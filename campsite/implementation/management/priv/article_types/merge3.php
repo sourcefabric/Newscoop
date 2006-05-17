@@ -121,21 +121,26 @@ if ($ok) {
     // calculate where this article is in relation to all the articles of the src type
     //
     $articlesArray = $src->getArticlesArray();
-    $f_cur_preview = trim(Input::get('f_cur_preview', 'int', $articlesArray[0])); // The currently previewed article
-    $tmp = array_keys($articlesArray, $f_cur_preview);	
-    $curPos = $tmp[0]; // used for calculating the next / prev arrows
+    if (!count($articlesArray)) {
+        $errMsgs[] = "No articles.";
+        $ok = false;
+    }
+    if ($ok) {
+        $f_cur_preview = trim(Input::get('f_cur_preview', 'int', $articlesArray[0])); // The currently previewed article
+        $tmp = array_keys($articlesArray, $f_cur_preview);	
+        $curPos = $tmp[0]; // used for calculating the next / prev arrows
         
-    // calculate the first language of an article number
-    // and also the number of translations associated with an article number
-    global $g_ado_db;
-    $sql = "SELECT * FROM X$f_src WHERE NrArticle=$f_cur_preview";		    
-    $rows = $g_ado_db->GetAll($sql);
-    if (!count($rows)) {
-      $errMsgs[] = 'There is no article associated with the preview.';
-      $ok = false;
+        // calculate the first language of an article number
+        // and also the number of translations associated with an article number
+        global $g_ado_db;
+        $sql = "SELECT * FROM X$f_src WHERE NrArticle=$f_cur_preview";		    
+        $rows = $g_ado_db->GetAll($sql);
+        if (!count($rows)) {
+            $errMsgs[] = 'There is no article associated with the preview.';
+            $ok = false;
           
-    }       
-    
+        }       
+    }
     if ($ok) {
         $numberOfTranslations = count($rows);
         $firstLanguage = $rows[0]['IdLanguage'];
