@@ -22,11 +22,6 @@ $issueObj =& new Issue($Pub, $Language, $Issue);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 $templates = Template::GetAllTemplates(array('ORDER BY' => array('Level' => 'ASC', 'Name' => 'ASC')));
 
-## added by sebastian
-if (function_exists ("incModFile")) {
-  incModFile ();
-}
-
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 camp_html_content_top(getGS("Configure section"), $topArray);
 

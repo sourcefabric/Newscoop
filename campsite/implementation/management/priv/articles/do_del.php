@@ -25,21 +25,16 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php?Pub=$Pub&Is
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
-	exit;	
+	exit;
 }
 
 $articleObj =& new Article($sLanguage, $Article);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
-	exit;		
+	exit;
 }
 
 $articleObj->delete();
-
-## added by sebastian
-if (function_exists ("incModFile")) {
-	incModFile();
-}
 
 header('Location: '.$BackLink."?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&ArtOffs=$ArticleOffset");
 exit;

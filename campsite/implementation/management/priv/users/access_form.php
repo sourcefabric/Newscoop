@@ -50,12 +50,4 @@ foreach ($rights as $group_name => $group) {
 	}
 }
 ?>
-	<tr>
-		<td>
-<?php
-	if (function_exists ("incModFile"))
-		incModFile ($User);
-?>
-		</td>
-	</tr>
 </table>

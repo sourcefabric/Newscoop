@@ -26,32 +26,32 @@ $f_position = Input::Get('f_position', 'int', 1, true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;	
+	exit;
 }
 
 
 $publicationObj =& new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
-	exit;	
+	exit;
 }
 
 $issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
-	exit;	
+	exit;
 }
 
 $sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'));
-	exit;	
+	exit;
 }
 
 $articleObj =& new Article($f_article_language, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'));
-	exit;	
+	exit;
 }
 
 switch ($f_move) {
@@ -65,11 +65,6 @@ case 'abs':
 	$articleObj->positionAbsolute($f_position);
 	break;
 default: ;
-}
-
-## added by sebastian
-if (function_exists ("incModFile")) {
-	incModFile();
 }
 
 $url = "/$ADMIN/articles/index.php"

@@ -66,11 +66,6 @@ if ($f_destination_issue_number > 0) {
 $allArticleTypes = ArticleType::GetArticleTypes();
 $allLanguages = Language::GetLanguages();
 
-// added by sebastian
-if (function_exists ("incModFile")) {
-	incModFile ();
-}
-
 $crumbs = array();
 $crumbs[] = array(getGS("Actions"), "");
 $crumbs[] = array(getGS("Add new article"), "");

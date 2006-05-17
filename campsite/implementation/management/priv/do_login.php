@@ -13,9 +13,6 @@ if ($f_login_language == "") {
 	$f_login_language='en';
 }
 if ($validUser) {
-	if (function_exists ("incModFile")) {
-		incModFile ();
-	}
 	setcookie("LoginUserId", $user->getUserId());
 	setcookie("LoginUserKey", $user->getKeyId());
 	setcookie("TOL_Language", $f_login_language);

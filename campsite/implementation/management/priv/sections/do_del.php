@@ -9,7 +9,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('DeleteSection')) {
-	camp_html_display_error(getGS('You do not have the right to delete sections.'));	
+	camp_html_display_error(getGS('You do not have the right to delete sections.'));
 	exit;
 }
 $Pub = Input::Get('Pub', 'int', 0);
@@ -23,11 +23,6 @@ $f_deleteArticles = ($User->hasPermission('DeleteArticle') && ($f_deleteArticles
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-
-## added by sebastian
-if (function_exists ("incModFile")) {
-    incModFile ();
-}
 
 $articles = Article::GetArticles($Pub, $Issue, $Section, $Language);
 $numArticles = count($articles);
@@ -47,7 +42,7 @@ if ($doDelete) {
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 camp_html_content_top(getGS('Delete section'), $topArray);
 ?>
-    
+
 <P>
 <CENTER>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
@@ -60,11 +55,11 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 <TR>
 	<TD COLSPAN="2">
 	   <BLOCKQUOTE>
-        <?php 
+        <?php
         if (!$doDelete) { ?>
             <LI><?php  putGS('There are $1 article(s) left.', $numArticles); ?></LI>
             <LI><?php  putGS('The section $1 could not be deleted.','<B>'.htmlspecialchars($sectionObj->getName()).'</B>'); ?></LI>
-            <?php 
+            <?php
         }
         else { ?>
             <LI><?php  putGS('The section $1 has been deleted.','<B>'.htmlspecialchars($sectionObj->getName()).'</B>'); ?></LI>
@@ -72,10 +67,10 @@ camp_html_content_top(getGS('Delete section'), $topArray);
             <?php
             if ($f_deleteArticles) { ?>
     			<LI><?php  putGS('A total of $1 articles were deleted.','<B>'.$numArticlesDeleted.'</B>'); ?></LI>
-    		<?php 
+    		<?php
             }
     	}
-        ?>	
+        ?>
         </BLOCKQUOTE>
     </TD>
 </TR>

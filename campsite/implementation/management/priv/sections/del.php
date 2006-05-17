@@ -8,7 +8,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('DeleteSection')) {
-	camp_html_display_error(getGS('You do not have the right to delete sections.'));	
+	camp_html_display_error(getGS('You do not have the right to delete sections.'));
 	exit;
 }
 $Pub = Input::Get('Pub', 'int', 0);
@@ -20,11 +20,6 @@ $Section = Input::Get('Section', 'int', 0);
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-
-## added by sebastian
-if (function_exists ("incModFile")) {
-  incModFile ();
-}
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 camp_html_content_top(getGS('Delete section'), $topArray);

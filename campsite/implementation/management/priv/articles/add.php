@@ -56,11 +56,6 @@ foreach ($languageIds as $languageId) {
 }
 $allArticleTypes = ArticleType::GetArticleTypes();
 
-// added by sebastian
-if (function_exists ("incModFile")) {
-	incModFile ();
-}
-
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
 camp_html_content_top(getGS('Add new article'), $topArray, true, false, array(getGS("Articles") => "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"));

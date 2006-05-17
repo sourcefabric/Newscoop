@@ -13,10 +13,6 @@ if ($access) {
 	Article::UnlockByUser($User->getUserId());
 }
 
-// added by sebastian
-if (function_exists ("incModFile")) {
-	incModFile ();
-}
 header("Location: /$ADMIN/login.php");
 exit;
 ?>

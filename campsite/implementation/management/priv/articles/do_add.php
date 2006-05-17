@@ -94,11 +94,6 @@ if ($articleObj->exists()) {
         $articleObj->setCommentsEnabled($commentDefault);
 	}
 
-    ## added by sebastian
-	if (function_exists ("incModFile")) {
-		incModFile();
-	}
-
 	header("Location: ".camp_html_article_url($articleObj, $f_language_id, "edit.php"));
 }
 else {

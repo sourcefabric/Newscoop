@@ -8,7 +8,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ManageSection')) {
-	camp_html_display_error(getGS("You do not have the right to add sections."));	
+	camp_html_display_error(getGS("You do not have the right to add sections."));
 	exit;
 }
 
@@ -18,16 +18,11 @@ $Language = Input::Get('Language', 'int', 0);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;		
+	exit;
 }
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $newSectionNumber = Section::GetUnusedSectionNumber($Pub, $Issue, $Language);
-
-## added by sebastian
-if (function_exists ("incModFile")) {
-	incModFile ();
-}
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
 camp_html_content_top(getGS('Add new section'), $topArray, true, true, array(getGS("Sections") => "/$ADMIN/sections/?Pub=$Pub&Issue=$Issue&Language=$Language"));
