@@ -113,7 +113,7 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 	 */
 	function getLanguages()
 	{
-    	global $Campsite;
+    	global $g_ado_db;
         $query = 'SELECT  Name, OrigName AS NativeName, Code as LanguageCode, Code AS Id
                     FROM Languages
                     ORDER BY Name';
