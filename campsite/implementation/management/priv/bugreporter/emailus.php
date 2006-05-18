@@ -54,6 +54,14 @@ else {
     <td nowrap><?php putGS("Error ID: &nbsp;") ?></td>
     <td><?php echo $reporter->getId(); ?></td>
 </tr>
+<tr>
+    <td nowrap><?php putGS("Error String: &nbsp;") ?></td>
+    <td><?php echo $reporter->getStr(); ?></td>
+</tr>
+<tr>
+    <td nowrap><?php putGS("Time: &nbsp;") ?></td>
+    <td><?php echo $reporter->getTime(); ?></td>
+</tr>
 <tr align="left">
     <td valign="top" nowrap><?php putGS("Backtrace: &nbsp;") ?></td>
     <td>
