@@ -763,10 +763,10 @@ if ($f_edit_mode == "edit") { ?>
 
 	<?php if ($f_edit_mode == "edit") { ?>
 	<TR>
-		<TD COLSPAN="2">
-		<DIV ALIGN="CENTER">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
-		</DIV>
+		<TD COLSPAN="2" align="center">
+			<INPUT TYPE="submit" NAME="save" VALUE="<?php putGS('Save'); ?>" class="button">
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<INPUT TYPE="submit" NAME="save_and_close" VALUE="<?php putGS('Save and Close'); ?>" class="button">
 		</TD>
 	</TR>
 	<?php } ?>

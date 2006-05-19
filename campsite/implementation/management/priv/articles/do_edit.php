@@ -157,6 +157,7 @@ $f_keywords = Input::Get('f_keywords');
 $f_article_title = Input::Get('f_article_title');
 $f_creation_date = Input::Get('f_creation_date');
 $f_comment_status = Input::Get('f_comment_status', 'string', '', true);
+$f_save_button = isset($_REQUEST['save']) ? 'save' : 'save_and_close';
 
 $BackLink = "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
 
@@ -243,5 +244,9 @@ foreach ($articleFields as $dbColumnName => $text) {
 	$articleTypeObj->setProperty($dbColumnName, $text);
 }
 
-header("Location: ". camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
+if ($f_save_button == "save") {
+	header("Location: ". camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
+} elseif ($f_save_button == "save_and_close") {
+	header("Location: ". camp_html_article_url($articleObj, $f_language_id, 'index.php'));
+}
 ?>
