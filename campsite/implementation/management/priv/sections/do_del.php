@@ -44,8 +44,7 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 ?>
 
 <P>
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
 		<B> <?php  putGS("Deleting section"); ?> </B>
@@ -82,9 +81,6 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 	</TD>
 </TR>
 </TABLE>
-</CENTER>
 <P>
 
 <?php camp_html_copyright_notice(); ?>
-</BODY>
-</HTML>
