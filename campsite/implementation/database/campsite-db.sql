@@ -805,6 +805,7 @@ CREATE TABLE `Users` (
   `Password` varchar(64) NOT NULL default '',
   `EMail` varchar(255) NOT NULL default '',
   `Reader` enum('Y','N') NOT NULL default 'Y',
+  `fk_user_type` varchar(140) default NULL,
   `City` varchar(100) NOT NULL default '',
   `StrAddress` varchar(255) NOT NULL default '',
   `State` varchar(32) NOT NULL default '',

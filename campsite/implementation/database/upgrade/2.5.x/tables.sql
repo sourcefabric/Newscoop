@@ -12,6 +12,9 @@ CREATE TABLE ArticleTypeMetadata (
     PRIMARY KEY (`type_name`,`field_name`)
 );
 
+-- Initialze the new ArticleTypeMetadata table.
+system php ./upgrade_article_types.php
+
 -- Change article creation time so we know when
 -- it was created, down to the second.
 ALTER TABLE `Articles` CHANGE `UploadDate` `UploadDate` DATETIME NOT NULL DEFAULT '0000-00-00';
@@ -22,6 +25,11 @@ ALTER TABLE `Issues` CHANGE `PublicationDate` `PublicationDate` DATETIME NOT NUL
 -- Add a "last-modified" field to article table
 ALTER TABLE `Articles` ADD `time_updated` TIMESTAMP NOT NULL ;
 
+-- To make it easier to figure out a users type
+ALTER TABLE `Users` ADD `fk_user_type` VARCHAR( 140 ) NULL DEFAULT NULL AFTER `Reader` ;
+
+-- Initialize the users type
+system php ./init_user_type.php
 
 --
 -- Article Comments
@@ -51,9 +59,6 @@ ADD `comments_public_moderated` TINYINT(1) NOT NULL DEFAULT '0';
 
 -- Run the user permission upgrade script
 system php ./upgrade_user_perms.php
-
--- Initialze the new ArticleTypeMetadata table.
-system php ./upgrade_article_types.php
 
 --
 -- Phorum tables
