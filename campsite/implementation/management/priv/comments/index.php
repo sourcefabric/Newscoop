@@ -22,7 +22,7 @@ $f_comment_start_inbox = camp_session_get('f_comment_start_inbox', 0);
 $f_comment_start_archive = camp_session_get('f_comment_start_archive', 0);
 $f_comment_per_page = camp_session_get('f_comment_per_page', 10);
 $f_comment_search = trim(camp_session_get('f_comment_search', ''));
-$f_comment_order_by = camp_session_get('f_comment_order_by', 'date');
+$f_comment_order_by = camp_session_get('f_comment_order_by', 'datestamp');
 $f_comment_order_direction = camp_session_get('f_comment_order_direction', 'ASC');
 if ($f_comment_per_page < 4) {
     $f_comment_per_page = 4;
