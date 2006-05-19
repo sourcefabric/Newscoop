@@ -71,15 +71,14 @@ if ($f_publication_id > 0) {
 	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 	$languageObj =& new Language($articleObj->getLanguageId());
 
-    $showComments = ($publicationObj->commentsEnabled()
+    $showCommentControls = ($publicationObj->commentsEnabled()
                      && $articleType->commentsEnabled()
-                     && $articleObj->commentsEnabled()
                      && ($articleObj->getWorkflowStatus() == 'Y'));
+    $showComments = $showCommentControls && $articleObj->commentsEnabled();
 }
 
-
 if ($showComments) {
-    // show all the comments attached to this article
+    // Fetch the comments attached to this article
     require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
     $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
 }
@@ -539,7 +538,7 @@ if ($f_edit_mode == "edit") { ?>
 
 				    <!-- Comments enabled -->
 				    <?php
-				    if ($showComments) {
+				    if ($showCommentControls) {
 				    ?>
 				    <tr>
 				        <td align="left" colspan="2" style="padding-top: 0.25em;">
