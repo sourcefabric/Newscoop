@@ -742,12 +742,12 @@ class DatabaseObject {
 						// We assume here that the column name is not numeric
 						if (is_numeric($key)) {
 							// Not using the ASC/DESC option
-							$tmpItems[] = $orderItem;
+							$tmpItems[] = '`'.$orderItem.'`';
 						} else {
 							$orderItem = strtoupper($orderItem);
 							if (($orderItem == 'ASC') || ($orderItem == 'DESC')) {
 								// Using the ASC/DESC option
-								$tmpItems[] = $key.' '.$orderItem;
+								$tmpItems[] = '`'.$key.'` '.$orderItem;
 							}
 						}
 					}
