@@ -36,7 +36,7 @@ if ($isNewUser) {
 }
 $userTypes = UserType::GetUserTypes();
 $countries = Country::GetCountries(1);
-$my_user_type = UserType::GetUserTypeFromConfig($editUser->getConfig());
+$my_user_type = $editUser->getUserType();
 
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
@@ -44,7 +44,7 @@ $my_user_type = UserType::GetUserTypeFromConfig($editUser->getConfig());
 <form name="dialog" method="POST" action="<?php echo $action; ?>" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <input type="hidden" name="uType" value="<?php echo $uType; ?>">
 <?php
-if (!$isNewUser) { 
+if (!$isNewUser) {
 ?>
 <input type="hidden" name="User" value="<?php echo $editUser->getUserId(); ?>">
 <?php
@@ -165,7 +165,7 @@ if (!$isNewUser) {
 			<input type="password" class="input_text" name="password" size="16" maxlength="32">
 			</td>
 		</tr>
-		
+
 		<tr>
 			<td align="right" nowrap width="1%"><?php putGS("Confirm password"); ?>:</td>
 			<td>
@@ -228,7 +228,7 @@ if (!$isNewUser) {
 				camp_html_select_option("40-49", $Age, "40-49");
 				camp_html_select_option("50-65", $Age, "50-65");
 				camp_html_select_option("65-", $Age, getGS("65 or over"));
-				?>				
+				?>
 				</SELECT>
 				</td>
 			</tr>
@@ -322,15 +322,12 @@ if ($editUser->isAdmin() /*&& $canManage*/) {
 <input type="hidden" name="customizeRights" id="customize_rights" value="false">
 <tr id="user_type_dialog">
 	<td style="padding-left: 4px; padding-top: 4px; padding-bottom: 4px;">
-		<?PHP
-		$my_user_type_name = $my_user_type ? $my_user_type->getName() : "";
-		?>
 		<?php putGS("User Type"); ?>:
 		<select name="UserType">
 		<option value="">---</option>
 		<?php
 		foreach ($userTypes as $user_type) {
-			camp_html_select_option($user_type->getName(), $my_user_type_name, $user_type->getName());
+			camp_html_select_option($user_type->getName(), $my_user_type, $user_type->getName());
 		}
 		?>
 		</select>

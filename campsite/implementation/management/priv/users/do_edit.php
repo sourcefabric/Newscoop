@@ -31,7 +31,7 @@ if ($setPassword) {
 	$password = Input::Get('password', 'string', 0);
 	$passwordConf = Input::Get('passwordConf', 'string', 0);
 	$backLink = "/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getUserId();
-	
+
 	if ($userId == $User->getUserId()) {
 		$oldPassword = Input::Get('oldPassword');
 		if (!$editUser->isValidPassword($oldPassword)) {
@@ -45,7 +45,7 @@ if ($setPassword) {
 		header("Location: $backLink&res=ERROR&resMsg=" . urlencode($resMsg));
 		exit;
 	}
-	
+
 	$editUser->setPassword($password);
 }
 
@@ -77,12 +77,14 @@ Log::Message($logtext, $User->getUserName(), 56);
 if ($editUser->isAdmin() && $customizeRights && $canManage) {
 	// save user customized rights
 	$rightsFields = $editUser->GetDefaultConfig();
+	$permissions = array();
 	foreach ($rightsFields as $field=>$value) {
 		$val = Input::Get($field, 'string', 'off');
 		$permissionEnabled = ($val == 'on') ? true : false;
-		$editUser->setPermission($field, $permissionEnabled);
+		$permissions[$field] = $permissionEnabled;
 	}
-	
+	$editUser->updatePermissions($permissions);
+
 	$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
 	Log::Message($logtext, $User->getUserName(), 55);
 }

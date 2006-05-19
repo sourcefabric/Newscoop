@@ -32,6 +32,7 @@ class User extends DatabaseObject {
 		'Password',
 		'EMail',
 		'Reader',
+		'fk_user_type',
 		'City',
 		'StrAddress',
 		'State',
@@ -217,6 +218,17 @@ class User extends DatabaseObject {
 
 
 	/**
+	 * Return the user type if there is one, or null if not.
+	 *
+	 * @return string
+	 */
+	function getUserType()
+	{
+		return $this->m_data['fk_user_type'];
+	} // fn getUserType
+
+
+	/**
 	 * Set the user to the given user type.
 	 *
 	 * @param string $p_userType
@@ -234,8 +246,6 @@ class User extends DatabaseObject {
 		// Fetch the user type's permissions.
 		$userType =& new UserType($p_userType);
 		if ($userType->exists()) {
-			// Drop all current user permissions.
-			//$queryStr = "DELETE FROM UserConfig WHERE fk_user_id=".$this->m_data['Id'];
 			$configVars = $userType->getConfig();
 			foreach ($configVars as $varname => $value) {
 				$queryStr = "SELECT value FROM UserConfig "
@@ -257,9 +267,16 @@ class User extends DatabaseObject {
 					$g_ado_db->Execute($queryStr);
 				}
 			}
+			// Update the user type in the user table.
+			$this->setProperty('fk_user_type', $p_userType);
 			$this->fetch();
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('User permissions for $1 changed', $this->m_data['Name']." (".$this->m_data['UName'].")");
+
+			if (function_exists("camp_load_language")) {
+				camp_load_language("api");
+			}
+			$logtext = getGS('User permissions for $1 changed',
+							 $this->m_data['Name']
+							 ." (".$this->m_data['UName'].")");
 			Log::Message($logtext, null, 55);
 		}
 	} // fn setUserType
@@ -275,8 +292,8 @@ class User extends DatabaseObject {
 
 
 	/**
-	 * Get unique login key for this user - login key is only good for the time the
-	 * user is logged in.
+	 * Get unique login key for this user - login key is only good for the
+	 * time the user is logged in.
 	 * @return int
 	 */
 	function getKeyId()
@@ -369,6 +386,14 @@ class User extends DatabaseObject {
 				$g_ado_db->Execute($sql);
 				$this->m_config[$p_varName] = $p_value;
 			}
+
+			// Figure out the new User Type for the user.
+			$userType = UserType::GetUserTypeFromConfig($this->m_config);
+			if ($userType) {
+				$this->setProperty('fk_user_type', $userType->getName());
+			} else {
+				$this->setProperty('fk_user_type', 'NULL', true, true);
+			}
 		}
 	} // fn setConfigValue
 
@@ -429,6 +454,32 @@ class User extends DatabaseObject {
 	} // fn setPermission
 
 
+	function updatePermissions($p_permissions)
+	{
+		global $g_ado_db;
+		$config = array_keys($this->m_config);
+		$updateArray = array();
+		foreach ($p_permissions as $permission => $value) {
+			if (in_array($permission, $config)) {
+				$value = $value ? 'Y' : 'N';
+				if ($value != $this->m_config[$permission]) {
+					$sql = "UPDATE UserConfig SET value='$value' "
+						   ." WHERE fk_user_id=".$this->m_data['Id']
+						   ." AND varname='$permission'";
+					$g_ado_db->Execute($sql);
+					$this->m_config[$permission] = $value;
+				}
+			}
+		}
+		$userType = UserType::GetUserTypeFromConfig($this->m_config);
+		if ($userType) {
+			$this->setProperty('fk_user_type', $userType->getName());
+		} else {
+			$this->setProperty('fk_user_type', 'NULL', true, true);
+		}
+	} // fn updatePermissions
+
+
 	/**
 	 * Return TRUE if this user is an administrator.
 	 *
@@ -476,7 +527,9 @@ class User extends DatabaseObject {
 		$queryStr = "SELECT SHA1('".mysql_real_escape_string($p_password)."') AS PWD";
 		$row = $g_ado_db->GetRow($queryStr);
 		$this->setProperty('Password', $row['PWD']);
-		if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		if (function_exists("camp_load_language")) {
+			camp_load_language("api");
+		}
 		$logtext = getGS('Password changed for $1', $this->m_data['Name']." (".$this->m_data['UName'].")");
 		Log::Message($logtext, null, 54);
 	}  // fn setPassword
@@ -527,6 +580,31 @@ class User extends DatabaseObject {
 			return false;
 		}
 	} // fn UserNameExists
+
+
+	/**
+	 * Get all users matching the given parameters.
+	 *
+	 * @param boolean $p_onlyAdmin
+	 * @param string $p_userType
+	 * @return array
+	 */
+	function GetUsers($p_onlyAdmin = true, $p_userType = null)
+	{
+		global $g_ado_db;
+		$constraints = array();
+		if ($p_onlyAdmin) {
+			$constraints[] = "Reader='N'";
+		}
+		if (!is_null($p_userType)) {
+			$constraints[] = "fk_user_type='".$p_userType."'";
+		}
+		if (count($constraints) > 0) {
+			$whereStr = " WHERE ".implode(" AND ", $constraints);
+		}
+		$sql = "SELECT * FROM Users " . $whereStr;
+		return DbObjectArray::Create("User", $sql);
+	} // fn GetUsers
 
 } // class User
 

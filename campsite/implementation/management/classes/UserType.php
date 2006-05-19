@@ -28,7 +28,8 @@ class UserType {
 	 */
 	function UserType($p_userType = null)
 	{
-		$this->m_userTypeName = $p_userType;
+		$this->m_userTypeName = mysql_real_escape_string($p_userType);
+
 		if (!empty($p_userType)) {
 			$this->fetch();
 		}
@@ -161,6 +162,15 @@ class UserType {
 				   ." WHERE user_type_name='".$this->m_userTypeName."'"
 				   ." AND varname='".mysql_real_escape_string($p_varName)."'";
 			$g_ado_db->Execute($sql);
+
+			// Update all the users of this user type
+			$users = User::GetUsers(true, $this->m_userTypeName);
+			$userIds = DbObjectArray::GetColumn($users, "Id");
+			$userIds = implode(",", $userIds);
+			$sql = "UPDATE UserConfig SET value='".mysql_real_escape_string($p_value)."'"
+					." WHERE varname='".mysql_real_escape_string($p_varName)."'"
+					." AND fk_user_id IN ($userIds)";
+			$g_ado_db->Execute($sql);
 		}
 	} // fn setValue
 
@@ -259,21 +269,21 @@ class UserType {
 			$numMatches = $g_ado_db->GetOne($queryStr);
 
 			// DEBUGGING CODE - DO NOT DELETE
-			$queryStr = "SELECT * FROM UserTypes WHERE user_type_name='".$userType->getName()."'"
-						." AND ($whereStr)";
-			$rows = $g_ado_db->GetAll($queryStr);
-			foreach ($p_configVars as $varname => $value) {
-				$found = false;
-				foreach ($rows as $row) {
-					if ($row['varname'] == $varname) {
-						$found =true;
-						break;
-					}
-				}
-				if (!$found) {
-					$mismatches[$userType->getName()][] = $varname;
-				}
-			}
+//			$queryStr = "SELECT * FROM UserTypes WHERE user_type_name='".$userType->getName()."'"
+//						." AND ($whereStr)";
+//			$rows = $g_ado_db->GetAll($queryStr);
+//			foreach ($p_configVars as $varname => $value) {
+//				$found = false;
+//				foreach ($rows as $row) {
+//					if ($row['varname'] == $varname) {
+//						$found =true;
+//						break;
+//					}
+//				}
+//				if (!$found) {
+//					$mismatches[$userType->getName()][] = $varname;
+//				}
+//			}
 
 			if ($numMatches >= $totalConfigValues) {
 				return $userType;

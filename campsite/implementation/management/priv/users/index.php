@@ -259,7 +259,6 @@ for($loop = 0; $loop < $last; $loop++) {
 	$userId = $row['Id'];
 	$rowClass = ($loop + 1) % 2 == 0 ? "list_row_even" : "list_row_odd";
 	$editUser =& new User($userId);
-	$userType = UserType::GetUserTypeFromConfig($editUser->getConfig());
 ?>
 	<tr <?php echo "class=\"$rowClass\""; ?>>
 		<td>
@@ -282,7 +281,7 @@ for($loop = 0; $loop < $last; $loop++) {
 		<?php } ?>
 
 		<?php if ($uType == "Staff") { ?>
-		<td><?php if ($userType !== false) { echo $userType->getName(); } ?></td>
+		<td><?php echo htmlspecialchars($editUser->getUserType()); ?></td>
 		<?php } ?>
 
 		<td>
