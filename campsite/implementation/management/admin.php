@@ -1,18 +1,9 @@
 <?php
-global $global_custum_var;
-$global_custom_var = 1;
-
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 
-if ( version_compare( phpversion(), "5.0.0", ">=" ) )
-    {
-         set_error_handler ("report_bug", E_ALL);
-    }
-else
-    {
-          set_error_handler("report_bug");
-    }
+error_reporting(E_ALL);
+set_error_handler("report_bug");
 
 /**
  * This file is basically a hack so that we could implement the
@@ -45,37 +36,18 @@ if (($question_mark = strpos($call_script, '?')) !== false) {
 // Remove all attempts to get at other parts of the file system
 $call_script = str_replace('/../', '/', $call_script);
 
-$is_image = (strstr($call_script, '/img/') !== false);
 $extension = '';
 if (($extension_start = strrpos($call_script, '.')) !== false) {
 	$extension = strtolower(substr($call_script, $extension_start));
 }
 
-// Is it an image?
-if ($is_image) {
-	$extension = substr(strrchr($call_script, '.'), 1);
-	// Expire one day from now.
-	$secondsTillExpired = 86400;
-	$currentTime = time();
-	$expireTime = $currentTime + $secondsTillExpired;
-	header("Content-type: image/$extension");
-    header('Expires: ' . gmdate("D, d M Y H:i:s", $expireTime) . ' GMT');
-    header('Last-Modified: ' . gmdate("D, d M Y H:i:s", $currentTime) . ' GMT');
-    header('Cache-Control: private, max-age=' . $secondsTillExpired . ', must-revalidate, pre-check=' . $secondsTillExpired);
-    $fileName = $Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script";
-    if (file_exists($fileName)) {
-	   readfile($fileName);
-    }
-}
-elseif (($extension == '.php') || ($extension == '')) {
-	// Requested file is not an image
+if (($extension == '.php') || ($extension == '')) {
 	header("Content-type: text/html; charset=UTF-8");
 
 	// If they arent trying to login in...
 	if (($call_script != '/login.php') && ($call_script != '/do_login.php')) {
 		// Check if the user is logged in already
 		require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-		//load_common_include_files($ADMIN_DIR);
 		list($access, $User) = check_basic_access($_REQUEST, false);
 		if (!$access) {
 			// If not logged in, show the login screen.
@@ -98,12 +70,10 @@ elseif (($extension == '.php') || ($extension == '')) {
 	$path_name = $Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script";
 	if (!file_exists($path_name)) {
 		header("HTTP/1.1 404 Not found");
-		print("<h1>404 Not found</h1>\n");
-		die("The page $ADMIN_DIR/$call_script could not be found");
+		exit;
 	}
 
 	// Clean up the global namespace before we call the script
-	unset($is_image);
 	unset($extension);
 	unset($extension_start);
 	unset($question_mark);
@@ -129,15 +99,12 @@ elseif (($extension == '.php') || ($extension == '')) {
 		$_top_menu = ob_get_clean();
 	}
 
-
-
 	echo $_top_menu . $content;
 
 	if ($needs_menu) {
 		echo "</td></tr>\n</table>\n</html>\n";
 	}
-}
-else {
+} else {
     readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
 }
 
@@ -149,11 +116,10 @@ else {
  * @param string $p_string The error message.
  * @param string $p_file The name of the file in which the error occurred.
  * @param int    $p_line The line number in which the error occurred.
- * @param
  */
-function report_bug ($p_number, $p_string, $p_file, $p_line)
+function report_bug($p_number, $p_string, $p_file, $p_line)
 {
-    global $ADMIN_DIR, $ADMIN, $Campsite;
+    global $ADMIN_DIR, $Campsite;
 
     // --- Don't print out the previous screen (in which the error occurred). ---
     ob_end_clean();
@@ -163,8 +129,6 @@ function report_bug ($p_number, $p_string, $p_file, $p_line)
     echo "</td></tr>\n<tr><td>\n";
 
     include ($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/senderrorform.php");
-
-//     include ($Campsite['HTML_DIR'] . "/bugreporter/senderrorform.php");
 
     exit();
 } // fn report_bug
