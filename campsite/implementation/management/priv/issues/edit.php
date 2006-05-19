@@ -41,7 +41,7 @@ $excludeLanguageIds = DbObjectArray::GetColumn($issueTranslations, 'IdLanguage')
 
 $allTemplates = Template::GetAllTemplates();
 
-camp_html_content_top(getGS('Change issue details'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
+camp_html_content_top(getGS('Change issue details'), array('Pub' => $publicationObj, 'Issue' => $issueObj), true, true);
 
 $url_args1 = "Pub=$Pub";
 $url_args2 = $url_args1."&Issue=$Issue&Language=$Language";
@@ -82,10 +82,10 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 </TABLE>
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" >
-<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php p($Pub); ?>">
-<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php p($Issue); ?>">
-<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php p($Language); ?>">
+<FORM METHOD="POST" ACTION="do_edit.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($Pub); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($Issue); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_current_language_id" VALUE="<?php p($Language); ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -93,17 +93,25 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
+
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
+	<TD>
+		<?php  p($issueObj->getIssueNumber()); ?>
+	</TD>
+</TR>
+
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64" value="<?php  p(htmlspecialchars($issueObj->getName())); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_issue_name" SIZE="32" MAXLENGTH="64" value="<?php  p(htmlspecialchars($issueObj->getName())); ?>" alt="blank" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Name')."'"); ?>">
 	</TD>
 </TR>
 
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
 	<TD>
-	    <SELECT NAME="cLang" class="input_select">
+	    <SELECT NAME="f_new_language_id" class="input_select">
 		<?php
 		foreach ($allLanguages as $tmpLanguage) {
 			$langId = $tmpLanguage->getLanguageId();
@@ -118,17 +126,17 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 
 <?php if ($issueObj->getWorkflowStatus() == 'Y') {?>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?>:</TD>
+	<TD ALIGN="RIGHT"><?php  putGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cPublicationDate" SIZE="11" MAXLENGTH="10" value="<?php  p(htmlspecialchars($issueObj->getPublicationDate())); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_publication_date" SIZE="11" MAXLENGTH="10" value="<?php  p(htmlspecialchars($issueObj->getPublicationDate())); ?>">
 	</TD>
 </TR>
 <?php } ?>
 
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Front Page Template"); ?>:</TD>
+	<TD ALIGN="RIGHT"><?php  putGS("Front Page Template"); ?>:</TD>
 	<TD>
-		<SELECT NAME="cIssueTplId" class="input_select">
+		<SELECT NAME="f_issue_template_id" class="input_select">
 		<OPTION VALUE="0">---</OPTION>
 		<?php
 		foreach ($allTemplates as $template) {
@@ -140,9 +148,9 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 </TR>
 
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Section Template"); ?>:</TD>
+	<TD ALIGN="RIGHT"><?php  putGS("Section Template"); ?>:</TD>
 	<TD>
-		<SELECT NAME="cSectionTplId" class="input_select">
+		<SELECT NAME="f_section_template_id" class="input_select">
 		<OPTION VALUE="0">---</OPTION>
 		<?php
 		foreach ($allTemplates as $template) {
@@ -154,9 +162,9 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 </TR>
 
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Article Template"); ?>:</TD>
+	<TD ALIGN="RIGHT"><?php  putGS("Article Template"); ?>:</TD>
 	<TD>
-		<SELECT NAME="cArticleTplId" class="input_select">
+		<SELECT NAME="f_article_template_id" class="input_select">
 		<OPTION VALUE="0">---</OPTION>
 		<?php
 		foreach ($allTemplates as $template) {
@@ -168,18 +176,16 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 </TR>
 
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
+	<TD ALIGN="RIGHT"><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($issueObj->getUrlName())); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($issueObj->getUrlName())); ?>" alt="alnum|1|A|true|false|_" emsg="<?php putGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"); ?>">
 	</TD>
 </TR>
 
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/?Pub=<?php p($Pub); ?>'">-->
-	</DIV>
+	<TD COLSPAN="2" align="center">
+		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
+		<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/?Pub=<?php p($Pub); ?>'">-->
 	</TD>
 </TR>
 </TABLE>

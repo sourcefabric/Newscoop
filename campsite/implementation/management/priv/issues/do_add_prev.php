@@ -13,15 +13,15 @@ if (!$User->hasPermission('ManageIssue')) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int');
-$cNumber = trim(Input::Get('cNumber', 'int'));
+$f_publication_id = Input::Get('f_publication_id', 'int');
+$f_issue_number = trim(Input::Get('f_issue_number', 'int'));
 
 $correct = true;
 $created = false;
 $errorMsgs = array();
-if ($cNumber == "") {
-	$correct = false; 
-	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Number').'</B>'); 
+if ( empty($f_issue_number) || !is_numeric($f_issue_number) || ($f_issue_number <= 0) ) {
+	$correct = false;
+	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Number').'</B>');
 }
 
 if (!Input::IsValid()) {
@@ -29,21 +29,32 @@ if (!Input::IsValid()) {
 	$errorMsgs[] = getGS('Invalid Input: $1', Input::GetErrorString());
 }
 
-$publicationObj =& new Publication($Pub);
+$publicationObj =& new Publication($f_publication_id);
+if (!$publicationObj->exists()) {
+	$correct = false;
+	$errorMsgs[] = getGS("Publication does not exist.");
+}
+
+// check if the issue number already exists
+$existingIssues = Issue::GetIssues($f_publication_id, null, $f_issue_number);
+if (count($existingIssues) > 0) {
+	$correct = false;
+	$errorMsgs[] = getGS("The issue could not be added.")." ".getGS("Please check if another issue with the same number/language does not already exist.");
+}
 
 if ($correct) {
-    $lastIssue = Issue::GetLastCreatedIssue($Pub);
-    $issueCopies = $lastIssue->copy(null, $cNumber);
+    $lastIssue = Issue::GetLastCreatedIssue($f_publication_id);
+    $issueCopies = $lastIssue->copy(null, $f_issue_number);
     $issueCopy = array_pop($issueCopies);
-	$logtext = getGS('New issue $1 from $2 in publication $3', $cNumber, 
-					 $lastIssue->getIssueNumber(), $publicationObj->getName()); 
+	$logtext = getGS('New issue $1 from $2 in publication $3', $f_issue_number,
+					 $lastIssue->getIssueNumber(), $publicationObj->getName());
 	Log::Message($logtext, $User->getUserName(), 11);
-	header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=".$issueCopy->getIssueNumber()
+	header("Location: /$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=".$issueCopy->getIssueNumber()
 		   ."&Language=".$issueCopy->getLanguageId());
 	exit;
 }
 
-camp_html_content_top(getGS('Copying previous issue'), array('Pub' => $publicationObj), true, false, array(getGS("Issues") => "/$ADMIN/issues/?Pub=$Pub"));
+camp_html_content_top(getGS('Copying previous issue'), array('Pub' => $publicationObj), true, false, array(getGS("Issues") => "/$ADMIN/issues/?Pub=$f_publication_id"));
 
 ?>
 
@@ -70,7 +81,7 @@ camp_html_content_top(getGS('Copying previous issue'), array('Pub' => $publicati
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="Ok" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/?Pub=<?php  p($Pub); ?>'">
+	<INPUT TYPE="button" class="button" NAME="Ok" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/add_prev.php?Pub=<?php  p($f_publication_id); ?>'">
 	</DIV>
 	</TD>
 </TR>
