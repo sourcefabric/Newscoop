@@ -25,6 +25,19 @@ if ($f_src == $f_dest) {
 	$errorMsgs[] = "You cannot merge the same type into itself.";
 }
 
+$src =& new ArticleType($f_src);
+$dest =& new ArticleType($f_dest);
+
+$tmp = Input::get('f_src_Fe');
+foreach ($dest->m_dbColumns as $destColumn) {
+	$f_src_c[$destColumn->getPrintName()] = trim(Input::get('f_src_'. $destColumn->getPrintName()));
+}
+$srcNumArticles = $src->getNumArticles();
+
+if ($srcNumArticles <= 0) {
+    $errorMsgs[] = "The source article type ($f_src) does not have any articles.";
+}
+    
 if (count($errorMsgs)) { 
 	
 	$crumbs = array();
@@ -69,15 +82,6 @@ if (count($errorMsgs)) {
 <?php
 } // endif count(errorMessages)
 
-
-$src =& new ArticleType($f_src);
-$dest =& new ArticleType($f_dest);
-
-$tmp = Input::get('f_src_Fe');
-foreach ($dest->m_dbColumns as $destColumn) {
-	$f_src_c[$destColumn->getPrintName()] = trim(Input::get('f_src_'. $destColumn->getPrintName()));
-}
-$srcNumArticles = $src->getNumArticles();
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");

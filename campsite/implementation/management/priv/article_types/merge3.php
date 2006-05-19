@@ -138,9 +138,10 @@ if ($ok) {
         if (!count($rows)) {
             $errMsgs[] = 'There is no article associated with the preview.';
             $ok = false;
+        }
           
-        }       
-    }
+    }       
+    
     if ($ok) {
         $numberOfTranslations = count($rows);
         $firstLanguage = $rows[0]['IdLanguage'];
