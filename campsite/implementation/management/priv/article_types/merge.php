@@ -53,7 +53,7 @@ echo camp_html_breadcrumbs($crumbs);
 	</TD>
 
 	<TD>Destination Article Type<BR>
-	<SELECT NAME="f_dest">
+	<SELECT NAME="f_dest" CLASS="input_select">
 	<?php
 	foreach ($articleTypes as $at) {
 		print '<OPTION VALUE="'. $at .'"';
