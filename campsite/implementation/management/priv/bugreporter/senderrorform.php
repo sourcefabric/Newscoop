@@ -12,9 +12,8 @@ $server = $g_bugReporterDefaultServer;
 
 // --- Show the form when this file is first loaded ---
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
-
-    // --- If reporter doesn't exist make one ($reporter might exist already
-    //     if this script is included) ---
+    // --- If reporter doesn't exist, make one ($reporter might exist
+    //     already if this script is an 'include') ---
     if (!isset($reporter))
         $reporter = new BugReporter ($p_number, $p_string
         , $p_file, $p_line, "Campsite", $Campsite['VERSION']);
@@ -34,10 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   // --- If this information was sent via POST, it's time to send to the server ---
 } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-    // Todo: find a way to print this menu, currently the user has  no access at this point ---
-    #echo "<html><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td>\n";
-    #require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
-    #echo "</td></tr>\n<tr><td>\n";
+    import_request_variables('p', "f_"); // todo: add 'f_' prefix here
 
     $sendWasAttempted = true;
 

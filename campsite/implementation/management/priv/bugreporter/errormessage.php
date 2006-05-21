@@ -1,6 +1,6 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
-global $g_documentRoot, $Campsite, $ADMIN_DIR;
+global $g_documentRoot, $Campsite, $ADMIN_DIR, $ADMIN;
 require_once ($g_documentRoot.'/classes/Language.php'); 
 ?>
 <br>
@@ -29,22 +29,22 @@ require_once ($g_documentRoot.'/classes/Language.php');
         "hidden" name="software" value=<?php
             echo ("'" . urlencode ($reporter->getSoftware ()) . "'");
         ?> > <input type="hidden"
-        name="f_str" value=<?php
+        name="str" value=<?php
             echo ("'" . urlencode ($reporter->getStr ()) . "'");
         ?> >
-        <input type="hidden" name="f_num" value=<?php
+        <input type="hidden" name="num" value=<?php
             echo ("'" . urlencode ($reporter->getErrorNum ()) . "'");
         ?> > <input type="hidden" name=
-        "f_time" value=<?php
+        "time" value=<?php
             echo ("'" . urlencode ($reporter->getTime ()) . "'");
         ?> >
-        <input type="hidden" name="f_file" value=<?php
+        <input type="hidden" name="file" value=<?php
             echo ("'" . urlencode ($reporter->getFile ()) . "'");
         ?> >
-        <input type="hidden" name="f_line" value=<?php
+        <input type="hidden" name="line" value=<?php
             echo ("'" . urlencode ($reporter->getLine ()) . "'");
         ?> >
-        <input type="hidden" name="f_backtrace" value=<?php
+        <input type="hidden" name="backtrace" value=<?php
             echo ("'" . urlencode ($reporter->getBacktraceString ()) . "'");
         ?> >
         <table border="0" cellspacing="0" align="left" class="table_input"
@@ -80,7 +80,7 @@ require_once ($g_documentRoot.'/classes/Language.php');
                 <tr>
                     <td align="left" nowrap>&nbsp;</td>
                     <td>
-                        <textarea cols="50" rows="4" class="input_text" name="f_description"></textarea>
+                        <textarea cols="50" rows="4" class="input_text" name="description"></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -88,7 +88,7 @@ require_once ($g_documentRoot.'/classes/Language.php');
                         putGS ("Email (optional)");
                     ?>
                     </td>
-                    <td><input type="text" class="input_text" name="f_email" value=""
+                    <td><input type="text" class="input_text" name="email" value=""
                         size="32" maxlength="255">
                     </td>
                 </tr>
