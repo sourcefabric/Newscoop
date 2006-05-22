@@ -766,8 +766,7 @@ class Article extends DatabaseObject {
 	 * 2) Users who have the ChangeArticle right can edit as long as the
 	 *    article is not published.  i.e. they can edit ALL articles that are
 	 *    new or submitted.
-	 * 3) Users with the AddArticle right can edit as long as they created
-	 *    the article, and the article is in the "New" state.
+	 * 3) The user created the article and the article is in the "New" state.
 	 *
 	 * @return boolean
 	 */

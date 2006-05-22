@@ -98,13 +98,17 @@ case "delete":
 case "toggle_front_page":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
-		$articleObj->setOnFrontPage(!$articleObj->onFrontPage());
+		if ($articleObj->userCanModify($User)) {
+			$articleObj->setOnFrontPage(!$articleObj->onFrontPage());
+		}
 	}
 	break;
 case "toggle_section_page":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
-		$articleObj->setOnSectionPage(!$articleObj->onSectionPage());
+		if ($articleObj->userCanModify($User)) {
+			$articleObj->setOnSectionPage(!$articleObj->onSectionPage());
+		}
 	}
 	break;
 case "copy":
