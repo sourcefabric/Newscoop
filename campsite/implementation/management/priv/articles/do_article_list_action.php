@@ -95,6 +95,18 @@ case "delete":
 		$articleObj->delete();
 	}
 	break;
+case "toggle_front_page":
+	foreach ($articleCodes as $articleCode) {
+		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
+		$articleObj->setOnFrontPage(!$articleObj->onFrontPage());
+	}
+	break;
+case "toggle_section_page":
+	foreach ($articleCodes as $articleCode) {
+		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
+		$articleObj->setOnSectionPage(!$articleObj->onSectionPage());
+	}
+	break;
 case "copy":
 	foreach ($groupedArticleCodes as $articleNumber => $languageArray) {
 		$languageId = camp_array_peek($languageArray);

@@ -292,14 +292,19 @@ function checkboxClick(theCheckbox, theRowNum)
 				<OPTION value="workflow_new"><?php putGS("Status: Set New"); ?></OPTION>
 				<?php } ?>
 
+				<?php if ($User->hasPermission('ChangeArticle')) { ?>
+				<OPTION value="toggle_front_page"><?php putGS("Toggle '$1'", getGS("On Front Page")); ?></OPTION>
+				<OPTION value="toggle_section_page"><?php putGS("Toggle '$1'", getGS("On Section Page")); ?></OPTION>
+				<?php } ?>
+
 				<OPTION value="schedule_publish"><?php putGS("Publish Schedule"); ?></OPTION>
 				<OPTION value="unlock"><?php putGS("Unlock"); ?></OPTION>
 
-				<?php  if ($User->hasPermission('DeleteArticle')) { ?>
+				<?php if ($User->hasPermission('DeleteArticle')) { ?>
 				<OPTION value="delete"><?php putGS("Delete"); ?></OPTION>
 				<?php } ?>
 
-				<?php  if ($User->hasPermission('AddArticle')) { ?>
+				<?php if ($User->hasPermission('AddArticle')) { ?>
 				<OPTION value="copy"><?php putGS("Duplicate"); ?></OPTION>
 				<OPTION value="copy_interactive"><?php putGS("Duplicate to another section"); ?></OPTION>
 				<?php } ?>
