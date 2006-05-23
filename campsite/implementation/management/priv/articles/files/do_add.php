@@ -64,7 +64,8 @@ if (!empty($_FILES['f_file'])) {
 
 // Check if image was added successfully
 if (!is_object($file)) {
-	camp_html_display_error("File upload failed.", $BackLink, true);
+
+    camp_html_display_error("File upload failed.", $BackLink, true);
 	exit;
 }
 

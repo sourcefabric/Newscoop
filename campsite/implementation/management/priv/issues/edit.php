@@ -73,7 +73,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	<TD style="padding-left: 20px;"><A HREF="autopublish.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" BORDER="0"></A></TD>
 	<TD><A HREF="autopublish.php?<?php p($url_args2); ?>" ><B><?php  putGS("Scheduled Publishing"); ?></B></A></TD>
 
-	<TD style="padding-left: 20px;"><A HREF="translate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" BORDER="0"></A></TD>
+	<TD style="padding-left: 20px;"><A HREF="translate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/localizer.png" BORDER="0"></A></TD>
 	<TD><A HREF="translate.php?<?php p($url_args2); ?>" ><B><?php  putGS("Translate"); ?></B></A></TD>
 
 	<TD style="padding-left: 20px;"><A HREF="do_del.php?<?php p($url_args2); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the issue $1?', htmlspecialchars($issueObj->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
