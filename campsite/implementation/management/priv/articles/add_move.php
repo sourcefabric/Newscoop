@@ -124,13 +124,15 @@ if (sizeof($allArticleTypes) == 0) {
 				
 				foreach ($allArticleTypes as $tmpType) {
 				    $tmpAT =& new ArticleType($tmpType);
-					if (count($allArticleTypes) == 1) {
-                        if ($f_article_type == "") {
-                            camp_html_select_option($tmpType, $tmpType, $tmpAT->getDisplayName());
-                        }
-					} else {
-   					    camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
-					}
+				    if (is_object($tmpAT)) {
+    					if (count($allArticleTypes) == 1) {
+                            if ($f_article_type == "") {
+                                camp_html_select_option($tmpType, $tmpType, $tmpAT->getDisplayName());
+                            }
+				    	} else {
+   					        camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
+					   }
+				    }
 				}
 				?>
 				</SELECT>
