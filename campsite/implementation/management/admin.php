@@ -4,13 +4,12 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 
 // --- In PHP 5, the error handler-default is set at E_STRICT, which
 //     captures all legacy based errors.  Unfortunately, this is
-//     completely incompatible with PHP 4.  
-if ( version_compare( phpversion(), "5.0.0", ">=" ) )
-    {
-        set_error_handler ("report_bug", E_ALL);
-    } else {
-        set_error_handler("report_bug");
-    }
+//     completely incompatible with PHP 4.
+if ( version_compare( phpversion(), "5.0.0", ">=" ) ) {
+	set_error_handler("report_bug", E_ALL);
+} else {
+    set_error_handler("report_bug");
+}
 
 /**
  * This file is basically a hack so that we could implement the
