@@ -138,7 +138,7 @@ foreach ($allIssues as $issue) {
 
 	<?php  if ($User->hasPermission('ManageIssue')) { ?>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/issues/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/localizer.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0"></A>
+		<A HREF="/<?php echo $ADMIN; ?>/issues/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0"></A>
 	</TD>
 	<?php  } ?>
 
