@@ -1386,7 +1386,42 @@ class Article extends DatabaseObject {
     /** Static Functions                                             */
     /*****************************************************************/
 
-	/**
+    /**
+     * Return true if the article of that name already exists for that publication / issue,
+     * other returns false.
+     * 
+     * @param string $p_name
+     * @param int $p_publicationId
+     * @param int $p_issueId
+     * @param int $p_sectionId
+     * 
+     * @return boolean
+     */
+    function Exists($p_name, $p_publicationId = null, $p_issueId = null, $p_sectionId = null) 
+    {
+        global $g_ado_db;
+        $queryStr = 'SELECT Number FROM Articles';
+        $whereClause = array();
+        if (!is_null($p_publicationId)) {
+            $whereClause[] = "IdPublication=$p_publicationId";
+        }
+        if (!is_null($p_issueId)) {
+			$whereClause[] = "NrIssue=$p_issueId";
+		}
+		if (!is_null($p_sectionId)) {
+			$whereClause[] = "NrSection=$p_sectionId";
+		}
+		$whereClause[] = "Name='$p_name'";
+		if (count($whereClause) > 0) {
+			$queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
+		}
+		$result = $g_ado_db->GetRow($queryStr);
+		if (count($result)) return true;
+		else return false;        
+    } // fn Exists
+
+    
+    /**
 	 * Return the number of unique (language-independant) articles
 	 * according to the given parameters.
 	 * @param int $p_publicationId
