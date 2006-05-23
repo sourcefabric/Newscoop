@@ -66,7 +66,7 @@ foreach ($Campsite["publications"] as $publication) {
 			$issueId = $issue->getIssueNumber();
 			$languageId = $issue->getLanguageId();
 			$issueIndexLink = "/$ADMIN/sections/index.php?Pub=$pubId&Issue=$issueId&Language=$languageId";
-			$menu_item_issue =& DynMenuItem::Create($issue->getName()." (".$issue->getLanguageName().")",
+			$menu_item_issue =& DynMenuItem::Create($issue->getIssueNumber().". ".$issue->getName()." (".$issue->getLanguageName().")",
 			     $issueIndexLink,
 			     array("icon" => $icon_bullet));
 			$menu_item_pub->addItem($menu_item_issue);
