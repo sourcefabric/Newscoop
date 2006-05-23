@@ -88,17 +88,18 @@ if ($publication_id > 0) {
 $articleObj =& new Article($f_article_language);
 
 if (($publication_id > 0) && ($issue_number > 0) && ($section_number > 0)) {
-    if (!Article::Exists($f_article_name, $publication_id, $issue_number, $section_number)) {
+    if (!Article::NameExists($f_article_name, $publication_id, $issue_number, $section_number)) {
         $articleObj->create($f_article_type, $f_article_name, $publication_id, $issue_number, $section_number);
     } else { 
         camp_html_display_error("Could not create duplicate article.");
     }
 } else {
-    if (!Article::Exists($f_article_name))
+    if (!Article::NameExists($f_article_name))
         $articleObj->create($f_article_type, $f_article_name);
     else    
         camp_html_display_error("Could not create duplicate article.");
 }
+
 if ($articleObj->exists()) {
 	$articleObj->setCreatorId($User->getUserId());
 	$articleObj->setIsPublic(true);

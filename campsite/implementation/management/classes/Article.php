@@ -1397,7 +1397,7 @@ class Article extends DatabaseObject {
      * 
      * @return boolean
      */
-    function Exists($p_name, $p_publicationId = null, $p_issueId = null, $p_sectionId = null) 
+    function NameExists($p_name, $p_publicationId = null, $p_issueId = null, $p_sectionId = null) 
     {
         global $g_ado_db;
         $queryStr = 'SELECT Number FROM Articles';
