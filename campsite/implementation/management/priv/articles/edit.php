@@ -3,6 +3,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php"
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_xinha.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAttachment.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -65,6 +67,7 @@ if ($today['year'] != $savedOn['year'] || $today['mon'] != $savedOn['mon'] || $t
 }
 
 $showComments = false;
+$showCommentControls = false;
 if ($f_publication_id > 0) {
 	$publicationObj =& new Publication($f_publication_id);
 	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
@@ -542,7 +545,7 @@ if ($f_edit_mode == "edit") { ?>
 				    ?>
 				    <tr>
 				        <td align="left" colspan="2" style="padding-top: 0.25em;">
-				            <?php putGS("Comments:"); ?>:
+				            <?php putGS("Comments:"); ?>
 				            <select name="f_comment_status" class="input_select" <?php if ($f_edit_mode == "view") { ?>disabled<?php } ?>>
 				            <?php
 				            if ($articleObj->commentsEnabled()) {
