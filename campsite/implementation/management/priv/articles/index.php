@@ -2,6 +2,9 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticlePublish.php');
+require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticleImage.php');
+require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticleTopic.php');
+require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/SimplePager.php');
 camp_load_language("api");
 
@@ -49,22 +52,38 @@ if (!$issueObj->exists()) {
 
 $allArticleLanguages = Article::GetAllLanguages();
 
+$sqlOptions = array("LIMIT" => array("START" => $f_article_offset,
+									 "MAX_ROWS" => $ArticlesPerPage));
+$totalArticles = Article::GetArticles($f_publication_id,
+									  $f_issue_number,
+									  $f_section_number,
+									  null,
+									  null,
+									  true);
 if ($f_language_selected) {
 	// Only show a specific language.
-	$allArticles = Article::GetArticles($f_publication_id, $f_issue_number,
-		$f_section_number, $f_language_selected, null, $f_language_id,
-		$ArticlesPerPage, $f_article_offset);
-	$totalArticles = count(Article::GetArticles($f_publication_id,
-		$f_issue_number, $f_section_number, $f_language_selected));
+	$allArticles = Article::GetArticles($f_publication_id,
+										$f_issue_number,
+										$f_section_number,
+										$f_language_selected,
+										$sqlOptions);
 	$numUniqueArticles = $totalArticles;
 	$numUniqueArticlesDisplayed = count($allArticles);
 } else {
 	// Show articles in all languages.
-	$allArticles = Article::GetArticles($f_publication_id, $f_issue_number,
-		$f_section_number, null, null, $f_language_id,
-		$ArticlesPerPage, $f_article_offset, true);
-	$totalArticles = count(Article::GetArticles($f_publication_id, $f_issue_number, $f_section_number, null));
-	$numUniqueArticles = Article::GetNumUniqueArticles($f_publication_id, $f_issue_number, $f_section_number);
+	$allArticles = Article::GetArticlesGrouped($f_publication_id,
+											   $f_issue_number,
+											   $f_section_number,
+											   null,
+											   $f_language_id,
+											   $sqlOptions);
+	$numUniqueArticles = Article::GetArticlesGrouped($f_publication_id,
+													 $f_issue_number,
+													 $f_section_number,
+													 null,
+													 null,
+													 null,
+													 true);
 	$numUniqueArticlesDisplayed = count(array_unique(DbObjectArray::GetColumn($allArticles, 'Number')));
 }
 $numArticlesThisPage = count($allArticles);
@@ -344,6 +363,7 @@ if ($numUniqueArticlesDisplayed > 0) {
 	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("On Section Page")); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Images"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Topics"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Comments"); ?></TD>
 	<TD align="center" valign="top"><?php //putGS("Preview"); ?></TD>
 	<?php  if ($User->hasPermission('AddArticle')) { ?>
 	<TD align="center" valign="top"><?php //putGS("Translate"); ?></TD>
@@ -487,8 +507,9 @@ foreach ($allArticles as $articleObj) {
 
 		<TD align="center"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p($articleObj->onFrontPage() ? "is_shown.png" : "is_hidden.png"); ?>" border="0"></TD>
 		<TD align="center"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p($articleObj->onSectionPage() ? "is_shown.png" : "is_hidden.png"); ?>" border="0"></TD>
-		<TD align="center"><?php echo count(ArticleImage::GetImagesByArticleNumber($articleObj->getArticleNumber())); ?></TD>
-		<TD align="center"><?php echo count(ArticleTopic::GetArticleTopics($articleObj->getArticleNumber())); ?></TD>
+		<TD align="center"><?php echo ArticleImage::GetImagesByArticleNumber($articleObj->getArticleNumber(), true); ?></TD>
+		<TD align="center"><?php echo ArticleTopic::GetArticleTopics($articleObj->getArticleNumber(), true); ?></TD>
+		<TD align="center"><?php echo ArticleComment::GetArticleComments($articleObj->getArticleNumber(), $articleObj->getLanguageId(), null, true); ?></TD>
 
 		<TD ALIGN="CENTER">
 			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview-16x16.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="16" height="16"></A>

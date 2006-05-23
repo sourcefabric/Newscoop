@@ -3,6 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/topics/topic_common
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Topic.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {

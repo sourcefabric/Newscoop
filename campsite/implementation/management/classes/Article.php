@@ -16,13 +16,8 @@ require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
 require_once($g_documentRoot.'/classes/ArticleData.php');
-require_once($g_documentRoot.'/classes/ArticleImage.php');
-require_once($g_documentRoot.'/classes/ArticleTopic.php');
-require_once($g_documentRoot.'/classes/ArticleIndex.php');
-require_once($g_documentRoot.'/classes/ArticleAttachment.php');
-require_once($g_documentRoot.'/classes/Language.php');
 require_once($g_documentRoot.'/classes/Log.php');
-require_once($g_documentRoot.'/classes/SystemPref.php');
+require_once($g_documentRoot.'/classes/Language.php');
 
 /**
  * @package Campsite
@@ -228,14 +223,18 @@ class Article extends DatabaseObject {
 	function copy($p_destPublicationId = 0, $p_destIssueNumber = 0, $p_destSectionNumber = 0,
 	              $p_userId = null, $p_copyTranslations = false)
 	{
+		// It is an optimization to put these here because in most cases
+		// you dont need these files.
+		global $g_documentRoot;
+		require_once($g_documentRoot.'/classes/ArticleImage.php');
+		require_once($g_documentRoot.'/classes/ArticleTopic.php');
+		require_once($g_documentRoot.'/classes/ArticleAttachment.php');
+
 		$copyArticles = array();
 		if ($p_copyTranslations) {
 		    // Get all translations for this article
-		    $copyArticles = Article::GetArticles($this->m_data['IdPublication'],
-		                                          $this->m_data['NrIssue'],
-		                                          $this->m_data['NrSection'],
-		                                          null,
-		                                          $this->m_data['Number']);
+		    $copyArticles = $this->getTranslations();
+
 		    // Remove any translations that are not requested to be translated.
 		    if (is_array($p_copyTranslations)) {
 		    	$tmpArray = array();
@@ -450,6 +449,15 @@ class Article extends DatabaseObject {
 	 */
 	function delete()
 	{
+		// It is an optimization to put these here because in most cases
+		// you dont need these files.
+		global $g_documentRoot;
+		require_once($g_documentRoot.'/classes/ArticleImage.php');
+		require_once($g_documentRoot.'/classes/ArticleTopic.php');
+		require_once($g_documentRoot.'/classes/ArticleIndex.php');
+		require_once($g_documentRoot.'/classes/ArticleAttachment.php');
+		require_once($g_documentRoot.'/classes/ArticleComment.php');
+
 		// Delete row from article type table.
 		$articleData =& new ArticleData($this->m_data['Type'],
 			$this->m_data['Number'],
@@ -471,6 +479,9 @@ class Article extends DatabaseObject {
 			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
 				$this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
 		}
+
+		// Delete Article Comments
+		ArticleComment::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
 
 		// Delete row from Articles table.
 		$deleted = parent::delete();
@@ -570,15 +581,19 @@ class Article extends DatabaseObject {
 	 * Return an array of Article objects, one for each
 	 * type of language the article is written in.
 	 *
+	 * @param int $p_articleNumber
+	 * 		Optional.  Use this if you call this function statically.
+	 *
 	 * @return array
 	 */
-	function getTranslations()
+	function getTranslations($p_articleNumber = null)
 	{
+		$articleNumber = $this->m_data['Number'];
+		if (is_null($p_articleNumber)) {
+			$articleNumber = $p_articleNumber;
+		}
 	 	$queryStr = 'SELECT '. implode(',', $this->m_columnNames).' FROM Articles '
-	 				.' WHERE IdPublication='.$this->m_data['IdPublication']
-	 				.' AND NrIssue='.$this->m_data['NrIssue']
-	 				.' AND NrSection='.$this->m_data['NrSection']
-	 				.' AND Number='.$this->m_data['Number'];
+	 				." WHERE Number=$articleNumber";
 	 	$articles = DbObjectArray::Create('Article', $queryStr);
 		return $articles;
 	} // fn getTranslations
@@ -1092,6 +1107,9 @@ class Article extends DatabaseObject {
 	 */
 	function setWorkflowStatus($p_value)
 	{
+		global $g_documentRoot;
+		require_once($g_documentRoot.'/classes/ArticleIndex.php');
+
 		$p_value = strtoupper($p_value);
 		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N')) {
 			return false;
@@ -1188,6 +1206,8 @@ class Article extends DatabaseObject {
 	 */
 	function getKeywords()
 	{
+		global $g_documentRoot;
+		require_once($g_documentRoot.'/classes/SystemPref.php');
 		$keywords = $this->m_data['Keywords'];
 		$keywordSeparator = SystemPref::Get("KeywordSeparator");
 		return str_replace(",", $keywordSeparator, $keywords);
@@ -1200,6 +1220,8 @@ class Article extends DatabaseObject {
 	 */
 	function setKeywords($p_value)
 	{
+		global $g_documentRoot;
+		require_once($g_documentRoot.'/classes/SystemPref.php');
 		$keywordsSeparator = SystemPref::Get('KeywordSeparator');
 		$p_value = str_replace($keywordsSeparator, ",", $p_value);
 		return parent::setProperty('Keywords', $p_value);
@@ -1527,45 +1549,29 @@ class Article extends DatabaseObject {
 	 * @param int $p_publicationId -
 	 *		The publication ID.
 	 *
-	 * @param int $p_issueId -
-	 *		The issue ID.
+	 * @param int $p_issueNumber -
+	 *		The issue number.
 	 *
-	 * @param int $p_sectionId -
-	 *		The section ID.
+	 * @param int $p_sectionNumber -
+	 *		The section number.
 	 *
 	 * @param int $p_languageId -
 	 *		The language ID.
 	 *
-	 * @param int $p_articleNumber -
-	 *		The article number.
+	 * @param array $p_sqlOptions
 	 *
-	 * @param int $p_preferredLanguage -
-	 *		If specified, list the articles in this language before others.
-	 *
-	 * @param int $p_numRows -
-	 *		Max number of rows to fetch.
-	 *
-	 * @param int $p_startAt -
-	 *		Index into the result array to begin at.
-	 *
-	 * @param boolean $p_numRowsIsUniqueRows -
-	 *		Whether the number of rows stated in p_rows should be
-	 *      interpreted as the number of articles to return regardless
-	 *      of how many times an article has been translated.  E.g. an
-	 *      article translated three times would be counted as one
-	 *      article if this is set to TRUE, and counted	as three
-	 *      articles if this is set to FALSE.
-	 *		Default: false
+	 * @param boolean $p_countOnly
 	 *
 	 * @return array
 	 *     Return an array of Article objects with indexes in sequential order
 	 *     starting from zero.
 	 */
-	function GetArticles($p_publicationId = null, $p_issueId = null,
-						 $p_sectionId = null, $p_languageId = null,
-						 $p_articleNumber = null, $p_preferredLanguage = null,
-						 $p_numRows = null, $p_startAt = '',
-						 $p_numRowsIsUniqueRows = false)
+	function GetArticles($p_publicationId = null,
+						 $p_issueNumber = null,
+						 $p_sectionNumber = null,
+						 $p_languageId = null,
+						 $p_sqlOptions = null,
+						 $p_countOnly = false)
     {
 		global $g_ado_db;
 
@@ -1573,34 +1579,133 @@ class Article extends DatabaseObject {
 		if (!is_null($p_publicationId)) {
 			$whereClause[] = "IdPublication=$p_publicationId";
 		}
-		if (!is_null($p_issueId)) {
-			$whereClause[] = "NrIssue=$p_issueId";
+		if (!is_null($p_issueNumber)) {
+			$whereClause[] = "NrIssue=$p_issueNumber";
 		}
-		if (!is_null($p_sectionId)) {
-			$whereClause[] = "NrSection=$p_sectionId";
+		if (!is_null($p_sectionNumber)) {
+			$whereClause[] = "NrSection=$p_sectionNumber";
 		}
 		if (!is_null($p_languageId)) {
 			$whereClause[] = "IdLanguage=$p_languageId";
 		}
-		if (!is_null($p_articleNumber)) {
-			$whereClause[] = "Number=$p_articleNumber";
+
+		$selectStr = "*";
+		if ($p_countOnly) {
+			$selectStr = "COUNT(*)";
+		}
+		$queryStr = "SELECT $selectStr FROM Articles";
+
+		// Add the WHERE clause.
+		if ((count($whereClause) > 0)) {
+			$queryStr .= ' WHERE (' . implode(' AND ', $whereClause) .')';
 		}
 
-		if ($p_numRowsIsUniqueRows) {
-			$queryStr1 = 'SELECT DISTINCT(Number) FROM Articles ';
-			if (count($whereClause) > 0) {
-				$queryStr1 .= ' WHERE '. implode(' AND ', $whereClause);
+		if ($p_countOnly) {
+			$count = $g_ado_db->GetOne($queryStr);
+			return $count;
+		} else {
+			if (is_null($p_sqlOptions)) {
+				$p_sqlOptions = array();
 			}
-			if ($p_startAt !== '') {
-				$p_startAt .= ',';
+			if (!isset($p_sqlOptions['ORDER BY'])) {
+				$p_sqlOptions['ORDER BY'] = array("ArticleOrder" => "ASC",
+												  "Number" => "DESC");
 			}
-			$queryStr1 .= ' ORDER BY ArticleOrder ASC, Number DESC ';
-			if (!is_null($p_numRows)) {
-				$queryStr1 .= ' LIMIT '.$p_startAt.$p_numRows;
-			}
-			$uniqueArticleNumbers = $g_ado_db->GetCol($queryStr1);
+			$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+			$articles = DbObjectArray::Create('Article', $queryStr);
+			return $articles;
+		}
+	} // fn GetArticles
+
+
+	/**
+	 * Get a list of articles.  You can be as specific or as general as you
+	 * like with the parameters: e.g. specifying only p_publication will get
+	 * you all the articles in a particular publication.  Specifying all
+	 * parameters will get you all the articles in a particular section with
+	 * the given language.
+	 *
+	 * This function differs from GetArticles in that any LIMIT set
+	 * in $p_sqlOptions will be interpreted as the number of articles to
+	 * return regardless of how many times an article has been translated.
+	 * E.g. an article translated three times would be counted as one
+	 * article, but counted as three articles in GetArticles().
+	 *
+	 * @param int $p_publicationId -
+	 *		The publication ID.
+	 *
+	 * @param int $p_issueNumber -
+	 *		The issue number.
+	 *
+	 * @param int $p_sectionNumber -
+	 *		The section number.
+	 *
+	 * @param int $p_languageId -
+	 *		The language ID.
+	 *
+	 * @param int $p_preferredLanguage -
+	 *		If specified, list the articles in this language before others.
+	 *
+	 * @param array $p_sqlOptions
+	 *
+	 * @param boolean $p_countOnly
+	 * 		Whether to run just the number of articles that match the
+	 * 		search criteria.
+	 *
+	 * @return array
+	 *     Return an array of Article objects.
+	 */
+	function GetArticlesGrouped($p_publicationId = null,
+							    $p_issueNumber = null,
+						        $p_sectionNumber = null,
+						        $p_languageId = null,
+						        $p_preferredLanguage = null,
+						        $p_sqlOptions = null,
+						        $p_countOnly = false)
+    {
+		global $g_ado_db;
+
+		// Constraints
+		$whereClause = array();
+		if (!is_null($p_publicationId)) {
+			$whereClause[] = "IdPublication=$p_publicationId";
+		}
+		if (!is_null($p_issueNumber)) {
+			$whereClause[] = "NrIssue=$p_issueNumber";
+		}
+		if (!is_null($p_sectionNumber)) {
+			$whereClause[] = "NrSection=$p_sectionNumber";
+		}
+		if (!is_null($p_languageId)) {
+			$whereClause[] = "IdLanguage=$p_languageId";
 		}
 
+		$selectStr = "DISTINCT(Number)";
+		if ($p_countOnly) {
+			$selectStr = "COUNT(DISTINCT(Number))";
+		}
+		// Get the list of unique article numbers
+		$queryStr1 = "SELECT $selectStr FROM Articles ";
+		if (count($whereClause) > 0) {
+			$queryStr1 .= ' WHERE '. implode(' AND ', $whereClause);
+		}
+
+		if ($p_countOnly) {
+			$count = $g_ado_db->GetOne($queryStr1);
+			return $count;
+		}
+
+		if (is_null($p_sqlOptions)) {
+			$p_sqlOptions = array();
+		}
+		if (!isset($p_sqlOptions['ORDER BY'])) {
+			$p_sqlOptions['ORDER BY'] = array("ArticleOrder" => "ASC",
+											  "Number"=> "DESC");
+		}
+		$queryStr1 = DatabaseObject::ProcessOptions($queryStr1, $p_sqlOptions);
+		$uniqueArticleNumbers = $g_ado_db->GetCol($queryStr1);
+
+		// Get the articles
 		$queryStr2 = 'SELECT *';
 		// This causes the preferred language to be listed first.
 		if (!is_null($p_preferredLanguage)) {
@@ -1608,17 +1713,9 @@ class Article extends DatabaseObject {
 		}
 		$queryStr2 .= ' FROM Articles';
 
-		// If selecting unique rows, specify those rows in the
-		// WHERE clause.
 		$uniqueRowsClause = '';
-		if ($p_numRowsIsUniqueRows) {
-			$tmpClause = array();
-			foreach ($uniqueArticleNumbers as $uniqueNumber) {
-				$tmpClause[] = "Number = $uniqueNumber";
-			}
-			if (count($tmpClause) > 0) {
-				$uniqueRowsClause = '(' .implode(' OR ', $tmpClause).')';
-			}
+		if (count($uniqueArticleNumbers) > 0) {
+			$uniqueRowsClause = '(Number=' .implode(' OR Number=', $uniqueArticleNumbers).')';
 		}
 
 		// Add the WHERE clause.
@@ -1636,26 +1733,15 @@ class Article extends DatabaseObject {
 		}
 
 		// ORDER BY clause
-		$orderBy = ' ORDER BY ArticleOrder ASC, Number DESC ';
 		if (!is_null($p_preferredLanguage)) {
-			$orderBy .= ', LanguageOrder ASC, IdLanguage ASC';
+			$p_sqlOptions['ORDER BY']['LanguageOrder'] = "ASC";
+			$p_sqlOptions['ORDER BY']['IdLanguage'] = "ASC";
 		}
-		$queryStr2 .= $orderBy;
-
-		// If not using the unique rows option,
-		// use the limit clause to set the number of rows returned.
-		if (!$p_numRowsIsUniqueRows) {
-			if ($p_startAt !== '') {
-				$p_startAt .= ',';
-			}
-			if (!is_null($p_numRows)) {
-				$queryStr2 .= ' LIMIT '.$p_startAt.$p_numRows;
-			}
-		}
-
+		unset($p_sqlOptions['LIMIT']);
+		$queryStr2 = DatabaseObject::ProcessOptions($queryStr2, $p_sqlOptions);
 		$articles = DbObjectArray::Create('Article', $queryStr2);
 		return $articles;
-	} // fn GetArticles
+	} // fn GetUniqueArticles
 
 
 	/**

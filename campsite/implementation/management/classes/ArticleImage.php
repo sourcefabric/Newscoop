@@ -126,33 +126,46 @@ class ArticleImage extends DatabaseObject {
 
 	/**
 	 * Get all the images that belong to this article.
+	 *
 	 * @param int $p_articleNumber
-	 * @return array
+	 * 		The specific article you want the images from.
+	 * @param boolean $p_countOnly
+	 * 		Only return the number of images in the article.
+	 * @return mixed
+	 * 		Return either an array or an int.
 	 */
-	function GetImagesByArticleNumber($p_articleNumber)
+	function GetImagesByArticleNumber($p_articleNumber, $p_countOnly = false)
 	{
 		global $g_ado_db;
-		$tmpImage =& new Image();
-		$columnNames = implode(',', $tmpImage->getColumnNames());
 
-		$queryStr = 'SELECT '.$columnNames
-					.', ArticleImages.Number, ArticleImages.NrArticle, ArticleImages.IdImage'
+		if ($p_countOnly) {
+			$selectStr = "COUNT(*)";
+		} else {
+			$tmpImage =& new Image();
+			$selectStr = implode(',', $tmpImage->getColumnNames());
+			$selectStr .= ', ArticleImages.Number, ArticleImages.NrArticle, ArticleImages.IdImage';
+		}
+		$queryStr = 'SELECT '.$selectStr
 					.' FROM Images, ArticleImages'
 					.' WHERE ArticleImages.NrArticle='.$p_articleNumber
 					.' AND ArticleImages.IdImage=Images.Id'
 					.' ORDER BY ArticleImages.Number';
-		$rows = $g_ado_db->GetAll($queryStr);
-		$returnArray = array();
-		if (is_array($rows)) {
-			foreach ($rows as $row) {
-				$tmpArticleImage =& new ArticleImage();
-				$tmpArticleImage->fetch($row);
-				$tmpArticleImage->m_image =& new Image();
-				$tmpArticleImage->m_image->fetch($row);
-				$returnArray[] =& $tmpArticleImage;
+		if ($p_countOnly) {
+			return $g_ado_db->GetOne($queryStr);
+		} else {
+			$rows = $g_ado_db->GetAll($queryStr);
+			$returnArray = array();
+			if (is_array($rows)) {
+				foreach ($rows as $row) {
+					$tmpArticleImage =& new ArticleImage();
+					$tmpArticleImage->fetch($row);
+					$tmpArticleImage->m_image =& new Image();
+					$tmpArticleImage->m_image->fetch($row);
+					$returnArray[] =& $tmpArticleImage;
+				}
 			}
+			return $returnArray;
 		}
-		return $returnArray;
 	} // fn GetImagesByArticleNumber
 
 
@@ -238,7 +251,7 @@ class ArticleImage extends DatabaseObject {
 	function RemoveImageTagsFromArticleText($p_articleNumber, $p_templateId)
 	{
 		// Get all the articles
-		$articles = Article::GetArticles(null, null, null, null, $p_articleNumber);
+		$articles = Article::getTranslations($p_articleNumber);
 
 		// The REGEX
 		$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";

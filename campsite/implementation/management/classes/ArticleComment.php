@@ -1,5 +1,4 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
@@ -49,6 +48,33 @@ class ArticleComment
 
 
     /**
+     * This function should be called whenever an article is deleted.
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     * @return void
+     */
+    function OnArticleDelete($p_articleNumber, $p_languageId)
+    {
+    	global $g_ado_db;
+    	if (!is_numeric($p_articleNumber) || !is_numeric($p_languageId)) {
+    		return;
+    	}
+
+    	$threadId = ArticleComment::GetCommentThreadId($p_articleNumber, $p_languageId);
+		// Delete all comments for this article
+		$threadHead = new Phorum_message($threadId);
+		$threadHead->delete(PHORUM_DELETE_TREE);
+
+		// Delete all links
+		$sql = "DELETE FROM ArticleComments "
+			  ." WHERE fk_article_number=$p_articleNumber"
+			  ." AND fk_language_id=$p_languageId";
+		$g_ado_db->Execute($sql);
+    } // fn OnArticleDelete
+
+
+    /**
      * Get all comments associated with the given article.
      *
      * @param int $p_articleNumber
@@ -66,7 +92,11 @@ class ArticleComment
         $threadId = ArticleComment::GetCommentThreadId($p_articleNumber,
                                                        $p_languageId);
         if (!$threadId) {
-            return null;
+        	if ($p_countOnly) {
+        		return 0;
+        	} else {
+            	return null;
+        	}
         }
 
         // Are we counting or getting the comments?
@@ -89,8 +119,13 @@ class ArticleComment
                     ." WHERE ".$PHORUM['message_table'].".thread=$threadId"
                     . $whereClause
                     ." ORDER BY message_id";
-        $messages = DbObjectArray::Create("Phorum_message", $queryStr);
-        return $messages;
+        if ($p_countOnly) {
+        	$count = $g_ado_db->GetOne($queryStr);
+       		return $count;
+        } else {
+	        $messages = DbObjectArray::Create("Phorum_message", $queryStr);
+	        return $messages;
+        }
     } // fn GetArticleComments
 
 

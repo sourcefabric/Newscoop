@@ -115,52 +115,29 @@ class ArticleTopic extends DatabaseObject {
 	 *
 	 * @param int $p_articleNumber
 	 *		Retrieve the topics for this article.
+	 * @param boolean $p_countOnly
+	 * 		Only get the number of topics attached to the article.
 	 *
-	 * @return array
+	 * @return mixed
+	 * 		Return an array or an int.
 	 */
-	function GetArticleTopics($p_articleNumber)
+	function GetArticleTopics($p_articleNumber, $p_countOnly = false)
 	{
 		global $g_ado_db;
-    	$queryStr = "SELECT DISTINCT(Topics.Id) FROM ArticleTopics, Topics "
+		$selectStr = "*";
+		if ($p_countOnly) {
+			$selectStr = "COUNT(*)";
+		}
+    	$queryStr = "SELECT $selectStr FROM ArticleTopics, Topics "
     				." WHERE ArticleTopics.NrArticle = $p_articleNumber"
     				.' AND ArticleTopics.TopicId = Topics.Id '
 					.' ORDER BY Topics.Id ';
-		$topicIds = array();
-		$rows = $g_ado_db->GetAll($queryStr);
-		if ($rows && is_array($rows)) {
-			foreach ($rows as $row) {
-				$topicIds[] = $row['Id'];
-			}
+		if ($p_countOnly) {
+			return $g_ado_db->GetOne($queryStr);
+		} else {
+			$topics = DbObjectArray::Create("Topic", $queryStr);
+			return $topics;
 		}
-
-		// read topics from article type fields
-/*		$queryStr = "SELECT Type FROM Articles WHERE Number = $p_articleNumber";
-		$articleType = $g_ado_db->GetOne($queryStr);
-		$queryStr = "SELECT FieldName FROM TopicFields WHERE ArticleType = '$articleType'";
-		$rows2 = $g_ado_db->GetAll($queryStr);
-		if (is_array($rows2) && sizeof($rows2) > 0) {
-			$columns = '';
-			foreach ($rows2 as $row2) {
-				$columns .= ", F" . $row2['FieldName'];
-			}
-			$columns = substr($columns, 2);
-			$queryStr = "SELECT $columns FROM X$articleType WHERE NrArticle = $p_articleNumber";
-			$rows2 = $g_ado_db->GetAll($queryStr);
-			if (is_array($rows2)) {
-				foreach ($rows2 as $row2) {
-					foreach ($row2 as $fieldName=>$value) {
-						$topicIds[] = $value;
-					}
-				}
-			}
-		}
-		$topicIds = array_unique($topicIds);
-*/
-		$topics = array();
-		foreach ($topicIds as $topicId) {
-			$topics[] =& new Topic($topicId);
-		}
-		return $topics;
 	} // fn GetArticleTopics
 
 
