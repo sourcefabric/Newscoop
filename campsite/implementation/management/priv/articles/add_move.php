@@ -121,9 +121,16 @@ if (sizeof($allArticleTypes) == 0) {
 				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
 				<option></option>
 				<?php
+				
 				foreach ($allArticleTypes as $tmpType) {
-					$tmpAT =& new ArticleType($tmpType);
-					camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
+				    $tmpAT =& new ArticleType($tmpType);
+					if (count($allArticleTypes) == 1) {
+                        if ($f_article_type == "") {
+                            camp_html_select_option($tmpType, $tmpType, $tmpAT->getDisplayName());
+                        }
+					} else {
+   					    camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
+					}
 				}
 				?>
 				</SELECT>
