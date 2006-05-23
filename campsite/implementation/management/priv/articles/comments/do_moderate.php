@@ -54,6 +54,6 @@ foreach ($_REQUEST as $name => $value) {
 //        $comment->setBody($commentStr);
     }
 }
-header("Location: ".camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#comments");
+header("Location: ".camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
 
 ?>

@@ -78,6 +78,6 @@ if ($phorumUser->exists()) {
     ArticleComment::Link($f_article_number, $f_language_id, $commentObj->getMessageId(), $isFirstMessage);
 }
 
-header("Location: ".camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
+header("Location: ".camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
 exit;
 ?>

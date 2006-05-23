@@ -15,7 +15,7 @@ function onCommentAction(p_type, p_commentId)
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 <tr>
-    <td style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid black;">
+    <td style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #8EAED7;"">
         &nbsp;<b><?php putGS("Comments"); ?></b>
    	</td>
 <tr>
@@ -90,10 +90,12 @@ if (count($comments) <= 0) {
         <?php } // if $User->hasPermission("CommentModerate") ?>
 
         <tr>
-            <td class="<?php p($css); ?>" style="padding-left: 15px; padding-right: 20px; padding-bottom: 5px; border-bottom: 2px solid #8EAED7;" id="comment_<?php p($comment->getMessageId()); ?>">
+            <td class="<?php p($css); ?>" style="padding-left: 15px; padding-right: 20px; padding-bottom: 5px; border-bottom: 1px solid #8EAED7;" id="comment_<?php p($comment->getMessageId()); ?>">
                 <table cellspacing="0" cellpadding="3" border="0">
                 <tr>
-                    <td align="right" valign="top" nowrap><?php putGS("From:"); ?></td>
+                    <td align="right" valign="top" nowrap>
+ 						<?php putGS("From:"); ?>
+                    </td>
                     <td><?php p(htmlspecialchars($comment->getAuthor())); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
                 </tr>
 
@@ -124,6 +126,7 @@ if (count($comments) <= 0) {
 // show the "add comment" form
 if (!$articleObj->commentsLocked()) {
 ?>
+<a name="add_comment" />
 <form action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
