@@ -125,16 +125,23 @@ if (sizeof($allArticleTypes) == 0) {
 		<TR>
 			<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 			<TD>
-				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
-				<option></option>
-				<?php
-				foreach ($allArticleTypes as $tmpType) {
-					$tmpAT =& new ArticleType($tmpType);
-					camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
-				}
-				?>
-				</SELECT>
-			</TD>
+			    <?php if (count($allArticleTypes) == 1) { ?>
+			        <INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php echo $allArticleTypes[0]; ?>">
+                    <?php 
+                        $tmpAT =& new ArticleType($allArticleTypes[0]);
+                        echo $tmpAT->getDisplayName();
+			    } else { ?>			    
+    				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
+	   		      	<option></option>
+		  		    <?php
+    				foreach ($allArticleTypes as $tmpType) {
+	       			    $tmpAT =& new ArticleType($tmpType);
+			     	    camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
+				    }
+					?>
+				    </SELECT>
+               <?php } ?>
+			</TD>			
 		</TR>
 		<TR>
 			<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>

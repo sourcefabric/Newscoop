@@ -51,6 +51,11 @@ if (!Input::IsValid()) {
 	exit;
 }
 
+$articleType =& new ArticleType($f_article_type);
+if (!$articleType->exists()) {
+    camp_html_display_error(getGS('Invalid type: $1', $f_article_type));
+}
+
 $publication_id = ($f_destination_publication_id > 0) ? $f_destination_publication_id : $f_publication_id;
 $issue_number = ($f_destination_issue_number > 0) ? $f_destination_issue_number : $f_issue_number;
 $section_number = ($f_destination_section_number > 0) ? $f_destination_section_number : $f_section_number;
