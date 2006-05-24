@@ -375,13 +375,13 @@ class Image extends DatabaseObject {
 	{
 		global $Campsite;
 		if (!is_array($p_fileVar)) {
-			return null;
+			return "Invalid arguments given to Image::OnImageUpload()";
 		}
 
 		// Verify its a valid image file.
 		$imageInfo = @getimagesize($p_fileVar['tmp_name']);
 		if ($imageInfo === false) {
-			return null;
+			return "The file is not recognized as an image.";
 		}
 		$extension = Image::__ImageTypeToExtension($imageInfo[2]);
 
@@ -428,14 +428,14 @@ class Image extends DatabaseObject {
 	        	if (is_null($p_id)) {
 	        		$image->delete();
 	        	}
-	    		return null;
+	    		return "Could not copy image file to directory ".dirname($target);
 	    	}
 	    } else {
 	        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
 	        	if (is_null($p_id)) {
 	        		$image->delete();
 	        	}
-	            return null;
+	            return "Could not copy image file to directory ".dirname($target);
 	        }
 	    }
 		chmod($target, 0644);
@@ -447,7 +447,9 @@ class Image extends DatabaseObject {
             }
         }
         $image->commit();
-		if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		if (function_exists("camp_load_language")) {
+			camp_load_language("api");
+		}
 		$logtext = getGS('The image $1 has been added.',
 						$image->m_data['Description']." (".$image->m_data['Id'].")");
 		Log::Message($logtext, null, 41);
@@ -473,7 +475,8 @@ class Image extends DatabaseObject {
 	 * @param int $p_id
 	 *		If you are updating an image, specify its ID here.
 	 *
-	 * @return void
+	 * @return mixed
+	 * 		Return an Image object on success, return an error string otherwise.
 	 */
 	function OnAddRemoteImage($p_url, $p_attributes, $p_userId = null, $p_id = null)
 	{
@@ -482,7 +485,7 @@ class Image extends DatabaseObject {
 	    $client->get($p_url);
 	    $response = $client->currentResponse();
 	    if ($response['code'] != 200) {
-	    	return;
+	    	return getGS("Unable to fetch image from remote server.");
 	    }
 	    foreach ($response['headers'] as $headerName => $value) {
 	    	if (strtolower($headerName) == "content-type") {
