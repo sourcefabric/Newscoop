@@ -22,6 +22,7 @@ require_once ($g_documentRoot.'/classes/Language.php');
         <!-- <form name="dialog" method="POST"
         action="http://test.n-space.org/mocktrac/echo.php"
         onsubmit="return validateForm(this, 0, 1, 0, 1, 8);"> -->
+        <input type="hidden" name="isPostFromBugreporter" value="1">
         <input type="hidden" name="id" value=<?php 
             echo ( "'" . $reporter->getId() . "'"); 
         ?> >

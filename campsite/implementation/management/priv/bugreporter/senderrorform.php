@@ -10,30 +10,11 @@ global $Campsite, $ADMIN_DIR, $g_documentRoot, $g_bugReporterDefaultServer;
 $server = $g_bugReporterDefaultServer;
 // $server = "http://localhost/trac/autotrac";
 
-// --- Show the form when this file is first loaded ---
-if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    // --- If reporter doesn't exist, make one ($reporter might exist
-    //     already if this script is an 'include') ---
-    if (!isset($reporter))
-        $reporter = new BugReporter ($p_number, $p_string
-        , $p_file, $p_line, "Campsite", $Campsite['VERSION']);
+import_request_variables('p', "f_"); 
 
-    $reporter->setServer ($server);
-
-    // --- Ping AutoTrac Server ---
-    $wasPinged = $reporter->pingServer();
-
-    // --- Print contents of error-page.html ---
-    if ($wasPinged) {
-        include ($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/errormessage.php");
-    } else {
-        include ($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/emailus.php");
-    }
-
-  // --- If this information was sent via POST, it's time to send to the server ---
-} else if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-    import_request_variables('p', "f_"); // todo: add 'f_' prefix here
+// --- If this information is a POST from errormessage.php, send it to
+//     the server ---
+if ($_SERVER['REQUEST_METHOD'] == "POST" && $f_isPostFromBugreporter == 1) {
 
     $sendWasAttempted = true;
 
@@ -127,5 +108,26 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         include ($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/thankyou.php");
     } else include ($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/emailus.php");
 }
+
+// --- Show the form  ---
+else {
+    // --- If reporter doesn't exist, make one ($reporter might exist
+    //     already if this script is an 'include') ---
+    if (!isset($reporter))
+        $reporter = new BugReporter ($p_number, $p_string
+        , $p_file, $p_line, "Campsite", $Campsite['VERSION']);
+
+    $reporter->setServer ($server);
+
+    // --- Ping AutoTrac Server ---
+    $wasPinged = $reporter->pingServer();
+
+    // --- Print contents of error-page.html ---
+    if ($wasPinged) {
+        include ($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/errormessage.php");
+    } else {
+        include ($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/emailus.php");
+    }
+} 
 
 ?>

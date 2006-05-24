@@ -6,7 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 //     captures all legacy based errors.  Unfortunately, this is
 //     completely incompatible with PHP 4.
 if ( version_compare( phpversion(), "5.0.0", ">=" ) ) {
-	//set_error_handler("report_bug", E_ALL);
+    set_error_handler("report_bug", E_ALL);
 } else {
     set_error_handler("report_bug");
 }
@@ -46,6 +46,8 @@ $extension = '';
 if (($extension_start = strrpos($call_script, '.')) !== false) {
 	$extension = strtolower(substr($call_script, $extension_start));
 }
+
+// $aa = $Campsite[HTML_DIR];
 
 if (($extension == '.php') || ($extension == '')) {
 	header("Content-type: text/html; charset=UTF-8");
