@@ -113,6 +113,13 @@ if (count($comments) <= 0) {
                     <td align="right" valign="top" nowrap><?php putGS("Comment:"); ?></td>
                     <td><?php p(htmlspecialchars($comment->getBody())); ?></td>
                 </tr>
+
+                <?php if ($comment->getStatus() == PHORUM_STATUS_APPROVED) { ?>
+                <tr>
+                    <td colspan="2" align="left" valign="top" nowrap><a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "comments/reply.php", "", "&f_comment_id=".$comment->getMessageId()); ?>"><?php putGS("Reply to this comment"); ?></a></td>
+                </tr>
+                <?php } ?>
+
                 </table>
             </td>
         </tr>
@@ -133,8 +140,8 @@ if (!$articleObj->commentsLocked()) {
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 <table class="table_input">
 <tr>
-    <td colspan="2">
-        <b><?php putGS("Add comment:"); ?></b>
+    <td colspan="2" style="padding-left: 5px;">
+        <b><?php putGS("Post a comment"); ?></b>
    		<HR NOSHADE SIZE="1" COLOR="BLACK">
     </td>
 </tr>

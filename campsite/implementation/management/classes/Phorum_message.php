@@ -25,7 +25,8 @@ class Phorum_message extends DatabaseObject {
 		"datestamp",
 		"meta",
 		"viewcount",
-		"closed");
+		"closed",
+		"thread_depth");
 
 	/**
 	 * A Phorum_message is a message posted to a forum.
@@ -49,13 +50,29 @@ class Phorum_message extends DatabaseObject {
 	 * Create a message.
 	 *
 	 * @param int $p_forumId
+	 * 		The forum ID that this message belongs to.
+	 *
 	 * @param string $p_subject
+	 * 		The subject of the message.
+	 *
 	 * @param string $p_body
+	 * 		The body of the message
+	 *
 	 * @param int $p_threadId
+	 * 		Set this to zero if it is the first message in the thread
+	 *
 	 * @param int $p_parentId
+	 * 		The message you are replying to.
+	 *
 	 * @param string $p_author
+	 * 		Human readable string for the name of the author.
+	 *
 	 * @param string $p_email
+	 * 		Author's email.
+	 *
 	 * @param int $p_userId
+	 * 		User ID that is stored in the phorum_users table.
+	 *
 	 * @return boolean
 	 */
 	function create($p_forumId, $p_subject ='', $p_body = '',
@@ -139,6 +156,9 @@ class Phorum_message extends DatabaseObject {
 	    $message = phorum_db_get_message($message["message_id"], "message_id", true);
 		$this->m_data = $message;
 
+		// Set the thread depth
+		$this->__initThreadDepth();
+
 		$this->__updateThreadInfo();
 
         if (isset($PHORUM['user']['user_id'])) {
@@ -153,8 +173,7 @@ class Phorum_message extends DatabaseObject {
         }
 
         // Actions for messages which are approved.
-	    if ($message["status"] > 0)
-	    {
+	    if ($message["status"] > 0) {
 	        // Update forum statistics,
 	        // ??? Note: phorum_db_update_forum_stats requires global parameter-passing.
 	        $PHORUM['forum_id'] = $p_forumId;
@@ -199,7 +218,7 @@ class Phorum_message extends DatabaseObject {
 	    		." WHERE message_id = ".$this->m_data["message_id"];
 	    $rec = $g_ado_db->GetRow($sql);
 
-	    if ($p_mode == PHORUM_DELETE_TREE){
+	    if ($p_mode == PHORUM_DELETE_TREE) {
 	        $mids = phorum_db_get_messagetree($this->m_data['message_id'], $rec['forum_id']);
 	    } else {
 	        $mids = $this->m_data['message_id'];
@@ -212,9 +231,10 @@ class Phorum_message extends DatabaseObject {
 	    $g_ado_db->Execute($sql);
 
 	    $thread = $rec['thread'];
-	    if($thread == $this->m_data['message_id'] && $p_mode == PHORUM_DELETE_TREE){
+	    if ( ($thread == $this->m_data['message_id'])
+	    	 && ($p_mode == PHORUM_DELETE_TREE) ) {
 	        $threadset = 1;
-	    }else{
+	    } else {
 	        $threadset = 0;
 	    }
 
@@ -227,7 +247,7 @@ class Phorum_message extends DatabaseObject {
 	        		." WHERE forum_id=$rec[forum_id] "
 	        		." AND parent_id=$rec[message_id]";
 	        $g_ado_db->Execute($sql);
-	    }else{
+	    } else {
 	        $count = count(explode(",", $mids));
 	    }
 
@@ -579,6 +599,43 @@ class Phorum_message extends DatabaseObject {
 	{
 		return $this->m_data['closed'];
 	} // fn isClosed
+
+
+	/**
+	 * Initialize the thread depth column.  See getThreadDepth() for more
+	 * info.
+	 *
+	 * @return void
+	 */
+	function __initThreadDepth()
+	{
+		if ( ($this->m_data['message_id'] == $this->m_data['thread'])
+			|| ($this->m_data['parent_id'] <= 0)) {
+			$count = 0;
+		} else {
+			// Walk the up the tree
+			$count = 1;
+			$tmpMsg =& new Phorum_message($this->m_data['parent_id']);
+			while ($tmpMsg->m_data['message_id'] != $tmpMsg->m_data['thread']) {
+				$count++;
+				$tmpMsg =& new Phorum_message($tmpMsg->m_data['parent_id']);
+			}
+		}
+		$this->setProperty('thread_depth', $count);
+	} // fn __initThreadDepth
+
+
+	/**
+	 * Get the nesting level of this comment.  The first message in a
+	 * thread has depth 0, a reply to the first message has depth 1.
+	 * A reply to the reply has depth 2, etc.
+	 *
+	 * @return int
+	 */
+	function getThreadDepth()
+	{
+		return $this->m_data['thread_depth'];
+	} // fn getThreadDepth
 
 
 	/**
