@@ -40,7 +40,7 @@ function check_basic_access($p_request)
 				.' WHERE Id='.$p_request['LoginUserId']
 				." AND Reader='N'";
 	$row = $g_ado_db->GetRow($queryStr);
-	if ($row) {
+	if ($row && $row['KeyId'] == $p_request['LoginUserKey']) {
 		// User exists.
 		$access = true;
 		$user =& new User();
