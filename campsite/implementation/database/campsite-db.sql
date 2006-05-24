@@ -1035,6 +1035,10 @@ CREATE TABLE `phorum_messages` (
   KEY `user_id` (`user_id`)
 ) TYPE=MyISAM;
 
+-- Campsite custom phorum addition:
+-- How many levels down in a thread is the comment?
+ALTER TABLE `phorum_messages` ADD `thread_depth` TINYINT UNSIGNED DEFAULT '0' NOT NULL ;
+
 -- --------------------------------------------------------
 
 --
