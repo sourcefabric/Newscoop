@@ -317,26 +317,8 @@ bool CContext::ArticleCommentEnabled() const
 {
 	if (!m_bArticleCommentEnabledValid)
 	{
-		string coArticleType;
-		if (article_nr > 0)
-		{
-			stringstream buf;
-			buf << "select Type from Articles where Number = '" << article_nr
-					<< "' and IdLanguage = '" << language_id << "'";
-			SQLQuery(MYSQLConnection(), buf.str().c_str());
-			MYSQL_RES *res = mysql_store_result(MYSQLConnection());
-			if (res == NULL)
-			{
-				return false;
-			}
-			MYSQL_ROW row = mysql_fetch_row(res);
-			if (row == NULL)
-			{
-				return false;
-			}
-			coArticleType = row[0];
-		}
-		m_bArticleCommentEnabled = CArticleComment::ArticleCommentsEnabled(publication_id, coArticleType);
+		m_bArticleCommentEnabled = CArticleComment::ArticleCommentsEnabled(publication_id,
+				article_nr, language_id);
 		m_bArticleCommentEnabledValid = true;
 	}
 	return m_bArticleCommentEnabled;

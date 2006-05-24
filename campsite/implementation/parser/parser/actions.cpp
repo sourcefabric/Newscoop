@@ -1823,6 +1823,18 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		{
 			fs << encodeHTML(c.ArticleComment()->getBody(), c.EncodeHTML());
 		}
+		else if (case_comp(attr, "ReaderEMailPreview") == 0)
+		{
+			fs << encodeHTML(c.URL()->getValue("CommentReaderEMail"), c.EncodeHTML());
+		}
+		else if (case_comp(attr, "SubjectPreview") == 0)
+		{
+			fs << encodeHTML(c.URL()->getValue("CommentSubject"), c.EncodeHTML());
+		}
+		else if (case_comp(attr, "ContentPreview") == 0)
+		{
+			fs << encodeHTML(c.URL()->getValue("CommentContent"), c.EncodeHTML());
+		}
 		else if (case_comp(attr, "Count") == 0)
 		{
 			fs << CArticleComment::ArticleCommentCount(c.Article(), c.Language());
@@ -2301,6 +2313,8 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 			run = c.SubmitArticleCommentEvent() ? 0 : 1;
 		if (case_comp(param.attribute(), "SubmitError") == 0 && c.SubmitArticleCommentEvent())
 			run = c.SubmitArticleCommentResult() != 0 ? 0 : 1;
+		if (case_comp(param.attribute(), "Preview") == 0)
+			run = c.URL()->getValue("previewComment") != "" ? 0 : 1;
 		if (case_comp(param.attribute(), "Rejected") == 0 && c.SubmitArticleCommentEvent())
 			run = c.SubmitArticleCommentResult() == ACERR_REJECTED ? 0 : 1;
 		if (case_comp(param.attribute(), "Moderated") == 0)
@@ -3452,9 +3466,23 @@ int CActArticleCommentForm::takeAction(CContext& c, sockstream& fs)
 		return ERR_INVALID_FIELD;
 	}
 	CContext lc = c;
-	fs << "<form name=\"articleComment\" action=\"" << pcoURL->getURIPath() << "\" method=\"POST\">\n"
-			<< "<input type=\"hidden\" name=" << P_TEMPLATE_ID << " value=\"" << m_nTemplateId
-			<< "\">" << endl;
+	fs << "<form name=\"articleComment\" action=\""
+			<< encodeHTML(c.URL()->getURIPath(), c.EncodeHTML())
+			<< "\" method=\"POST\">\n<input type=\"hidden\" name=\""
+			<< P_TEMPLATE_ID << "\" value=\"" << m_nTemplateId << "\">\n";
+	if (c.URL()->getURLType() == "short names")
+	{
+		fs << "<input type=\"hidden\" name=\"" << P_IDLANG << "\" value=\""
+				<< c.Language() << "\">\n"
+				<< "<input type=\"hidden\" name=\"" << P_IDPUBL << "\" value=\""
+				<< c.Publication() << "\">\n"
+				<< "<input type=\"hidden\" name=\"" << P_NRISSUE << "\" value=\""
+				<< c.Issue() << "\">\n"
+				<< "<input type=\"hidden\" name=\"" << P_NRSECTION << "\" value=\""
+				<< c.Section() << "\">\n"
+				<< "<input type=\"hidden\" name=\"" << P_NRARTICLE << "\" value=\""
+				<< c.Article() << "\">\n";
+	}
 	fs << c.URL()->getFormString();
 	runActions(block, lc, fs);
 	fs << "<input type=\"submit\" name=\"submitComment\" class=\"submitButton\" "

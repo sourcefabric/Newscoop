@@ -891,9 +891,12 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CStringAttr("ReaderEMail"));
 	pcoCtx->insertAttr(new CStringAttr("Subject"));
 	pcoCtx->insertAttr(new CStringAttr("Content"));
+	pcoCtx->insertAttr(new CStringAttr("ReaderEMailPreview"));
+	pcoCtx->insertAttr(new CStringAttr("SubjectPreview"));
+	pcoCtx->insertAttr(new CStringAttr("ContentPreview"));
 	pcoCtx->insertAttr(new CIntegerAttr("Count"));
 	pcoCtx->insertAttr(new CIntegerAttr("Level"));
-	pcoCtx->insertAttr(new CIntegerAttr("SubmitError"));
+	pcoCtx->insertAttr(new CStringAttr("SubmitError"));
 	pcoCtx->insertAttr(new CIntegerAttr("SubmitErrorNo"));
 	pcoSt->insertCtx(pcoCtx);
 
@@ -904,6 +907,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("Defined"));
 	pcoCtx->insertAttr(new CAttribute("Submitted"));
 	pcoCtx->insertAttr(new CAttribute("SubmitError"));
+	pcoCtx->insertAttr(new CAttribute("Preview"));
 	pcoCtx->insertAttr(new CAttribute("Moderated"));
 	pcoCtx->insertAttr(new CAttribute("Enabled"));
 	pcoCtx->insertAttr(new CAttribute("Rejected"));

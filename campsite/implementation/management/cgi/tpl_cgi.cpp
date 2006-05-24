@@ -52,7 +52,8 @@ using std::ios_base;
 
 
 void ReadConf(string& p_rcoIP, int& p_rnPort, string& p_rcoBinDir);
-int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg);
+int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg, bool &p_rbSubmitComment);
+void SubmitComment(const char* p_pchMsg, int p_nSize);
 
 
 int main()
@@ -65,12 +66,18 @@ int main()
 	int nSize;
 	char* pchMsg;
 	const char* pchErrMsg;
-	if ((nErrNo = ReadParameters(&pchMsg, &nSize, &pchErrMsg)) != 0)
+	bool bSubmitComment = false;
+	if ((nErrNo = ReadParameters(&pchMsg, &nSize, &pchErrMsg, bSubmitComment)) != 0)
 	{
 		if (pchErrMsg == 0)
 			pchErrMsg = "Error reading parameters";
 		cout << "<html>\n<head>\n<title>REQUEST ERROR</title>\n</head>\n"
 			 << "<body>\n" << pchErrMsg << "\n</body>\n</html>\n";
+		return 0;
+	}
+	if (bSubmitComment)
+	{
+		SubmitComment(pchMsg, nSize);
 		return 0;
 	}
 	stringstream coMsg;
@@ -131,6 +138,15 @@ int main()
 }
 
 
+void SubmitComment(const char* p_pchMsg, int p_nSize)
+{
+	if (p_pchMsg == NULL || p_nSize <= 0)
+	{
+		return;
+	}
+}
+
+
 void ReadConf(string& p_rcoIP, int& p_rnPort, string& p_rcoBinDir)
 {
 	char* pchDocumentRoot = getenv("DOCUMENT_ROOT");
@@ -185,7 +201,7 @@ void ReadConf(string& p_rcoIP, int& p_rnPort, string& p_rcoBinDir)
 }
 
 
-int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
+int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg, bool& p_rbSubmitComment)
 {
 	char* pchHTTPHost = 0;
 	char* pchDocumentRoot = 0;
@@ -196,6 +212,7 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 	char* pchServerPort = "80";
 	char* pchQueryString = 0;
 	char* pchHttpCookie = 0;
+	p_rbSubmitComment = false;
 	try
 	{
 		char* pchTmp;
@@ -301,6 +318,14 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 	{
 		CXMLTree::iterator coParamIt = coTree.newChild(coNodeIt, "Parameter", pchValue);
 		string coParam = pchParam;
+		if (coParam == "ArticleCommentSubmitResult")
+		{
+			continue;
+		}
+		if (coParam == "submitComment")
+		{
+			p_rbSubmitComment = true;
+		}
 		if (coParam.rfind("[]") == (coParam.size() - 2))
 		{
 			coParam = coParam.substr(0, coParam.size() - 2);

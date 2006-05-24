@@ -2,7 +2,26 @@
 
 global $DEBUG;
 
-$DEBUG = false;
+$DEBUG = true;
+
+
+/**
+ * Send the request message to the template engine and print the result to output.
+ *
+ * @return void
+ */
+function camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies)
+{
+	$msg = camp_create_url_request_message($p_env_vars, $p_parameters, $p_cookies);
+	for ($i = 1; $i <= 10; $i++) {
+		$size_read = camp_read_parser_output(camp_send_message_to_parser($msg));
+		if ($size_read > 0) {
+			break;
+		}
+		usleep(200000);
+	}
+}
+
 
 /**
  * Start the campsite parser daemon.

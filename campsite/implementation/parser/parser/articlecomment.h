@@ -94,25 +94,17 @@ class CArticleComment
 
 		int getStatus() const { return m_nStatus; }
 
-		const string& getMsgId() const { return m_coMsgId; }
-
 		ulint getModifyStamp() const { return m_nModifyStamp; }
 
 		id_type getUserId() const { return m_nUserId; }
 
 		ulint getThreadCount() const { return m_nThreadCount; }
 
-		int getModeratorPost() const { return m_nModeratorPost; }
-
-		int getSort() const { return m_nSort; }
-
 		ulint getDateStamp() const { return m_nDateStamp; }
-
-		const string& getMeta() const { return m_coMeta; }
 
 		ulint getViewCount() const { return m_nViewcount; }
 
-		bool setViewCount(ulint p_nViewCount);
+		bool incrementViewCount();
 
 		int getClosed() const { return m_nClosed; }
 
@@ -152,10 +144,13 @@ class CArticleComment
 		 * ArticleCommentsEnabled(): returns true if article comments were enabled for the
 		 * given publication and article type
 		 * @param id_type p_nPublicationId
+		 * @param id_type p_nArticleNumber
+		 * @param id_type p_nLanguageId
 		 * @param string p_rcoArticleType
 		 * @return bool
 		 **/
-		static bool ArticleCommentsEnabled(id_type p_nPublicationId, const string& p_rcoArticleType);
+		static bool ArticleCommentsEnabled(id_type p_nPublicationId, id_type p_nArticleNumber,
+										   id_type p_nLanguageId);
 
 	private:
 		bool m_bExists;
@@ -171,14 +166,10 @@ class CArticleComment
 		string m_coEmail;
 		string m_coIP;
 		int m_nStatus;
-		string m_coMsgId;
 		ulint m_nModifyStamp;
 		id_type m_nUserId;
 		ulint m_nThreadCount;
-		int m_nModeratorPost;
-		int m_nSort;
 		ulint m_nDateStamp;
-		string m_coMeta;
 		ulint m_nViewcount;
 		int m_nClosed;
 		int m_nLevel;
