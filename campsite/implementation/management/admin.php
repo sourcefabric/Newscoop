@@ -2,14 +2,8 @@
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 
-// --- In PHP 5, the error handler-default is set at E_STRICT, which
-//     captures all legacy based errors.  Unfortunately, this is
-//     completely incompatible with PHP 4.
-if ( version_compare( phpversion(), "5.0.0", ">=" ) ) {
-    set_error_handler("report_bug", E_ALL);
-} else {
-    set_error_handler("report_bug");
-}
+camp_set_error_handler("camp_report_bug");
+
 
 /**
  * This file is basically a hack so that we could implement the
@@ -117,6 +111,31 @@ if (($extension == '.php') || ($extension == '')) {
 }
 
 
+/** Sets a user-defined error function.  
+ * 
+ *  The function set_error_handler() works differently in PHP 4 & 5.
+ *  This function is a wrapper interface, to both versions of
+ *  set_error_handler.
+ *
+ * @param The function to return
+ */
+
+function camp_set_error_handler ($function){
+
+    // --- In PHP 5, the error handler-default is set at E_STRICT,
+    //     which captures all legacy based errors.  Unfortunately, this is
+    //     completely incompatible with PHP 4. ---
+    if ( version_compare( phpversion(), "5.0.0", ">=" ) ) {
+        set_error_handler($function, E_ALL);// - E_WARNING - E_NOTICE);
+
+    } else {
+        // -- Meanwhile, the error-handler flag argument is not
+        // available in PHP4, which always assumes it's value to be
+        // E_ALL --
+        set_error_handler($function);
+    }
+} // fn camp_set_error_handler
+
 /**
  * Called for all Campsite errors.
  *
@@ -124,10 +143,29 @@ if (($extension == '.php') || ($extension == '')) {
  * @param string $p_string The error message.
  * @param string $p_file The name of the file in which the error occurred.
  * @param int    $p_line The line number in which the error occurred.
+ * @return void
  */
-function report_bug($p_number, $p_string, $p_file, $p_line)
+function camp_report_bug($p_number, $p_string, $p_file, $p_line)
 {
+
     global $ADMIN_DIR, $Campsite;
+
+    // --- Return on unimportant errors ---
+    if ($Campsite['DEBUG'] == false) {
+        switch ($p_number)
+            {
+            case E_NOTICE:
+            case E_WARNING:
+            case E_USER_NOTICE:
+            case E_USER_WARNING:
+                return;
+            }
+        }
+
+    // --- Return on socket errros ---
+    if (preg_match ('/^fsockopen/i', $p_string)){
+        return;
+    }
 
     // --- Don't print out the previous screen (in which the error occurred). ---
     ob_end_clean();
@@ -139,5 +177,5 @@ function report_bug($p_number, $p_string, $p_file, $p_line)
     include ($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/senderrorform.php");
 
     exit();
-} // fn report_bug
+} // fn camp_report_bug
 ?>
