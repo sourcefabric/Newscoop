@@ -1,6 +1,6 @@
 <?php
 /*
-V4.66 28 Sept 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.81 3 May 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -38,6 +38,7 @@ class ADODB_mysql extends ADOConnection {
 	var $clientFlags = 0;
 	var $substr = "substring";
 	var $nameQuote = '`';		/// string to use to quote identifiers and names
+	var $compat323 = false; 		// true if compat with mysql 3.23
 	
 	function ADODB_mysql() 
 	{			
@@ -55,6 +56,7 @@ class ADODB_mysql extends ADOConnection {
 	{
 		return " IFNULL($field, $ifNull) "; // if MySQL
 	}
+	
 	
 	function &MetaTables($ttype=false,$showSchema=false,$mask=false) 
 	{	
@@ -155,7 +157,7 @@ class ADODB_mysql extends ADOConnection {
 	
 	function GetOne($sql,$inputarr=false)
 	{
-		if (strncasecmp($sql,'sele',4) == 0) {
+		if ($this->compat323 == false && strncasecmp($sql,'sele',4) == 0) {
 			$rs =& $this->SelectLimit($sql,1,-1,$inputarr);
 			if ($rs) {
 				$rs->Close();
@@ -306,6 +308,10 @@ class ADODB_mysql extends ADOConnection {
 				
 			case 'w':
 				$s .= '%w';
+				break;
+				
+			 case 'W':
+				$s .= '%U';
 				break;
 				
 			case 'l':
@@ -534,7 +540,7 @@ class ADODB_mysql extends ADOConnection {
 	}
 	
 	// "Innox - Juan Carlos Gonzalez" <jgonzalez#innox.com.mx>
-	function MetaForeignKeys( $table, $owner = FALSE, $upper = FALSE, $asociative = FALSE )
+	function MetaForeignKeys( $table, $owner = FALSE, $upper = FALSE, $associative = FALSE )
      {
          if ( !empty($owner) ) {
             $table = "$owner.$table";
@@ -560,7 +566,7 @@ class ADODB_mysql extends ADOConnection {
              $foreign_keys[$ref_table] = array();
              $num_fields = count($my_field);
              for ( $j = 0;  $j < $num_fields;  $j ++ ) {
-                 if ( $asociative ) {
+                 if ( $associative ) {
                      $foreign_keys[$ref_table][$ref_field[$j]] = $my_field[$j];
                  } else {
                      $foreign_keys[$ref_table][] = "{$my_field[$j]}={$ref_field[$j]}";
@@ -622,8 +628,8 @@ class ADORecordSet_mysql extends ADORecordSet{
 		}
 		else if ($fieldOffset == -1) {	/*	The $fieldOffset argument is not provided thus its -1 	*/
 			$o = @mysql_fetch_field($this->_queryID);
-			$o->max_length = @mysql_field_len($this->_queryID); // suggested by: Jim Nicholson (jnich@att.com)
-			//$o->max_length = -1; // mysql returns the max length less spaces -- so it is unrealiable
+		$o->max_length = @mysql_field_len($this->_queryID); // suggested by: Jim Nicholson (jnich@att.com)
+		//$o->max_length = -1; // mysql returns the max length less spaces -- so it is unrealiable
 		}
 			
 		return $o;
@@ -631,8 +637,8 @@ class ADORecordSet_mysql extends ADORecordSet{
 
 	function &GetRowAssoc($upper=true)
 	{
-		if ($this->fetchMode == MYSQL_ASSOC && !$upper) return $this->fields;
-		$row =& ADORecordSet::GetRowAssoc($upper);
+		if ($this->fetchMode == MYSQL_ASSOC && !$upper) $row = $this->fields;
+		else $row =& ADORecordSet::GetRowAssoc($upper);
 		return $row;
 	}
 	

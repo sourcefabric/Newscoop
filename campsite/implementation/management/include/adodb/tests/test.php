@@ -1,6 +1,6 @@
 <?php
 /* 
-V4.66 28 Sept 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.80 8 Mar 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -88,6 +88,7 @@ GLOBAL $ADODB_vers,$ADODB_CACHE_DIR,$ADODB_FETCH_MODE,$ADODB_COUNTRECS;
 	echo "<pre>";print_r($arr);
 	die();*/
 	
+	if (!$db) die("testdb: database not inited");
 	GLOBAL $EXECS, $CACHED;
 	
 	$EXECS = 0;
@@ -129,7 +130,7 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
 	echo "<br>";
 	$e = error_reporting(E_ALL-E_WARNING);
 	flush();
-	
+	#$db->debug=1;
 	$tt  = $db->Time(); 
 	if ($tt == 0) echo '<br><b>$db->Time failed</b>';
 	else echo "<br>db->Time: ".date('d-m-Y H:i:s',$tt);
@@ -182,7 +183,7 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
 			error_reporting($e);
 		}
 	}
-	
+	error_reporting(E_ALL);
 	echo "<p>Testing Metatypes</p>";
 	$t = $db->MetaType('varchar');
 	if ($t != 'C') Err("Bad Metatype for varchar");
@@ -390,11 +391,13 @@ GO
 		print "<h4>Testing Stored Procedures for mssql</h4>";
 		$saved = $db->debug;
 		$db->debug=true;
-		
+		$assoc = $ADODB_FETCH_MODE;
+		$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 		$cmd = $db->PrepareSP('ADODBTestSP');
 		$ss = "You should see me in the output.";
 		$db->InParameter($cmd,$ss,'a');
 		$rs = $db->Execute($cmd);
+		#var_dump($rs->fields);
 		echo $rs->fields['T']." --- ".$rs->fields['A']."---<br>";
 
 		$cat = 'Dairy Products';
@@ -414,6 +417,8 @@ GO
 		$db->InParameter($stmt,$yr,'OrdYear');
 		$rs = $db->Execute($stmt);
 		rs2html($rs);
+		
+		$ADODB_FETCH_MODE = $assoc;
 		
 		/*
 		Test out params - works in PHP 4.2.3 and 4.3.3 and 4.3.8 but not 4.3.0:
@@ -733,9 +738,11 @@ END Adodb;
 	else print "<p>Affected_Rows() passed</p>";
 	}
 	
-	/*if ($db->dataProvider == 'oci8') */ $array = array('zid'=>1,'zdate'=>date('Y-m-d',time()));
-	/*else $array=array(1,date('Y-m-d',time()));*/
+	if ($db->dataProvider == 'oci8')  $array = array('zid'=>1,'zdate'=>date('Y-m-d',time()));
+	else $array=array(1,date('Y-m-d',time()));
 	
+	
+	#$array = array(1,date('Y-m-d',time()));
 	$id = $db->GetOne("select id from ADOXYZ 
 		where id=".$db->Param('zid')." and created>=".$db->Param('ZDATE')."",
 		$array);
@@ -775,12 +782,14 @@ END Adodb;
 	 if ($val == 50) print "<p>GetOne returns ok</p>";
 	 else print "<p><b>Fail: GetOne returns $val</b></p>";
 
+	 echo "<b>GetRow Test</b>";
 	$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
-	$val = $db->GetRow("select count(*) from ADOXYZ");
-	 if ($val[0] == 50 and sizeof($val) == 1) print "<p>GetRow returns ok</p>";
+	$val1 = $db->GetRow("select count(*) from ADOXYZ");
+	$val2 =& $db->GetRow("select count(*) from ADOXYZ");
+	 if ($val1[0] == 50 and sizeof($val1) == 1 and $val2[0] == 50 and sizeof($val2) == 1) print "<p>GetRow returns ok</p>";
 	 else {
 	 	print_r($val);
-	 	print "<p><b>Fail: GetRow returns {$val[0]}</b></p>";
+	 	print "<p><b>Fail: GetRow returns {$val2[0]}</b></p>";
 	}
 
 	print "<p>FetchObject/FetchNextObject Test</p>";
@@ -817,9 +826,9 @@ END Adodb;
 	$savefetch = $ADODB_FETCH_MODE;
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	
-	print "<p>CacheSelectLimit  Test</p>";
+	print "<p>CacheSelectLimit  Test...</p>";
 	$db->debug=1;
-	$rs = $db->CacheSelectLimit('  select  id, firstname from  ADOXYZ order by id',2);
+	$rs = $db->CacheSelectLimit('select  id, firstname from  ADOXYZ order by id',2);
 	
 	if ($rs && !$rs->EOF) {
 		if (isset($rs->fields[0])) {
@@ -1030,7 +1039,7 @@ END Adodb;
 		Err( "Failed Concat:".$sql);
 	}
 	$ADODB_FETCH_MODE = $save;
-	print "<hr>Testing GetArray() ";
+	print "<hr />Testing GetArray() ";
 	//$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	
 	$rs = &$db->Execute("select * from ADOXYZ order by id");
@@ -1067,7 +1076,7 @@ END Adodb;
 	$ADODB_COUNTRECS = false;
 	//$arr = $db->GetArray("select  lastname,firstname from ADOXYZ");
 	//print_r($arr);
-	print "<hr>";
+	print "<hr />";
 	$rs =& $db->Execute("select distinct lastname,firstname,created from ADOXYZ");
 	
 	if ($rs) {
@@ -1106,22 +1115,29 @@ END Adodb;
 	else print " Fail<BR>";
 	
 	$rs = &$db->CacheExecute(4,"select distinct firstname,lastname from ADOXYZ");
+	
+	if ($rs) print ' 1st line set to **** , Steven selected: '. $rs->GetMenu('menu','Steven','1st:****').'<BR>';
+	else print " Fail<BR>";
+	
+
+	
+	$rs = &$db->CacheExecute(4,"select distinct firstname,lastname from ADOXYZ");
 	if ($rs) print ' Multiple, Alan selected: '. $rs->GetMenu('menu','Alan',false,true).'<BR>';
 	else print " Fail<BR>";
-	print '</p><hr>';
+	print '</p><hr />';
 	
 	$rs = &$db->CacheExecute(4,"select distinct firstname,lastname from ADOXYZ");
 	if ($rs) {
 		print ' Multiple, Alan and George selected: '. $rs->GetMenu('menu',array('Alan','George'),false,true);
 		if (empty($rs->connection)) print "<b>Connection object missing from recordset</b></br>";
 	} else print " Fail<BR>";
-	print '</p><hr>';
+	print '</p><hr />';
 	
 	print "Testing GetMenu3()<br>";
 	$rs = $db->Execute("select ".$db->Concat('firstname',"'-'",'id').",id, lastname from ADOXYZ order by lastname,id");
 	if ($rs) print "Grouped Menu: ".$rs->GetMenu3('name');
 	else Err('Grouped Menu GetMenu3()');
-	print "<hr>";
+	print "<hr />";
 
 	print "Testing GetMenu2() <BR>";
 	$rs = &$db->CacheExecute(4,"select distinct firstname,lastname from ADOXYZ");
@@ -1297,8 +1313,9 @@ END Adodb;
 		rs2tabout($rs);
 		print "</pre>";
 	}
-	//print " CacheFlush ";
-	//$db->CacheFlush();
+	print " CacheFlush ";
+	$db->CacheFlush();
+	
 	$date = $db->SQLDate('d-m-M-Y-\QQ h:i:s A');
 	$sql = "SELECT $date from ADOXYZ";
 	print "<p>Test SQLDate: ".htmlspecialchars($sql)."</p>";
@@ -1700,6 +1717,6 @@ include_once('../adodb-time.inc.php');
 if (isset($_GET['time'])) adodb_date_test();
 
 ?>
-<p><i>ADODB Database Library  (c) 2000-2005 John Lim. All rights reserved. Released under BSD and LGPL, PHP <?php echo PHP_VERSION ?>.</i></p>
+<p><i>ADODB Database Library  (c) 2000-2006 John Lim. All rights reserved. Released under BSD and LGPL, PHP <?php echo PHP_VERSION ?>.</i></p>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
 /*
 
-  V4.66 28 Sept 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.81 3 May 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -13,7 +13,7 @@
 error_reporting(E_ALL);
 include_once('../adodb.inc.php');
 
-foreach(array('sapdb','sybase','mysqlt','access','oci8','postgres','odbc_mssql','odbc','db2','firebird','informix') as $dbType) {
+foreach(array('sapdb','sybase','mysql','access','oci8po','postgres','odbc_mssql','odbc','db2','firebird','informix') as $dbType) {
 	echo "<h3>$dbType</h3><p>";
 	$db = NewADOConnection($dbType);
 	$dict = NewDataDictionary($db);
@@ -21,7 +21,7 @@ foreach(array('sapdb','sybase','mysqlt','access','oci8','postgres','odbc_mssql',
 	if (!$dict) continue;
 	$dict->debug = 1;
 	
-	$opts = array('REPLACE','mysql' => 'TYPE=INNODB', 'oci8' => 'TABLESPACE USERS');
+	$opts = array('REPLACE','mysql' => 'ENGINE=INNODB', 'oci8' => 'TABLESPACE USERS');
 	
 /*	$flds = array(
 		array('id',	'I',								
@@ -116,7 +116,7 @@ function printsqla($dbType,$sqla)
 		print "$s;\n";
 		if ($dbType == 'oci8') print "/\n";
 	}
-	print "</pre><hr>";
+	print "</pre><hr />";
 }
 
 /***

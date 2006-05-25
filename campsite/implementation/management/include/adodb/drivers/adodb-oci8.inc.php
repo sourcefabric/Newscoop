@@ -1,7 +1,7 @@
 <?php
 /*
 
-  version V4.66 28 Sept 2005 (c) 2000-2005 John Lim. All rights reserved.
+  version V4.81 3 May 2006 (c) 2000-2006 John Lim. All rights reserved.
 
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
@@ -195,7 +195,7 @@ NATSOFT.DOMAIN =
 				   	$argHostname=$argHostinfo[0];
 					$argHostport=$argHostinfo[1];
 			 	} else {
-					$argHostport="1521";
+					$argHostport = empty($this->port)?  "1521" : $this->port;
 	   			}
 				
 				if ($this->connectSID) {
@@ -298,7 +298,7 @@ NATSOFT.DOMAIN =
 		if ($mask) {
 			$save = $this->metaTablesSQL;
 			$mask = $this->qstr(strtoupper($mask));
-			$this->metaTablesSQL .= " AND table_name like $mask";
+			$this->metaTablesSQL .= " AND upper(table_name) like $mask";
 		}
 		$ret =& ADOConnection::MetaTables($ttype,$showSchema);
 		
@@ -502,6 +502,10 @@ NATSOFT.DOMAIN =
 				
 			case 'l':
 				$s .= 'DAY';
+				break;
+				
+			 case 'W':
+				$s .= 'WW';
 				break;
 				
 			default:
@@ -793,6 +797,7 @@ NATSOFT.DOMAIN =
 	
 		if (is_array($stmt) && sizeof($stmt) >= 5) {
 			$hasref = true;
+			$ignoreCur = false;
 			$this->Parameter($stmt, $ignoreCur, $cursorName, false, -1, OCI_B_CURSOR);
 			if ($params) {
 				foreach($params as $k => $v) {

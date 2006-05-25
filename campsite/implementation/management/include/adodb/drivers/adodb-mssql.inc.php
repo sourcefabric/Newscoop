@@ -1,6 +1,6 @@
 <?php
 /* 
-V4.66 28 Sept 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.81 3 May 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -161,6 +161,8 @@ class ADODB_mssql extends ADOConnection {
 	
 	function CreateSequence($seq='adodbseq',$start=1)
 	{
+		
+		$this->Execute('BEGIN TRANSACTION adodbseq');
 		$start -= 1;
 		$this->Execute("create table $seq (id float(53))");
 		$ok = $this->Execute("insert into $seq with (tablock,holdlock) values($start)");
@@ -583,7 +585,7 @@ order by constraint_name, referenced_table_name, keyno";
 	{
 		if (!$this->_has_mssql_init) {
 			ADOConnection::outp( "Parameter: mssql_bind only available since PHP 4.1.0");
-			return $sql;
+			return false;
 		}
 
 		$isNull = is_null($var); // php 4.0.4 and above...
