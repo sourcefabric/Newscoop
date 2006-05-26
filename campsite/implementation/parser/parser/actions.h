@@ -683,7 +683,7 @@ public:
 	// constructor
 	CActURLParameters(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
 					  id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE,
-					  bool p_bArticleAttachment = false, bool p_bArticleComment)
+					  bool p_bArticleAttachment = false, bool p_bArticleComment = false)
 	: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl), m_coTemplate(tpl),
 	m_nPubLevel(lvl), m_bArticleAttachment(p_bArticleAttachment),
 	m_bArticleComment(p_bArticleComment) {}
@@ -1301,7 +1301,7 @@ public:
 	// constructor
 	CActURI(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
 			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE, bool p_bArticleAttachment = false,
-			bool p_bArticleComment)
+			bool p_bArticleComment = false)
 	: m_coURIPath(tpl, lvl, p_bArticleAttachment),
 	m_coURLParameters(fs, as, i, r_fl, tpl, lvl, p_bArticleAttachment, p_bArticleComment),
 	m_nImageNr(i) {}

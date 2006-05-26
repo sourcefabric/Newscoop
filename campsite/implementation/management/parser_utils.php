@@ -2,7 +2,7 @@
 
 global $DEBUG;
 
-$DEBUG = true;
+$DEBUG = false;
 
 
 /**
@@ -265,10 +265,11 @@ function camp_read_get_parameters(&$p_queryString)
  */
 function camp_read_post_parameters(&$p_queryString)
 {
-	if (is_array($_POST)) {
+	global $_POST;
+	$query_string = file_get_contents("php://stdin");
+	if (trim($query_string) == "" && isset($_POST) && is_array($_POST)) {
 		return $_POST;
 	}
-	$query_string = file_get_contents("php://stdin");
 	camp_debug_msg("query string: $query_string");
 	return camp_read_get_parameters($query_string);
 } // fn camp_read_post_parameters

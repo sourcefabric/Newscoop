@@ -1296,15 +1296,6 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		}
 		return 0;
 	}
-	if (m_bArticleComment)
-	{
-		if (c.ArticleCommentId() <= 0)
-		{
-			return ERR_NODATA;
-		}
-		fs << "acid=" << c.ArticleCommentId();
-		return 0;
-	}
 	if (image_nr >= 0)
 	{
 		if (c.Publication() < 0 || c.Issue() < 0 || c.Section() < 0 || c.Article() < 0)
@@ -1338,6 +1329,11 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 	coOut << (first ? "" : "&") << coURL;
 	first = coURL == "";
 
+	if (m_bArticleComment && c.ArticleCommentId() > 0)
+	{
+		coOut << (first ? "" : "&") << "acid=" << c.ArticleCommentId();
+		first = false;
+	}
 	URLPrintParam(P_TOPIC_ID, (fromstart ? c.DefTopic() : c.Topic()), coOut, first);
 	if (pcoURL->needTemplateParameter())
 	{

@@ -945,17 +945,6 @@ inline int CParser::HURLParameters(CActionList& al)
 			l = lex.getLexem();
 			continue;
 		}
-		if (case_comp(l->atom()->identifier(), "articleComment") == 0)
-		{
-			bArticleComment = true;
-			if (!bFirst)
-			{
-				SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
-						  lex.prevLine(), lex.prevColumn());
-			}
-			l = lex.getLexem();
-			continue;
-		}
 		bFirst = false;
 		if (bArticleAttachment || bArticleComment)
 		{
@@ -977,6 +966,10 @@ inline int CParser::HURLParameters(CActionList& al)
 			nResetList = CLV_SEARCHRESULT_LIST;
 		if (case_comp(l->atom()->identifier(), "reset_subtitle_list") == 0)
 			nResetList = CLV_SUBTITLE_LIST;
+		if (case_comp(l->atom()->identifier(), "articleComment") == 0)
+		{
+			bArticleComment = true;
+		}
 		if (case_comp(l->atom()->identifier(), "image") == 0)
 		{
 			RequireAtom(l);
