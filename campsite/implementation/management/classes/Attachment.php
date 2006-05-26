@@ -317,7 +317,7 @@ class Attachment extends DatabaseObject {
 	 *
 	 * @return mixed
 	 *		The Attachment object that was created or updated.
-	 *		NULL if there was an error.
+	 *		NULL if there is a generic error or -1 if there is a file permission problem.
 	 */
 	function OnFileUpload($p_fileVar, $p_attributes, $p_id = null)
 	{
@@ -360,7 +360,7 @@ class Attachment extends DatabaseObject {
 	    $attachment->makeDirectories();
         if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
         	$attachment->delete();
-            return null;
+            return -1;
         }
 		chmod($target, 0644);
         $attachment->commit();

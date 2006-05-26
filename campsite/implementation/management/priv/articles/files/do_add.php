@@ -64,8 +64,10 @@ if (!empty($_FILES['f_file'])) {
 
 // Check if image was added successfully
 if (!is_object($file)) {
-
-    camp_html_display_error("File upload failed.", $BackLink, true);
+	if ($file == -1) 
+		camp_html_display_error("File upload failed because your files permission are not writable by the webuser.", $BackLink, true);
+	else
+	    camp_html_display_error("File upload failed.", $BackLink, true);
 	exit;
 }
 
