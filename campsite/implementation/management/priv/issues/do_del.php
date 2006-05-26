@@ -56,7 +56,7 @@ camp_html_content_top("Deleting issue", $tmpArray);
 	<TD COLSPAN="2"><BLOCKQUOTE>
     <?php 
     if ($numArticlesRemaining > 0) { ?>	
-        <LI><?php  putGS('There are $1 article(s) left.', $numArticlesRemaining); ?></LI>
+        <LI><?php  putGS('You cannot delete the issue because it is not empty (number of articles: $1).  To delete the issue, first delete its contents.', $numArticlesRemaining); ?></LI>
         <?php
     }
    	?>
