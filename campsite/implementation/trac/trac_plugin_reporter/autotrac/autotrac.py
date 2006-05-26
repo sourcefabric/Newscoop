@@ -28,7 +28,7 @@ class AutoTrac(Component):
     def __init__ (self):
         # --- Define the permission that is required for users to act
         # on inbox-tickets (eg accept) ---
-        self.actionPermission = 'TICKET_CREATE'
+        self.actionPermission = 'TICKET_ADMIN'
         self.debug = ""
 
     # --- INavigationContributor methods ---
@@ -40,6 +40,9 @@ class AutoTrac(Component):
     #
     # @param Request req The HTTP Request data
     def get_navigation_items(self, req):
+        if not req.perm.has_permission (self.actionPermission):
+            return
+        
         yield 'mainnav', 'autotrac', util.Markup('<a href="%s">Ticket Inbox</a>', 
                                             self.env.href.autotrac())
 
