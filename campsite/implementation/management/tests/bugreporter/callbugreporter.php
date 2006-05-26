@@ -11,7 +11,7 @@ trigger_error ("A triggered error");
 // --- put back old error handler ---
 set_error_handler ($oldErrorHandler);
 
-function call_bug_reporter($p_number, $p_string, $p_file, $p_line)
+function camp_call_bug_reporter($p_number, $p_string, $p_file, $p_line)
 {
     global $ADMIN_DIR, $ADMIN, $Campsite;
     require_once ($_SERVER['DOCUMENT_ROOT'] . "/classes/BugReporter.php");

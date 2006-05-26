@@ -41,8 +41,6 @@ if (($extension_start = strrpos($call_script, '.')) !== false) {
 	$extension = strtolower(substr($call_script, $extension_start));
 }
 
-// $aa = $Campsite[HTML_DIR];
-
 if (($extension == '.php') || ($extension == '')) {
 	header("Content-type: text/html; charset=UTF-8");
 
@@ -126,7 +124,7 @@ function camp_set_error_handler ($function){
     //     which captures all legacy based errors.  Unfortunately, this is
     //     completely incompatible with PHP 4. ---
     if ( version_compare( phpversion(), "5.0.0", ">=" ) ) {
-        set_error_handler($function, E_ALL);// - E_WARNING - E_NOTICE);
+        set_error_handler($function, E_ALL);
 
     } else {
         // -- Meanwhile, the error-handler flag argument is not
@@ -148,7 +146,7 @@ function camp_set_error_handler ($function){
 function camp_report_bug($p_number, $p_string, $p_file, $p_line)
 {
 
-    global $ADMIN_DIR, $Campsite;
+    global $ADMIN_DIR, $ADMIN, $Campsite;
 
     // --- Return on unimportant errors ---
     if ($Campsite['DEBUG'] == false) {
