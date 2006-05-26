@@ -128,14 +128,19 @@ function camp_set_error_handler ($function){
 
     } else {
         // -- Meanwhile, the error-handler flag argument is not
-        // available in PHP4, which always assumes it's value to be
-        // E_ALL --
+        //    available in PHP4, which always assumes it's value to be
+        //    E_ALL --
         set_error_handler($function);
     }
 } // fn camp_set_error_handler
 
 /**
- * Called for all Campsite errors.
+ * Called for all Campsite errors.  
+ *
+ * If the flag $Campsite['DEBUG'] is set to false, this function will
+ * return minor errors (ie notices and warnings) without having
+ * processed them.  Errors with fsockopen() are returned without being
+ * processed regardless of the $Campsite['DEBUG'] flag.
  *
  * @param int    $p_number The error number.
  * @param string $p_string The error message.
