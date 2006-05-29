@@ -13,7 +13,11 @@ class UserbaseModule(Component):
 #         return 'milestones'
                 
     def get_navigation_items(self, req):
-        yield 'mainnav', 'milestones', Markup('<a href="%s/3">Tickets by Milestone</a>', self.env.href.report())
+        if not req.perm.has_permission('REPORT_VIEW'):
+            return
+        yield ('mainnav', 'milestones',
+               Markup('<a href="%s/3">Tickets by Milestone</a>',
+                      self.env.href.report()))
 
     # IRequestHandler methods
     def match_request(self, req):
