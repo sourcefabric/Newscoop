@@ -6,9 +6,9 @@ HTTP_Client      1.0.0
 HTTP_Request     1.3.0
 Net_Socket       1.0.6
 Net_URL          1.0.14
-PEAR             1.4.6
+PEAR             1.4.9  
 PHP_Unit         1.3.2
 XML_Parser       1.2.7
-XML_RPC          1.4.5
+XML_RPC          1.4.8
 XML_Serializer   0.18.0 (beta)
 XML_Util         1.1.1

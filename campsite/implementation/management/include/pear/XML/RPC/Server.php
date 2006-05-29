@@ -270,7 +270,7 @@ function XML_RPC_Server_debugmsg($m)
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1999-2001 Edd Dumbill, 2001-2005 The PHP Group
- * @version    Release: 1.4.5
+ * @version    Release: 1.4.8
  * @link       http://pear.php.net/package/XML_RPC
  */
 class XML_RPC_Server
