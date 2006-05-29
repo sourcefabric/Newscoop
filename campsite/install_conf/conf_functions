@@ -880,12 +880,18 @@ if [ $? -ne 0 ]; then
 fi
 module_check=$1
 shift 1
+default_option=$1
 message=""
 while true; do
-    echo " " && module_config_menu "$module"
-    echo $message
-    echo -n -e "Option: "
-    read -r option
+    if [ "$default_option" = "1" ] || [ "$default_option" = "0" ]; then
+	option=$default_option
+	echo -n ""
+    else
+	echo " " && module_config_menu "$module"
+	echo $message
+	echo -n -e "Option: "
+	read -r option
+    fi
     case $option in
     1)
 	message=""
@@ -900,7 +906,11 @@ while true; do
 	    if [ $result -ne 0 ]; then
 		choice_yn "Invalid $module module configuration. Try again?" y
 		if [ "$choice" = "N" ]; then
-		    break
+		    if [ "$default_option" = "1" ] || [ "$default_option" = "0" ]; then
+			return 1
+		    else
+			break
+		    fi
 		fi
 	    else
 		choice_yn "Commit changes?" y
@@ -911,7 +921,11 @@ while true; do
 		    fi
 		    modules_conf --reset PARSER
 		fi
-		break
+		if [ "$default_option" = "1" ] || [ "$default_option" = "0" ]; then
+		    return 0
+		else
+		    break
+		fi
 	    fi
 	done ;;
     0)

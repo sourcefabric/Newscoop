@@ -12,21 +12,6 @@ while [ "$1" != "" ]; do
     shift 1
 done
 
-if [ "$cc_interactive" = "--interactive" ]; then
-
-echo -e "\nCampsite application is composed out of modules. Before installing"
-echo "campsite they must be configured."
-echo ""
-choice_yn "Do you want to read the description of campsite modules?" N
-if [ "$choice" = "Y" ]; then
-    echo -e "\nCampsite modules description:"
-    modules_desc
-    echo -e "\nPress ENTER when ready"
-    read
-fi
-
-fi # interactive
-
 prepare_install_env || exit 1
 check_install_deps || exit 1
 check_install_config
@@ -62,39 +47,57 @@ for cc_mod in $NEED_CONFIG_MODULES; do
 done
 cc_err_msg=""
 while true; do
-    echo -e "\nThe following list shows modules that are configurable."
-    echo "Modules not shown in this list are not configurable at this stage."
-    echo "Modules checked with X have a valid configuration."
+    cc_mod_name=`list_item 2 $NEED_CONFIG_MODULES`
+    if [ "$cc_mod_name" = "" ]; then
+	cc_single=true
+    else
+	cc_single=false
+    fi
     cc_index=1
-    all_ok=true
-    for cc_mod in $NEED_CONFIG_MODULES; do
-	echo -e -n "\t${cc_index}. ["
-	if in_list $cc_mod $CHECKED_MODULES; then
-	    echo -n "X"
-	else
-	    echo -n " "
-	    all_ok=false
-	fi
-	echo "] $cc_mod"
-	cc_index=`expr $cc_index + 1`
-    done
-    cc_index=`expr $cc_index - 1`
-    echo -e "\nSelect\n\t1 - Modify these options\n\t0 - Continue to the next step"
-    echo -e -n "$cc_err_msg\nSelect a choice: "
-    read -r choice
+    if ! $cc_single; then
+	echo -e "\nThe following list shows modules that are configurable."
+	echo "Modules not shown in this list are not configurable at this stage."
+	echo "Modules checked with X have a valid configuration."
+	all_ok=true
+	for cc_mod in $NEED_CONFIG_MODULES; do
+	    echo -e -n "\t${cc_index}. ["
+	    if in_list $cc_mod $CHECKED_MODULES; then
+		echo -n "X"
+	    else
+		echo -n " "
+		all_ok=false
+	    fi
+	    echo "] $cc_mod"
+	    cc_index=`expr $cc_index + 1`
+	done
+	cc_index=`expr $cc_index - 1`
+	echo -e "\nSelect\n\t1 - Modify these options\n\t0 - Continue to the next step"
+	echo -e -n "$cc_err_msg\nSelect a choice: "
+	read -r choice
+    else
+	choice=1
+    fi
     if [ "$choice" != "0" ] && [ "$choice" != "1" ]; then
 	cc_err_msg="Invalid choice $choice"
     else
 	case $choice in
 	1)
-	    read_string module_number
+	    if $cc_single; then
+		module_number=1
+	    else
+		read_string module_number
+	    fi
 	    cc_m_nr=$module_number
 	    cc_err_msg=""
 	    if [ $cc_m_nr -gt $cc_index ] || [ 0 -ge $cc_m_nr ]; then
 		cc_err_msg="Invalid module number $module_number"
 	    else
 		cc_mod_name=`list_item $module_number $NEED_CONFIG_MODULES`
+		if [ "$cc_interactive" = "--interactive" ]; then
+		    modules_desc
+		fi
 		configure_module $cc_mod_name check_${cc_mod_name}_config
+		[ "$option" = "0" ] && break;
 	    fi ;;
 	0)
 	    cc_err_msg=""
