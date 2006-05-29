@@ -173,6 +173,7 @@ int CStatementMap::InitStatements()
 	pcoSt = new CStatement(CMS_ST_LANGUAGE, ST_LANGUAGE);
 
 	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
+	pcoCtx->insertAttr(new CAttribute("off"));
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoCtx = new CStatementContext(CMS_CT_IF);

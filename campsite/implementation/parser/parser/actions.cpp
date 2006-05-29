@@ -379,7 +379,13 @@ void CActionList::clear()
 //		sockstream& fs - output stream (not used)
 int CActLanguage::takeAction(CContext& c, sockstream& fs)
 {
-	char* pchLang = SQLEscapeString(m_coLang.c_str(), m_coLang.length());
+	if (case_comp(m_coParam.attribute(), "off") == 0)
+	{
+		c.SetLanguage(-1);
+		return RES_OK;
+	}
+	char* pchLang = SQLEscapeString(m_coParam.attribute().c_str(),
+									m_coParam.attribute().length());
 	if (pchLang == NULL)
 		return ERR_NOMEM;
 	string coQuery = string("select Id from Languages where Name = '") + pchLang + "'";

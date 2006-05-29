@@ -706,7 +706,7 @@ inline int CParser::HLanguage(CActionList& al, int level, ulint sublevel)
 		CheckNotLevel(sublevel, SUBLV_SEARCHRESULT, lex.prevLine(), lex.prevColumn());
 	}
 	RequireAtom(l);
-	al.insert(al.end(), new CActLanguage(l->atom()->identifier()));
+	al.insert(al.end(), new CActLanguage(CParameter(l->atom()->identifier(), "", NULL)));
 	WaitForStatementEnd(true);
 	return 0;
 }

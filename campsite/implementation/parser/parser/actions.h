@@ -264,13 +264,13 @@ public:
 class CActLanguage : public CAction
 {
 protected:
-	string m_coLang;		// language name
+	CParameter m_coParam;		// parameter
 
 public:
 	// constructor
 	// Parameters:
-	//		const string& p_pchLang - language name
-	CActLanguage(const string& p_pcoLang) : m_coLang(p_pcoLang) {}
+	//		const CParameter& p_rcoParam
+	CActLanguage(const CParameter& p_rcoParam) : m_coParam(p_rcoParam) {}
 
 	// destructor
 	virtual ~CActLanguage() {}
