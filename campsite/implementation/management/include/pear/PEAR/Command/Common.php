@@ -16,7 +16,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Common.php,v 1.30 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: Common.php,v 1.32 2006/03/02 16:39:14 pajoye Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -35,7 +35,7 @@ require_once 'PEAR.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -254,19 +254,21 @@ class PEAR_Command_Common extends PEAR
 
     function run($command, $options, $params)
     {
-        $func = @$this->commands[$command]['function'];
-        if (empty($func)) {
+        if (empty($this->commands[$command]['function'])) {
             // look for shortcuts
             foreach (array_keys($this->commands) as $cmd) {
-                if (@$this->commands[$cmd]['shortcut'] == $command) {
-                    $command = $cmd;
-                    $func = @$this->commands[$command]['function'];
-                    if (empty($func)) {
+                if (isset($this->commands[$cmd]['shortcut']) && $this->commands[$cmd]['shortcut'] == $command) {
+                    if (empty($this->commands[$cmd]['function'])) {
                         return $this->raiseError("unknown command `$command'");
+                    } else {
+                        $func = $this->commands[$cmd]['function'];
                     }
+                    $command = $cmd;
                     break;
                 }
             }
+        } else {
+            $func = $this->commands[$command]['function'];
         }
         return $this->$func($command, $options, $params);
     }

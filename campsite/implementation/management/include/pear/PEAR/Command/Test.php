@@ -17,7 +17,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Test.php,v 1.6 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: Test.php,v 1.9 2006/02/03 22:28:08 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -37,7 +37,7 @@ require_once 'PEAR/Command/Common.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -76,6 +76,10 @@ class PEAR_Command_Test extends PEAR_Command_Common
                 'package' => array(
                     'shortopt' => 'p',
                     'doc' => 'Treat parameters as installed packages from which to run tests',
+                ),
+                'phpunit' => array(
+                    'shortopt' => 'u',
+                    'doc' => 'Search parameters for AllTests.php, and use that to run phpunit-based tests',
                 ),
             ),
             'doc' => '[testfile|dir ...]
@@ -137,8 +141,14 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
                     if (isset($atts['role']) && $atts['role'] != 'test') {
                         continue;
                     }
-                    if (!preg_match('/\.phpt$/', $name)) {
-                        continue;
+                    if (isset($options['phpunit'])) {
+                        if (!preg_match('/AllTests\.php$/i', $name)) {
+                            continue;
+                        }
+                    } else {
+                        if (!preg_match('/\.phpt$/', $name)) {
+                            continue;
+                        }
                     }
                     $params[] = $atts['installed_as'];
                 }
@@ -146,21 +156,34 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
         }
         foreach ($params as $p) {
             if (is_dir($p)) {
-                $dir = System::find(array($p, '-type', 'f',
-                                            '-maxdepth', $depth,
-                                            '-name', '*.phpt'));
+                if (isset($options['phpunit'])) {
+                    $dir = System::find(array($p, '-type', 'f',
+                                                '-maxdepth', $depth,
+                                                '-name', 'AllTests.php'));
+                } else {
+                    $dir = System::find(array($p, '-type', 'f',
+                                                '-maxdepth', $depth,
+                                                '-name', '*.phpt'));
+                }
                 $tests = array_merge($tests, $dir);
             } else {
-                if (!@file_exists($p)) {
-                    if (!preg_match('/\.phpt$/', $p)) {
-                        $p .= '.phpt';
+                if (isset($options['phpunit'])) {
+                    if (!preg_match('/AllTests\.php$/i', $p)) {
+                        continue;
                     }
-                    $dir = System::find(array(dirname($p), '-type', 'f',
-                                                '-maxdepth', $depth,
-                                                '-name', $p));
-                    $tests = array_merge($tests, $dir);
-                } else {
                     $tests[] = $p;
+                } else {
+                    if (!@file_exists($p)) {
+                        if (!preg_match('/\.phpt$/', $p)) {
+                            $p .= '.phpt';
+                        }
+                        $dir = System::find(array(dirname($p), '-type', 'f',
+                                                    '-maxdepth', $depth,
+                                                    '-name', $p));
+                        $tests = array_merge($tests, $dir);
+                    } else {
+                        $tests[] = $p;
+                    }
                 }
             }
         }
@@ -194,11 +217,6 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
             if (PEAR::isError($result)) {
                 $this->ui->log(0, $result->getMessage());
                 continue;
-            }
-            if (OS_WINDOWS) {
-                for($i=0;$i<2000;$i++) {
-                    $i = $i; // delay - race conditions on windows
-                }
             }
             if (isset($options['realtimelog'])) {
                 $fp = @fopen('run-tests.log', 'a');

@@ -15,10 +15,15 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Package.php,v 1.90 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: Package.php,v 1.91 2006/01/23 19:05:52 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
+/**
+ * Error code when parameter initialization fails because no releases
+ * exist within preferred_state, but releases do exist
+ */
+define('PEAR_DOWNLOADER_PACKAGE_STATE', -1003);
 /**
  * Coordinates download parameters and manages their dependencies
  * prior to downloading them.
@@ -44,7 +49,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -147,7 +152,7 @@ class PEAR_Downloader_Package
      * This is the heart of the PEAR_Downloader_Package(), and is used in
      * {@link PEAR_Downloader::download()}
      * @param string
-     * @return void|PEAR_Error
+     * @return bool|PEAR_Error
      */
     function initialize($param)
     {
@@ -174,6 +179,10 @@ class PEAR_Downloader_Package
                 }
                 $err = $this->_fromString($param);
                 if (PEAR::isError($err) || !$this->_valid) {
+                    if (PEAR::isError($err) &&
+                          $err->getCode() == PEAR_DOWNLOADER_PACKAGE_STATE) {
+                        return false; // instruct the downloader to silently skip
+                    }
                     if (isset($this->_type) && $this->_type == 'local' &&
                           PEAR::isError($origErr)) {
                         if (is_array($origErr->getUserInfo())) {
@@ -209,6 +218,7 @@ class PEAR_Downloader_Package
                 }
             }
         }
+        return true;
     }
 
     /**
@@ -1522,7 +1532,11 @@ class PEAR_Downloader_Package
                             $this->_registry->parsedPackageNameToString($pname, true) .
                             ' can be installed with "pecl install ' . $pname['package'] .
                             '"');
+                    } else {
+                        $pname['channel'] = 'pear.php.net';
                     }
+                } else {
+                    $pname['channel'] = 'pear.php.net';
                 }
             }
             return $info;
@@ -1671,6 +1685,22 @@ class PEAR_Downloader_Package
                 } else {
                     $vs = ' within preferred state "' . $this->_downloader->config->get(
                         'preferred_state') . '"';
+                }
+                $options = $this->_downloader->getOptions();
+                // this is only set by the "download-all" command
+                if (isset($options['ignorepreferred_state'])) {
+                    $err = PEAR::raiseError(
+                        'Failed to download ' . $this->_registry->parsedPackageNameToString(
+                            array('channel' => $pname['channel'], 'package' => $pname['package']),
+                                true)
+                         . $vs .
+                        ', latest release is version ' . $info['version'] .
+                        ', stability "' . $info['info']->getState() . '", use "' .
+                        $this->_registry->parsedPackageNameToString(
+                            array('channel' => $pname['channel'], 'package' => $pname['package'],
+                            'version' => $info['version'])) . '" to install',
+                            PEAR_DOWNLOADER_PACKAGE_STATE);
+                    return $err;
                 }
                 $err = PEAR::raiseError(
                     'Failed to download ' . $this->_registry->parsedPackageNameToString(

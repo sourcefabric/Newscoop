@@ -132,7 +132,7 @@ define('PEAR_ERRORSTACK_ERR_OBJTOSTRING', 2);
  * $local_stack = new PEAR_ErrorStack('MyPackage');
  * </code>
  * @author     Greg Beaver <cellog@php.net>
- * @version    1.4.6
+ * @version    1.4.9
  * @package    PEAR_ErrorStack
  * @category   Debugging
  * @copyright  2004-2006 Greg Beaver

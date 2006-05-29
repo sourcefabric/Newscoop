@@ -15,7 +15,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: v1.php,v 1.68 2006/01/06 04:47:37 cellog Exp $
+ * @version    CVS: $Id: v1.php,v 1.69 2006/03/02 18:14:13 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -281,7 +281,7 @@ define('PEAR_PACKAGEFILE_ERROR_INVALID_FILENAME', 52);
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -1200,6 +1200,10 @@ class PEAR_PackageFile_v1
         }
         if (isset($this->_registry) && $this->_isValid) {
             $chan = $this->_registry->getChannel('pear.php.net');
+            if (PEAR::isError($chan)) {
+                $this->_validateError(PEAR_PACKAGEFILE_ERROR_CHANNELVAL, $chan->getMessage());
+                return $this->_isValid = 0;
+            }
             $validator = $chan->getValidationObject();
             $validator->setPackageFile($this);
             $validator->validate($state);

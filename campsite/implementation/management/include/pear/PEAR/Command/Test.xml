@@ -29,6 +29,10 @@
     <shortopt>p</shortopt>
     <doc>Treat parameters as installed packages from which to run tests</doc>
    </package>
+   <phpunit>
+    <shortopt>u</shortopt>
+    <doc>Search parameters for AllTests.php, and use that to run phpunit-based tests</doc>
+   </phpunit>
   </options>
   <doc>[testfile|dir ...]
 Run regression tests with PHP&apos;s regression testing script (run-tests.php).</doc>

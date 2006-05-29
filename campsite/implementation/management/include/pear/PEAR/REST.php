@@ -15,7 +15,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: REST.php,v 1.19 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: REST.php,v 1.20 2006/03/02 03:09:31 pajoye Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -34,7 +34,7 @@ require_once 'PEAR/XMLParser.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -204,10 +204,21 @@ class PEAR_REST
         if ($cacheid === null && $nochange) {
             $cacheid = unserialize(implode('', file($cacheidfile)));
         }
+
         $fp = @fopen($cacheidfile, 'wb');
         if (!$fp) {
-            return false;
+            $cache_dir = $this->config->get('cache_dir');
+            if (!is_dir($cache_dir)) {
+                System::mkdir(array('-p', $cache_dir));
+                $fp = @fopen($cacheidfile, 'wb');
+                if (!$fp) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         }
+
         if ($nochange) {
             fwrite($fp, serialize(array(
                 'age'        => time(),
@@ -312,7 +323,7 @@ class PEAR_REST
             $ifmodifiedsince = ($lastmodified ? "If-Modified-Since: $lastmodified\r\n" : '');
         }
         $request .= "Host: $host:$port\r\n" . $ifmodifiedsince .
-            "User-Agent: PEAR/1.4.6/PHP/" . PHP_VERSION . "\r\n";
+            "User-Agent: PEAR/1.4.9/PHP/" . PHP_VERSION . "\r\n";
         $username = $this->config->get('username');
         $password = $this->config->get('password');
         if ($username && $password) {

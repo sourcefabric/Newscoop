@@ -16,7 +16,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Config.php,v 1.123 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: Config.php,v 1.124 2006/03/02 18:14:12 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -216,7 +216,7 @@ if (getenv('PHP_PEAR_SIG_KEYDIR')) {
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -1265,6 +1265,9 @@ class PEAR_Config extends PEAR
                         $reg = &$this->getRegistry();
                         if (is_object($reg)) {
                             $chan = &$reg->getChannel($channel);
+                            if (PEAR::isError($chan)) {
+                                return $channel;
+                            }
                             if (!$chan->getMirror($test) && $chan->getName() != $test) {
                                 return $channel; // mirror does not exist
                             }
@@ -1286,6 +1289,9 @@ class PEAR_Config extends PEAR
                 $reg = &$this->getRegistry();
                 if (is_object($reg)) {
                     $chan = &$reg->getChannel($channel);
+                    if (PEAR::isError($chan)) {
+                        return $channel;
+                    }
                     if (!$chan->getMirror($test) && $chan->getName() != $test) {
                         return $channel; // mirror does not exist
                     }
@@ -1329,6 +1335,9 @@ class PEAR_Config extends PEAR
                 $reg = &$this->getRegistry($layer);
                 if (is_object($reg)) {
                     $chan = &$reg->getChannel($channel);
+                    if (PEAR::isError($chan)) {
+                        return $channel;
+                    }
                     if (!$chan->getMirror($ret) && $chan->getName() != $ret) {
                         return $channel; // mirror does not exist
                     }
@@ -1383,6 +1392,9 @@ class PEAR_Config extends PEAR
             $reg = &$this->getRegistry($layer);
             if (is_object($reg)) {
                 $chan = &$reg->getChannel($channel ? $channel : 'pear.php.net');
+                if (PEAR::isError($chan)) {
+                    return false;
+                }
                 if (!$chan->getMirror($value) && $chan->getName() != $value) {
                     return false; // mirror does not exist
                 }

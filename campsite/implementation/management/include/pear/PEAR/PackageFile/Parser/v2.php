@@ -15,7 +15,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: v2.php,v 1.18 2006/01/06 04:47:37 cellog Exp $
+ * @version    CVS: $Id: v2.php,v 1.19 2006/01/23 17:39:52 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -97,7 +97,7 @@ class PEAR_PackageFile_Parser_v2 extends PEAR_XMLParser
      *               a subclass
      * @return PEAR_PackageFile_v2
      */
-    function parse($data, $file, $archive = false, $class = 'PEAR_PackageFile_v2')
+    function &parse($data, $file, $archive = false, $class = 'PEAR_PackageFile_v2')
     {
         if (PEAR::isError($err = parent::parse($data, $file))) {
             return $err;

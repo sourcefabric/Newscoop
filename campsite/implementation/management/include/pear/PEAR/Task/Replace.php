@@ -15,7 +15,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Replace.php,v 1.13 2006/01/06 04:47:37 cellog Exp $
+ * @version    CVS: $Id: Replace.php,v 1.15 2006/03/02 18:14:13 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -30,7 +30,7 @@ require_once 'PEAR/Task/Common.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -89,7 +89,7 @@ class PEAR_Task_Replace extends PEAR_Task_Common
             }
         } else {
             return array(PEAR_TASK_ERROR_WRONG_ATTRIB_VALUE, 'type', $xml['attribs']['type'],
-                array('pear-config', 'package-info'));
+                array('pear-config', 'package-info', 'php-const'));
         }
         return true;
     }
@@ -126,7 +126,7 @@ class PEAR_Task_Replace extends PEAR_Task_Common
                 }
                 if ($a['to'] == 'master_server') {
                     $chan = $this->registry->getChannel($pkg->getChannel());
-                    if ($chan) {
+                    if (!PEAR::isError($chan)) {
                         $to = $chan->getServer();
                     } else {
                         $this->logger->log(0, "$dest: invalid pear-config replacement: $a[to]");

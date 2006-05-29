@@ -15,7 +15,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Frontend.php,v 1.7 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: Frontend.php,v 1.9 2006/03/03 13:13:07 pajoye Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -34,7 +34,7 @@ $GLOBALS['_PEAR_FRONTEND_SINGLETON'] = null;
 
 /**
  * Singleton-based frontend for PEAR user input/output
- * 
+ *
  * Note that frontend classes must implement userConfirm(), and shoul implement
  * displayFatalError() and outputData()
  * @category   pear
@@ -42,7 +42,7 @@ $GLOBALS['_PEAR_FRONTEND_SINGLETON'] = null;
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -103,6 +103,38 @@ class PEAR_Frontend extends PEAR
         }
         $err = PEAR::raiseError("no such class: $uiclass");
         return $err;
+    }
+
+    /**
+     * Set the frontend class that will be used by calls to {@link singleton()}
+     *
+     * Frontends are expected to be a descendant of PEAR_Frontend
+     * @param PEAR_Frontend
+     * @return PEAR_Frontend
+     * @static
+     */
+    function &setFrontendObject($uiobject)
+    {
+        if (is_object($GLOBALS['_PEAR_FRONTEND_SINGLETON']) &&
+              is_a($GLOBALS['_PEAR_FRONTEND_SINGLETON'], get_class($uiobject))) {
+            return $GLOBALS['_PEAR_FRONTEND_SINGLETON'];
+        }
+        if (!is_a($uiobject, 'PEAR_Frontend')) {
+            $err = PEAR::raiseError('not a valid frontend class: (' .
+                get_class($uiobject) . ')');
+            return $err;
+        }
+        // quick test to see if this class implements a few of the most
+        // important frontend methods
+        if (method_exists($uiobject, 'userConfirm')) {
+            $GLOBALS['_PEAR_FRONTEND_SINGLETON'] = &$uiobject;
+            $GLOBALS['_PEAR_FRONTEND_CLASS'] = get_class($uiobject);
+            return $uiobject;
+        } else {
+            $err = PEAR::raiseError("not a value frontend class: (" . get_class($uiobject)
+                . ')');
+            return $err;
+        }
     }
 
     /**

@@ -15,7 +15,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: ChannelFile.php,v 1.74 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: ChannelFile.php,v 1.75 2006/03/02 18:14:12 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -152,7 +152,7 @@ $GLOBALS['_PEAR_CHANNELS_MIRROR_TYPES'] =  array('server');
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -322,6 +322,20 @@ class PEAR_ChannelFile {
             $a = false;
             return $a;
         }
+        return $a;
+    }
+
+    /**
+     * Unlike {@link fromArray()} this does not do any validation
+     * @param array
+     * @static
+     * @return PEAR_ChannelFile
+     */
+    function &fromArrayWithErrors($data, $compatibility = false,
+                                  $stackClass = 'PEAR_ErrorStack')
+    {
+        $a = new PEAR_ChannelFile($compatibility, $stackClass);
+        $a->_fromArray($data);
         return $a;
     }
     

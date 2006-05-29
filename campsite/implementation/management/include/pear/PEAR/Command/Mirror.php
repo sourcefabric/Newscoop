@@ -15,7 +15,7 @@
  * @author     Alexander Merz <alexmerz@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Mirror.php,v 1.16 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: Mirror.php,v 1.18 2006/03/02 18:14:13 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.2.0
  */
@@ -33,7 +33,7 @@ require_once 'PEAR/Command/Common.php';
  * @author     Alexander Merz <alexmerz@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.2.0
  */
@@ -113,6 +113,9 @@ packages within preferred_state ({config preferred_state}) will be downloaded'
         $this->config->set('default_channel', $channel);
         $this->ui->outputData('Using Channel ' . $this->config->get('default_channel'));
         $chan = $reg->getChannel($channel);
+        if (PEAR::isError($chan)) {
+            return $this->raiseError($chan);
+        }
         if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
             $rest = &$this->config->getREST('1.0', array());
@@ -129,6 +132,9 @@ packages within preferred_state ({config preferred_state}) will be downloaded'
         if (PEAR::isError($cmd)) {
             return $cmd;
         }
+        $this->ui->outputData('Using Preferred State of ' .
+            $this->config->get('preferred_state'));
+        $this->ui->outputData('Gathering release information, please wait...');
         /**
          * Error handling not necessary, because already done by 
          * the download command

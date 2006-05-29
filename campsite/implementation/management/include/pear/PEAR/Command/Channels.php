@@ -18,7 +18,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Channels.php,v 1.43 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: Channels.php,v 1.44 2006/03/02 18:14:13 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -36,7 +36,7 @@ require_once 'PEAR/Command/Common.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -218,7 +218,7 @@ List the files in an installed package.
             if ($reg->channelExists($channel, true)) {
                 $this->ui->outputData("Updating channel \"$channel\"", $command);
                 $test = $reg->getChannel($channel, true);
-                if (!$test) {
+                if (PEAR::isError($test)) {
                     $this->ui->outputData("Channel '$channel' is corrupt in registry!", $command);
                     $lastmodified = false;
                 } else {
@@ -266,6 +266,9 @@ List the files in an installed package.
             } else {
                 if ($reg->isAlias($channel)) {
                     $temp = &$reg->getChannel($channel);
+                    if (PEAR::isError($temp)) {
+                        return $this->raiseError($temp);
+                    }
                     $temp->setAlias($temp->getName(), true); // set the alias to the channel name
                     if ($reg->channelExists($temp->getName())) {
                         $this->ui->outputData('ERROR: existing channel "' . $temp->getName() .
@@ -323,6 +326,9 @@ List the files in an installed package.
         $channel = strtolower($params[0]);
         if ($reg->channelExists($channel)) {
             $chan = $reg->getChannel($channel);
+            if (PEAR::isError($chan)) {
+                return $this->raiseError($chan);
+            }
         } else {
             if (strpos($channel, '://')) {
                 $downloader = &$this->getDownloader();
@@ -600,6 +606,9 @@ List the files in an installed package.
         if ((!file_exists($params[0]) || is_dir($params[0]))
               && $reg->channelExists(strtolower($params[0]))) {
             $c = $reg->getChannel(strtolower($params[0]));
+            if (PEAR::isError($c)) {
+                return $this->raiseError($c);
+            }
             $this->ui->outputData('Retrieving channel.xml from remote server');
             $dl = &$this->getDownloader(array());
             // if force is specified, use a timestamp of "1" to force retrieval
@@ -729,9 +738,9 @@ List the files in an installed package.
                 'already aliased to "' . strtolower($params[1]) . '", cannot re-alias');
         }
         $chan = &$reg->getChannel($params[0]);
-        if (!$chan) {
+        if (PEAR::isError($chan)) {
             return $this->raiseError('Corrupt registry?  Error retrieving channel "' . $params[0] .
-                '" information');
+                '" information (' . $chan->getMessage() . ')');
         }
         // make it a local alias
         if (!$chan->setAlias(strtolower($params[1]), true)) {
@@ -762,7 +771,8 @@ List the files in an installed package.
         $err = $this->doAdd($command, $options, array('http://' . $params[0] . '/channel.xml'));
         $this->popErrorHandling();
         if (PEAR::isError($err)) {
-            return $this->raiseError("Discovery of channel \"$params[0]\" failed");
+            return $this->raiseError("Discovery of channel \"$params[0]\" failed (" .
+                $err->getMessage() . ')');
         }
         $this->ui->outputData("Discovery of channel \"$params[0]\" succeeded", $command);
     }

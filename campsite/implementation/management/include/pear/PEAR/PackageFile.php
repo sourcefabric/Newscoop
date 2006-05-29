@@ -15,7 +15,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: PackageFile.php,v 1.32 2006/01/06 04:47:36 cellog Exp $
+ * @version    CVS: $Id: PackageFile.php,v 1.33 2006/02/09 22:39:32 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -41,7 +41,7 @@ define('PEAR_PACKAGEFILE_ERROR_INVALID_PACKAGEVERSION', 2);
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.4.6
+ * @version    Release: 1.4.9
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -332,7 +332,7 @@ class PEAR_PackageFile
                 $xml = $name;
                 break;
             } elseif (ereg('package.xml$', $name, $match)) {
-                $xml = $match[0];
+                $xml = $name;
                 break;
             }
         }
