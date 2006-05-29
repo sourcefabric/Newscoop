@@ -1,2 +1,2 @@
 # Milestones module
-from milestones import *
+from ticketsbymilestone import *

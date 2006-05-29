@@ -10,19 +10,18 @@ class UserbaseModule(Component):
 
     # INavigationContributor methods
     def get_active_navigation_item(self, req):
-        return 'milestones'
+        return 'ticketsbymilestone'
                 
     def get_navigation_items(self, req):
         if not req.perm.has_permission('REPORT_VIEW'):
             return
-        yield ('mainnav', 'milestones',
+        yield ('mainnav', 'ticketsbymilestone',
                Markup('<a href="%s">Tickets by Milestone</a>',
-                      # self.env.href.report()))
-                      self.env.href.milestones()))
+                      self.env.href.ticketsbymilestone()))
 
     # IRequestHandler methods
     def match_request(self, req):
-        return req.path_info == '/milestones'
+        return req.path_info == '/ticketsbymilestone'
 
     def process_request (self, req):
         req.redirect (self.env.href.report() + "/3")
