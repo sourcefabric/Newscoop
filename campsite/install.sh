@@ -75,14 +75,23 @@ install_campsite()
 	echo -e "\nIMPORTANT!!!\n"
     fi
     echo "Please configure apache server before using Campsite application; make sure"
-    echo -e "the crond daemon is running; read INSTALL file and follow the instructions.\n"
+    echo "the crond daemon is running; for details read the INSTALL file and follow"
+    echo -e "the instructions.\n"
     if [ "$DEF_INST_INSTALLED" = "Y" ]; then
-	echo "To enter the Campsite administration site start a browser and type in the"
-	echo "following URL: http://[\$SERVER_NAME]/admin/."
+	echo "After configuring the apache server for Campsite enter the Campsite"
+	echo "administration site by starting a browser and typing in the following"
+	echo "URL: http://[\$SERVER_NAME]/admin/."
 	echo -e "Fill in \"admin\" and \"admn00\" user and password respectively to log in."
 	echo "You should change the password as soon as possible."
     else
-	echo "Run campsite-create-instance script in order to complete Campsite install."
+	echo "Run the script:"
+	echo "    $BIN_DIR/campsite-create-instance"
+	echo "in order to complete Campsite install."
+	echo "Run:"
+	echo "    $BIN_DIR/campsite-create-instance --help"
+	echo "or read the manual at:"
+	echo "    http://code.campware.org/manuals/campsite/2.5/index.php?id=147"
+	echo "in order to learn how to use the instance creation script."
     fi
 }
 
