@@ -15,6 +15,11 @@ if (!$access) {
 	exit;
 }
 
+if (!$User->hasPermission('CommentModerate')) {
+	camp_html_display_error(getGS("You do not have the right to moderate comments." ));
+	exit;
+}
+
 // process all comments
 foreach ($_REQUEST as $name => $value) {
     if (strstr($name, "comment_action_")) {

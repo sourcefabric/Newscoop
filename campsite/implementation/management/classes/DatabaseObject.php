@@ -230,7 +230,7 @@ class DatabaseObject {
 			$queryStr .= implode(', ', $tmpColumnNames);
 			$queryStr .= ' FROM ' . $this->m_dbTableName;
 			$queryStr .= ' WHERE ' . $this->getKeyWhereClause();
-			$queryStr .= ' LIMIT 1';
+//			$queryStr .= ' LIMIT 1';
 			$resultSet = $g_ado_db->GetRow($queryStr);
 			if ($resultSet) {
 				foreach ($this->getColumnNames() as $dbColumnName) {
@@ -271,7 +271,7 @@ class DatabaseObject {
 		$queryStr = 'SELECT `'.$this->m_keyColumnNames[0].'`';
 		$queryStr .= ' FROM ' . $this->m_dbTableName;
 		$queryStr .= ' WHERE ' . $this->getKeyWhereClause();
-		$queryStr .= ' LIMIT 1';
+//		$queryStr .= ' LIMIT 1';
 		$resultSet = $g_ado_db->GetRow($queryStr);
 		return (count($resultSet) > 0);
 	} // fn exists

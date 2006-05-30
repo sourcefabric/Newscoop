@@ -562,7 +562,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getUserId()
 	{
-		return $this->m_data['userid'];
+		return $this->m_data['user_id'];
 	} // fn getUserId
 
 

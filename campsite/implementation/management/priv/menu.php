@@ -3,6 +3,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/DynMenuItem.php");
 load_common_include_files("home");
+global $ADMIN;
+
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
 	exit;

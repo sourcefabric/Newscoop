@@ -6,6 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_ban_item.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
@@ -16,11 +17,16 @@ if (!$access) {
 	exit;
 }
 
+if (!$User->hasPermission('CommentModerate')) {
+	camp_html_display_error(getGS("You do not have the right to moderate comments." ));
+	exit;
+}
+
 // This can be 'inbox' or 'archive'
 $f_comment_screen = camp_session_get('f_comment_screen', 'inbox');
 $f_comment_start_inbox = camp_session_get('f_comment_start_inbox', 0);
 $f_comment_start_archive = camp_session_get('f_comment_start_archive', 0);
-$f_comment_per_page = camp_session_get('f_comment_per_page', 10);
+$f_comment_per_page = camp_session_get('f_comment_per_page', 20);
 $f_comment_search = trim(camp_session_get('f_comment_search', ''));
 $f_comment_order_by = camp_session_get('f_comment_order_by', 'datestamp');
 $f_comment_order_direction = camp_session_get('f_comment_order_direction', 'ASC');
@@ -78,11 +84,11 @@ echo camp_html_breadcrumbs($crumbs);
 <tr>
     <td style="border-bottom: 1px solid #777;">&nbsp;</td>
     <td width="1%" nowrap class="<?php if ($f_comment_screen != "inbox") { ?>tab_inactive<?php } else { ?>tab_active<?php } ?>">
-        <a href="?f_comment_screen=inbox" <?php if ($f_comment_screen != "inbox") { ?>style="color: #555;"<?php } ?>><b><?php putGS("Moderate"); ?> (<?php p($numInbox); ?>)</b></a>
+        <a href="?f_comment_screen=inbox" <?php if ($f_comment_screen != "inbox") { ?>style="color: #555;"<?php } ?>><b><?php putGS("New"); ?> (<?php p($numInbox); ?>)</b></a>
     </td>
 
     <td width="1%" nowrap class="<?php if ($f_comment_screen != "archive") { ?>tab_inactive<?php } else { ?>tab_active<?php } ?>">
-        <a href="?f_comment_screen=archive" <?php if ($f_comment_screen != "archive") { ?>style="color: #555;"<?php } ?>><b><?php putGS("Approved"); ?> (<?php p($numArchive); ?>)</b></a>
+        <a href="?f_comment_screen=archive" <?php if ($f_comment_screen != "archive") { ?>style="color: #555;"<?php } ?>><b><?php putGS("Published"); ?> (<?php p($numArchive); ?>)</b></a>
     </td>
 
     <td width="98%" style="border-bottom: 1px solid #777;">&nbsp;</td>
@@ -260,6 +266,14 @@ function onSummaryClick(p_messageId)
             <td>
                 <a href="javascript: void(0);" onclick="onCommentAction('hidden', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Hidden"); ?></b></a>
             </td>
+
+            <td style="padding-left: 10px;">
+            	<a href="javascript: void(0);" onclick="window.open('/<?php p($ADMIN); ?>/comments/ban.php?f_comment_id=<?php p($comment->getMessageId()); ?>', null, 'resizable=yes, menubar=no, toolbar=no, width=400, height=200, top=200, left=200'); return false;"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
+	        </td>
+
+	        <td>
+            	<a href="javascript: void(0);" onclick="window.open('/<?php p($ADMIN); ?>/comments/ban.php?f_comment_id=<?php p($comment->getMessageId()); ?>', null, 'resizable=yes, menubar=no, toolbar=no, width=400, height=200, top=200, left=200'); return false;"><b><?php putGS("Ban user"); ?></b></a>
+	        </td>
             </tr>
             </table>
             <!-- END table for the action controls -->

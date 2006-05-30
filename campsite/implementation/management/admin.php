@@ -23,7 +23,9 @@ $no_menu_scripts = array(
 	'/articles/images/view.php',
 	'/articles/topics/popup.php',
 	'/articles/files/popup.php',
-	'/articles/empty.php');
+	'/articles/empty.php',
+	'/comments/ban.php',
+	'/comments/do_ban.php');
 
 $request_uri = $_SERVER['REQUEST_URI'];
 $call_script = substr($request_uri, strlen("/$ADMIN"));

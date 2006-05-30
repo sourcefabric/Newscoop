@@ -348,6 +348,7 @@ if ($f_publication_id > 0) {
 <tr>
 	<td><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
 	<td><a href="<?php echo camp_html_article_url($article, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>
+</tr>
 </table>
 <?php } ?>
 

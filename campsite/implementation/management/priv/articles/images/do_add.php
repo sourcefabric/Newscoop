@@ -53,11 +53,9 @@ $attributes['Place'] = $f_image_place;
 $attributes['Date'] = $f_image_date;
 if (!empty($f_image_url)) {
 	$image = Image::OnAddRemoteImage($f_image_url, $attributes, $User->getUserId());
-}
-elseif (!empty($_FILES['f_image_file']) && !empty($_FILES['f_image_file']['name'])) {
+} elseif (!empty($_FILES['f_image_file']) && !empty($_FILES['f_image_file']['name'])) {
 	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $User->getUserId());
-}
-else {
+} else {
 	camp_html_display_error(getGS("You must select an image file to upload."), $BackLink, true);
 	exit;
 }
