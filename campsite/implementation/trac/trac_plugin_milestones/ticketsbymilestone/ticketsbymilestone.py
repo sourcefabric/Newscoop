@@ -16,6 +16,7 @@ class UserbaseModule(Component):
     def get_navigation_items(self, req):
         if not req.perm.has_permission('REPORT_VIEW'):
             return
+        time.sleep(.5)
         yield ('mainnav', 'ticketsbymilestone',
                Markup('<a href="%s">Tickets by Milestone</a>',
                       self.env.href.ticketsbymilestone()))
@@ -25,7 +26,6 @@ class UserbaseModule(Component):
         return req.path_info == '/ticketsbymilestone'
 
     def process_request (self, req):
-        time.sleep(.5)
         req.redirect (self.env.href.report() + "/3")
 
         
