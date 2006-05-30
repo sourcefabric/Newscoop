@@ -23,4 +23,5 @@ regGS("Article Images", "Article Images");
 regGS("Are you sure you want to delete this entry?", "Are you sure you want to delete this entry?");
 regGS("All strings have been translated.", "All strings have been translated.");
 regGS("Add", "Add");
+regGS("Bug Reporting", "Bug Reporting");
 ?>

@@ -61,7 +61,7 @@ require_once ($g_documentRoot.'/classes/Language.php');
                 <tr>
                     <td colspan="2">
                         <p><?php
-                            putGS ("Campsite has encountered a problem. ");
+                            putGS ("Campsite has encountered a problem.");
                             putGS ("We are sorry for the inconvenience. The Campsite development team will be investigating this issue.");
                             ?></p>
                         <p><?php

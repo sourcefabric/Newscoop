@@ -28,7 +28,7 @@ else {
 <p>
 <?php
     putGS ("Please take a minute to send us an email.");
-    putGS ("Include the error report below, as well as a brief explanation of what you were doing when the error occurred. ");
+    putGS ("Include the error report below, as well as a brief explanation of what you were doing when the error occurred.");
     putGS ("Send the email to");
     echo ("<b>");
     echo ("campsite-support@lists.campware.org"); 
@@ -51,19 +51,19 @@ else {
                         <hr noshade size="1" color="black"><br /></td>
 </tr>
 <tr>
-    <td nowrap><?php putGS("Error ID: &nbsp;") ?></td>
+    <td nowrap><?php putGS("Error ID:") ?></td>
     <td><?php echo $reporter->getId(); ?></td>
 </tr>
 <tr>
-    <td nowrap><?php putGS("Error String: &nbsp;") ?></td>
+    <td nowrap><?php putGS("Error String:") ?></td>
     <td><?php echo $reporter->getStr(); ?></td>
 </tr>
 <tr>
-    <td nowrap><?php putGS("Time: &nbsp;") ?></td>
+    <td nowrap><?php putGS("Time:") ?></td>
     <td><?php echo $reporter->getTime(); ?></td>
 </tr>
 <tr align="left">
-    <td valign="top" nowrap><?php putGS("Backtrace: &nbsp;") ?></td>
+    <td valign="top" nowrap><?php putGS("Backtrace:") ?></td>
     <td>
         <pre>
 <?php echo $reporter->getBacktraceString(); ?>

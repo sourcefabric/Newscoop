@@ -92,6 +92,7 @@ $mapPrefixToDir["users"] = "/admin-files/users";
 $mapPrefixToDir["user_subscriptions"] = "/admin-files/users/subscriptions";
 $mapPrefixToDir["user_subscription_sections"] = "/admin-files/users/subscriptions/sections";
 $mapPrefixToDir["user_types"] = "/admin-files/user_types";
+$mapPrefixToDir["bug_reporting"] = "/admin-files/bugreporter";
 $g_localizerConfig["MAP_PREFIX_TO_DIR"] = $mapPrefixToDir;
 unset($mapPrefixToDir);
 

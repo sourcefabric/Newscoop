@@ -119,7 +119,6 @@ if (($extension == '.php') || ($extension == '')) {
  *
  * @param The function to return
  */
-
 function camp_set_error_handler ($function){
 
     // --- In PHP 5, the error handler-default is set at E_STRICT,
@@ -130,7 +129,7 @@ function camp_set_error_handler ($function){
 
     } else {
         // -- Meanwhile, the error-handler flag argument is not
-        //    available in PHP4, which always assumes it's value to be
+        //    available in PHP 4, which always assumes it's value to be
         //    E_ALL --
         set_error_handler($function);
     }

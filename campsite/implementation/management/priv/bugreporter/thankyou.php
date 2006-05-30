@@ -5,5 +5,6 @@
     ?></h1>
 
 <p><?php
-        putGS ("Your bug report has been sent to Campware and will be investigated.  ");
-?> </p>
+        putGS("Your bug report has been sent to Campware and will be investigated.");
+?> 
+</p>
