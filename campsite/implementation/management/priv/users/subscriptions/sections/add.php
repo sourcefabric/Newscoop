@@ -114,14 +114,11 @@ echo camp_html_breadcrumbs($crumbs);
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
+	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="HIDDEN" NAME="f_user_id" VALUE="<?php  p($f_user_id); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_subscription_id" VALUE="<?php  p($f_subscription_id); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/users/subscriptions/sections/?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>'">-->
-	</DIV>
 	</TD>
 </TR>
 <!--<tr><td colspan=2 width=250><?php  putGS('WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!'); ?></td></tr>-->
