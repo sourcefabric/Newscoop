@@ -768,7 +768,73 @@ CREATE TABLE `UserConfig` (
 -- Dumping data for table `UserConfig`
 --
 
-INSERT INTO `UserConfig` (`id`, `fk_user_id`, `varname`, `value`, `last_modified`) VALUES (1,1,'ManagePub','Y',20051213155700),(2,1,'DeletePub','Y',20051213155700),(3,1,'ManageIssue','Y',20051213155700),(4,1,'DeleteIssue','Y',20051213155700),(5,1,'ManageSection','Y',20051213155700),(6,1,'DeleteSection','Y',20051213155700),(7,1,'AddArticle','Y',20051213155700),(8,1,'ChangeArticle','Y',20051213155700),(9,1,'DeleteArticle','Y',20051213155700),(10,1,'AddImage','Y',20051213155700),(11,1,'AddFile','Y',20051213155700),(12,1,'ChangeImage','Y',20051213155700),(13,1,'ChangeFile','Y',20051213155700),(14,1,'DeleteImage','Y',20051213155700),(15,1,'DeleteFile','Y',20051213155700),(16,1,'ManageTempl','Y',20051213155700),(17,1,'DeleteTempl','Y',20051213155700),(18,1,'ManageUsers','Y',20051213155700),(19,1,'ManageSubscriptions','Y',20051213155700),(20,1,'DeleteUsers','Y',20051213155700),(21,1,'ManageUserTypes','Y',20051213155700),(22,1,'ManageArticleTypes','Y',20051213155700),(23,1,'DeleteArticleTypes','Y',20051213155700),(24,1,'ManageLanguages','Y',20051213155700),(25,1,'DeleteLanguages','Y',20051213155700),(26,1,'ManageCountries','Y',20051213155700),(27,1,'DeleteCountries','Y',20051213155700),(28,1,'MailNotify','N',20051213155700),(29,1,'ViewLogs','Y',20051213155700),(30,1,'ManageLocalizer','Y',20051213155700),(31,1,'ManageIndexer','N',20060306150855),(32,1,'Publish','Y',20051213155700),(33,1,'ManageTopics','Y',20051213155700),(34,1,'EditorImage','Y',20051213155700),(35,1,'EditorTextAlignment','Y',20051213155700),(36,1,'EditorFontColor','Y',20051213155700),(37,1,'EditorFontSize','Y',20051213155700),(38,1,'EditorFontFace','Y',20051213155700),(39,1,'EditorTable','Y',20051213155700),(40,1,'EditorSuperscript','Y',20051213155700),(41,1,'EditorSubscript','Y',20051213155700),(42,1,'EditorStrikethrough','Y',20051213155700),(43,1,'EditorIndent','Y',20051213155700),(44,1,'EditorListBullet','Y',20051213155700),(45,1,'EditorListNumber','Y',20051213155700),(46,1,'EditorHorizontalRule','Y',20051213155700),(47,1,'EditorSourceView','Y',20051213155700),(48,1,'EditorEnlarge','Y',20051213155700),(49,1,'EditorTextDirection','Y',20051213155700),(50,1,'EditorLink','Y',20051213155700),(51,1,'EditorSubhead','Y',20051213155700),(52,1,'EditorBold','Y',20051213155700),(53,1,'EditorItalic','Y',20051213155700),(54,1,'EditorUnderline','Y',20051213155700),(55,1,'EditorUndoRedo','Y',20051213155700),(56,1,'EditorCopyCutPaste','Y',20051213155700),(57,1,'ManageReaders','Y',20051213155700),(58,1,'InitializeTemplateEngine','Y',20051213155700),(59,0,'KeywordSeparator',',',20060306143350),(60,1,'MoveArticle','Y',20060306143350),(61,1,'TranslateArticle','Y',20060306143350),(62,1,'AttachImageToArticle','Y',20060306143350),(63,1,'ChangeSystemPreferences','Y',20060306143350),(64,1,'AttachTopicToArticle','Y',20060306143350),(65,1,'EditorFindReplace','Y',20060306143350),(66,1,'EditorCharacterMap','Y',20060306143350);
+INSERT INTO `UserConfig` VALUES (1,1,'ManagePub','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (2,1,'DeletePub','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (3,1,'ManageIssue','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (4,1,'DeleteIssue','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (5,1,'ManageSection','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (6,1,'DeleteSection','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (7,1,'AddArticle','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (8,1,'ChangeArticle','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (9,1,'DeleteArticle','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (10,1,'AddImage','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (11,1,'AddFile','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (12,1,'ChangeImage','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (13,1,'ChangeFile','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (14,1,'DeleteImage','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (15,1,'DeleteFile','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (16,1,'ManageTempl','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (17,1,'DeleteTempl','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (18,1,'ManageUsers','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (19,1,'ManageSubscriptions','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (20,1,'DeleteUsers','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (21,1,'ManageUserTypes','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (22,1,'ManageArticleTypes','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (23,1,'DeleteArticleTypes','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (24,1,'ManageLanguages','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (25,1,'DeleteLanguages','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (26,1,'ManageCountries','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (27,1,'DeleteCountries','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (28,1,'MailNotify','N',20051213155700);
+INSERT INTO `UserConfig` VALUES (29,1,'ViewLogs','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (30,1,'ManageLocalizer','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (31,1,'ManageIndexer','N',20060306150855);
+INSERT INTO `UserConfig` VALUES (32,1,'Publish','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (33,1,'ManageTopics','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (34,1,'EditorImage','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (35,1,'EditorTextAlignment','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (36,1,'EditorFontColor','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (37,1,'EditorFontSize','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (38,1,'EditorFontFace','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (39,1,'EditorTable','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (40,1,'EditorSuperscript','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (41,1,'EditorSubscript','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (42,1,'EditorStrikethrough','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (43,1,'EditorIndent','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (44,1,'EditorListBullet','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (45,1,'EditorListNumber','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (46,1,'EditorHorizontalRule','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (47,1,'EditorSourceView','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (48,1,'EditorEnlarge','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (49,1,'EditorTextDirection','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (50,1,'EditorLink','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (51,1,'EditorSubhead','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (52,1,'EditorBold','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (53,1,'EditorItalic','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (54,1,'EditorUnderline','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (55,1,'EditorUndoRedo','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (56,1,'EditorCopyCutPaste','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (57,1,'ManageReaders','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (58,1,'InitializeTemplateEngine','Y',20051213155700);
+INSERT INTO `UserConfig` VALUES (59,0,'KeywordSeparator',',',20060306143350);
+INSERT INTO `UserConfig` VALUES (60,1,'MoveArticle','Y',20060306143350);
+INSERT INTO `UserConfig` VALUES (61,1,'TranslateArticle','Y',20060306143350);
+INSERT INTO `UserConfig` VALUES (62,1,'AttachImageToArticle','Y',20060306143350);
+INSERT INTO `UserConfig` VALUES (63,1,'ChangeSystemPreferences','Y',20060306143350);
+INSERT INTO `UserConfig` VALUES (64,1,'AttachTopicToArticle','Y',20060306143350);
+INSERT INTO `UserConfig` VALUES (65,1,'EditorFindReplace','Y',20060306143350);
+INSERT INTO `UserConfig` VALUES (66,1,'EditorCharacterMap','Y',20060306143350);
+INSERT INTO `UserConfig` VALUES (67,0,'LoginFailedAttemptsNum','3','20060522012934');
 
 --
 -- Table structure for table `UserTypes`
@@ -878,6 +944,17 @@ CREATE TABLE `ArticleComments` (
   KEY `article_index` (`fk_article_number`,`fk_language_id`),
   KEY `first_message_index` (`fk_article_number`,`fk_language_id`,`is_first`)
 ) TYPE=MyISAM;
+
+
+--
+-- Failed Login Attempts
+--
+CREATE TABLE `FailedLoginAttempts` (
+	`ip_address` varchar(40) NOT NULL default '',
+	`time_of_attempt` bigint(20) NOT NULL default '0',
+	KEY `ip_address` (`ip_address`)
+) TYPE=MyISAM;
+
 
 --
 -- Phorum tables

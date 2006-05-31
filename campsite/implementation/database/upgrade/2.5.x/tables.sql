@@ -57,6 +57,15 @@ ADD `comments_article_default_enabled` TINYINT(1) NOT NULL DEFAULT '0',
 ADD `comments_subscribers_moderated` TINYINT(1) NOT NULL DEFAULT '0',
 ADD `comments_public_moderated` TINYINT(1) NOT NULL DEFAULT '0';
 
+-- Add system preference for number of login attempts before CAPTCHA is shown.
+INSERT INTO `UserConfig` VALUES (67,0,'LoginFailedAttemptsNum','3','20060522012934');
+
+CREATE TABLE `FailedLoginAttempts` (
+	`ip_address` varchar(40) NOT NULL default '',
+	`time_of_attempt` bigint(20) NOT NULL default '0',
+	KEY `ip_address` (`ip_address`)
+) TYPE=MyISAM;
+
 -- Run the user permission upgrade script
 system php ./upgrade_user_perms.php
 
