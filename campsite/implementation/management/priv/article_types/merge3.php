@@ -202,7 +202,7 @@ if ($ok) {
 
         		if ($srcColumn == 'NULL') {
         			?>
-        			<LI><FONT COLOR="TAN"><?php putGS("Merge $1 into $2", "<b>".getGS("NOTHING")."</b>", "<b>". $destColumn ."</b>"); ?> <?php putGS("(Null merge warning.)"); ?></FONT></LI>";
+        			<LI><FONT COLOR="TAN"><?php putGS("Merge $1 into $2", "<b>".getGS("NOTHING")."</b>", "<b>". $destColumn ."</b>"); ?> <?php putGS("(Null merge warning.)"); ?></FONT></LI>
         			<?php
         		} else if (count($tmp) > 1) {
         			?>
@@ -210,7 +210,7 @@ if ($ok) {
         			<?php
         		} else {
         			?>
-        			<LI><FONT COLOR="GREEN"><?php putGS("Merge $1 into $2", "<b>".$srcColumn."</b>", "<b>". $destColumn ."</b>"); ?></FONT></LI>";
+        			<LI><FONT COLOR="GREEN"><?php putGS("Merge $1 into $2", "<b>".$srcColumn."</b>", "<b>". $destColumn ."</b>"); ?></FONT></LI>
         			<?php
         		}
         	} ?>
@@ -219,7 +219,7 @@ if ($ok) {
         	// do the warning if they select NONE in red
         	foreach ($src->m_dbColumns as $srcColumn) {
         		if (!in_array($srcColumn->getPrintName(), $f_src_c))
-        			print "<LI><FONT COLOR=\"RED\">(!) Do <B>NOT</B> merge <b>". $srcColumn->getPrintName() ."</b> (No merge warning.)</FONT></LI>";
+        			?><LI><FONT COLOR="RED"><?php putGS("(!) Do NOT merge $1 (No merge warning).", "<B>". $srcColumn->getPrintName() ."</B>"); ?></FONT></LI><?php
         	} ?>
         	</UL>
         	</TD>
@@ -234,11 +234,13 @@ if ($ok) {
         <TR>
         	<TD COLSPAN="2">
             <?php if ($f_prev_action == 'Orig') { ?>
-                <B>View of original (<?php print htmlspecialchars($curPreview->getType()); ?>) <?php print $curPreview->getTitle(); ?> (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?<?php print $getString; ?>">To return to the preview click here</a>)</B>
+                <B><?php putGS("View of original ($1) $2", htmlspecialchars($curPreview->getType()), $curPreview->getTitle()); ?>
+                (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?<?php print $getString; ?>">
+                <?php putGS("To return to the preview click here"); ?></a>)</B>
             <?php } else { ?>
-            	<B>Preview of <?php print wordwrap(htmlspecialchars($curPreview->getTitle()), 60, '<BR>'); ?>
-            	   (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?f_action=Orig&<?php print $getString; ?>">View the source (<?php print $src->getDisplayName(); ?>) version of <?php print wordwrap(htmlspecialchars($curPreview->getTitle()), 60, '<BR>'); ?></A>)
-            	<?php print $curPos + 1; ?> of <?php print count($articlesArray); ?>.
+            	<B><?php putGS("Preview of $1", wordwrap(htmlspecialchars($curPreview->getTitle()), 60, '<BR>')); ?>
+            	   (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?f_action=Orig&<?php print $getString; ?>"><?php putGS("View the source ($1) version of $2", $src->getDisplayName(), wordwrap(htmlspecialchars($curPreview->getTitle()), 60, '<BR>')); ?></A>)
+            	<?php putGS("$1 of $2", $curPos + 1, count($articlesArray)); ?>.
                 <?php
                 if (isset($articlesArray[$curPos - 1])) {
                     $prevArticle = $articlesArray[$curPos - 1];
@@ -254,7 +256,7 @@ if ($ok) {
                 }
             } // else
             ?>
-            <BR>This is the first translation of <?php print $numberOfTranslations; ?>
+            <BR><?php putGS("This is the first translation of $1", $numberOfTranslations); ?>
 
             </TD>
         </TR>
@@ -460,10 +462,10 @@ if ($ok) {
 
         <TR>
         	<TD>
-        	<INPUT TYPE="CHECKBOX" NAME="f_delete">Delete the source article type (<?php print $src->getDisplayName(); ?>) when finished.
+        	<INPUT TYPE="CHECKBOX" NAME="f_delete"><?php putGS("Delete the source article type ($1) when finished.", $src->getDisplayName()); ?>
         	</TD>
         	<TD>
-        	<b>Clicking "Merge" will merge <?php print $src->getNumArticles(); ?> articles.</b>
+        	<b><?php putGS("Clicking \"Merge\" will merge ($1) article(s).", $src->getNumArticles()); ?></b>
         	</TD>
         <TR>
         	<TD COLSPAN="2">
