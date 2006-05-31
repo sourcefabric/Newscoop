@@ -102,11 +102,6 @@ int NotifyEventsFunc(const ConfAttrValue& p_rcoConfValues)
 	ConfAttrValue coInstallConf(coInstallConfFile);
 	SMTP_WRAPPER = coInstallConf.valueOf("BIN_DIR") + "/smtp_wrapper";
 
-// 	cout << "sql server: " << SQL_SERVER << ", sql port: " << SQL_SRV_PORT
-// 			<< ", sql user: " << SQL_USER << ", sql password: " << SQL_PASSWORD
-// 			<< ", db name: " << SQL_DATABASE << endl;
-// 	cout << "smtp server: " << SMTP_SERVER << ", smtp wrapper: " << SMTP_WRAPPER << endl;
-
 	if ((result = SQLConnection(&sql)) != RES_OK)
 		return result;
 
@@ -134,10 +129,10 @@ int NotifyEventsFunc(const ConfAttrValue& p_rcoConfValues)
 	row = mysql_fetch_row(res);
 	if (row == NULL)
 		return 3;
-	sprintf(buf, "select Users.Name, Users.EMail, Users.UName, Events.Name, "
-			"Log.Text, Log.TStamp, now() from Log, Users, Events where IdEvent "
-					"= Events.Id and Events.Notify = 'Y' and Log.User = Users.UName and "
-					"TStamp > '%s' order by TStamp", row[0]);
+	sprintf(buf, "select u.Name, u.EMail, u.UName, e.Name, l.text, l.time_created, now() "
+			"from Log as l, Users as u, Events as e "
+			"where l.fk_event_id = e.Id and e.Notify = 'Y' and l.fk_user_id = u.Id and "
+				"l.time_created > '%s' order by time_created asc", row[0]);
 	mysql_free_result(res);
 	if (mysql_query(sql, buf) != 0)
 		return 1;
@@ -158,8 +153,8 @@ int NotifyEventsFunc(const ConfAttrValue& p_rcoConfValues)
 		sprintf(text, "Performed by: %s (%s) - email: %s\n%s on %s\n", name, uname,
 				email, event_text, event_tstamp);
 
-		sprintf(buf, "select Users.EMail from Users, UserPerm where MailNotify = "
-				"'Y' and Users.Id = UserPerm.IdUser");
+		sprintf(buf, "select u.EMail from Users as u, UserConfig as uc "
+				"where uc.varname = 'MailNotify' and uc.value ='Y' and u.Id = uc.fk_user_id");
 		if (mysql_query(sql, buf) != 0)
 			return 1;
 		MYSQL_RES* res_usr = mysql_store_result(sql);

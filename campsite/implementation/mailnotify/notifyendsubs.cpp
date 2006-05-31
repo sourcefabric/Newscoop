@@ -102,11 +102,6 @@ int NotifyEndSubsFunc(const ConfAttrValue& p_rcoConfValues)
 	ConfAttrValue coInstallConf(coInstallConfFile);
 	SMTP_WRAPPER = coInstallConf.valueOf("BIN_DIR") + "/smtp_wrapper";
 
-// 	cout << "sql server: " << SQL_SERVER << ", sql port: " << SQL_SRV_PORT
-// 			<< ", sql user: " << SQL_USER << ", sql password: " << SQL_PASSWORD
-// 			<< ", db name: " << SQL_DATABASE << endl;
-// 	cout << "smtp server: " << SMTP_SERVER << ", smtp wrapper: " << SMTP_WRAPPER << endl;
-
 	if ((result = SQLConnection(&sql)) != RES_OK)
 		return result;
 
@@ -126,19 +121,17 @@ int NotifyEndSubsFunc(const ConfAttrValue& p_rcoConfValues)
 
 	long int notifiedIndex = 0;
 	// read ending subscriptions
-	sprintf(buf, "select Publications.Name, Publications.IdDefaultLanguage, "
-			"Users.Title, Users.Name, Users.EMail, Subscriptions.Id, "
-			"Subscriptions.Type, Publications.Id, Publications.Site from "
-			"Subscriptions, Publications, Users where Users.Id = Subscriptions."
-			"IdUser and Publications.Id = Subscriptions.IdPublication and "
-			"Subscriptions.Active = 'Y' and Subscriptions.ToPay = \"0.00\"");
+	sprintf(buf, "select p.Name, p.IdDefaultLanguage, u.Title, u.Name, u.EMail, s.Id, "
+				"s.Type, p.Id, a.Name "
+			"from Subscriptions as s, Publications as p, Aliases as a, Users as u "
+			"where u.Id = s.IdUser and p.Id = s.IdPublication and s.Active = 'Y' "
+				"and p.IdDefaultAlias = a.Id and s.ToPay = \"0.00\"");
 	SQLQuery(sql, buf);
 	if ((res = mysql_store_result(sql)) == 0)
 	{
 		printf("Not enough memory");
 		exit(1);
 	}
-	CheckForRows(res, 1);
 	while ((row = mysql_fetch_row(res))) {
 		const char *pub_name = row[0];
 		long int id_lang = atol(row[1]);
@@ -265,7 +258,9 @@ int NotifyEndSubsFunc(const ConfAttrValue& p_rcoConfValues)
 		mysql_free_result(res_sec);
 		notifiedIndex++;
 	}
-	printf("%ld users notified\n", notifiedIndex);
+	if (notifiedIndex > 0) {
+		printf("%s: %ld user(s) notified\n", SQL_DATABASE.c_str(), notifiedIndex);
+	}
 	return 0;
 }
 
