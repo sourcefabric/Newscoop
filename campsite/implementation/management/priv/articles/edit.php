@@ -75,8 +75,7 @@ if ($f_publication_id > 0) {
 	$languageObj =& new Language($articleObj->getLanguageId());
 
     $showCommentControls = ($publicationObj->commentsEnabled()
-                     && $articleType->commentsEnabled()
-                     && ($articleObj->getWorkflowStatus() == 'Y'));
+                     && $articleType->commentsEnabled());
     $showComments = $showCommentControls && $articleObj->commentsEnabled();
 }
 
@@ -123,13 +122,13 @@ if ($f_unlock === false) {
 }
 
 // Automatically unlock the article is the user goes into VIEW mode
-if ( ($f_edit_mode == "view") && $articleObj->isLocked()) {
+$lockedByCurrentUser = ($articleObj->getLockedByUser() == $User->getUserId());
+if ( ($f_edit_mode == "view") && $lockedByCurrentUser) {
     $articleObj->setIsLocked(false);
-	$locked = false;
 }
 
 // If the article is locked by the current user, OK to edit.
-if ($articleObj->getLockedByUser() == $User->getUserId()) {
+if ($lockedByCurrentUser) {
     $locked = false;
 }
 
@@ -170,7 +169,7 @@ if ($errorStr != "") {
 }
 
 // If the article is locked.
-if ($articleObj->userCanModify($User) && $locked) {
+if ($articleObj->userCanModify($User) && $locked && ($f_edit_mode == "edit")) {
 	?><P>
 	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 	<TR>
@@ -198,15 +197,16 @@ if ($articleObj->userCanModify($User) && $locked) {
 				}
 				?>
 				<br>
-				<?php putGS('Are you sure you want to unlock it?'); ?>
+				<?php //putGS('Are you sure you want to unlock it?'); ?>
 			</BLOCKQUOTE>
 		</TD>
 	</TR>
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" class="button" ONCLICK="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php"); ?>'">
-		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'">
+		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Unlock'); ?>" class="button" ONCLICK="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php"); ?>'">
+		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('View'); ?>" class="button" ONCLICK="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_edit_mode=view"); ?>'">
+		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'">
 		</DIV>
 		</TD>
 	</TR>
@@ -410,7 +410,7 @@ if ($f_edit_mode == "edit") { ?>
 			     </td>
 
 			     <td style="background-color: #00CB38; color: #FFF; border: 1px solid white; padding-left: 5px; padding-right: 10px;" align="center" nowrap>
-			     <b><span style="font-size: larger;"><?php putGS("Saved:"); ?></span> <?php if ($savedToday) { p(date("H:i", $lastModified)); } else { p(date("Y-m-d H:i", $lastModified)); } ?></b>
+			     <b><?php putGS("Saved:"); ?> <?php if ($savedToday) { p(date("H:i", $lastModified)); } else { p(date("Y-m-d H:i", $lastModified)); } ?></b>
 			     </td>
 			     </tr></table>
 			</TD>
