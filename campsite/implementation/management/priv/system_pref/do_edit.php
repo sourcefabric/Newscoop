@@ -24,6 +24,12 @@ if (!empty($f_keyword_separator)) {
 	SystemPref::Set("KeywordSeparator", $f_keyword_separator);
 }
 
+$f_login_num = Input::Get('f_login_num');
+
+if (!empty($f_login_num)) {
+	SystemPref::Set("FailedAttemptsNum", $f_login_num);
+}
+
 header("Location: /$ADMIN/system_pref/");
 exit;
 ?>

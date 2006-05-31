@@ -11,7 +11,6 @@ function load_common_include_files($p_currentDir)
 	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 	camp_load_language('globals');
 	camp_load_language("$p_currentDir");
-	//require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
 } // fn load_common_include_files
 
 

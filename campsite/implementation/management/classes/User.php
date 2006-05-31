@@ -217,6 +217,24 @@ class User extends DatabaseObject {
 	} // fn fetch
 
 
+
+	function FetchUserByName($p_username, $p_adminOnly = false)
+	{
+		global $g_ado_db;
+		$queryStr = "SELECT * FROM Users WHERE UName='$p_username'";
+		if ($p_adminOnly) {
+			$queryStr .= " AND Reader='N'";
+		}
+		$row = $g_ado_db->GetRow($queryStr);
+		if ($row) {
+			$user =& new User();
+			$user->fetch($row);
+			return $user;
+		}
+		return null;
+	} // fn FetchUserByName
+
+
 	/**
 	 * Return the user type if there is one, or null if not.
 	 *
@@ -320,6 +338,17 @@ class User extends DatabaseObject {
 	{
 		return $this->m_data['UName'];
 	} // fn getUserName
+
+
+	/**
+	 * Get the encrypted password.
+	 *
+	 * @return string
+	 */
+	function getPassword()
+	{
+		return $this->m_data['Password'];
+	} // fn getPassword
 
 
 	/**
@@ -492,34 +521,55 @@ class User extends DatabaseObject {
 
 
 	/**
+	 * Check if the password is a valid password in the old format.
+	 *
 	 * @return boolean
 	 */
-	function isValidPassword($p_password)
+	function isValidOldPassword($p_password)
 	{
 		global $g_ado_db;
 		$userPasswordSQL = mysql_real_escape_string($p_password);
-		$queryStr = "SELECT Password, SHA1('$userPasswordSQL') AS SHA1Password,"
-				. " PASSWORD('$userPasswordSQL') AS OLDPassword FROM Users "
-				. " WHERE Id = '".mysql_real_escape_string($this->getUserId())."' ";
+        $queryStr = "SELECT PASSWORD('$userPasswordSQL') AS old_password_1, "
+        			." OLD_PASSWORD('$userPasswordSQL') AS old_password_2"
+        			." FROM Users "
+					." WHERE Id = '".$this->m_data['Id']."' ";
 		if (!($row = $g_ado_db->GetRow($queryStr))) {
 			return false;
 		}
-		if ($row['Password'] == $row['SHA1Password'] || $row['Password'] == $row['OLDPassword']) {
+		// Check if the given password matches the one in the database
+		if ( ($this->m_data['Password'] == $row['old_password_1'])
+			|| ($this->m_data['Password'] == $row['old_password_2'] ) ) {
 			return true;
 		}
-		$queryStr = "SELECT Password, OLD_PASSWORD('$userPasswordSQL') AS OLDPassword FROM Users "
-				. " WHERE Id = '".mysql_real_escape_string($this->getUserId())."' ";
-		if (!($row = $g_ado_db->GetRow($queryStr))) {
-			return false;
+		return false;
+	} // fn isValidOldPassword
+
+
+	/**
+	 * Return TRUE if the given password matches the one in the database.
+	 *
+	 * @param string $p_password
+	 * @param boolean $p_isEncrypted
+	 * 		Set to true if the password is already encrypted in SHA1 format.
+	 * @return boolean
+	 */
+	function isValidPassword($p_password, $p_isEncrypted = false)
+	{
+		global $g_ado_db;
+		if (!$p_isEncrypted) {
+			$userPasswordSQL = mysql_real_escape_string($p_password);
+    	    $queryStr = "SELECT SHA1('$userPasswordSQL') as encrypted_password FROM Users "
+						. " WHERE Id = '".$this->m_data['Id']."' ";
+			$encryptedPassword = $g_ado_db->GetOne($queryStr);
+			return ($encryptedPassword == $p_password);
 		}
-		if ($row['Password'] == $row['OLDPassword']) {
-			return true;
-		}
+		return ($p_password == $this->m_data['Password']);
 	} // fn isValidPassword
 
 
 	/**
-	 * @return boolean
+	 * @param string $p_password
+	 * @return void
 	 */
 	function setPassword($p_password)
 	{
@@ -536,32 +586,16 @@ class User extends DatabaseObject {
 
 
 	/**
-	 * This is a static function.  Check if the user is allowed
-	 * to access the site.
+	 * Initialize the per-session login key.  This makes sure the user can only
+	 * login from one location at a time.
 	 *
-	 * @return array
-	 * 		An array of two elements:
-	 *		boolean - whether the login was successful
-	 *		object - if successful, the user object
+	 * @return void
 	 */
-	function Login($p_userName, $p_userPassword)
+	function initLoginKey()
 	{
-		global $g_ado_db;
-		$queryStr = "SELECT * FROM Users WHERE UName='$p_userName' AND Reader='N'";
-		$row = $g_ado_db->GetRow($queryStr);
-		if ($row) {
-			$user =& new User();
-			$user->fetch($row);
-			if ($user->isValidPassword($p_userPassword)) {
-				// Generate the Key ID
-				$user->setProperty('KeyId', 'RAND()*1000000000+RAND()*1000000+RAND()*1000', true, true);
-				return array(true, $user);
-			}
-			return array(false, null);
-		} else {
-			return array(false, null);
-		}
-	} // fn Login
+		// Generate the Key ID
+		$this->setProperty('KeyId', 'RAND()*1000000000+RAND()*1000000+RAND()*1000', true, true);
+	} // fn initLoginKey
 
 
 	/**
