@@ -75,7 +75,8 @@ void die_usage()
 
 void die_mysql(MYSQL *mysql, const char *message)
 {
-	fprintf(stderr, "%s: %s: %s\n", prog_name, message, mysql_error(mysql));
+	fprintf(stderr, "%s: instance %s: %s: %s\n",
+			prog_name, SQL_DATABASE.c_str(), message, mysql_error(mysql));
 	exit(1);
 }
 
