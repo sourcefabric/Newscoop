@@ -103,10 +103,13 @@ echo camp_html_breadcrumbs($crumbs);
 		</SELECT>
 	</TD>
 </TR>
+<?php if (count($languages) == 0) { ?>
+	<input type="hidden" name="f_language_set" value="all">
+<?php } else { ?>
 <TR>
 	<TD ALIGN="RIGHT"><?php  putGS("Languages"); ?>:</TD>
 	<TD>
-		<select name="f_language_set" class="input_select" onchange="ToggleRowVisibility('select_languages');">
+		<select name="f_language_set" class="input_select" onchange="ToggleRowVisibility('select_languages'); langBox = this.form['f_language_id[]']; if (this.options[selectedIndex].value == 'all' && langBox.selectedIndex < 0) { langBox.selectedIndex = 0; }">
 <?php
 		$language_sets = array('select'=>getGS('Individual languages'), 'all'=>getGS('Regardless of the language'));
 		foreach ($language_sets as $language_set_id=>$language_set_description) {
@@ -114,11 +117,12 @@ echo camp_html_breadcrumbs($crumbs);
 		}
 ?>
 		</select>
+	</td>
 </tr>
 <tr id="select_languages" <?php if ($f_language_set == 'all') { ?>style="display: none;"<?php } ?>>
 	<td></td>
 	<td>
-		<select name="f_language_id[]" multiple size="3" class="input_select">
+		<select name="f_language_id[]" multiple size="3" class="input_select" alt="selectm|1|*" emsg="<?php putGS("Please select one or more languages."); ?>">
 		<?php
 		foreach ($languages as $language) {
 			camp_html_select_option($language->getLanguageId(), '', $language->getName() . ' (' . $language->getNativeName() . ')');
@@ -127,6 +131,7 @@ echo camp_html_breadcrumbs($crumbs);
 		</select>
 	</TD>
 </TR>
+<?php } ?>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Sections"); ?>:</TD>
 	<TD>
