@@ -211,6 +211,9 @@ class Phorum_message extends DatabaseObject {
 		global $g_ado_db;
 		unset($PHORUM['forum_id']);
 
+		if (!$this->exists()) {
+			return true;
+		}
 	    $threadset = 0;
 	    // get the parents of the message to delete.
 	    $sql = "SELECT forum_id, message_id, thread, parent_id "
