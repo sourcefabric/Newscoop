@@ -69,13 +69,13 @@ function TransformInternalLinks($p_match) {
 
 		// Get the URL
 		preg_match("/href\s*=\s*[\"'](campsite_internal_link[?][\w&=;]*)[\"']/i", $p_match[0], $url);
-		$url = isset($url[1])?$url[1]:'';
+		$url = isset($url[1]) ? $url[1] : '';
 		$parsedUrl = parse_url($url);
 		$parsedUrl = str_replace("&amp;", "&", $parsedUrl);
 
 		// Get the target, if there is one
 		preg_match("/target\s*=\s*[\"']([_\w]*)[\"']/i", $p_match[0], $target);
-		$target = isset($target[1])?$target[1]:null;
+		$target = isset($target[1]) ? $target[1] : null;
 
 		// Replace the HTML tag with a template tag
 		$retval = "<!** Link Internal ".$parsedUrl["query"];
@@ -104,19 +104,21 @@ function TransformImageTags($p_match) {
 	$attrs = array();
 	foreach ($p_match as $attr) {
 		$attr = split('=', $attr);
-		$attrName = trim(strtolower($attr[0]));
-		$attrValue = $attr[1];
-		// Strip out the quotes
-		$attrValue = str_replace('"', '', $attrValue);
-		$attrValue = str_replace("'", '', $attrValue);
-		$attrs[$attrName] = $attrValue;
+		if (isset($attr[0]) && !empty($attr[0])) {
+			$attrName = trim(strtolower($attr[0]));
+			$attrValue = isset($attr[1]) ? $attr[1] : '';
+			// Strip out the quotes
+			$attrValue = str_replace('"', '', $attrValue);
+			$attrValue = str_replace("'", '', $attrValue);
+			$attrs[$attrName] = $attrValue;
+		}
 	}
 
 	if (!isset($attrs['id'])) {
 		return '';
 	} else {
 		$templateId = $attrs['id'];
-		$articleImage =& new ArticleImage($f_article_number, $templateId);
+		$articleImage =& new ArticleImage($f_article_number, null, $templateId);
 		if (!$articleImage->exists()) {
 			return '';
 		}
