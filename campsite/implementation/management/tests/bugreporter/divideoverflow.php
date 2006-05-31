@@ -7,6 +7,6 @@ $bottom = 0;
 
 print "<p>" . $top/$bottom . "</p>";
 
-
+print "<hr />"
 
 ?>
