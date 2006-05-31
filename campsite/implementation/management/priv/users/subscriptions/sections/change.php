@@ -59,7 +59,6 @@ $crumbs[] = array(getGS("Subscribed sections").": ".$publicationObj->getName(), 
 $crumbs[] = array(getGS("Change subscription"), "");
 echo camp_html_breadcrumbs($crumbs);
 ?>
-
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
@@ -74,6 +73,18 @@ echo camp_html_breadcrumbs($crumbs);
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
+
+<?php if (empty($subscriptionSection)) { ?>
+	<tr>
+		<td align="center">
+			<BLOCKQUOTE>
+			<LI><?php  putGS("There are no sections in this publication."); ?></LI>
+			</BLOCKQUOTE>
+			<INPUT type="button" class="button" value="<?php putGS("OK"); ?>" onclick="location.href='<?php echo "/$ADMIN/users/subscriptions/sections/?f_publication_id=$f_publication_id&f_user_id=$f_user_id&f_subscription_id=$f_subscription_id"; ?>';">
+		</td>
+	</tr>
+	<?php
+} else { ?>
 
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Section"); ?>:</TD>
@@ -112,20 +123,17 @@ echo camp_html_breadcrumbs($crumbs);
 </TR>
 <?php  } ?>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
+	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="HIDDEN" NAME="f_user_id" VALUE="<?php p($f_user_id); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_subscription_id" VALUE="<?php p($f_subscription_id); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php p($f_language_id); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/users/subscriptions/sections/?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>'">-->
-	</DIV>
 	</TD>
 </TR>
 </TABLE>
+<?php } ?>
 </FORM>
 <P>
-
 <?php camp_html_copyright_notice(); ?>
