@@ -14,7 +14,7 @@ import_request_variables('p', "f_");
 
 // --- If this information is a POST from errormessage.php, send it to
 //     the server ---
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($f_isPostFromBugreporter)) {
+if (isset($f_isPostFromBugreporter) && $_SERVER['REQUEST_METHOD'] == "POST") {
 
     $sendWasAttempted = true;
 
