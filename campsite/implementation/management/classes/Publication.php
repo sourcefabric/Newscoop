@@ -377,7 +377,7 @@ class Publication extends DatabaseObject {
 	        $p_sqlOptions = array();
 	    }
 	    if (!isset($p_sqlOptions["ORDER BY"])) {
-	        $p_sqlOptions["ORDER BY"] = array("l.Name" => "ASC");
+	        $p_sqlOptions["ORDER BY"] = array("Name" => "ASC");
 	    }
 		$queryStr = 'SELECT l.* FROM Issues AS i LEFT JOIN Languages AS l ON i.IdLanguage = l.Id '
 				. 'WHERE i.IdPublication = ' . $this->getPublicationId() . ' GROUP BY IdLanguage';

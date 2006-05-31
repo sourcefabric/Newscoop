@@ -25,17 +25,26 @@ $f_publication_id = Input::Get('f_publication_id');
 $manageUser =& new User($f_user_id);
 $subscription =& new Subscription($f_subscription_id);
 $publication =& new Publication($subscription->getPublicationId());
-$deleted = $subscription->delete();
-if ($deleted) {
-	header("Location: /$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
+
+if ($subscription->delete()) {
+	$uriPath = strtok($_SERVER['HTTP_REFERER'], "?");
+	$inSubscriptions = (strstr($uriPath, '/subscriptions') != '')
+						|| !$User->hasPermission('ManageUsers');
+	if ($inSubscriptions) {
+		$location = "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id";
+	} else {
+		$location = "/$ADMIN/users/edit.php?User=$f_user_id&uType=Subscribers";
+	}
+	header("Location: $location");
 	exit;
 }
+
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Subscribers"), "/$ADMIN/users/?uType=Subscribers");
 $crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'", 
 			"/$ADMIN/users/edit.php?User=$User&uType=Subscribers");
-$crumbs[] = array(getGS("Subscriptions"), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");			
+$crumbs[] = array(getGS("Subscriptions"), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
 $crumbs[] = array(getGS("Delete subscription"), "");
 echo camp_html_breadcrumbs($crumbs);
 

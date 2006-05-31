@@ -28,6 +28,20 @@ $f_subscription_type = Input::Get('f_subscription_type');
 $f_subscription_start_date = Input::Get('f_subscription_start_date');
 $f_add_sections_now = Input::Get('f_add_sections_now');
 $f_subscription_days = Input::Get('f_subscription_days');
+$f_in_subscriptions = Input::Get('f_in_subscriptions');
+
+if ($f_in_subscriptions) {
+	$location = "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id";
+} else {
+	$location = "/$ADMIN/users/edit.php?User=$f_user_id&uType=Subscribers";
+}
+
+if ((!is_array($f_language_id) || sizeof($f_language_id) == 0)
+	&& $f_language_set == 'select'){
+	camp_html_display_error("Unable to create the subscription: please select a language.",
+		"/$ADMIN/users/subscriptions/add.php?f_user_id=$f_user_id");
+	exit;
+}
 
 if ($f_language_set == 'all') {
 	$f_language_id = array('0');
@@ -52,7 +66,8 @@ if ($f_subscription_type != "T") {
 }
 
 if ($f_publication_id <= 0) {
-	camp_html_display_error("Unable to create the subscription: please select a publication.", "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
+	camp_html_display_error("Unable to create the subscription: please select a publication.",
+		"/$ADMIN/users/subscriptions/add.php?f_user_id=$f_user_id");
 	exit;
 }
 
@@ -64,7 +79,8 @@ $created = $subscription->create(array(
 	'Type' => $f_subscription_type));
 
 if (!$created) {
-	$errorMsgs[] = getGS('The subscription could not be added.').' '.getGS("Please check if there isn't another subscription to the same publication.");
+	$errorMsgs[] = getGS('The subscription could not be added.')
+				.' '.getGS("Please check if there isn't another subscription to the same publication.");
 }
 
 if ($created && ($f_add_sections_now == 'Y')) {
@@ -84,7 +100,7 @@ if ($created && ($f_add_sections_now == 'Y')) {
 	}
 }
 if (sizeof($errorMsgs) == 0) {
-	header("Location: /$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
+	header("Location: $location");
 	exit;
 }
 

@@ -27,6 +27,10 @@ $f_subscription_start_date = Input::Get('f_subscription_start_date', 'string', d
 $f_subscription_type = Input::Get('f_subscription_type', 'string', 'PN');
 $f_subscription_days = Input::Get('f_subscription_days', 'int', 0);
 
+$uriPath = strtok($_SERVER['HTTP_REFERER'], "?");
+$inSubscriptions = (strstr($uriPath, '/subscriptions') != '')
+					|| !$User->hasPermission('ManageUsers');
+
 $manageUser =& new User($f_user_id);
 $publications = Publication::GetPublications();
 $subscriptions = Subscription::GetSubscriptions(null, $f_user_id);
@@ -85,6 +89,7 @@ echo camp_html_breadcrumbs($crumbs);
 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php"  onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<input type="hidden" name="f_in_subscriptions" value="<?php print_r($inSubscriptions); ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Publication"); ?>:</TD>
