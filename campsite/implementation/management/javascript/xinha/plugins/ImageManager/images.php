@@ -198,6 +198,16 @@ function drawErrorBase(&$manager)
 	<?php drawFiles($list[1], $manager); ?>
 	</tr>
 </table>
+
+	<?php
+	$firstImage = array_shift($list[1]);
+	if (!empty($firstImage)) {	?>
+	<!-- automatically select the first image -->
+	<script>
+	selectImage(<?php echo $firstImage['template_id']; ?>, '<?php echo $firstImage['image_object']->getImageUrl(); ?>', '<?php echo $firstImage['alt']; ?>');
+	</script>
+	<?php } ?>
+
 <?php } else { drawNoResults(); } ?>
 </body>
 </html>
