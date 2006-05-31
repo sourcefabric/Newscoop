@@ -30,12 +30,10 @@ if (!$attachmentObj->exists()) {
 	header('HTTP/1.0 404 Not Found');
 	exit;
 }
-
 header('Content-Type: ' . $attachmentObj->getMimeType());
 header('Content-Disposition: ' . $attachmentObj->getContentDisposition()
-		. ", filename=" . $attachmentObj->getFileName());
-header('Content-Length: ' . $attachmentObj->getSizeInBytes());
-
+		. "; filename=\"" . $attachmentObj->getFileName() ."\"");
+header('Content-Length: "' . $attachmentObj->getSizeInBytes() .'"');
 $filePath = $attachmentObj->getStorageLocation();
 if (file_exists($filePath)) {
 	readfile($filePath);

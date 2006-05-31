@@ -2,8 +2,8 @@
 
 /**
  * The frame that contains the image to be edited.
- * @author $Author: paul $
- * @version $Id: editorFrame.php,v 1.1 2005/05/02 17:39:57 paul Exp $
+ * @author $Author$
+ * @version $Id$
  * @package ImageManager
  */
 

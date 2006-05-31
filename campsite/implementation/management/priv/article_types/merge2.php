@@ -43,7 +43,7 @@ if (count($errorMsgs)) {
 	$crumbs = array();
 	$crumbs[] = array(getGS("Configure"), "");
 	$crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-	$crumbs[] = array(getGS("Renaiming article type"), "");
+	$crumbs[] = array(getGS("Rename article type"), "");
 
 	echo camp_html_breadcrumbs($crumbs);
 
@@ -52,7 +52,7 @@ if (count($errorMsgs)) {
 	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 	<TR>
 		<TD COLSPAN="2">
-			<B> <?php  putGS("Merging article types: Step $1 of $2", "1", "3"); ?> </B>
+			<B> <?php  putGS("Merge Article Types: Step $1 of $2", "1", "3"); ?> </B>
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
 		</TD>
 	</TR>
@@ -111,10 +111,10 @@ echo camp_html_breadcrumbs($crumbs);
 		</tr>
 		<TR>
 			<TD align="center">
-				<u>&nbsp;&nbsp;&nbsp;&nbsp;<?php putGS("Source Article Type:");?>&nbsp;&nbsp;&nbsp;&nbsp;</u>
+				<u>&nbsp;&nbsp;&nbsp;&nbsp;<?php putGS("Source Article Type");?>:&nbsp;&nbsp;&nbsp;&nbsp;</u>
 			</TD>
 			<TD align="center" style="padding-left: 20px;">
-				<u>&nbsp;&nbsp;&nbsp;&nbsp;<?php putGS("Destination Article Type:"); ?>&nbsp;&nbsp;&nbsp;&nbsp;</u>
+				<u>&nbsp;&nbsp;&nbsp;&nbsp;<?php putGS("Destination Article Type"); ?>:&nbsp;&nbsp;&nbsp;&nbsp;</u>
 			</TD>
 		</TR>
 		<tr>

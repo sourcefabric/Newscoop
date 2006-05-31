@@ -1,7 +1,7 @@
 /**
  * The ImageManager plugin javascript.
- * @author $Author: paul $
- * @version $Id: campsite-image-manager.js,v 1.1 2005/05/02 17:39:57 paul Exp $
+ * @author $Author$
+ * @version $Id$
  * @package ImageManager
  */
 

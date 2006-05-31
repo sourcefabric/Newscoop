@@ -4,8 +4,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 global $Campsite;
 /**
  * Image Manager configuration file.
- * @author $Author: paul $
- * @version $Id: config.inc.php,v 1.1 2005/05/02 17:39:57 paul Exp $
+ * @author $Author$
+ * @version $Id$
  * @package ImageManager
  */
 

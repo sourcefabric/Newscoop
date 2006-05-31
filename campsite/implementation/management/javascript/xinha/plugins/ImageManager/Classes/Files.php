@@ -1,8 +1,8 @@
 <?php
 /**
  * File Utilities.
- * @author $Author: paul $
- * @version $Id: Files.php,v 1.1 2005/05/02 17:39:57 paul Exp $
+ * @author $Author$
+ * @version $Id$
  * @package ImageManager
  */
 
@@ -13,8 +13,8 @@ define('FILE_COPY_OK', 103);
 
 /**
  * File Utilities
- * @author $Author: paul $
- * @version $Id: Files.php,v 1.1 2005/05/02 17:39:57 paul Exp $
+ * @author $Author$
+ * @version $Id$
  * @package ImageManager
  * @subpackage files
  */
