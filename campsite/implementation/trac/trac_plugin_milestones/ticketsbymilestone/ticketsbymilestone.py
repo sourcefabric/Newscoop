@@ -6,7 +6,7 @@ from trac.web.main import IRequestHandler
 from trac.util import escape, Markup
 import time
 
-class UserbaseModule(Component):
+class TicketsByMilestone (Component):
     implements(INavigationContributor, IRequestHandler)
 
     # INavigationContributor methods
@@ -25,7 +25,6 @@ class UserbaseModule(Component):
         return req.path_info == '/ticketsbymilestone'
 
     def process_request (self, req):
-        time.sleep(.5)
         req.redirect (self.env.href.report() + "/3")
 
         
