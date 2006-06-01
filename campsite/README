@@ -1,11 +1,11 @@
 Campsite
-version     : 2.6-dev
-release date: March 6, 2006
+version     : 2.6.0 "Joey"
+release date: June 6, 2006
 contact     : contact@campware.org
 url         : http://www.campware.org
 copyright   : (c)1999-2006 Media Development Loan Fund
 support     : mailto: campsite-support@campware.org; subject: subscribe
-manual      : http://code.campware.org/manuals/campsite/2.5/
+manual      : http://code.campware.org/manuals/campsite/2.6/
 
 INTRODUCTION
 
@@ -16,9 +16,9 @@ Campsite follows the print-newspaper publishing paradigm, so it
 structures sites by default as Publications > Issues > Sections >
 Articles.
 
-Campsite is available in: English, Portuguese, Spanish, German,
-Russian, Arabic, Chinese, Serbian (Cyrillic), Serbo-Croatian (Latin),
-Croatian, Czech, Swedish, and Romanian.  However, the interface can
+Campsite is available in: Arabic, Chinese, Croatian, Czech, Dutch, English,
+German, Korean, Portuguese, Romanian, Russian, Serbian (Cyrillic),
+Serbo-Croatian (Latin), Spanish, and Swedish.  However, the interface can
 easily be localized to new languages using its built-in 'Localizer'.
 
 With Campsite you can:
@@ -31,20 +31,21 @@ With Campsite you can:
       "Body" and "Author Bio".
    4. Incorporate images into your articles
    5. Attach files to articles
-   6. Categorize your articles with topics
-   7. Schedule articles for release in the future
-   8. Require a copy-flow process to ensure quality of content: the
+   6. Allow site visitors to comment on your articles
+   7. Categorize your articles with topics
+   8. Schedule articles for release in the future
+   9. Require a copy-flow process to ensure quality of content: the
       journalist writes the article, the editor reviews and edits
       the content, and then the article is published.
-   9. Have full control over the look of your web site
-  10. Exercise fine-grained access control for different types of staff
+  10. Have full control over the look of your web site
+  11. Exercise fine-grained access control for different types of staff
       users, for example: journalist, editor, designer, etc.
-  11. Manage subscribers and allow:
+  12. Manage subscribers and allow:
          1. time trials
          2. pay periods
          3. IP access control for group subscriptions
-  12. Localize the administration interface to new languages
-  13. Build third-party plugins using the PHP object-oriented API
+  13. Localize the administration interface to new languages
+  14. Build third-party plugins using the PHP object-oriented API
 
 We encourage further development of this software and would like to
 make any progress accessible to all other users. Please contact us
@@ -56,11 +57,11 @@ See the INSTALL file
 
 
 MANUAL
-See http://code.campware.org/manuals/campsite/2.5/
+See http://code.campware.org/manuals/campsite/2.6/
 
 
 TECHNICAL REQUIREMENTS
-See http://code.campware.org/manuals/campsite/2.5/index.php?id=5
+See http://code.campware.org/manuals/campsite/2.6/index.php?id=5
 
 
 COPYRIGHT

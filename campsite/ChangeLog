@@ -1,3 +1,126 @@
+2.6.0 (June 6, 2006)
+  For full details about these changes, see:
+  http://code.campware.org/projects/campsite/query?milestone=2.6.0
+
+  New Features
+  ------------
+  - Frontend users can post comments on articles & articles can be moderated
+    by the staff.
+  - 'Article Types' screen re-engineered with the ability to rename article
+    types, to translate them, to hide or show them, and merge them together.
+    Article Type Fields can be renamed, translated, hidden, and can change
+    types.
+  - Improved security for the login screen.  The password is encrypted when
+    it is sent to the server, and if too many unsuccessful login attempts are
+    made, a CAPTCHA is displayed.  This prevents automated scripting attacks
+    trying to guess passwords.
+  - If an error occurs in the admin interface, automated bug reporter takes
+    over and allows the user to submit the bug back to the Campsite team
+    automatically.  This takes away any extra effort on the part of the users
+    to submit a bug and will allow quick resolution of anything that comes up.
+
+  Minor Features
+  --------------
+  - You can now specify the time format (hours, minutes, seconds) for time
+    values in the templates.
+  - A 'Save and Close' button has been added to the bottom of the
+    'Article Edit' screen
+  - Improved layout of the Article Edit screen - more compact, more obvious
+    switching between the "Edit/View" modes, and the time the article was
+    saved is displayed.
+  - When an article is locked, you are given the option to view it without
+    unlocking it.
+  - #1844: Section number is now displayed in the Section configure screen
+  - #1884: Better installation procedure for the "Parser options" section
+  - #1927: Xinha photo popup defaults to first image selected
+  - A number of things were done to speed up the Admin interface
+  - API improved & simplified
+
+  Bugs Fixed
+  ----------
+  - #1919: Inserting image fails when caption and alt text erased in Xinha popup
+  - #1585: URL type is not localized
+  - #1685: Article attachments sometimes have the wrong file name when you
+    download them
+  - #1789: When deleting a section, only delete the articles of the same
+    language as the section
+  - #1821: Changing a user type does not change permissions for all users of
+    that user type
+  - #1827: Add "Other" option to user employer type
+  - #1828: Templates: No way to set "Language OFF"
+  - #1865: Creating an article with a duplicate name gives an uninformative
+    error
+  - #1908: If you try to save the publication without changing anything,
+    you get an error
+  - #1914: Campsite Indexer and other scripts should display the instance name
+  - #1918: Issue edit screen allows issues with number 0
+  - #1939: Trying to use an issue number that already exists crashes
+  - #1946: 'Add attachment' gives an uninformative error message when the
+    server is not able to write the file to the destination directory
+  - #1938: Adding a new subscription crashes when there are no issues
+  - #1949: No error given if there is a problem uploading an image
+  - #1975: On the frontend, the subscription form javascript doesn't work
+    when some fields are predefined
+  - #1763: Article Edit: Going into view mode should automatically unlock
+    the article
+  - #1767: Deleting an article type doesnt warn you that you will delete all
+    articles of that type
+  - #1943: Message not clear enough when deleting an issue that contains
+    articles
+
+
+2.5.2 (May 11, 2006)
+  New Features
+  ------------
+  - Added Korean localization
+
+  Bugs Fixed
+  ----------
+  - Article internal links don't work for multiple publications
+  - Demo templates don't display the correct article in "About us" section
+  - The script campsite-create-instance was not set executable
+
+2.5.1 (April 10, 2006)
+  New Features
+  ------------
+  Full localizations for the following languages were added:
+  1.  French (new!) (Rokhaya Ndiour)
+  2.  Arabic (Read Neshiewat <raed@raednesh.com>)
+  3.  Croatian (Marinko Filipović <marinko.filipovic@gmail.com>)
+  4.  German (Micz Flor <micz.flor@web.de>)
+  5.  Portugues (Guilherme Henrique Soares <ghsoares@publicor.pt>)
+  6.  Romanian (George Hari Popescu)
+  7.  Russian (Andrei Blagorazumov <a@fnr.ru>)
+  8.  Serbian (Cyrillic) (Ljuba Rankovic <sr-localizer@campware.org>)
+  9.  Serbo-Croatian (Latin) (Ljuba Rankovic <sr-localizer@campware.org>)
+  10. Swedish (Erik Dalén <dalen@jpl.se>)
+
+  A demo server was added which allows you to test-drive Campsite.
+  You can access the demo administration interface here:
+      http://campsite-demo.campware.org/admin
+  and see the demo frontend here:
+      http://campsite-demo.campware.org/
+
+  Bugs Fixed
+  ----------
+  - Xinha cant handle more than 9 images in an article
+  - Xinha subheads sometimes dont work
+  - User creation date shows up incorrectly
+  - Topics: Root topic language should default to login language
+  - Parts of the Home page formatted wrong when there are no articles
+  - Minor bug in localizer when installing
+  - PHP notice in "Add new user type" (most users would never see it)
+  - "65 or over" string not translated
+  - 'Users' & 'Help' string in the main menu is not translated
+  - Not all main menu items are escaped for javascript (caused the
+    main menu not to show up in French)
+  - Updated Manual with documentation for 2.5 features
+  - The article indexer doesn't work with a blank database
+  - Scripts from older versions of Campsite are not deleted
+    automaticaly when upgrading. They are: autopublish, gather,
+    notifyendsubs and notifyevents.
+
+
 2.5.0 (March 6, 2006)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.5.0
@@ -16,12 +139,12 @@
     placed in a publication/issue/section.
   - Added the ability to subscribe to a section of a specific language,
     instead of all languages in a section.
-  - Added the ability to create an article-type field that lists 
+  - Added the ability to create an article-type field that lists
     topics in a dropdown list.
   - Added the ability to print only the first paragraph of a story.
   - Added Swedish translation.
   - Campsite no longer tries to install PEAR libraries on the system at
-    install time, instead it will use the ones we have added to the 
+    install time, instead it will use the ones we have added to the
     release.  This will eliminate one of our main install problems.
 
   Added permissions:

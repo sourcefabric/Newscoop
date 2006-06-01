@@ -1,13 +1,34 @@
 Campsite Credits (by Version Number)
 
 --------------------
+Campsite 2.6 Credits
+--------------------
+Released June 6, 2006
+
+- Mugurel Rus (mugur1973@yahoo.com):
+  Campsite parser, install scripts, documentation
+
+- Paul Baranowski (paul@paulbaranowski.org):
+  Article comments, integration of login security, documentation
+
+- Peter Hartman (peterjohnhartman@gmail.com):
+  Redesigned article types admin
+
+- Raed Neshiewat (raed@tamamtech.com) & Fadi Abu Essa (fadi@tamamtech.com)
+  Login security
+
+- Sava Tatic (sava.tatic@mdlf.org):
+  Management
+
+
+--------------------
 Campsite 2.5 Credits
 --------------------
 Released March 6, 2006
 
 - Mugurel Rus (mugur1973@yahoo.com):
-  Subscribe by language, Campsite parser, database, admin interface, install scripts,
-  documentation
+  Subscribe by language, Campsite parser, database, admin interface,
+  install scripts, documentation
 
 - Paul Baranowski (paul@paulbaranowski.org):
   New topic screen, ability to create an article without first categorizing it,
