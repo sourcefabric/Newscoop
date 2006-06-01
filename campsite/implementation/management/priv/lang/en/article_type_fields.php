@@ -13,7 +13,6 @@ regGS("The translation could not be added.", "The translation could not be added
 regGS("The field $1 does not exist.", "The field $1 does not exist.");
 regGS("The field $1 does not already exist.", "The field $1 does not already exist.");
 regGS("The $1 field may only contain letters and underscore (_) character.", "The $1 field may only contain letters and underscore (_) character.");
-regGS("Text", "Text");
 regGS("Template Field Name", "Template Field Name");
 regGS("Show/Hide", "Show/Hide");
 regGS("Show display names", "Show display names");
@@ -23,7 +22,6 @@ regGS("Rename field", "Rename field");
 regGS("Reassign a field type", "Reassign a field type");
 regGS("Hide display names", "Hide display names");
 regGS("Display Name", "Display Name");
-regGS("Article body", "Article body");
 regGS("Are you sure you want to $1 the article type field $2?", "Are you sure you want to $1 the article type field $2?");
 regGS("Adding new article type", "Adding new article type");
 regGS("Add translation:", "Add translation:");
