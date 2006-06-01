@@ -153,6 +153,7 @@ function camp_report_bug($p_number, $p_string, $p_file, $p_line)
 {
 
     global $ADMIN_DIR, $ADMIN, $Campsite;
+    load_common_include_files ("bug_reporting");
 
     // --- Return on unimportant errors ---
     if ($Campsite['DEBUG'] == false) {
@@ -167,9 +168,9 @@ function camp_report_bug($p_number, $p_string, $p_file, $p_line)
         }
 
     // --- Return on socket errros ---
-    if (preg_match ('/^fsockopen/i', $p_string)){
-        return;
-    }
+//     if (preg_match ('/^fsockopen/i', $p_string)){
+//         return;
+//     }
 
     // --- Don't print out the previous screen (in which the error occurred). ---
     ob_end_clean();
