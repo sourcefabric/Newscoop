@@ -2897,7 +2897,18 @@ int CActSubscription::takeAction(CContext& c, sockstream& fs)
 	}
 	CContext lc = c;
 	lc.SetByPublication(by_publication);
-	string coSubsType = (c.SubsType() == ST_TRIAL ? "trial" : "paid");
+	string coSubsType = (lc.SubsType() == ST_TRIAL ? "trial" : "paid");
+	fs << "<form action=\"" << encodeHTML(pcoURL->getURIPath(), lc.EncodeHTML())
+			<< "\" name=\"subscription_form\" method=\"POST\">\n"
+			<< "<input type=\"hidden\" name=\"" << P_TEMPLATE_ID
+			<< "\" value=\"" << m_nTemplateId << "\">\n"
+			<< "<input type=\"hidden\" name=\"" << P_SUBSTYPE << "\" value=\""
+			<< encodeHTML(coSubsType, lc.EncodeHTML()) << "\">\n"
+			<< "<input type=\"hidden\" name=\"tx_subs\" value=\"" << lc.SubsTimeUnits() << "\">\n"
+			<< "<input type=\"hidden\" name=\"nos\" value=\"" << nos << "\">\n"
+			<< "<input type=\"hidden\" name=\"unitcost\" value=\"" << nUnitCost << "\">\n"
+			<< "<input type=\"hidden\" name=\"unitcostalllang\" value=\""
+			<< nUnitCostAllLang << "\">" << endl;
 	fs << "<script>\n"
 			"function ToggleElementEnabled(id) {\n"
 			"	if (document.getElementById(id).disabled) {\n"
@@ -2907,28 +2918,25 @@ int CActSubscription::takeAction(CContext& c, sockstream& fs)
 			"	}\n"
 			"}\n"
 			"</script>\n";
-	fs << "<form action=\"" << encodeHTML(pcoURL->getURIPath(), c.EncodeHTML())
-			<< "\" name=\"subscription_form\" method=\"POST\">\n"
-			<< "<input type=\"hidden\" name=\"" << P_TEMPLATE_ID
-			<< "\" value=\"" << m_nTemplateId << "\">\n"
-			<< "<input type=\"hidden\" name=\"" << P_SUBSTYPE << "\" value=\""
-			<< encodeHTML(coSubsType, c.EncodeHTML()) << "\">\n"
-			<< "<input type=\"hidden\" name=\"tx_subs\" value=\"" << c.SubsTimeUnits() << "\">\n"
-			<< "<input type=\"hidden\" name=\"nos\" value=\"" << nos << "\">\n"
-			<< "<input type=\"hidden\" name=\"unitcost\" value=\"" << nUnitCost << "\">\n"
-			<< "<input type=\"hidden\" name=\"unitcostalllang\" value=\""
-			<< nUnitCostAllLang << "\">\n";
 	runActions(block, lc, fs);
-	if (c.SubsType() == ST_PAID && total != "")
+	if (lc.SubsType() == ST_PAID && total != "")
 	{
-		fs << encodeHTML(total, c.EncodeHTML())
+		fs << encodeHTML(total, lc.EncodeHTML())
 				<< " <input type=\"text\" name=\"suma\" size=\"10\" READONLY> "
-				<< encodeHTML(currency, c.EncodeHTML()) << endl;
+				<< encodeHTML(currency, lc.EncodeHTML()) << endl;
 	}
-	fs << c.URL()->getFormString();
-	if (c.SubsType() == ST_PAID && evaluate != "")
+	lc.URL()->deleteParameter(P_TEMPLATE_ID);
+	lc.URL()->deleteParameter(P_SUBSTYPE);
+	lc.URL()->deleteParameter("tx_subs");
+	lc.URL()->deleteParameter("nos");
+	lc.URL()->deleteParameter("suma");
+	lc.URL()->deleteParameter("unitcost");
+	lc.URL()->deleteParameter("unitcostalllang");
+	lc.URL()->deleteParameter("subs_all_languages");
+	fs << lc.URL()->getFormString();
+	if (lc.SubsType() == ST_PAID && evaluate != "")
 	{
-		fs << "<p><input type=\"button\" value=\"" << encodeHTML(evaluate, c.EncodeHTML())
+		fs << "<p><input type=\"button\" value=\"" << encodeHTML(evaluate, lc.EncodeHTML())
 				<< "\" onclick=\"update_subscription_payment()\"></p>\n";
 	}
 	if (by_publication)
@@ -2937,8 +2945,8 @@ int CActSubscription::takeAction(CContext& c, sockstream& fs)
 				"<input type=\"hidden\" name=\"cb_subs\" value=\"0\">\n";
 	}
 	fs << "<p><input type=\"submit\" name=\"" P_SUBSCRIBE "\" value=\""
-			<< encodeHTML(button_name, c.EncodeHTML()) << "\"></p>\n</form>\n";
-	if (c.SubsType() == ST_PAID && total != "")
+			<< encodeHTML(button_name, lc.EncodeHTML()) << "\"></p>\n</form>\n";
+	if (lc.SubsType() == ST_PAID && total != "")
 	{
 		fs << "<script>\n"
 				"function element_exists(object, property) {\n"
@@ -2987,6 +2995,13 @@ int CActSubscription::takeAction(CContext& c, sockstream& fs)
 				"	my_form.suma.value = Math.round(100 * sum * unitcost * lang_count) / 100\n"
 				"}\n"
 				"update_subscription_payment()\n"
+				"</script>\n";
+	}
+	else
+	{
+		fs << "<script>\n"
+				"function update_subscription_payment() {\n"
+				"}\n"
 				"</script>\n";
 	}
 	return RES_OK;
@@ -3134,14 +3149,13 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 					<< m_nSize << "\"" << (m_bMultipleSelect ? " multiple" : "")
 					<< " onchange=\"update_subscription_payment()\" id=\"select_language\">\n";
 			MYSQL_ROW row;
+			buf.str("");
+			buf << c.Language();
 			while ((row = mysql_fetch_row(*res)))
 			{
-				id_type nLanguageId = atol(row[0]);
-				fs << "<option value=\"" << nLanguageId << "\""
-						<< (nLanguageId == c.Language() ? " selected" : "") << ">"
-						<< encodeHTML(row[1], c.EncodeHTML()) << "</option>\n";
+				printOption(row[0], buf.str(), row[1], fs, c.EncodeHTML());
 			}
-			fs << "</select>\n";
+			fs << "</select>" << endl;
 		}
 		else if (case_comp(field, "AllLanguages") == 0)
 		{
@@ -3159,15 +3173,12 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 		}
 		else if (case_comp(field, "Title") == 0)
 		{
-			fs << "<select name=\"User" << field << "\">"
-			<< "<option value=\"Mr.\"" << (attrval == "Mr." ? " selected" : "")
-			<< ">Mr.</option>"
-			<< "<option value=\"Mrs.\"" << (attrval == "Mrs." ? " selected" : "")
-			<< ">Mrs.</option>"
-			<< "<option value=\"Ms.\"" << (attrval == "Ms." ? " selected" : "")
-			<< ">Ms.</option>"
-			<< "<option value=\"Dr.\"" << (attrval == "Dr." ? " selected" : "")
-			<< ">Dr.</option></select>\n";
+			fs << "<select name=\"User" << field << "\">" << endl;
+			printOption("Mr.", attrval, "Mr.", fs, c.EncodeHTML());
+			printOption("Mrs.", attrval, "Mrs.", fs, c.EncodeHTML());
+			printOption("Ms.", attrval, "Ms.", fs, c.EncodeHTML());
+			printOption("Dr.", attrval, "Dr.", fs, c.EncodeHTML());
+			fs << "</select>" << endl;
 			return RES_OK;
 		}
 		else if (case_comp(field, "Gender") == 0)
@@ -3182,37 +3193,30 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 		}
 		else if (case_comp(field, "Age") == 0)
 		{
-			fs << "<select name=\"User" << field << "\">"
-			<< "<option value=\"0-17\"" << (attrval == "0-17" ? " selected" : "")
-			<< ">under 18</option>"
-			<< "<option value=\"18-24\"" << (attrval == "18-24" ? " selected" : "")
-			<< ">18-24</option>"
-			<< "<option value=\"25-39\"" << (attrval == "25-39" ? " selected" : "")
-			<< ">25-39</option>"
-			<< "<option value=\"40-49\"" << (attrval == "40-49" ? " selected" : "")
-			<< ">40-49</option>"
-			<< "<option value=\"50-65\"" << (attrval == "50-65" ? " selected" : "")
-			<< ">50-65</option>"
-			<< "<option value=\"65-\"" << (attrval == "65-" ? " selected" : "")
-			<< ">65 or over</option></select>\n";
+			fs << "<select name=\"User" << field << "\">" << endl;
+			printOption("0-17", attrval, "0-17", fs, c.EncodeHTML());
+			printOption("18-24", attrval, "18-24", fs, c.EncodeHTML());
+			printOption("25-39", attrval, "25-39", fs, c.EncodeHTML());
+			printOption("40-49", attrval, "40-49", fs, c.EncodeHTML());
+			printOption("50-65", attrval, "50-65", fs, c.EncodeHTML());
+			printOption("65-", attrval, "65 or over", fs, c.EncodeHTML());
+			fs << "</select>" << endl;
 			return RES_OK;
 		}
 		else if (case_comp(field, "EmployerType") == 0)
 		{
-			fs << "<select name=\"User" << field << "\">"
-			<< "<option value=\"\""
-			<< (attrval == "" ? " selected" : "") << "></option>"
-			<< "<option value=\"Corporate\""
-			<< (attrval == "Corporate" ? " selected" : "") << ">Corporate</option>"
-			<< "<option value=\"NGO\""
-			<< (attrval == "NGO" ? " selected" : "") << ">Non-Governmental Organisation</option>"
-			<< "<option value=\"Government Agency\""
-			<< (attrval == "Government Agency" ? " selected" : "")
-			<< ">Government Agency</option>"
-			<< "<option value=\"Academic\""
-			<< (attrval == "Academic" ? " selected" : "") << ">Academic</option>"
-			<< "<option value=\"Media\""
-			<< (attrval == "Media" ? " selected" : "") << ">Media</option></select>\n";
+			if (attrval == "")
+			{
+				attrval = "Other";
+			}
+			fs << "<select name=\"User" << field << "\">" << endl;
+			printOption("Corporate", attrval, "Corporate", fs, c.EncodeHTML());
+			printOption("NGO", attrval, "Non-Governmental Organisation", fs, c.EncodeHTML());
+			printOption("Government Agency", attrval, "Government Agency", fs, c.EncodeHTML());
+			printOption("Academic", attrval, "Academic", fs, c.EncodeHTML());
+			printOption("Media", attrval, "Media", fs, c.EncodeHTML());
+			printOption("Other", attrval, "Other", fs, c.EncodeHTML());
+			fs << "</select>" << endl;
 			return RES_OK;
 		}
 		else if (strncasecmp(field.c_str(), "Pref", 4) == 0)
@@ -3224,19 +3228,20 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 			return RES_OK;
 		}
 		else
+		{
 			return ERR_INVALID_FIELD;
+		}
 		SQLQuery(&m_coSql, buf.str().c_str());
 		StoreResult(&m_coSql, res);
 		CheckForRows(*res, 1);
-		fs << "<select name=\"User" << field << "\"><option value=\"\">-</option>";
+		fs << "<select name=\"User" << field << "\">" << endl;
+		printOption("", attrval, "", fs, c.EncodeHTML());
 		MYSQL_ROW row;
 		while ((row = mysql_fetch_row(*res)))
 		{
-			fs << "<option value=\"" << encodeHTML(row[0], c.EncodeHTML()) << "\""
-					<< (attrval == row[0] ? " selected" : "") << ">"
-					<< encodeHTML(row[1], c.EncodeHTML()) << "</option>";
+			printOption(row[0], attrval, row[1], fs, c.EncodeHTML());
 		}
-		fs << "</select>\n";
+		fs << "</select>" << endl;
 	}
 	else if (modifier == CMS_ST_SEARCH)
 	{
@@ -3260,6 +3265,14 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 	}
 	return RES_OK;
 	TK_CATCH_ERR
+}
+
+void CActSelect::printOption(const string& p_rcoValue, const string& p_rcoDefaultValue,
+							 const string& p_rcoOption, sockstream& fs, bool p_bEncodeHTML)
+{
+	fs << "\t<option value=\"" << encodeHTML(p_rcoValue, p_bEncodeHTML)
+			<< (p_rcoValue == p_rcoDefaultValue ? "\" selected>" : "\">")
+			<< encodeHTML(p_rcoOption, p_bEncodeHTML) << "</option>" << endl;
 }
 
 // takeAction: performs the action

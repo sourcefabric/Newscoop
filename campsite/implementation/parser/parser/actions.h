@@ -1130,6 +1130,9 @@ public:
 
 	// validModifier: return true if modifier is valid; false otherwise
 	static bool validModifier(int m) { return s_coModifiers.validModifier(m); }
+
+	static void printOption(const string& p_rcoValue, const string& p_rcoDefaultValue,
+							const string& p_rcoOption, sockstream& fs, bool p_bEncodeHTML);
 };
 
 // CActUser: User action - corresponding to User statement (see manual)
