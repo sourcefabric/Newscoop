@@ -296,13 +296,16 @@ if (!$isNewUser) {
 				<td align="right" nowrap><?php putGS("Employer Type"); ?>:</td>
 				<td>
 					<SELECT name="EmployerType" class="input_select">
-					<OPTION></OPTION>
 					<?php
+					if ($EmployerType == "") {
+						$EmployerType = "Other";
+					}
 					camp_html_select_option('Corporate', $EmployerType, getGS('Corporate'));
 					camp_html_select_option('NGO', $EmployerType, getGS('Non-Governmental Organisation'));
 					camp_html_select_option('Government Agency', $EmployerType, getGS('Government Agency'));
 					camp_html_select_option('Academic', $EmployerType, getGS('Academic'));
 					camp_html_select_option('Media', $EmployerType, getGS('Media'));
+					camp_html_select_option('Other', $EmployerType, getGS('Other'));
 					?>
 					</SELECT>
 				</td>
