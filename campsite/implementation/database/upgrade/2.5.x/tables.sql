@@ -29,7 +29,7 @@ ALTER TABLE `Articles` ADD `time_updated` TIMESTAMP NOT NULL ;
 ALTER TABLE `Users` ADD `fk_user_type` VARCHAR( 140 ) NULL DEFAULT NULL AFTER `Reader` ;
 
 -- Initialize the users type
-system php ./init_user_type.php
+system php ./init_user_types.php
 
 --
 -- Article Comments
