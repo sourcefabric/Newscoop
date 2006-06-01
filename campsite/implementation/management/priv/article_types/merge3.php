@@ -206,7 +206,7 @@ if ($ok) {
         			<?php
         		} else if (count($tmp) > 1) {
         			?>
-        			<LI><FONT COLOR="TAN"><?php putGS("Merge $1 into $2", "<b>".$srcColumn."</b>", "<b>". $destColumn ."</b>"); ?> <?php putGS("(Duplicate warning.)"); ?></FONT></LI>
+        			<LI><FONT COLOR="TAN"><?php putGS("Merge $1 into $2", "<b>".$srcColumn."</b>", "<b>". $destColumn ."</b>"); ?></FONT> <?php putGS("(Duplicate warning.)"); ?></FONT></LI>
         			<?php
         		} else {
         			?>
@@ -219,7 +219,7 @@ if ($ok) {
         	// do the warning if they select NONE in red
         	foreach ($src->m_dbColumns as $srcColumn) {
         		if (!in_array($srcColumn->getPrintName(), $f_src_c))
-        			?><LI><FONT COLOR="RED"><?php putGS("(!) Do NOT merge $1", "<B>". $srcColumn->getPrintName() ."</B>"); ?> <?php putGS("(No merge warning.)"); ?></FONT></LI><?php
+        			?><LI><FONT COLOR="RED"><?php putGS("(!) Do NOT merge $1 (No merge warning).", "<B>". $srcColumn->getPrintName() ."</B>"); ?></FONT></LI><?php
         	} ?>
         	</UL>
         	</TD>
@@ -465,7 +465,7 @@ if ($ok) {
         	<INPUT TYPE="CHECKBOX" NAME="f_delete"><?php putGS("Delete the source article type ($1) when finished.", $src->getDisplayName()); ?>
         	</TD>
         	<TD>
-        	<b><?php putGS('Clicking "Merge" will merge ($1) article(s).', $src->getNumArticles()); ?></b>
+        	<b><?php putGS("Clicking \"Merge\" will merge ($1) article(s).", $src->getNumArticles()); ?></b>
         	</TD>
         <TR>
         	<TD COLSPAN="2">
@@ -494,7 +494,7 @@ if (!$ok) {
     $crumbs = array();
     $crumbs[] = array(getGS("Configure"), "");
     $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-    $crumbs[] = array(getGS("Rename article type"), "");
+    $crumbs[] = array(getGS("Renaiming article type"), "");
 
     echo camp_html_breadcrumbs($crumbs);
 
@@ -503,7 +503,7 @@ if (!$ok) {
     <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
     <TR>
     	<TD COLSPAN="2">
-    		<B> <?php  putGS("Merge article type"); ?> </B>
+    		<B> <?php  putGS("Merging article type"); ?> </B>
     		<HR NOSHADE SIZE="1" COLOR="BLACK">
     	</TD>
     </TR>

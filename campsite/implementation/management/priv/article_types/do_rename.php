@@ -67,7 +67,7 @@ if (empty($f_name)) {
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-$crumbs[] = array(getGS("Rename article type"), "");
+$crumbs[] = array(getGS("Renaiming article type"), "");
 
 echo camp_html_breadcrumbs($crumbs);
 
@@ -76,7 +76,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Rename article type"); ?> </B>
+		<B> <?php  putGS("Renaming article type"); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
