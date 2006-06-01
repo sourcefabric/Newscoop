@@ -1,4 +1,4 @@
-INSTALLATION PROCEDURE FOR CAMPSITE V.2.5.x
+INSTALLATION PROCEDURE FOR CAMPSITE V.2.6.x
 http://www.campware.org
 
 CONTENTS:
@@ -75,7 +75,7 @@ INSTALLATION - the usual procedure
 
    IMPORTANT!!!
    If your MySQL configuration is not the default one you'll have to run
-   the create instance script separately, after installation. Read 
+   the create instance script separately, after installation. Read
    instructions from install script.
 
 4. Configure the default instance
