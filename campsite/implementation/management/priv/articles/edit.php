@@ -197,7 +197,6 @@ if ($articleObj->userCanModify($User) && $locked && ($f_edit_mode == "edit")) {
 				}
 				?>
 				<br>
-				<?php //putGS('Are you sure you want to unlock it?'); ?>
 			</BLOCKQUOTE>
 		</TD>
 	</TR>
