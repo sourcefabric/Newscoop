@@ -370,12 +370,16 @@ class AutoTrac(Component):
             # --- Remove unwanted backslashes before quotes ---
             summary = re.sub (r'''\\(\'|\")''', r'\1', summary)
 
+        _errorMessage = req.args.get ('f_str')
+        if _errorMessage == None:
+            _errorMessage = ""
+
         description = req.args.get('f_backtrace')
         if description == None:
             description = "";
         else:
             description = urllib.unquote_plus (description)
-            description = "{{{\n" + description + "\n}}}"
+            description = "{{{\n" + _errorMessage + "\n\n" + description + "\n}}}"
             description = summary + "\n" + description
 
         reporter = req.args.get('f_email')
