@@ -729,29 +729,33 @@ if ($f_edit_mode == "edit") { ?>
 				<?php echo $articleTypeField->getDisplayName(); ?>:
 			</td>
 			<td>
-				<select class="input_select" name="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>>
-				<option value="0"></option>
-				<?php
-				$TOL_Language = Input::Get('TOL_Language');
-				$currentLanguage =& new Language($TOL_Language);
-				$currentLanguageId = $currentLanguage->getLanguageId();
-				foreach ($subtopics as $topicPath) {
-					$printTopic = array();
-					foreach ($topicPath as $topicId => $topic) {
-						$translations = $topic->getTranslations();
-						if (array_key_exists($currentLanguageId, $translations)) {
-							$currentTopic = $translations[$currentLanguageId];
-						} elseif ( ($currentLanguageId != 1) && array_key_exists(1, $translations)) {
-							$currentTopic = $translations[1];
-						} else {
-							$currentTopic = end($translations);
-						}
-						$printTopic[] = $currentTopic;
-					}
-					camp_html_select_option($topicId, $articleTopicId, implode(" / ", $printTopic));
-				}
-				?>
-				</select>
+			    <?php if (count($subtopics) == 0) { ?>
+			    No subtopics available.
+    			<?php } else { ?>
+    				<select class="input_select" name="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>>
+    				<option value="0"></option>
+    				<?php
+    				$TOL_Language = Input::Get('TOL_Language');
+    				$currentLanguage =& new Language($TOL_Language);
+    				$currentLanguageId = $currentLanguage->getLanguageId();
+    				foreach ($subtopics as $topicPath) {
+    					$printTopic = array();
+    					foreach ($topicPath as $topicId => $topic) {
+    						$translations = $topic->getTranslations();
+    						if (array_key_exists($currentLanguageId, $translations)) {
+    							$currentTopic = $translations[$currentLanguageId];
+    						} elseif ( ($currentLanguageId != 1) && array_key_exists(1, $translations)) {
+    							$currentTopic = $translations[1];
+    						} else {
+    							$currentTopic = end($translations);
+    						}
+    						$printTopic[] = $currentTopic;
+    					}
+    					camp_html_select_option($topicId, $articleTopicId, implode(" / ", $printTopic));
+    				}
+    				?>
+    				</select>
+            <?php } ?>
 			</td>
 			</tr>
 			<?php
