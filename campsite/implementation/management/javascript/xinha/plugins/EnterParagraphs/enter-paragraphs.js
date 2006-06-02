@@ -700,12 +700,15 @@ EnterParagraphs.prototype.processRng = function(rng, search_direction, roam, nei
 	  }
 
 	// NODE TYPE 11 is DOCUMENT_FRAGMENT NODE
-
-  if ( cnt.nodeType == 11 && !cnt.firstChild )
-		{
-		cnt.appendChild(editor._doc.createElement(pify.nodeName));
-		}
-
+  // I do not profess to understand any of this, simply applying a patch that others say is good - ticket:446
+  if ( cnt.nodeType == 11 && !cnt.firstChild)
+  {	
+    if (pify.nodeName != "BODY" || (pify.nodeName == "BODY" && pifyOffset != 0)) 
+    { //WKR: prevent body tag in empty doc
+      cnt.appendChild(editor._doc.createElement(pify.nodeName));
+    }
+  }
+  
 	// YmL: Added additional last parameter for fill case to work around logic
 	// error in forEachNode()
 

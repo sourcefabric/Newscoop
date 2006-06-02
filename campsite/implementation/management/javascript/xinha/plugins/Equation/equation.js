@@ -66,13 +66,13 @@ Equation.prototype.insertOperation = function(editor,params) {
 
 	switch (cur_operation) {
 		case "less_equal":
-			editor.insertHTML('<img src="../plugins/Equation/img/dsp_less_equal.gif" style="position:relative; top:4px;">');
+			editor.insertHTML('<img src="' + _editor_url + '/plugins/Equation/img/dsp_less_equal.gif" style="position:relative; top:4px;">');
 		break;
 		case "greater_egual":
-			editor.insertHTML('<img src="../plugins/Equation/img/dsp_greater_equal.gif" style="position:relative; top:4px;">');
+			editor.insertHTML('<img src="' + _editor_url + '/plugins/Equation/img/dsp_greater_equal.gif" style="position:relative; top:4px;">');
 		break;
 		case "notequal":
-			editor.insertHTML('<img src="../plugins/Equation/img/dsp_notequal.gif" style="position:relative; top:4px;">');
+			editor.insertHTML('<img src="' + _editor_url + '/plugins/Equation/img/dsp_notequal.gif" style="position:relative; top:4px;">');
 		break;
 		case "mul":
 			editor.insertHTML('&nbsp;*&nbsp;');

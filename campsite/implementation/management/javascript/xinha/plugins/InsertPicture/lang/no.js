@@ -9,7 +9,7 @@
   "Alternate text:": "Alternativ tekst",  
   "Layout": "Oppsett",
   "Alignment:": "Plassering",
-  "Border thickness:": "Ramme tykkelse:",
+  "Border thickness:": "Rammetykkelse:",
   "Spacing": "Luft rundt bildet",
   "Horizontal:": "Horisontal:",
   "Vertical:": "Vertikal:",
@@ -17,7 +17,7 @@
   "The file you are uploading already exists.": "Bildet du prøver å laste opp eksisterer allerede på serveren",
   "The file you are uploading is to big. The max Filesize is": "Bildet du laster opp er for stort, maks tillatt størrelse er",
   "Images on the Server:": "Bilder på serveren:",
-  "Please select a file to upload.": "Velg bilde for opplastning til server",
+  "Please select a file to upload.": "Velg bilde du skal laste opp",
   "Upload file": "Last opp bilde",
   "Open file in new window": "Åpne bilde i nytt vindu"
 };

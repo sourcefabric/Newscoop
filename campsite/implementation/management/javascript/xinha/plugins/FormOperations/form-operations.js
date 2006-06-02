@@ -227,8 +227,7 @@ FormOperations.prototype.onUpdateToolbar = function()
     if(activeElement == this.activeElement) return true;
 
     var tag = activeElement.tagName.toLowerCase();
-    this.panel.show();
-
+    
     this.hideAll();
     if(tag === 'form')
     {
@@ -310,6 +309,9 @@ FormOperations.prototype.onUpdateToolbar = function()
         }
       }
     }
+    
+    this.panel.show();
+    
     //this.editor.scrollToElement(activeElement);
     this.activeElement = activeElement;
     return true;

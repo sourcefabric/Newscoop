@@ -2,11 +2,16 @@
   $text = stripslashes($_POST['content']);
 
   // Convert UTF-8 multi-bytes into decimal character entities.  This is because
-  // aspell isn't fully utf8-aware
-  $text = preg_replace('/([\xC0-\xDF][\x80-\xBF])/e', "'&#' . utf8_ord('\$1') . ';'", $text);
-  $text = preg_replace('/([\xE0-\xEF][\x80-\xBF][\x80-\xBF])/e',             "'&#' . utf8_ord('\$1') . ';'",  $text);
-  $text = preg_replace('/([\xF0-\xF7][\x80-\xBF][\x80-\xBF][\x80-\xBF])/e', "'&#' . utf8_ord('\$1') . ';'",   $text);
-
+  // aspell isn't fully utf8-aware - ticket:120 raises the possibility 
+  // that this is not required (any more) and so you can turn it off
+  // with editor.config.SpellChecker.utf8_to_entities = false 
+  if(!isset($_REQUEST['utf8_to_entitis']) || $_REQUEST['utf8_to_entities'])
+  {
+    $text = preg_replace('/([\xC0-\xDF][\x80-\xBF])/e', "'&#' . utf8_ord('\$1') . ';'", $text);
+    $text = preg_replace('/([\xE0-\xEF][\x80-\xBF][\x80-\xBF])/e',             "'&#' . utf8_ord('\$1') . ';'",  $text);
+    $text = preg_replace('/([\xF0-\xF7][\x80-\xBF][\x80-\xBF][\x80-\xBF])/e', "'&#' . utf8_ord('\$1') . ';'",   $text);
+  }
+  
   function utf8_ord($chr)
   {
     switch(strlen($chr))

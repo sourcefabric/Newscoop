@@ -23,10 +23,13 @@ function TableOperations(editor) {
 
 	// register the toolbar buttons provided by this plugin
 
-    
-    // Paul Baranowski, Campsite: Removed linebreak
-    //var toolbar = ["linebreak"];
-    var toolbar = [];
+  // Remove existing inserttable and toggleborders, we will replace it in our group
+  //cfg.removeToolbarElement(' inserttable toggleborders ');
+
+	// Paul Baranowski: remove linebreak
+	//var toolbar = ["linebreak", "inserttable", "toggleborders"];
+	//var toolbar = ["inserttable", "toggleborders"];
+	var toolbar = [];
 
 	for (var i = 0; i < bl.length; ++i) {
 		var btn = bl[i];
@@ -510,14 +513,14 @@ TableOperations.prototype.buttonPress = function(editor, button_id) {
 		var index = td.cellIndex;
     var lastColumn = (td.parentNode.cells.length == index + 1);
 		for (var i = rows.length; --i >= 0;) {
-			var tr = rows[i];			
+			var tr = rows[i];
 			var otd = editor._doc.createElement("td");
 			otd.innerHTML = mozbr;
-      if (lastColumn && HTMLArea.is_ie) 
+      if (lastColumn && HTMLArea.is_ie)
       {
         tr.insertBefore(otd);
-      } 
-      else 
+      }
+      else
       {
         var ref = tr.cells[index + (/after/.test(button_id) ? 1 : 0)];
         tr.insertBefore(otd, ref);
@@ -793,7 +796,7 @@ TableOperations.processStyle = function(params, element) {
 		    element.vAlign = "";
 			if (val == "-") {
 			    style.verticalAlign = "";
-			    
+
 		    } else {
 			    style.verticalAlign = val;
 			}

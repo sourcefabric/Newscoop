@@ -1,21 +1,29 @@
 // Charcounter for HTMLArea-3.0
-// (c) Udo Schmal & L.N.Schaffrath NeueMedien 
+// (c) Udo Schmal & L.N.Schaffrath NeueMedien
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 
 function CharCounter(editor) {
-    this.editor = editor;
+  this.editor = editor;
 }
 
+HTMLArea.Config.prototype.CharCounter =
+{
+  'showChar': true, // show the characters count,
+  'showWord': true, // show the words count,
+  'showHtml': true, // show the exact html count
+  'separator': ' | ' // separator used to join informations
+};
+
 CharCounter._pluginInfo = {
-    name : "CharCounter",
-    version : "1.0",
-    developer : "Udo Schmal",
-    developer_url : "http://www.schaffrath-neuemedien.de",
-    sponsor       : "L.N.Schaffrath NeueMedien",
-    sponsor_url   : "http://www.schaffrath-neuemedien.de",
-    c_owner : "Udo Schmal & L.N.Schaffrath NeueMedien",
-    license : "htmlArea"
+  name          : "CharCounter",
+  version       : "1.2",
+  developer     : "Udo Schmal",
+  developer_url : "http://www.schaffrath-neuemedien.de",
+  sponsor       : "L.N.Schaffrath NeueMedien",
+  sponsor_url   : "http://www.schaffrath-neuemedien.de",
+  c_owner       : "Udo Schmal & L.N.Schaffrath NeueMedien",
+  license       : "htmlArea"
 };
 
 CharCounter.prototype._lc = function(string) {
@@ -50,8 +58,47 @@ CharCounter.prototype.onGenerate = function() {
   }
 };
 
+CharCounter.prototype._updateCharCount = function() {
+  var editor = this.editor;
+  var cfg = editor.config;
+  var contents = editor.getHTML();
+  var string = new Array();
+  if (cfg.CharCounter.showHtml) {
+    string[string.length] = this._lc("HTML") + ": " + contents.length;
+  }
+  if (cfg.CharCounter.showWord || cfg.CharCounter.showChar) {
+    contents = contents.replace(/<\/?\s*!--[^-->]*-->/gi, "" );
+    contents = contents.replace(/<(.+?)>/g, '');//Don't count HTML tags
+    contents = contents.replace(/&nbsp;/gi, ' ');
+    contents = contents.replace(/([\n\r\t])/g, ' ');//convert newlines and tabs into space
+    contents = contents.replace(/(  +)/g, ' ');//count spaces only once
+    contents = contents.replace(/&(.*);/g, ' ');//Count htmlentities as one keystroke
+    contents = contents.replace(/^\s*|\s*$/g, '');//trim
+  }
+  if (cfg.CharCounter.showWord) {
+    var words=0;
+    for (var x=0;x<contents.length;x++)
+    {
+      if (contents.charAt(x) == " " ) {words++;}
+    }
+    if (words>=1) { words++; }
+    string[string.length] = this._lc("Words") + ": " + words;
+  }
+
+  if (cfg.CharCounter.showChar) {
+    string[string.length] = this._lc("Chars") + ": " + contents.length;
+  }
+
+  this.charCount.innerHTML = string.join(cfg.CharCounter.separator);
+};
+
 CharCounter.prototype.onUpdateToolbar = function() {
-    this.updateCharCount();
+  this.charCount.innerHTML = this._lc("... in progress");
+  if(this._timeoutID) {
+    window.clearTimeout(this._timeoutID);
+  }
+  var e = this;
+  this._timeoutID = window.setTimeout(function() {e._updateCharCount();}, 1000);
 };
 
 CharCounter.prototype.onMode = function (mode)
@@ -69,21 +116,4 @@ CharCounter.prototype.onMode = function (mode)
       alert("Mode <" + mode + "> not defined!");
       return false;
   }
-};
-
-CharCounter.prototype.updateCharCount = function(ev) {
-    editor = this.editor;
-    var contents = editor.getHTML();
-    contents = contents.replace(/<(.+?)>/g, '');//Don't count HTML tags
-    contents = contents.replace(/([\n\r\t])/g, ' ');//convert newlines and tabs into space
-    contents = contents.replace(/(  +)/g, ' ');//count spaces only once
-    contents = contents.replace(/&(.*);/g, ' ');//Count htmlentities as one keystroke
-    contents = contents.replace(/^\s*|\s*$/g, '');//trim
-//    var words=0;
-//    for (var x=0;x<contents.length;x++) {
-//      if (contents.charAt(x) == " " )  {words++}
-//    }
-//    this.charCount.innerHTML = this._lc("Words") + ": " + words + " | " + this._lc("Chars") + ": " + contents.length;
-    this.charCount.innerHTML = this._lc("Chars") + ": " + contents.length;
-    return(contents.length);
 };

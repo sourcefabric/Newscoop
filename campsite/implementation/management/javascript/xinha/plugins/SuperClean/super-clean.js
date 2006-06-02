@@ -101,12 +101,18 @@ HTMLArea.Config.prototype.SuperClean =
   'tidy_handler': _editor_url + 'plugins/SuperClean/tidy.php',
 
   //avaliable filters (these are built-in filters)
+  // You can either use
+  //    'filter_name' : "Label/Description String"
+  // or 'filter_name' : {label: "Label", checked: true/false, filterFunction: function(html) { ... return html;} }
+  // filterFunction in the second format above is optional.
+  
   'filters': { 'tidy': HTMLArea._lc('General tidy up and correction of some problems.', 'SuperClean'),
                'word_clean': HTMLArea._lc('Clean bad HTML from Microsoft Word', 'SuperClean'),
                'remove_faces': HTMLArea._lc('Remove custom typefaces (font "styles").', 'SuperClean'),
                'remove_sizes': HTMLArea._lc('Remove custom font sizes.', 'SuperClean'),
                'remove_colors': HTMLArea._lc('Remove custom text colors.', 'SuperClean'),
-               'remove_lang': HTMLArea._lc('Remove lang attributes.', 'SuperClean')
+               'remove_lang': HTMLArea._lc('Remove lang attributes.', 'SuperClean'),
+               'remove_fancy_quotes': {label:HTMLArea._lc('Replace directional quote marks with non-directional quote marks.', 'SuperClean'), checked:false},
   //additional custom filters (defined in plugins/SuperClean/filters/word.js)
                //'paragraph': 'remove paragraphs'},
                //'word': 'exteded Word-Filter' },
@@ -148,6 +154,16 @@ SuperClean.filterFunctions.word_clean = function(html, editor)
   editor._wordClean();
   return editor.getInnerHTML();
 };
+
+SuperClean.filterFunctions.remove_fancy_quotes = function(D)
+{
+  D = D.replace(new RegExp(String.fromCharCode(8216),"g"),"'");
+  D = D.replace(new RegExp(String.fromCharCode(8217),"g"),"'");
+  D = D.replace(new RegExp(String.fromCharCode(8220),"g"),"\"");
+  D = D.replace(new RegExp(String.fromCharCode(8221),"g"),"\"");
+  return D;
+};
+
 SuperClean.filterFunctions.tidy = function(html, editor)
 {
   HTMLArea._postback(editor.config.SuperClean.tidy_handler, {'content' : html},
@@ -176,14 +192,22 @@ SuperClean.prototype.onGenerate = function()
   var sc = this;
   //load the filter-functions
   for(var filter in this.editor.config.SuperClean.filters)
-  {
+  {    
     if(!SuperClean.filterFunctions[filter])
     {
-      HTMLArea._getback(_editor_url + 'plugins/SuperClean/filters/'+filter+'.js',
+      var filtDetail = this.editor.config.SuperClean.filters[filter];
+      if(typeof filtDetail.filterFunction != 'undefined')
+      {
+        SuperClean.filterFunctions[filter] = filterFunction;
+      }
+      else
+      {
+        HTMLArea._getback(_editor_url + 'plugins/SuperClean/filters/'+filter+'.js',
                       function(func) {
                         eval('SuperClean.filterFunctions.'+filter+'='+func+';');
                         sc.onGenerate();
                       });
+      }
       return;
     }
   }
@@ -223,8 +247,17 @@ SuperClean.Dialog.prototype._prepareDialog = function()
   for(var filter in this.SuperClean.editor.config.SuperClean.filters)
   {
     htmlFilters += "    <div>\n";
-    htmlFilters += "        <input type=\"checkbox\" name=\"["+filter+"]\" id=\"["+filter+"]\" checked />\n";
-    htmlFilters += "        <label for=\"["+filter+"]\">"+this.SuperClean.editor.config.SuperClean.filters[filter]+"</label>\n";
+    var filtDetail = this.SuperClean.editor.config.SuperClean.filters[filter];
+    if(typeof filtDetail.label == 'undefined')
+    {    
+      htmlFilters += "        <input type=\"checkbox\" name=\"["+filter+"]\" id=\"["+filter+"]\" checked />\n";
+      htmlFilters += "        <label for=\"["+filter+"]\">"+this.SuperClean.editor.config.SuperClean.filters[filter]+"</label>\n";
+    }
+    else
+    {
+      htmlFilters += "        <input type=\"checkbox\" name=\"["+filter+"]\" id=\"["+filter+"]\" " + (filtDetail.checked ? "checked" : "") + " />\n";
+      htmlFilters += "        <label for=\"["+filter+"]\">"+filtDetail.label+"</label>\n";
+    }
     htmlFilters += "    </div>\n";
   }
   this.html = this.html.replace('<!--filters-->', htmlFilters);

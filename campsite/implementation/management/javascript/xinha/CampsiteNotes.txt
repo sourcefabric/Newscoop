@@ -1,10 +1,10 @@
 Notes on Changes to HTMLArea for Campsite
 -----------------------------------------
-Last synced with Xinha trunk on December 5, 2005
+Last synced with Xinha trunk on June 1, 2006 (but you can look in htmlarea.js for the exact revision)
 
 * Core
 File: /htmlarea.js
-1) Replaced "cut", "copy", "paste" section with code to use the WordPaste plugin.
+1) Replaced "cut", "copy", "paste" section with code to use the WordPaste plugin. (You can search for "Paul Baranowski" to find this section)
 2) Compressed the javascript using Rhino (http://dojotoolkit.org/docs/compressor_system.html):
 java -jar custom_rhino.jar -c infile.js > outfile.js
 

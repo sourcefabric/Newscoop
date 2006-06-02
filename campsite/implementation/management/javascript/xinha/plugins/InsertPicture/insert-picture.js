@@ -41,20 +41,20 @@ HTMLArea.prototype._insertImage = function(image) {
 			image = null;
 	}
 	if (image) outparam = {
-		f_url    : HTMLArea.is_ie ? image.src : image.getAttribute("src"),
+		f_url    : image.getAttribute("src"),
 		f_alt    : image.alt,
 		f_border : image.border,
 		f_align  : image.align,
 		f_vert   : image.vspace,
 		f_horiz  : image.hspace,
 		f_width  : image.width,
-		f_height  : image.height
+		f_height : image.height
 	};
 
 	var manager = _editor_url + 'plugins/InsertPicture/InsertPicture.php'
 	              + '?picturepath=' + InsertPicture.PicturePath;
 
-	Dialog(manager, function(param) {	        
+	Dialog(manager, function(param) {
 		if (!param) {	// user must have pressed Cancel
 			return false;
 		}

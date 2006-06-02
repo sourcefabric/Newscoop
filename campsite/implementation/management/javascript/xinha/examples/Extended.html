@@ -15,14 +15,55 @@ function getAbsolutePos(el) {
 	return r;
 };
 
-function comboSelectValue(c, val) {
-	var ops = c.getElementsByTagName("option");
-	for (var i = ops.length; --i >= 0;) {
-		var op = ops[i];
-		op.selected = (op.value == val);
-	}
-	c.value = val;
-};
+function getSelectedValue(el) {
+  if(!el)
+    return "";
+  return el[el.selectedIndex].value;
+}
+
+function setSelectedValue(el, val) {
+  if(!el)
+    return "";
+  var ops = el.getElementsByTagName("option");
+  for (var i = ops.length; --i >= 0;) {
+    var op = ops[i];
+    op.selected = (op.value == val);
+  }
+  el.value = val;
+}
+
+function getCheckedValue(el) {
+  if(!el)
+    return "";
+  var radioLength = el.length;
+  if(radioLength == undefined)
+    if(el.checked)
+      return el.value;
+    else
+      return "false";
+  for(var i = 0; i < radioLength; i++) {
+    if(el[i].checked) {
+      return el[i].value;
+    }
+  }
+  return "";
+}
+
+function setCheckedValue(el, val) {
+  if(!el)
+    return;
+  var radioLength = el.length;
+  if(radioLength == undefined) {
+    el.checked = (el.value == val.toString());
+    return;
+  }
+  for(var i = 0; i < radioLength; i++) {
+    el[i].checked = false;
+    if(el[i].value == val.toString()) {
+      el[i].checked = true;
+    }
+  }
+}
 
 function __dlg_onclose() {
 	opener.Dialog._return(null);
@@ -84,50 +125,77 @@ function __dlg_init(bottom) {
 	document.body.onkeypress = __dlg_close_on_esc;
 };
 
+function placeFocus() {
+var bFound = false;
+  // for each form
+  for (f=0; f < document.forms.length; f++) {
+    // for each element in each form
+    for(i=0; i < document.forms[f].length; i++) {
+      // if it's not a hidden element
+      if (document.forms[f][i].type != "hidden") {
+        // and it's not disabled
+        if (document.forms[f][i].disabled != true) {
+            // set the focus to it
+            document.forms[f][i].focus();
+            var bFound = true;
+        }
+      }
+      // if found in this element, stop looking
+      if (bFound == true)
+        break;
+    }
+    // if found in this form, stop looking
+    if (bFound == true)
+      break;
+  }
+}
+
 function Init() {
   __dlg_init();
   var param = window.dialogArguments;
-  if (param) {
-    document.getElementById("width").value = param["width"];
-    document.getElementById("height").value = param["height"];
-    document.getElementById("sizeIncludesBars").checked = (param["sizeIncludesBars"] == 'true');
-    document.getElementById("statusBar").checked = (param["statusBar"] == 'true');
-    document.getElementById("mozParaHandler").value = param["mozParaHandler"];
-    document.getElementById("undoSteps").value = param["undoSteps"];
-    document.getElementById("baseHref").value = param["baseHref"];
-    document.getElementById("stripBaseHref").checked = (param["stripBaseHref"] == 'true');
-    document.getElementById("stripSelfNamedAnchors").checked = (param["stripSelfNamedAnchors"] == 'true');
-    document.getElementById("only7BitPrintablesInURLs").checked = (param["only7BitPrintablesInURLs"] == 'true');
-    document.getElementById("sevenBitClean").checked = (param["sevenBitClean"] == 'true');
-    document.getElementById("killWordOnPaste").checked = (param["killWordOnPaste"] == 'true');
-		document.getElementById("flowToolbars").checked = (param["flowToolbars"] == 'true');
-		document.getElementById("CharacterMapMode").value = param["CharacterMapMode"];
-    document.getElementById("ListTypeMode").value = param["ListTypeMode"];
-    
+  if(param) {
+    var el;
+    for (var field in param) {
+      //alert(field + '="' + param[field] + '"');
+      el = document.getElementById(field);
+      if (el.tagName.toLowerCase()=="input"){
+        if ((el.type.toLowerCase()=="radio") || (el.type.toLowerCase()=="checkbox")){
+          setCheckedValue(el, param[field]);
+        } else {
+          el.value = param[field];
+        }
+      } else if (el.tagName.toLowerCase()=="select"){
+        setSelectedValue(el, param[field]);
+      } else if (el.tagName.toLowerCase()=="textarea"){
+        el.value = param[field];
+      }
+    }
   }
-  document.getElementById("width").focus();
-	window.resizeTo(420, 500);
+  placeFocus();
 };
 
+// pass data back to the calling window
 function onOK() {
-  // pass data back to the calling window
-  var param = { width: document.getElementById("width").value,
-                height: document.getElementById("height").value,
-                sizeIncludesBars: (document.getElementById("sizeIncludesBars").checked?true:""),
-                statusBar: (document.getElementById("statusBar").checked?true:""),
-                mozParaHandler: document.getElementById("mozParaHandler").value,
-                undoSteps: document.getElementById("undoSteps").value,
-                baseHref: document.getElementById("baseHref").value,
-                stripBaseHref: (document.getElementById("stripBaseHref").checked?true:""),
-                stripSelfNamedAnchors: (document.getElementById("stripSelfNamedAnchors").checked?true:""),
-                only7BitPrintablesInURLs: (document.getElementById("only7BitPrintablesInURLs").checked?true:""),
-                sevenBitClean: (document.getElementById("sevenBitClean").checked?true:""),
-                killWordOnPaste: (document.getElementById("killWordOnPaste").checked?true:""),
-                flowToolbars: (document.getElementById("flowToolbars").checked?true:""),
-		            CharacterMapMode: document.getElementById("CharacterMapMode").value,
-                ListTypeOptions: document.getElementById("ListTypeMode").value
-		          };
-	__dlg_close(param);
+  var param = new Object();
+  var el = document.getElementsByTagName('input');
+  for (var i=0; i<el.length;i++){
+    if ((el[i].type.toLowerCase()=="radio") || (el[i].type.toLowerCase()=="checkbox")){
+      if (getCheckedValue(el[i])!=''){
+        param[el[i].id] = getCheckedValue(el[i]);
+      }
+    } else {
+      param[el[i].id] = el[i].value;
+    }
+  }
+  el = document.getElementsByTagName('select');
+  for (var i=0; i<el.length;i++){
+    param[el[i].id] = getSelectedValue(el[i]);
+  }
+  el = document.getElementsByTagName('textarea');
+  for (var i=0; i<el.length;i++){
+    param[el[i].id] = el[i].value;
+  }
+  __dlg_close(param);
   return false;
 };
 
@@ -144,7 +212,7 @@ function onCancel() {
 
 </head>
 
-<body class="dialog" onload="Init()">
+<body class="dialog" onload="Init(); window.resizeTo(360, 590);">
 <div class="title">Settings</div>
   <form action="" method="get">
     <div class="fr">Editor width:</div>
@@ -154,10 +222,10 @@ function onCancel() {
       <input type="text" name="height" id="height" title="" />
     <p />
     <div class="fr">Size includes bars</div>
-      <input type="checkbox" name="sizeIncludesBars" id="sizeIncludesBars" />
+      <input type="checkbox" name="sizeIncludesBars" id="sizeIncludesBars" value="true" />
     <p />
     <div class="fr">Status Bar</div>
-      <input type="checkbox" name="statusBar" id="statusBar" />
+      <input type="checkbox" name="statusBar" id="statusBar" value="true" />
     <p />
     <div class="fr">Mozilla Parameter Handler:</div>
     <select name="mozParaHandler" id="mozParaHandler">
@@ -173,44 +241,55 @@ function onCancel() {
       <input type="text" name="baseHref" id="baseHref" title="" />
     <p />
     <div class="fr">Strip base href</div>
-      <input type="checkbox" name="stripBaseHref" id="stripBaseHref" />
+      <input type="checkbox" name="stripBaseHref" id="stripBaseHref" value="true" />
     <p />
     <div class="fr">Strip self named anchors</div>
-      <input type="checkbox" name="stripSelfNamedAnchors" id="stripSelfNamedAnchors" />
+      <input type="checkbox" name="stripSelfNamedAnchors" id="stripSelfNamedAnchors" value="true" />
     <p />
     <div class="fr">only 7bit printables in URLs</div>
-      <input type="checkbox" name="only7BitPrintablesInURLs" id="only7BitPrintablesInURLs" />
+      <input type="checkbox" name="only7BitPrintablesInURLs" id="only7BitPrintablesInURLs" value="true" />
     <p />
     <div class="fr">7bit Clean</div>
-      <input type="checkbox" name="sevenBitClean" id="sevenBitClean" />
+      <input type="checkbox" name="sevenBitClean" id="sevenBitClean" value="true" />
     <p />
     <div class="fr">kill Word on paste</div>
-      <input type="checkbox" name="killWordOnPaste" id="killWordOnPaste" />
+      <input type="checkbox" name="killWordOnPaste" id="killWordOnPaste" value="true" />
     <p />
     <div class="fr">flow toolbars</div>
-      <input type="checkbox" name="flowToolbars" id="flowToolbars" />
+      <input type="checkbox" name="flowToolbars" id="flowToolbars" value="true" />
+    <p />
+    <div class="fr">show loading</div>
+      <input type="checkbox" name="showLoading" id="showLoading" value="true" />
     <p />
 
     <div id="CharacterMapOptions" class="options">
     <hr size="0.5">
-		<div class="fr">CharacterMap mode :</div>
-		  <select id="CharacterMapMode" name="CharacterMapMode">
+    <div class="fr">CharacterMap mode :</div>
+      <select id="CharacterMapMode" name="CharacterMapMode">
         <option value="popup">popup</option>
         <option value="panel">panel</option>
       </select>
-	  </div>
+    </div>
     <p />
 
     <div id="ListTypeOptions" class="options">
-		<hr size="0.5">
+    <hr size="0.5">
     <div class="fr">ListType mode :</div>
-		  <select id="ListTypeMode" name="ListTypeMode">
+      <select id="ListTypeMode" name="ListTypeMode">
         <option value="toolbar">toolbar</option>
         <option value="panel">panel</option>
       </select>
     </div>
-		<p />
-      
+    <p />
+
+    <div id="CharCounterOptions" class="options">
+    <hr size="0.5">
+    <div class="fr">CharCounter (showChar) :</div><input type="checkbox" name="showChar" id="showChar" value="true" /><br />
+    <div class="fr">CharCounter (showWord) :</div><input type="checkbox" name="showWord" id="showWord" value="true" /><br />
+    <div class="fr">CharCounter (showHtml) :</div><input type="checkbox" name="showHtml" id="showHtml" value="true" />
+    </div>
+    <p />
+
   <div id="buttons">
     <button type="submit" name="ok" onclick="return onOK();">OK</button>
     <button type="button" name="cancel" onclick="return onCancel();">Cancel</button>

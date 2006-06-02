@@ -144,5 +144,14 @@
   "Set format to paragraph": "Setze Formatierung auf Absatz",
   "Clean content pasted from Word": "Von Word eingefügter Text bereinigen",
   "Headings": "Überschrift Typ 1 bis 6",
-  "Close": "Schließen"
+  "Close": "Schließen",
+
+  // Loading messages
+  "Loading in progress. Please wait !": "Editor wird geladen. Bitte warten !",
+  "Constructing main object": "Hauptteil wird erzeugt",
+  "Create Toolbar": "Bearbeitungswerkzeuge werden angelegt",
+  "Register panel right": "Erzeugt rechte Leiste",
+  "Register panel left": "Erzeugt linke Leiste",
+  "Register panel top": "Erzeugt obere Leiste",
+  "Register panel bottom": "Erzeugt untere Leiste"
 };

@@ -1,7 +1,7 @@
 <?PHP
-  $LocalPluginPath = dirname(dirname(__FILE__)).'\plugins';
-  $LocalSkinPath = dirname(dirname(__File__)).'\skins';
-?>  
+  $LocalPluginPath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'plugins';
+  $LocalSkinPath = dirname(dirname(__File__)).DIRECTORY_SEPARATOR.'skins';
+?>
 <html>
 <head>
 
@@ -25,7 +25,30 @@
     label { display:block;}
   </style>
   <script language="JavaScript" type="text/javascript">
-  
+  var settings = null;
+  settings = {
+    width: "auto",
+    height: "auto",
+    sizeIncludesBars: true,
+    statusBar: true,
+    mozParaHandler: "best",
+    undoSteps: 20,
+    baseHref: null,
+    stripBaseHref: true,
+    stripSelfNamedAnchors: true,
+    only7BitPrintablesInURLs: true,
+    sevenBitClean: false,
+    killWordOnPaste: true,
+    flowToolbars: true,
+    CharacterMapMode: "popup",
+    ListTypeMode: "toolbar",
+    showLoading: false,
+    showChar: true,
+    showWord: true,
+    showHtml: true
+  };
+
+
     function getCookieVal (offset) {
       var endstr = document.cookie.indexOf (";", offset);
       if (endstr == -1)
@@ -43,7 +66,7 @@
         if (document.cookie.substring(i, j) == arg)
           return getCookieVal (j);
         i = document.cookie.indexOf(" ", i) + 1;
-        if (i == 0) break; 
+        if (i == 0) break;
       }
       return null;
     }
@@ -71,11 +94,11 @@
       sHeight = sHeight - 245;
     } else {
       sHeight = 30
-    }  
+    }
     var div = document.getElementById("div_plugins");
     div.style.height = sHeight + "px";
   }
-  
+
 function Dialog(url, action, init) {
 	if (typeof init == "undefined") {
 		init = window;	// pass this window object by default
@@ -143,41 +166,29 @@ Dialog._geckoOpenModal = function(url, action, init) {
 };
 
   function fExtended () {
-   	var outparam = { width: document.getElementById("width").value,
-                     height: document.getElementById("height").value,
-                     sizeIncludesBars: document.getElementById("sizeIncludesBars").value,
-                     statusBar: document.getElementById("statusBar").value,
-                     mozParaHandler: document.getElementById("mozParaHandler").value,
-                     undoSteps: document.getElementById("undoSteps").value,
-                     baseHref: document.getElementById("baseHref").value,
-                     stripBaseHref: document.getElementById("stripBaseHref").value,
-                     stripSelfNamedAnchors: document.getElementById("stripSelfNamedAnchors").value,
-                     only7BitPrintablesInURLs: document.getElementById("only7BitPrintablesInURLs").value,
-                     sevenBitClean: document.getElementById("sevenBitClean").value,
-                     killWordOnPaste: document.getElementById("killWordOnPaste").value,
-                     flowToolbars: document.getElementById("flowToolbars").value,
-                     CharacterMapMode: document.getElementById("CharacterMapMode").value,
-                     ListTypeMode: document.getElementById("ListTypeMode").value
-                   };
-	  Dialog("Extended.html", function(param) {
+    Dialog("Extended.html", function(param) {
       if(param) {
-		    document.getElementById("width").value = param["width"];
-		    document.getElementById("height").value = param["height"];
-        document.getElementById("sizeIncludesBars").value = param["sizeIncludesBars"];
-        document.getElementById("statusBar").value = param["statusBar"];
-        document.getElementById("mozParaHandler").value = param["mozParaHandler"];
-        document.getElementById("undoSteps").value = param["undoSteps"];
-        document.getElementById("baseHref").value = param["baseHref"];
-        document.getElementById("stripBaseHref").value = param["stripBaseHref"];
-        document.getElementById("stripSelfNamedAnchors").value = param["stripSelfNamedAnchors"];
-        document.getElementById("only7BitPrintablesInURLs").value = param["only7BitPrintablesInURLs"];
-        document.getElementById("sevenBitClean").value = param["sevenBitClean"];
-        document.getElementById("killWordOnPaste").value = param["killWordOnPaste"];
-        document.getElementById("flowToolbars").value = param["flowToolbars"];
-     		document.getElementById("CharacterMapMode").value = param["CharacterMapMode"];
-        document.getElementById("ListTypeMode").value = param["ListTypeMode"];
-		  }
-		}, outparam );
+        settings.width = param["width"];
+        settings.height = param["height"];
+        settings.sizeIncludesBars = (param["sizeIncludesBars"]=="true");
+        settings.statusBar = (param["statusBar"]=="true");
+        settings.mozParaHandler = param["mozParaHandler"];
+        settings.undoSteps = param["undoSteps"];
+        settings.baseHref = param["baseHref"];
+        settings.stripBaseHref = (param["stripBaseHref"]=="true");
+        settings.stripSelfNamedAnchors = (param["stripSelfNamedAnchors"]=="true");
+        settings.only7BitPrintablesInURLs = (param["only7BitPrintablesInURLs"]=="true");
+        settings.sevenBitClean = (param["sevenBitClean"]=="true");
+        settings.killWordOnPaste = (param["killWordOnPaste"]=="true");
+        settings.flowToolbars = (param["flowToolbars"]=="true");
+        settings.CharacterMapMode = param["CharacterMapMode"];
+        settings.ListTypeMode = param["ListTypeMode"];
+        settings.showLoading = (param["showLoading"]=="true");
+        settings.showChar = (param["showChar"]=="true");
+        settings.showWord = (param["showWord"]=="true");
+        settings.showHtml = (param["showHtml"]=="true");
+      }
+    }, settings );
   }
 
   function init(){
@@ -197,17 +208,17 @@ Dialog._geckoOpenModal = function(url, action, init) {
           document.getElementById(co_values[0]).value = co_values[1];
         }
       }
-    }  
+    }
     _onResize();
   };
-  
+
   window.onresize = _onResize;
   window.onload = init;
   </script>
 </head>
 
 <body>
-  <form action="ext_example-body.html" target="body">
+  <form action="ext_example-body.html" target="body" name="fsettings" id="fsettings">
   <h1>Xinha Example</h1>
     <fieldset>
       <legend>Settings</legend>
@@ -233,28 +244,13 @@ Dialog._geckoOpenModal = function(url, action, init) {
 	$d = @dir($LocalSkinPath);
 	while (false !== ($entry = $d->read()))  //not a dot file or directory
 	{	if(substr($entry,0,1) != '.')
-		{ echo '<option value="' . $entry . '"> ' . $entry . '</option>';
+		{ echo '<option value="' . $entry . '"> ' . $entry . '</option>'."\n";
 		}
 	}
 	$d->close();
 ?>
           </select>
         </label>
-        <input type="hidden" id="width" name="width" value="auto" />
-        <input type="hidden" id="height" name="height" value="auto" />
-        <input type="hidden" id="sizeIncludesBars" name="sizeIncludeBars" value="true" />
-        <input type="hidden" id="statusBar" name="statusBar" value="true" />
-        <input type="hidden" id="mozParaHandler" name="mozParaHandler" value="best" />
-        <input type="hidden" id="undoSteps" name="undoSteps" value="20" />
-        <input type="hidden" id="baseHref" name="baseHref" value="null" />
-        <input type="hidden" id="stripBaseHref" name="stripBaseHref" value="true" />
-        <input type="hidden" id="stripSelfNamedAnchors" name="stripSelfNamedAnchors" value="true" />
-        <input type="hidden" id="only7BitPrintablesInURLs" name="only7BitPrintablesInURLs" value="true" />
-        <input type="hidden" id="sevenBitClean" name="sevenBitClean" value="false" />
-        <input type="hidden" id="killWordOnPaste" name="killWordOnPaste" value="true" />
-        <input type="hidden" id="flowToolbars" name="flowToolbars" value="true" />
-        <input type="hidden" id="CharacterMapMode" name="CharacterMapMode" value="popup" />
-        <input type="hidden" id="ListTypeMode" name="ListTypeMode" value="toolbar" />
         <center><input type="button" value="extended Settings" onClick="fExtended();" /></center>
 
     </fieldset>
@@ -265,7 +261,7 @@ Dialog._geckoOpenModal = function(url, action, init) {
 	$d = @dir($LocalPluginPath);
 	while (false !== ($entry = $d->read()))  //not a dot file or directory
 	{	if(substr($entry,0,1) != '.')
-		{ echo '<label><input type="checkbox" name="plugins" value="' . $entry . '"> ' . $entry . '</label>';
+		{ echo '<label><input type="checkbox" name="plugins" id="plugins" value="' . $entry . '"> ' . $entry . '</label>'."\n";
 		}
 	}
 	$d->close();
@@ -273,7 +269,7 @@ Dialog._geckoOpenModal = function(url, action, init) {
       </div>
     </fieldset>
     <center><button type="submit">reload editor</button></center>
-    
+
         <textarea id="myTextarea0" style="display:none">
           <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
           Aliquam et tellus vitae justo varius placerat. Suspendisse iaculis
@@ -292,7 +288,7 @@ Dialog._geckoOpenModal = function(url, action, init) {
             <li> Nunc sit amet metus in tortor semper mattis. </li>
           </ul>
         </textarea>
-        
+
   </form>
   <script type="text/javascript">
     top.frames["body"].location.href = document.location.href.replace(/ext_example-menu\.php.*/, 'ext_example-body.html')
@@ -308,7 +304,7 @@ Dialog._geckoOpenModal = function(url, action, init) {
                      'num=' + document.getElementById('num').value + '###';
       var s_value='';
       for(var x = 0; x < document.forms[0].plugins.length; x++) {
-        if(document.forms[0].plugins[x].checked) 
+        if(document.forms[0].plugins[x].checked)
           s_value += document.forms[0].plugins[x].value + '/';
       }
       if(s_value!='') {

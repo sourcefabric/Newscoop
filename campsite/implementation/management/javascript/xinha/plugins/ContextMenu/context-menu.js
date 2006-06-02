@@ -130,7 +130,27 @@ ContextMenu.prototype.getContextMenu = function(target) {
 				     [ HTMLArea._lc("C_ell Properties...", "ContextMenu"),
 				       function() { tableOperation("TO-cell-prop"); },
 				       HTMLArea._lc("Show the Table Cell Properties dialog", "ContextMenu"),
-				       config.btnList["TO-cell-prop"][1] ]
+				       config.btnList["TO-cell-prop"][1] ],
+               
+             [ HTMLArea._lc("Insert Cell After", "ContextMenu"),
+				       function() { tableOperation("TO-cell-insert-after"); },
+				       HTMLArea._lc("Insert Cell After", "ContextMenu"),
+				       config.btnList["TO-cell-insert-after"][1] ],
+               
+             [ HTMLArea._lc("Insert Cell Before", "ContextMenu"),
+				       function() { tableOperation("TO-cell-insert-before"); },
+				       HTMLArea._lc("Insert Cell After", "ContextMenu"),
+				       config.btnList["TO-cell-insert-before"][1] ],
+             
+             [ HTMLArea._lc("Delete Cell", "ContextMenu"),
+				       function() { tableOperation("TO-cell-delete"); },
+				       HTMLArea._lc("Delete Cell", "ContextMenu"),
+				       config.btnList["TO-cell-delete"][1] ],
+               
+             [ HTMLArea._lc("Merge Cells", "ContextMenu"),
+				       function() { tableOperation("TO-cell-merge"); },
+				       HTMLArea._lc("Merge Cells", "ContextMenu"),
+				       config.btnList["TO-cell-merge"][1] ]    
 				);
 			break;
 		    case "tr":

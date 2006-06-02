@@ -9,7 +9,7 @@
   "Remove custom typefaces (font \"styles\").": "Fjerne egendefinerte skrifttyper (font face)",
   "Remove custom font sizes.": "Fjerne egendefinerte skriftstørrelser (font size)",
   "Remove custom text colors.": "Fjerne egendefinerte skriftfarger (font color)",
-  "Remove lang attributes.": "Fjerne lang attributter.",
+  "Remove lang attributes.": "Fjerne lang-attributter.",
   "Go": "Utfør",
   "Cancel": "Avbryt",
   "Tidy failed.  Check your HTML for syntax errors.": "Tidy (Programmet som retter HTML koden) feilet. Vennligst se over HTML koden for feil.",

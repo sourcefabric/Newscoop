@@ -137,7 +137,7 @@ ListType.prototype.onUpdateToolbar = function()
   {
     this.showPanel( parent );
   }
-  else
+  else if (this.editor._ListType.style.display != 'none')
   {
     this.editor.hidePanel( this.editor._ListType );
   }

@@ -1,4 +1,4 @@
-﻿// I18N constants
+// I18N constants
 // LANG: "no", ENCODING: UTF-8
 // translated: Kim Steinhaug, http://www.steinhaug.com/, kim@steinhaug.com
 {
@@ -8,5 +8,5 @@
   "Lower latin letters": "Lower latin letters",
   "Upper latin letters": "Upper latin letters",
   "Lower greek letters": "Lower greek letters",
-  "Choose list style type (for ordered lists)": "Velg liste type (for nummererte lister)"
+  "Choose list style type (for ordered lists)": "Velg listetype (for nummererte lister)"
 };

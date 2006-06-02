@@ -1,6 +1,6 @@
 // LANG: "de", ENCODING: UTF-8 | ISO-8859-1
 // Sponsored by http://www.schaffrath-neuemedien.de
-// Author: Udo Schmal (gocher), http://www.schaffrath-neuemedien.de/, udo.schmal@t-online.deUdo Schmal (gocher), <udo.schmal@t-online.de>
+// Author: Udo Schmal (gocher), http://www.schaffrath-neuemedien.de/, udo.schmal@t-online.de
 {
   "The file you are uploading doesn't have the correct extension.": "Die hochgeladene Datei ist im falschen Format.",
   "The file you are uploading already exists.": "Eine Datei mit diesem Namen existiert schon.",

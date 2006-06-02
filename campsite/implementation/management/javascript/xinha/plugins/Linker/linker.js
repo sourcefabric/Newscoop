@@ -383,8 +383,14 @@ Linker.Dialog.prototype._prepareDialog = function()
   // Hookup the resizer
   this.dialog.onresize = function()
     {
-      options.style.height = ddTree.style.height = (parseInt(dialog.height) - dialog.getElementById('h1').offsetHeight) + 'px';
-      ddTree.style.width  = (parseInt(dialog.width)  - 322 ) + 'px';
+      var h = parseInt(dialog.height) - dialog.getElementById('h1').offsetHeight;
+      var w = parseInt(dialog.width)  - 322 ;
+      // An error is thrown with IE when trying to set a negative width or a negative height
+      // But perhaps a width / height of 0 is not the minimum required we need to set
+      if (w<0) w = 0;
+      if (h<0) h = 0;
+      options.style.height = ddTree.style.height = h + 'px';
+      ddTree.style.width  = w + 'px';
     }
 
   this.ready = true;

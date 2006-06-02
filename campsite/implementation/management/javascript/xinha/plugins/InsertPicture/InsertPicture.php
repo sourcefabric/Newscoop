@@ -69,7 +69,7 @@ function i18n(str) {
 function Init() {
   __dlg_translate("InsertPicture");
   __dlg_init();
-  window.resizeTo(470, 490);
+  window.resizeTo(500, 490);
   // Make sure the translated string appears in the drop down. (for gecko)
   document.getElementById("f_align").selectedIndex = 1;
   document.getElementById("f_align").selectedIndex = 5;
@@ -81,6 +81,8 @@ function Init() {
       document.getElementById("f_align").value = param["f_align"];
       document.getElementById("f_vert").value = param["f_vert"];
       document.getElementById("f_horiz").value = param["f_horiz"];
+      document.getElementById("f_height").value = param["f_height"];
+      document.getElementById("f_width").value = param["f_width"];			
       window.ipreview.location.replace(param.f_url);
   }
   document.getElementById("f_url").focus();
@@ -148,9 +150,23 @@ function onPreview() {
   return false;
 }
 
+var img = new Image();
+function imgWait() {
+  waiting = window.setInterval("imgIsLoaded()", 1000)
+}
+function imgIsLoaded() {
+  if(img.width > 0) {
+    window.clearInterval(waiting)
+    document.getElementById("f_width").value = img.width;
+    document.getElementById("f_height").value = img.height;
+  }
+}
+
 function CopyToURL(imgName) {
   document.getElementById("f_url").value = imgName;
   onPreview();
+  img.src = imgName;
+  img.onLoad = imgWait()
 }
 
 function openFile() {
@@ -228,7 +244,7 @@ function openFile() {
 
 <div class="space"></div>
 
-<div class="fl">Alignment:</div>
+<div class="fl" style="width: 6em;">Alignment:</div>
 <select size="1" name="align" id="f_align"
   title="Positioning of this image">
   <option value=""                             >Not set</option>
@@ -245,10 +261,25 @@ function openFile() {
 
 <p />
 
-<div class="fl">Border thickness:</div>
+<div class="fl" style="width: 6em;">Border thickness:</div>
 <input type="text" name="border" id="f_border" size="5"
 title="Leave empty for no border" />
 
+<div class="space"></div>
+
+</fieldset>
+
+<fieldset style="float: left; margin-left: 5px;">
+<legend>Size</legend>
+
+<div class="space"></div>
+
+<div class="fl" style="width: 5em;">Width:</div>
+<input type="text" name="width" id="f_width" size="5" title="Leave empty for not defined" />
+<p />
+
+<div class="fl" style="width: 5em;">Height:</div>
+<input type="text" name="height" id="f_height" size="5" title="Leave empty for not defined" />
 <div class="space"></div>
 
 </fieldset>
@@ -258,13 +289,13 @@ title="Leave empty for no border" />
 
 <div class="space"></div>
 
-<div class="fr">Horizontal:</div>
+<div class="fr" style="width: 5em;">Horizontal:</div>
 <input type="text" name="horiz" id="f_horiz" size="5"
 title="Horizontal padding" />
 
 <p />
 
-<div class="fr">Vertical:</div>
+<div class="fr" style="width: 5em;">Vertical:</div>
 <input type="text" name="vert" id="f_vert" size="5"
 title="Vertical padding" />
 

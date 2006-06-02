@@ -7,16 +7,16 @@
  */
 function editor_load_xinha($p_dbColumns, $p_user) {
 	global $Campsite;
-	$stylesheetFile = $Campsite['HTML_COMMON_DIR'] 
+	$stylesheetFile = $Campsite['HTML_COMMON_DIR']
 		."/priv/articles/article_stylesheet.css";
-	?>	
+	?>
 <script type="text/javascript">
 	//<![CDATA[
       _editor_url = "/javascript/xinha/";
       _editor_lang = "<?php p($_REQUEST['TOL_Language']); ?>";
       _campsite_article_id = <?php echo $_REQUEST['f_article_number']; ?>;
 	//]]>
-</script>    
+</script>
 
 <!-- Load the HTMLArea file -->
 <script type="text/javascript" src="/javascript/xinha/htmlarea.js"></script>
@@ -30,7 +30,7 @@ function CampsiteSubhead(editor, objectName, object) {
 		// So IE will allow subheads within subheads (bad), while
 		// the code below will prevent that for the other browsers.
 		parent = editor.getParentElement();
-		if ((parent.tagName.toLowerCase() == "span") && 
+		if ((parent.tagName.toLowerCase() == "span") &&
 			(parent.className.toLowerCase()=="campsite_subhead")) {
 			editor.selectNodeContents(parent);
 			editor.updateToolbar();
@@ -39,13 +39,13 @@ function CampsiteSubhead(editor, objectName, object) {
 			editor.surroundHTML('<span class="campsite_subhead">', '</span>');
 		}
 	} else {
-		editor.surroundHTML('<span class="campsite_subhead">', '</span>');		
+		editor.surroundHTML('<span class="campsite_subhead">', '</span>');
 	}
 } // fn CampsiteSubhead
 
-/** 
+/**
  * Handler for creating an internal campsite link.
- * This is a copy of the _createlink function, except that it calls 
+ * This is a copy of the _createlink function, except that it calls
  * a different popup window.
  */
 function CampsiteInternalLink(editor, objectName, object, link) {
@@ -68,7 +68,7 @@ function CampsiteInternalLink(editor, objectName, object, link) {
     	var compare = 0;
     	if (HTMLArea.is_ie) {
       		compare = range.compareEndPoints("StartToEnd", range);
-    	} 
+    	}
     	else {
       		compare = range.compareBoundaryPoints(range.START_TO_END, range);
     	}
@@ -82,7 +82,7 @@ function CampsiteInternalLink(editor, objectName, object, link) {
 		      f_target : '',
 		      f_usetarget : editor.config.makeLinkShowsTarget
 		    };
-	} 
+	}
 	else {
 	    outparam = {
 	      f_href   : HTMLArea.is_ie ? editor.stripBaseURL(link.href) : link.getAttribute("href"),
@@ -114,7 +114,7 @@ function CampsiteInternalLink(editor, objectName, object, link) {
           				}
         			}
       			}
-    		} 
+    		}
     		catch(e) {}
     	}
     	else {
@@ -138,7 +138,7 @@ function CampsiteInternalLink(editor, objectName, object, link) {
     	editor.updateToolbar();
   	}, outparam);
 };
-	
+
 xinha_editors = null;
 xinha_init    = null;
 xinha_config  = null;
@@ -187,7 +187,7 @@ xinha_init = xinha_init ? xinha_init : function()
   [
   	<?php
   	$xinhaEditors = array();
-	foreach ($p_dbColumns as $dbColumn) {	
+	foreach ($p_dbColumns as $dbColumn) {
 		if (stristr($dbColumn->getType(), "blob")) {
 			$xinhaEditors[] = "'".$dbColumn->getName()."'";
 		}
@@ -220,15 +220,15 @@ xinha_init = xinha_init ? xinha_init : function()
    xinha_config.btnList["createlink"] = [ "Insert Web Link", linkIcon, false, function(e) {e._createLink();} ],
    // Change the removeformat button to work in text mode.
    xinha_config.btnList["removeformat"] = [ "Remove formatting", ["ed_buttons_main.gif",4,4], true, function(e) {e.execCommand("removeformat");} ],
-   
+
    <?php if ($p_user->hasPermission('EditorFindReplace')) { ?>
    // Put the "find-replace" plugin in a better location
    xinha_config.addToolbarElement([], ["FR-findreplace"], 0);
    <?php } ?>
-   
+
    // Add in our style sheet for the "subheads".
    xinha_config.pageStyle = "<?php echo str_replace("\n", "", file_get_contents($stylesheetFile)); ?>";
-   
+
    <?php if ($p_user->hasPermission('EditorSubhead')) { ?>
    subheadTooltip = HTMLArea._lc('Subhead', 'Campsite');
    xinha_config.registerButton({
@@ -248,7 +248,7 @@ xinha_init = xinha_init ? xinha_init : function()
        context   : ''
    });
    <?php } ?>
-   
+
    <?php if ($p_user->hasPermission('EditorLink')) { ?>
    internalLinkTooltip = HTMLArea._lc('Insert Internal Link', 'Campsite');
    xinha_config.registerButton({
@@ -267,70 +267,70 @@ xinha_init = xinha_init ? xinha_init : function()
        // the specified element.
        context   : ''
    });
-   <?php } 
-   
+   <?php }
+
     $toolbar1 = array();
-    if ($p_user->hasPermission('EditorBold')) { 
-	  	$toolbar1[] = "\"bold\""; 
+    if ($p_user->hasPermission('EditorBold')) {
+	  	$toolbar1[] = "\"bold\"";
 	}
-	if ($p_user->hasPermission('EditorItalic')) { 
-		$toolbar1[] = "\"italic\""; 
+	if ($p_user->hasPermission('EditorItalic')) {
+		$toolbar1[] = "\"italic\"";
 	}
-	if ($p_user->hasPermission('EditorUnderline')) { 
-		$toolbar1[] = "\"underline\""; 
+	if ($p_user->hasPermission('EditorUnderline')) {
+		$toolbar1[] = "\"underline\"";
 	}
-	if ($p_user->hasPermission('EditorStrikethrough')) { 
-		$toolbar1[] = "\"strikethrough\""; 
-	} 
-	if ($p_user->hasPermission('EditorTextAlignment')) { 
+	if ($p_user->hasPermission('EditorStrikethrough')) {
+		$toolbar1[] = "\"strikethrough\"";
+	}
+	if ($p_user->hasPermission('EditorTextAlignment')) {
 		$toolbar1[] = "\"justifyleft\"";
-		$toolbar1[] = "\"justifycenter\""; 
-		$toolbar1[] = "\"justifyright\""; 
-		$toolbar1[] = "\"justifyfull\""; 
-	} 
-	if ($p_user->hasPermission('EditorIndent')) { 
-		$toolbar1[] = "\"outdent\""; 
-		$toolbar1[] = "\"indent\""; 
-	} 
-	if ($p_user->hasPermission('EditorCopyCutPaste')) { 
-		$toolbar1[] = "\"copy\""; 
-		$toolbar1[] = "\"cut\""; 
-		$toolbar1[] = "\"paste\""; 
-		$toolbar1[] = "\"space\""; 
-	} 
-	if ($p_user->hasPermission('EditorUndoRedo')) { 
-		$toolbar1[] = "\"undo\""; 
-		$toolbar1[] = "\"redo\""; 
-	} 
-	if ($p_user->hasPermission('EditorTextDirection')) { 
-		 $toolbar1[] = "\"lefttoright\""; 
-		 $toolbar1[] = "\"righttoleft\""; 
+		$toolbar1[] = "\"justifycenter\"";
+		$toolbar1[] = "\"justifyright\"";
+		$toolbar1[] = "\"justifyfull\"";
 	}
-	if ($p_user->hasPermission('EditorLink')) { 
-		$toolbar1[] = "\"campsite-internal-link\""; 
-		$toolbar1[] = "\"createlink\""; 
+	if ($p_user->hasPermission('EditorIndent')) {
+		$toolbar1[] = "\"outdent\"";
+		$toolbar1[] = "\"indent\"";
+	}
+	if ($p_user->hasPermission('EditorCopyCutPaste')) {
+		$toolbar1[] = "\"copy\"";
+		$toolbar1[] = "\"cut\"";
+		$toolbar1[] = "\"paste\"";
+		$toolbar1[] = "\"space\"";
+	}
+	if ($p_user->hasPermission('EditorUndoRedo')) {
+		$toolbar1[] = "\"undo\"";
+		$toolbar1[] = "\"redo\"";
+	}
+	if ($p_user->hasPermission('EditorTextDirection')) {
+		 $toolbar1[] = "\"lefttoright\"";
+		 $toolbar1[] = "\"righttoleft\"";
+	}
+	if ($p_user->hasPermission('EditorLink')) {
+		$toolbar1[] = "\"campsite-internal-link\"";
+		$toolbar1[] = "\"createlink\"";
 	}
 	if ($p_user->hasPermission('EditorSubhead')) {
-		$toolbar1[] = "\"campsite-subhead\""; 
-	} 
-	if ($p_user->hasPermission('EditorImage')) { 
+		$toolbar1[] = "\"campsite-subhead\"";
+	}
+	if ($p_user->hasPermission('EditorImage')) {
 		$toolbar1[] = "\"insertimage\"";
-	} 
-	if ($p_user->hasPermission('EditorSourceView')) { 
-		$toolbar1[] = "\"htmlmode\""; 
-	} 
-	if ($p_user->hasPermission('EditorEnlarge')) { 
+	}
+	if ($p_user->hasPermission('EditorSourceView')) {
+		$toolbar1[] = "\"htmlmode\"";
+	}
+	if ($p_user->hasPermission('EditorEnlarge')) {
 		$toolbar1[] = "\"popupeditor\"";
 	}
-    
-	if ($p_user->hasPermission('EditorHorizontalRule')) { 
+
+	if ($p_user->hasPermission('EditorHorizontalRule')) {
 		$toolbar1[] = "\"inserthorizontalrule\"";
-	} 
-	if ($p_user->hasPermission('EditorFontColor')) { 
+	}
+	if ($p_user->hasPermission('EditorFontColor')) {
 		$toolbar1[] = "\"forecolor\"";
 		$toolbar1[] = "\"hilitecolor\"";
-	} 
-	if ($p_user->hasPermission('EditorSubscript')) { 
+	}
+	if ($p_user->hasPermission('EditorSubscript')) {
 		$toolbar1[] = "\"subscript\"";
 	}
 	if ($p_user->hasPermission('EditorSuperscript')) {
@@ -342,13 +342,13 @@ xinha_init = xinha_init ? xinha_init : function()
 	if (count($toolbar1) > 24) {
 		$toolbar2 = array_splice($toolbar1, 24);
 	}
-	
+
 	// This is to put the bulleted and numbered list controls
 	// on the most appropriate line of the toolbar.
-	if ($p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 15) { 
+	if ($p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 15) {
 		$toolbar1[] = "\"insertunorderedlist\"";
 		$toolbar1[] = "\"insertorderedlist\"";
-	}		
+	}
 	elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 24) {
 		$toolbar1[] = "\"insertunorderedlist\"";
 	}
@@ -356,39 +356,39 @@ xinha_init = xinha_init ? xinha_init : function()
 		$toolbar1[] = "\"insertorderedlist\"";
 	}
 	else {
-		if ($p_user->hasPermission('EditorListBullet')) { 
+		if ($p_user->hasPermission('EditorListBullet')) {
 			$toolbar2[] = "\"insertunorderedlist\"";
 		}
-		if ($p_user->hasPermission('EditorListNumber')) { 
+		if ($p_user->hasPermission('EditorListNumber')) {
 			$toolbar2[] = "\"insertorderedlist\"";
 	 	}
 	}
-	
+
 	if ($p_user->hasPermission('EditorFontFace')) {
 		$toolbar2[] = "\"formatblock\"";
 		$toolbar2[] = "\"fontname\"";
 	}
-	
+
 	if ($p_user->hasPermission('EditorFontSize')) {
 		$toolbar2[] = "\"fontsize\"";
 	}
-	
+
 	// This is to fix ticket #1602.  You only want the line break if
 	// there is more than one line in the toolbar.
-	if (count($toolbar2) > 0 || $p_user->hasPermission('EditorTable'))  { 
+	if (count($toolbar2) > 0 || $p_user->hasPermission('EditorTable'))  {
 		$toolbar1[] = "\"linebreak\"";
 	}
    ?>
-   
+
    xinha_config.toolbar = [
 		[ <?php echo implode(",", $toolbar1); ?> ],
-		
+
 		<?php if (count($toolbar2) > 0) { ?>
 		[ <?php echo implode(",", $toolbar2); ?> ],
 		<?php } ?>
-		
+
 		<?php if ($p_user->hasPermission('EditorTable')) { ?>
-		[ "linebreak", "inserttable" ],
+		[ "linebreak", "inserttable", "toggleborders" ],
 		<?php } ?>
 	];
 
@@ -410,7 +410,7 @@ xinha_init = xinha_init ? xinha_init : function()
    ************************************************************************/
 
   xinha_editors   = HTMLArea.makeEditors(xinha_editors, xinha_config, xinha_plugins);
-	
+
   /** STEP 4 ***************************************************************
    * If you want to change the configuration variables of any of the
    * editors,  this is the place to do that, for example you might want to

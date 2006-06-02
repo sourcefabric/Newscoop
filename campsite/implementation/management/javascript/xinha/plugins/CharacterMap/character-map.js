@@ -104,7 +104,7 @@ CharacterMap.prototype.buttonPress = function( editor )
 
 CharacterMap.prototype.addEntity = function ( entite, pos )
 {
-  editor = this.editor;
+  var editor = this.editor;
   var self = this;
   var a = document.createElement( 'a' );
   HTMLArea._addClass( a, 'entity' );

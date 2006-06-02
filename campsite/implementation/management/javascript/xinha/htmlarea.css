@@ -70,7 +70,6 @@
 .htmlarea .toolbar select:active { 
   margin-top: 2px;
   margin-bottom: 1px;
-  background: FieldFace;
   color: ButtonText;
 }
 
@@ -225,10 +224,32 @@ form { margin: 0px; border: none; }
   font-size:100%;
   font-weight:bold;
   padding: 2px;
+  clear:left;
+  
 }
 
+.htmlarea .panel { overflow:auto; }
 .htmlarea .panels.left  .panel { border-right:none; border-left:none; }
 .htmlarea .panels.left  h1     { border-right:none;  }
 .htmlarea .panels.right .panel { border-right:none; border-left:none; }
 .htmlarea .panels.left  h1     { border-left:none;  }
 .htmlarea { border: 1px solid black; }
+
+.loading
+{
+  background-color:#666;
+  position:absolute;
+  z-index:998;
+}
+.loading_main
+{
+  font-size:1.6em;
+  color:#ff6;
+  text-align:center;
+}
+.loading_sub
+{
+  font-size:1.0em;
+  color:#fff;
+  text-align:center;
+}

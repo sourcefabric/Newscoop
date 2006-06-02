@@ -215,7 +215,14 @@ function initDocument() {
   {
     field.form.action = _editor_url + '/plugins/SpellChecker/spell-check-logic.php';
   }
-
+  if(editor.config.SpellChecker.utf8_to_entities)
+  {
+    document.getElementById('utf8_to_entities').value = 1;
+  }
+  else
+  {
+    document.getElementById('utf8_to_entities').value = 0;
+  }
   field.form.submit();
   document.getElementById("f_init").value = "0";
 

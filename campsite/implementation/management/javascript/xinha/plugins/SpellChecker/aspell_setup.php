@@ -58,7 +58,7 @@
   // Personal dictionaries
   $p_dicts_path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'personal_dicts';
 
-  if(file_exists($_REQUEST['p_dicts_path']) && is_writable($_REQUEST['p_dicts_path']))
+  if(isset($_REQUEST['p_dicts_path']) && file_exists($_REQUEST['p_dicts_path']) && is_writable($_REQUEST['p_dicts_path']))
   {
     if(!isset($_REQUEST['p_dicts_name']))
     {

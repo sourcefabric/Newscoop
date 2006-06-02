@@ -35,7 +35,9 @@ function __dlg_onclose() {
 	opener.Dialog._return(null);
 }
 
-function __dlg_init(bottom) {
+function __dlg_init(bottom, win_dim) {
+  if(window.__dlg_init_done) return true;
+  
   if(window.opener._editor_skin != "") {
     var head = document.getElementsByTagName("head")[0];
     var link = document.createElement("link");
@@ -44,42 +46,44 @@ function __dlg_init(bottom) {
     link.rel = "stylesheet";
     head.appendChild(link);
   }
-	var body = document.body;
-	var body_height = 0;
-	if (typeof bottom == "undefined") {
-		var div = document.createElement("div");
-		body.appendChild(div);
-		var pos = getAbsolutePos(div);
-		body_height = pos.y;
-	} else {
-		var pos = getAbsolutePos(bottom);
-		body_height = pos.y + bottom.offsetHeight;
-	}
 	window.dialogArguments = opener.Dialog._arguments;
-	if (!document.all) {
+
+  var body        = document.body;
+  
+  if(win_dim)
+  {
+    window.resizeTo(win_dim.width, win_dim.height);
+    if(win_dim.top && win_dim.left)
+    {
+      window.moveTo(win_dim.left,win_dim.top);
+    }
+    else
+    {
+      var x = opener.screenX + (opener.outerWidth - win_dim.width) / 2;
+      var y = opener.screenY + (opener.outerHeight - win_dim.height) / 2;
+      window.moveTo(x,y);
+    }
+  }
+  else if (window.sizeToContent) {
 		window.sizeToContent();
 		window.sizeToContent();	// for reasons beyond understanding,
 					// only if we call it twice we get the
 					// correct size.
 		window.addEventListener("unload", __dlg_onclose, true);
 		window.innerWidth = body.offsetWidth + 5;
-		window.innerHeight = body_height + 2;
+		window.innerHeight = body.scrollHeight + 2;
 		// center on parent
 		var x = opener.screenX + (opener.outerWidth - window.outerWidth) / 2;
 		var y = opener.screenY + (opener.outerHeight - window.outerHeight) / 2;
 		window.moveTo(x, y);
 	} else {
-		// window.dialogHeight = body.offsetHeight + 50 + "px";
-		// window.dialogWidth = body.offsetWidth + "px";
+		var docElm      = document.documentElement ? document.documentElement : null;    
+		var body_height = body.scrollHeight;
+    
+		window.resizeTo(body.scrollWidth, body_height);
+		var ch = docElm && docElm.clientHeight ? docElm.clientHeight : body.clientHeight;
+		var cw = docElm && docElm.clientWidth  ? docElm.clientWidth  : body.clientWidth;
 		
-		// Paul Baranowski: Added next three lines to deal with 
-		// incorrectly sized IE popups.
-		if (HTMLArea.is_ie) {
-			body_height += 40;
-		}
-		window.resizeTo(body.offsetWidth, body_height);
-		var ch = body.clientHeight;
-		var cw = body.clientWidth;
 		window.resizeBy(body.offsetWidth - cw, body_height - ch);
 		var W = body.offsetWidth;
 		var H = 2 * body_height - ch;
@@ -88,10 +92,11 @@ function __dlg_init(bottom) {
 		window.moveTo(x, y);
 	}
 	HTMLArea.addDom0Event(document.body, 'keypress', __dlg_close_on_esc);
+  window.__dlg_init_done = true;
 }
 
 function __dlg_translate(context) {
-	var types = ["input", "select", "legend", "span", "option", "td", "button", "div", "label"];
+	var types = ["input", "select", "legend", "span", "option", "td", "button", "div", "label", "a", "img"];
 	for (var type = 0; type < types.length; ++type) {
 		var spans = document.getElementsByTagName(types[type]);
 		for (var i = spans.length; --i >= 0;) {
