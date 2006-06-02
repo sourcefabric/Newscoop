@@ -6,9 +6,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files("localizer");
 require_once('Localizer.php');
 
-global $g_translationStrings;
-global $g_localizerConfig;
-
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -21,14 +18,12 @@ if (!$User->hasPermission('ManageLocalizer')) {
 	exit;
 }
 
-$crumbs = array();
-$crumbs[] = array("Configure", "");
-$crumbs[] = array("Localizer", "");
-echo camp_html_breadcrumbs($crumbs);
+$prefix = Input::Get('prefix', 'string', '', true);
+$missingStrings = Localizer::FindMissingStrings($prefix);
+if (count($missingStrings) > 0) {
+    Localizer::AddStringAtPosition($prefix, 0, $missingStrings);
+}
 
-require_once("translate.php");
-translationForm($_REQUEST);
-
+header("Location: /$ADMIN/localizer/index.php");
+exit;
 ?>
-</body>
-</html>

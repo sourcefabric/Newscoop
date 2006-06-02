@@ -129,7 +129,6 @@ function translationForm($p_request)
 
 		<table border="0" style="background-color: #d5e2ee; border: 1px solid #8baed1; margin-left: 10px; margin-top: 5px;" width="700px;">
 		<form action="index.php" method="post">
-	    <INPUT TYPE="hidden" name="action" value="translate">
 	    <INPUT TYPE="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLanguageId(); ?>">
 	    <input type="hidden" name="search_string" value="<?php echo htmlspecialchars($searchString); ?>">
 		<tr>
@@ -194,7 +193,11 @@ function translationForm($p_request)
 				<table>
 				<tr>
 					<td>
-			           	<input type="checkbox" name="hide_translated" value="" <?php echo $hideTranslated; ?> class="input_checkbox" onchange="this.form.submit();"><?php putGS('Hide translated strings?'); ?>
+			           	<input type="checkbox" name="hide_translated" value="" <?php echo $hideTranslated; ?> class="input_checkbox"><?php putGS('Hide translated strings?'); ?>
+					</td>
+
+					<td style="padding-left: 10px;">
+						<INPUT type="submit" value="<?php putGS("Submit"); ?>" class="button">
 					</td>
 				</tr>
 				</table>
@@ -211,7 +214,6 @@ function translationForm($p_request)
 		<td valign="top">
 			<table border="0" style="background-color: #FAEFFF; border: 1px solid black; margin-left: 10px;" width="700px;" align="center">
 			<form>
-	        <input type="hidden" name="action" value="translate">
 	        <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
 	        <?php if (!empty($hideTranslated)) { ?>
 	        <input type="hidden" name="hide_translated" value="on">
@@ -244,8 +246,7 @@ function translationForm($p_request)
 	if ((count($missingStrings) > 0)  && ($screenDropDownSelection != 'globals')) {
 		?>
 		<table align="center" style="background-color: #EDFFDF; border: 1px solid #357654; margin-left: 10px; margin-bottom: 5px;" width="700px">
-        <form action="index.php" method="post">
-        <input type="hidden" name="action" value="add_missing_translation_strings">
+        <form action="do_add_missing_strings.php" method="post">
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <?php if (!empty($hideTranslated)) { ?>
         <input type="hidden" name="hide_translated" value="on">
@@ -280,8 +281,7 @@ function translationForm($p_request)
 	if ((count($unusedStrings) > 0) && ($screenDropDownSelection != 'globals')) {
 		?>
 		<table style="background-color: #FFE0DF; border: 1px solid #C51325; margin-top: 3px; margin-left: 10px; margin-bottom: 5px;" width="700px">
-        <form action="index.php" method="post">
-        <input type="hidden" name="action" value="delete_unused_translation_strings">
+        <form action="do_delete_unused_strings.php" method="post">
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <?php if (!empty($hideTranslated)) { ?>
         <input type="hidden" name="hide_translated" value="on">
@@ -315,8 +315,7 @@ function translationForm($p_request)
 	?>
 	<!-- Begin translated strings box -->
 	<table border="0" class="table_input" style="padding-left: 10px; padding-bottom: 10px; margin-left: 10px;" width="700px">
-	<form action="index.php" method="post">
-    <INPUT TYPE="hidden" name="action" value="save_translation">
+	<form action="do_save.php" method="post">
     <INPUT TYPE="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
     <?php if (!empty($hideTranslated)) { ?>
     <input type="hidden" name="hide_translated" value="on">
@@ -411,10 +410,10 @@ function translationForm($p_request)
             	            	$next = $count+1;
             	            }
 
-            	            $removeLink    = "?action=remove_string&pos=$count&$fileparms"
+            	            $removeLink    = "do_delete_string.php?pos=$count&$fileparms"
             	            	."&string=".urlencode($sourceKey);
-            	            $moveUpLink    = "?action=move_string&pos1=$count&pos2=$prev&$fileparms";
-            	            $moveDownLink  = "?action=move_string&pos1=$count&pos2=$next&$fileparms";
+            	            $moveUpLink    = "do_reorder_string.php?pos1=$count&pos2=$prev&$fileparms";
+            	            $moveDownLink  = "do_reorder_string.php?pos1=$count&pos2=$next&$fileparms";
                 			if (empty($searchString)) {
             				?>
             				<td style="padding-left: 3px;">
@@ -440,7 +439,7 @@ function translationForm($p_request)
 								}
 								?>
 								</SELECT>
-								<input type="button" name="" value="Move" onclick="location.href='?action=change_string_prefix&string=<?php echo urlencode($sourceKey); ?>&new_prefix='+this.form.change_prefix_<?php echo $count; ?>.options[this.form.change_prefix_<?php echo $count; ?>.selectedIndex].value+'&<?php echo $fileparms; ?>';" class="button">
+								<input type="button" name="" value="Move" onclick="location.href='do_string_switch_file.php?string=<?php echo urlencode($sourceKey); ?>&new_prefix='+this.form.change_prefix_<?php echo $count; ?>.options[this.form.change_prefix_<?php echo $count; ?>.selectedIndex].value+'&<?php echo $fileparms; ?>';" class="button">
             	            </td>
                             <?php
                 	        }
