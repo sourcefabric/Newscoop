@@ -40,7 +40,7 @@ if (count($comments) <= 0) {
         }
         ?>
 
-        <?php if ($User->hasPermission("CommentModerate")) { ?>
+        <?php if ($User->hasPermission("CommentModerate")  && ($f_edit_mode == "edit") )  { ?>
         <tr>
             <td>
 
@@ -131,7 +131,7 @@ if (count($comments) <= 0) {
 </table>
 <?php
 // show the "add comment" form
-if (!$articleObj->commentsLocked()) {
+if (!$articleObj->commentsLocked() && ($f_edit_mode == "edit") ) {
 ?>
 <a name="add_comment" />
 <form action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">
