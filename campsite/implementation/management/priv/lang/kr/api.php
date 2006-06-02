@@ -43,4 +43,10 @@ regGS("The user account $1 has been deleted.", "사용자 아이디 $1 삭제됨
 regGS("Password changed for $1", "$1 패스워드 변경됨");
 regGS("User account $1 created", "사용자 아이디 $1 새로 생성됨");
 regGS("Template $1 uploaded", "템플레이트 $1 업로드됨");
+regGS("Cannot create file \"$1\"", "파일 \"$1\"을 생성할 수 없습니다.");
+regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\"은 비정상이거나 이미지가 아닙니다.");
+regGS("URL \"$1\" is not an image.", "URL \"$1\" 은 이미지가 아닙니다.");
+regGS("Topic $1 added", "토픽 $1 추가됨");
+regGS("Topic $1 deleted", "토픽 $1 삭제됨");
+regGS("Topic $1 updated", "토픽 $1 업데이트됨");
 ?>

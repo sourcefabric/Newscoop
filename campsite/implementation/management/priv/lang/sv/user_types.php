@@ -8,4 +8,6 @@ regGS("User type", "Användartyp");
 regGS("Change user type permissions", "Ändra användartyprättigheter");
 regGS("You do not have the right to change user type permissions.", "Du har inte rätt att ändra på användartypsrättigheter.");
 regGS("User type $1 changed permissions", "Användartypen $1 ändrade rättigheter");
+regGS("A user type with the name '$1' already exists.", "En användartyp med namnet '$1' finns redan.");
+regGS("Access", "Åtkomst");
 ?>

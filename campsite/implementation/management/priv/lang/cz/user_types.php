@@ -18,4 +18,6 @@ regGS("Updating user type permissions", "Obnovení práva typu uživatele");
 regGS("User type permissions have been successfuly updated.", "Práva tohoto typu uživatele byla úspěšně obnovena");
 regGS("User type permissions could not be updated.", "Práva tohoto typu uživatele nemohla být obnovena");
 regGS("User type $1 changed permissions", "Typ uživatele $1 změnil práva");
+regGS("A user type with the name '$1' already exists.", "");
+regGS("Access", "Přístup");
 ?>

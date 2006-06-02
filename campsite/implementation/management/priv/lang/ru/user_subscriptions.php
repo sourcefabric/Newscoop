@@ -19,7 +19,6 @@ regGS("Subscription status could not be changed.", "Невозможно изм�
 regGS("Update payment", "Обновление оплаты");
 regGS("Subscription payment could not be changed.", "Невозможно изменить оплату подписки.");
 regGS("Account", "Учетная запись");
-regGS("Are you sure you want to deactivate the subscription?", "Вы уверены, что хотите деактивировать подписку?");
 regGS("Are you sure you want to activate the subscription?", "Вы уверены, что хотите активировать подписку?");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "Вы уверены, что хотите удалить подписку на публикацию $1?");
 regGS("Left to pay", "Осталось оплатить:ru");

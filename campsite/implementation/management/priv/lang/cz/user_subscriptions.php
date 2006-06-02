@@ -21,7 +21,6 @@ regGS("The subscription could not be added.", "Předplatné nemohlo být přidá
 regGS("Please check if there isn't another subscription to the same publication.", "Zkontrolujte, zda již neexistuje předplatné ke stejné publikaci");
 regGS("Change subscription status", "Změnit stav předplatného");
 regGS("You do not have the right to change subscriptions status.", "Nemáte právo měnit stav předplatného");
-regGS("Are you sure you want to deactivate the subscription?", "Určitě chcete deaktivovat předplatné?");
 regGS("Are you sure you want to activate the subscription?", "Určitě chcete aktivovat předplatné?");
 regGS("Subscription status could not be changed.", "Předplatné nemohlo být změněno");
 regGS("Update payment", "Obnovit platby");

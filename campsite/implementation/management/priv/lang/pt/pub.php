@@ -62,4 +62,8 @@ regGS("$1 is the default publication alias, it can not be deleted.", "$1 é o al
 regGS("You do not have the right to add publications.", "Nao tem permissões para adicionar publicações.");
 regGS("There are $1 issue(s) left.", "Existe(m) ainda $1 Edição(ões).");
 regGS("Change publication information", "Alterar detalhes da Publicação");
+regGS("Time Unit", "Unidade de Tempo");
+regGS("Countries Subscription Default Time", "Tempo de Avaliação Paises");
+regGS("Currency", "Moeda");
+regGS("Edit languages", "Editar Idiomas");
 ?>

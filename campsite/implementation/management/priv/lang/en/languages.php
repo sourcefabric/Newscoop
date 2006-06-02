@@ -33,4 +33,5 @@ regGS("Saturday", "Saturday");
 regGS("Sunday", "Sunday");
 regGS("You do not have the right to add new languages.", "You do not have the right to add new languages.");
 regGS("There are $1 issue(s) left.", "There are $1 issue(s) left.");
+regGS("Native name", "Native name");
 ?>

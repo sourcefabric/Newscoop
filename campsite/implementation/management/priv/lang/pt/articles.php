@@ -1,7 +1,17 @@
 <?php
+regGS("Total:", "");
+regGS("Toggle '$1'", "");
+regGS("Show Comments", "");
+regGS("Saved:", "");
+regGS("Locked", "");
+regGS("Link to public page", "");
+regGS("Invalid type: $1", "");
+regGS("Hide Comments", "");
+regGS("Enabled", "");
+regGS("Disabled", "");
+regGS("Comments:", "");
+regGS("Comments", "");
 regGS("The article has already been translated into $1.", "Este artigo ja foi traduzido para $1");
-regGS("move", "mover");
-regGS("duplicate", "duplicar");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Tem de escolher a publicação, numero e secção para este artigo antes de agendar a sua publicação. Vá ao menu $1 e escolha a opção $2 para fazê-lo");
 regGS("You do not have the right to translate articles.", "Não tem permissão para traduzir artigos.");
 regGS("You do not have the right to publish articles.", "Não tem permissão para publicar artigos");
@@ -14,7 +24,6 @@ regGS("Publish article", "Publicar artigo");
 regGS("Move?", "Mover?");
 regGS("Move articles", "Mover artigos");
 regGS("Move article", "Mover artigo");
-regGS("Move", "Mover");
 regGS("An issue must be created for the selected language but you do not have the right to create an issue.", "Tem de criar uma edição para o idioma escolhido, mas não possui permissões para tal.");
 regGS("A section must be created for the selected language but you do not have the right to create a section.", "Tem de criar um secção para o idioma escolhido, mas não possui permissões para tal.");
 regGS("to section", "para secção");
@@ -55,7 +64,6 @@ regGS("Are you sure you want to remove the event scheduled on $1?", "Confirma a 
 regGS("Are you sure you want to delete this article?", "Confirma a eliminação deste artigo?");
 regGS("Are you sure you want to delete the selected articles?", "Confirma a eliminação do artigos selecionados?");
 regGS("An issue must be created for the selected language.  Please enter the issue name and URL name.", "Tem de existir uma edição para o idioma selecionado. Introduza o nome da edição e respectivo nome URL.");
-regGS("All", "Todos");
 regGS("A section must be created for the selected language.  Please enter the section name and URL name.", "Tem de existir uma secção para o idioma selecionado. Introduza o nome da secção e respectivo nome URL.");
 regGS("Article Type", "Tipo de artigo");
 regGS("$1 articles found", "exist(m) $1 artigo(s).");
@@ -67,7 +75,6 @@ regGS("Edit article", "Editar Detalhes do Artigo");
 regGS("Allow users without subscriptions to view the article", "Permitir que leitores sem assinatura vejam Artigo.");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "O artigo foi bloqueado por $1 ($2) à $3 horas e $4 minutos.");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "O artigo foi bloqueado por $1 ($2) à $3 minutos.");
-regGS("Are you sure you want to unlock it?", "Confirme o desbloqueamento");
 regGS("Article is locked", "Artigo bloqueado");
 regGS("Duplicate article", "Duplicar Artigo");
 regGS("The destination section is the same as the source section.", "Secção destino idêntica à de origem.");
@@ -80,7 +87,10 @@ regGS("You do not have the right to delete articles.", "Não tem permissões par
 regGS("You must select an article type.", "Tem de escolher o tipo de artigo.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Confirma a eliminação da imagem \'$1\' do artigo?");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Confirma a eliminação do tópico \\'$1\\' do artigo?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Confirma a eliminação do anexo \\'$1\\' do artigo?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Confirma a eliminação da imagem \\'$1\\' do artigo?");
+regGS("There was an error reading request parameters.", "Ocorreu um erro na leitura do parametro solicitado.");
+regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Este artigo não pode ser prévisualizado, verifique se existe um modelo atribuido à visualização de artigos.");
+regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Este artigo não pode ser prévisualizado, verifique se existe um modelo atribuido à página principal");
+regGS("Insert Internal Link", "Inserir Ligação Interna");
+regGS("No such article.", "Artigo Desconhecido.");
+regGS("No such section.", "Secção Desconhecida.");
 ?>

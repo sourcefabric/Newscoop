@@ -1,7 +1,17 @@
 <?php
+regGS("Total:", "Total:");
+regGS("Toggle '$1'", "Toggle '$1'");
+regGS("Show Comments", "Show Comments");
+regGS("Saved:", "Saved:");
+regGS("Locked", "Locked");
+regGS("Link to public page", "Link to public page");
+regGS("Invalid type: $1", "Invalid type: $1");
+regGS("Hide Comments", "Hide Comments");
+regGS("Enabled", "Enabled");
+regGS("Disabled", "Disabled");
+regGS("Comments:", "Comments:");
+regGS("Comments", "Comments");
 regGS("The article has already been translated into $1.", "The article has already been translated into $1.");
-regGS("move", "move");
-regGS("duplicate", "duplicate");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.");
 regGS("You do not have the right to translate articles.", "You do not have the right to translate articles.");
 regGS("You do not have the right to publish articles.", "You do not have the right to publish articles.");
@@ -14,7 +24,6 @@ regGS("Publish article", "Publish article");
 regGS("Move?", "Move?");
 regGS("Move articles", "Move articles");
 regGS("Move article", "Move article");
-regGS("Move", "Move");
 regGS("An issue must be created for the selected language but you do not have the right to create an issue.", "An issue must be created for the selected language but you do not have the right to create an issue.");
 regGS("A section must be created for the selected language but you do not have the right to create a section.", "A section must be created for the selected language but you do not have the right to create a section.");
 regGS("to section", "to section");
@@ -55,7 +64,6 @@ regGS("Are you sure you want to remove the event scheduled on $1?", "Are you sur
 regGS("Are you sure you want to delete this article?", "Are you sure you want to delete this article?");
 regGS("Are you sure you want to delete the selected articles?", "Are you sure you want to delete the selected articles?");
 regGS("An issue must be created for the selected language.  Please enter the issue name and URL name.", "An issue must be created for the selected language.  Please enter the issue name and URL name.");
-regGS("All", "All");
 regGS("A section must be created for the selected language.  Please enter the section name and URL name.", "A section must be created for the selected language.  Please enter the section name and URL name.");
 regGS("Article Type", "Article Type");
 regGS("$1 articles found", "$1 articles found");
@@ -67,7 +75,6 @@ regGS("Edit article", "Edit article");
 regGS("Allow users without subscriptions to view the article", "Allow users without subscriptions to view the article");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "The article has been locked by $1 ($2) $3 minute(s) ago.");
-regGS("Are you sure you want to unlock it?", "Are you sure you want to unlock it?");
 regGS("Article is locked", "Article is locked");
 regGS("Duplicate article", "Duplicate article");
 regGS("The destination section is the same as the source section.", "The destination section is the same as the source section.");
@@ -79,4 +86,10 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "You do not have the right to delete articles.");
 regGS("You must select an article type.", "You must select an article type.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Are you sure you want to remove the image \'$1\' from the article?");
+regGS("There was an error reading request parameters.", "There was an error reading request parameters.");
+regGS("This article cannot be previewed. Please make sure it has the article template selected.", "This article cannot be previewed. Please make sure it has the article template selected.");
+regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "This article cannot be previewed. Please make sure it has the front page template selected.");
+regGS("Insert Internal Link", "Insert Internal Link");
+regGS("No such article.", "No such article.");
+regGS("No such section.", "No such section.");
 ?>

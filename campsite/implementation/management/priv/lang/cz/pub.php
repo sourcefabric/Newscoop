@@ -62,4 +62,8 @@ regGS("$1 is the default publication alias, it can not be deleted.", "");
 regGS("You do not have the right to add publications.", "");
 regGS("There are $1 issue(s) left.", "");
 regGS("Change publication information", "Změnit informace o publikaci");
+regGS("Time Unit", "Časová jednotka");
+regGS("Countries Subscription Default Time", "");
+regGS("Currency", "Měna");
+regGS("Edit languages", "Upravit jazyky");
 ?>

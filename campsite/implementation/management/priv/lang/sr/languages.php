@@ -43,4 +43,5 @@ regGS("Language information has been successfuly updated.", "Подаци о ј�
 regGS("Language information could not be updated.", "Подаци о језику не могу бити измењени");
 regGS("A language with the same name already exists.", "Језик под тим именом већ постоји");
 regGS("Add another language", "Додај нови језик");
+regGS("Native name", "Изворно име");
 ?>

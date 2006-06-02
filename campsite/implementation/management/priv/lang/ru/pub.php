@@ -62,4 +62,8 @@ regGS("$1 is the default publication alias, it can not be deleted.", "$1 - эт�
 regGS("You do not have the right to add publications.", "Вы не имеете прав добавления публикации.");
 regGS("There are $1 issue(s) left.", "Отсалось выпусков: $1");
 regGS("Change publication information", "Изменить информацию публикации:ru");
+regGS("Time Unit", "Единица времени");
+regGS("Countries Subscription Default Time", "Время по-умолчания для локальных подписок");
+regGS("Currency", "Валюта");
+regGS("Edit languages", "Редактировать язык");
 ?>

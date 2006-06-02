@@ -49,4 +49,9 @@ regGS("The template has been successfully changed.", "模版已被成功修改")
 regGS("Issue template for publication $1 changed to $2", "议题模版从发布$1变化到$2");
 regGS("Issue template for single articles from $1 changed to $2", "单文章的模版从$1改变到$2");
 regGS("The template could not be changed.", "模版不能被改变");
+regGS("There was an error reading the language parameter.", "");
+regGS("There was an error reading the publication parameter.", "");
+regGS("There was an error reading the issue parameter.", "");
+regGS("There was an error scheduling the $1 action on $2", "");
+regGS("The action scheduled on $1 could not be deleted.", "");
 ?>

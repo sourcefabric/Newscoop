@@ -43,4 +43,10 @@ regGS("The user account $1 has been deleted.", "The user account $1 has been del
 regGS("Password changed for $1", "Password changed for $1");
 regGS("User account $1 created", "User account $1 created");
 regGS("Template $1 uploaded", "Template $1 uploaded");
+regGS("Cannot create file \"$1\"", "Cannot create file \"$1\"");
+regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\" is invalid or is not an image.");
+regGS("URL \"$1\" is not an image.", "URL \"$1\" is not an image.");
+regGS("Topic $1 added", "Topic $1 added");
+regGS("Topic $1 deleted", "Topic $1 deleted");
+regGS("Topic $1 updated", "Topic $1 updated");
 ?>

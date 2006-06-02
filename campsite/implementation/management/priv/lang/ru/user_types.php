@@ -19,4 +19,6 @@ regGS("The user type could not be deleted.", "Не удалось удалить
 regGS("Updating user type permissions", "Обновление прав типов пользователей:ru");
 regGS("User type permissions have been successfuly updated.", "Права типов пользователей были успешно обновлены.:ru");
 regGS("User type permissions could not be updated.", "Не удалось обновить права типов пользователей.:ru");
+regGS("A user type with the name '$1' already exists.", "Тип пользователя с именем '$1' уже существует");
+regGS("Access", "Доступ");
 ?>

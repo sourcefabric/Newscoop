@@ -40,4 +40,7 @@ regGS("The section number specified already exists, please specify a different v
 regGS("Warning", "Warning");
 regGS("You must select a section.", "You must select a section.");
 regGS("You must specify a name for the section.", "You must specify a name for the section.");
+regGS("The section could not be added.", "The section could not be added.");
+regGS("Add new section", "Add new section");
+regGS("The section $1 could not be deleted.", "The section $1 could not be deleted.");
 ?>

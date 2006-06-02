@@ -61,4 +61,8 @@ regGS("The alias $1 has been deleted from publication $2.", "The alias $1 has be
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 is the default publication alias, it can not be deleted.");
 regGS("You do not have the right to add publications.", "You do not have the right to add publications.");
 regGS("There are $1 issue(s) left.", "There are $1 issue(s) left.");
+regGS("Time Unit", "Time Unit");
+regGS("Countries Subscription Default Time", "Countries Subscription Default Time");
+regGS("Currency", "Currency");
+regGS("Edit languages", "Edit languages");
 ?>

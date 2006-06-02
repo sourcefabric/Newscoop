@@ -52,4 +52,9 @@ regGS("The template has been successfully changed.", "Šablon je uspešno promen
 regGS("Issue template for publication $1 changed to $2", "Šablon izdanja za publikaciju $1 promenjen u $2");
 regGS("Issue template for single articles from $1 changed to $2", "Šablon izdanja za stranu sa tekstom iz $1 promenjen u $2");
 regGS("The template could not be changed.", "Šablon ne može biti promenjen");
+regGS("There was an error reading the language parameter.", "Greška pri čitanju parametra jezika.");
+regGS("There was an error reading the publication parameter.", "Greška pri čitanju parametra publikacije.");
+regGS("There was an error reading the issue parameter.", "Greška pri čitanju parametra izdanja.");
+regGS("There was an error scheduling the $1 action on $2", "Došlo je do greške pri zakazivanju akcije $1 za $2");
+regGS("The action scheduled on $1 could not be deleted.", "Akcija predviđena za $1 ne može biti obrisana.");
 ?>

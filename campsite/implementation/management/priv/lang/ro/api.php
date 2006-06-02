@@ -43,4 +43,10 @@ regGS("The user account $1 has been deleted.", "Contul de utilizator $1 a fost �
 regGS("Password changed for $1", "Parola pentru $1 a fost schimbată");
 regGS("User account $1 created", "Contul de utilizator $1 a fost creat");
 regGS("Template $1 uploaded", "Şablonul $1 a fost încărcat în sistem");
+regGS("Cannot create file \"$1\"", "Fişierul \"$1\" nu poate fi creat");
+regGS("URL \"$1\" is invalid or is not an image.", "Adresa de Internet \"$1\" nu este validă sau nu este un fişier de tip imagine.");
+regGS("URL \"$1\" is not an image.", "Adresa de Internet \"$1\" nu este un fişier de tip imagine.");
+regGS("Topic $1 added", "Subiectul $1 a fost adăugat");
+regGS("Topic $1 deleted", "Subiectul $1 a fost şters");
+regGS("Topic $1 updated", "Subiectul $1 a fost actualizat");
 ?>

@@ -1,7 +1,17 @@
 <?php
+regGS("Total:", "");
+regGS("Toggle '$1'", "");
+regGS("Show Comments", "");
+regGS("Saved:", "");
+regGS("Locked", "");
+regGS("Link to public page", "");
+regGS("Invalid type: $1", "");
+regGS("Hide Comments", "");
+regGS("Enabled", "");
+regGS("Disabled", "");
+regGS("Comments:", "");
+regGS("Comments", "");
 regGS("The article has already been translated into $1.", "Articolul a fost deja tradus în $1.");
-regGS("move", "mută");
-regGS("duplicate", "duplică");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Trebuie să alegi publicaţia, ediţia şi secţiunea articolului înainte de a-l programa pentru publicare. Mergi la meniul \"$1\" şi selectează \"$2\" pentru a face acest lucru.");
 regGS("You do not have the right to translate articles.", "Nu ai dreptul să traduci articole.");
 regGS("You do not have the right to publish articles.", "Nu ai dreptul să publici articole.");
@@ -14,7 +24,6 @@ regGS("Publish article", "Publică articolul");
 regGS("Move?", "Muţi?");
 regGS("Move articles", "Mută articolele");
 regGS("Move article", "Mută articolul");
-regGS("Move", "Mută");
 regGS("An issue must be created for the selected language but you do not have the right to create an issue.", "Trebuie creată o ediţie pentru limba selectată dar nu ai dreptul să creezi o ediţie.");
 regGS("A section must be created for the selected language but you do not have the right to create a section.", "Trebuie creată o secţiune pentru limba selectată dar nu ai dreptul să creezi o secţiune.");
 regGS("to section", "către secţiunea");
@@ -55,7 +64,6 @@ regGS("Are you sure you want to remove the event scheduled on $1?", "Eşti sigur
 regGS("Are you sure you want to delete this article?", "Eşti sigur că vrei să ştergi acest articol?");
 regGS("Are you sure you want to delete the selected articles?", "Eşti sigur că vrei să ştergi articolele selectate?");
 regGS("An issue must be created for the selected language.  Please enter the issue name and URL name.", "Trebuie creată o ediţie pentru limba selectată. Introdu denumirea ediţiei şi denumirea adresei de Internet.");
-regGS("All", "Toate");
 regGS("A section must be created for the selected language.  Please enter the section name and URL name.", "Trebuie creată o secţiune pentru limba selectată. Introdu denumirea secţiunii şi");
 regGS("Article Type", "Tipul articolului");
 regGS("$1 articles found", "$1 articole găsite");
@@ -67,7 +75,6 @@ regGS("Edit article", "Modifică articolul");
 regGS("Allow users without subscriptions to view the article", "Autorizează accesul cititorilor fără subscriere la articol");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Articolul a fost securizat de $1, în urmă cu ($2) $3 ore şi $4 minute.");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Articolul a fost securizat de $1, în urmă cu ($2) şi $3 minute.");
-regGS("Are you sure you want to unlock it?", "Doriţi să îl deblocaţi?");
 regGS("Article is locked", "Articolul este securizat");
 regGS("Duplicate article", "Duplică articolul");
 regGS("The destination section is the same as the source section.", "Secţiunea destinaţie este aceeaşi cu cea sursă.");
@@ -80,7 +87,10 @@ regGS("You do not have the right to delete articles.", "Nu ai dreptul să şterg
 regGS("You must select an article type.", "Trebuie să selectezi un tip de articol.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Eşti sigur că vrei să ştergi imaginea \'$1\' de la articol?");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Eşti sigur că vrei să ştergi subiectul \\'$1\\' de la articol?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Eşti sigur că vrei să ştergi fişierul \\'$1\\' de la articol?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Eşti sigur că vrei să ştergi imaginea \\'$1\\' de la articol?");
+regGS("There was an error reading request parameters.", "O eroare s-a produs în timpul interpretării parametrilor cererii.");
+regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Acest articol nu poate fi previzualizat. Asigură-te că este selectat şablonul articolului.");
+regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Acest articol nu poate fi previzualizat. Asigură-te că este selectat şablonul primei pagini.");
+regGS("Insert Internal Link", "Inserează link intern");
+regGS("No such article.", "Articolul nu există");
+regGS("No such section.", "Secţiunea nu există.");
 ?>

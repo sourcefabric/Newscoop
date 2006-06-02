@@ -8,4 +8,6 @@ regGS("User type", "User type");
 regGS("Change user type permissions", "Change user type permissions");
 regGS("You do not have the right to change user type permissions.", "You do not have the right to change user type permissions.");
 regGS("User type $1 changed permissions", "User type $1 changed permissions");
+regGS("A user type with the name '$1' already exists.", "A user type with the name '$1' already exists.");
+regGS("Access", "Access");
 ?>

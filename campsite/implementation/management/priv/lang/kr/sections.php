@@ -40,4 +40,7 @@ regGS("The section number specified already exists, please specify a different v
 regGS("Warning", "주의");
 regGS("You must select a section.", "선택하시오");
 regGS("You must specify a name for the section.", "섹션 이름을 지정하시오");
+regGS("The section could not be added.", "섹션을 추가할 수 업습니다. ");
+regGS("Add new section", "새로운 섹션 추가 ");
+regGS("The section $1 could not be deleted.", "섹션 $1 을 삭제할 수 없습니다. ");
 ?>

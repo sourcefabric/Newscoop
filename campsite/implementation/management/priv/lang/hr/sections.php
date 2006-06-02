@@ -44,4 +44,7 @@ regGS("No sections.", "Nema nikakvih rubrika");
 regGS("Please check if another section with the same number does not already exist.", "Provjerite da li istoimena rubrika sa istim rednim brojem već postoji.");
 regGS("Change section name", "Promijeni ime rubrike");
 regGS("Name<BR><SMALL>(click to add article)</SMALL>", "Ime<br><small>(kliknite da dodate članak)</small>");
+regGS("The section could not be added.", "Rubrika se ne može dodati.");
+regGS("Add new section", "Dodaj novu rubriku");
+regGS("The section $1 could not be deleted.", "Rubrika $1 se ne može brisati.");
 ?>

@@ -36,4 +36,9 @@ regGS("Issue Publishing Schedule", "출판 스케쥴 이슈");
 regGS("Invalid Input: $1", "비정상 입력: $1");
 regGS("Issue Number", "이슈 넘버");
 regGS("Go To Sections", "섹션으로 가기");
+regGS("There was an error reading the language parameter.", "언어 파라미터를 읽는중 에러가 있습니다.");
+regGS("There was an error reading the publication parameter.", "출판 파라미터를 읽는중 에러가 있습니다.");
+regGS("There was an error reading the issue parameter.", "이슈 파라미터를 읽는중 에러가 있습니다. ");
+regGS("There was an error scheduling the $1 action on $2", "$1 기능을 $2 에 스케듈링하는데 에러가 있습니다. ");
+regGS("The action scheduled on $1 could not be deleted.", "$1 에 스케듈링된 기능이 삭제될수 없습니다.");
 ?>

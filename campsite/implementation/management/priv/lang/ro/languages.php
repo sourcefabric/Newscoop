@@ -42,4 +42,5 @@ regGS("Updating language information", "Modific informaţia despre limbă");
 regGS("Language information has been successfuly updated.", "Informaţia despre limbă a fost modificată");
 regGS("Language information could not be updated.", "Informaţia despre limba $1 nu poate fi modificată");
 regGS("A language with the same name already exists.", "O limba cu acelaşi nume există deja");
+regGS("Native name", "Nume în limba originală");
 ?>

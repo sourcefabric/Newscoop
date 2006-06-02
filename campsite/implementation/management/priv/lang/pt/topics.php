@@ -11,4 +11,12 @@ regGS("Top", "Topo");
 regGS("You do not have the right to add topics.", "Não tem permissões para Adicionar Temas");
 regGS("You do not have the right to delete topics.", "Não tem permissões para Eliminar Temas");
 regGS("Are you sure you want to delete the topic $1?", "Eliminar tema $1?");
+regGS("You do not have the right to change topic name.", "Não tem permissão para 'Alterar Tema'.");
+regGS("The topic $1 could not be deleted.", "O Tema $1 não pode ser Apagado.");
+regGS("Adding new topic", "Adicionando Tema");
+regGS("The topic could not be added.", "Tema não pode ser Adicionado.");
+regGS("Deleting topic", "Eliminando Tema");
+regGS("The topic name could not be updated.", "O Tema não pode ser Alterado.");
+regGS("Change topic name", "Alterar Tema");
+regGS("There are $1 articles using the topic.", "Existe(m) $1 artigos usando este Tema.");
 ?>

@@ -51,7 +51,7 @@ if (count($allSections) > 0) {
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
-	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Nr"); ?></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Number"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Name<BR><SMALL>(click to see articles)</SMALL>"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("URL Name"); ?></TD>
 	<?php if ($User->hasPermission('ManageSection')) { ?>

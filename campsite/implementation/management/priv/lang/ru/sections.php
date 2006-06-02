@@ -45,4 +45,7 @@ regGS("Short Name", "Короткое название");
 regGS("No such issue.", "Нет такого выпуска");
 regGS("No sections.", "Нет секций.:ru");
 regGS("Change section name", "Изменить название секции:ru");
+regGS("The section could not be added.", "Невозможно добавить секцию");
+regGS("Add new section", "Добавить новую секцию");
+regGS("The section $1 could not be deleted.", "Невозможно удалить секцию $1");
 ?>

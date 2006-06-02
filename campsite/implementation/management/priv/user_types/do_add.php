@@ -14,7 +14,7 @@ $uType = Input::Get('Name', 'string', '');
 if ($uType != '') {
 	$userType = new UserType($uType);
 	if ($userType->exists()) {
-		$errMsg = getGS("An user type with the name '$1' already exists.", $uType);
+		$errMsg = getGS("A user type with the name '$1' already exists.", $uType);
 		camp_html_display_error($errMsg);
 		exit;
 	}

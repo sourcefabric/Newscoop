@@ -61,4 +61,8 @@ regGS("The alias $1 has been deleted from publication $2.", "تم حذف الا�
 regGS("$1 is the default publication alias, it can not be deleted.", "لا يمكن الغاء الاسم المستعار 1$ لانه الاسم الافتراضي");
 regGS("You do not have the right to add publications.", "لا تملك صلاحية اضافة منشورات");
 regGS("There are $1 issue(s) left.", "هنالك $1 أعداد متبقية.");
+regGS("Time Unit", "وحدة الوقت");
+regGS("Countries Subscription Default Time", "التوقيت الإفتراضي لإشتراكات الدول");
+regGS("Currency", "العملة");
+regGS("Edit languages", "تعديل اللغات");
 ?>

@@ -61,4 +61,8 @@ regGS("The alias $1 has been deleted from publication $2.", "아리아스 $1 이
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 이 기본 출판 아리아스입니다. 삭제할 수 없습니다. ");
 regGS("You do not have the right to add publications.", "출판사이트를 추가할 권한이 없습니다.");
 regGS("There are $1 issue(s) left.", "$1 이슈가 남아있습니다. ");
+regGS("Time Unit", "시간 단위");
+regGS("Countries Subscription Default Time", "국가 구독 기본 시간");
+regGS("Currency", "통화");
+regGS("Edit languages", "언어 편집");
 ?>

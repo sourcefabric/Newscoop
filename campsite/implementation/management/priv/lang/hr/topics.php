@@ -11,4 +11,12 @@ regGS("Top", "Vrh");
 regGS("You do not have the right to add topics.", "Nemate ovlasti dodavati teme.");
 regGS("You do not have the right to delete topics.", "Nemate ovlasti brisati teme.");
 regGS("Are you sure you want to delete the topic $1?", "Jeste li sigurni da želite obrisati temu $1?");
+regGS("You do not have the right to change topic name.", "Nemate ovlasti mijenjati ime teme.");
+regGS("The topic $1 could not be deleted.", "Tema $1 se ne može brisati.");
+regGS("Adding new topic", "Dodaj novu temu");
+regGS("The topic could not be added.", "Tema se ne može dodati.");
+regGS("Deleting topic", "Brisanje teme");
+regGS("The topic name could not be updated.", "Ime teme se ne može ažurirati.");
+regGS("Change topic name", "Izmjena imena teme");
+regGS("There are $1 articles using the topic.", "Ostalo je $1 članaka koji koriste temu.");
 ?>

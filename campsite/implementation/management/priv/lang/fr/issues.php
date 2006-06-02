@@ -36,4 +36,9 @@ regGS("Issue Publishing Schedule", "Programme de Publication de l'édition");
 regGS("Invalid Input: $1", "Entrée invalide: $1");
 regGS("Issue Number", "Numéro d'Edition");
 regGS("Go To Sections", "Aller aux Sections");
+regGS("There was an error reading the language parameter.", "Il y avait une erreur survenue lors de la lecture des paramètres de langue.");
+regGS("There was an error reading the publication parameter.", "Il y avait une erreur survenue lors de la lecture des paramètres de publication.");
+regGS("There was an error reading the issue parameter.", "Il y avait une erreur survenue lors de la lecture des paramètres d'édition.");
+regGS("There was an error scheduling the $1 action on $2", "Il y a eu une erreur en planifiant l'action $1 pour $2");
+regGS("The action scheduled on $1 could not be deleted.", "L'action planifiéé pour $1 ne peut être supprimée.");
 ?>

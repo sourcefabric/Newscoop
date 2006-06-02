@@ -37,4 +37,9 @@ regGS("Invalid Input: $1", "Ogiltig inmatning: $1");
 regGS("Issue Number", "Utgåva nummer");
 regGS("Go To Sections", "Gå till sektioner");
 regGS("Add Event", "Lägg till händelse");
+regGS("There was an error reading the language parameter.", "Ett fel uppstod vid läsning av språkparametern.");
+regGS("There was an error reading the publication parameter.", "Ett fel uppstod vid läsning av publikationsparametern.");
+regGS("There was an error reading the issue parameter.", "Ett fel uppstod vid läsning av utgåveparametern.");
+regGS("There was an error scheduling the $1 action on $2", "Ett fel uppstod när $1 schemalades $2");
+regGS("The action scheduled on $1 could not be deleted.", "Händelsen schemalagd $1 kunde inte raderas.");
 ?>

@@ -40,4 +40,7 @@ regGS("The section number specified already exists, please specify a different v
 regGS("Warning", "Varning");
 regGS("You must select a section.", "Du måste välja en sektion.");
 regGS("You must specify a name for the section.", "Du måste skriva in ett namn för sektionen.");
+regGS("The section could not be added.", "Sektionen kunde inte läggas till.");
+regGS("Add new section", "Lägg till ny sektion");
+regGS("The section $1 could not be deleted.", "Sektionen $1 kunde inte raderas.");
 ?>

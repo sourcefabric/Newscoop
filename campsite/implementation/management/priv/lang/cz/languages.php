@@ -42,4 +42,5 @@ regGS("Updating language information", "Obnovit jazyk");
 regGS("Language information has been successfuly updated.", "Jazyk obnoven");
 regGS("Language information could not be updated.", "Jazyk nemohl být obnoven");
 regGS("A language with the same name already exists.", "Jazyk se stejným názvem už existuje");
+regGS("Native name", "Jazyk (nepřeložen)");
 ?>

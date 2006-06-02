@@ -18,7 +18,6 @@ regGS("You do not have the right to change subscriptions status.", "Немате
 regGS("Subscription status could not be changed.", "Статус претплате не може бити промењен");
 regGS("Update payment", "Измени уплату");
 regGS("Subscription payment could not be changed.", "Уплата за претплату не може бити измењена");
-regGS("Are you sure you want to deactivate the subscription?", "Сигурни сте да желите да деактивирате претплату?");
 regGS("Are you sure you want to activate the subscription?", "Сигурни сте да желите да активирате претплату?");
 regGS("Left to pay", "Преостало за плаћање");
 regGS("Active", "Активно");

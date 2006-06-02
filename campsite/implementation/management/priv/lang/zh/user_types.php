@@ -18,4 +18,6 @@ regGS("Updating user type permissions", "正在更新用户类型许可");
 regGS("User type permissions have been successfuly updated.", "用户类型许可已成功更新");
 regGS("User type permissions could not be updated.", "用户类型许可不能更新");
 regGS("User type $1 changed permissions", "用户类型$1改变了许可");
+regGS("A user type with the name '$1' already exists.", "");
+regGS("Access", "访问");
 ?>

@@ -1,7 +1,17 @@
 <?php
+regGS("Total:", "");
+regGS("Toggle '$1'", "");
+regGS("Show Comments", "");
+regGS("Saved:", "");
+regGS("Locked", "");
+regGS("Link to public page", "");
+regGS("Invalid type: $1", "");
+regGS("Hide Comments", "");
+regGS("Enabled", "");
+regGS("Disabled", "");
+regGS("Comments:", "");
+regGS("Comments", "");
 regGS("The article has already been translated into $1.", "L'article a déjà été traduit dans 1 $. ");
-regGS("move", "Déplacer");
-regGS("duplicate", "duplicate");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Vous devez mettre la publication, l'édition et la section pour cet article avant que vous ne puissiez le prévoir pour la publication. Allez au menu \"$1\"  et  choisir \"$2\" pour faire cela. ");
 regGS("You do not have the right to translate articles.", "Vous n'avez pas le droit de traduire des articles. ");
 regGS("You do not have the right to publish articles.", "Vous n'avez pas le droit de publier des articles.");
@@ -14,7 +24,6 @@ regGS("Publish article", "Publier article");
 regGS("Move?", "Déplacer?");
 regGS("Move articles", "Déplacer articles");
 regGS("Move article", "Déplacer article");
-regGS("Move", "Déplacer");
 regGS("An issue must be created for the selected language but you do not have the right to create an issue.", "Une édition doit être créée pour la langue choisie mais vous n'avez pas le droit de créer une édition.");
 regGS("A section must be created for the selected language but you do not have the right to create a section.", "Une section doit être créée pour la langue choisie mais vous n'avez pas le droit de créer une section. ");
 regGS("to section", "à section");
@@ -55,7 +64,6 @@ regGS("Are you sure you want to remove the event scheduled on $1?", "Etes-vous s
 regGS("Are you sure you want to delete this article?", "Ete-vous sûr de vouloir supprimer cet article?");
 regGS("Are you sure you want to delete the selected articles?", "Etes-vous sûr que vous voulez supprimer les articles choisis ? ");
 regGS("An issue must be created for the selected language.  Please enter the issue name and URL name.", "Une édition doit être créée pour la langue choisie. Entrez s'il vous plaît le nom de l'édition et le nom URL.");
-regGS("All", "Tous");
 regGS("A section must be created for the selected language.  Please enter the section name and URL name.", "Une section doit être créée pour la langue choisie. Entrez s'il vous plaît le nom de section et le nom d'URL.");
 regGS("Article Type", "Type d'Article ");
 regGS("$1 articles found", "$1 articles trouvés");
@@ -67,7 +75,6 @@ regGS("Edit article", "Editer article");
 regGS("Allow users without subscriptions to view the article", "Permettre aux utilisateurs sans abonnements de voir l'article ");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "L'article a été fermé par $1 ($2) $3 heure(s) et $4 il y a une des minute (s). ");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "L'article a été fermé par $1 ($2) $3 il y a une des minute (s). ");
-regGS("Are you sure you want to unlock it?", "Etes-vous sûr que vous voulez l'ouvrir ? ");
 regGS("Article is locked", "L'Article est fermé ");
 regGS("Duplicate article", "Dupliquer article");
 regGS("The destination section is the same as the source section.", "La section de destination est la même comme la section source. ");
@@ -79,4 +86,10 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "Vous n'avez pas le droit de supprimer des articles.");
 regGS("You must select an article type.", "Vous devez choisir un type d'article. ");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Etes-vous sûrs que vous voulez enlever l'image \'$1\' de l'article ? ");
+regGS("There was an error reading request parameters.", "Il y avait une erreur survenu lors de la lecture des paramètres requis.");
+regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Cet article ne peut être visualisé. SVP assurez-vous que son template d'article est sélectionné.");
+regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Cet article ne peut pas être visualiser. SVP assurez-vous  que son template de page d'accueil est sélectionné.");
+regGS("Insert Internal Link", "Insérer Lien interne");
+regGS("No such article.", "Pas d'article correspondant");
+regGS("No such section.", "Pas une telle section.");
 ?>

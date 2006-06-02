@@ -43,4 +43,7 @@ regGS("You must specify a name for the section.", "Für die Rubrik muss ein Name
 regGS("No sections.", "Keine Rubriken");
 regGS("Please check if another section with the same number does not already exist.", "Bitte prüfen ob eine Rubrik unter diesem Namen schon existiert");
 regGS("Change section name", "Namen der Rubrik ändern");
+regGS("The section could not be added.", "Diese Rubrik konnte nicht hinzugefügt werden");
+regGS("Add new section", "Neue Rubrik hinzufügen");
+regGS("The section $1 could not be deleted.", "Die Rubrik $1 konnte nicht gelöscht werden");
 ?>

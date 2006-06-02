@@ -42,4 +42,7 @@ regGS("You must select a section.", "Vous devez choisir une section.");
 regGS("You must specify a name for the section.", "Vous devez spécifier un nom pour la section. ");
 regGS("Please check if another section with the same number does not already exist.", "");
 regGS("Short Name", "");
+regGS("The section could not be added.", "La section ne peut pas être ajoutée");
+regGS("Add new section", "Ajouter nouvelle section");
+regGS("The section $1 could not be deleted.", "La section $1 ne pouvait pas être supprimée.");
 ?>

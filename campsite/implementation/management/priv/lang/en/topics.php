@@ -11,4 +11,12 @@ regGS("Top", "Top");
 regGS("You do not have the right to add topics.", "You do not have the right to add topics.");
 regGS("You do not have the right to delete topics.", "You do not have the right to delete topics.");
 regGS("Are you sure you want to delete the topic $1?", "Are you sure you want to delete the topic $1?");
+regGS("You do not have the right to change topic name.", "You do not have the right to change topic name.");
+regGS("The topic $1 could not be deleted.", "The topic $1 could not be deleted.");
+regGS("Adding new topic", "Adding new topic");
+regGS("The topic could not be added.", "The topic could not be added.");
+regGS("Deleting topic", "Deleting topic");
+regGS("The topic name could not be updated.", "The topic name could not be updated.");
+regGS("Change topic name", "Change topic name");
+regGS("There are $1 articles using the topic.", "There are $1 articles using the topic.");
 ?>

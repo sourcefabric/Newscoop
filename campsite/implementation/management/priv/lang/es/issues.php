@@ -56,4 +56,9 @@ regGS("The template has been successfully changed.", "La plantilla ha sido cambi
 regGS("Issue template for publication $1 changed to $2", "Plantilla de edición para publicación $1 cambió a $2");
 regGS("Issue template for single articles from $1 changed to $2", "Plantilla de edición para artículos individuales $1 cambió a $1");
 regGS("The template could not be changed.", "La platilla no pudo ser cambiada");
+regGS("There was an error reading the language parameter.", "Hubo un error en la lectura del parámetro de idioma.");
+regGS("There was an error reading the publication parameter.", "Hubo un error en la lectura del parámetro de publicación.");
+regGS("There was an error reading the issue parameter.", "Hubo un error en la lectura del parámetro de edición.");
+regGS("There was an error scheduling the $1 action on $2", "Hubo un error en la programación de la acción $1 para el $2");
+regGS("The action scheduled on $1 could not be deleted.", "No se pudo eliminar la acción $1.");
 ?>

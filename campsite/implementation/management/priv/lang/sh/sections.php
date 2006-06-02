@@ -43,4 +43,7 @@ regGS("You must specify a name for the section.", "Morate uneti ime rubrike.");
 regGS("Please check if another section with the same number does not already exist.", "Proverite da li već ne postoji rubrika pod istim brojem");
 regGS("Short Name", "Skraćeno ime");
 regGS("Destination section number", "Broj ciljne rubrike");
+regGS("The section could not be added.", "Rubrika ne može biti dodata.");
+regGS("Add new section", "Dodaj novu rubriku");
+regGS("The section $1 could not be deleted.", "Rubrika $1 ne može biti obrisana.");
 ?>

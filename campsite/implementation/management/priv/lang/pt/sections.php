@@ -43,4 +43,7 @@ regGS("You must specify a name for the section.", "Tem de indicar um nome para a
 regGS("Please check if another section with the same number does not already exist.", "Verifique se já não existe uma secção com o mesmo numero.");
 regGS("Change section name", "Alterar nome da Secção");
 regGS("Destination section number", "Numero da Secção de destino");
+regGS("The section could not be added.", "Esta Secção não pode ser Adicionada.");
+regGS("Add new section", "Criar Secção");
+regGS("The section $1 could not be deleted.", "A Secção $1 não pode ser Apagada.");
 ?>

@@ -43,4 +43,5 @@ regGS("Language information has been successfuly updated.", "تم تحديث م�
 regGS("Language information could not be updated.", "لا يمكن تحديث معلومات اللغة");
 regGS("A language with the same name already exists.", " هناك لغة تحمل الاسم نفسه");
 regGS("Add another language", "أضف لغة جديدة");
+regGS("Native name", "الأسم الأصلي");
 ?>

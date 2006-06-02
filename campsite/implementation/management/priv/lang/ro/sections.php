@@ -43,4 +43,7 @@ regGS("You must specify a name for the section.", "Trebuie să specifici un nume
 regGS("Please check if another section with the same number does not already exist.", "Verificaţi dacă există o altă secţiune cu acelaşi număr");
 regGS("Change section name", "Schimbă numele secţiunii");
 regGS("Destination section number", "Numărul secţiei destinaţie");
+regGS("The section could not be added.", "Secţiunea nu a putut fi adăugată.");
+regGS("Add new section", "Adaugă secţiune");
+regGS("The section $1 could not be deleted.", "Secţiunea $1 nu poate fi ştearsă.");
 ?>

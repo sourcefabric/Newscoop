@@ -44,4 +44,9 @@ regGS("Password changed for $1", "Изменен пароль для $1");
 regGS("User account $1 created", "Создана учетная запись пользователя $1");
 regGS("Template $1 uploaded", "Загружен шаблон $1");
 regGS("Cannot create file \"$1\"", "Невозможно создать файл \"$1\"");
+regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\" неверен или не является картинкой");
+regGS("URL \"$1\" is not an image.", "URL \"$1\" не является картинкой");
+regGS("Topic $1 added", "Добавлена тема $1");
+regGS("Topic $1 deleted", "Удалена тема $1");
+regGS("Topic $1 updated", "Тема $1 обновлена");
 ?>

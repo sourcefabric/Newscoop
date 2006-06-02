@@ -23,6 +23,5 @@ regGS("Active", "جاري");
 regGS("No subscriptions.", "لا اشتراكات");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "أنت متأكد من أنك تريد إلغاء الاشتراك في المنشور $1 ");
 regGS("Trial", "تجربة");
-regGS("Are you sure you want to deactivate the subscription?", "هل أنت متأكد من أنك تريد إيقاف الاشتراك؟");
 regGS("Are you sure you want to activate the subscription?", "هل أنت متأكد من أنك تريد استئناف الاشتراك؟");
 ?>

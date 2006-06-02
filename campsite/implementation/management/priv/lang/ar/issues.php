@@ -52,4 +52,9 @@ regGS("The template has been successfully changed.", "تم تغيير النمو
 regGS("Issue template for publication $1 changed to $2", "تغيير  نموذج الإصدار من المنشور$1  إلى $2");
 regGS("Issue template for single articles from $1 changed to $2", " تغيير نموذج الإصدار للمقالات المنفردة من $1  إلى $2");
 regGS("The template could not be changed.", "لا يمكن تغيير النموذج");
+regGS("There was an error reading the language parameter.", "هنالك خطاء في قراءة متغيرات اللغة");
+regGS("There was an error reading the publication parameter.", "هنالك خطاء في قراءة متغيرات المنشور");
+regGS("There was an error reading the issue parameter.", "هنالك خطاء في قراءة متغيرات العدد");
+regGS("There was an error scheduling the $1 action on $2", "حدث خطاء في جدولة $1 في $2");
+regGS("The action scheduled on $1 could not be deleted.", "العملية المجدولة في $1 لا يمكن إلغاؤها");
 ?>

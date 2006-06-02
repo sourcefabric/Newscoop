@@ -58,4 +58,9 @@ regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>", "Шабло
 regGS("Preview issue", "Предварительный просмотр выпуска:ru");
 regGS("This issue cannot be previewed. Please make sure it has a $1 template selected.", "Невозможно просмотреть этот выпуск. Пожалуйста убедитесь, что у него выбран шаблон $1.:ru");
 regGS("front page", "титульная страница:ru");
+regGS("There was an error reading the language parameter.", "Ошибка чтения параметров языка");
+regGS("There was an error reading the publication parameter.", "Ошибка чтения параметров публикации");
+regGS("There was an error reading the issue parameter.", "Ошибка чтения параметров выпуска");
+regGS("There was an error scheduling the $1 action on $2", "Ошибка планирования операции $1 на $2");
+regGS("The action scheduled on $1 could not be deleted.", "Назначенная на $1 операция не может быть отменена");
 ?>

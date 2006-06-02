@@ -41,4 +41,10 @@ regGS("The user account $1 has been deleted.", "帐户$1已被删除");
 regGS("Password changed for $1", "$1的密码已改变");
 regGS("User account $1 created", "帐户$1已产生");
 regGS("Template $1 uploaded", "模版$1已上载");
+regGS("Cannot create file \"$1\"", "");
+regGS("URL \"$1\" is invalid or is not an image.", "");
+regGS("URL \"$1\" is not an image.", "");
+regGS("Topic $1 added", "主题$1已添加");
+regGS("Topic $1 deleted", "主题$1已删除");
+regGS("Topic $1 updated", "主题$1已更新");
 ?>

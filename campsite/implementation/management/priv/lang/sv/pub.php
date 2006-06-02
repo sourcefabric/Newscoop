@@ -63,4 +63,8 @@ regGS("You do not have the right to add publications.", "Du har inte rätt att l
 regGS("There are $1 issue(s) left.", "Det finns $1 utgåva(or) kvar.");
 regGS("Select the publication", "Välj publikation");
 regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Namn<BR><SMALL>(klicka för att välja publikation)</SMALL>");
+regGS("Time Unit", "Tidsenhet");
+regGS("Countries Subscription Default Time", "Länders grundtid för prenumerationer");
+regGS("Currency", "Valuta");
+regGS("Edit languages", "Redigera språk");
 ?>

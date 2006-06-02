@@ -19,4 +19,6 @@ regGS("The user type could not be deleted.", "Тип корисника не м�
 regGS("Updating user type permissions", "Мењање права додељених типу корисника");
 regGS("User type permissions have been successfuly updated.", "Права додељена типу корисника успешно су измењена");
 regGS("User type permissions could not be updated.", "Права додељена типу корисника не могу бити измењена");
+regGS("A user type with the name '$1' already exists.", "Тип корисника са именом '$1' већ постоји.");
+regGS("Access", "Приступ");
 ?>

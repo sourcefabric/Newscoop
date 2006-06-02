@@ -11,4 +11,12 @@ regGS("Top", "الأعلى");
 regGS("You do not have the right to add topics.", "لا يحق لك إضافة المواضيع");
 regGS("You do not have the right to delete topics.", "لا يحق لك إلغاء المواضيع");
 regGS("Are you sure you want to delete the topic $1?", "تم إلغاء الموضوع $1");
+regGS("You do not have the right to change topic name.", "لا تملك صلاحية تغير أسم الموضوع");
+regGS("The topic $1 could not be deleted.", "لم يتم حذف الموضوع $1");
+regGS("Adding new topic", "إضافة موضوع جديد");
+regGS("The topic could not be added.", "لم يتم إضافة الموضوع");
+regGS("Deleting topic", "حذف الموضوع");
+regGS("The topic name could not be updated.", "لم يتم تحديث أسم الموضوع");
+regGS("Change topic name", "تغير أسم الموضوع");
+regGS("There are $1 articles using the topic.", "هنالك $1 مقالات تستخدم الموضوع");
 ?>

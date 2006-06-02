@@ -19,4 +19,7 @@ regGS("The section $1 has been deleted.", "区$1已被删除");
 regGS("Change section name", "改变区名称");
 regGS("Updating section name", "正在更新区名称");
 regGS("The section could not be changed.", "区不能被修改");
+regGS("The section could not be added.", "不能添加区");
+regGS("Add new section", "添加新区");
+regGS("The section $1 could not be deleted.", "$1区不能被删除");
 ?>

@@ -24,6 +24,5 @@ regGS("Active", "Activo");
 regGS("No subscriptions.", "Não existem assinaturas");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "Eliminar assinatura da publicação $1?");
 regGS("Trial", "Periodo Gratuito");
-regGS("Are you sure you want to deactivate the subscription?", "Suspender Assinatura?");
 regGS("Are you sure you want to activate the subscription?", "Activar Assinatura");
 ?>

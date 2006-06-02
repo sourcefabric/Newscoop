@@ -19,4 +19,6 @@ regGS("The user type could not be deleted.", "لا يمكن إلغاء نموذ�
 regGS("Updating user type permissions", "تحديث الإذن لنموذج المستخدم");
 regGS("User type permissions have been successfuly updated.", "تم تحديث الإذن  لنموذج المستخدم ");
 regGS("User type permissions could not be updated.", "لا يمكن تحديث الإذن بنموذج المستخدم");
+regGS("A user type with the name '$1' already exists.", "هنالك حاليا نوع مستخدم بالأسم \"$1\" موجود.");
+regGS("Access", "وصول");
 ?>

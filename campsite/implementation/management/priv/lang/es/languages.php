@@ -42,4 +42,5 @@ regGS("Updating language information", "Actualizando información de idioma");
 regGS("Language information has been successfuly updated.", "Información de idioma ha sido actualizada con éxito");
 regGS("Language information could not be updated.", "Información de idioma no pudo ser actualizado");
 regGS("A language with the same name already exists.", "Un idioma con el mismo nombre ya existe");
+regGS("Native name", "Nombre local");
 ?>

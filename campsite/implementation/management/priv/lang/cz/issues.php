@@ -48,4 +48,9 @@ regGS("The template has been successfully changed.", "Šablona byla úspěšně 
 regGS("Issue template for publication $1 changed to $2", "Šablona vydání pro publikaci $1 byla změněna na $2");
 regGS("Issue template for single articles from $1 changed to $2", "Šablona vydání pro jednotlivé články z $1 byla změněna na $2");
 regGS("The template could not be changed.", "Šablona namohla být změněna");
+regGS("There was an error reading the language parameter.", "");
+regGS("There was an error reading the publication parameter.", "");
+regGS("There was an error reading the issue parameter.", "");
+regGS("There was an error scheduling the $1 action on $2", "Nebylo možné naplánovat činnost $1 na $2");
+regGS("The action scheduled on $1 could not be deleted.", "Činnost naplánovaná na $1 nemohla být zrušena");
 ?>

@@ -33,4 +33,5 @@ regGS("Saturday", "토요일");
 regGS("Sunday", "일요일");
 regGS("You do not have the right to add new languages.", "새로운 언어를 추가할 권한이 없습니다.");
 regGS("There are $1 issue(s) left.", "$ 1 이슈가 남아 있슴.");
+regGS("Native name", "모국 언어");
 ?>

@@ -33,4 +33,5 @@ regGS("Saturday", "Lördag");
 regGS("Sunday", "Söndag");
 regGS("You do not have the right to add new languages.", "Du har inte rätt att lägga till nya språk.");
 regGS("There are $1 issue(s) left.", "Det finns $1 utgåva(or) kvar.");
+regGS("Native name", "Inhemskt namn");
 ?>

@@ -43,4 +43,7 @@ regGS("You must specify a name for the section.", "Морате унети им�
 regGS("Please check if another section with the same number does not already exist.", "Проверите да ли већ не постоји рубрика са истим бројем");
 regGS("Short Name", "Скраћено име");
 regGS("Destination section number", "Број циљне рубрике");
+regGS("The section could not be added.", "Рубрика не може бити додата");
+regGS("Add new section", "Додај нову рубрику");
+regGS("The section $1 could not be deleted.", "Рубрика $1 не може бити обрисана");
 ?>

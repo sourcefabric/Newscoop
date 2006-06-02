@@ -36,4 +36,8 @@ regGS("Change subscription default time", "改变订阅默认时间");
 regGS("Default subscription time for $1 changed", "$1的默认订阅时间已改变");
 regGS("Are you sure you want to delete the subscription default time for $1?", "您确定要删除$1的默认订阅时间？");
 regGS("Subscription default time for $1 deleted", "$1的默认订阅时间已删除");
+regGS("Time Unit", "时间单位");
+regGS("Countries Subscription Default Time", "");
+regGS("Currency", "货币");
+regGS("Edit languages", "");
 ?>

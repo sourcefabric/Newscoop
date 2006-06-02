@@ -43,4 +43,10 @@ regGS("The user account $1 has been deleted.", "Användarkontot $1 har raderats.
 regGS("Password changed for $1", "Lösenordet ändrat för $1");
 regGS("User account $1 created", "Användarkontot $1 skapat");
 regGS("Template $1 uploaded", "Mall $1 uppladdad");
+regGS("Cannot create file \"$1\"", "Kan inte skapa filen \"$1\"");
+regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\" är ogiltig eller inte en bild.");
+regGS("URL \"$1\" is not an image.", "URL \"$1\" är inte en bild.");
+regGS("Topic $1 added", "Temat $1 har lagts till");
+regGS("Topic $1 deleted", "Temat $1 raderat");
+regGS("Topic $1 updated", "Temat $1 uppdaterat");
 ?>

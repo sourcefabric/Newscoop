@@ -1,7 +1,17 @@
 <?php
+regGS("Total:", "");
+regGS("Toggle '$1'", "");
+regGS("Show Comments", "");
+regGS("Saved:", "");
+regGS("Locked", "");
+regGS("Link to public page", "");
+regGS("Invalid type: $1", "");
+regGS("Hide Comments", "");
+regGS("Enabled", "");
+regGS("Disabled", "");
+regGS("Comments:", "");
+regGS("Comments", "");
 regGS("The article has already been translated into $1.", "기사가 이미 $1 으로 번역되었습니다. ");
-regGS("move", "이동 ");
-regGS("duplicate", "복사");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "스케쥴하기전에 이 기사에 대해 출판사이트, 이슈, 섹션을 설정해야 합니다. \"$1\" 메뉴로 가서 \"$2\" 를 선택하시오.");
 regGS("You do not have the right to translate articles.", "기사를 번역할 권한이 없습니다.");
 regGS("You do not have the right to publish articles.", "기사를 출판할 권한이 없습니다.");
@@ -14,7 +24,6 @@ regGS("Publish article", "기사 출판");
 regGS("Move?", "이동?");
 regGS("Move articles", "기사 이동");
 regGS("Move article", "기사 이동");
-regGS("Move", "이동");
 regGS("An issue must be created for the selected language but you do not have the right to create an issue.", "선택한 언어로 이슈를 생성해야 합니다. 이슈를 생성할 권한이 없습니다.");
 regGS("A section must be created for the selected language but you do not have the right to create a section.", "선택한 언어로 섹션을 생성해야 합니다. 섹션을 생성할 권한이 없습니다. ");
 regGS("to section", "섹션으로");
@@ -55,7 +64,6 @@ regGS("Are you sure you want to remove the event scheduled on $1?", "$1 에 예�
 regGS("Are you sure you want to delete this article?", "기사를 삭제합니까?");
 regGS("Are you sure you want to delete the selected articles?", "선택된 기사를 삭제합니까?");
 regGS("An issue must be created for the selected language.  Please enter the issue name and URL name.", "선택한 언어로 이슈를 생성해야 합니다. 이슈 이름과 URL이름을 입력하시오.");
-regGS("All", "모두");
 regGS("A section must be created for the selected language.  Please enter the section name and URL name.", "선택한 언어로 섹션을 생성해야합니다. 섹션 이름과 URL 이름을 입력하시오.");
 regGS("Article Type", "기사 타입 ");
 regGS("$1 articles found", "$1 기사 발견 ");
@@ -67,7 +75,6 @@ regGS("Edit article", "기사 수정");
 regGS("Allow users without subscriptions to view the article", "구독하지 않고 기사 보기 허용");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "기사가 $1 에 의해 ($2) $3 시간 $4 분전에 잠금어 졌습니다. ");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "기사가 $1 에 의해 ($2) $3 분전에 잠금어 졌습니다. ");
-regGS("Are you sure you want to unlock it?", "잠금 풀기를 합니까?");
 regGS("Article is locked", "기사 잠금");
 regGS("Duplicate article", "기사 복사");
 regGS("The destination section is the same as the source section.", "목표 섹션이 원래 색션과 같습니다. ");
@@ -79,7 +86,10 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "기사를 삭제할 권한이 없습니다. ");
 regGS("You must select an article type.", "기사 타입을 선택하시오.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "기사에서 이미지 \'$1\' 삭제합니까?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "기사에서 토픽 \\'$1\\' 을 삭제합니까?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "기사에서 파일 \\'$1\\' 을 삭제합니까?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "기사에서 이미지 \\'$1\\' 삭제합니까?");
+regGS("There was an error reading request parameters.", "요구 파라미터를 읽는중 에러가 있습니다. ");
+regGS("This article cannot be previewed. Please make sure it has the article template selected.", "기사를 미리볼 수 없습니다. 기사 템플레이트을 선택했는지 확인하시오.");
+regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "기사를 미리볼 수 없습니다. 프론트페이지 템플레이트를 선택했는지 확인하시오.");
+regGS("Insert Internal Link", "내부링크 삽입");
+regGS("No such article.", "그런 기사 없슴");
+regGS("No such section.", "그런 섹션 없슴.");
 ?>

@@ -20,7 +20,6 @@ regGS("The subscription could not be added.", "订阅不能被添加");
 regGS("Please check if there isn't another subscription to the same publication.", "请确认是否有同样发布的其它订阅");
 regGS("Change subscription status", "改变订阅状态");
 regGS("You do not have the right to change subscriptions status.", "您无权修改订阅状态");
-regGS("Are you sure you want to deactivate the subscription?", "您确认要解除订阅？");
 regGS("Are you sure you want to activate the subscription?", "您确认要激活订阅？");
 regGS("Subscription status could not be changed.", "订阅状态不能改变");
 regGS("Update payment", "更新付款");

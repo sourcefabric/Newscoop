@@ -1,7 +1,17 @@
 <?php
+regGS("Total:", "");
+regGS("Toggle '$1'", "");
+regGS("Show Comments", "");
+regGS("Saved:", "");
+regGS("Locked", "");
+regGS("Link to public page", "");
+regGS("Invalid type: $1", "");
+regGS("Hide Comments", "");
+regGS("Enabled", "");
+regGS("Disabled", "");
+regGS("Comments:", "");
+regGS("Comments", "");
 regGS("The article has already been translated into $1.", "Статья уже была переведена на $1");
-regGS("move", "перенести");
-regGS("duplicate", "дублировать");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Вы должны установить публикацию, выпуск и секцию для этой статьи до планирования ее к публикации. Перейдите к меню \"$1\" и выберите \"$2\", чтобы сделать это.");
 regGS("You do not have the right to translate articles.", "Вы не имеете права перевода статей.");
 regGS("You do not have the right to publish articles.", "Вы не имеете права публикации статей.");
@@ -14,7 +24,6 @@ regGS("Publish article", "Опубликовать статью");
 regGS("Move?", "Перенести?");
 regGS("Move articles", "Перенести статьи");
 regGS("Move article", "Перенести статью");
-regGS("Move", "Перенести");
 regGS("An issue must be created for the selected language but you do not have the right to create an issue.", "Выпуск должен быть создан для выбранного языка, но вы не имеете права создания выпуска.");
 regGS("A section must be created for the selected language but you do not have the right to create a section.", "Секция должена быть создана для выбранного языка, но вы не имеете права создания секции.");
 regGS("to section", "к секции");
@@ -55,7 +64,6 @@ regGS("Are you sure you want to remove the event scheduled on $1?", "Вы уве
 regGS("Are you sure you want to delete this article?", "Вы уверены, что хотите удалить эту статью?");
 regGS("Are you sure you want to delete the selected articles?", "Вы уверены, что хотите удалить выбранные статьи?");
 regGS("An issue must be created for the selected language.  Please enter the issue name and URL name.", "Выпуск должен быть создан для выбранного языка. Пожалуйста введите название выпуска и название URL.");
-regGS("All", "Все");
 regGS("A section must be created for the selected language.  Please enter the section name and URL name.", "Секция должна быть создана для выбранного языка. Пожалуйста введите название секции и название URL.");
 regGS("Article Type", "Тип статьи");
 regGS("$1 articles found", "Статей найдено: $1");
@@ -67,7 +75,6 @@ regGS("Edit article", "Редактировать параметры стать�
 regGS("Allow users without subscriptions to view the article", "Позволить пользователям без подписки просматривать статью");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Статья была заблокирована пользователем $1 ($2) $3 часа и $4 минут назад.");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "была заблокирована пользователем $1 ($2) $3 минут назад.");
-regGS("Are you sure you want to unlock it?", "Вы уверены, что уверены разблокировать?");
 regGS("Article is locked", "Статья заблокирована");
 regGS("Duplicate article", "Дублировать статью");
 regGS("The destination section is the same as the source section.", "Секция назначения та же, что и секция источника");
@@ -81,14 +88,16 @@ regGS("You must select an article type.", "Вы должны выбрать ти
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Вы уверены, что хотите удалить картинку \'$1\' из статьи?");
 regGS("Reorder", "");
 regGS("Author", "");
-regGS("No such section.", "Нет такой секции.");
+regGS("No such section.", "Нет такой секции:ru");
 regGS("No such issue.", "Нет такого выпуска");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(щелкните для правки)</SMALL>");
 regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.", "Невозможно сохранить статью. Она была заблокирована пользователем $1 $2 часов и $3 минут назад.");
 regGS("Back to article details", "Назад к подробностям статьи");
 regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
 regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Вы уверены, что хотите удалить топик \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Вы уверены, что хотите удалить файл \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Вы уверены, что хотите удалить картинку \\'$1\\' из статьи?");
+regGS("There was an error reading request parameters.", "Ошибка чтения параметров запроса");
+regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Невозможен предварительный просмотр статьи. Убедитесь, что выбран шаблон статьи.");
+regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Невозможен предварительный просмотр статьи. Убедитесь, что выбран шаблон титульной страницы.");
+regGS("Insert Internal Link", "Вставить внутреннюю ссылку");
+regGS("No such article.", "Нет такой статьи");
 ?>

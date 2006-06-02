@@ -11,4 +11,12 @@ regGS("Top", "Sus");
 regGS("You do not have the right to add topics.", "Nu ai dreptul să adăugi subiecte.");
 regGS("You do not have the right to delete topics.", "Nu ai dreptul să ştergi subiecte.");
 regGS("Are you sure you want to delete the topic $1?", "Eşti sigur că vrei să ştergi subiectul $1?");
+regGS("You do not have the right to change topic name.", "Nu aveţi dreptul să modificaţi denumirea subiectului.");
+regGS("The topic $1 could not be deleted.", "Subiectul $1 nu poate fi şters.");
+regGS("Adding new topic", "Se adaugă subiect nou");
+regGS("The topic could not be added.", "Subiectul nu poate fi adăugat");
+regGS("Deleting topic", "Şterge subiect");
+regGS("The topic name could not be updated.", "Subiectul nu poate fi modificat.");
+regGS("Change topic name", "Schimbă denumirea subiectului");
+regGS("There are $1 articles using the topic.", "Mai sunt $1 articole care folosesc subiectul.");
 ?>

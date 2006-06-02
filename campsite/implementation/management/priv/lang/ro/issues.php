@@ -56,4 +56,9 @@ regGS("The template has been successfully changed.", "Şablonul a fost modificat
 regGS("Issue template for publication $1 changed to $2", "Şablonul ediţiei din publicaţia $1 a fost schimbat la $2");
 regGS("Issue template for single articles from $1 changed to $2", "Şablonul pentru afişarea articolului din publicaţia $1 a fost schimbat la $2");
 regGS("The template could not be changed.", "Şablonul nu poate fi schimbat");
+regGS("There was an error reading the language parameter.", "O eroare s-a produs în timpul interpretării parametrului limbii.");
+regGS("There was an error reading the publication parameter.", "O eroare s-a produs în timpul interpretării parametrului publicaţiei.");
+regGS("There was an error reading the issue parameter.", "O eroare s-a produs în timpul interpretării parametrului ediţiei.");
+regGS("There was an error scheduling the $1 action on $2", "S-a produs o eroare la programarea acţiunii $1 la $2");
+regGS("The action scheduled on $1 could not be deleted.", "Acţiunea programată la $1 nu a putut fi ştearsă.");
 ?>

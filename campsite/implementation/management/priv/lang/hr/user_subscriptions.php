@@ -23,6 +23,5 @@ regGS("Active", "Aktivna");
 regGS("No subscriptions.", "Nema pretplata");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "Jeste li sigurni da želite obrisati pretplatu za publikaciju $1?");
 regGS("Trial", "Privremeno");
-regGS("Are you sure you want to deactivate the subscription?", "Jeste li sigurni da želite deaktivirati ovu pretplatu?");
 regGS("Are you sure you want to activate the subscription?", "Jeste li sigurni da želite aktivirati ovu pretplatu?");
 ?>

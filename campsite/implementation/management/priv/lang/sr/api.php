@@ -43,4 +43,10 @@ regGS("The user account $1 has been deleted.", "Кориснички налог 
 regGS("Password changed for $1", "Промењена је лозинка за $1");
 regGS("User account $1 created", "Креиран кориснички налог за $1");
 regGS("Template $1 uploaded", "Шаблон $1 је аплоудован");
+regGS("Cannot create file \"$1\"", "Фајл \"$1\" не може бити креиран");
+regGS("URL \"$1\" is invalid or is not an image.", "УРЛ \"$1\"је неисправан или није слика");
+regGS("URL \"$1\" is not an image.", "УРЛ \"$1\" није слика.");
+regGS("Topic $1 added", "Тема $1 је додата");
+regGS("Topic $1 deleted", "Тема $1 је обрисана");
+regGS("Topic $1 updated", "Тема $1 измењена");
 ?>

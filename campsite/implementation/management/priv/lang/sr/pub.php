@@ -62,4 +62,8 @@ regGS("$1 is the default publication alias, it can not be deleted.", "$1 је о
 regGS("You do not have the right to add publications.", "Немате право да додајете публикације.");
 regGS("There are $1 issue(s) left.", "Преостало је $1 издања.");
 regGS("The default subscription time for $1 has been added.", "Нови период претплате за $1 додат");
+regGS("Time Unit", "Временска јединица");
+regGS("Countries Subscription Default Time", "Основна дужина претплате за државе");
+regGS("Currency", "Валута");
+regGS("Edit languages", "Прикажи језике");
 ?>

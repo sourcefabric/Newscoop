@@ -36,4 +36,9 @@ regGS("Issue Publishing Schedule", "Issue Publishing Schedule");
 regGS("Invalid Input: $1", "Invalid Input: $1");
 regGS("Issue Number", "Issue Number");
 regGS("Go To Sections", "Go To Sections");
+regGS("There was an error reading the language parameter.", "There was an error reading the language parameter.");
+regGS("There was an error reading the publication parameter.", "There was an error reading the publication parameter.");
+regGS("There was an error reading the issue parameter.", "There was an error reading the issue parameter.");
+regGS("There was an error scheduling the $1 action on $2", "There was an error scheduling the $1 action on $2");
+regGS("The action scheduled on $1 could not be deleted.", "The action scheduled on $1 could not be deleted.");
 ?>

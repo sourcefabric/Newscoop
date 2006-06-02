@@ -23,6 +23,5 @@ regGS("Active", "Activă");
 regGS("No subscriptions.", "Nu există subscrieri");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "Doriţi să ştergeţi subscrierile la publicaţia $1?");
 regGS("Trial", "Probă");
-regGS("Are you sure you want to deactivate the subscription?", "Doriţi să deactivaţi subscrierea?");
 regGS("Are you sure you want to activate the subscription?", "Doriţi să activaţi subscrierea?");
 ?>

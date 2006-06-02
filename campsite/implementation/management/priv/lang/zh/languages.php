@@ -40,4 +40,5 @@ regGS("Thursday", "星期四");
 regGS("Friday", "星期五");
 regGS("Saturday", "星期六");
 regGS("Sunday", "星期日");
+regGS("Native name", "本地名称");
 ?>

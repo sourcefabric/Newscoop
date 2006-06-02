@@ -23,6 +23,5 @@ regGS("Active", "Aktiv");
 regGS("No subscriptions.", "Keine Abonoments");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "Abonoment an Publikation $1 wirklich löschen?");
 regGS("Trial", "Probe");
-regGS("Are you sure you want to deactivate the subscription?", "Abonoment wirklich deaktivieren?");
 regGS("Are you sure you want to activate the subscription?", "Abonoment wirklich aktivieren?");
 ?>

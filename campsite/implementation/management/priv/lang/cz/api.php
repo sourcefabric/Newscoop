@@ -43,5 +43,10 @@ regGS("The user account $1 has been deleted.", "Uživatelský účet $1 byl smaz
 regGS("Password changed for $1", "Heslo bylo změněno na $1");
 regGS("User account $1 created", "Uživatelský účet $1 byl vytvořen");
 regGS("Template $1 uploaded", "Šablona $1 byla nahrána");
-regGS("Cannot create file \"$1\"", "");
+regGS("Cannot create file \"$1\"", "Nemohu vytvořit soubor \"$1\"");
+regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\" není platné, nebo se nejedná o obrázek.");
+regGS("URL \"$1\" is not an image.", "URL \"$1\" není obrázek");
+regGS("Topic $1 added", "Téma $1 bylo přidáno");
+regGS("Topic $1 deleted", "Téma $1 bylo smazáno");
+regGS("Topic $1 updated", "Téma $1 bylo obnoveno");
 ?>

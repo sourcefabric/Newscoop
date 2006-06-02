@@ -19,4 +19,6 @@ regGS("The user type could not be deleted.", "O Tipo de Utilizador não pode ser
 regGS("Updating user type permissions", "Alterando permissões");
 regGS("User type permissions have been successfuly updated.", "Permissões Alteradas");
 regGS("User type permissions could not be updated.", "As Permissões não podem ser alteradas");
+regGS("A user type with the name '$1' already exists.", "Um utilizador com o nome \"$1\" já existe.");
+regGS("Access", "Acesso");
 ?>
