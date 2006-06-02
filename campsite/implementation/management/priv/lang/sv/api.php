@@ -17,8 +17,8 @@ regGS("Article #$1 \"$2\" ($3) translated to \"$5\" ($4)", "Artikel #$1 \"$2\" (
 regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "Artikel #$1 \"$2\" ($3)  kopierad till Artikel #$3.");
 regGS("Article #$1: \"$2\" status changed from $3 to $4.", "Artikel #$1 \"$2\" status ändrad från $3 till $4.");
 regGS("Article #$1: \"$2\" ($3) deleted.", "Artikel #$1 \"$2\" ($3) raderad.");
-regGS("Text", "Text");
-regGS("Article body", "Artikeltext");
+regGS("Single-line Text", "Text");
+regGS("Multi-line Text with WYSIWYG", "Artikeltext");
 regGS("The default subscription time for $1 has been added.", "Grundprenumerationstiden för $1 har lagts till.");
 regGS("Image $1 linked to article $2", "Bild $1 länkad till artikel $2");
 regGS("Image $1 unlinked from $2", "Bild $1 avlänkad från artikel $2");

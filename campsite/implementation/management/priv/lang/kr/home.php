@@ -1,4 +1,10 @@
 <?php
+regGS("Type the code shown above:", "");
+regGS("Please enter your user name.", "");
+regGS("Please enter your password.", "");
+regGS("Please enter the code shown in the image.", "");
+regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
+regGS("CAPTCHA code is not valid.  Please try again.", "");
 regGS("There are no pending articles.", "대기중인 기사는 없습니다.");
 regGS("Pending Articles", "대기중인 기사");
 regGS("System Preferences", "시스템 구성");

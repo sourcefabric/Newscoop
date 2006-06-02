@@ -17,8 +17,8 @@ regGS("Article #$1 \"$2\" ($3) translated to \"$5\" ($4)", "Чланак #$1 \"$
 regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "Чланак #$1 \"$2\" ($3) је прекопиран у #$3");
 regGS("Article #$1: \"$2\" status changed from $3 to $4.", "Статус чланка #$1: \"$2\" је промењен из $3 у $4.");
 regGS("Article #$1: \"$2\" ($3) deleted.", "Чланак #$1: \"$2\" ($3) је обрисан.");
-regGS("Text", "текст");
-regGS("Article body", "Сложен текст");
+regGS("Single-line Text", "текст");
+regGS("Multi-line Text with WYSIWYG", "Сложен текст");
 regGS("The default subscription time for $1 has been added.", "Нови период претплате за $1 додат");
 regGS("Image $1 linked to article $2", "Слика $1 јењ повезана са чланком $2.");
 regGS("Image $1 unlinked from $2", "Веза слика $1 са чланком $2 је раскинута");

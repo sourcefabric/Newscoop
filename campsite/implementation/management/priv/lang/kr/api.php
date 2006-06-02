@@ -17,8 +17,8 @@ regGS("Article #$1 \"$2\" ($3) translated to \"$5\" ($4)", "기사 #$1 \"$2\" ($
 regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "기사 #$1 \"$2\" ($3) 가 기사 #$3 로 복사됨");
 regGS("Article #$1: \"$2\" status changed from $3 to $4.", "기사 #$1: \"$2\"  상태가 $3에서 $4 로 변경됨 ");
 regGS("Article #$1: \"$2\" ($3) deleted.", "기사 #$1: \"$2\" ($3) 삭제됨");
-regGS("Text", "텍스트");
-regGS("Article body", "기사 본문");
+regGS("Single-line Text", "텍스트");
+regGS("Multi-line Text with WYSIWYG", "기사 본문");
 regGS("The default subscription time for $1 has been added.", "$1의 기본 구독 기간 추가됨.");
 regGS("Image $1 linked to article $2", "이미지 $1 가 기사 $2 로 링크됨");
 regGS("Image $1 unlinked from $2", "이미지 $1 이 $2 에서 링크 삭제됨. ");

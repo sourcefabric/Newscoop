@@ -17,8 +17,8 @@ regGS("Article #$1 \"$2\" ($3) translated to \"$5\" ($4)", "Статья #$1 \"$
 regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "Статья #$1 \"$2\" ($3)скопирована в статью #$3.");
 regGS("Article #$1: \"$2\" status changed from $3 to $4.", "Статья #$1: Состояние \"$2\" изменено из $3 в $4.");
 regGS("Article #$1: \"$2\" ($3) deleted.", "Статья #$1: \"$2\" ($3) удалена.");
-regGS("Text", "Текст");
-regGS("Article body", "Тело статьи");
+regGS("Single-line Text", "Текст");
+regGS("Multi-line Text with WYSIWYG", "Тело статьи");
 regGS("The default subscription time for $1 has been added.", "Время подписки по умолчанию для $1 успешно добавлено.");
 regGS("Image $1 linked to article $2", "Картинки $1 привязана к статье $2");
 regGS("Image $1 unlinked from $2", "Картинка $1 отвязана от $2");

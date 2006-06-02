@@ -17,8 +17,8 @@ regGS("Article #$1 \"$2\" ($3) translated to \"$5\" ($4)", "Article #$1 \"$2\" (
 regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "Article #$1 \"$2\" ($3) copié à Article #$3.");
 regGS("Article #$1: \"$2\" status changed from $3 to $4.", "Article #$1: \"$2\" statut changé de $3 à $4.");
 regGS("Article #$1: \"$2\" ($3) deleted.", "Article #$1: \"$2\" ($3) supprimé.");
-regGS("Text", "Texte");
-regGS("Article body", "Corps de l' article");
+regGS("Single-line Text", "Texte");
+regGS("Multi-line Text with WYSIWYG", "Corps de l' article");
 regGS("The default subscription time for $1 has been added.", "Le temps d'abonnement par défaut pour $1 a été ajoutée.");
 regGS("Image $1 linked to article $2", "Image $1 liée à l'article $2");
 regGS("Image $1 unlinked from $2", "Image $1 détachée de $2");
