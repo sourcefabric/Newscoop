@@ -130,6 +130,19 @@ class Topic extends DatabaseObject {
 			$sql = "DELETE FROM Topics WHERE Id=".$this->m_data['Id']." AND LanguageId=".$p_languageId;
 			$deleted = $g_ado_db->Execute($sql);
 		}
+		
+		// Delete the ATF metadata 
+        if ($deleted) {
+
+            $sql = "SELECT * FROM TopicFields WHERE RootTopicId=". $this->m_data['Id'];
+            
+            $row = $g_ado_db->GetRow($sql);     
+            if ($row) { 
+                $delATF =& new ArticleTypeField($row['ArticleType'], $row['FieldName']);
+                $deleted = $delATF->delete();                                        
+            }
+        }
+		
 		if ($deleted) {
 			$this->m_exists = false;
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}

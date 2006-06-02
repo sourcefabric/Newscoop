@@ -35,7 +35,7 @@ if ($doDelete) {
 		exit;
 	}
 	else {
-		$errorMsgs[] = getGS('The topic $1 could not be deleted.','<B>'.$deleteTopic->getName().'</B>');
+		$errorMsgs[] = getGS('The topic $1 could not be deleted.','<B>'.$deleteTopic->getName($f_topic_language_id).'</B>');
 	}
 }
 

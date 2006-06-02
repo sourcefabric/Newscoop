@@ -283,7 +283,9 @@ class ArticleTypeField {
 			$logtext = getGS('Article type field $1 deleted', $this->m_fieldName);
 			Log::Message($logtext, null, 72);
 			ParserCom::SendMessage("article_types", "modify", array("article_type"=>"$this->m_dbTableName"));
+            return true;
 		}
+		return false;
 	} // fn delete
 
 
