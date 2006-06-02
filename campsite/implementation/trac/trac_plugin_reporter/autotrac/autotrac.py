@@ -741,7 +741,7 @@ class AutoTrac(Component):
             % (tkt_id))
         row = cursor.fetchall()
         if row == None:
-            occurrences = 0
+            occurrences = 1
         else:
             occurrences = len(row) + 1
         ticket.values["occurrences"] = int(occurrences)
