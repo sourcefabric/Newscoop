@@ -20,20 +20,18 @@ $correct = true;
 $editTopic =& new Topic($f_topic_edit_id);
 $path = camp_topic_path($editTopic, $f_topic_language_id);
 
-if (empty($f_name)) {
-	$correct = false;
+$errorMsgs = array();
+if (!empty($f_name)) {
+	if ($editTopic->setName($f_topic_language_id, $f_name)) {
+		header("Location: /$ADMIN/topics/index.php");
+		exit;
+	} else {
+		$errorMsgs[] = getGS('The topic name is already in use by another topic.');
+	}
+} else {
 	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>');
 }
 
-if ($correct) {
-	$updated = $editTopic->setName($f_topic_language_id, $f_name);
-	if ($updated) {
-		header("Location: /$ADMIN/topics/index.php");
-		exit;
-	}
-} else {
-	$errorMsgs[] = getGS('The topic name could not be updated.');
-}
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Topics"), "/$ADMIN/topics/");

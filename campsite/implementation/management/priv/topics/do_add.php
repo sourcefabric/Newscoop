@@ -24,19 +24,21 @@ $Path = camp_topic_path($topicParent, $f_topic_language_id);
 
 $errorMsgs = array();
 if (empty($f_topic_name)) {
-	$correct = false; 
-	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'); 
+	$correct = false;
+	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
 }
 if ($f_topic_language_id <= 0) {
 	$correct = false; 
 	$errorMsgs[] = getGS('You must choose a language for the topic.'); 
 }
 
-if ($correct) {
+if (!empty($f_topic_name)) {
 	if ($f_topic_id == 0) {
 		// Create new topic
 		$topic =& new Topic();
-		$created = $topic->create(array("Name" => $f_topic_name, "ParentId" => $f_topic_parent_id, 'LanguageId'=>$f_topic_language_id));
+		$created = $topic->create(array('Name' => $f_topic_name,
+										'ParentId' => $f_topic_parent_id,
+										'LanguageId'=>$f_topic_language_id));
 	} else {
 		// Translate existing topic
 		$topic =& new Topic($f_topic_id);
@@ -45,10 +47,11 @@ if ($correct) {
 	if ($created) {
 		header("Location: /$ADMIN/topics/index.php");
 		exit;
+	} else {
+		$errorMsgs[] = getGS('The topic name is already in use by another topic.');
 	}
-	else {
-		$errorMsgs[] = getGS('The topic could not be added.');
-	}
+} else {
+	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'); 
 }
 
 $crumbs = array();
