@@ -561,7 +561,7 @@ class User extends DatabaseObject {
     	    $queryStr = "SELECT SHA1('$userPasswordSQL') as encrypted_password FROM Users "
 						. " WHERE Id = '".$this->m_data['Id']."' ";
 			$encryptedPassword = $g_ado_db->GetOne($queryStr);
-			return ($encryptedPassword == $p_password);
+			return ($encryptedPassword == $this->getPassword());
 		}
 		return ($p_password == $this->m_data['Password']);
 	} // fn isValidPassword
