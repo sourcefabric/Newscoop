@@ -18,8 +18,13 @@ if (!Template::IsValidPath($cPath)) {
 	exit;
 }
 $cName = Input::Get('cName', 'string', '');
-$correct = trim($cName) != "";
+$correct = trim($cName) != '';
 if ($correct) {
+	if (trim($cName) == '..' || trim($cName) == '.') {
+		camp_html_display_error(getGS("The folder name can't be '..' or '.'"),
+								"/$ADMIN/templates/?Path=".urlencode($cPath));
+		exit;
+	}
 	$cName = strtr($cName, '?~#%*&|"\'\\/<>', '_____________');
 	$newdir = Template::GetFullPath($cPath, $cName);
 	$ok = 0;
