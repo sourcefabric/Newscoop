@@ -349,11 +349,20 @@ class AutoTrac(Component):
 #         else:
 
         errorId = req.args.get('f_id')
-        if (errorId == None) or (not self.is_valid_error_id(errorId)):
+        if (errorId == None):
             req.write ('error: Bad or missing error ID\n')
             return
         else:
             errorId = urllib.unquote_plus (errorId)
+            #errorId = '0:q":q:q:0'
+
+            # --- Replace double quotes with single quotes, or you
+            #     won't be able to make SQL queries ---
+            errorId = errorId.replace('"', "'")
+
+            if not self.is_valid_error_id (errorId):
+                return
+            
 
         time = req.args.get('f_time')
         if time == None:
@@ -863,7 +872,7 @@ class AutoTrac(Component):
     # @param str errorId  The error ID string
     # @return True if valid, otherwise False 
     def is_valid_error_id (self, errorId):
-        if re.match (r"[0-9]+:[^:]*:[^:]*:[^:]*:[0-9]+", errorId):
+        if re.match (r'''[0-9]+:[^:]*:[^:]*:[^:]*:[0-9]+''', errorId) and (not re.search (r'''["]''', errorId)):
             return True
         else:
             return False
