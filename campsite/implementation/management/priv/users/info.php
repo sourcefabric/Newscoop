@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Country.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!isset($editUser) || gettype($editUser) != 'object') {
-	camp_html_display_error(getGS('No such user account.'));
+	camp_html_display_error(getGS('No such user account.'), "/$ADMIN/users/?".get_user_urlparams());
 	exit;
 }
 $isNewUser = $editUser->getUserName() == '';

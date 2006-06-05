@@ -13,7 +13,7 @@ compute_user_rights($User, $canManage, $canDelete);
 $userId = Input::Get('User', 'int', 0);
 $editUser = new User($userId);
 if ($editUser->getUserName() == '') {
-	camp_html_display_error(getGS('No such user account.'));
+	camp_html_display_error(getGS('No such user account.'), "/$ADMIN/users/?".get_user_urlparams());
 	exit;
 }
 
@@ -34,7 +34,8 @@ if ($setPassword) {
 
 	if ($userId == $User->getUserId()) {
 		$oldPassword = Input::Get('oldPassword');
-		if (!$editUser->isValidPassword($oldPassword)) {
+		if (!$editUser->isValidPassword($oldPassword)
+				&& !$editUser->isValidOldPassword($oldPassword)) {
 			$resMsg = getGS('The password you typed is incorrect.');
 			header("Location: $backLink&res=ERROR&resMsg=" . urlencode($resMsg));
 			exit;

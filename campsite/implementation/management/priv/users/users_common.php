@@ -128,6 +128,8 @@ function get_user_urlparams($userId = 0, $print_back_link = false, $strip_search
 		$url .= '&backLink=' . urlencode($_SERVER['REQUEST_URI']);
 	}
 
+	if ($url != '' && $url[0] == '&')
+		$url = substr($url, 1);
 	return $url;
 }
 

@@ -16,7 +16,7 @@ $userId = Input::Get('User', 'int', 0);
 if ($userId > 0) {
 	$editUser = new User($userId);
 	if ($editUser->getUserName() == '') {
-		camp_html_display_error(getGS('No such user account.'));
+		camp_html_display_error(getGS('No such user account.'), "/$ADMIN/users/?".get_user_urlparams());
 		exit;
 	}
 	$isNewUser = false;
