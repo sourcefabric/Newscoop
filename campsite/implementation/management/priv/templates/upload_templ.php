@@ -25,20 +25,13 @@ $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates");
 $crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
-$crumbs[] = array(getGS("Create new folder"), "");
+$crumbs[] = array(getGS("Upload template"), "");
 echo camp_html_breadcrumbs($crumbs);
 
- 
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_upload_templ.php" ENCTYPE="multipart/form-data" >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php  putGS("Upload template"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Template charset"); ?>:</TD>
 	<TD>

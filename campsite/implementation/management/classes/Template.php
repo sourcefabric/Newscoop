@@ -256,19 +256,18 @@ class Template extends DatabaseObject {
 	{
 		global $Campsite;
 		$p_baseUpload = $Campsite['TEMPLATE_DIRECTORY'].$p_baseUpload;
-		$fileName = $GLOBALS["$p_fileNameStr"];
 
-		if (trim($fileName) == "") {
+		if (!isset($_FILES[$p_fileNameStr]) || !isset($_FILES[$p_fileNameStr]['name'])) {
 			return false;
 		}
 
-		$fninForm = $GLOBALS["$p_fileNameStr"."_name"];
+		$fninForm = $_FILES[$p_fileNameStr]['name'];
 
-		$dotpos = strrpos($fninForm, ".");
+		$dotpos = strrpos($fninForm, '.');
 		$name = substr ($fninForm, 0, $dotpos);
 		$ext = substr ($fninForm, $dotpos + 1);
 
-		if ($p_desiredName != "") {
+		if ($p_desiredName != '') {
 			$fninForm = "$p_desiredName.$ext";
 		}
 
@@ -276,19 +275,19 @@ class Template extends DatabaseObject {
 		// the & sign will be interpreted as separator, and this will destroy the
 		// consistency of the todolist
 		$fninForm = str_replace('&', '', $fninForm);
-		$newname = "$p_baseUpload/".$fninForm;
+		$newname = "$p_baseUpload/$fninForm";
 		if(file_exists($newname) && !is_dir($newname)) {
 			unlink($newname);
 		}
 
-		$origFile = $newname.".orig";
-		@$renok = move_uploaded_file($fileName, $origFile);
+		$origFile = "$newname.orig";
+		@$renok = move_uploaded_file($_FILES[$p_fileNameStr]['tmp_name'], $origFile);
 		if ($renok == false){
 			return false;
 		}
 
-		$fType = $GLOBALS["$p_fileNameStr"."_type"];
-		if (strncmp($fType, "text", 4) == 0)
+		$fType = $_FILES[$p_fileNameStr]['type'];
+		if (strncmp($fType, 'text', 4) == 0)
 		{
 			$command = "iconv -f $p_charset -t UTF-8 \"$origFile\" > \"$newname\"";
 			$res_out = system($command, $status);
@@ -300,8 +299,8 @@ class Template extends DatabaseObject {
 		} else {
 			rename($origFile, $newname);
 		}
-		if (function_exists("camp_load_language")) { camp_load_language("api");	}
-		$logtext = getGS('Template $1 uploaded', $fileName);
+		if (function_exists('camp_load_language')) { camp_load_language('api');	}
+		$logtext = getGS('Template $1 uploaded', $fninForm);
 		Log::Message($logtext, null, 111);
 		return true;
 	} // fn OnUpload
