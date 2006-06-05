@@ -3419,6 +3419,10 @@ int CActURIPath::takeAction(CContext& c, sockstream& fs)
 	using std::resetiosflags;
 	if (m_bArticleAttachment)
 	{
+		if (c.Attachment() <= 0)
+		{
+			return ERR_NODATA;
+		}
 		fs << "/attachment/" << setw(9) << setfill('0') << right << c.Attachment()
 				<< "." << encodeHTML(c.AttachmentExtension(), c.EncodeHTML());
 		return RES_OK;
@@ -3451,14 +3455,40 @@ int CActURIPath::takeAction(CContext& c, sockstream& fs)
 //		sockstream& fs - output stream	
 int CActURI::takeAction(CContext& c, sockstream& fs)
 {
-	if (m_nImageNr > 0)
-		fs << "/cgi-bin/get_img";
-	else
-		m_coURIPath.takeAction(c, fs);
 	stringstream coURLParametersStr;
 	m_coURLParameters.takeAction(c, coURLParametersStr);
+	if (coURLParametersStr.str() == "" && m_nImageNr > 0)
+	{
+		return ERR_NODATA;
+	}
+	if (m_nImageNr > 0)
+	{
+		fs << "/cgi-bin/get_img";
+	}
+	else
+	{
+		m_coURIPath.takeAction(c, fs);
+	}
 	if (coURLParametersStr.str() != "")
+	{
 		fs << "?" << coURLParametersStr.str();
+	}
+	return RES_OK;
+}
+
+// takeAction: performs the action
+// Parametes:
+//		CContext& c - current context
+//		sockstream& fs - output stream	
+int CActURL::takeAction(CContext& c, sockstream& fs)
+{
+	int nServerPort = c.URL()->getServerPort();
+	fs << (nServerPort == 443 ? "https://" : "http://") << c.URL()->getHostName();
+	if (nServerPort != 80 && nServerPort != 443)
+	{
+		fs << ":" << nServerPort;
+	}
+	m_coURI.takeAction(c, fs);
 	return RES_OK;
 }
 

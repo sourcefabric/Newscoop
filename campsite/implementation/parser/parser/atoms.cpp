@@ -41,7 +41,10 @@ const CAttributeMap& CAttributeMap::operator =(const CAttributeMap& o)
 		return *this;
 	clear();
 	for (const_iterator coIt = o.begin(); coIt != o.end(); ++coIt)
-		this->operator []((*coIt).second->identifier()) = new CAttribute(*(*coIt).second);
+	{
+		this->operator []((*coIt).second->identifier()) =
+				(CAttribute*)(*coIt).second->clone();
+	}
 	return *this;
 }
 

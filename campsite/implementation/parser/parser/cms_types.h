@@ -123,7 +123,8 @@ typedef enum _TAction {
 	CMS_ACT_URI = 0x0018,
 	CMS_ACT_HTMLENCODING = 0x0019,
 	CMS_ACT_ARTICLECOMMENTFORM = 0x0020,
-	CMS_ACT_ARTICLECOMMENT = 0x0021
+	CMS_ACT_ARTICLECOMMENT = 0x0021,
+	CMS_ACT_URL = 0x0022
 } TAction;
 
 // TPubLevel: identifies the levels in the publication structure

@@ -23,6 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 ******************************************************************************/
 
+#include <sstream>
+
+using std::stringstream;
 
 #include "curl.h"
 
@@ -85,6 +88,18 @@ void CURL::replaceValue(const string& p_rcoParameter, const string& p_rcoValue)
 	deleteParameter(p_rcoParameter);
 	m_coParamMap.insert(pair<string, string>(p_rcoParameter, p_rcoValue));
 	PostSetValue(p_rcoParameter, p_rcoValue);
+}
+
+string CURL::getURL() const
+{
+	stringstream coBuf;
+	coBuf << (m_nServerPort == 443 ? "https://" : "http://") << getHostName();
+	if (m_nServerPort != 80 && m_nServerPort != 443)
+	{
+		coBuf << ":" << m_nServerPort;
+	}
+	coBuf << getURI();
+	return coBuf.str();
 }
 
 // readQueryString(): static method; reads the parameters from the query string

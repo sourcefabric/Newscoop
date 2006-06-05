@@ -131,7 +131,9 @@ public:
 
 	virtual void unlockTemplate() const = 0;
 
-	virtual string getURL() const = 0;
+	string getURL() const;
+
+	virtual string getHostName() const = 0;
 
 	virtual string getURIPath() const = 0;
 
@@ -183,11 +185,12 @@ private:
 
 inline CURL::CURL(const CURL& p_rcoSrc)
 {
-	m_coMethod = p_rcoSrc.m_coMethod;
-	m_coParamMap = p_rcoSrc.m_coParamMap;
 	m_coCookies = p_rcoSrc.m_coCookies;
 	m_coDocumentRoot = p_rcoSrc.m_coDocumentRoot;
+	m_coMethod = p_rcoSrc.m_coMethod;
+	m_coParamMap = p_rcoSrc.m_coParamMap;
 	m_coPathTranslated = p_rcoSrc.m_coPathTranslated;
+	m_nServerPort = p_rcoSrc.m_nServerPort;
 }
 
 inline void CURL::setValue(const string& p_rcoParameter, id_type p_nValue)

@@ -989,7 +989,10 @@ inline int CParser::HURLParameters(CActionList& al)
 		if (case_comp(l->atom()->identifier(), "template") == 0)
 		{
 			RequireAtom(l);
-			ValidateDType(l, attr);
+			if (!attr->validValue(l->atom()->identifier()))
+			{
+				throw InvalidValue();
+			}
 			string tpl_name;
 			if ((l->atom()->identifier())[0] == '/')
 				tpl_name = l->atom()->identifier().substr(1);
@@ -1016,9 +1019,13 @@ inline int CParser::HURLParameters(CActionList& al)
 		al.insert(al.end(),
 		          new CActURLParameters(fromstart, allsubtitles, img, nResetList, nTemplate, 
 										nLevel, bArticleAttachment, bArticleComment));
-	else
+	if (st->id() == CMS_ST_URI)
 		al.insert(al.end(),
 		          new CActURI(fromstart, allsubtitles, img, nResetList, nTemplate, nLevel,
+							  bArticleAttachment, bArticleComment));
+	if (st->id() == CMS_ST_URL)
+		al.insert(al.end(),
+				  new CActURL(fromstart, allsubtitles, img, nResetList, nTemplate, nLevel,
 							  bArticleAttachment, bArticleComment));
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
@@ -2390,6 +2397,8 @@ int CParser::LevelParser(CActionList& al, int level, ulint sublevel)
 				return res;
 			break;
 		case CMS_ST_URLPARAMETERS:
+		case CMS_ST_URI:
+		case CMS_ST_URL:
 			HURLParameters(al);
 			break;
 		case CMS_ST_FORMPARAMETERS:
@@ -2437,10 +2446,6 @@ int CParser::LevelParser(CActionList& al, int level, ulint sublevel)
 			break;
 		case CMS_ST_URIPATH:
 			if ((res = HURIPath(al)))
-				return res;
-			break;
-		case CMS_ST_URI:
-			if ((res = HURLParameters(al)))
 				return res;
 			break;
 		case CMS_ST_ARTICLECOMMENTFORM:

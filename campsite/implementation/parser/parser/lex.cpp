@@ -478,24 +478,40 @@ int CStatementMap::InitStatements()
 	pcoSt = new CStatement(CMS_ST_URLPARAMETERS, ST_URLPARAMETERS);
 
 	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
-	pcoCtx->insertAttr(new CAttribute("allsubtitles"));
 	pcoCtx->insertAttr(new CAttribute("fromstart"));
 	pcoCtx->insertAttr(new CAttribute("reset_issue_list"));
 	pcoCtx->insertAttr(new CAttribute("reset_section_list"));
 	pcoCtx->insertAttr(new CAttribute("reset_article_list"));
 	pcoCtx->insertAttr(new CAttribute("reset_searchresult_list"));
 	pcoCtx->insertAttr(new CAttribute("reset_subtitle_list"));
-	pcoCtx->insertAttr(new CStringAttr("template"));
-	pcoCtx->insertAttr(new CIntegerAttr("image"));
 	pcoCtx->insertAttr(new CAttribute("root_level"));
 	pcoCtx->insertAttr(new CAttribute("language"));
 	pcoCtx->insertAttr(new CAttribute("publication"));
 	pcoCtx->insertAttr(new CAttribute("issue"));
 	pcoCtx->insertAttr(new CAttribute("section"));
 	pcoCtx->insertAttr(new CAttribute("article"));
+	pcoCtx->insertAttr(new CAttribute("allsubtitles"));
 	pcoCtx->insertAttr(new CAttribute("articleAttachment"));
 	pcoCtx->insertAttr(new CAttribute("articleComment"));
+	pcoCtx->insertAttr(new CIntegerAttr("image"));
+	pcoCtx->insertAttr(new CStringAttr("template"));
 	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
+	// URI statement
+	pcoSt = new CStatement(CMS_ST_URI, ST_URI);
+
+	// use the same context as URLParameters
+	pcoSt->insertCtx(new CStatementContext(*pcoCtx));
+
+	this->insert(pcoSt);
+
+	// URL statement
+	pcoSt = new CStatement(CMS_ST_URL, ST_URL);
+
+	// use the same context as URLParameters
+	pcoSt->insertCtx(new CStatementContext(*pcoCtx));
 
 	this->insert(pcoSt);
 
@@ -785,31 +801,6 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("section"));
 	pcoCtx->insertAttr(new CAttribute("article"));
 	pcoCtx->insertAttr(new CAttribute("articleAttachment"));
-	pcoSt->insertCtx(pcoCtx);
-
-	this->insert(pcoSt);
-
-	// URI statement
-	pcoSt = new CStatement(CMS_ST_URI, ST_URI);
-
-	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
-	pcoCtx->insertAttr(new CStringAttr("template"));
-	pcoCtx->insertAttr(new CIntegerAttr("image"));
-	pcoCtx->insertAttr(new CAttribute("root_level"));
-	pcoCtx->insertAttr(new CAttribute("language"));
-	pcoCtx->insertAttr(new CAttribute("publication"));
-	pcoCtx->insertAttr(new CAttribute("issue"));
-	pcoCtx->insertAttr(new CAttribute("section"));
-	pcoCtx->insertAttr(new CAttribute("article"));
-	pcoCtx->insertAttr(new CAttribute("allsubtitles"));
-	pcoCtx->insertAttr(new CAttribute("fromstart"));
-	pcoCtx->insertAttr(new CAttribute("reset_issue_list"));
-	pcoCtx->insertAttr(new CAttribute("reset_section_list"));
-	pcoCtx->insertAttr(new CAttribute("reset_article_list"));
-	pcoCtx->insertAttr(new CAttribute("reset_searchresult_list"));
-	pcoCtx->insertAttr(new CAttribute("reset_subtitle_list"));
-	pcoCtx->insertAttr(new CAttribute("articleAttachment"));
-	pcoCtx->insertAttr(new CAttribute("articleComment"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);

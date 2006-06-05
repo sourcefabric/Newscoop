@@ -1303,8 +1303,8 @@ protected:
 public:
 	// constructor
 	CActURI(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
-			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE, bool p_bArticleAttachment = false,
-			bool p_bArticleComment = false)
+			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE,
+			bool p_bArticleAttachment = false, bool p_bArticleComment = false)
 	: m_coURIPath(tpl, lvl, p_bArticleAttachment),
 	m_coURLParameters(fs, as, i, r_fl, tpl, lvl, p_bArticleAttachment, p_bArticleComment),
 	m_nImageNr(i) {}
@@ -1317,6 +1317,35 @@ public:
 
 	// clone this object
 	virtual CAction* clone() const { return new CActURI(*this); }
+
+	// takeAction: performs the action
+	// Parametes:
+	//		CContext& c - current context
+	//		sockstream& fs - output stream
+	virtual int takeAction(CContext& c, sockstream& fs);
+};
+
+// CActURL: URL action - corresponding to URL statement (see manual)
+class CActURL : public CAction
+{
+protected:
+	CActURI m_coURI;
+
+public:
+	// constructor
+	CActURL(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
+			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE,
+			bool p_bArticleAttachment = false, bool p_bArticleComment = false)
+	: m_coURI(fs, as, i, r_fl, tpl, lvl, p_bArticleAttachment, p_bArticleComment) {}
+
+	// destructor
+	virtual ~CActURL() {}
+
+	// action: return action identifier
+	virtual TAction action() const { return CMS_ACT_URL; }
+
+	// clone this object
+	virtual CAction* clone() const { return new CActURL(*this); }
 
 	// takeAction: performs the action
 	// Parametes:

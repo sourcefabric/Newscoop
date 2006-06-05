@@ -62,10 +62,9 @@ public:
 
 	virtual void unlockTemplate() const;
 
-	// getURL(): returns the URL in string format
-	virtual string getURL() const { return m_coHTTPHost + getURI(); }
+	virtual string getHostName() const { return m_coHTTPHost; }
 
-	// getURI(): returns the path component of the URI in string format
+	// getURIPath(): returns the path component of the URI in string format
 	virtual string getURIPath() const;
 
 	// getURI(): returns the URI in string format
