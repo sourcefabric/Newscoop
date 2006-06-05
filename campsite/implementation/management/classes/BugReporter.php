@@ -231,8 +231,11 @@ class BugReporter
      */
     function getId()
     {
-        return "$this->m_num:$this->m_software:$this->m_version:" .
+        $id = "$this->m_num:$this->m_software:$this->m_version:" .
             $this->getFileWithoutPath() . ":$this->m_line";
+
+        $id = preg_replace ('/"/', "'", $id);
+        return $id;
     } // fn getId
 
 
