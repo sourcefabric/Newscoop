@@ -2,9 +2,9 @@
 
 global $Campsite, $ADMIN_DIR, $ADMIN, $g_documentRoot;
 
-// We indirectly reference the document root because some 
+// We indirectly reference the document root because some
 // scripts that use this file run from the command line,
-// therefore $_SERVER['DOCUMENT_ROOT'] is not defined in 
+// therefore $_SERVER['DOCUMENT_ROOT'] is not defined in
 // these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -54,7 +54,8 @@ $Campsite['FILE_DIRECTORY'] = $Campsite['HTML_DIR'].'/files';
 $Campsite['FILE_NUM_DIRS_LEVEL_1'] = "1000";
 $Campsite['FILE_NUM_DIRS_LEVEL_2'] = "1000";
 $Campsite['TMP_DIRECTORY'] = '/tmp/';
-$Campsite['HELP_URL'] = 'http://code.campware.org/manuals/campsite/2.5/';
+$Campsite['HELP_URL'] = 'http://code.campware.org/manuals/campsite/2.6/';
 $Campsite['ABOUT_URL'] = 'http://www.campware.org/en/camp/campsite_news/';
+$Campsite['SUPPORT_EMAIL'] = 'campsite-support@lists.campware.org';
 $Campsite['DEBUG'] = true;
 ?>
