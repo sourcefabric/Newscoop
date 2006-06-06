@@ -4,7 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 
 camp_set_error_handler("camp_report_bug");
 
-
 /**
  * This file is basically a hack so that we could implement the
  * new interface without having to rewrite everything.
@@ -111,75 +110,40 @@ if (($extension == '.php') || ($extension == '')) {
 }
 
 
-/** Sets a user-defined error function.  
- * 
+/**
+ * Sets a user-defined error function.
+ *
  *  The function set_error_handler() works differently in PHP 4 & 5.
  *  This function is a wrapper interface, to both versions of
  *  set_error_handler.
  *
- * @param The function to return
+ * @param $p_function The function to execute on error
+ * @return void
  */
-function camp_set_error_handler ($function){
+function camp_set_error_handler($p_function) {
 
     // --- In PHP 5, the error handler-default is set at E_STRICT,
     //     which captures all legacy based errors.  Unfortunately, this is
     //     completely incompatible with PHP 4. ---
     if ( version_compare( phpversion(), "5.0.0", ">=" ) ) {
-        set_error_handler($function, E_ALL);
+        set_error_handler($p_function, E_ALL);
 
     } else {
         // -- Meanwhile, the error-handler flag argument is not
         //    available in PHP 4, which always assumes it's value to be
         //    E_ALL --
-        set_error_handler($function);
+        set_error_handler($p_function);
     }
 } // fn camp_set_error_handler
 
+
 /**
- * Called for all Campsite errors.  
- *
- * If the flag $Campsite['DEBUG'] is set to false, this function will
- * return minor errors (ie notices and warnings) without having
- * processed them.  Errors with fsockopen() are returned without being
- * processed regardless of the $Campsite['DEBUG'] flag.
- *
- * @param int    $p_number The error number.
- * @param string $p_string The error message.
- * @param string $p_file The name of the file in which the error occurred.
- * @param int    $p_line The line number in which the error occurred.
- * @return void
+ * Called for all Campsite errors.
  */
 function camp_report_bug($p_number, $p_string, $p_file, $p_line)
 {
-
-    global $ADMIN_DIR, $ADMIN, $Campsite;
-
-    // --- Return on unimportant errors ---
-    if ($Campsite['DEBUG'] == false) {
-        switch ($p_number)
-            {
-            case E_NOTICE:
-            case E_WARNING:
-            case E_USER_NOTICE:
-            case E_USER_WARNING:
-                return;
-            }
-        }
-
-    // --- Return on socket errros ---
-    if (preg_match ('/^fsockopen/i', $p_string)){
-        return;
-    }
-
-    // --- Don't print out the previous screen (in which the error occurred). ---
-    ob_end_clean();
-
-    echo "<html><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td>\n";
-    require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
-    echo "</td></tr>\n<tr><td>\n";
-
-    include ($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/senderrorform.php");
-
-    exit();
+    global $ADMIN_DIR, $Campsite;
+    require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/bug_handler_main.php");
+    camp_bug_handler_main($p_number, $p_string, $p_file, $p_line);
 } // fn camp_report_bug
 ?>
