@@ -589,7 +589,7 @@ class Article extends DatabaseObject {
 	function getTranslations($p_articleNumber = null)
 	{
 		$articleNumber = $this->m_data['Number'];
-		if (is_null($p_articleNumber)) {
+		if (!is_null($p_articleNumber)) {
 			$articleNumber = $p_articleNumber;
 		}
 	 	$queryStr = 'SELECT '. implode(',', $this->m_columnNames).' FROM Articles '
@@ -1387,17 +1387,17 @@ class Article extends DatabaseObject {
     /*****************************************************************/
 
     /**
-     * Return true if the article of that name already exists for that publication / issue,
-     * other returns false.
-     * 
+     * Return true if the article of that name already exists
+     * in the given publication / issue / section.  If not, return false.
+     *
      * @param string $p_name
      * @param int $p_publicationId
      * @param int $p_issueId
      * @param int $p_sectionId
-     * 
+     *
      * @return boolean
      */
-    function NameExists($p_name, $p_publicationId = null, $p_issueId = null, $p_sectionId = null) 
+    function NameExists($p_name, $p_publicationId = null, $p_issueId = null, $p_sectionId = null)
     {
         global $g_ado_db;
         $queryStr = 'SELECT Number FROM Articles';
@@ -1416,11 +1416,14 @@ class Article extends DatabaseObject {
 			$queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
 		}
 		$result = $g_ado_db->GetRow($queryStr);
-		if (count($result)) return true;
-		else return false;        
-    } // fn Exists
+		if (count($result) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+    } // fn NameExists
 
-    
+
     /**
 	 * Return the number of unique (language-independant) articles
 	 * according to the given parameters.
