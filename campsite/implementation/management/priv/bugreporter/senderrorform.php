@@ -9,7 +9,7 @@ load_common_include_files ("bug_reporting");
 global $Campsite, $ADMIN_DIR, $g_documentRoot, $g_bugReporterDefaultServer;
 
 $server = $g_bugReporterDefaultServer;
-// $server = "http://localhost/trac/autotrac"; 
+//$server = "http://localhost/trac/autotrac"; 
 
 import_request_variables('p', "f_"); 
 

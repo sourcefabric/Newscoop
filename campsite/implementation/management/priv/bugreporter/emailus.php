@@ -16,9 +16,7 @@ if (isset($sendWasAttempted) && $sendWasAttempted=="true"){
     echo ("<b>");
     putGS ("We are sorry, but there was a problem sending your bug report." );
     echo ("</b>");
-}
-
-else {
+} else {
     echo ('<font size="+2"><b>');
     putGS ("Campsite has encountered a problem");
     echo ("</b></font>");
@@ -50,6 +48,23 @@ else {
     <td colspan="2"><b><?php putGS("Error Report") ?></b>
                         <hr noshade size="1" color="black"><br /></td>
 </tr>
+<?php if (isset($sendWasAttempted) && $sendWasAttempted=="true"){
+    include ("emailanddescription.php");
+} ?>
+<!--
+<tr>
+    <td nowrap><?php putGS("Email:") ?></td>
+    <td><?php echo $reporter->getEmail(); ?></td>
+</tr>
+<tr>
+    <td nowrap><?php putGS("Description:") ?></td>
+    <td><?php echo $reporter->getDescription(); ?></td>
+</tr>
+<tr>
+    <td nowrap>&nbsp;</td>
+    <td>&nbsp;</td>
+</tr>
+-->
 <tr>
     <td nowrap><?php putGS("Error ID:") ?></td>
     <td><?php echo $reporter->getId(); ?></td>

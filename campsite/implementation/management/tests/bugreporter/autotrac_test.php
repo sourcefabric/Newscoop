@@ -179,7 +179,7 @@ class AutotracVars
         $this->m_newreportUrl = "$this->m_autotracUrl/newreport";
         $this->m_debugUrl = "$this->m_autotracUrl/debug";
 //         $this->m_errorId = "(error ID)";
-        $this->m_errorId = "2:xxx:yyy:zzz:5";
+        $this->m_errorId = '2:xxx:yyy:zzz:5';
         
     }
 }    

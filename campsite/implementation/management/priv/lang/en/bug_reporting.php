@@ -20,5 +20,5 @@ regGS("We are sorry for the inconvenience. The Campsite development team will be
 regGS("We are sorry, but there was a problem sending your bug report.", "We are sorry, but there was a problem sending your bug report.");
 regGS("What were you trying to do when this happened?", "What were you trying to do when this happened?");
 regGS("Your bug report has been sent to Campware and will be investigated.", "Your bug report has been sent to Campware and will be investigated.");
-
+regGS("Description:", "Description:");
 ?>
