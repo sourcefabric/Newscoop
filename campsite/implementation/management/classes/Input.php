@@ -55,8 +55,13 @@ class Input {
 	 *		The index into the $_REQUEST array.
 	 *
 	 * @param string $p_type
-	 *		The type of data expected; can be 'int', 'string',
-	 *      'array', or 'checkbox'.
+	 *		The type of data expected; can be:
+	 * 		"int"
+	 * 		"string"
+	 *      "array"
+	 * 		"checkbox"
+	 * 		"boolean"
+	 *
 	 *      Default is 'string'.
 	 *
 	 * @param mixed $p_defaultValue
@@ -98,6 +103,14 @@ class Input {
 			}
 		}
 		switch ($p_type) {
+		case 'boolean':
+			$value = strtolower($_REQUEST[$p_varName]);
+			if ( ($value == "true") || (is_numeric($value) && ($value > 0)) ) {
+				return true;
+			} else {
+				return false;
+			}
+			break;
 		case 'int':
 			if (!is_numeric($_REQUEST[$p_varName])) {
 				if (!$p_errorsOk) {
