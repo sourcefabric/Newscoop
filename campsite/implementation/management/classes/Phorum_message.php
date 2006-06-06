@@ -214,15 +214,9 @@ class Phorum_message extends DatabaseObject {
 		if (!$this->exists()) {
 			return true;
 		}
-	    $threadset = 0;
-	    // get the parents of the message to delete.
-	    $sql = "SELECT forum_id, message_id, thread, parent_id "
-	    		." FROM {$PHORUM['message_table']} "
-	    		." WHERE message_id = ".$this->m_data["message_id"];
-	    $rec = $g_ado_db->GetRow($sql);
 
 	    if ($p_mode == PHORUM_DELETE_TREE) {
-	        $mids = phorum_db_get_messagetree($this->m_data['message_id'], $rec['forum_id']);
+	    	$mids = phorum_db_get_messagetree($this->m_data['message_id'], $this->m_data['forum_id']);
 	    } else {
 	        $mids = $this->m_data['message_id'];
 	    }
@@ -233,22 +227,20 @@ class Phorum_message extends DatabaseObject {
 	    		." WHERE message_id IN ($mids)";
 	    $g_ado_db->Execute($sql);
 
-	    $thread = $rec['thread'];
-	    if ( ($thread == $this->m_data['message_id'])
-	    	 && ($p_mode == PHORUM_DELETE_TREE) ) {
-	        $threadset = 1;
-	    } else {
-	        $threadset = 0;
+	    // Paul Baranowski: update thread depth for all children.
+	    // Note this must come before you update the children's parent_id.
+	    if ($p_mode == PHORUM_DELETE_MESSAGE) {
+		    $this->__updateThreadDepth(array($this->m_data["message_id"]));
 	    }
 
-	    if ($p_mode == PHORUM_DELETE_MESSAGE){
+	    if ($p_mode == PHORUM_DELETE_MESSAGE) {
 	        $count = 1;
 	        // Change the children to point to their parent's parent.
 	        // forum_id is in here for speed by using a key only
 	        $sql = "UPDATE {$PHORUM['message_table']} "
-	        		." SET parent_id=$rec[parent_id] "
-	        		." WHERE forum_id=$rec[forum_id] "
-	        		." AND parent_id=$rec[message_id]";
+	        		." SET parent_id=".$this->m_data["parent_id"]
+	        		." WHERE forum_id=".$this->m_data["forum_id"]
+	        		." AND parent_id=".$this->m_data["message_id"];
 	        $g_ado_db->Execute($sql);
 	    } else {
 	        $count = count(explode(",", $mids));
@@ -269,7 +261,7 @@ class Phorum_message extends DatabaseObject {
 
 	    // we need to delete the subscriptions for that thread too
 	    $sql = "DELETE FROM {$PHORUM['subscribers_table']} "
-	           ." WHERE forum_id > 0 AND thread=$thread";
+	           ." WHERE forum_id > 0 AND thread=".$this->m_data['thread'];
 	    $g_ado_db->Execute($sql);
 
 	    // this function will be slow with a lot of messages.
@@ -281,6 +273,38 @@ class Phorum_message extends DatabaseObject {
 
 		return explode(",", $mids);
 	} // fn delete
+
+
+	/**
+	 * Update the thread depth for all given messages and their children.
+	 * Recursive function.
+	 *
+	 * @param array $p_messageIds
+	 * @return void
+	 */
+	function __updateThreadDepth($p_messageIds)
+	{
+		global $g_ado_db;
+		global $PHORUM;
+		if (!is_array($p_messageIds) || (count($p_messageIds) == 0)) {
+			return;
+		}
+
+	    // Update the thread_depth.
+	    $sql = "UPDATE {$PHORUM['message_table']} "
+	    		." SET thread_depth=thread_depth-1"
+	    		." WHERE message_id IN (".implode(",", $p_messageIds).")";
+	    $g_ado_db->Execute($sql);
+
+    	foreach ($p_messageIds as $msgId) {
+			// get children...
+		    $sql = "SELECT message_id FROM {$PHORUM['message_table']} "
+		    	   ." WHERE forum_id=".$this->m_data["forum_id"]
+		    	   ." AND parent_id=$msgId";
+			$childIds = $g_ado_db->GetCol($sql);
+			$this->__updateThreadDepth($childIds);
+    	}
+	} // fn __updateThreadDepth
 
 
     /**
