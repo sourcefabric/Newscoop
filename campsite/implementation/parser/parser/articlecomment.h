@@ -46,29 +46,13 @@ class CArticleComment
 		CArticleComment(const CArticleComment& p_rcoSource)
 		{ *this = p_rcoSource; }
 
-		~CArticleComment();
+		~CArticleComment() {}
 
 		/**
 		 * exists(): returns true if the article comment exists
 		 * @return bool
 		**/
 		bool exists() const { return m_bExists; }
-
-		/**
-		 * createComment(): creates an article comment from the list of values
-		 * received as parameter. Returns true if succesful. Sets p_rbRejected to
-		 * true if the comment was rejected by filters.
-		 * @param String2String& p_rcoValues
-		 * @param bool& p_rbRejected
-		 * @return bool
-		**/
-		bool createComment(String2String& p_rcoValues, bool& p_rbRejected);
-
-		/**
-		 * deleteComment(): delete the current article comment
-		 * @return bool
-		 **/
-		bool deleteComment();
 
 		id_type getArticleNumber() const { return m_nArticleNumber; }
 
@@ -173,15 +157,6 @@ class CArticleComment
 		ulint m_nViewcount;
 		int m_nClosed;
 		int m_nLevel;
-
-	private:
-		/**
-		 * CommentAccepted(): returns true if the comment defined by the list of values
-		 * was accepted by the filters
-		 * @param String2String& p_rcoValues
-		 * @return bool
-		**/
-		bool CommentAccepted(String2String& p_rcoValues) const;
 };
 
 #endif

@@ -50,14 +50,18 @@ string CPublication::getTemplate(id_type p_nLanguage, id_type p_nPublication, id
 		if (p_nIssue <= 0 || p_nSection <= 0)
 		{
 			stringstream coSql;
-			coSql << "select NrIssue, NrSection from Issues where Number = "
+			coSql << "select NrIssue, NrSection from Articles where Number = "
 			      << p_nArticle << " and IdLanguage = " << p_nLanguage;
 			if (p_bIsPublished)
+			{
 				coSql << " and Published = 'Y'";
+			}
 			CMYSQL_RES coRes;
 			MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 			if (qRow == NULL)
+			{
 				throw InvalidValue("article number", ((string)Integer(p_nArticle)).c_str());
+			}
 			p_nIssue = (p_nIssue > 0) ? p_nIssue : (id_type)Integer(string(qRow[0]));
 			p_nSection = (p_nSection > 0) ? p_nSection : (id_type)Integer(string(qRow[1]));
 		}
@@ -73,11 +77,15 @@ string CPublication::getTemplate(id_type p_nLanguage, id_type p_nPublication, id
 			      << "and s.IdPublication = " << p_nPublication << " and s.IdLanguage = "
 			      << p_nLanguage;
 			if (p_bIsPublished)
+			{
 				coSql << " and i.Published = 'Y'";
+			}
 			CMYSQL_RES coRes;
 			MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 			if (qRow == NULL)
+			{
 				throw InvalidValue("section number", ((string)Integer(p_nSection)).c_str());
+			}
 			p_nIssue = (id_type)Integer(string(qRow[0]));
 		}
 		return getSectionTemplate(p_nLanguage, p_nPublication, p_nIssue, p_nSection, p_DBConn);
@@ -87,20 +95,24 @@ string CPublication::getTemplate(id_type p_nLanguage, id_type p_nPublication, id
 		stringstream coSql;
 		coSql << "select max(Number) from Issues where IdPublication = " << p_nPublication
 		      << " and IdLanguage = " << p_nLanguage;
-			if (p_bIsPublished)
-				coSql << " and Published = 'Y'";
+		if (p_bIsPublished)
+		{
+			coSql << " and Published = 'Y'";
+		}
 		CMYSQL_RES coRes;
 		MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 		if (qRow == NULL)
+		{
 			throw InvalidValue("publication number", ((string)Integer(p_nPublication)).c_str());
+		}
 		p_nIssue = (id_type)Integer(string(qRow[0]));
 	}
 	return getIssueTemplate(p_nLanguage, p_nPublication, p_nIssue, p_DBConn);
 }
 
 
-string CPublication::getIssueTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue, 
-                                      MYSQL* p_DBConn)
+string CPublication::getIssueTemplate(id_type p_nLanguage, id_type p_nPublication,
+									  id_type p_nIssue, MYSQL* p_DBConn)
 {
 	stringstream coSql;
 	coSql << "select t.Name from Issues as i, Templates as t where i.IssueTplId = t.Id "
@@ -109,12 +121,14 @@ string CPublication::getIssueTemplate(id_type p_nLanguage, id_type p_nPublicatio
 	CMYSQL_RES coRes;
 	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 	if (qRow == NULL)
-		throw InvalidValue("issue number", ((string)Integer(p_nIssue)).c_str());
+	{
+		throw InvalidValue("issue template; set the issue template!", "(unset)");
+	}
 	return string(qRow[0]);
 }
 
-string CPublication::getSectionTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
-                                        id_type p_nSection, MYSQL* p_DBConn)
+string CPublication::getSectionTemplate(id_type p_nLanguage, id_type p_nPublication,
+										id_type p_nIssue, id_type p_nSection, MYSQL* p_DBConn)
 {
 	stringstream coSql;
 	CMYSQL_RES coRes;
@@ -125,7 +139,9 @@ string CPublication::getSectionTemplate(id_type p_nLanguage, id_type p_nPublicat
 		      << " and IdLanguage = " << p_nLanguage << " and Number = " << p_nSection;
 		MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 		if (qRow != NULL)
+		{
 			return string(qRow[0]);
+		}
 		coSql.str("");
 	}
 	coSql << "select t.Name from Issues as i, Templates as t where i.SectionTplId = t.Id "
@@ -133,12 +149,14 @@ string CPublication::getSectionTemplate(id_type p_nLanguage, id_type p_nPublicat
 	      << " and IdLanguage = " << p_nLanguage;
 	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 	if (qRow == NULL)
-		throw InvalidValue("issue number", ((string)Integer(p_nIssue)).c_str());
+	{
+		throw InvalidValue("section template; set the section template!", "(unset)");
+	}
 	return string(qRow[0]);
 }
 
-string CPublication::getArticleTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
-                                        id_type p_nSection, MYSQL* p_DBConn)
+string CPublication::getArticleTemplate(id_type p_nLanguage, id_type p_nPublication,
+										id_type p_nIssue, id_type p_nSection, MYSQL* p_DBConn)
 {
 	stringstream coSql;
 	CMYSQL_RES coRes;
@@ -149,7 +167,9 @@ string CPublication::getArticleTemplate(id_type p_nLanguage, id_type p_nPublicat
 		      << " and IdLanguage = " << p_nLanguage << " and Number = " << p_nSection;
 		MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 		if (qRow != NULL)
+		{
 			return string(qRow[0]);
+		}
 		coSql.str("");
 	}
 	coSql << "select t.Name from Issues as i, Templates as t where i.ArticleTplId = t.Id "
@@ -157,19 +177,24 @@ string CPublication::getArticleTemplate(id_type p_nLanguage, id_type p_nPublicat
 	      << " and IdLanguage = " << p_nLanguage;
 	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 	if (qRow == NULL)
-		throw InvalidValue("issue number", ((string)Integer(p_nSection)).c_str());
+	{
+		throw InvalidValue("article template; set the article template!", "(unset)");
+	}
 	return string(qRow[0]);
 }
 
 
-id_type CPublication::getTemplateId(const string& p_rcoTemplate, MYSQL* p_DBConn) throw(InvalidValue)
+id_type CPublication::getTemplateId(const string& p_rcoTemplate, MYSQL* p_DBConn)
+		throw(InvalidValue)
 {
 	stringstream coSql;
 	coSql << "select Id from Templates where Name = '" << p_rcoTemplate << "'";
 	CMYSQL_RES coRes;
 	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 	if (qRow == NULL)
+	{
 		throw InvalidValue("template name", p_rcoTemplate);
+	}
 	return Integer(qRow[0]);
 }
 
@@ -186,7 +211,9 @@ void CPublication::BuildFromDB(id_type p_nId, MYSQL* p_DBConn) throw(InvalidValu
 	CMYSQL_RES coRes;
 	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 	if (qRow == NULL)
+	{
 		throw InvalidValue("publication identifier", ((string)Integer(p_nId)).c_str());
+	}
 	m_nIdLanguage = Integer(qRow[0]);
 	m_coURLTypeName = qRow[1];
 	lint nDefaultAliasId = strtol(qRow[2], 0, 10);
@@ -196,7 +223,9 @@ void CPublication::BuildFromDB(id_type p_nId, MYSQL* p_DBConn) throw(InvalidValu
 	coSql << "select Name, Id from Aliases where IdPublication = " << p_nId;
 	qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 	if (qRow == NULL)
+	{
 		throw InvalidValue("publication identifier", ((string)Integer(p_nId)).c_str());
+	}
 	while (qRow != NULL)
 	{
 		addAlias(qRow[0]);
@@ -212,38 +241,33 @@ bool CPublication::isValidIssue(id_type p_nLanguage, id_type p_nPublication, id_
 								MYSQL* p_DBConn)
 {
 	stringstream coSql;
-	coSql << "select * from Issues where IdPublication = " << p_nPublication << " and Number = "
-			<< p_nIssue << " and IdLanguage = " << p_nLanguage;
+	coSql << "select Number from Issues where IdPublication = " << p_nPublication
+			<< " and Number = " << p_nIssue << " and IdLanguage = " << p_nLanguage;
 	CMYSQL_RES coRes;
 	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
-	if (qRow == NULL)
-		return false;
-	return true;
+	return (qRow != NULL);
 }
 
 bool CPublication::isValidSection(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
 								  id_type p_nSection, MYSQL* p_DBConn)
 {
 	stringstream coSql;
-	coSql << "select * from Sections where IdPublication = " << p_nPublication << " and NrIssue = "
-			<< p_nIssue << " and IdLanguage = " << p_nLanguage << " and Number = " << p_nSection;
+	coSql << "select Number from Sections where IdPublication = " << p_nPublication
+			<< " and NrIssue = " << p_nIssue << " and IdLanguage = " << p_nLanguage
+			<< " and Number = " << p_nSection;
 	CMYSQL_RES coRes;
 	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
-	if (qRow == NULL)
-		return false;
-	return true;
+	return (qRow != NULL);
 }
 
 bool CPublication::isValidArticle(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
 								  id_type p_nSection, id_type p_nArticle, MYSQL* p_DBConn)
 {
 	stringstream coSql;
-	coSql << "select * from Articles where IdPublication = " << p_nPublication << " and NrIssue = "
-			<< p_nIssue << " and NrSection = " << p_nSection << " and Number = " << p_nArticle
-			<< " and IdLanguage = " << p_nLanguage;
+	coSql << "select Number from Articles where IdPublication = " << p_nPublication
+			<< " and NrIssue = " << p_nIssue << " and NrSection = " << p_nSection
+			<< " and Number = " << p_nArticle << " and IdLanguage = " << p_nLanguage;
 	CMYSQL_RES coRes;
 	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
-	if (qRow == NULL)
-		return false;
-	return true;
+	return (qRow != NULL);
 }
