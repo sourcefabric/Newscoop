@@ -35,10 +35,8 @@ class SimplePager {
 	 */
 	function SimplePager($p_totalItems, $p_itemsPerPage, $p_offsetVarName, $p_baseUrl, $p_useSessions = true, $p_width = 10)
 	{
-		$this->m_urls["first"] = $p_baseUrl;
-		$this->m_urls["previous"] = $p_baseUrl;
-		$this->m_urls["next"] = $p_baseUrl;
-		$this->m_urls["last"] = $p_baseUrl;
+	    global $_REQUEST;
+
 		$this->m_urls["links"] = array();
 		if ($p_totalItems < 0) {
 			$p_totalItems = 0;
@@ -55,7 +53,7 @@ class SimplePager {
 		}
 		if ($this->m_offset < 0) {
 			$this->m_offset = 0;
-		} elseif ( ($this->m_offset*$p_itemsPerPage) > $p_totalItems) {
+		} elseif ( ($this->m_offset) > $p_totalItems) {
 		    // If the offset is past the total number of items,
 		    // reset it.
 		    $this->m_offset = 0;
@@ -98,22 +96,28 @@ class SimplePager {
 			}
 
 			// Generate special links.
-			$this->m_urls["first"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[0];
-			$this->m_urls["previous"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[max(0, $this->m_selectedPageNumber-2)];
-			if ($this->m_selectedPageNumber > 10) {
+			if ($this->m_selectedPageNumber > 1) {
+    			$this->m_urls["first"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[0];
+	       		$this->m_urls["previous"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[max(0, $this->m_selectedPageNumber-2)];
+			} 
+	       	if ($this->m_selectedPageNumber > 10) {
 				$this->m_urls["previous_10_pages"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[max(0, $this->m_selectedPageNumber-11)];
 			}
 			if ($this->m_selectedPageNumber > 100) {
 				$this->m_urls["previous_100_pages"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[max(0, $this->m_selectedPageNumber-101)];
 			}
-			$this->m_urls["next"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[min($this->m_numPages-1, $this->m_selectedPageNumber)];
-			if ( ($this->m_numPages - $this->m_selectedPageNumber) > 9) {
+			if ( ($this->m_numPages > $this->m_selectedPageNumber)) {
+    			$this->m_urls["next"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[min($this->m_numPages-1, $this->m_selectedPageNumber)];
+			} 
+    		if ( ($this->m_numPages - $this->m_selectedPageNumber) > 9) {
 				$this->m_urls["next_10_pages"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[min($this->m_numPages-1, $this->m_selectedPageNumber+9)];
 			}
 			if ( ($this->m_numPages - $this->m_selectedPageNumber) > 99) {
 				$this->m_urls["next_100_pages"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[min($this->m_numPages-1, $this->m_selectedPageNumber+99)];
 			}
-			$this->m_urls["last"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[$this->m_numPages-1];
+			if ( ($this->m_numPages > $this->m_selectedPageNumber)) {
+    			$this->m_urls["last"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[$this->m_numPages-1];
+			} 
 		}
 	} // constructor
 
@@ -129,29 +133,37 @@ class SimplePager {
 		}
 		$this->m_renderedStr = "";
 		if (count($this->m_urls["links"]) > 1) {
-			$this->m_renderedStr .= "<a href=\"".$this->m_urls["first"]."\">".getGS("First")."</a> | ";
-			if (isset($this->m_urls["previous_100_pages"])) {
+			if (isset($this->m_urls["first"])) {
+    		    $this->m_renderedStr .= "<a href=\"".$this->m_urls["first"]."\">".getGS("First")."</a> | ";
+			}
+    		if (isset($this->m_urls["previous_100_pages"])) {
 				$this->m_renderedStr .= "<a href=\"".$this->m_urls["previous_100_pages"]."\">".getGS("Previous")." 100</a> | ";
 			}
 			if (isset($this->m_urls["previous_10_pages"])) {
 				$this->m_renderedStr .= "<a href=\"".$this->m_urls["previous_10_pages"]."\">".getGS("Previous")." 10</a> | ";
 			}
-			$this->m_renderedStr .= "<a href=\"".$this->m_urls["previous"]."\">".getGS("Previous")."</a> | ";
-			foreach ($this->m_urls["links"] as $number => $url) {
+			if (isset($this->m_urls["previous"])) {
+    			$this->m_renderedStr .= "<a href=\"".$this->m_urls["previous"]."\">".getGS("Previous")."</a> | ";
+			}
+    		foreach ($this->m_urls["links"] as $number => $url) {
 				if ($number == $this->m_selectedPageNumber) {
 					$this->m_renderedStr .= "$number | ";
 				} else {
 					$this->m_renderedStr .= "<a href=\"".$url."\">$number</a> | ";
 				}
 			}
-			$this->m_renderedStr .= "<a href=\"".$this->m_urls["next"]."\">".getGS("Next")."</a> | ";
+			if (isset($this->m_urls["next"])) {
+			    $this->m_renderedStr .= "<a href=\"".$this->m_urls["next"]."\">".getGS("Next")."</a> | ";
+			}
 			if (isset($this->m_urls["next_10_pages"])) {
 				$this->m_renderedStr .= "<a href=\"".$this->m_urls["next_10_pages"]."\">".getGS("Next")." 10</a> | ";
 			}
 			if (isset($this->m_urls["next_100_pages"])) {
 				$this->m_renderedStr .= "<a href=\"".$this->m_urls["next_100_pages"]."\">".getGS("Next")." 100</a> | ";
 			}
-			$this->m_renderedStr .= "<a href=\"".$this->m_urls["last"]."\">".getGS("Last")."</a>";
+			if (isset($this->m_urls["last"])) {
+    			$this->m_renderedStr .= "<a href=\"".$this->m_urls["last"]."\">".getGS("Last")."</a>";
+			}
 		}
 		return $this->m_renderedStr;
 	} // fn render
