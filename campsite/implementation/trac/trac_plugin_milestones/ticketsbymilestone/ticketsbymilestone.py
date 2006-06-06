@@ -18,8 +18,8 @@ class TicketsByMilestone (Component):
             return
         time.sleep(.5)
         yield ('mainnav', 'ticketsbymilestone',
-               Markup('<a href="%s">Tickets by Milestone</a>',
-                      self.env.href.ticketsbymilestone()))
+#                Markup('<a href="%s">Tickets by Milestone</a>', self.env.href.ticketsbymilestone()))
+               Markup('<a href="%s">Tickets by Milestone</a>', str(self.env.href.report()) + "/3"))
 
     # IRequestHandler methods
     def match_request(self, req):
