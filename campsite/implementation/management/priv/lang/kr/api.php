@@ -1,4 +1,11 @@
 <?php
+regGS("template path", "");
+regGS("short names", "");
+regGS("Unable to fetch image from remote server.", "");
+regGS("The article type field $1 has been renamed to $2.", "");
+regGS("The article type $1 has been renamed to $2.", "");
+regGS("Article type field $1 changed", "");
+regGS("Article Type $1 translation updated", "");
 regGS("The IP address group $1 has been deleted.", "IP 어드레스 그룹 $1 이 삭제되었습니다.");
 regGS("IP Group $1 added for user $2", "IP 그룹 $1 이 $2 사용자에 추가됨.");
 regGS("User permissions for $1 changed", "$1 사용자 권한이 변경됨.");

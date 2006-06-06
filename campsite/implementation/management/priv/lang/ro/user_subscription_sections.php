@@ -1,4 +1,5 @@
 <?php
+regGS("There are no sections in this publication.", "");
 regGS("You must input a number greater or equal to 0 into the $1 field.", "Trebuie să introduci un număr mai mare sau egal cu 0 în câmpul $1.");
 regGS("Regardless of the language", "Indiferent de limbă");
 regGS("Individual languages", "Limbi individuale");

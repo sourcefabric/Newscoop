@@ -1,6 +1,6 @@
 <?php
-regGS("edit '$1'", "modifică '$1'");
-regGS("edit \"$1\"", "modifică \"$1\"");
+regGS("You do not have the right to manage the localizer.", "");
+regGS("API", "");
 regGS("User Subscriptions Sections", "Secţiunile abonamentului utilizatorului");
 regGS("User Subscriptions", "Abonamentele utilizatorului");
 regGS("Translate to:", "Tradu în:");

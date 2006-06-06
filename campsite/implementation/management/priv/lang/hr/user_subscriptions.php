@@ -1,4 +1,5 @@
 <?php
+regGS("Please select one or more languages.", "");
 regGS("Regardless of the language", "Bez obzira na jezik");
 regGS("Individual languages", "Pojedinačni jezici");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publikacija <br><small>(klikni da vidiš rubrike)</small>");

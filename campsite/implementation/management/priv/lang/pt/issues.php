@@ -1,4 +1,5 @@
 <?php
+regGS("You cannot delete the issue because it is not empty (number of articles: $1).  To delete the issue, first delete its contents.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Nome<br>(Clique para ver Secções)");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publicado<br>(aaaa-mm-dd)");
 regGS("Delete issue $1", "Eliminar Número $1");

@@ -1,4 +1,9 @@
 <?php
+regGS("Subscriber comments moderated?", "");
+regGS("Public comments moderated?", "");
+regGS("Comments enabled?", "");
+regGS("Comments enabled", "");
+regGS("Article comments default to enabled?", "");
 regGS("trial subscription", "시험 구독");
 regGS("paid subscription", "정기 구독");
 regGS("time units", "시간 단위");

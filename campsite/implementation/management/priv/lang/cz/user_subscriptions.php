@@ -1,4 +1,5 @@
 <?php
+regGS("Please select one or more languages.", "");
 regGS("Regardless of the language", "");
 regGS("Individual languages", "");
 regGS("Account", "");

@@ -254,4 +254,5 @@ regGS("Article Comments", "Article Comments");
 regGS("Are you sure you want to deactivate the subscription?", "Are you sure you want to deactivate the subscription?");
 regGS("Are you sure you want to activate the subscription?", "Are you sure you want to activate the subscription?");
 regGS("Other", "Other");
+regGS("Time:", "Time:");
 ?>

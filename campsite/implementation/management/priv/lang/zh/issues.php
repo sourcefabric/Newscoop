@@ -1,4 +1,5 @@
 <?php
+regGS("You cannot delete the issue because it is not empty (number of articles: $1).  To delete the issue, first delete its contents.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "名称");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>", "首页模版");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>", "单文章模版（单击进行修改）");

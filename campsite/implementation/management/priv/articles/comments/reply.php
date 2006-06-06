@@ -92,7 +92,7 @@ camp_html_content_top(getGS("Reply to comment"), $topArray);
 <table class="table_input" width="600px">
 <tr>
     <td colspan="2" style="padding-left: 5px;">
-        <b><?php putGS("Reply to this comment"); ?></b>
+        <b><?php putGS("Reply to comment"); ?></b>
    		<HR NOSHADE SIZE="1" COLOR="BLACK">
     </td>
 </tr>

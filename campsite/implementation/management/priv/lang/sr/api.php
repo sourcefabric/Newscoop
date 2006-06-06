@@ -1,4 +1,11 @@
 <?php
+regGS("template path", "");
+regGS("short names", "");
+regGS("Unable to fetch image from remote server.", "");
+regGS("The article type field $1 has been renamed to $2.", "");
+regGS("The article type $1 has been renamed to $2.", "");
+regGS("Article type field $1 changed", "");
+regGS("Article Type $1 translation updated", "");
 regGS("The IP address group $1 has been deleted.", "ИП група адреса $1 је обрисана.");
 regGS("IP Group $1 added for user $2", "ИП група $1 додата за корисника $2 ");
 regGS("User permissions for $1 changed", "Корисничка права за $1 су промењена");

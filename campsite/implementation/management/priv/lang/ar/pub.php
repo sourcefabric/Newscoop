@@ -1,4 +1,9 @@
 <?php
+regGS("Subscriber comments moderated?", "");
+regGS("Public comments moderated?", "");
+regGS("Comments enabled?", "");
+regGS("Comments enabled", "");
+regGS("Article comments default to enabled?", "");
 regGS("trial subscription", "إشتراك تجريبي");
 regGS("paid subscription", "إشتراك مدفوع");
 regGS("time units", "وحدات الوقت");

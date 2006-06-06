@@ -5,7 +5,7 @@
  * be fast (it gets loaded for every hit to the admin screen), we put it
  * all in one file.
  */
- 
+
 /**
  * Includes
  */
@@ -24,11 +24,11 @@ require_once('LanguageMetadata.php');
  *
  * @return void
  */
-function putGS($p_translateString) 
+function putGS($p_translateString)
 {
 	$args = func_get_args();
 	echo call_user_func_array('getGS', $args);
-} // fn putGS    
+} // fn putGS
 
 
 /**
@@ -40,7 +40,7 @@ function putGS($p_translateString)
  *
  * @return string
  */
-function getGS($p_translateString) 
+function getGS($p_translateString)
 {
 	global $g_translationStrings, $TOL_Language;
 	$numFunctionArgs = func_num_args();
@@ -68,7 +68,7 @@ function getGS($p_translateString)
  * @param string $p_key
  * @return void
  */
-function regGS($p_key, $p_value) 
+function regGS($p_key, $p_value)
 {
 	global $g_translationStrings;
 	if (isset($g_translationStrings[$p_key])) {
@@ -87,7 +87,7 @@ function regGS($p_key, $p_value)
 
 /**
  * The Localizer class handles groups of translation tables (LocalizerLanguages).
- * This class simply acts as a namespace for a group of static methods.  
+ * This class simply acts as a namespace for a group of static methods.
  * @package Campware
  */
 class Localizer {
@@ -100,13 +100,13 @@ class Localizer {
      * @return mixed
      *		Will return 'gs' or 'xml' on success, or NULL on failure.
      */
-    function GetMode() 
+    function GetMode()
     {
         global $g_localizerConfig;
     	if ($g_localizerConfig['DEFAULT_FILE_TYPE'] != '') {
     		return $g_localizerConfig['DEFAULT_FILE_TYPE'];
     	}
-	    $defaultLang =& new LocalizerLanguage('globals', 
+	    $defaultLang =& new LocalizerLanguage('globals',
 	                                          $g_localizerConfig['DEFAULT_LANGUAGE']);
 	    if ($defaultLang->loadGsFile()) {
 	    	return 'gs';
@@ -118,8 +118,8 @@ class Localizer {
 	    	return null;
 	    }
     } // fn GetMode
-    
-    
+
+
     /**
      * Load the translation strings into a global variable.
      *
@@ -129,14 +129,14 @@ class Localizer {
      * 		The two-letter language code of the language you want to load.
      * @return void
      */
-	function LoadLanguageFiles($p_prefix, $p_languageCode = null) 
+	function LoadLanguageFiles($p_prefix, $p_languageCode = null)
 	{
 	    global $g_translationStrings;
 	    global $g_localizerConfig;
 	    if (is_null($p_languageCode)){
 	        $p_languageCode = $g_localizerConfig['DEFAULT_LANGUAGE'];
 	    }
-	    
+
 	    if (!isset($g_translationStrings)) {
     		$g_translationStrings = array();
         }
@@ -145,7 +145,7 @@ class Localizer {
 	    if (!isset($g_localizerConfig['LOADED_FILES'][$key])) {
 	        $defaultLang =& new LocalizerLanguage($p_prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
     	    $defaultLang->loadFile(Localizer::GetMode());
-    	    $defaultLangStrings = $defaultLang->getTranslationTable();		    
+    	    $defaultLangStrings = $defaultLang->getTranslationTable();
     	    // Merge default language strings into the translation array.
     	    $g_translationStrings = array_merge($g_translationStrings, $defaultLangStrings);
 	        $g_localizerConfig['LOADED_FILES'][$key] = true;
@@ -153,15 +153,15 @@ class Localizer {
 	    $key = $p_prefix."_".$p_languageCode;
 	    if (!isset($g_localizerConfig['LOADED_FILES'][$key])) {
     	    $userLang =& new LocalizerLanguage($p_prefix, $p_languageCode);
-    	    $userLang->loadFile(Localizer::GetMode());	
+    	    $userLang->loadFile(Localizer::GetMode());
     	    $userLangStrings = $userLang->getTranslationTable();
     	    // Merge user strings into translation array.
     	    $g_translationStrings = array_merge($g_translationStrings, $userLangStrings);
 	        $g_localizerConfig['LOADED_FILES'][$key] = true;
-	    }    
+	    }
 	} // fn LoadLanguageFiles
 
-	
+
     /**
      * Compare a particular language's keys with the default language set.
      *
@@ -177,13 +177,13 @@ class Localizer {
      *
      * @return array
      */
-    function CompareKeys($p_prefix, $p_data, $p_findExistingKeys = true) 
+    function CompareKeys($p_prefix, $p_data, $p_findExistingKeys = true)
     {
         global $g_localizerConfig;
-		$localData =& new LocalizerLanguage($p_prefix, 
+		$localData =& new LocalizerLanguage($p_prefix,
 		                                    $g_localizerConfig['DEFAULT_LANGUAGE']);
 		$localData->loadFile(Localizer::GetMode());
-        $globaldata =& new LocalizerLanguage($g_localizerConfig['FILENAME_PREFIX_GLOBAL'], 
+        $globaldata =& new LocalizerLanguage($g_localizerConfig['FILENAME_PREFIX_GLOBAL'],
                                              $g_localizerConfig['DEFAULT_LANGUAGE']);
         $globaldata->loadFile(Localizer::GetMode());
 
@@ -202,14 +202,14 @@ class Localizer {
         return $returnValue;
     } // fn CompareKeys
 
-    
+
     /**
      * Return an array of localizer languages codes, discovered by looking at the directory
      * names in the /lang directory.
      *
      * @return array
      */
-    function GetLanguages() 
+    function GetLanguages()
     {
         global $g_localizerConfig;
         $languages = array();
@@ -218,7 +218,7 @@ class Localizer {
                 while (($file = readdir($dirHandle)) !== false) {
                     $filepath = $g_localizerConfig['TRANSLATION_DIR'].'/'.$file;
                     if ( ($file != '.') && ($file != '..') && ($file[0] != '.')
-                         && (filetype($filepath) == "dir")) { 
+                         && (filetype($filepath) == "dir")) {
         		        $languageDef =& new LanguageMetadata();
         		        $languageDef->m_languageId = $file;
         		        $languageDef->m_languageCode = $file;
@@ -231,23 +231,23 @@ class Localizer {
         return $languages;
     } // fn GetLanguages
 
-    
+
     /**
      * Search through PHP files and find all the strings that need to be translated.
      * @param string $p_directory -
      * @return array
      */
-    function FindTranslationStrings($p_directory) 
+    function FindTranslationStrings($p_directory)
     {
         global $g_localizerConfig;
         // All .php files
-        $filePattern = '/(.*).php/';                                               
+        $filePattern = '/(.*).php/';
         $patterns = array();
 
-        // like getGS('edit "$1"', ...);  '
-        $functPattern1 = '/(put|get)gs( )*\(( )*\'([^\']*)\'/iU';                  
-        // like getGS("edit '$1'", ...);
-        $functPattern2 = '/(put|get)gs( )*\(( )*"([^"]*)"/iU';                     
+        // like get GS('edit "$1"', ...);  '
+        $functPattern1 = '/(put|get)gs( )*\(( )*\'([^\']*)\'/iU';
+        // like get GS("edit '$1'", ...);
+        $functPattern2 = '/(put|get)gs( )*\(( )*"([^"]*)"/iU';
 
         // Get all files in this directory
         $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$p_directory, 1);
@@ -257,20 +257,20 @@ class Localizer {
         foreach ($files as $name) {
             if (preg_match($filePattern, $name)) {
             	// list of .php-scripts in this folder
-                $filelist[] = $name;                                         
+                $filelist[] = $name;
             }
         }
-        
+
 		// Read in all the PHP files.
 		$data = array();
-        foreach ($filelist as $name) {                                                  
+        foreach ($filelist as $name) {
             $data = array_merge($data, file($g_localizerConfig['BASE_DIR'].$p_directory.'/'.$name));
         }
 
        	// Collect all matches
        	$matches = array();
         foreach ($data as $line) {
-            if (preg_match_all($functPattern1, $line, $m)) {                            
+            if (preg_match_all($functPattern1, $line, $m)) {
                 foreach ($m[4] as $match) {
                     $match = str_replace("\\\\", "\\", $match);
                     $matches[$match] = $match;
@@ -287,14 +287,14 @@ class Localizer {
         asort($matches);
         return $matches;
     } // fn FindTranslationStrings
-    
-    
+
+
     /**
      * Return the set of strings in the code that are not in the translation files.
-     * @param string $p_prefix 
+     * @param string $p_prefix
      * @return array
      */
-    function FindMissingStrings($p_prefix) 
+    function FindMissingStrings($p_prefix)
     {
         global $g_localizerConfig;
         if (empty($p_prefix)) {
@@ -303,17 +303,17 @@ class Localizer {
         $dir = $g_localizerConfig["MAP_PREFIX_TO_DIR"][$p_prefix];
 	    $newKeys = Localizer::FindTranslationStrings($dir);
 	    $missingKeys = Localizer::CompareKeys($p_prefix, $newKeys, false);
-	    $missingKeys = array_unique($missingKeys);	    
+	    $missingKeys = array_unique($missingKeys);
 	    return $missingKeys;
     } // fn FindMissingStrings
-    
-    
+
+
     /**
      * Return the set of strings in the translation files that are not used in the code.
      * @param string $p_prefix
      * @return array
      */
-    function FindUnusedStrings($p_prefix) 
+    function FindUnusedStrings($p_prefix)
     {
         global $g_localizerConfig;
         if (empty($p_prefix)) {
@@ -333,8 +333,8 @@ class Localizer {
 	    $unusedKeys = array_unique($unusedKeys);
 	    return $unusedKeys;
     } // fn FindUnusedStrings
-    
-    
+
+
     /**
      * Update a set of strings in a language file.
      * @param string $p_prefix
@@ -343,7 +343,7 @@ class Localizer {
      *
      * @return void
      */
-    function ModifyStrings($p_prefix, $p_languageId, $p_data) 
+    function ModifyStrings($p_prefix, $p_languageId, $p_data)
     {
         global $g_localizerConfig;
       	// If we change a string in the default language,
@@ -351,11 +351,11 @@ class Localizer {
         if ($p_languageId == $g_localizerConfig['DEFAULT_LANGUAGE']) {
 	        $languages = Localizer::GetLanguages();
 	        foreach ($languages as $language) {
-	        	
+
 	        	// Load the language file
 	        	$source =& new LocalizerLanguage($p_prefix, $language->getLanguageId());
 	        	$source->loadFile(Localizer::GetMode());
-	        	
+
 	        	// For the default language, we set the key & value to be the same.
 	        	if ($p_languageId == $language->getLanguageId()) {
 	        		foreach ($p_data as $pair) {
@@ -368,7 +368,7 @@ class Localizer {
 	        			$source->updateString($pair['key'], $pair['value']);
 	        		}
 	        	}
-	        	
+
 	        	// Save the file
 				$source->saveFile(Localizer::GetMode());
 	        }
@@ -382,17 +382,17 @@ class Localizer {
     			$source->updateString($pair['key'], $pair['key'], $pair['value']);
     		}
         	// Save the file
-			$source->saveFile(Localizer::GetMode());        	
+			$source->saveFile(Localizer::GetMode());
         }
     } // fn ModifyStrings
 
-    
+
     /**
      * Synchronize the positions of the strings to the default language file order.
      * @param string $p_prefix
      * @return void
      */
-    function FixPositions($p_prefix) 
+    function FixPositions($p_prefix)
     {
         global $g_localizerConfig;
         $defaultLanguage =& new LocalizerLanguage($p_prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
@@ -400,7 +400,7 @@ class Localizer {
         $defaultTranslationTable = $defaultLanguage->getTranslationTable();
         $languageIds = Localizer::GetAllLanguages();
         foreach ($languageIds as $languageId) {
-        	
+
         	// Load the language file
         	$source =& new LocalizerLanguage($p_prefix, $languageId);
         	$source->loadFile(Localizer::GetMode());
@@ -410,13 +410,13 @@ class Localizer {
         		$source->moveString($key, $count);
         		$count++;
         	}
-        	
+
         	// Save the file
 			$source->saveFile(Localizer::GetMode());
-        }    	
+        }
     } // fn FixPositions
-    
-    
+
+
     /**
      * Go through all files matching $p_prefix in $p_directory and add entry(s).
      *
@@ -426,7 +426,7 @@ class Localizer {
      *
      * @return void
      */
-    function AddStringAtPosition($p_prefix, $p_position, $p_newKey) 
+    function AddStringAtPosition($p_prefix, $p_position, $p_newKey)
     {
         global $g_localizerConfig;
         $languages = Localizer::GetLanguages();
@@ -448,7 +448,7 @@ class Localizer {
 	        		$source->addString($p_newKey, $p_newKey, $p_position);
        			}
        			else {
-	        		$source->addString($p_newKey, '', $p_position);       				
+	        		$source->addString($p_newKey, '', $p_position);
        			}
         	}
 			$source->saveFile(Localizer::GetMode());
@@ -463,7 +463,7 @@ class Localizer {
      *		Can be a string or an array of strings.
      * @return void
      */
-    function RemoveString($p_prefix, $p_key) 
+    function RemoveString($p_prefix, $p_key)
     {
         $languages = Localizer::GetLanguages();
 
@@ -482,7 +482,7 @@ class Localizer {
         }
     } // fn RemoveString
 
-    
+
     /**
      * Go through all files matching $p_prefix and swap selected entrys.
      *
@@ -492,7 +492,7 @@ class Localizer {
      *
      * @return void
      */
-    function RepositionString($p_prefix, $p_pos1, $p_pos2) 
+    function RepositionString($p_prefix, $p_pos1, $p_pos2)
     {
         $languages = Localizer::GetLanguages();
         foreach ($languages as $language) {
@@ -503,7 +503,7 @@ class Localizer {
         }
     } // fn RepositionString
 
-    
+
     /**
      * Move a string from one file to another.
      *
@@ -511,26 +511,26 @@ class Localizer {
      * @param string $p_newPrefix
      * @param string $p_key
      */
-    function ChangeStringPrefix($p_oldPrefix, $p_newPrefix, $p_key) 
+    function ChangeStringPrefix($p_oldPrefix, $p_newPrefix, $p_key)
     {
         $languages = Localizer::GetLanguages();
         foreach ($languages as $language) {
 			$source =& new LocalizerLanguage($p_oldPrefix, $language->getLanguageId());
 			$source->loadFile(Localizer::GetMode());
 			$srcValue = $source->getValue($p_key);
-			
+
 			$target =& new LocalizerLanguage($p_newPrefix, $language->getLanguageId());
 			$target->loadFile(Localizer::GetMode());
-			
+
 			$target->addString($p_key, $srcValue);
 			$source->deleteString($p_key);
-			
+
 			$target->saveFile(Localizer::GetMode());
 			$source->saveFile(Localizer::GetMode());
-        }    	
+        }
     } // fn ChangeStringPrefix
-    
-    
+
+
    	/**
      * Get all the languages that the interface supports.
      *
@@ -543,7 +543,7 @@ class Localizer {
      * @return array
      *		An array of LanguageMetadata objects.
      */
-    function GetAllLanguages($p_mode = null) 
+    function GetAllLanguages($p_mode = null)
     {
 		if (is_null($p_mode)) {
 			$p_mode = Localizer::GetMode();
@@ -557,7 +557,7 @@ class Localizer {
 		}
         //$this->m_languageDefs =& $languages;
     	return $languages;
-    } // fn GetAllLanguages	
+    } // fn GetAllLanguages
 
 
     /**
@@ -567,7 +567,7 @@ class Localizer {
      * @param string $p_pattern
      * @return array
      */
-    function SearchFilesRecursive($p_startdir, $p_pattern) 
+    function SearchFilesRecursive($p_startdir, $p_pattern)
     {
         $structure = File_Find::mapTreeMultiple($p_startdir);
 
@@ -576,9 +576,9 @@ class Localizer {
         foreach ($structure as $dir => $file) {
         	// it's a directory
             if (is_array($file)) {
-                $filelist = array_merge($filelist, 
+                $filelist = array_merge($filelist,
                     Localizer::SearchFilesRecursive($p_startdir.'/'.$dir, $p_pattern));
-            } 
+            }
             else {
             	// it's a file
                 if (preg_match($p_pattern, $file)) {
@@ -595,23 +595,23 @@ class Localizer {
      * @param string $p_languageCode
      * @return void
      */
-    function CreateLanguageFiles($p_languageCode) 
+    function CreateLanguageFiles($p_languageCode)
     {
         global $g_localizerConfig;
-        
+
         // Make new directory
         if (!mkdir($g_localizerConfig['TRANSLATION_DIR']."/".$p_languageCode)) {
             return;
-        }        
+        }
     } // fn CreateLanguageFiles
 
-    
+
     /**
      * Delete language files for the given language.
      * @param string $p_languageCode
      * @return void
      */
-    function DeleteLanguageFiles($p_languageCode) 
+    function DeleteLanguageFiles($p_languageCode)
     {
         global $g_localizerConfig;
         $langDir = $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_languageCode;
@@ -627,6 +627,6 @@ class Localizer {
             }
         }
     } // fn DeleteLanguageFiles
-	    
+
 } // class Localizer
 ?>

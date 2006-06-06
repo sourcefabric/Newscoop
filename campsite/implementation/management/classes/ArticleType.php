@@ -95,7 +95,7 @@ class ArticleType {
 	function exists()
 	{
 		global $g_ado_db;
-		$queryStr = "SHOW TABLES LIKE '".$this->m_dbTableName."'"; 
+		$queryStr = "SHOW TABLES LIKE '".$this->m_dbTableName."'";
 		$result = $g_ado_db->GetOne($queryStr);
 		if ($result) {
 			return true;
@@ -146,7 +146,7 @@ class ArticleType {
 		}
         if ($success2) {
             $queryStr = "UPDATE Articles SET Type='". $p_newName ."' WHERE Type='". $this->m_name ."'";
-            $success3 = $g_ado_db->Execute($queryStr);       
+            $success3 = $g_ado_db->Execute($queryStr);
         }
 		if ($success3) {
 			$this->m_dbTableName = 'X'. $p_newName;
@@ -232,7 +232,7 @@ class ArticleType {
 
 		if ($changed) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('Type $1 updated: updated translation for ', $this->m_name);
+			$logtext = getGS('Article Type $1 translation updated', $this->m_name);
 			Log::Message($logtext, null, 143);
 			ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_name));
 		}
@@ -500,38 +500,38 @@ class ArticleType {
 	} // fn getNumArticles
 
     /**
-     * 
+     *
      * For the preview of merge; this grabs an array of the article numbers for calculating next, prev, and cur
-     * 
-     * @return array 
+     *
+     * @return array
      */
-    function getArticlesArray() 
+    function getArticlesArray()
     {
         global $g_ado_db;
         $sql = "SELECT NrArticle FROM ". $this->m_dbTableName;
-        $rows = $g_ado_db->GetAll($sql); 
+        $rows = $g_ado_db->GetAll($sql);
         $returnArray = array();
         foreach ($rows as $row) {
             $returnArray[] = $row['NrArticle'];
         }
-        return $returnArray;       
+        return $returnArray;
     }
-    
-    
+
+
     /**
      * Creates a preview table of PreviewNTablename, where N is a unique integer.
-     * 
+     *
      * @param string p_table
      * @return string a tablename
      */
-    function __getPreviewTableName($p_table) 
+    function __getPreviewTableName($p_table)
     {
         $res = 1;
         $append = 0;
-        while ($res) {    	            
-    		$append++; 
+        while ($res) {
+    		$append++;
             $sql = "DESC XPreview$append$p_table";
-    		$res = $g_ado_db->GetOne($sql);         
+    		$res = $g_ado_db->GetOne($sql);
         }
         $dest = 'Preview'. $append . $p_table;
         $sql = "CREATE TABLE X$dest LIKE X$p_table";
@@ -543,30 +543,30 @@ class ArticleType {
         foreach ($rows as $row) {
             $keys = array();
             $values = array();
-            foreach ($row as $k => $v) {	           
+            foreach ($row as $k => $v) {
                 $keys[] = $k;
-                if ($k == 'type_name') $v = $dest;     
+                if ($k == 'type_name') $v = $dest;
                 if (!is_numeric($v)) $values[] = "'$v'";
-                else $values[] = $v;        
+                else $values[] = $v;
             }
             $keysString = implode(',', $keys);
             $valuesString = implode(',', $values);
             $sql = "INSERT INTO ArticleTypeMetadata ($keysString) VALUES ($valuesString)";
             $res = $g_ado_db->Execute($sql);
             if (!$res) return 0;
-        }	      
-        return 'Preview'. $dest;          
+        }
+        return 'Preview'. $dest;
     } // fn __getPreviewTableName
-    
+
     function getPreviewArticleData() {
         global $g_ado_db;
         $sql = "SELECT * FROM ". $this->m_dbTableName ." LIMIT 1";
         $row = $g_ado_db->GetRow($sql);
         if (!$row) {
-            $destArticleData =& new ArticleData($this->m_name, Article::__generateArticleNumber(), 1);   
+            $destArticleData =& new ArticleData($this->m_name, Article::__generateArticleNumber(), 1);
         } else {
             $destArticleData =& new ArticleData($this->m_name, $row['NrArticle'], $row['IdLanguage']);
-        }        
+        }
         return $destArticleData;
     }
 	/**
@@ -575,20 +575,20 @@ class ArticleType {
      * and the values being the SOURCE fieldname (without Fs).
      * E.g.
      * $p_rules = array('a' => 'a', 'b' => 'title', 'd' => 'body');
-     * 
+     *
      * p_rules is verified elsewhere (see article_types/merge3.php).
-     *      
+     *
      * If we are doing an actual merge, all that happens is that we rename the Type in Articles
      * from SrcType to DestType and run the merge (p_rules) on the XSrcTable entries and move
      * them over to XDestType.  Merged articles have the same ArticleNumber as their originals.
      *
 	 * @param string p_src
-	 * @param string p_dest 
-	 * @param array p_rules 
+	 * @param string p_dest
+	 * @param array p_rules
 	 *
-	 * @return boolean 
+	 * @return boolean
 	 **/
-	function merge($p_src, $p_dest, $p_rules) 
+	function merge($p_src, $p_dest, $p_rules)
 	{
 		global $g_ado_db;
 	    // non-preview mode, the actual merge
@@ -597,7 +597,7 @@ class ArticleType {
         $sql = "UPDATE Articles SET Type='$p_dest' WHERE Type='$p_src'";
         $res = $g_ado_db->Execute($sql);
         if (!$res) return 0;
-	    
+
 	    $sql = "SELECT * FROM X$p_src";
 	    $rows = $g_ado_db->GetAll($sql);
 	    if (!count($rows)) return 0;
@@ -607,8 +607,8 @@ class ArticleType {
             foreach ($p_rules as $destC => $srcC) {
                 $fields[] = 'F'. $destC;
                 if ($srcC == 'NULL') $values[] = "''";
-                else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC]; 
-                else $values[] = "'". $row['F'. $srcC] ."'"; 
+                else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC];
+                else $values[] = "'". $row['F'. $srcC] ."'";
             }
             $fields[] = 'NrArticle';
             $values[] = $row['NrArticle'];
@@ -616,16 +616,16 @@ class ArticleType {
             $values[] = $row['IdLanguage'];
             $fieldsString = implode(',', $fields);
             $valuesString = implode(',', $values);
-            $sql = "INSERT INTO X$p_dest ($fieldsString) VALUES ($valuesString)";          
+            $sql = "INSERT INTO X$p_dest ($fieldsString) VALUES ($valuesString)";
 		    $res = $g_ado_db->Execute($sql);
 		    if (!$res)
-		      return 0;   
-	    }   
-	    return 1;       
-    
+		      return 0;
+	    }
+	    return 1;
 
-	} // fn merge 
-	
+
+	} // fn merge
+
 } // class ArticleType
 
 ?>

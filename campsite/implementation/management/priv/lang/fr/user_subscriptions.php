@@ -1,4 +1,5 @@
 <?php
+regGS("Please select one or more languages.", "");
 regGS("Regardless of the language", "Indépendamment de la langue ");
 regGS("Individual languages", "langues individuelles ");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publication<BR><SMALL>(cliquer ici pour voir des sections)</SMALL>");

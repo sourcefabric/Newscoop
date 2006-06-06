@@ -116,7 +116,7 @@ if (count($comments) <= 0) {
 
                 <?php if ($comment->getStatus() == PHORUM_STATUS_APPROVED) { ?>
                 <tr>
-                    <td colspan="2" align="left" valign="top" nowrap><a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "comments/reply.php", "", "&f_comment_id=".$comment->getMessageId()); ?>"><?php putGS("Reply to this comment"); ?></a></td>
+                    <td colspan="2" align="left" valign="top" nowrap><a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "comments/reply.php", "", "&f_comment_id=".$comment->getMessageId()); ?>"><?php putGS("Reply to comment"); ?></a></td>
                 </tr>
                 <?php } ?>
 
