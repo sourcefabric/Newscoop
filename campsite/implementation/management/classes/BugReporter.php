@@ -54,8 +54,8 @@ class BugReporter
      * @param string $p_time The date and time.  If left blank, it is the current date and time.
      * @param mixed $p_backtrace The stack trace.  This can be an array or string.
      */
-    function BugReporter ($p_number, $p_string, $p_file, $p_line,
-                          $p_software, $p_version, $p_time = "", $p_backtrace = "")
+    function BugReporter($p_number, $p_string, $p_file, $p_line,
+                         $p_software, $p_version, $p_time = "", $p_backtrace = "")
     {
         require_once "HTTP/Client.php";
 
@@ -113,7 +113,7 @@ class BugReporter
     } // fn setServer
 
 
-    /** 
+    /**
      * Returns the current developers' server.
      *
      * @return string
@@ -147,23 +147,27 @@ class BugReporter
         $this->__responseBody = $response['body'];
         $this->__responseCode = $code;
 
-        if (preg_match ("/pong/", $this->__responseBody) && ($code == 200))
+        if (preg_match ("/pong/", $this->__responseBody) && ($code == 200)) {
             return true;
-        else return false;
-
+        } else {
+        	return false;
+        }
     } // fn pingServer
 
 
-    /** 
-     * When pinging status is is set to false, pingServer() returns 
+    /**
+     * When pinging status is is set to false, pingServer() returns
      * true without actually pinging the server.
      *
      * @return void
      */
     function setPingStatus ($p_pingingStatus)
     {
-        if (!is_bool($p_pingingStatus)) trigger_error ($this->invalidParam);
-        else $this->m_disablePing = !($p_pingingStatus);
+        if (!is_bool($p_pingingStatus)) {
+        	trigger_error ($this->invalidParam);
+        } else {
+        	$this->m_disablePing = !($p_pingingStatus);
+        }
     } // fn setPingStatus
 
 
@@ -201,12 +205,14 @@ class BugReporter
         $this->__responseBody = $response['body'];
         $this->__responseCode = $code;
 
-        if ($code != 200) return false;
-
-        // --- Did we get an "accepted"?
-        elseif (preg_match ("/\baccepted\b/", $this->__responseBody)) return true;
-        else return false;
-
+        if ($code != 200) {
+        	return false;
+        } elseif (preg_match ("/\baccepted\b/", $this->__responseBody)) {
+        	// --- Did we get an "accepted"?
+        	return true;
+        } else {
+        	return false;
+        }
     } // fn sendToServer
 
 
@@ -218,8 +224,9 @@ class BugReporter
      */
     function getFileWithoutPath()
     {
-        if (preg_match ("/\/$/", $this->m_file))
+        if (preg_match ("/\/$/", $this->m_file)) {
             trigger_error ($this->invalidParam);
+        }
         return preg_replace ("/.*\/([^\/]*)/", "$1", $this->m_file);
     } // fn getFileWithoutPath
 
@@ -227,7 +234,7 @@ class BugReporter
     /**
      * Get the Error ID Code
      *
-     * @return string the file's ID-code.   
+     * @return string the file's ID-code.
      */
     function getId()
     {
@@ -317,7 +324,7 @@ class BugReporter
 
 
     /**
-     * Get the line number the error occurred in.  
+     * Get the line number the error occurred in.
      *
      * @return int The line number the error occurred in.
      */
@@ -334,7 +341,9 @@ class BugReporter
      */
     function getEmail()
     {
-        if (!isset($this->m_email)) $this->m_email = "";
+        if (!isset($this->m_email)) {
+        	$this->m_email = "";
+        }
         return $this->m_email;
     } // fn getEmail
 
@@ -346,7 +355,9 @@ class BugReporter
      */
     function getDescription()
     {
-        if (!isset($this->m_description)) $this->m_description = "";
+        if (!isset($this->m_description)) {
+        	$this->m_description = "";
+        }
         return $this->m_description;
     } // fn getDescription
 
@@ -479,12 +490,12 @@ class BugReporter
      */
     function __convertBacktraceArrayToString($p_backtrace)
     {
-        if (is_string($p_backtrace)){
+        if (is_string($p_backtrace)) {
             return $p_backtrace;
-        } else if (is_array ($p_backtrace)){
+        } elseif (is_array ($p_backtrace)) {
             $backtrace = "";
 
-            for ($aa=0; $aa<sizeof($p_backtrace); $aa++) {
+            for ($aa=0; $aa < sizeof($p_backtrace); $aa++) {
                 $backtraceCurrentLine = "";
 
                 // --- Get the Current the Backtrace line $aa (cbt) ---
@@ -505,7 +516,7 @@ class BugReporter
             return $backtrace;
         } else trigger_error ($this->invalidParam);
     } // fn __convertBacktraceArrayToString
-}
 
+} // class Bugreporter
 
 ?>
