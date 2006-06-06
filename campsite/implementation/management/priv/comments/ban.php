@@ -31,7 +31,6 @@ if (!Input::IsValid()) {
 
 // load the comment
 $comment =& new Phorum_message($f_comment_id);
-$phorumUser =& new Phorum_user($comment->getUserId());
 $bans = Phorum_ban_item::IsPostBanned($comment);
 
 ?>
