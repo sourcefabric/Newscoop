@@ -2,13 +2,14 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once "HTTP/Client.php";
 require_once ($_SERVER['DOCUMENT_ROOT'] . "/classes/BugReporter.php");
+load_common_include_files ("bug_reporting");
 
 // **Display the form, and then post the error to server**
 
 global $Campsite, $ADMIN_DIR, $g_documentRoot, $g_bugReporterDefaultServer;
 
 $server = $g_bugReporterDefaultServer;
-// $server = "http://localhost/trac/autotrac";
+// $server = "http://localhost/trac/autotrac"; 
 
 import_request_variables('p', "f_"); 
 
