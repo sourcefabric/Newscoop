@@ -91,6 +91,7 @@ CContext::CContext()
 	adduser = modifyuser = login = search = search_and = false;
 	adduser_res = modifyuser_res = login_res = search_res = m_nSubmitArticleCommentResult = -1;
 	search_level = 0;
+	m_bMultiplePublicationSearch = false;
 	m_pcoURL = NULL;
 	m_pcoDefURL = NULL;
 	ResetKwdIt();
@@ -161,6 +162,7 @@ int CContext::operator ==(const CContext& c) const
 			&& search_res == c.search_res
 			&& search_and == c.search_and
 			&& search_level == c.search_level
+			&& m_bMultiplePublicationSearch == c.m_bMultiplePublicationSearch
 			&& start_subtitle == c.start_subtitle
 			&& default_start_subtitle == c.default_start_subtitle
 			&& all_subtitles == c.all_subtitles
@@ -249,6 +251,7 @@ const CContext& CContext::operator =(const CContext& s)
 	search_res = s.search_res;
 	search_and = s.search_and;
 	search_level = s.search_level;
+	m_bMultiplePublicationSearch = s.m_bMultiplePublicationSearch;
 	start_subtitle = s.start_subtitle;
 	default_start_subtitle = s.default_start_subtitle;
 	all_subtitles = s.all_subtitles;

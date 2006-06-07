@@ -133,9 +133,33 @@ bool CArticleComment::IsUserBlocked(id_type p_nUserId)
 }
 
 
-bool CArticleComment::Moderated(id_type p_nPublicationId)
+bool CArticleComment::PublicModerated(id_type p_nPublicationId)
 {
-	return false;
+	stringstream buf;
+	buf << "select comments_public_moderated from Publications where Id = '"
+			<< p_nPublicationId << "'";
+	CMYSQL_RES coQRes;
+	MYSQL_ROW row = QueryFetchRow(MYSQLConnection(), buf.str(), coQRes);
+	if (row == NULL || row[0] == NULL)
+	{
+		return false;
+	}
+	return strtol(row[0], 0, 10) != 0;
+}
+
+
+bool CArticleComment::SubscribersModerated(id_type p_nPublicationId)
+{
+	stringstream buf;
+	buf << "select comments_subscribers_moderated from Publications where Id = '"
+			<< p_nPublicationId << "'";
+	CMYSQL_RES coQRes;
+	MYSQL_ROW row = QueryFetchRow(MYSQLConnection(), buf.str(), coQRes);
+	if (row == NULL || row[0] == NULL)
+	{
+		return false;
+	}
+	return strtol(row[0], 0, 10) != 0;
 }
 
 

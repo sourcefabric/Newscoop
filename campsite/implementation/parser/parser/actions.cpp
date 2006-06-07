@@ -295,12 +295,12 @@ string CAction::dateFormat(const char* p_pchDate, const char* p_pchFormat, id_ty
 	int nParams = 0;
 	for (; p_pchFormat[nIndex] != 0; nIndex++)
 	{
+		if (p_pchFormat[nIndex] == 0)
+			break;
 		if (p_pchFormat[nIndex] != '%')
 			continue;
 		bNeedFormat = true;
 		nIndex++;
-		if (p_pchFormat[nIndex] == 0)
-			break;
 		if (p_pchFormat[nIndex] == 'w')
 		{
 			coQuery << (nParams > 0 ? ", " : "") << nWDay;
@@ -315,9 +315,9 @@ string CAction::dateFormat(const char* p_pchDate, const char* p_pchFormat, id_ty
 		{
 			if (nParams > 0)
 				coQuery << ", ";
-			coQuery << "DATE_FORMAT('" << pchDate << "', '";
-			coQuery.write(p_pchFormat + nStartFormat, nFormatLen);
-			coQuery << "')";
+			char* pchBuf = SQLEscapeString(p_pchFormat + nStartFormat, nFormatLen);
+			coQuery << "DATE_FORMAT('" << pchDate << "', '" << pchBuf << "')";
+			delete []pchBuf;
 			nParams++;
 		}
 		nStartFormat = nIndex + 1;
@@ -335,9 +335,9 @@ string CAction::dateFormat(const char* p_pchDate, const char* p_pchFormat, id_ty
 	{
 		if (nParams > 0)
 			coQuery << ", ";
-		coQuery << "DATE_FORMAT('" << pchDate << "', '";
-		coQuery.write(p_pchFormat + nStartFormat, nIndex - nStartFormat);
-		coQuery << "')";
+		char* pchBuf = SQLEscapeString(p_pchFormat + nStartFormat, nIndex - nStartFormat);
+		coQuery << "DATE_FORMAT('" << pchDate << "', '" << pchBuf << "')";
+		delete []pchBuf;
 		nParams++;
 	}
 	coQuery << " from Languages where Id = " << p_nLanguageId
@@ -868,7 +868,10 @@ int CActList::WriteSrcParam(string& s, CContext& c, string& table)
 		return -1;
 	w += ")";
 	stringstream buf;
-	CheckFor("Articles.IdPublication", c.Publication(), buf, w);
+	if (!c.MultiplePublicationSearch())
+	{
+		CheckFor("Articles.IdPublication", c.Publication(), buf, w);
+	}
 	if (c.SearchLevel() >= 1)
 		CheckFor("Articles.NrIssue", c.Issue(), buf, w);
 	if (c.SearchLevel() >= 2)
@@ -2319,8 +2322,10 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 			run = c.URL()->getValue("previewComment") != "" ? 0 : 1;
 		if (case_comp(param.attribute(), "Rejected") == 0 && c.SubmitArticleCommentEvent())
 			run = c.SubmitArticleCommentResult() == ACERR_REJECTED ? 0 : 1;
-		if (case_comp(param.attribute(), "Moderated") == 0)
-			run = CArticleComment::Moderated(c.Publication()) ? 0 : 1;
+		if (case_comp(param.attribute(), "PublicModerated") == 0)
+			run = CArticleComment::PublicModerated(c.Publication()) ? 0 : 1;
+		if (case_comp(param.attribute(), "SubscribersModerated") == 0)
+			run = CArticleComment::SubscribersModerated(c.Publication()) ? 0 : 1;
 		if ((run == 0 && !m_bNegated) || (run == 1 && m_bNegated))
 			runActions(block, c, fs);
 		else if ((run == 1 && !m_bNegated) || (run == 0 && m_bNegated))
@@ -3050,30 +3055,31 @@ int CActEdit::takeAction(CContext& c, sockstream& fs)
 					<< (len > 50 ? 50 : len) << "\" maxlength=\"" << len;
 			if (attrval != "")
 				fs << "\" value=\"" << encodeHTML(attrval, c.EncodeHTML());
-			fs << "\">";
+			fs << "\" " << m_coHTML << ">";
 			return RES_OK;
 		}
 		if (field == "Password" || field == "PasswordAgain")
 		{
 			fs << "<input type=\"password\" name=\"User" << field
-					<< "\" size=\"32\" maxlength=\"32\">";
+					<< "\" size=\"32\" maxlength=\"32\" " << m_coHTML << ">";
 			return RES_OK;
 		}
-		fs << "<textarea name=\"User" << field << "\" cols=\"40\" rows=\"4\"></textarea>";
+		fs << "<textarea name=\"User" << field << "\" cols=\"40\" rows=\"4\" "
+				<< m_coHTML << "></textarea>";
 	}
 	if (modifier == CMS_ST_SUBSCRIPTION)
 	{
 		fs << "<input type=\"hidden\" name=\"" << P_TX_SUBS << c.Section() << "\" value=\""
-				<< c.SubsTimeUnits() << "\">" << c.SubsTimeUnits();
+				<< c.SubsTimeUnits() << "\" " << m_coHTML << ">" << c.SubsTimeUnits();
 	}
 	if (modifier == CMS_ST_LOGIN)
 	{
 		if (field == "Password")
 			fs << "<input type=\"password\" name=\"Login" << field
-					<< "\" maxlength=\"32\" size=\"10\">";
+					<< "\" maxlength=\"32\" size=\"10\" " << m_coHTML << ">";
 		else
 			fs << "<input type=\"text\" name=\"Login" << field
-					<< "\" maxlength=\"32\" size=\"10\">";
+					<< "\" maxlength=\"32\" size=\"10\" " << m_coHTML << ">";
 	}
 	if (modifier == CMS_ST_SEARCH)
 	{
@@ -3081,7 +3087,8 @@ int CActEdit::takeAction(CContext& c, sockstream& fs)
 		{
 			fs << "<input type=\"text\" name=\"Search" << field << "\" maxlength=\"255\" "
 					"size=\"" << size << "\" value=\""
-					<< encodeHTML(c.StrKeywords(), c.EncodeHTML()) << "\">";
+					<< encodeHTML(c.StrKeywords(), c.EncodeHTML())
+					<< "\" " << m_coHTML << ">";
 		}
 	}
 	if (modifier == CMS_ST_ARTICLECOMMENT && c.ArticleCommentEnabled())
@@ -3089,14 +3096,17 @@ int CActEdit::takeAction(CContext& c, sockstream& fs)
 		string coFieldName = string("Comment") + field;
 		if (field == "Content")
 		{
-			fs << "<textarea name=\"" << coFieldName << "\" cols=\"40\" rows=\"4\">"
-					<< encodeHTML(c.URL()->getValue(coFieldName), c.EncodeHTML()) << "</textarea>";
+			fs << "<textarea name=\"" << coFieldName << "\" cols=\"40\" rows=\"4\" "
+					<< m_coHTML << ">"
+					<< encodeHTML(c.URL()->getValue(coFieldName), c.EncodeHTML())
+					<< "</textarea>";
 		}
 		else
 		{
 			fs << "<input type=\"text\" name=\"" << coFieldName << "\" maxlength=\"255\" "
 					"size=\"" << size << "\" value=\""
-					<< encodeHTML(c.URL()->getValue(coFieldName), c.EncodeHTML()) << "\">";
+					<< encodeHTML(c.URL()->getValue(coFieldName), c.EncodeHTML())
+					<< "\" " << m_coHTML << ">";
 		}
 	}
 	return RES_OK;

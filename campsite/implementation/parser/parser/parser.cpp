@@ -1869,7 +1869,7 @@ inline int CParser::HSubscription(CActionList& al, int level, ulint sublevel)
 //		ulint sublevel - current sublevel
 inline int CParser::HEdit(CActionList& al, int level, ulint sublevel)
 {
-	string size;
+	string size, coHTML;
 	RequireAtom(l);
 	CheckForStatement(l, EditStatements(sublevel), lex.prevLine(), lex.prevColumn());
 	st = CLex::findSt(l->atom()->identifier());
@@ -1909,15 +1909,24 @@ inline int CParser::HEdit(CActionList& al, int level, ulint sublevel)
 	if (l->res() != CMS_LEX_END_STATEMENT)
 	{
 		CheckForAtom(l);
-		if (l->dataType() != CMS_DT_INTEGER)
+		if (l->dataType() != CMS_DT_INTEGER
+				  && case_comp(l->atom()->identifier(), "html") != 0)
 		{
 			SetPError(parse_err, PERR_DATA_TYPE, MODE_PARSE, "integer",
 					  lex.prevLine(), lex.prevColumn());
 			return PERR_INVALID_VALUE;
 		}
-		size = l->atom()->identifier();
+		if (l->dataType() == CMS_DT_INTEGER)
+		{
+			size = l->atom()->identifier();
+		}
+		else
+		{
+			RequireAtom(l);
+			coHTML = l->atom()->identifier();
+		}
 	}
-	CActEdit* edit = new CActEdit(st->id(), attr->attribute(), atol(size.c_str()));
+	CActEdit* edit = new CActEdit(st->id(), attr->attribute(), atol(size.c_str()), coHTML);
 	al.insert(al.end(), edit);
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);

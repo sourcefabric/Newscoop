@@ -250,6 +250,7 @@ private:
 	bool m_bLexemStarted;					// true if reading lexem
 	bool m_bQuotedLexem; 					// true if m_bLexemStarted is true and the new
 											// lexem is quoted
+	bool m_bEscapedCharacter;				// true if the current caracter was escaped
 	bool m_bIsEOF;							// true if end of text buffer
 	int m_nHtmlCodeLevel;
 	const char* m_pchTextStart;				// html text start

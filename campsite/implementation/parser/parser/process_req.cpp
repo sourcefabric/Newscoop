@@ -1045,6 +1045,10 @@ int Search(CContext& c, MYSQL* pSql)
 	level = level > 2 ? 2 : level;
 	c.SetSearchLevel(level);
 
+	c.SetMultiplePublicationSearch(c.URL()->getValue("MultiplePublicationSearch") == "true");
+	c.URL()->deleteParameter("MultiplePublicationSearch");
+	c.DefURL()->deleteParameter("MultiplePublicationSearch");
+
 	return 0;
 }
 

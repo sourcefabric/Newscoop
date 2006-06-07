@@ -184,6 +184,7 @@ private:
 	lint search_res;						// search result
 	bool search_and;						// true if search for all keywords
 	int search_level;						// search level: 0 - all, 1 - issue, 2 - section
+	bool m_bMultiplePublicationSearch;		// if true search through multiple publications
 	String2StringList subtitles;			// current article body field subtitles/field
 	String2StringListIt subtitles_it;		// subtitles iterator: current subtitle/field
 	String2Int start_subtitle;				// start subtitle/field to print
@@ -197,8 +198,8 @@ private:
 	id_type m_nAttachment;					// article attachment identifier
 	string m_coAttachmentExtension;			// article attachment extension
 	mutable bool m_bArticleCommentEnabled;	// true if add comment event occurred
-	mutable bool m_bArticleCommentEnabledValid; // true if the m_bArticleCommentEnabled member was computed
-											// for the current context
+	mutable bool m_bArticleCommentEnabledValid; // true if the m_bArticleCommentEnabled member
+											// was computed for the current context
 	CArticleComment* m_pcoArticleComment;	// article comment identifier
 	id_type m_nSubmitArticleCommentResult;	// result of the add comment event
 	CURL* m_pcoURL;
@@ -418,6 +419,10 @@ public:
 	void SetSearchLevel(int sl)
 	{
 		search_level = sl;
+	}
+	void SetMultiplePublicationSearch(bool p_bMultiplePublicationSearch)
+	{
+		m_bMultiplePublicationSearch = p_bMultiplePublicationSearch;
 	}
 	void AppendSubtitle(const string&, const string& = "");
 	void ResetSubtitles(const string& = "");
@@ -689,9 +694,13 @@ public:
 	{
 		return search_and;
 	}
-	lint SearchLevel()
+	lint SearchLevel() const
 	{
 		return search_level;
+	}
+	bool MultiplePublicationSearch() const
+	{
+		return m_bMultiplePublicationSearch;
 	}
 	int SubtitlesNumber(const string& = "");
 	const string& NextSubtitle(const string& = "");
@@ -705,11 +714,11 @@ public:
 	{
 		return fields;
 	}
-	const string& CurrentField()
+	const string& CurrentField() const
 	{
 		return current_field;
 	}
-	const string& CurrentArtType()
+	const string& CurrentArtType() const
 	{
 		return current_art_type;
 	}

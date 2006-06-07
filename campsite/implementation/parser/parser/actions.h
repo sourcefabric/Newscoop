@@ -1046,11 +1046,12 @@ protected:
 	int modifier;				// edit modifier
 	string field;				// field to edit
 	int size;					// field size
+	string m_coHTML;			// extra HTML formatting
 
 public:
 	// constructor
-	CActEdit(int m, const string& f, int s) throw(InvalidModifier)
-		: modifier(m), field(f)
+	CActEdit(int m, const string& f, int s, const string& p_rcoHTML) throw(InvalidModifier)
+		: modifier(m), field(f), size(s), m_coHTML(p_rcoHTML)
 	{
 		if (!s_coModifiers.validModifier(m))
 			throw InvalidModifier();

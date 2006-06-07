@@ -109,12 +109,20 @@ class CArticleComment
 		static bool IsUserBlocked(id_type p_nUserId);
 
 		/**
-		 * Moderated(): returns true if the article comments are moderated for the given
-		 * publication
+		 * PublicModerated(): returns true if the article comments are moderated
+		 * for the public in the given publication
 		 * @param p_nPublicationId
 		 * @return bool
 		 **/
-		static bool Moderated(id_type p_nPublicationId);
+		static bool PublicModerated(id_type p_nPublicationId);
+
+		/**
+		 * SubscribersModerated(): returns true if the article comments are moderated
+		 * for the subscribers in the given publication
+		 * @param p_nPublicationId
+		 * @return bool
+		 **/
+		static bool SubscribersModerated(id_type p_nPublicationId);
 
 		/**
 		 * ArticleCommentCount(): returns the number of comments for the given article

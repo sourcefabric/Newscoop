@@ -900,7 +900,8 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("Submitted"));
 	pcoCtx->insertAttr(new CAttribute("SubmitError"));
 	pcoCtx->insertAttr(new CAttribute("Preview"));
-	pcoCtx->insertAttr(new CAttribute("Moderated"));
+	pcoCtx->insertAttr(new CAttribute("PublicModerated"));
+	pcoCtx->insertAttr(new CAttribute("SubscribersModerated"));
 	pcoCtx->insertAttr(new CAttribute("Enabled"));
 	pcoCtx->insertAttr(new CAttribute("Rejected"));
 	pcoSt->insertCtx(pcoCtx);
@@ -932,7 +933,7 @@ CLex::CLex(const char* i, ulint bl)
 	m_nState = 1;
 	m_chChar = 0;
 	m_nTempIndex = 0;
-	m_bLexemStarted = m_bIsEOF = false;
+	m_bLexemStarted = m_bIsEOF = m_bQuotedLexem = m_bEscapedCharacter = false;
 	m_nHtmlCodeLevel = 0;
 }
 
@@ -979,7 +980,7 @@ const CLex& CLex::operator =(const CLex& s)
 	m_nState = 1;
 	m_chChar = 0;
 	m_nTempIndex = 0;
-	m_bLexemStarted = m_bIsEOF = m_bQuotedLexem = false;
+	m_bLexemStarted = m_bIsEOF = m_bQuotedLexem = m_bEscapedCharacter = false;
 	m_pchTextStart = 0;
 	return *this;
 }
@@ -1041,14 +1042,18 @@ const CLexem* CLex::getLexem()
 				m_nColumn = 0;
 			}
 			else
+			{
 				m_nColumn += m_chChar == '\t' ? 8 : 1;
 				// increment column (by 8 if character is tab)
+			}
 		}
 		switch (m_nState)
 		{
 		case 1: // start state; read html text
 			if (m_chChar == '>')
+			{
 				m_nHtmlCodeLevel--;
+			}
 			if (m_chChar == s_pchCTokenStart[0] || m_nTempIndex == 1)
 			{
 				m_nTempIndex = 1;
@@ -1122,7 +1127,8 @@ const CLexem* CLex::getLexem()
 			}
 			else if (m_bQuotedLexem)		// lexem (atom) is delimited by quotes
 			{
-				if ((m_chChar < ' ' && m_chChar >= 0) || m_chChar == s_chCTokenEnd)
+				if (((m_chChar >= 0 && m_chChar < ' ') || m_chChar == s_chCTokenEnd)
+								  && !m_bEscapedCharacter)
 				{
 					m_bLexemStarted = false;
 					m_bQuotedLexem = false;
@@ -1131,14 +1137,19 @@ const CLexem* CLex::getLexem()
 					m_coLexem.setRes(CMS_ERR_END_QUOTE_MISSING);
 					return &m_coLexem;
 				}
-				else if (m_chChar == '\"')
+				else if (m_chChar == '\"' && !m_bEscapedCharacter)
 				{
 					FoundLexem = true;
 					m_bLexemStarted = false;
 				}
+				else if (m_chChar == '\\' && !m_bEscapedCharacter)
+				{
+					m_bEscapedCharacter = true;
+				}
 				else
 				{
-					if (!AppendOnAtom())
+					m_bEscapedCharacter = false;
+					if ((m_chChar < 0 || m_chChar >= ' ') && !AppendOnAtom())
 					{
 						m_bLexemStarted = false;
 						return IdentifyAtom();
@@ -1147,7 +1158,8 @@ const CLexem* CLex::getLexem()
 			}
 			else				// lexem is not delimited by quotes
 			{
-				if ((m_chChar <= ' ' && m_chChar >= 0) || m_chChar == s_chCTokenEnd)
+				if (((m_chChar >= 0 && m_chChar <= ' ') || m_chChar == s_chCTokenEnd)
+								  && !m_bEscapedCharacter)
 				{	// separator or end token
 					FoundLexem = true;
 					m_bLexemStarted = false;
@@ -1157,16 +1169,21 @@ const CLexem* CLex::getLexem()
 						return IdentifyAtom();
 					}
 				}
-				else if (m_chChar == '\"')
+				else if (m_chChar == '\"' && !m_bEscapedCharacter)
 				{	// found another lexem delimited by quotes
 					FoundLexem = true;
 					m_bLexemStarted = true;
 					m_bQuotedLexem = true;
 					return IdentifyAtom();
 				}
+				else if (m_chChar == '\\' && !m_bEscapedCharacter)
+				{
+					m_bEscapedCharacter = true;
+				}
 				else
 				{	// append character to atom identifier
-					if (!AppendOnAtom())
+					m_bEscapedCharacter = false;
+					if ((m_chChar < 0 || m_chChar >= ' ') && !AppendOnAtom())
 					{
 						m_bLexemStarted = false;
 						return IdentifyAtom();
