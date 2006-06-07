@@ -1,17 +1,10 @@
 <?PHP
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_images");
+camp_load_translation_strings("article_images");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/topics/topic_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Topic.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission("AttachTopicToArticle")) {
+if (!$g_user->hasPermission("AttachTopicToArticle")) {
 	$errorStr = getGS('You do not have the right to attach topics to articles.');
 	camp_html_display_error($errorStr, null, true);
 	exit;

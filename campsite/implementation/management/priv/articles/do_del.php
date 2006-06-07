@@ -2,12 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission('DeleteArticle')) {
+if (!$g_user->hasPermission('DeleteArticle')) {
 	camp_html_display_error(getGS("You do not have the right to delete articles."));
 	exit;
 }

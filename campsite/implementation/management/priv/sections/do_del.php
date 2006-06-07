@@ -3,12 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Article.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Subscription.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission('DeleteSection')) {
+if (!$g_user->hasPermission('DeleteSection')) {
 	camp_html_display_error(getGS('You do not have the right to delete sections.'));
 	exit;
 }
@@ -18,7 +13,7 @@ $Language = Input::Get('Language', 'int', 0);
 $Section = Input::Get('Section', 'int', 0);
 $f_deleteSubscriptions = Input::Get('f_delete_subscriptions', 'string', '', true);
 $f_deleteArticles = Input::Get('f_delete_articles', 'string', '', true);
-$f_deleteArticles = ($User->hasPermission('DeleteArticle') && ($f_deleteArticles != ''));
+$f_deleteArticles = ($g_user->hasPermission('DeleteArticle') && ($f_deleteArticles != ''));
 
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);

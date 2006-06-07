@@ -2,12 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Template.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission('ManageSection')) {
+if (!$g_user->hasPermission('ManageSection')) {
 	camp_html_display_error(getGS("You do not have the right to modify sections."));
 	exit;
 }

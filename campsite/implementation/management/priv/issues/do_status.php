@@ -1,13 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 
-// Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
 $Pub = Input::Get('Pub', 'int');
 $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
@@ -17,7 +10,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-if (!$User->hasPermission('ManageIssue') || !$User->hasPermission('Publish')) {
+if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('Publish')) {
 	$BackLink ="/$ADMIN/issues/?Pub=$Pub&Language=$Language";
 	camp_html_display_error(getGS('You do not have the right to change issues.'));
 	exit;

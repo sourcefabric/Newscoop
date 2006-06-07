@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageTempl') && !$User->hasPermission('DeleteTempl')) {
+if (!$g_user->hasPermission('ManageTempl') && !$g_user->hasPermission('DeleteTempl')) {
 	header("Location: /$ADMIN/");
 	exit;
 }
@@ -45,7 +39,7 @@ echo camp_html_breadcrumbs($crumbs);
 		<?php
 	}
 
-	if ($User->hasPermission("ManageTempl")) { ?>
+	if ($g_user->hasPermission("ManageTempl")) { ?>
 		<TD>
 			<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 			<TR>

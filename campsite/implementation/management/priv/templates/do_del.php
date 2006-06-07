@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('DeleteTempl')) {
+if (!$g_user->hasPermission('DeleteTempl')) {
 	camp_html_display_error(getGS("You do not have the right to delete templates."));
 	exit;
 }
@@ -37,7 +31,7 @@ if ($What == '0') {
 		$deleted = unlink($fileFullPath);
 		if ($deleted) {
 			$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($dir));
-			Log::Message($logtext, $User->getUserName(), 112);
+			Log::Message($logtext, $g_user->getUserName(), 112);
 			Template::UpdateStatus();
 		}
 		else {
@@ -59,10 +53,10 @@ $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
 $crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
-if ($What == 1) { 
-	$crumbs[] = array(getGS("Deleting template"), ""); 
-} else { 
-	$crumbs[] = array(getGS("Deleting folder"), ""); 
+if ($What == 1) {
+	$crumbs[] = array(getGS("Deleting template"), "");
+} else {
+	$crumbs[] = array(getGS("Deleting folder"), "");
 }
 echo camp_html_breadcrumbs($crumbs);
 
@@ -79,7 +73,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
-		<?php 
+		<?php
 			foreach ($errorMsgs as $errorMsg) { ?>
 				<li><?php p($errorMsg); ?></li>
 				<?php

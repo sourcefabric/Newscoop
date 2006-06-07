@@ -2,12 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Template.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission('DeleteSection')) {
+if (!$g_user->hasPermission('DeleteSection')) {
 	camp_html_display_error(getGS('You do not have the right to delete sections.'));
 	exit;
 }
@@ -43,7 +38,7 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 		<INPUT TYPE="checkbox" checked NAME="f_delete_subscriptions" class="input_checkbox"> <?php  putGS("Delete section from all subscriptions."); ?>
 		</TD>
 	</TR>
-	<?php if ($User->hasPermission('DeleteArticle')) { ?>
+	<?php if ($g_user->hasPermission('DeleteArticle')) { ?>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Articles"); ?>:</TD>
 		<TD>

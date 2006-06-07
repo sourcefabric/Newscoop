@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
+global $ADMIN_DIR;
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 
 camp_set_error_handler("camp_report_bug");
 
@@ -42,20 +44,24 @@ if (($extension_start = strrpos($call_script, '.')) !== false) {
 	$extension = strtolower(substr($call_script, $extension_start));
 }
 
+global $g_user;
+
 if (($extension == '.php') || ($extension == '')) {
 	header("Content-type: text/html; charset=UTF-8");
 
 	// If they arent trying to login in...
 	if (($call_script != '/login.php') && ($call_script != '/do_login.php')) {
 		// Check if the user is logged in already
-		require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-		list($access, $User) = check_basic_access($_REQUEST, false);
+		list($access, $g_user) = camp_check_admin_access($_REQUEST);
 		if (!$access) {
 			// If not logged in, show the login screen.
 			header("Location: /$ADMIN/login.php");
 			return;
 		}
 	}
+
+	// Load common translation strings
+	camp_load_translation_strings('globals');
 
 	// If its not a PHP file, assume its a directory.
    	if ($extension != '.php') {
@@ -75,6 +81,7 @@ if (($extension == '.php') || ($extension == '')) {
 	}
 
 	// Clean up the global namespace before we call the script
+	unset($access);
 	unset($extension);
 	unset($extension_start);
 	unset($question_mark);

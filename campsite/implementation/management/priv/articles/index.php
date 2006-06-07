@@ -6,13 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticleImage.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticleTopic.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/SimplePager.php');
-camp_load_language("api");
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
+camp_load_translation_strings("api");
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
@@ -105,7 +99,7 @@ camp_html_content_top(getGS('Article List'), $topArray);
 <TR>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_publication_id); ?>&Issue=<?php p($f_issue_number); ?>&Language=<?php p($f_language_id); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_publication_id); ?>&Issue=<?php p($f_issue_number); ?>&Language=<?php p($f_language_id); ?>"><B><?php  putGS("Section List"); ?></B></A></TD>
-	<?php if ($User->hasPermission('AddArticle')) { ?>
+	<?php if ($g_user->hasPermission('AddArticle')) { ?>
 	<TD style="padding-left: 20px;"><A HREF="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 	<TD><A HREF="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><B><?php  putGS("Add new article"); ?></B></A></TD>
 	<?php  } ?>
@@ -299,19 +293,19 @@ function checkboxClick(theCheckbox, theRowNum)
 				<OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
 				<OPTION value="">-----------------------</OPTION>
 
-				<?php if ($User->hasPermission('Publish')) { ?>
+				<?php if ($g_user->hasPermission('Publish')) { ?>
 				<OPTION value="workflow_publish"><?php putGS("Status: Publish"); ?></OPTION>
 				<?php } ?>
 
-				<?php if ($User->hasPermission('ChangeArticle')) { ?>
+				<?php if ($g_user->hasPermission('ChangeArticle')) { ?>
 				<OPTION value="workflow_submit"><?php putGS("Status: Submit"); ?></OPTION>
 				<?php } ?>
 
-				<?php if ($User->hasPermission('Publish')) { ?>
+				<?php if ($g_user->hasPermission('Publish')) { ?>
 				<OPTION value="workflow_new"><?php putGS("Status: Set New"); ?></OPTION>
 				<?php } ?>
 
-				<?php if ($User->hasPermission('ChangeArticle')) { ?>
+				<?php if ($g_user->hasPermission('ChangeArticle')) { ?>
 				<OPTION value="toggle_front_page"><?php putGS("Toggle '$1'", getGS("On Front Page")); ?></OPTION>
 				<OPTION value="toggle_section_page"><?php putGS("Toggle '$1'", getGS("On Section Page")); ?></OPTION>
 				<?php } ?>
@@ -319,16 +313,16 @@ function checkboxClick(theCheckbox, theRowNum)
 				<OPTION value="schedule_publish"><?php putGS("Publish Schedule"); ?></OPTION>
 				<OPTION value="unlock"><?php putGS("Unlock"); ?></OPTION>
 
-				<?php if ($User->hasPermission('DeleteArticle')) { ?>
+				<?php if ($g_user->hasPermission('DeleteArticle')) { ?>
 				<OPTION value="delete"><?php putGS("Delete"); ?></OPTION>
 				<?php } ?>
 
-				<?php if ($User->hasPermission('AddArticle')) { ?>
+				<?php if ($g_user->hasPermission('AddArticle')) { ?>
 				<OPTION value="copy"><?php putGS("Duplicate"); ?></OPTION>
 				<OPTION value="copy_interactive"><?php putGS("Duplicate to another section"); ?></OPTION>
 				<?php } ?>
 
-				<?php if ($User->hasPermission("MoveArticle")) { ?>
+				<?php if ($g_user->hasPermission("MoveArticle")) { ?>
 				<option value="move"><?php putGS("Move"); ?></OPTION>
 				<?php } ?>
 				</SELECT>
@@ -353,7 +347,7 @@ if ($numUniqueArticlesDisplayed > 0) {
 <TR class="table_list_header">
 	<TD>&nbsp;</TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name <SMALL>(click to edit)</SMALL>"); ?></TD>
-	<?php if ($User->hasPermission("Publish")) { ?>
+	<?php if ($g_user->hasPermission("Publish")) { ?>
 	<TD align="center" valign="top"><?php putGS("Order"); ?></TD>
 	<?php } ?>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Type"); ?></TD>
@@ -365,7 +359,7 @@ if ($numUniqueArticlesDisplayed > 0) {
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Topics"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Comments"); ?></TD>
 	<TD align="center" valign="top"><?php //putGS("Preview"); ?></TD>
-	<?php  if ($User->hasPermission('AddArticle')) { ?>
+	<?php  if ($g_user->hasPermission('AddArticle')) { ?>
 	<TD align="center" valign="top"><?php //putGS("Translate"); ?></TD>
 	<?php } ?>
 </TR>
@@ -379,7 +373,7 @@ foreach ($allArticles as $articleObj) {
 		break;
 	}
 	$timeDiff = camp_time_diff_str($articleObj->getLockTime());
-	if ($articleObj->isLocked() && ($timeDiff['days'] <= 0) && ($articleObj->getLockedByUser() != $User->getUserId())) {
+	if ($articleObj->isLocked() && ($timeDiff['days'] <= 0) && ($articleObj->getLockedByUser() != $g_user->getUserId())) {
 	    $rowClass = "article_locked";
 	}
 	else {
@@ -432,7 +426,7 @@ foreach ($allArticles as $articleObj) {
 
 		<?php
 		// The MOVE links
-		if ($User->hasPermission('Publish')) {
+		if ($g_user->hasPermission('Publish')) {
 			if (($articleObj->getArticleNumber() == $previousArticleNumber) || ($numUniqueArticles <= 1))  {
 				?>
 				<TD ALIGN="CENTER" valign="middle" NOWRAP></TD>
@@ -515,7 +509,7 @@ foreach ($allArticles as $articleObj) {
 			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview-16x16.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="16" height="16"></A>
 		</TD>
 
-		<?php  if ($User->hasPermission('TranslateArticle')) { ?>
+		<?php  if ($g_user->hasPermission('TranslateArticle')) { ?>
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php echo $ADMIN; ?>/articles/translate.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_code=<?php p($articleObj->getArticleNumber()); ?>_<?php p($articleObj->getLanguageId()); ?>&f_language_id=<?php p($f_language_id); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate-16x16.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0" width="16" height="16"></A>
 		</TD>

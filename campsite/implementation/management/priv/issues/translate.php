@@ -2,13 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageIssue')) {
+if (!$g_user->hasPermission('ManageIssue')) {
 	camp_html_display_error(getGS('You do not have the right to add issues.'));
 	exit;
 }
@@ -17,7 +11,7 @@ $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));	
+	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
 $publicationObj =& new Publication($Pub);
@@ -50,7 +44,7 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 <TR>
 	<TD ALIGN="RIGHT" valign="top"><?php  putGS("Issue"); ?>:</TD>
 	<TD>
-		<?php  
+		<?php
 		$comma = 0;
 		foreach ($allIssues as $tmpIssue) {
 			if ($comma) {
@@ -80,8 +74,8 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
 	<TD>
-		<SELECT NAME="cLang" class="input_select"><?php 
-		foreach ($unusedLanguages as $tmpLanguage) { 
+		<SELECT NAME="cLang" class="input_select"><?php
+		foreach ($unusedLanguages as $tmpLanguage) {
 			camp_html_select_option($tmpLanguage->getLanguageId(),'',htmlspecialchars($tmpLanguage->getNativeName()));
         }
 	    ?>

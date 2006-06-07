@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files("templates");
+camp_load_translation_strings("templates");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Template.php");
@@ -17,7 +16,7 @@ function camp_is_template_file($s)
 		|| $ext == 'css');
 } // fn camp_is_template_file
 
-function camp_template_path_crumbs($p_path) 
+function camp_template_path_crumbs($p_path)
 {
 	global $ADMIN;
 	$crumbs = array();

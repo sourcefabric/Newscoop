@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/topics/topics_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageTopics')) {
+if (!$g_user->hasPermission('ManageTopics')) {
 	camp_html_display_error(getGS("You do not have the right to add topics."));
 	exit;
 }
@@ -28,8 +22,8 @@ if (empty($f_topic_name)) {
 	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
 }
 if ($f_topic_language_id <= 0) {
-	$correct = false; 
-	$errorMsgs[] = getGS('You must choose a language for the topic.'); 
+	$correct = false;
+	$errorMsgs[] = getGS('You must choose a language for the topic.');
 }
 
 if (!empty($f_topic_name)) {
@@ -51,7 +45,7 @@ if (!empty($f_topic_name)) {
 		$errorMsgs[] = getGS('The topic name is already in use by another topic.');
 	}
 } else {
-	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'); 
+	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
 }
 
 $crumbs = array();
@@ -78,7 +72,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
-		<?php 
+		<?php
 		foreach ($errorMsgs as $errorMsg) { ?>
 			<li><?php p($errorMsg); ?></li>
 			<?PHP

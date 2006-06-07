@@ -4,13 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/SubscriptionDefaultTime.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Country.php");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManagePub')) {
+if (!$g_user->hasPermission('ManagePub')) {
 	camp_html_display_error(getGS("You do not have the right to change publication information."));
 	exit;
 }
@@ -26,8 +20,8 @@ $defaultTime =& new SubscriptionDefaultTime($CountryCode, $Pub);
 
 $defaultTime->setTrialTime($cTrialTime);
 $defaultTime->setPaidTime($cPaidTime);
-$logtext = getGS('Default subscription time for $1 changed', $publicationObj->getName().':'.$CountryCode); 
-Log::Message($logtext, $User->getUserName(), 6);
+$logtext = getGS('Default subscription time for $1 changed', $publicationObj->getName().':'.$CountryCode);
+Log::Message($logtext, $g_user->getUserName(), 6);
 header("Location: /$ADMIN/pub/editdeftime.php?Pub=$Pub&Language=$Language&CountryCode=$CountryCode");
 exit;
 ?>

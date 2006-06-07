@@ -3,9 +3,8 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
 require_once('permission_list.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
 $uType = 'Staff';
-compute_user_rights($User, $canManage, $canDelete);
+compute_user_rights($g_user, $canManage, $canDelete);
 if (!$canManage) {
 	$error = getGS("You do not have the right to change user account permissions.");
 	camp_html_display_error($error);

@@ -1,18 +1,11 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files("system_pref");
+camp_load_translation_strings("system_pref");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ChangeSystemPreferences')) {
+if (!$g_user->hasPermission('ChangeSystemPreferences')) {
 	camp_html_display_error(getGS("You do not have the right to change system preferences."));
 	exit;
 }
@@ -34,7 +27,7 @@ echo camp_html_breadcrumbs($crumbs);
 		<input type="text" name="f_keyword_separator" value="<?php p(SystemPref::Get("KeywordSeparator")); ?>" maxlength="2" size="4" class="input_text">
 	</td>
 </tr>
-<tr>	
+<tr>
 	<td colspan="2" align="center">
 		<input type="submit" name="save" value="<?php putGS("Save"); ?>" class="button">
 	</td>
@@ -53,7 +46,7 @@ echo camp_html_breadcrumbs($crumbs);
 		<input type="text" name="f_login_num" value="<?php p(SystemPref::Get("FailedAttemptsNum")); ?>" maxlength="2" size="4" class="input_text">
 	</td>
 </tr>
-<tr>	
+<tr>
 	<td colspan="2" align="center">
 		<input type="submit" name="save" value="<?php putGS("Save"); ?>" class="button">
 	</td>

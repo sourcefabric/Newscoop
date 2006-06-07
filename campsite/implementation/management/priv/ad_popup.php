@@ -1,8 +1,7 @@
 <?php
 require_once('db_connect.php');
 require_once('camp_html.php');
-require_once('classes/common.php');
-load_common_include_files("home");
+camp_load_translation_strings("home");
 require_once('classes/Input.php');
 $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to access this page.'), true);
 ?>

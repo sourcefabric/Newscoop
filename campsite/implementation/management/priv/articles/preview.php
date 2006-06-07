@@ -1,12 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -39,7 +33,7 @@ if ($errorStr != "") {
 
 $templateObj =& new Template($templateId);
 
-$accessParams = "LoginUserId=" . $User->getUserId() . "&LoginUserKey=" . $User->getKeyId()
+$accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_user->getKeyId()
 				. "&AdminAccess=all";
 if ($publicationObj->getUrlTypeId() == 1) {
 	$templateObj = & new Template($templateId);
@@ -51,7 +45,7 @@ if ($publicationObj->getUrlTypeId() == 1) {
 		. "/" . $sectionObj->getUrlName() . "/" . $articleObj->getUrlName() . "?$accessParams";
 }
 
-if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) {
+if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
 	// Show dual-pane view for those with template management priviledges
 ?>
 	<FRAMESET ROWS="60%,*" BORDER="2">

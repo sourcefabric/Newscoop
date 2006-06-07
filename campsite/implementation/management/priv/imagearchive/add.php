@@ -1,17 +1,11 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("imagearchive");
+camp_load_translation_strings("imagearchive");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission('AddImage')) {
+if (!$g_user->hasPermission('AddImage')) {
 	header("Location: /$ADMIN/logout.php");
 	exit;
 }
@@ -23,19 +17,8 @@ $crumbs[] = array(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php");
 $crumbs[] = array(getGS('Add new image'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
+echo $breadcrumbs;
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-	"http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
-<HEAD>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<TITLE><?php putGS("Add new image"); ?></TITLE>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-</HEAD>
-
-<BODY>
-<?php echo $breadcrumbs; ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" ENCTYPE="multipart/form-data">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
@@ -54,7 +37,7 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS('Photographer'); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($User->getRealName()); ?>" SIZE="32" MAXLENGTH="64" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($g_user->getRealName()); ?>" SIZE="32" MAXLENGTH="64" class="input_text">
 	</TD>
 </TR>
 <TR>
@@ -82,10 +65,8 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
-	</DIV>
+	<TD COLSPAN="2" align="center">
+		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
 	</TD>
 </TR>
 </TABLE>

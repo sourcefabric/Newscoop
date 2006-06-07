@@ -299,7 +299,9 @@ class Template extends DatabaseObject {
 		} else {
 			rename($origFile, $newname);
 		}
-		if (function_exists('camp_load_language')) { camp_load_language('api');	}
+		if (function_exists('camp_load_translation_strings')) {
+			camp_load_translation_strings('api');
+		}
 		$logtext = getGS('Template $1 uploaded', $fninForm);
 		Log::Message($logtext, null, 111);
 		return true;

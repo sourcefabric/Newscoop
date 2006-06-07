@@ -1,16 +1,9 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_images");
+camp_load_translation_strings("article_images");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
 $f_order_by = camp_session_get('f_order_by', 'id');
 $f_order_direction = camp_session_get('f_order_direction', 'ASC');
@@ -95,7 +88,7 @@ if (count($imageData) > 0) {
 </table>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="6" class="table_list">
 <TR class="table_list_header">
-    <?php if ($articleObj->userCanModify($User)) { ?>
+    <?php if ($articleObj->userCanModify($g_user)) { ?>
     <TD ALIGN="center" VALIGN="top" style="padding: 3px;"><B><?php p(getGS("Attach")); ?></B></TD>
 	<?php } ?>
     <TD ALIGN="LEFT" VALIGN="TOP">
@@ -123,7 +116,7 @@ foreach ($imageData as $image) {
     ?>
     <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
         <?php
-        if ($articleObj->userCanModify($User)) { ?>
+        if ($articleObj->userCanModify($g_user)) { ?>
     		<form method="POST" action="do_link.php">
 			<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 			<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">

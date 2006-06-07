@@ -75,7 +75,9 @@ class ArticleType {
 		}
 
 		if ($success2) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 		    $logtext = getGS('The article type $1 has been added.', $this->m_name);
 	    	Log::Message($logtext, null, 61);
 			ParserCom::SendMessage('article_types', 'create', array("article_type"=>$this->m_name));
@@ -121,7 +123,9 @@ class ArticleType {
 		}
 
 		if ($success2) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('The article type $1 has been deleted.', $this->m_name);
 			Log::Message($logtext, null, 62);
 			ParserCom::SendMessage('article_types', 'delete', array("article_type" => $this->m_name));
@@ -150,7 +154,9 @@ class ArticleType {
         }
 		if ($success3) {
 			$this->m_dbTableName = 'X'. $p_newName;
-			if (function_exists("camp_load_language")) { camp_load_language("api"); }
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logText = getGS('The article type $1 has been renamed to $2.', $this->m_name, $p_newName);
 			Log::Message($logText, null, 62);
 			ParserCom::SendMessage('article_types', 'rename', array('article_type' => $this->m_name));
@@ -231,7 +237,9 @@ class ArticleType {
 		}
 
 		if ($changed) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('Article Type $1 translation updated', $this->m_name);
 			Log::Message($logtext, null, 143);
 			ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_name));

@@ -1,35 +1,23 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_types");
+camp_load_translation_strings("article_types");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Translation.php');
-// Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
 $articleTypes = ArticleType::GetArticleTypes(true);
 // return value is sorted by language
 $allLanguages = Language::GetLanguages();
 
-
 $lang = camp_session_get('LoginLanguageId', 1);
 $languageObj =& new Language($lang);
-
-
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "");
 
 echo camp_html_breadcrumbs($crumbs);
-
 ?>
 
-<!-- TODO; I just cut and paste this from topics/index.php; I need to go through and figure out which .js files I really need for the pulldown business. -->
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
@@ -57,7 +45,7 @@ if (count($articleTypes))
 	} // foreach
 } // if
 
-if ($User->hasPermission("ManageArticleTypes")) { ?>
+if ($g_user->hasPermission("ManageArticleTypes")) { ?>
 	<P>
 	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 	<TR>
@@ -67,33 +55,33 @@ if ($User->hasPermission("ManageArticleTypes")) { ?>
 		<TD><A HREF="merge.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/merge.png" BORDER="0"></A></TD>
 		<TD><B><A HREF="merge.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><?php  putGS("Merge types"); ?></B></A></TD>
 		<TD><DIV STYLE="width:15px;"></DIV></TD>
-		<TD><A HREF="javascript: void(0);" 
-               ONCLICK="if (allShown == 0) { 
-                            ShowAll(type_ids); 
-                            allShown = 1; 
+		<TD><A HREF="javascript: void(0);"
+               ONCLICK="if (allShown == 0) {
+                            ShowAll(type_ids);
+                            allShown = 1;
                             document.getElementById('showtext').innerHTML = '<?php putGS("Hide display names"); ?>';
-                            document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';         
-                        } else { 
-                            HideAll(type_ids); 
-                            allShown = 0; 
-                            document.getElementById('showtext').innerHTML = '<?php putGS("Show display names"); ?>';           
+                            document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';
+                        } else {
+                            HideAll(type_ids);
+                            allShown = 0;
+                            document.getElementById('showtext').innerHTML = '<?php putGS("Show display names"); ?>';
                             document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag+.png';
                         }">
 		      <IMG NAME="show" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag+.png" BORDER="0"></A></TD>
-    	<TD><B><A HREF="javascript: void(0);" 
-                    ONCLICK="if (allShown == 0) { 
-                                ShowAll(type_ids); 
-                                allShown = 1; 
+    	<TD><B><A HREF="javascript: void(0);"
+                    ONCLICK="if (allShown == 0) {
+                                ShowAll(type_ids);
+                                allShown = 1;
                                 document.getElementById('showtext').innerHTML = '<?php putGS("Hide display names"); ?>';
-                                document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';         
-                                } else { 
-                                HideAll(type_ids); 
-                                allShown = 0;                      
-                                document.getElementById('showtext').innerHTML = '<?php putGS("Show display names"); ?>';           
+                                document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';
+                                } else {
+                                HideAll(type_ids);
+                                allShown = 0;
+                                document.getElementById('showtext').innerHTML = '<?php putGS("Show display names"); ?>';
                                 document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag+.png';
                                 }"><DIV ID="showtext"><?php putGS("Show display names"); ?></DIV></A></B></TD>
 
-	
+
 	</TR>
 	</TABLE>
 
@@ -109,7 +97,7 @@ if ($User->hasPermission("ManageArticleTypes")) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Translate"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Show/Hide"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Comments enabled?"); ?></B></TD>
-	<?php  if ($User->hasPermission("DeleteArticleTypes")) { ?>
+	<?php  if ($g_user->hasPermission("DeleteArticleTypes")) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
 	<?php  } ?>
 </TR>
@@ -160,17 +148,13 @@ foreach ($articleTypes as $articleType) {
 		<A HREF="/<?php p($ADMIN); ?>/article_types/do_comment_activation.php?f_article_type=<?php  print urlencode($articleType); ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 comments for article type $2?', $commentChangeText, "\'".htmlspecialchars($articleType)."\'"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $commentImage; ?>" BORDER="0" ALT="<?php  putGS('$1 comments for article type $1', ucfirst($commentChangeText), htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('$1 comments for article type $2', ucfirst($commentChangeText), htmlspecialchars($articleType)); ?>" ></A>
 	</TD>
 
-	<?php  if ($User->hasPermission("DeleteArticleTypes")) { ?>
+	<?php  if ($g_user->hasPermission("DeleteArticleTypes")) { ?>
 	<TD ALIGN="CENTER">
 		<A HREF="/<?php p($ADMIN); ?>/article_types/do_del.php?f_article_type=<?php  print urlencode($articleType); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.', htmlspecialchars($articleType)); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete article type $1', htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('Delete article type $1.', htmlspecialchars($articleType)); ?>" ></A>
 	</TD>
 	<?php  } ?>
 
 	</TR>
-
-
-
-
 
     <tr id="translate_type_<?php p($i); ?>" style="display: none;"><td colspan="6">
     	<table>
@@ -198,9 +182,6 @@ foreach ($articleTypes as $articleType) {
 		}
 		?>
 
-
-
-
     	<tr>
     	<td colspan="2">
     		<FORM method="POST" action="do_translate.php">
@@ -218,12 +199,12 @@ foreach ($articleTypes as $articleType) {
 						 	foreach ($allLanguages as $tmpLanguage) {
 						        if ($languageObj->getLanguageId() == $tmpLanguage->getLanguageId())
 						            $selected = true;
-						        else 
-						            $selected = false;		
+						        else
+						            $selected = false;
 						 	    camp_html_select_option($tmpLanguage->getLanguageId(),
 						 								$selected,
 						 								$tmpLanguage->getNativeName());
-						
+
 					        }
 							?>
 							</SELECT>

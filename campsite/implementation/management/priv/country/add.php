@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/country/country_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageCountries')) {
+if (!$g_user->hasPermission('ManageCountries')) {
 	camp_html_display_error(getGS("You do not have the right to add countries." ));
 	exit;
 }
@@ -47,7 +41,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
 	<TD>
 		<SELECT NAME="f_country_language" class="input_select">
-		<?php  
+		<?php
 		foreach ($languages as $language) {
 			camp_html_select_option($language->getLanguageId(), 0, $language->getNativeName());
     	} ?>

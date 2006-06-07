@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("comments");
+camp_load_translation_strings("comments");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
@@ -9,13 +8,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('CommentModerate')) {
+if (!$g_user->hasPermission('CommentModerate')) {
 	camp_html_display_error(getGS("You do not have the right to moderate comments." ));
 	exit;
 }

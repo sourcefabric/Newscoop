@@ -5,12 +5,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_topic_ids = Input::Get('f_topic_ids', 'array', null, true);
@@ -27,7 +21,7 @@ if (!is_null($f_topic_ids)) {
 		exit;
 	}
 
-	if (!$User->hasPermission('AttachTopicToArticle')) {
+	if (!$g_user->hasPermission('AttachTopicToArticle')) {
 		camp_html_display_error(getGS("You do not have the right to attach topics to articles."), null, true);
 		exit;
 	}

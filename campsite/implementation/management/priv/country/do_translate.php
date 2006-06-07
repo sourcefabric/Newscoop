@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/country/country_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageCountries')) {
+if (!$g_user->hasPermission('ManageCountries')) {
 	camp_html_display_error(getGS("You do not have the right to translate country names."));
 	exit;
 }
@@ -23,15 +17,15 @@ $correct = true;
 $created = false;
 
 if (empty($f_country_name)) {
-	$correct = false; 
+	$correct = false;
 	$errorMsgs[] = getGS("You must complete the $1 field.", "<B>".getGS("Name")."</B>");
-} 
+}
 
 if (!$language->exists()) {
     $correct = false;
-    $errorMsgs[] = getGS('You must select a language.'); 
+    $errorMsgs[] = getGS('You must select a language.');
 }
-    
+
 if ($correct) {
 	$newCountry =& new Country($f_country_code, $f_country_new_language);
 	$created = $newCountry->create(array('Name' => $f_country_name));
@@ -39,7 +33,7 @@ if ($correct) {
 	    header("Location: /$ADMIN/country/");
 	    exit;
 	} else {
-		$errorMsgs[] = getGS('The country name $1 could not be translated','<B>'.$country->getName().'</B>'); 
+		$errorMsgs[] = getGS('The country name $1 could not be translated','<B>'.$country->getName().'</B>');
 	}
 }
 
@@ -48,7 +42,7 @@ $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Countries"), "/$ADMIN/country/");
 $crumbs[] = array(getGS("Adding new translation"), "");
 echo camp_html_breadcrumbs($crumbs);
- 
+
 ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">

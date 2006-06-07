@@ -1,10 +1,4 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files("home");
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/login.php");
-	return;
-}
+camp_load_translation_strings("home");
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/home.php");
 ?>

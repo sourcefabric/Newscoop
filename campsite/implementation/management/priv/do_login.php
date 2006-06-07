@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files('home');
+camp_load_translation_strings('home');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');

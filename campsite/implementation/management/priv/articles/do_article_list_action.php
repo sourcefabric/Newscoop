@@ -1,14 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 
-// Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-
 //echo "<pre>";
 //print_r($_REQUEST);
 //echo "</pre>";
@@ -31,13 +23,13 @@ if (!Input::IsValid()) {
 // Validate permissions
 switch ($f_article_list_action) {
 case "delete":
-	if (!$User->hasPermission('DeleteArticle')) {
+	if (!$g_user->hasPermission('DeleteArticle')) {
 		camp_html_display_error(getGS("You do not have the right to delete articles."));
 		exit;
 	}
 	break;
 case "publish":
-	if (!$User->hasPermission('Publish')) {
+	if (!$g_user->hasPermission('Publish')) {
 		$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.");
 		camp_html_display_error($errorStr, $BackLink);
 		exit;
@@ -45,7 +37,7 @@ case "publish":
 	break;
 case "copy":
 case "copy_interactive":
-	if (!$User->hasPermission('AddArticle')) {
+	if (!$g_user->hasPermission('AddArticle')) {
 		$errorStr = getGS("You do not have the right to add articles.");
 		camp_html_display_error($errorStr, $BackLink);
 		exit;
@@ -68,8 +60,8 @@ case "workflow_new":
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
 		// A publisher can change the status in any way he sees fit.
 		// Someone who can change an article can submit/unsubmit articles.
-		if ($User->hasPermission('Publish')
-			|| ($User->hasPermission('ChangeArticle') && ($articleObj->getWorkflowStatus() == 'S'))) {
+		if ($g_user->hasPermission('Publish')
+			|| ($g_user->hasPermission('ChangeArticle') && ($articleObj->getWorkflowStatus() == 'S'))) {
 			$articleObj->setWorkflowStatus('N');
 		}
 	}
@@ -78,7 +70,7 @@ case "workflow_submit":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
 		// A user who owns the article may submit it.
-		if ($User->hasPermission("Publish") || $articleObj->userCanModify($User)) {
+		if ($g_user->hasPermission("Publish") || $articleObj->userCanModify($g_user)) {
 			$articleObj->setWorkflowStatus('S');
 		}
 	}
@@ -98,7 +90,7 @@ case "delete":
 case "toggle_front_page":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
-		if ($articleObj->userCanModify($User)) {
+		if ($articleObj->userCanModify($g_user)) {
 			$articleObj->setOnFrontPage(!$articleObj->onFrontPage());
 		}
 	}
@@ -106,7 +98,7 @@ case "toggle_front_page":
 case "toggle_section_page":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
-		if ($articleObj->userCanModify($User)) {
+		if ($articleObj->userCanModify($g_user)) {
 			$articleObj->setOnSectionPage(!$articleObj->onSectionPage());
 		}
 	}
@@ -118,7 +110,7 @@ case "copy":
 		$articleObj->copy($articleObj->getPublicationId(),
 						  $articleObj->getIssueNumber(),
 						  $articleObj->getSectionNumber(),
-						  $User->getUserId(),
+						  $g_user->getUserId(),
 						  $languageArray);
 	}
 	break;
@@ -147,7 +139,7 @@ case "move":
 case "unlock":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
-		if ($articleObj->userCanModify($User)) {
+		if ($articleObj->userCanModify($g_user)) {
 			$articleObj->setIsLocked(false);
 		}
 	}

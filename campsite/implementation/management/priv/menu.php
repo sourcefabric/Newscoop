@@ -1,34 +1,29 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/DynMenuItem.php");
-load_common_include_files("home");
+camp_load_translation_strings("home");
 global $ADMIN;
+global $g_user;
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	exit;
-}
-
-$showPublishingEnvironmentMenu = ($User->hasPermission("ManageTempl")
-	|| $User->hasPermission("DeleteTempl")
-	|| $User->hasPermission("ManageArticleTypes")
-	|| $User->hasPermission("DeleteArticleTypes")
-	|| $User->hasPermission("ManageTopics")
-	|| $User->hasPermission("ManageLanguages")
-	|| $User->hasPermission("DeleteLanguages")
-	|| $User->hasPermission("ManageCountries")
-	|| $User->hasPermission("DeleteCountries"));
+$showPublishingEnvironmentMenu = ($g_user->hasPermission("ManageTempl")
+	|| $g_user->hasPermission("DeleteTempl")
+	|| $g_user->hasPermission("ManageArticleTypes")
+	|| $g_user->hasPermission("DeleteArticleTypes")
+	|| $g_user->hasPermission("ManageTopics")
+	|| $g_user->hasPermission("ManageLanguages")
+	|| $g_user->hasPermission("DeleteLanguages")
+	|| $g_user->hasPermission("ManageCountries")
+	|| $g_user->hasPermission("DeleteCountries"));
 
 $showConfigureMenu = ($showPublishingEnvironmentMenu
-	|| $User->hasPermission("ManageLocalizer")
-	|| $User->hasPermission("ViewLogs"));
+	|| $g_user->hasPermission("ManageLocalizer")
+	|| $g_user->hasPermission("ViewLogs"));
 
-$showUserMenu = ($User->hasPermission("ManageUsers")
-	|| $User->hasPermission("DeleteUsers")
-	|| $User->hasPermission("ManageSubscriptions")
-	|| $User->hasPermission("ManageUserTypes")
-	|| $User->hasPermission("ManageReaders"));
+$showUserMenu = ($g_user->hasPermission("ManageUsers")
+	|| $g_user->hasPermission("DeleteUsers")
+	|| $g_user->hasPermission("ManageSubscriptions")
+	|| $g_user->hasPermission("ManageUserTypes")
+	|| $g_user->hasPermission("ManageReaders"));
 
 $iconTemplateStr = '<img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/%s" align="middle" style="padding-bottom: 3px;" width="22" height="22" />';
 
@@ -45,7 +40,7 @@ $menu_item =& DynMenuItem::Create(getGS('Publications'), "/$ADMIN/pub/index.php"
                 array('icon' => sprintf($iconTemplateStr, 'publication.png'), 'id' => 'publication'));
 $menu_content->addItem($menu_item);
 
-if ($User->hasPermission('CommentModerate')) {
+if ($g_user->hasPermission('CommentModerate')) {
     $menu_item =& DynMenuItem::Create(getGS('Comments'), "/$ADMIN/comments/index.php",
                     array('icon' => sprintf($iconTemplateStr, 'comments.png'), 'id' => 'comments'));
     $menu_content->addItem($menu_item);
@@ -107,62 +102,62 @@ $menu_actions =& DynMenuItem::Create(getGS("Actions"), '',
     array("icon" => sprintf($iconTemplateStr, "actions.png"), "id" => "actions"));
 $menu_root->addItem($menu_actions);
 
-if ($User->hasPermission("AddArticle")) {
+if ($g_user->hasPermission("AddArticle")) {
     $menu_item =& DynMenuItem::Create(getGS('Add new article'), "/$ADMIN/articles/add_move.php",
         array("icon" => sprintf($iconTemplateStr, "add_article.png")));
     $menu_actions->addItem($menu_item);
 }
 
-if ($User->hasPermission("ManageTempl")) {
+if ($g_user->hasPermission("ManageTempl")) {
     $menu_item =& DynMenuItem::Create(getGS('Upload new template'),
         "/$ADMIN/templates/upload_templ.php?Path=/look/&Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "upload_template.png")));
     $menu_actions->addItem($menu_item);
 }
 
-if ($User->hasPermission("ManagePub")) {
+if ($g_user->hasPermission("ManagePub")) {
     $menu_item =& DynMenuItem::Create(getGS("Add new publication"),
         "/$ADMIN/pub/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_publication.png")));
     $menu_actions->addItem($menu_item);
 }
 
-if ($User->hasPermission("ManageUsers")) {
+if ($g_user->hasPermission("ManageUsers")) {
     $menu_item =& DynMenuItem::Create(getGS("Add new staff member"),
         "/$ADMIN/users/edit.php?uType=Staff&Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_user.png")));
     $menu_actions->addItem($menu_item);
 }
 
-if ($User->hasPermission("ManageUsers")) {
+if ($g_user->hasPermission("ManageUsers")) {
     $menu_item =& DynMenuItem::Create(getGS("Add new subscriber"),
         "/$ADMIN/users/edit.php?uType=Subscribers&Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_user.png")));
     $menu_actions->addItem($menu_item);
 }
 
-if ($User->hasPermission("ManageUserTypes")) {
+if ($g_user->hasPermission("ManageUserTypes")) {
     $menu_item =& DynMenuItem::Create(getGS("Add new user type"),
         "/$ADMIN/user_types/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_user_type.png")));
     $menu_actions->addItem($menu_item);
 }
 
-if ($User->hasPermission("ManageArticleTypes")) {
+if ($g_user->hasPermission("ManageArticleTypes")) {
     $menu_item =& DynMenuItem::Create(getGS("Add new article type"),
         "/$ADMIN/article_types/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_article_type.png")));
     $menu_actions->addItem($menu_item);
 }
 
-if ($User->hasPermission("ManageCountries")) {
+if ($g_user->hasPermission("ManageCountries")) {
     $menu_item =& DynMenuItem::Create(getGS("Add new country"),
         "/$ADMIN/country/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_country.png")));
     $menu_actions->addItem($menu_item);
 }
 
-if ($User->hasPermission("ManageLanguages")) {
+if ($g_user->hasPermission("ManageLanguages")) {
     $menu_item =& DynMenuItem::Create(getGS("Add new language"),
         "/$ADMIN/languages/add_modify.php?Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_language.png")));
@@ -170,11 +165,11 @@ if ($User->hasPermission("ManageLanguages")) {
 }
 
 $menu_item =& DynMenuItem::Create(getGS("Change your password"),
-    "/$ADMIN/users/edit.php?uType=Staff&User=".$User->getUserId(),
+    "/$ADMIN/users/edit.php?uType=Staff&User=".$g_user->getUserId(),
     array("icon" => sprintf($iconTemplateStr, "change_password.png")));
 $menu_actions->addItem($menu_item);
 
-if ($User->hasPermission("InitializeTemplateEngine")) {
+if ($g_user->hasPermission("InitializeTemplateEngine")) {
     $menu_item =& DynMenuItem::Create(getGS('Restart the template engine'), "/$ADMIN/home.php?restart_engine=yes",
         array("icon" => sprintf($iconTemplateStr, "actions.png")));
     $menu_actions->addItem($menu_item);
@@ -186,37 +181,37 @@ if ($showConfigureMenu) {
         array("icon" => sprintf($iconTemplateStr, "configure.png"), "id"=>"configure"));
     $menu_root->addItem($menu_config);
 
-    if ($User->hasPermission("ChangeSystemPreferences")) {
+    if ($g_user->hasPermission("ChangeSystemPreferences")) {
         $menu_item =& DynMenuItem::Create(getGS("System Preferences"),
             "/$ADMIN/system_pref/",
             array("icon" => sprintf($iconTemplateStr, "preferences.png")));
         $menu_config->addItem($menu_item);
     }
-    if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) {
+    if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
         $menu_item =& DynMenuItem::Create(getGS("Templates"),
             "/$ADMIN/templates/",
             array("icon" => sprintf($iconTemplateStr, "templates.png")));
         $menu_config->addItem($menu_item);
     }
-    if ($User->hasPermission("ManageArticleTypes") || $User->hasPermission("DeleteArticleTypes")) {
+    if ($g_user->hasPermission("ManageArticleTypes") || $g_user->hasPermission("DeleteArticleTypes")) {
         $menu_item =& DynMenuItem::Create(getGS("Article Types"),
             "/$ADMIN/article_types/",
             array("icon" => sprintf($iconTemplateStr, "article_types.png")));
         $menu_config->addItem($menu_item);
     }
-    if ($User->hasPermission("ManageTopics")) {
+    if ($g_user->hasPermission("ManageTopics")) {
         $menu_item =& DynMenuItem::Create(getGS("Topics"),
             "/$ADMIN/topics/",
             array("icon" => sprintf($iconTemplateStr, "topics.png")));
         $menu_config->addItem($menu_item);
     }
-    if ($User->hasPermission("ManageLanguages") || $User->hasPermission("DeleteLanguages")) {
+    if ($g_user->hasPermission("ManageLanguages") || $g_user->hasPermission("DeleteLanguages")) {
         $menu_item =& DynMenuItem::Create(getGS("Languages"),
             "/$ADMIN/languages/",
             array("icon" => sprintf($iconTemplateStr, "languages.png")));
         $menu_config->addItem($menu_item);
     }
-    if ($User->hasPermission("ManageCountries") || $User->hasPermission("DeleteCountries")) {
+    if ($g_user->hasPermission("ManageCountries") || $g_user->hasPermission("DeleteCountries")) {
         $menu_item =& DynMenuItem::Create(getGS("Countries"),
             "/$ADMIN/country/",
             array("icon" => sprintf($iconTemplateStr, "countries.png")));
@@ -225,13 +220,13 @@ if ($showConfigureMenu) {
     if ($showPublishingEnvironmentMenu) {
         $menu_config->addSplit();
     }
-	if ($User->hasPermission("ManageLocalizer")) {
+	if ($g_user->hasPermission("ManageLocalizer")) {
         $menu_item =& DynMenuItem::Create(getGS("Localizer"),
             "/$ADMIN/localizer/",
             array("icon" => sprintf($iconTemplateStr, "localizer.png")));
         $menu_config->addItem($menu_item);
 	}
-	if ($User->hasPermission("ViewLogs")) {
+	if ($g_user->hasPermission("ViewLogs")) {
         $menu_item =& DynMenuItem::Create(getGS("Logs"),
             "/$ADMIN/logs/",
             array("icon" => sprintf($iconTemplateStr, "logs.png")));
@@ -244,19 +239,19 @@ if ($showUserMenu) {
     $menu_users =& DynMenuItem::Create(getGS("Users"), "",
         array("icon" => sprintf($iconTemplateStr, "users.png"), "id" => "users"));
     $menu_root->addItem($menu_users);
-	if ($User->hasPermission("ManageUsers") || $User->hasPermission("DeleteUsers")) {
+	if ($g_user->hasPermission("ManageUsers") || $g_user->hasPermission("DeleteUsers")) {
         $menu_item =& DynMenuItem::Create(getGS("Staff"),
             "/$ADMIN/users/?uType=Staff",
             array("icon" => sprintf($iconTemplateStr, "users.png")));
         $menu_users->addItem($menu_item);
 	}
-	if ($User->hasPermission("ManageReaders") || $User->hasPermission("ManageSubscriptions")) {
+	if ($g_user->hasPermission("ManageReaders") || $g_user->hasPermission("ManageSubscriptions")) {
         $menu_item =& DynMenuItem::Create(getGS("Subscribers"),
             "/$ADMIN/users/?uType=Subscribers",
             array("icon" => sprintf($iconTemplateStr, "users.png")));
         $menu_users->addItem($menu_item);
 	}
-	if ($User->hasPermission("ManageUserTypes")) {
+	if ($g_user->hasPermission("ManageUserTypes")) {
         $menu_item =& DynMenuItem::Create(getGS("Staff User Types"),
             "/$ADMIN/user_types/",
             array("icon" => sprintf($iconTemplateStr, "user_types.png")));
@@ -314,7 +309,7 @@ $menu_help->addItem($menu_item);
 			<td align="right" style="padding-top: 0px;">
                 <table cellpadding="0" cellspacing="0">
 				<TR>
-            		<td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 0px;" colspan="4"><?php putGS("Signed in: $1", "<b>".$User->getRealName()."</b>"); ?></td>
+            		<td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 0px;" colspan="4"><?php putGS("Signed in: $1", "<b>".$g_user->getRealName()."</b>"); ?></td>
 					<td style="padding-left: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a></td>
 					<td style="font-weight: bold; padding-left: 2px; padding-right: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a></td>
 				</tr>

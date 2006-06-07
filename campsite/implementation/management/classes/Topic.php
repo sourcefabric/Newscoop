@@ -104,7 +104,9 @@ class Topic extends DatabaseObject {
 		$success = parent::create($p_values);
 		if ($success) {
 			$this->m_exists = true;
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('Topic $1 added', $this->m_data['Name']." (".$this->m_data['Id'].")");
 			Log::Message($logtext, null, 141);
 			ParserCom::SendMessage('topics', 'create', array("tpid" => $this->m_data['Id']));
@@ -130,22 +132,24 @@ class Topic extends DatabaseObject {
 			$sql = "DELETE FROM Topics WHERE Id=".$this->m_data['Id']." AND LanguageId=".$p_languageId;
 			$deleted = $g_ado_db->Execute($sql);
 		}
-		
-		// Delete the ATF metadata 
+
+		// Delete the ATF metadata
         if ($deleted) {
 
             $sql = "SELECT * FROM TopicFields WHERE RootTopicId=". $this->m_data['Id'];
-            
-            $row = $g_ado_db->GetRow($sql);     
-            if ($row) { 
+
+            $row = $g_ado_db->GetRow($sql);
+            if ($row) {
                 $delATF =& new ArticleTypeField($row['ArticleType'], $row['FieldName']);
-                $deleted = $delATF->delete();                                        
+                $deleted = $delATF->delete();
             }
         }
-		
+
 		if ($deleted) {
 			$this->m_exists = false;
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			if (is_null($p_languageId)) {
 				$name = implode(",", $this->m_names);
 			} else {
@@ -206,7 +210,9 @@ class Topic extends DatabaseObject {
 		}
 		if ($changed) {
 			$this->m_names[$p_languageId] = $p_value;
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('Topic $1 updated', $this->m_data['Id'].": (".$oldValue." -> ".$this->m_names[$p_languageId].")");
 			Log::Message($logtext, null, 143);
 			ParserCom::SendMessage('topics', 'modify', array("tpid"=> $this->m_data['Id']));

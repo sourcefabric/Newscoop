@@ -1,18 +1,11 @@
-<?php  
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("imagearchive");
+<?php
+camp_load_translation_strings("imagearchive");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
 // check input
 $f_image_id = Input::Get('f_image_id', 'int', 0);
@@ -23,14 +16,14 @@ $f_image_date = Input::Get('f_image_date');
 $f_image_url = Input::Get('f_image_url', 'string', '', true);
 if (!Input::IsValid() || ($f_image_id <= 0)) {
 	header("Location: /$ADMIN/imagearchive/index.php");
-	exit;	
+	exit;
 }
 
 $imageObj =& new Image($f_image_id);
 
-if (!$User->hasPermission('ChangeImage')) {
+if (!$g_user->hasPermission('ChangeImage')) {
 	header("Location: /$ADMIN/logout.php");
-	exit;		
+	exit;
 }
 
 $updateArray = array('Description' => $f_image_description,

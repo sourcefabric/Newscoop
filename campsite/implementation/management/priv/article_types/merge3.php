@@ -1,18 +1,12 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_types");
+camp_load_translation_strings("article_types");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-// Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
-if (!$User->hasPermission('ManageArticleTypes')) {
+// Check permissions
+if (!$g_user->hasPermission('ManageArticleTypes')) {
 	camp_html_display_error(getGS("You do not have the right to merge article types."));
 	exit;
 }

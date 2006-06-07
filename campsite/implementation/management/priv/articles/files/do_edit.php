@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_files");
+camp_load_translation_strings("article_files");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
@@ -11,13 +10,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Attachment.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ChangeFile')) {
+if (!$g_user->hasPermission('ChangeFile')) {
 	camp_html_display_error(getGS('You do not have the right to change files.' ), null, true);
 	exit;
 }
@@ -50,7 +43,7 @@ if (!$articleObj->exists()) {
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
-if (!$articleObj->userCanModify($User)) {
+if (!$articleObj->userCanModify($g_user)) {
 	camp_html_display_error(getGS('You do not have the right to change the article.'), null, true);
 	exit;
 }

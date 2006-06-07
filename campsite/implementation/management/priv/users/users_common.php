@@ -1,7 +1,5 @@
 <?php
-
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/common.php');
-load_common_include_files("users");
+camp_load_translation_strings("users");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/IPAccess.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
@@ -51,7 +49,7 @@ function read_user_common_parameters()
 function user_search_is_set()
 {
 	global $defaultUserSearchParameters, $userSearchParameters;
-	
+
 	foreach ($userSearchParameters as $parameter=>$defaultValue) {
 		if ($userSearchParameters[$parameter] != $defaultUserSearchParameters[$parameter]) {
 			return true;
@@ -63,7 +61,7 @@ function user_search_is_set()
 function reset_user_search_parameters()
 {
 	global $userSearchParameters, $_REQUEST, $_GET, $_POST, $_SESSION;
-	
+
 	foreach ($userSearchParameters as $parameter=>$defaultValue) {
 		if (isset($_REQUEST[$parameter])) {
 			unset($_REQUEST[$parameter]);

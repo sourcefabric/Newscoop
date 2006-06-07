@@ -1,6 +1,5 @@
-<?php  
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("imagearchive");
+<?php
+camp_load_translation_strings("imagearchive");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
@@ -8,16 +7,11 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN_DIR/logout.php");
-	exit;
-}
 $f_image_id = Input::Get('f_image_id', 'int', 0);
 
 if (!Input::IsValid()) {
 	header("Location: /$ADMIN/imagearchive/index.php");
-	exit;	
+	exit;
 }
 $imageObj =& new Image($f_image_id);
 $articles = ArticleImage::GetArticlesThatUseImage($f_image_id);
@@ -25,7 +19,7 @@ $articles = ArticleImage::GetArticlesThatUseImage($f_image_id);
 $crumbs = array();
 $crumbs[] = array(getGS("Content"), "");
 $crumbs[] = array(getGS("Image Archive"), "/$ADMIN/imagearchive/index.php");
-if ($User->hasPermission('ChangeImage')) {
+if ($g_user->hasPermission('ChangeImage')) {
 	$crumbs[] = array(getGS('Change image information'), "");
 }
 else {
@@ -33,25 +27,13 @@ else {
 }
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
+echo $breadcrumbs;
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-	"http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
-<HEAD>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<TITLE><?php  putGS("Change image information"); ?></TITLE>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-</HEAD>
-
-<BODY>
-<?php echo $breadcrumbs; ?>
 <p></p>
 <table cellpadding="0" cellspacing="0" class="action_buttons">
 <tr>
 <?php
-if ($User->hasPermission('AddImage')) { ?>
+if ($g_user->hasPermission('AddImage')) { ?>
     <td>
     	<A HREF="add.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A>
     </TD>
@@ -59,13 +41,13 @@ if ($User->hasPermission('AddImage')) { ?>
     	<A HREF="add.php"><B><?php  putGS('Add new image'); ?></B></A>
     </TD>
 <?php } ?>
-    
+
 </tr>
 </table>
 <p></p>
 <IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" style="padding-left:15px">
 <P>
-<?php if ($User->hasPermission('ChangeImage')) { ?>
+<?php if ($g_user->hasPermission('ChangeImage')) { ?>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" ENCTYPE="multipart/form-data">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
 <TR>
@@ -120,18 +102,16 @@ if ($imageObj->getLocation() == 'remote') {
 }
 ?>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
+	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="HIDDEN" NAME="f_image_id" VALUE="<?php echo $imageObj->getImageId(); ?>">
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
-	</DIV>
 	</TD>
 </TR>
 </TABLE>
 </FORM>
 <P>
 <?php
-} // if ($User->hasPermission('ChangeImage'))
+} // if ($g_user->hasPermission('ChangeImage'))
 
 if (count($articles) > 0) {
 	// image is in use //////////////////////////////////////////////////////////////////
@@ -148,13 +128,13 @@ if (count($articles) > 0) {
 		$translations = $article->getTranslations();
 		foreach ($translations as $translation) {
 			echo '<tr ';
-			if ($color) { 
-				$color=0; 
+			if ($color) {
+				$color=0;
 				echo 'class="list_row_even"';
-			} else { 
-				$color=1; 
+			} else {
+				$color=1;
 				echo 'class="list_row_odd"';
-			} 
+			}
 			echo '>';
 			if ($translation->getArticleNumber() == $previousArticleNumber) {
 				echo '<td class="translation_indent">';

@@ -1,11 +1,9 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/user_types/utypes_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/permission_list.php");
-camp_load_language("users");
+camp_load_translation_strings("users");
 
-list($access, $User) = check_basic_access($_REQUEST);
-$canManage = $User->hasPermission('ManageUserTypes');
+$canManage = $g_user->hasPermission('ManageUserTypes');
 if (!$canManage) {
 	$error = getGS("You do not have the right to change user type permissions.");
 	camp_html_display_error($error);

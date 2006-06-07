@@ -1,14 +1,7 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
-    
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
-if (!$User->hasPermission('ManageTempl')) {
+if (!$g_user->hasPermission('ManageTempl')) {
 	camp_html_display_error(getGS("You do not have the right to modify templates."));
 	exit;
 }
@@ -28,11 +21,11 @@ $result = false;
 if (@$handle = fopen($filename, 'w')) {
 	$result = fwrite($handle, $nField);
 	fclose($handle);
-} 
+}
 
 if ($result !== false) {
 	$logtext = getGS('Template $1 was changed', $Path."/".$Name);
-	Log::Message($logtext, $User->getUserName(), 113);
+	Log::Message($logtext, $g_user->getUserName(), 113);
 	header("Location: /$ADMIN/templates/edit_template.php?Path=".urlencode($Path)
 			."&Name=".urlencode($Name)."&res=OK"
 			."&resMsg=".urlencode(getGS("The template '$1' was saved successfully.", $Name)));

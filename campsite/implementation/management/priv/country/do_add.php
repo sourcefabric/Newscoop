@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/country/country_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageCountries')) {
+if (!$g_user->hasPermission('ManageCountries')) {
 	camp_html_display_error(getGS("You do not have the right to add countries." ));
 	exit;
 }
@@ -23,16 +17,16 @@ $errorMsgs = array();
 if (empty($f_country_code)) {
 	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Code').'</B>');
 	$correct = false;
-} 
+}
 if (empty($f_country_name)) {
 	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>');
 	$correct = false;
-} 
+}
 if (empty($f_country_language) || ($f_country_language == 0)) {
 	$correct = false;
-    $errorMsgs[] = getGS('You must select a language.'); 
-} 
-if ($correct) { 
+    $errorMsgs[] = getGS('You must select a language.');
+}
+if ($correct) {
 	$country =& new Country($f_country_code, $f_country_language);
 	$created = $country->create(array("Name" => $f_country_name));
 	if ($created) {
@@ -61,7 +55,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<BLOCKQUOTE>
-	<?php  
+	<?php
 	foreach ($errorMsgs as $errorMsg) { ?>
 		<li><?php p($errorMsg); ?></li>
 		<?PHP

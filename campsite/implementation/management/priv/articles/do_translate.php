@@ -2,13 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission("AddArticle")) {
+if (!$g_user->hasPermission("AddArticle")) {
 	$errorStr = getGS('You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.');
 	camp_html_display_error($errorStr);
 	exit;
@@ -74,7 +68,7 @@ if ($f_publication_id > 0) {
 
 	$translationIssueObj =& new Issue($f_publication_id, $f_translation_language, $f_issue_number);
 	if (!$translationIssueObj->exists()) {
-		if (!$User->hasPermission("ManageIssue")) {
+		if (!$g_user->hasPermission("ManageIssue")) {
 			camp_html_display_error(getGS('An issue must be created for the selected language but you do not have the right to create an issue.'), $BackLink);
 			exit;
 		}
@@ -113,7 +107,7 @@ if ($f_publication_id > 0) {
 	$translationSectionObj =& new Section($f_publication_id, $f_issue_number, $f_translation_language,
 										  $f_section_number);
 	if (!$translationSectionObj->exists()) {
-		if (!$User->hasPermission("ManageSection")) {
+		if (!$g_user->hasPermission("ManageSection")) {
 			camp_html_display_error(getGS('A section must be created for the selected language but you do not have the right to create a section.'), $BackLink);
 			exit;
 		}
@@ -140,7 +134,7 @@ if ($f_publication_id > 0) {
 	}
 }
 
-$articleCopy = $articleObj->createTranslation($f_translation_language, $User->getUserId(), $f_translation_title);
+$articleCopy = $articleObj->createTranslation($f_translation_language, $g_user->getUserId(), $f_translation_title);
 
 header('Location: '.camp_html_article_url($articleCopy, $f_language_id, 'edit.php'));
 exit;

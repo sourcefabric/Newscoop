@@ -1,19 +1,12 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/common.php');
-load_common_include_files("user_subscriptions");
+camp_load_translation_strings("user_subscriptions");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Subscription.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageSubscriptions')) {
+if (!$g_user->hasPermission('ManageSubscriptions')) {
 	camp_html_display_error(getGS("You do not have the right to change subscriptions status."));
 	exit;
 }
@@ -27,8 +20,8 @@ $subscription =& new Subscription($f_subscription_id);
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Subscribers"), "/$ADMIN/users/?uType=Subscribers");
-$crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'", 
-			"/$ADMIN/users/edit.php?User=$User&uType=Subscribers");
+$crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'",
+			"/$ADMIN/users/edit.php?User=$f_user_id&uType=Subscribers");
 $crumbs[] = array(getGS("Subscriptions"), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
 $crumbs[] = array(getGS("Change subscription status"), "");
 echo camp_html_breadcrumbs($crumbs);

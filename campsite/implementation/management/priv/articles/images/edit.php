@@ -1,14 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_images");
+camp_load_translation_strings("article_images");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
@@ -33,7 +26,7 @@ if ($f_publication_id > 0) {
 $articleObj =& new Article($f_language_selected, $f_article_number);
 $imageObj =& new Image($f_image_id);
 
-if (!$User->hasPermission('ChangeImage')) {
+if (!$g_user->hasPermission('ChangeImage')) {
 	$title = getGS('Image information');
 } else {
 	$title = getGS('Change image information');
@@ -75,7 +68,7 @@ if ($f_publication_id > 0) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS('Number'); ?>:</TD>
 	<TD>
-		<?php if ($User->hasPermission('AttachImageToArticle')) { ?>
+		<?php if ($g_user->hasPermission('AttachImageToArticle')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_template_id" VALUE="<?php echo $f_image_template_id; ?>" class="input_text" SIZE="32" MAXLENGTH="10">
 		<?php } else {
 			echo $f_image_template_id;
@@ -85,7 +78,7 @@ if ($f_publication_id > 0) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS('Description'); ?>:</TD>
 	<TD>
-		<?php if ($User->hasPermission('ChangeImage')) { ?>
+		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" class="input_text" SIZE="32" MAXLENGTH="128">
 		<?php } else {
 			echo htmlspecialchars($imageObj->getDescription());
@@ -95,7 +88,7 @@ if ($f_publication_id > 0) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS('Photographer'); ?>:</TD>
 	<TD>
-		<?php if ($User->hasPermission('ChangeImage')) { ?>
+		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" class="input_text" SIZE="32" MAXLENGTH="64">
 		<?php } else {
 			echo htmlspecialchars($imageObj->getPhotographer());
@@ -105,7 +98,7 @@ if ($f_publication_id > 0) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS('Place'); ?>:</TD>
 	<TD>
-		<?php if ($User->hasPermission('ChangeImage')) { ?>
+		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" class="input_text" SIZE="32" MAXLENGTH="64">
 		<?php } else {
 			echo htmlspecialchars($imageObj->getPlace());
@@ -115,7 +108,7 @@ if ($f_publication_id > 0) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS('Date'); ?>:</TD>
 	<TD>
-		<?php if ($User->hasPermission('ChangeImage')) { ?>
+		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_date" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" class="input_text" SIZE="11" MAXLENGTH="10">
 		<?php } else {
 			echo htmlspecialchars($imageObj->getDate());
@@ -123,7 +116,7 @@ if ($f_publication_id > 0) {
 		<?php putGS('YYYY-MM-DD'); ?>
 	</TD>
 </TR>
-<?php if ($User->hasPermission('ChangeImage') || $User->hasPermission('AttachImageToArticle')) { ?>
+<?php if ($g_user->hasPermission('ChangeImage') || $g_user->hasPermission('AttachImageToArticle')) { ?>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">

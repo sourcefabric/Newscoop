@@ -73,8 +73,8 @@ class Section extends DatabaseObject {
 	    $p_columns['ShortName'] = $p_shortName;
 	    $success = parent::create($p_columns);
 	    if ($success) {
-			if (function_exists("camp_load_language")) {
-				camp_load_language("api");
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
 			}
 		    $logtext = getGS('Section $1 added. (Issue: $2, Publication: $3)',
 		        $this->m_data['Name']." (".$this->m_data['Number'].")",
@@ -187,8 +187,8 @@ class Section extends DatabaseObject {
 	    }
 	    $success = parent::delete();
 	    if ($success) {
-			if (function_exists("camp_load_language")) {
-				camp_load_language("api");
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
 			}
 	        $logtext = getGS('Section $1 deleted. (Issue: $2, Publication: $3)',
 		        $this->m_data['Name']." (".$this->m_data['Number'].")",

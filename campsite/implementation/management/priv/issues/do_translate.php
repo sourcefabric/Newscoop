@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("issues");
+camp_load_translation_strings("issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
@@ -8,13 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageIssue')) {
+if (!$g_user->hasPermission('ManageIssue')) {
 	camp_html_display_error(getGS('You do not have the right to add issues.'));
 	exit;
 }
@@ -29,7 +22,7 @@ $cShortName = trim(Input::Get('cShortName'));
 $cLang = Input::Get('cLang');
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));	
+	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
 $publicationObj =& new Publication($Pub);
@@ -43,11 +36,11 @@ if ($cLang == 0) {
 }
 
 if ($cName == "") {
-    $correct = false; 
+    $correct = false;
 }
 
 if ($cShortName == "") {
-    $correct = false; 
+    $correct = false;
 }
 
 if ($correct) {
@@ -74,22 +67,22 @@ camp_html_content_top("Adding new translation", $tmpArray);
 </TR>
 <TR>
 	<TD COLSPAN="2"><BLOCKQUOTE>
-    <?php 
+    <?php
     if ($cLang == 0) {	?>
     	<LI><?php  putGS('You must select a language.'); ?></LI>
         <?php
     }
-    
+
     if ($cName == "") { ?>
     	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
         <?php
     }
-    
+
     if ($cShortName == "") { ?>
     	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('URL Name').'</B>'); ?></LI>
         <?php
     }
-    
+
     if ($created) { ?>
     	<LI><?php  putGS('The issue $1 has been successfuly added.','<B>'.htmlspecialchars($cName).'</B>' ); ?></LI>
         <?php
@@ -104,7 +97,7 @@ camp_html_content_top("Adding new translation", $tmpArray);
     </TD>
 </TR>
 
-<?php  if ($correct && $created) { ?>	
+<?php  if ($correct && $created) { ?>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
@@ -113,7 +106,7 @@ camp_html_content_top("Adding new translation", $tmpArray);
 	</DIV>
 	</TD>
 </TR>
-<?php  } else { ?>	
+<?php  } else { ?>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">

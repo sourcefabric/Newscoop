@@ -41,6 +41,20 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
         return;
     }
 
+    // --- Return on unlink errros ---
+    if (preg_match ('/^unlink/i', $p_string)){
+        return;
+    }
+
+    // --- Return on upload file errros ---
+    if (preg_match ('/^move_uploaded_file/i', $p_string)){
+        return;
+    }
+
+    if (preg_match ('/^getimagesize/i', $p_string)){
+        return;
+    }
+
     // --- Don't print out the previous screen (in which the error occurred). ---
     ob_end_clean();
 

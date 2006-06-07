@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_types");
+camp_load_translation_strings("article_types");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
@@ -8,13 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageArticleTypes')) {
+if (!$g_user->hasPermission('ManageArticleTypes')) {
 	camp_html_display_error(getGS("You do not have the right to add article types."));
 	exit;
 }
@@ -31,13 +24,13 @@ $created = false;
 
 $errorMsgs = array();
 if (empty($f_field_translation_name)) {
-	$correct = false; 
-	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'); 
+	$correct = false;
+	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
 }
 
 if ($f_field_language_id <= 0) {
-	$correct = false; 
-	$errorMsgs[] = getGS('You must choose a language for the field.'); 
+	$correct = false;
+	$errorMsgs[] = getGS('You must choose a language for the field.');
 }
 
 if ($correct) {
@@ -71,8 +64,8 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
-		<?php 
-		foreach ($errorMsgs as $errorMsg) { 
+		<?php
+		foreach ($errorMsgs as $errorMsg) {
 			echo "<li>".$errorMsg."</li>";
 		}
 		?>

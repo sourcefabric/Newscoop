@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_images");
+camp_load_translation_strings("article_images");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
@@ -11,12 +10,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -36,7 +29,7 @@ if (!Input::IsValid()) {
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
 
-if (!$User->hasPermission('ChangeImage') && !$User->hasPermission('AttachImageToArticle')) {
+if (!$g_user->hasPermission('ChangeImage') && !$g_user->hasPermission('AttachImageToArticle')) {
 	$ref = camp_html_article_url($articleObj, $f_language_id, 'edit.php');
 	header("Location: $ref");
 }
@@ -44,18 +37,18 @@ if (!$User->hasPermission('ChangeImage') && !$User->hasPermission('AttachImageTo
 
 $imageObj =& new Image($f_image_id);
 
-if (!is_null($f_image_description) && $User->hasPermission('ChangeImage')) {
+if (!is_null($f_image_description) && $g_user->hasPermission('ChangeImage')) {
 	$attributes = array();
 	$attributes['Description'] = $f_image_description;
 	$attributes['Photographer'] = $f_image_photographer;
 	$attributes['Place'] = $f_image_place;
 	$attributes['Date'] = $f_image_date;
-	if ($User->hasPermission('ChangeImage')) {
+	if ($g_user->hasPermission('ChangeImage')) {
 		$imageObj->update($attributes);
 	}
 }
 
-if ($User->hasPermission('AttachImageToArticle')) {
+if ($g_user->hasPermission('AttachImageToArticle')) {
 	if (is_numeric($f_image_template_id) && ($f_image_template_id > 0)) {
 		ArticleImage::SetTemplateId($f_article_number, $f_image_id, $f_image_template_id);
 	}

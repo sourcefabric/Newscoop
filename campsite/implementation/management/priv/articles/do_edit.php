@@ -140,11 +140,6 @@ function TransformImageTags($p_match) {
 } // fn TransformImageTags
 
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
 $f_section_number = Input::Get('f_section_number', 'int', 0, true);
@@ -185,13 +180,13 @@ foreach ($dbColumns as $dbColumn) {
 }
 
 
-if (!$articleObj->userCanModify($User)) {
+if (!$articleObj->userCanModify($g_user)) {
 	$errorStr = getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.");
 	camp_html_display_error($errorStr, $BackLink);
 	exit;
 }
 // Only users with a lock on the article can change it.
-if ($articleObj->isLocked() && ($User->getUserId() != $articleObj->getLockedByUser())) {
+if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedByUser())) {
 	$diffSeconds = time() - strtotime($articleObj->getLockTime());
 	$hours = floor($diffSeconds/3600);
 	$diffSeconds -= $hours * 3600;

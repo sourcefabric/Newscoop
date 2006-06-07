@@ -1,7 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-load_common_include_files("bug_reporting");
+camp_load_translation_strings("bug_reporting");
 
 global $Campsite;
 global $ADMIN_DIR;

@@ -2,12 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission("Publish")) {
+if (!$g_user->hasPermission("Publish")) {
 	camp_html_display_error(getGS("You do not have the right to schedule issues or articles for automatic publishing."));
 	exit;
 }

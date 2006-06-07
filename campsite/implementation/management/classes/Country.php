@@ -46,7 +46,9 @@ class Country extends DatabaseObject {
 	{
 		$success = parent::create($p_values);
 		if ($success) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('Country $1 added', $this->m_data['Name']." (".$this->m_data['Code'].")");
 			Log::Message($logtext, null, 131);
 		}
@@ -58,7 +60,9 @@ class Country extends DatabaseObject {
 	{
 		$success = parent::delete();
 		if ($success) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('Country $1 deleted', $this->m_data['Name'].' ('.$this->m_data['Code'].')' );
 			Log::Message($logtext, null, 134);
 		}
@@ -96,7 +100,9 @@ class Country extends DatabaseObject {
 		$oldValue = $this->m_data['Name'];
 		$success = $this->setProperty('Name', $p_value);
 		if ($success) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('Country name $1 changed', $this->m_data['Name']." (".$this->m_data['Code'].")");
 			Log::Message($logtext, null, 133);
 		}

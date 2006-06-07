@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageTempl') || !$User->hasPermission("DeleteTempl")) {
+if (!$g_user->hasPermission('ManageTempl') || !$g_user->hasPermission("DeleteTempl")) {
 	camp_html_display_error(getGS("You do not have the right to modify templates."));
 	exit;
 }
@@ -63,7 +57,7 @@ $resMsg = Input::Get('resMsg', 'string', '');
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<?php  if ($User->hasPermission("DeleteTempl")) { ?>
+	<?php  if ($g_user->hasPermission("DeleteTempl")) { ?>
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($Path); ?>'">-->
 	<?php  } else { ?>
@@ -80,7 +74,7 @@ $resMsg = Input::Get('resMsg', 'string', '');
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<?php  if ($User->hasPermission("DeleteTempl")) { ?>
+	<?php  if ($g_user->hasPermission("DeleteTempl")) { ?>
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($Path); ?>'">-->
 	<?php  } else { ?>

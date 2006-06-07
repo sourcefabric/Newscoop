@@ -91,7 +91,9 @@ class UserType {
 
 		$this->fetch();
 		if ($this->exists()) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('User type $1 added', $p_name);
 			Log::Message($logtext, null, 121);
 		}
@@ -109,7 +111,9 @@ class UserType {
 		$query = "DELETE FROM UserTypes WHERE user_type_name='".mysql_real_escape_string($this->m_userTypeName)."'";
 		if ($g_ado_db->Execute($query)) {
 			$this->m_exists = false;
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('User type $1 deleted', $this->m_userTypeName);
 			Log::Message($logtext, null, 122);
 			return true;

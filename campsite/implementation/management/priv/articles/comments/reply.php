@@ -1,5 +1,4 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
@@ -7,14 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
-camp_load_language("globals");
-camp_load_language("articles");
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
+camp_load_translation_strings("globals");
+camp_load_translation_strings("articles");
 
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);

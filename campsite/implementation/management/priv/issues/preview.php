@@ -2,13 +2,6 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
 
-// Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
 $Language = Input::Get('Language', 'int', 0);
 $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
@@ -36,7 +29,7 @@ if ($errorStr != "") {
 	exit(0);
 }
 
-$accessParams = "LoginUserId=" . $User->getUserId() . "&LoginUserKey=" . $User->getKeyId()
+$accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_user->getKeyId()
 				. "&AdminAccess=all";
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
@@ -47,7 +40,7 @@ if ($urlType == 1) {
 	$uri = "/" . $languageObj->getCode() . "/" . $issueObj->getUrlName() . "?$accessParams";
 }
 
-if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) {
+if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
 	// Show dual-pane view for those with template management priviledges
 ?>
 <FRAMESET ROWS="60%,*" BORDER="1">

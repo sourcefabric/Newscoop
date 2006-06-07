@@ -3,16 +3,11 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission("ManageSection")) {
+if (!$g_user->hasPermission("ManageSection")) {
 	camp_html_display_error(getGS("You do not have the right to add sections."));
 	exit;
 }
-if (!$User->hasPermission("AddArticle")) {
+if (!$g_user->hasPermission("AddArticle")) {
 	camp_html_display_error(getGS("You do not have the right to add articles."));
 	exit;
 }
@@ -28,7 +23,7 @@ if ($radioButton == 'new_section') {
     $f_dest_section_number = Input::Get('f_dest_section_new_number', 'int', 0, true);
 }
 else {
-    $f_dest_section_number = Input::Get('f_dest_section_existing', 'int', 0, true);    
+    $f_dest_section_number = Input::Get('f_dest_section_existing', 'int', 0, true);
 }
 $f_dest_section_name = Input::Get('f_dest_section_new_name', 'string', '', true);
 
@@ -40,26 +35,26 @@ if (!Input::IsValid()) {
 $srcPublicationObj =& new Publication($f_src_publication_id);
 if (!$srcPublicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
-	exit;	
+	exit;
 }
 
 $srcIssueObj =& new Issue($f_src_publication_id, $f_language_id, $f_src_issue_number);
 if (!$srcIssueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
-	exit;	
+	exit;
 }
 
 $srcSectionObj =& new Section($f_src_publication_id, $f_src_issue_number, $f_language_id, $f_src_section_number);
 if (!$srcSectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'));
-	exit;	
+	exit;
 }
 
 $correct = ($f_dest_publication_id > 0) && ($f_dest_issue_number > 0) && ($f_dest_section_number > 0);
 $created = false;
 
 if ($correct) {
-    $dstSectionObj = $srcSectionObj->copy($f_dest_publication_id, $f_dest_issue_number, 
+    $dstSectionObj = $srcSectionObj->copy($f_dest_publication_id, $f_dest_issue_number,
     									  $f_language_id, $f_dest_section_number);
     if (($radioButton == "new_section") && ($f_dest_section_name != "")) {
         $dstSectionObj->setName($f_dest_section_name);
@@ -71,7 +66,7 @@ if ($correct) {
     $logtext = getGS('Section $1 has been duplicated to $2. $3 of $4',
                      $dstSectionObj->getName(), $f_dest_issue_number, $dstIssueObj->getName(),
                      $dstPublicationObj->getName());
-    Log::Message($logtext, $User->getUserName(), 154);
+    Log::Message($logtext, $g_user->getUserName(), 154);
 	header("Location: /$ADMIN/sections/duplicate_complete.php?"
 		   ."f_src_publication_id=$f_src_publication_id"
 		   ."&f_src_issue_number=$f_src_issue_number"
@@ -98,11 +93,11 @@ if ($correct) {
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
-		<?php 
+		<?php
 			if (!$correct) {
 				echo "<LI>"; putGS('Invalid parameters received'); echo "</LI>\n";
 			} else {
-				 ?>	
+				 ?>
 				<LI><?php  putGS('The section $1 could not be duplicated','<B>'.htmlspecialchars($srcSectionObj->getName()).'</B>'); ?></LI>
 		<?php  } ?>
 		</BLOCKQUOTE>

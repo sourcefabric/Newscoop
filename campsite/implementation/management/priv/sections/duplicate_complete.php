@@ -4,16 +4,11 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission("ManageSection")) {
+if (!$g_user->hasPermission("ManageSection")) {
 	camp_html_display_error(getGS("You do not have the right to add sections."));
 	exit;
 }
-if (!$User->hasPermission("AddArticle")) {
+if (!$g_user->hasPermission("AddArticle")) {
 	camp_html_display_error(getGS("You do not have the right to add articles."));
 	exit;
 }
@@ -34,19 +29,19 @@ if (!Input::IsValid()) {
 $srcPublicationObj =& new Publication($f_src_publication_id);
 if (!$srcPublicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
-	exit;	
+	exit;
 }
 
 $srcIssueObj =& new Issue($f_src_publication_id, $f_language_id, $f_src_issue_number);
 if (!$srcIssueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
-	exit;	
+	exit;
 }
 
 $srcSectionObj =& new Section($f_src_publication_id, $f_src_issue_number, $f_language_id, $f_src_section_number);
 if (!$srcSectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'));
-	exit;	
+	exit;
 }
 
 $dstPublicationObj =& new Publication($f_dest_publication_id);

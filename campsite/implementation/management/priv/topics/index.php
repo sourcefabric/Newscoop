@@ -1,12 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/topics/topics_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
 $f_show_languages = camp_session_get('f_show_languages', array());
 
 $topics = Topic::GetTree();
@@ -91,7 +85,7 @@ function uncheckAll()
 </FORM>
 
 <p>
-<?php  if ($User->hasPermission("ManageTopics")) { ?>
+<?php  if ($g_user->hasPermission("ManageTopics")) { ?>
 <form method="POST" action="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <input type="hidden" name="f_topic_parent_id" value="0">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_input">

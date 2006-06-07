@@ -160,7 +160,9 @@ class User extends DatabaseObject {
 		}
 		$success = parent::create($p_values);
 		if ($success) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('User account $1 created', $this->m_data['Name']." (".$this->m_data['UName'].")");
 			Log::Message($logtext, null, 51);
 		}
@@ -185,7 +187,9 @@ class User extends DatabaseObject {
 			}
 			$g_ado_db->Execute("DELETE FROM Subscriptions WHERE IdUser=".$this->m_data['Id']);
 			$g_ado_db->Execute("DELETE FROM SubsByIP WHERE IdUser=".$this->m_data['Id']);
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('The user account $1 has been deleted.', $this->m_data['Name']." (".$this->m_data['UName'].")");
 			Log::Message($logtext, null, 52);
 		}
@@ -289,8 +293,8 @@ class User extends DatabaseObject {
 			$this->setProperty('fk_user_type', $p_userType);
 			$this->fetch();
 
-			if (function_exists("camp_load_language")) {
-				camp_load_language("api");
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
 			}
 			$logtext = getGS('User permissions for $1 changed',
 							 $this->m_data['Name']
@@ -577,8 +581,8 @@ class User extends DatabaseObject {
 		$queryStr = "SELECT SHA1('".mysql_real_escape_string($p_password)."') AS PWD";
 		$row = $g_ado_db->GetRow($queryStr);
 		$this->setProperty('Password', $row['PWD']);
-		if (function_exists("camp_load_language")) {
-			camp_load_language("api");
+		if (function_exists("camp_load_translation_strings")) {
+			camp_load_translation_strings("api");
 		}
 		$logtext = getGS('Password changed for $1', $this->m_data['Name']." (".$this->m_data['UName'].")");
 		Log::Message($logtext, null, 54);

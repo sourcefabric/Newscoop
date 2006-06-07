@@ -7,13 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('DeletePub')) {
+if (!$g_user->hasPermission('DeletePub')) {
 	camp_html_display_error(getGS("You do not have the right to delete publications."));
 	exit;
 }
@@ -47,19 +41,19 @@ if ($subscriptionsRemaining > 0) {
 	$errorMsgs[] = getGS('There are $1 subscription(s) left.', $subscriptionsRemaining);
 	$doDelete = false;
 }
-    
+
 if ($doDelete) {
 	$publicationObj->delete();
 	header("Location: /$ADMIN/pub");
 	exit;
 } else {
-	$errorMsgs[] = getGS('The publication $1 could not be deleted.', 
-						 '<B>'.htmlspecialchars($publicationObj->getName()).'</B>'); 
+	$errorMsgs[] = getGS('The publication $1 could not be deleted.',
+						 '<B>'.htmlspecialchars($publicationObj->getName()).'</B>');
 }
 echo camp_html_content_top(getGS("Deleting publication"), array("Pub" => $publicationObj));
 
 
-?>	
+?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>

@@ -1,16 +1,14 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Country.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
 if (!isset($editUser) || gettype($editUser) != 'object') {
 	camp_html_display_error(getGS('No such user account.'), "/$ADMIN/users/?".get_user_urlparams());
 	exit;
 }
 $isNewUser = $editUser->getUserName() == '';
-compute_user_rights($User, $canManage, $canDelete);
-if (!$canManage && $editUser->getUserId() != $User->getUserId()) {
+compute_user_rights($g_user, $canManage, $canDelete);
+if (!$canManage && $editUser->getUserId() != $g_user->getUserId()) {
 	if ($isNewUser) {
 		$error = getGS("You do not have the right to create user accounts.");
 	} else {
@@ -147,7 +145,7 @@ if (!$isNewUser) {
 	<td>
 		<table border="0" cellspacing="0" cellpadding="3" align="center" width="100%">
 		<?php
-		if ($userId == $User->getUserId() && !$isNewUser) {
+		if ( ($userId == $g_user->getUserId()) && !$isNewUser) {
 		?>
 		<tr>
 			<td align="right" nowrap width="1%"><?php putGS("Old Password"); ?>:</td>

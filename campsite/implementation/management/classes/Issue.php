@@ -70,7 +70,9 @@ class Issue extends DatabaseObject {
 	    }
 	    $success = parent::create($tmpValues);
 	    if ($success) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 	    	$logtext = getGS('Issue $1 added in publication $2',
 	    					 $this->m_data['Name']." (".$this->m_data['Number'].")",
 	    					 $this->m_data['IdPublication']);
@@ -97,7 +99,9 @@ class Issue extends DatabaseObject {
 		}
 	    $success = parent::delete();
 	    if ($success) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 	    	$logtext = getGS('Issue $1 from publication $2 deleted',
 	    		$this->m_data['Name']." (".$this->m_data['Number'].")",
 	    		$this->m_data['IdPublication']);
@@ -379,7 +383,9 @@ class Issue extends DatabaseObject {
 			} else {
 				$status = getGS('Not published');
 			}
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('Issue $1 changed status to $2',
 							 $this->m_data['Number'].'. '.$this->m_data['Name'].' ('.$this->getLanguageName().')',
 							 $status);

@@ -1,15 +1,9 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/SimplePager.php");
-camp_load_language("api");
+camp_load_translation_strings("api");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
 $PubOffs = camp_session_get('PubOffs', 0);
 if ($PubOffs < 0) {
     $PubOffs = 0;
@@ -27,7 +21,7 @@ camp_html_content_top(getGS('Publication List'), null);
 
 ?>
 
-<?php  if ($User->hasPermission("ManagePub")) { ?>
+<?php  if ($g_user->hasPermission("ManagePub")) { ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
@@ -54,12 +48,12 @@ camp_html_content_top(getGS('Publication List'), null);
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Name<BR><SMALL>(click to see issues)</SMALL>"); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Default Site Alias"); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Default Language"); ?></B></TD>
-    <?php  if ($User->hasPermission("ManagePub")) { ?>
+    <?php  if ($g_user->hasPermission("ManagePub")) { ?>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Comments enabled"); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="20%" ><B><?php  putGS("URL Type"); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Configure"); ?></B></TD>
     <?php  }
-    if ($User->hasPermission("DeletePub")) { ?>
+    if ($g_user->hasPermission("DeletePub")) { ?>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
     <?php  } ?>
 </TR>
@@ -76,7 +70,7 @@ foreach ($publications as $pub) { ?>
         <TD>
             <?php  p(htmlspecialchars($pub->getProperty("NativeName"))); ?>&nbsp;
         </TD>
-        <?php  if ($User->hasPermission("ManagePub")) { ?>
+        <?php  if ($g_user->hasPermission("ManagePub")) { ?>
         <TD align="center">
             <?php if ($pub->commentsEnabled()) { ?>
                 <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/is_shown.png" border="0">
@@ -91,7 +85,7 @@ foreach ($publications as $pub) { ?>
             <A HREF="/<?php p($ADMIN); ?>/pub/edit.php?Pub=<?php p($pub->getPublicationId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
         </TD>
         <?php  }
-        if ($User->hasPermission("DeletePub")) { ?>
+        if ($g_user->hasPermission("DeletePub")) { ?>
         <TD ALIGN="CENTER">
         <A HREF="/<?php p($ADMIN); ?>/pub/do_del.php?Pub=<?php p($pub->getPublicationId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($pub->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete publication $1',htmlspecialchars($pub->getName())); ?>" TITLE="<?php  putGS('Delete publication $1',htmlspecialchars($pub->getName())); ?>" ></A>
         </TD>

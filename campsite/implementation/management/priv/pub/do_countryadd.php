@@ -4,13 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/SubscriptionDefaultTime.php");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManagePub')) {
+if (!$g_user->hasPermission('ManagePub')) {
 	camp_html_display_error(getGS("You do not have the right to manage publications."));
 	exit;
 }
@@ -25,10 +19,10 @@ $created = false;
 $publicationObj =& new Publication($cPub);
 
 if (empty($cCountryCode)) {
-	$correct = false; 
-	$errorMsgs[] = getGS('You must select a country.'); 
+	$correct = false;
+	$errorMsgs[] = getGS('You must select a country.');
 }
-    
+
 if ($correct) {
 	$defaultTime = new SubscriptionDefaultTime($cCountryCode, $cPub);
 	$created = $defaultTime->create(array('TrialTime' => $cTrialTime, 'PaidTime' => $cPaidTime));
@@ -37,13 +31,13 @@ if ($correct) {
 		exit;
 	}
 } else {
-    $errorMsgs[] = getGS('The default subscription time for country $1 could not be added.', $publicationObj->getName().':'.$cCountryCode) .' '.getGS('Please check if another entry with the same country code exists already.'); 
+    $errorMsgs[] = getGS('The default subscription time for country $1 could not be added.', $publicationObj->getName().':'.$cCountryCode) .' '.getGS('Please check if another entry with the same country code exists already.');
 }
 
 $crumbs = array(getGS("Subscriptions") => "deftime.php?Pub=$cPub");
 camp_html_content_top(getGS("Adding new country default subscription time"), array("Pub" => $publicationObj), true, false, $crumbs);
 
-    
+
 ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
@@ -56,7 +50,7 @@ camp_html_content_top(getGS("Adding new country default subscription time"), arr
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
-		<?php 
+		<?php
 		foreach ($errorMsgs as $errorMsg) { ?>
 			<li><?php p($errorMsg); ?></li>
 			<?php

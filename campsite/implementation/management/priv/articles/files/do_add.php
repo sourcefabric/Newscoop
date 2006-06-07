@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_files");
+camp_load_translation_strings("article_files");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Attachment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAttachment.php');
@@ -8,12 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Translation.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission('AddFile')) {
+if (!$g_user->hasPermission('AddFile')) {
 	camp_html_display_error(getGS('You do not have the right to add files.'), null, true);
 	exit;
 }
@@ -47,7 +41,7 @@ $description->create($f_description);
 
 $attributes = array();
 $attributes['fk_description_id'] = $description->getPhraseId();
-$attributes['fk_user_id'] = $User->getUserId();
+$attributes['fk_user_id'] = $g_user->getUserId();
 if ($f_language_specific == "yes") {
 	$attributes['fk_language_id'] = $f_language_selected;
 }
@@ -64,7 +58,7 @@ if (!empty($_FILES['f_file'])) {
 
 // Check if image was added successfully
 if (!is_object($file)) {
-	if ($file == -1) 
+	if ($file == -1)
 		camp_html_display_error("File upload failed because your files permission are not writable by the webuser.", $BackLink, true);
 	else
 	    camp_html_display_error("File upload failed.", $BackLink, true);

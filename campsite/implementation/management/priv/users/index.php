@@ -1,16 +1,14 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/SimplePager.php");
-camp_load_language("api");
-
-list($access, $User) = check_basic_access($_REQUEST);
+camp_load_translation_strings("api");
 
 if (Input::Get('reset_search', 'string', 'false', true) == 'true') {
 	reset_user_search_parameters();
 }
 read_user_common_parameters(); // $uType, $userOffs, $ItemsPerPage, search parameters
 verify_user_type();
-compute_user_rights($User, $canManage, $canDelete);
+compute_user_rights($g_user, $canManage, $canDelete);
 
 $typeParam = 'uType=' . urlencode($uType);
 $isReader = $uType == 'Subscribers' ? 'Y' : 'N';
@@ -233,7 +231,7 @@ if (gettype($res) == 'object' && $res->NumRows() > 0) {
 		</td>
 		<td align="left" valign="middle"><b><?php putGS("E-Mail"); ?></b></td>
 
-		<?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
+		<?php if ($uType == "Subscribers" && $g_user->hasPermission("ManageSubscriptions")) { ?>
 		<td align="left" valign="middle"><b><?php putGS("Subscriptions"); ?></b></td>
 		<?php } ?>
 
@@ -274,7 +272,7 @@ for($loop = 0; $loop < $last; $loop++) {
 		</td>
 		<td><?php echo htmlspecialchars($row['UName']); ?></TD>
 		<td><?php echo htmlspecialchars($row['EMail']); ?></td>
-		<?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
+		<?php if ($uType == "Subscribers" && $g_user->hasPermission("ManageSubscriptions")) { ?>
 		<td><a href="<?php echo "/$ADMIN/users/subscriptions/?f_user_id=$userId"; ?>">
 			<?php putGS("Subscriptions"); ?>
 		</td>

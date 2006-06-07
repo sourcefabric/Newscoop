@@ -4,12 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleType.php");
 
 global $Campsite;
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission('AddArticle')) {
+if (!$g_user->hasPermission('AddArticle')) {
 	camp_html_display_error(getGS("You do not have the right to add articles."));
 	exit;
 }
@@ -127,10 +122,10 @@ if (sizeof($allArticleTypes) == 0) {
 			<TD>
 			    <?php if (count($allArticleTypes) == 1) { ?>
 			        <INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php echo $allArticleTypes[0]; ?>">
-                    <?php 
+                    <?php
                         $tmpAT =& new ArticleType($allArticleTypes[0]);
                         echo $tmpAT->getDisplayName();
-			    } else { ?>			    
+			    } else { ?>
     				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
 	   		      	<option></option>
 		  		    <?php
@@ -141,7 +136,7 @@ if (sizeof($allArticleTypes) == 0) {
 					?>
 				    </SELECT>
                <?php } ?>
-			</TD>			
+			</TD>
 		</TR>
 		<TR>
 			<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>

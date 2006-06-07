@@ -3,13 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManagePub')) {
+if (!$g_user->hasPermission('ManagePub')) {
 	camp_html_display_error(getGS("You do not have the right to manage publications."));
 	exit;
 }
@@ -22,15 +16,15 @@ $errorMsgs = array();
 
 if ($publicationObj->getDefaultAliasId() != $Alias) {
 	$deleted = $aliasObj->delete();
-	
+
 	if ($deleted) {
-		$logtext = getGS('The alias $1 has been deleted from publication $2.', 
-						 $aliasObj->getName(), $publicationObj->getName()); 
-		Log::Message($logtext, $User->getUserName(), 152);
+		$logtext = getGS('The alias $1 has been deleted from publication $2.',
+						 $aliasObj->getName(), $publicationObj->getName());
+		Log::Message($logtext, $g_user->getUserName(), 152);
 		header("Location: /$ADMIN/pub/aliases.php?Pub=$Pub");
 		exit;
 	} else {
-		$errorMsgs[] = getGS('The alias $1 could not be deleted.','<B>'.$aliasObj->getName().'</B>'); 
+		$errorMsgs[] = getGS('The alias $1 could not be deleted.','<B>'.$aliasObj->getName().'</B>');
 	}
 } else {
 	$errorMsgs[] = getGS('$1 is the default publication alias, it can not be deleted.', '<B>'.$aliasObj->getName().'</B>');
@@ -51,7 +45,7 @@ camp_html_content_top(getGS("Deleting alias"), array("Pub" => $publicationObj), 
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
-		<?php 
+		<?php
 		foreach ($errorMsgs as $errorMsg) { ?>
 			<li><?php p($errorMsg); ?></li>
 			<?php

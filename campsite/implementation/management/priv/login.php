@@ -1,7 +1,5 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 include($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/LoginAttempts.php');
@@ -65,8 +63,8 @@ else {
 }
 
 // Load the language files.
-camp_load_language("globals");
-camp_load_language("home");
+camp_load_translation_strings("globals");
+camp_load_translation_strings("home");
 
 ?>
 <head>

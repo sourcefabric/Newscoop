@@ -1,14 +1,11 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Subscription.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Publication.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-
 read_user_common_parameters(); // $uType, $userOffs, $ItemsPerPage, search parameters
 verify_user_type();
-compute_user_rights($User, $canManage, $canDelete);
+compute_user_rights($g_user, $canManage, $canDelete);
 
 $typeParam = 'uType=' . urlencode($uType);
 
@@ -95,7 +92,7 @@ if ($canManage && ($userId > 0)) {
 		<tr>
 			<td valign="top">
 		        <?php
-       			if (($uType == 'Subscribers') && ($User->hasPermission("ManageSubscriptions"))) {
+       			if (($uType == 'Subscribers') && ($g_user->hasPermission("ManageSubscriptions"))) {
         			require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/subscriptions.php");
 	        	}
         		?>
@@ -103,9 +100,9 @@ if ($canManage && ($userId > 0)) {
 		</tr>
 		<tr>
 			<td valign="top">
-        		<?php 
+        		<?php
 			if ($uType == 'Subscribers') {
-        			require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php"); 
+        			require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php");
         		}
 			?>
 			</td>

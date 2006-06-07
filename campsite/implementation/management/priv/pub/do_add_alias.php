@@ -4,13 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManagePub')) {
+if (!$g_user->hasPermission('ManagePub')) {
 	camp_html_display_error(getGS("You do not have the right to manage publications."));
 	exit;
 }
@@ -24,7 +18,7 @@ $created = false;
 $errorMsgs = array();
 if (empty($cName)) {
 	$correct = false;
-	$errorMsgs[] = getGS('You must complete the $1 field.', '<B>Name</B>'); 
+	$errorMsgs[] = getGS('You must complete the $1 field.', '<B>Name</B>');
 }
 
 $aliases = 0;
@@ -34,15 +28,15 @@ if ($correct) {
 		$newAlias =& new Alias();
 		$created = $newAlias->create(array('Name' => "$cName", "IdPublication" => "$cPub"));
 		if ($created) {
-			$logtext = getGS('The site alias $1 has been added to publication $2.', 
+			$logtext = getGS('The site alias $1 has been added to publication $2.',
 						$cName, $publicationObj->getName());
-			Log::Message($logtext, $User->getUserName(), 151);
+			Log::Message($logtext, $g_user->getUserName(), 151);
 			header("Location: /$ADMIN/pub/edit_alias.php?Pub=$cPub&Alias=".$newAlias->getId());
 			exit;
 		}
 	}
 	else {
-		$errorMsgs[] = getGS('Another alias with the same name exists already.'); 
+		$errorMsgs[] = getGS('Another alias with the same name exists already.');
 	}
 }
 
@@ -65,7 +59,7 @@ camp_html_content_top(getGS("Adding new alias"), array("Pub" => $publicationObj)
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
-		<?php 
+		<?php
 		foreach ($errorMsgs as $errorMsg) { ?>
 			<li><?php p($errorMsg); ?></li>
 			<?PHP

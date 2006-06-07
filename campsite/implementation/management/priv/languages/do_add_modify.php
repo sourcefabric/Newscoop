@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("languages");
+camp_load_translation_strings("languages");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/localizer/Localizer.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
@@ -9,12 +8,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/TimeUnit.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/parser_utils.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission('ManageLanguages')) {
+if (!$g_user->hasPermission('ManageLanguages')) {
 	camp_html_display_error(getGS("You do not have the right to add new languages."));
 	exit;
 }
@@ -52,7 +46,7 @@ $Y = Input::Get('Y', 'string', '', true);
 $correct = 1;
 $created = 0;
 if (($cName == "") || ($cOrigName == "") || ($cCode == "") ) {
-    $correct = 0; 
+    $correct = 0;
 }
 
 if ($editMode) {
@@ -60,7 +54,7 @@ if ($editMode) {
 }
 
 if ($correct) {
-	$columns = array('Name' => $cName, 
+	$columns = array('Name' => $cName,
 					 'Code' => $cCode,
 					 'OrigName' => $cOrigName,
 					 'Month1' => $cMonth1,
@@ -118,10 +112,10 @@ echo $breadcrumbs;
 <TR>
 	<TD COLSPAN="2">
 	   <BLOCKQUOTE>
-        <?php 
+        <?php
         if ($cName == "") { ?>
             <LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-            <?php  
+            <?php
         }
         if ($cOrigName == "") { ?>
            	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Native name').'</B>'); ?></LI>
@@ -129,7 +123,7 @@ echo $breadcrumbs;
         }
         if ($cCode == "") { ?>
             <LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Code').'</B>'); ?></LI>
-            <?php  
+            <?php
         }
         ?>
         </BLOCKQUOTE>

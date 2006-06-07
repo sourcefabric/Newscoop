@@ -1,18 +1,11 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("imagearchive");
+camp_load_translation_strings("imagearchive");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-camp_load_language("api");
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
+camp_load_translation_strings("api");
 
 // Initialize input variables ///////////////////////////////////////////////////
 $f_order_by = camp_session_get('f_order_by', 'id');
@@ -47,25 +40,13 @@ $crumbs = array();
 $crumbs[] = array(getGS('Content'), "");
 $crumbs[] = array(getGS('Image Archive'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
+echo $breadcrumbs;
 ?>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-	"http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
-<HEAD>
-	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<TITLE><?php  putGS('Images'); ?></TITLE>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-</HEAD>
-<BODY>
-
-<?php echo $breadcrumbs; ?>
 <p>
 <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
 <tr>
 <?php
-if ($User->hasPermission('AddImage')) { ?>
+if ($g_user->hasPermission('AddImage')) { ?>
     <td>
     	<A HREF="add.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A>
     </TD>
@@ -146,7 +127,7 @@ if (count($imageData) > 0) {
    		<?php  putGS("In use"); ?>
     </TD>
     <?php
-    if ($User->hasPermission('DeleteImage')) { ?>
+    if ($g_user->hasPermission('DeleteImage')) { ?>
     <TD ALIGN="center" VALIGN="TOP" style="padding: 3px;"><?php  putGS("Delete"); ?></TD>
 <?php  } ?>
 </TR>
@@ -176,7 +157,7 @@ foreach ($imageData as $image) {
             <?php echo $image['in_use']; ?>&nbsp;
         </TD>
         <?php
-        if ($User->hasPermission('DeleteImage')) {
+        if ($g_user->hasPermission('DeleteImage')) {
         	if (!$image['in_use']) { ?>
             	<TD ALIGN="CENTER">
                 <A HREF="do_del.php?f_image_id=<?php echo $image['id']; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($image['description'])); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>

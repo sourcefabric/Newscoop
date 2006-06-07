@@ -1,9 +1,8 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once "HTTP/Client.php";
 require_once($_SERVER['DOCUMENT_ROOT'] . "/classes/BugReporter.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/classes/Input.php");
-load_common_include_files("bug_reporting");
+camp_load_translation_strings("bug_reporting");
 
 //
 // Post the error to server

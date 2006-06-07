@@ -2,13 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/topics/topics_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticleTopic.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageTopics')) {
+if (!$g_user->hasPermission('ManageTopics')) {
 	camp_html_display_error(getGS("You do not have the right to delete topics."));
 	exit;
 }
@@ -25,7 +19,7 @@ if (($deleteTopic->getNumTranslations() == 1) && $deleteTopic->hasSubtopics()) {
 $numArticles = count(ArticleTopic::GetArticlesWithTopic($f_topic_delete_id));
 if ($numArticles > 0) {
 	$doDelete = false;
-	$errorMsgs[] = getGS('There are $1 articles using the topic.', $numArticles); 
+	$errorMsgs[] = getGS('There are $1 articles using the topic.', $numArticles);
 }
 
 if ($doDelete) {
@@ -45,7 +39,7 @@ $crumbs[] = array(getGS("Topics"), "/$ADMIN/topics/");
 $crumbs[] = array(getGS("Deleting topic"), "");
 echo camp_html_breadcrumbs($crumbs);
 ?>
- 
+
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>

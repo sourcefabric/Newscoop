@@ -57,7 +57,9 @@ class Language extends DatabaseObject {
 		if ($success) {
 	    	Localizer::CreateLanguageFiles($this->m_data['Code']);
 	    	camp_create_language_links();
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 	        $logtext = getGS('Language $1 added', $this->m_data['Name']." (".$this->m_data['OrigName'].")");
 	        Log::Message($logtext, null, 101);
 		}
@@ -68,7 +70,9 @@ class Language extends DatabaseObject {
 	function update($p_values = null, $p_commit = true, $p_isSql = false)
 	{
 		parent::update($p_values, $p_commit, $p_isSql);
-		if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		if (function_exists("camp_load_translation_strings")) {
+			camp_load_translation_strings("api");
+		}
         $logtext = getGS('Language $1 modified', $this->m_data['Name']." (".$this->m_data['OrigName'].")");
         Log::Message($logtext, null, 103);
 	} // fn update
@@ -81,7 +85,9 @@ class Language extends DatabaseObject {
 		Localizer::DeleteLanguageFiles($this->getCode());
 		$success = parent::delete();
 		if ($success) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('Language $1 deleted', $this->m_data['Name']." (".$this->m_data['OrigName'].")");
 			Log::Message($logtext, null, 102);
 		}

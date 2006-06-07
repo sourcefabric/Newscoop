@@ -1,18 +1,11 @@
-<?php  
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_images");
+<?php
+camp_load_translation_strings("article_images");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -26,20 +19,20 @@ if (!Input::IsValid()) {
 $articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), null, true);
-	exit;		
+	exit;
 }
 
 $imageObj =& new Image($f_image_id);
 if (!$imageObj->exists()) {
 	camp_html_display_error(getGS('Image does not exist.'), null, true);
-	exit;	
+	exit;
 }
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
-if (!$User->hasPermission('AttachImageToArticle')) {
+if (!$g_user->hasPermission('AttachImageToArticle')) {
 	camp_html_display_error(getGS("You do not have the right to attach images to articles."), null, true);
-	exit;		
+	exit;
 }
 
 ArticleImage::AddImageToArticle($f_image_id, $f_article_number);

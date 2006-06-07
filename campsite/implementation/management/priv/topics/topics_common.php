@@ -1,6 +1,5 @@
 <?PHP
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files("topics");
+camp_load_translation_strings("topics");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Topic.php");
@@ -17,7 +16,7 @@ function camp_topic_path($p_topic, $p_languageId)
 		if (empty($name)) {
 			$name = "-----";
 		}
-		$path .= "/ $name ";	
+		$path .= "/ $name ";
 	}
 	return $path;
 }

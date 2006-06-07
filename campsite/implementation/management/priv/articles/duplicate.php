@@ -1,12 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
 // Optional input, for articles that are inside of sections.
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
@@ -31,17 +25,17 @@ $f_action = Input::Get('f_action');
 // Check permissions
 //
 if ($f_action == "duplicate") {
-	if (!$User->hasPermission("AddArticle")) {
+	if (!$g_user->hasPermission("AddArticle")) {
 		camp_html_display_error(getGS("You do not have the right to add articles."));
 		exit;
 	}
 } elseif ($f_action == "move") {
-	if (!$User->hasPermission("MoveArticle")) {
+	if (!$g_user->hasPermission("MoveArticle")) {
 		camp_html_display_error(getGS("You do not have the right to move articles."));
 		exit;
 	}
 } elseif ($f_action == "publish") {
-	if (!$User->hasPermission("Publish")) {
+	if (!$g_user->hasPermission("Publish")) {
 		camp_html_display_error(getGS("You do not have the right to publish articles."));
 		exit;
 	}
@@ -234,7 +228,7 @@ if (isset($_REQUEST["action_button"])) {
 			$newArticles = $tmpArticle->copy($f_destination_publication_id,
 							  				 $f_destination_issue_number,
 							  				 $f_destination_section_number,
-							  				 $User->getUserId(),
+							  				 $g_user->getUserId(),
 							  				 $languageArray);
 
 			// Set the names of the new copies

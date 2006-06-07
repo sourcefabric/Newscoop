@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_types");
+camp_load_translation_strings("article_types");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
@@ -8,13 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageArticleTypes')) {
+if (!$g_user->hasPermission('ManageArticleTypes')) {
 	camp_html_display_error(getGS("You do not have the right to rename article type fields."));
 	exit;
 }
@@ -37,18 +30,18 @@ if (empty($f_name)) {
 } else {
 	$valid = ArticleType::IsValidFieldName($f_name);
 	if (!$valid) {
-		$correct = false; 
-		$errorMsgs[] = getGS('The $1 field may only contain letters and underscore (_) character.', '<B>' . getGS('Name') . '</B>'); 
+		$correct = false;
+		$errorMsgs[] = getGS('The $1 field may only contain letters and underscore (_) character.', '<B>' . getGS('Name') . '</B>');
     }
 
     if ($correct) {
     	$old_articleTypeField =& new ArticleTypeField($articleTypeName, $f_oldName);
     	if (!$old_articleTypeField->exists()) {
-		    $correct = false; 
-		    $errorMsgs[] = getGS('The field $1 does not exist.', '<B>'.htmlspecialchars($f_oldName).'</B>'); 
+		    $correct = false;
+		    $errorMsgs[] = getGS('The field $1 does not exist.', '<B>'.htmlspecialchars($f_oldName).'</B>');
 		}
     }
-	
+
 	if ($correct) {
 		$articleTypeField =& new ArticleTypeField($articleTypeName, $f_name);
 		if ($articleTypeField->exists()) {
@@ -56,13 +49,13 @@ if (empty($f_name)) {
 			$errorMsgs[] = getGS('The field $1 already exists.', '<B>'. htmlspecialchars($f_name). '</B>');
 		}
 	}
-    
+
     if ($correct) {
     	$old_articleTypeField->rename($f_name);
     	header("Location: /$ADMIN/article_types/fields/?f_article_type=". urlencode($articleTypeName));
 		exit;
 	}
-} 
+}
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -83,8 +76,8 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
-		<?php 
-		foreach ($errorMsgs as $errorMsg) { 
+		<?php
+		foreach ($errorMsgs as $errorMsg) {
 			echo "<li>".$errorMsg."</li>";
 		}
 		?>

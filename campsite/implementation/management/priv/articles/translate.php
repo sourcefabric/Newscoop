@@ -2,12 +2,6 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
 // Optional input parameters
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
@@ -54,7 +48,7 @@ if ($f_publication_id > 0) {
 	}
 }
 
-if (!$User->hasPermission("TranslateArticle")) {
+if (!$g_user->hasPermission("TranslateArticle")) {
 	$errorStr = getGS('You do not have the right to translate articles.');
 	camp_html_display_error($errorStr, $BackLink);
 	exit;
@@ -158,13 +152,13 @@ if ($f_publication_id > 0) {
 		// Every article must live inside a cooresponding issue of the same language.
 		if (!$translationIssueObj->exists()) {
 
-			if ($User->hasPermission("ManageIssue")) {
+			if ($g_user->hasPermission("ManageIssue")) {
 
 				// If a section needs to be translated, but the user doesnt have the permission
 				// to create a section, then we dont want to display anything here.  Even
 				// if they can create the issue, they still need to create a cooresponding section.
 				// If they dont have the permission to do that, then no use in creating the issue.
-				if ($translationSectionObj->exists() || $User->hasPermission("ManageSection")) {
+				if ($translationSectionObj->exists() || $g_user->hasPermission("ManageSection")) {
 ?>
 <TR>
 	<TD colspan="2" align="left" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><strong><?php putGS("An issue must be created for the selected language.  Please enter the issue name and URL name."); ?></strong></TD>
@@ -195,12 +189,12 @@ if ($f_publication_id > 0) {
 
 		if (!$translationSectionObj->exists()) {
 
-			if ($User->hasPermission("ManageSection")) {
+			if ($g_user->hasPermission("ManageSection")) {
 
 				// If an issue needs to be translated, but the user doesnt have the permission
 				// to create an issue, then we dont want to display anything here.  Even
 				// if they can create the section, they still need to create a cooresponding issue.
-				if ($translationIssueObj->exists() || $User->hasPermission("ManageIssue")) {
+				if ($translationIssueObj->exists() || $g_user->hasPermission("ManageIssue")) {
 ?>
 <TR>
 	<TD colspan="2" align="left" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><strong><?php putGS("A section must be created for the selected language.  Please enter the section name and URL name."); ?></strong></TD>

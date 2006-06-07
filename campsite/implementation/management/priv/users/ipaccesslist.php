@@ -1,6 +1,5 @@
 <?php
 
-check_basic_access($_REQUEST);
 if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserName() == '') {
 	camp_html_display_error(getGS('No such user account.'),$_SERVER['REQUEST_URI']);
 	exit;
@@ -48,7 +47,7 @@ if (sizeof($ipAccessList) > 0) {
 			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" ALT="<?php putGS('Delete'); ?>" title="<?php putGS('Delete'); ?>"></a>
 		</td>
 	</tr>
-<?php  
+<?php
 	}
 } else {
 ?><tr class="list_row_odd"><td colspan="3" style="padding-left: 3px;"><?php  putGS('No records.'); ?></td></tr>

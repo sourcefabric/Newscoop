@@ -1,7 +1,5 @@
 <?php
-
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_images");
+camp_load_translation_strings("article_images");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
@@ -12,12 +10,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission('AddImage')) {
+if (!$g_user->hasPermission('AddImage')) {
 	camp_html_display_error(getGS('You do not have the right to add images.' ), null, true);
 	exit;
 }
@@ -52,9 +45,9 @@ $attributes['Photographer'] = $f_image_photographer;
 $attributes['Place'] = $f_image_place;
 $attributes['Date'] = $f_image_date;
 if (!empty($f_image_url)) {
-	$image = Image::OnAddRemoteImage($f_image_url, $attributes, $User->getUserId());
+	$image = Image::OnAddRemoteImage($f_image_url, $attributes, $g_user->getUserId());
 } elseif (!empty($_FILES['f_image_file']) && !empty($_FILES['f_image_file']['name'])) {
-	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $User->getUserId());
+	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $g_user->getUserId());
 } else {
 	camp_html_display_error(getGS("You must select an image file to upload."), $BackLink, true);
 	exit;

@@ -3,11 +3,9 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Log.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-
 read_user_common_parameters(); // $uType, $userOffs, $ItemsPerPage, search parameters
 verify_user_type();
-compute_user_rights($User, $canManage, $canDelete);
+compute_user_rights($g_user, $canManage, $canDelete);
 if (!$canManage) {
 	camp_html_display_error(getGS('You do not have the right to create user accounts.'));
 	exit;
@@ -53,7 +51,7 @@ if ($errorField != "") {
 if (User::UserNameExists($fieldValues['UName'])) {
 	$errorMsg = getGS('That user name already exists, please choose a different login name.');
 	header("Location: $backLink&res=ERROR&resMsg=" . urlencode($errorMsg));
-	exit;	
+	exit;
 }
 
 // read password

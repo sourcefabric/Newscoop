@@ -1,16 +1,10 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files("article_images");
+camp_load_translation_strings("article_images");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticleImage.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Image.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission("AddImage")) {
+if (!$g_user->hasPermission("AddImage")) {
 	camp_html_display_error(getGS("You do not have the right to add images" ), null, true);
 	exit;
 }
@@ -78,7 +72,7 @@ function checkAddForm(form) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" SIZE="32" MAXLENGTH="64" VALUE="<?php echo $User->getRealName(); ?>" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_photographer" SIZE="32" MAXLENGTH="64" VALUE="<?php echo $g_user->getRealName(); ?>" class="input_text">
 	</TD>
 </TR>
 <TR>

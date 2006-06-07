@@ -2,16 +2,11 @@
 
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission("ManageSection")) {
+if (!$g_user->hasPermission("ManageSection")) {
 	camp_html_display_error(getGS("You do not have the right to add sections."));
 	exit;
 }
-if (!$User->hasPermission("AddArticle")) {
+if (!$g_user->hasPermission("AddArticle")) {
 	camp_html_display_error(getGS("You do not have the right to add articles."));
 	exit;
 }
@@ -26,25 +21,25 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/sections/index.php?Pub=$f_src_
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS("Invalid input: $1", Input::GetErrorString()), $BackLink);
-	exit;	
+	exit;
 }
 
 $publicationObj =& new Publication($f_src_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
-	exit;	
+	exit;
 }
 
 $issueObj =& new Issue($f_src_publication_id, $f_language_id, $f_src_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
-	exit;	
+	exit;
 }
 
 $sectionObj =& new Section($f_src_publication_id, $f_src_issue_number, $f_language_id, $f_src_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'));
-	exit;	
+	exit;
 }
 
 $allPublications = Publication::GetPublications();
@@ -55,7 +50,7 @@ if (count($allPublications) == 1) {
 $allIssues = array();
 if ($f_dest_publication_id > 0) {
     // Get the most recent 50 Issues...if they want something farther back, we are in trouble.
-    $sqlOptions = array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC")); 
+    $sqlOptions = array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC"));
 	$allIssues = Issue::GetIssues($f_dest_publication_id, $f_language_id, null, null, $sqlOptions);
 	if (count($allIssues) == 1) {
 		$f_dest_issue_number = $f_src_issue_number;
@@ -79,7 +74,7 @@ function CustomValidator_DuplicateSection(form) {
         alert("<?php putGS("Please select either '$1' or '$2'.", getGS('Existing Section'), getGS('New Section')); ?>");
         return false;
     }
-    
+
     // Existing section checking
     if (form.section_chooser[0].checked) {
         if (form.destination_section_existing.selectedIndex == 0) {
@@ -95,19 +90,19 @@ function CustomValidator_DuplicateSection(form) {
             alert('<?php putGS("You must select a section."); ?>');
             return false;
         }
-        
+
         // Verify there is a name for the section
         if (form.section_chooser[1].checked && (form.destination_section_new_name.value.trim() == "")) {
             alert('<?php putGS("You must specify a name for the section."); ?>');
             return false;
         }
-        
+
         // Check if user specified an existing section in the "New Section" dialog.
         existingSections = [ <?php p(implode(',', DbObjectArray::GetColumn($allSections, 'Number'))); ?> ];
         for (i = 0; i < existingSections.length; i++ ) {
             if (newSectionNumber == existingSections[i]) {
                 alert('<?php putGS("The section number specified already exists, please specify a different value or use the dropdown to find an existing section."); ?>');
-                return false;   
+                return false;
             }
         }
     }
@@ -119,7 +114,7 @@ function CustomValidator_DuplicateSection(form) {
 <TR>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_src_publication_id); ?>&Issue=<?php p($f_src_issue_number); ?>&Language=<?php p($f_language_id); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_src_publication_id); ?>&Issue=<?php p($f_src_issue_number); ?>&Language=<?php p($f_language_id); ?>"><B><?php  putGS("Section List"); ?></B></A></TD>
-	
+
 	<TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/sections/edit.php?Pub=<?php p($f_src_publication_id); ?>&f_issue_number=<?php  p($f_src_issue_number); ?>&f_section_number=<?php p($f_src_section_number); ?>&f_language_id=<?php  p($f_language_id); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/edit.php?Pub=<?php p($f_src_publication_id); ?>&Issue=<?php p($f_src_issue_number); ?>&Section=<?php p($f_src_section_number); ?>&Language=<?php  p($f_language_id); ?>"><B><?php  putGS("Section"); ?>: <?php p(htmlspecialchars($sectionObj->getName())); ?></B></A></TD>
 </TR>
@@ -142,9 +137,9 @@ function CustomValidator_DuplicateSection(form) {
 <TR>
 	<TD VALIGN="middle" style="padding-left: 20px; padding-top: 6px;"><?php  putGS('Publication'); ?>: </TD>
 	<TD valign="middle" ALIGN="LEFT" style="padding-top: 6px;">
-		<?php 
-		if (count($allPublications) > 0) { 
-			if (count($allPublications) == 1) { 
+		<?php
+		if (count($allPublications) > 0) {
+			if (count($allPublications) == 1) {
 				echo htmlspecialchars($destPublicationObj->getName());
 			} else { ?>
 		<FORM NAME="FORM_PUB" METHOD="POST">
@@ -156,7 +151,7 @@ function CustomValidator_DuplicateSection(form) {
 		<SELECT NAME="f_dest_publication_id" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($f_dest_publication_id); ?>)) {this.form.submit();}">
 		<?php if ($f_dest_publication_id == 0) { ?>
 		<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?></option>
-		<?php } 
+		<?php }
 		foreach ($allPublications as $tmpPublication) {
 			camp_html_select_option($tmpPublication->getPublicationId(), $f_dest_publication_id, $tmpPublication->getName());
 		}
@@ -177,10 +172,10 @@ function CustomValidator_DuplicateSection(form) {
 <tr >
 	<TD VALIGN="middle" style="padding-left: 20px; padding-top: 6px;"><?php  putGS('Issue'); ?>: </TD>
 	<TD valign="middle" ALIGN="LEFT" style="padding-top: 6px;">
-		<?php 
-		if (($f_dest_publication_id > 0) && (count($allIssues) > 0)) { 
-			if (count($allIssues) == 1) { 
-				echo htmlspecialchars($destIssueObj->getName());		
+		<?php
+		if (($f_dest_publication_id > 0) && (count($allIssues) > 0)) {
+			if (count($allIssues) == 1) {
+				echo htmlspecialchars($destIssueObj->getName());
 			} else { ?>
 		<FORM NAME="FORM_ISS" METHOD="POST">
 		<input type="hidden" name="Pub" value="<?php p($f_src_publication_id); ?>">
@@ -191,25 +186,25 @@ function CustomValidator_DuplicateSection(form) {
 		<input type="hidden" name="f_dest_publication_id" value="<?php p($f_dest_publication_id); ?>">
 		<SELECT NAME="f_dest_issue_number" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($f_dest_issue_number); ?>)) { this.form.submit(); }">
 		<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?></option>
-		<?php 
+		<?php
 		foreach ($allIssues as $tmpIssue) {
 			camp_html_select_option($tmpIssue->getIssueNumber(), $f_dest_issue_number, $tmpIssue->getName());
 		}
 		?>
 		</SELECT>
 		</FORM>
-		<?php  
+		<?php
 		}
-		} 
-		else { 
+		}
+		else {
 			?><SELECT class="input_select" DISABLED><OPTION><?php  putGS('No issues'); ?></SELECT>
-			<?php  
-		} 
+			<?php
+		}
 		?>
 	</td>
 </tr>
 
-<?php 
+<?php
 if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number == $f_dest_issue_number)) { ?>
 <tr>
 	<td colspan="2" style="padding-top: 10px; padding-bottom: 7px;">
@@ -244,7 +239,7 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 		<?php } else { ?>
 		<OPTION VALUE="0"><?php  putGS('---Select section---'); ?></option>
 		<?php } ?>
-		<?php 
+		<?php
 		foreach ($allSections as $tmpSection) {
 			camp_html_select_option($tmpSection->getSectionNumber(), null, $tmpSection->getName());
 		}
@@ -318,7 +313,7 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 	       <td>
 		      <INPUT TYPE="submit" Name="Duplicate" Value="<?php putGS("Duplicate section"); ?>" <?php if (($f_dest_publication_id <= 0) || ($f_dest_issue_number <=0)) { echo 'class="button_disabled"'; } else { echo 'class="button"'; }?> >
 		   </td>
-		   
+
 	   </tr>
 	   </table>
 	</td>

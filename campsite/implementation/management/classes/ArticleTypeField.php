@@ -92,8 +92,10 @@ class ArticleTypeField {
 		}
 
 
-		if ($success2) {	
-			if (function_exists("camp_load_language")) { camp_load_language("api"); }
+		if ($success2) {
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logText = getGS('The article type field $1 has been renamed to $2.', $this->m_fieldName, $p_newName);
     		$this->m_dbColumnName = 'F'. $p_newName;
 			$this->m_fieldName = $p_newName;
@@ -145,7 +147,9 @@ class ArticleTypeField {
 
 		if ($success) {
 
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('Article type field $1 created', $this->m_fieldName);
 			Log::Message($logtext, null, 71);
 			ParserCom::SendMessage('article_types', 'modify', array("article_type"=> $this->m_fieldName));
@@ -192,7 +196,9 @@ class ArticleTypeField {
 		}
 
 		if ($success) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('Article type field $1 changed', $this->m_fieldName);
 			Log::Message($logtext, null, 71);
 			ParserCom::SendMessage('article_types', 'modify', array("article_type"=> $this->m_articleTypeName));
@@ -260,8 +266,8 @@ class ArticleTypeField {
 
 		// reorder
 		if ($success) {
-			
-    	    //$mypos = array_keys($orders, $this->m_fieldName);	   
+
+    	    //$mypos = array_keys($orders, $this->m_fieldName);
             $newOrders = array();
             foreach ($orders as $k => $v) {
                 if ($v != $this->m_fieldName)
@@ -277,8 +283,8 @@ class ArticleTypeField {
 			$queryStr = "DELETE FROM TopicFields WHERE ArticleType = '".$this->m_articleTypeName
 						."' and FieldName = '".substr($this->m_dbColumnName, 1)."'";
 			$g_ado_db->Execute($queryStr);
-			if (function_exists("camp_load_language")) {
-			    camp_load_language("api");
+			if (function_exists("camp_load_translation_strings")) {
+			    camp_load_translation_strings("api");
 			}
 			$logtext = getGS('Article type field $1 deleted', $this->m_fieldName);
 			Log::Message($logtext, null, 72);
@@ -325,7 +331,7 @@ class ArticleTypeField {
 		}
 		return strtolower($this->Type);
 	} // fn getType
-	
+
 	/**
 	 * @return string
 	 */
@@ -349,7 +355,7 @@ class ArticleTypeField {
 	 */
 	function getPrintType($p_languageId = 1)
 	{
-		global $g_ado_db;		
+		global $g_ado_db;
 		switch ($this->getType()) {
 	    case 'mediumblob':
 	    	return getGS('Multi-line Text with WYSIWYG');
@@ -581,8 +587,8 @@ class ArticleTypeField {
 		}
 
 		if ($changed) {
-			if (function_exists("camp_load_language")) {
-			    camp_load_language("api");
+			if (function_exists("camp_load_translation_strings")) {
+			    camp_load_translation_strings("api");
 			}
 			$logtext = getGS('Field $1 updated', $this->m_dbColumnName);
 			Log::Message($logtext, null, 143);
@@ -599,7 +605,7 @@ class ArticleTypeField {
 	 * @return int
 	 */
 	function getNextOrder()
-	{		
+	{
 		global $g_ado_db;
 		$queryStr = "SELECT field_weight "
 		            ." FROM ArticleTypeMetadata "

@@ -5,7 +5,7 @@
  *   arguments in the URL, like "filename.php?IdPublication=1&IdLanguage=2&..."
  * - Everytime a menu item is changed, the file is re-fetched with the same arguments
  *	 set in the POST.
- * 
+ *
  */
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
@@ -14,9 +14,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-load_common_include_files("$ADMIN_DIR");
 
 $maxSelectLength = 60;
 $languageId = Input::get('IdLanguage', 'int', 0, true);
@@ -56,34 +54,34 @@ table {
   font: 11px Tahoma,Verdana,sans-serif;
 }
 
-select, input, button { 
-	font: 11px Tahoma,Verdana,sans-serif; 
+select, input, button {
+	font: 11px Tahoma,Verdana,sans-serif;
 }
 
-button { 
-	width: 70px; 
+button {
+	width: 70px;
 }
 
-table .label { 
-	text-align: right; 
-	width: 8em; 
+table .label {
+	text-align: right;
+	width: 8em;
 }
 
-.title { 
-	background: #ddf; 
-	color: #000; 
-	font-weight: bold; 
-	font-size: 120%; 
-	padding: 3px 10px; 
+.title {
+	background: #ddf;
+	color: #000;
+	font-weight: bold;
+	font-size: 120%;
+	padding: 3px 10px;
 	margin-bottom: 10px;
-	border-bottom: 1px solid black; 
+	border-bottom: 1px solid black;
 	letter-spacing: 2px;
 }
 
 #buttons {
-	margin-top: 1em; 
+	margin-top: 1em;
 	border-top: 1px solid #999;
-	padding: 2px; 
+	padding: 2px;
 	text-align: right;
 }
 </style>
@@ -96,16 +94,16 @@ function Init() {
 	__dlg_translate('Campsite');
 	// This function gets the arguments passed to the window and sizes the window.
 	__dlg_init();
-	
+
 	// Make sure that the proper translation appears in the drop down
 	document.getElementById("f_target").selectedIndex = 1;
 	document.getElementById("f_target").selectedIndex = 0;
-	
+
 	var param = window.dialogArguments;
 	var target_select = document.getElementById("f_target");
 	if (param) {
 		targetValue = param["f_target"];
-		if ((param["f_target"] != "") && (param["f_target"] != "_blank") 
+		if ((param["f_target"] != "") && (param["f_target"] != "_blank")
 			&& (param["f_target"] != "_self") && (param["f_target"] != "_top")) {
 			targetValue = "_other";
 			target_select.selectedIndex = 4;
@@ -129,13 +127,13 @@ function onOK() {
 	articleId = articleElement? articleElement.value : 0;
 	targetElement = document.getElementById("f_target");
 	target = targetElement ? targetElement.value : '';
-	
+
 	// User must at least specify language and publication.
 	if ((languageId <= 0) || (publicationId <= 0)) {
 		alert("You must specify the language and the publication.");
-		return false;		
+		return false;
 	}
-	
+
 	// Pass data back to the calling window.
 	var param = new Object();
 	param["f_href"] = "campsite_internal_link?IdPublication="+publicationId
@@ -176,7 +174,7 @@ function onTargetChanged(selectElement) {
 		f.style.visibility = "visible";
 		f.select();
 		f.focus();
-	} 
+	}
 	else {
 		f.style.visibility = "hidden";
 	}

@@ -1,5 +1,4 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
@@ -8,12 +7,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 
 $rootDirectory = $ADMIN_DIR;
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
 $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
@@ -117,18 +110,18 @@ $issueLanguage =& new Language($sLanguage);
 <tr>
 	<td align="left" colspan="2" style="padding: 6px">
 		<B>Article Import</B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK"> 		
+		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</td>
 </tr>
 <tr>
 	<td style="padding: 6px;">
 		Upload File:
 	</td>
-	
+
 	<td style="padding: 6px;">
 		<input type="file" name="filename" size="55" value="" alt="file|sxw" emsg="The file name must have an extension of .sxw" class="input_file">
 	</td>
-	
+
 </tr>
 <tr>
 	<td colspan="2">

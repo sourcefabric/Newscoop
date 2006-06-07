@@ -5,12 +5,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Topic.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -27,7 +21,7 @@ if (!$articleObj->exists()) {
 	exit;
 }
 
-if (!$User->hasPermission('AttachTopicToArticle')) {
+if (!$g_user->hasPermission('AttachTopicToArticle')) {
 	camp_html_display_error(getGS("You do not have the right to detach topics from articles."), null, true);
 	exit;
 }

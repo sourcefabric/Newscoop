@@ -2,13 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageTempl')) {
+if (!$g_user->hasPermission('ManageTempl')) {
 	camp_html_display_error(getGS("You do not have the right to modify templates."));
 	exit;
 }
@@ -23,15 +17,15 @@ $created = 0;
 $correct = trim($f_name) != "";
 if ($correct) {
 	$f_name = strtr($f_name,'?~#%*&|"\'\\/<>', '_____________');
-	
+
 	// Set the extension of the new file if it doesnt have one already.
 	$new_path_info = pathinfo($f_name);
 	$newExtension = isset($new_path_info["extension"]) ? $new_path_info["extension"] : "";
 	if (empty($newExtension)) {
 		if ($f_name[strlen($f_name)-1] != ".") {
 			$f_name .= ".";
-		} 
-		$f_name .= "tpl";			
+		}
+		$f_name .= "tpl";
 	}
 
 	$newTempl = Template::GetFullPath($f_path, $f_name);
@@ -44,7 +38,7 @@ if ($correct) {
 	if ($ok) {
 		Template::UpdateStatus();
 		$logtext = getGS('New template $1 was created',$f_path."/".$f_name);
-		Log::Message($logtext, $User->getUserName(), 114);
+		Log::Message($logtext, $g_user->getUserName(), 114);
 		header("Location: /$ADMIN/templates/edit_template.php?Path=$f_path&Name=$f_name");
 		exit;
 	}

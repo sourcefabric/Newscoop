@@ -1,17 +1,10 @@
 <?PHP
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/common.php');
-load_common_include_files("user_subscriptions");
+camp_load_translation_strings("user_subscriptions");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Subscription.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
 $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_subscription_offset = Input::Get('f_subscription_offset', 'int', 0, true);

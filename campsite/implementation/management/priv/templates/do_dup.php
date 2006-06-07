@@ -1,14 +1,8 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
-    
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
-if (!$User->hasPermission('ManageTempl')) {
+if (!$g_user->hasPermission('ManageTempl')) {
 	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to modify templates.")));
 	exit;
 }
@@ -25,7 +19,7 @@ $correct = trim($f_new_name) != "";
 $ok = false;
 if ($correct) {
 	$f_new_name = strtr($f_new_name,'?~#%*&|"\'\\/<>', '_____________');
-	
+
 	// Set the extension of the duplicate to be the same as the original file.
 	$orig_path_info = pathinfo($f_orig_name);
 	$origExtension = isset($orig_path_info["extension"]) ? $orig_path_info["extension"] : "";
@@ -34,10 +28,10 @@ if ($correct) {
 	if ($newExtension != $origExtension) {
 		if ($f_new_name[strlen($f_new_name)-1] != ".") {
 			$f_new_name .= ".";
-		} 
+		}
 		$f_new_name .= $origExtension;
 	}
-	
+
 	$newTempl = $Campsite['HTML_DIR']."/look/".urldecode($f_path)."/$f_new_name";
 	$exists = file_exists($newTempl);
 	if (!$exists) {
@@ -55,13 +49,13 @@ if ($correct) {
 		$ok = ( ($bytes_written !== false) || (strlen($contents) == 0) );
 		if ($ok) {
 			$logtext = getGS('Template $1 was duplicated into $2', $tpl1_name, $tpl2_name);
-			Log::Message($logtext, $User->getUserId(), 115);
+			Log::Message($logtext, $g_user->getUserId(), 115);
 		}
 	}
 }
 
 if ($ok) {
-	if (camp_is_template_file($tpl2FullPath)) { 
+	if (camp_is_template_file($tpl2FullPath)) {
 		// Go into edit mode.
 		header("Location: /$ADMIN/templates/edit_template.php?Path=".urlencode($f_path)."&Name=".urlencode($f_new_name));
 		exit;
@@ -70,7 +64,7 @@ if ($ok) {
 		header("Location: /$ADMIN/templates?Path=".urlencode($f_path));
 		exit;
 	}
-} 
+}
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -90,7 +84,7 @@ echo camp_html_breadcrumbs($crumbs);
 </TR>
 <TR>
 	<TD COLSPAN="2"><BLOCKQUOTE>
-	<?php  
+	<?php
 	if (!$correct) { ?>
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
 		<?php

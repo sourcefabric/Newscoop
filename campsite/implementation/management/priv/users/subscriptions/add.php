@@ -1,19 +1,12 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/common.php');
-load_common_include_files("user_subscriptions");
+camp_load_translation_strings("user_subscriptions");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Subscription.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageSubscriptions')) {
+if (!$g_user->hasPermission('ManageSubscriptions')) {
 	camp_html_display_error(getGS("You do not have the right to add subscriptions."));
 	exit;
 }
@@ -29,7 +22,7 @@ $f_subscription_days = Input::Get('f_subscription_days', 'int', 0);
 
 $uriPath = strtok($_SERVER['HTTP_REFERER'], "?");
 $inSubscriptions = (strstr($uriPath, '/subscriptions') != '')
-					|| !$User->hasPermission('ManageUsers');
+					|| !$g_user->hasPermission('ManageUsers');
 
 $manageUser =& new User($f_user_id);
 $publications = Publication::GetPublications();
@@ -179,12 +172,9 @@ echo camp_html_breadcrumbs($crumbs);
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
+	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="HIDDEN" NAME="f_user_id" VALUE="<?php p($f_user_id); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/users/subscriptions/?User=<?php  p($User); ?>'">-->
-	</DIV>
 	</TD>
 </TR>
 </TABLE>

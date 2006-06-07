@@ -1,14 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_files");
+camp_load_translation_strings("article_files");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Attachment.php');
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
@@ -39,7 +32,7 @@ if (!$articleObj->exists()) {
 
 $isDisabled = '';
 $isReadOnly = '';
-if (!$User->hasPermission('ChangeFile')) {
+if (!$g_user->hasPermission('ChangeFile')) {
 	$isDisabled = 'disabled';
 	$isReadOnly = 'readonly';
 	$title = getGS('File information');
@@ -100,7 +93,7 @@ if ($f_publication_id > 0) {
 	<INPUT type="radio" name="f_content_disposition" value="attachment" <?php if ($attachmentObj->getContentDisposition()) { ?> checked<?php } ?> <?php p($isDisabled); ?>><?php putGS("Automatically download"); ?>
 	</TD>
 </TR>
-<?php if ($User->hasPermission('ChangeFile')) { ?>
+<?php if ($g_user->hasPermission('ChangeFile')) { ?>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">

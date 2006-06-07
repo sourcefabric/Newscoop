@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/SimplePager.php');
-camp_load_language("api");
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
+camp_load_translation_strings("api");
 
 $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
@@ -37,7 +31,7 @@ camp_html_content_top(getGS('Section List'), $topArray);
 	<TD><A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php  p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php  p($Pub); ?>"><B><?php  putGS("Issue List"); ?></B></A></TD>
 <?php
-if ($User->hasPermission('ManageSection')) { ?>
+if ($g_user->hasPermission('ManageSection')) { ?>
 	<TD style="padding-left: 20px;"><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 	<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><B><?php  putGS("Add new section"); ?></B></A></TD>
 <?php  } ?>
@@ -54,13 +48,13 @@ if (count($allSections) > 0) {
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Number"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Name<BR><SMALL>(click to see articles)</SMALL>"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("URL Name"); ?></TD>
-	<?php if ($User->hasPermission('ManageSection')) { ?>
+	<?php if ($g_user->hasPermission('ManageSection')) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Configure"); ?></TD>
 	<?php } ?>
-	<?php if ($User->hasPermission('ManageSection') && $User->hasPermission('AddArticle')) { ?>
+	<?php if ($g_user->hasPermission('ManageSection') && $g_user->hasPermission('AddArticle')) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Duplicate"); ?></TD>
 	<?php } ?>
-	<?php if($User->hasPermission('DeleteSection')) { ?>
+	<?php if($g_user->hasPermission('DeleteSection')) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Delete"); ?></TD>
 	<?php } ?>
 </TR>
@@ -80,19 +74,19 @@ if (count($allSections) > 0) {
 			<?php p(htmlspecialchars($section->getUrlName())); ?>
 		</TD>
 
-		<?php  if ($User->hasPermission('ManageSection')) { ?>
+		<?php  if ($g_user->hasPermission('ManageSection')) { ?>
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php p($ADMIN); ?>/sections/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($section->getIssueNumber()); ?>&Section=<?php p($section->getSectionNumber()); ?>&Language=<?php  p($section->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>" border="0"></A>
 		</TD>
 		<?php 	} ?>
 
-		<?php if ($User->hasPermission('ManageSection') && $User->hasPermission('AddArticle')) { ?>
+		<?php if ($g_user->hasPermission('ManageSection') && $g_user->hasPermission('AddArticle')) { ?>
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php p($ADMIN);?>/sections/duplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php p($section->getSectionNumber()); ?>&Language=<?php  p($Language); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" alt="<?php putGS('Duplicate'); ?>" title="<?php putGS('Duplicate'); ?>" border="0"></A>
 		</TD>
 		<?php } ?>
 
-		<?php if ($User->hasPermission('DeleteSection')) { ?>
+		<?php if ($g_user->hasPermission('DeleteSection')) { ?>
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php p($ADMIN); ?>/sections/del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($section->getIssueNumber()); ?>&Section=<?php p($section->getSectionNumber()); ?>&Language=<?php  p($section->getLanguageId()); ?>&SectOffs=<?php p($SectOffs); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete section $1', htmlspecialchars($section->getName())); ?>" TITLE="<?php  putGS('Delete section $1', htmlspecialchars($section->getName())); ?>"></A>
 		</TD>

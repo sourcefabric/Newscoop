@@ -3,12 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/IssuePublish.php');
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission('Publish')) {
+if (!$g_user->hasPermission('Publish')) {
 	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to schedule issues or articles for automatic publishing." )));
 	exit;
 }
@@ -25,7 +20,7 @@ $publish_hour = trim(Input::Get('publish_hour', 'string', ''));
 $publish_min = trim(Input::Get('publish_min', 'string', ''));
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));	
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;
 }
 
@@ -87,7 +82,7 @@ camp_html_content_top(getGS("Scheduling a new publish action"), $crumbs);
 	if ($correct) {
 		if (!$created) { ?>
 			<LI><?php putGS('There was an error scheduling the $1 action on $2', getGS($action_str), $publish_time); ?></LI>
-	       <?php 
+	       <?php
 		}
     }
 ?>	</BLOCKQUOTE></TD>

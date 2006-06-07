@@ -3,13 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageIssue')) {
+if (!$g_user->hasPermission('ManageIssue')) {
 	camp_html_display_error(getGS('You do not have the right to change issue details.'));
 	exit;
 }
@@ -61,7 +55,7 @@ $issueObj->setProperty('ShortName', $f_url_name, false);
 if ($issueObj->commit()) {
 	$issueObj->setLanguageId($f_new_language_id);
 	$logtext = getGS('Issue $1 updated in publication $2', $f_issue_name, $publicationObj->getName());
-	Log::Message($logtext, $User->getUserName(), 11);
+	Log::Message($logtext, $g_user->getUserName(), 11);
 } else {
 	$errMsg = getGS("Could not save the changes to the issue $1. Please make sure the issue URL name '$2' was not used before in the publication $3.",
 					$issueObj->getName(), $issueObj->getUrlName(), $publicationObj->getName());

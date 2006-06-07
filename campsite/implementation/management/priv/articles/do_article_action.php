@@ -1,11 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
 $f_section_number = Input::Get('f_section_number', 'int', 0, true);
@@ -36,7 +31,7 @@ switch ($f_action) {
 	case "unlock":
 		// If the user does not have permission to change the article
 		// or they didnt create the article, give them the boot.
-		if (!$articleObj->userCanModify($User)) {
+		if (!$articleObj->userCanModify($g_user)) {
 			camp_html_display_error(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
 			exit;
 		}
@@ -44,7 +39,7 @@ switch ($f_action) {
 		header('Location: '.camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_unlock=true"));
 		exit;
 	case "delete":
-		if (!$User->hasPermission('DeleteArticle')) {
+		if (!$g_user->hasPermission('DeleteArticle')) {
 			camp_html_display_error(getGS("You do not have the right to delete articles."));
 			exit;
 		}
@@ -92,9 +87,9 @@ if (!is_null($f_action_workflow)) {
 		// A publisher can change the status in any way he sees fit.
 		// Someone who can change an article can submit/unsubmit articles.
 		// A user who owns the article may submit it.
-		if ($User->hasPermission('Publish')
-			|| ($User->hasPermission('ChangeArticle') && ($f_action_workflow != 'Y'))
-			|| ($articleObj->userCanModify($User) && ($f_action_workflow == 'S') )) {
+		if ($g_user->hasPermission('Publish')
+			|| ($g_user->hasPermission('ChangeArticle') && ($f_action_workflow != 'Y'))
+			|| ($articleObj->userCanModify($g_user) && ($f_action_workflow == 'S') )) {
 			$access = true;
 		}
 		if (!$access) {

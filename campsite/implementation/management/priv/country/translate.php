@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/country/country_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageCountries')) {
+if (!$g_user->hasPermission('ManageCountries')) {
 	camp_html_display_error(getGS("You do not have the right to translate country names."));
 	exit;
 }
@@ -25,7 +19,7 @@ $crumbs[] = array(getGS("Countries"), "/$ADMIN/country/");
 $crumbs[] = array(getGS("Translate country name"), "");
 echo camp_html_breadcrumbs($crumbs);
 
-?> 
+?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_translate.php"  >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
@@ -38,7 +32,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Country"); ?>:</TD>
 	<TD>
-	<?php 
+	<?php
 	$names = array();
 	foreach ($countryTranslations as $item) {
 		$names[] = $item->getName();
@@ -55,7 +49,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
 	<TD>
 		<SELECT NAME="f_country_new_language" class="input_select">
-		<?php 
+		<?php
 		foreach ($languages as $language) {
 			$num = Country::GetNumCountries($language->getLanguageId(), $f_country_code);
 			if ($num == 0) { ?>

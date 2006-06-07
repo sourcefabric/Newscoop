@@ -1,7 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files("logs");
-camp_load_language("api");
+camp_load_translation_strings("logs");
+camp_load_translation_strings("api");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
@@ -10,13 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Event.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ViewLogs')) {
+if (!$g_user->hasPermission('ViewLogs')) {
 	camp_html_display_error(getGS("You do not have the right to view logs."));
 	exit;
 }

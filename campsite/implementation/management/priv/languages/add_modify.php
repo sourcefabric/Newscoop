@@ -1,24 +1,17 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("languages");
+camp_load_translation_strings("languages");
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/localizer/Localizer.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
 $languageId = Input::Get('Lang', 'int', 0, true);
 $Back = Input::Get('Back', 'string', null, true);
 
 $editMode = ($languageId != 0);
 
-if (!$User->hasPermission('ManageLanguages')) {
+if (!$g_user->hasPermission('ManageLanguages')) {
     if (!$editMode) {
 	   camp_html_display_error(getGS("You do not have the right to add languages."));
     }

@@ -1,6 +1,5 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
@@ -11,22 +10,17 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/IssuePublish.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/SimplePager.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-load_common_include_files("home");
-camp_load_language("articles");
-camp_load_language("api");
+camp_load_translation_strings("home");
+camp_load_translation_strings("articles");
+camp_load_translation_strings("api");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 $defaultScreen = "submitted_articles";
 $f_screen = camp_session_get("f_screen", $defaultScreen);
 $f_submitted_articles_offset = camp_session_get('f_submitted_articles_offset', 0);
 $f_your_articles_offset = camp_session_get('f_your_articles_offset', 0);
 $f_unplaced_articles_offset = camp_session_get('f_unplaced_articles_offset', 0);
 $NumDisplayArticles = 20;
-list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($User->getUserId(), $f_your_articles_offset,
+list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($g_user->getUserId(), $f_your_articles_offset,
 	$NumDisplayArticles);
 
 list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles($f_submitted_articles_offset, $NumDisplayArticles);
@@ -82,7 +76,7 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 
 $restartEngine = Input::Get('restart_engine', 'string', 'no', true);
-if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine")) {
+if ( ($restartEngine == 'yes') && $g_user->hasPermission("InitializeTemplateEngine")) {
 	require_once($_SERVER['DOCUMENT_ROOT']."/parser_utils.php");
 	if (camp_stop_parser()) {
 		$resetMsg = getGS("The template engine was (re)started.");
@@ -164,11 +158,11 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
 				<?php
-				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
+				if ($g_user->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
 					echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php");
 				}
 				p(htmlspecialchars($tmpArticle->getTitle()." (".$language->getNativeName().")"));
-				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
+				if ($g_user->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
 					echo '</a>';
 				}
 				?>
@@ -222,7 +216,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		</TABLE>
 
 		<!-- Submitted articles -->
-		<?php if ($User->hasPermission('ChangeArticle') || $User->hasPermission('Publish')) { ?>
+		<?php if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish')) { ?>
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="submitted_articles" <?php if ($f_screen != "submitted_articles") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
 			<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Submitted Articles"); ?></TD>
@@ -304,7 +298,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		</TR>
 		</TABLE>
 		<?php
-		} // if ($User->hasPermission('ChangeArticle') || $User->hasPermission('Publish'))
+		} // if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish'))
 		?>
 
 		<!-- Recently Published -->
@@ -341,11 +335,11 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
 				<?php
-				if ($User->hasPermission('ChangeArticle')) {
+				if ($g_user->hasPermission('ChangeArticle')) {
     				echo camp_html_article_link($tmpArticle, $tmpArticle->getLanguageId(), "edit.php");
 				}
 				p(htmlspecialchars($tmpArticle->getTitle(). " (".$language->getNativeName().")"));
-				if ($User->hasPermission('ChangeArticle')) {
+				if ($g_user->hasPermission('ChangeArticle')) {
     				echo '</a>';
 				}
 				?>
@@ -415,12 +409,12 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			?>
 			<TD valign="top"><?php putGS("Article"); ?>:
     			<?PHP
-				if ($User->hasPermission('ChangeArticle')) { ?>
+				if ($g_user->hasPermission('ChangeArticle')) { ?>
                     <a href="/<?php p($ADMIN); ?>/articles/edit.php?f_publication_id=<?php p($action["IdPublication"]); ?>&f_issue_number=<?php p($action["NrIssue"]); ?>&f_section_number=<?php p($action["NrSection"]); ?>&f_article_number=<?php p($action["Number"]); ?>&f_language_id=<?php p($action["IdLanguage"]); ?>&f_language_selected=<?php p($action["IdLanguage"]); ?>">
                 	<?PHP
 				}
 			    echo htmlspecialchars($action["Name"]." (".$language->getNativeName().")");
-				if ($User->hasPermission('ChangeArticle')) {
+				if ($g_user->hasPermission('ChangeArticle')) {
     				echo "</a>";
                 }
                 ?>
@@ -474,12 +468,12 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			?>
 			<TD valign="top"><?php putGS("Issue"); ?>:
     			<?PHP
-				if ($User->hasPermission('ManageIssue')) { ?>
+				if ($g_user->hasPermission('ManageIssue')) { ?>
                     <a href="/<?php p($ADMIN); ?>/issues/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>">
                     <?PHP
 				}
 				echo htmlspecialchars($action["Name"]);
-				if ($User->hasPermission('ManageIssue')) {
+				if ($g_user->hasPermission('ManageIssue')) {
 				    echo "</a>";
 				}
 				?>
@@ -499,12 +493,12 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			?></td>
 			<td nowrap valign="top">
                 <?php
-                if ($User->hasPermission("Publish")) { ?>
+                if ($g_user->hasPermission("Publish")) { ?>
                     <a href="/<?php p($ADMIN); ?>/issues/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&event_id=<?php p(urlencode($action["id"])); ?>">
                     <?PHP
                 }
                 echo htmlspecialchars($action["time_action"]);
-                if ($User->hasPermission("Publish")) {
+                if ($g_user->hasPermission("Publish")) {
                     echo "</a>";
                 }
                 ?>
@@ -552,11 +546,11 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
 				<?php
-				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
+				if ($g_user->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
 					echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php");
 				}
 				p(htmlspecialchars($tmpArticle->getTitle()." (".$language->getNativeName().")"));
-				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
+				if ($g_user->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
 					echo '</a>';
 				}
 				?>

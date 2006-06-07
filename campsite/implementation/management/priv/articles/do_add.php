@@ -3,12 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-if (!$User->hasPermission('AddArticle')) {
+if (!$g_user->hasPermission('AddArticle')) {
 	camp_html_display_error(getGS("You do not have the right to add articles."));
 	exit;
 }
@@ -90,18 +85,18 @@ $articleObj =& new Article($f_article_language);
 if (($publication_id > 0) && ($issue_number > 0) && ($section_number > 0)) {
     if (!Article::NameExists($f_article_name, $publication_id, $issue_number, $section_number)) {
         $articleObj->create($f_article_type, $f_article_name, $publication_id, $issue_number, $section_number);
-    } else { 
+    } else {
         camp_html_display_error("Could not create duplicate article.");
     }
 } else {
     if (!Article::NameExists($f_article_name))
         $articleObj->create($f_article_type, $f_article_name);
-    else    
+    else
         camp_html_display_error("Could not create duplicate article.");
 }
 
 if ($articleObj->exists()) {
-	$articleObj->setCreatorId($User->getUserId());
+	$articleObj->setCreatorId($g_user->getUserId());
 	$articleObj->setIsPublic(true);
 	if ($publication_id > 0) {
     	$commentDefault = $publicationObj->commentsArticleDefaultEnabled();

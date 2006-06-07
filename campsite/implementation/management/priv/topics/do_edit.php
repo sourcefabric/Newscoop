@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/topics/topics_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageTopics')) {
+if (!$g_user->hasPermission('ManageTopics')) {
 	camp_html_display_error(getGS("You do not have the right to change topic name."));
 	exit;
 }

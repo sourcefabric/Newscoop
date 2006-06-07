@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/country/country_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageCountries')) {
+if (!$g_user->hasPermission('ManageCountries')) {
 	camp_html_display_error(getGS("You do not have the right to change country names."));
 	exit;
 }
@@ -25,11 +19,11 @@ if (empty($f_country_name)) {
 	if ($country->setName($f_country_name)) {
 		header("Location: /$ADMIN/country/index.php");
 		exit;
-	} else { 
+	} else {
 		$errorMsgs[] = getGS('The country name $1 could not be changed','<B>'.htmlspecialchars($country->getName()).'</B>');
-	} 
-} 
- 
+	}
+}
+
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Countries"), "/$ADMIN/country/");

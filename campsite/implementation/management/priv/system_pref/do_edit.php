@@ -1,19 +1,12 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("system_pref");
+camp_load_translation_strings("system_pref");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ChangeSystemPreferences')) {
+if (!$g_user->hasPermission('ChangeSystemPreferences')) {
 	camp_html_display_error(getGS("You do not have the right to change system preferences."));
 	exit;
 }

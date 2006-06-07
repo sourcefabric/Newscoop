@@ -1,5 +1,4 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
@@ -7,12 +6,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
-
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -37,11 +30,11 @@ if (!$articleObj->commentsEnabled() || $articleObj->commentsLocked())  {
 }
 
 // Add the user if he doesnt exist in the Phorum user table
-$phorumUser =& new Phorum_user($User->getUserId());
+$phorumUser =& new Phorum_user($g_user->getUserId());
 if (!$phorumUser->exists()) {
-    $success = $phorumUser->create($User->getUserName(),
-                                   $User->getEmail(),
-                                   $User->getUserId());
+    $success = $phorumUser->create($g_user->getUserName(),
+                                   $g_user->getEmail(),
+                                   $g_user->getUserId());
 }
 
 // Check if this article already has a thread
@@ -76,9 +69,9 @@ if ($f_comment_parent_id != 0) {
                         $f_comment_body,
                         $threadId,
                         $f_comment_parent_id,
-                        $User->getRealName(),
-                        $User->getEmail(),
-                        $User->getUserId());
+                        $g_user->getRealName(),
+                        $g_user->getEmail(),
+                        $g_user->getUserId());
 } else {
 	// Either the first message or a message replying to the first message.
     $commentObj->create($forumId,
@@ -86,9 +79,9 @@ if ($f_comment_parent_id != 0) {
                         $f_comment_body,
                         $threadId,
                         $threadId,
-                        $User->getRealName(),
-                        $User->getEmail(),
-                        $User->getUserId());
+                        $g_user->getRealName(),
+                        $g_user->getEmail(),
+                        $g_user->getUserId());
 }
 $commentObj->setStatus(PHORUM_STATUS_APPROVED);
 // Link the message to the article

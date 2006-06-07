@@ -1,9 +1,7 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/user_types/utypes_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-$canManage = $User->hasPermission('ManageUserTypes');
+$canManage = $g_user->hasPermission('ManageUserTypes');
 if (!$canManage) {
 	$error = getGS("You do not have the right to change user type permissions.");
 	camp_html_display_error($error);
@@ -47,18 +45,18 @@ if (count($userTypes) > 0) {
 	<td align="left" valign="top"><b><?php putGS("Delete"); ?></b></td>
 <?php } ?>
 </tr>
-<?php 
+<?php
 foreach ($userTypes as $userType) { ?>
 <tr <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 	<td>
 		<?php p(htmlspecialchars($userType->getName())); ?>&nbsp;
 	</td>
-	
+
 	<?php if ($canManage) { ?>
 	<td align="center">
 		<a href="/<?php echo $ADMIN; ?>/user_types/access.php?UType=<?php p(urlencode($userType->getName())); ?>"><?php  putGS('Change'); ?></a>
 	</td>
-	
+
 	<td align="center">
 		<a href="/<?php echo $ADMIN; ?>/user_types/do_del.php?UType=<?php p(urlencode($userType->getName())); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user type $1?', $userType->getName()); ?>');">
 		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" alt="Delete user type <?php p(htmlspecialchars($userType->getName())); ?>" title="Delete user type <?php p(htmlspecialchars($userType->getName())); ?>"></a>

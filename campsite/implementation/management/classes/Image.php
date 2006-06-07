@@ -44,8 +44,10 @@ class Image extends DatabaseObject {
 		'TimeCreated');
 
 	/**
-	 * @param int $p_imageId
+	 * An image is both the orginal image, plus a thumbnail image,
+	 * plus metadata.
 	 *
+	 * @param int $p_imageId
 	 */
 	function Image($p_imageId = null)
 	{
@@ -57,48 +59,76 @@ class Image extends DatabaseObject {
 	} // constructor
 
 
+	/**
+	 * Update the image data in the database.
+	 *
+	 * @param array $p_columns
+	 * @param boolean $p_commit
+	 * @param boolean $p_isSql
+	 * @return boolean
+	 */
 	function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
 		$success = parent::update($p_columns, $p_commit, $p_isSql);
 		if ($success) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			$logtext = getGS('Changed image properties of $1', $this->m_data['Id']);
 			Log::Message($logtext, null, 43);
 		}
 		return $success;
 	} // fn update
 
+
 	/**
 	 * Delete the row from the database, all article references to this image,
 	 * and the file(s) on disk.
 	 *
 	 * @return boolean
-	 *		TRUE if the record was deleted, false if not.
+	 *		TRUE (1) if the record was deleted,
+	 * 		On failed, return the sum of:
+	 * 		-1 if the database query failed
+	 * 		-2 if the image file could not be deleted
+	 * 		-4 if the thumbnail could not be deleted
 	 */
 	function delete()
 	{
+		if (function_exists("camp_load_translation_strings")) {
+			camp_load_translation_strings("api");
+		}
+
 		// Delete all the references to this image.
 		ArticleImage::OnImageDelete($this->getImageId());
 
 		// Delete the record in the database
-		$success = parent::delete();
+		$errorMsgs = array();
+		if (!parent::delete()) {
+			$errorMsgs[] = getGS("Could not delete record from the database.");
+		}
 
-		if ($success) {
-			// Delete the images from disk
-			if (file_exists($this->getImageStorageLocation())
-				&& is_file($this->getImageStorageLocation())) {
-				unlink($this->getImageStorageLocation());
+		// Delete the images from disk
+		$thumb = $this->getThumbnailStorageLocation();
+		if (file_exists($thumb) && is_file($thumb)) {
+			if (!unlink($thumb)) {
+	            $errorMsgs[] = getGS("Could not delete thumbnail file $1", $thumb);
 			}
-			if (file_exists($this->getThumbnailStorageLocation())
-				&& is_file($this->getThumbnailStorageLocation())) {
-				unlink($this->getThumbnailStorageLocation());
-			}
+		}
 
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		$imageFile = $this->getImageStorageLocation();
+		if (file_exists($imageFile)	&& is_file($imageFile)) {
+			if (!unlink($imageFile)) {
+	            $errorMsgs[] = getGS("Could not delete image file $1", $imageFile);
+			}
+		}
+
+		if (count($errorMsgs) == 0) {
 			$logtext = getGS('Image $1 deleted', $this->m_data['Id']);
 			Log::Message($logtext, null, 42);
+			return 1;
+		} else {
+			return $errorMsgs;
 		}
-		return $success;
 	} // fn delete
 
 
@@ -374,6 +404,10 @@ class Image extends DatabaseObject {
 	function OnImageUpload($p_fileVar, $p_attributes, $p_userId = null, $p_id = null, $p_isLocalFile = false)
 	{
 		global $Campsite;
+		if (function_exists("camp_load_translation_strings")) {
+			camp_load_translation_strings("api");
+		}
+
 		if (!is_array($p_fileVar)) {
 			return "Invalid arguments given to Image::OnImageUpload()";
 		}
@@ -381,7 +415,7 @@ class Image extends DatabaseObject {
 		// Verify its a valid image file.
 		$imageInfo = @getimagesize($p_fileVar['tmp_name']);
 		if ($imageInfo === false) {
-			return "The file is not recognized as an image.";
+			return getGS("The file is not recognized as an image.");
 		}
 		$extension = Image::__ImageTypeToExtension($imageInfo[2]);
 
@@ -428,14 +462,14 @@ class Image extends DatabaseObject {
 	        	if (is_null($p_id)) {
 	        		$image->delete();
 	        	}
-	    		return "Could not copy image file to directory ".dirname($target);
+	    		return getGS("Could not copy image file to directory $1", dirname($target));
 	    	}
 	    } else {
 	        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
 	        	if (is_null($p_id)) {
 	        		$image->delete();
 	        	}
-	            return "Could not copy image file to directory ".dirname($target);
+	            return getGS("Could not copy image file to directory $1", dirname($target));
 	        }
 	    }
 		chmod($target, 0644);
@@ -447,9 +481,6 @@ class Image extends DatabaseObject {
             }
         }
         $image->commit();
-		if (function_exists("camp_load_language")) {
-			camp_load_language("api");
-		}
 		$logtext = getGS('The image $1 has been added.',
 						$image->m_data['Description']." (".$image->m_data['Id'].")");
 		Log::Message($logtext, null, 41);
@@ -567,7 +598,9 @@ class Image extends DatabaseObject {
         unlink($tmpname);
         $image->commit();
 
-		if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		if (function_exists("camp_load_translation_strings")) {
+			camp_load_translation_strings("api");
+		}
 		$logtext = getGS('The image $1 has been added.',
 						$image->m_data['Description']." (".$image->m_data['Id'].")");
 		Log::Message($logtext, null, 41);

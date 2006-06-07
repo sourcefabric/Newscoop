@@ -6,13 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManagePub')) {
+if (!$g_user->hasPermission('ManagePub')) {
 	camp_html_display_error(getGS("You do not have the right to change publication information."));
 	exit;
 }

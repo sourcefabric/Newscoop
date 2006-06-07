@@ -1,14 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageSection')) {
-	camp_html_display_error(getGS("You do not have the right to add sections."));	
+if (!$g_user->hasPermission('ManageSection')) {
+	camp_html_display_error(getGS("You do not have the right to add sections."));
 	exit;
 }
 
@@ -22,7 +16,7 @@ $cShortName = trim(Input::Get('cShortName', 'string', '', true));
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;    
+	exit;
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
@@ -30,7 +24,7 @@ $publicationObj =& new Publication($Pub);
 
 if (!$publicationObj->exists()) {
     camp_html_display_error(getGS('Publication does not exist.'));
-    exit; 
+    exit;
 }
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('No such issue.'));
@@ -43,13 +37,13 @@ $isValidShortName = camp_is_valid_url_name($cShortName);
 
 $errors = array();
 if ($cName == "") {
-	$correct = false; 
-	$errors[] = getGS('You must complete the $1 field.', '"'.getGS('Name').'"'); 
+	$correct = false;
+	$errors[] = getGS('You must complete the $1 field.', '"'.getGS('Name').'"');
 }
 if ($cNumber == 0) {
 	$correct= false;
-	$cNumber = ($cNumber + 0); 
-	$errors[] = getGS('You must complete the $1 field.','"'.getGS('Number').'"'); 
+	$cNumber = ($cNumber + 0);
+	$errors[] = getGS('You must complete the $1 field.','"'.getGS('Number').'"');
 }
 if ($cShortName == "") {
 	$correct = false;
@@ -65,8 +59,8 @@ if ($correct) {
     if ($created) {
 	    if (!empty($cSubs)) {
 	        $numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($Pub, $cNumber);
-			if ($numSubscriptionsAdded == -1) { 
-	            $errors[] = getGS('Error updating subscriptions.'); 
+			if ($numSubscriptionsAdded == -1) {
+	            $errors[] = getGS('Error updating subscriptions.');
 			}
 	    }
 	    header("Location: edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=".$newSection->getSectionNumber());
@@ -76,7 +70,7 @@ if ($correct) {
 
 $tmpArray = array("Pub" => $publicationObj, "Issue" => $issueObj);
 camp_html_content_top(getGS("Adding new section"), $tmpArray);
-?> 
+?>
 
 <P>
 <CENTER>
@@ -89,14 +83,14 @@ camp_html_content_top(getGS("Adding new section"), $tmpArray);
 </TR>
 <TR>
 	<TD COLSPAN="2"><BLOCKQUOTE>
-    <?php 
+    <?php
     foreach ($errors as $error) { ?>
 		<LI><?php echo $error; ?></LI>
 		<?php
 	}
 	if ($created) {    ?>
         <LI><?php  putGS('The section $1 has been successfuly added.','<B>'.htmlspecialchars($cName).'</B>'); ?></LI>
-        <?php 
+        <?php
         if ($cSubs != "") {
 			if ($numSubscriptionsAdded > 0) { ?>
 				<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.$numSubscriptionsAdded.'</B>'); ?></LI>
@@ -107,7 +101,7 @@ camp_html_content_top(getGS("Adding new section"), $tmpArray);
         if ($correct != 0) { ?>
         	<LI><?php  putGS('The section could not be added.'); ?></LI>
         	<LI><?php  putGS('Please check if another section with the same number or URL name does not exist already.'); ?></LI>
-            <?php  
+            <?php
         }
     }
     ?>

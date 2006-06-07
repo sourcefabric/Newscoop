@@ -1,18 +1,11 @@
 <?PHP
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_images");
-camp_load_language('api');
+camp_load_translation_strings("article_images");
+camp_load_translation_strings('api');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission("AttachImageToArticle")) {
+if (!$g_user->hasPermission("AttachImageToArticle")) {
 	$errorStr = getGS('You do not have the right to attach images to articles.');
 	camp_html_display_error($errorStr, null, true);
 	exit;
@@ -40,7 +33,7 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 <body>
 <table style="margin-top: 10px; margin-left: 5px;" cellpadding="0" cellspacing="0">
 <tr>
-	<?php if ($User->hasPermission('AddImage')) { ?>
+	<?php if ($g_user->hasPermission('AddImage')) { ?>
 	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_image_attach_mode != "new") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php", "", "&f_image_attach_mode=new"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Attach New Image"); ?></b></a></td>
 	<?php } ?>
 

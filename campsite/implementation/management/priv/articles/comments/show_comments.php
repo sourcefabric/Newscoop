@@ -40,7 +40,7 @@ if (count($comments) <= 0) {
         }
         ?>
 
-        <?php if ($User->hasPermission("CommentModerate")  && ($f_edit_mode == "edit") )  { ?>
+        <?php if ($g_user->hasPermission("CommentModerate")  && ($f_edit_mode == "edit") )  { ?>
         <tr>
             <td>
 
@@ -87,7 +87,7 @@ if (count($comments) <= 0) {
 
             </td>
         </tr>
-        <?php } // if $User->hasPermission("CommentModerate") ?>
+        <?php } // if $g_user->hasPermission("CommentModerate") ?>
 
         <tr>
             <td class="<?php p($css); ?>" style="padding-left: 15px; padding-right: 20px; padding-bottom: 5px; border-bottom: 1px solid #8EAED7;" id="comment_<?php p($comment->getMessageId()); ?>">

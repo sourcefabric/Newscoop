@@ -2,13 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageIssue')) {
+if (!$g_user->hasPermission('ManageIssue')) {
 	camp_html_display_error(getGS('You do not have the right to add issues.'));
 	exit;
 }
@@ -48,7 +42,7 @@ if ($correct) {
     $issueCopy = array_pop($issueCopies);
 	$logtext = getGS('New issue $1 from $2 in publication $3', $f_issue_number,
 					 $lastIssue->getIssueNumber(), $publicationObj->getName());
-	Log::Message($logtext, $User->getUserName(), 11);
+	Log::Message($logtext, $g_user->getUserName(), 11);
 	header("Location: /$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=".$issueCopy->getIssueNumber()
 		   ."&Language=".$issueCopy->getLanguageId());
 	exit;

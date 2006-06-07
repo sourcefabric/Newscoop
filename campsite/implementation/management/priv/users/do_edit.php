@@ -4,11 +4,9 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Log.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
 
-list($access, $User) = check_basic_access($_REQUEST);
-
 read_user_common_parameters(); // $uType, $userOffs, $ItemsPerPage, search parameters
 verify_user_type();
-compute_user_rights($User, $canManage, $canDelete);
+compute_user_rights($g_user, $canManage, $canDelete);
 
 $userId = Input::Get('User', 'int', 0);
 $editUser = new User($userId);
@@ -17,7 +15,7 @@ if ($editUser->getUserName() == '') {
 	exit;
 }
 
-if (!$canManage && $editUser->getUserId() != $User->getUserId()) {
+if (!$canManage && $editUser->getUserId() != $g_user->getUserId()) {
 	$errMsg = getGS('You do not have the right to change user account information.');
 	camp_html_display_error($errMsg);
 	exit;
@@ -32,7 +30,7 @@ if ($setPassword) {
 	$passwordConf = Input::Get('passwordConf', 'string', 0);
 	$backLink = "/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getUserId();
 
-	if ($userId == $User->getUserId()) {
+	if ($userId == $g_user->getUserId()) {
 		$oldPassword = Input::Get('oldPassword');
 		if (!$editUser->isValidPassword($oldPassword)
 				&& !$editUser->isValidOldPassword($oldPassword)) {
@@ -72,7 +70,7 @@ $editUser->setProperty('Position', Input::Get('Position', 'string', ''), false);
 $editUser->commit();
 
 $logtext = getGS('User account information changed for $1', $editUser->getUserName());
-Log::Message($logtext, $User->getUserName(), 56);
+Log::Message($logtext, $g_user->getUserName(), 56);
 
 
 if ($editUser->isAdmin() && $customizeRights && $canManage) {
@@ -87,7 +85,7 @@ if ($editUser->isAdmin() && $customizeRights && $canManage) {
 	$editUser->updatePermissions($permissions);
 
 	$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
-	Log::Message($logtext, $User->getUserName(), 55);
+	Log::Message($logtext, $g_user->getUserName(), 55);
 }
 if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 	// save user rights based on existing user type
@@ -100,7 +98,7 @@ if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 $resParams = "res=OK&resMsg=" . getGS("User '$1' information was changed successfully.",
 	$editUser->getUserName());
 $editUser->fetch();
-if ($editUser->getUserName() == $User->getUserName() && !$editUser->hasPermission('ManageUsers')) {
+if ($editUser->getUserName() == $g_user->getUserName() && !$editUser->hasPermission('ManageUsers')) {
 	header("Location: /$ADMIN/");
 	exit(0);
 }

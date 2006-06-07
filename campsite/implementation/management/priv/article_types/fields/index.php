@@ -1,17 +1,9 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_type_fields");
+camp_load_translation_strings("article_type_fields");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Translation.php');
-
-// Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
 $articleTypeName = Input::Get('f_article_type');
 // return value is sorted by language
@@ -31,12 +23,12 @@ $crumbs[] = array(getGS("Article type fields"), "");
 
 echo camp_html_breadcrumbs($crumbs);
 
-if ($User->hasPermission("ManageArticleTypes")) { ?>
+if ($g_user->hasPermission("ManageArticleTypes")) { ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>	
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 <script>
 var field_ids = new Array;
 var allShown = 0;
@@ -65,33 +57,33 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 	<TD><B><A HREF="add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><B><?php  putGS("Add new field"); ?></B></A>
 	</TD>
 	<TD><DIV STYLE="width:15px;"></DIV></TD>
-		<TD><A HREF="javascript: void(0);" 
-               ONCLICK="if (allShown == 0) { 
-                            ShowAll(field_ids); 
-                            allShown = 1; 
+		<TD><A HREF="javascript: void(0);"
+               ONCLICK="if (allShown == 0) {
+                            ShowAll(field_ids);
+                            allShown = 1;
                             document.getElementById('showtext').innerHTML = '<?php putGS("Hide display names"); ?>';
-                            document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';         
-                        } else { 
-                            HideAll(field_ids); 
-                            allShown = 0; 
-                            document.getElementById('showtext').innerHTML = '<?php putGS("Show display names"); ?>';           
+                            document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';
+                        } else {
+                            HideAll(field_ids);
+                            allShown = 0;
+                            document.getElementById('showtext').innerHTML = '<?php putGS("Show display names"); ?>';
                             document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag+.png';
                         }">
 		      <IMG NAME="show" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag+.png" BORDER="0"></A></TD>
-    	<TD><B><A HREF="javascript: void(0);" 
-                    ONCLICK="if (allShown == 0) { 
-                                ShowAll(field_ids); 
-                                allShown = 1; 
+    	<TD><B><A HREF="javascript: void(0);"
+                    ONCLICK="if (allShown == 0) {
+                                ShowAll(field_ids);
+                                allShown = 1;
                                 document.getElementById('showtext').innerHTML = '<?php putGS("Hide display names"); ?>';
-                                document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';         
-                                } else { 
-                                HideAll(field_ids); 
-                                allShown = 0;                      
-                                document.getElementById('showtext').innerHTML = '<?php putGS("Show display names"); ?>';           
+                                document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';
+                                } else {
+                                HideAll(field_ids);
+                                allShown = 0;
+                                document.getElementById('showtext').innerHTML = '<?php putGS("Show display names"); ?>';
                                 document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag+.png';
                                 }"><DIV ID="showtext"><?php putGS("Show display names"); ?></DIV></A></B></TD>
 
-	
+
 
 </TR>
 </TABLE>
@@ -104,7 +96,7 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Template Field Name"); ?></B></TD>
 
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Type"); ?></B></TD>
-	<?php  if ($User->hasPermission("ManageArticleTypes")) { ?>
+	<?php  if ($g_user->hasPermission("ManageArticleTypes")) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Display Name"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Translate"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Show/Hide"); ?></B></TD>
@@ -112,10 +104,10 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
 	<?php  } ?>
 </TR>
-<?php 
+<?php
 $color= 0;
 $i = 0;
-foreach ($fields as $field) { 
+foreach ($fields as $field) {
 	if ($field->getStatus() == 'hidden') {
 		$hideShowText = getGS('show');
 		$hideShowStatus = 'show';
@@ -146,20 +138,20 @@ foreach ($fields as $field) {
 		</TD>
 		</TR></TABLE>
 	</TD>
-	
+
 	<TD>
 		<A HREF="rename.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php  print htmlspecialchars($field->getPrintName()); ?></A>&nbsp;
 	</TD>
-	
+
 	<TD>
-		<A HREF="retype.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php print htmlspecialchars($field->getPrintType()); ?></A>		
+		<A HREF="retype.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php print htmlspecialchars($field->getPrintType()); ?></A>
 	</TD>
 
 	<TD>
 		<?php print htmlspecialchars($field->getDisplayName()); ?> <?php print htmlspecialchars($field->getDisplayNameLanguageCode()); ?>
 	</TD>
-	
-	<td> 
+
+	<td>
 		<a href="javascript: void(0);" onclick="HideAll(field_ids); ShowElement('translate_field_<?php p($i); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/localizer.png" alt="<?php putGS("Translate"); ?>" title="<?php putGS("Translate"); ?>" border="0"></a>
 	</td>
 
@@ -167,7 +159,7 @@ foreach ($fields as $field) {
 		<A HREF="/<?php p($ADMIN); ?>/article_types/fields/do_hide.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_status=<?php print $hideShowStatus; ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type field $2?', $hideShowText, $field->getPrintName()); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('$1 article type field $2', ucfirst($hideShowText), $field->getPrintName()); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), $field->getPrintName()); ?>" ></A>
 	</TD>
 
-	<?php  if ($User->hasPermission("ManageArticleTypes")) { ?>
+	<?php  if ($g_user->hasPermission("ManageArticleTypes")) { ?>
 	<TD ALIGN="CENTER">
 		<A HREF="/<?php p($ADMIN); ?>/article_types/fields/do_del.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print urlencode($field->getPrintName()); ?>" onclick="return confirm('<?php echo getGS('Are you sure you want to delete the field $1?', htmlspecialchars($field->getPrintName())).' '.getGS('You will also delete all fields with this name from all articles of this type from all publications.');  ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete field $1', htmlspecialchars($field->getPrintName())); ?>" TITLE="<?php  putGS('Delete field $1', htmlspecialchars($field->getPrintName())); ?>" ></A>
 	</TD>
@@ -207,7 +199,7 @@ foreach ($fields as $field) {
     	<tr>
     	<td colspan="2">
     		<FORM method="POST" action="do_translate.php?f_article_type=<?php p($articleTypeName); ?>" >
-    		<input type="hidden" name="f_field_id" value="<?php p($field->getPrintName()); ?>"> 
+    		<input type="hidden" name="f_field_id" value="<?php p($field->getPrintName()); ?>">
     		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
     		<tr>
     			<td align="left">
@@ -217,15 +209,15 @@ foreach ($fields as $field) {
 		    			<td>
 							<SELECT NAME="f_field_language_id" class="input_select" alt="select" emsg="<?php putGS("You must select a language."); ?>">
 							<option value="0"><?php putGS("---Select language---"); ?></option>
-							<?php 
+							<?php
 						 	foreach ($allLanguages as $tmpLanguage) {
 						 		if ($languageObj->getLanguageId() == $tmpLanguage->getLanguageId()) $selected = true;
 						 		else $selected = false;
-						 	    camp_html_select_option($tmpLanguage->getLanguageId(), 
-						 								$selected, 
+						 	    camp_html_select_option($tmpLanguage->getLanguageId(),
+						 								$selected,
 						 								$tmpLanguage->getNativeName());
 					        }
-							?>			
+							?>
 							</SELECT>
 		    			</td>
 		    			<td><input type="text" name="f_field_translation_name" value="" class="input_text" size="15" alt="blank" emsg="<?php putGS('You must enter a name for the field.'); ?>"></td>
@@ -247,9 +239,9 @@ foreach ($fields as $field) {
 
 
 
-<?php  
-$i++; 
-} // foreach  
-?>	
+<?php
+$i++;
+} // foreach
+?>
 </TABLE>
 <?php camp_html_copyright_notice(); ?>

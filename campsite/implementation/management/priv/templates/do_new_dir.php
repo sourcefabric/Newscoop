@@ -1,13 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
-    
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
 
-if (!$User->hasPermission('ManageTempl')) {
+if (!$g_user->hasPermission('ManageTempl')) {
 	camp_html_display_error(getGS("You do not have the right to create new folders."));
 	exit;
 }
@@ -57,7 +51,7 @@ echo camp_html_breadcrumbs($crumbs);
 </TR>
 <TR>
 	<TD COLSPAN="2"><BLOCKQUOTE>
-	<?php  
+	<?php
 	if (!$correct) { ?>
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
 		<?php

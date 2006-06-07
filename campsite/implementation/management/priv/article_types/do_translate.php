@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("article_types");
+camp_load_translation_strings("article_types");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
@@ -8,13 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageArticleTypes')) {
+if (!$g_user->hasPermission('ManageArticleTypes')) {
 	camp_html_display_error(getGS("You do not have the right to add article types."));
 	exit;
 }
@@ -32,8 +25,8 @@ $errorMsgs = array();
 
 
 if ($f_type_language_id <= 0) {
-	$correct = false; 
-	$errorMsgs[] = getGS('You must choose a language for the article type.'); 
+	$correct = false;
+	$errorMsgs[] = getGS('You must choose a language for the article type.');
 }
 
 if ($correct) {
@@ -68,8 +61,8 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
-		<?php 
-		foreach ($errorMsgs as $errorMsg) { 
+		<?php
+		foreach ($errorMsgs as $errorMsg) {
 			echo "<li>".$errorMsg."</li>";
 		}
 		?>

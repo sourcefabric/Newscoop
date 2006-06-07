@@ -1,16 +1,10 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/IssuePublish.php');
-camp_load_language("articles");
+camp_load_translation_strings("articles");
 
 // Check permissions
-list($access, $User) = check_basic_access($_REQUEST);
-if (!$access) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
-}
-
-if (!$User->hasPermission('ManageIssue')) {
+if (!$g_user->hasPermission('ManageIssue')) {
 	camp_html_display_error(getGS('You do not have the right to change issues.'));
 	exit;
 }
@@ -74,7 +68,7 @@ camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $public
 		<?php if (is_null($event_id)) { ?>
 		<B><?php  putGS("Schedule a new action"); ?></B>
 		<?php } else { ?>
-		<B><?php  putGS("Edit"); ?></B>		
+		<B><?php  putGS("Edit"); ?></B>
 		<?php } ?>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
@@ -142,17 +136,17 @@ if (count($allEvents) > 0) {
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Publish articles"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
 	</TR>
-	
+
 	<?php
 	foreach ($allEvents as $event) {
 		$url_publish_time = urlencode($event->getActionTime());
-		?>	
+		?>
 		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-		
+
 		<TD>
 			<?php if (!$event->isCompleted()) { ?><A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&event_id=<?php echo $event->getEventId(); ?>"><?php } else { echo "<strike>"; } ?><?php p(htmlspecialchars($event->getActionTime())); ?><?php if (!$event->isCompleted()) { ?></A><?php } else { echo "</strike>"; } ?>
 		</TD>
-		
+
 		<TD >
 			<?php
 				$action = $event->getPublishAction();
@@ -164,7 +158,7 @@ if (count($allEvents) > 0) {
 				}
 			?>&nbsp;
 		</TD>
-		
+
 		<TD >
 			<?php
 				$publish_articles = $event->getPublishArticlesAction();
@@ -176,14 +170,14 @@ if (count($allEvents) > 0) {
 				}
 			?>&nbsp;
 		</TD>
-		
+
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&event_id=<?php echo $event->getEventId(); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
 		</TD>
-		
+
 	<?php } // foreach ?>
 	</TR>
 <?php
-} // if 
+} // if
 camp_html_copyright_notice();
 ?>
