@@ -59,14 +59,10 @@ if (count($allIssues) > 0) {
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Number"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Name<BR><SMALL>(click to see sections)</SMALL>"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("URL Name"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
+		<TD ALIGN="center" VALIGN="TOP"><B><?php putGS("Publish Date $1", "<br><small>".getGS("(yyyy-mm-dd)")."</small>"); ?></B></TD>
 
 		<?php  if ($g_user->hasPermission('ManageIssue')) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Configure"); ?></B></TD>
-		<?php } ?>
-
-		<?php if ($g_user->hasPermission('Publish')) { ?>
-		<TD ALIGN="center" VALIGN="TOP"><B><?php echo str_replace(' ', '<br>', getGS("Scheduled Publishing")); ?></B></TD>
 		<?php } ?>
 
 		<?php  if ($g_user->hasPermission('ManageIssue')) { ?>
@@ -82,7 +78,7 @@ if (count($allIssues) > 0) {
 <?php
 $currentIssue = -1;
 foreach ($allIssues as $issue) {
-	$hasPendingEvents = (count(IssuePublish::GetIssueEvents($issue->getPublicationId(), $issue->getIssueNumber(), $issue->getLanguageId(), false)) > 0);
+	$pendingEvents = IssuePublish::GetIssueEvents($issue->getPublicationId(), $issue->getIssueNumber(), $issue->getLanguageId(), false);
 	?>
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 
@@ -99,33 +95,46 @@ foreach ($allIssues as $issue) {
 	</TD>
 
 	<TD ALIGN="CENTER">
-		<?php if ($g_user->hasPermission('ManageIssue')) { ?>
-		<A HREF="/<?php echo $ADMIN; ?>/issues/status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>">
 		<?php
-		}
 		if ($issue->getWorkflowStatus() == 'Y') {
 			p(htmlspecialchars($issue->getPublicationDate()));
 		} else {
-			if ($g_user->hasPermission('ManageIssue')) {
-				print putGS("Publish");
+			print putGS("Not published");
+		}
+		?>
+		<?php
+		if (count($pendingEvents) > 0) {
+			echo "<br>";
+			$nextEvent = array_shift($pendingEvents);
+			if ($nextEvent->getPublishAction() == 'P') {
+				putGS("Publish on: $1", $nextEvent->getActionTime());
 			} else {
-				print putGS("No");
+				putGS("Unpublish on: $1", $nextEvent->getActionTime());
 			}
-		} ?>
-		<?php if ($g_user->hasPermission('ManageIssue')) { ?>
-		</A>
-		<?php } ?>
+		}
+		?>
+		<br>
+		<?php if ($g_user->hasPermission('ManageIssue')) {
+			if ($issue->getWorkflowStatus() == 'Y') {
+				$t2 = getGS('Published');
+				$t3 = getGS('Not published');
+			}
+			else {
+				$t2 = getGS('Not published');
+				$t3 = getGS('Published');
+			}
+			?>
+			<A HREF="/<?php echo $ADMIN; ?>/issues/do_status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>&f_target=index.php" onclick="return confirm('<?php  putGS('Are you sure you want to change the issue $1 status from $2 to $3?',$issue->getIssueNumber().'. '.htmlspecialchars($issue->getName()).' ('.htmlspecialchars($issue->getLanguageName()).')',"\'$t2\'","\'$t3\'"); ?>
+	');"><?php ($issue->getWorkflowStatus() == 'Y') ? putGS("Unpublish") : putGS("Publish"); ?></A>
+			- <A HREF="/<?php echo $ADMIN; ?>/issues/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php  putGS("Schedule"); ?></A>
+			<?php
+		}
+		?>
 	</TD>
 
 	<?php  if ($g_user->hasPermission('ManageIssue')) { ?>
 	<TD ALIGN="CENTER">
 		<A HREF="/<?php echo $ADMIN; ?>/issues/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
-	</TD>
-	<?php } ?>
-
-	<?php if ($g_user->hasPermission('Publish')) { ?>
-	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php if ($hasPendingEvents) { ?>automatic_publishing_active.png<?php } else { ?>automatic_publishing.png<?php } ?>" alt="<?php putGS("Scheduled Publishing"); ?>"  title="<?php putGS("Scheduled Publishing"); ?>" border="0"></A>
 	</TD>
 	<?php } ?>
 

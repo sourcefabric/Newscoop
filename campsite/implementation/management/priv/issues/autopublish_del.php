@@ -17,7 +17,7 @@ $action =& new IssuePublish($event_id);
 $deleted = $action->delete();
 
 if ($deleted) {
-	header("Location: /$ADMIN/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
+	header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 }
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
@@ -43,7 +43,7 @@ camp_html_content_top(getGS("Delete scheduled publish action"), $crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
 	</DIV>
 	</TD>
 </TR>

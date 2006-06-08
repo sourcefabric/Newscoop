@@ -83,16 +83,13 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-		<DIV ALIGN="CENTER">
+	<TD COLSPAN="2" align="center">
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub);?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-		<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/?Pub=<?php  p($Pub); ?>'">-->
-		</DIV>
-		</TD>
-	</TR>
+	</TD>
+</TR>
 </TABLE>
 </FORM>
 <P>

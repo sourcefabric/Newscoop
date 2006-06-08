@@ -4,6 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 $Pub = Input::Get('Pub', 'int');
 $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
+$f_target = Input::Get('f_target', 'string', 'index.php', true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
@@ -16,10 +17,9 @@ if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('Publish')
 	exit;
 }
 
-$publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $issueObj->setWorkflowStatus();
 
-header("Location: /$ADMIN/issues/?Pub=" . $publicationObj->getPublicationId());
+header("Location: /$ADMIN/issues/$f_target?Pub=$Pub&Issue=$Issue&Language=$Language");
 
 ?>

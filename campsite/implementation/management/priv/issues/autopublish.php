@@ -38,7 +38,6 @@ if (!is_null($event_id)) {
 	$publish_hour = $publish_time[0];
 	$publish_min = $publish_time[1];
 }
-$allEvents = IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
 
 camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $publicationObj, 'Issue' => $issueObj), true, true);
 
@@ -49,14 +48,6 @@ camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $public
 	<TD><A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php  p($Pub); ?>"><B><?php  putGS("Issue List"); ?></B></A></TD>
 	<TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php  p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/issues/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>"><B><?php  echo getGS("Issue").": ".htmlspecialchars($issueObj->getName()); ?></B></A></TD>
-</TR>
-</TABLE>
-
-<p>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
-<TR>
-	<TD><A HREF="autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-	<TD><A HREF="autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>"><B><?php  putGS("Add Event"); ?></B></A></TD>
 </TR>
 </TABLE>
 
@@ -124,60 +115,4 @@ camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $public
 </FORM>
 </P>
 
-<P>
-<?php
-if (count($allEvents) > 0) {
-	$color= 0;
-	?>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
-	<TR class="table_list_header">
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Date/Time"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Action"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Publish articles"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
-	</TR>
-
-	<?php
-	foreach ($allEvents as $event) {
-		$url_publish_time = urlencode($event->getActionTime());
-		?>
-		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-
-		<TD>
-			<?php if (!$event->isCompleted()) { ?><A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&event_id=<?php echo $event->getEventId(); ?>"><?php } else { echo "<strike>"; } ?><?php p(htmlspecialchars($event->getActionTime())); ?><?php if (!$event->isCompleted()) { ?></A><?php } else { echo "</strike>"; } ?>
-		</TD>
-
-		<TD >
-			<?php
-				$action = $event->getPublishAction();
-				if ($action == "P") {
-					putGS("Publish");
-				}
-				else {
-					putGS("Unpublish");
-				}
-			?>&nbsp;
-		</TD>
-
-		<TD >
-			<?php
-				$publish_articles = $event->getPublishArticlesAction();
-				if ($publish_articles == "Y") {
-					putGS("Yes");
-				}
-				else {
-					putGS("No");
-				}
-			?>&nbsp;
-		</TD>
-
-		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&event_id=<?php echo $event->getEventId(); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
-		</TD>
-
-	<?php } // foreach ?>
-	</TR>
-<?php
-} // if
-camp_html_copyright_notice();
-?>
+<?php camp_html_copyright_notice(); ?>
