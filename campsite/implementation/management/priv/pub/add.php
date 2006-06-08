@@ -30,9 +30,11 @@ echo camp_html_breadcrumbs($crumbs);
 </TR>
 </TABLE>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php">
+<FORM NAME="publication_add" METHOD="POST" ACTION="do_add.php">
 <?php include("pub_form.php"); ?>
 </FORM>
 <P>
-
+<script>
+document.publication_add.f_name.focus();
+</script>
 <?php camp_html_copyright_notice(); ?>

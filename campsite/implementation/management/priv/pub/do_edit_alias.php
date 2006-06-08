@@ -8,43 +8,48 @@ if (!$g_user->hasPermission('ManagePub')) {
 	exit;
 }
 
-$cPub = Input::Get('cPub', 'int');
-$cAlias = Input::Get('cAlias', 'int');
-$cName = trim(Input::Get('cName'));
-$publicationObj =& new Publication($cPub);
+$f_publication_id = Input::Get('f_publication_id', 'int');
+$f_alias_id = Input::Get('f_alias_id', 'int');
+$f_name = trim(Input::Get('f_name'));
+
+$publicationObj =& new Publication($f_publication_id);
 
 $correct = true;
-$updated = false;
 $errorMsgs = array();
 
-if (empty($cName)) {
+if (empty($f_name)) {
 	$correct = false;
 	$errorMsgs[] = getGS('You must complete the $1 field.', '<B>Name</B>');
 }
 
+$alias =& new Alias($f_alias_id);
 $aliases = 0;
 if ($correct) {
-	$aliasDups = count(Alias::GetAliases(null, null, $cName));
-	if ($aliasDups <= 0) {
-		$alias =& new Alias($cAlias);
-		$alias->setName($cName);
-		$updated = true;
-		$logtext = getGS('The site alias for publication $1 has been modified to $2.',
-						 $publicationObj->getName(), $cName);
-		Log::Message($logtext, $g_user->getUserName(), 153);
-		header("Location: /$ADMIN/pub/edit_alias.php?Pub=$cPub&Alias=$cAlias");
-		exit;
-	}
-	else {
-		$errorMsgs[] = getGS('Another alias with the same name exists already.');
+	if ($alias->getName() != $f_name) {
+		$aliasDups = count(Alias::GetAliases(null, null, $f_name));
+		if ($aliasDups <= 0) {
+			$success = $alias->setName($f_name);
+			if ($success) {
+				$logtext = getGS('The site alias for publication $1 has been modified to $2.',
+								 $publicationObj->getName(), $f_name);
+				Log::Message($logtext, $g_user->getUserName(), 153);
+			}
+		}
+		else {
+			$errorMsgs[] = getGS('Another alias with the same name exists already.');
+			$correct = false;
+		}
 	}
 }
 
-if (!$updated && !$correct) {
-	$errorMsgs[] = getGS('The site alias $1 could not be modified.', '<B>'.$cName.'</B>');
+if ($correct) {
+	header("Location: /$ADMIN/pub/aliases.php?Pub=$f_publication_id&Alias=$f_alias_id");
+	exit;
+} else {
+	$errorMsgs[] = getGS('The site alias $1 could not be modified.', '<B>'.$alias->getName().'</B>');
 }
 
-$crumbs = array(getGS("Publication Aliases") => "aliases.php?Pub=$cPub");
+$crumbs = array(getGS("Publication Aliases") => "aliases.php?Pub=$f_publication_id");
 camp_html_content_top(getGS("Editing alias"), array("Pub" => $publicationObj), true, false, $crumbs);
 
 ?>
@@ -70,10 +75,8 @@ camp_html_content_top(getGS("Editing alias"), array("Pub" => $publicationObj), t
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/edit_alias.php?Pub=<?php p($cPub); ?>&Alias=<?php p($cAlias); ?>'">
-	</DIV>
+	<TD COLSPAN="2" align="center">
+		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/aliases.php?Pub=<?php p($f_publication_id); ?>&Alias=<?php p($f_alias_id); ?>'">
 	</TD>
 </TR>
 </TABLE>

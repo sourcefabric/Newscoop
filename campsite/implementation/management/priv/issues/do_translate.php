@@ -12,42 +12,41 @@ if (!$g_user->hasPermission('ManageIssue')) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int');
-$Issue = Input::Get('Issue', 'int');
-$Language = Input::Get('Language', 'int');
-$IssOffs = Input::Get('IssOffs', 'int', 0, true);
+$f_publication_id = Input::Get('f_publication_id', 'int');
+$f_issue_id = Input::Get('f_issue_number', 'int');
+$f_language_id = Input::Get('f_language_id', 'int');
 
-$cName = trim(Input::Get('cName'));
-$cShortName = trim(Input::Get('cShortName'));
-$cLang = Input::Get('cLang');
+$f_name = trim(Input::Get('f_name'));
+$f_url_name = trim(Input::Get('f_url_name'));
+$f_new_language_id = Input::Get('f_new_language_id');
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
+$publicationObj =& new Publication($f_publication_id);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_id);
 
 $correct = true;
 $created = false;
 
-if ($cLang == 0) {
+if ($f_new_language_id == 0) {
     $correct = false;
 }
 
-if ($cName == "") {
+if ($f_name == "") {
     $correct = false;
 }
 
-if ($cShortName == "") {
+if ($f_url_name == "") {
     $correct = false;
 }
 
 if ($correct) {
-    $newIssue = $issueObj->copy(null, $issueObj->getIssueNumber(), $cLang);
-    $newIssue->setName($cName);
-    $newIssue->setUrlName($cShortName);
-    header("Location: /$ADMIN/issues/?Pub=$Pub");
+    $newIssue = $issueObj->copy(null, $issueObj->getIssueNumber(), $f_new_language_id);
+    $newIssue->setName($f_name);
+    $newIssue->setUrlName($f_url_name);
+    header("Location: /$ADMIN/issues/?Pub=$f_publication_id");
     exit;
     //$created = true;
 }
@@ -57,7 +56,6 @@ camp_html_content_top("Adding new translation", $tmpArray);
 ?>
 
 <P>
-<CENTER>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
 <TR>
 	<TD COLSPAN="2">
@@ -68,23 +66,23 @@ camp_html_content_top("Adding new translation", $tmpArray);
 <TR>
 	<TD COLSPAN="2"><BLOCKQUOTE>
     <?php
-    if ($cLang == 0) {	?>
+    if ($f_new_language_id == 0) {	?>
     	<LI><?php  putGS('You must select a language.'); ?></LI>
         <?php
     }
 
-    if ($cName == "") { ?>
+    if ($f_name == "") { ?>
     	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
         <?php
     }
 
-    if ($cShortName == "") { ?>
+    if ($f_url_name == "") { ?>
     	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('URL Name').'</B>'); ?></LI>
         <?php
     }
 
     if ($created) { ?>
-    	<LI><?php  putGS('The issue $1 has been successfuly added.','<B>'.htmlspecialchars($cName).'</B>' ); ?></LI>
+    	<LI><?php  putGS('The issue $1 has been successfuly added.','<B>'.htmlspecialchars($f_name).'</B>' ); ?></LI>
         <?php
     } else {
         if ($correct != 0) { ?>
@@ -101,25 +99,20 @@ camp_html_content_top("Adding new translation", $tmpArray);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="Another" VALUE="<?php  putGS('Add another'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php p($Language); ?>'">
-	<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/?Pub=<?php p($Pub); ?>'">
+	<INPUT TYPE="button" class="button" NAME="Another" VALUE="<?php  putGS('Add another'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/translate.php?Pub=<?php  p($f_publication_id); ?>&Issue=<?php  p($f_issue_id); ?>&Language=<?php p($f_language_id); ?>'">
+	<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/?Pub=<?php p($f_publication_id); ?>'">
 	</DIV>
 	</TD>
 </TR>
 <?php  } else { ?>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php p($Issue); ?>'">
-	</DIV>
+	<TD COLSPAN="2" align="center">
+		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/translate.php?Pub=<?php  p($f_publication_id); ?>&Issue=<?php p($f_issue_id); ?>'">
 	</TD>
 </TR>
 <?php  } ?>
 
 </TABLE>
-</CENTER>
 <P>
 
 <?php camp_html_copyright_notice(); ?>
-</BODY>
-</HTML>

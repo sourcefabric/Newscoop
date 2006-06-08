@@ -261,6 +261,8 @@ if (sizeof($allArticleTypes) == 0) {
 </TABLE>
 </FORM>
 <P>
-
+<script>
+document.add_article.f_article_name.focus();
+</script>
 <?php } ?>
 <?php camp_html_copyright_notice(); ?>

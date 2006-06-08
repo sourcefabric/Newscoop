@@ -99,7 +99,7 @@ if ($f_publication_id > 0) {
 </table>
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_translate.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<FORM NAME="article_translate" METHOD="POST" ACTION="do_translate.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <INPUT TYPE="HIDDEN" NAME="f_article_code" VALUE="<?php  p($f_article_code); ?>">
 <?php if ($f_publication_id > 0) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
@@ -238,5 +238,7 @@ if ($f_publication_id > 0) {
 </TABLE>
 </FORM>
 <P>
-
+<script>
+document.article_translate.f_translation_title.focus();
+</script>
 <?php camp_html_copyright_notice(); ?>

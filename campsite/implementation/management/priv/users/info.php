@@ -39,7 +39,7 @@ $my_user_type = $editUser->getUserType();
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 
-<form name="dialog" method="POST" action="<?php echo $action; ?>" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<form name="user_add" method="POST" action="<?php echo $action; ?>" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <input type="hidden" name="uType" value="<?php echo $uType; ?>">
 <?php
 if (!$isNewUser) {
@@ -368,11 +368,8 @@ if ($editUser->isAdmin() /*&& $canManage*/) {
 	<td>
 		<table border="0" cellspacing="0" cellpadding="6" align="center" width="100%">
 		<tr>
-			<td colspan="2">
-			<div align="center">
-			<input type="submit" class="button" name="Save" value="<?php  putGS('Save'); ?>">
-<!--				<input type="button" class="button" name="Cancel" value="<?php putGS('Cancel'); ?>" onclick="location.href='<?php echo "/$ADMIN/users/?" . get_user_urlparams(); ?>'">
--->				</div>
+			<td colspan="2" align="center">
+				<input type="submit" class="button" name="Save" value="<?php  putGS('Save'); ?>">
 			</td>
 		</tr>
 		</table>
@@ -380,3 +377,8 @@ if ($editUser->isAdmin() /*&& $canManage*/) {
 </tr>
 </table>
 </form>
+<?php if ($isNewUser) { ?>
+<script>
+document.user_add.UName.focus();
+</script>
+<?php } ?>

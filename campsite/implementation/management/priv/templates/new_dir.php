@@ -22,7 +22,7 @@ echo camp_html_breadcrumbs($crumbs);
 ?>
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_new_dir.php"  >
+<FORM NAME="directory_add" METHOD="POST" ACTION="do_new_dir.php"  >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -37,16 +37,15 @@ echo camp_html_breadcrumbs($crumbs);
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="HIDDEN" NAME="cPath" VALUE="<?php p($Path); ?>">
-	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($Path); ?>'">-->
-	</DIV>
+	<TD COLSPAN="2" align="center">
+		<INPUT TYPE="HIDDEN" NAME="cPath" VALUE="<?php p($Path); ?>">
+		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	</TD>
 </TR>
 </TABLE>
 </FORM>
 <P>
-
+<script>
+document.directory_add.cName.focus();
+</script>
 <?php camp_html_copyright_notice(); ?>

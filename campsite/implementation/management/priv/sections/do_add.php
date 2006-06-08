@@ -6,21 +6,21 @@ if (!$g_user->hasPermission('ManageSection')) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$cName = trim(Input::Get('cName', 'string', '', true));
-$cNumber = trim(Input::Get('cNumber', 'int', 0, true));
-$cSubs = Input::Get('cSubs', 'string', '', true);
-$cShortName = trim(Input::Get('cShortName', 'string', '', true));
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_name = trim(Input::Get('f_name', 'string', '', true));
+$f_number = trim(Input::Get('f_number', 'int', 0, true));
+$f_add_subscriptions = Input::Get('f_add_subscriptions', 'checkbox');
+$f_url_name = trim(Input::Get('f_url_name', 'string', '', true));
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$publicationObj =& new Publication($Pub);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$publicationObj =& new Publication($f_publication_id);
 
 if (!$publicationObj->exists()) {
     camp_html_display_error(getGS('Publication does not exist.'));
@@ -33,37 +33,37 @@ if (!$issueObj->exists()) {
 
 $correct = true;
 $created = false;
-$isValidShortName = camp_is_valid_url_name($cShortName);
+$isValidShortName = camp_is_valid_url_name($f_url_name);
 
 $errors = array();
-if ($cName == "") {
+if ($f_name == "") {
 	$correct = false;
 	$errors[] = getGS('You must complete the $1 field.', '"'.getGS('Name').'"');
 }
-if ($cNumber == 0) {
+if ($f_number == 0) {
 	$correct= false;
-	$cNumber = ($cNumber + 0);
+	$f_number = ($f_number + 0);
 	$errors[] = getGS('You must complete the $1 field.','"'.getGS('Number').'"');
 }
-if ($cShortName == "") {
+if ($f_url_name == "") {
 	$correct = false;
 	$errors[] = getGS('You must complete the $1 field.','"'.getGS('URL Name').'"');
 }
-if (!$isValidShortName && trim($cShortName) != "") {
+if (!$isValidShortName && trim($f_url_name) != "") {
 	$correct = false;
 	$errors[] = getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('URL Name') . '"');
 }
 if ($correct) {
-    $newSection =& new Section($Pub, $Issue, $Language, $cNumber);
-    $created = $newSection->create($cName, $cShortName);
+    $newSection =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_number);
+    $created = $newSection->create($f_name, $f_url_name);
     if ($created) {
-	    if (!empty($cSubs)) {
-	        $numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($Pub, $cNumber);
+	    if ($f_add_subscriptions) {
+	        $numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($f_publication_id, $f_number);
 			if ($numSubscriptionsAdded == -1) {
 	            $errors[] = getGS('Error updating subscriptions.');
 			}
 	    }
-	    header("Location: edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=".$newSection->getSectionNumber());
+	    header("Location: edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id&Section=".$newSection->getSectionNumber());
 	    exit;
     }
 }
@@ -89,9 +89,9 @@ camp_html_content_top(getGS("Adding new section"), $tmpArray);
 		<?php
 	}
 	if ($created) {    ?>
-        <LI><?php  putGS('The section $1 has been successfuly added.','<B>'.htmlspecialchars($cName).'</B>'); ?></LI>
+        <LI><?php  putGS('The section $1 has been successfuly added.','<B>'.htmlspecialchars($f_name).'</B>'); ?></LI>
         <?php
-        if ($cSubs != "") {
+        if ($f_add_subscriptions) {
 			if ($numSubscriptionsAdded > 0) { ?>
 				<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.$numSubscriptionsAdded.'</B>'); ?></LI>
 	           <?php
@@ -113,10 +113,10 @@ camp_html_content_top(getGS("Adding new section"), $tmpArray);
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
     <?php  if ($correct && $created) { ?>
-        <INPUT TYPE="button" class="button" NAME="Add another" VALUE="<?php  putGS('Add another'); ?>" ONCLICK="location.href='/admin/sections/add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">
-		<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/admin/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">
+        <INPUT TYPE="button" class="button" NAME="Add another" VALUE="<?php  putGS('Add another'); ?>" ONCLICK="location.href='/admin/sections/add.php?Pub=<?php  p($f_publication_id); ?>&Issue=<?php  p($f_issue_number); ?>&Language=<?php  p($f_language_id); ?>'">
+		<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/admin/sections/?Pub=<?php  p($f_publication_id); ?>&Issue=<?php  p($f_issue_number); ?>&Language=<?php  p($f_language_id); ?>'">
 <?php  } else { ?>
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/admin/sections/add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">
+		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/admin/sections/add.php?Pub=<?php  p($f_publication_id); ?>&Issue=<?php  p($f_issue_number); ?>&Language=<?php  p($f_language_id); ?>'">
 <?php  } ?>
 	</DIV>
 	</TD>

@@ -20,7 +20,7 @@ echo camp_html_breadcrumbs($crumbs);
 
 ?>
 
-<form name="dialog" method="post" action="do_add.php" >
+<form name="user_type_add" method="post" action="do_add.php">
 <p>
 <table border="0" cellspacing="0" cellpadding="1" class="table_input">
 <tr>
@@ -75,4 +75,7 @@ foreach ($group as $right_name=>$right_text) {
 </table>
 </p>
 </form>
+<script>
+document.user_type_add.Name.focus();
+</script>
 <?php camp_html_copyright_notice(); ?>

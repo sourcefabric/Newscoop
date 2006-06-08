@@ -8,18 +8,18 @@ if (!$g_user->hasPermission('ManagePub')) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int');
-$Alias = Input::Get('Alias', 'int');
-$publicationObj =& new Publication($Pub);
-$alias =& new Alias($Alias);
+$f_publication_id = Input::Get('Pub', 'int');
+$f_alias_id = Input::Get('Alias', 'int');
 
-$crumbs = array(getGS("Publication Aliases") => "aliases.php?Pub=$Pub");
+$publicationObj =& new Publication($f_publication_id);
+$alias =& new Alias($f_alias_id);
+
+$crumbs = array(getGS("Publication Aliases") => "aliases.php?Pub=$f_publication_id");
 camp_html_content_top(getGS("Edit alias"), array("Pub" => $publicationObj), true, false, $crumbs);
 
 ?>
-
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_edit_alias.php"  >
+<FORM name="edit_alias" METHOD="POST" ACTION="do_edit_alias.php">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -27,23 +27,24 @@ camp_html_content_top(getGS("Edit alias"), array("Pub" => $publicationObj), true
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
-<INPUT TYPE=HIDDEN NAME=cPub VALUE="<?php  p($Pub); ?>">
-<INPUT TYPE=HIDDEN NAME=cAlias VALUE="<?php  p($Alias); ?>">
+<INPUT TYPE="hidden" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
+<INPUT TYPE="hidden" NAME="f_alias_id" VALUE="<?php p($f_alias_id); ?>">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="cName" VALUE="<?php echo htmlspecialchars($alias->getName()); ?>" SIZE="32" MAXLENGTH="255">
+	<INPUT TYPE="TEXT" NAME="f_name" VALUE="<?php echo htmlspecialchars($alias->getName()); ?>" SIZE="32" MAXLENGTH="255" class="input_text">
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-<!--	<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/pub/aliases.php?Pub=<?php  p($Pub); ?>'">
--->	</DIV>
+	<TD COLSPAN="2" align="center">
+		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	</TD>
 </TR>
 </TABLE>
 </FORM>
 <P>
+<script>
+document.edit_alias.f_name.focus();
+</script>
+
 <?php camp_html_copyright_notice(); ?>

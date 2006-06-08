@@ -28,7 +28,7 @@ if (is_null($lastCreatedIssue)) { ?>
 } else { ?>
 
 <P>
-<FORM METHOD="POST" ACTION="do_add_prev.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<FORM name="issue_add" METHOD="POST" ACTION="do_add_prev.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -54,5 +54,8 @@ if (is_null($lastCreatedIssue)) { ?>
 </TABLE>
 </FORM>
 <P>
+<script>
+document.issue_add.f_issue_number.focus();
+</script>
 <?php  } ?>
 <?php camp_html_copyright_notice(); ?>

@@ -50,20 +50,17 @@ $resMsg = Input::Get('resMsg', 'string', '');
 <?php } ?>
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php"  >
+<FORM NAME="template_edit" METHOD="POST" ACTION="do_edit.php"  >
 <INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p($Path); ?>">
 <INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  p($Name); ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
+	<TD COLSPAN="2" align="center">
 	<?php  if ($g_user->hasPermission("DeleteTempl")) { ?>
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($Path); ?>'">-->
 	<?php  } else { ?>
 	<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($Path); ?>'">
 	<?php  } ?>
-	</DIV>
 	</TD>
 </TR>
 
@@ -72,18 +69,18 @@ $resMsg = Input::Get('resMsg', 'string', '');
 </TR>
 
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
+	<TD COLSPAN="2" align="center">
 	<?php  if ($g_user->hasPermission("DeleteTempl")) { ?>
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($Path); ?>'">-->
 	<?php  } else { ?>
 	<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($Path); ?>'">
 	<?php  } ?>
-	</DIV>
 	</TD>
 </TR>
 </TABLE>
 </FORM>
+<SCRIPT>
+document.template_edit.cField.focus();
 
+</SCRIPT>
 <?php camp_html_copyright_notice(); ?>

@@ -31,7 +31,7 @@ if ($correct) {
 			$logtext = getGS('The site alias $1 has been added to publication $2.',
 						$cName, $publicationObj->getName());
 			Log::Message($logtext, $g_user->getUserName(), 151);
-			header("Location: /$ADMIN/pub/edit_alias.php?Pub=$cPub&Alias=".$newAlias->getId());
+			header("Location: /$ADMIN/pub/aliases.php?Pub=$cPub");
 			exit;
 		}
 	}
