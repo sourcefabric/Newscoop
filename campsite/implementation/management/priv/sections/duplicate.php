@@ -148,15 +148,15 @@ function CustomValidator_DuplicateSection(form) {
 		<input type="hidden" name="Section" value="<?php p($f_src_section_number); ?>">
 		<input type="hidden" name="Language" value="<?php p($f_language_id); ?>">
 		<input type="hidden" name="Back" value="<?php p($BackLink); ?>">
-		<SELECT NAME="f_dest_publication_id" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($f_dest_publication_id); ?>)) {this.form.submit();}">
-		<?php if ($f_dest_publication_id == 0) { ?>
+		<SELECT NAME="f_dest_publication_id" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != '<?php p($f_dest_publication_id); ?>') { this.form.submit();}">
 		<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?></option>
-		<?php }
+		<?php
 		foreach ($allPublications as $tmpPublication) {
 			camp_html_select_option($tmpPublication->getPublicationId(), $f_dest_publication_id, $tmpPublication->getName());
 		}
 		?>
 		</SELECT>
+		</form>
 		<?php
 		}
 		} else {
@@ -165,7 +165,6 @@ function CustomValidator_DuplicateSection(form) {
 		<?php
 		}
 		?>
-		</form>
 	</td>
 </tr>
 
