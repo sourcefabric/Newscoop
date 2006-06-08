@@ -58,7 +58,10 @@ ADD `comments_subscribers_moderated` TINYINT(1) NOT NULL DEFAULT '0',
 ADD `comments_public_moderated` TINYINT(1) NOT NULL DEFAULT '0';
 
 -- Add system preference for number of login attempts before CAPTCHA is shown.
-INSERT INTO `UserConfig` VALUES (67,0,'LoginFailedAttemptsNum','3','20060522012934');
+INSERT INTO `UserConfig` ( `id` , `fk_user_id` , `varname` , `value` , `last_modified` )
+VALUES (
+'', '0', 'LoginFailedAttemptsNum', '3', NOW( )
+);
 
 CREATE TABLE `FailedLoginAttempts` (
 	`ip_address` varchar(40) NOT NULL default '',
