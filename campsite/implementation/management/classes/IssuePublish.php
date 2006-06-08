@@ -175,6 +175,8 @@ class IssuePublish extends DatabaseObject {
 
 	/**
 	 * Get the time the event is scheduled to happen.
+	 * Will be returned in the format: YYYY-MM-DD HH:MM:SS
+	 *
 	 * @return string
 	 */
 	function getActionTime()
