@@ -49,7 +49,7 @@ $url_args2 = $url_args1."&Section=$Section";
 
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" >
+<FORM NAME="section_edit" METHOD="POST" ACTION="do_edit.php" >
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Configure section"); ?></B>
@@ -121,19 +121,18 @@ $url_args2 = $url_args1."&Section=$Section";
  ?>
 
 <TR>
-	<TD COLSPAN="2">
-		<DIV ALIGN="CENTER">
+	<TD COLSPAN="2" align="center">
 	  	<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
 	  	<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
 	  	<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 	  	<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
 	  	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	  	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">-->
-	 	</DIV>
 	</TD>
 </TR>
 </FORM>
 </TABLE>
 <P>
-
+<SCRIPT>
+document.section_edit.cName.focus();
+</SCRIPT>
 <?php camp_html_copyright_notice(); ?>
