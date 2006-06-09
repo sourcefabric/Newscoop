@@ -92,7 +92,7 @@ if ($f_publication_id > 0) {
 <tr>
 	<?php if ($f_publication_id > 0) { ?>
 	<td><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
-	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "index.php"); ?>"><b><?php putGS("Article List"); ?></b></a></td>
+	<td><a href="<?php echo "index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><b><?php putGS("Article List"); ?></b></a></td>
 	<?php } ?>
 	<td <?php if ($f_publication_id > 0) { ?>style="padding-left: 20px;"<?php } ?>><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
 	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>

@@ -401,22 +401,35 @@ class Issue extends DatabaseObject {
 
 
 	/**
-	 * Get all the languages to which this issue has not been translated.
+	 * Get all the languages to which this issue has been translated.
+	 *
+	 * @param boolean $p_getUnusedLanguagesOnly
+	 * 		Reverses the search and finds only those languages which this
+	 * 		issue has not been translated into.
 	 * @return array
+	 * 		Return an array of Language objects.
 	 */
-	function getUnusedLanguages()
+	function getLanguages($p_getUnusedLanguagesOnly = false)
 	{
 		$tmpLanguage =& new Language();
 		$columnNames = $tmpLanguage->getColumnNames(true);
-		$queryStr = "SELECT ".implode(',', $columnNames)
-					." FROM Languages LEFT JOIN Issues "
-					." ON Issues.IdPublication = ".$this->m_data['IdPublication']
-					." AND Issues.Number= ".$this->m_data['Number']
-					." AND Issues.IdLanguage = Languages.Id "
-					." WHERE Issues.IdPublication IS NULL";
+		if ($p_getUnusedLanguagesOnly) {
+			$queryStr = "SELECT ".implode(',', $columnNames)
+						." FROM Languages LEFT JOIN Issues "
+						." ON Issues.IdPublication = ".$this->m_data['IdPublication']
+						." AND Issues.Number= ".$this->m_data['Number']
+						." AND Issues.IdLanguage = Languages.Id "
+						." WHERE Issues.IdPublication IS NULL";
+		} else {
+			$queryStr = "SELECT ".implode(',', $columnNames)
+						." FROM Languages, Issues "
+						." WHERE Issues.IdPublication = ".$this->m_data['IdPublication']
+						." AND Issues.Number= ".$this->m_data['Number']
+						." AND Issues.IdLanguage = Languages.Id ";
+		}
 		$languages = DbObjectArray::Create('Language', $queryStr);
 		return $languages;
-	} // fn getUsusedLanguages
+	} // fn getLanguages
 
 
 	/**

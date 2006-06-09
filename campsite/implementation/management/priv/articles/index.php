@@ -12,7 +12,7 @@ $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
-$f_language_selected = Input::Get('f_language_selected', 'int', 0, true);
+$f_language_selected = camp_session_get('f_language_selected', 0);
 $offsetVarName = "f_article_offset_".$f_publication_id."_".$f_issue_number."_".$f_language_id."_".$f_section_number;
 $f_article_offset = camp_session_get($offsetVarName, 0);
 $ArticlesPerPage = 15;
@@ -44,7 +44,10 @@ if (!$issueObj->exists()) {
 	exit;
 }
 
-$allArticleLanguages = Article::GetAllLanguages();
+$allArticleLanguages = $issueObj->getLanguages();
+if (!in_array($f_language_selected, DbObjectArray::GetColumn($allArticleLanguages, 'Id'))) {
+	$f_language_selected = 0;
+}
 
 $sqlOptions = array("LIMIT" => array("START" => $f_article_offset,
 									 "MAX_ROWS" => $ArticlesPerPage));

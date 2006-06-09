@@ -17,7 +17,7 @@ if (!Input::IsValid()) {
 $publicationObj =& new Publication($f_publication_id);
 $issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $allIssues = Issue::GetIssues($f_publication_id, null, $f_issue_number);
-$unusedLanguages = $issueObj->getUnusedLanguages();
+$unusedLanguages = $issueObj->getLanguages(true);
 
 camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
