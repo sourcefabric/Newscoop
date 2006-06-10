@@ -42,8 +42,7 @@ PREPARATION - applications you need to have installed
 
 6. PHP
    Campsite requires PHP 4.3 or newer; the following PHP modules
-   must be installed: php-cli (command line), php-pear, php-adodb,
-   php-mysql.
+   must be installed: php-cli (command line), php-mysql, php-gd.
 
 7. Cron daemon
    Usually the crond binary is located in /usr/sbin directory.
