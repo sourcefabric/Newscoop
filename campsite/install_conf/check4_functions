@@ -538,9 +538,17 @@ for stl_prefix in /usr/include /usr/local/include; do
     for stl_dir in c++ g++; do
 	stl_path="$stl_prefix:$stl_prefix/$stl_dir"
 	for stl_major_version in $stl_major_versions; do
-	    stl_subdir=`ls -1 -r "$stl_prefix/$stl_dir" 2> /dev/null | grep -m 1 "^$stl_major_version."`
+	    stl_subdirs=`ls -1 -r "$stl_prefix/$stl_dir" 2> /dev/null | grep "^$stl_major_version."`
 	    stl_result=$?
-	    [ $stl_result -eq 0 ] && file_path="$stl_prefix/$stl_dir/$stl_subdir" && break
+	    if [ $stl_result -eq 0 ]; then
+		for stl_subdir in $stl_subdirs; do
+		    stl_path="$stl_prefix/$stl_dir/$stl_subdir"
+		    check4_file string --file --path "$stl_path" &> /dev/null
+		    stl_result=$?
+		    [ $stl_result -eq 0 ] && file_path=`cut_last_dirs $file_path 1` && break
+		done
+		[ $stl_result -eq 0 ] && break
+	    fi
 	done
 	[ $stl_result -eq 0 ] && break
     done
