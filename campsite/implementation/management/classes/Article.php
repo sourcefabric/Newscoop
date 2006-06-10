@@ -452,6 +452,8 @@ class Article extends DatabaseObject {
 	/**
 	 * Delete article from database.  This will
 	 * only delete one specific translation of the article.
+	 *
+	 * @return boolean
 	 */
 	function delete()
 	{
@@ -463,12 +465,13 @@ class Article extends DatabaseObject {
 		require_once($g_documentRoot.'/classes/ArticleIndex.php');
 		require_once($g_documentRoot.'/classes/ArticleAttachment.php');
 		require_once($g_documentRoot.'/classes/ArticleComment.php');
+		require_once($g_documentRoot.'/classes/ArticlePublish.php');
 
-		// Delete row from article type table.
-		$articleData =& new ArticleData($this->m_data['Type'],
-			$this->m_data['Number'],
-			$this->m_data['IdLanguage']);
-		$articleData->delete();
+		// Delete scheduled publishing
+		ArticlePublish::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
+
+		// Delete Article Comments
+		ArticleComment::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
 
 		// is this the last translation?
 		if (count($this->getLanguages()) <= 1) {
@@ -486,11 +489,14 @@ class Article extends DatabaseObject {
 				$this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
 		}
 
-		// Delete Article Comments
-		ArticleComment::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
-
 		// Delete row from Articles table.
 		$deleted = parent::delete();
+
+		// Delete row from article type table.
+		$articleData =& new ArticleData($this->m_data['Type'],
+			$this->m_data['Number'],
+			$this->m_data['IdLanguage']);
+		$articleData->delete();
 
 		if ($deleted) {
 			if (function_exists("camp_load_translation_strings")) {
@@ -596,11 +602,14 @@ class Article extends DatabaseObject {
 	 */
 	function getTranslations($p_articleNumber = null)
 	{
-		$articleNumber = $this->m_data['Number'];
 		if (!is_null($p_articleNumber)) {
 			$articleNumber = $p_articleNumber;
+		} elseif (isset($this)) {
+			$articleNumber = $this->m_data['Number'];
+		} else {
+			return array();
 		}
-	 	$queryStr = 'SELECT '. implode(',', $this->m_columnNames).' FROM Articles '
+	 	$queryStr = 'SELECT * FROM Articles '
 	 				." WHERE Number=$articleNumber";
 	 	$articles = DbObjectArray::Create('Article', $queryStr);
 		return $articles;

@@ -360,6 +360,23 @@ class ArticlePublish extends DatabaseObject {
         return $addKeys;
 	} // fn GetFutureActions
 
+
+	/**
+	 * This will be called whenever an article is deleted.
+	 *
+	 * @param int $p_articleNumber
+	 * @param int $p_languageId
+	 * @return void
+	 */
+	function OnArticleDelete($p_articleNumber, $p_languageId)
+	{
+		global $g_ado_db;
+		$queryStr = 'DELETE FROM ArticlePublish '
+					." WHERE fk_article_number=$p_articleNumber"
+					." AND fk_language_id=$p_languageId ";
+		$g_ado_db->Execute($queryStr);
+	} // fn OnArticleDelete
+
 } // class ArticlePublish
 
 ?>
