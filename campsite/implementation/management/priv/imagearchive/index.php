@@ -58,12 +58,12 @@ if ($g_user->hasPermission('AddImage')) { ?>
 </tr>
 </table>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;" align="center">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;">
 <form method="POST" action="index.php">
 <input type="hidden" name="f_order_direction" value="<?php echo $f_order_direction; ?>">
 <input type="hidden" name="f_image_offset" value="0">
 <tr>
-	<td><input type="submit" name="submit_button" value="Search" class="button"></td>
+	<td><input type="submit" name="submit_button" value="<?php putGS("Search"); ?>" class="button"></td>
 	<td><input type="text" name="f_search_string" value="<?php echo $f_search_string; ?>" class="input_text" style="width: 150px;"></td>
 	<td>
 		<table cellpadding="0" cellspacing="0">
