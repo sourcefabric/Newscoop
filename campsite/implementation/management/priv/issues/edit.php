@@ -48,6 +48,8 @@ camp_html_content_top(getGS('Change issue details'), array('Pub' => $publication
 $url_args1 = "Pub=$Pub";
 $url_args2 = $url_args1."&Issue=$Issue&Language=$Language";
 
+$url_args3 = "f_publication_id=$Pub&f_issue_number=$Issue&f_language_id=$Language";
+
 if (Issue::GetNumIssues($Pub) <= 0) {
 	$url_add = "add_new.php";
 } else {
@@ -75,8 +77,8 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	<TD style="padding-left: 20px;"><A HREF="translate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" BORDER="0"></A></TD>
 	<TD><A HREF="translate.php?<?php p($url_args2); ?>" ><B><?php  putGS("Translate"); ?></B></A></TD>
 
-	<TD style="padding-left: 20px;"><A HREF="do_del.php?<?php p($url_args2); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the issue $1?', htmlspecialchars($issueObj->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
-	<TD><A HREF="do_del.php?<?php p($url_args2); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the issue $1?', htmlspecialchars($issueObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
+	<TD style="padding-left: 20px;"><A HREF="delete.php?<?php p($url_args3); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
+	<TD><A HREF="delete.php?<?php p($url_args3); ?>"><B><?php  putGS("Delete"); ?></B></A></TD>
 </TR>
 </TABLE>
 

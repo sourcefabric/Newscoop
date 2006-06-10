@@ -52,7 +52,7 @@ if ($correct) {
 }
 
 $tmpArray = array("Pub" => $publicationObj, "Issue" => $issueObj);
-camp_html_content_top("Adding new translation", $tmpArray);
+camp_html_content_top(getGS("Adding new translation"), $tmpArray);
 ?>
 
 <P>
