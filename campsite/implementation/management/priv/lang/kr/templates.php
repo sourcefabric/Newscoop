@@ -1,4 +1,5 @@
 <?php
+regGS("The folder name can't be '..' or '.'", "");
 regGS("The template '$1' was saved successfully.", "템플레이트 '$1' 이 성공적으로 저장되었습니다.");
 regGS("The template $1 is in use and can not be deleted.", "템플레이트 $1 이 사용중이라 삭제할 수 없습니다. ");
 regGS("The folder could not be deleted.", "폴더를 삭제할 수 없습니다. ");

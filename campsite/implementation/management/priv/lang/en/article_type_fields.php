@@ -16,7 +16,6 @@ regGS("The $1 field may only contain letters and underscore (_) character.", "Th
 regGS("Template Field Name", "Template Field Name");
 regGS("Show/Hide", "Show/Hide");
 regGS("Show display names", "Show display names");
-regGS("Reorder article type field $1", "Reorder article type field $1");
 regGS("Renaming article type field", "Renaming article type field");
 regGS("Rename field", "Rename field");
 regGS("Reassign a field type", "Reassign a field type");

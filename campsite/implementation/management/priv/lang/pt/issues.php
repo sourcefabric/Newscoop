@@ -1,10 +1,17 @@
 <?php
-regGS("You cannot delete the issue because it is not empty (number of articles: $1).  To delete the issue, first delete its contents.", "");
+regGS("Unpublish on: $1", "");
+regGS("There are $1 articles in this issue.", "");
+regGS("The issue $1 has been deleted.", "");
+regGS("Schedule", "");
+regGS("Publish on: $1", "");
+regGS("Publish Date $1", "");
+regGS("Deleted issue", "");
+regGS("Delete issue", "");
+regGS("Click here to publish this issue", "");
+regGS("A total of $1 articles were deleted.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Nome<br>(Clique para ver Secções)");
-regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publicado<br>(aaaa-mm-dd)");
 regGS("Delete issue $1", "Eliminar Número $1");
 regGS("Publish articles", "Publicar Artigos");
-regGS("Change issue status", "Alterar estado do Número");
 regGS("You do not have the right to change issues.", "Não tem permissões para alterar Números");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Tem a certeza que deseja alterar a edição de $1 de $2 para $3?");
 regGS("Add new translation", "Adicionar tradução");
@@ -19,7 +26,6 @@ regGS("Front Page Template", "Modelo de Página Principal");
 regGS("Issue $1 updated in publication $2", "A Edição $1 da Publicação $2 foi alterada");
 regGS("You do not have the right to delete issues.", "Não tem permissões para eliminar Edições");
 regGS("Are you sure you want to delete the issue $1?", "Tem a certeza que deseja eliminar a Edição $1?");
-regGS("Deleting issue", "Eliminando Edição");
 regGS("Use the structure of the previous issue", "Usar estrutura da Edição anterior");
 regGS("Copy the entire structure in all languages from the previous issue except for content.", "Copiar toda a estrutura em todos os Idiomas de Edição anterior, excepto o conteúdo");
 regGS("You may modify it later if you wish.", "Poderá modificar mais tarde se o desejar");

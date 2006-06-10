@@ -1,10 +1,17 @@
 <?php
-regGS("You cannot delete the issue because it is not empty (number of articles: $1).  To delete the issue, first delete its contents.", "");
+regGS("Unpublish on: $1", "");
+regGS("There are $1 articles in this issue.", "");
+regGS("The issue $1 has been deleted.", "");
+regGS("Schedule", "");
+regGS("Publish on: $1", "");
+regGS("Publish Date $1", "");
+regGS("Deleted issue", "");
+regGS("Delete issue", "");
+regGS("Click here to publish this issue", "");
+regGS("A total of $1 articles were deleted.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Namn<BR><SMALL>(klicka för att se sektioner)</SMALL>");
-regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publicerad<BR><SMALL>(åååå-mm-dd)</SMALL>");
 regGS("Delete issue $1", "Radera utgåva $1");
 regGS("Publish articles", "Publicera artiklar");
-regGS("Change issue status", "Ändra utgåvestatus");
 regGS("You do not have the right to change issues.", "Du har inte rätt att ändra på utgåvor.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Är du säker att du vill ändra status på utgåvan $1 från $2 till $3");
 regGS("Add new translation", "Lägg till ny översättning");
@@ -19,7 +26,6 @@ regGS("Front Page Template", "Framsidesmall");
 regGS("Issue $1 updated in publication $2", "Utgåva $1 updaterad i publikation $2");
 regGS("You do not have the right to delete issues.", "Du har inte rätt att radera utgåvor.");
 regGS("Are you sure you want to delete the issue $1?", "Är du säker på att du vill radera utgåvan $1?");
-regGS("Deleting issue", "Raderar utgåva");
 regGS("Use the structure of the previous issue", "Använd strukturen från föregående utgåva");
 regGS("Copy the entire structure in all languages from the previous issue except for content.", "Kopiera hela strukturen på alla språk från den föregående utgåvan förutom innehåll.");
 regGS("You may modify it later if you wish.", "Du kan ändra det senare om du vill.");

@@ -1,4 +1,6 @@
 <?php
+regGS("There are $1 subscriptions which will be affected.", "");
+regGS("There are $1 articles in this section.", "");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "");
 regGS("Go To Articles", "");
 regGS("Add section to all subscriptions.", "Přidat rubriku pro všechny předplatné");

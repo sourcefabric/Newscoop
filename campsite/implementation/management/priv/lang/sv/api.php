@@ -1,4 +1,10 @@
 <?php
+regGS("The file is not recognized as an image.", "");
+regGS("Field $1 updated", "");
+regGS("Could not delete thumbnail file $1", "");
+regGS("Could not delete record from the database.", "");
+regGS("Could not delete image file $1", "");
+regGS("Could not copy image file to directory $1", "");
 regGS("template path", "");
 regGS("short names", "");
 regGS("Unable to fetch image from remote server.", "");

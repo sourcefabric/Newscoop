@@ -1,4 +1,6 @@
 <?php
+regGS("There are $1 subscriptions which will be affected.", "");
+regGS("There are $1 articles in this section.", "");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Rubrika #$1 \"$2\" je ažurirana. (Publikacija: $3, Izdanje: $4)");
 regGS("Go To Articles", "Idi na članak");
 regGS("Add section to all subscriptions.", "Dodaj rubriku svim pretplatama.");
@@ -25,7 +27,6 @@ regGS("Duplicating section", "Udvostručavanje rubrike");
 regGS("The section $1 could not be duplicated", "Rubrika $1 ne može se udvostručiti");
 regGS("Section $1 has been duplicated to $2. $3 of $4", "Rubrika $1 je kopirana u $2, $3 od $4");
 regGS("You do not have the right to modify sections.", "Nemate prava mijenjati rubrike.");
-regGS("Delete all articles from the section.", "Obrišite sve članke u rubrici.");
 regGS("A total of $1 articles were deleted.", "Ukupno $1 članak/a je obrisano.");
 regGS("Duplicate Section:", "Udvostruči rubriku:");
 regGS("Existing Section", "Postojeća rubrika");

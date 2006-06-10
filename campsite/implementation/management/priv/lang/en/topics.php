@@ -1,4 +1,5 @@
 <?php
+regGS("The topic name is already in use by another topic.", "The topic name is already in use by another topic.");
 regGS("You must enter a name for the topic.", "You must enter a name for the topic.");
 regGS("You must choose a language for the topic.", "You must choose a language for the topic.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "This topic has subtopics, therefore it cannot be deleted.");
@@ -14,9 +15,7 @@ regGS("Are you sure you want to delete the topic $1?", "Are you sure you want to
 regGS("You do not have the right to change topic name.", "You do not have the right to change topic name.");
 regGS("The topic $1 could not be deleted.", "The topic $1 could not be deleted.");
 regGS("Adding new topic", "Adding new topic");
-regGS("The topic could not be added.", "The topic could not be added.");
 regGS("Deleting topic", "Deleting topic");
-regGS("The topic name could not be updated.", "The topic name could not be updated.");
 regGS("Change topic name", "Change topic name");
 regGS("There are $1 articles using the topic.", "There are $1 articles using the topic.");
 ?>

@@ -1,4 +1,6 @@
 <?php
+regGS("There are $1 subscriptions which will be affected.", "");
+regGS("There are $1 articles in this section.", "");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Secţiunea #$1 \"$2\" a fost actualizată. (Publicaţia: $3, Ediţia: $4)");
 regGS("Go To Articles", "Mergi la articole");
 regGS("Add section to all subscriptions.", "Adaugă secţiunea la toate abonamentele.");
@@ -25,7 +27,6 @@ regGS("Duplicating section", "Se duplică secţiunea");
 regGS("The section $1 could not be duplicated", "Secţiunea $1 nu poate fi duplicată");
 regGS("Section $1 has been duplicated to $2. $3 of $4", "Secţiunea $1 a fost duplicată în $2. $3 din $4");
 regGS("You do not have the right to modify sections.", "Nu ai dreptul să modifici secţiunile.");
-regGS("Delete all articles from the section.", "Şterge toate articolele din secţiune.");
 regGS("A total of $1 articles were deleted.", "Au fost şterse $1 articole.");
 regGS("Duplicate Section:", "Duplică secţiunea");
 regGS("Existing Section", "Secţiune existentă");

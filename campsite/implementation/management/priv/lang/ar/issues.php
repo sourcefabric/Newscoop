@@ -1,10 +1,17 @@
 <?php
-regGS("You cannot delete the issue because it is not empty (number of articles: $1).  To delete the issue, first delete its contents.", "");
+regGS("Unpublish on: $1", "");
+regGS("There are $1 articles in this issue.", "");
+regGS("The issue $1 has been deleted.", "");
+regGS("Schedule", "");
+regGS("Publish on: $1", "");
+regGS("Publish Date $1", "");
+regGS("Deleted issue", "");
+regGS("Delete issue", "");
+regGS("Click here to publish this issue", "");
+regGS("A total of $1 articles were deleted.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "      ( الاسم <br> (إضغط لترى الإصدارات");
-regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "نشر<br> (السنة، الشهر، اليوم");
 regGS("Delete issue $1", "الغاء  الإصدار$1");
 regGS("Publish articles", "نشر المقالات");
-regGS("Change issue status", "بدّل وضع الإصدار");
 regGS("You do not have the right to change issues.", "لا يحق لك تغيير الإصدارات");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "هل أنت متأكد من أنك تريد تغيير وضع الإصدار  $1 من $2 إلى $3؟");
 regGS("Add new translation", "إضافة ترجمة جديدة");
@@ -19,7 +26,6 @@ regGS("Front Page Template", "قالب الصفحة الأمامية");
 regGS("Issue $1 updated in publication $2", " تحديث الإصدار $1 في المنشور $2");
 regGS("You do not have the right to delete issues.", "لا يحق لك إلغاء الإصدارات");
 regGS("Are you sure you want to delete the issue $1?", "هل أنت متأكد من أنك تريد إلغاء الإصدار $1 ؟  ");
-regGS("Deleting issue", "إلغاء الإصدار");
 regGS("Use the structure of the previous issue", "إستخدم هيكلية الإصدار السابق");
 regGS("Copy the entire structure in all languages from the previous issue except for content.", "إنسخ الهيكلية الكاملة باللغات كلها من الإصدار السابق باستثناء المحتوى");
 regGS("You may modify it later if you wish.", "يمكنك تغييره لاحقا إذا أردت");

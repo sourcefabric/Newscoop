@@ -36,7 +36,7 @@ if (!is_array($errorMsgs)) {
 $crumbs = array();
 $crumbs[] = array(getGS('Content'), "");
 $crumbs[] = array(getGS("Image Archive"), "/$ADMIN/imagearchive/index.php");
-$crumbs[] = array(getGS("Delete image"), "");
+$crumbs[] = array(getGS("Delete image $1", ""), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 ?>
@@ -45,7 +45,7 @@ echo $breadcrumbs;
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Delete image"); ?> </B>
+		<B> <?php  putGS("Delete image $1", ""); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>

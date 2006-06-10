@@ -1,10 +1,17 @@
 <?php
-regGS("You cannot delete the issue because it is not empty (number of articles: $1).  To delete the issue, first delete its contents.", "");
+regGS("Unpublish on: $1", "");
+regGS("There are $1 articles in this issue.", "");
+regGS("The issue $1 has been deleted.", "");
+regGS("Schedule", "");
+regGS("Publish on: $1", "");
+regGS("Publish Date $1", "");
+regGS("Deleted issue", "");
+regGS("Delete issue", "");
+regGS("Click here to publish this issue", "");
+regGS("A total of $1 articles were deleted.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Nume<BR><SMALL>(clic pentru a vedea secţiunile)</SMALL>");
-regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publicat<br><small>(aaaa-ll-zz)</small>");
 regGS("Delete issue $1", "Şterge ediţia $1");
 regGS("Publish articles", "Publică articolele");
-regGS("Change issue status", "Schimbă status-ul ediţiei");
 regGS("You do not have the right to change issues.", "Nu ai dreptul de a modifica ediţiile.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Eşti sigur că vrei să schimbi starea ediţiei $1 de la $2 la $3?");
 regGS("Add new translation", "Adaugă o traducere nouă");
@@ -19,7 +26,6 @@ regGS("Front Page Template", "Şablonul primei pagini");
 regGS("Issue $1 updated in publication $2", "Ediţia $1 din publicaţia $2 a fost modificată");
 regGS("You do not have the right to delete issues.", "Nu ai dreptul să ştergi ediţii.");
 regGS("Are you sure you want to delete the issue $1?", "Eşti sigur că vrei să ştergi ediţia $1?");
-regGS("Deleting issue", "Se şterge ediţia");
 regGS("Use the structure of the previous issue", "Foloseşte structura ediţiei anterioare");
 regGS("Copy the entire structure in all languages from the previous issue except for content.", "Copiază întreaga structură în toate limbile din ediţia precedentă cu excepţia conţinutului.");
 regGS("You may modify it later if you wish.", "Poţi să modifici mai târziu, dacă doreşti.");

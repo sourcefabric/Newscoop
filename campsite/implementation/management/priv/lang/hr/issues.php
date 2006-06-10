@@ -1,10 +1,17 @@
 <?php
-regGS("You cannot delete the issue because it is not empty (number of articles: $1).  To delete the issue, first delete its contents.", "");
+regGS("Unpublish on: $1", "");
+regGS("There are $1 articles in this issue.", "");
+regGS("The issue $1 has been deleted.", "");
+regGS("Schedule", "");
+regGS("Publish on: $1", "");
+regGS("Publish Date $1", "");
+regGS("Deleted issue", "");
+regGS("Delete issue", "");
+regGS("Click here to publish this issue", "");
+regGS("A total of $1 articles were deleted.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Ime<br><small>(kliknite da vidite rubriku)</small>");
-regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Objavljeno<br><small>(gggg-mm-dd)</small>");
 regGS("Delete issue $1", "Izbriši izdanje $1");
 regGS("Publish articles", "Objavi članke.");
-regGS("Change issue status", "Promijeni status izdanja");
 regGS("You do not have the right to change issues.", "Nemate ovlasti mijenjati izdanja.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Sigurno želite promjeniti status izdanja $1 iz $2 u $3?");
 regGS("Add new translation", "Dodaj verziju na drugom jeziku");
@@ -19,7 +26,6 @@ regGS("Front Page Template", "Predložak naslovnice");
 regGS("Issue $1 updated in publication $2", "Izdanje $1 je ažurirano u publikaciji $2");
 regGS("You do not have the right to delete issues.", "Nemate ovlasti brisati izdanja.");
 regGS("Are you sure you want to delete the issue $1?", "Jeste li sigurni da želite obrisati izdanje $1?");
-regGS("Deleting issue", "Brisanje izdanja");
 regGS("Use the structure of the previous issue", "Upotrijebi strukturu prethodnog izdanja");
 regGS("Copy the entire structure in all languages from the previous issue except for content.", "Kopiraj čitavu strukturu prethodnog izdanja, ali bez sadržaja, na svim jezicima.");
 regGS("You may modify it later if you wish.", "Ovo možete izmijeniti kasnije, ukoliko budete željeli.");

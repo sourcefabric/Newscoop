@@ -1,4 +1,5 @@
 <?php
+regGS("The topic name is already in use by another topic.", "");
 regGS("You must enter a name for the topic.", "Du måste skriva ett namn för temat.");
 regGS("You must choose a language for the topic.", "Du måste välja ett språk för temat.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "Det här temat har underteman, det kan därför inte raderas.");
@@ -14,9 +15,7 @@ regGS("Are you sure you want to delete the topic $1?", "Är du säker att du vil
 regGS("You do not have the right to change topic name.", "Du har inte rätt att ändra temanamn.");
 regGS("The topic $1 could not be deleted.", "Temat $1 kunde inte raderas.");
 regGS("Adding new topic", "Lägger till nytt tema");
-regGS("The topic could not be added.", "Temat kunde inte läggas till.");
 regGS("Deleting topic", "Raderar tema");
-regGS("The topic name could not be updated.", "Temanamnet kunde inte uppdateras.");
 regGS("Change topic name", "Ändra temanamn");
 regGS("There are $1 articles using the topic.", "Det finns $1 artiklar som använder temat.");
 ?>

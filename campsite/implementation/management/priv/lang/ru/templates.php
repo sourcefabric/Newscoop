@@ -1,4 +1,5 @@
 <?php
+regGS("The folder name can't be '..' or '.'", "");
 regGS("The template '$1' was saved successfully.", "Шаблон '$1' был успешно сохранен.");
 regGS("The template $1 is in use and can not be deleted.", "Шаблон $1 используется и не может быть удален");
 regGS("The folder could not be deleted.", "Папка не может быть удалена.");

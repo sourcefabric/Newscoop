@@ -1,4 +1,5 @@
 <?php
+regGS("The folder name can't be '..' or '.'", "");
 regGS("The template '$1' was saved successfully.", "Predložak '$1' je uspješno sačuvan.");
 regGS("The template $1 is in use and can not be deleted.", "Predložak $1 je u upotrebi i ne može se obrisati.");
 regGS("The folder could not be deleted.", "Mapa se ne može brisati");

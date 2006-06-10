@@ -250,7 +250,7 @@ xinha_init = xinha_init ? xinha_init : function()
    <?php } ?>
 
    <?php if ($p_user->hasPermission('EditorLink')) { ?>
-   internalLinkTooltip = HTMLArea._lc('Insert Internal Link', 'Campsite');
+   internalLinkTooltip = HTMLArea._lc('<?php putGS('Insert Internal Link'); ?>', 'Campsite');
    xinha_config.registerButton({
        // The ID of the button.
        id        : "campsite-internal-link",

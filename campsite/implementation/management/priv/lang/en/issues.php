@@ -1,10 +1,17 @@
 <?php
-regGS("You cannot delete the issue because it is not empty (number of articles: $1).  To delete the issue, first delete its contents.", "You cannot delete the issue because it is not empty (number of articles: $1).  To delete the issue, first delete its contents.");
+regGS("Unpublish on: $1", "Unpublish on: $1");
+regGS("There are $1 articles in this issue.", "There are $1 articles in this issue.");
+regGS("The issue $1 has been deleted.", "The issue $1 has been deleted.");
+regGS("Schedule", "Schedule");
+regGS("Publish on: $1", "Publish on: $1");
+regGS("Publish Date $1", "Publish Date $1");
+regGS("Deleted issue", "Deleted issue");
+regGS("Delete issue", "Delete issue");
+regGS("Click here to publish this issue", "Click here to publish this issue");
+regGS("A total of $1 articles were deleted.", "A total of $1 articles were deleted.");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Name<BR><SMALL>(click to see sections)</SMALL>");
-regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Published<BR><SMALL>(yyyy-mm-dd)</SMALL>");
 regGS("Delete issue $1", "Delete issue $1");
 regGS("Publish articles", "Publish articles");
-regGS("Change issue status", "Change issue status");
 regGS("You do not have the right to change issues.", "You do not have the right to change issues.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Are you sure you want to change the issue $1 status from $2 to $3?");
 regGS("Add new translation", "Add new translation");
@@ -19,7 +26,6 @@ regGS("Front Page Template", "Front Page Template");
 regGS("Issue $1 updated in publication $2", "Issue $1 updated in publication $2");
 regGS("You do not have the right to delete issues.", "You do not have the right to delete issues.");
 regGS("Are you sure you want to delete the issue $1?", "Are you sure you want to delete the issue $1?");
-regGS("Deleting issue", "Deleting issue");
 regGS("Use the structure of the previous issue", "Use the structure of the previous issue");
 regGS("Copy the entire structure in all languages from the previous issue except for content.", "Copy the entire structure in all languages from the previous issue except for content.");
 regGS("You may modify it later if you wish.", "You may modify it later if you wish.");

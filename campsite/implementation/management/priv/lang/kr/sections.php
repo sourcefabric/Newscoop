@@ -1,4 +1,6 @@
 <?php
+regGS("There are $1 subscriptions which will be affected.", "");
+regGS("There are $1 articles in this section.", "");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "섹션 #$1 \"$2\" 업데이트됨 (출판: $3, 이슈: $4) ");
 regGS("Go To Articles", "기사로 가기");
 regGS("Add section to all subscriptions.", "모든 구독자에게 섹션 추가 ");
@@ -25,7 +27,6 @@ regGS("Duplicating section", "섹션 복사중");
 regGS("The section $1 could not be duplicated", "섹션 $1 을 복사할 수 없습니다. ");
 regGS("Section $1 has been duplicated to $2. $3 of $4", "섹션 $1 이 $4 의 $2. $3 로 복사되었습니다.");
 regGS("You do not have the right to modify sections.", "섹션을 수정할 권한이 없습니다. ");
-regGS("Delete all articles from the section.", "섹션에서 모든 기사 삭제");
 regGS("A total of $1 articles were deleted.", "$1 기사 모두 삭제되었습니다. ");
 regGS("Duplicate Section:", "섹션 복사 ");
 regGS("Existing Section", "기존 섹션 ");

@@ -1,4 +1,6 @@
 <?php
+regGS("There are $1 subscriptions which will be affected.", "There are $1 subscriptions which will be affected.");
+regGS("There are $1 articles in this section.", "There are $1 articles in this section.");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)");
 regGS("Go To Articles", "Go To Articles");
 regGS("Add section to all subscriptions.", "Add section to all subscriptions.");
@@ -25,7 +27,6 @@ regGS("Duplicating section", "Duplicating section");
 regGS("The section $1 could not be duplicated", "The section $1 could not be duplicated");
 regGS("Section $1 has been duplicated to $2. $3 of $4", "Section $1 has been duplicated to $2. $3 of $4");
 regGS("You do not have the right to modify sections.", "You do not have the right to modify sections.");
-regGS("Delete all articles from the section.", "Delete all articles from the section.");
 regGS("A total of $1 articles were deleted.", "A total of $1 articles were deleted.");
 regGS("Duplicate Section:", "Duplicate Section:");
 regGS("Existing Section", "Existing Section");

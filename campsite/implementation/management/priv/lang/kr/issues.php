@@ -1,10 +1,17 @@
 <?php
-regGS("You cannot delete the issue because it is not empty (number of articles: $1).  To delete the issue, first delete its contents.", "");
+regGS("Unpublish on: $1", "");
+regGS("There are $1 articles in this issue.", "");
+regGS("The issue $1 has been deleted.", "");
+regGS("Schedule", "");
+regGS("Publish on: $1", "");
+regGS("Publish Date $1", "");
+regGS("Deleted issue", "");
+regGS("Delete issue", "");
+regGS("Click here to publish this issue", "");
+regGS("A total of $1 articles were deleted.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "이름<BR><SMALL>(이슈보려면클릭)</SMALL>");
-regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "출판완료<BR></SMALL>(년-월-일)</SAMLL>");
 regGS("Delete issue $1", "이슈  $1  삭제");
 regGS("Publish articles", "기사 출판");
-regGS("Change issue status", "이슈 상태 수정");
 regGS("You do not have the right to change issues.", "이슈를 수정할 권한이 없습니다. ");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "이슈 $1 상태를 $2 에서 $3 로 변경합니까?");
 regGS("Add new translation", "새로운 번역 추가");
@@ -19,7 +26,6 @@ regGS("Front Page Template", "프론트페이지 템플레이트");
 regGS("Issue $1 updated in publication $2", "이슈 $1 이 출판사이트 $2에 업데이트됨");
 regGS("You do not have the right to delete issues.", "이슈를 삭제할 권한이 없습니다. ");
 regGS("Are you sure you want to delete the issue $1?", "이슈 $1 을 확실히 삭제합니까?");
-regGS("Deleting issue", "이슈 삭제중");
 regGS("Use the structure of the previous issue", "이전 이슈의 구조를 사용");
 regGS("Copy the entire structure in all languages from the previous issue except for content.", "콘테트제외하고 이전 이슈의 모든 언어의 전체적 구조 복사");
 regGS("You may modify it later if you wish.", "원하면 나중에 수정할 수 있습니다.");

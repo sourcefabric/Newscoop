@@ -1,4 +1,6 @@
 <?php
+regGS("There are $1 subscriptions which will be affected.", "");
+regGS("There are $1 articles in this section.", "");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "تم تحديث القسم رقم $1 \"$2\". (المنشور: $3، العدد: $4)");
 regGS("Go To Articles", "إذهب إلى المقالات");
 regGS("Add section to all subscriptions.", "أضف باب لكل الإشتراكات");
@@ -25,7 +27,6 @@ regGS("Duplicating section", "تكرير القسم");
 regGS("The section $1 could not be duplicated", "لم يتم تكرير القسم 1$");
 regGS("Section $1 has been duplicated to $2. $3 of $4", "تم تكرير القسم 1$ الى 2$ ، 3$ من 4$");
 regGS("You do not have the right to modify sections.", "لا تملك صلاحية تعديل الاقسام");
-regGS("Delete all articles from the section.", "إلغي جميع المقالات من القسم.");
 regGS("A total of $1 articles were deleted.", "تم إلغاء $1 مقالات.");
 regGS("Duplicate Section:", "تكرير القسم:");
 regGS("Existing Section", "القسم الحالي");

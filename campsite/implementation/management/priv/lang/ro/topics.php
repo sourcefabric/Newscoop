@@ -1,4 +1,5 @@
 <?php
+regGS("The topic name is already in use by another topic.", "");
 regGS("You must enter a name for the topic.", "Trebuie să selectezi o denumire pentru subiect.");
 regGS("You must choose a language for the topic.", "Trebuie să selectezi o limbă pentru subiect.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "Subiectul are sub-subiecte şi de aceea nu poate fi şters.");
@@ -14,9 +15,7 @@ regGS("Are you sure you want to delete the topic $1?", "Eşti sigur că vrei să
 regGS("You do not have the right to change topic name.", "Nu aveţi dreptul să modificaţi denumirea subiectului.");
 regGS("The topic $1 could not be deleted.", "Subiectul $1 nu poate fi şters.");
 regGS("Adding new topic", "Se adaugă subiect nou");
-regGS("The topic could not be added.", "Subiectul nu poate fi adăugat");
 regGS("Deleting topic", "Şterge subiect");
-regGS("The topic name could not be updated.", "Subiectul nu poate fi modificat.");
 regGS("Change topic name", "Schimbă denumirea subiectului");
 regGS("There are $1 articles using the topic.", "Mai sunt $1 articole care folosesc subiectul.");
 ?>
