@@ -251,16 +251,16 @@ class IssuePublish extends DatabaseObject {
 	 * Returns an array of IssuePublish objects.
 	 *
 	 * @param int $p_publicationId
-	 * @param int $p_issueId
+	 * @param int $p_issueNumber
 	 * @param int $p_language
 	 * @param boolean $p_includeCompleted
 	 * @return array
 	 */
-	function GetIssueEvents($p_publicationId, $p_issueId, $p_languageId = null, $p_includeCompleted = true)
+	function GetIssueEvents($p_publicationId, $p_issueNumber, $p_languageId = null, $p_includeCompleted = true)
 	{
 		$queryStr = "SELECT * FROM IssuePublish "
 					." WHERE fk_publication_id = $p_publicationId "
-					." AND fk_issue_id = $p_issueId "
+					." AND fk_issue_id = $p_issueNumber "
 					." AND fk_language_id = $p_languageId ";
 		if (!$p_includeCompleted) {
 			$queryStr .= " AND is_completed = 'N'";
@@ -333,6 +333,22 @@ class IssuePublish extends DatabaseObject {
 		}
         return $addKeys;
 	} // fn GetFutureActions
+
+
+	/**
+	 * This should be called whenever an issue is deleted.
+	 *
+	 * @param int $p_issueNumber
+	 */
+	function OnIssueDelete($p_publicationId, $p_issueNumber, $p_languageId)
+	{
+		global $g_ado_db;
+		$queryStr = "DELETE FROM IssuePublish "
+					." WHERE fk_publication_id = $p_publicationId "
+					." AND fk_issue_id = $p_issueNumber "
+					." AND fk_language_id = $p_languageId ";
+		return $g_ado_db->Execute($queryStr);
+	} // fn OnIssueDelete
 
 } // class IssuePublish
 

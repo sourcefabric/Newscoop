@@ -18,6 +18,7 @@ require_once($g_documentRoot.'/classes/DbObjectArray.php');
 require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/Language.php');
 require_once($g_documentRoot.'/classes/Section.php');
+require_once($g_documentRoot.'/classes/IssuePublish.php');
 
 /**
  * @package Campsite
@@ -86,15 +87,21 @@ class Issue extends DatabaseObject {
 	 * Delete the Issue, and optionally all sections and articles contained within it.
 	 * @param boolean $p_deleteSections
 	 * @param boolean $p_deleteArticles
-	 * @return boolean
+	 * @return int
+	 * 		Return the number of articles deleted.
 	 */
 	function delete($p_deleteSections = true, $p_deleteArticles = true)
 	{
 		global $g_ado_db;
+
+		// Delete all scheduled publishing events
+	    IssuePublish::OnIssueDelete($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
+
+		$articlesDeleted = 0;
 		if ($p_deleteSections) {
     		$sections = Section::GetSections($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
     		foreach ($sections as $section) {
-    		    $section->delete($p_deleteArticles);
+    		    $articlesDeleted += $section->delete($p_deleteArticles);
     		}
 		}
 	    $success = parent::delete();
@@ -107,7 +114,7 @@ class Issue extends DatabaseObject {
 	    		$this->m_data['IdPublication']);
 			Log::Message($logtext, null, 12);
 	    }
-		return $success;
+		return $articlesDeleted;
 	} // fn delete
 
 
