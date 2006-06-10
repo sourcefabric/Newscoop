@@ -25,6 +25,12 @@ class Subscription extends DatabaseObject {
 		'Type');
 
 
+	/**
+	 * A user's subscription to a publication.
+	 *
+	 * @param int $p_id
+	 * @return Subscription
+	 */
 	function Subscription($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
@@ -35,6 +41,11 @@ class Subscription extends DatabaseObject {
 	} // constructor
 
 
+	/**
+	 * Delete this subscription and all cooresponding section subscriptions.
+	 *
+	 * @return boolean
+	 */
 	function delete()
 	{
 		global $g_ado_db;
@@ -45,30 +56,52 @@ class Subscription extends DatabaseObject {
 	} // fn delete
 
 
+	/**
+	 * Unique ID for this subscription.
+	 *
+	 * @return int
+	 */
 	function getSubscriptionId()
 	{
 		return $this->m_data['Id'];
 	} // fn getSubscriptionId
 
 
+	/**
+	 * The user who is subscribed.
+	 *
+	 * @return int
+	 */
 	function getUserId()
 	{
 		return $this->m_data['IdUser'];
 	} // fn getUserId
 
 
+	/**
+	 * The publication to which the user is subscribed.
+	 *
+	 * @return int
+	 */
 	function getPublicationId()
 	{
 		return $this->m_data['IdPublication'];
 	} // fn getPublicationId
 
 
+	/**
+	 * @return float
+	 */
 	function getToPay()
 	{
 		return $this->m_data['ToPay'];
 	} // fn getToPay
 
 
+	/**
+	 * @param float $p_value
+	 * @return boolean
+	 */
 	function setToPay($p_value)
 	{
 		global $g_ado_db;
@@ -81,18 +114,31 @@ class Subscription extends DatabaseObject {
 	} // fn setToPay
 
 
+	/**
+	 * @return string
+	 */
 	function getCurrency()
 	{
 		return $this->m_data['Currency'];
 	} // fn getCurrency
 
 
+	/**
+	 * Returns 'T' for Trial subscription or 'P' for paid subscription.
+	 *
+	 * @return string
+	 */
 	function getType()
 	{
 		return $this->m_data['Type'];
 	} // fn getType
 
 
+	/**
+	 * Return TRUE if the subscription is active.
+	 *
+	 * @return boolean
+	 */
 	function isActive()
 	{
 		$active = $this->m_data['Active'];
@@ -104,6 +150,12 @@ class Subscription extends DatabaseObject {
 	} // fn isActive
 
 
+	/**
+	 * Set whether the subscription is active.
+	 *
+	 * @param boolean $p_value
+	 * @return boolean
+	 */
 	function setIsActive($p_value)
 	{
 		if ($p_value) {
@@ -118,6 +170,7 @@ class Subscription extends DatabaseObject {
 	 * Return the number of subscriptions in the given publication.
 	 *
 	 * @param int $p_publicationId
+	 * @param int $p_userId
 	 * @return int
 	 */
 	function GetNumSubscriptions($p_publicationId = null, $p_userId = null)
@@ -143,6 +196,14 @@ class Subscription extends DatabaseObject {
 	} // fn GetNumSubscriptions
 
 
+	/**
+	 * Fetch the subscription objects that match the search criteria.
+	 *
+	 * @param int $p_publicationId
+	 * @param int $p_userId
+	 * @param array $p_sqlOptions
+	 * @return array
+	 */
 	function GetSubscriptions($p_publicationId = null, $p_userId = null, $p_sqlOptions = null)
 	{
 		$constraints = array();
@@ -168,17 +229,15 @@ class Subscription extends DatabaseObject {
     {
         global $g_ado_db;
     	$query = "SELECT Id FROM Subscriptions WHERE IdPublication = " . $p_publicationId;
-    	$subscriberIds = $g_ado_db->GetAll($query);
+    	$subscriberIds = $g_ado_db->GetCol($query);
     	$numSubscriberIds = count($subscriberIds);
     	if ($numSubscriberIds <= 0) {
     		return 0;
     	}
-    	foreach ($subscriberIds as $id) {
-    		$delQuery = "DELETE FROM SubsSections WHERE IdSubscription = " . $id
-    		     . " AND SectionNumber = " . $p_sectionId;
-
-    		$g_ado_db->Execute($delQuery);
-    	}
+		$delQuery = "DELETE FROM SubsSections "
+					." WHERE IdSubscription IN (".implode(",", $subscriberIds).")"
+		     		." AND SectionNumber = " . $p_sectionId;
+		$g_ado_db->Execute($delQuery);
     	return $numSubscriberIds;
     } // fn DeleteSubscriptionsInSection
 

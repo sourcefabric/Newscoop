@@ -7,31 +7,23 @@ if (!$g_user->hasPermission('DeleteSection')) {
 	camp_html_display_error(getGS('You do not have the right to delete sections.'));
 	exit;
 }
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_language_id= Input::Get('f_language_id', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_deleteSubscriptions = Input::Get('f_delete_subscriptions', 'string', '', true);
-$f_deleteArticles = Input::Get('f_delete_articles', 'string', '', true);
-$f_deleteArticles = ($g_user->hasPermission('DeleteArticle') && ($f_deleteArticles != ''));
 
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$publicationObj =& new Publication($f_publication_id);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
-$articles = Article::GetArticles($Pub, $Issue, $Section, $Language);
+$articles = Article::GetArticles($f_publication_id, $f_issue_number, $f_section_number, $f_language_id);
 $numArticles = count($articles);
-$doDelete = false;
-if ($f_deleteArticles || (!$f_deleteArticles && ($numArticles <= 0))) {
-    $doDelete = true;
-}
 $numSubscriptionsDeleted = 0;
 $numArticlesDeleted = 0;
-if ($doDelete) {
-    $numArticlesDeleted = $sectionObj->delete($f_deleteArticles);
-    if ($f_deleteSubscriptions != "") {
-        $numSubscriptionsDeleted = Subscription::DeleteSubscriptionsInSection($Pub, $Section);
-    }
+$numArticlesDeleted = $sectionObj->delete(true);
+if ($f_deleteSubscriptions != "") {
+    $numSubscriptionsDeleted = Subscription::DeleteSubscriptionsInSection($f_publication_id, $f_section_number);
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
@@ -49,30 +41,15 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 <TR>
 	<TD COLSPAN="2">
 	   <BLOCKQUOTE>
-        <?php
-        if (!$doDelete) { ?>
-            <LI><?php  putGS('There are $1 article(s) left.', $numArticles); ?></LI>
-            <LI><?php  putGS('The section $1 could not be deleted.','<B>'.htmlspecialchars($sectionObj->getName()).'</B>'); ?></LI>
-            <?php
-        }
-        else { ?>
-            <LI><?php  putGS('The section $1 has been deleted.','<B>'.htmlspecialchars($sectionObj->getName()).'</B>'); ?></LI>
-			<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.$numSubscriptionsDeleted.'</B>'); ?></LI>
-            <?php
-            if ($f_deleteArticles) { ?>
-    			<LI><?php  putGS('A total of $1 articles were deleted.','<B>'.$numArticlesDeleted.'</B>'); ?></LI>
-    		<?php
-            }
-    	}
-        ?>
+        <LI><?php putGS('The section $1 has been deleted.','<B>'.htmlspecialchars($sectionObj->getName()).'</B>'); ?></LI>
+		<LI><?php putGS('A total of $1 subscriptions were updated.','<B>'.$numSubscriptionsDeleted.'</B>'); ?></LI>
+		<LI><?php putGS('A total of $1 articles were deleted.','<B>'.$numArticlesDeleted.'</B>'); ?></LI>
         </BLOCKQUOTE>
     </TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-    	<DIV ALIGN="CENTER">
-        <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">
-		</DIV>
+	<TD COLSPAN="2" align="center">
+        <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/sections/?Pub=<?php  p($f_publication_id); ?>&Issue=<?php  p($f_issue_number); ?>&Language=<?php  p($f_language_id); ?>'">
 	</TD>
 </TR>
 </TABLE>

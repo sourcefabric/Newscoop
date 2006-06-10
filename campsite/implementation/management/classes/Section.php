@@ -166,7 +166,8 @@ class Section extends DatabaseObject {
 	 *
 	 * @param boolean $p_deleteArticles
 	 * @param boolean $p_deleteArticleTranslations
-	 * @return boolean
+	 * @return int
+	 * 		Return the number of articles deleted.
 	 */
 	function delete($p_deleteArticles = false, $p_deleteArticleTranslations = false)
 	{

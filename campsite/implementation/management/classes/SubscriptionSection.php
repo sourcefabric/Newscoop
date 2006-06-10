@@ -24,6 +24,14 @@ class SubscriptionSection extends DatabaseObject {
 		'NoticeSent');
 
 
+	/**
+	 * Subscribers can be subscribed to individual sections of a publication.
+	 *
+	 * @param int $p_subscriptionId
+	 * @param int $p_sectionNumber
+	 * @param int $p_languageId
+	 * @return SubscriptionSection
+	 */
 	function SubscriptionSection($p_subscriptionId = null, $p_sectionNumber = null, $p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
@@ -46,58 +54,96 @@ class SubscriptionSection extends DatabaseObject {
 	} // fn delete
 
 
+	/**
+	 * @return int
+	 */
 	function getSubscriptionId()
 	{
 		return $this->m_data['IdSubscription'];
 	} // fn getSubscriptionId
 
 
+	/**
+	 * @return int
+	 */
 	function getSectionNumber()
 	{
 		return $this->m_data['SectionNumber'];
 	} // fn getSectionNumber
 
 
+	/**
+	 * @return int
+	 */
 	function getLanguageId()
 	{
 		return $this->m_data['IdLanguage'];
 	} // fn getSubscriptionId
 
 
+	/**
+	 * Return the starting date in the form YYYY-MM-DD.
+	 *
+	 * @return string
+	 */
 	function getStartDate()
 	{
 		return $this->m_data['StartDate'];
 	} // fn getStartDate
 
 
+	/**
+	 * Set the start date, must be in the form YYYY-MM-DD.
+	 *
+	 * @param string $p_value
+	 * @return boolean
+	 */
 	function setStartDate($p_value)
 	{
 		return $this->setProperty('StartDate', $p_value);
-	}
+	} // fn setStartDate
 
 
+	/**
+	 * The length of the subscription in days.
+	 *
+	 * @return int
+	 */
 	function getDays()
 	{
 		return $this->m_data['Days'];
 	} // fn getDays
 
 
+	/**
+	 * Set length of the subscription in days.
+	 *
+	 * @param int $p_value
+	 * @return boolean
+	 */
 	function setDays($p_value)
 	{
 		return $this->setProperty('Days', $p_value);
 	}
 
 
+	/**
+	 * @return int
+	 */
 	function getPaidDays()
 	{
 		return $this->m_data['PaidDays'];
 	} // fn getPaidDays
 
 
+	/**
+	 * @param int $p_value
+	 * @return boolean
+	 */
 	function setPaidDays($p_value)
 	{
 		return $this->setProperty('PaidDays', $p_value);
-	}
+	} // fn setPaidDays
 
 
 	/**
@@ -133,9 +179,18 @@ class SubscriptionSection extends DatabaseObject {
 			$created &= $subscriptionSection->create($p_values);
 		}
 		return $created;
-	}
+	} // fn AddSubscriberToPublication
 
 
+	/**
+	 * Return an array of SubscriptionSection objects matching the
+	 * search criteria.
+	 *
+	 * @param int $p_subscriptionId
+	 * @param int $p_sectionId
+	 * @param int $p_languageId
+	 * @return array
+	 */
 	function GetSubscriptionSections($p_subscriptionId, $p_sectionId = null, $p_languageId = null)
 	{
 		$queryStr = "SELECT SubsSections.*, Sections.Name, Subscriptions.Type, "
@@ -155,9 +210,17 @@ class SubscriptionSection extends DatabaseObject {
 		$queryStr .= " GROUP BY SectionNumber, IdLanguage ORDER BY SectionNumber, LangName";
 		$sections = DbObjectArray::Create('SubscriptionSection', $queryStr);
 		return $sections;
-	}
+	} // fn GetSubscriptionSections
 
 
+	/**
+	 * Return the number of sections matching the search criteria.
+	 *
+	 * @param int $p_subscriptionId
+	 * @param int $p_sectionId
+	 * @param int $p_languageId
+	 * @return int
+	 */
 	function GetNumSections($p_subscriptionId, $p_sectionId = null, $p_languageId = null)
 	{
 		global $g_ado_db;
@@ -180,7 +243,7 @@ class SubscriptionSection extends DatabaseObject {
 		}
 		$total = $g_ado_db->GetOne($queryStr);
 		return $total;
-	}
+	} // fn GetNumSections
 
 } // class SubscriptionSection
 ?>
