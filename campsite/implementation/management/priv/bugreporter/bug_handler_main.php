@@ -51,7 +51,13 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
         return;
     }
 
+    // -- Return on getimagesize errors --
     if (preg_match ('/^getimagesize/i', $p_string)){
+        return;
+    }
+
+    // -- Return on rmdir errors --
+    if (preg_match ('/^rmdir/i', $p_string)){
         return;
     }
 
