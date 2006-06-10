@@ -343,7 +343,7 @@ if ($f_edit_mode == "edit") { ?>
 						}
 						if ( count($articleEvents) > 0 ) {
 							?>
-							<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="middle" style="padding-bottom: 1px;">
+							<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="absmiddle" style="padding-bottom: 1px;">
 							<?php
 						}
 						?>
