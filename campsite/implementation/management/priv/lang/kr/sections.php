@@ -1,4 +1,6 @@
 <?php
+regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "");
+regGS("Section updated", "");
 regGS("There are $1 subscriptions which will be affected.", "");
 regGS("There are $1 articles in this section.", "");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "섹션 #$1 \"$2\" 업데이트됨 (출판: $3, 이슈: $4) ");
@@ -18,7 +20,6 @@ regGS("Are you sure you want to delete the section $1?", "섹션 $1 을 확실�
 regGS("Deleting section", "섹션 삭제중");
 regGS("The section $1 has been deleted.", "섹션 $1 이 삭제되었습니다. ");
 regGS("Configure section", "섹션 구성");
-regGS("Updating section name", "섹션 이름 업데이트중");
 regGS("The section could not be changed.", "섹션이 수정될 수 없습니다. ");
 regGS("Duplicate section", "섹션 복사 ");
 regGS("The destination issue is the same as the source issue.", "목표 이슈가 원래 이슈와 같습니다.");
@@ -43,5 +44,4 @@ regGS("You must select a section.", "선택하시오");
 regGS("You must specify a name for the section.", "섹션 이름을 지정하시오");
 regGS("The section could not be added.", "섹션을 추가할 수 업습니다. ");
 regGS("Add new section", "새로운 섹션 추가 ");
-regGS("The section $1 could not be deleted.", "섹션 $1 을 삭제할 수 없습니다. ");
 ?>

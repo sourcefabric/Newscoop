@@ -3,7 +3,6 @@ camp_load_translation_strings("imagearchive");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 if (!$g_user->hasPermission('AddImage')) {
 	header("Location: /$ADMIN/logout.php");

@@ -22,6 +22,7 @@ if (!$articleObj->exists()) {
 	if ($templateId == 0) {
 		$templateId = $issueObj->getArticleTemplateId();
 	}
+	//getGS("This article cannot be previewed. Please make sure it has the front page template selected.");
 	if ($templateId == 0) {
 		$errorStr = getGS('This article cannot be previewed. Please make sure it has the article template selected.');
 	}

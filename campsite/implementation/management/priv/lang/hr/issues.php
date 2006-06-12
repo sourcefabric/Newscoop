@@ -1,4 +1,7 @@
 <?php
+regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("Issue updated", "");
+regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
 regGS("There are $1 articles in this issue.", "");
 regGS("The issue $1 has been deleted.", "");
@@ -34,7 +37,7 @@ regGS("Create a complete new structure.", "Kreiraj potpuno novu strukturu.");
 regGS("You must define an issue type for each language and then sections for them.", "Morate definirati vrstu izdanja za svaki jezik, kao i rubrike za njih.");
 regGS("Copy previous issue", "Prekopiraj prethodno izdanje");
 regGS("No previous issue.", "Prethodno izdanje ne postoji.");
-regGS("Copy structure from issue nr $1", "Iskoristi strukturu izdanja br. $1");
+regGS("Copy structure from issue number $1", "Iskoristi strukturu izdanja br. $1");
 regGS("Copying previous issue", "Kopiranje prethodnog izdanja");
 regGS("New issue $1 from $2 in publication $3", "Novo izdanje $1 od $2 u publikaciji $3");
 regGS("Adding new issue", "Dodavanje novog izdanja");

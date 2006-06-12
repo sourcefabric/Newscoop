@@ -260,4 +260,7 @@ regGS("Article Comments", "");
 regGS("Are you sure you want to deactivate the subscription?", "Да ли сте сигурни да желите да деактивирате претплату?");
 regGS("Are you sure you want to activate the subscription?", "Да ли сте сигурни да желите да активирате претплату?");
 regGS("Other", "");
+regGS("No events.", "");
+regGS("Default templates", "");
+regGS("System Preferences", "");
 ?>

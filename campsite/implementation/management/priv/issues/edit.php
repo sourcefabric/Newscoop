@@ -56,6 +56,8 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	$url_add = "qadd.php";
 }
 ?>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php  p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
@@ -82,11 +84,12 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 </TR>
 </TABLE>
 
+<?php camp_html_display_msgs(); ?>
 <P>
 <table>
 <tr>
 	<td valign="top">
-		<FORM METHOD="POST" ACTION="do_edit.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+		<FORM name="issue_edit" METHOD="POST" ACTION="do_edit.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 		<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="f_current_language_id" VALUE="<?php p($Language); ?>">
@@ -109,6 +112,13 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 			<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 			<TD>
 			<INPUT TYPE="TEXT" class="input_text" NAME="f_issue_name" SIZE="32" MAXLENGTH="64" value="<?php  p(htmlspecialchars($issueObj->getName())); ?>" alt="blank" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Name')."'"); ?>">
+			</TD>
+		</TR>
+
+		<TR>
+			<TD ALIGN="RIGHT"><?php  putGS("URL Name"); ?>:</TD>
+			<TD>
+			<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($issueObj->getUrlName())); ?>" alt="alnum|1|A|true|false|_" emsg="<?php putGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"); ?>">
 			</TD>
 		</TR>
 
@@ -158,6 +168,12 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		</TR>
 
 		<TR>
+			<TD COLSPAN="2" style="padding-top: 20px;">
+				<B><?php  putGS("Default templates"); ?></B>
+				<HR NOSHADE SIZE="1" COLOR="BLACK">
+			</TD>
+		</TR>
+		<TR>
 			<TD ALIGN="RIGHT"><?php  putGS("Front Page Template"); ?>:</TD>
 			<TD>
 				<SELECT NAME="f_issue_template_id" class="input_select">
@@ -200,14 +216,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		</TR>
 
 		<TR>
-			<TD ALIGN="RIGHT"><?php  putGS("URL Name"); ?>:</TD>
-			<TD>
-			<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($issueObj->getUrlName())); ?>" alt="alnum|1|A|true|false|_" emsg="<?php putGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"); ?>">
-			</TD>
-		</TR>
-
-		<TR>
-			<TD COLSPAN="2" align="center">
+			<TD COLSPAN="2" align="center" style="padding-top: 15px;">
 				<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 			</TD>
 		</TR>
@@ -335,5 +344,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	</td>
 </tr>
 </table>
-
+<script>
+document.forms.issue_edit.f_issue_name.focus();
+</script>
 <?php camp_html_copyright_notice(); ?>

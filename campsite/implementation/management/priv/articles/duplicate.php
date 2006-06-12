@@ -137,7 +137,7 @@ if (count($allPublications) == 1) {
 // Get the most recent issues.
 $allIssues = array();
 if ($f_destination_publication_id > 0) {
-	$allIssues = Issue::GetIssues($f_destination_publication_id, $firstArticle->getLanguageId(), null, null, array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC")));
+	$allIssues = Issue::GetIssues($f_destination_publication_id, $firstArticle->getLanguageId(), null, null, null, array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC")));
 	// Automatically select the issue if there is only one.
 	if (count($allIssues) == 1) {
 		$tmpIssue = camp_array_peek($allIssues);
@@ -149,7 +149,7 @@ if ($f_destination_publication_id > 0) {
 $allSections = array();
 if ($f_destination_issue_number > 0) {
 	$destIssue =& new Issue($f_destination_publication_id);
-	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $firstArticle->getLanguageId(), array("ORDER BY" => array("Number" => "DESC")));
+	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $firstArticle->getLanguageId(), null, array("ORDER BY" => array("Number" => "DESC")));
 	// Automatically select the section if there is only one.
 	if (count($allSections) == 1) {
 		$tmpSection = camp_array_peek($allSections);

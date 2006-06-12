@@ -338,7 +338,10 @@ class Section extends DatabaseObject {
 	 *		(Optional) Only return sections in this issue.
 	 *
 	 * @param int $p_languageId
-	 * 		(Optional) Only return sections that have this language.
+	 * 		(Optional) Only return sections that have this language ID.
+	 *
+	 * @param int $p_urlName
+	 * 		(Optional) Only return sections that have this URL name.
 	 *
 	 * @param array $p_sqlOptions
 	 *		(Optional) Additional options.  See DatabaseObject::ProcessOptions().
@@ -346,7 +349,8 @@ class Section extends DatabaseObject {
 	 * @return array
 	 */
 	function GetSections($p_publicationId = null, $p_issueNumber = null,
-	                     $p_languageId = null, $p_sqlOptions = null)
+	                     $p_languageId = null, $p_urlName = null,
+	                     $p_sqlOptions = null)
 	{
 		$constraints = array();
 		if (!is_null($p_publicationId)) {
@@ -357,6 +361,9 @@ class Section extends DatabaseObject {
 		}
 		if (!is_null($p_languageId)) {
 			$constraints[] = array("IdLanguage", $p_languageId);
+		}
+		if (!is_null($p_urlName)) {
+			$constraints[] = array("ShortName", $p_urlName);
 		}
 
 		return DatabaseObject::Search('Section', $constraints, $p_sqlOptions);

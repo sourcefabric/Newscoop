@@ -346,4 +346,103 @@ function camp_html_breadcrumb($p_text, $p_link, $p_separator = true, $p_active =
 	}
     return $tmpStr;
 } // fn camp_html_breadcrumb
+
+
+/**
+ * Send the user to the given page.
+ *
+ * @param string $p_link
+ * @return void
+ */
+function camp_html_goto_page($p_link)
+{
+	header("Location: $p_link");
+	exit;
+} // fn camp_html_goto_page
+
+// This is a simple global to tell us whether messages have been added
+// during this page request.
+global $g_camp_msg_added;
+$g_camp_msg_added = false;
+
+/**
+ * Add a message to be sent to a page when camp_html_goto_page() is called.
+ * The messages can be displayed on the destination screen by using
+ * camp_html_display_msgs().
+ *
+ * @param string $p_errorMsg
+ * @param string $p_type
+ */
+function camp_html_add_msg($p_errorMsg, $p_type = "error")
+{
+	global $g_camp_msg_added;
+	$g_camp_msg_added = true;
+	$_SESSION["camp_user_msgs"][$p_errorMsg] = $p_type;
+} // fn camp_html_add_msg
+
+
+/**
+ * Return true if there are response messages to show to the user.
+ *
+ * @return boolean
+ */
+function camp_html_has_msgs()
+{
+	return (count($_SESSION['camp_user_msgs']) > 0);
+} // fn camp_html_has_msgs
+
+
+/**
+ * Delete all pending user messages.  This is called at the end of
+ * the next page request in admin.php.  This means that messages do not last
+ * past one page request.
+ *
+ * @param boolean $p_calledByAdmin
+ *		This is only used by the admin script.  If it is set to true it
+ * 		will check if any messages have been posted during this request,
+ * 		and if so, it does not delete the messages.
+ * @return void
+ */
+function camp_html_clear_msgs($p_calledByAdmin = false)
+{
+	global $g_camp_msg_added;
+	if (!$p_calledByAdmin || ($p_calledByAdmin && $g_camp_msg_added)) {
+		$_SESSION['camp_user_msgs'] = array();
+	}
+} // fn camp_html_clear_msgs
+
+
+/**
+ * Display any user messages stored in the session.
+ */
+function camp_html_display_msgs()
+{
+	if (isset($_SESSION['camp_user_msgs']) && count($_SESSION['camp_user_msgs']) > 0) { ?>
+		<p>
+		<table border="0" cellpadding="0" cellspacing="0" class="action_buttons">
+		<?php
+		$count = 1;
+		foreach ($_SESSION['camp_user_msgs'] as $msg => $type) {
+			?>
+			<tr>
+				<?php if ($type == 'ok') { ?>
+				<td class="info_message" id="camp_message_<?php p($count); ?>">
+					<script>
+					fade('camp_message_<?php p($count); ?>', 50, 8, false, 1000);
+					</script>
+				<?php } elseif ($type == 'error') { ?>
+				<td class="error_message">
+				<?php } ?>
+					<?php echo $msg; ?>
+				</td>
+			</tr>
+			<?php
+			$count++;
+		} ?>
+		</table>
+		<p>
+		<?php
+		$_SESSION['camp_user_msgs'] = array();
+	}
+} // fn camp_html_display_msgs
 ?>

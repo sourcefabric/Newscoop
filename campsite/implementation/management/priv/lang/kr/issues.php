@@ -1,4 +1,7 @@
 <?php
+regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("Issue updated", "");
+regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
 regGS("There are $1 articles in this issue.", "");
 regGS("The issue $1 has been deleted.", "");
@@ -34,7 +37,7 @@ regGS("Create a complete new structure.", "완전히 새로운 구조 생성");
 regGS("You must define an issue type for each language and then sections for them.", "각기 언어에 대한 이슈 타입을 정의하고, 그다음  섹션을 정의해야 됩니다. ");
 regGS("Copy previous issue", "이전 이슈 복사");
 regGS("No previous issue.", "이전 이슈 없슴.");
-regGS("Copy structure from issue nr $1", "이슈  nr $1 에서 구조 복사");
+regGS("Copy structure from issue number $1", "이슈  nr $1 에서 구조 복사");
 regGS("Copying previous issue", "이전 이슈 복사중");
 regGS("New issue $1 from $2 in publication $3", "출판사이트 $3 에서 $2 부터 $1 새로운 이슈 ");
 regGS("Adding new issue", "새로운 이슈 추가");

@@ -102,7 +102,7 @@ class SystemPref {
 					   ." WHERE fk_user_id=0"
 					   ." AND varname='".mysql_real_escape_string($p_varName)."'";
 				$g_ado_db->Execute($sql);
-				$Campsite['system_preferences'][$p_varName] = $value;
+				$Campsite['system_preferences'][$p_varName] = $p_value;
 			}
 		}
 	} // fn Set

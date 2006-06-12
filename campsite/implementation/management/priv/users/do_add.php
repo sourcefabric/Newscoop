@@ -44,14 +44,14 @@ if ($errorField != "") {
 	} else {
 		$errorMsg = getGS('You must complete the $1 field.', $desc);
 	}
-	header("Location: $backLink&res=ERROR&resMsg=" . urlencode($errorMsg));
-	exit;
+	camp_html_add_msg($errorMsg);
+	camp_html_goto_page($backLink);
 }
 
 if (User::UserNameExists($fieldValues['UName'])) {
 	$errorMsg = getGS('That user name already exists, please choose a different login name.');
-	header("Location: $backLink&res=ERROR&resMsg=" . urlencode($errorMsg));
-	exit;
+	camp_html_add_msg($errorMsg);
+	camp_html_goto_page($backLink);
 }
 
 // read password
@@ -59,8 +59,8 @@ $password = Input::Get('password', 'string', '');
 $passwordConf = Input::Get('passwordConf', 'string', '');
 if (strlen($password) < 6 || $password != $passwordConf) {
 	$errorMsg = getGS('The password must be at least 6 characters long and both passwords should match.');
-	header("Location: $backLink&res=ERROR&resMsg=" . urlencode($errorMsg));
-	exit;
+	camp_html_add_msg($errorMsg);
+	camp_html_goto_page($backLink);
 }
 
 // create user
@@ -70,12 +70,11 @@ if ($editUser->create($fieldValues)) {
 	if ($uType == 'Staff') {
 		$editUser->setUserType($Type);
 	}
-	$resMsg = getGS('User account $1 was created successfully.', $editUser->getUserName());
-	header("Location: /$ADMIN/users/edit.php?User=".$editUser->getUserId()."&$typeParam&res=OK&resMsg=" . urlencode($resMsg));
+	camp_html_add_msg(getGS('User account $1 was created successfully.', $editUser->getUserName()), "ok");
+	camp_html_goto_page("/$ADMIN/users/edit.php?User=".$editUser->getUserId()."&$typeParam");
 } else {
-	$errorMsg = getGS('The user account could not be created.');
-	header("Location: $backLink&res=ERROR&resMsg=" . urlencode($errorMsg));
-	exit;
+	camp_html_add_msg(getGS('The user account could not be created.'));
+	camp_html_goto_page($backLink);
 }
 
 ?>

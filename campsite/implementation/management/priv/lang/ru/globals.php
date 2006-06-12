@@ -269,4 +269,7 @@ regGS("Article Comments", "");
 regGS("Are you sure you want to deactivate the subscription?", "Вы уверены, что хотите деактивировать подписчика?");
 regGS("Are you sure you want to activate the subscription?", "Вы уверены, что хотите активировать подписку?");
 regGS("Other", "");
+regGS("No events.", "");
+regGS("Default templates", "");
+regGS("System Preferences", "");
 ?>

@@ -7,6 +7,7 @@ if (!$g_user->hasPermission('ManageIssue')) {
 	camp_html_display_error(getGS('You do not have the right to change issue details.'));
 	exit;
 }
+
 $f_publication_id = Input::Get('f_publication_id', 'int');
 $f_issue_number = Input::Get('f_issue_number', 'int');
 $f_current_language_id = Input::Get('f_current_language_id', 'int');
@@ -27,43 +28,64 @@ $issueObj =& new Issue($f_publication_id, $f_current_language_id, $f_issue_numbe
 
 $backLink = "/$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_current_language_id";
 if ($f_new_language_id == 0) {
-	camp_html_display_error(getGS('You must select a language.'), $backLink);
-	exit;
+	camp_html_add_msg(getGS('You must select a language.'));
 }
 if (empty($f_issue_name)) {
-	camp_html_display_error(getGS('You must complete the $1 field.', "'".getGS('Name')."'"),
-		$backLink);
-	exit;
+	camp_html_add_msg(getGS('You must complete the $1 field.', "'".getGS('Name')."'"));
 }
 if (empty($f_url_name)) {
-	camp_html_display_error(getGS('You must complete the $1 field.', "'".getGS('URL Name')."'"),
-		$backLink);
-	exit;
+	camp_html_add_msg(getGS('You must complete the $1 field.', "'".getGS('URL Name')."'"));
 }
 if (!camp_is_valid_url_name($f_url_name)) {
-	camp_html_display_error(getGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"), $backLink);
-	exit;
+	camp_html_add_msg(getGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"));
 }
-$issueObj->setProperty('Name', $f_issue_name, false);
+if (camp_html_has_msgs()) {
+	camp_html_goto_page($backLink);
+}
+
+$changed = true;
+$changed &= $issueObj->setName('Name');
 if ($issueObj->getWorkflowStatus() == 'Y') {
-	$issueObj->setProperty('PublicationDate', $f_publication_date, false);
+	$changed &= $issueObj->setPublicationDate($f_publication_date);
 }
-$issueObj->setProperty('IssueTplId', $f_issue_template_id, false);
-$issueObj->setProperty('SectionTplId', $f_section_template_id, false);
-$issueObj->setProperty('ArticleTplId', $f_article_template_id, false);
-$issueObj->setProperty('ShortName', $f_url_name, false);
-if ($issueObj->commit()) {
-	$issueObj->setLanguageId($f_new_language_id);
+$changed &= $issueObj->setIssueTemplateId($f_issue_template_id);
+$changed &= $issueObj->setSectionTemplateId($f_section_template_id);
+$changed &= $issueObj->setArticleTemplateId($f_article_template_id);
+
+if ($changed) {
 	$logtext = getGS('Issue $1 updated in publication $2', $f_issue_name, $publicationObj->getName());
 	Log::Message($logtext, $g_user->getUserName(), 11);
 } else {
-	$errMsg = getGS("Could not save the changes to the issue $1. Please make sure the issue URL name '$2' was not used before in the publication $3.",
-					$issueObj->getName(), $issueObj->getUrlName(), $publicationObj->getName());
-	camp_html_display_error($errMsg, $backLink);
+	$errMsg = getGS("Could not save the changes to the issue.");
+	camp_html_add_msg($errMsg);
 	exit;
 }
 
-header("Location: /$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=".$issueObj->getLanguageId());
-exit;
+// The tricky part - language ID and URL name must be unique.
+$conflictingIssues = Issue::GetIssues($f_publication_id, $f_new_language_id, null, $f_url_name);
+$conflictingIssue = array_pop($conflictingIssues);
+// If it isnt the one we are currently updating
+if (is_object($conflictingIssue) && ($conflictingIssue->getIssueNumber() != $f_issue_number)) {
+	$conflictingIssueLink = "/$ADMIN/issues/edit.php?"
+		."Pub=$f_publication_id"
+		."&Issue=".$conflictingIssue->getIssueNumber()
+		."&Language=".$conflictingIssue->getLanguageId();
+
+	$errMsg = getGS('The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue "$1$2. $3 ($4)$5".',
+		"<a href='$conflictingIssueLink' class='error_message' style='color:#E30000;'>",
+		$conflictingIssue->getIssueNumber(),
+		$conflictingIssue->getName(),
+		$conflictingIssue->getLanguageName(),
+		'</a>');
+	camp_html_add_msg($errMsg);
+	camp_html_goto_page($backLink);
+} else {
+	$issueObj->setProperty('ShortName', $f_url_name, false);
+	$issueObj->setProperty('IdLanguage', $f_new_language_id, false);
+	$issueObj->commit();
+	$link = "/$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=".$issueObj->getLanguageId();
+	camp_html_add_msg(getGS('Issue updated'), "ok");
+	camp_html_goto_page($link);
+}
 
 ?>

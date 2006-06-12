@@ -24,6 +24,8 @@ $url_args1 = "Pub=$Pub&Issue=$Issue&Language=$Language";
 $url_args2 = $url_args1."&Section=$Section";
 
 ?>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
@@ -47,6 +49,8 @@ $url_args2 = $url_args1."&Section=$Section";
 </TR>
 </TABLE>
 
+<?php camp_html_display_msgs(); ?>
+
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <FORM NAME="section_edit" METHOD="POST" ACTION="do_edit.php" >
@@ -69,6 +73,31 @@ $url_args2 = $url_args1."&Section=$Section";
 	<TD>
 		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64" value="<?php  p(htmlspecialchars($sectionObj->getName())); ?>">
  	</TD>
+</TR>
+
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($sectionObj->getUrlName())); ?>">
+	</TD>
+</TR>
+
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Subscriptions"); ?>:</TD>
+	<TD>
+		<SELECT NAME="cSubs" class="input_select">
+	   	<OPTION VALUE="n"> --- </OPTION>
+	   	<OPTION VALUE="a"><?php  putGS("Add section to all subscriptions."); ?></OPTION>
+	   	<OPTION VALUE="d"><?php  putGS("Delete section from all subscriptions."); ?></OPTION>
+	  	</SELECT>
+	</TD>
+</TR>
+
+<TR>
+	<TD COLSPAN="2" style="padding-top:20px;">
+		<B><?php  putGS("Default templates"); ?></B>
+		<HR NOSHADE SIZE="1" COLOR="BLACK">
+	</TD>
 </TR>
 
 <TR>
@@ -98,27 +127,6 @@ $url_args2 = $url_args1."&Section=$Section";
 		</SELECT>
 	</TD>
 </TR>
-
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($sectionObj->getUrlName())); ?>">
-	</TD>
-</TR>
-
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Subscriptions"); ?>:</TD>
-	<TD>
-		<SELECT NAME="cSubs" class="input_select">
-	   	<OPTION VALUE="n"> --- </OPTION>
-	   	<OPTION VALUE="a"><?php  putGS("Add section to all subscriptions."); ?></OPTION>
-	   	<OPTION VALUE="d"><?php  putGS("Delete section from all subscriptions."); ?></OPTION>
-	  	</SELECT>
-	</TD>
-</TR>
-
- <?php
- ?>
 
 <TR>
 	<TD COLSPAN="2" align="center">

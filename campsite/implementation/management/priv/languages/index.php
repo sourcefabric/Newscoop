@@ -2,7 +2,6 @@
 camp_load_translation_strings("languages");
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 $languages = Language::GetLanguages();
 $crumbs = array();

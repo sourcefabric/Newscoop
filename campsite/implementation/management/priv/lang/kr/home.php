@@ -7,7 +7,6 @@ regGS("Campsite has upgraded its security measures.  In order to upgrade your ac
 regGS("CAPTCHA code is not valid.  Please try again.", "");
 regGS("There are no pending articles.", "대기중인 기사는 없습니다.");
 regGS("Pending Articles", "대기중인 기사");
-regGS("System Preferences", "시스템 구성");
 regGS("You haven't written any articles yet.", "기사를 아직 작성하지 않았습니다. ");
 regGS("There are no pending items to be published.", "출판하기 위해 대기중인 아이템이 없습니다. ");
 regGS("There are currently no submitted articles.", "현재 송고된 기사는 없습니다. ");

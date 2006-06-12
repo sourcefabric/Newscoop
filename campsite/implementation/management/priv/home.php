@@ -9,7 +9,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticlePublish.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/IssuePublish.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/SimplePager.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 camp_load_translation_strings("home");
 camp_load_translation_strings("articles");
 camp_load_translation_strings("api");

@@ -103,6 +103,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["article_comments"] = getGS("Article Comments");
     $mapPrefixToDisplay["imagearchive"] = getGS("Image Archive");
     $mapPrefixToDisplay["comments"] = getGS("Comments");
+    $mapPrefixToDisplay["system_pref"] = getGS("System Preferences");
     $mapPrefixToDisplay["templates"] = getGS("Templates");
     $mapPrefixToDisplay["article_types"] = getGS("Article Types");
     $mapPrefixToDisplay["article_type_fields"] = getGS("Article Type Fields");

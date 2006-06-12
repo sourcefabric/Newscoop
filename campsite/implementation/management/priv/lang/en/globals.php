@@ -255,4 +255,7 @@ regGS("Are you sure you want to deactivate the subscription?", "Are you sure you
 regGS("Are you sure you want to activate the subscription?", "Are you sure you want to activate the subscription?");
 regGS("Other", "Other");
 regGS("Time:", "Time:");
+regGS("No events.", "No events.");
+regGS("Default templates", "Default templates");
+regGS("System Preferences", "System Preferences");
 ?>

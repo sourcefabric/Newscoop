@@ -5,7 +5,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 // check input
 $f_image_id = Input::Get('f_image_id', 'int', 0);

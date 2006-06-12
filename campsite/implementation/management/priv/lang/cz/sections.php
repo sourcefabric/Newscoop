@@ -1,4 +1,6 @@
 <?php
+regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "");
+regGS("Section updated", "");
 regGS("There are $1 subscriptions which will be affected.", "");
 regGS("There are $1 articles in this section.", "");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "");
@@ -19,9 +21,7 @@ regGS("Are you sure you want to delete the section $1?", "Určitě chcete smazat
 regGS("Deleting section", "Mazání rubriky");
 regGS("The section $1 has been deleted.", "Rubrika $1 byla smazána");
 regGS("Change section name", "Změnit název rubriky");
-regGS("Updating section name", "Obnovit název rubriky");
 regGS("The section could not be changed.", "Rubrika nemohla být změněna");
 regGS("The section could not be added.", "Rubrika nemohla být přidána");
 regGS("Add new section", "Přidat novou rubriku");
-regGS("The section $1 could not be deleted.", "Rubrika $1 nemohla být smazána");
 ?>

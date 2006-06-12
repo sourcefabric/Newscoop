@@ -9,7 +9,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);

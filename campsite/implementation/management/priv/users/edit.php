@@ -42,22 +42,7 @@ echo $breadcrumbs;
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
-
-
-<?php if ($resMsg != '') { ?>
-<table border="0" cellpadding="0" cellspacing="0" class="action_buttons">
-<tr>
-<?php if ($res == 'OK') { ?>
-	<td class="info_message">
-<?php } else { ?>
-	<td class="error_message">
-<?php } ?>
-		<?php echo $resMsg; ?>
-	</td>
-</tr>
-</table>
-<p>
-<?php } ?>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 
 <?php
 if ($canManage && ($userId > 0)) {
@@ -80,6 +65,8 @@ if ($canManage && ($userId > 0)) {
 	<?php
 }
 ?>
+
+<?php camp_html_display_msgs(); ?>
 
 <table border="0">
 <tr>

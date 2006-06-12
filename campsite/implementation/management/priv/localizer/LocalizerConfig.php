@@ -82,6 +82,7 @@ $mapPrefixToDir["article_topics"] = "/admin-files/articles/topics";
 $mapPrefixToDir["article_comments"] = "/admin-files/articles/comments";
 $mapPrefixToDir["imagearchive"] = "/admin-files/imagearchive";
 $mapPrefixToDir["comments"] = "/admin-files/comments";
+$mapPrefixToDir["system_pref"] = "/admin-files/system_pref";
 $mapPrefixToDir["templates"] = "/admin-files/templates";
 $mapPrefixToDir["article_types"] = "/admin-files/article_types";
 $mapPrefixToDir["article_type_fields"] = "/admin-files/article_types/fields";

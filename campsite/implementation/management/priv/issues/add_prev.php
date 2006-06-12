@@ -37,7 +37,7 @@ if (is_null($lastCreatedIssue)) { ?>
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2"><?php  putGS('Copy structure from issue nr $1','<B>'. $lastCreatedIssue->getIssueNumber().'</B>'); ?></TD>
+	<TD COLSPAN="2"><?php  putGS('Copy structure from issue number $1','<B>'. $lastCreatedIssue->getIssueNumber().'</B>'); ?></TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Issue Number"); ?>:</TD>

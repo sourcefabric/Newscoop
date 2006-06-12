@@ -1,4 +1,7 @@
 <?php
+regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("Issue updated", "");
+regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
 regGS("There are $1 articles in this issue.", "");
 regGS("The issue $1 has been deleted.", "");
@@ -41,7 +44,7 @@ regGS("Create a complete new structure.", "创建全新的结构");
 regGS("You must define an issue type for each language and then sections for them.", "你必须为每种语言定义一个议题，然后是区");
 regGS("Copy previous issue", "复制以前的议题");
 regGS("No previous issue.", "无以前的议题");
-regGS("Copy structure from issue nr $1", "从$1议题复制结构");
+regGS("Copy structure from issue number $1", "从$1议题复制结构");
 regGS("Copying previous issue", "正在复制以前的议题");
 regGS("New issue $1 from $2 in publication $3", "在发布$3来自$2的新议题$1");
 regGS("Adding new issue", "正在增加新议题");

@@ -1,7 +1,6 @@
 <?php
 camp_load_translation_strings("system_pref");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 
@@ -12,16 +11,18 @@ if (!$g_user->hasPermission('ChangeSystemPreferences')) {
 }
 
 $f_keyword_separator = Input::Get('f_keyword_separator');
+$f_login_num = Input::Get('f_login_num', 'int');
 
-if (!empty($f_keyword_separator)) {
-	SystemPref::Set("KeywordSeparator", $f_keyword_separator);
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
 }
 
-$f_login_num = Input::Get('f_login_num');
-
-if (!empty($f_login_num)) {
-	SystemPref::Set("FailedAttemptsNum", $f_login_num);
+SystemPref::Set("KeywordSeparator", $f_keyword_separator);
+if ($f_login_num >= 0) {
+	SystemPref::Set("LoginFailedAttemptsNum", $f_login_num);
 }
+camp_html_add_msg(getGS("System preferences updated."), "ok");
 
 header("Location: /$ADMIN/system_pref/");
 exit;

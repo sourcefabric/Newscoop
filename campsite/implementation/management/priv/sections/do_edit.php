@@ -47,27 +47,23 @@ $modified = false;
 
 $errors = array();
 if ($cName == "") {
-    $correct = false;
-    $errors[] = getGS('You must complete the $1 field.','"'.getGS('Name').'"');
+	camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('Name').'"'));
 }
 if ($cShortName == "")  {
-	$correct = false;
-	$errors[] = getGS('You must complete the $1 field.','"'.getGS('URL Name').'"');
+	camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('URL Name').'"'));
 }
 $isValidShortName = camp_is_valid_url_name($cShortName);
 
 if (!$isValidShortName) {
-	$correct = false;
-	$errors[] = getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('URL Name') . '"');
+	camp_html_add_msg(getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('URL Name') . '"'));
 }
 
 $editUrl = "/$ADMIN/sections/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
-if ($correct) {
-    $sectionObj->setName($cName);
-    $sectionObj->setUrlName($cShortName);
-    $sectionObj->setSectionTemplateId($cSectionTplId);
-    $sectionObj->setArticleTemplateId($cArticleTplId);
+if (!camp_html_has_msgs()) {
 	$modified = true;
+    $modified &= $sectionObj->setName($cName);
+    $modified &= $sectionObj->setSectionTemplateId($cSectionTplId);
+    $modified &= $sectionObj->setArticleTemplateId($cArticleTplId);
 
 	if ($cSubs == "a") {
         $numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($Pub, $Section);
@@ -81,47 +77,28 @@ if ($correct) {
             $errors[] = getGS('Error updating subscriptions.');
 		}
 	}
+
+	$conflictingSection = array_pop(Section::GetSections($Pub, $Issue, $Language, $cShortName));
+	if (is_object($conflictingSection) && ($conflictingSection->getSectionNumber() != $Section)) {
+		$conflictingSectionLink = "/$ADMIN/sections/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=".$conflictingSection->getSectionNumber();
+
+		$msg = getGS('The URL name must be unique for all sections in this issue.<br>The URL name you specified ("$1") conflicts with section "$2$3. $4$5"',
+			$cShortName,
+			"<a href='$conflictingSectionLink' class='error_message' style='color:#E30000;'>",
+			$conflictingSection->getSectionNumber(),
+			htmlspecialchars($conflictingSection->getName()),
+			"</a>");
+	    camp_html_add_msg($msg);
+	    // placeholder for localization string - we might need this later.
+	    // getGS("The section could not be changed.");
+	} else {
+	    $modified &= $sectionObj->setUrlName($cShortName);
+	    camp_html_add_msg(getGS("Section updated"), "ok");
+	}
     $logtext = getGS('Section #$1 "$2" updated. (Publication: $3, Issue: $4)',
     				 $Issue, $cName, $publicationObj->getPublicationId(), $issueObj->getIssueNumber());
     Log::Message($logtext, $g_user->getUserName(), 21);
-    header("Location: $editUrl");
-    exit;
 }
-else {
-    $errors[] = getGS('The section could not be changed.').' '.getGS('Please check if another section with the same number or URL name does not exist already.');
-}
+camp_html_goto_page($editUrl);
 
-$topArray = array("Pub" => $publicationObj, "Issue" => $issueObj, "Section" => $sectionObj);
-camp_html_content_top("Updating section name", $topArray);
 ?>
-
-<P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
-<TR>
-	<TD COLSPAN="2">
-		<B> <?php  putGS("Updating section name"); ?> </B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-	<BLOCKQUOTE>
-    <?php
-    foreach ($errors as $error) {
-        echo "<LI>".$error."</LI>";
-    }
-    ?>
-    </BLOCKQUOTE>
-    </TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='<?php p($editUrl); ?>'">
-    </DIV>
-	</TD>
-</TR>
-</TABLE>
-<P>
-
-<?php camp_html_copyright_notice(); ?>

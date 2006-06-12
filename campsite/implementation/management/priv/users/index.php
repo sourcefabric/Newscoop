@@ -42,6 +42,8 @@ if ($uType == "Staff") {
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 ?>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+
 <p>
 <table border="0" cellspacing="0" cellpadding="0" class="action_buttons">
 <tr>
@@ -128,19 +130,7 @@ if ($canManage) {
 </form>
 </table>
 
-<?php if ($resMsg != '') { ?>
-<table border="0" cellpadding="0" cellspacing="0" class="indent" style="padding-bottom: 5px;">
-<tr>
-	<?php if ($res == 'OK') { ?>
-	<td class="info_message">
-	<?php } else { ?>
-	<td class="error_message">
-	<?php } ?>
-		<?php echo $resMsg; ?>
-	</td>
-</tr>
-</table>
-<?php } ?>
+<?php camp_html_display_msgs(); ?>
 
 <?php
 $sqlBase = "SELECT DISTINCT u.Id, u.Name, u.UName, u.EMail, DATE_FORMAT(u.time_created, '%Y-%m-%d %T') as time_created FROM Users AS u";

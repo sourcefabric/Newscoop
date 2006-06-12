@@ -4,7 +4,6 @@ require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/localizer/Localizer.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 $languageId = Input::Get('Lang', 'int', 0, true);
 $Back = Input::Get('Back', 'string', null, true);

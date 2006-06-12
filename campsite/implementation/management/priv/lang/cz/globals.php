@@ -262,4 +262,7 @@ regGS("Article Comments", "");
 regGS("Are you sure you want to deactivate the subscription?", "Doopravdy chcete deaktivovat předplatné?");
 regGS("Are you sure you want to activate the subscription?", "Doopravdy chcete aktivovat předplatné?");
 regGS("Other", "");
+regGS("No events.", "");
+regGS("Default templates", "");
+regGS("System Preferences", "");
 ?>

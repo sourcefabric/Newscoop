@@ -4,7 +4,6 @@ require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 if (!$g_user->hasPermission('DeleteLanguages')) {
 	camp_html_display_error(getGS("You do not have the right to delete languages."));

@@ -3,7 +3,6 @@ camp_load_translation_strings("users");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/IPAccess.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 
 function verify_user_type()
@@ -29,7 +28,7 @@ $userSearchParameters = array('full_name'=>'', 'user_name'=>'', 'email'=>'',
 
 function read_user_common_parameters()
 {
-	global $uType, $userOffs, $ItemsPerPage, $res, $resMsg;
+	global $uType, $userOffs, $ItemsPerPage;
 	global $defaultUserSearchParameters, $userSearchParameters;
 
 	$uType = Input::Get('uType', 'string', '');
@@ -42,8 +41,6 @@ function read_user_common_parameters()
 		$userSearchParameters[$parameter] =
 			camp_session_get($parameter, $defaultUserSearchParameters[$parameter]);
 	}
-	$res = Input::Get('res', 'string', 'OK');
-	$resMsg = Input::Get('resMsg', 'string', '');
 }
 
 function user_search_is_set()

@@ -271,4 +271,7 @@ regGS("Article Comments", "");
 regGS("Are you sure you want to deactivate the subscription?", "¿Está seguro de querer desactivar la suscripción?");
 regGS("Are you sure you want to activate the subscription?", "¿Está seguro de querer activar la suscripción?");
 regGS("Other", "");
+regGS("No events.", "");
+regGS("Default templates", "");
+regGS("System Preferences", "");
 ?>

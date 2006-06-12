@@ -7,7 +7,6 @@ regGS("Campsite has upgraded its security measures.  In order to upgrade your ac
 regGS("CAPTCHA code is not valid.  Please try again.", "");
 regGS("There are no pending articles.", "Não existem artigos pendentes");
 regGS("Pending Articles", "Artigos pendentes");
-regGS("System Preferences", "Definições de sistema");
 regGS("You haven't written any articles yet.", "Ainda não escreveu artigos.");
 regGS("There are no pending items to be published.", "Nao existem itens pendentes para publicação.");
 regGS("There are currently no submitted articles.", "Nao existem artigos submetidos para aprovação.");

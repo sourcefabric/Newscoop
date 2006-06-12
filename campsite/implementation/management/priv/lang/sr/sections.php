@@ -1,4 +1,6 @@
 <?php
+regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "");
+regGS("Section updated", "");
 regGS("There are $1 subscriptions which will be affected.", "");
 regGS("There are $1 articles in this section.", "");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "рубрика #$1 \"$2\" је измењена. (публикација: $3, издање: $4)");
@@ -18,7 +20,6 @@ regGS("Are you sure you want to delete the section $1?", "Да ли сте си�
 regGS("Deleting section", "Брисање рубрика");
 regGS("The section $1 has been deleted.", "Рубрика $1 је обрисана");
 regGS("Configure section", "Подеси рубрику");
-regGS("Updating section name", "Мењање имена рубрике");
 regGS("The section could not be changed.", "Рубрика не може бити измењена");
 regGS("Duplicate section", "Дуплирај рубрику");
 regGS("The destination issue is the same as the source issue.", "Циљно издање је исто као матично.");
@@ -46,5 +47,4 @@ regGS("Short Name", "Скраћено име");
 regGS("Destination section number", "Број циљне рубрике");
 regGS("The section could not be added.", "Рубрика не може бити додата");
 regGS("Add new section", "Додај нову рубрику");
-regGS("The section $1 could not be deleted.", "Рубрика $1 не може бити обрисана");
 ?>

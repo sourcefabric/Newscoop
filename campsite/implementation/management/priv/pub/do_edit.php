@@ -57,13 +57,15 @@ if ($correct) {
 					 'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
 					 'comments_public_moderated' => $f_comments_public_moderated);
 	$updated = $publicationObj->update($columns);
+	$gotoPage = "/$ADMIN/pub/edit.php?Pub=$f_publication_id";
 	if ($updated) {
-		header("Location: /$ADMIN/pub/edit.php?Pub=$f_publication_id");
-		exit;
+		camp_html_add_msg(getGS("Publication updated"), "ok");
 	} else {
-		$errorMsgs[] = getGS('The publication information could not be updated.')
-					  .' '.getGS('Please check if another publication with the same name or the same site name does not already exist.');
+		$errorMsg = getGS('The publication information could not be updated.')
+				  .' '.getGS('Please check if another publication with the same name or the same site name does not already exist.');
+		camp_html_add_msg($errorMsg);
 	}
+	camp_html_goto_page($gotoPage);
 }
 
 echo camp_html_content_top(getGS("Changing publication information"), array("Pub" => $publicationObj));

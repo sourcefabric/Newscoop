@@ -8,7 +8,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Attachment.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 if (!$g_user->hasPermission('ChangeFile')) {
 	camp_html_display_error(getGS('You do not have the right to change files.' ), null, true);

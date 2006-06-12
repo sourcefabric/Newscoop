@@ -1,4 +1,6 @@
 <?php
+regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "");
+regGS("Section updated", "");
 regGS("There are $1 subscriptions which will be affected.", "");
 regGS("There are $1 articles in this section.", "");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "");
@@ -18,7 +20,6 @@ regGS("Are you sure you want to delete the section $1?", "¿Esta seguro de quere
 regGS("Deleting section", "Borrando sección");
 regGS("The section $1 has been deleted.", "La sección $1 ha sido borrada");
 regGS("Configure section", "Configure sección");
-regGS("Updating section name", "Actualizando nombre de secciones");
 regGS("The section could not be changed.", "La sección no pudo ser cambiada");
 regGS("Duplicate section", "Seccion Duplicada");
 regGS("The destination issue is the same as the source issue.", "La edición destino es la misma que la edición fuente.");
@@ -46,5 +47,4 @@ regGS("Change section name", "Cambiar nombre de sección");
 regGS("Destination section number", "Numero de seccion destino");
 regGS("The section could not be added.", "La sección no pudo ser agregada");
 regGS("Add new section", "Agregar nueva sección");
-regGS("The section $1 could not be deleted.", "La sección $1 no pudo ser borrada");
 ?>

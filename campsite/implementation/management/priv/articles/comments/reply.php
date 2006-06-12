@@ -1,5 +1,4 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');

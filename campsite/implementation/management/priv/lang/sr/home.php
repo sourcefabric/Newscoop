@@ -7,7 +7,6 @@ regGS("Campsite has upgraded its security measures.  In order to upgrade your ac
 regGS("CAPTCHA code is not valid.  Please try again.", "");
 regGS("There are no pending articles.", "Нема текстова на чекању.");
 regGS("Pending Articles", "Текстови на чекању");
-regGS("System Preferences", "Системске поставке");
 regGS("You haven't written any articles yet.", "Нема ваших текстова.");
 regGS("There are no pending items to be published.", "Нема ставки за објављивање.");
 regGS("There are currently no submitted articles.", "Тренутно нема предатих текстова.");

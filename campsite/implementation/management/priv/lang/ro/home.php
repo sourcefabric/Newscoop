@@ -7,7 +7,6 @@ regGS("Campsite has upgraded its security measures.  In order to upgrade your ac
 regGS("CAPTCHA code is not valid.  Please try again.", "");
 regGS("There are no pending articles.", "Nu există articole în aşteptare.");
 regGS("Pending Articles", "Articole în aşteptare");
-regGS("System Preferences", "Caracteristicile sistemului");
 regGS("You haven't written any articles yet.", "Nu ai scris nici un articol deocamdată.");
 regGS("There are no pending items to be published.", "Nu există elemente în aşteptare ce urmează a fi publicate.");
 regGS("There are currently no submitted articles.", "Nu există articole trimise spre publicare.");

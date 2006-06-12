@@ -27,7 +27,7 @@ if (!$ipAccess->delete()) {
 	exit;
 }
 
-$resMsg = getGS("The IP address group $1 has been deleted.", "$startIPstring:$addresses");
-header("Location: /$ADMIN/users/edit.php?uType=Subscribers&User=$userId&res=OK&resMsg=" . urlencode($resMsg));
+camp_html_add_msg(getGS("The IP address group $1 has been deleted.", "$startIPstring:$addresses"), "ok");
+camp_html_goto_page("/$ADMIN/users/edit.php?uType=Subscribers&User=$userId");
 
 ?>

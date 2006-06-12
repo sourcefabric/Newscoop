@@ -263,4 +263,7 @@ regGS("Article Comments", "");
 regGS("Are you sure you want to deactivate the subscription?", "هل أنت متأكد من إيقاف الإشتراك؟");
 regGS("Are you sure you want to activate the subscription?", "هل أنت متأكد من تفعيل الإشتراك؟");
 regGS("Other", "");
+regGS("No events.", "");
+regGS("Default templates", "");
+regGS("System Preferences", "");
 ?>

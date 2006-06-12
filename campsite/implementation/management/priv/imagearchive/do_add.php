@@ -4,7 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 // Check input
 $f_image_description = Input::Get('f_image_description');

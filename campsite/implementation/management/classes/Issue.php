@@ -317,6 +317,19 @@ class Issue extends DatabaseObject {
 
 
 	/**
+	 * Set the default template ID used for articles in this issue.
+	 *
+	 * @param int $p_value
+	 */
+	function setArticleTemplateId($p_value)
+	{
+		if (is_numeric($p_value)) {
+			return $this->setProperty('ArticleTplId', $p_value);
+		}
+	} // fn setArticleTemplateId
+
+
+	/**
 	 * Get the default template ID used for sections in this issue.
 	 * @return int
 	 */
@@ -327,6 +340,19 @@ class Issue extends DatabaseObject {
 
 
 	/**
+	 * Set the default template ID used for sections in this issue.
+	 *
+	 * @param int $p_value
+	 */
+	function setSectionTemplateId($p_value)
+	{
+		if (is_numeric($p_value)) {
+			return $this->setProperty('SectionTplId', $p_value);
+		}
+	} // fn setSectionTemplateId
+
+
+	/**
 	 * Get the template ID used for this issue.
 	 * @return int
 	 */
@@ -334,6 +360,19 @@ class Issue extends DatabaseObject {
 	{
 		return $this->m_data['IssueTplId'];
 	} // fn getIssueTemplateId
+
+
+	/**
+	 * Set the template ID used for this issue.
+	 *
+	 * @param int $p_value
+	 */
+	function setIssueTemplateId($p_value)
+	{
+		if (is_numeric($p_value)) {
+			return $this->setProperty('IssueTplId', $p_value);
+		}
+	} // fn setIssueTemplateId
 
 
 	/**
@@ -401,10 +440,29 @@ class Issue extends DatabaseObject {
 	} // fn setWorkflowStatus
 
 
+	/**
+	 * Get publication date in the form YYYY-MM-DD HH:MM:SS
+	 *
+	 * @return string
+	 */
 	function getPublicationDate()
 	{
 		return $this->m_data['PublicationDate'];
 	} // fn getPublicationDate
+
+
+	/**
+	 * Set the publication date.  Given value should be in the form
+	 * YYYY-MM-DD HH:MM:SS.
+	 *
+	 * @param string $p_value
+	 */
+	function setPublicationDate($p_value)
+	{
+		if (is_string($p_value)) {
+			return $this->setProperty('PublicationDate', $p_value);
+		}
+	} // fn setPublicationDate
 
 
 	/**
@@ -452,6 +510,9 @@ class Issue extends DatabaseObject {
 	 * @param int $p_issueId
 	 *		(Optional) Only return issues with this Issue ID.
 	 *
+	 * @param string $p_urlName
+	 * 		(Optional) Only return issues that match this URL Name.
+	 *
 	 * @param int $p_preferredLanguage
 	 *		(Optional) List this language before others.  This will override any 'ORDER BY' sql
 	 *		options you have.
@@ -462,7 +523,8 @@ class Issue extends DatabaseObject {
 	 */
 	function GetIssues($p_publicationId = null,
 	                   $p_languageId = null,
-	                   $p_issueId = null,
+	                   $p_issueNumber = null,
+	                   $p_urlName = null,
 	                   $p_preferredLanguage = null,
 	                   $p_sqlOptions = null)
 	{
@@ -485,8 +547,8 @@ class Issue extends DatabaseObject {
 		if (!is_null($p_languageId)) {
 			$whereClause[] = "Issues.IdLanguage=$p_languageId";
 		}
-		if (!is_null($p_issueId)) {
-			$whereClause[] = "Issues.Number=$p_issueId";
+		if (!is_null($p_issueNumber)) {
+			$whereClause[] = "Issues.Number=$p_issueNumber";
 		}
 		if (count($whereClause) > 0) {
 			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
@@ -506,6 +568,7 @@ class Issue extends DatabaseObject {
 
 		return $issues;
 	} // fn GetIssues
+
 
 	/**
 	 * Return the total number of issues in the database.

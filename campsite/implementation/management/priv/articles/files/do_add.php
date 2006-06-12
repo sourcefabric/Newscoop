@@ -5,7 +5,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Attachment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAttachment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Translation.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 if (!$g_user->hasPermission('AddFile')) {
 	camp_html_display_error(getGS('You do not have the right to add files.'), null, true);

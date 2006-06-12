@@ -3,7 +3,6 @@ camp_load_translation_strings("user_subscriptions");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Subscription.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 
 if (!$g_user->hasPermission('ManageSubscriptions')) {

@@ -5,7 +5,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/TimeUnit.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/parser_utils.php");
 
 if (!$g_user->hasPermission('ManageLanguages')) {

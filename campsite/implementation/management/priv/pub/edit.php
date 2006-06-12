@@ -27,6 +27,8 @@ if (!$pubTimeUnit->exists()) {
 
 echo camp_html_content_top(getGS("Configure publication"), array("Pub" => $publicationObj));
 ?>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
@@ -54,6 +56,7 @@ if ($g_user->hasPermission("DeletePub")) {
 </TR>
 </TABLE>
 
+<?php camp_html_display_msgs(); ?>
 
 <P>
 <FORM METHOD="POST" ACTION="do_edit.php">

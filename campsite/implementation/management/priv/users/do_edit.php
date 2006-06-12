@@ -34,15 +34,13 @@ if ($setPassword) {
 		$oldPassword = Input::Get('oldPassword');
 		if (!$editUser->isValidPassword($oldPassword)
 				&& !$editUser->isValidOldPassword($oldPassword)) {
-			$resMsg = getGS('The password you typed is incorrect.');
-			header("Location: $backLink&res=ERROR&resMsg=" . urlencode($resMsg));
-			exit;
+			camp_html_add_msg(getGS('The password you typed is incorrect.'));
+			camp_html_goto_page($backLink);
 		}
 	}
 	if (strlen($password) < 6 || $password != $passwordConf) {
-		$resMsg = getGS('The password must be at least 6 characters long and both passwords should match.');
-		header("Location: $backLink&res=ERROR&resMsg=" . urlencode($resMsg));
-		exit;
+		camp_html_add_msg(getGS('The password must be at least 6 characters long and both passwords should match.'));
+		camp_html_goto_page($backLink);
 	}
 
 	$editUser->setPassword($password);
@@ -95,13 +93,13 @@ if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 	}
 }
 
-$resParams = "res=OK&resMsg=" . getGS("User '$1' information was changed successfully.",
-	$editUser->getUserName());
+camp_html_add_msg(getGS("User '$1' information was changed successfully.",
+	$editUser->getUserName()), "ok");
 $editUser->fetch();
 if ($editUser->getUserName() == $g_user->getUserName() && !$editUser->hasPermission('ManageUsers')) {
 	header("Location: /$ADMIN/");
 	exit(0);
 }
-header("Location: /$ADMIN/users/edit.php?$typeParam&User=" . $editUser->getUserId() . "&$resParams");
+camp_html_goto_page("/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getUserId());
 
 ?>

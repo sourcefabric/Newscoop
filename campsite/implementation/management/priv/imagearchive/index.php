@@ -4,7 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 camp_load_translation_strings("api");
 
 // Initialize input variables ///////////////////////////////////////////////////

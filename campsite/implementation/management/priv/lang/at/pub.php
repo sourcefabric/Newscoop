@@ -1,4 +1,5 @@
 <?php
+regGS("Publication updated", "");
 regGS("Subscriber comments moderated?", "");
 regGS("Public comments moderated?", "");
 regGS("Comments enabled?", "");

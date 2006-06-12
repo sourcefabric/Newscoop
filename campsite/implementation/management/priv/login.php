@@ -1,7 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 include($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/LoginAttempts.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 

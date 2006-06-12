@@ -254,4 +254,7 @@ regGS("Article Comments", "");
 regGS("Are you sure you want to deactivate the subscription?", "구독을 비활성화합니까?");
 regGS("Are you sure you want to activate the subscription?", "구독을 활성화 합니까?");
 regGS("Other", "");
+regGS("No events.", "");
+regGS("Default templates", "");
+regGS("System Preferences", "");
 ?>

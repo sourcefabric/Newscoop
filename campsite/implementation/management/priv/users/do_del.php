@@ -21,7 +21,7 @@ $typeParam = 'uType=' . urlencode($uType);
 $uName = $editUser->getUserName();
 $editUser->delete();
 
-$resMsg = getGS('User account $1 was deleted successfully.', $uName);
-header("Location: /$ADMIN/users/?$typeParam&res=OK&resMsg=" . urlencode($resMsg));
+camp_html_add_msg(getGS('User account $1 was deleted successfully.', $uName), "ok");
+camp_html_goto_page("/$ADMIN/users/?$typeParam");
 
 ?>

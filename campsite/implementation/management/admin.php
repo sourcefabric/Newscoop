@@ -3,6 +3,7 @@ session_start();
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 global $ADMIN_DIR;
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 camp_set_error_handler("camp_report_bug");
 
@@ -112,6 +113,8 @@ if (($extension == '.php') || ($extension == '')) {
 	if ($needs_menu) {
 		echo "</td></tr>\n</table>\n</html>\n";
 	}
+
+	camp_html_clear_msgs();
 } else {
     readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
 }

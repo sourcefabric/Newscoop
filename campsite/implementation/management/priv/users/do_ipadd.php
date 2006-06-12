@@ -52,7 +52,7 @@ if (!$ipAccess->create($g_userId, $ipAddressArray, $g_cAddresses)) {
 	exit;
 }
 
-$g_resMsg = getGS("The IP Group $1 has been created.", $ipAccess->getStartIPstring().":$g_cAddresses");
-header("Location: $g_backLink&res=OK&resMsg=" . urlencode($g_resMsg));
+camp_html_add_msg(getGS("The IP Group $1 has been created.", $ipAccess->getStartIPstring().":$g_cAddresses"), "ok");
+camp_html_goto_page($g_backLink);
 
 ?>
