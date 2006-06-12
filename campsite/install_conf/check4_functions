@@ -1036,6 +1036,22 @@ return 0
 }
 # END OF check4_php_myslq
 
+# FUNCTION: check4_php_gd
+# Description: check if php gd module was installed
+# Parameters: none
+# Variables set:
+#	output - error message (if any)
+check4_php_gd()
+{
+is_checked php_gd && return 0
+check4_php_cli || return 1
+"$PHP" -q "$INSTALL_CONF/php_gd_exists.php"
+[ $? -ne 0 ] && output="PHP GD graphics library was not installed. Please install it." && return 1
+set_checked php_gd
+return 0
+}
+# END OF check4_php_gd
+
 # FUNCTION: check4_convert
 # Description: check if ImageMagic package was installed
 # Parameters: none
