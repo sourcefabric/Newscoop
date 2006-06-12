@@ -38,7 +38,7 @@ function exec_command($cmd, $err_msg = "", $print_output = true)
 		if (!$print_output)
 			$output = array();
 		if ($err_msg != "") {
-			$my_output[] = $msg;
+			$my_output[] = $err_msg;
 			$output = array_merge($my_output, $output);
 		}
 		exit_with_error($output);
