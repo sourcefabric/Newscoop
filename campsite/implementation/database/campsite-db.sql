@@ -1,8 +1,8 @@
--- MySQL dump 9.10
+-- MySQL dump 10.9
 --
 -- Host: localhost    Database: campsite
 -- ------------------------------------------------------
--- Server version	4.0.18
+-- Server version	4.1.15-Debian_1ubuntu5-log
 
 --
 -- Table structure for table `Aliases`
@@ -37,6 +37,26 @@ CREATE TABLE `ArticleAttachments` (
 
 --
 -- Dumping data for table `ArticleAttachments`
+--
+
+
+--
+-- Table structure for table `ArticleComments`
+--
+
+DROP TABLE IF EXISTS `ArticleComments`;
+CREATE TABLE `ArticleComments` (
+  `fk_article_number` int(10) unsigned NOT NULL default '0',
+  `fk_language_id` int(10) unsigned NOT NULL default '0',
+  `fk_comment_thread_id` int(10) unsigned NOT NULL default '0',
+  `is_first` tinyint(1) NOT NULL default '0',
+  KEY `fk_comment_thread_id` (`fk_comment_thread_id`),
+  KEY `article_index` (`fk_article_number`,`fk_language_id`),
+  KEY `first_message_index` (`fk_article_number`,`fk_language_id`,`is_first`)
+) TYPE=MyISAM;
+
+--
+-- Dumping data for table `ArticleComments`
 --
 
 
@@ -120,6 +140,28 @@ CREATE TABLE `ArticleTopics` (
 
 
 --
+-- Table structure for table `ArticleTypeMetadata`
+--
+
+DROP TABLE IF EXISTS `ArticleTypeMetadata`;
+CREATE TABLE `ArticleTypeMetadata` (
+  `type_name` varchar(250) NOT NULL default '',
+  `field_name` varchar(250) NOT NULL default 'NULL',
+  `field_weight` int(11) default NULL,
+  `is_hidden` tinyint(1) NOT NULL default '0',
+  `comments_enabled` tinyint(1) NOT NULL default '0',
+  `fk_phrase_id` int(10) unsigned default NULL,
+  `field_type` varchar(255) default NULL,
+  `field_type_param` varchar(255) default NULL,
+  PRIMARY KEY  (`type_name`,`field_name`)
+) TYPE=MyISAM;
+
+--
+-- Dumping data for table `ArticleTypeMetadata`
+--
+
+
+--
 -- Table structure for table `Articles`
 --
 
@@ -145,7 +187,7 @@ CREATE TABLE `Articles` (
   `LockTime` datetime NOT NULL default '0000-00-00 00:00:00',
   `ShortName` varchar(32) NOT NULL default '',
   `ArticleOrder` int(10) unsigned NOT NULL default '0',
-  `comments_enabled` tinyint(1) NOT NULL,
+  `comments_enabled` tinyint(1) NOT NULL default '0',
   `comments_locked` tinyint(1) NOT NULL default '0',
   `time_updated` timestamp NOT NULL,
   PRIMARY KEY  (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
@@ -178,8 +220,8 @@ CREATE TABLE `Attachments` (
   `size_in_bytes` bigint(20) unsigned default NULL,
   `fk_description_id` int(11) default NULL,
   `fk_user_id` int(10) unsigned default NULL,
-  `last_modified` timestamp(14) NOT NULL,
-  `time_created` timestamp(14) NOT NULL default '00000000000000',
+  `last_modified` timestamp NOT NULL,
+  `time_created` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM;
 
@@ -277,7 +319,7 @@ CREATE TABLE `Errors` (
 -- Dumping data for table `Errors`
 --
 
-INSERT INTO `Errors` (`Number`, `IdLanguage`, `Message`) VALUES (4000,1,'Internal error.'),(4001,1,'Username not specified.'),(4002,1,'Invalid username.'),(4003,1,'Password not specified.'),(4004,1,'Invalid password.'),(2000,1,'Internal error'),(2001,1,'Username is not specified. Please fill out login name field.'),(2002,1,'You are not a reader.'),(2003,1,'Publication not specified.'),(2004,1,'There are other subscriptions not payed.'),(2005,1,'Time unit not specified.'),(3000,1,'Internal error.'),(3001,1,'Username already exists.'),(3002,1,'Name is not specified. Please fill out name field.'),(3003,1,'Username is not specified. Please fill out login name field.'),(3004,1,'Password is not specified. Please fill out password field.'),(3005,1,'EMail is not specified. Please fill out EMail field.'),(3006,1,'EMail address already exists. Please try to login with your old account.'),(3007,1,'Invalid user identifier'),(3008,1,'No country specified. Please select a country.'),(3009,1,'Password (again) is not specified. Please fill out password (again) field.'),(3010,1,'Passwords do not match. Please fill out the same password to both password fields.'),(3011,1,'Password is too simple. Please choose a better password (at least 6 characters).');
+INSERT INTO `Errors` (`Number`, `IdLanguage`, `Message`) VALUES (4000,1,'Internal error.'),(4001,1,'Username not specified.'),(4002,1,'Invalid username.'),(4003,1,'Password not specified.'),(4004,1,'Invalid password.'),(2000,1,'Internal error'),(2001,1,'Username is not specified. Please fill out login name field.'),(2002,1,'You are not a reader.'),(2003,1,'Publication not specified.'),(2004,1,'There are other subscriptions not payed.'),(2005,1,'Time unit not specified.'),(3000,1,'Internal error.'),(3001,1,'Username already exists.'),(3002,1,'Name is not specified. Please fill out name field.'),(3003,1,'Username is not specified. Please fill out login name field.'),(3004,1,'Password is not specified. Please fill out password field.'),(3005,1,'EMail is not specified. Please fill out EMail field.'),(3006,1,'EMail address already exists. Please try to login with your old account.'),(3007,1,'Invalid user identifier'),(3008,1,'No country specified. Please select a country.'),(3009,1,'Password (again) is not specified. Please fill out password (again) field.'),(3010,1,'Passwords do not match. Please fill out the same password to both password fields.'),(3011,1,'Password is too simple. Please choose a better password (at least 6 characters).'),(5006,1,'The comment was rejected by the spam filters.'),(5005,1,'You are banned from submitting comments.'),(5004,1,'Comments are not enabled for this publication/article.'),(5003,1,'The article was not selected. You must view an article in order to post comments.'),(5002,1,'The comment content was empty.'),(5001,1,'You must log in to submit a comment.'),(5000,1,'There was an internal error when submitting the comment.');
 
 --
 -- Table structure for table `Events`
@@ -300,6 +342,22 @@ CREATE TABLE `Events` (
 INSERT INTO `Events` (`Id`, `Name`, `Notify`, `IdLanguage`) VALUES (1,'Add Publication','N',1),(2,'Delete Publication','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(112,'Delete templates','N',1),(111,'Add templates','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(3,'Change publication information','N',1),(36,'Change article template','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1),(154,'Duplicate section','N',1),(155,'Duplicate article','N',1);
 
 --
+-- Table structure for table `FailedLoginAttempts`
+--
+
+DROP TABLE IF EXISTS `FailedLoginAttempts`;
+CREATE TABLE `FailedLoginAttempts` (
+  `ip_address` varchar(40) NOT NULL default '',
+  `time_of_attempt` bigint(20) NOT NULL default '0',
+  KEY `ip_address` (`ip_address`)
+) TYPE=MyISAM;
+
+--
+-- Dumping data for table `FailedLoginAttempts`
+--
+
+
+--
 -- Table structure for table `Images`
 --
 
@@ -317,8 +375,8 @@ CREATE TABLE `Images` (
   `ThumbnailFileName` varchar(50) NOT NULL default '',
   `ImageFileName` varchar(50) NOT NULL default '',
   `UploadedByUser` int(11) default NULL,
-  `LastModified` timestamp(14) NOT NULL,
-  `TimeCreated` timestamp(14) NOT NULL default '00000000000000',
+  `LastModified` timestamp NOT NULL,
+  `TimeCreated` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`Id`)
 ) TYPE=MyISAM;
 
@@ -449,21 +507,7 @@ CREATE TABLE `Languages` (
 -- Dumping data for table `Languages`
 --
 
-INSERT INTO `Languages` VALUES (1,'English','ISO_8859-1','English','en','January','February','March','April','May','June','July','August','September','October','November','December','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-INSERT INTO `Languages` VALUES (5,'German','ISO_8859-1','Deutsch','de','Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember','Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag');
-INSERT INTO `Languages` VALUES (9,'Portuguese','ISO_8859-1','Português','pt','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro','Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado');
-INSERT INTO `Languages` VALUES (12,'French','ISO_8859-1','Français','fr','Janvier','Février','Mars','Avril','Peut','Juin','Juli','Août','Septembre','Octobre','Novembre','Décembre','Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi');
-INSERT INTO `Languages` VALUES (13,'Spanish','ISO_8859-1','Español','es','Enero','Febrero','Marcha','Abril','Puede','Junio','Juli','Agosto','Septiembre','Octubre','Noviembre','Diciembre','Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado');
-INSERT INTO `Languages` VALUES (2,'Romanian','ISO_8859-2','Română','ro','Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie','Duminică','Luni','Marţi','Miercuri','Joi','Vineri','Sâmbătă');
-INSERT INTO `Languages` VALUES (7,'Croatian','ISO_8859-2','Hrvatski','hr','Siječanj','Veljača','Ožujak','Travanj','Svibanj','Lipanj','Srpanj','Kolovoz','Rujan','Listopad','Studeni','Prosinac','Nedjelja','Ponedjeljak','Utorak','Srijeda','Četvrtak','Petak','Subota');
-INSERT INTO `Languages` VALUES (8,'Czech','ISO_8859-2','Český','cz','Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec','Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota');
-INSERT INTO `Languages` VALUES (11,'Serbo-Croatian','ISO_8859-2','Srpskohrvatski','sh','januar','februar','mart','april','maj','jun','jul','avgust','septembar','oktobar','novembar','decembar','nedelja','ponedeljak','utorak','sreda','četvrtak','petak','subota');
-INSERT INTO `Languages` VALUES (10,'Serbian (Cyrillic)','ISO_8859-5','Српски (Ћирилица)','sr','јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар','недеља','понедељак','уторак','среда','четвртак','петак','субота');
-INSERT INTO `Languages` VALUES (15,'Russian','ISO_8859-5','Русский','ru','январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь','воскресенье','понедельник','вторник','среда','четверг','пятница','суббота');
-INSERT INTO `Languages` VALUES (18,'Swedish','','Svenska','sv','januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december','söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag');
-INSERT INTO `Languages` VALUES (16,'Chinese','UTF-8','中文','zh','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期','星期','星期','星期','星期','星期','星期');
-INSERT INTO `Languages` VALUES (17,'Arabic','UTF-8','عربي','ar','كانون الثاني','شباط','آذار','نيسان','آيار','حزيران','تموز','آب','أيلول','تشرين أول','تشرين الثاني','كانون أول','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت');
-INSERT INTO `Languages` VALUES (19,'Korean','','한국어','kr','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월','일요일','월요일','화요일','수요일','목요일','금요일','토요일');
+INSERT INTO `Languages` (`Id`, `Name`, `CodePage`, `OrigName`, `Code`, `Month1`, `Month2`, `Month3`, `Month4`, `Month5`, `Month6`, `Month7`, `Month8`, `Month9`, `Month10`, `Month11`, `Month12`, `WDay1`, `WDay2`, `WDay3`, `WDay4`, `WDay5`, `WDay6`, `WDay7`) VALUES (1,'English','ISO_8859-1','English','en','January','February','March','April','May','June','July','August','September','October','November','December','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'),(5,'German','ISO_8859-1','Deutsch','de','Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember','Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'),(9,'Portuguese','ISO_8859-1','Português','pt','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro','Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'),(12,'French','ISO_8859-1','Français','fr','Janvier','Février','Mars','Avril','Peut','Juin','Juli','Août','Septembre','Octobre','Novembre','Décembre','Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'),(13,'Spanish','ISO_8859-1','Español','es','Enero','Febrero','Marcha','Abril','Puede','Junio','Juli','Agosto','Septiembre','Octubre','Noviembre','Diciembre','Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'),(2,'Romanian','ISO_8859-2','Română','ro','Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie','Duminică','Luni','Marţi','Miercuri','Joi','Vineri','Sâmbătă'),(7,'Croatian','ISO_8859-2','Hrvatski','hr','Siječanj','Veljača','Ožujak','Travanj','Svibanj','Lipanj','Srpanj','Kolovoz','Rujan','Listopad','Studeni','Prosinac','Nedjelja','Ponedjeljak','Utorak','Srijeda','Četvrtak','Petak','Subota'),(8,'Czech','ISO_8859-2','Český','cz','Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec','Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota'),(11,'Serbo-Croatian','ISO_8859-2','Srpskohrvatski','sh','januar','februar','mart','april','maj','jun','jul','avgust','septembar','oktobar','novembar','decembar','nedelja','ponedeljak','utorak','sreda','četvrtak','petak','subota'),(10,'Serbian (Cyrillic)','ISO_8859-5','Српски (Ћирилица)','sr','јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар','недеља','понедељак','уторак','среда','четвртак','петак','субота'),(15,'Russian','ISO_8859-5','Русский','ru','январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь','воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'),(18,'Swedish','','Svenska','sv','januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december','söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag'),(16,'Chinese','UTF-8','中文','zh','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期','星期','星期','星期','星期','星期','星期'),(17,'Arabic','UTF-8','عربي','ar','كانون الثاني','شباط','آذار','نيسان','آيار','حزيران','تموز','آب','أيلول','تشرين أول','تشرين الثاني','كانون أول','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'),(19,'Korean','','한국어','kr','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월','일요일','월요일','화요일','수요일','목요일','금요일','토요일');
 
 --
 -- Table structure for table `Log`
@@ -758,7 +802,7 @@ CREATE TABLE `UserConfig` (
   `fk_user_id` int(10) unsigned NOT NULL default '0',
   `varname` varchar(100) NOT NULL default '',
   `value` varchar(100) default NULL,
-  `last_modified` timestamp(14) NOT NULL,
+  `last_modified` timestamp NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_var_name_index` (`fk_user_id`,`varname`),
   KEY `fk_user_id` (`fk_user_id`)
@@ -768,73 +812,7 @@ CREATE TABLE `UserConfig` (
 -- Dumping data for table `UserConfig`
 --
 
-INSERT INTO `UserConfig` VALUES (1,1,'ManagePub','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (2,1,'DeletePub','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (3,1,'ManageIssue','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (4,1,'DeleteIssue','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (5,1,'ManageSection','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (6,1,'DeleteSection','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (7,1,'AddArticle','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (8,1,'ChangeArticle','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (9,1,'DeleteArticle','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (10,1,'AddImage','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (11,1,'AddFile','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (12,1,'ChangeImage','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (13,1,'ChangeFile','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (14,1,'DeleteImage','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (15,1,'DeleteFile','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (16,1,'ManageTempl','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (17,1,'DeleteTempl','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (18,1,'ManageUsers','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (19,1,'ManageSubscriptions','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (20,1,'DeleteUsers','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (21,1,'ManageUserTypes','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (22,1,'ManageArticleTypes','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (23,1,'DeleteArticleTypes','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (24,1,'ManageLanguages','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (25,1,'DeleteLanguages','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (26,1,'ManageCountries','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (27,1,'DeleteCountries','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (28,1,'MailNotify','N',20051213155700);
-INSERT INTO `UserConfig` VALUES (29,1,'ViewLogs','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (30,1,'ManageLocalizer','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (31,1,'ManageIndexer','N',20060306150855);
-INSERT INTO `UserConfig` VALUES (32,1,'Publish','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (33,1,'ManageTopics','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (34,1,'EditorImage','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (35,1,'EditorTextAlignment','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (36,1,'EditorFontColor','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (37,1,'EditorFontSize','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (38,1,'EditorFontFace','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (39,1,'EditorTable','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (40,1,'EditorSuperscript','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (41,1,'EditorSubscript','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (42,1,'EditorStrikethrough','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (43,1,'EditorIndent','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (44,1,'EditorListBullet','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (45,1,'EditorListNumber','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (46,1,'EditorHorizontalRule','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (47,1,'EditorSourceView','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (48,1,'EditorEnlarge','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (49,1,'EditorTextDirection','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (50,1,'EditorLink','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (51,1,'EditorSubhead','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (52,1,'EditorBold','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (53,1,'EditorItalic','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (54,1,'EditorUnderline','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (55,1,'EditorUndoRedo','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (56,1,'EditorCopyCutPaste','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (57,1,'ManageReaders','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (58,1,'InitializeTemplateEngine','Y',20051213155700);
-INSERT INTO `UserConfig` VALUES (59,0,'KeywordSeparator',',',20060306143350);
-INSERT INTO `UserConfig` VALUES (60,1,'MoveArticle','Y',20060306143350);
-INSERT INTO `UserConfig` VALUES (61,1,'TranslateArticle','Y',20060306143350);
-INSERT INTO `UserConfig` VALUES (62,1,'AttachImageToArticle','Y',20060306143350);
-INSERT INTO `UserConfig` VALUES (63,1,'ChangeSystemPreferences','Y',20060306143350);
-INSERT INTO `UserConfig` VALUES (64,1,'AttachTopicToArticle','Y',20060306143350);
-INSERT INTO `UserConfig` VALUES (65,1,'EditorFindReplace','Y',20060306143350);
-INSERT INTO `UserConfig` VALUES (66,1,'EditorCharacterMap','Y',20060306143350);
-INSERT INTO `UserConfig` VALUES (67,0,'LoginFailedAttemptsNum','3','20060522012934');
+INSERT INTO `UserConfig` (`id`, `fk_user_id`, `varname`, `value`, `last_modified`) VALUES (1,1,'ManagePub','Y','2005-12-13 15:57:00'),(2,1,'DeletePub','Y','2005-12-13 15:57:00'),(3,1,'ManageIssue','Y','2005-12-13 15:57:00'),(4,1,'DeleteIssue','Y','2005-12-13 15:57:00'),(5,1,'ManageSection','Y','2005-12-13 15:57:00'),(6,1,'DeleteSection','Y','2005-12-13 15:57:00'),(7,1,'AddArticle','Y','2005-12-13 15:57:00'),(8,1,'ChangeArticle','Y','2005-12-13 15:57:00'),(9,1,'DeleteArticle','Y','2005-12-13 15:57:00'),(10,1,'AddImage','Y','2005-12-13 15:57:00'),(11,1,'AddFile','Y','2005-12-13 15:57:00'),(12,1,'ChangeImage','Y','2005-12-13 15:57:00'),(13,1,'ChangeFile','Y','2005-12-13 15:57:00'),(14,1,'DeleteImage','Y','2005-12-13 15:57:00'),(15,1,'DeleteFile','Y','2005-12-13 15:57:00'),(16,1,'ManageTempl','Y','2005-12-13 15:57:00'),(17,1,'DeleteTempl','Y','2005-12-13 15:57:00'),(18,1,'ManageUsers','Y','2005-12-13 15:57:00'),(19,1,'ManageSubscriptions','Y','2005-12-13 15:57:00'),(20,1,'DeleteUsers','Y','2005-12-13 15:57:00'),(21,1,'ManageUserTypes','Y','2005-12-13 15:57:00'),(22,1,'ManageArticleTypes','Y','2005-12-13 15:57:00'),(23,1,'DeleteArticleTypes','Y','2005-12-13 15:57:00'),(24,1,'ManageLanguages','Y','2005-12-13 15:57:00'),(25,1,'DeleteLanguages','Y','2005-12-13 15:57:00'),(26,1,'ManageCountries','Y','2005-12-13 15:57:00'),(27,1,'DeleteCountries','Y','2005-12-13 15:57:00'),(28,1,'MailNotify','N','2005-12-13 15:57:00'),(29,1,'ViewLogs','Y','2005-12-13 15:57:00'),(30,1,'ManageLocalizer','Y','2005-12-13 15:57:00'),(31,1,'ManageIndexer','N','2006-03-06 15:08:55'),(32,1,'Publish','Y','2005-12-13 15:57:00'),(33,1,'ManageTopics','Y','2005-12-13 15:57:00'),(34,1,'EditorImage','Y','2005-12-13 15:57:00'),(35,1,'EditorTextAlignment','Y','2005-12-13 15:57:00'),(36,1,'EditorFontColor','Y','2005-12-13 15:57:00'),(37,1,'EditorFontSize','Y','2005-12-13 15:57:00'),(38,1,'EditorFontFace','Y','2005-12-13 15:57:00'),(39,1,'EditorTable','Y','2005-12-13 15:57:00'),(40,1,'EditorSuperscript','Y','2005-12-13 15:57:00'),(41,1,'EditorSubscript','Y','2005-12-13 15:57:00'),(42,1,'EditorStrikethrough','Y','2005-12-13 15:57:00'),(43,1,'EditorIndent','Y','2005-12-13 15:57:00'),(44,1,'EditorListBullet','Y','2005-12-13 15:57:00'),(45,1,'EditorListNumber','Y','2005-12-13 15:57:00'),(46,1,'EditorHorizontalRule','Y','2005-12-13 15:57:00'),(47,1,'EditorSourceView','Y','2005-12-13 15:57:00'),(48,1,'EditorEnlarge','Y','2005-12-13 15:57:00'),(49,1,'EditorTextDirection','Y','2005-12-13 15:57:00'),(50,1,'EditorLink','Y','2005-12-13 15:57:00'),(51,1,'EditorSubhead','Y','2005-12-13 15:57:00'),(52,1,'EditorBold','Y','2005-12-13 15:57:00'),(53,1,'EditorItalic','Y','2005-12-13 15:57:00'),(54,1,'EditorUnderline','Y','2005-12-13 15:57:00'),(55,1,'EditorUndoRedo','Y','2005-12-13 15:57:00'),(56,1,'EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(57,1,'ManageReaders','Y','2005-12-13 15:57:00'),(58,1,'InitializeTemplateEngine','Y','2005-12-13 15:57:00'),(59,0,'KeywordSeparator',',','2006-03-06 14:33:50'),(60,1,'MoveArticle','Y','2006-03-06 14:33:50'),(61,1,'TranslateArticle','Y','2006-03-06 14:33:50'),(62,1,'AttachImageToArticle','Y','2006-03-06 14:33:50'),(63,1,'ChangeSystemPreferences','Y','2006-03-06 14:33:50'),(64,1,'AttachTopicToArticle','Y','2006-03-06 14:33:50'),(65,1,'EditorFindReplace','Y','2006-03-06 14:33:50'),(66,1,'EditorCharacterMap','Y','2006-03-06 14:33:50'),(67,0,'LoginFailedAttemptsNum','3','2006-06-12 17:01:34'),(68,1,'CommentModerate','Y','2006-06-12 17:01:34'),(69,1,'CommentEnable','Y','2006-06-12 17:01:34');
 
 --
 -- Table structure for table `UserTypes`
@@ -846,7 +824,7 @@ CREATE TABLE `UserTypes` (
   `user_type_name` varchar(140) NOT NULL default '',
   `varname` varchar(100) NOT NULL default '',
   `value` varchar(100) default NULL,
-  `last_modified` timestamp(14) NOT NULL,
+  `last_modified` timestamp NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_var_name_index` (`user_type_name`,`varname`),
   KEY `user_type_name` (`user_type_name`)
@@ -856,7 +834,7 @@ CREATE TABLE `UserTypes` (
 -- Dumping data for table `UserTypes`
 --
 
-INSERT INTO `UserTypes` (`id`, `user_type_name`, `varname`, `value`, `last_modified`) VALUES (1,'Administrator','ManagePub','Y',20051213155700),(2,'Administrator','DeletePub','Y',20051213155700),(3,'Administrator','ManageIssue','Y',20051213155700),(4,'Administrator','DeleteIssue','Y',20051213155700),(5,'Administrator','ManageSection','Y',20051213155700),(6,'Administrator','DeleteSection','Y',20051213155700),(7,'Administrator','AddArticle','Y',20051213155700),(8,'Administrator','ChangeArticle','Y',20051213155700),(9,'Administrator','DeleteArticle','Y',20051213155700),(10,'Administrator','AddImage','Y',20051213155700),(11,'Administrator','AddFile','Y',20051213155700),(12,'Administrator','ChangeImage','Y',20051213155700),(13,'Administrator','ChangeFile','Y',20051213155700),(14,'Administrator','DeleteImage','Y',20051213155700),(15,'Administrator','DeleteFile','Y',20051213155700),(16,'Administrator','ManageTempl','Y',20051213155700),(17,'Administrator','DeleteTempl','Y',20051213155700),(18,'Administrator','ManageUsers','Y',20051213155700),(19,'Administrator','ManageSubscriptions','Y',20051213155700),(20,'Administrator','DeleteUsers','Y',20051213155700),(21,'Administrator','ManageUserTypes','Y',20051213155700),(22,'Administrator','ManageArticleTypes','Y',20051213155700),(23,'Administrator','DeleteArticleTypes','Y',20051213155700),(24,'Administrator','ManageLanguages','Y',20051213155700),(25,'Administrator','DeleteLanguages','Y',20051213155700),(26,'Administrator','ManageCountries','Y',20051213155700),(27,'Administrator','DeleteCountries','Y',20051213155700),(28,'Administrator','MailNotify','N',20051213155700),(29,'Administrator','ViewLogs','Y',20051213155700),(30,'Administrator','ManageLocalizer','Y',20051213155700),(31,'Administrator','ManageIndexer','N',20060104002155),(32,'Administrator','Publish','Y',20051213155700),(33,'Administrator','ManageTopics','Y',20051213155700),(34,'Administrator','EditorImage','Y',20051213155700),(35,'Administrator','EditorTextAlignment','Y',20051213155700),(36,'Administrator','EditorFontColor','Y',20051213155700),(37,'Administrator','EditorFontSize','Y',20051213155700),(38,'Administrator','EditorFontFace','Y',20051213155700),(39,'Administrator','EditorTable','Y',20051213155700),(40,'Administrator','EditorSuperscript','Y',20051213155700),(41,'Administrator','EditorSubscript','Y',20051213155700),(42,'Administrator','EditorStrikethrough','Y',20051213155700),(43,'Administrator','EditorIndent','Y',20051213155700),(44,'Administrator','EditorListBullet','Y',20051213155700),(45,'Administrator','EditorListNumber','Y',20051213155700),(46,'Administrator','EditorHorizontalRule','Y',20051213155700),(47,'Administrator','EditorSourceView','Y',20051213155700),(48,'Administrator','EditorEnlarge','Y',20051213155700),(49,'Administrator','EditorTextDirection','Y',20051213155700),(50,'Administrator','EditorLink','Y',20051213155700),(51,'Administrator','EditorSubhead','Y',20051213155700),(52,'Administrator','EditorBold','Y',20051213155700),(53,'Administrator','EditorItalic','Y',20051213155700),(54,'Administrator','EditorUnderline','Y',20051213155700),(55,'Administrator','EditorUndoRedo','Y',20051213155700),(56,'Administrator','EditorCopyCutPaste','Y',20051213155700),(57,'Administrator','ManageReaders','Y',20051213155700),(58,'Administrator','InitializeTemplateEngine','Y',20060104002155),(59,'Editor','ManagePub','N',20051213155700),(60,'Editor','DeletePub','N',20051213155700),(61,'Editor','ManageIssue','N',20051213155700),(62,'Editor','DeleteIssue','N',20051213155700),(63,'Editor','ManageSection','N',20051213155700),(64,'Editor','DeleteSection','N',20051213155700),(65,'Editor','AddArticle','Y',20051213155700),(66,'Editor','ChangeArticle','Y',20051213155700),(67,'Editor','DeleteArticle','Y',20051213155700),(68,'Editor','AddImage','Y',20051213155700),(69,'Editor','AddFile','Y',20051213155700),(70,'Editor','ChangeImage','Y',20051213155700),(71,'Editor','ChangeFile','Y',20051213155700),(72,'Editor','DeleteImage','Y',20051213155700),(73,'Editor','DeleteFile','Y',20051213155700),(74,'Editor','ManageTempl','N',20051213155700),(75,'Editor','DeleteTempl','N',20051213155700),(76,'Editor','ManageUsers','N',20051213155700),(77,'Editor','ManageSubscriptions','N',20051213155700),(78,'Editor','DeleteUsers','N',20051213155700),(79,'Editor','ManageUserTypes','N',20051213155700),(80,'Editor','ManageArticleTypes','N',20051213155700),(81,'Editor','DeleteArticleTypes','N',20051213155700),(82,'Editor','ManageLanguages','N',20051213155700),(83,'Editor','DeleteLanguages','N',20051213155700),(84,'Editor','ManageCountries','N',20051213155700),(85,'Editor','DeleteCountries','N',20051213155700),(86,'Editor','MailNotify','Y',20051213155700),(87,'Editor','ViewLogs','N',20051213155700),(88,'Editor','ManageLocalizer','N',20051213155700),(89,'Editor','ManageIndexer','N',20051213155700),(90,'Editor','Publish','N',20051213155700),(91,'Editor','ManageTopics','N',20051213155700),(92,'Editor','EditorImage','Y',20051213155700),(93,'Editor','EditorTextAlignment','Y',20051213155700),(94,'Editor','EditorFontColor','N',20051213155700),(95,'Editor','EditorFontSize','N',20051213155700),(96,'Editor','EditorFontFace','N',20051213155700),(97,'Editor','EditorTable','Y',20051213155700),(98,'Editor','EditorSuperscript','N',20060306153426),(99,'Editor','EditorSubscript','N',20060306153426),(100,'Editor','EditorStrikethrough','N',20051213155700),(101,'Editor','EditorIndent','Y',20051213155700),(102,'Editor','EditorListBullet','Y',20051213155700),(103,'Editor','EditorListNumber','Y',20051213155700),(104,'Editor','EditorHorizontalRule','N',20051213155700),(105,'Editor','EditorSourceView','N',20051213155700),(106,'Editor','EditorEnlarge','Y',20051213155700),(107,'Editor','EditorTextDirection','Y',20051213155700),(108,'Editor','EditorLink','Y',20051213155700),(109,'Editor','EditorSubhead','Y',20051213155700),(110,'Editor','EditorBold','Y',20051213155700),(111,'Editor','EditorItalic','Y',20051213155700),(112,'Editor','EditorUnderline','Y',20051213155700),(113,'Editor','EditorUndoRedo','Y',20051213155700),(114,'Editor','EditorCopyCutPaste','Y',20051213155700),(115,'Editor','ManageReaders','N',20051213155700),(116,'Editor','InitializeTemplateEngine','N',20051213155700),(117,'Chief Editor','ManagePub','N',20051213155700),(118,'Chief Editor','DeletePub','N',20051213155700),(119,'Chief Editor','ManageIssue','Y',20051213155700),(120,'Chief Editor','DeleteIssue','Y',20051213155700),(121,'Chief Editor','ManageSection','Y',20051213155700),(122,'Chief Editor','DeleteSection','Y',20051213155700),(123,'Chief Editor','AddArticle','Y',20051213155700),(124,'Chief Editor','ChangeArticle','Y',20051213155700),(125,'Chief Editor','DeleteArticle','Y',20051213155700),(126,'Chief Editor','AddImage','Y',20051213155700),(127,'Chief Editor','AddFile','Y',20051213155700),(128,'Chief Editor','ChangeImage','Y',20051213155700),(129,'Chief Editor','ChangeFile','Y',20051213155700),(130,'Chief Editor','DeleteImage','Y',20051213155700),(131,'Chief Editor','DeleteFile','Y',20051213155700),(132,'Chief Editor','ManageTempl','N',20060306153540),(133,'Chief Editor','DeleteTempl','N',20060306153540),(134,'Chief Editor','ManageUsers','Y',20060306153540),(135,'Chief Editor','ManageSubscriptions','N',20051213155700),(136,'Chief Editor','DeleteUsers','Y',20060306153540),(137,'Chief Editor','ManageUserTypes','N',20051213155700),(138,'Chief Editor','ManageArticleTypes','Y',20051213155700),(139,'Chief Editor','DeleteArticleTypes','Y',20051213155700),(140,'Chief Editor','ManageLanguages','N',20051213155700),(141,'Chief Editor','DeleteLanguages','N',20051213155700),(142,'Chief Editor','ManageCountries','N',20051213155700),(143,'Chief Editor','DeleteCountries','N',20051213155700),(144,'Chief Editor','MailNotify','N',20051213155700),(145,'Chief Editor','ViewLogs','Y',20051213155700),(146,'Chief Editor','ManageLocalizer','Y',20051213155700),(147,'Chief Editor','ManageIndexer','N',20051213155700),(148,'Chief Editor','Publish','Y',20051213155700),(149,'Chief Editor','ManageTopics','Y',20051213155700),(150,'Chief Editor','EditorImage','Y',20051213155700),(151,'Chief Editor','EditorTextAlignment','N',20051213155700),(152,'Chief Editor','EditorFontColor','Y',20051213155700),(153,'Chief Editor','EditorFontSize','N',20051213155700),(154,'Chief Editor','EditorFontFace','N',20051213155700),(155,'Chief Editor','EditorTable','Y',20051213155700),(156,'Chief Editor','EditorSuperscript','Y',20051213155700),(157,'Chief Editor','EditorSubscript','Y',20051213155700),(158,'Chief Editor','EditorStrikethrough','Y',20051213155700),(159,'Chief Editor','EditorIndent','Y',20051213155700),(160,'Chief Editor','EditorListBullet','Y',20051213155700),(161,'Chief Editor','EditorListNumber','Y',20051213155700),(162,'Chief Editor','EditorHorizontalRule','N',20051213155700),(163,'Chief Editor','EditorSourceView','N',20051213155700),(164,'Chief Editor','EditorEnlarge','Y',20051213155700),(165,'Chief Editor','EditorTextDirection','Y',20051213155700),(166,'Chief Editor','EditorLink','Y',20051213155700),(167,'Chief Editor','EditorSubhead','Y',20051213155700),(168,'Chief Editor','EditorBold','Y',20051213155700),(169,'Chief Editor','EditorItalic','Y',20051213155700),(170,'Chief Editor','EditorUnderline','Y',20051213155700),(171,'Chief Editor','EditorUndoRedo','Y',20051213155700),(172,'Chief Editor','EditorCopyCutPaste','Y',20051213155700),(173,'Chief Editor','ManageReaders','Y',20051213155700),(174,'Chief Editor','InitializeTemplateEngine','N',20051213155700),(175,'Journalist','ManagePub','N',20060103231030),(176,'Journalist','DeletePub','N',20060103231030),(177,'Journalist','ManageIssue','N',20060103231030),(178,'Journalist','DeleteIssue','N',20060103231030),(179,'Journalist','ManageSection','N',20060103231030),(180,'Journalist','DeleteSection','N',20060103231030),(181,'Journalist','AddArticle','Y',20060103231030),(182,'Journalist','ChangeArticle','N',20060103231030),(183,'Journalist','DeleteArticle','N',20060103231030),(184,'Journalist','AddImage','Y',20060103231030),(185,'Journalist','ChangeImage','Y',20060103231030),(186,'Journalist','DeleteImage','N',20060103231030),(187,'Journalist','ManageTempl','N',20060103231030),(188,'Journalist','DeleteTempl','N',20060103231030),(189,'Journalist','ManageUsers','N',20060103231030),(190,'Journalist','ManageReaders','N',20060103231030),(191,'Journalist','ManageSubscriptions','N',20060103231030),(192,'Journalist','DeleteUsers','N',20060103231030),(193,'Journalist','ManageUserTypes','N',20060103231030),(194,'Journalist','ManageArticleTypes','N',20060103231030),(195,'Journalist','DeleteArticleTypes','N',20060103231030),(196,'Journalist','ManageLanguages','N',20060103231030),(197,'Journalist','DeleteLanguages','N',20060103231030),(198,'Journalist','MailNotify','N',20060103231030),(199,'Journalist','ManageCountries','N',20060103231030),(200,'Journalist','DeleteCountries','N',20060103231030),(201,'Journalist','ViewLogs','N',20060103231030),(202,'Journalist','ManageLocalizer','N',20060103231030),(203,'Journalist','ManageIndexer','N',20060103231030),(204,'Journalist','Publish','N',20060103231030),(205,'Journalist','ManageTopics','N',20060103231030),(206,'Journalist','EditorBold','Y',20060103231030),(207,'Journalist','EditorItalic','Y',20060103231030),(208,'Journalist','EditorUnderline','Y',20060103231030),(209,'Journalist','EditorUndoRedo','Y',20060306153035),(210,'Journalist','EditorCopyCutPaste','Y',20060103231030),(211,'Journalist','EditorImage','Y',20060103231030),(212,'Journalist','EditorTextAlignment','N',20060306153035),(213,'Journalist','EditorFontColor','N',20060306153035),(214,'Journalist','EditorFontSize','N',20060103231030),(215,'Journalist','EditorFontFace','N',20060103231030),(216,'Journalist','EditorTable','N',20060306153248),(217,'Journalist','EditorSuperscript','N',20060103231030),(218,'Journalist','EditorSubscript','N',20060103231030),(219,'Journalist','EditorStrikethrough','N',20060306153035),(220,'Journalist','EditorIndent','N',20060306153035),(221,'Journalist','EditorListBullet','Y',20060103231030),(222,'Journalist','EditorListNumber','Y',20060103231030),(223,'Journalist','EditorHorizontalRule','N',20060103231030),(224,'Journalist','EditorSourceView','N',20060103231030),(225,'Journalist','EditorEnlarge','Y',20060103231030),(226,'Journalist','EditorTextDirection','N',20060306153035),(227,'Journalist','EditorLink','Y',20060103231030),(228,'Journalist','EditorSubhead','Y',20060103231030),(229,'Journalist','InitializeTemplateEngine','N',20060103231030),(230,'Journalist','AddFile','Y',20060103231030),(231,'Journalist','ChangeFile','Y',20060103231030),(232,'Journalist','DeleteFile','N',20060103231030),(233,'Administrator','MoveArticle','Y',20060306143350),(234,'Administrator','TranslateArticle','Y',20060306143350),(235,'Administrator','AttachImageToArticle','Y',20060306143350),(236,'Administrator','ChangeSystemPreferences','Y',20060306143350),(237,'Administrator','AttachTopicToArticle','Y',20060306143350),(238,'Administrator','EditorFindReplace','Y',20060306143350),(239,'Administrator','EditorCharacterMap','Y',20060306143350),(240,'Chief Editor','MoveArticle','Y',20060306143350),(241,'Chief Editor','TranslateArticle','Y',20060306143350),(242,'Chief Editor','AttachImageToArticle','Y',20060306143350),(243,'Chief Editor','ChangeSystemPreferences','N',20060306143350),(244,'Chief Editor','AttachTopicToArticle','Y',20060306143350),(245,'Chief Editor','EditorFindReplace','Y',20060306143350),(246,'Chief Editor','EditorCharacterMap','Y',20060306143350),(247,'Editor','MoveArticle','Y',20060306143350),(248,'Editor','TranslateArticle','Y',20060306143350),(249,'Editor','AttachImageToArticle','Y',20060306143350),(250,'Editor','ChangeSystemPreferences','N',20060306143350),(251,'Editor','AttachTopicToArticle','Y',20060306143350),(252,'Editor','EditorFindReplace','Y',20060306143350),(253,'Editor','EditorCharacterMap','Y',20060306143350),(254,'Journalist','MoveArticle','N',20060306143350),(255,'Journalist','TranslateArticle','Y',20060306143350),(256,'Journalist','AttachImageToArticle','Y',20060306143350),(257,'Journalist','ChangeSystemPreferences','N',20060306143350),(258,'Journalist','AttachTopicToArticle','Y',20060306143350),(259,'Journalist','EditorFindReplace','Y',20060306143350),(260,'Journalist','EditorCharacterMap','Y',20060306143350),(261,'Subscription manager','ManagePub','N',20060306153624),(262,'Subscription manager','DeletePub','N',20060306153624),(263,'Subscription manager','ManageIssue','N',20060306153624),(264,'Subscription manager','DeleteIssue','N',20060306153624),(265,'Subscription manager','ManageSection','N',20060306153624),(266,'Subscription manager','DeleteSection','N',20060306153624),(267,'Subscription manager','AddArticle','N',20060306153624),(268,'Subscription manager','ChangeArticle','N',20060306153624),(269,'Subscription manager','MoveArticle','N',20060306153624),(270,'Subscription manager','TranslateArticle','N',20060306153624),(271,'Subscription manager','DeleteArticle','N',20060306153624),(272,'Subscription manager','AttachImageToArticle','N',20060306153624),(273,'Subscription manager','AttachTopicToArticle','N',20060306153624),(274,'Subscription manager','AddImage','N',20060306153624),(275,'Subscription manager','ChangeImage','N',20060306153624),(276,'Subscription manager','DeleteImage','N',20060306153624),(277,'Subscription manager','ManageTempl','N',20060306153624),(278,'Subscription manager','DeleteTempl','N',20060306153624),(279,'Subscription manager','ManageUsers','N',20060306153624),(280,'Subscription manager','ManageReaders','Y',20060306153624),(281,'Subscription manager','ManageSubscriptions','Y',20060306153624),(282,'Subscription manager','DeleteUsers','N',20060306153624),(283,'Subscription manager','ManageUserTypes','N',20060306153624),(284,'Subscription manager','ManageArticleTypes','N',20060306153624),(285,'Subscription manager','DeleteArticleTypes','N',20060306153624),(286,'Subscription manager','ManageLanguages','N',20060306153624),(287,'Subscription manager','DeleteLanguages','N',20060306153624),(288,'Subscription manager','MailNotify','N',20060306153624),(289,'Subscription manager','ManageCountries','N',20060306153624),(290,'Subscription manager','DeleteCountries','N',20060306153624),(291,'Subscription manager','ViewLogs','N',20060306153624),(292,'Subscription manager','ManageLocalizer','N',20060306153624),(293,'Subscription manager','ManageIndexer','N',20060306153624),(294,'Subscription manager','Publish','N',20060306153624),(295,'Subscription manager','ManageTopics','N',20060306153624),(296,'Subscription manager','EditorBold','N',20060306153624),(297,'Subscription manager','EditorItalic','N',20060306153624),(298,'Subscription manager','EditorUnderline','N',20060306153624),(299,'Subscription manager','EditorUndoRedo','N',20060306153624),(300,'Subscription manager','EditorCopyCutPaste','N',20060306153624),(301,'Subscription manager','EditorFindReplace','N',20060306153624),(302,'Subscription manager','EditorCharacterMap','N',20060306153624),(303,'Subscription manager','EditorImage','N',20060306153624),(304,'Subscription manager','EditorTextAlignment','N',20060306153624),(305,'Subscription manager','EditorFontColor','N',20060306153624),(306,'Subscription manager','EditorFontSize','N',20060306153624),(307,'Subscription manager','EditorFontFace','N',20060306153624),(308,'Subscription manager','EditorTable','N',20060306153624),(309,'Subscription manager','EditorSuperscript','N',20060306153624),(310,'Subscription manager','EditorSubscript','N',20060306153624),(311,'Subscription manager','EditorStrikethrough','N',20060306153624),(312,'Subscription manager','EditorIndent','N',20060306153624),(313,'Subscription manager','EditorListBullet','N',20060306153624),(314,'Subscription manager','EditorListNumber','N',20060306153624),(315,'Subscription manager','EditorHorizontalRule','N',20060306153624),(316,'Subscription manager','EditorSourceView','N',20060306153624),(317,'Subscription manager','EditorEnlarge','N',20060306153624),(318,'Subscription manager','EditorTextDirection','N',20060306153624),(319,'Subscription manager','EditorLink','N',20060306153624),(320,'Subscription manager','EditorSubhead','N',20060306153624),(321,'Subscription manager','InitializeTemplateEngine','N',20060306153624),(322,'Subscription manager','ChangeSystemPreferences','N',20060306153624),(323,'Subscription manager','AddFile','N',20060306153624),(324,'Subscription manager','ChangeFile','N',20060306153624),(325,'Subscription manager','DeleteFile','N',20060306153624);
+INSERT INTO `UserTypes` (`id`, `user_type_name`, `varname`, `value`, `last_modified`) VALUES (1,'Administrator','ManagePub','Y','2005-12-13 15:57:00'),(2,'Administrator','DeletePub','Y','2005-12-13 15:57:00'),(3,'Administrator','ManageIssue','Y','2005-12-13 15:57:00'),(4,'Administrator','DeleteIssue','Y','2005-12-13 15:57:00'),(5,'Administrator','ManageSection','Y','2005-12-13 15:57:00'),(6,'Administrator','DeleteSection','Y','2005-12-13 15:57:00'),(7,'Administrator','AddArticle','Y','2005-12-13 15:57:00'),(8,'Administrator','ChangeArticle','Y','2005-12-13 15:57:00'),(9,'Administrator','DeleteArticle','Y','2005-12-13 15:57:00'),(10,'Administrator','AddImage','Y','2005-12-13 15:57:00'),(11,'Administrator','AddFile','Y','2005-12-13 15:57:00'),(12,'Administrator','ChangeImage','Y','2005-12-13 15:57:00'),(13,'Administrator','ChangeFile','Y','2005-12-13 15:57:00'),(14,'Administrator','DeleteImage','Y','2005-12-13 15:57:00'),(15,'Administrator','DeleteFile','Y','2005-12-13 15:57:00'),(16,'Administrator','ManageTempl','Y','2005-12-13 15:57:00'),(17,'Administrator','DeleteTempl','Y','2005-12-13 15:57:00'),(18,'Administrator','ManageUsers','Y','2005-12-13 15:57:00'),(19,'Administrator','ManageSubscriptions','Y','2005-12-13 15:57:00'),(20,'Administrator','DeleteUsers','Y','2005-12-13 15:57:00'),(21,'Administrator','ManageUserTypes','Y','2005-12-13 15:57:00'),(22,'Administrator','ManageArticleTypes','Y','2005-12-13 15:57:00'),(23,'Administrator','DeleteArticleTypes','Y','2005-12-13 15:57:00'),(24,'Administrator','ManageLanguages','Y','2005-12-13 15:57:00'),(25,'Administrator','DeleteLanguages','Y','2005-12-13 15:57:00'),(26,'Administrator','ManageCountries','Y','2005-12-13 15:57:00'),(27,'Administrator','DeleteCountries','Y','2005-12-13 15:57:00'),(28,'Administrator','MailNotify','N','2005-12-13 15:57:00'),(29,'Administrator','ViewLogs','Y','2005-12-13 15:57:00'),(30,'Administrator','ManageLocalizer','Y','2005-12-13 15:57:00'),(31,'Administrator','ManageIndexer','N','2006-01-04 00:21:55'),(32,'Administrator','Publish','Y','2005-12-13 15:57:00'),(33,'Administrator','ManageTopics','Y','2005-12-13 15:57:00'),(34,'Administrator','EditorImage','Y','2005-12-13 15:57:00'),(35,'Administrator','EditorTextAlignment','Y','2005-12-13 15:57:00'),(36,'Administrator','EditorFontColor','Y','2005-12-13 15:57:00'),(37,'Administrator','EditorFontSize','Y','2005-12-13 15:57:00'),(38,'Administrator','EditorFontFace','Y','2005-12-13 15:57:00'),(39,'Administrator','EditorTable','Y','2005-12-13 15:57:00'),(40,'Administrator','EditorSuperscript','Y','2005-12-13 15:57:00'),(41,'Administrator','EditorSubscript','Y','2005-12-13 15:57:00'),(42,'Administrator','EditorStrikethrough','Y','2005-12-13 15:57:00'),(43,'Administrator','EditorIndent','Y','2005-12-13 15:57:00'),(44,'Administrator','EditorListBullet','Y','2005-12-13 15:57:00'),(45,'Administrator','EditorListNumber','Y','2005-12-13 15:57:00'),(46,'Administrator','EditorHorizontalRule','Y','2005-12-13 15:57:00'),(47,'Administrator','EditorSourceView','Y','2005-12-13 15:57:00'),(48,'Administrator','EditorEnlarge','Y','2005-12-13 15:57:00'),(49,'Administrator','EditorTextDirection','Y','2005-12-13 15:57:00'),(50,'Administrator','EditorLink','Y','2005-12-13 15:57:00'),(51,'Administrator','EditorSubhead','Y','2005-12-13 15:57:00'),(52,'Administrator','EditorBold','Y','2005-12-13 15:57:00'),(53,'Administrator','EditorItalic','Y','2005-12-13 15:57:00'),(54,'Administrator','EditorUnderline','Y','2005-12-13 15:57:00'),(55,'Administrator','EditorUndoRedo','Y','2005-12-13 15:57:00'),(56,'Administrator','EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(57,'Administrator','ManageReaders','Y','2005-12-13 15:57:00'),(58,'Administrator','InitializeTemplateEngine','Y','2006-01-04 00:21:55'),(59,'Editor','ManagePub','N','2005-12-13 15:57:00'),(60,'Editor','DeletePub','N','2005-12-13 15:57:00'),(61,'Editor','ManageIssue','N','2005-12-13 15:57:00'),(62,'Editor','DeleteIssue','N','2005-12-13 15:57:00'),(63,'Editor','ManageSection','N','2005-12-13 15:57:00'),(64,'Editor','DeleteSection','N','2005-12-13 15:57:00'),(65,'Editor','AddArticle','Y','2005-12-13 15:57:00'),(66,'Editor','ChangeArticle','Y','2005-12-13 15:57:00'),(67,'Editor','DeleteArticle','Y','2005-12-13 15:57:00'),(68,'Editor','AddImage','Y','2005-12-13 15:57:00'),(69,'Editor','AddFile','Y','2005-12-13 15:57:00'),(70,'Editor','ChangeImage','Y','2005-12-13 15:57:00'),(71,'Editor','ChangeFile','Y','2005-12-13 15:57:00'),(72,'Editor','DeleteImage','Y','2005-12-13 15:57:00'),(73,'Editor','DeleteFile','Y','2005-12-13 15:57:00'),(74,'Editor','ManageTempl','N','2005-12-13 15:57:00'),(75,'Editor','DeleteTempl','N','2005-12-13 15:57:00'),(76,'Editor','ManageUsers','N','2005-12-13 15:57:00'),(77,'Editor','ManageSubscriptions','N','2005-12-13 15:57:00'),(78,'Editor','DeleteUsers','N','2005-12-13 15:57:00'),(79,'Editor','ManageUserTypes','N','2005-12-13 15:57:00'),(80,'Editor','ManageArticleTypes','N','2005-12-13 15:57:00'),(81,'Editor','DeleteArticleTypes','N','2005-12-13 15:57:00'),(82,'Editor','ManageLanguages','N','2005-12-13 15:57:00'),(83,'Editor','DeleteLanguages','N','2005-12-13 15:57:00'),(84,'Editor','ManageCountries','N','2005-12-13 15:57:00'),(85,'Editor','DeleteCountries','N','2005-12-13 15:57:00'),(86,'Editor','MailNotify','Y','2005-12-13 15:57:00'),(87,'Editor','ViewLogs','N','2005-12-13 15:57:00'),(88,'Editor','ManageLocalizer','N','2005-12-13 15:57:00'),(89,'Editor','ManageIndexer','N','2005-12-13 15:57:00'),(90,'Editor','Publish','N','2005-12-13 15:57:00'),(91,'Editor','ManageTopics','N','2005-12-13 15:57:00'),(92,'Editor','EditorImage','Y','2005-12-13 15:57:00'),(93,'Editor','EditorTextAlignment','Y','2005-12-13 15:57:00'),(94,'Editor','EditorFontColor','N','2005-12-13 15:57:00'),(95,'Editor','EditorFontSize','N','2005-12-13 15:57:00'),(96,'Editor','EditorFontFace','N','2005-12-13 15:57:00'),(97,'Editor','EditorTable','Y','2005-12-13 15:57:00'),(98,'Editor','EditorSuperscript','N','2006-03-06 15:34:26'),(99,'Editor','EditorSubscript','N','2006-03-06 15:34:26'),(100,'Editor','EditorStrikethrough','N','2005-12-13 15:57:00'),(101,'Editor','EditorIndent','Y','2005-12-13 15:57:00'),(102,'Editor','EditorListBullet','Y','2005-12-13 15:57:00'),(103,'Editor','EditorListNumber','Y','2005-12-13 15:57:00'),(104,'Editor','EditorHorizontalRule','N','2005-12-13 15:57:00'),(105,'Editor','EditorSourceView','N','2005-12-13 15:57:00'),(106,'Editor','EditorEnlarge','Y','2005-12-13 15:57:00'),(107,'Editor','EditorTextDirection','Y','2005-12-13 15:57:00'),(108,'Editor','EditorLink','Y','2005-12-13 15:57:00'),(109,'Editor','EditorSubhead','Y','2005-12-13 15:57:00'),(110,'Editor','EditorBold','Y','2005-12-13 15:57:00'),(111,'Editor','EditorItalic','Y','2005-12-13 15:57:00'),(112,'Editor','EditorUnderline','Y','2005-12-13 15:57:00'),(113,'Editor','EditorUndoRedo','Y','2005-12-13 15:57:00'),(114,'Editor','EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(115,'Editor','ManageReaders','N','2005-12-13 15:57:00'),(116,'Editor','InitializeTemplateEngine','N','2005-12-13 15:57:00'),(117,'Chief Editor','ManagePub','N','2005-12-13 15:57:00'),(118,'Chief Editor','DeletePub','N','2005-12-13 15:57:00'),(119,'Chief Editor','ManageIssue','Y','2005-12-13 15:57:00'),(120,'Chief Editor','DeleteIssue','Y','2005-12-13 15:57:00'),(121,'Chief Editor','ManageSection','Y','2005-12-13 15:57:00'),(122,'Chief Editor','DeleteSection','Y','2005-12-13 15:57:00'),(123,'Chief Editor','AddArticle','Y','2005-12-13 15:57:00'),(124,'Chief Editor','ChangeArticle','Y','2005-12-13 15:57:00'),(125,'Chief Editor','DeleteArticle','Y','2005-12-13 15:57:00'),(126,'Chief Editor','AddImage','Y','2005-12-13 15:57:00'),(127,'Chief Editor','AddFile','Y','2005-12-13 15:57:00'),(128,'Chief Editor','ChangeImage','Y','2005-12-13 15:57:00'),(129,'Chief Editor','ChangeFile','Y','2005-12-13 15:57:00'),(130,'Chief Editor','DeleteImage','Y','2005-12-13 15:57:00'),(131,'Chief Editor','DeleteFile','Y','2005-12-13 15:57:00'),(132,'Chief Editor','ManageTempl','N','2006-03-06 15:35:40'),(133,'Chief Editor','DeleteTempl','N','2006-03-06 15:35:40'),(134,'Chief Editor','ManageUsers','Y','2006-03-06 15:35:40'),(135,'Chief Editor','ManageSubscriptions','N','2005-12-13 15:57:00'),(136,'Chief Editor','DeleteUsers','Y','2006-03-06 15:35:40'),(137,'Chief Editor','ManageUserTypes','N','2005-12-13 15:57:00'),(138,'Chief Editor','ManageArticleTypes','Y','2005-12-13 15:57:00'),(139,'Chief Editor','DeleteArticleTypes','Y','2005-12-13 15:57:00'),(140,'Chief Editor','ManageLanguages','N','2005-12-13 15:57:00'),(141,'Chief Editor','DeleteLanguages','N','2005-12-13 15:57:00'),(142,'Chief Editor','ManageCountries','N','2005-12-13 15:57:00'),(143,'Chief Editor','DeleteCountries','N','2005-12-13 15:57:00'),(144,'Chief Editor','MailNotify','N','2005-12-13 15:57:00'),(145,'Chief Editor','ViewLogs','Y','2005-12-13 15:57:00'),(146,'Chief Editor','ManageLocalizer','Y','2005-12-13 15:57:00'),(147,'Chief Editor','ManageIndexer','N','2005-12-13 15:57:00'),(148,'Chief Editor','Publish','Y','2005-12-13 15:57:00'),(149,'Chief Editor','ManageTopics','Y','2005-12-13 15:57:00'),(150,'Chief Editor','EditorImage','Y','2005-12-13 15:57:00'),(151,'Chief Editor','EditorTextAlignment','N','2005-12-13 15:57:00'),(152,'Chief Editor','EditorFontColor','Y','2005-12-13 15:57:00'),(153,'Chief Editor','EditorFontSize','N','2005-12-13 15:57:00'),(154,'Chief Editor','EditorFontFace','N','2005-12-13 15:57:00'),(155,'Chief Editor','EditorTable','Y','2005-12-13 15:57:00'),(156,'Chief Editor','EditorSuperscript','Y','2005-12-13 15:57:00'),(157,'Chief Editor','EditorSubscript','Y','2005-12-13 15:57:00'),(158,'Chief Editor','EditorStrikethrough','Y','2005-12-13 15:57:00'),(159,'Chief Editor','EditorIndent','Y','2005-12-13 15:57:00'),(160,'Chief Editor','EditorListBullet','Y','2005-12-13 15:57:00'),(161,'Chief Editor','EditorListNumber','Y','2005-12-13 15:57:00'),(162,'Chief Editor','EditorHorizontalRule','N','2005-12-13 15:57:00'),(163,'Chief Editor','EditorSourceView','N','2005-12-13 15:57:00'),(164,'Chief Editor','EditorEnlarge','Y','2005-12-13 15:57:00'),(165,'Chief Editor','EditorTextDirection','Y','2005-12-13 15:57:00'),(166,'Chief Editor','EditorLink','Y','2005-12-13 15:57:00'),(167,'Chief Editor','EditorSubhead','Y','2005-12-13 15:57:00'),(168,'Chief Editor','EditorBold','Y','2005-12-13 15:57:00'),(169,'Chief Editor','EditorItalic','Y','2005-12-13 15:57:00'),(170,'Chief Editor','EditorUnderline','Y','2005-12-13 15:57:00'),(171,'Chief Editor','EditorUndoRedo','Y','2005-12-13 15:57:00'),(172,'Chief Editor','EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(173,'Chief Editor','ManageReaders','Y','2005-12-13 15:57:00'),(174,'Chief Editor','InitializeTemplateEngine','N','2005-12-13 15:57:00'),(175,'Journalist','ManagePub','N','2006-01-03 23:10:30'),(176,'Journalist','DeletePub','N','2006-01-03 23:10:30'),(177,'Journalist','ManageIssue','N','2006-01-03 23:10:30'),(178,'Journalist','DeleteIssue','N','2006-01-03 23:10:30'),(179,'Journalist','ManageSection','N','2006-01-03 23:10:30'),(180,'Journalist','DeleteSection','N','2006-01-03 23:10:30'),(181,'Journalist','AddArticle','Y','2006-01-03 23:10:30'),(182,'Journalist','ChangeArticle','N','2006-01-03 23:10:30'),(183,'Journalist','DeleteArticle','N','2006-01-03 23:10:30'),(184,'Journalist','AddImage','Y','2006-01-03 23:10:30'),(185,'Journalist','ChangeImage','Y','2006-01-03 23:10:30'),(186,'Journalist','DeleteImage','N','2006-01-03 23:10:30'),(187,'Journalist','ManageTempl','N','2006-01-03 23:10:30'),(188,'Journalist','DeleteTempl','N','2006-01-03 23:10:30'),(189,'Journalist','ManageUsers','N','2006-01-03 23:10:30'),(190,'Journalist','ManageReaders','N','2006-01-03 23:10:30'),(191,'Journalist','ManageSubscriptions','N','2006-01-03 23:10:30'),(192,'Journalist','DeleteUsers','N','2006-01-03 23:10:30'),(193,'Journalist','ManageUserTypes','N','2006-01-03 23:10:30'),(194,'Journalist','ManageArticleTypes','N','2006-01-03 23:10:30'),(195,'Journalist','DeleteArticleTypes','N','2006-01-03 23:10:30'),(196,'Journalist','ManageLanguages','N','2006-01-03 23:10:30'),(197,'Journalist','DeleteLanguages','N','2006-01-03 23:10:30'),(198,'Journalist','MailNotify','N','2006-01-03 23:10:30'),(199,'Journalist','ManageCountries','N','2006-01-03 23:10:30'),(200,'Journalist','DeleteCountries','N','2006-01-03 23:10:30'),(201,'Journalist','ViewLogs','N','2006-01-03 23:10:30'),(202,'Journalist','ManageLocalizer','N','2006-01-03 23:10:30'),(203,'Journalist','ManageIndexer','N','2006-01-03 23:10:30'),(204,'Journalist','Publish','N','2006-01-03 23:10:30'),(205,'Journalist','ManageTopics','N','2006-01-03 23:10:30'),(206,'Journalist','EditorBold','Y','2006-01-03 23:10:30'),(207,'Journalist','EditorItalic','Y','2006-01-03 23:10:30'),(208,'Journalist','EditorUnderline','Y','2006-01-03 23:10:30'),(209,'Journalist','EditorUndoRedo','Y','2006-03-06 15:30:35'),(210,'Journalist','EditorCopyCutPaste','Y','2006-01-03 23:10:30'),(211,'Journalist','EditorImage','Y','2006-01-03 23:10:30'),(212,'Journalist','EditorTextAlignment','N','2006-03-06 15:30:35'),(213,'Journalist','EditorFontColor','N','2006-03-06 15:30:35'),(214,'Journalist','EditorFontSize','N','2006-01-03 23:10:30'),(215,'Journalist','EditorFontFace','N','2006-01-03 23:10:30'),(216,'Journalist','EditorTable','N','2006-03-06 15:32:48'),(217,'Journalist','EditorSuperscript','N','2006-01-03 23:10:30'),(218,'Journalist','EditorSubscript','N','2006-01-03 23:10:30'),(219,'Journalist','EditorStrikethrough','N','2006-03-06 15:30:35'),(220,'Journalist','EditorIndent','N','2006-03-06 15:30:35'),(221,'Journalist','EditorListBullet','Y','2006-01-03 23:10:30'),(222,'Journalist','EditorListNumber','Y','2006-01-03 23:10:30'),(223,'Journalist','EditorHorizontalRule','N','2006-01-03 23:10:30'),(224,'Journalist','EditorSourceView','N','2006-01-03 23:10:30'),(225,'Journalist','EditorEnlarge','Y','2006-01-03 23:10:30'),(226,'Journalist','EditorTextDirection','N','2006-03-06 15:30:35'),(227,'Journalist','EditorLink','Y','2006-01-03 23:10:30'),(228,'Journalist','EditorSubhead','Y','2006-01-03 23:10:30'),(229,'Journalist','InitializeTemplateEngine','N','2006-01-03 23:10:30'),(230,'Journalist','AddFile','Y','2006-01-03 23:10:30'),(231,'Journalist','ChangeFile','Y','2006-01-03 23:10:30'),(232,'Journalist','DeleteFile','N','2006-01-03 23:10:30'),(233,'Administrator','MoveArticle','Y','2006-03-06 14:33:50'),(234,'Administrator','TranslateArticle','Y','2006-03-06 14:33:50'),(235,'Administrator','AttachImageToArticle','Y','2006-03-06 14:33:50'),(236,'Administrator','ChangeSystemPreferences','Y','2006-03-06 14:33:50'),(237,'Administrator','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(238,'Administrator','EditorFindReplace','Y','2006-03-06 14:33:50'),(239,'Administrator','EditorCharacterMap','Y','2006-03-06 14:33:50'),(240,'Chief Editor','MoveArticle','Y','2006-03-06 14:33:50'),(241,'Chief Editor','TranslateArticle','Y','2006-03-06 14:33:50'),(242,'Chief Editor','AttachImageToArticle','Y','2006-03-06 14:33:50'),(243,'Chief Editor','ChangeSystemPreferences','N','2006-03-06 14:33:50'),(244,'Chief Editor','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(245,'Chief Editor','EditorFindReplace','Y','2006-03-06 14:33:50'),(246,'Chief Editor','EditorCharacterMap','Y','2006-03-06 14:33:50'),(247,'Editor','MoveArticle','Y','2006-03-06 14:33:50'),(248,'Editor','TranslateArticle','Y','2006-03-06 14:33:50'),(249,'Editor','AttachImageToArticle','Y','2006-03-06 14:33:50'),(250,'Editor','ChangeSystemPreferences','N','2006-03-06 14:33:50'),(251,'Editor','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(252,'Editor','EditorFindReplace','Y','2006-03-06 14:33:50'),(253,'Editor','EditorCharacterMap','Y','2006-03-06 14:33:50'),(254,'Journalist','MoveArticle','N','2006-03-06 14:33:50'),(255,'Journalist','TranslateArticle','Y','2006-03-06 14:33:50'),(256,'Journalist','AttachImageToArticle','Y','2006-03-06 14:33:50'),(257,'Journalist','ChangeSystemPreferences','N','2006-03-06 14:33:50'),(258,'Journalist','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(259,'Journalist','EditorFindReplace','Y','2006-03-06 14:33:50'),(260,'Journalist','EditorCharacterMap','Y','2006-03-06 14:33:50'),(261,'Subscription manager','ManagePub','N','2006-03-06 15:36:24'),(262,'Subscription manager','DeletePub','N','2006-03-06 15:36:24'),(263,'Subscription manager','ManageIssue','N','2006-03-06 15:36:24'),(264,'Subscription manager','DeleteIssue','N','2006-03-06 15:36:24'),(265,'Subscription manager','ManageSection','N','2006-03-06 15:36:24'),(266,'Subscription manager','DeleteSection','N','2006-03-06 15:36:24'),(267,'Subscription manager','AddArticle','N','2006-03-06 15:36:24'),(268,'Subscription manager','ChangeArticle','N','2006-03-06 15:36:24'),(269,'Subscription manager','MoveArticle','N','2006-03-06 15:36:24'),(270,'Subscription manager','TranslateArticle','N','2006-03-06 15:36:24'),(271,'Subscription manager','DeleteArticle','N','2006-03-06 15:36:24'),(272,'Subscription manager','AttachImageToArticle','N','2006-03-06 15:36:24'),(273,'Subscription manager','AttachTopicToArticle','N','2006-03-06 15:36:24'),(274,'Subscription manager','AddImage','N','2006-03-06 15:36:24'),(275,'Subscription manager','ChangeImage','N','2006-03-06 15:36:24'),(276,'Subscription manager','DeleteImage','N','2006-03-06 15:36:24'),(277,'Subscription manager','ManageTempl','N','2006-03-06 15:36:24'),(278,'Subscription manager','DeleteTempl','N','2006-03-06 15:36:24'),(279,'Subscription manager','ManageUsers','N','2006-03-06 15:36:24'),(280,'Subscription manager','ManageReaders','Y','2006-03-06 15:36:24'),(281,'Subscription manager','ManageSubscriptions','Y','2006-03-06 15:36:24'),(282,'Subscription manager','DeleteUsers','N','2006-03-06 15:36:24'),(283,'Subscription manager','ManageUserTypes','N','2006-03-06 15:36:24'),(284,'Subscription manager','ManageArticleTypes','N','2006-03-06 15:36:24'),(285,'Subscription manager','DeleteArticleTypes','N','2006-03-06 15:36:24'),(286,'Subscription manager','ManageLanguages','N','2006-03-06 15:36:24'),(287,'Subscription manager','DeleteLanguages','N','2006-03-06 15:36:24'),(288,'Subscription manager','MailNotify','N','2006-03-06 15:36:24'),(289,'Subscription manager','ManageCountries','N','2006-03-06 15:36:24'),(290,'Subscription manager','DeleteCountries','N','2006-03-06 15:36:24'),(291,'Subscription manager','ViewLogs','N','2006-03-06 15:36:24'),(292,'Subscription manager','ManageLocalizer','N','2006-03-06 15:36:24'),(293,'Subscription manager','ManageIndexer','N','2006-03-06 15:36:24'),(294,'Subscription manager','Publish','N','2006-03-06 15:36:24'),(295,'Subscription manager','ManageTopics','N','2006-03-06 15:36:24'),(296,'Subscription manager','EditorBold','N','2006-03-06 15:36:24'),(297,'Subscription manager','EditorItalic','N','2006-03-06 15:36:24'),(298,'Subscription manager','EditorUnderline','N','2006-03-06 15:36:24'),(299,'Subscription manager','EditorUndoRedo','N','2006-03-06 15:36:24'),(300,'Subscription manager','EditorCopyCutPaste','N','2006-03-06 15:36:24'),(301,'Subscription manager','EditorFindReplace','N','2006-03-06 15:36:24'),(302,'Subscription manager','EditorCharacterMap','N','2006-03-06 15:36:24'),(303,'Subscription manager','EditorImage','N','2006-03-06 15:36:24'),(304,'Subscription manager','EditorTextAlignment','N','2006-03-06 15:36:24'),(305,'Subscription manager','EditorFontColor','N','2006-03-06 15:36:24'),(306,'Subscription manager','EditorFontSize','N','2006-03-06 15:36:24'),(307,'Subscription manager','EditorFontFace','N','2006-03-06 15:36:24'),(308,'Subscription manager','EditorTable','N','2006-03-06 15:36:24'),(309,'Subscription manager','EditorSuperscript','N','2006-03-06 15:36:24'),(310,'Subscription manager','EditorSubscript','N','2006-03-06 15:36:24'),(311,'Subscription manager','EditorStrikethrough','N','2006-03-06 15:36:24'),(312,'Subscription manager','EditorIndent','N','2006-03-06 15:36:24'),(313,'Subscription manager','EditorListBullet','N','2006-03-06 15:36:24'),(314,'Subscription manager','EditorListNumber','N','2006-03-06 15:36:24'),(315,'Subscription manager','EditorHorizontalRule','N','2006-03-06 15:36:24'),(316,'Subscription manager','EditorSourceView','N','2006-03-06 15:36:24'),(317,'Subscription manager','EditorEnlarge','N','2006-03-06 15:36:24'),(318,'Subscription manager','EditorTextDirection','N','2006-03-06 15:36:24'),(319,'Subscription manager','EditorLink','N','2006-03-06 15:36:24'),(320,'Subscription manager','EditorSubhead','N','2006-03-06 15:36:24'),(321,'Subscription manager','InitializeTemplateEngine','N','2006-03-06 15:36:24'),(322,'Subscription manager','ChangeSystemPreferences','N','2006-03-06 15:36:24'),(323,'Subscription manager','AddFile','N','2006-03-06 15:36:24'),(324,'Subscription manager','ChangeFile','N','2006-03-06 15:36:24'),(325,'Subscription manager','DeleteFile','N','2006-03-06 15:36:24'),(326,'Administrator','CommentModerate','Y','2006-06-12 17:01:34'),(327,'Administrator','CommentEnable','Y','2006-06-12 17:01:34'),(328,'Chief Editor','CommentModerate','Y','2006-06-12 17:01:34'),(329,'Chief Editor','CommentEnable','Y','2006-06-12 17:01:34'),(330,'Editor','CommentModerate','N','2006-06-12 17:01:34'),(331,'Editor','CommentEnable','N','2006-06-12 17:01:34'),(332,'Journalist','CommentModerate','N','2006-06-12 17:01:34'),(333,'Journalist','CommentEnable','N','2006-06-12 17:01:34'),(334,'Subscription manager','CommentModerate','N','2006-06-12 17:01:34'),(335,'Subscription manager','CommentEnable','N','2006-06-12 17:01:34');
 
 --
 -- Table structure for table `Users`
@@ -903,8 +881,8 @@ CREATE TABLE `Users` (
   `Text1` mediumblob NOT NULL,
   `Text2` mediumblob NOT NULL,
   `Text3` mediumblob NOT NULL,
-  `time_updated` timestamp(14) NOT NULL,
-  `time_created` timestamp(14) NOT NULL default '00000000000000',
+  `time_updated` timestamp NOT NULL,
+  `time_created` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `UName` (`UName`)
 ) TYPE=MyISAM;
@@ -913,57 +891,13 @@ CREATE TABLE `Users` (
 -- Dumping data for table `Users`
 --
 
-INSERT INTO `Users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`, `time_updated`, `time_created`) VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','','N','','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','',20060306164323,00000000000000);
-
---
--- Table structure for `ArticleTypeMetadata`
---
-DROP TABLE IF EXISTS `ArticleTypeMetadata`;
-CREATE TABLE `ArticleTypeMetadata` (
-    `type_name` VARCHAR(250) NOT NULL,
-    `field_name` VARCHAR(250) NOT NULL DEFAULT 'NULL',
-    `field_weight` INT,
-    `is_hidden` TINYINT(1) NOT NULL DEFAULT 0,
-    `comments_enabled` TINYINT(1) NOT NULL DEFAULT '0',
-    `fk_phrase_id` INT UNSIGNED,
-    `field_type` VARCHAR(255),
-    `field_type_param` VARCHAR(255),
-    PRIMARY KEY (`type_name`, `field_name`)
-) TYPE=MyISAM;
-
---
--- Article Comments
---
-DROP TABLE IF EXISTS `ArticleComments`;
-CREATE TABLE `ArticleComments` (
-  `fk_article_number` int(10) unsigned NOT NULL,
-  `fk_language_id` int(10) unsigned NOT NULL,
-  `fk_comment_thread_id` int(10) unsigned NOT NULL,
-  `is_first` tinyint(1) NOT NULL default '0',
-  KEY `fk_comment_thread_id` (`fk_comment_thread_id`),
-  KEY `article_index` (`fk_article_number`,`fk_language_id`),
-  KEY `first_message_index` (`fk_article_number`,`fk_language_id`,`is_first`)
-) TYPE=MyISAM;
-
-
---
--- Failed Login Attempts
---
-CREATE TABLE `FailedLoginAttempts` (
-	`ip_address` varchar(40) NOT NULL default '',
-	`time_of_attempt` bigint(20) NOT NULL default '0',
-	KEY `ip_address` (`ip_address`)
-) TYPE=MyISAM;
-
-
---
--- Phorum tables
---
+INSERT INTO `Users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `fk_user_type`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`, `time_updated`, `time_created`) VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','','N','Administrator','','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2006-06-12 17:01:33','0000-00-00 00:00:00');
 
 --
 -- Table structure for table `phorum_banlists`
 --
 
+DROP TABLE IF EXISTS `phorum_banlists`;
 CREATE TABLE `phorum_banlists` (
   `id` int(11) NOT NULL auto_increment,
   `forum_id` int(11) NOT NULL default '0',
@@ -974,12 +908,16 @@ CREATE TABLE `phorum_banlists` (
   KEY `forum_id` (`forum_id`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_banlists`
+--
+
 
 --
 -- Table structure for table `phorum_files`
 --
 
+DROP TABLE IF EXISTS `phorum_files`;
 CREATE TABLE `phorum_files` (
   `file_id` int(11) NOT NULL auto_increment,
   `user_id` int(11) NOT NULL default '0',
@@ -994,12 +932,16 @@ CREATE TABLE `phorum_files` (
   KEY `message_id_link` (`message_id`,`link`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_files`
+--
+
 
 --
 -- Table structure for table `phorum_forum_group_xref`
 --
 
+DROP TABLE IF EXISTS `phorum_forum_group_xref`;
 CREATE TABLE `phorum_forum_group_xref` (
   `forum_id` int(11) NOT NULL default '0',
   `group_id` int(11) NOT NULL default '0',
@@ -1007,12 +949,16 @@ CREATE TABLE `phorum_forum_group_xref` (
   PRIMARY KEY  (`forum_id`,`group_id`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_forum_group_xref`
+--
+
 
 --
 -- Table structure for table `phorum_forums`
 --
 
+DROP TABLE IF EXISTS `phorum_forums`;
 CREATE TABLE `phorum_forums` (
   `forum_id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(50) NOT NULL default '',
@@ -1057,12 +1003,16 @@ CREATE TABLE `phorum_forums` (
   KEY `group_id` (`parent_id`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_forums`
+--
+
 
 --
 -- Table structure for table `phorum_groups`
 --
 
+DROP TABLE IF EXISTS `phorum_groups`;
 CREATE TABLE `phorum_groups` (
   `group_id` int(11) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '0',
@@ -1070,12 +1020,16 @@ CREATE TABLE `phorum_groups` (
   PRIMARY KEY  (`group_id`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_groups`
+--
+
 
 --
 -- Table structure for table `phorum_messages`
 --
 
+DROP TABLE IF EXISTS `phorum_messages`;
 CREATE TABLE `phorum_messages` (
   `message_id` int(10) unsigned NOT NULL auto_increment,
   `forum_id` int(10) unsigned NOT NULL default '0',
@@ -1097,6 +1051,7 @@ CREATE TABLE `phorum_messages` (
   `meta` mediumtext NOT NULL,
   `viewcount` int(10) unsigned NOT NULL default '0',
   `closed` tinyint(4) NOT NULL default '0',
+  `thread_depth` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`message_id`),
   KEY `thread_message` (`thread`,`message_id`),
   KEY `thread_forum` (`thread`,`forum_id`),
@@ -1112,16 +1067,16 @@ CREATE TABLE `phorum_messages` (
   KEY `user_id` (`user_id`)
 ) TYPE=MyISAM;
 
--- Campsite custom phorum addition:
--- How many levels down in a thread is the comment?
-ALTER TABLE `phorum_messages` ADD `thread_depth` TINYINT UNSIGNED DEFAULT '0' NOT NULL ;
+--
+-- Dumping data for table `phorum_messages`
+--
 
--- --------------------------------------------------------
 
 --
 -- Table structure for table `phorum_pm_buddies`
 --
 
+DROP TABLE IF EXISTS `phorum_pm_buddies`;
 CREATE TABLE `phorum_pm_buddies` (
   `pm_buddy_id` int(10) unsigned NOT NULL auto_increment,
   `user_id` int(10) unsigned NOT NULL default '0',
@@ -1131,12 +1086,16 @@ CREATE TABLE `phorum_pm_buddies` (
   KEY `buddy_user_id` (`buddy_user_id`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_pm_buddies`
+--
+
 
 --
 -- Table structure for table `phorum_pm_folders`
 --
 
+DROP TABLE IF EXISTS `phorum_pm_folders`;
 CREATE TABLE `phorum_pm_folders` (
   `pm_folder_id` int(10) unsigned NOT NULL auto_increment,
   `user_id` int(10) unsigned NOT NULL default '0',
@@ -1144,12 +1103,16 @@ CREATE TABLE `phorum_pm_folders` (
   PRIMARY KEY  (`pm_folder_id`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_pm_folders`
+--
+
 
 --
 -- Table structure for table `phorum_pm_messages`
 --
 
+DROP TABLE IF EXISTS `phorum_pm_messages`;
 CREATE TABLE `phorum_pm_messages` (
   `pm_message_id` int(10) unsigned NOT NULL auto_increment,
   `from_user_id` int(10) unsigned NOT NULL default '0',
@@ -1161,12 +1124,16 @@ CREATE TABLE `phorum_pm_messages` (
   PRIMARY KEY  (`pm_message_id`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_pm_messages`
+--
+
 
 --
 -- Table structure for table `phorum_pm_xref`
 --
 
+DROP TABLE IF EXISTS `phorum_pm_xref`;
 CREATE TABLE `phorum_pm_xref` (
   `pm_xref_id` int(10) unsigned NOT NULL auto_increment,
   `user_id` int(10) unsigned NOT NULL default '0',
@@ -1180,12 +1147,16 @@ CREATE TABLE `phorum_pm_xref` (
   KEY `read_flag` (`read_flag`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_pm_xref`
+--
+
 
 --
 -- Table structure for table `phorum_search`
 --
 
+DROP TABLE IF EXISTS `phorum_search`;
 CREATE TABLE `phorum_search` (
   `message_id` int(10) unsigned NOT NULL default '0',
   `forum_id` int(10) unsigned NOT NULL default '0',
@@ -1195,12 +1166,16 @@ CREATE TABLE `phorum_search` (
   FULLTEXT KEY `search_text` (`search_text`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_search`
+--
+
 
 --
 -- Table structure for table `phorum_settings`
 --
 
+DROP TABLE IF EXISTS `phorum_settings`;
 CREATE TABLE `phorum_settings` (
   `name` varchar(255) NOT NULL default '',
   `type` enum('V','S') NOT NULL default 'V',
@@ -1212,58 +1187,13 @@ CREATE TABLE `phorum_settings` (
 -- Dumping data for table `phorum_settings`
 --
 
-INSERT INTO `phorum_settings` (`name`, `type`, `data`) VALUES ('title', 'V', 'Phorum 5'),
-('cache', 'V', '/tmp'),
-('session_timeout', 'V', '30'),
-('short_session_timeout', 'V', '60'),
-('tight_security', 'V', '0'),
-('session_path', 'V', '/'),
-('session_domain', 'V', ''),
-('admin_session_salt', 'V', '0.62629000 1146135136'),
-('cache_users', 'V', '0'),
-('register_email_confirm', 'V', '0'),
-('default_template', 'V', 'default'),
-('default_language', 'V', 'english'),
-('use_cookies', 'V', '1'),
-('use_bcc', 'V', '1'),
-('use_rss', 'V', '1'),
-('internal_version', 'V', '2006032300'),
-('PROFILE_FIELDS', 'S', 'a:1:{i:0;a:3:{s:4:"name";s:9:"real_name";s:6:"length";i:255;s:13:"html_disabled";i:1;}}'),
-('enable_pm', 'V', '0'),
-('user_edit_timelimit', 'V', '0'),
-('enable_new_pm_count', 'V', '1'),
-('enable_dropdown_userlist', 'V', '1'),
-('enable_moderator_notifications', 'V', '1'),
-('show_new_on_index', 'V', '1'),
-('dns_lookup', 'V', '1'),
-('tz_offset', 'V', '0'),
-('user_time_zone', 'V', '1'),
-('user_template', 'V', '0'),
-('registration_control', 'V', '1'),
-('file_uploads', 'V', '0'),
-('file_types', 'V', ''),
-('max_file_size', 'V', ''),
-('file_space_quota', 'V', ''),
-('file_offsite', 'V', '0'),
-('system_email_from_name', 'V', ''),
-('hide_forums', 'V', '1'),
-('track_user_activity', 'V', '86400'),
-('html_title', 'V', 'Phorum'),
-('head_tags', 'V', ''),
-('redirect_after_post', 'V', 'list'),
-('reply_on_read_page', 'V', '1'),
-('status', 'V', 'normal'),
-('use_new_folder_style', 'V', '1'),
-('default_forum_options', 'S', 'a:24:{s:8:"forum_id";i:0;s:10:"moderation";i:0;s:16:"email_moderators";i:0;s:9:"pub_perms";i:1;s:9:"reg_perms";i:15;s:13:"display_fixed";i:0;s:8:"template";s:7:"default";s:8:"language";s:7:"english";s:13:"threaded_list";i:0;s:13:"threaded_read";i:0;s:17:"reverse_threading";i:0;s:12:"float_to_top";i:1;s:16:"list_length_flat";i:30;s:20:"list_length_threaded";i:15;s:11:"read_length";i:30;s:18:"display_ip_address";i:0;s:18:"allow_email_notify";i:0;s:15:"check_duplicate";i:1;s:11:"count_views";i:2;s:15:"max_attachments";i:0;s:22:"allow_attachment_types";s:0:"";s:19:"max_attachment_size";i:0;s:24:"max_totalattachment_size";i:0;s:5:"vroot";i:0;}'),
-('hooks', 'S', 'a:1:{s:6:"format";a:2:{s:4:"mods";a:2:{i:0;s:7:"smileys";i:1;s:6:"bbcode";}s:5:"funcs";a:2:{i:0;s:18:"phorum_mod_smileys";i:1;s:14:"phorum_bb_code";}}}'),
-('mods', 'S', 'a:4:{s:4:"html";i:0;s:7:"replace";i:0;s:7:"smileys";i:1;s:6:"bbcode";i:1;}');
-
--- --------------------------------------------------------
+INSERT INTO `phorum_settings` (`name`, `type`, `data`) VALUES ('title','V','Phorum 5'),('cache','V','/tmp'),('session_timeout','V','30'),('short_session_timeout','V','60'),('tight_security','V','0'),('session_path','V','/'),('session_domain','V',''),('admin_session_salt','V','0.62629000 1146135136'),('cache_users','V','0'),('register_email_confirm','V','0'),('default_template','V','default'),('default_language','V','english'),('use_cookies','V','1'),('use_bcc','V','1'),('use_rss','V','1'),('internal_version','V','2006032300'),('PROFILE_FIELDS','S','a:1:{i:0;a:3:{s:4:\"name\";s:9:\"real_name\";s:6:\"length\";i:255;s:13:\"html_disabled\";i:1;}}'),('enable_pm','V','0'),('user_edit_timelimit','V','0'),('enable_new_pm_count','V','1'),('enable_dropdown_userlist','V','1'),('enable_moderator_notifications','V','1'),('show_new_on_index','V','1'),('dns_lookup','V','1'),('tz_offset','V','0'),('user_time_zone','V','1'),('user_template','V','0'),('registration_control','V','1'),('file_uploads','V','0'),('file_types','V',''),('max_file_size','V',''),('file_space_quota','V',''),('file_offsite','V','0'),('system_email_from_name','V',''),('hide_forums','V','1'),('track_user_activity','V','86400'),('html_title','V','Phorum'),('head_tags','V',''),('redirect_after_post','V','list'),('reply_on_read_page','V','1'),('status','V','normal'),('use_new_folder_style','V','1'),('default_forum_options','S','a:24:{s:8:\"forum_id\";i:0;s:10:\"moderation\";i:0;s:16:\"email_moderators\";i:0;s:9:\"pub_perms\";i:1;s:9:\"reg_perms\";i:15;s:13:\"display_fixed\";i:0;s:8:\"template\";s:7:\"default\";s:8:\"language\";s:7:\"english\";s:13:\"threaded_list\";i:0;s:13:\"threaded_read\";i:0;s:17:\"reverse_threading\";i:0;s:12:\"float_to_top\";i:1;s:16:\"list_length_flat\";i:30;s:20:\"list_length_threaded\";i:15;s:11:\"read_length\";i:30;s:18:\"display_ip_address\";i:0;s:18:\"allow_email_notify\";i:0;s:15:\"check_duplicate\";i:1;s:11:\"count_views\";i:2;s:15:\"max_attachments\";i:0;s:22:\"allow_attachment_types\";s:0:\"\";s:19:\"max_attachment_size\";i:0;s:24:\"max_totalattachment_size\";i:0;s:5:\"vroot\";i:0;}'),('hooks','S','a:1:{s:6:\"format\";a:2:{s:4:\"mods\";a:2:{i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";}s:5:\"funcs\";a:2:{i:0;s:18:\"phorum_mod_smileys\";i:1;s:14:\"phorum_bb_code\";}}}'),('mods','S','a:4:{s:4:\"html\";i:0;s:7:\"replace\";i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";i:1;}');
 
 --
 -- Table structure for table `phorum_subscribers`
 --
 
+DROP TABLE IF EXISTS `phorum_subscribers`;
 CREATE TABLE `phorum_subscribers` (
   `user_id` int(10) unsigned NOT NULL default '0',
   `forum_id` int(10) unsigned NOT NULL default '0',
@@ -1273,12 +1203,16 @@ CREATE TABLE `phorum_subscribers` (
   KEY `forum_id` (`forum_id`,`thread`,`sub_type`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_subscribers`
+--
+
 
 --
 -- Table structure for table `phorum_user_custom_fields`
 --
 
+DROP TABLE IF EXISTS `phorum_user_custom_fields`;
 CREATE TABLE `phorum_user_custom_fields` (
   `user_id` int(11) NOT NULL default '0',
   `type` int(11) NOT NULL default '0',
@@ -1286,12 +1220,16 @@ CREATE TABLE `phorum_user_custom_fields` (
   PRIMARY KEY  (`user_id`,`type`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_user_custom_fields`
+--
+
 
 --
 -- Table structure for table `phorum_user_group_xref`
 --
 
+DROP TABLE IF EXISTS `phorum_user_group_xref`;
 CREATE TABLE `phorum_user_group_xref` (
   `user_id` int(11) NOT NULL default '0',
   `group_id` int(11) NOT NULL default '0',
@@ -1299,12 +1237,16 @@ CREATE TABLE `phorum_user_group_xref` (
   PRIMARY KEY  (`user_id`,`group_id`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_user_group_xref`
+--
+
 
 --
 -- Table structure for table `phorum_user_newflags`
 --
 
+DROP TABLE IF EXISTS `phorum_user_newflags`;
 CREATE TABLE `phorum_user_newflags` (
   `user_id` int(11) NOT NULL default '0',
   `forum_id` int(11) NOT NULL default '0',
@@ -1312,12 +1254,16 @@ CREATE TABLE `phorum_user_newflags` (
   PRIMARY KEY  (`user_id`,`forum_id`,`message_id`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_user_newflags`
+--
+
 
 --
 -- Table structure for table `phorum_user_permissions`
 --
 
+DROP TABLE IF EXISTS `phorum_user_permissions`;
 CREATE TABLE `phorum_user_permissions` (
   `user_id` int(10) unsigned NOT NULL default '0',
   `forum_id` int(10) unsigned NOT NULL default '0',
@@ -1326,12 +1272,16 @@ CREATE TABLE `phorum_user_permissions` (
   KEY `forum_id` (`forum_id`,`permission`)
 ) TYPE=MyISAM;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `phorum_user_permissions`
+--
+
 
 --
 -- Table structure for table `phorum_users`
 --
 
+DROP TABLE IF EXISTS `phorum_users`;
 CREATE TABLE `phorum_users` (
   `user_id` int(10) unsigned NOT NULL auto_increment,
   `username` varchar(50) NOT NULL default '',
@@ -1373,4 +1323,8 @@ CREATE TABLE `phorum_users` (
   KEY `date_added` (`date_added`),
   KEY `email_temp` (`email_temp`)
 ) TYPE=MyISAM;
+
+--
+-- Dumping data for table `phorum_users`
+--
 
