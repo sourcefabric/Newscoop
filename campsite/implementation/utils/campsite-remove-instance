@@ -16,6 +16,14 @@ else
         PHP=`$bin_path/campsite_config --php_cli`
 fi
 
+if [ "$1" = "" ]; then
+    echo "Usage:"
+    echo "$0 <instance_name>"
+    echo "    <instance_name>: the name of the instance you want to remove; this"
+    echo "        parameter is mandatory"
+    exit 1
+fi
+
 CMD="$PHP -q $script_call $ETC_DIR $*"
 $CMD
-
+exit $?

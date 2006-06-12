@@ -17,12 +17,12 @@ if ($type == "-i")
 if ($etc_dir == "" || $type == "" || ($type == "-a" && $archive_file == "")
 	|| ($type == "-i" && $instance_name == "") || ($type != '-a' && $type != '-i')) {
 	echo "Invalid parameters received; usage:\n"
-		. "\tcampsite-restore-instance [type] [archive_name/instance_name]\n"
-		. "\twhere [etc_dir] = campsite etc directory\n"
-		. "\t\t[type] = restore type: -a from archive file, -i instance name\n"
-		. "\t\t[archive_name] = archive file name, use with -a type\n"
-		. "\t\t[instance_name] = instance to be restored, use with -i type\n"
-		. "\t\t\tThe archive file must be in backup/[instance_name] directory.\n";
+		. "    campsite-restore-instance [-a <path_to_archive> | -i <instance_name>]\n"
+		. "where:\n"
+		. "    [-a <path_to_archive>] = restore the instance from the backup archive\n"
+		. "        file <path_to_archive>; give the full or relative path to the file\n"
+		. "    [-i <instance_name>] = restore the instance having the name <instance_name>\n"
+		. "        from the default backup directory\n";
 	exit(1);
 }
 

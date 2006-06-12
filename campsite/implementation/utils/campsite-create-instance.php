@@ -13,15 +13,20 @@ $info_messages = array();
 
 $errors = array();
 if (!create_instance($GLOBALS['argv'], $errors)) {
-	foreach($errors as $index=>$error)
+	foreach($errors as $index=>$error) {
 		echo "$error\n";
-	echo "Campsite parameters:\n";
-	foreach($Campsite as $var_name=>$value)
-		echo "$var_name = $value\n";
+	}
+	if (sizeof($Campsite) > 0) {
+		echo "Campsite parameters:\n";
+		foreach($Campsite as $var_name=>$value) {
+			echo "$var_name = $value\n";
+		}
+	}
 	exit(1);
 }
-foreach ($info_messages as $index=>$message)
+foreach ($info_messages as $index=>$message) {
 	echo "$message\n";
+}
 
 
 function create_instance($p_arguments, &$p_errors)
@@ -621,7 +626,7 @@ function read_cmdline_parameters($p_arguments, &$p_errors)
 		// read the parameter value
 		$arg_n++;
 		if ($arg_n >= sizeof($p_arguments)) {
-			$p_errors[] = "Value not specified for argument '$param_name'";
+			$p_errors[] = "Value not specified for parameter '$param_name'";
 			break;
 		}
 		$param_val = $p_arguments[$arg_n];
@@ -647,12 +652,16 @@ function print_usage()
 	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults;
 
 	define_globals();
-	echo "Usage: campsite-create-instance [arguments]\nArguments may be:\n";
+	echo "Usage: campsite-create-instance [parameters]\nParameters may be:\n";
 	foreach ($g_instance_parameters as $index=>$parameter) {
-		if ($parameter != '--no_database')
+		if ($parameter == '--etc_dir') {
+			continue;
+		}
+		if ($parameter != '--no_database') {
 			echo "\t$parameter [value]\n";
-		else
+		} else {
 			echo "\t$parameter\n";
+		}
 	}
 }
 

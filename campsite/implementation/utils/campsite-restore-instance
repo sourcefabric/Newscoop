@@ -18,3 +18,4 @@ fi
 
 CMD="$PHP -q $script_call $ETC_DIR $*"
 $CMD
+exit $?

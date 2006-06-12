@@ -10,10 +10,12 @@ $instance_name = isset($GLOBALS['argv'][2]) ? trim($GLOBALS['argv'][2]) : "";
 $arg3 = isset($GLOBALS['argv'][3]) ? trim($GLOBALS['argv'][3]) : "";
 $no_backup = $arg3 == '--no_backup';
 
-if ($etc_dir == "")
+if ($etc_dir == "") {
 	die("Please supply the configuration directory as the first argument.\n");
-if ($instance_name == "")
+}
+if ($instance_name == "") {
 	die("Please supply the instance name as the second argument.\n");
+}
 
 // include install_conf.php file
 require_once("$etc_dir/install_conf.php");
@@ -21,7 +23,8 @@ require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
 
 if (!$no_backup) {
 	// backup instance
-	$cmd = $Campsite['BIN_DIR'] . "/campsite-backup-instance " . escape_shell_arg($instance_name) . " --silent --default_dir";
+	$cmd = $Campsite['BIN_DIR'] . "/campsite-backup-instance "
+		. escape_shell_arg($instance_name) . " --silent --default_dir";
 	exec_command($cmd);
 }
 
