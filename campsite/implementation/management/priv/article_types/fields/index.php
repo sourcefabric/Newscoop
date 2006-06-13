@@ -61,7 +61,7 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
                             ShowAll(field_ids);
                             allShown = 1;
                             document.getElementById('showtext').innerHTML = '<?php putGS("Hide display names"); ?>';
-                            document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';
+                            document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagminus.png';
                         } else {
                             HideAll(field_ids);
                             allShown = 0;
@@ -74,7 +74,7 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
                                 ShowAll(field_ids);
                                 allShown = 1;
                                 document.getElementById('showtext').innerHTML = '<?php putGS("Hide display names"); ?>';
-                                document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';
+                                document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagminus.png';
                                 } else {
                                 HideAll(field_ids);
                                 allShown = 0;

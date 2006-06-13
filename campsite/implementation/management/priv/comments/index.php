@@ -282,7 +282,7 @@ function onSummaryClick(p_messageId)
             </tr>
             <tr style="display: none;" id="article_<?php p($comment->getMessageId()); ?>">
                 <td>
-                    <a href="javascript:void(0);" onclick="HideElement('article_<?php p($comment->getMessageId()); ?>'); ShowElement('article_closed_<?php p($comment->getMessageId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmag-.png" border="0" align="absmiddle"><b><?php putGS("Hide article"); ?></b></a><br>
+                    <a href="javascript:void(0);" onclick="HideElement('article_<?php p($comment->getMessageId()); ?>'); ShowElement('article_closed_<?php p($comment->getMessageId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmagminus.png" border="0" align="absmiddle"><b><?php putGS("Hide article"); ?></b></a><br>
                     <table bgcolor="#EFEFEF" style="margin: 10px; border: 1px solid #777;" width="100%" cellpadding="0" cellspacing="0">
                     <?php
                         $articleData = $article->getArticleData();

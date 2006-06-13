@@ -59,7 +59,7 @@ if ($g_user->hasPermission("ManageArticleTypes")) { ?>
                             ShowAll(type_ids);
                             allShown = 1;
                             document.getElementById('showtext').innerHTML = '<?php putGS("Hide display names"); ?>';
-                            document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';
+                            document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagminus.png';
                         } else {
                             HideAll(type_ids);
                             allShown = 0;
@@ -72,7 +72,7 @@ if ($g_user->hasPermission("ManageArticleTypes")) { ?>
                                 ShowAll(type_ids);
                                 allShown = 1;
                                 document.getElementById('showtext').innerHTML = '<?php putGS("Hide display names"); ?>';
-                                document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag-.png';
+                                document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagminus.png';
                                 } else {
                                 HideAll(type_ids);
                                 allShown = 0;
