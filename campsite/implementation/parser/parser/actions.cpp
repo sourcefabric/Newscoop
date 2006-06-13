@@ -610,9 +610,25 @@ int CActTopic::takeAction(CContext& c, sockstream& fs)
 		c.SetTopic(c.DefTopic());
 		return RES_OK;
 	}
-	const Topic* pcoTopic = Topic::topic(param.value());
+	const Topic* pcoTopic = NULL;
+	if (case_comp(param.attribute(), "identifier") == 0)
+	{
+		try {
+			pcoTopic = Topic::topic((lint)Integer(param.value()));
+		}
+		catch (const InvalidValue &rcoEx)
+		{
+			return ERR_NODATA;
+		}
+	}
+	else
+	{
+		pcoTopic = Topic::topic(param.value());
+	}
 	if (pcoTopic == NULL)
+	{
 		return ERR_NODATA;
+	}
 	c.SetTopic(pcoTopic->id());
 	return RES_OK;
 }

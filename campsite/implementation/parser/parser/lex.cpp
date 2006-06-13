@@ -371,6 +371,7 @@ int CStatementMap::InitStatements()
 	pcoSt = new CStatement(CMS_ST_TOPIC, ST_TOPIC);
 
 	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
+	pcoCtx->insertAttr(new CIntegerAttr("identifier"));
 	pcoCtx->insertAttr(new CTopicAttr("name"));
 	pcoCtx->insertAttr(new CAttribute("off"));
 	pcoCtx->insertAttr(new CAttribute("default"));
@@ -381,8 +382,8 @@ int CStatementMap::InitStatements()
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
-	pcoCtx->insertAttr(new CTopicAttr("identifier"));
-	pcoCtx->insertAttr(new CTopicAttr("name"));
+	pcoCtx->insertAttr(new CIntegerAttr("identifier"));
+	pcoCtx->insertAttr(new CStringAttr("name"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
