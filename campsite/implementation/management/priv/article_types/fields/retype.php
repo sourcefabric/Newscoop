@@ -22,6 +22,36 @@ $crumbs[] = array(getGS("Reassign a field type"), "");
 
 echo camp_html_breadcrumbs($crumbs);
 
+
+// Verify the merge rules
+// Text->Text = OK
+// Text->Body = OK
+// Body->Text = NO
+// Body->Body = OK
+// Text->Date = NO
+// Text->Topic = NO
+// Body->Date = NO
+// Body->Topic = NO
+// Date->Text = OK
+// Date->Body = OK
+// Date->Date = OK
+// Date->Topic = NO
+// Topic->Text = OK
+// Topic->Body = OK
+// Topic->Date = NO
+// Topic->Topic = NO* (TODO)
+$options = array();
+if ($articleField->getType() == 'mediumblob') {
+    $options = array();        
+}
+if ($articleField->getType() == 'date') {
+    $options = array('datey' => getGS('Date'), 'text' => getGS('Single-line Text'), 'body' => getGS('Multi-line Text with WYSIWYG'));    
+}
+if ($articleField->getType() == 'varchar(255)') {
+    $options = array('text' => getGS('Single-line Text'), 'body' => getGS('Multi-line Text with WYSIWYG'));    
+}
+if ($articleField->getType() == 'int(10) unsigned') {
+}
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
@@ -42,6 +72,12 @@ function UpdateArticleFieldContext() {
 </script>
 
 
+<?php if (!count($options)) { ?>
+<P>
+You cannot reassign this type.
+</P>
+<?php camp_html_copyright_notice(); ?>
+<?php } else { ?>
 
 
 <P>
@@ -53,11 +89,12 @@ function UpdateArticleFieldContext() {
 	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 	<TD>
 	<SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
-		<OPTION VALUE="text" <?php if ($articleField->getType() == 'varchar(255)') print "SELECTED"; ?>><?php  putGS('Single-line Text'); ?>
-		<OPTION VALUE="date" <?php if ($articleField->getType() == 'date') print "SELECTED"; ?>><?php  putGS('Date'); ?>
-		<OPTION VALUE="body" <?php if ($articleField->getType() == 'mediumblob') print "SELECTED"; ?>><?php  putGS('Multi-line Text with WYSIWYG'); ?>
-		<OPTION VALUE="topic" <?php if ($articleField->getType() == 'int(10) unsigned') print "SELECTED"; ?>><?php  putGS('Topic'); ?>
-	</SELECT>
+        <?php foreach ($options as $k => $v) { ?>
+        	<OPTION VALUE="<?php print $k; ?>"><?php putGS($v); ?></OPTION>
+        <?php } ?>
+    </SELECT>
+
+    
 	</TD>
 </TR>
 <tr style="display: none;" id="topic_list">
@@ -108,3 +145,4 @@ UpdateArticleFieldContext();
 </script>
 <?php } ?>
 <?php camp_html_copyright_notice(); ?>
+<?php } ?>
