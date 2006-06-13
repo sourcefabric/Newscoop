@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Alias.php');
 
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
@@ -34,15 +35,23 @@ if ($errorStr != "") {
 
 $templateObj =& new Template($templateId);
 
+if (!isset($_SERVER['SERVER_PORT']))
+{
+	$_SERVER['SERVER_PORT'] = 80;
+}
+$scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
+$siteAlias = new Alias($publicationObj->getDefaultAliasId());
+$websiteURL = $scheme.$siteAlias->getName();
+
 $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_user->getKeyId()
 				. "&AdminAccess=all";
 if ($publicationObj->getUrlTypeId() == 1) {
 	$templateObj = & new Template($templateId);
-	$uri = "/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
+	$uri = "$websiteURL/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
 		. "&IdPublication=$f_publication_id&NrIssue=$f_issue_number&NrSection=$f_section_number"
 		. "&NrArticle=$f_article_number&$accessParams";
 } else {
-	$uri = "/" . $languageObj->getCode() . "/" . $issueObj->getUrlName()
+	$uri = "$websiteURL/" . $languageObj->getCode() . "/" . $issueObj->getUrlName()
 		. "/" . $sectionObj->getUrlName() . "/" . $articleObj->getUrlName() . "?$accessParams";
 }
 

@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Alias.php');
 
 $Language = Input::Get('Language', 'int', 0);
 $Pub = Input::Get('Pub', 'int', 0);
@@ -29,15 +30,24 @@ if ($errorStr != "") {
 	exit(0);
 }
 
+if (!isset($_SERVER['SERVER_PORT']))
+{
+	$_SERVER['SERVER_PORT'] = 80;
+}
+$scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
+$siteAlias = new Alias($publicationObj->getDefaultAliasId());
+$websiteURL = $scheme.$siteAlias->getName();
+
 $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_user->getKeyId()
 				. "&AdminAccess=all";
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
 	$templateObj = & new Template($templateId);
-	$uri = "/look/" . $templateObj->getName()
+	$uri = "$websiteURL/look/" . $templateObj->getName()
 		. "?IdLanguage=$Language&IdPublication=$Pub&NrIssue=$Issue&$accessParams";
 } else {
-	$uri = "/" . $languageObj->getCode() . "/" . $issueObj->getUrlName() . "?$accessParams";
+	$uri = "$websiteURL/" . $languageObj->getCode()
+		. "/" . $issueObj->getUrlName() . "?$accessParams";
 }
 
 if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
