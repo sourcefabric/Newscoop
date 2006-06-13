@@ -11,6 +11,12 @@ if (!$g_user->hasPermission('ManageArticleTypes')) {
 }
 
 $articleTypeName = Input::Get('f_article_type');
+$lang = camp_session_get('LoginLanguageId', 1);
+$langObj =& new Language($lang);
+$currentLanguageId = $langObj->getLanguageId();
+
+
+$topics = Topic::GetTree();
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -56,8 +62,10 @@ function UpdateArticleFieldContext() {
 		<OPTION VALUE="text"><?php  putGS('Single-line Text'); ?>
 		<OPTION VALUE="date"><?php  putGS('Date'); ?>
 		<OPTION VALUE="body"><?php  putGS('Multi-line Text with WYSIWYG'); ?>
-		<OPTION VALUE="topic"><?php  putGS('Topic'); ?>
-	</SELECT>
+        <?php if (count($topics) > 0) { ?>
+    		<OPTION VALUE="topic"><?php  putGS('Topic'); ?>
+        <?php } ?>
+    </SELECT>
 	</TD>
 </TR>
 <tr style="display: none;" id="topic_list">
@@ -65,12 +73,7 @@ function UpdateArticleFieldContext() {
 	<td>
 		<select name="f_root_topic_id" class="input_select">
 <?php
-$lang = camp_session_get('LoginLanguageId', 1);
-$langObj =& new Language($lang);
-$currentLanguageId = $langObj->getLanguageId();
 
-
-$topics = Topic::GetTree();
 foreach ($topics as $topicPath) {
 	$printTopic = array();
 	foreach ($topicPath as $topicId => $topic) {
