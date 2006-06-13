@@ -90,6 +90,7 @@ CContext::CContext()
 	m_bArticleCommentEnabledValid = false;
 	adduser = modifyuser = login = search = search_and = false;
 	adduser_res = modifyuser_res = login_res = search_res = m_nSubmitArticleCommentResult = -1;
+	m_nImageId = -1;
 	search_level = 0;
 	m_bMultiplePublicationSearch = false;
 	m_pcoURL = NULL;
@@ -181,6 +182,7 @@ int CContext::operator ==(const CContext& c) const
 				|| (m_pcoArticleComment != NULL && c.m_pcoArticleComment != NULL
 				&& *m_pcoArticleComment == *c.m_pcoArticleComment))
 			&& m_nSubmitArticleCommentResult == c.m_nSubmitArticleCommentResult
+			&& m_nImageId == c.m_nImageId
 			&& m_pcoURL->equalTo(c.m_pcoURL)
 			&& m_pcoDefURL->equalTo(c.m_pcoDefURL);
 }
@@ -273,6 +275,7 @@ const CContext& CContext::operator =(const CContext& s)
 		m_pcoArticleComment = new CArticleComment(*s.m_pcoArticleComment);
 	}
 	m_nSubmitArticleCommentResult = s.m_nSubmitArticleCommentResult;
+	m_nImageId = s.m_nImageId;
 	if (s.m_pcoURL != NULL)
 		m_pcoURL = s.m_pcoURL->clone();
 	else

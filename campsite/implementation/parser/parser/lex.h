@@ -96,6 +96,7 @@ using std::map;
 #define CMS_ST_ARTICLECOMMENTFORM 49
 #define CMS_ST_ENDARTICLECOMMENTFORM 50
 #define CMS_ST_URL 51
+#define CMS_ST_ARTICLEIMAGE 52
 
 // statement names
 #define ST_LANGUAGE "Language"
@@ -149,6 +150,7 @@ using std::map;
 #define ST_ARTICLECOMMENTFORM "ArticleCommentForm"
 #define ST_ENDARTICLECOMMENTFORM "EndArticleCommentForm"
 #define ST_URL "URL"
+#define ST_ARTICLEIMAGE "ArticleImage"
 
 // The lexem returned by lex class
 class CLexem

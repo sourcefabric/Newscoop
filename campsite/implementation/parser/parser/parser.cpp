@@ -72,6 +72,8 @@ using std::endl;
 	ST_LIST " " ST_SUBTOPIC ", " \
 	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
 	ST_LIST " " ST_ARTICLECOMMENT ", " \
+	ST_LIST " " ST_ARTICLEIMAGE ", " \
+	ST_URL ", " \
 	ST_URLPARAMETERS ", " \
 	ST_URI ", " \
 	ST_URIPATH ", " \
@@ -101,6 +103,8 @@ using std::endl;
 	ST_LIST " " ST_SUBTOPIC ", " \
 	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
 	ST_LIST " " ST_ARTICLECOMMENT ", " \
+	ST_LIST " " ST_ARTICLEIMAGE ", " \
+	ST_URL ", " \
 	ST_URLPARAMETERS ", " \
 	ST_URI ", " \
 	ST_URIPATH ", " \
@@ -128,6 +132,8 @@ using std::endl;
 	ST_LIST " " ST_SUBTOPIC ", " \
 	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
 	ST_LIST " " ST_ARTICLECOMMENT ", " \
+	ST_LIST " " ST_ARTICLEIMAGE ", " \
+	ST_URL ", " \
 	ST_URLPARAMETERS ", " \
 	ST_URI ", " \
 	ST_URIPATH ", " \
@@ -150,6 +156,8 @@ using std::endl;
 	ST_LIST " " ST_ARTICLETOPIC ", " \
 	ST_LIST " " ST_SUBTOPIC ", " \
 	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
+	ST_LIST " " ST_ARTICLEIMAGE ", " \
+	ST_URL ", " \
 	ST_URLPARAMETERS ", " \
 	ST_URI ", " \
 	ST_URIPATH ", " \
@@ -193,6 +201,7 @@ using std::endl;
 #define SUBLV_ARTICLEATTACHMENT 1048576
 #define SUBLV_LISTARTICLECOMMENT 2097152
 #define SUBLV_ARTICLECOMMENT 4194304
+#define SUBLV_LISTIMAGE 8388608
 
 
 // macro definition
@@ -479,18 +488,31 @@ const char* CParser::LvStatements(int level)
 const char* CParser::LvListSt(int level)
 {
 	if (level & LV_LARTICLE || level & LV_LSUBTITLE)
-		return ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC;
+	{
+		return ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC
+				", " ST_ARTICLECOMMENT ", " ST_ARTICLEIMAGE;
+	}
 	else if (level & LV_LSECTION)
+	{
 		return ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT ", "
-				ST_SUBTOPIC;
+				ST_SUBTOPIC ", " ST_ARTICLECOMMENT ", " ST_ARTICLEIMAGE;
+	}
 	else if (level & LV_LISSUE)
+	{
 		return ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC
-				", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC;
+				", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC ", " ST_ARTICLECOMMENT
+				", " ST_ARTICLEIMAGE;
+	}
 	else if (level & LV_ROOT)
+	{
 		return ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC
-				", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC;
+				", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC ", " ST_ARTICLECOMMENT
+				", " ST_ARTICLEIMAGE;
+	}
 	else
+	{
 		return "";
+	}
 }
 
 // IfStatements: return string containing if type statements allowed in a given level
@@ -972,19 +994,27 @@ inline int CParser::HURLParameters(CActionList& al)
 		}
 		if (case_comp(l->atom()->identifier(), "image") == 0)
 		{
-			RequireAtom(l);
-			try
+			l = lex.getLexem();
+			if (l->res() == CMS_LEX_IDENTIFIER && l->atom() != NULL)
 			{
-				Integer i(l->atom()->identifier());
-				i.operator long int();
+				try
+				{
+					Integer i(l->atom()->identifier());
+					i.operator long int();
+					img = strtol(l->atom()->identifier().c_str(), 0, 10);
+				}
+				catch (InvalidValue& rcoEx)
+				{
+					SetPError(parse_err, PERR_DATA_TYPE, MODE_PARSE, "integer",
+							  lex.prevLine(), lex.prevColumn());
+					return 0;
+				}
 			}
-			catch (InvalidValue& rcoEx)
+			else
 			{
-				SetPError(parse_err, PERR_DATA_TYPE, MODE_PARSE, "integer",
-				          lex.prevLine(), lex.prevColumn());
-				return 0;
+				img = 0;
+				continue;
 			}
-			img = strtol(l->atom()->identifier().c_str(), 0, 10);
 		}
 		if (case_comp(l->atom()->identifier(), "template") == 0)
 		{
@@ -1248,7 +1278,8 @@ inline int CParser::HList(CActionList& al, int level, ulint sublevel)
 	// ArticleAttachment or ArticleComment
 	st = (const CStatement*)l->atom();
 	if (level >= LV_LARTICLE && st->id() != CMS_ST_ARTICLETOPIC && st->id() != CMS_ST_SUBTOPIC
-		   && st->id() != CMS_ST_ARTICLEATTACHMENT)
+		   && st->id() != CMS_ST_ARTICLEATTACHMENT && st->id() != CMS_ST_ARTICLECOMMENT
+		   && st->id() != CMS_ST_ARTICLEIMAGE && st->id() != CMS_ST_SUBTITLE)
 	{
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 					LARTICLE_STATEMENTS, lex.prevLine(), lex.prevColumn());

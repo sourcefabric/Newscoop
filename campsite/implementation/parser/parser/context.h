@@ -202,6 +202,7 @@ private:
 											// was computed for the current context
 	CArticleComment* m_pcoArticleComment;	// article comment identifier
 	id_type m_nSubmitArticleCommentResult;	// result of the add comment event
+	id_type m_nImageId;						// article image identifier
 	CURL* m_pcoURL;
 	CURL* m_pcoDefURL;
 
@@ -462,6 +463,10 @@ public:
 	void SetArticleCommentResult(id_type p_nSubmitArticleCommentResult)
 	{
 		m_nSubmitArticleCommentResult = p_nSubmitArticleCommentResult;
+	}
+	void SetImage(id_type p_nImageId)
+	{
+		m_nImageId = p_nImageId;
 	}
 	void SetURL(CURL* p_pcoURL)
 	{
@@ -765,6 +770,10 @@ public:
 	id_type SubmitArticleCommentResult() const
 	{
 		return m_nSubmitArticleCommentResult;
+	}
+	id_type Image() const
+	{
+		return m_nImageId;
 	}
 	CURL* URL() const
 	{

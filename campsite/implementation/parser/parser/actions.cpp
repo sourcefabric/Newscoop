@@ -663,6 +663,7 @@ CListModifiers::CListModifiers()
 	insert(CMS_ST_SUBTOPIC);
 	insert(CMS_ST_ARTICLEATTACHMENT);
 	insert(CMS_ST_ARTICLECOMMENT);
+	insert(CMS_ST_ARTICLEIMAGE);
 }
 
 CListModifiers CActList::s_coModifiers;
@@ -676,32 +677,50 @@ CListModifiers CActList::s_coModifiers;
 int CActList::WriteModParam(string& s, CContext& c, string& table)
 {
 	if (modifier == CMS_ST_SECTION)
+	{
 		table = "Sections";
-	else
+	}
+	else if (modifier == CMS_ST_ISSUE)
+	{
 		table = "Issues";
+	}
+	else
+	{
+		return ERR_NODATA;
+	}
 	string w = "";
 	if (modifier == CMS_ST_ISSUE && c.Access() != A_ALL)
+	{
 		w = "Published = 'Y'";
+	}
 	CParameterList::iterator pl_i;
 	for (pl_i = mod_param.begin(); pl_i != mod_param.end(); ++pl_i)
 	{
 		char* pchVal = SQLEscapeString((*pl_i)->value().c_str(), (*pl_i)->value().length());
 		if (pchVal == NULL)
+		{
 			return ERR_NOMEM;
+		}
 		AppendConstraint(w, (*pl_i)->attribute(), (*pl_i)->opSymbol(), pchVal, "and");
 		delete []pchVal;
 	}
 	stringstream buf;
 	CheckFor("IdPublication", c.Publication(), buf, w);
 	if (modifier == CMS_ST_SECTION)
+	{
 		CheckFor("NrIssue", c.Issue(), buf, w);
+	}
 	buf.str("");
 	buf << "IdLanguage = " << c.Language();
 	if (w != "")
+	{
 		w += " and ";
+	}
 	w += buf.str();
-	if (w.length())
+	if (w.length() > 0)
+	{
 		s += string(" where ") + w;
+	}
 	return RES_OK;
 }
 
@@ -963,6 +982,10 @@ int CActList::WriteOrdParam(string& s)
 	{
 		s = " order by pm.message_id asc";
 	}
+	if (modifier == CMS_ST_ARTICLEIMAGE)
+	{
+		s = " order by Number asc";
+	}
 	return RES_OK;
 }
 
@@ -1097,6 +1120,11 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				buf << " where pm.status > 0 and ac.fk_article_number = " << lc.Article();
 				where = buf.str();
 				break;
+			case CMS_ST_ARTICLEIMAGE:
+				table = "ArticleImages";
+				buf << " where NrArticle = " << lc.Article();
+				where = buf.str();
+				break;
 		}
 		WriteOrdParam(order);
 		WriteLimit(limit, lc);
@@ -1130,6 +1158,9 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				break;
 			case CMS_ST_ARTICLECOMMENT:
 				fields = "select pm.message_id";
+				break;
+			case CMS_ST_ARTICLEIMAGE:
+				fields = "select IdImage";
 				break;
 		}
 		
@@ -1201,9 +1232,13 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				}
 				lc.SetPublication(strtol(row[2], 0, 10));
 				if (modifier != CMS_ST_ISSUE)
+				{
 					lc.SetIssue(strtol(row[3], 0, 10));
+				}
 				if (modifier == CMS_ST_ARTICLE || modifier == CMS_ST_SEARCHRESULT)
+				{
 					lc.SetSection(strtol(row[4], 0, 10));
+				}
 				SetContext(lc, strtol(row[0], 0, 10));
 			}
 			if (modifier == CMS_ST_ARTICLEATTACHMENT)
@@ -1218,6 +1253,10 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 			if (modifier == CMS_ST_ARTICLETOPIC || modifier == CMS_ST_SUBTOPIC)
 			{
 				lc.SetTopic(strtol(row[0], 0, 10));
+			}
+			if (modifier == CMS_ST_ARTICLEIMAGE)
+			{
+				lc.SetImage(strtol(row[0], 0, 10));
 			}
 		}
 		else
@@ -1324,8 +1363,21 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 	if (image_nr >= 0)
 	{
 		if (c.Publication() < 0 || c.Issue() < 0 || c.Section() < 0 || c.Article() < 0)
+		{
 			return ERR_NOPARAM;
-		URLPrintParam(P_NRIMAGE, image_nr, coOut, first);
+		}
+		if (image_nr > 0)
+		{
+			URLPrintParam(P_NRIMAGE, image_nr, coOut, first);
+		}
+		if (image_nr == 0)
+		{
+			if (c.Image() <= 0)
+			{
+				return ERR_NODATA;
+			}
+			URLPrintParam(P_NRIMAGE, c.Image(), coOut, first);
+		}
 		URLPrintParam(P_NRARTICLE, c.Article(), coOut, first);
 		fs << encodeHTML(coOut.str(), c.EncodeHTML());
 		return 0;

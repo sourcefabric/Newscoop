@@ -466,6 +466,14 @@ int CStatementMap::InitStatements()
 
 	this->insert(pcoSt);
 
+	// ArticleImage statement
+	pcoSt = new CStatement(CMS_ST_ARTICLEIMAGE, ST_ARTICLEIMAGE);
+
+	pcoCtx = new CStatementContext(CMS_CT_LIST);
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
 	// FormParameters statement
 	pcoSt = new CStatement(CMS_ST_FORMPARAMETERS, ST_FORMPARAMETERS);
 
