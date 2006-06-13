@@ -40,7 +40,7 @@ echo camp_html_breadcrumbs($crumbs);
 	foreach ($articleTypes as $at) {
 		print '<OPTION VALUE="'. $at .'"';
 		if ($f_src == $at) { print " SELECTED "; }
-		print '">'. $at .'</OPTION>';
+		print '>'. $at .'</OPTION>';
 
 	}
 	?>
@@ -53,7 +53,7 @@ echo camp_html_breadcrumbs($crumbs);
 	foreach ($articleTypes as $at) {
 		print '<OPTION VALUE="'. $at .'"';
 		if ($f_dest == $at) { print " SELECTED "; }
-		print '">'. $at .'</OPTION>';
+		print '>'. $at .'</OPTION>';
 
 	}
 	?>
