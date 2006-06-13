@@ -64,9 +64,9 @@ if ($g_user->hasPermission("ManageArticleTypes")) { ?>
                             HideAll(type_ids);
                             allShown = 0;
                             document.getElementById('showtext').innerHTML = '<?php putGS("Show display names"); ?>';
-                            document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag+.png';
+                            document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagplus.png';
                         }">
-		      <IMG NAME="show" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag+.png" BORDER="0"></A></TD>
+		      <IMG NAME="show" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagplus.png" BORDER="0"></A></TD>
     	<TD><B><A HREF="javascript: void(0);"
                     ONCLICK="if (allShown == 0) {
                                 ShowAll(type_ids);
@@ -77,7 +77,7 @@ if ($g_user->hasPermission("ManageArticleTypes")) { ?>
                                 HideAll(type_ids);
                                 allShown = 0;
                                 document.getElementById('showtext').innerHTML = '<?php putGS("Show display names"); ?>';
-                                document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmag+.png';
+                                document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagplus.png';
                                 }"><DIV ID="showtext"><?php putGS("Show display names"); ?></DIV></A></B></TD>
 
 

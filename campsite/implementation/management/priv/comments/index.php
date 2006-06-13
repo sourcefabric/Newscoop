@@ -277,7 +277,7 @@ function onSummaryClick(p_messageId)
             </td></tr>
             <TR id="article_closed_<?php p($comment->getMessageId()); ?>">
                 <td valign="middle">
-                    <a href="javascript:void(0);" onclick="HideElement('article_closed_<?php p($comment->getMessageId()); ?>'); ShowElement('article_<?php p($comment->getMessageId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmag+.png" border="0" align="absmiddle"><b><?php putGS("Show article"); ?></b></a>
+                    <a href="javascript:void(0);" onclick="HideElement('article_closed_<?php p($comment->getMessageId()); ?>'); ShowElement('article_<?php p($comment->getMessageId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmagplus.png" border="0" align="absmiddle"><b><?php putGS("Show article"); ?></b></a>
                 </td>
             </tr>
             <tr style="display: none;" id="article_<?php p($comment->getMessageId()); ?>">

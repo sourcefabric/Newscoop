@@ -75,7 +75,7 @@ global $ADMIN;
                 "ToggleRowVisibility('user_details_dialog');
                 ToggleRowVisibility('user_details_hide_link');
                 ToggleRowVisibility('user_details_show_link');">
-                <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] . "/viewmag+.png"; ?>" id="my_icon" border=
+                <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] . "/viewmagplus.png"; ?>" id="my_icon" border=
                 "0" align="center"><?php putGS("Show error details"); ?></a>
             </td>
         </tr>
