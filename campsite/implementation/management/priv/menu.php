@@ -71,7 +71,8 @@ foreach ($Campsite["publications"] as $publication) {
 				foreach ($Campsite["sections"][$pubId][$issueId][$languageId] as $section) {
 				    $sectionId = $section->getSectionNumber();
 				    $menu_item_section =& DynMenuItem::Create(
-				        $section->getName(),
+				        $section->getSectionNumber().". "
+				        .$section->getName(),
 				        "/$ADMIN/articles/index.php"
 				        ."?f_publication_id=$pubId"
 				        ."&f_issue_number=$issueId"
