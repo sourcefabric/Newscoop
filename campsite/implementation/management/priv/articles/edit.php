@@ -772,8 +772,10 @@ if ($f_edit_mode == "edit") { ?>
 	<TR>
 		<TD COLSPAN="2" align="center">
 			<INPUT TYPE="submit" NAME="save" VALUE="<?php putGS('Save'); ?>" class="button">
+			<?php if ($f_publication_id > 0) { ?>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<INPUT TYPE="submit" NAME="save_and_close" VALUE="<?php putGS('Save and Close'); ?>" class="button">
+			<?php } ?>
 		</TD>
 	</TR>
 	<?php } ?>
