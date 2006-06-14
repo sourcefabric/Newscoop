@@ -44,7 +44,7 @@ if (camp_html_has_msgs()) {
 }
 
 $changed = true;
-$changed &= $issueObj->setName('Name');
+$changed &= $issueObj->setName($f_issue_name);
 if ($issueObj->getWorkflowStatus() == 'Y') {
 	$changed &= $issueObj->setPublicationDate($f_publication_date);
 }
@@ -64,7 +64,7 @@ if ($changed) {
 // The tricky part - language ID and URL name must be unique.
 $conflictingIssues = Issue::GetIssues($f_publication_id, $f_new_language_id, null, $f_url_name);
 $conflictingIssue = array_pop($conflictingIssues);
-// If it isnt the one we are currently updating
+// If it conflicts with another issue
 if (is_object($conflictingIssue) && ($conflictingIssue->getIssueNumber() != $f_issue_number)) {
 	$conflictingIssueLink = "/$ADMIN/issues/edit.php?"
 		."Pub=$f_publication_id"
