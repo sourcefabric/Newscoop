@@ -35,15 +35,14 @@ foreach ($_REQUEST as $name => $value) {
                 break;
             case "delete":
                 $comment->delete();
+                ArticleComment::Unlink($articleObj->getArticleNumber(),
+                					   $articleObj->getLanguageId(),
+                					   $messageId);
                 break;
             case "approve":
                 $comment->setStatus(PHORUM_STATUS_APPROVED);
                 break;
         }
-//        $subjectStr = Input::Get('f_subject_'.$messageId, 'string', '', true);
-//        $comment->setSubject($subjectStr);
-//        $commentStr = Input::Get('f_comment_'.$messageId, 'string', '', true);
-//        $comment->setBody($commentStr);
     }
 }
 header("Location: ".camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");

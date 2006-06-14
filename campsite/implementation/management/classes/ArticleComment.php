@@ -48,6 +48,32 @@ class ArticleComment
 
 
     /**
+     * Remove all the entries from the table that match the given parameters.
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     * @param int $p_commentId
+     */
+    function Unlink($p_articleNumber = null, $p_languageId = null, $p_commentId = null)
+    {
+        global $g_ado_db;
+        $constraints = array();
+        if (!is_null($p_articleNumber)) {
+        	$constraints[] = "fk_article_number=$p_articleNumber";
+        }
+        if (!is_null($p_languageId)) {
+        	$constraints[] = "fk_language_id=$p_languageId";
+        }
+        if (!is_null($p_commentId)) {
+        	$constraints[] = "fk_comment_thread_id=$p_commentId";
+        }
+        $queryStr = "DELETE FROM ArticleComments WHERE "
+        			.implode(" AND ", $constraints);
+        $g_ado_db->Execute($queryStr);
+    } // fn Unlink
+
+
+    /**
      * This function should be called whenever an article is deleted.
      *
      * @param int $p_articleNumber
@@ -56,7 +82,6 @@ class ArticleComment
      */
     function OnArticleDelete($p_articleNumber, $p_languageId)
     {
-    	global $g_ado_db;
     	if (!is_numeric($p_articleNumber) || !is_numeric($p_languageId)) {
     		return;
     	}
@@ -66,11 +91,8 @@ class ArticleComment
 		$threadHead = new Phorum_message($threadId);
 		$threadHead->delete(PHORUM_DELETE_TREE);
 
-		// Delete all links
-		$sql = "DELETE FROM ArticleComments "
-			  ." WHERE fk_article_number=$p_articleNumber"
-			  ." AND fk_language_id=$p_languageId";
-		$g_ado_db->Execute($sql);
+		// Delete all links to this article.
+		ArticleComment::Unlink($p_articleNumber, $p_languageId);
     } // fn OnArticleDelete
 
 

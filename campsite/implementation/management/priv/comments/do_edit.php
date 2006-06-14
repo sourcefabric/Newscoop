@@ -30,6 +30,7 @@ foreach ($_REQUEST as $name => $value) {
                 break;
             case "delete":
                 $comment->delete();
+                ArticleComment::Unlink(null, null, $messageId);
                 break;
             case "approve":
                 $comment->setStatus(PHORUM_STATUS_APPROVED);
