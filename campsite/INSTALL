@@ -77,6 +77,10 @@ INSTALLATION - the usual procedure
    the create instance script separately, after installation. Read
    instructions from install script.
 
+   GENTOO
+   You will need to follow these special instructions at:
+   http://code.campware.org/manuals/campsite/2.5/index.php?id=152  
+
 4. Configure the default instance
 
    - Edit the file "campsite-vhost.conf" from the instance configuration
