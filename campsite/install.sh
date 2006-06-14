@@ -84,14 +84,14 @@ install_campsite()
 	echo -e "Fill in \"admin\" and \"admn00\" user and password respectively to log in."
 	echo "You should change the password as soon as possible."
     else
-	echo "Run the script:"
+	echo "Run this script in order to complete the Campsite installation:"
 	echo "    $BIN_DIR/campsite-create-instance"
-	echo "in order to complete Campsite install."
-	echo "Run:"
+	echo
+	echo "For help with this command, run:"
 	echo "    $BIN_DIR/campsite-create-instance --help"
 	echo "or read the manual at:"
 	echo "    http://code.campware.org/manuals/campsite/2.5/index.php?id=147"
-	echo "in order to learn how to use the instance creation script."
+	echo
     fi
 }
 
