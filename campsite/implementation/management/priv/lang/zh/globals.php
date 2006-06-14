@@ -2,7 +2,7 @@
 regGS("Account", "");
 regGS("Items per page", "");
 regGS("Add new", "");
-regGS("CAMPSITE", "CAMPSITE");
+regGS("Campsite", "CAMPSITE");
 regGS("Home", "首页");
 regGS("Logout", "注销");
 regGS("More...", "");

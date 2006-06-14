@@ -19,7 +19,6 @@ class Template extends DatabaseObject {
 	var $m_columnNames = array('Id', 'Name', 'Type', 'Level');
 
 	/**
-	 *
 	 * @param int p_templateId
 	 */
 	function Template($p_templateId = null)
@@ -32,6 +31,11 @@ class Template extends DatabaseObject {
 	} // constructor
 
 
+	/**
+	 * Return TRUE if the file exists.
+	 *
+	 * @return boolean
+	 */
 	function fileExists()
 	{
 		global $Campsite;
@@ -39,44 +43,63 @@ class Template extends DatabaseObject {
 		if (!Template::IsValidPath(dirname($this->m_data['Name']))) {
 			return false;
 		}
-		if (!is_file($Campsite['HTML_DIR'] . "/look/" . $this->m_data['Name'])) {
+		if (!is_file($Campsite['TEMPLATE_DIRECTORY']."/".$this->m_data['Name'])) {
 			return false;
 		}
 		return true;
-	}
+	} // fn fileExists
 
 
+	/**
+	 * @return int
+	 */
 	function getTemplateId()
 	{
 		return $this->m_data['Id'];
 	} // fn getTemplateId
 
 
+	/**
+	 * @return string
+	 */
 	function getName()
 	{
 		return $this->m_data['Name'];
 	} // fn getName
 
 
+	/**
+	 * @return int
+	 */
 	function getType()
 	{
 		return $this->m_data['Type'];
 	} // fn  getType
 
 
+	/**
+	 * @return int
+	 */
 	function getLevel()
 	{
 		return $this->m_data['Level'];
 	} // fn getLevel
 
 
+	/**
+	 * @return string
+	 */
 	function getAbsoluteUrl()
 	{
 		global $Campsite;
-		return $Campsite['WEBSITE_URL'].'/look/'.$this->m_data['Name'];
+		return $Campsite['TEMPLATE_BASE_URL'].$this->m_data['Name'];
 	} // fn getAbsoluteUrl
 
 
+	/**
+	 * @param string $p_path
+	 * @return string
+	 */
 	function GetContents($p_path)
 	{
 		if (file_exists($p_path)) {
@@ -89,7 +112,8 @@ class Template extends DatabaseObject {
 
 
 	/**
-	 * Returns true if the template path was valid
+	 * Returns true if the template path is valid.
+	 *
 	 * @param string $p_path
 	 * @return bool
 	 */
@@ -98,13 +122,14 @@ class Template extends DatabaseObject {
 		global $Campsite;
 
 		foreach (split("/", $p_path) as $index=>$dir) {
-			if ($dir == "..")
+			if ($dir == "..") {
 				return false;
+			}
 		}
 
-		if (!is_dir($Campsite['HTML_DIR'] . "/look/$p_path"))
+		if (!is_dir($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path")) {
 			return false;
-
+		}
 		return true;
 	} // fn IsValidPath
 
@@ -185,12 +210,20 @@ class Template extends DatabaseObject {
 	} // fn GetPath
 
 
+	/**
+	 * Return the full path to the file.
+	 *
+	 * @param string $p_path
+	 * 		Path of the file starting from the base template directory.
+	 * @param string $p_filename
+	 * @return string
+	 */
 	function GetFullPath($p_path, $p_filename)
 	{
 		global $Campsite;
 		$fileFullPath = $Campsite['TEMPLATE_DIRECTORY'].$p_path."/".$p_filename;
 		return $fileFullPath;
-	}
+	} // fn GetFullPath
 
 
 	/**
@@ -212,7 +245,7 @@ class Template extends DatabaseObject {
 		}
 
 		// insert new templates
-		$rootDir = $Campsite['HTML_DIR'] . "/look";
+		$rootDir = $Campsite['TEMPLATE_DIRECTORY'];
 		$dirs[] = $rootDir;
 		while (($currDir = array_pop($dirs)) != "") {
 			if (!$dirHandle = opendir($currDir)) {
@@ -252,64 +285,77 @@ class Template extends DatabaseObject {
 	} // fn UpdateStatus
 
 
-	function OnUpload($p_fileNameStr, $p_charset, $p_baseUpload, $p_desiredName = null)
+	/**
+	 * Call this to upload a template file.  Note: Template::UpdateStatus()
+	 * will be called automatically for you if this is successful.
+	 *
+	 * @param string $p_fileVarName
+	 * 		Name of the variable in the $_FILES global variable.
+	 * @param string $p_charset
+	 * 		Desired character set of the file.
+	 * @param string $p_baseUpload
+	 * 		Directory path to add to the base template directory.
+	 * @param string $p_desiredName
+	 * 		Desired name of the file.
+	 *
+	 * @return boolean
+	 */
+	function OnUpload($f_fileVarName, $p_baseUpload, $p_desiredName = null, $p_charset = null)
 	{
 		global $Campsite;
 		$p_baseUpload = $Campsite['TEMPLATE_DIRECTORY'].$p_baseUpload;
 
-		if (!isset($_FILES[$p_fileNameStr]) || !isset($_FILES[$p_fileNameStr]['name'])) {
+		if (!isset($_FILES[$f_fileVarName]) || !isset($_FILES[$f_fileVarName]['name'])) {
 			return false;
 		}
 
-		$fninForm = $_FILES[$p_fileNameStr]['name'];
-
-		$dotpos = strrpos($fninForm, '.');
-		$name = substr ($fninForm, 0, $dotpos);
-		$ext = substr ($fninForm, $dotpos + 1);
-
-		if ($p_desiredName != '') {
-			$fninForm = "$p_desiredName.$ext";
+		if (is_null($p_desiredName)) {
+			$fileName = $_FILES[$f_fileVarName]['name'];
+		} else {
+			$fileName = $p_desiredName;
 		}
 
-		// strip out the &, because when transmitting filename list over the todolist,
-		// the & sign will be interpreted as separator, and this will destroy the
-		// consistency of the todolist
-		$fninForm = str_replace('&', '', $fninForm);
-		$newname = "$p_baseUpload/$fninForm";
-		if(file_exists($newname) && !is_dir($newname)) {
-			unlink($newname);
-		}
-
-		$origFile = "$newname.orig";
-		@$renok = move_uploaded_file($_FILES[$p_fileNameStr]['tmp_name'], $origFile);
-		if ($renok == false){
-			return false;
-		}
-
-		$fType = $_FILES[$p_fileNameStr]['type'];
-		if (strncmp($fType, 'text', 4) == 0)
-		{
-			$command = "iconv -f $p_charset -t UTF-8 \"$origFile\" > \"$newname\"";
-			$res_out = system($command, $status);
-			unlink($origFile);
-			if ($status != 0) {
-				unlink($newname);
+		// remove existing file if one exists
+		$newname = "$p_baseUpload/$fileName";
+		if (file_exists($newname) && !is_dir($newname)) {
+			if (!unlink($newname)) {
 				return false;
 			}
+		}
+
+		$fType = $_FILES[$f_fileVarName]['type'];
+		if (!is_null($p_charset) && (strncmp($fType, 'text', 4) == 0)) {
+			$origFile = "$newname.orig";
+			$success = move_uploaded_file($_FILES[$f_fileVarName]['tmp_name'], $origFile);
+			if ($success) {
+				$command = "iconv -f $p_charset -t UTF-8 \"$origFile\" > \"$newname\"";
+				system($command, $status);
+				if ($status == 0) {
+					$success = unlink($origFile);
+				} else {
+					$success = false;
+					unlink($newname);
+				}
+			}
 		} else {
-			rename($origFile, $newname);
+			$success = move_uploaded_file($_FILES[$f_fileVarName]['tmp_name'], $newname);
 		}
-		if (function_exists('camp_load_translation_strings')) {
-			camp_load_translation_strings('api');
+
+		if ($success) {
+			Template::UpdateStatus();
+			if (function_exists('camp_load_translation_strings')) {
+				camp_load_translation_strings('api');
+			}
+			$logtext = getGS('Template $1 uploaded', $fileName);
+			Log::Message($logtext, null, 111);
 		}
-		$logtext = getGS('Template $1 uploaded', $fninForm);
-		Log::Message($logtext, null, 111);
-		return true;
+		return $success;
 	} // fn OnUpload
 
 
 	/**
 	 * @param array $p_sqlOptions
+	 * @param boolean $p_update
 	 */
 	function GetAllTemplates($p_sqlOptions = null, $p_update = true)
 	{

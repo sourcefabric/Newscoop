@@ -21,7 +21,7 @@ $crumbs[] = array(getGS("Article type fields"), "/$ADMIN/article_types/fields/?f
 $crumbs[] = array(getGS("Reassign a field type"), "");
 
 echo camp_html_breadcrumbs($crumbs);
-
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 
 // Verify the merge rules
 // Text->Text = OK
@@ -53,11 +53,6 @@ if ($articleField->getType() == 'varchar(255)') {
 if ($articleField->getType() == 'int(10) unsigned') {
 }
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 <script>
 function UpdateArticleFieldContext() {
 	var my_form = document.forms["add_field_form"]
@@ -81,7 +76,7 @@ You cannot reassign this type.
 
 
 <P>
-<FORM NAME="add_field_form" METHOD="POST" ACTION="do_retype.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<FORM NAME="add_field_form" METHOD="POST" ACTION="do_retype.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <input type="hidden" name="f_field_name" value="<?php print $articleTypeFieldName; ?>">
 <input type="hidden" name="is_topic" id="is_topic" value="false">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">

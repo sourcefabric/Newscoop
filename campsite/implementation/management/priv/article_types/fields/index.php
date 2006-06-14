@@ -22,12 +22,9 @@ $crumbs[] = array(getGS("Article type fields"), "");
 
 echo camp_html_breadcrumbs($crumbs);
 
-if ($g_user->hasPermission("ManageArticleTypes")) { ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
+if ($g_user->hasPermission("ManageArticleTypes")) {
+	include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+	?>
 <script>
 var field_ids = new Array;
 var allShown = 0;

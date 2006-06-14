@@ -32,12 +32,8 @@ $issueLanguage =& new Language($sLanguage);
 <HTML>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="text/javascript" src="/javascript/fValidate/fValidate.config.js"></script>
-    <script type="text/javascript" src="/javascript/fValidate/fValidate.core.js"></script>
-    <script type="text/javascript" src="/javascript/fValidate/fValidate.lang-enUS.js"></script>
-    <script type="text/javascript" src="/javascript/fValidate/fValidate.validators.js"></script>
+    <?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
 	<TITLE><?php putGS("Article Import"); ?></TITLE>
-	<LINK rel="stylesheet" type="text/css" href="/css/admin_stylesheet.css">
 </HEAD>
 
 <BODY>
@@ -96,7 +92,7 @@ $issueLanguage =& new Language($sLanguage);
 </table>
 
 <table border="0" align="center" cellspacing="0" class="table_input">
-<form method="POST" action="CommandProcessor.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 0);" enctype="multipart/form-data">
+<form method="POST" action="CommandProcessor.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 <input type="hidden" name="form_name" value="upload_article_form">
 <input type="hidden" name="Pub" value="<?php echo $Pub ?>">

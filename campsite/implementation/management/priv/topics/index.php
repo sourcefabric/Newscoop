@@ -22,14 +22,10 @@ $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Topics"), "");
 echo camp_html_breadcrumbs($crumbs);
-?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
-<script>
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+?>
+<script>
 function checkAll()
 {
 	<?php foreach ($allLanguages as $tmpLanguage) { ?>
@@ -86,7 +82,7 @@ function uncheckAll()
 
 <p>
 <?php  if ($g_user->hasPermission("ManageTopics")) { ?>
-<form method="POST" action="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<form method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <input type="hidden" name="f_topic_parent_id" value="0">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_input">
 <TR>
@@ -204,7 +200,7 @@ foreach ($topics as $topicPath) {
 	    <tr id="add_subtopic_<?php p($currentTopic->getTopicId()); ?>_<?php p($topicLanguageId); ?>" style="display: none;">
 	    	<td colspan="2"></td>
 	    	<td colspan="3">
-	    		<FORM method="POST" action="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+	    		<FORM method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 	    		<input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>">
 	    		<input type="hidden" name="f_topic_language_id" value="<?php p($topicLanguageId); ?>">
 	    		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #8FBF8F; border-bottom: 1px solid #8FBF8F; background-color: #EFFFEF; padding-left: 5px; padding-right: 5px;" width="100%">
@@ -235,7 +231,7 @@ foreach ($topics as $topicPath) {
     <tr id="translate_topic_<?php p($currentTopic->getTopicId()); ?>" style="display: none;">
     	<td colspan="2"></td>
     	<td colspan="3">
-    		<FORM method="POST" action="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+    		<FORM method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
     		<input type="hidden" name="f_topic_id" value="<?php p($currentTopic->getTopicId()); ?>">
     		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
     		<tr>

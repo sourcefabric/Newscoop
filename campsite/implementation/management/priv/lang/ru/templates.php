@@ -1,4 +1,10 @@
 <?php
+regGS("You can only replace a file with a file of the same type.  The original file is of type \"$1\", and the file you uploaded was of type \"$2\".", "");
+regGS("Unable to save the file '$1' to the path '$2'.", "");
+regGS("Replace file:", "");
+regGS("Replace", "");
+regGS("File \"$1\" uploaded.", "");
+regGS("File \"$1\" replaced.", "");
 regGS("The folder name can't be '..' or '.'", "");
 regGS("The template '$1' was saved successfully.", "Шаблон '$1' был успешно сохранен.");
 regGS("The template $1 is in use and can not be deleted.", "Шаблон $1 используется и не может быть удален");

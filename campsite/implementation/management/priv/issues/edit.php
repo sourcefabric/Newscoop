@@ -89,7 +89,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 <table>
 <tr>
 	<td valign="top">
-		<FORM name="issue_edit" METHOD="POST" ACTION="do_edit.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+		<FORM name="issue_edit" METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 		<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="f_current_language_id" VALUE="<?php p($Language); ?>">
@@ -288,7 +288,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		</table>
 
 		<br>
-		<FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+		<FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 		<TR>
 			<TD COLSPAN="2">

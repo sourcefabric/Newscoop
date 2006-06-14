@@ -39,7 +39,7 @@ $my_user_type = $editUser->getUserType();
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 
-<form name="user_add" method="POST" action="<?php echo $action; ?>" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<form name="user_add" method="POST" action="<?php echo $action; ?>" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <input type="hidden" name="uType" value="<?php echo $uType; ?>">
 <?php
 if (!$isNewUser) {

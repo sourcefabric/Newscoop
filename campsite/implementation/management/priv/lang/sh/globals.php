@@ -2,7 +2,7 @@
 regGS("Account", "Nalog");
 regGS("Items per page", "Stavki po strani");
 regGS("Add new", "Dodaj novi");
-regGS("CAMPSITE", "KEMPSAJT");
+regGS("Campsite", "KEMPSAJT");
 regGS("Home", "Početak");
 regGS("Logout", "Odjava");
 regGS("More...", "Dalje...");

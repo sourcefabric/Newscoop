@@ -24,7 +24,7 @@ camp_html_content_top(getGS('Add new section'), $topArray, true, true, array(get
 ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-<FORM NAME="section_add" METHOD="POST" ACTION="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<FORM NAME="section_add" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Add new section"); ?></B>

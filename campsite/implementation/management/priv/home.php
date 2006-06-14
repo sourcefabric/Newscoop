@@ -42,34 +42,29 @@ $crumbs = array();
 $crumbs[] = array(getGS("Home"), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 ?>
-<HEAD>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
-	<TITLE><?php  putGS("Home"); ?></TITLE>
-	<script>
-	home_page_elements = new Array("your_articles",
-								   "submitted_articles",
-								   "recently_published_articles",
-								   "scheduled_actions",
-								   "unplaced_articles");
-	home_page_links = new Array("link_your_articles",
-								"link_submitted_articles",
-								"link_recently_published_articles",
-								"link_scheduled_actions",
-								"link_unplaced_articles");
-	function on_link_click(id, home_page_links)
-	{
-		for (i = 0; i < home_page_links.length; i++) {
-			if (id == home_page_links[i]) {
-				document.getElementById(home_page_links[i]).style.backgroundColor = '#CCC';
-			} else {
-				document.getElementById(home_page_links[i]).style.backgroundColor = '#FFF';
-			}
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<script>
+home_page_elements = new Array("your_articles",
+							   "submitted_articles",
+							   "recently_published_articles",
+							   "scheduled_actions",
+							   "unplaced_articles");
+home_page_links = new Array("link_your_articles",
+							"link_submitted_articles",
+							"link_recently_published_articles",
+							"link_scheduled_actions",
+							"link_unplaced_articles");
+function on_link_click(id, home_page_links)
+{
+	for (i = 0; i < home_page_links.length; i++) {
+		if (id == home_page_links[i]) {
+			document.getElementById(home_page_links[i]).style.backgroundColor = '#CCC';
+		} else {
+			document.getElementById(home_page_links[i]).style.backgroundColor = '#FFF';
 		}
 	}
-	</script>
-</HEAD>
-<BODY>
+}
+</script>
 
 <?php
 echo $breadcrumbs;

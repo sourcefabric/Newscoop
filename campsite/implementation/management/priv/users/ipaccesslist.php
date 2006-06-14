@@ -54,7 +54,7 @@ if (sizeof($ipAccessList) > 0) {
 <?php } ?>
 <tr id="add_ip_row_id" style="display: none;">
 	<td colspan="3" align="center" style="padding-top: 3px;">
-		<form name="dialog" method="POST" action="do_ipadd.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+		<form name="dialog" method="POST" action="do_ipadd.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 		<input type="hidden" name="User" value="<?php echo $editUser->getUserId(); ?>">
 		<table border="0" cellspacing="0" cellpadding="3" class="table_input" align="center" width="100%">
 			<tr>

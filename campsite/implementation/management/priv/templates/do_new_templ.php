@@ -39,7 +39,7 @@ if ($correct) {
 		Template::UpdateStatus();
 		$logtext = getGS('New template $1 was created',$f_path."/".$f_name);
 		Log::Message($logtext, $g_user->getUserName(), 114);
-		header("Location: /$ADMIN/templates/edit_template.php?Path=$f_path&Name=$f_name");
+		header("Location: /$ADMIN/templates/edit_template.php?f_path=$f_path&f_name=$f_name");
 		exit;
 	}
 }

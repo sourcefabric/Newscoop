@@ -2,7 +2,7 @@
 regGS("Account", "Учетная запись");
 regGS("Items per page", "Объектов на странице");
 regGS("Add new", "Добавить");
-regGS("CAMPSITE", "CAMPSITE");
+regGS("Campsite", "CAMPSITE");
 regGS("Home", "Главная");
 regGS("Logout", "Выход");
 regGS("More...", "Далее...");

@@ -35,16 +35,10 @@ $crumbs[] = array(getGS("Subscribed sections").": ".$publicationObj->getName(), 
 $crumbs[] = array(getGS("Add new subscription"), "");
 echo camp_html_breadcrumbs($crumbs);
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 ?>
-
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
-
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php"  onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php"  onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD ALIGN="RIGHT"><?php  putGS("Languages"); ?>:</TD>

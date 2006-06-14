@@ -14,17 +14,14 @@ $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("System Preferences"), "");
 echo camp_html_breadcrumbs($crumbs);
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 <p></p>
 
 <?php camp_html_display_msgs(); ?>
 
-<form action="do_edit.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<form action="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <table border="0" cellspacing="6" align="left" class="table_input" width="500px">
 <tr>
 	<td align="left" width="400px">

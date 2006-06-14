@@ -22,15 +22,12 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<title><?php putGS("Attach File to Article"); ?></title>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
+	<?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
 </head>
 <body>
 
 <br>
-<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/files/do_add.php" ENCTYPE="multipart/form-data" onsubmit="return validateForm(this, 0, 0, 0, 1, 8);">
+<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/files/do_add.php" ENCTYPE="multipart/form-data" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
 	<TD COLSPAN="2">

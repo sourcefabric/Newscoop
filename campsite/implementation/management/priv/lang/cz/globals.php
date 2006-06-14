@@ -2,7 +2,7 @@
 regGS("Account", "Účet");
 regGS("Items per page", "Položek na stránku");
 regGS("Add new", "Přidat nový");
-regGS("CAMPSITE", "CAMPSITE");
+regGS("Campsite", "CAMPSITE");
 regGS("Home", "Domů");
 regGS("Logout", "Odhlásit");
 regGS("More...", "Více...");

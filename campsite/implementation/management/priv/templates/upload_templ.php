@@ -24,14 +24,13 @@ echo camp_html_breadcrumbs($crumbs);
 
 ?>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_upload_templ.php" ENCTYPE="multipart/form-data" >
+<FORM METHOD="POST" ACTION="do_upload_templ.php" ENCTYPE="multipart/form-data" >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Template charset"); ?>:</TD>
+	<TD ALIGN="RIGHT"><?php  putGS("Template charset"); ?>:</TD>
 	<TD>
-		<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p(htmlspecialchars($Path)); ?>">
-		<INPUT TYPE="HIDDEN" NAME="UNIQUE_ID" VALUE="1">
-		<SELECT NAME="Charset" class="input_select">
+		<INPUT TYPE="HIDDEN" NAME="f_path" VALUE="<?php  p(htmlspecialchars($Path)); ?>">
+		<SELECT NAME="f_charset" class="input_select">
 		<OPTION VALUE="">-- <?php putGS("Select a language/character set") ?> --</OPTION>
 		<OPTION VALUE="UTF-8"><?php putGS("All languages"); ?>/UTF-8</OPTION>
 		<?PHP
@@ -44,17 +43,14 @@ echo camp_html_breadcrumbs($crumbs);
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("File"); ?>:</TD>
+	<TD ALIGN="RIGHT"><?php  putGS("File"); ?>:</TD>
 	<TD>
-	<P><INPUT TYPE="FILE" NAME="File" SIZE="32" MAXLENGTH="128" class="input_file">
+	<P><INPUT TYPE="FILE" NAME="f_file" SIZE="32" class="input_file">
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($Path); ?>'">-->
-	</DIV>
+	<TD COLSPAN="2" align="center">
+		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	</TD>
 </TR>
 </TABLE>

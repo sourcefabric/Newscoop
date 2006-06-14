@@ -26,10 +26,10 @@ if (@$handle = fopen($filename, 'w')) {
 if ($result !== false) {
 	$logtext = getGS('Template $1 was changed', $Path."/".$Name);
 	Log::Message($logtext, $g_user->getUserName(), 113);
-	header("Location: /$ADMIN/templates/edit_template.php?Path=".urlencode($Path)
-			."&Name=".urlencode($Name)."&res=OK"
-			."&resMsg=".urlencode(getGS("The template '$1' was saved successfully.", $Name)));
-	exit;
+	camp_html_add_msg(getGS("The template '$1' was saved successfully.", $Name), "ok");
+	camp_html_goto_page("/$ADMIN/templates/edit_template.php?"
+		."f_path=".urlencode($Path)
+		."&f_name=".urlencode($Name));
 } else {
 	$errMsg = getGS("Unable to save the template '$1' to the path '$2'.", $Name, $Path) . " "
 			. getGS("Please check if the user '$1' has permission to write in this directory.", $Campsite['APACHE_USER']);

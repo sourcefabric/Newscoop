@@ -175,6 +175,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 {
 	global $Campsite;
 	global $ADMIN;
+	global $ADMIN_DIR;
 	$publicationObj = camp_array_get_value($p_objArray, 'Pub', null);
 	$issueObj = camp_array_get_value($p_objArray, 'Issue', null);
 	$sectionObj = camp_array_get_value($p_objArray, 'Section', null);
@@ -242,29 +243,14 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
                 ."&f_language_selected=".$articleObj->getLanguageId());
 	}
 	if (is_array($p_extraBreadcrumbs)) {
-	    //print_r($p_extraBreadcrumbs);
 		foreach ($p_extraBreadcrumbs as $text => $link) {
 		    $breadcrumbs[] = array($text, $link);
 		}
 	}
 	$breadcrumbs[] = array($p_title, "");
-	//echo "<pre>";
-	//print_r($breadcrumbs);
-	//echo "</pre>";
-	?>
-<HEAD>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<?php if ($p_fValidate) { ?>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
-	<?php } ?>
-	<TITLE><?php p($p_title); ?></TITLE>
-</HEAD>
-
-<BODY>
-	<?php
+	if ($p_fValidate) {
+		include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+	}
 	echo camp_html_breadcrumbs($breadcrumbs);
 } // fn camp_html_content_top
 
@@ -445,4 +431,15 @@ function camp_html_display_msgs()
 		$_SESSION['camp_user_msgs'] = array();
 	}
 } // fn camp_html_display_msgs
+
+
+/**
+ * One common form validate function.
+ *
+ */
+function camp_html_fvalidate()
+{
+	echo "validateForm(this, 0, 1, 0, 1, 8)";
+} // fn camp_html_fvalidate
+
 ?>

@@ -50,14 +50,11 @@ $crumbs[] = array(getGS("Subscriptions"), "/$ADMIN/users/subscriptions/?f_user_i
 $crumbs[] = array(getGS("Subscribed sections").": ".$publicationObj->getName(), "/$ADMIN/users/subscriptions/sections/?f_user_id=$f_user_id&f_subscription_id=$f_subscription_id&f_publication_id=$f_publication_id");
 $crumbs[] = array(getGS("Change subscription"), "");
 echo camp_html_breadcrumbs($crumbs);
-?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+?>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_change.php"  onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<FORM NAME="dialog" METHOD="POST" ACTION="do_change.php"  onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">

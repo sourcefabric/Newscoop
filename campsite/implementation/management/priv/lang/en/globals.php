@@ -2,7 +2,7 @@
 regGS("Account", "Account");
 regGS("Items per page", "Items per page");
 regGS("Add new", "Add new");
-regGS("CAMPSITE", "CAMPSITE");
+regGS("Campsite", "Campsite");
 regGS("Home", "Home");
 regGS("Logout", "Logout");
 regGS("More...", "More...");
@@ -258,4 +258,5 @@ regGS("Time:", "Time:");
 regGS("No events.", "No events.");
 regGS("Default templates", "Default templates");
 regGS("System Preferences", "System Preferences");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Are you sure you want to delete the image \\'$1\\'?");
 ?>

@@ -2,7 +2,7 @@
 regGS("Account", "Cont");
 regGS("Items per page", "Elemente pe pagină");
 regGS("Add new", "Adaugă element nou");
-regGS("CAMPSITE", "CAMPSITE");
+regGS("Campsite", "CAMPSITE");
 regGS("Home", "Pagina principală");
 regGS("Logout", "Închide sesiunea");
 regGS("More...", "Mai mult...");

@@ -20,7 +20,7 @@ camp_html_content_top(getGS('Add new issue'), array('Pub' => $publicationObj), t
 ?>
 
 <P>
-<FORM name="issue_add" METHOD="POST" ACTION="do_add_new.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<FORM name="issue_add" METHOD="POST" ACTION="do_add_new.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">

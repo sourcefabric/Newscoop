@@ -40,14 +40,10 @@ if ($editMode) {
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
-
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add_modify.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<FORM NAME="dialog" METHOD="POST" ACTION="do_add_modify.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($editMode) { ?>
 <input type="hidden" name="cLang" value="<?php p($languageObj->getLanguageId()); ?>">
 <?php } ?>

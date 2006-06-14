@@ -7,12 +7,12 @@ if (!$g_user->hasPermission('DeleteTempl')) {
 }
 
 $Path = Input::Get('Path', 'string', '');
-if (!Template::IsValidPath($Path)) {
-	header("Location: /$ADMIN/templates/");
-	exit;
-}
 $Name = Input::Get('Name', 'string', '');
-$What = Input::Get('What', 'int', 0);
+$isFile = Input::Get('What', 'int', 0);
+
+if (!Template::IsValidPath($Path)) {
+	camp_html_goto_page("/$ADMIN/templates/");
+}
 
 $dir = urldecode($Path)."/".urldecode($Name);
 $fileFullPath = Template::GetFullPath(urldecode($Path), $Name);
@@ -20,7 +20,7 @@ $errorMsgs = array();
 
 $errorReportingState = error_reporting(0);
 $deleted = false;
-if ($What == '0') {
+if (!$isFile) {
 	$deleted = rmdir($fileFullPath);
 	if (!$deleted) {
 		$errorMsgs[] = getGS("The folder could not be deleted.").' '.getGS("The directory must be empty");
@@ -33,8 +33,7 @@ if ($What == '0') {
 			$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($dir));
 			Log::Message($logtext, $g_user->getUserName(), 112);
 			Template::UpdateStatus();
-		}
-		else {
+		} else {
 			$errorMsgs[] = getGS("Unable to delete the template '$1' in the path '$2'.", $Name, $Path) . " "
 						. getGS("Please check if the user '$1' has permission to write in this directory.", $Campsite['APACHE_USER']);
 		}
@@ -45,15 +44,14 @@ if ($What == '0') {
 error_reporting($errorReportingState);
 
 if ($deleted) {
-	header("Location: /$ADMIN/templates/?Path=" . urlencode($Path));
-	exit;
+	camp_html_goto_page("/$ADMIN/templates/?Path=" . urlencode($Path));
 }
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
 $crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
-if ($What == 1) {
+if ($isFile) {
 	$crumbs[] = array(getGS("Deleting template"), "");
 } else {
 	$crumbs[] = array(getGS("Deleting folder"), "");

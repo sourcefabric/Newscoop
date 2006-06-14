@@ -57,7 +57,7 @@ if ($correct) {
 if ($ok) {
 	if (camp_is_template_file($tpl2FullPath)) {
 		// Go into edit mode.
-		header("Location: /$ADMIN/templates/edit_template.php?Path=".urlencode($f_path)."&Name=".urlencode($f_new_name));
+		header("Location: /$ADMIN/templates/edit_template.php?f_path=".urlencode($f_path)."&f_name=".urlencode($f_new_name));
 		exit;
 	} else {
 		// Go back to file list.

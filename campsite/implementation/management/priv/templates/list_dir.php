@@ -98,8 +98,12 @@
 					$color = 1;
 					$tr_class = "class=\"list_row_odd\"";
 				}
+				$extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+				$imageExtensions = array("png", "jpg", "jpeg", "jpe", "gif");
 				if (camp_is_template_file($filename)) {
-					print "<TR $tr_class><TD valign=\"center\"><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/generic.gif' BORDER='0'>&nbsp;<A HREF='/$ADMIN/templates/edit_template.php?Path=" .urlencode($listbasedir)."&Name=".urlencode($filename)."'>$filename</A></TD>";
+					print "<TR $tr_class><TD valign=\"center\"><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/generic.gif' BORDER='0'>&nbsp;<A HREF='/$ADMIN/templates/edit_template.php?f_path=" .urlencode($listbasedir)."&f_name=".urlencode($filename)."'>$filename</A></TD>";
+				} elseif (in_array($extension, $imageExtensions)) {
+					print "<TR $tr_class><TD><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/image.png' BORDER='0'> <A HREF='/$ADMIN/templates/edit_template.php?f_path=" .urlencode($listbasedir)."&f_name=".urlencode($filename)."'>$filename</a></TD>";
 				} else {
 					print "<TR $tr_class><TD><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/generic.gif' BORDER='0'> $filename</TD>";
 				}

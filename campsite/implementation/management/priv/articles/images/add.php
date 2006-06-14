@@ -30,12 +30,10 @@ $ImageTemplateId = ArticleImage::GetUnusedTemplateId($f_article_number);
 
 $q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 ?>
 <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 <script>
 function checkAddForm(form) {
 	retval = ((form.f_image_url.value != '') || (form.f_image_file.value != ''));
@@ -43,7 +41,7 @@ function checkAddForm(form) {
 	    alert('<?php putGS("You must select an image file to upload."); ?>');
 	    return retval;
 	}
-	retval = retval && validateForm(form, 0, 0, 0, 1, 8);
+	retval = retval && <?php camp_html_fvalidate(); ?>;
 	return retval;
 } // fn checkAddForm
 </script>

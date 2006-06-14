@@ -69,10 +69,7 @@ camp_load_translation_strings("home");
 <head>
 	<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/sha1.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
+	<?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
 	<TITLE><?php  putGS("Login"); ?></title>
 </head>
 <body >
@@ -86,7 +83,7 @@ camp_load_translation_strings("home");
 </table>
 
 <table width="400px" border="0" cellspacing="0" cellpadding="6" align="center" style="margin-top: 20px; background-color: #d5e2ee;	border: 1px solid #8baed1;">
-<form method="post" action="do_login.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<form method="post" action="do_login.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($error_code == "upgrade") { ?>
 <input type="hidden" name="f_is_encrypted" value="0">
 <?php } else { ?>

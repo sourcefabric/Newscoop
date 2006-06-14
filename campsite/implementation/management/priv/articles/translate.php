@@ -99,7 +99,7 @@ if ($f_publication_id > 0) {
 </table>
 
 <P>
-<FORM NAME="article_translate" METHOD="POST" ACTION="do_translate.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<FORM NAME="article_translate" METHOD="POST" ACTION="do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <INPUT TYPE="HIDDEN" NAME="f_article_code" VALUE="<?php  p($f_article_code); ?>">
 <?php if ($f_publication_id > 0) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
