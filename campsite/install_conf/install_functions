@@ -30,7 +30,7 @@ for cc_mod in $MODULES_LIST; do
     check_module_deps $cc_mod $cc_interactive
     if [ $? -ne 0 ]; then
 	if [ "$output" != "" ]; then echo $output; fi
-	echo "There is a dependecy problem. Please read the previous message and"
+	echo "There is a dependency problem. Please read the previous message and"
 	echo "install the required program/package".
 	exit 1
     fi
