@@ -600,8 +600,9 @@ class Localizer {
         global $g_localizerConfig;
 
         // Make new directory
-        if (!mkdir($g_localizerConfig['TRANSLATION_DIR']."/".$p_languageCode)) {
-            return;
+        $dirName = $g_localizerConfig['TRANSLATION_DIR']."/".$p_languageCode;
+        if (!file_exists($dirName)) {
+        	mkdir($dirName);
         }
     } // fn CreateLanguageFiles
 
