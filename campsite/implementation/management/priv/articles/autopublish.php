@@ -119,7 +119,7 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 		);
 		</script>
 		<p>
-		<input type="text" name="f_publish_date" value="" readonly class="input_text_disabled" size="10" alt="blank" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date')."'"); ?>">
+		<input type="text" name="f_publish_date" value="" class="input_text_disabled" size="10" alt="blank" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date')."'"); ?>">
 		<?php putGS('YYYY-MM-DD'); ?>
 	</TD>
 </TR>
