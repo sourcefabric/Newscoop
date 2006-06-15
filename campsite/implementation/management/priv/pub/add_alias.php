@@ -16,7 +16,7 @@ camp_html_content_top(getGS("Add new alias"), array("Pub" => $publicationObj), t
 
 ?>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add_alias.php">
+<FORM NAME="add_alias" METHOD="POST" ACTION="do_add_alias.php">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -32,14 +32,16 @@ camp_html_content_top(getGS("Add new alias"), array("Pub" => $publicationObj), t
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
+	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 <!--	<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/pub/aliases.php?Pub=<?php  p($Pub); ?>'">
--->	</DIV>
+-->
 	</TD>
 </TR>
 </TABLE>
 </FORM>
 <P>
+<script>
+document.forms.add_alias.cName.focus();
+</script>
 <?php camp_html_copyright_notice(); ?>
