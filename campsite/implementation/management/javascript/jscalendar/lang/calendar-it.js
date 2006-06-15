@@ -2,8 +2,9 @@
 
 // Calendar EN language
 // Author: Mihai Bazon, <mihai_bazon@yahoo.com>
-// Translator: Fabio Di Bernardini, <altraqua@email.it>
-// Encoding: any
+// Translator: Fabio Di Bernardini, <altraqua@email.it> <-- IT DOESN'T WORKED!
+// Added Translation and changed values for italian dates by: Diego Giacani, <diego@gioventudigitale.net> <-- NOW IT WORKS!
+// Encoding: UTF-8
 // Distributed under the same terms as the calendar itself.
 
 // For translators: please use UTF-8 if possible.  We strongly believe that
@@ -13,11 +14,11 @@
 // full day names
 Calendar._DN = new Array
 ("Domenica",
- "Lunedì",
- "Martedì",
- "Mercoledì",
- "Giovedì",
- "Venerdì",
+ "Luned&igrave;",
+ "Marted&igrave;",
+ "Mercoled&igrave;",
+ "Gioved&igrave;",
+ "Venerd&igrave;",
  "Sabato",
  "Domenica");
 
@@ -43,6 +44,10 @@ Calendar._SDN = new Array
  "Ven",
  "Sab",
  "Dom");
+
+ // First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+Calendar._FD = 1;
 
 // full month names
 Calendar._MN = new Array
@@ -94,11 +99,11 @@ Calendar._TT["ABOUT_TIME"] = "\n\n" +
 "- o Shift+click per decrementarlo\n" +
 "- o click e sinistra o destra per variarlo.";
 
-Calendar._TT["PREV_YEAR"] = "Anno prec.(clicca a lungo per il menù)";
-Calendar._TT["PREV_MONTH"] = "Mese prec. (clicca a lungo per il menù)";
+Calendar._TT["PREV_YEAR"] = "Anno prec.( clicca a lungo per il men&ugrave;)";
+Calendar._TT["PREV_MONTH"] = "Mese prec. (clicca a lungo per il men&ugrave;)";
 Calendar._TT["GO_TODAY"] = "Oggi";
-Calendar._TT["NEXT_MONTH"] = "Pross. mese (clicca a lungo per il menù)";
-Calendar._TT["NEXT_YEAR"] = "Pross. anno (clicca a lungo per il menù)";
+Calendar._TT["NEXT_MONTH"] = "Pross. mese (clicca a lungo per il men&ugrave;)";
+Calendar._TT["NEXT_YEAR"] = "Pross. anno (clicca a lungo per il men&ugrave;)";
 Calendar._TT["SEL_DATE"] = "Seleziona data";
 Calendar._TT["DRAG_TO_MOVE"] = "Trascina per spostarlo";
 Calendar._TT["PART_TODAY"] = " (oggi)";
@@ -110,7 +115,7 @@ Calendar._TT["DAY_FIRST"] = "Mostra prima %s";
 // This may be locale-dependent.  It specifies the week-end days, as an array
 // of comma-separated numbers.  The numbers are from 0 to 6: 0 means Sunday, 1
 // means Monday, etc.
-Calendar._TT["WEEKEND"] = "0,6";
+Calendar._TT["WEEKEND"] = "6,0";
 
 Calendar._TT["CLOSE"] = "Chiudi";
 Calendar._TT["TODAY"] = "Oggi";
@@ -118,7 +123,7 @@ Calendar._TT["TIME_PART"] = "(Shift-)Click o trascina per cambiare il valore";
 
 // date formats
 Calendar._TT["DEF_DATE_FORMAT"] = "%d-%m-%Y";
-Calendar._TT["TT_DATE_FORMAT"] = "%a:%b:%e";
+Calendar._TT["TT_DATE_FORMAT"] = "%A %e %B";
 
-Calendar._TT["WK"] = "set";
+Calendar._TT["WK"] = "Sett";
 Calendar._TT["TIME"] = "Ora:";
