@@ -175,10 +175,8 @@ camp_load_translation_strings("home");
 	<!-- CAPTCHA-->
 
 	<tr>
-		<td colspan="2">
-		<div align="center">
-		<input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != '') f_password.value = hex_sha1(f_password.value);" <?php } ?>>
-		</div>
+		<td colspan="2" align="center">
+		<input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != '' && (f_password.value.trim().length) != 40) f_password.value = hex_sha1(f_password.value);" <?php } ?>>
 		</td>
 	</tr>
 </form>
