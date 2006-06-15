@@ -930,7 +930,7 @@ int CActList::WriteSrcParam(string& s, CContext& c, string& table)
 int CActList::WriteOrdParam(string& s)
 {
 	CParameterList::iterator pl_i;
-	if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION && modifier == CMS_ST_ARTICLE)
+	if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION || modifier == CMS_ST_ARTICLE)
 	{
 		string table;
 		if (modifier == CMS_ST_ARTICLE)
@@ -952,7 +952,13 @@ int CActList::WriteOrdParam(string& s)
 				s += (*pl_i)->spec();
 		}
 		if (modifier == CMS_ST_ARTICLE)
-			s += string(", Articles.ArticleOrder asc");
+		{
+			if (ord_param.size() == 0)
+			{
+				s += ", Articles.NrIssue desc, Articles.NrSection asc";
+			}
+			s += ", Articles.ArticleOrder asc";
+		}
 	}
 	if (modifier == CMS_ST_SUBTOPIC)
 	{
