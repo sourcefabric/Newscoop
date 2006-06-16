@@ -4,6 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/TimeUnit.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/UrlType.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
+camp_load_translation_strings("api");
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
