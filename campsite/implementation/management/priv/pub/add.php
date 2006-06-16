@@ -22,6 +22,9 @@ $crumbs = array();
 $crumbs[] = array(getGS("Publications"), "/$ADMIN/pub/");
 $crumbs[] = array(getGS("Add new publication"), "");
 echo camp_html_breadcrumbs($crumbs);
+
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
@@ -29,8 +32,8 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><B><?php  putGS("Publication List"); ?></B></A></TD>
 </TR>
 </TABLE>
-<P>
-<FORM NAME="publication_add" METHOD="POST" ACTION="do_add.php">
+<?php camp_html_display_msgs(); ?>
+<FORM NAME="publication_add" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php include("pub_form.php"); ?>
 </FORM>
 <P>

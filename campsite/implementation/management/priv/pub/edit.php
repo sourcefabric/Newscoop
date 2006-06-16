@@ -25,9 +25,10 @@ if (!$pubTimeUnit->exists()) {
 	$pubTimeUnit =& new TimeUnit($publicationObj->getTimeUnit(), 1);
 }
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 echo camp_html_content_top(getGS("Configure publication"), array("Pub" => $publicationObj));
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
@@ -59,7 +60,7 @@ if ($g_user->hasPermission("DeletePub")) {
 <?php camp_html_display_msgs(); ?>
 
 <P>
-<FORM METHOD="POST" ACTION="do_edit.php">
+<FORM METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php include("pub_form.php"); ?>
 </FORM>
 <P>

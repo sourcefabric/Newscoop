@@ -28,74 +28,42 @@ $f_comments_article_default = Input::Get('f_comments_article_default', 'checkbox
 $f_comments_public_moderated = Input::Get('f_comments_public_moderated', 'checkbox', 'numeric');
 $f_comments_subscribers_moderated = Input::Get('f_comments_subscribers_moderated', 'checkbox', 'numeric');
 
+$backLink = "/$ADMIN/pub/edit.php?Pub=$f_publication_id";
 $errorMsgs = array();
-$correct = true;
 $updated = false;
 if (empty($f_name)) {
-	$correct = false;
-	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>');
+	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 if (empty($f_default_alias)) {
-	$correct = false;
-	$errorMsgs = getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>');
+	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'));
+}
+
+if (camp_html_has_msgs()) {
+	camp_html_goto_page($backLink);
 }
 
 $publicationObj =& new Publication($f_publication_id);
-if ($correct) {
-	$columns = array('Name' => $f_name,
-					 'IdDefaultAlias' => $f_default_alias,
-					 'IdDefaultLanguage' => $f_language,
-					 'IdURLType' => $f_url_type,
-					 'TimeUnit' => $f_time_unit,
-					 'PaidTime' => $f_paid,
-					 'TrialTime' => $f_trial,
-					 'UnitCost' => $f_unit_cost,
-					 'UnitCostAllLang' => $f_unit_cost_all_lang,
-					 'Currency' => $f_currency,
-					 'comments_enabled' => $f_comments_enabled,
-					 'comments_article_default_enabled'=> $f_comments_article_default,
-					 'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
-					 'comments_public_moderated' => $f_comments_public_moderated);
-	$updated = $publicationObj->update($columns);
-	$gotoPage = "/$ADMIN/pub/edit.php?Pub=$f_publication_id";
-	if ($updated) {
-		camp_html_add_msg(getGS("Publication updated"), "ok");
-	} else {
-		$errorMsg = getGS('The publication information could not be updated.')
-				  .' '.getGS('Please check if another publication with the same name or the same site name does not already exist.');
-		camp_html_add_msg($errorMsg);
-	}
-	camp_html_goto_page($gotoPage);
+$columns = array('Name' => $f_name,
+				 'IdDefaultAlias' => $f_default_alias,
+				 'IdDefaultLanguage' => $f_language,
+				 'IdURLType' => $f_url_type,
+				 'TimeUnit' => $f_time_unit,
+				 'PaidTime' => $f_paid,
+				 'TrialTime' => $f_trial,
+				 'UnitCost' => $f_unit_cost,
+				 'UnitCostAllLang' => $f_unit_cost_all_lang,
+				 'Currency' => $f_currency,
+				 'comments_enabled' => $f_comments_enabled,
+				 'comments_article_default_enabled'=> $f_comments_article_default,
+				 'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
+				 'comments_public_moderated' => $f_comments_public_moderated);
+$updated = $publicationObj->update($columns);
+if ($updated) {
+	camp_html_add_msg(getGS("Publication updated"), "ok");
+} else {
+	$errorMsg = getGS('The publication information could not be updated.')
+			  .' '.getGS('Please check if another publication with the same name or the same site name does not already exist.');
+	camp_html_add_msg($errorMsg);
 }
-
-echo camp_html_content_top(getGS("Changing publication information"), array("Pub" => $publicationObj));
+camp_html_goto_page($backLink);
 ?>
-
-<P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
-<TR>
-	<TD COLSPAN="2">
-		<B> <?php  putGS("Changing publication information"); ?> </B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-		<BLOCKQUOTE>
-		<?php
-		foreach ($errorMsgs as $errorMsg) { ?>
-			<li><?php p($errorMsg); ?> </li>
-			<?php
-		}
-		?>
-		</BLOCKQUOTE>
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2" align="center">
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/edit.php?Pub=<?php  p($f_publication_id); ?>'">
-	</TD>
-</TR>
-</TABLE>
-<P>
-<?php camp_html_copyright_notice(); ?>
