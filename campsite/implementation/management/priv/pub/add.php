@@ -34,6 +34,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 </TR>
 </TABLE>
 <?php camp_html_display_msgs(); ?>
+<p>
 <FORM NAME="publication_add" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php include("pub_form.php"); ?>
 </FORM>
