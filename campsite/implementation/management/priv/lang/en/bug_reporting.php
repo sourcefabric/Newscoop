@@ -1,4 +1,5 @@
 <?php
+regGS("What were you trying to do when this happened? (optional)", "What were you trying to do when this happened? (optional)");
 regGS("Description:", "Description:");
 regGS("We are sorry for the inconvenience.", "We are sorry for the inconvenience.");
 regGS("Simply copy and paste the error report below and send it to:", "Simply copy and paste the error report below and send it to:");
@@ -18,6 +19,5 @@ regGS("Please take a minute to send us an email.", "Please take a minute to send
 regGS("Software:", "Software:");
 regGS("Thank you.", "Thank you.");
 regGS("We are sorry, but there was a problem sending your bug report.", "We are sorry, but there was a problem sending your bug report.");
-regGS("What were you trying to do when this happened?", "What were you trying to do when this happened?");
 regGS("Your bug report has been sent to Campware and will be investigated.", "Your bug report has been sent to Campware and will be investigated.");
 ?>

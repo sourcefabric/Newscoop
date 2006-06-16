@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -21,7 +24,6 @@ regGS("Add new translation", "Agregar nueva traducción");
 regGS("You do not have the right to add issues.", "No tiene derecho a agregar ediciones");
 regGS("The issue $1 has been successfuly added.", "La edición $1 ha sido agregada con éxito");
 regGS("The issue could not be added.", "La edición no puedo ser agregada");
-regGS("Please check if another issue with the same number/language does not already exist.", "Favor revise si otra edición con el mismo número/idioma no existe ya");
 regGS("Change issue details", "Cambian detalles de edición");
 regGS("You do not have the right to change issue details.", "No tiene derechos para cambiar detalles de edición");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Fecha de Publicación");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Copiar edición previa");
 regGS("No previous issue.", "Sin ediciones previas");
 regGS("Copy structure from issue number $1", "Copiar estructura de edición No. $1");
-regGS("Copying previous issue", "Copiando edición previa");
 regGS("New issue $1 from $2 in publication $3", "Nueva edición $1 de $2 en publicación $3");
-regGS("Adding new issue", "Agregando nueva edición");
 regGS("Delete entry", "Eliminar registro");
 regGS("Issue Publishing Schedule", "Horario de publicación de ediciones");
 regGS("Invalid Input: $1", "Registro inválido:  $1");

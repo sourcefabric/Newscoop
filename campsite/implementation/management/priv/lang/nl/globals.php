@@ -366,5 +366,5 @@ regGS("On Front Page", "Op Voorpagina");
 regGS("On Section Page", "Op Sectiepagina");
 regGS("Created by", "Gemaakt door");
 regGS("Creation date", "Gemaakt op");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Weet je zeker dat je afbeelding \\'$1\\' wilt verwijderen?");
+regGS("The date must be in the future.", "");
 ?>

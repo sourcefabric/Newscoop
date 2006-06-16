@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -21,7 +24,6 @@ regGS("Add new translation", "Ajouter une nouvelle traduction");
 regGS("You do not have the right to add issues.", "Vous n'avez pas le droit d'ajouter des éditions");
 regGS("The issue $1 has been successfuly added.", "L'édition $1 a été ajoutée avec succès.");
 regGS("The issue could not be added.", "L'édition ne pouvait pas être ajoutée.");
-regGS("Please check if another issue with the same number/language does not already exist.", "SVP vérifier si une autre édition avec le même numéro/langue n'existe pas déjà.");
 regGS("Change issue details", "Changer les détails d'édition");
 regGS("You do not have the right to change issue details.", "Vous n'avez pas le droit de changer les détails d'édition.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Date de Publication<BR><SMALL>(aaaa-mm-jj)</SMALL>");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Copier l'édition précédente ");
 regGS("No previous issue.", "Aucune édition précédente.");
 regGS("Copy structure from issue number $1", "Copier la structure de l'édition n° $1");
-regGS("Copying previous issue", "Copie édition précédente");
 regGS("New issue $1 from $2 in publication $3", "Nouvelle édition $1 de $2 dans la publication $3");
-regGS("Adding new issue", "Ajout de nouvelle édition");
 regGS("Delete entry", "Supprimer l'entrée");
 regGS("Issue Publishing Schedule", "Programme de Publication de l'édition");
 regGS("Invalid Input: $1", "Entrée invalide: $1");

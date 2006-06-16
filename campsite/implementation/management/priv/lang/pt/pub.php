@@ -27,7 +27,6 @@ regGS("You do not have the right to edit publication information.", "Não tem pe
 regGS("General attributes", "Definições Gerais");
 regGS("Subscriptions defaults", "Definições de Assinaturas");
 regGS("Countries defaults", "Definições de Paises");
-regGS("Changing publication information", "Alterando Detalhes de Publicação");
 regGS("You do not have the right to change publication information.", "Não tem permissão para Alterar Detalhes de Publicação");
 regGS("The publication information could not be updated.", "Os detalhes de Publicação não podem ser alterados");
 regGS("Please check if another publication with the same name or the same site name does not already exist.", "Verifique se já não existem uma Publicação com o mesmo nome ou com o mesmo endereço URL");
@@ -36,7 +35,6 @@ regGS("Are you sure you want to delete the publication $1?", "Confirma o apagame
 regGS("Deleting publication", "Apagando Publicação");
 regGS("There are $1 subscription(s) left.", "Existe(m) ainda $1 Assinatura(s)");
 regGS("The publication $1 could not be deleted.", "A Publicação $1 não pode ser Apagada");
-regGS("Adding new publication", "Criar Publicação");
 regGS("The publication could not be added.", "A Publicação não pode ser Criada");
 regGS("Add new country default subscription time", "Adicionar tempo de Assinatura para Pais");
 regGS("You do not have the right to manage publications.", "Não tem permissões para gerir Publicações");

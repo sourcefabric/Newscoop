@@ -1,4 +1,11 @@
 <?php
+regGS("The system was unable to write to the file '$1'.", "The system was unable to write to the file '$1'.");
+regGS("The system was unable to delete the file '$1'.", "The system was unable to delete the file '$1'.");
+regGS("The system was unable to create the file '$1'.", "The system was unable to create the file '$1'.");
+regGS("The system was unable to create the directory '$1'.", "The system was unable to create the directory '$1'.");
+regGS("Please check if the user '$1' has permission to write to this file.", "Please check if the user '$1' has permission to write to this file.");
+regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "Please check if the user '$1' has permission to write to the directory '$2'.");
+regGS("Feedback", "Feedback");
 regGS("Type the code shown above:", "Type the code shown above:");
 regGS("Please enter your user name.", "Please enter your user name.");
 regGS("Please enter your password.", "Please enter your password.");

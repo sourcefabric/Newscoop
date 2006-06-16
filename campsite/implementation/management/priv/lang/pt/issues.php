@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -21,7 +24,6 @@ regGS("Add new translation", "Adicionar tradução");
 regGS("You do not have the right to add issues.", "Não tem permissões para adicionar Números");
 regGS("The issue $1 has been successfuly added.", "A Edição $1 foi adicionada com sucesso.");
 regGS("The issue could not be added.", "A Edição não pode ser adicionada.");
-regGS("Please check if another issue with the same number/language does not already exist.", "P.F: Verifique se já não existe uma Edição/Idioma pretendido");
 regGS("Change issue details", "Alterar detalhes da Edição");
 regGS("You do not have the right to change issue details.", "Não tem permissões para alterar detalhes de Edições");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Data de Publicação<BR><SMALL>(aaaa-mm-dd)</SMALL>");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Copiar Edição anterior");
 regGS("No previous issue.", "Não existem Edição anterior");
 regGS("Copy structure from issue number $1", "Copiar estrutura da Edição $1");
-regGS("Copying previous issue", "Copiar Edição anterior");
 regGS("New issue $1 from $2 in publication $3", "Nova Edição $1 de $2 na Publicação $3");
-regGS("Adding new issue", "Adicionando nova Edição");
 regGS("Delete entry", "Eliminar entrada");
 regGS("Issue Publishing Schedule", "Agendar publicação de Edição");
 regGS("Invalid Input: $1", "Valor Inválido: $1");

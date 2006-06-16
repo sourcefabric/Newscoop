@@ -3,7 +3,6 @@ regGS("No language.", "언어 없슴.");
 regGS("Delete language $1", "언어 $1 삭제중");
 regGS("You do not have the right to add languages.", "언어를 추가할 권한이 없습니다.");
 regGS("Please enter the translation for time units.", "시간 단위의 번역을 입력하시오.");
-regGS("Adding new language", "새로운 언어 추가");
 regGS("You do not have the right to delete languages.", "언어를 삭제할 권한이 없습니다. ");
 regGS("Are you sure you want to delete the language $1?", "언어 $1을 확실히 삭제합니까?");
 regGS("Deleting language", "언어 삭제중");

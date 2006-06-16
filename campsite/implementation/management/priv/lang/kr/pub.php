@@ -27,7 +27,6 @@ regGS("You do not have the right to edit publication information.", "출판정�
 regGS("General attributes", "일반적 속성");
 regGS("Subscriptions defaults", "구독 기본");
 regGS("Countries defaults", "국가 기본");
-regGS("Changing publication information", "출판 정보 변경");
 regGS("You do not have the right to change publication information.", "출판 정보를 변경할 권한이 없습니다.");
 regGS("The publication information could not be updated.", "출판 정보를 업데이트 할 수 없습니다.");
 regGS("Please check if another publication with the same name or the same site name does not already exist.", "같은 이름의 출판사이트가 있는지, 확인하시오");
@@ -36,7 +35,6 @@ regGS("Are you sure you want to delete the publication $1?", "출판사이트 $1
 regGS("Deleting publication", "출판사이트 삭제중");
 regGS("There are $1 subscription(s) left.", "출판사이트 $1 이 남아있슴.");
 regGS("The publication $1 could not be deleted.", "출판사이트 $1 을 삭제할 수 없습니다.");
-regGS("Adding new publication", "새로운 출판사이트 추가");
 regGS("The publication could not be added.", "출판사이트를 추가할 수 없습니다.");
 regGS("Add new country default subscription time", "새로운 국가 기본 구독 시간 추가");
 regGS("You do not have the right to manage publications.", "출판사이트를 관리할 권한이 없습니다.");

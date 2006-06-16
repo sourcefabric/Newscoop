@@ -27,7 +27,6 @@ regGS("You do not have the right to edit publication information.", "Du har inte
 regGS("General attributes", "Generella attribut");
 regGS("Subscriptions defaults", "Prenumerationsgrundinställningar");
 regGS("Countries defaults", "Landsgrundinställningar");
-regGS("Changing publication information", "Ändrar publikationsinformation");
 regGS("You do not have the right to change publication information.", "Du har inte rätt att ändra publikationsinformation.");
 regGS("The publication information could not be updated.", "Publikationsinformationen kunde inte uppdateras.");
 regGS("Please check if another publication with the same name or the same site name does not already exist.", "Var god kontrollera om en publikation med samma namn eller samma sajtnamn redan finns.");
@@ -36,7 +35,6 @@ regGS("Are you sure you want to delete the publication $1?", "Är du säker att 
 regGS("Deleting publication", "Raderar publikation");
 regGS("There are $1 subscription(s) left.", "Det finns $1 prenumeration(er) kvar.");
 regGS("The publication $1 could not be deleted.", "Publikationen $1 kunde inte raderas.");
-regGS("Adding new publication", "Lägger till ny publikation");
 regGS("The publication could not be added.", "Publikationen kunde inte läggas till.");
 regGS("Add new country default subscription time", "Lägg till ny landsgrundprenumerationstid.");
 regGS("You do not have the right to manage publications.", "Du har inte rätt att hantera publikationer.");

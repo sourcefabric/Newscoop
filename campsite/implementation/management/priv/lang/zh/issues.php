@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -25,7 +28,6 @@ regGS("Add new translation", "添加新翻译");
 regGS("You do not have the right to add issues.", "您无权增加议题");
 regGS("The issue $1 has been successfuly added.", "议题$1已成功添加");
 regGS("The issue could not be added.", "议题不能被添加");
-regGS("Please check if another issue with the same number/language does not already exist.", "请确认是否其它同意数字/语言的议题还没存在");
 regGS("Change issue details", "改变议题详情");
 regGS("You do not have the right to change issue details.", "你无权修改议题详情");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "");
@@ -45,9 +47,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "复制以前的议题");
 regGS("No previous issue.", "无以前的议题");
 regGS("Copy structure from issue number $1", "从$1议题复制结构");
-regGS("Copying previous issue", "正在复制以前的议题");
 regGS("New issue $1 from $2 in publication $3", "在发布$3来自$2的新议题$1");
-regGS("Adding new issue", "正在增加新议题");
 regGS("Preview issue", "预览议题");
 regGS("This issue cannot be previewed. Please make sure it has a $1 template selected.", "此议题不能被预览，请确认它选择$1模版");
 regGS("front page", "首页");

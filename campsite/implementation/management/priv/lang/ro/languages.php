@@ -3,7 +3,6 @@ regGS("No language.", "Nu există limbi.");
 regGS("Delete language $1", "Şterge limba $1");
 regGS("You do not have the right to add languages.", "Nu ai dreptul să adaugi limbi.");
 regGS("Please enter the translation for time units.", "Introdu traducerea pentru unitatea de timp.");
-regGS("Adding new language", "Se adaugă o limbă nouă");
 regGS("You do not have the right to delete languages.", "Nu ai dreptul de a şterge limbi.");
 regGS("Are you sure you want to delete the language $1?", "Eşti sigur că vrei să ştergi limba $1?");
 regGS("Deleting language", "Se şterge limba");

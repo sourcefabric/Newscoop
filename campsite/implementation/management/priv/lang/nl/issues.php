@@ -1,4 +1,8 @@
 <?php
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue List", "Uitgaven lijst");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Naam<BR><SMALL>(klik om de secties te zien)</SMALL>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Gepubliceerd<BR><SMALL>(yyyy-mm-dd)</SMALL>");
@@ -11,7 +15,6 @@ regGS("Add new translation", "Voeg nieuwe vertaling toe");
 regGS("You do not have the right to add issues.", "Je hebt niet de rechten om uitgaven toe te voegen.");
 regGS("The issue $1 has been successfuly added.", "De uitgave $1 is succesvol toegevoegd.");
 regGS("The issue could not be added.", "De uitgave kon niet worden toegevoegd.");
-regGS("Please check if another issue with the same number/language does not already exist.", "Controleer of een andere uitgave met dezelfde nummer/taal niet al bestaat.");
 regGS("Change issue details", "Wijzig de uitgave details");
 regGS("You do not have the right to change issue details.", "Je hebt niet de rechten om de uitgave details te wijzigen.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publicatie datum<BR><SMALL>(yyyy-mm-dd)</SMALL>");
@@ -29,9 +32,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Kopieer vorige uitgave");
 regGS("No previous issue.", "Geen vorige uitgave.");
 regGS("Copy structure from issue nr $1", "Kopieer structuur van uitgave nr $1");
-regGS("Copying previous issue", "Vorige uitgave wordt gekopieerd");
 regGS("New issue $1 from $2 in publication $3", "Nieuwe uitgave $1 van $2 in publicatie $3");
-regGS("Adding new issue", "Nieuwe uitgave wordt toegevoegd");
 regGS("Delete entry", "Verwijder regel");
 regGS("Issue Publishing Schedule", "Uitgave Publiceer Planning");
 regGS("Invalid Input: $1", "Onjuiste Invoer: $1");

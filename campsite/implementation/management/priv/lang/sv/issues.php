@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -21,7 +24,6 @@ regGS("Add new translation", "Lägg till ny översättning");
 regGS("You do not have the right to add issues.", "Du har inte rätt att lägga till utgåvor.");
 regGS("The issue $1 has been successfuly added.", "Utgåvan $1 har lagts till framgångsrikt.");
 regGS("The issue could not be added.", "Utgåvan kunde inte läggas till.");
-regGS("Please check if another issue with the same number/language does not already exist.", "Var god kontrollera om en utgåva med samma nummer/språk redan finns");
 regGS("Change issue details", "Ändra utgåvans detaljer");
 regGS("You do not have the right to change issue details.", "Du har inte rätt att ändra utgåvedetaljer.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publiceringsdatum<BR><SMALL>(åååå-mm-dd)</SMALL>");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Kopiera föregående utgåva");
 regGS("No previous issue.", "Ingen tidigare utgåva.");
 regGS("Copy structure from issue number $1", "Kopiera struktur från utgåva nr $1");
-regGS("Copying previous issue", "Kopierar föregående utgåva");
 regGS("New issue $1 from $2 in publication $3", "Ny utgåva $1 från $2 i publikation $3");
-regGS("Adding new issue", "Lägger till ny utgåva");
 regGS("Delete entry", "Radera post");
 regGS("Issue Publishing Schedule", "Utgåvepubliceringsschema");
 regGS("Invalid Input: $1", "Ogiltig inmatning: $1");

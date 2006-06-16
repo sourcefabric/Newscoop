@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -25,7 +28,6 @@ regGS("Add new translation", "Přidat překlad");
 regGS("You do not have the right to add issues.", "Nemáte právo přidat vydání");
 regGS("The issue $1 has been successfuly added.", "Vydání $1 bylo úspěšně přidáno");
 regGS("The issue could not be added.", "Vydání nemohlo být přidáno");
-regGS("Please check if another issue with the same number/language does not already exist.", "Zkontrolujte, zda již neexistuje vydání se stejným číslem/jazykem");
 regGS("Change issue details", "Změnit detaily vydání");
 regGS("You do not have the right to change issue details.", "Nemáte právo změnit detaily vydání");
 regGS("Updating issue", "Obnova vydání");
@@ -44,9 +46,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Kopírovat předchozí vydání");
 regGS("No previous issue.", "Žádné předchozí vydání");
 regGS("Copy structure from issue number $1", "Kopírovat strukturu z vydání č. $1");
-regGS("Copying previous issue", "Kopírování předchozího vydání");
 regGS("New issue $1 from $2 in publication $3", "Nové vydání $1 z $1 v publikaci $3");
-regGS("Adding new issue", "Přidání nového vydání");
 regGS("Preview issue", "Náhled vydání");
 regGS("This issue cannot be previewed. Please make sure it has a $1 template selected.", "Nelze provést náhled tohoto vydání. ");
 regGS("front page", "titulní strana");

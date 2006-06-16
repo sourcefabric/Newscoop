@@ -27,7 +27,6 @@ regGS("You do not have the right to edit publication information.", "Nu aveţi d
 regGS("General attributes", "Atribute generale");
 regGS("Subscriptions defaults", "Caracteristicile din oficiu ale abonamentelor");
 regGS("Countries defaults", "Caracteristicile din oficiu ale ţărilor");
-regGS("Changing publication information", "Se modifică informaţiile despre publicaţie");
 regGS("You do not have the right to change publication information.", "Nu ai dreptul de a modifica informaţiile despre publicaţie.");
 regGS("The publication information could not be updated.", "Informaţiile despre publicaţie nu pot fi modificate.");
 regGS("Please check if another publication with the same name or the same site name does not already exist.", "Verifică dacă nu există altă publicaţie cu acelaşi nume sau un nume de site identic.");
@@ -36,7 +35,6 @@ regGS("Are you sure you want to delete the publication $1?", "Eşti sigur că vr
 regGS("Deleting publication", "Se şterge publicaţia");
 regGS("There are $1 subscription(s) left.", "Mai sunt $1 abonamente.");
 regGS("The publication $1 could not be deleted.", "Publicaţia $1 nu poate fi ştearsă.");
-regGS("Adding new publication", "Se adaugă o publicaţie nouă");
 regGS("The publication could not be added.", "Publicaţia nu poate fi adăugată");
 regGS("Add new country default subscription time", "Adaugă un timp nou din oficiu pe ţară pentru abonament");
 regGS("You do not have the right to manage publications.", "Nu ai dreptul de a administra publicaţii.");

@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -21,7 +24,6 @@ regGS("Add new translation", "Додај нови превод");
 regGS("You do not have the right to add issues.", "Немате право да додајете издања");
 regGS("The issue $1 has been successfuly added.", "Издање $1 је успешно додато");
 regGS("The issue could not be added.", "Издање не може бити додато");
-regGS("Please check if another issue with the same number/language does not already exist.", "Проверите да ли постоји издање заведено под истим бројем/језиком");
 regGS("Change issue details", "Промени детаље о издању");
 regGS("You do not have the right to change issue details.", "Немате право да мењате податке о издању");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Датум објављивања<br><small>(гггг-мм-дд)</small>");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Прекопирај претходно издање");
 regGS("No previous issue.", "Нема претходног издања");
 regGS("Copy structure from issue number $1", "Прекопирај структуру из издања $1");
-regGS("Copying previous issue", "Копирање претходног издања");
 regGS("New issue $1 from $2 in publication $3", "Ново издање $1 из $2 у публикацији $3");
-regGS("Adding new issue", "Додавање новог издања");
 regGS("Delete entry", "Обриши унос");
 regGS("Issue Publishing Schedule", "Распоред аутоматског објављивања издања");
 regGS("Invalid Input: $1", "Погрешан унос: $1");

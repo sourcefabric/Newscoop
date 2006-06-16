@@ -27,7 +27,6 @@ regGS("You do not have the right to edit publication information.", "Немат�
 regGS("General attributes", "Општи атрибути");
 regGS("Subscriptions defaults", "Основни подаци о претплатама");
 regGS("Countries defaults", "Основни подаци о државама");
-regGS("Changing publication information", "Мењање података о публикацији");
 regGS("You do not have the right to change publication information.", "Немате право измене података о публикацији");
 regGS("The publication information could not be updated.", "Подаци о публикацији не могу бити измењени");
 regGS("Please check if another publication with the same name or the same site name does not already exist.", "Проверите да ли већ постоји публикација са истим именом или именом сајта ");
@@ -36,7 +35,6 @@ regGS("Are you sure you want to delete the publication $1?", "Сигурни с�
 regGS("Deleting publication", "Брисање публикације");
 regGS("There are $1 subscription(s) left.", "Преостало је $1 претплата");
 regGS("The publication $1 could not be deleted.", "Публикација $1 не може бити обрисана");
-regGS("Adding new publication", "Додавање нове публикације");
 regGS("The publication could not be added.", "Публикација не може бити додата");
 regGS("Add new country default subscription time", "Додај нови основни период претплате за државу");
 regGS("You do not have the right to manage publications.", "Немате право да администрирате публикацијама");

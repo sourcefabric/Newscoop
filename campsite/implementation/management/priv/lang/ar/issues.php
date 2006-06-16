@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -21,7 +24,6 @@ regGS("Add new translation", "إضافة ترجمة جديدة");
 regGS("You do not have the right to add issues.", "لا يحق لك إضافة إصدارات");
 regGS("The issue $1 has been successfuly added.", "تمت إضافة الإصدار $1");
 regGS("The issue could not be added.", "لا يمكن إضافة الإصدار");
-regGS("Please check if another issue with the same number/language does not already exist.", "    الرجاء التأكد من عدم وجود إصدار يحمل الرقم نفسه/ اللغة نفسها");
 regGS("Change issue details", "بدّل تفاصيل الإصدار");
 regGS("You do not have the right to change issue details.", "لا يحق لك تغيير تفاصيل الإصدار");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "تاريخ النشر <br>");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "إنسخ الإصدار السابق");
 regGS("No previous issue.", "لا يوجد إصدار سابق");
 regGS("Copy structure from issue number $1", "إنسخ الهيكلية من الإصدار رقم $1");
-regGS("Copying previous issue", "نسخ الإصدار السابق");
 regGS("New issue $1 from $2 in publication $3", "إصدار $1 جديد من $2 في المنشور $3");
-regGS("Adding new issue", "إضافة إصدار جديد");
 regGS("Delete entry", "إلغاء المدخل");
 regGS("Issue Publishing Schedule", "جدول نشر العدد");
 regGS("Invalid Input: $1", "إدخال غير مقبول: $1");

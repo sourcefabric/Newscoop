@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -21,7 +24,6 @@ regGS("Add new translation", "새로운 번역 추가");
 regGS("You do not have the right to add issues.", "이슈를 추가할 권한이 없습니다. ");
 regGS("The issue $1 has been successfuly added.", "이슈 $1 이 성공적으로 추가되었습니다. ");
 regGS("The issue could not be added.", "이슈가 추가될 수 없습니다. ");
-regGS("Please check if another issue with the same number/language does not already exist.", "같은 넘버나/언어의 다른 이슈가 이미 존재하는지 확인하시오.");
 regGS("Change issue details", "이슈 내역 수정");
 regGS("You do not have the right to change issue details.", "이슈 내역을 수정할 권한이 없습니다.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "출판일자<BR><SMALL>(년-월-일)</SAMLL>");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "이전 이슈 복사");
 regGS("No previous issue.", "이전 이슈 없슴.");
 regGS("Copy structure from issue number $1", "이슈  nr $1 에서 구조 복사");
-regGS("Copying previous issue", "이전 이슈 복사중");
 regGS("New issue $1 from $2 in publication $3", "출판사이트 $3 에서 $2 부터 $1 새로운 이슈 ");
-regGS("Adding new issue", "새로운 이슈 추가");
 regGS("Delete entry", "엔트리 삭제");
 regGS("Issue Publishing Schedule", "출판 스케쥴 이슈");
 regGS("Invalid Input: $1", "비정상 입력: $1");

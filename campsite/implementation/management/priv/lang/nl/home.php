@@ -1,4 +1,11 @@
 <?php
+regGS("The system was unable to write to the file '$1'.", "");
+regGS("The system was unable to delete the file '$1'.", "");
+regGS("The system was unable to create the file '$1'.", "");
+regGS("The system was unable to create the directory '$1'.", "");
+regGS("Please check if the user '$1' has permission to write to this file.", "");
+regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "");
+regGS("Feedback", "");
 regGS("There are no pending articles.", "Er zijn geen ongepubliceerde artikelen");
 regGS("Pending Articles", "Ongepubliceerde Artikelen");
 regGS("System Preferences", "Systeem Voorkeuren");

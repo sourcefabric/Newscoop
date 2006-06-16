@@ -3,7 +3,6 @@ regGS("No language.", "Sin idioma");
 regGS("Delete language $1", "Borrar idioma $1");
 regGS("You do not have the right to add languages.", "No tiene derecho a agregar idiomas");
 regGS("Please enter the translation for time units.", "Favor entre la traducción por unidad de tiempo");
-regGS("Adding new language", "Agregando nuevo idioma");
 regGS("You do not have the right to delete languages.", "No tiene derecho a borrar idiomas");
 regGS("Are you sure you want to delete the language $1?", "¿Esta seguro que desea borrar el idioma $1?");
 regGS("Deleting language", "Borrando idioma");

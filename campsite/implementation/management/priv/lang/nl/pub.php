@@ -22,7 +22,6 @@ regGS("You do not have the right to edit publication information.", "Je hebt nie
 regGS("General attributes", "Algemene attributen");
 regGS("Subscriptions defaults", "Abonnementen voorkeuren");
 regGS("Countries defaults", "Landen voorkeuren");
-regGS("Changing publication information", "Publicatie informatie wordt veranderd");
 regGS("You do not have the right to change publication information.", "Je hebt niet de rechten om de publicatie informatie te veranderen");
 regGS("The publication information could not be updated.", "The publicatie informatie kan niet worden geupdate.");
 regGS("Please check if another publication with the same name or the same site name does not already exist.", "Controleer of een andere publicatie met de zelfde naam of de zelfde site naam niet al bestaat.");
@@ -31,7 +30,6 @@ regGS("Are you sure you want to delete the publication $1?", "Weet je zeker dat 
 regGS("Deleting publication", "Publicatie wordt verwijderd");
 regGS("There are $1 subscription(s) left.", "Er zijn $1 abonnement(en) over.");
 regGS("The publication $1 could not be deleted.", "De publicatie $1 kan niet worden verwijderd.");
-regGS("Adding new publication", "Nieuwe publicatie wordt toegevoegd.");
 regGS("The publication could not be added.", "De publicatie kan niet worden toegevoegd.");
 regGS("Add new country default subscription time", "Voeg nieuwe land standaard abonnement tijd toe");
 regGS("You do not have the right to manage publications.", "Je hebt niet de rechten om de publicaties te beheren.");

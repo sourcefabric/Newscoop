@@ -27,7 +27,6 @@ regGS("You do not have the right to edit publication information.", "لا يحق
 regGS("General attributes", "الخصائص العامة");
 regGS("Subscriptions defaults", "إفتراضيات الإشتراكات");
 regGS("Countries defaults", "إفتراضيات الدول");
-regGS("Changing publication information", "تبديل المعلومات الخاصة بالمنشور");
 regGS("You do not have the right to change publication information.", "لا يحق لك تغيير المعلومات الخاصة بالمنشور");
 regGS("The publication information could not be updated.", "لا يمكن تحديث المعلومات الخاصة بالمنشور");
 regGS("Please check if another publication with the same name or the same site name does not already exist.", "الرجاء التأكد من عدم وجود منشور يحمل الاسم نفسه أو اسم الموقع نفسه");
@@ -36,7 +35,6 @@ regGS("Are you sure you want to delete the publication $1?", "هل أنت متأ
 regGS("Deleting publication", "إلغاء المنشور");
 regGS("There are $1 subscription(s) left.", "اشتراك $1 (اشتراكات) متبقية");
 regGS("The publication $1 could not be deleted.", "لا  يمكن إلغاء المنشور$1");
-regGS("Adding new publication", "إضافة منشور جديد");
 regGS("The publication could not be added.", "لا يمكن إضافة المنشور");
 regGS("Add new country default subscription time", "أضف مدّة الاشتراك الأصلية خاصة بالبلد الجديد");
 regGS("You do not have the right to manage publications.", "لا يحق لك إدارة المنشورات");

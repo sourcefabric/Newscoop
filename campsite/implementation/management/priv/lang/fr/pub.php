@@ -27,7 +27,6 @@ regGS("You do not have the right to edit publication information.", "Vous n'avez
 regGS("General attributes", "Attributs Généraux");
 regGS("Subscriptions defaults", "Abonnements par défaut");
 regGS("Countries defaults", "Pays par défaut");
-regGS("Changing publication information", "Changement information de publication");
 regGS("You do not have the right to change publication information.", "Vous n'avez pas le droit de changer l'information de publication. ");
 regGS("The publication information could not be updated.", "l'information de publication ne pouvait pas être mise à jour. ");
 regGS("Please check if another publication with the same name or the same site name does not already exist.", "vérifiez SVP si une autre publication avec le même nom ou le même nom de site n'existe pas déjà . ");
@@ -36,7 +35,6 @@ regGS("Are you sure you want to delete the publication $1?", "Etes-vous sûr de 
 regGS("Deleting publication", "Suppression publication");
 regGS("There are $1 subscription(s) left.", "Il manque un ou des abonnement(s).");
 regGS("The publication $1 could not be deleted.", "La publication $1 ne pouvait pas être supprimée.");
-regGS("Adding new publication", "Ajout de nouvelle publication");
 regGS("The publication could not be added.", "La publication ne pouvait pas être ajoutée.");
 regGS("Add new country default subscription time", "Ajouter le nouveau temps d'abonnement par défaut du pays");
 regGS("You do not have the right to manage publications.", "Vous n'avez pas le droit de gérer des publications");

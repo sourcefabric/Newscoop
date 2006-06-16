@@ -3,7 +3,6 @@ regGS("No language.", "无语言");
 regGS("Delete language $1", "删除语言$1");
 regGS("You do not have the right to add languages.", "您无权添加语言");
 regGS("Please enter the translation for time units.", "请输入时间单位的翻译");
-regGS("Adding new language", "正在增加新语言");
 regGS("The language $1 has been successfuly added.", "已成功增加语言$1");
 regGS("Please check if a language with the same name does not already exist.", "请确认是否同样名字已经存在");
 regGS("The language could not be added.", "语言不能被添加");

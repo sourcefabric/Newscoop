@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -21,7 +24,6 @@ regGS("Add new translation", "Adaugă o traducere nouă");
 regGS("You do not have the right to add issues.", "Nu ai dreptul să adaugi ediţii.");
 regGS("The issue $1 has been successfuly added.", "Ediţia $1 a fost adăugată.");
 regGS("The issue could not be added.", "Ediţia nu poate fi adăugată.");
-regGS("Please check if another issue with the same number/language does not already exist.", "Verifică dacă nu există altă ediţie cu acelaşi număr/aceeaşi limbă.");
 regGS("Change issue details", "Modifică detaliile ediţiei");
 regGS("You do not have the right to change issue details.", "Nu ai dreptul să modifici detaliile ediţiei.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Data publicării<br><small>(aaaa-ll-zz)</small>");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Copiază ediţia precedentă");
 regGS("No previous issue.", "Nu există ediţie anterioară.");
 regGS("Copy structure from issue number $1", "Copiază structura de la ediţia nr $1");
-regGS("Copying previous issue", "Se copiază ediţia anterioară");
 regGS("New issue $1 from $2 in publication $3", "Ediţia nouă $1 din $2 în publicaţia $3");
-regGS("Adding new issue", "Se adaugă ediţia nouă");
 regGS("Delete entry", "Şterge înregistrarea");
 regGS("Issue Publishing Schedule", "Programarea publicării ediţiei");
 regGS("Invalid Input: $1", "Intrare invalidă: $1");

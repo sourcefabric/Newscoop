@@ -27,7 +27,6 @@ regGS("You do not have the right to edit publication information.", "Вы не �
 regGS("General attributes", "Общие атрибуты");
 regGS("Subscriptions defaults", "Настройки подписки по умолчанию");
 regGS("Countries defaults", "Настройки стран по умолчанию");
-regGS("Changing publication information", "Изменение информации публикации");
 regGS("You do not have the right to change publication information.", "Вы не имеете права изменять информацию публикации.");
 regGS("The publication information could not be updated.", "Не удалось обновить информацию публикации.");
 regGS("Please check if another publication with the same name or the same site name does not already exist.", "Пожалуйста проверьте, не существует ли уже другая публикация с этим именем или другой сайт с этим именем.");
@@ -36,7 +35,6 @@ regGS("Are you sure you want to delete the publication $1?", "Вы уверен�
 regGS("Deleting publication", "Удаление публикации");
 regGS("There are $1 subscription(s) left.", "Осталось подписок: $1.");
 regGS("The publication $1 could not be deleted.", "Не удалось удалить публикацию $1.");
-regGS("Adding new publication", "Добавление новой публикации");
 regGS("The publication could not be added.", "Не удалось добавить публикацию.");
 regGS("Add new country default subscription time", "Добавить время подписки по умолчанию для новой страны");
 regGS("You do not have the right to manage publications.", "Вы не имеете права управления публикациями");

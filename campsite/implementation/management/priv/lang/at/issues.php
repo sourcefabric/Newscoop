@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -21,7 +24,6 @@ regGS("Add new translation", "Übersetzung hinzufügen");
 regGS("You do not have the right to add issues.", "Keine Berechtigung Ausgaben hinzuzufügen");
 regGS("The issue $1 has been successfuly added.", "Ausgabe $1 wurde hinzugefügt");
 regGS("The issue could not be added.", "Die Ausgabe konnte nicht verändert werden");
-regGS("Please check if another issue with the same number/language does not already exist.", "Bitte überprüfen, ob weitere Ausgabe mit derselben Nummer/Sprache bereits existiert");
 regGS("Change issue details", "Details der Ausgabe ändern");
 regGS("You do not have the right to change issue details.", "Keine Rechte Details der Ausgabe zu ändern");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publikationsdatumg<br><small>(yyyy-mm-tt)</small>");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Vorherige Ausgabe kopieren");
 regGS("No previous issue.", "Keine vorherige Ausgabe vorhanden");
 regGS("Copy structure from issue number $1", "Struktur der Ausgabe $1 kopieren");
-regGS("Copying previous issue", "Vorherige Ausgabe kopieren");
 regGS("New issue $1 from $2 in publication $3", "Neue Ausgabe $1 von $2 der Publikation $3");
-regGS("Adding new issue", "Neue Ausgabe hinzufügen");
 regGS("Delete entry", "Eintrag löschen");
 regGS("Issue Publishing Schedule", "Veröffentlichung der Ausgabe automatisieren");
 regGS("Invalid Input: $1", "Ungültige Eingabe: $1");

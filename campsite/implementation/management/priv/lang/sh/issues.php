@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -21,7 +24,6 @@ regGS("Add new translation", "Dodaj novi prevod");
 regGS("You do not have the right to add issues.", "Nemate pravo da dodajete izdanja");
 regGS("The issue $1 has been successfuly added.", "Izdanje $1 je uspešno dodato");
 regGS("The issue could not be added.", "Izdanje ne može biti dodato");
-regGS("Please check if another issue with the same number/language does not already exist.", "Proverite da li postoji izdanje zavedeno pod istim brojem/jezikom");
 regGS("Change issue details", "Promeni detalje o izdanju");
 regGS("You do not have the right to change issue details.", "Nemate pravo da menjate podatke o izdanju");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Datum objavljivanja<br><small>(gggg-mm-dd)</small>");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Prekopiraj prethodno izdanje");
 regGS("No previous issue.", "Nema prethodnog izdanja.");
 regGS("Copy structure from issue number $1", "Prekopiraj strukturu iz izdanja $1");
-regGS("Copying previous issue", "Kopiranje prethodnog izdanja");
 regGS("New issue $1 from $2 in publication $3", "Novo izdanje $1 iz $2 u publikaciji $3");
-regGS("Adding new issue", "Dodavanje novog izdanja");
 regGS("Delete entry", "Obriši unos");
 regGS("Issue Publishing Schedule", "Raspored automatskog objavljivanja izdanja");
 regGS("Invalid Input: $1", "Pogrešan unos: $1");

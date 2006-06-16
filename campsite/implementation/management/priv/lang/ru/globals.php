@@ -272,4 +272,5 @@ regGS("Other", "");
 regGS("No events.", "");
 regGS("Default templates", "");
 regGS("System Preferences", "");
+regGS("The date must be in the future.", "");
 ?>

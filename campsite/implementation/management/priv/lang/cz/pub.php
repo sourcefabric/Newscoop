@@ -27,7 +27,6 @@ regGS("You do not have the right to edit publication information.", "Nemáte pr�
 regGS("General attributes", "");
 regGS("Subscriptions defaults", "");
 regGS("Countries defaults", "");
-regGS("Changing publication information", "Změna informací o publikaci");
 regGS("You do not have the right to change publication information.", "Nemáte práva změnit informace o publikaci");
 regGS("The publication information could not be updated.", "Publikace nemohla být obnovena");
 regGS("Please check if another publication with the same name or the same site name does not already exist.", "Zkontrolujte, zda publikace se stejným názvem již neexistuje.");
@@ -36,7 +35,6 @@ regGS("Are you sure you want to delete the publication $1?", "Určitě chcete sm
 regGS("Deleting publication", "Mazání publikace");
 regGS("There are $1 subscription(s) left.", "Zbývá předplatné $1");
 regGS("The publication $1 could not be deleted.", "Publikace $1 nemohla být smazána");
-regGS("Adding new publication", "Přidat novou publikaci");
 regGS("The publication could not be added.", "Publikace nemohla být přidána");
 regGS("Add new country default subscription time", "Přidat předplatné období pro novou zemi");
 regGS("You do not have the right to manage publications.", "Nemáte právo spravovat publikace");

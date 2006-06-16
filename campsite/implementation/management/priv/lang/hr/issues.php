@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The number must be unique for each issue in this publication of the same language.", "");
+regGS("The language and URL name must be unique for each issue in this publication.", "");
+regGS("Issue created.", "");
 regGS("Issue updated", "");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
@@ -21,7 +24,6 @@ regGS("Add new translation", "Dodaj verziju na drugom jeziku");
 regGS("You do not have the right to add issues.", "Nemate ovlasti dodavati izdanja.");
 regGS("The issue $1 has been successfuly added.", "Izdanje $1 je uspješno dodano.");
 regGS("The issue could not be added.", "Izdanje ne može biti dodano.");
-regGS("Please check if another issue with the same number/language does not already exist.", "Provjerite da li već postoji izdanje s istim brojem/na istom jeziku.");
 regGS("Change issue details", "Izmijeni podrobnosti o izdanju");
 regGS("You do not have the right to change issue details.", "Nemate ovlasti mijenjati detalje o izdanju.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Datum publikacije<BR><SMALL>(yyyy-mm-dd)</SMALL>");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Prekopiraj prethodno izdanje");
 regGS("No previous issue.", "Prethodno izdanje ne postoji.");
 regGS("Copy structure from issue number $1", "Iskoristi strukturu izdanja br. $1");
-regGS("Copying previous issue", "Kopiranje prethodnog izdanja");
 regGS("New issue $1 from $2 in publication $3", "Novo izdanje $1 od $2 u publikaciji $3");
-regGS("Adding new issue", "Dodavanje novog izdanja");
 regGS("Delete entry", "Obriši zapis");
 regGS("Issue Publishing Schedule", "Raspored objavljivanja izdanja");
 regGS("Invalid Input: $1", "Nevažeći unos: $1");

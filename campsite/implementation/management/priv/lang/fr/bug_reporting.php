@@ -1,4 +1,5 @@
 <?php
+regGS("What were you trying to do when this happened? (optional)", "");
 regGS("Description:", "");
 regGS("We are sorry for the inconvenience.", "");
 regGS("Simply copy and paste the error report below and send it to:", "");

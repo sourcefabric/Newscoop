@@ -258,5 +258,5 @@ regGS("Time:", "Time:");
 regGS("No events.", "No events.");
 regGS("Default templates", "Default templates");
 regGS("System Preferences", "System Preferences");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Are you sure you want to delete the image \\'$1\\'?");
+regGS("The date must be in the future.", "The date must be in the future.");
 ?>

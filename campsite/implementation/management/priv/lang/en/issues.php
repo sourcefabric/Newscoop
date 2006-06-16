@@ -1,5 +1,8 @@
 <?php
-regGS("The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".");
+regGS("The number must be unique for each issue in this publication of the same language.", "The number must be unique for each issue in this publication of the same language.");
+regGS("The language and URL name must be unique for each issue in this publication.", "The language and URL name must be unique for each issue in this publication.");
+regGS("Issue created.", "Issue created.");
 regGS("Issue updated", "Issue updated");
 regGS("Could not save the changes to the issue.", "Could not save the changes to the issue.");
 regGS("Unpublish on: $1", "Unpublish on: $1");
@@ -21,7 +24,6 @@ regGS("Add new translation", "Add new translation");
 regGS("You do not have the right to add issues.", "You do not have the right to add issues.");
 regGS("The issue $1 has been successfuly added.", "The issue $1 has been successfuly added.");
 regGS("The issue could not be added.", "The issue could not be added.");
-regGS("Please check if another issue with the same number/language does not already exist.", "Please check if another issue with the same number/language does not already exist.");
 regGS("Change issue details", "Change issue details");
 regGS("You do not have the right to change issue details.", "You do not have the right to change issue details.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>");
@@ -38,9 +40,7 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Copy previous issue");
 regGS("No previous issue.", "No previous issue.");
 regGS("Copy structure from issue number $1", "Copy structure from issue number $1");
-regGS("Copying previous issue", "Copying previous issue");
 regGS("New issue $1 from $2 in publication $3", "New issue $1 from $2 in publication $3");
-regGS("Adding new issue", "Adding new issue");
 regGS("Delete entry", "Delete entry");
 regGS("Issue Publishing Schedule", "Issue Publishing Schedule");
 regGS("Invalid Input: $1", "Invalid Input: $1");
