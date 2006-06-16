@@ -1,7 +1,17 @@
 <?php
 
 if (!is_array($GLOBALS['argv'])) {
+	echo "\n";
 	echo "Can't read command line arguments\n";
+	echo "\n";
+	exit(1);
+}
+
+$processUserId = posix_geteuid();
+if ($processUserId != 0) {
+	echo "\n";
+	echo "You must run this script as root.\n";
+	echo "\n";
 	exit(1);
 }
 
@@ -30,13 +40,17 @@ require_once("$etc_dir/install_conf.php");
 require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
 if (!is_dir("$etc_dir/$instance_name")) {
 	if (!$silent) {
+		echo "\n";
 		echo "Instance '$instance_name' does not exist!\n";
+		echo "\n";
 	}
 	exit(1);
 }
 if (!is_file("$etc_dir/$instance_name/database_conf.php")) {
 	if (!$silent) {
+		echo "\n";
 		echo "Database configuration file for instance '$instance_name' is missing!\n";
+		echo "\n";
 	}
 	exit(1);
 }
@@ -50,29 +64,36 @@ if ($default_dir) {
 }
 
 // backup look (templates) directory
-if (archive_file("$html_dir/look", $backup_dir, "$instance_name-look", $output) != 0)
+if (archive_file("$html_dir/look", $backup_dir, "$instance_name-look", $output) != 0) {
 	exit_with_error($silent ? "" : $output);
+}
 
 // backup images directory
-if (archive_file("$html_dir/images", $backup_dir, "$instance_name-images", $output) != 0)
+if (archive_file("$html_dir/images", $backup_dir, "$instance_name-images", $output) != 0) {
 	exit_with_error($silent ? "" : $output);
+}
 
 // backup files directory
-if (archive_file("$html_dir/files", $backup_dir, "$instance_name-files", $output) != 0)
+if (archive_file("$html_dir/files", $backup_dir, "$instance_name-files", $output) != 0) {
 	exit_with_error($silent ? "" : $output);
+}
 
 // backup configuration directory
-if (archive_file("$etc_dir/$instance_name", $backup_dir, "$instance_name-conf", $output) != 0)
+if (archive_file("$etc_dir/$instance_name", $backup_dir, "$instance_name-conf", $output) != 0) {
 	exit_with_error($silent ? "" : $output);
+}
 
 // backup the database
 $db_file_name = "$backup_dir/$instance_name-database.sql";
-if (is_file($db_file_name) && (backup_file($db_file_name, $output) != 0))
+if (is_file($db_file_name) && (backup_file($db_file_name, $output) != 0)) {
 	exit_with_error($silent ? "" : $output);
-if (backup_database($instance_name, $db_file_name, $output) != 0)
+}
+if (backup_database($instance_name, $db_file_name, $output) != 0) {
 	exit_with_error($silent ? "" : $output);
-if (archive_file($db_file_name, $backup_dir, "$instance_name-database", $output) != 0)
+}
+if (archive_file($db_file_name, $backup_dir, "$instance_name-database", $output) != 0) {
 	exit_with_error($silent ? "" : $output);
+}
 
 // create the final archive
 $cmd = "pushd $backup_dir > /dev/null && tar cf "

@@ -2,20 +2,20 @@
 
 bin_path=`dirname $0`
 if [ "$bin_path" = "." ]; then
-        script_call="./campsite-backup-instance.php"
-        ETC_DIR=`./campsite_config --etc_dir`
-        PHP=`./campsite_config --php_cli`
+    script_call="./campsite-backup-instance.php"
+    ETC_DIR=`./campsite_config --etc_dir`
+    PHP=`./campsite_config --php_cli`
 	CAMPSITE_DIR=`./campsite_config --campsite_dir`
 elif [ "$bin_path" = "" ]; then
-        BIN_DIR=`campsite_config --bin_dir`
-        script_call="$BIN_DIR/campsite-backup-instance.php"
-        ETC_DIR=`campsite_config --etc_dir`
-        PHP=`campsite_config --php_cli`
+    BIN_DIR=`campsite_config --bin_dir`
+    script_call="$BIN_DIR/campsite-backup-instance.php"
+    ETC_DIR=`campsite_config --etc_dir`
+    PHP=`campsite_config --php_cli`
 	CAMPSITE_DIR=`campsite_config --campsite_dir`
 else
-        script_call="$bin_path/campsite-backup-instance.php"
-        ETC_DIR=`$bin_path/campsite_config --etc_dir`
-        PHP=`$bin_path/campsite_config --php_cli`
+    script_call="$bin_path/campsite-backup-instance.php"
+    ETC_DIR=`$bin_path/campsite_config --etc_dir`
+    PHP=`$bin_path/campsite_config --php_cli`
 	CAMPSITE_DIR=`$bin_path/campsite_config --campsite_dir`
 fi
 

@@ -5,24 +5,36 @@ if (!is_array($GLOBALS['argv'])) {
 	exit(1);
 }
 
+$processUserId = posix_geteuid();
+if ($processUserId != 0) {
+	echo "\n";
+	echo "You must run this script as root.\n";
+	echo "\n";
+	exit(1);
+}
+
+
 $etc_dir = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : "";
 $type = isset($GLOBALS['argv'][2]) ? trim($GLOBALS['argv'][2]) : "";
 $arg3 = isset($GLOBALS['argv'][3]) ? trim($GLOBALS['argv'][3]) : "";
 
-if ($type == "-a")
+if ($type == "-a") {
 	$archive_file = $arg3;
-if ($type == "-i")
+}
+if ($type == "-i") {
 	$instance_name = $arg3;
+}
 
 if ($etc_dir == "" || $type == "" || ($type == "-a" && $archive_file == "")
 	|| ($type == "-i" && $instance_name == "") || ($type != '-a' && $type != '-i')) {
-	echo "Invalid parameters received; usage:\n"
-		. "    campsite-restore-instance [-a <path_to_archive> | -i <instance_name>]\n"
-		. "where:\n"
-		. "    [-a <path_to_archive>] = restore the instance from the backup archive\n"
-		. "        file <path_to_archive>; give the full or relative path to the file\n"
-		. "    [-i <instance_name>] = restore the instance having the name <instance_name>\n"
-		. "        from the default backup directory\n";
+	echo "Invalid parameters.  Usage:\n"
+		. "    campsite-restore-instance [-a <backup_file> | -i <instance_name>]\n"
+		. "\n"
+		. "    where:\n"
+		. "    [-a <backup_file>]   = Restore the instance from the backup file.\n"
+		. "                           Give the full or relative path to the file.\n"
+		. "    [-i <instance_name>] = Restore the instance having the name <instance_name>\n"
+		. "                           from the default backup directory.\n";
 	exit(1);
 }
 
