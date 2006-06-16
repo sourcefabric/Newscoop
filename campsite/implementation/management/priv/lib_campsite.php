@@ -2,22 +2,6 @@
 $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 
 /**
- * Load include files and localization files.
- *
- * @param string $p_languageFile
- * @return void
- */
-//function camp_load_common_include_files($p_languageFile)
-//{
-//	//global $ADMIN_DIR;
-//	//require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
-//	//require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
-////	camp_load_language('globals');
-//	camp_load_language("$p_languageFile");
-//} // fn load_common_include_files
-
-
-/**
  * Check if user has access to the admin.
  * @param array $p_request
  * @return array
@@ -341,8 +325,33 @@ function camp_dump($p_object)
 }
 
 
-if (isset($ADMIN_DIR) && file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/admin/priv_functions.php")) {
-	include ($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/admin/priv_functions.php");
-}
+/**
+ * Get the error message for standard errors.
+ *
+ * @param int $p_errorCode
+ * 		Can be:
+ * 		CAMP_FILE_NOT_WRITABLE
+ * 		CAMP_DIR_NOT_WRITABLE
+ * @param unknown_type $p_arg1
+ */
+function camp_get_error_message($p_errorCode, $p_arg1 = null)
+{
+	global $Campsite;
+	switch ($p_errorCode) {
+	case CAMP_ERROR_CREATE_FILE:
+		return getGS("The system was unable to create the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		break;
+	case CAMP_ERROR_WRITE_FILE:
+		return getGS("The system was unable to write to the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to this file.", $Campsite['APACHE_USER']);
+		break;
+	case CAMP_ERROR_DELETE_FILE:
+		return getGS("The system was unable to delete the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to this file.", $Campsite['APACHE_USER']);
+		break;
+	case CAMP_ERROR_MKDIR:
+		return getGS("The system was unable to create the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		break;
+	}
+	return "";
+} // fn camp_get_error_message
 
 ?>

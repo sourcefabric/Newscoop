@@ -5,10 +5,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/localizer/Localizer.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 
-$languageId = Input::Get('Lang', 'int', 0, true);
-$Back = Input::Get('Back', 'string', null, true);
-
-$editMode = ($languageId != 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0, true);
+$editMode = ($f_language_id != 0);
 
 if (!$g_user->hasPermission('ManageLanguages')) {
     if (!$editMode) {
@@ -24,10 +22,10 @@ $q_defaultTimeUnits = $g_ado_db->GetAll("SELECT * FROM TimeUnits WHERE IdLanguag
 $numTimeUnits = 0;
 $q_timeUnits = array();
 if ($editMode) {
-    $q_timeUnits = $g_ado_db->GetAll("SELECT * FROM TimeUnits WHERE IdLanguage=$languageId");
+    $q_timeUnits = $g_ado_db->GetAll("SELECT * FROM TimeUnits WHERE IdLanguage=$f_language_id");
 }
 
-$languageObj =& new Language($languageId);
+$languageObj =& new Language($f_language_id);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -41,9 +39,11 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
+camp_html_display_msgs();
 ?>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add_modify.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM NAME="language_form" METHOD="POST" ACTION="do_add_modify.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($editMode) { ?>
 <input type="hidden" name="cLang" value="<?php p($languageObj->getLanguageId()); ?>">
 <?php } ?>
@@ -61,19 +61,19 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Name')); ?>" value="<?php p($languageObj->getProperty('Name')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_language_name" SIZE="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Name')); ?>" value="<?php p($languageObj->getProperty('Name')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Native name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cOrigName" SIZE="32" MAXLENGTH="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Native name')); ?>" value="<?php p($languageObj->getProperty('OrigName')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_native_name" SIZE="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Native name')); ?>" value="<?php p($languageObj->getProperty('OrigName')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Code"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cCode" SIZE="2" MAXLENGTH="2" alt="length|2|2" emsg="<?php  putGS('You must complete the $1 field.', getGS('Code')); ?>" value="<?php p($languageObj->getProperty('Code')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_language_code" SIZE="2" MAXLENGTH="2" alt="length|2|2" emsg="<?php  putGS('You must complete the $1 field.', getGS('Code')); ?>" value="<?php p($languageObj->getProperty('Code')); ?>">
 	</TD>
 </TR>
 <TR>
@@ -82,73 +82,73 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("January"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth1" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month1')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_1" SIZE="20" value="<?php p($languageObj->getProperty('Month1')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("February"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth2" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month2')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_2" SIZE="20" value="<?php p($languageObj->getProperty('Month2')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("March"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth3" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month3')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_3" SIZE="20" value="<?php p($languageObj->getProperty('Month3')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("April"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth4" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month4')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_4" SIZE="20" value="<?php p($languageObj->getProperty('Month4')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("May"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth5" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month5')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_5" SIZE="20" value="<?php p($languageObj->getProperty('Month5')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("June"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth6" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month6')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_6" SIZE="20" value="<?php p($languageObj->getProperty('Month6')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("July"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth7" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month7')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_7" SIZE="20" value="<?php p($languageObj->getProperty('Month7')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("August"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth8" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month8')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_8" SIZE="20" value="<?php p($languageObj->getProperty('Month8')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("September"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth9" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month9')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_9" SIZE="20" value="<?php p($languageObj->getProperty('Month9')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("October"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth10" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month10')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_10" SIZE="20" value="<?php p($languageObj->getProperty('Month10')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("November"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth11" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month11')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_11" SIZE="20" value="<?php p($languageObj->getProperty('Month11')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("December"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cMonth12" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('Month12')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_month_12" SIZE="20" value="<?php p($languageObj->getProperty('Month12')); ?>">
 	</TD>
 </TR>
 <TR>
@@ -157,43 +157,43 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Sunday"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cWDay1" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('WDay1')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_sunday" SIZE="20" value="<?php p($languageObj->getProperty('WDay1')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Monday"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cWDay2" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('WDay2')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_monday" SIZE="20" value="<?php p($languageObj->getProperty('WDay2')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Tuesday"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cWDay3" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('WDay3')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_tuesday" SIZE="20" value="<?php p($languageObj->getProperty('WDay3')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Wednesday"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cWDay4" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('WDay4')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_wednesday" SIZE="20" value="<?php p($languageObj->getProperty('WDay4')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Thursday"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cWDay5" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('WDay5')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_thursday" SIZE="20" value="<?php p($languageObj->getProperty('WDay5')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Friday"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cWDay6" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('WDay6')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_friday" SIZE="20" value="<?php p($languageObj->getProperty('WDay6')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Saturday"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cWDay7" SIZE="20" MAXLENGTH="20" value="<?php p($languageObj->getProperty('WDay7')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_saturday" SIZE="20" value="<?php p($languageObj->getProperty('WDay7')); ?>">
 	</TD>
 </TR>
 
@@ -211,26 +211,20 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 	   ?>
 	   <TR>
 		  <TD ALIGN="RIGHT"><?php p(htmlspecialchars($q_defaultTimeUnits[$i]['Name']));?></TD>
-		  <TD><INPUT TYPE="TEXT" class="input_text" NAME="<?php p(htmlspecialchars($q_defaultTimeUnits[$i]['Unit']));?>" SIZE="20" MAXLENGTH="20" VALUE="<?php  p(htmlspecialchars($value)); ?>"></TD>
+		  <TD><INPUT TYPE="TEXT" class="input_text" NAME="<?php p(htmlspecialchars($q_defaultTimeUnits[$i]['Unit']));?>" SIZE="20" VALUE="<?php  p(htmlspecialchars($value)); ?>"></TD>
 	   </TR>
 	   <?php
 	} ?>
 	<TR>
 
-	<TD COLSPAN="2">
-		<DIV ALIGN="CENTER">
+	<TD COLSPAN="2" align="center">
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php  print htmlspecialchars($Back); ?>">
-        <?php  if ($Back != "") { ?>
-        <!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php  print $Back; ?>'">-->
-        <?php  } else { ?>
-        <!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/languages/'">-->
-        <?php  } ?>
-        </DIV>
 	</TD>
 </TR>
 </TABLE>
 </FORM>
 <P>
-
+<script>
+document.forms.language_form.f_language_name.focus();
+</script>
 <?php camp_html_copyright_notice(); ?>

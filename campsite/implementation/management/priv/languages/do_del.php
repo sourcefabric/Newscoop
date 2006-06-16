@@ -23,41 +23,45 @@ if (!$languageObj->exists()) {
 }
 
 $doDelete = true;
-
+$errorMsgs = array();
 $numPublications = $g_ado_db->GetOne("SELECT COUNT(*) FROM Publications WHERE IdDefaultLanguage=$Language");
 if ($numPublications > 0) {
 	$doDelete = false;
-	$msg[] = getGS('There are $1 publication(s) left.', $numPublications);
+	$errorMsgs[] = getGS('There are $1 publication(s) left.', $numPublications);
 }
 
 $numIssues = $g_ado_db->GetOne("SELECT COUNT(*) FROM Issues WHERE IdLanguage=$Language");
 if ($numIssues > 0) {
     $doDelete = false;
-    $msg[] = getGS('There are $1 issue(s) left.', $numIssues);
+    $errorMsgs[] = getGS('There are $1 issue(s) left.', $numIssues);
 }
 
 $numSections = $g_ado_db->GetOne("SELECT COUNT(*) FROM Sections WHERE IdLanguage=$Language");
 if ($numSections > 0) {
     $doDelete = false;
-    $msg[] = getGS('There are $1 section(s) left.', $numSections);
+    $errorMsgs[] = getGS('There are $1 section(s) left.', $numSections);
 }
 
 $numArticles = $g_ado_db->GetOne("SELECT COUNT(*) FROM Articles WHERE IdLanguage=$Language");
 if ($numArticles > 0) {
     $doDelete = false;
-    $msg[] = getGS('There are $1 article(s) left.', $numArticles);
+    $errorMsgs[] = getGS('There are $1 article(s) left.', $numArticles);
 }
 
 $numCountries = $g_ado_db->GetOne("SELECT COUNT(*) FROM Countries WHERE IdLanguage=$Language");
 if ($numCountries > 0) {
     $doDelete = false;
-    $msg[] = getGS('There are $1 countries left.', $numCountries);
+    $errorMsgs[] = getGS('There are $1 countries left.', $numCountries);
 }
 
 if ($doDelete) {
-	$languageObj->delete();
-	header("Location: /$ADMIN/languages/index.php");
-	exit;
+	$result = $languageObj->delete();
+	if (!PEAR::isError($result)) {
+		camp_html_goto_page("/$ADMIN/languages/index.php");
+	} else {
+		$errorMsgs[] = $result->getMessage();
+	}
+
 }
 
 $crumbs = array();
@@ -78,13 +82,13 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	   <BLOCKQUOTE>
+		<LI><?php  putGS('The language $1 could not be deleted.','<B>'.$languageObj->getNativeName().'</B>'); ?></LI>
         <?php
-        foreach ($msg as $error) { ?>
+        foreach ($errorMsgs as $error) { ?>
             <LI><?php p($error); ?></LI>
             <?php
         }
         ?>
-		<LI><?php  putGS('The language $1 could not be deleted.','<B>'.$languageObj->getNativeName().'</B>'); ?></LI>
 	   </BLOCKQUOTE>
 	</TD>
 </TR>

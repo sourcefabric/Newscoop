@@ -58,8 +58,10 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
      * @param LocalizerLanguage $p_localizerLanguage
      *		LocalizerLanguage object.
      *
-     * @return string
-     *		File contents
+     * @return int
+     *		CAMP_SUCCESS
+     * 		CAMP_ERROR_MKDIR
+     * 		CAMP_ERROR_WRITE_FILE
      */
 	function save(&$p_localizerLanguage)
 	{
@@ -74,22 +76,26 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
     	}
     	$data .= "?>";
         $filePath = LocalizerFileFormat_GS::GetFilePath($p_localizerLanguage);
-        //echo $filePath;
         $p_localizerLanguage->_setSourceFile($filePath);
 
         // Create the language directory if it doesnt exist.
         $dirName = $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_localizerLanguage->getLanguageCode();
         if (!file_exists($dirName)) {
-            mkdir($dirName);
+        	if (is_writable($dirName)) {
+            	mkdir($dirName);
+        	} else {
+        		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_MKDIR, $dirName), CAMP_ERROR_MKDIR);
+        	}
         }
 
         // write data to file
-        if (PEAR::isError(File::write($filePath, $data, FILE_MODE_WRITE))) {
-//        	echo "<br>error writing file<br>";
-            return FALSE;
+        if (is_writable($filePath)) {
+	        File::write($filePath, $data, FILE_MODE_WRITE);
+        } else {
+        	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_FILE, $filePath), CAMP_ERROR_WRITE_FILE);
         }
         File::close($filePath, FILE_MODE_WRITE);
-        return $data;
+        return CAMP_SUCCESS;
     } // fn save
 
 
@@ -215,21 +221,29 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
         $serializer->serialize($saveData);
         $xml = $serializer->getSerializedData();
         if (PEAR::isError($xml)) {
-        	echo "<br>error serializing data<br>";
-            return FALSE;
+            return CAMP_ERROR;
+        }
+
+        // Create the language directory if it doesnt exist.
+        $dirName = $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_localizerLanguage->getLanguageCode();
+        if (!file_exists($dirName)) {
+        	if (is_writable($dirName)) {
+            	mkdir($dirName);
+        	} else {
+        		return CAMP_ERROR_MKDIR;
+        	}
         }
 
         $filePath = LocalizerFileFormat_XML::GetFilePath($p_localizerLanguage);
-        //echo "Saving as ".$this->m_filePath."<Br>";
         // write data to file
-        if (PEAR::isError(File::write($filePath, $xml, FILE_MODE_WRITE))) {
-//        	echo "<br>error writing file<br>";
-            return FALSE;
+        if (is_writable($filePath)) {
+        	File::write($filePath, $xml, FILE_MODE_WRITE);
+        } else {
+        	return CAMP_ERROR_WRITE_FILE;
         }
 
         File::close($filePath, FILE_MODE_WRITE);
-
-        return $xml;
+        return CAMP_SUCCESS;
 	} // fn save
 
 

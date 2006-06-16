@@ -341,7 +341,8 @@ class Localizer {
      * @param string $p_languageCode
      * @param array $p_data
      *
-     * @return void
+     * @return mixed
+     * 		Return TRUE on success and a PEAR_Error on failure.
      */
     function ModifyStrings($p_prefix, $p_languageId, $p_data)
     {
@@ -370,7 +371,7 @@ class Localizer {
 	        	}
 
 	        	// Save the file
-				$source->saveFile(Localizer::GetMode());
+				return $source->saveFile(Localizer::GetMode());
 	        }
         }
       	// We only need to change the values in one file.
@@ -382,7 +383,7 @@ class Localizer {
     			$source->updateString($pair['key'], $pair['key'], $pair['value']);
     		}
         	// Save the file
-			$source->saveFile(Localizer::GetMode());
+			return $source->saveFile(Localizer::GetMode());
         }
     } // fn ModifyStrings
 
@@ -593,40 +594,54 @@ class Localizer {
 	/**
      * Create a new directory to store the language files.
      * @param string $p_languageCode
-     * @return void
+     * @return mixed
+     * 		Return TRUE on success and PEAR_Error on failure.
      */
     function CreateLanguageFiles($p_languageCode)
     {
         global $g_localizerConfig;
 
+        if (!is_string($p_languageCode)) {
+        	return new PEAR_Error("Localizer::CreateLanguageFiles: Invalid parameter");
+        }
+
         // Make new directory
         $dirName = $g_localizerConfig['TRANSLATION_DIR']."/".$p_languageCode;
         if (!file_exists($dirName)) {
-        	mkdir($dirName);
+        	if (is_writable($g_localizerConfig['TRANSLATION_DIR'])) {
+        		mkdir($dirName);
+        	} else {
+        		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_MKDIR, $dirName), CAMP_ERROR_MKDIR);
+        	}
         }
+        return true;
     } // fn CreateLanguageFiles
 
 
     /**
      * Delete language files for the given language.
      * @param string $p_languageCode
-     * @return void
+     * @return mixed
+     * 		Return TRUE on success, PEAR_Error on failure.
      */
     function DeleteLanguageFiles($p_languageCode)
     {
         global $g_localizerConfig;
         $langDir = $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_languageCode;
         if (!file_exists($langDir)) {
-            return;
+            return true;
         }
         $files = File_Find::mapTreeMultiple($langDir, 1);
-        //echo "<pre>";print_r($files);echo "</pre>";
         foreach ($files as $pathname) {
             if (file_exists($pathname)) {
-                //echo 'deleteing '.$pathname.'<br>';
-                unlink($pathname);
+            	if (is_writable($pathname)) {
+                	unlink($pathname);
+            	} else {
+            		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $pathname), CAMP_ERROR_DELETE_FILE);
+            	}
             }
         }
+        return true;
     } // fn DeleteLanguageFiles
 
 } // class Localizer

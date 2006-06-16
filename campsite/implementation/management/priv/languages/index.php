@@ -14,11 +14,13 @@ if ($g_user->hasPermission('ManageLanguages')) { ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="action_buttons">
 <TR>
-    <TD><A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-    <TD><A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><B><?php  putGS("Add new language"); ?></B></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php"><B><?php  putGS("Add new language"); ?></B></A></TD>
 </TR>
 </TABLE>
 <?php  } ?>
+
+<?php camp_html_display_msgs(); ?>
 
 <P>
 <?php
@@ -38,7 +40,7 @@ if (count($languages) > 0) {
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD>
 			<?php if ($g_user->hasPermission('ManageLanguages')) { ?>
-			<A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php?Lang=<?php p($language->getLanguageId()); ?>">
+			<A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php?f_language_id=<?php p($language->getLanguageId()); ?>">
 			<?php } ?>
 			<?php  p(htmlspecialchars($language->getName())); ?>
 			<?php if ($g_user->hasPermission('ManageLanguages')) { ?>

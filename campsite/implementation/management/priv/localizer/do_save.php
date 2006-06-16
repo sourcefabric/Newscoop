@@ -13,7 +13,10 @@ if (!$g_user->hasPermission('ManageLocalizer')) {
 $prefix = Input::Get('prefix', 'string', '', true);
 $targetLanguageId = Input::Get('localizer_target_language');
 $data = Input::Get('data', 'array');
-Localizer::ModifyStrings($prefix, $targetLanguageId, $data);
+$result = Localizer::ModifyStrings($prefix, $targetLanguageId, $data);
+if (PEAR::isError($result)) {
+	camp_html_add_msg($result->getMessage());
+}
 
 header("Location: /$ADMIN/localizer/index.php");
 exit;

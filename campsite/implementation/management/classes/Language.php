@@ -46,16 +46,22 @@ class Language extends DatabaseObject {
 
 
 	/**
-	 * Create the language.
+	 * Create the language.  Creates the directory on disk to store the
+	 * translation files.
 	 *
 	 * @param array $p_values
-	 * @return boolean
+	 * @return mixed
+	 * 		Return TRUE on success and PEAR_Error on failure.
 	 */
 	function create($p_values = null)
 	{
 		$success = parent::create($p_values);
 		if ($success) {
-	    	Localizer::CreateLanguageFiles($this->m_data['Code']);
+	    	$result = Localizer::CreateLanguageFiles($this->m_data['Code']);
+	    	if (PEAR::isError($result)) {
+	    		$this->delete(false);
+	    		return $result;
+	    	}
 	    	camp_create_language_links();
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
@@ -67,22 +73,42 @@ class Language extends DatabaseObject {
 	} // fn create
 
 
+	/**
+	 * Update the language.
+	 *
+	 * @param array $p_values
+	 * @param boolean $p_commit
+	 * @param boolean $p_isSql
+	 * @return boolean
+	 */
 	function update($p_values = null, $p_commit = true, $p_isSql = false)
 	{
-		parent::update($p_values, $p_commit, $p_isSql);
+		$success = parent::update($p_values, $p_commit, $p_isSql);
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
         $logtext = getGS('Language $1 modified', $this->m_data['Name']." (".$this->m_data['OrigName'].")");
         Log::Message($logtext, null, 103);
+        return $success;
 	} // fn update
 
 
-	function delete()
+	/**
+	 * Delete the language, this will also delete the language files unless
+	 * the parameter specifies otherwise.
+	 *
+	 * @return boolean
+	 */
+	function delete($p_deleteLanguageFiles = true)
 	{
 		global $g_documentRoot;
 		unlink($g_documentRoot . "/" . $this->getCode() . ".php");
-		Localizer::DeleteLanguageFiles($this->getCode());
+		if ($p_deleteLanguageFiles) {
+			$result = Localizer::DeleteLanguageFiles($this->getCode());
+			if (PEAR::isError($result)) {
+				return result;
+			}
+		}
 		$success = parent::delete();
 		if ($success) {
 			if (function_exists("camp_load_translation_strings")) {

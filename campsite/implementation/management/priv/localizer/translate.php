@@ -63,11 +63,13 @@ function translationForm($p_request)
         // order as the default language file.
         $modified = $sourceLang->syncToDefault();
         if ($modified) {
-        	$sourceLang->saveFile($mode);
+        	$sourceSaveSuccess = $sourceLang->saveFile($mode);
+        	camp_html_add_msg(camp_get_error_message($sourceSaveSuccess));
         }
         $modified = $targetLang->syncToDefault();
         if ($modified) {
-        	$targetLang->saveFile($mode);
+        	$targetSaveSuccess = $targetLang->saveFile($mode);
+        	camp_html_add_msg(camp_get_error_message($targetSaveSuccess));
         }
 	}
 
@@ -123,6 +125,8 @@ function translationForm($p_request)
     if (isset($p_request['hide_translated'])) {
     	$hideTranslated = "CHECKED";
     }
+
+    camp_html_display_msgs();
 	?>
 	<table>
 	<tr>

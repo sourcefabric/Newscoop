@@ -59,4 +59,12 @@ $Campsite['HELP_URL'] = 'http://code.campware.org/manuals/campsite/2.6/';
 $Campsite['ABOUT_URL'] = 'http://www.campware.org/en/camp/campsite_news/';
 $Campsite['SUPPORT_EMAIL'] = 'campsite-support@lists.campware.org';
 $Campsite['DEBUG'] = true;
+
+define('CAMP_SUCCESS', 1);
+define('CAMP_ERROR',   0);
+define('CAMP_ERROR_MKDIR',       -100);
+define('CAMP_ERROR_CREATE_FILE', -200);
+define('CAMP_ERROR_WRITE_FILE',  -300);
+define('CAMP_ERROR_DELETE_FILE', -400);
+
 ?>
