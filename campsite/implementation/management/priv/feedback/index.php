@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-camp_load_translation_strings("bug_reporting");
+camp_load_translation_strings("feedback");
 
 global $Campsite;
 global $ADMIN_DIR;
@@ -32,10 +32,13 @@ global $ADMIN;
                         putGS("What would you like to leave as feedback?")
                     ?></td>
                 </tr>
+                <tr><td align="left" nowrap><?php putGS("Summary"); ?></td>
+                    <td><input type="text" class="input_text" name="f_description" value="" size="32" maxalength="255"></td>
+                </tr>
                 <tr>
                     <td align="left" nowrap>&nbsp;</td>
                     <td>
-                        <textarea cols="50" rows="4" class="input_text" name="f_description"></textarea>
+                        <textarea cols="50" rows="4" class="input_text" name="f_body"></textarea>
                     </td>
                 </tr>
                 <tr>

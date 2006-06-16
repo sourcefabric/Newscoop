@@ -197,7 +197,7 @@ class BugReporter
                                        'f_backtrace' => $this->getBacktraceString(),
                                        'f_time' => $this->getTime(),
                                        'f_description' => $this->getDescription(),
-                                       'f_email' => $this->getEmail()
+                                       'f_email' => $this->getEmail(),
                                     ));
 
         $response = $client->currentResponse();
@@ -384,7 +384,6 @@ class BugReporter
     {
         $this->m_software = $p_software;
     } // fn setSoftware
-
 
     /**
      * Manually set the software version of the error which occurred.

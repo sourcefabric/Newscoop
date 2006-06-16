@@ -119,7 +119,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["user_subscription_sections"] = getGS("User Subscriptions Sections");
     $mapPrefixToDisplay["user_types"] = getGS("Staff User Types");
     $mapPrefixToDisplay["bug_reporting"] = getGS("Bug Reporting");
-
+    $mapPrefixToDisplay["feedback"] = getGS("Feedback");
 	// Whether to show translated strings or not.
 	$hideTranslated = '';
     if (isset($p_request['hide_translated'])) {

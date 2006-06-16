@@ -1,4 +1,5 @@
 <?php
+regGS("Feedback", "");
 regGS("Article Files", "Artikel bestanden");
 regGS("Log Messages", "Logboek Berichten");
 regGS("edit '$1'", "bewerk '$1'");

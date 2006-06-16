@@ -1,4 +1,5 @@
 <?php
+regGS("Feedback", "Feedback");
 regGS("You do not have the right to manage the localizer.", "You do not have the right to manage the localizer.");
 regGS("API", "API");
 regGS("User Subscriptions Sections", "User Subscriptions Sections");
