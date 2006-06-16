@@ -362,8 +362,14 @@ $g_camp_msg_added = false;
 function camp_html_add_msg($p_errorMsg, $p_type = "error")
 {
 	global $g_camp_msg_added;
-	$g_camp_msg_added = true;
-	$_SESSION["camp_user_msgs"][$p_errorMsg] = $p_type;
+	$p_type = strtolower($p_type);
+	if (!in_array($p_type, array("error", "ok"))) {
+		return;
+	}
+	if (is_string($p_errorMsg) && (trim($p_errorMsg) != "")) {
+		$g_camp_msg_added = true;
+		$_SESSION["camp_user_msgs"][$p_errorMsg] = $p_type;
+	}
 } // fn camp_html_add_msg
 
 
