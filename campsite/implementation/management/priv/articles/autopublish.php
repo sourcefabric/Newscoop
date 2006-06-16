@@ -96,6 +96,7 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD>
+		<?php $now = getdate(); ?>
 		<div id="calendar-container"></div>
 		<script type="text/javascript">
 		function dateChanged(calendar) {
@@ -113,13 +114,14 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 
 		Calendar.setup(
 			{
+	          range:new Array(<?php p($now["year"]); ?>, 2020),
 			  flat         : "calendar-container", // ID of the parent element
 			  flatCallback : dateChanged           // our callback function
 			}
 		);
 		</script>
 		<p>
-		<input type="text" name="f_publish_date" value="" class="input_text_disabled" size="10" alt="blank" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date')."'"); ?>">
+		<input type="text" name="f_publish_date" value="" class="input_text_disabled" size="10" alt="date|yyyy/mm/dd|-|4|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date')."'"); ?> <?php putGS("The date must be in the future."); ?>">
 		<?php putGS('YYYY-MM-DD'); ?>
 	</TD>
 </TR>
