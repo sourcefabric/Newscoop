@@ -433,6 +433,7 @@ class Publication extends DatabaseObject {
 		$publications = DbObjectArray::Create('Publication', $queryStr);
 		return $publications;
 	} // fn getPublications
+	
 
 } // class Publication
 ?>

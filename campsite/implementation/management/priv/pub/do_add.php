@@ -39,9 +39,23 @@ if (camp_html_has_msgs()) {
 	camp_html_goto_page($backLink);
 }
 
+$aliasId = Alias::AliasExists($f_default_alias);
+if (!empty($aliasId)) {
+      $alias =& new Alias($aliasId);
+      $pub = $alias->getPublicationId();
+      $pubObj =& new Publication($pub);
+      $aliasLink = "<A HREF=\"/$ADMIN/pub/edit.php?Pub=$pub\">". $pubObj->getName() ."</A>";      
+      $msg = getGS('The publication alias conflicts with another publication');
+      $msg .= ': '. $aliasLink;
+      camp_html_add_msg($msg);
+      camp_html_goto_page($backLink);
+}
+
 $aliases = Alias::GetAliases(null, null, $f_default_alias);
+
 if (count($aliases) <= 0) {
-	$alias =& new Alias();
+ 
+    $alias =& new Alias();
 	$alias->create(array('Name' => $f_default_alias));
 	$newPub =& new Publication();
 	$columns = array('Name' => $f_name,
@@ -69,6 +83,6 @@ if (count($aliases) <= 0) {
 } else {
 	camp_html_add_msg(getGS('The publication could not be added.').' '.getGS('Please check if another publication with the same name or the same site name does not already exist.'));
 }
-
+ 
 camp_html_goto_page($backLink);
 ?>

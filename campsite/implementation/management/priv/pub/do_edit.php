@@ -37,7 +37,16 @@ if (empty($f_name)) {
 if (empty($f_default_alias)) {
 	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'));
 }
-
+$aliasId = Alias::AliasExists($f_default_alias);
+if (!empty($aliasId)) {
+      $alias =& new Alias($aliasId);
+      $pub = $alias->getPublicationId();
+      $pubObj =& new Publication($pub);
+      $aliasLink = "<A HREF=\"/$ADMIN/pub/edit.php?Pub=$pub\">". $pubObj->getName() ."</A>";      
+      $msg = getGS('The publication alias conflicts with another publication');
+      $msg .= ': '. $aliasLink;
+      camp_html_add_msg($msg);
+}
 if (camp_html_has_msgs()) {
 	camp_html_goto_page($backLink);
 }
