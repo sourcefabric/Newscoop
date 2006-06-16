@@ -169,7 +169,7 @@ class Issue extends DatabaseObject {
 	 *     (optional) Use this if you want the copy to be a translation of the current issue.
 	 *     Default is to copy all translations of this issue.
 	 * @return mixed
-	 *		An array of Issues, a single Issue, or null.
+	 *		An array of Issues, a single Issue, or null on error.
 	 */
 	function copy($p_destPublicationId = null, $p_destIssueId = null, $p_destLanguageId = null)
 	{
@@ -549,6 +549,9 @@ class Issue extends DatabaseObject {
 		}
 		if (!is_null($p_issueNumber)) {
 			$whereClause[] = "Issues.Number=$p_issueNumber";
+		}
+		if (!is_null($p_urlName)) {
+			$whereClause[] = "Issues.ShortName='".mysql_real_escape_string($p_urlName)."'";
 		}
 		if (count($whereClause) > 0) {
 			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
