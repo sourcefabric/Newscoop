@@ -44,7 +44,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" class="input_text" NAME="f_country_name" SIZE="32" MAXLENGTH="128" VALUE="<?php  p(htmlspecialchars($country->getName())); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="f_country_name" SIZE="32" VALUE="<?php  p(htmlspecialchars($country->getName())); ?>">
 		</TD>
 	</TR>
 	<TR>

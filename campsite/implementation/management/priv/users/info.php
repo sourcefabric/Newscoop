@@ -233,7 +233,7 @@ if (!$isNewUser) {
 			<tr>
 				<td align="right" nowrap><?php putGS("City"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" NAME="City" VALUE="<?php p(htmlspecialchars($City)); ?>" size="32" maxlength="60">
+				<input type="text" class="input_text" NAME="City" VALUE="<?php p(htmlspecialchars($City)); ?>" size="32">
 				</td>
 			</tr>
 			<tr>
@@ -245,13 +245,13 @@ if (!$isNewUser) {
 			<tr>
 				<td align="right" nowrap><?php putGS("Postal Code"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="PostalCode" value="<?php p(htmlspecialchars($PostalCode)); ?>" size="10" maxlength="10">
+				<input type="text" class="input_text" name="PostalCode" value="<?php p(htmlspecialchars($PostalCode)); ?>" size="10">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("State"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="State" value="<?php p(htmlspecialchars($State)); ?>" size="32" maxlength="32">
+				<input type="text" class="input_text" name="State" value="<?php p(htmlspecialchars($State)); ?>" size="32">
 				</td>
 			</tr>
 			<tr>
@@ -269,25 +269,25 @@ if (!$isNewUser) {
 			<tr>
 				<td align="right" nowrap><?php putGS("Fax"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Fax" value="<?php p(htmlspecialchars($Fax)); ?>" size="20" maxlength="20">
+				<input type="text" class="input_text" name="Fax" value="<?php p(htmlspecialchars($Fax)); ?>" size="20">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Contact Person"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Contact" value="<?php  p(htmlspecialchars($Contact)); ?>" size="32" maxlength="64">
+				<input type="text" class="input_text" name="Contact" value="<?php  p(htmlspecialchars($Contact)); ?>" size="32">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Second Phone"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Phone2" value="<?php  p(htmlspecialchars($Phone2)); ?>" size="20" maxlength="20">
+				<input type="text" class="input_text" name="Phone2" value="<?php  p(htmlspecialchars($Phone2)); ?>" size="20">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Employer"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Employer" value="<?php  p(htmlspecialchars($Employer)); ?>" size="30" maxlength="30">
+				<input type="text" class="input_text" name="Employer" value="<?php  p(htmlspecialchars($Employer)); ?>" size="30">
 				</td>
 			</tr>
 			<tr>
@@ -311,7 +311,7 @@ if (!$isNewUser) {
 			<tr>
 				<td align="right" nowrap><?php putGS("Position"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Position" value="<?php p(htmlspecialchars($Position)); ?>" size="30" maxlength="30">
+				<input type="text" class="input_text" name="Position" value="<?php p(htmlspecialchars($Position)); ?>" size="30">
 				</td>
 			</tr>
 		</table>

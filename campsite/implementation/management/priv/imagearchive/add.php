@@ -30,19 +30,19 @@ echo $breadcrumbs;
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS('Description'); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="Image <?php echo Image::GetMaxId(); ?>" SIZE="32" MAXLENGTH="128" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="Image <?php echo Image::GetMaxId(); ?>" SIZE="32" class="input_text">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS('Photographer'); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($g_user->getRealName()); ?>" SIZE="32" MAXLENGTH="64" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($g_user->getRealName()); ?>" SIZE="32" class="input_text">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS('Place'); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_place" SIZE="32" MAXLENGTH="64" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_place" SIZE="32" class="input_text">
 	</TD>
 </TR>
 <TR>

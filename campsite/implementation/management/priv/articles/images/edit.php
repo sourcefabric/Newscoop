@@ -79,7 +79,7 @@ if ($f_publication_id > 0) {
 	<TD ALIGN="RIGHT" ><?php  putGS('Description'); ?>:</TD>
 	<TD>
 		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
-		<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" class="input_text" SIZE="32" MAXLENGTH="128">
+		<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" class="input_text" SIZE="32">
 		<?php } else {
 			echo htmlspecialchars($imageObj->getDescription());
 		} ?>
@@ -89,7 +89,7 @@ if ($f_publication_id > 0) {
 	<TD ALIGN="RIGHT" ><?php  putGS('Photographer'); ?>:</TD>
 	<TD>
 		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
-		<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" class="input_text" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" class="input_text" SIZE="32">
 		<?php } else {
 			echo htmlspecialchars($imageObj->getPhotographer());
 		} ?>
@@ -99,7 +99,7 @@ if ($f_publication_id > 0) {
 	<TD ALIGN="RIGHT" ><?php  putGS('Place'); ?>:</TD>
 	<TD>
 		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
-		<INPUT TYPE="TEXT" NAME="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" class="input_text" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" class="input_text" SIZE="32">
 		<?php } else {
 			echo htmlspecialchars($imageObj->getPlace());
 		} ?>

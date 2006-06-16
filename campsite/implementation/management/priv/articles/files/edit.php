@@ -72,7 +72,7 @@ if ($f_publication_id > 0) {
 <TR>
 	<TD ALIGN="RIGHT"><?php  putGS('Description'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_description" VALUE="<?php echo htmlspecialchars($attachmentObj->getDescription($f_language_selected)); ?>" class="input_text" SIZE="32" MAXLENGTH="128" <?php p($isReadOnly); ?>>
+	<INPUT TYPE="TEXT" NAME="f_description" VALUE="<?php echo htmlspecialchars($attachmentObj->getDescription($f_language_selected)); ?>" class="input_text" SIZE="32" <?php p($isReadOnly); ?>>
 	</TD>
 </TR>
 <TR>

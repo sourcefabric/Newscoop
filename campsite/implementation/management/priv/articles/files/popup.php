@@ -38,13 +38,13 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("File"); ?>:</TD>
 	<TD>
-		<INPUT TYPE="FILE" NAME="f_file" SIZE="32" MAXLENGTH="64" class="input_file">
+		<INPUT TYPE="FILE" NAME="f_file" SIZE="32" class="input_file">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_description" VALUE="" SIZE="32" MAXLENGTH="128" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the file."); ?>">
+	<INPUT TYPE="TEXT" NAME="f_description" VALUE="" SIZE="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the file."); ?>">
 	</TD>
 </TR>
 <TR>

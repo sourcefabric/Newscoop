@@ -58,19 +58,19 @@ if ($g_user->hasPermission('AddImage')) { ?>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" MAXLENGTH="128" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" class="input_text">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" SIZE="32" MAXLENGTH="64" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" SIZE="32" class="input_text">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Place"); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" SIZE="32" MAXLENGTH="64" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" SIZE="32" class="input_text">
 	</TD>
 </TR>
 <TR>
@@ -94,7 +94,7 @@ if ($imageObj->getLocation() == 'remote') {
 <TR>
 	<TD ALIGN="RIGHT"><?php  putGS("Image"); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_file" SIZE="32" MAXLENGTH="64" VALUE="<?php echo basename($imageObj->getImageStorageLocation()); ?>" DISABLED class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_file" SIZE="32" VALUE="<?php echo basename($imageObj->getImageStorageLocation()); ?>" DISABLED class="input_text">
 	</TD>
 </TR>
 <?php

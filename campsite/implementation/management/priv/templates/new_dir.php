@@ -33,7 +33,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="32">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" >
 	</TD>
 </TR>
 <TR>

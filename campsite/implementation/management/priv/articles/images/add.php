@@ -58,25 +58,25 @@ function checkAddForm(form) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_template_id" VALUE="<?php p($ImageTemplateId); ?>" SIZE="5" MAXLENGTH="5" class="input_text" alt="number|0" emsg="<?php putGS('Please enter a number for the image.'); ?>">
+	<INPUT TYPE="TEXT" NAME="f_image_template_id" VALUE="<?php p($ImageTemplateId); ?>" SIZE="5" class="input_text" alt="number|0" emsg="<?php putGS('Please enter a number for the image.'); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="Image <?php  p($maxId); ?>" SIZE="32" MAXLENGTH="128" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the image."); ?>">
+	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="Image <?php  p($maxId); ?>" SIZE="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the image."); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" SIZE="32" MAXLENGTH="64" VALUE="<?php echo $g_user->getRealName(); ?>" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_photographer" SIZE="32" VALUE="<?php echo $g_user->getRealName(); ?>" class="input_text">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Place"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_place" SIZE="32" MAXLENGTH="64" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_place" SIZE="32" class="input_text">
 	</TD>
 </TR>
 <TR>
@@ -94,7 +94,7 @@ function checkAddForm(form) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("Image"); ?>:</TD>
 	<TD>
-		<INPUT TYPE="FILE" NAME="f_image_file" SIZE="32" MAXLENGTH="64" class="input_file" alt="file|jpg,jpeg,jpe,gif,png,tif,tiff|bok" emsg="<?php putGS("You must select an image file to upload."); ?>">
+		<INPUT TYPE="FILE" NAME="f_image_file" SIZE="32" class="input_file" alt="file|jpg,jpeg,jpe,gif,png,tif,tiff|bok" emsg="<?php putGS("You must select an image file to upload."); ?>">
 	</TD>
 </TR>
 <TR>

@@ -613,7 +613,7 @@ if ($f_edit_mode == "edit") { ?>
 					   VALUE="<?php print $articleData->getProperty($dbColumn->getName()); ?>"
 					   class="input_text"
 					   SIZE="50"
-					   MAXLENGTH="100">
+					   MAXLENGTH="255">
 		        <?php } else {
 		        	print $articleData->getProperty($dbColumn->getName());
 		        }

@@ -48,7 +48,7 @@ global $ADMIN;
                 </tr>
                 <tr valign="top">
                     <td colspan="2"><?php
-                        putGS("What were you trying to do when this happened?")
+                        putGS("What were you trying to do when this happened? (optional)")
                     ?></td>
                 </tr>
                 <tr>

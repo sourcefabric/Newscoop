@@ -275,7 +275,7 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 	   <table cellpadding="0" cellspacing="0">
 	   <tr>
 	       <td style="width: 5em;"><?php putGS("Number"); ?>:</td>
-	       <td><input type="text" class="input_text" name="f_dest_section_new_number" size="4" maxlength="4" value="<?php echo $f_src_section_number; ?>" <?php if (($f_dest_publication_id <= 0) || ($f_dest_issue_number <= 0)) { ?>disabled<?php } ?> onclick="this.form.f_section_chooser[1].checked = true;"></td>
+	       <td><input type="text" class="input_text" name="f_dest_section_new_number" size="4" value="<?php echo $f_src_section_number; ?>" <?php if (($f_dest_publication_id <= 0) || ($f_dest_issue_number <= 0)) { ?>disabled<?php } ?> onclick="this.form.f_section_chooser[1].checked = true;"></td>
 	   </tr>
 	   </table>
 	</td>

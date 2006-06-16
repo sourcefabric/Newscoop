@@ -71,14 +71,14 @@ $url_args2 = $url_args1."&Section=$Section";
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64" value="<?php  p(htmlspecialchars($sectionObj->getName())); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" value="<?php  p(htmlspecialchars($sectionObj->getName())); ?>">
  	</TD>
 </TR>
 
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($sectionObj->getUrlName())); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" value="<?php  p(htmlspecialchars($sectionObj->getUrlName())); ?>">
 	</TD>
 </TR>
 

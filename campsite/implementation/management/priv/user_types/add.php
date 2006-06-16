@@ -41,7 +41,7 @@ echo camp_html_breadcrumbs($crumbs);
 <tr>
 	<td colspan="2" align="left" style="padding-left: 10px;">
 		<?php putGS('Name'); ?>:
-		<input type="text" class="input_text" name="Name" size="32" maxlength="32">
+		<input type="text" class="input_text" name="Name" size="32">
 	</td>
 </tr>
 <?php
