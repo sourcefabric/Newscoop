@@ -1,4 +1,5 @@
 <?php
+regGS("Visible to non-subscribers?", "");
 regGS("Total:", "");
 regGS("Toggle '$1'", "");
 regGS("Show Comments", "");
@@ -72,7 +73,6 @@ regGS("Show article on section page", "Zobrazit článek na stránce rubriky");
 regGS("Translate article", "Překlad článku");
 regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "Nemáte právo změnit tento článek. Můžete pouze editova své vlastní články. Podané články mohou být změněny pouze autorizovanými uživateli.");
 regGS("Edit article", "Editovat detaily článku");
-regGS("Allow users without subscriptions to view the article", "Povolit náhled článku uživatelům bez předplatného");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("Article is locked", "Článek je uzamčený");

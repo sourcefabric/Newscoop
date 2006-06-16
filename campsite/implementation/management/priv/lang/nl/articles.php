@@ -1,4 +1,5 @@
 <?php
+regGS("Visible to non-subscribers?", "");
 regGS("The article has already been translated into $1.", "Het artikel is al vertaald in $1.");
 regGS("move", "verplaatsen");
 regGS("duplicate", "dupliceren");
@@ -49,8 +50,8 @@ regGS("Duplicate to another section", "Dupliceer naar een andere sectie");
 regGS("Duplicate articles", "Dupliceer artikelen");
 regGS("Article name ($1)", "Artikel naam ($1)");
 regGS("Article List", "Artikel Lijst");
-regGS("Are you sure you want to remove the topic \'$1\' from the article?", "");
-regGS("Are you sure you want to remove the file \'$1\' from the article?", "");
+regGS("Are you sure you want to remove the topic \'$1\' from the article?", "Weet je zeker dat je het onderwerp \'$1\' wilt verwijderen uit het artikel?");
+regGS("Are you sure you want to remove the file \'$1\' from the article?", "Weet je zeker dat je het bestand \'$1\' wilt verwijderen uit het artikel?");
 regGS("Are you sure you want to remove the event scheduled on $1?", "Weet je zeker dat je de actie gepland op $1 wilt verwijderen van het artikel?");
 regGS("Are you sure you want to delete this article?", "Weet je zeker dat je dit artikel wilt verwijderen?");
 regGS("Are you sure you want to delete the selected articles?", "Weet je zeker dat je de geselecteerde artikelen wilt verwijderen?");
@@ -64,7 +65,6 @@ regGS("Show article on section page", "Toon artikel op sectiepagina");
 regGS("Translate article", "Vertaal artikel");
 regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "Je hebt niet de rechten om dit artikel te wijzigen. Je mag het alleen je eigen artikelen bewerken en wanneer een artikel is opgestuurd kan een artikel alleen door geauthoriseerde gebruikers worden veranderd.");
 regGS("Edit article", "Bewerk artikel");
-regGS("Allow users without subscriptions to view the article", "Sta gebruikers zonder abonnement to om het artikel te bekijken");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Het artikel is beveiligd door $1 ($2) $3 uur en $4 minuten geleden.");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Het artikel is beveiligd door $1 ($2) $3 minuten geleden.");
 regGS("Are you sure you want to unlock it?", "Weet je zeker dat je de beveiliging wilt opheffen?");
@@ -79,7 +79,4 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "Je hebt niet de rechten om de artikelen te verwijderen.");
 regGS("You must select an article type.", "Je moet het artikel type selecteren.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Weet je zeker dat je afbeelding \'$1\' wilt verwijderen uit het artikel?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Weet je zeker dat je het onderwerp \\'$1\\' wilt verwijderen uit het artikel?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Weet je zeker dat je het bestand \\'$1\\' wilt verwijderen uit het artikel?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Weet je zeker dat je afbeelding \\'$1\\' wilt verwijderen uit het artikel?");
 ?>

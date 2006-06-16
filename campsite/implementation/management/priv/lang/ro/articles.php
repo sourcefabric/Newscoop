@@ -1,4 +1,5 @@
 <?php
+regGS("Visible to non-subscribers?", "Autorizează accesul cititorilor fără subscriere la articol");
 regGS("Total:", "");
 regGS("Toggle '$1'", "");
 regGS("Show Comments", "");
@@ -72,7 +73,6 @@ regGS("Show article on section page", "Afişează articolul în pagina secţiuni
 regGS("Translate article", "Traducere articol");
 regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "Nu aveţi dreptul să modificaţi articolul. Puteţi să editaţi numai articolele dumneavoastră. Odată propus un articol poate fi modificat numai de utilizatori autorizaţi.");
 regGS("Edit article", "Modifică articolul");
-regGS("Allow users without subscriptions to view the article", "Autorizează accesul cititorilor fără subscriere la articol");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Articolul a fost securizat de $1, în urmă cu ($2) $3 ore şi $4 minute.");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Articolul a fost securizat de $1, în urmă cu ($2) şi $3 minute.");
 regGS("Article is locked", "Articolul este securizat");

@@ -1,4 +1,5 @@
 <?php
+regGS("Visible to non-subscribers?", "");
 regGS("Total:", "");
 regGS("Toggle '$1'", "");
 regGS("Show Comments", "");
@@ -71,7 +72,6 @@ regGS("Show article on section page", "在区页显示文章");
 regGS("Translate article", "翻译文章");
 regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "您无权修改此文章，你只能编辑自己的文章，提交的文章只能由审定的用户修改");
 regGS("Edit article", "编辑文章详情");
-regGS("Allow users without subscriptions to view the article", "允许无订阅的用户阅读文章");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("Article is locked", "");

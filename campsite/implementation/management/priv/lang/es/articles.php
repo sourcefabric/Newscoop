@@ -1,4 +1,5 @@
 <?php
+regGS("Visible to non-subscribers?", "");
 regGS("Total:", "");
 regGS("Toggle '$1'", "");
 regGS("Show Comments", "");
@@ -72,7 +73,6 @@ regGS("Show article on section page", "Mostrar artículo en portada de sección"
 regGS("Translate article", "Traducir artículo");
 regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "No tiene derechos para cambiar este artículo.  Solamente puede editar sus propios artículos y una vez enviado un artículo sólo puede ser cambiado por usuarios autorizados.");
 regGS("Edit article", "Editar detalles de artículo");
-regGS("Allow users without subscriptions to view the article", "Permitir usuarios sin suscripción a ver este artículo");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("Article is locked", "");

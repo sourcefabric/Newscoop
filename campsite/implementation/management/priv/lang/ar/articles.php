@@ -1,4 +1,5 @@
 <?php
+regGS("Visible to non-subscribers?", "");
 regGS("Total:", "");
 regGS("Toggle '$1'", "");
 regGS("Show Comments", "");
@@ -72,7 +73,6 @@ regGS("Show article on section page", "أظهار المقال في صفحة ا�
 regGS("Translate article", "ترجم المقال");
 regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "لا تملك صلاحية تعديل هذا المقال. يحق لك تعديل مقالاتك وعند اعتماد المقال يمكن تغيره من قبل الاشخاص المخوليين فقط");
 regGS("Edit article", "تحرير المقال");
-regGS("Allow users without subscriptions to view the article", "اسمع للمستخدمين من دون اشتراكات رؤية هذا المقال");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "تم اغلاق المقال بواسطة 1$ (2$) منذ 3$ ساعات و4$ دقائق");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "تم اغلاق المقال بواسطة 1$ (2$) منذ 3$ دقائق");
 regGS("Article is locked", "المقال مغلق");

@@ -1,4 +1,5 @@
 <?php
+regGS("Visible to non-subscribers?", "");
 regGS("Total:", "");
 regGS("Toggle '$1'", "");
 regGS("Show Comments", "");
@@ -72,7 +73,6 @@ regGS("Show article on section page", "Prikaži tekst na strani rubrike");
 regGS("Translate article", "Prevedi tekst");
 regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "Nemate pravo da menjate tekst. Možete pregledati jedino sopstvene tekstove, a jednom predati tekst može biti menjan samo od strane ovlašćenih korisnika");
 regGS("Edit article", "Uredi tekst");
-regGS("Allow users without subscriptions to view the article", "Dozvoli korisnicima bez pretplate da čitaju tekst");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Tekst je zaključao $1 ($2) pre $3 časova i $4 minuta. ");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Tekst je zaključao $1 ($2) pre $3 minuta. ");
 regGS("Article is locked", "Tekst je zaključan");

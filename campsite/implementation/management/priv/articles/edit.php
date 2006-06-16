@@ -505,8 +505,8 @@ if ($f_edit_mode == "edit") { ?>
                 </td>
 
                 <!-- Right-hand column underneath article title -->
-                <td valign="top" align="right" style="padding-right: 0.5em; padding-top: 0.25em;">
-                    <table border="0" cellpadding="0" cellspacing="0">
+                <td valign="top" align="right" style="padding-right: 2em; padding-top: 0.25em;">
+                    <table border="0" cellpadding="0" cellspacing="1">
 
                     <!-- Show article on front page -->
                     <tr>
@@ -528,7 +528,7 @@ if ($f_edit_mode == "edit") { ?>
 			        <tr>
 				        <TD ALIGN="RIGHT" valign="top"><INPUT TYPE="CHECKBOX" NAME="f_is_public" class="input_checkbox" <?php  if ($articleObj->isPublic()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
 				        <TD align="left" valign="top" style="padding-top: 0.1em;">
-				<?php putGS('Allow users without subscriptions to view the article'); ?>
+							<?php putGS('Visible to non-subscribers?'); ?>
 				        </TD>
 				    </tr>
 
