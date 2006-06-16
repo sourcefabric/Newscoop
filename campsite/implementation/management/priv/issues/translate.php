@@ -19,6 +19,8 @@ $issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $allIssues = Issue::GetIssues($f_publication_id, null, $f_issue_number);
 $unusedLanguages = $issueObj->getLanguages(true);
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
@@ -31,8 +33,10 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 </TR>
 </TABLE>
 
+<?php camp_html_display_msgs(); ?>
+
 <P>
-<FORM NAME="issue_translate" METHOD="POST" ACTION="do_translate.php">
+<FORM NAME="issue_translate" METHOD="POST" ACTION="do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -60,14 +64,14 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" SIZE="32" MAXLENGTH="64">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" SIZE="32" alt="blank" emsg="<?php  putGS('You must complete the $1 field.',getGS('Name')); ?>">
 	</TD>
 </TR>
 
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" size="32" maxlength="64" value="<?php echo htmlspecialchars($issueObj->getUrlName()); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" size="32" value="<?php echo htmlspecialchars($issueObj->getUrlName()); ?>" alt="blank" emsg="<?php  putGS('You must complete the $1 field.',getGS('URL Name')); ?>">
 	</TD>
 </TR>
 

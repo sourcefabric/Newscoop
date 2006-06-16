@@ -16,7 +16,11 @@ $publicationObj =& new Publication($Pub);
 $allLanguages = Language::GetLanguages();
 $newIssueId = Issue::GetUnusedIssueId($Pub);
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 camp_html_content_top(getGS('Add new issue'), array('Pub' => $publicationObj), true, true, array(getGS("Issues") => "/$ADMIN/issues/?Pub=$Pub"));
+
+camp_html_display_msgs();
 ?>
 
 <P>
@@ -31,7 +35,7 @@ camp_html_content_top(getGS('Add new issue'), array('Pub' => $publicationObj), t
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_issue_name" SIZE="32" MAXLENGTH="64" alt="blank" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Name')."'"); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_issue_name" SIZE="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Name')."'"); ?>">
 	</TD>
 </TR>
 <TR>
@@ -55,7 +59,7 @@ camp_html_content_top(getGS('Add new issue'), array('Pub' => $publicationObj), t
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" VALUE="<?php p($newIssueId); ?>" SIZE="32" MAXLENGTH="32" alt="alnum|1|A|true|false|_" emsg="<?php putGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" VALUE="<?php p($newIssueId); ?>" SIZE="32"  alt="alnum|1|A|true|false|_" emsg="<?php putGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"); ?>">
 	</TD>
 </TR>
 <TR>

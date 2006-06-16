@@ -65,19 +65,8 @@ if ($changed) {
 $conflictingIssues = Issue::GetIssues($f_publication_id, $f_new_language_id, null, $f_url_name);
 $conflictingIssue = array_pop($conflictingIssues);
 // If it conflicts with another issue
-if (is_object($conflictingIssue) && ($conflictingIssue->getIssueNumber() != $f_issue_number)) {
-	$conflictingIssueLink = "/$ADMIN/issues/edit.php?"
-		."Pub=$f_publication_id"
-		."&Issue=".$conflictingIssue->getIssueNumber()
-		."&Language=".$conflictingIssue->getLanguageId();
-
-	$errMsg = getGS('The language and URL name must be unique for each issue in this publication.<br>The values you are trying to set conflict with issue "$1$2. $3 ($4)$5".',
-		"<a href='$conflictingIssueLink' class='error_message' style='color:#E30000;'>",
-		$conflictingIssue->getIssueNumber(),
-		$conflictingIssue->getName(),
-		$conflictingIssue->getLanguageName(),
-		'</a>');
-	camp_html_add_msg($errMsg);
+if ($errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f_new_language_id, $f_url_name, true)) {
+	camp_html_add_msg($errorMsg);
 	camp_html_goto_page($backLink);
 } else {
 	$issueObj->setProperty('ShortName', $f_url_name, false);

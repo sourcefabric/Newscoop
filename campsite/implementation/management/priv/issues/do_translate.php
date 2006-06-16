@@ -1,9 +1,5 @@
 <?php
-camp_load_translation_strings("issues");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManageIssue')) {
@@ -12,7 +8,7 @@ if (!$g_user->hasPermission('ManageIssue')) {
 }
 
 $f_publication_id = Input::Get('f_publication_id', 'int');
-$f_issue_id = Input::Get('f_issue_number', 'int');
+$f_issue_number = Input::Get('f_issue_number', 'int');
 $f_language_id = Input::Get('f_language_id', 'int');
 
 $f_name = trim(Input::Get('f_name'));
@@ -24,94 +20,40 @@ if (!Input::IsValid()) {
 	exit;
 }
 $publicationObj =& new Publication($f_publication_id);
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_id);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 
-$correct = true;
+$backLink = "/$ADMIN/issues/translate.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id";
 $created = false;
 
 if ($f_new_language_id == 0) {
-    $correct = false;
+	camp_html_add_msg(getGS('You must select a language.'));
 }
 
 if ($f_name == "") {
-    $correct = false;
+	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 
 if ($f_url_name == "") {
-    $correct = false;
+	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('URL Name').'</B>'));
 }
 
-if ($correct) {
-    $newIssue = $issueObj->copy(null, $issueObj->getIssueNumber(), $f_new_language_id);
-    $newIssue->setName($f_name);
-    $newIssue->setUrlName($f_url_name);
-    header("Location: /$ADMIN/issues/?Pub=$f_publication_id");
-    exit;
-    //$created = true;
+$errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f_new_language_id, $f_url_name, false);
+if ($errorMsg) {
+	camp_html_add_msg($errorMsg);
 }
 
-$tmpArray = array("Pub" => $publicationObj, "Issue" => $issueObj);
-camp_html_content_top(getGS("Adding new translation"), $tmpArray);
+if (camp_html_has_msgs()) {
+	camp_html_goto_page($backLink);
+}
+
+$newIssue = $issueObj->copy(null, $issueObj->getIssueNumber(), $f_new_language_id);
+if ($newIssue->exists()) {
+	$newIssue->setName($f_name);
+	$newIssue->setUrlName($f_url_name);
+	camp_html_add_msg(getGS('The issue $1 has been successfuly added.','"<B>'.htmlspecialchars($f_name).'</B>"' ), "ok");
+	camp_html_goto_page("/$ADMIN/issues/?Pub=$f_publication_id");
+} else {
+	camp_html_add_msg(getGS('The issue could not be added.'));
+	camp_html_goto_page($backLink);
+}
 ?>
-
-<P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
-<TR>
-	<TD COLSPAN="2">
-		<B> <?php  putGS("Adding new translation"); ?> </B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2"><BLOCKQUOTE>
-    <?php
-    if ($f_new_language_id == 0) {	?>
-    	<LI><?php  putGS('You must select a language.'); ?></LI>
-        <?php
-    }
-
-    if ($f_name == "") { ?>
-    	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-        <?php
-    }
-
-    if ($f_url_name == "") { ?>
-    	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('URL Name').'</B>'); ?></LI>
-        <?php
-    }
-
-    if ($created) { ?>
-    	<LI><?php  putGS('The issue $1 has been successfuly added.','<B>'.htmlspecialchars($f_name).'</B>' ); ?></LI>
-        <?php
-    } else {
-        if ($correct != 0) { ?>
-        	<LI><?php  putGS('The issue could not be added.'); ?></LI>
-        	<LI><?php  putGS('Please check if another issue with the same number/language does not already exist.'); ?></LI>
-            <?php
-        }
-    } ?>
-    </BLOCKQUOTE>
-    </TD>
-</TR>
-
-<?php  if ($correct && $created) { ?>
-<TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="Another" VALUE="<?php  putGS('Add another'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/translate.php?Pub=<?php  p($f_publication_id); ?>&Issue=<?php  p($f_issue_id); ?>&Language=<?php p($f_language_id); ?>'">
-	<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/?Pub=<?php p($f_publication_id); ?>'">
-	</DIV>
-	</TD>
-</TR>
-<?php  } else { ?>
-<TR>
-	<TD COLSPAN="2" align="center">
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/translate.php?Pub=<?php  p($f_publication_id); ?>&Issue=<?php p($f_issue_id); ?>'">
-	</TD>
-</TR>
-<?php  } ?>
-
-</TABLE>
-<P>
-
-<?php camp_html_copyright_notice(); ?>

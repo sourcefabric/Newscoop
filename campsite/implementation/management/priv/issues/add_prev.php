@@ -17,6 +17,8 @@ $allLanguages = Language::GetLanguages();
 $newIssueId = Issue::GetUnusedIssueId($Pub);
 $lastCreatedIssue = Issue::GetLastCreatedIssue($Pub);
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 camp_html_content_top(getGS('Copy previous issue'), array('Pub' => $publicationObj), true, true, array(getGS("Issues") => "/$ADMIN/issues/?Pub=$Pub"));
 
 
@@ -25,7 +27,9 @@ if (is_null($lastCreatedIssue)) { ?>
 	<LI><?php  putGS('No previous issue.'); ?></LI>
     </BLOCKQUOTE>
     <?php
-} else { ?>
+} else {
+	camp_html_display_msgs();
+	?>
 
 <P>
 <FORM name="issue_add" METHOD="POST" ACTION="do_add_prev.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">

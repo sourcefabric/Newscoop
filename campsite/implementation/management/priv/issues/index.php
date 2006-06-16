@@ -20,6 +20,7 @@ $allIssues = Issue::GetIssues($Pub, null, null, null, $publicationObj->getLangua
 $totalIssues = Issue::GetNumIssues($Pub);
 
 $pager =& new SimplePager($totalIssues, $ItemsPerPage, "IssOffs_$Pub", "index.php?Pub=$Pub&");
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_content_top(getGS('Issue List'), array('Pub' => $publicationObj));
 ?>
@@ -41,6 +42,7 @@ if ($g_user->hasPermission('ManageIssue')) {
 ?>
 </TR>
 </TABLE>
+<?php camp_html_display_msgs(); ?>
 <P>
 <?php
 if (count($allIssues) > 0) {
