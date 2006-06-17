@@ -2352,7 +2352,7 @@ int CParser::HArticleCommentForm(CActionList& al, int level, ulint sublevel)
 	if (st->id() != CMS_ST_ENDARTICLECOMMENTFORM)
 	{
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-					ST_ENDWITH, lex.prevLine(), lex.prevColumn());
+					ST_ENDARTICLECOMMENTFORM, lex.prevLine(), lex.prevColumn());
 	}
 	WaitForStatementEnd(true);
 	al.insert(al.end(), aloc.release());
