@@ -9,11 +9,18 @@ if (!$g_user->hasPermission('ManagePub')) {
 }
 
 $Pub = Input::Get('Pub', 'int');
+
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 $publicationObj =& new Publication($Pub);
 
 $crumbs = array(getGS("Publication Aliases") => "aliases.php?Pub=$Pub");
 camp_html_content_top(getGS("Add new alias"), array("Pub" => $publicationObj), true, false, $crumbs);
 
+camp_html_display_msgs();
 ?>
 <P>
 <FORM NAME="add_alias" METHOD="POST" ACTION="do_add_alias.php">
@@ -24,7 +31,7 @@ camp_html_content_top(getGS("Add new alias"), array("Pub" => $publicationObj), t
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
-<INPUT TYPE=HIDDEN NAME=cPub VALUE="<?php p($Pub); ?>">
+<INPUT TYPE="HIDDEN" NAME="cPub" VALUE="<?php p($Pub); ?>">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>

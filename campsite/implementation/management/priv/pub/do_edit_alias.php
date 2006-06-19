@@ -12,6 +12,11 @@ $f_publication_id = Input::Get('f_publication_id', 'int');
 $f_alias_id = Input::Get('f_alias_id', 'int');
 $f_name = trim(Input::Get('f_name'));
 
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 $publicationObj =& new Publication($f_publication_id);
 
 $correct = true;

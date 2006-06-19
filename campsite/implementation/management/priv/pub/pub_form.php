@@ -16,7 +16,7 @@ function onCommentsActivated(p_checkbox)
 <tr>
     <td>
         <!-- Begin left column -->
-        <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-left: 10px; padding-right: 10px; margin-top: 10px; border-right: 1px solid black;">
+        <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-left: 10px; padding-right: 10px; border-right: 1px solid black;">
         <tr>
             <td colspan="2">
                 <font size="+1"><b><?php putGS("General attributes"); ?></b></font>
@@ -132,11 +132,11 @@ function onCommentsActivated(p_checkbox)
     </td>
 
     <!-- BEGIN right column -->
-    <td>
-        <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-left: 10px; padding-right: 10px;">
+    <td style="">
+        <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-top: 0.5em; padding-left: 10px; padding-right: 10px;">
         <tr>
             <td colspan="2">
-                <font size="+1"><b><?php putGS("Subscriptions defaults"); ?></b></font>
+                <font size="+1"><b><?php putGS("Subscription defaults"); ?></b></font>
             </td>
         </tr>
 
@@ -187,7 +187,7 @@ function onCommentsActivated(p_checkbox)
         	</TD>
         </TR>
         <tr>
-        	<td colspan="2" align="left"><b><?php putGS('Trial subscriptions'); ?></b></td>
+        	<td colspan="2" align="left" style="padding-top: 1em;"><b><?php putGS('Trial subscriptions'); ?></b></td>
         </tr>
         <TR>
         	<TD ALIGN="RIGHT"><?php  putGS("Default time period"); ?>:</TD>
@@ -198,8 +198,8 @@ function onCommentsActivated(p_checkbox)
 
         <?php if (isset($publicationObj)) { ?>
         <tr>
-            <td colspan="2" align="center">
-                <a href="deftime.php?Pub=<?php echo $f_publication_id; ?>"><?php putGS("Countries defaults"); ?></a>
+            <td colspan="2" align="center" style="padding-top: 1em;">
+                <a href="deftime.php?Pub=<?php echo $f_publication_id; ?>&Language=<?php p($publicationObj->getDefaultLanguageId()); ?>"><?php putGS("Set subscription settings by country"); ?></a>
             </td>
         </tr>
         <?php } ?>

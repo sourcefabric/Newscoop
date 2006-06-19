@@ -14,58 +14,33 @@ $Language = Input::Get('Language', 'int', 1, true);
 $cCountryCode = trim(Input::Get('cCountryCode'));
 $cTrialTime = Input::Get('cTrialTime', 'int', 0);
 $cPaidTime = Input::Get('cPaidTime', 'int', 0);
-$correct = true;
-$created = false;
+
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
+$backLink = "/$ADMIN/pub/countryadd.php?Pub=$cPub&Language=$Language";
 $publicationObj =& new Publication($cPub);
 
 if (empty($cCountryCode)) {
-	$correct = false;
-	$errorMsgs[] = getGS('You must select a country.');
+	camp_html_add_msg(getGS('You must select a country.'));
+	camp_html_goto_page($backLink);
 }
 
-if ($correct) {
-	$defaultTime = new SubscriptionDefaultTime($cCountryCode, $cPub);
-	$created = $defaultTime->create(array('TrialTime' => $cTrialTime, 'PaidTime' => $cPaidTime));
-	if ($created) {
-		header("Location: /$ADMIN/pub/editdeftime.php?Pub=$cPub&CountryCode=$cCountryCode&Language=$Language");
-		exit;
-	}
+$values = array('TrialTime' => $cTrialTime,
+				'PaidTime' => $cPaidTime);
+$defaultTime =& new SubscriptionDefaultTime($cCountryCode, $cPub);
+if ($defaultTime->exists()) {
+	$defaultTime->update($values);
 } else {
-    $errorMsgs[] = getGS('The default subscription time for country $1 could not be added.', $publicationObj->getName().':'.$cCountryCode) .' '.getGS('Please check if another entry with the same country code exists already.');
+	$created = $defaultTime->create($values);
+	if (!$created) {
+    	camp_html_add_msg(getGS("The subscription settings for '$1' could not be added.", $publicationObj->getName().':'.$cCountryCode));
+    	camp_html_goto_page($backLink);
+	}
 }
-
-$crumbs = array(getGS("Subscriptions") => "deftime.php?Pub=$cPub");
-camp_html_content_top(getGS("Adding new country default subscription time"), array("Pub" => $publicationObj), true, false, $crumbs);
-
+camp_html_add_msg(getGS("Country subscription settings updated."), "ok");
+camp_html_goto_page("/$ADMIN/pub/deftime.php?Pub=$cPub&Language=$Language");
 
 ?>
-<P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
-<TR>
-	<TD COLSPAN="2">
-		<B> <?php  putGS("Adding new country default subscription time"); ?> </B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-		<BLOCKQUOTE>
-		<?php
-		foreach ($errorMsgs as $errorMsg) { ?>
-			<li><?php p($errorMsg); ?></li>
-			<?php
-		}
-		?>
-		</BLOCKQUOTE>
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/countryadd.php?Pub=<?php p($cPub); ?>&Language=<?php p($Language); ?>'">
-	</DIV>
-	</TD>
-</TR>
-</TABLE>
-<P>
-<?php camp_html_copyright_notice(); ?>

@@ -11,12 +11,18 @@ if (!$g_user->hasPermission('ManagePub')) {
 $f_publication_id = Input::Get('Pub', 'int');
 $f_alias_id = Input::Get('Alias', 'int');
 
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 $publicationObj =& new Publication($f_publication_id);
 $alias =& new Alias($f_alias_id);
 
 $crumbs = array(getGS("Publication Aliases") => "aliases.php?Pub=$f_publication_id");
 camp_html_content_top(getGS("Edit alias"), array("Pub" => $publicationObj), true, false, $crumbs);
 
+camp_html_display_msgs();
 ?>
 <P>
 <FORM name="edit_alias" METHOD="POST" ACTION="do_edit_alias.php">

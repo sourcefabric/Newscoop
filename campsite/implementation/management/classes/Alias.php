@@ -121,6 +121,8 @@ class Alias extends DatabaseObject {
 
 
 	/**
+	 * Get all the aliases that match the given criteria.
+	 *
 	 * @param int $p_id
 	 * @param int $p_publicationId
 	 * @param string $p_name
@@ -141,18 +143,6 @@ class Alias extends DatabaseObject {
 		return DatabaseObject::Search('Alias', $contraints);
 	} // fn GetAliases
 
-	/**
-	 * @param string $p_alias_id
-	 * @return boolean or ID
-	 */
-	function AliasExists($p_alias_id) 
-	{
-	    global $g_ado_db;
-	    $queryStr = "SELECT Id, Name FROM Aliases WHERE Name='$p_alias_id'";
-	    $res = $g_ado_db->GetRow($queryStr);
-	    if ($res) return $res['Id'];
-	    else return false;	    
-	} // fn AliasExists
 } // class Alias
 
 ?>

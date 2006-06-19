@@ -12,7 +12,7 @@ $ItemsPerPage = 15;
 
 $sqlOptions = array("LIMIT" => array("START" => $PubOffs, "MAX_ROWS" => $ItemsPerPage),
                     "ORDER BY" => array("Name" => "ASC"));
-$publications = Publication::GetPublications($sqlOptions);
+$publications = Publication::GetPublications(null, null, $sqlOptions);
 $numPublications = Publication::GetNumPublications();
 
 $pager =& new SimplePager($numPublications, $ItemsPerPage, "PubOffs", "index.php?");
@@ -50,7 +50,7 @@ camp_html_content_top(getGS('Publication List'), null);
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Default Language"); ?></B></TD>
     <?php  if ($g_user->hasPermission("ManagePub")) { ?>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Comments enabled"); ?></B></TD>
-    <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="20%" ><B><?php  putGS("URL Type"); ?></B></TD>
+    <TD ALIGN="center" VALIGN="TOP"><B><?php  putGS("URL Type"); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Configure"); ?></B></TD>
     <?php  }
     if ($g_user->hasPermission("DeletePub")) { ?>
@@ -78,7 +78,7 @@ foreach ($publications as $pub) { ?>
                 <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/is_hidden.png" border="0">
             <?php } ?>
         </TD>
-        <TD>
+        <TD align="center">
             <?php  p(htmlspecialchars($pub->getProperty('URLType'))); ?>&nbsp;
         </TD>
         <TD ALIGN="CENTER">

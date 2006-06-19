@@ -13,6 +13,12 @@ if (!$g_user->hasPermission('DeletePub')) {
 }
 
 $Pub = Input::Get('Pub', 'int');
+
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 $doDelete = true;
 
 $publicationObj =& new Publication($Pub);

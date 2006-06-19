@@ -15,13 +15,18 @@ $CountryCode = Input::Get('CountryCode');
 $cPaidTime = Input::Get('cPaidTime', 'int', 0);
 $cTrialTime = Input::Get('cTrialTime', 'int', 0);
 
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 $publicationObj =& new Publication($Pub);
 $defaultTime =& new SubscriptionDefaultTime($CountryCode, $Pub);
 
 $defaultTime->setTrialTime($cTrialTime);
 $defaultTime->setPaidTime($cPaidTime);
+camp_html_add_msg(getGS("Country subscription settings updated."), "ok");
 $logtext = getGS('Default subscription time for $1 changed', $publicationObj->getName().':'.$CountryCode);
 Log::Message($logtext, $g_user->getUserName(), 6);
-header("Location: /$ADMIN/pub/editdeftime.php?Pub=$Pub&Language=$Language&CountryCode=$CountryCode");
-exit;
+camp_html_goto_page("/$ADMIN/pub/deftime.php?Pub=$Pub&Language=$Language");
 ?>

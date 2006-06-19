@@ -15,6 +15,11 @@ if (!$g_user->hasPermission('ManagePub')) {
 $f_publication_id = Input::Get('Pub', 'int');
 $TOL_Language = Input::Get('TOL_Language');
 
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 $languages = Language::GetLanguages();
 $urlTypes = UrlType::GetUrlTypes();
 $timeUnits = TimeUnit::GetTimeUnits($TOL_Language);

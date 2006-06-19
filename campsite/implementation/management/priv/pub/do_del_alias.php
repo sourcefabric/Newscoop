@@ -10,6 +10,12 @@ if (!$g_user->hasPermission('ManagePub')) {
 
 $Pub = Input::Get('Pub', 'int', 0);
 $Alias = Input::Get('Alias', 'int', 0);
+
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 $publicationObj =& new Publication($Pub);
 $aliasObj =& new Alias($Alias);
 $errorMsgs = array();

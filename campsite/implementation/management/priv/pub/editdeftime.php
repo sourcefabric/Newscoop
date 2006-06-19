@@ -13,6 +13,12 @@ if (!$g_user->hasPermission('ManagePub')) {
 $Pub = Input::Get('Pub', 'int');
 $Language = Input::Get('Language', 'int', 1, true);
 $CountryCode = Input::Get('CountryCode');
+
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 $publicationObj =& new Publication($Pub);
 $pubTimeUnit =& new TimeUnit($publicationObj->getTimeUnit(), $publicationObj->getLanguageId());
 if (!$pubTimeUnit->exists()) {
@@ -22,36 +28,37 @@ if (!$pubTimeUnit->exists()) {
 $defaultTime =& new SubscriptionDefaultTime($CountryCode, $Pub);
 $country =& new Country($CountryCode, $Language);
 
-$crumbs = array(getGS("Subscriptions") => "deftime.php?Pub=$Pub");
-camp_html_content_top(getGS("Change subscription default time"), array("Pub" => $publicationObj), true, false, $crumbs);
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
+$crumbs = array(getGS("Subscriptions") => "deftime.php?Pub=$Pub&Language=$Language");
+camp_html_content_top(getGS("Change country subscription settings"), array("Pub" => $publicationObj), true, false, $crumbs);
 
 ?>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_editdeftime.php"  >
+<FORM NAME="subscription_settings" METHOD="POST" ACTION="do_editdeftime.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-<INPUT TYPE=HIDDEN NAME="Pub" VALUE="<?php p($Pub); ?>">
-<INPUT TYPE=HIDDEN NAME="CountryCode" VALUE="<?php p($CountryCode); ?>">
-<INPUT TYPE=HIDDEN NAME="Language" VALUE="<?php p($Language); ?>">
+<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php p($Pub); ?>">
+<INPUT TYPE="HIDDEN" NAME="CountryCode" VALUE="<?php p($CountryCode); ?>">
+<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php p($Language); ?>">
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Country"); ?>:</TD>
-	<TD>
-	<?php p(htmlspecialchars($country->getName()." (".$country->getCode().")")); ?>
+	<TD ALIGN="center" colspan="2">
+		<b><?php  putGS("Country"); ?>: <?php p(htmlspecialchars($country->getName()." (".$country->getCode().")")); ?></b>
 	</TD>
 </TR>
 <tr>
-	<td colspan="2" align="left"><b><?php putGS('Default time period'); ?>:</b></td>
+	<td colspan="2" align="left"><?php putGS('Default time periods:'); ?></td>
 </tr>
 <TR>
 	<TD ALIGN="RIGHT" >- <?php  putGS("trial subscription"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="<?php p($defaultTime->getTrialTime()); ?>" SIZE="5" MAXLENGTH="5">
+	<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="<?php p($defaultTime->getTrialTime()); ?>" SIZE="5" MAXLENGTH="5" class="input_text" alt="number|0|1|100000" emsg="<?php putGS("You must input a number greater than 0 into the $1 field.", "&quot;".getGS("trial subscription")."&quot;"); ?>">
 	<?php p($pubTimeUnit->getName()); ?>
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" >- <?php  putGS("paid subscription"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="<?php p($defaultTime->getPaidTime()); ?>" SIZE="5" MAXLENGTH="5">
+	<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="<?php p($defaultTime->getPaidTime()); ?>" SIZE="5" MAXLENGTH="5" class="input_text" alt="number|0|1|100000" emsg="<?php putGS("You must input a number greater than 0 into the $1 field.", "&quot;".getGS("paid subscription")."&quot;"); ?>">
 	<?php p($pubTimeUnit->getName()); ?>
 	</TD>
 </TR>
@@ -66,4 +73,7 @@ camp_html_content_top(getGS("Change subscription default time"), array("Pub" => 
 </TABLE>
 </FORM>
 <P>
+<script>
+document.forms.subscription_settings.cTrialTime.focus();
+</script>
 <?php camp_html_copyright_notice(); ?>

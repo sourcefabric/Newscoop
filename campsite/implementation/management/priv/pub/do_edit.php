@@ -28,6 +28,11 @@ $f_comments_article_default = Input::Get('f_comments_article_default', 'checkbox
 $f_comments_public_moderated = Input::Get('f_comments_public_moderated', 'checkbox', 'numeric');
 $f_comments_subscribers_moderated = Input::Get('f_comments_subscribers_moderated', 'checkbox', 'numeric');
 
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 $backLink = "/$ADMIN/pub/edit.php?Pub=$f_publication_id";
 $errorMsgs = array();
 $updated = false;
@@ -37,21 +42,23 @@ if (empty($f_name)) {
 if (empty($f_default_alias)) {
 	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'));
 }
-$aliasId = Alias::AliasExists($f_default_alias);
-if (!empty($aliasId)) {
-      $alias =& new Alias($aliasId);
-      $pub = $alias->getPublicationId();
-      $pubObj =& new Publication($pub);
-      $aliasLink = "<A HREF=\"/$ADMIN/pub/edit.php?Pub=$pub\">". $pubObj->getName() ."</A>";      
-      $msg = getGS('The publication alias conflicts with another publication');
-      $msg .= ': '. $aliasLink;
-      camp_html_add_msg($msg);
-}
-if (camp_html_has_msgs()) {
-	camp_html_goto_page($backLink);
-}
 
 $publicationObj =& new Publication($f_publication_id);
+if (!$publicationObj->exists()) {
+	camp_html_add_msg(getGS('Publication does not exist.'));
+}
+
+if ($f_default_alias != $publicationObj->getDefaultAliasId()) {
+	camp_is_alias_conflicting($f_default_alias);
+}
+if ($f_name != $publicationObj->getName()) {
+	camp_is_publication_conflicting($f_name);
+}
+
+if (camp_html_has_msgs()) {
+      camp_html_goto_page($backLink);
+}
+
 $columns = array('Name' => $f_name,
 				 'IdDefaultAlias' => $f_default_alias,
 				 'IdDefaultLanguage' => $f_language,
@@ -70,8 +77,7 @@ $updated = $publicationObj->update($columns);
 if ($updated) {
 	camp_html_add_msg(getGS("Publication updated"), "ok");
 } else {
-	$errorMsg = getGS('The publication information could not be updated.')
-			  .' '.getGS('Please check if another publication with the same name or the same site name does not already exist.');
+	$errorMsg = getGS('The publication information could not be updated.');
 	camp_html_add_msg($errorMsg);
 }
 camp_html_goto_page($backLink);

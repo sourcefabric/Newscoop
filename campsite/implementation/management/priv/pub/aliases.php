@@ -3,8 +3,13 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
 
-// Check permissions
 $Pub = Input::Get('Pub', 'int');
+
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 $publicationObj =& new Publication($Pub);
 $aliases = Alias::GetAliases(null, $Pub);
 

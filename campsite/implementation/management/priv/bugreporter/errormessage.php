@@ -59,7 +59,7 @@ global $ADMIN;
                 </tr>
                 <tr>
                     <td align="left" nowrap><?php
-                        putGS("Email (optional)");
+                        putGS("Email (optional):");
                     ?>
                     </td>
                     <td><input type="text" class="input_text" name="f_email" value="" size="32" maxlength="255">

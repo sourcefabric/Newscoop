@@ -409,9 +409,13 @@ class Publication extends DatabaseObject {
 	/**
 	 * Return all publications as an array of Publication objects.
 	 *
+	 * @param string $p_name
+	 * @param int $p_aliasId
+	 * @param array $p_sqlOptions
+	 *
 	 * @return array
 	 */
-	function GetPublications($p_sqlOptions = null)
+	function GetPublications($p_name = null, $p_aliasId = null, $p_sqlOptions = null)
 	{
 	    if (is_null($p_sqlOptions)) {
 	        $p_sqlOptions = array();
@@ -429,11 +433,16 @@ class Publication extends DatabaseObject {
 		            .' WHERE Publications.IdDefaultAlias = Aliases.Id '
 		            .' AND Publications.IdURLType = URLTypes.Id '
 		            .' AND Publications.IdDefaultLanguage = Languages.Id ';
+		if (is_string($p_name)) {
+			$queryStr .= " AND Publications.Name='".mysql_real_escape_string($p_name)."'";
+		}
+		if (is_numeric($p_aliasId)) {
+			$queryStr .= " AND Publications.IdDefaultAlias=$p_aliasId";
+		}
         $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
 		$publications = DbObjectArray::Create('Publication', $queryStr);
 		return $publications;
 	} // fn getPublications
-	
 
 } // class Publication
 ?>

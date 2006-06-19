@@ -11,7 +11,14 @@ if (!$g_user->hasPermission('ManagePub')) {
 
 $cPub = Input::Get('cPub', 'int');
 $cName = trim(Input::Get('cName'));
+
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 $publicationObj =& new Publication($cPub);
+$backLink = "/$ADMIN/pub/add_alias.php?Pub=$cPub";
 
 $correct = true;
 $created = false;
