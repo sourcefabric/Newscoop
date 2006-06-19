@@ -13,7 +13,10 @@ if (!$g_user->hasPermission('ManageLocalizer')) {
 $prefix = Input::Get('prefix', 'string', '', true);
 $missingStrings = Localizer::FindMissingStrings($prefix);
 if (count($missingStrings) > 0) {
-    Localizer::AddStringAtPosition($prefix, 0, $missingStrings);
+    $result = Localizer::AddStringAtPosition($prefix, 0, $missingStrings);
+    if (PEAR::isError($result)) {
+    	camp_html_add_msg($result->getMessage());
+    }
 }
 
 header("Location: /$ADMIN/localizer/index.php");

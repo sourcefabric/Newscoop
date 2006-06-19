@@ -425,7 +425,8 @@ class Localizer {
      * @param int $p_position
      * @param array $p_newKey
      *
-     * @return void
+     * @return mixed
+     * 		Return true on success, PEAR_Error on failure.
      */
     function AddStringAtPosition($p_prefix, $p_position, $p_newKey)
     {
@@ -433,27 +434,34 @@ class Localizer {
         $languages = Localizer::GetLanguages();
         foreach ($languages as $language) {
         	$source =& new LocalizerLanguage($p_prefix, $language->getLanguageId());
-        	$source->loadFile(Localizer::GetMode());
+        	$success = $source->loadFile(Localizer::GetMode());
+        	if (!$success) {
+        		$result = $source->saveFile(Localizer::GetMode());
+        		if (PEAR::isError($result)) {
+        			return $result;
+        		}
+        	}
         	if (is_array($p_newKey)) {
         		foreach ($p_newKey as $key) {
         			if ($language->getLanguageId() == $g_localizerConfig['DEFAULT_LANGUAGE']) {
         				$source->addString($key, $key, $p_position);
-        			}
-        			else {
+        			} else {
         				$source->addString($key, '', $p_position);
         			}
         		}
-        	}
-        	else {
+        	} else {
        			if ($Id == $g_localizerConfig['DEFAULT_LANGUAGE']) {
 	        		$source->addString($p_newKey, $p_newKey, $p_position);
-       			}
-       			else {
+       			} else {
 	        		$source->addString($p_newKey, '', $p_position);
        			}
         	}
-			$source->saveFile(Localizer::GetMode());
+			$result = $source->saveFile(Localizer::GetMode());
+			if (PEAR::isError($result)) {
+				return $result;
+			}
         }
+        return true;
     } // fn AddStringAtPosition
 
 
@@ -475,8 +483,7 @@ class Localizer {
         		foreach ($p_key as $key) {
         			$target->deleteString($key);
         		}
-        	}
-        	else {
+        	} else {
         		$target->deleteString($p_key);
         	}
 			$target->saveFile(Localizer::GetMode());
@@ -579,8 +586,7 @@ class Localizer {
             if (is_array($file)) {
                 $filelist = array_merge($filelist,
                     Localizer::SearchFilesRecursive($p_startdir.'/'.$dir, $p_pattern));
-            }
-            else {
+            } else {
             	// it's a file
                 if (preg_match($p_pattern, $file)) {
                     $filelist[] = $p_startdir.'/'.$file;

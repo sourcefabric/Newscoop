@@ -45,8 +45,7 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 	        	}
 	        }
 	        return true;
-        }
-        else {
+        } else {
         	return false;
         }
 	} // fn load
@@ -66,7 +65,7 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 	function save(&$p_localizerLanguage)
 	{
 	    global $g_localizerConfig;
-    	$data = "<?php\n";
+    	$data = "<?php \n";
     	$translationTable = $p_localizerLanguage->getTranslationTable();
     	foreach ($translationTable as $key => $value) {
     	    // Escape quote characters.
@@ -81,18 +80,26 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
         // Create the language directory if it doesnt exist.
         $dirName = $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_localizerLanguage->getLanguageCode();
         if (!file_exists($dirName)) {
-        	if (is_writable($dirName)) {
+        	if (is_writable(dirname($dirName))) {
             	mkdir($dirName);
         	} else {
         		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_MKDIR, $dirName), CAMP_ERROR_MKDIR);
         	}
         }
 
-        // write data to file
-        if (is_writable($filePath)) {
-	        File::write($filePath, $data, FILE_MODE_WRITE);
+        // Write data to the file
+        if (!file_exists($filePath)) {
+        	if (is_writable($dirName)) {
+		        File::write($filePath, $data, FILE_MODE_WRITE);
+	        } else {
+	        	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_FILE, $filePath), CAMP_ERROR_WRITE_FILE);
+	        }
         } else {
-        	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_FILE, $filePath), CAMP_ERROR_WRITE_FILE);
+	        if (is_writable($filePath)) {
+		        File::write($filePath, $data, FILE_MODE_WRITE);
+	        } else {
+	        	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_FILE, $filePath), CAMP_ERROR_WRITE_FILE);
+	        }
         }
         File::close($filePath, FILE_MODE_WRITE);
         return CAMP_SUCCESS;
@@ -192,8 +199,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 		        }
 	        }
 	        return true;
-        }
-        else {
+        } else {
         	return false;
         }
 	} // fn load
@@ -286,8 +292,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
                 $languageDef->m_englishName = '';
                 $languageDef->m_nativeName = '';
             }
-        }
-        else {
+        } else {
             return Localizer::GetLanguages();
         }
 	} // fn getLanguages
