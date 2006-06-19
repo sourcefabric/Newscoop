@@ -1,4 +1,16 @@
-<?php
+<?php 
+regGS("The subscription settings for '$1' could not be added.", "");
+regGS("The publication name you specified conflicts with publication '$1'.", "");
+regGS("The publication alias you specified conflicts with publication '$1'.", "");
+regGS("Subscription defaults", "");
+regGS("Subscription Settings by Country", "");
+regGS("Set subscription settings for a country", "");
+regGS("Set subscription settings by country", "");
+regGS("Default time periods:", "");
+regGS("Country subscription settings updated.", "");
+regGS("Country subscription settings deleted.", "");
+regGS("Change country subscription settings", "");
+regGS("Are you sure you want to delete the subscription settings for $1?", "");
 regGS("Publication updated", "");
 regGS("Subscriber comments moderated?", "");
 regGS("Public comments moderated?", "");
@@ -25,26 +37,17 @@ regGS("Delete alias $1", "Şterge alias-ul $1");
 regGS("Configure publication", "Configurează publicaţia");
 regGS("You do not have the right to edit publication information.", "Nu aveţi dreptul de a edita informaţia despre publicaţie.");
 regGS("General attributes", "Atribute generale");
-regGS("Subscriptions defaults", "Caracteristicile din oficiu ale abonamentelor");
-regGS("Countries defaults", "Caracteristicile din oficiu ale ţărilor");
 regGS("You do not have the right to change publication information.", "Nu ai dreptul de a modifica informaţiile despre publicaţie.");
 regGS("The publication information could not be updated.", "Informaţiile despre publicaţie nu pot fi modificate.");
-regGS("Please check if another publication with the same name or the same site name does not already exist.", "Verifică dacă nu există altă publicaţie cu acelaşi nume sau un nume de site identic.");
 regGS("You do not have the right to delete publications.", "Nu ai dreptul sa ştergi publicaţii.");
 regGS("Are you sure you want to delete the publication $1?", "Eşti sigur că vrei să ştergi publicaţia $1?");
 regGS("Deleting publication", "Se şterge publicaţia");
 regGS("There are $1 subscription(s) left.", "Mai sunt $1 abonamente.");
 regGS("The publication $1 could not be deleted.", "Publicaţia $1 nu poate fi ştearsă.");
 regGS("The publication could not be added.", "Publicaţia nu poate fi adăugată");
-regGS("Add new country default subscription time", "Adaugă un timp nou din oficiu pe ţară pentru abonament");
 regGS("You do not have the right to manage publications.", "Nu ai dreptul de a administra publicaţii.");
-regGS("Please check if another entry with the same country code exists already.", "Verifică dacă nu există o altă înregistrare cu acelaş cod de ţară.");
-regGS("Adding new country default subscription time", "Se adaugă un timp nou din oficiu pe ţară pentru abonament");
 regGS("You must select a country.", "Trebuie să selectezi o ţară.");
-regGS("The default subscription time for country $1 could not be added.", "Timpul din oficiu de abonament pentru ţara $1 nu poate fi adăugat.");
-regGS("Change subscription default time", "Modifică timpul din oficiu pe ţară pentru abonament");
 regGS("Default subscription time for $1 changed", "Timpul din oficiu pe ţară pentru abonament pentru ţara $1 a fost modificat");
-regGS("Are you sure you want to delete the subscription default time for $1?", "Eşti sigur că vrei să ştergi timpul din oficiu pe ţară pentru abonament pentru ţara $1?");
 regGS("Subscription default time for $1 deleted", "Timpul din oficiu de abonament pentru ţara $1 a fost şters");
 regGS("Add new alias", "Adaugă alias nou");
 regGS("Alias (click to edit)", "Alias (clic pentru a modifica)");
@@ -67,7 +70,6 @@ regGS("You do not have the right to add publications.", "Nu ai dreptul să adaug
 regGS("There are $1 issue(s) left.", "Mai sunt $1 ediţii.");
 regGS("Change publication information", "Modifică informaţia despre publicaţie");
 regGS("Time Unit", "Unitatea de timp");
-regGS("Countries Subscription Default Time", "Ora din oficiu a abonamentului pe ţări");
 regGS("Currency", "Monedă");
 regGS("Edit languages", "Modifică limbile");
 ?>

@@ -1,4 +1,16 @@
-<?php
+<?php 
+regGS("The subscription settings for '$1' could not be added.", "");
+regGS("The publication name you specified conflicts with publication '$1'.", "");
+regGS("The publication alias you specified conflicts with publication '$1'.", "");
+regGS("Subscription defaults", "");
+regGS("Subscription Settings by Country", "");
+regGS("Set subscription settings for a country", "");
+regGS("Set subscription settings by country", "");
+regGS("Default time periods:", "");
+regGS("Country subscription settings updated.", "");
+regGS("Country subscription settings deleted.", "");
+regGS("Change country subscription settings", "");
+regGS("Are you sure you want to delete the subscription settings for $1?", "");
 regGS("Publication updated", "");
 regGS("Subscriber comments moderated?", "");
 regGS("Public comments moderated?", "");
@@ -25,26 +37,17 @@ regGS("Delete alias $1", "Obriši alias $1");
 regGS("Configure publication", "Podesi publikaciju");
 regGS("You do not have the right to edit publication information.", "Nemate pravo dа uređuјеtе podatkе o publikaciji.");
 regGS("General attributes", "Opšti atributi");
-regGS("Subscriptions defaults", "Osnovni podaci o pretplatama");
-regGS("Countries defaults", "Osnovni podaci o državama");
 regGS("You do not have the right to change publication information.", "Nemate pravo izmene podataka o publikaciji.");
 regGS("The publication information could not be updated.", "Podaci o publikaciji ne mogu biti izmenjeni.");
-regGS("Please check if another publication with the same name or the same site name does not already exist.", "Proverite da li već postoji publikacija sa istim imenom ili imenom sajta .");
 regGS("You do not have the right to delete publications.", "Nemate pravo da brišete publikacije");
 regGS("Are you sure you want to delete the publication $1?", "Sigurni ste da želite da obrišete publikaciju $1?");
 regGS("Deleting publication", "Brisanje publikacije");
 regGS("There are $1 subscription(s) left.", "Preostalo je $1 pretplata.");
 regGS("The publication $1 could not be deleted.", "Publikacija $1 ne može biti obrisana.");
 regGS("The publication could not be added.", "Publikacija ne može biti dodata.");
-regGS("Add new country default subscription time", "Dodaj novi osnovni period pretplate za državu");
 regGS("You do not have the right to manage publications.", "Nemate pravo da administrirate publikacijama.");
-regGS("Please check if another entry with the same country code exists already.", "Proverite da li već postoji unos sa istim kodom države.");
-regGS("Adding new country default subscription time", "Dodavanje novog osnovnog perioda pretplate za državu");
 regGS("You must select a country.", "Morate izabrati državu.");
-regGS("The default subscription time for country $1 could not be added.", "Novi period pretplate za $1 ne može biti dodat.");
-regGS("Change subscription default time", "Promeni trajanje osnovne pretplate");
 regGS("Default subscription time for $1 changed", "Trajanje osnovne pretplate za $1 promenjeno");
-regGS("Are you sure you want to delete the subscription default time for $1?", "Sigurni ste da želite da obrišete osnovnu dužinu pretplate za $1?");
 regGS("Subscription default time for $1 deleted", "Dužina pretplate za $1 je izbrisana");
 regGS("Add new alias", "Dodaj novi alias");
 regGS("Alias (click to edit)", "Alias (klik za uređivanje)");
@@ -66,7 +69,6 @@ regGS("$1 is the default publication alias, it can not be deleted.", "$1 je osno
 regGS("You do not have the right to add publications.", "Nemate pravo da dodajete publikacije.");
 regGS("There are $1 issue(s) left.", "Preostalo je $1 izdanja.");
 regGS("Time Unit", "Vremenska jedinica");
-regGS("Countries Subscription Default Time", "Dužina trajanja pretplate po državama");
 regGS("Currency", "Valuta");
 regGS("Edit languages", "Uredi jezike");
 ?>

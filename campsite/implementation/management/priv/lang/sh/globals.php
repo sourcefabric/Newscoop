@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("Account", "Nalog");
 regGS("Items per page", "Stavki po strani");
 regGS("Add new", "Dodaj novi");
@@ -264,4 +264,6 @@ regGS("No events.", "");
 regGS("Default templates", "");
 regGS("System Preferences", "");
 regGS("The date must be in the future.", "");
+regGS("Email (optional):", "");
+regGS("Send", "");
 ?>

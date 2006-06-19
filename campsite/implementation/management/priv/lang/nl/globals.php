@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("Account", "Profiel");
 regGS("Items per page", "Items");
 regGS("Cannot create file \"$1\"", "Kan bestand \"$1\" niet maken");
@@ -367,4 +367,5 @@ regGS("On Section Page", "Op Sectiepagina");
 regGS("Created by", "Gemaakt door");
 regGS("Creation date", "Gemaakt op");
 regGS("The date must be in the future.", "");
+regGS("Send", "");
 ?>

@@ -1,4 +1,16 @@
-<?php
+<?php 
+regGS("The subscription settings for '$1' could not be added.", "The subscription settings for '$1' could not be added.");
+regGS("The publication name you specified conflicts with publication '$1'.", "The publication name you specified conflicts with publication '$1'.");
+regGS("The publication alias you specified conflicts with publication '$1'.", "The publication alias you specified conflicts with publication '$1'.");
+regGS("Subscription defaults", "Subscription defaults");
+regGS("Subscription Settings by Country", "Subscription Settings by Country");
+regGS("Set subscription settings for a country", "Set subscription settings for a country");
+regGS("Set subscription settings by country", "Set subscription settings by country");
+regGS("Default time periods:", "Default time periods:");
+regGS("Country subscription settings updated.", "Country subscription settings updated.");
+regGS("Country subscription settings deleted.", "Country subscription settings deleted.");
+regGS("Change country subscription settings", "Change country subscription settings");
+regGS("Are you sure you want to delete the subscription settings for $1?", "Are you sure you want to delete the subscription settings for $1?");
 regGS("Publication updated", "Publication updated");
 regGS("Subscriber comments moderated?", "Subscriber comments moderated?");
 regGS("Public comments moderated?", "Public comments moderated?");
@@ -25,26 +37,17 @@ regGS("Delete alias $1", "Delete alias $1");
 regGS("Configure publication", "Configure publication");
 regGS("You do not have the right to edit publication information.", "You do not have the right to edit publication information.");
 regGS("General attributes", "General attributes");
-regGS("Subscriptions defaults", "Subscriptions defaults");
-regGS("Countries defaults", "Countries defaults");
 regGS("You do not have the right to change publication information.", "You do not have the right to change publication information.");
 regGS("The publication information could not be updated.", "The publication information could not be updated.");
-regGS("Please check if another publication with the same name or the same site name does not already exist.", "Please check if another publication with the same name or the same site name does not already exist.");
 regGS("You do not have the right to delete publications.", "You do not have the right to delete publications.");
 regGS("Are you sure you want to delete the publication $1?", "Are you sure you want to delete the publication $1?");
 regGS("Deleting publication", "Deleting publication");
 regGS("There are $1 subscription(s) left.", "There are $1 subscription(s) left.");
 regGS("The publication $1 could not be deleted.", "The publication $1 could not be deleted.");
 regGS("The publication could not be added.", "The publication could not be added.");
-regGS("Add new country default subscription time", "Add new country default subscription time");
 regGS("You do not have the right to manage publications.", "You do not have the right to manage publications.");
-regGS("Please check if another entry with the same country code exists already.", "Please check if another entry with the same country code exists already.");
-regGS("Adding new country default subscription time", "Adding new country default subscription time");
 regGS("You must select a country.", "You must select a country.");
-regGS("The default subscription time for country $1 could not be added.", "The default subscription time for country $1 could not be added.");
-regGS("Change subscription default time", "Change subscription default time");
 regGS("Default subscription time for $1 changed", "Default subscription time for $1 changed");
-regGS("Are you sure you want to delete the subscription default time for $1?", "Are you sure you want to delete the subscription default time for $1?");
 regGS("Subscription default time for $1 deleted", "Subscription default time for $1 deleted");
 regGS("Add new alias", "Add new alias");
 regGS("Alias (click to edit)", "Alias (click to edit)");
@@ -66,7 +69,6 @@ regGS("$1 is the default publication alias, it can not be deleted.", "$1 is the 
 regGS("You do not have the right to add publications.", "You do not have the right to add publications.");
 regGS("There are $1 issue(s) left.", "There are $1 issue(s) left.");
 regGS("Time Unit", "Time Unit");
-regGS("Countries Subscription Default Time", "Countries Subscription Default Time");
 regGS("Currency", "Currency");
 regGS("Edit languages", "Edit languages");
 ?>

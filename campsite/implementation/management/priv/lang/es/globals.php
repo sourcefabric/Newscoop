@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("Account", "Cuenta");
 regGS("Items per page", "Items por página");
 regGS("Add new", "Agregar nuevo");
@@ -275,4 +275,6 @@ regGS("No events.", "");
 regGS("Default templates", "");
 regGS("System Preferences", "");
 regGS("The date must be in the future.", "");
+regGS("Email (optional):", "");
+regGS("Send", "");
 ?>

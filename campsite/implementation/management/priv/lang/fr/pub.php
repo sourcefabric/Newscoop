@@ -1,4 +1,16 @@
-<?php
+<?php 
+regGS("The subscription settings for '$1' could not be added.", "");
+regGS("The publication name you specified conflicts with publication '$1'.", "");
+regGS("The publication alias you specified conflicts with publication '$1'.", "");
+regGS("Subscription defaults", "");
+regGS("Subscription Settings by Country", "");
+regGS("Set subscription settings for a country", "");
+regGS("Set subscription settings by country", "");
+regGS("Default time periods:", "");
+regGS("Country subscription settings updated.", "");
+regGS("Country subscription settings deleted.", "");
+regGS("Change country subscription settings", "");
+regGS("Are you sure you want to delete the subscription settings for $1?", "");
 regGS("Publication updated", "");
 regGS("Subscriber comments moderated?", "");
 regGS("Public comments moderated?", "");
@@ -25,26 +37,17 @@ regGS("Delete alias $1", "Supprimer alias $1");
 regGS("Configure publication", "Configurer publication");
 regGS("You do not have the right to edit publication information.", "Vous n'avez pas le droit d'éditer l'information de publication.                    ");
 regGS("General attributes", "Attributs Généraux");
-regGS("Subscriptions defaults", "Abonnements par défaut");
-regGS("Countries defaults", "Pays par défaut");
 regGS("You do not have the right to change publication information.", "Vous n'avez pas le droit de changer l'information de publication. ");
 regGS("The publication information could not be updated.", "l'information de publication ne pouvait pas être mise à jour. ");
-regGS("Please check if another publication with the same name or the same site name does not already exist.", "vérifiez SVP si une autre publication avec le même nom ou le même nom de site n'existe pas déjà . ");
 regGS("You do not have the right to delete publications.", "Vous n'avez pas le droit de supprimer des publications");
 regGS("Are you sure you want to delete the publication $1?", "Etes-vous sûr de vouloir supprimer la publication $1?");
 regGS("Deleting publication", "Suppression publication");
 regGS("There are $1 subscription(s) left.", "Il manque un ou des abonnement(s).");
 regGS("The publication $1 could not be deleted.", "La publication $1 ne pouvait pas être supprimée.");
 regGS("The publication could not be added.", "La publication ne pouvait pas être ajoutée.");
-regGS("Add new country default subscription time", "Ajouter le nouveau temps d'abonnement par défaut du pays");
 regGS("You do not have the right to manage publications.", "Vous n'avez pas le droit de gérer des publications");
-regGS("Please check if another entry with the same country code exists already.", "SVP vérifier si une autre entrée avec le même code de pays existe déjà.");
-regGS("Adding new country default subscription time", "Ajout d'un nouveau temps d'abonnement par défaut du pays");
 regGS("You must select a country.", "Vous devez choisir un pays");
-regGS("The default subscription time for country $1 could not be added.", "Le temps d'abonnement par défaut du pays $1 ne pouvait pas être ajouté.");
-regGS("Change subscription default time", "Changer le temps d'abonnement par défaut");
 regGS("Default subscription time for $1 changed", "Temps d'abonnement par défaut pour $1 changé");
-regGS("Are you sure you want to delete the subscription default time for $1?", "Etes-vous sûr de vouloir supprimer le temps d'abonnement par défaut pour $1?");
 regGS("Subscription default time for $1 deleted", "Temps d'abonnement par défaut  pour $1 supprimé");
 regGS("Add new alias", "Ajouter un nouvel alias");
 regGS("Alias (click to edit)", "Alias (cliquer pour éditer)");
@@ -66,7 +69,6 @@ regGS("$1 is the default publication alias, it can not be deleted.", "$1 est l'a
 regGS("You do not have the right to add publications.", "Vous n'avez pas le droit d'ajouter des publications.");
 regGS("There are $1 issue(s) left.", "Il manque une des édition (s)");
 regGS("Time Unit", "Unité de Temps");
-regGS("Countries Subscription Default Time", "Heure par défaut des abonnements de pays");
 regGS("Currency", "Monnaie");
 regGS("Edit languages", "Editer langues");
 ?>

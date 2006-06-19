@@ -1,4 +1,16 @@
-<?php
+<?php 
+regGS("The subscription settings for '$1' could not be added.", "");
+regGS("The publication name you specified conflicts with publication '$1'.", "");
+regGS("The publication alias you specified conflicts with publication '$1'.", "");
+regGS("Subscription defaults", "");
+regGS("Subscription Settings by Country", "");
+regGS("Set subscription settings for a country", "");
+regGS("Set subscription settings by country", "");
+regGS("Default time periods:", "");
+regGS("Country subscription settings updated.", "");
+regGS("Country subscription settings deleted.", "");
+regGS("Change country subscription settings", "");
+regGS("Are you sure you want to delete the subscription settings for $1?", "");
 regGS("Publication updated", "");
 regGS("Subscriber comments moderated?", "");
 regGS("Public comments moderated?", "");
@@ -25,26 +37,17 @@ regGS("Delete alias $1", "Eintrag $1 löschen");
 regGS("Configure publication", "Publikation konfigurieren");
 regGS("You do not have the right to edit publication information.", "Keine Berechtigung Info der Publikation zu ändern");
 regGS("General attributes", "Allgemeine Eigenschaften");
-regGS("Subscriptions defaults", "Abonnement Voreinstellungen");
-regGS("Countries defaults", "Länder Voreinstellungen");
 regGS("You do not have the right to change publication information.", "Keine Rechte Info der Publikation zu ändern");
 regGS("The publication information could not be updated.", "Die Info der Publikations konnte nicht verändert werden");
-regGS("Please check if another publication with the same name or the same site name does not already exist.", "Bitte überprüfen, ob eine Publikation mit dem selben Namen schon existiert");
 regGS("You do not have the right to delete publications.", "Keine Berechtigung Publikationen zu löschen");
 regGS("Are you sure you want to delete the publication $1?", "Sicher, dass Publikation $1 gelöscht werden soll?");
 regGS("Deleting publication", "Publikation wird gelöscht");
 regGS("There are $1 subscription(s) left.", "$1 Abonement(s) noch vorhanden");
 regGS("The publication $1 could not be deleted.", "Publikation $1 konnte nicht gelöscht werden");
 regGS("The publication could not be added.", "Publikation konnte nicht hinzugefügt werden");
-regGS("Add new country default subscription time", "Neue Länderstandardzeit für Abonoments hinzufügen");
 regGS("You do not have the right to manage publications.", "Keine Berechtigung, die Publikation zu verändern");
-regGS("Please check if another entry with the same country code exists already.", "Bitte prüfen, ob ein Eintrag mit diesem Ländercode schon existiert.");
-regGS("Adding new country default subscription time", "Hinzufügen von für Abonomentstandardzeit ");
 regGS("You must select a country.", "Es muss ein Land gewählt werden");
-regGS("The default subscription time for country $1 could not be added.", "Abonomentstandardzeit für das Land $1 konnte nicht hinzugefügt werden");
-regGS("Change subscription default time", "Abonomentstandardzeit  ändern");
 regGS("Default subscription time for $1 changed", "Abonomentstandardzeit  für $1 hat sich geändert");
-regGS("Are you sure you want to delete the subscription default time for $1?", "Sicher, die Abonomentstandardzeit  für $1 zu löschen?");
 regGS("Subscription default time for $1 deleted", "Abonomentstandardzeit  für $1 gelöscht");
 regGS("Add new alias", "Neuen Alias hinzufügen");
 regGS("Alias (click to edit)", "Alias (anklicken zum editieren)");
@@ -67,7 +70,6 @@ regGS("You do not have the right to add publications.", "Keine Zugriffsrechte ei
 regGS("There are $1 issue(s) left.", "$1 Ausgaben sind übrig.");
 regGS("Change publication information", "Information der Publikation ändern");
 regGS("Time Unit", "Zeiteinheit");
-regGS("Countries Subscription Default Time", "Voreinstellung der Zeit für Länder-Abonnement ");
 regGS("Currency", "Währung");
 regGS("Edit languages", "Sprachen bearbeiten");
 ?>

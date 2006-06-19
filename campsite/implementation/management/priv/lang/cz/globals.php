@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("Account", "Účet");
 regGS("Items per page", "Položek na stránku");
 regGS("Add new", "Přidat nový");
@@ -266,4 +266,6 @@ regGS("No events.", "");
 regGS("Default templates", "");
 regGS("System Preferences", "");
 regGS("The date must be in the future.", "");
+regGS("Email (optional):", "");
+regGS("Send", "");
 ?>

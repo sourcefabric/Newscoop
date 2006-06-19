@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("Account", "아이디 ");
 regGS("Items per page", "페이지당 아이템");
 regGS("Add new", "신규로 추가");
@@ -258,4 +258,6 @@ regGS("No events.", "");
 regGS("Default templates", "");
 regGS("System Preferences", "");
 regGS("The date must be in the future.", "");
+regGS("Email (optional):", "");
+regGS("Send", "");
 ?>

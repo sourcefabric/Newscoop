@@ -1,4 +1,16 @@
-<?php
+<?php 
+regGS("The subscription settings for '$1' could not be added.", "");
+regGS("The publication name you specified conflicts with publication '$1'.", "");
+regGS("The publication alias you specified conflicts with publication '$1'.", "");
+regGS("Subscription defaults", "");
+regGS("Subscription Settings by Country", "");
+regGS("Set subscription settings for a country", "");
+regGS("Set subscription settings by country", "");
+regGS("Default time periods:", "");
+regGS("Country subscription settings updated.", "");
+regGS("Country subscription settings deleted.", "");
+regGS("Change country subscription settings", "");
+regGS("Are you sure you want to delete the subscription settings for $1?", "");
 regGS("Publication updated", "");
 regGS("Subscriber comments moderated?", "");
 regGS("Public comments moderated?", "");
@@ -25,26 +37,17 @@ regGS("Delete alias $1", "الغاء بيانات الدخول $1");
 regGS("Configure publication", "إعدادات المنشور");
 regGS("You do not have the right to edit publication information.", "لا يحق لك تحرير المعلومات الخاصة بالمنشور");
 regGS("General attributes", "الخصائص العامة");
-regGS("Subscriptions defaults", "إفتراضيات الإشتراكات");
-regGS("Countries defaults", "إفتراضيات الدول");
 regGS("You do not have the right to change publication information.", "لا يحق لك تغيير المعلومات الخاصة بالمنشور");
 regGS("The publication information could not be updated.", "لا يمكن تحديث المعلومات الخاصة بالمنشور");
-regGS("Please check if another publication with the same name or the same site name does not already exist.", "الرجاء التأكد من عدم وجود منشور يحمل الاسم نفسه أو اسم الموقع نفسه");
 regGS("You do not have the right to delete publications.", "لا يحق لك إلغاء المنشورات");
 regGS("Are you sure you want to delete the publication $1?", "هل أنت متأكد من أنك تريد إلغاء المنشور $1");
 regGS("Deleting publication", "إلغاء المنشور");
 regGS("There are $1 subscription(s) left.", "اشتراك $1 (اشتراكات) متبقية");
 regGS("The publication $1 could not be deleted.", "لا  يمكن إلغاء المنشور$1");
 regGS("The publication could not be added.", "لا يمكن إضافة المنشور");
-regGS("Add new country default subscription time", "أضف مدّة الاشتراك الأصلية خاصة بالبلد الجديد");
 regGS("You do not have the right to manage publications.", "لا يحق لك إدارة المنشورات");
-regGS("Please check if another entry with the same country code exists already.", "الرجاء التأكد من عدم وجود إدخال أخر بنفس رمز الدولة");
-regGS("Adding new country default subscription time", "إضافة مدّة اشتراك الأصلية خاصة بالبلد الجديد");
 regGS("You must select a country.", "اختر بلداً");
-regGS("The default subscription time for country $1 could not be added.", "لا يمكن إضافة مدة الاشتراك الأصلية للبلد $1");
-regGS("Change subscription default time", "قم بتغيير مدّة الاشتراك الأصلية");
 regGS("Default subscription time for $1 changed", " تغيير مدّة الاشتراك الأصلية لـ $1");
-regGS("Are you sure you want to delete the subscription default time for $1?", "هل أنت متأكد من أنك تريد إلغاء مدّة الاشتراك الأصلية لـ $1 ؟");
 regGS("Subscription default time for $1 deleted", "تمّ الغاء مدّة الاشتراك الأصلية لـ $1");
 regGS("Add new alias", "أضف اسم مستعار جديد");
 regGS("Alias (click to edit)", "الاسم المستعار ( اضغط للتعديل)");
@@ -66,7 +69,6 @@ regGS("$1 is the default publication alias, it can not be deleted.", "لا يم�
 regGS("You do not have the right to add publications.", "لا تملك صلاحية اضافة منشورات");
 regGS("There are $1 issue(s) left.", "هنالك $1 أعداد متبقية.");
 regGS("Time Unit", "وحدة الوقت");
-regGS("Countries Subscription Default Time", "التوقيت الإفتراضي لإشتراكات الدول");
 regGS("Currency", "العملة");
 regGS("Edit languages", "تعديل اللغات");
 ?>
