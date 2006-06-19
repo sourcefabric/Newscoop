@@ -100,14 +100,14 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Days"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_subscription_days" SIZE="5" VALUE="<?php p(htmlspecialchars($subscriptionSection->getDays())); ?>"  MAXLENGTH="5" alt="number|0|1|1000000000" emsg="<?php putGS("You must input a number greater than 0 into the $1 field.", "Days"); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_subscription_days" SIZE="5" VALUE="<?php p(htmlspecialchars($subscriptionSection->getDays())); ?>"  MAXLENGTH="5" alt="number|0|1|1000000000" emsg="<?php putGS("You must input a number greater than 0 into the $1 field.", getGS("Days")); ?>">
 	</TD>
 </TR>
 <?php  if ($isPaid) { ?>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Paid Days"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_subscription_paid_days" SIZE="5" VALUE="<?php  p($subscriptionSection->getPaidDays()); ?>" MAXLENGTH="5" alt="number|0|0|1000000000" emsg="<?php putGS("You must input a number greater or equal to 0 into the $1 field.", "Paid Days"); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_subscription_paid_days" SIZE="5" VALUE="<?php  p($subscriptionSection->getPaidDays()); ?>" MAXLENGTH="5" alt="number|0|0|1000000000" emsg="<?php putGS("You must input a number greater or equal to 0 into the $1 field.", getGS("Paid Days")); ?>">
 	</TD>
 </TR>
 <?php  } ?>
