@@ -199,45 +199,18 @@ function camp_load_translation_strings($p_prefix)
 
 
 /**
- * Split the given text into something.
- * @return string
+ * Return TRUE if the given name is a valid URL name for a issue or section.
+ *
+ * @param string $p_name
+ * @return boolean
  */
-//function camp_limit_chars($p_text, $p_limit, $p_break, $p_tail)
-//{
-//	$p_text = preg_replace("/$p_break/i", strtolower($p_break), $p_text);
-//	$p_text = split(strtolower("$p_break"), $p_text);
-//	if (strlen(implode("$p_break", $p_text)) >= $p_limit) {
-//		$i = 0;
-//		$add_str = "";
-//		while($i <= count($p_text)) {
-//			$add_str = $p_text[$i];
-//			$out[] = $add_str;
-//			if(strlen(implode("$p_break", $out)) >= $p_limit - strlen($p_break) - strlen($add_str)) {
-//				break;
-//			}
-//			$add_str = "";
-//			$i++;
-//		}
-//		$p_text = implode("$p_break", $out);
-//		if (substr($p_text, 0, -strlen($p_break)) == $p_break) {
-//			$p_text = substr($p_text, 0, -strlen($p_break));
-//		}
-//		$p_text = "$p_text$p_tail";
-//	}
-//	else {
-//		$p_text=implode("$p_break", $p_text);
-//	}
-//	return $p_text;
-//} // fn camp_limit_chars
-
-
-function camp_is_valid_url_name($name)
+function camp_is_valid_url_name($p_name)
 {
-	if (strlen($name) == 0) {
+	if (strlen($p_name) == 0) {
 		return false;
 	}
-	for ($i = 0; $i < strlen($name); $i++) {
-		$c = $name[$i];
+	for ($i = 0; $i < strlen($p_name); $i++) {
+		$c = $p_name[$i];
 		$ok = ($c >= 'A' && $c <= 'Z') || ($c >= 'a' && $c <= 'z') || $c == '_' || ($c >= '0' && $c <= '9');
 		if (!$ok) {
 			return false;
