@@ -31,7 +31,8 @@ function camp_is_issue_conflicting($p_publicationId, $p_issueNumber, $p_language
 
 	// If the issue exists, we have to make sure the conflicting issue is not
 	// itself.
-	$isSelf = ($p_isExistingIssue && ($conflictingIssue->getIssueNumber() != $p_issueNumber));
+	$isSelf = ($p_isExistingIssue && is_object($conflictingIssue)
+			   && ($conflictingIssue->getIssueNumber() == $p_issueNumber));
 	if (is_object($conflictingIssue) && !$isSelf) {
 		$conflictingIssueLink = "/$ADMIN/issues/edit.php?"
 			."Pub=$p_publicationId"
