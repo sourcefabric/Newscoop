@@ -358,6 +358,8 @@ $g_camp_msg_added = false;
  *
  * @param string $p_errorMsg
  * @param string $p_type
+ * @param int $p_delay
+ * 		The number of screen refreshes before this is displayed.
  */
 function camp_html_add_msg($p_errorMsg, $p_type = "error")
 {
@@ -368,7 +370,8 @@ function camp_html_add_msg($p_errorMsg, $p_type = "error")
 	}
 	if (is_string($p_errorMsg) && (trim($p_errorMsg) != "")) {
 		$g_camp_msg_added = true;
-		$_SESSION["camp_user_msgs"][$p_errorMsg] = $p_type;
+		$_SESSION["camp_user_msgs"][] = array("msg" => $p_errorMsg,
+											  "type" => $p_type);
 	}
 } // fn camp_html_add_msg
 
@@ -398,7 +401,7 @@ function camp_html_has_msgs()
 function camp_html_clear_msgs($p_calledByAdmin = false)
 {
 	global $g_camp_msg_added;
-	if (!$p_calledByAdmin || ($p_calledByAdmin && $g_camp_msg_added)) {
+	if (!$p_calledByAdmin || ($p_calledByAdmin && !$g_camp_msg_added)) {
 		$_SESSION['camp_user_msgs'] = array();
 	}
 } // fn camp_html_clear_msgs
@@ -406,33 +409,37 @@ function camp_html_clear_msgs($p_calledByAdmin = false)
 
 /**
  * Display any user messages stored in the session.
+ *
+ * @param string $p_spacing
+ * 		How much spacing to put above and below the error message
+ * 		(e.g. 10px, 1em, etc...).
+ *
+ * @return void
  */
-function camp_html_display_msgs()
+function camp_html_display_msgs($p_spacingTop = "1em", $p_spacingBottom = "1em")
 {
 	if (isset($_SESSION['camp_user_msgs']) && count($_SESSION['camp_user_msgs']) > 0) { ?>
-		<p>
-		<table border="0" cellpadding="0" cellspacing="0" class="action_buttons">
+		<table border="0" cellpadding="0" cellspacing="0" class="action_buttons" style="padding-top: <?php echo $p_spacingTop; ?>; padding-bottom: <?php echo $p_spacingBottom; ?>;" width="800px">
 		<?php
 		$count = 1;
-		foreach ($_SESSION['camp_user_msgs'] as $msg => $type) {
+		foreach ($_SESSION['camp_user_msgs'] as $message) {
 			?>
 			<tr>
-				<?php if ($type == 'ok') { ?>
+				<?php if ($message['type'] == 'ok') { ?>
 				<td class="info_message" id="camp_message_<?php p($count); ?>">
 					<script>
-					fade('camp_message_<?php p($count); ?>', 50, 8, false, 1000);
+					fade('camp_message_<?php p($count); ?>', 50, 8, false, 1100);
 					</script>
-				<?php } elseif ($type == 'error') { ?>
+				<?php } elseif ($message['type'] == 'error') { ?>
 				<td class="error_message">
 				<?php } ?>
-					<?php echo $msg; ?>
+					<?php echo $message['msg']; ?>
 				</td>
 			</tr>
 			<?php
 			$count++;
 		} ?>
 		</table>
-		<p>
 		<?php
 		$_SESSION['camp_user_msgs'] = array();
 	}
