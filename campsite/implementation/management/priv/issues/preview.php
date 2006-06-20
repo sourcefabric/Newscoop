@@ -26,8 +26,7 @@ if ($errorStr == "" && ($templateId = $issueObj->getIssueTemplateId()) == 0)
 	$errorStr = 'This issue cannot be previewed. Please make sure it has the front page template selected.';
 
 if ($errorStr != "") {
-	header("Location: /$ADMIN/ad_popup.php?ADReason=".urlencode($errorStr));
-	exit(0);
+	camp_html_display_error($errorStr, null, true);
 }
 
 if (!isset($_SERVER['SERVER_PORT']))

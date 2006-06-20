@@ -20,6 +20,6 @@ if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('Publish')
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $issueObj->setWorkflowStatus();
 
-header("Location: /$ADMIN/issues/$f_target?Pub=$Pub&Issue=$Issue&Language=$Language");
+camp_html_goto_page("/$ADMIN/issues/$f_target?Pub=$Pub&Issue=$Issue&Language=$Language");
 
 ?>

@@ -4,8 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/IssuePublish.php');
 
 // Check permissions
 if (!$g_user->hasPermission('Publish')) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to schedule issues or articles for automatic publishing." )));
-	exit;
+	camp_html_display_error(getGS("You do not have the right to schedule issues or articles for automatic publishing."));
 }
 
 $Pub = Input::Get('Pub', 'int', 0);
@@ -17,7 +16,7 @@ $action =& new IssuePublish($event_id);
 $deleted = $action->delete();
 
 if ($deleted) {
-	header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
+	camp_html_goto_page("/$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 }
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
