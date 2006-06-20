@@ -13,8 +13,7 @@ $f_is_encrypted = Input::Get('f_is_encrypted', 'int', '1');
 $f_captcha_code = Input::Get('f_captcha_code', 'string', '', true);
 
 if (!Input::isValid()) {
-	header("Location: /$ADMIN/login.php?error_code=userpass");
-	exit;
+	camp_html_goto_page("/$ADMIN/login.php?error_code=userpass");
 }
 
 function camp_successful_login($user, $f_login_language)
@@ -26,8 +25,7 @@ function camp_successful_login($user, $f_login_language)
 	setcookie("LoginUserKey", $user->getKeyId());
 	setcookie("TOL_Language", $f_login_language);
     Article::UnlockByUser($user->getUserId());
-	header("Location: /$ADMIN/index.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/index.php");
 }
 
 //
@@ -84,17 +82,14 @@ LoginAttempts::RecordLoginAttempt();
 
 // CAPTCHA invalid -> captcha login page
 if ($validateCaptcha && !PhpCaptcha::Validate($f_captcha_code, true)) {
-	header("Location: /$ADMIN/login.php?error_code=captcha");
-	exit;
+	camp_html_goto_page("/$ADMIN/login.php?error_code=captcha");
 }
 
 // user valid, password invalid, encrypted, CAPTCHA valid -> upgrade
 if (!is_null($user) && $f_is_encrypted && (strlen($user->getPassword()) < 40)) {
-	header("Location: /$ADMIN/login.php?error_code=upgrade&f_user_name=$f_user_name");
-	exit;
+	camp_html_goto_page("/$ADMIN/login.php?error_code=upgrade&f_user_name=$f_user_name");
 }
 
 // Everything else
-header("Location: /$ADMIN/login.php?error_code=userpass");
-exit;
+camp_html_goto_page("/$ADMIN/login.php?error_code=userpass");
 ?>

@@ -18,8 +18,7 @@ if (!Input::IsValid()) {
 
 $languageObj =& new Language($Language);
 if (!$languageObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/logout.php");
 }
 
 $doDelete = true;
