@@ -21,8 +21,7 @@ if (!$changed) {
 	$errorMsgs[] = getGS('Subscription status could not be changed.');
 }
 else {
-	header("Location: /$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
-	exit;
+	camp_html_goto_page("/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
 }
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");

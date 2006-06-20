@@ -92,8 +92,7 @@ if ($created && ($f_add_sections_now == 'Y')) {
 	}
 }
 if (sizeof($errorMsgs) == 0) {
-	header("Location: $location");
-	exit;
+	camp_html_goto_page($location);
 }
 
 $crumbs = array();

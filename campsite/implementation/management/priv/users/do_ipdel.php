@@ -23,8 +23,7 @@ $startIPstring = $ipAccess->getStartIPstring();
 $addresses = $ipAccess->getAddresses();
 
 if (!$ipAccess->delete()) {
-	header("Location: /$ADMIN/users/edit.php?uType=Subscribers&User=$userId");
-	exit;
+	camp_html_goto_page("/$ADMIN/users/edit.php?uType=Subscribers&User=$userId");
 }
 
 camp_html_add_msg(getGS("The IP address group $1 has been deleted.", "$startIPstring:$addresses"), "ok");

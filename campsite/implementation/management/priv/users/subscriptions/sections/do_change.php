@@ -41,7 +41,7 @@ foreach ($subscriptionSections as $section) {
 	$section->setPaidDays($f_subscription_paid_days);
 }
 
-header("Location: /$ADMIN/users/subscriptions/sections/?f_publication_id=$f_publication_id&f_user_id=$f_user_id&f_subscription_id=$f_subscription_id");
+camp_html_goto_page("/$ADMIN/users/subscriptions/sections/?f_publication_id=$f_publication_id&f_user_id=$f_user_id&f_subscription_id=$f_subscription_id");
 exit;
 
 $crumbs = array();

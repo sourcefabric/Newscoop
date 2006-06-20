@@ -24,7 +24,6 @@ $manageUser =& new User($f_user_id);
 
 $subscriptionSection =& new SubscriptionSection($f_subscription_id, $f_section_number, $f_language_id);
 $subscriptionSection->delete();
-header("Location: /$ADMIN/users/subscriptions/sections/?f_user_id=$f_user_id&f_subscription_id=$f_subscription_id&f_publication_id=$f_publication_id");
-exit;
+camp_html_goto_page("/$ADMIN/users/subscriptions/sections/?f_user_id=$f_user_id&f_subscription_id=$f_subscription_id&f_publication_id=$f_publication_id");
 
 ?>

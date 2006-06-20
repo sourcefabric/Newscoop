@@ -55,8 +55,8 @@ foreach ($new_sections as $section_number=>$section_languages) {
 	}
 }
 if ($success) {
-	header("Location: /$ADMIN/users/subscriptions/sections/?f_user_id=$f_user_id&f_subscription_id=$f_subscription_id&f_publication_id=$f_publication_id");
-	exit;
+	camp_html_goto_page("/$ADMIN/users/subscriptions/sections/"
+		."?f_user_id=$f_user_id&f_subscription_id=$f_subscription_id&f_publication_id=$f_publication_id");
 } else {
 	$errorMsgs[] = getGS('The sections could not be added successfully. Some of them were already added !');
 }

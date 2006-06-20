@@ -19,8 +19,7 @@ $subscription =& new Subscription($f_subscription_id);
 
 $changed = $subscription->setToPay($f_subscription_left_to_pay);
 if ($changed) {
-	header("Location: /$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
-	exit;
+	camp_html_goto_page("/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
 }
 
 $crumbs = array();

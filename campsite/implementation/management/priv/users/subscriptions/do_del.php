@@ -27,8 +27,7 @@ if ($subscription->delete()) {
 	} else {
 		$location = "/$ADMIN/users/edit.php?User=$f_user_id&uType=Subscribers";
 	}
-	header("Location: $location");
-	exit;
+	camp_html_goto_page($location);
 }
 
 $crumbs = array();

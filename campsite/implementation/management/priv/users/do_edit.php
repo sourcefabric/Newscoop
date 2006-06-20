@@ -97,8 +97,7 @@ camp_html_add_msg(getGS("User '$1' information was changed successfully.",
 	$editUser->getUserName()), "ok");
 $editUser->fetch();
 if ($editUser->getUserName() == $g_user->getUserName() && !$editUser->hasPermission('ManageUsers')) {
-	header("Location: /$ADMIN/");
-	exit(0);
+	camp_html_goto_page("/$ADMIN/");
 }
 camp_html_goto_page("/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getUserId());
 
