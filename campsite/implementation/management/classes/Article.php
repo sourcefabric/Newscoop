@@ -337,7 +337,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_destSectionNumber -
 	 * 		The destination section number.
 	 *
-	 * @return void
+	 * @return boolean
 	 */
 	function move($p_destPublicationId = 0, $p_destIssueNumber = 0, $p_destSectionNumber = 0)
 	{
@@ -351,10 +351,14 @@ class Article extends DatabaseObject {
 		if ($this->m_data["NrSection"] != $p_destSectionNumber) {
 			$columns["NrSection"] = $p_destSectionNumber;
 		}
+		$success = false;
 		if (count($columns) > 0) {
-			$this->update($columns);
-			$this->positionAbsolute(1);
+			$success = $this->update($columns);
+			if ($success) {
+				$this->positionAbsolute(1);
+			}
 		}
+		return $success;
 	} // fn move
 
 
@@ -1412,12 +1416,12 @@ class Article extends DatabaseObject {
      * @param int $p_issueId
      * @param int $p_sectionId
      *
-     * @return boolean
+     * @return array
      */
-    function NameExists($p_name, $p_publicationId = null, $p_issueId = null, $p_sectionId = null)
+    function GetByName($p_name, $p_publicationId = null, $p_issueId = null, $p_sectionId = null)
     {
         global $g_ado_db;
-        $queryStr = 'SELECT Number FROM Articles';
+        $queryStr = 'SELECT * FROM Articles';
         $whereClause = array();
         if (!is_null($p_publicationId)) {
             $whereClause[] = "IdPublication=$p_publicationId";
@@ -1432,13 +1436,9 @@ class Article extends DatabaseObject {
 		if (count($whereClause) > 0) {
 			$queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
 		}
-		$result = $g_ado_db->GetRow($queryStr);
-		if (count($result) > 0) {
-			return true;
-		} else {
-			return false;
-		}
-    } // fn NameExists
+		$result = DbObjectArray::Create("Article", $queryStr);
+		return $result;
+    } // fn GetByName
 
 
     /**
