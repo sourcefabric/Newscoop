@@ -1,16 +1,18 @@
 <?php
+/**
+ * This file gets called before any file in the "priv" directory is executed.
+ * Think of it as a wrapper for all admin interface scripts.
+ * Here you can set up anything that should be applied globally to all scripts.
+ */
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 global $ADMIN_DIR;
+global $ADMIN;
+global $g_user;
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 camp_set_error_handler("camp_report_bug");
-
-/**
- * This file is basically a hack so that we could implement the
- * new interface without having to rewrite everything.
- */
 
 $no_menu_scripts = array(
     '/login.php',
@@ -44,8 +46,6 @@ $extension = '';
 if (($extension_start = strrpos($call_script, '.')) !== false) {
 	$extension = strtolower(substr($call_script, $extension_start));
 }
-
-global $g_user;
 
 if (($extension == '.php') || ($extension == '')) {
 	header("Content-type: text/html; charset=UTF-8");
@@ -114,7 +114,7 @@ if (($extension == '.php') || ($extension == '')) {
 		echo "</td></tr>\n</table>\n</html>\n";
 	}
 
-	camp_html_clear_msgs();
+	camp_html_clear_msgs(true);
 } else {
     readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
 }
@@ -130,8 +130,8 @@ if (($extension == '.php') || ($extension == '')) {
  * @param $p_function The function to execute on error
  * @return void
  */
-function camp_set_error_handler($p_function) {
-
+function camp_set_error_handler($p_function)
+{
     // --- In PHP 5, the error handler-default is set at E_STRICT,
     //     which captures all legacy based errors.  Unfortunately, this is
     //     completely incompatible with PHP 4. ---
