@@ -30,8 +30,7 @@ if ($correct) {
 	$newCountry =& new Country($f_country_code, $f_country_new_language);
 	$created = $newCountry->create(array('Name' => $f_country_name));
 	if ($created) {
-	    header("Location: /$ADMIN/country/");
-	    exit;
+	    camp_html_goto_page("/$ADMIN/country/");
 	} else {
 		$errorMsgs[] = getGS('The country name $1 could not be translated','<B>'.$country->getName().'</B>');
 	}

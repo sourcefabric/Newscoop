@@ -17,8 +17,7 @@ if (empty($f_country_name)) {
 	$errorMsgs[] = getGS("You must complete the $1 field.", "<B>".getGS("Name")."</B>");
 } else {
 	if ($country->setName($f_country_name)) {
-		header("Location: /$ADMIN/country/index.php");
-		exit;
+		camp_html_goto_page("/$ADMIN/country/index.php");
 	} else {
 		$errorMsgs[] = getGS('The country name $1 could not be changed','<B>'.htmlspecialchars($country->getName()).'</B>');
 	}

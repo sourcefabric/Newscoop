@@ -13,8 +13,7 @@ $country =& new Country($f_country_code, $f_country_language);
 $language =& new Language($f_country_language);
 $deleted = $country->delete();
 if ($deleted) {
-	header("Location: /$ADMIN/country");
-	exit;
+	camp_html_goto_page("/$ADMIN/country");
 }
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");

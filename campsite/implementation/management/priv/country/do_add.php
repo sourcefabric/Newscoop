@@ -30,8 +30,7 @@ if ($correct) {
 	$country =& new Country($f_country_code, $f_country_language);
 	$created = $country->create(array("Name" => $f_country_name));
 	if ($created) {
-		header("Location: /$ADMIN/country/");
-		exit;
+		camp_html_goto_page("/$ADMIN/country/");
 	}
 	else {
 		$errorMsgs[] = getGS('The country $1 could not be created','<B>'.$f_country_name.'</B>');
