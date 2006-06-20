@@ -42,6 +42,6 @@ foreach ($_REQUEST as $name => $value) {
         $comment->setBody($commentStr);
     }
 }
-header("Location: /$ADMIN/comments/index.php");
+camp_html_goto_page("/$ADMIN/comments/index.php");
 
 ?>

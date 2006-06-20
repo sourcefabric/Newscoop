@@ -9,6 +9,5 @@ session_destroy();
 // Unlock all articles that are locked by this user
 Article::UnlockByUser($g_user->getUserId());
 
-header("Location: /$ADMIN/login.php");
-exit;
+camp_html_goto_page("/$ADMIN/login.php");
 ?>

@@ -24,6 +24,5 @@ if ($f_login_num >= 0) {
 }
 camp_html_add_msg(getGS("System preferences updated."), "ok");
 
-header("Location: /$ADMIN/system_pref/");
-exit;
+camp_html_goto_page("/$ADMIN/system_pref/");
 ?>

@@ -63,8 +63,7 @@ if ($correct) {
 	            $errors[] = getGS('Error updating subscriptions.');
 			}
 	    }
-	    header("Location: edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id&Section=".$newSection->getSectionNumber());
-	    exit;
+	    camp_html_goto_page("edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id&Section=".$newSection->getSectionNumber());
     }
 }
 

@@ -67,7 +67,7 @@ if ($correct) {
                      $dstSectionObj->getName(), $f_dest_issue_number, $dstIssueObj->getName(),
                      $dstPublicationObj->getName());
     Log::Message($logtext, $g_user->getUserName(), 154);
-	header("Location: /$ADMIN/sections/duplicate_complete.php?"
+	camp_html_goto_page("/$ADMIN/sections/duplicate_complete.php?"
 		   ."f_src_publication_id=$f_src_publication_id"
 		   ."&f_src_issue_number=$f_src_issue_number"
 		   ."&f_src_section_number=$f_src_section_number"
@@ -75,7 +75,6 @@ if ($correct) {
 		   ."&f_dest_publication_id=$f_dest_publication_id"
 		   ."&f_dest_issue_number=$f_dest_issue_number"
 		   ."&f_dest_section_number=$f_dest_section_number");
-	exit;
 } else {
 	$topArray = array('Pub' => $srcPublicationObj, 'Issue' => $srcIssueObj, 'Section' => $srcSectionObj);
 	camp_html_content_top(getGS('Duplicating section'), $topArray);
