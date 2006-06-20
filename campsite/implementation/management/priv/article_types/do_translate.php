@@ -33,8 +33,7 @@ if ($correct) {
 	$type =& new ArticleType($f_type_id);
 	$created = $type->setName($f_type_language_id, $f_type_translation_name);
 	if ($created) {
-		header("Location: /$ADMIN/article_types/index.php");
-		exit;
+		camp_html_goto_page("/$ADMIN/article_types/index.php");
 	}
 	else {
 		$errorMsgs[] = getGS('The translation could not be added.');

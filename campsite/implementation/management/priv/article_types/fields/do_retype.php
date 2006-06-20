@@ -38,8 +38,7 @@ if (!in_array($fieldType, $validTypes)) {
 if ($correct) {
 	//$field->create($fieldType, $rootTopicId);
 	$field->setType($fieldType, $rootTopicId);
-	header("Location: /$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
-	exit;
+	camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 }
 
 $crumbs = array();

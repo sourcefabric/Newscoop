@@ -40,8 +40,7 @@ if ($correct) {
 
     if ($correct) {
     	$created = $articleType->create();
-    	header("Location: /$ADMIN/article_types/fields/add.php?f_article_type=$f_name");
-    	exit;
+    	camp_html_goto_page("/$ADMIN/article_types/fields/add.php?f_article_type=$f_name");
 	}
 }
 

@@ -15,8 +15,7 @@ $f_oldName = trim(Input::get('f_oldName'));
 $f_name = trim(Input::Get('f_name'));
 
 if ($f_oldName == $f_name) {
-   	header("Location: /$ADMIN/article_types/");
-	exit;
+   	camp_html_goto_page("/$ADMIN/article_types/");
 }
 
 $correct = true;
@@ -51,8 +50,7 @@ if (empty($f_name)) {
 
     if ($correct) {
     	$old_articleType->rename($f_name);
-    	header("Location: /$ADMIN/article_types/");
-		exit;
+    	camp_html_goto_page("/$ADMIN/article_types/");
 	}
 }
 

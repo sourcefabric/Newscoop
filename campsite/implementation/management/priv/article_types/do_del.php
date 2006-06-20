@@ -22,8 +22,7 @@ if ($doDelete) {
 		$a->delete();
 	}
 	$articleType->delete();
-	header("Location: /$ADMIN/article_types/");
-	exit;
+	camp_html_goto_page("/$ADMIN/article_types/");
 } else {
 	$errorMsgs[] = getGS('The article type $1 could not be deleted.', '<B>'.htmlspecialchars($articleTypeName).'</B>');
 }

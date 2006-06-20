@@ -18,8 +18,7 @@ $f_action = trim(Input::get('f_action')); // either Step1, Step2, Preview or Mer
 
 
 if ($f_action == 'Step1') {
-	header("Location: /$ADMIN/article_types/merge.php?f_src=$f_src&f_dest=$f_dest");
-	exit;
+	camp_html_goto_page("/$ADMIN/article_types/merge.php?f_src=$f_src&f_dest=$f_dest");
 }
 
 $src =& new ArticleType($f_src);
@@ -31,8 +30,7 @@ foreach ($dest->m_dbColumns as $destColumn) {
 }
 
 if ($f_action == 'Step2') {
-	header("Location: /$ADMIN/article_types/merge2.php?f_src=$f_src&f_dest=$f_dest". $getString);
-	exit;
+	camp_html_goto_page("/$ADMIN/article_types/merge2.php?f_src=$f_src&f_dest=$f_dest". $getString);
 }
 
 foreach ($dest->m_dbColumns as $destColumn) {
@@ -112,8 +110,7 @@ if ($ok && $f_action == 'Merge') {
             $at->delete();
         }
 
-        header("Location: /$ADMIN/article_types/");
-	    exit;
+        camp_html_goto_page("/$ADMIN/article_types/");
     }
 }
 

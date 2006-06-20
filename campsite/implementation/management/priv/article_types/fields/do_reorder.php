@@ -13,6 +13,5 @@ $errorMsgs = array();
 $articleTypeField = new ArticleTypeField($articleTypeName, $articleTypeFieldName);
 $articleTypeField->reorder($move);
 
-header("Location: /$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
-exit;
+camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 ?>

@@ -12,6 +12,5 @@ $errorMsgs = array();
 $articleType = new ArticleType($articleTypeName);
 $articleType->setStatus($status);
 
-header("Location: /$ADMIN/article_types/");
-exit;
+camp_html_goto_page("/$ADMIN/article_types/");
 ?>

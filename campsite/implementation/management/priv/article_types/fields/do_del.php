@@ -18,5 +18,5 @@ $field =& new ArticleTypeField($articleTypeName, $fieldName);
 if ($field->exists()) {
 	$field->delete();
 }
-header("Location: /$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
-exit;
+camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
+?>

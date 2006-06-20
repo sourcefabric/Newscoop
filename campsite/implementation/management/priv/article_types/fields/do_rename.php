@@ -16,8 +16,7 @@ $f_oldName = Input::Get('f_old_field_name');
 $f_name = Input::Get('f_new_field_name');
 
 if ($f_oldName == $f_name) {
-   	header("Location: /$ADMIN/article_types/fields/?f_article_type=". urlencode($articleTypeName));
-	exit;
+   	camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=". urlencode($articleTypeName));
 }
 $correct = true;
 $created = false;
@@ -51,8 +50,7 @@ if (empty($f_name)) {
 
     if ($correct) {
     	$old_articleTypeField->rename($f_name);
-    	header("Location: /$ADMIN/article_types/fields/?f_article_type=". urlencode($articleTypeName));
-		exit;
+    	camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=". urlencode($articleTypeName));
 	}
 }
 

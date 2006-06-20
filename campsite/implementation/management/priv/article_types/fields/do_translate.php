@@ -37,7 +37,7 @@ if ($correct) {
 	$field =& new ArticleTypeField($f_article_type, $f_field_id);
 	$created = $field->setName($f_field_language_id, $f_field_translation_name);
 	if ($created) {
-		header("Location: /$ADMIN/article_types/fields/?f_article_type=". $f_article_type);
+		camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=". $f_article_type);
 		exit;
 	}
 	else {

@@ -18,7 +18,6 @@ $articleType = new ArticleType($articleTypeName);
 if ($articleType->exists()) {
     $articleType->setCommentsEnabled(!$articleType->commentsEnabled());
 }
-header("Location: /$ADMIN/article_types/");
-exit;
+camp_html_goto_page("/$ADMIN/article_types/");
 
 ?>
