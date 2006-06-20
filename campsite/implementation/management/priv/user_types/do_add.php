@@ -30,6 +30,6 @@ foreach ($rightsFields as $field=>$value) {
 }
 $userType->create($uType, $rightsFields);
 
-header("Location: /$ADMIN/user_types/access.php?UType=$uType");
+camp_html_goto_page("/$ADMIN/user_types/access.php?UType=$uType");
 
 ?>

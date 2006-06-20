@@ -28,6 +28,6 @@ foreach ($rightsFields as $field=>$value) {
 $logtext = getGS('User type $1 changed permissions', $userType->getName());
 Log::Message($logtext, $userType->getName(), 123);
 
-header("Location: /$ADMIN/user_types/access.php?UType=$uType");
+camp_html_goto_page("/$ADMIN/user_types/access.php?UType=$uType");
 
 ?>

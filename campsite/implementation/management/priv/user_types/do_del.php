@@ -21,6 +21,6 @@ if (!empty($uType)) {
 	exit;
 }
 
-header("Location: /$ADMIN/user_types/");
+camp_html_goto_page("/$ADMIN/user_types/");
 
 ?>
