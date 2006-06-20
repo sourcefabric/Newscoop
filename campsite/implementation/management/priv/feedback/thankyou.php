@@ -11,7 +11,7 @@
 <tr>
 	<td>
 		<?php
-    	putGS("Your bug report has been sent to Campware and will be investigated.");
+    	putGS("Thanks for your feedback!  We'll read it and get back to you if appropriate.");
 		?>
 	</td>
 </tr>
