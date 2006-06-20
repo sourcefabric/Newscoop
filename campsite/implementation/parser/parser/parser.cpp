@@ -2340,9 +2340,9 @@ int CParser::HArticleCommentForm(CActionList& al, int level, ulint sublevel)
 	l = lex.getLexem();
 	if (l->res() != CMS_LEX_END_STATEMENT)
 	{
-		coPreviewButton = l->atom()->identifier();
+		coPreviewButton =  (l->atom() != NULL) ? l->atom()->identifier() : "";
+		WaitForStatementEnd(true);
 	}
-	WaitForStatementEnd(true);
 	SafeAutoPtr<CActArticleCommentForm> aloc(new CActArticleCommentForm(nTemplate, coSubmitButton,
 										  coPreviewButton));
 	if ((res = LevelParser(aloc->block, level, sublevel | SUBLV_ARTICLECOMMENT)))
