@@ -7,7 +7,7 @@ regGS("Scheduled action added.", "");
 regGS("Article(s) unlocked.", "");
 regGS("Article(s) duplicated.", "");
 regGS("Article(s) deleted.", "");
-regGS("Article workflow status set to '$1'", "");
+regGS("Article status set to '$1'", "");
 regGS("Article unlocked.", "");
 regGS("Article translation created.", "");
 regGS("Article order changed.", "");

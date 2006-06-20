@@ -65,7 +65,7 @@ case "workflow_new":
 			$articleObj->setWorkflowStatus('N');
 		}
 	}
-	camp_html_add_msg(getGS("Article workflow status set to '$1'", getGS("New")), "ok");
+	camp_html_add_msg(getGS("Article status set to '$1'", getGS("New")), "ok");
 	break;
 case "workflow_submit":
 	foreach ($articleCodes as $articleCode) {
@@ -75,14 +75,14 @@ case "workflow_submit":
 			$articleObj->setWorkflowStatus('S');
 		}
 	}
-	camp_html_add_msg(getGS("Article workflow status set to '$1'", getGS("Submitted")), "ok");
+	camp_html_add_msg(getGS("Article status set to '$1'", getGS("Submitted")), "ok");
 	break;
 case "workflow_publish":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
 		$articleObj->setWorkflowStatus('Y');
 	}
-	camp_html_add_msg(getGS("Article workflow status set to '$1'", getGS("Published")), "ok");
+	camp_html_add_msg(getGS("Article status set to '$1'", getGS("Published")), "ok");
 	break;
 case "delete":
 	foreach ($articleCodes as $articleCode) {

@@ -7,7 +7,7 @@ regGS("Scheduled action added.", "Scheduled action added.");
 regGS("Article(s) unlocked.", "Article(s) unlocked.");
 regGS("Article(s) duplicated.", "Article(s) duplicated.");
 regGS("Article(s) deleted.", "Article(s) deleted.");
-regGS("Article workflow status set to '$1'", "Article workflow status set to '$1'");
+regGS("Article status set to '$1'", "Article status set to '$1'");
 regGS("Article unlocked.", "Article unlocked.");
 regGS("Article translation created.", "Article translation created.");
 regGS("Article order changed.", "Article order changed.");
@@ -107,4 +107,7 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("Insert Internal Link", "Insert Internal Link");
 regGS("No such article.", "No such article.");
 regGS("No such section.", "No such section.");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Are you sure you want to remove the topic \\'$1\\' from the article?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Are you sure you want to remove the file \\'$1\\' from the article?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Are you sure you want to remove the image \\'$1\\' from the article?");
 ?>
