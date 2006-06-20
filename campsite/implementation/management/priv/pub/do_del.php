@@ -50,8 +50,7 @@ if ($subscriptionsRemaining > 0) {
 
 if ($doDelete) {
 	$publicationObj->delete();
-	header("Location: /$ADMIN/pub");
-	exit;
+	camp_html_goto_page("/$ADMIN/pub");
 } else {
 	$errorMsgs[] = getGS('The publication $1 could not be deleted.',
 						 '<B>'.htmlspecialchars($publicationObj->getName()).'</B>');

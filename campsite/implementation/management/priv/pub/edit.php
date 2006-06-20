@@ -44,7 +44,7 @@ echo camp_html_content_top(getGS("Configure publication"), array("Pub" => $publi
 	<TD ><A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php  p($f_publication_id); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/go_to.png" BORDER="0"></A></TD>
 </TR>
 </TABLE>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-bottom: 1em;">
 <TR>
 <?php  if ($g_user->hasPermission("ManagePub")) { ?>    <P>
 	<TD>
@@ -63,9 +63,8 @@ if ($g_user->hasPermission("DeletePub")) {
 </TR>
 </TABLE>
 
-<?php camp_html_display_msgs(); ?>
+<?php camp_html_display_msgs(0); ?>
 
-<P>
 <FORM METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php include("pub_form.php"); ?>
 </FORM>

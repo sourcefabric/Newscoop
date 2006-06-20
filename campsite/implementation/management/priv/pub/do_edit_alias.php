@@ -48,7 +48,7 @@ if ($correct) {
 }
 
 if ($correct) {
-	header("Location: /$ADMIN/pub/aliases.php?Pub=$f_publication_id&Alias=$f_alias_id");
+	camp_html_goto_page("/$ADMIN/pub/aliases.php?Pub=$f_publication_id&Alias=$f_alias_id");
 	exit;
 } else {
 	$errorMsgs[] = getGS('The site alias $1 could not be modified.', '<B>'.$alias->getName().'</B>');
