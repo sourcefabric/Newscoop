@@ -90,7 +90,7 @@ if (in_array($extension, $imageExtensions)) {
 <table class="table_input" cellpadding="6">
 <tr>
 	<td>
-		<b><?php putGS("Replace file:"); ?></b> <input type="FILE" name="f_file" class="input_file">
+		<b><?php putGS("Replace file:"); ?></b> <input type="FILE" name="f_file" class="input_file" alt="file|txt,html,htm,php,xml,asp,tpl,py,java,jpg,jpeg,jpe,png,gif,tif,tiff" emsg="<?php putGS("You must select a file to upload."); ?>">
 	</td>
 </tr>
 <tr>
