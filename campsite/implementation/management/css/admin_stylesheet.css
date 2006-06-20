@@ -228,6 +228,12 @@ hr {
 	color: #E30000;
 }
 
+.error_message a {
+	font-weight: bold;
+	font-size: 14pt;
+	color: #E30000;
+}
+
 .action_link {
 	font-weight: bold;
 }
