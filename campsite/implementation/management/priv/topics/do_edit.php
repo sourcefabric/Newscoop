@@ -17,8 +17,7 @@ $path = camp_topic_path($editTopic, $f_topic_language_id);
 $errorMsgs = array();
 if (!empty($f_name)) {
 	if ($editTopic->setName($f_topic_language_id, $f_name)) {
-		header("Location: /$ADMIN/topics/index.php");
-		exit;
+		camp_html_goto_page("/$ADMIN/topics/index.php");
 	} else {
 		$errorMsgs[] = getGS('The topic name is already in use by another topic.');
 	}

@@ -39,8 +39,7 @@ if (!empty($f_topic_name)) {
 		$created = $topic->setName($f_topic_language_id, $f_topic_name);
 	}
 	if ($created) {
-		header("Location: /$ADMIN/topics/index.php");
-		exit;
+		camp_html_goto_page("/$ADMIN/topics/index.php");
 	} else {
 		$errorMsgs[] = getGS('The topic name is already in use by another topic.');
 	}

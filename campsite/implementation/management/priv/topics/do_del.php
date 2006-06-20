@@ -25,8 +25,7 @@ if ($numArticles > 0) {
 if ($doDelete) {
 	$deleted = $deleteTopic->delete($f_topic_language_id);
 	if ($deleted) {
-		header("Location: /$ADMIN/topics/index.php");
-		exit;
+		camp_html_goto_page("/$ADMIN/topics/index.php");
 	}
 	else {
 		$errorMsgs[] = getGS('The topic $1 could not be deleted.','<B>'.$deleteTopic->getName($f_topic_language_id).'</B>');
