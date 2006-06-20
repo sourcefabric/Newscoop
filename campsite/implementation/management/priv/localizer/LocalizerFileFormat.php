@@ -25,7 +25,8 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
      * @param LocalizerLanguage $p_localizerLanguage
      *		LocalizerLanguage object.
      *
-     * @return boolean
+     * @return mixed
+     * 		TRUE on success, PEAR_Error on failure.
      */
 	function load(&$p_localizerLanguage)
 	{
@@ -33,20 +34,20 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
     	$p_localizerLanguage->setMode('gs');
         $filePath = LocalizerFileFormat_GS::GetFilePath($p_localizerLanguage);
         //echo "Loading $filePath<br>";
-        if (file_exists($filePath)) {
+        if (file_exists($filePath) && is_readable($filePath)) {
 	        $lines = file($filePath);
 	        foreach ($lines as $line) {
 	        	if (strstr($line, "regGS")) {
 			        $line = preg_replace('/regGS/', '$p_localizerLanguage->registerString', $line);
 	        		$success = eval($line);
 	        		if ($success === FALSE) {
-	        			echo "Error evaluating: ".htmlspecialchars($line)."<br>";
+	        			return new PEAR_Error("Error evaluating: ".htmlspecialchars($line));
 	        		}
 	        	}
 	        }
 	        return true;
         } else {
-        	return false;
+        	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_READ_FILE), CAMP_ERROR_READ_FILE);
         }
 	} // fn load
 

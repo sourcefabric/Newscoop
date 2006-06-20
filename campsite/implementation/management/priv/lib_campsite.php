@@ -302,10 +302,7 @@ function camp_dump($p_object)
  * Get the error message for standard errors.
  *
  * @param int $p_errorCode
- * 		Can be:
- * 		CAMP_FILE_NOT_WRITABLE
- * 		CAMP_DIR_NOT_WRITABLE
- * @param unknown_type $p_arg1
+ * @param mixed $p_arg1
  */
 function camp_get_error_message($p_errorCode, $p_arg1 = null)
 {
@@ -316,6 +313,9 @@ function camp_get_error_message($p_errorCode, $p_arg1 = null)
 		break;
 	case CAMP_ERROR_WRITE_FILE:
 		return getGS("The system was unable to write to the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to this file.", $Campsite['APACHE_USER']);
+		break;
+	case CAMP_ERROR_READ_FILE:
+		return getGS("The system was unable to read the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to read this file.", $Campsite['APACHE_USER']);
 		break;
 	case CAMP_ERROR_DELETE_FILE:
 		return getGS("The system was unable to delete the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to this file.", $Campsite['APACHE_USER']);

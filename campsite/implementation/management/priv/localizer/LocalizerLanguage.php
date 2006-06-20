@@ -595,7 +595,8 @@ class LocalizerLanguage {
      * @param string $p_type
      *		If not specified, it will use the current mode.
      *
-     * @return boolean
+     * @return mixed
+     * 		Return TRUE on success, PEAR_Error on failure.
      */
     function loadFile($p_type = null)
     {
@@ -614,10 +615,14 @@ class LocalizerLanguage {
         if (class_exists($className)) {
             $object =& new $className();
             if (method_exists($object, 'load')) {
-                return $object->load($this);
+                $result = $object->load($this);
+                return $result;
+            } else {
+	        	return new PEAR_Error("LocalizerLanguage::loadFile(): Class $className is missing the 'load' function.");
             }
+        } else {
+        	return new PEAR_Error("LocalizerLanguage::loadFile(): Class $className does not exist.");
         }
-    	return false;
     } // fn loadFile
 
 

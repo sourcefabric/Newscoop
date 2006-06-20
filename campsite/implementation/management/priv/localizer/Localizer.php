@@ -342,7 +342,7 @@ class Localizer {
      * @param array $p_data
      *
      * @return mixed
-     * 		Return TRUE on success and a PEAR_Error on failure.
+     * 		Return TRUE on success, or an array of PEAR_Errors on failure.
      */
     function ModifyStrings($p_prefix, $p_languageId, $p_data)
     {
@@ -351,11 +351,18 @@ class Localizer {
       	// then all the language files must be updated with the new key.
         if ($p_languageId == $g_localizerConfig['DEFAULT_LANGUAGE']) {
 	        $languages = Localizer::GetLanguages();
+	        $saveResults = true;
 	        foreach ($languages as $language) {
 
 	        	// Load the language file
 	        	$source =& new LocalizerLanguage($p_prefix, $language->getLanguageId());
-	        	$source->loadFile(Localizer::GetMode());
+	        	$tmpResult = $source->loadFile(Localizer::GetMode());
+
+	        	// If we cant load the file, record the error and move on to the next file.
+				if (PEAR::isError($tmpResult)) {
+					$saveResults[] = $tmpResult;
+					continue;
+				}
 
 	        	// For the default language, we set the key & value to be the same.
 	        	if ($p_languageId == $language->getLanguageId()) {
@@ -371,19 +378,31 @@ class Localizer {
 	        	}
 
 	        	// Save the file
-				return $source->saveFile(Localizer::GetMode());
+				$tmpResult = $source->saveFile(Localizer::GetMode());
+				if (PEAR::isError($tmpResult)) {
+					$saveResults[] = $tmpResult;
+				}
 	        }
+	        return $saveResults;
         }
       	// We only need to change the values in one file.
         else {
         	// Load the language file
         	$source =& new LocalizerLanguage($p_prefix, $p_languageId);
-        	$source->loadFile(Localizer::GetMode());
+        	$result = $source->loadFile(Localizer::GetMode());
+        	if (PEAR::isError($result)) {
+        		return array($result);
+        	}
     		foreach ($p_data as $pair) {
     			$source->updateString($pair['key'], $pair['key'], $pair['value']);
     		}
         	// Save the file
-			return $source->saveFile(Localizer::GetMode());
+			$result = $source->saveFile(Localizer::GetMode());
+			if (PEAR::isError($result)) {
+				return array($result);
+			} else {
+				return true;
+			}
         }
     } // fn ModifyStrings
 

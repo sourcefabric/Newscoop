@@ -14,8 +14,10 @@ $prefix = Input::Get('prefix', 'string', '', true);
 $targetLanguageId = Input::Get('localizer_target_language');
 $data = Input::Get('data', 'array');
 $result = Localizer::ModifyStrings($prefix, $targetLanguageId, $data);
-if (PEAR::isError($result)) {
-	camp_html_add_msg($result->getMessage());
+if (is_array($result)) {
+	foreach ($result as $pearError) {
+		camp_html_add_msg($pearError->getMessage());
+	}
 }
 
 header("Location: /$ADMIN/localizer/index.php");
