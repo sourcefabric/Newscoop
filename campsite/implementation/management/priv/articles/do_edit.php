@@ -152,6 +152,7 @@ $f_on_section_page = Input::Get('f_on_section_page', 'string', '', true);
 $f_is_public = Input::Get('f_is_public', 'string', '', true);
 $f_keywords = Input::Get('f_keywords');
 $f_article_title = Input::Get('f_article_title');
+$f_message = Input::Get('f_message', 'string', '', true);
 $f_creation_date = Input::Get('f_creation_date');
 $f_comment_status = Input::Get('f_comment_status', 'string', '', true);
 $f_save_button = isset($_REQUEST['save_and_close']) ? 'save_and_close' : 'save';
@@ -179,11 +180,13 @@ foreach ($dbColumns as $dbColumn) {
 	}
 }
 
+if (!empty($f_message)) {
+	camp_html_add_msg($f_message, "ok");
+}
 
 if (!$articleObj->userCanModify($g_user)) {
-	$errorStr = getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.");
-	camp_html_display_error($errorStr, $BackLink);
-	exit;
+	camp_html_add_msg(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
+	camp_html_goto_page($BackLink);
 }
 // Only users with a lock on the article can change it.
 if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedByUser())) {
@@ -192,9 +195,8 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
 	$diffSeconds -= $hours * 3600;
 	$minutes = floor($diffSeconds/60);
 	$lockUser =& new User($articleObj->getLockedByUser());
-	$errorStr = getGS('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getRealName(), $hours, $minutes);
-	camp_html_display_error($errorStr, $BackLink);
-	exit;
+	camp_html_add_msg(getGS('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getRealName(), $hours, $minutes));
+	camp_html_goto_page($BackLink);
 }
 
 // Update the article.
@@ -242,8 +244,8 @@ foreach ($articleFields as $dbColumnName => $text) {
 }
 
 if ($f_save_button == "save") {
-	header("Location: ". camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 } elseif ($f_save_button == "save_and_close") {
-	header("Location: ". camp_html_article_url($articleObj, $f_language_id, 'index.php'));
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'index.php'));
 }
 ?>

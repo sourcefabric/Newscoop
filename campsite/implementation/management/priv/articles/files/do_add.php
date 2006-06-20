@@ -51,23 +51,20 @@ if ($f_content_disposition == "attachment") {
 if (!empty($_FILES['f_file'])) {
 	$file = Attachment::OnFileUpload($_FILES['f_file'], $attributes);
 } else {
-	header('Location: '.camp_html_article_url($articleObj, $f_language_id, 'files/popup.php'));
-	exit;
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'files/popup.php'));
 }
 
 // Check if image was added successfully
-if (!is_object($file)) {
-	if ($file == -1)
-		camp_html_display_error("File upload failed because your files permission are not writable by the webuser.", $BackLink, true);
-	else
-	    camp_html_display_error("File upload failed.", $BackLink, true);
-	exit;
+if (PEAR::isError($file)) {
+	camp_html_add_msg($file->getMessage());
+	camp_html_goto_page($BackLink);
 }
 
 ArticleAttachment::AddFileToArticle($file->getAttachmentId(), $articleObj->getArticleNumber());
 
 ?>
 <script>
+window.opener.document.forms.article_edit.f_message.value = "<?php putGS("File '$1' added.", $file->getFileName()); ?>";
 window.opener.document.forms.article_edit.onsubmit();
 window.opener.document.forms.article_edit.submit();
 window.close();

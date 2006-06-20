@@ -25,27 +25,36 @@ $f_article_language = trim(Input::Get('f_article_language', 'int', 0));
 
 $f_language_id = ($f_language_id > 0) ? $f_language_id : $f_article_language;
 
+$linkArgs = "?f_article_name=".urlencode($f_article_name)
+			."&f_article_type=".urlencode($f_article_type)
+			."&f_article_language=$f_article_language";
+if ($f_publication_id != 0) {
+	$linkArgs .= "&f_publication_id=$f_publication_id"
+				."&f_issue_number=$f_issue_number"
+				."&f_section_number=$f_section_number"
+				."&f_language_id=$f_language_id";
+	$backLink = "/$ADMIN/articles/add.php".$linkArgs;
+} else {
+	$backLink = "/$ADMIN/articles/add_move.php".$linkArgs;
+}
+
+
 // Check input
 if (empty($f_article_name)) {
-	camp_html_display_error(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
-	exit;
+	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 
 if (empty($f_article_type)) {
-	camp_html_display_error(getGS('You must select an article type.'));
-	exit;
+	camp_html_add_msg(getGS('You must select an article type.'));
 }
 
 if (empty($f_article_language)) {
-	camp_html_display_error(getGS('You must select a language.'));
-	exit;
+	camp_html_add_msg(getGS('You must select a language.'));
 }
 
-if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;
+if (camp_html_has_msgs()) {
+	camp_html_goto_page();
 }
-
 $articleType =& new ArticleType($f_article_type);
 if (!$articleType->exists()) {
     camp_html_display_error(getGS('Invalid type: $1', $f_article_type));
@@ -82,17 +91,20 @@ if ($publication_id > 0) {
 // Create article
 $articleObj =& new Article($f_article_language);
 
-if (($publication_id > 0) && ($issue_number > 0) && ($section_number > 0)) {
-    if (!Article::NameExists($f_article_name, $publication_id, $issue_number, $section_number)) {
-        $articleObj->create($f_article_type, $f_article_name, $publication_id, $issue_number, $section_number);
-    } else {
-        camp_html_display_error("Could not create duplicate article.");
-    }
+$conflictingArticles = Article::GetByName($f_article_name,
+										  $publication_id,
+										  $issue_number,
+										  $section_number);
+if (count($conflictingArticles) > 0) {
+	$conflictingArticle = array_pop($conflictingArticles);
+	$conflictingArticleLink = camp_html_article_url($conflictingArticle,
+									$conflictingArticle->getLanguageId(),
+									"edit.php");
+    camp_html_add_msg(getGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.",
+     	"<a href='$conflictingArticleLink'>".$conflictingArticle->getName()."</a>"));
+    camp_html_goto_page($backLink);
 } else {
-    if (!Article::NameExists($f_article_name))
-        $articleObj->create($f_article_type, $f_article_name);
-    else
-        camp_html_display_error("Could not create duplicate article.");
+	$articleObj->create($f_article_type, $f_article_name, $publication_id, $issue_number, $section_number);
 }
 
 if ($articleObj->exists()) {
@@ -103,9 +115,9 @@ if ($articleObj->exists()) {
         $articleObj->setCommentsEnabled($commentDefault);
 	}
 
-	header("Location: ".camp_html_article_url($articleObj, $f_language_id, "edit.php"));
-}
-else {
+	camp_html_add_msg(getGS("Article created."), "ok");
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"));
+} else {
 	camp_html_display_error("Could not create article.");
 }
 exit;

@@ -34,8 +34,8 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 
 // If the template ID is in use, dont add the image.
 if (ArticleImage::TemplateIdInUse($f_article_number, $f_image_template_id)) {
-	header('Location: '.camp_html_article_url($articleObj, $f_language_id, 'images/popup.php'));
-	exit;
+	camp_html_add_msg(getGS("The image number specified is already in use."));
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'images/popup.php'));
 }
 
 $attributes = array();
@@ -48,20 +48,21 @@ if (!empty($f_image_url)) {
 } elseif (!empty($_FILES['f_image_file']) && !empty($_FILES['f_image_file']['name'])) {
 	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $g_user->getUserId());
 } else {
-	camp_html_display_error(getGS("You must select an image file to upload."), $BackLink, true);
-	exit;
+	camp_html_add_msg(getGS("You must select an image file to upload."));
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'images/popup.php'));
 }
 
 // Check if image was added successfully
 if (!is_object($image)) {
-	camp_html_display_error($image, $BackLink, true);
-	exit;
+	camp_html_add_msg($image);
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'images/popup.php'));
 }
 
 ArticleImage::AddImageToArticle($image->getImageId(), $articleObj->getArticleNumber(), $f_image_template_id);
 
 ?>
 <script>
+window.opener.document.forms.article_edit.f_message.value = "<?php putGS("Image '$1' added.", $image->getDescription()); ?>";
 window.opener.document.forms.article_edit.onsubmit();
 window.opener.document.forms.article_edit.submit();
 window.close();

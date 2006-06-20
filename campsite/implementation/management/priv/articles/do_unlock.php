@@ -23,7 +23,7 @@ if (!$articleObj->userCanModify($g_user)) {
 }
 
 $articleObj->setIsLocked(false);
-header('Location: '.camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&Unlock=true"));
-exit;
+camp_html_add_msg(getGS("Article unlocked."), "ok");
+camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&Unlock=true"));
 
 ?>

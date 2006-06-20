@@ -38,6 +38,7 @@ ArticleImage::AddImageToArticle($f_image_id, $f_article_number);
 
 ?>
 <script>
+window.opener.document.forms.article_edit.f_message.value = "<?php putGS("Image '$1' added.", $image->getDescription()); ?>";
 window.opener.document.forms.article_edit.onsubmit();
 window.opener.document.forms.article_edit.submit();
 window.close();

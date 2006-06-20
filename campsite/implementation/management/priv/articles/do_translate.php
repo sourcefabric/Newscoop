@@ -19,7 +19,7 @@ $f_article_code = Input::Get('f_article_code', 'string', 0);
 $f_translation_title = trim(Input::Get('f_translation_title'));
 $f_translation_language = Input::Get('f_translation_language');
 list($articleNumber, $languageId) = split("_", $f_article_code);
-$BackLink = "/$ADMIN/articles/translate.php?f_language_id=$f_language_id"
+$backLink = "/$ADMIN/articles/translate.php?f_language_id=$f_language_id"
 		. "&f_publication_id=$f_publication_id&f_issue_number=$f_issue_number"
 		. "&f_section_number=$f_section_number&f_article_code=$f_article_code"
 		. "&f_translation_title=$f_translation_title&f_translation_language=$f_translation_language";
@@ -43,9 +43,8 @@ if (!$translationLanguageObj->exists()) {
 
 $translationArticle =& new Article($f_translation_language, $articleNumber);
 if ($translationArticle->exists()) {
-	$BackLink = camp_html_article_url($articleObj, $f_language_id, "edit.php");
-	camp_html_display_error(getGS("The article has already been translated into $1.", $translationLanguageObj->getNativeName()), $BackLink);
-	exit;
+	camp_html_add_msg(getGS("The article has already been translated into $1.", $translationLanguageObj->getNativeName()));
+	camp_html_goto_page($backLink);
 }
 
 $f_publication_id = $articleObj->getPublicationId();
@@ -55,22 +54,22 @@ $f_publication_id = $articleObj->getPublicationId();
 if ($f_publication_id > 0) {
 	$publicationObj =& new Publication($f_publication_id);
 	if (!$publicationObj->exists()) {
-		camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
+		camp_html_display_error(getGS('Publication does not exist.'), $backLink);
 		exit;
 	}
 
 	$f_issue_number = $articleObj->getIssueNumber();
 	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 	if (!$issueObj->exists()) {
-		camp_html_display_error(getGS('No such issue.'), $BackLink);
+		camp_html_display_error(getGS('No such issue.'), $backLink);
 		exit;
 	}
 
 	$translationIssueObj =& new Issue($f_publication_id, $f_translation_language, $f_issue_number);
 	if (!$translationIssueObj->exists()) {
 		if (!$g_user->hasPermission("ManageIssue")) {
-			camp_html_display_error(getGS('An issue must be created for the selected language but you do not have the right to create an issue.'), $BackLink);
-			exit;
+			camp_html_add_msg(getGS('An issue must be created for the selected language but you do not have the right to create an issue.'));
+			camp_html_goto_page($backLink);
 		}
 		foreach ($issueObj->getData() as $field=>$fieldValue) {
 			if ($field != 'IdLanguage') {
@@ -83,24 +82,24 @@ if ($f_publication_id > 0) {
 		}
 		$f_issue_urlname = Input::Get('f_issue_urlname', 'string', $issueObj->getUrlName());
 		if ($f_issue_urlname == "") {
-			camp_html_display_error(getGS('You must complete the $1 field.','"'.getGS('New issue URL name').'"'), $BackLink);
-			exit;
+			camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('New issue URL name').'"'));
+			camp_html_goto_page($backLink);
 		}
 		if (!camp_is_valid_url_name($f_issue_urlname)) {
-			camp_html_display_error(getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('New issue URL name') . '"'), $BackLink);
-			exit;
+			camp_html_add_msg(getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('New issue URL name') . '"'));
+			camp_html_goto_page($backLink);
 		}
 		$translationIssueObj->create($f_issue_urlname);
 		if (!$translationIssueObj->exists()) {
-			camp_html_display_error(getGS('Unable to create the issue for translation $1.', $translationLanguageObj->getName()), $BackLink);
-			exit;
+			camp_html_add_msg(getGS('Unable to create the issue for translation $1.', $translationLanguageObj->getName()));
+			camp_html_goto_page($backLink);
 		}
 	}
 
 	$f_section_number = $articleObj->getSectionNumber();
 	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 	if (!$sectionObj->exists()) {
-		camp_html_display_error(getGS('No such section.'), $BackLink);
+		camp_html_display_error(getGS('No such section.'), $backLink);
 		exit;
 	}
 
@@ -108,8 +107,8 @@ if ($f_publication_id > 0) {
 										  $f_section_number);
 	if (!$translationSectionObj->exists()) {
 		if (!$g_user->hasPermission("ManageSection")) {
-			camp_html_display_error(getGS('A section must be created for the selected language but you do not have the right to create a section.'), $BackLink);
-			exit;
+			camp_html_add_msg(getGS('A section must be created for the selected language but you do not have the right to create a section.'));
+			camp_html_goto_page($backLink);
 		}
 		foreach ($sectionObj->getData() as $field=>$fieldValue) {
 			if ($field != 'IdLanguage') {
@@ -119,23 +118,23 @@ if ($f_publication_id > 0) {
 		$f_section_name = Input::Get('f_section_name', 'string', $sectionObj->getName());
 		$f_section_urlname = Input::Get('f_section_urlname', 'string', $sectionObj->getUrlName());
 		if ($f_section_urlname == "") {
-			camp_html_display_error(getGS('You must complete the $1 field.','"'.getGS('New section URL name').'"'), $BackLink);
-			exit;
+			camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('New section URL name').'"'));
+			camp_html_goto_page($backLink);
 		}
 		if (!camp_is_valid_url_name($f_section_urlname)) {
-			camp_html_display_error(getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('New section URL name') . '"'), $BackLink);
-			exit;
+			camp_html_add_msg(getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('New section URL name') . '"'));
+			camp_html_goto_page($backLink);
 		}
 		$translationSectionObj->create($f_section_name, $f_section_urlname);
 		if (!$translationSectionObj->exists()) {
-			camp_html_display_error(getGS('Unable to create the section for translation $1.', $translationLanguageObj->getName()), $BackLink);
-			exit;
+			camp_html_add_msg(getGS('Unable to create the section for translation $1.', $translationLanguageObj->getName()));
+			camp_html_goto_page($backLink);
 		}
 	}
 }
 
 $articleCopy = $articleObj->createTranslation($f_translation_language, $g_user->getUserId(), $f_translation_title);
 
-header('Location: '.camp_html_article_url($articleCopy, $f_language_id, 'edit.php'));
-exit;
+camp_html_add_msg(getGS("Article translation created."), "ok");
+camp_html_goto_page(camp_html_article_url($articleCopy, $f_language_id, 'edit.php'));
 ?>

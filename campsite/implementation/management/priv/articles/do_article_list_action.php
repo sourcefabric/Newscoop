@@ -65,6 +65,7 @@ case "workflow_new":
 			$articleObj->setWorkflowStatus('N');
 		}
 	}
+	camp_html_add_msg(getGS("Article workflow status set to '$1'", getGS("New")), "ok");
 	break;
 case "workflow_submit":
 	foreach ($articleCodes as $articleCode) {
@@ -74,18 +75,21 @@ case "workflow_submit":
 			$articleObj->setWorkflowStatus('S');
 		}
 	}
+	camp_html_add_msg(getGS("Article workflow status set to '$1'", getGS("Submitted")), "ok");
 	break;
 case "workflow_publish":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
 		$articleObj->setWorkflowStatus('Y');
 	}
+	camp_html_add_msg(getGS("Article workflow status set to '$1'", getGS("Published")), "ok");
 	break;
 case "delete":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
 		$articleObj->delete();
 	}
+	camp_html_add_msg(getGS("Articles deleted."), "ok");
 	break;
 case "toggle_front_page":
 	foreach ($articleCodes as $articleCode) {
@@ -94,6 +98,7 @@ case "toggle_front_page":
 			$articleObj->setOnFrontPage(!$articleObj->onFrontPage());
 		}
 	}
+	camp_html_add_msg(getGS("$1 toggled.", "&quot;".getGS("On Front Page")."&quot;"), "ok");
 	break;
 case "toggle_section_page":
 	foreach ($articleCodes as $articleCode) {
@@ -102,6 +107,7 @@ case "toggle_section_page":
 			$articleObj->setOnSectionPage(!$articleObj->onSectionPage());
 		}
 	}
+	camp_html_add_msg(getGS("$1 toggled.", "&quot;".getGS("On Section Page")."&quot;"), "ok");
 	break;
 case "copy":
 	foreach ($groupedArticleCodes as $articleNumber => $languageArray) {
@@ -112,6 +118,7 @@ case "copy":
 						  $articleObj->getSectionNumber(),
 						  $g_user->getUserId(),
 						  $languageArray);
+		camp_html_add_msg(getGS("Articles duplicated."), "ok");
 	}
 	break;
 case "copy_interactive":
@@ -122,9 +129,7 @@ case "copy_interactive":
 	foreach ($_REQUEST["f_article_code"] as $code) {
 		$argsStr .= "&f_article_code[]=$code";
 	}
-	$url = "Location: /$ADMIN/articles/duplicate.php?".$argsStr;
-	header($url);
-	exit;
+	camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr);
 case "move":
 	$args = $_REQUEST;
 	unset($args["f_article_code"]);
@@ -133,9 +138,7 @@ case "move":
 	foreach ($_REQUEST["f_article_code"] as $code) {
 		$argsStr .= "&f_article_code[]=$code";
 	}
-	$url = "Location: /$ADMIN/articles/duplicate.php?".$argsStr;
-	header($url);
-	exit;
+	camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr);
 case "unlock":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
@@ -143,6 +146,7 @@ case "unlock":
 			$articleObj->setIsLocked(false);
 		}
 	}
+	camp_html_add_msg(getGS("Article(s) unlocked"), "ok");
 	break;
 case "schedule_publish":
 	$args = $_REQUEST;
@@ -151,9 +155,7 @@ case "schedule_publish":
 	foreach ($_REQUEST["f_article_code"] as $code) {
 		$argsStr .= "&f_article_code[]=$code";
 	}
-	$url = "Location: /$ADMIN/articles/multi_autopublish.php?".$argsStr;
-	header($url);
-	exit;
+	camp_html_goto_page("/$ADMIN/articles/multi_autopublish.php?".$argsStr);
 case "translate":
 	$args = $_REQUEST;
 	unset($args["f_article_code"]);
@@ -162,11 +164,8 @@ case "translate":
 		$argsStr .= "&f_article_code=$code";
 		break;
 	}
-	$url = "Location: /$ADMIN/articles/translate.php?".$argsStr;
-	header($url);
-	exit;
+	camp_html_goto_page("/$ADMIN/articles/translate.php?".$argsStr);
 }
 
-header("Location: /$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected&f_article_offset=$f_article_offset");
-exit;
+camp_html_goto_page("/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected&f_article_offset=$f_article_offset");
 ?>

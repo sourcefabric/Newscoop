@@ -15,20 +15,29 @@ if (!Input::IsValid()) {
 	exit;
 }
 
+if (!$g_user->hasPermission('AttachTopicToArticle')) {
+	camp_html_display_error(getGS("You do not have the right to detach topics from articles."), null, true);
+	exit;
+}
+
 $articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), null, true);
 	exit;
 }
-
-if (!$g_user->hasPermission('AttachTopicToArticle')) {
-	camp_html_display_error(getGS("You do not have the right to detach topics from articles."), null, true);
+$topicObj =& new Topic($f_topic_id);
+if (!$topicObj->exists()) {
+	camp_html_display_error(getGS('Topic does not exist.'), null, true);
 	exit;
 }
-ArticleTopic::RemoveTopicFromArticle($f_topic_id, $f_article_number);
 
+ArticleTopic::RemoveTopicFromArticle($f_topic_id, $f_article_number);
+$topicName = $topicObj->getName($f_language_selected);
+if (empty($topicName)) {
+	$topicName = $topicObj->getName(1);
+}
+camp_html_add_msg(getGS("The topic '$1' has been removed from article.", $topicName), "ok");
 $url = camp_html_article_url($articleObj, $f_language_id, "edit.php");
-header("Location: $url");
-exit;
+camp_html_goto_page($url);
 
 ?>

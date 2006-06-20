@@ -30,13 +30,13 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$errorStr = "";
-
 // Fetch article
 $articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
-	$errorStr = getGS('No such article.');
+	camp_html_display_error(getGS('No such article.'));
+	exit;
 }
+
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
 $dbColumns = $articleData->getUserDefinedColumns(0);
@@ -129,6 +129,8 @@ if ($lockedByCurrentUser) {
 //
 // Begin Display of page
 //
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 if ($f_edit_mode == "edit") {
 	$title = getGS("Edit article");
 }
@@ -155,11 +157,6 @@ foreach ($dbColumns as $dbColumn) {
 }
 if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 	editor_load_xinha($dbColumns, $g_user);
-}
-
-if ($errorStr != "") {
-	camp_html_display_error($errorStr);
-	return;
 }
 
 // If the article is locked.
@@ -230,6 +227,7 @@ if ($f_edit_mode == "edit") { ?>
 </TABLE>
 <?php } ?>
 
+<?php camp_html_display_msgs("0.25em", "0.25em"); ?>
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" class="table_input" width="900px" style="margin-top: 5px;">
 <TR>
@@ -423,6 +421,7 @@ if ($f_edit_mode == "edit") { ?>
 	<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php  p($f_article_number); ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_message" VALUE="">
 	<table width="100%">
 	<TR>
 		<TD style="padding-top: 3px;">

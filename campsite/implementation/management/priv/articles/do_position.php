@@ -69,6 +69,6 @@ $url = "/$ADMIN/articles/index.php"
 		."&f_article_number=".$articleObj->getArticleNumber()
 		."&f_language_selected=$f_language_selected"
 		."&f_language_id=".$f_language_id;
-header("Location: $url");
-exit;
+camp_html_add_msg(getGS("Article order changed."), "ok");
+camp_html_goto_page($url);
 ?>

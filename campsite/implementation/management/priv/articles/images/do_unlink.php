@@ -18,8 +18,6 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
-
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
 if (!$g_user->hasPermission('AttachImageToArticle')) {
@@ -27,9 +25,10 @@ if (!$g_user->hasPermission('AttachImageToArticle')) {
 	exit;
 }
 
+$articleObj =& new Article($f_language_selected, $f_article_number);
+
 ArticleImage::RemoveImageFromArticle($f_image_id, $f_article_number, $f_image_template_id);
 
-// Go back to article image list.
-header('Location: '.camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
-exit;
+camp_html_add_msg(getGS("The image has been removed from the article."), "ok");
+camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 ?>

@@ -86,6 +86,7 @@ if (sizeof($allArticleTypes) == 0) {
 <?php
 } else {
 	include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+	camp_html_display_msgs();
 ?>
 <P>
 <FORM NAME="add_article" METHOD="GET" ACTION="add_move.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">

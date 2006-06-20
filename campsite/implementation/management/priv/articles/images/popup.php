@@ -31,6 +31,7 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 	<title><?php putGS("Attach Image To Article"); ?></title>
 </head>
 <body>
+<?php camp_html_display_msgs(); ?>
 <table style="margin-top: 10px; margin-left: 5px;" cellpadding="0" cellspacing="0">
 <tr>
 	<?php if ($g_user->hasPermission('AddImage')) { ?>

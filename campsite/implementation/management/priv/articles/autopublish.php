@@ -77,6 +77,9 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 	<?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
 </head>
 <body>
+
+<?php camp_html_display_msgs(); ?>
+
 <FORM NAME="autopublish" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" style="margin-top: 10px;">
 <TR>

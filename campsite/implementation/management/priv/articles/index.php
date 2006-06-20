@@ -97,6 +97,9 @@ $pager =& new SimplePager($numUniqueArticles, $ArticlesPerPage, $offsetVarName, 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
 camp_html_content_top(getGS('Article List'), $topArray);
+
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
@@ -342,6 +345,8 @@ function checkboxClick(theCheckbox, theRowNum)
 </TR>
 </TABLE>
 <?php
+camp_html_display_msgs("0.5em", 0);
+
 if ($numUniqueArticlesDisplayed > 0) {
 	$counter = 0;
 	$color = 0;

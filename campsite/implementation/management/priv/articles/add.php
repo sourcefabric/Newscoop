@@ -69,10 +69,8 @@ if (sizeof($allArticleTypes) == 0) {
 <p>
 <table border="0" cellspacing="0" cellpadding="6" align="center" class="table_input">
 <tr>
-	<td align="center">
-	<font color="red">
+	<td align="center" class="error_message">
 	<?php putGS("No article types were defined. You must create an article type first."); ?>
-	</font>
 	<p><b><a href="/<?php echo $ADMIN; ?>/article_types/"><?php putGS("Edit article types"); ?></a></b></p>
 	</td>
 </tr>
@@ -81,6 +79,7 @@ if (sizeof($allArticleTypes) == 0) {
 <?php
 } else {
 	include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+	camp_html_display_msgs();
 ?>
 <P>
 <FORM NAME="add_article" METHOD="GET" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">

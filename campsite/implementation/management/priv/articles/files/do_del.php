@@ -23,15 +23,15 @@ if (!Input::IsValid()) {
 	exit;
 }
 
+if (!$g_user->hasPermission("DeleteFile")) {
+	camp_html_display_error(getGS("You do not have the right to delete file attachments."), null, true);
+	exit;
+}
+
 $articleObj =& new Article($f_language_selected, $f_article_number);
 
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS("Article does not exist."), null, true);
-	exit;
-}
-
-if (!$g_user->hasPermission("DeleteFile")) {
-	camp_html_display_error(getGS("You do not have the right to delete file attachments."), null, true);
 	exit;
 }
 
@@ -44,6 +44,6 @@ ArticleAttachment::RemoveAttachmentFromArticle($f_attachment_id, $f_article_numb
 $attachmentObj->delete();
 
 // Go back to article.
-header('Location: '.camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
-exit;
+camp_html_add_msg(getGS("File '$1' deleted.", $attachmentObj->getFileName()), "ok");
+camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 ?>

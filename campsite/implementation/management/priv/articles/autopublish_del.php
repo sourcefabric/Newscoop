@@ -28,7 +28,7 @@ $articlePublishObj =& new ArticlePublish($f_event_id);
 if ($articlePublishObj->exists()) {
 	$articlePublishObj->delete();
 }
+camp_html_add_msg(getGS("Scheduled action deleted."), "ok");
 $redirect = camp_html_article_url($articleObj, $f_language_id, "edit.php");
-header("Location: $redirect");
-exit;
+camp_html_goto_page($redirect);
 ?>

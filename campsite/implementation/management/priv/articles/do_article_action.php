@@ -32,51 +32,51 @@ switch ($f_action) {
 		// If the user does not have permission to change the article
 		// or they didnt create the article, give them the boot.
 		if (!$articleObj->userCanModify($g_user)) {
-			camp_html_display_error(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
-			exit;
+			camp_html_add_msg(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
+		} else {
+			camp_html_add_msg(getGS("Article unlocked."), "ok");
+			$articleObj->setIsLocked(false);
 		}
-		$articleObj->setIsLocked(false);
-		header('Location: '.camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_unlock=true"));
+		camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_unlock=true"));
 		exit;
 	case "delete":
 		if (!$g_user->hasPermission('DeleteArticle')) {
-			camp_html_display_error(getGS("You do not have the right to delete articles."));
-			exit;
-		}
-		$articleObj->delete();
-		if ($f_publication_id > 0) {
-			$url = "/$ADMIN/articles/index.php"
-					."?f_publication_id=$f_publication_id"
-					."&f_issue_number=$f_issue_number"
-					."&f_section_number=$f_section_number"
-					."&f_language_id=$f_language_id";
+			camp_html_add_msg(getGS("You do not have the right to delete articles."));
+			camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"));
 		} else {
-			$url = "/$ADMIN/home.php";
+			$articleObj->delete();
+			if ($f_publication_id > 0) {
+				$url = "/$ADMIN/articles/index.php"
+						."?f_publication_id=$f_publication_id"
+						."&f_issue_number=$f_issue_number"
+						."&f_section_number=$f_section_number"
+						."&f_language_id=$f_language_id";
+			} else {
+				$url = "/$ADMIN/home.php";
+			}
+			camp_html_add_msg(getGS("Article deleted."), "ok");
+			camp_html_goto_page($url);
 		}
-		header("Location: $url");
 		exit;
 	case "translate":
 		$args = $_REQUEST;
 		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
 		$argsStr .= "&f_article_code=".$f_article_number."_".$f_language_selected;
-		$url = "Location: /$ADMIN/articles/translate.php?".$argsStr;
-		header($url);
+		camp_html_goto_page("/$ADMIN/articles/translate.php?".$argsStr);
 		exit;
 	case "copy":
 		$args = $_REQUEST;
 		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
 		$argsStr .= "&f_article_code[]=".$f_article_number."_".$f_language_selected;
 		$argsStr .= "&f_mode=single&f_action=duplicate";
-		$url = "Location: /$ADMIN/articles/duplicate.php?".$argsStr;
-		header($url);
+		camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr);
 		exit;
 	case "move":
 		$args = $_REQUEST;
 		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
 		$argsStr .= "&f_article_code[]=".$f_article_number."_".$f_language_selected;
 		$argsStr .= "&f_mode=single&f_action=move";
-		$url = "Location: /$ADMIN/articles/duplicate.php?".$argsStr;
-		header($url);
+		camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr);
 		exit;
 }
 
@@ -93,9 +93,8 @@ if (!is_null($f_action_workflow)) {
 			$access = true;
 		}
 		if (!$access) {
-			$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.");
-			camp_html_display_error($errorStr);
-			exit;
+			camp_html_add_msg(getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users."));
+			camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"));
 		}
 
 		// If the article is not yet categorized, force it to be before publication.
@@ -104,15 +103,14 @@ if (!is_null($f_action_workflow)) {
 			$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
 			$argsStr .= "&f_article_code[]=".$f_article_number."_".$f_language_selected;
 			$argsStr .= "&f_mode=single&f_action=publish";
-			$url = "Location: /$ADMIN/articles/duplicate.php?".$argsStr;
-			header($url);
-			exit;
+			camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr);
 		}
+
 		$articleObj->setWorkflowStatus($f_action_workflow);
+		camp_html_add_msg(getGS("Article workflow status set to '$1'", $articleObj->getWorkflowDisplayString()), "ok");
 	}
 	$url = camp_html_article_url($articleObj, $f_language_id, "edit.php");
-	header("Location: $url");
-	exit;
+	camp_html_goto_page($url);
 }
 
 ?>

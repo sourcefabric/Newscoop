@@ -58,9 +58,8 @@ if ($f_content_disposition == "attachment" || empty($f_content_disposition)) {
 	$attachmentObj->setContentDisposition($f_content_disposition);
 }
 
-$ref = camp_html_article_url($articleObj, $f_language_id, 'edit.php');
-
 // Go back to article.
-header("Location: $ref");
+camp_html_add_msg(getGS("File '$1' updated.", $attachmentObj->getFileName()), "ok");
+camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 
 ?>

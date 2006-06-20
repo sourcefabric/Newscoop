@@ -98,6 +98,7 @@ if ($f_publication_id > 0) {
 	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>
 </table>
 
+<?php camp_html_display_msgs(); ?>
 <P>
 <FORM NAME="article_translate" METHOD="POST" ACTION="do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <INPUT TYPE="HIDDEN" NAME="f_article_code" VALUE="<?php  p($f_article_code); ?>">

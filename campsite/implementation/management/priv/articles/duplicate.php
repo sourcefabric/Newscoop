@@ -102,7 +102,7 @@ foreach ($articles as $articleNumber => $languageArray) {
 }
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;
 }
 
@@ -203,8 +203,7 @@ if (isset($_REQUEST["action_button"])) {
 
 	// If no actions were selected, dont do anything.
 	if (($f_action != "move") && (count($doAction) == 0) ) {
-		header("Location: $srcArticleIndexUrl");
-		exit;
+		camp_html_goto_page($srcArticleIndexUrl);
 	}
 
 	if ($f_action == "duplicate") {
@@ -242,8 +241,8 @@ if (isset($_REQUEST["action_button"])) {
 		} else {
 			$url = $destArticleIndexUrl;
 		}
-		header("Location: $url");
-		exit;
+		camp_html_add_msg(getGS("Article(s) duplicated."), "ok");
+		camp_html_goto_page($url);
 
 	} elseif ($f_action == "move") {
 
@@ -268,8 +267,8 @@ if (isset($_REQUEST["action_button"])) {
 		} else {
 			$url = $destArticleIndexUrl;
 		}
-		header("Location: $url");
-		exit;
+		camp_html_add_msg(getGS("Article moved."), "ok");
+		camp_html_goto_page($url);
 
 	} elseif ($f_action == "publish") {
 
@@ -278,14 +277,36 @@ if (isset($_REQUEST["action_button"])) {
 		foreach ($doAction as $articleNumber => $languageArray) {
 			foreach ($languageArray as $languageId => $action) {
 				$tmpArticle =& new Article($languageId, $articleNumber);
-
-				$tmpArticle->move($f_destination_publication_id,
-								  $f_destination_issue_number,
-								  $f_destination_section_number);
-
 				$tmpArticle->setTitle($articleNames[$articleNumber][$languageId]);
-				$tmpArticle->setWorkflowStatus('Y');
-				$tmpArticles[] = $tmpArticle;
+
+				// Check if the name already exists in the destination section.
+				$conflictingArticles = Article::GetByName($tmpArticle->getTitle(),
+								          $f_destination_publication_id,
+							 	          $f_destination_issue_number,
+								          $f_destination_section_number);
+				if (count($conflictingArticles) > 0) {
+					$conflictingArticle = array_pop($conflictingArticles);
+					$conflictingArticleLink = camp_html_article_url($conflictingArticle,
+									$conflictingArticle->getLanguageId(),
+									"edit.php");
+    				camp_html_add_msg(getGS("The article could not be published.")." ".getGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.",
+     						"<a href='$conflictingArticleLink'>".$conflictingArticle->getName()."</a>"));
+     				$args = $_REQUEST;
+     				unset($args["action_button"]);
+					unset($args["f_article_code"]);
+					$argsStr = camp_implode_keys_and_values($args, "=", "&");
+					foreach ($_REQUEST["f_article_code"] as $code) {
+						$argsStr .= "&f_article_code[]=$code";
+					}
+					$backLink = "/$ADMIN/articles/duplicate.php?$argsStr";
+					camp_html_goto_page($backLink);
+				} else {
+					$tmpArticle->move($f_destination_publication_id,
+					 	              $f_destination_issue_number,
+								      $f_destination_section_number);
+					$tmpArticle->setWorkflowStatus('Y');
+					$tmpArticles[] = $tmpArticle;
+				}
 			}
 		}
 		$tmpArticle = camp_array_peek($tmpArticles);
@@ -294,8 +315,7 @@ if (isset($_REQUEST["action_button"])) {
 		} else {
 			$url = $destArticleIndexUrl;
 		}
-		header("Location: $url");
-		exit;
+		camp_html_goto_page($url);
 	}
 } // END perform the action
 
@@ -345,6 +365,8 @@ if ($f_publication_id > 0) {
 </tr>
 </table>
 <?php } ?>
+
+<?php camp_html_display_msgs(); ?>
 
 <P>
 <div class="page_title" style="padding-left: 18px;">
