@@ -10,8 +10,7 @@ $Path = Input::Get('Path', 'string', '');
 $TOL_Language = Input::Get('TOL_Language');
 
 if (!Template::IsValidPath($Path)) {
-	header("Location: /$ADMIN/templates/");
-	exit;
+	camp_html_goto_page("/$ADMIN/templates/");
 }
 $languages = Language::GetLanguages();
 

@@ -8,8 +8,7 @@ if (!$g_user->hasPermission('ManageTempl')) {
 
 $Path = Input::Get('Path', 'string', '');
 if (!Template::IsValidPath($Path)) {
-	header("Location: /$ADMIN/templates/");
-	exit;
+	camp_html_goto_page("/$ADMIN/templates/");
 }
 $Name = Input::Get('Name', 'string', '');
 $cField = Input::Get('cField', 'string', '');

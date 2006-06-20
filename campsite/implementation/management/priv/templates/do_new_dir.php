@@ -8,8 +8,7 @@ if (!$g_user->hasPermission('ManageTempl')) {
 
 $cPath = Input::Get('cPath', 'string', '');
 if (!Template::IsValidPath($cPath)) {
-	header("Location: /$ADMIN/templates/");
-	exit;
+	camp_html_goto_page("/$ADMIN/templates/");
 }
 $cName = Input::Get('cName', 'string', '');
 $correct = trim($cName) != '';
@@ -30,8 +29,7 @@ if ($correct) {
 }
 
 if ($ok) {
-	header("Location: /$ADMIN/templates?Path=" . urlencode("$cPath/$cName"));
-	exit;
+	camp_html_goto_page("/$ADMIN/templates?Path=" . urlencode("$cPath/$cName"));
 }
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");

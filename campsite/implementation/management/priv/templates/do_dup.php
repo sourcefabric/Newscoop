@@ -3,14 +3,12 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
 
 if (!$g_user->hasPermission('ManageTempl')) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to modify templates.")));
-	exit;
+	camp_html_display_error(getGS("You do not have the right to modify templates."));
 }
 
 $f_path = Input::Get('f_path', 'string', '');
 if (!Template::IsValidPath($f_path)) {
-	header("Location: /$ADMIN/templates/");
-	exit;
+	camp_html_goto_page("/$ADMIN/templates/");
 }
 $f_new_name = Input::Get('f_new_name', 'string', '');
 $f_orig_name = Input::Get('f_orig_name', 'string', '');
@@ -57,12 +55,11 @@ if ($correct) {
 if ($ok) {
 	if (camp_is_template_file($tpl2FullPath)) {
 		// Go into edit mode.
-		header("Location: /$ADMIN/templates/edit_template.php?f_path=".urlencode($f_path)."&f_name=".urlencode($f_new_name));
-		exit;
+		camp_html_goto_page("/$ADMIN/templates/edit_template.php"
+			."?f_path=".urlencode($f_path)."&f_name=".urlencode($f_new_name));
 	} else {
 		// Go back to file list.
-		header("Location: /$ADMIN/templates?Path=".urlencode($f_path));
-		exit;
+		camp_html_goto_page("/$ADMIN/templates?Path=".urlencode($f_path));
 	}
 }
 

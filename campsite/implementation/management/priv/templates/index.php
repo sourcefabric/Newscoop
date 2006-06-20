@@ -2,8 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
 
 if (!$g_user->hasPermission('ManageTempl') && !$g_user->hasPermission('DeleteTempl')) {
-	header("Location: /$ADMIN/");
-	exit;
+	camp_html_goto_page("/$ADMIN/");
 }
 
 $path = Input::Get('Path', 'string', '');
