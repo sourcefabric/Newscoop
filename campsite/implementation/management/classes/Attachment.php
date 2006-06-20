@@ -317,7 +317,7 @@ class Attachment extends DatabaseObject {
 	 *
 	 * @return mixed
 	 *		The Attachment object that was created or updated.
-	 *		NULL if there is a generic error or -1 if there is a file permission problem.
+	 *		Return a PEAR_Error on failure.
 	 */
 	function OnFileUpload($p_fileVar, $p_attributes, $p_id = null)
 	{
@@ -328,7 +328,7 @@ class Attachment extends DatabaseObject {
 		// Verify its a valid file.
 		$filesize = filesize($p_fileVar['tmp_name']);
 		if ($filesize === false) {
-			return null;
+			return new PEAR_Error("Attachment::OnFileUpload(): invalid parameters received.");
 		}
 
 		// Are we updating or creating?
@@ -360,7 +360,7 @@ class Attachment extends DatabaseObject {
 	    $attachment->makeDirectories();
         if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
         	$attachment->delete();
-            return -1;
+            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
         }
 		chmod($target, 0644);
         $attachment->commit();
