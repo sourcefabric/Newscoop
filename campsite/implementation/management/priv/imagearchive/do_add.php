@@ -13,16 +13,13 @@ $f_image_date = Input::Get('f_image_date');
 $f_image_url = Input::Get('f_image_url', 'string', '', true);
 
 if (!Input::IsValid()) {
-	header("Location: /$ADMIN/imagearchive/index.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 }
 if (empty($f_image_url) && !isset($_FILES['f_image_file'])) {
-	header("Location: /$ADMIN/imagearchive/index.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 }
 if (!$g_user->hasPermission('AddImage')) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/logout.php");
 }
 $attributes = array();
 $attributes['Description'] = $f_image_description;
@@ -45,6 +42,5 @@ if (!is_object($image)) {
 	camp_html_display_error($image, "/$ADMIN/imagearchive/add.php");
 }
 
-header("Location: /$ADMIN/imagearchive/edit.php?f_image_id=".$image->getImageId());
-exit;
+camp_html_goto_page("/$ADMIN/imagearchive/edit.php?f_image_id=".$image->getImageId());
 ?>

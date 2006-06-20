@@ -9,8 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 $f_image_id = Input::Get('f_image_id', 'int', 0);
 
 if (!Input::IsValid()) {
-	header("Location: /$ADMIN/imagearchive/index.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 }
 $imageObj =& new Image($f_image_id);
 $articles = ArticleImage::GetArticlesThatUseImage($f_image_id);

@@ -5,8 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 
 if (!$g_user->hasPermission('AddImage')) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/logout.php");
 }
 $q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 

@@ -9,27 +9,23 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 $f_image_id = Input::Get('f_image_id', 'int', 0);
 
 if (!Input::IsValid() || ($f_image_id <= 0)) {
-	header("Location: /$ADMIN/imagearchive/index.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 }
 
 $imageObj =& new Image($f_image_id);
 
 // This file can only be accessed if the user has the right to delete images.
 if (!$g_user->hasPermission('DeleteImage')) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/logout.php");
 }
 if ($imageObj->inUse()) {
-	header("Location: /$ADMIN/imagearchive/index.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 }
 
 $errorMsgs = $imageObj->delete();
 if (!is_array($errorMsgs)) {
 	// Go back to article image list.
-	header("Location: /$ADMIN/imagearchive/index.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 }
 
 $crumbs = array();

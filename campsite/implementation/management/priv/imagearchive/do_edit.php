@@ -14,15 +14,13 @@ $f_image_place = Input::Get('f_image_place');
 $f_image_date = Input::Get('f_image_date');
 $f_image_url = Input::Get('f_image_url', 'string', '', true);
 if (!Input::IsValid() || ($f_image_id <= 0)) {
-	header("Location: /$ADMIN/imagearchive/index.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 }
 
 $imageObj =& new Image($f_image_id);
 
 if (!$g_user->hasPermission('ChangeImage')) {
-	header("Location: /$ADMIN/logout.php");
-	exit;
+	camp_html_goto_page("/$ADMIN/logout.php");
 }
 
 $updateArray = array('Description' => $f_image_description,
@@ -34,6 +32,5 @@ if (!empty($f_image_url)) {
 }
 $imageObj->update($updateArray);
 
-header("Location: /$ADMIN/imagearchive/edit.php?f_image_id=$f_image_id");
-exit;
+camp_html_goto_page("/$ADMIN/imagearchive/edit.php?f_image_id=$f_image_id");
 ?>
