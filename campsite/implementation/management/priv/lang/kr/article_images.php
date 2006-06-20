@@ -1,4 +1,9 @@
-<?php
+<?php 
+regGS("You do not have the right to change image information.", "");
+regGS("The image number specified is already in use.", "");
+regGS("The image has been removed from the article.", "");
+regGS("Image '$1' updated.", "");
+regGS("Image '$1' added.", "");
 regGS("Edit article", "기사 편집");
 regGS("You do not have the right to attach images to articles.", "기사에 이미지를 첨부할 권한이 없습니다. ");
 regGS("You do not have the right to add images.", "이미지를 추가할 권한이 없습니다. ");

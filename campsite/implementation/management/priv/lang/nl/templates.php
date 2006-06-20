@@ -1,4 +1,5 @@
-<?php
+<?php 
+regGS("You must select a file to upload.", "");
 regGS("The template '$1' was saved successfully.", "Het sjabloon '$1' was succesvol opgeslagen.");
 regGS("The template $1 is in use and can not be deleted.", "Het sjabloon $1 is in gebruik en kan niet worden verwijderd.");
 regGS("The folder could not be deleted.", "De map kan niet worden verwijderd.");

@@ -261,4 +261,6 @@ regGS("System Preferences", "System Preferences");
 regGS("The date must be in the future.", "The date must be in the future.");
 regGS("Email (optional):", "Email (optional):");
 regGS("Send", "Send");
+regGS("Thank you.", "Thank you.");
+regGS("Please take a minute to send us an email.", "Please take a minute to send us an email.");
 ?>

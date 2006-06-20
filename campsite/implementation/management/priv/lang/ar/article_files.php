@@ -1,4 +1,7 @@
-<?php
+<?php 
+regGS("File '$1' updated.", "");
+regGS("File '$1' deleted.", "");
+regGS("File '$1' added.", "");
 regGS("Edit article", "تعديل المقالة");
 regGS("You do not have the right to delete file attachments.", "لا تملك صلاحية إلغاء الملفات المرافقة");
 regGS("You must select a file to upload.", "عليك إختار ملف للتحميل.");

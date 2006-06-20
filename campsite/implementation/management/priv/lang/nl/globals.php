@@ -368,4 +368,6 @@ regGS("Created by", "Gemaakt door");
 regGS("Creation date", "Gemaakt op");
 regGS("The date must be in the future.", "");
 regGS("Send", "");
+regGS("Thank you.", "");
+regGS("Please take a minute to send us an email.", "");
 ?>

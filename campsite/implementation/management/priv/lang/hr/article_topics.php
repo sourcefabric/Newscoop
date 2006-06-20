@@ -1,4 +1,7 @@
-<?php
+<?php 
+regGS("Topics added.", "");
+regGS("Topic does not exist.", "");
+regGS("The topic '$1' has been removed from article.", "");
 regGS("You do not have the right to detach topics from articles.", "Nemate prava uklanjati teme iz članaka.");
 regGS("You do not have the right to attach topics to articles.", "Nemate prava dodavati teme člancima");
 regGS("Attach Topics", "Priloži temu");

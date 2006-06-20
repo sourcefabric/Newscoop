@@ -1,4 +1,9 @@
-<?php
+<?php 
+regGS("You do not have the right to change image information.", "You do not have the right to change image information.");
+regGS("The image number specified is already in use.", "The image number specified is already in use.");
+regGS("The image has been removed from the article.", "The image has been removed from the article.");
+regGS("Image '$1' updated.", "Image '$1' updated.");
+regGS("Image '$1' added.", "Image '$1' added.");
 regGS("Edit article", "Edit article");
 regGS("You do not have the right to attach images to articles.", "You do not have the right to attach images to articles.");
 regGS("You do not have the right to add images.", "You do not have the right to add images.");

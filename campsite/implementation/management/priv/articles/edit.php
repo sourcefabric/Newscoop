@@ -527,7 +527,7 @@ if ($f_edit_mode == "edit") { ?>
 			        <tr>
 				        <TD ALIGN="RIGHT" valign="top"><INPUT TYPE="CHECKBOX" NAME="f_is_public" class="input_checkbox" <?php  if ($articleObj->isPublic()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
 				        <TD align="left" valign="top" style="padding-top: 0.1em;">
-							<?php putGS('Visible to non-subscribers?'); ?>
+							<?php putGS('Visible to non-subscribers'); ?>
 				        </TD>
 				    </tr>
 

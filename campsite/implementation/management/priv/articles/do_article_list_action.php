@@ -89,7 +89,7 @@ case "delete":
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
 		$articleObj->delete();
 	}
-	camp_html_add_msg(getGS("Articles deleted."), "ok");
+	camp_html_add_msg(getGS("Article(s) deleted."), "ok");
 	break;
 case "toggle_front_page":
 	foreach ($articleCodes as $articleCode) {
@@ -118,7 +118,7 @@ case "copy":
 						  $articleObj->getSectionNumber(),
 						  $g_user->getUserId(),
 						  $languageArray);
-		camp_html_add_msg(getGS("Articles duplicated."), "ok");
+		camp_html_add_msg(getGS("Article(s) duplicated."), "ok");
 	}
 	break;
 case "copy_interactive":
@@ -146,7 +146,7 @@ case "unlock":
 			$articleObj->setIsLocked(false);
 		}
 	}
-	camp_html_add_msg(getGS("Article(s) unlocked"), "ok");
+	camp_html_add_msg(getGS("Article(s) unlocked."), "ok");
 	break;
 case "schedule_publish":
 	$args = $_REQUEST;

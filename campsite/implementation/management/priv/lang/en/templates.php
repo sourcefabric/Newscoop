@@ -1,4 +1,5 @@
-<?php
+<?php 
+regGS("You must select a file to upload.", "You must select a file to upload.");
 regGS("You can only replace a file with a file of the same type.  The original file is of type \"$1\", and the file you uploaded was of type \"$2\".", "You can only replace a file with a file of the same type.  The original file is of type \"$1\", and the file you uploaded was of type \"$2\".");
 regGS("Unable to save the file '$1' to the path '$2'.", "Unable to save the file '$1' to the path '$2'.");
 regGS("Replace file:", "Replace file:");

@@ -1,5 +1,20 @@
-<?php
-regGS("Visible to non-subscribers?", "");
+<?php 
+regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "");
+regGS("Visible to non-subscribers", "");
+regGS("The article could not be published.", "");
+regGS("Scheduled action deleted.", "");
+regGS("Scheduled action added.", "");
+regGS("Article(s) unlocked.", "");
+regGS("Article(s) duplicated.", "");
+regGS("Article(s) deleted.", "");
+regGS("Article workflow status set to '$1'", "");
+regGS("Article unlocked.", "");
+regGS("Article translation created.", "");
+regGS("Article order changed.", "");
+regGS("Article moved.", "");
+regGS("Article deleted.", "");
+regGS("Article created.", "");
+regGS("$1 toggled.", "");
 regGS("Total:", "");
 regGS("Toggle '$1'", "");
 regGS("Show Comments", "");

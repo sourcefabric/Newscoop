@@ -1,4 +1,7 @@
-<?php
+<?php 
+regGS("File '$1' updated.", "");
+regGS("File '$1' deleted.", "");
+regGS("File '$1' added.", "");
 regGS("Edit article", "Uredi članak");
 regGS("You do not have the right to delete file attachments.", "Nemate prava brisati zakačene datoteke.");
 regGS("You must select a file to upload.", "Morate označiti datoteku za postavljanje.");

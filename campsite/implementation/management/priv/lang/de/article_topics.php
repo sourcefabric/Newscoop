@@ -1,4 +1,7 @@
-<?php
+<?php 
+regGS("Topics added.", "");
+regGS("Topic does not exist.", "");
+regGS("The topic '$1' has been removed from article.", "");
 regGS("You do not have the right to detach topics from articles.", "Keine Berechtigung Themen von Artikeln zu entknüpfen.");
 regGS("You do not have the right to attach topics to articles.", "Keine Berechtigung Themen mit Artikeln zu verknüpfen.");
 regGS("Attach Topics", "Thema hinzufügen");

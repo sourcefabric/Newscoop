@@ -27,7 +27,7 @@ if ($f_isFromInterface && ($_SERVER['REQUEST_METHOD'] == "POST") ) {
     $reporter->setBacktraceString($f_body);
     $reporter->setServer($server);
     $reporter->setDescription($f_description);
-    $reporter->setEmail($f_email);        
+    $reporter->setEmail($f_email);
     $wasSent = $reporter->sendToServer();
 
 
