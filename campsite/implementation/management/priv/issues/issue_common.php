@@ -39,7 +39,7 @@ function camp_is_issue_conflicting($p_publicationId, $p_issueNumber, $p_language
 			."&Language=".$conflictingIssue->getLanguageId();
 
 		$errMsg = getGS('The language and URL name must be unique for each issue in this publication.')."<br>".getGS('The values you are trying to set conflict with issue "$1$2. $3 ($4)$5".',
-			"<a href='$conflictingIssueLink' class='error_message' style='color:#E30000;'>",
+			"<a href='$conflictingIssueLink'>",
 			$conflictingIssue->getIssueNumber(),
 			$conflictingIssue->getName(),
 			$conflictingIssue->getLanguageName(),
