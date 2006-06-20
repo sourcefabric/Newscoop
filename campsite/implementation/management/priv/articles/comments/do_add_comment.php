@@ -24,8 +24,7 @@ if (!$articleObj->exists()) {
     exit;
 }
 if (!$articleObj->commentsEnabled() || $articleObj->commentsLocked())  {
-    header("Location: ".camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
-    exit;
+    camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
 }
 
 // Add the user if he doesnt exist in the Phorum user table
@@ -87,6 +86,5 @@ $commentObj->setStatus(PHORUM_STATUS_APPROVED);
 $isFirstMessage = ($threadId == 0);
 ArticleComment::Link($f_article_number, $f_language_id, $commentObj->getMessageId(), $isFirstMessage);
 
-header("Location: ".camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
-exit;
+camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
 ?>

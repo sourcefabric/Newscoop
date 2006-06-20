@@ -45,6 +45,6 @@ foreach ($_REQUEST as $name => $value) {
         }
     }
 }
-header("Location: ".camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
+camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
 
 ?>
