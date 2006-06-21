@@ -13,7 +13,11 @@ camp_load_translation_strings("home");
 camp_load_translation_strings("articles");
 camp_load_translation_strings("api");
 
-$defaultScreen = "submitted_articles";
+if ($User->hasPermission('ChangeArticle') || $User->hasPermission('Publish')) {
+	$defaultScreen = "submitted_articles";
+} else {
+	$defaultScreen = "your_articles";
+}
 $f_screen = camp_session_get("f_screen", $defaultScreen);
 $f_submitted_articles_offset = camp_session_get('f_submitted_articles_offset', 0);
 $f_your_articles_offset = camp_session_get('f_your_articles_offset', 0);
@@ -57,10 +61,13 @@ home_page_links = new Array("link_your_articles",
 function on_link_click(id, home_page_links)
 {
 	for (i = 0; i < home_page_links.length; i++) {
-		if (id == home_page_links[i]) {
-			document.getElementById(home_page_links[i]).style.backgroundColor = '#CCC';
-		} else {
-			document.getElementById(home_page_links[i]).style.backgroundColor = '#FFF';
+		element = document.getElementById(home_page_links[i]);
+		if (element) {
+			if (id == home_page_links[i]) {
+				element.style.backgroundColor = '#CCC';
+			} else {
+				element.style.backgroundColor = '#FFF';
+			}
 		}
 	}
 }
@@ -101,7 +108,9 @@ if ( ($restartEngine == 'yes') && $g_user->hasPermission("InitializeTemplateEngi
 	<TD VALIGN="TOP" align="left" nowrap width="1%">
 		<table cellpadding="4" cellspacing="3">
 
+		<?php if ($User->hasPermission('ChangeArticle') || $User->hasPermission('Publish')) { ?>
 		<tr><td nowrap><a href="javascript: void(0);" id="link_submitted_articles" onclick="HideAll(home_page_elements); ShowElement('submitted_articles'); on_link_click('link_submitted_articles', home_page_links);"  style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "submitted_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Submitted Articles"); ?></a></td></tr>
+		<?php } ?>
 
 		<tr><td nowrap><a href="javascript: void(0);" id="link_your_articles" onclick="HideAll(home_page_elements); ShowElement('your_articles'); on_link_click('link_your_articles', home_page_links);"  style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "your_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Your Articles"); ?></a></td></tr>
 
