@@ -316,6 +316,10 @@ function checkboxClick(theCheckbox, theRowNum)
 				<OPTION value="toggle_section_page"><?php putGS("Toggle '$1'", getGS("On Section Page")); ?></OPTION>
 				<?php } ?>
 
+				<?php if ($g_user->hasPermission('CommentEnable')) { ?>
+				<OPTION value="toggle_comments"><?php putGS("Toggle '$1'", getGS("Comments")); ?></OPTION>
+				<?php } ?>
+
 				<OPTION value="schedule_publish"><?php putGS("Publish Schedule"); ?></OPTION>
 				<OPTION value="unlock"><?php putGS("Unlock"); ?></OPTION>
 
@@ -511,7 +515,7 @@ foreach ($allArticles as $articleObj) {
 		<TD align="center"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p($articleObj->onSectionPage() ? "is_shown.png" : "is_hidden.png"); ?>" border="0"></TD>
 		<TD align="center"><?php echo ArticleImage::GetImagesByArticleNumber($articleObj->getArticleNumber(), true); ?></TD>
 		<TD align="center"><?php echo ArticleTopic::GetArticleTopics($articleObj->getArticleNumber(), true); ?></TD>
-		<TD align="center"><?php echo ArticleComment::GetArticleComments($articleObj->getArticleNumber(), $articleObj->getLanguageId(), null, true); ?></TD>
+		<TD align="center"><?php if ($articleObj->commentsEnabled()) { echo ArticleComment::GetArticleComments($articleObj->getArticleNumber(), $articleObj->getLanguageId(), null, true); } else { ?><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/is_hidden.png" border="0"><?php } ?></TD>
 
 		<TD ALIGN="CENTER">
 			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview-16x16.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="16" height="16"></A>

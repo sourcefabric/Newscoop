@@ -109,6 +109,15 @@ case "toggle_section_page":
 	}
 	camp_html_add_msg(getGS("$1 toggled.", "&quot;".getGS("On Section Page")."&quot;"), "ok");
 	break;
+case "toggle_comments":
+	foreach ($articleCodes as $articleCode) {
+		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
+		if ($articleObj->userCanModify($g_user)) {
+			$articleObj->setCommentsEnabled(!$articleObj->commentsEnabled());
+		}
+	}
+	camp_html_add_msg(getGS("$1 toggled.", "&quot;".getGS("Comments")."&quot;"), "ok");
+	break;
 case "copy":
 	foreach ($groupedArticleCodes as $articleNumber => $languageArray) {
 		$languageId = camp_array_peek($languageArray);
