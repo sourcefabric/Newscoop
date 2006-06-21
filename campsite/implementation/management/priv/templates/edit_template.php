@@ -13,6 +13,8 @@ if (!Template::IsValidPath($f_path)) {
 	camp_html_goto_page($backLink);
 }
 $filename = Template::GetFullPath($f_path, $f_name);
+$templateName = (!empty($f_path) ? $f_path."/" : "").$f_name;
+$templateObj =& new Template($templateName);
 
 if (!file_exists($filename)) {
 	camp_html_display_error(getGS("Invalid template file $1" , $f_path."/$f_name"), $backLink);
@@ -49,57 +51,77 @@ if (in_array($extension, $imageExtensions)) {
 } else {
 	$contents = file_get_contents($filename);
 	?>
+	<link type="text/css" rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/SyntaxHighlighter/SyntaxHighlighter.css"></link>
 	<P>
 	<FORM NAME="template_edit" METHOD="POST" ACTION="do_edit.php"  >
 	<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p($f_path); ?>">
 	<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  p($f_name); ?>">
 	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 	<TR>
-		<TD COLSPAN="2" align="center">
+		<td align="left">
+			<?php  if ($g_user->hasPermission("DeleteTempl")) { ?>
+			<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
+			<?php  } else { ?>
+			<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($f_path); ?>'">
+			<?php  } ?>
+		</TD>
+
+		<TD align="right">
+			<?php if ($templateObj->exists()) { ?>
+			<b><?php putGS("Template ID:"); ?> <?php p($templateObj->getTemplateId()); ?></b>
+			<?php } ?>
+		</td>
+	</TR>
+
+	<TR>
+		<TD colspan="2"><TEXTAREA ROWS="25" COLS="90" NAME="cField" WRAP="NO" class="input_text"><?php  p(htmlspecialchars($contents)); ?></TEXTAREA></TD>
+	</TR>
+
+	<TR>
+		<TD align="left">
 		<?php  if ($g_user->hasPermission("DeleteTempl")) { ?>
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 		<?php  } else { ?>
 		<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($f_path); ?>'">
 		<?php  } ?>
+		</FORM>
 		</TD>
-	</TR>
 
-	<TR>
-		<TD><TEXTAREA ROWS="25" COLS="90" NAME="cField" WRAP="NO"><?php  p(htmlspecialchars($contents)); ?></TEXTAREA></TD>
-	</TR>
-
-	<TR>
-		<TD COLSPAN="2" align="center">
-		<?php  if ($g_user->hasPermission("DeleteTempl")) { ?>
-		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-		<?php  } else { ?>
-		<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($f_path); ?>'">
-		<?php  } ?>
-		</TD>
+		<td align="right">
+			<table >
+			<form method="POST" action="do_replace.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" ENCTYPE="multipart/form-data" >
+			<input type="hidden" name="f_path" value="<?php p(htmlspecialchars($f_path)); ?>">
+			<input type="hidden" name="f_old_name" value="<?php p(htmlspecialchars($f_name)); ?>">
+			<tr>
+				<td>
+					<b><?php putGS("Replace file:"); ?></b> <input type="FILE" name="f_file" class="input_file" alt="file|<?php echo implode(",",camp_get_text_extensions()).",".implode(",", camp_get_image_extensions()); ?>" emsg="<?php putGS("You must select a file to upload."); ?>">
+				</td>
+				<td>
+					<INPUT type="submit" name="replace" value="<?php putGS("Replace"); ?>" class="button">
+				</td>
+			</tr>
+			</form>
+			</table>
+		</td>
 	</TR>
 	</TABLE>
-	</FORM>
+
+	<?php if (trim($contents) != "") {
+		?>
+	<textarea name="code" class="html" cols="60" rows="10"><?php  p(htmlspecialchars($contents)); ?></textarea>
+	<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/SyntaxHighlighter/shCore.js"></script>
+	<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/syntaxHighlighter/shBrushCSharp.js"></script>
+	<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/SyntaxHighlighter/shBrushXml.js"></script>
+	<script language="javascript">
+	    dp.SyntaxHighlighter.HighlightAll('code');
+	</script>
+	<?php } ?>
+
 	<SCRIPT>
 	document.template_edit.cField.focus();
 	</SCRIPT>
 <?php } ?>
 <p>
-<form method="POST" action="do_replace.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" ENCTYPE="multipart/form-data" >
-<input type="hidden" name="f_path" value="<?php p(htmlspecialchars($f_path)); ?>">
-<input type="hidden" name="f_old_name" value="<?php p(htmlspecialchars($f_name)); ?>">
-<table class="table_input" cellpadding="6">
-<tr>
-	<td>
-		<b><?php putGS("Replace file:"); ?></b> <input type="FILE" name="f_file" class="input_file" alt="file|txt,html,htm,php,xml,asp,tpl,py,java,jpg,jpeg,jpe,png,gif,tif,tiff" emsg="<?php putGS("You must select a file to upload."); ?>">
-	</td>
-</tr>
-<tr>
-	<td align="center">
-		<INPUT type="submit" name="replace" value="<?php putGS("Replace"); ?>" class="button">
-	</td>
-</tr>
-</table>
-</form>
 <P>
 
 <?php camp_html_copyright_notice(); ?>

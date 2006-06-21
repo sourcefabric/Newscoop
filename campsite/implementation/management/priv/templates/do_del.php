@@ -14,16 +14,20 @@ if (!Template::IsValidPath($Path)) {
 	camp_html_goto_page("/$ADMIN/templates/");
 }
 
+$backLink = "/$ADMIN/templates?Path=".urlencode($Path);
 $dir = urldecode($Path)."/".urldecode($Name);
 $fileFullPath = Template::GetFullPath(urldecode($Path), $Name);
 $errorMsgs = array();
 
-$errorReportingState = error_reporting(0);
 $deleted = false;
 if (!$isFile) {
 	$deleted = rmdir($fileFullPath);
-	if (!$deleted) {
-		$errorMsgs[] = getGS("The folder could not be deleted.").' '.getGS("The directory must be empty");
+	if ($deleted) {
+		$logtext = getGS('Directory $1 was deleted', mysql_real_escape_string($dir));
+		Log::Message($logtext, $g_user->getUserName(), 112);
+		camp_html_add_msg($logtext, "ok");
+	} else {
+		camp_html_add_msg(camp_get_error_message(CAMP_ERROR_RMDIR, $fileFullPath));
 	}
 } else {
 	$template_path = Template::GetPath($Path, $Name);
@@ -33,60 +37,15 @@ if (!$isFile) {
 			$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($dir));
 			Log::Message($logtext, $g_user->getUserName(), 112);
 			Template::UpdateStatus();
+			camp_html_add_msg($logtext, "ok");
 		} else {
-			$errorMsgs[] = getGS("Unable to delete the template '$1' in the path '$2'.", $Name, $Path) . " "
-						. getGS("Please check if the user '$1' has permission to write in this directory.", $Campsite['APACHE_USER']);
+			camp_html_add_msg(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $fileFullPath));
 		}
 	} else {
-		$errorMsgs[] = getGS("The template $1 is in use and can not be deleted.", $fileFullPath);
+		camp_html_add_msg(getGS("The template $1 is in use and can not be deleted.", $fileFullPath));
 	}
 }
-error_reporting($errorReportingState);
 
-if ($deleted) {
-	camp_html_goto_page("/$ADMIN/templates/?Path=" . urlencode($Path));
-}
-
-$crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
-$crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
-if ($isFile) {
-	$crumbs[] = array(getGS("Deleting template"), "");
-} else {
-	$crumbs[] = array(getGS("Deleting folder"), "");
-}
-echo camp_html_breadcrumbs($crumbs);
+camp_html_goto_page($backLink);
 
 ?>
-<P>
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="table_input">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php if($What == 1) { putGS("Deleting template"); } else { putGS("Deleting folder"); } ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-		<BLOCKQUOTE>
-		<?php
-			foreach ($errorMsgs as $errorMsg) { ?>
-				<li><?php p($errorMsg); ?></li>
-				<?php
-			}
-		?>
-		</BLOCKQUOTE>
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($Path); ?>'">
-	</DIV>
-	</TD>
-</TR>
-</TABLE>
-<P>
-<?php camp_html_copyright_notice(); ?>

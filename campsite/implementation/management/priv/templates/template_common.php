@@ -6,14 +6,32 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Template.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 
-function camp_is_template_file($s)
+function camp_get_text_extensions()
 {
-	$dotpos = strrpos($s,".");
-	$ext = strtolower(substr($s,$dotpos+1));
-	return ($ext == 'tpl' || $ext == 'php' || $ext == 'htm'
-		|| $ext == 'html' || $ext == 'php3' || $ext == 'php4' || $ext == 'txt'
-		|| $ext == 'css');
-} // fn camp_is_template_file
+	return array('tpl','php','htm','html','php3','php4','txt','css',
+				 'xml','asp','py','java');
+}
+
+
+function camp_is_text_file($p_fileName)
+{
+	$extension = strtolower(pathinfo($p_fileName, PATHINFO_EXTENSION));
+	return in_array($extension, camp_get_text_extensions());
+} // fn camp_is_text_file
+
+
+function camp_get_image_extensions()
+{
+	return array('jpg','jpe','jpeg','png','gif','tif','tiff');
+}
+
+
+function camp_is_image_file($p_fileName)
+{
+	$extension = strtolower(pathinfo($p_fileName, PATHINFO_EXTENSION));
+	return in_array($extension, camp_get_image_extensions());
+} // fn camp_is_image_file
+
 
 function camp_template_path_crumbs($p_path)
 {

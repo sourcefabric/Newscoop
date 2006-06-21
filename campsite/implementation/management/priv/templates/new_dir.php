@@ -18,6 +18,9 @@ $crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
 $crumbs[] = array(getGS("Create new folder"), "");
 echo camp_html_breadcrumbs($crumbs);
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
+camp_html_display_msgs();
 ?>
 
 <P>

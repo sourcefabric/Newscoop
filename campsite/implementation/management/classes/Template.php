@@ -19,12 +19,21 @@ class Template extends DatabaseObject {
 	var $m_columnNames = array('Id', 'Name', 'Type', 'Level');
 
 	/**
-	 * @param int p_templateId
+	 * A template is an HTML file with Campsite parser tags inside.
+	 *
+	 * @param mixed p_templateIdOrName
+	 * 		Give the template ID or the template name relative
+	 * 		to the template base directory.
 	 */
-	function Template($p_templateId = null)
+	function Template($p_templateIdOrName = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data['Id'] = $p_templateId;
+		if (is_numeric($p_templateIdOrName)) {
+			$this->m_data['Id'] = $p_templateIdOrName;
+		} elseif (is_string($p_templateIdOrName)) {
+			$this->m_data['Name'] = $p_templateIdOrName;
+			$this->m_keyColumnNames = array('Name');
+		}
 		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
@@ -298,7 +307,8 @@ class Template extends DatabaseObject {
 	 * @param string $p_desiredName
 	 * 		Desired name of the file.
 	 *
-	 * @return boolean
+	 * @return mixed
+	 * 		TRUE on success, PEAR_Error on failure.
 	 */
 	function OnUpload($f_fileVarName, $p_baseUpload, $p_desiredName = null, $p_charset = null)
 	{
@@ -306,7 +316,7 @@ class Template extends DatabaseObject {
 		$p_baseUpload = $Campsite['TEMPLATE_DIRECTORY'].$p_baseUpload;
 
 		if (!isset($_FILES[$f_fileVarName]) || !isset($_FILES[$f_fileVarName]['name'])) {
-			return false;
+			return new PEAR_Error("Invalid parameters given to Template::OnUpload()");
 		}
 
 		if (is_null($p_desiredName)) {
@@ -319,7 +329,7 @@ class Template extends DatabaseObject {
 		$newname = "$p_baseUpload/$fileName";
 		if (file_exists($newname) && !is_dir($newname)) {
 			if (!unlink($newname)) {
-				return false;
+				return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $newname), CAMP_ERROR_DELETE_FILE);
 			}
 		}
 
@@ -335,10 +345,16 @@ class Template extends DatabaseObject {
 				} else {
 					$success = false;
 					unlink($newname);
+					return new PEAR_Error("Unable to convert the character set of the file.");
 				}
+			} else {
+				return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $origFile), CAMP_ERROR_CREATE_FILE);
 			}
 		} else {
 			$success = move_uploaded_file($_FILES[$f_fileVarName]['tmp_name'], $newname);
+			if (!$success) {
+				return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $newname), CAMP_ERROR_CREATE_FILE);
+			}
 		}
 
 		if ($success) {

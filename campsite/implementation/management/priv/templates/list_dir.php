@@ -76,7 +76,8 @@
 	<TD VALIGN="TOP">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 		<TR class="table_list_header">
-			<TD  VALIGN="TOP"><B> <?php  putGS('Files'); ?> </B></TD>
+			<TD VALIGN="TOP"><?php  putGS('Files'); ?></TD>
+			<TD VALIGN="TOP"><?php  putGS('Template ID'); ?></TD>
 			<?php
 			if ($g_user->hasPermission("ManageTempl")) {
 				echo '<TD  VALIGN="TOP" ><B> '.getGS('Duplicate').' </B></TD>';
@@ -91,22 +92,26 @@
 			sort($files);
 			$color = 0;
 			foreach ($files as $filename) {
+				$templateName = (!empty($listbasedir) ? $listbasedir."/" : "").$filename;
+				$templateObj =& new Template($templateName);
 				if ($color) {
-					$color = 0;
 					$tr_class = "class=\"list_row_even\"";
 				} else {
-					$color = 1;
 					$tr_class = "class=\"list_row_odd\"";
 				}
-				$extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-				$imageExtensions = array("png", "jpg", "jpeg", "jpe", "gif");
-				if (camp_is_template_file($filename)) {
+				$color = !$color;
+				if (camp_is_text_file($filename)) {
 					print "<TR $tr_class><TD valign=\"center\"><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/generic.gif' BORDER='0'>&nbsp;<A HREF='/$ADMIN/templates/edit_template.php?f_path=" .urlencode($listbasedir)."&f_name=".urlencode($filename)."'>$filename</A></TD>";
-				} elseif (in_array($extension, $imageExtensions)) {
+				} elseif (camp_is_image_file($filename)) {
 					print "<TR $tr_class><TD><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/image.png' BORDER='0'> <A HREF='/$ADMIN/templates/edit_template.php?f_path=" .urlencode($listbasedir)."&f_name=".urlencode($filename)."'>$filename</a></TD>";
 				} else {
 					print "<TR $tr_class><TD><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/generic.gif' BORDER='0'> $filename</TD>";
 				}
+				?>
+
+				<td align="center"><?php if ($templateObj->exists()) { echo $templateObj->getTemplateId(); } else { putGS("N/A"); } ?></td>
+
+				<?php
 				if ($g_user->hasPermission("ManageTempl")){
 					print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/dup.php?Path='.urlencode($listbasedir).'&Name='.urlencode($filename).'"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/duplicate.png" BORDER="0" ALT="'.getGS('Duplicate file').'" TITLE="'.getGS('Duplicate file').'"></A></TD>';
 				}

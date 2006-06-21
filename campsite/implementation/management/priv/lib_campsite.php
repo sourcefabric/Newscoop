@@ -323,6 +323,9 @@ function camp_get_error_message($p_errorCode, $p_arg1 = null)
 	case CAMP_ERROR_MKDIR:
 		return getGS("The system was unable to create the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
 		break;
+	case CAMP_ERROR_RMDIR:
+		return getGS("The system was unable to delete the directory '$1'.", $p_arg1).' '.getGS("Please check if the directory is empty and the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		break;
 	}
 	return "";
 } // fn camp_get_error_message

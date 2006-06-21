@@ -61,6 +61,16 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
         return;
     }
 
+    // -- Return on mkdir errors --
+    if (preg_match ('/^mkdir/i', $p_string)){
+        return;
+    }
+
+    // -- Return on fopen errors --
+    if (preg_match ('/^fopen/i', $p_string)){
+        return;
+    }
+
     // --- Don't print out the previous screen (in which the error occurred). ---
     ob_end_clean();
 

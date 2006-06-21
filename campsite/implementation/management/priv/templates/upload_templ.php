@@ -21,10 +21,22 @@ $crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
 $crumbs[] = array(getGS("Upload template"), "");
 echo camp_html_breadcrumbs($crumbs);
 
+camp_html_display_msgs();
 ?>
 <P>
 <FORM METHOD="POST" ACTION="do_upload_templ.php" ENCTYPE="multipart/form-data" >
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" width="600px">
+<TR>
+	<TD ALIGN="RIGHT"><?php  putGS("File"); ?>:</TD>
+	<TD>
+	<P><INPUT TYPE="FILE" NAME="f_file" SIZE="32" class="input_file">
+	</TD>
+</TR>
+<tr>
+	<td colspan="2" align="center" style="padding-top: 15px;">
+		<?php p(wordwrap(getGS("If the file you specified is a text file, you can convert its character set using the dropdown below."), 60, "<br>")); ?>
+	</td>
+</tr>
 <TR>
 	<TD ALIGN="RIGHT"><?php  putGS("Template charset"); ?>:</TD>
 	<TD>
@@ -34,17 +46,12 @@ echo camp_html_breadcrumbs($crumbs);
 		<OPTION VALUE="UTF-8"><?php putGS("All languages"); ?>/UTF-8</OPTION>
 		<?PHP
 		foreach ($languages as $language) { ?>
-			<option value="<?php p($language->getCodePage()); ?>" <?php if ($TOL_Language == $language->getCode()) { ?>selected<?php } ?> ><?php p($language->getNativeName().'/'.$language->getCodePage()); ?></OPTION>
+			<option value="<?php p($language->getCodePage()); ?>"><?php p($language->getNativeName().'/'.$language->getCodePage()); ?></OPTION>
 			<?PHP
 		}
 		?>
 		</SELECT>
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT"><?php  putGS("File"); ?>:</TD>
-	<TD>
-	<P><INPUT TYPE="FILE" NAME="f_file" SIZE="32" class="input_file">
+		<?php putGS("(optional)"); ?>
 	</TD>
 </TR>
 <TR>

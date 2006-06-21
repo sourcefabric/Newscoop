@@ -16,45 +16,28 @@ $nField = str_replace("\\r", "\r", $cField);
 $nField = str_replace("\\n", "\n", $nField);
 
 $filename = Template::GetFullPath($Path, $Name);
+
 $result = false;
-if (@$handle = fopen($filename, 'w')) {
-	$result = fwrite($handle, $nField);
-	fclose($handle);
+if (file_exists($filename)) {
+	if (is_writable($filename)) {
+		if (@$handle = fopen($filename, 'w')) {
+			$result = fwrite($handle, $nField);
+			fclose($handle);
+		}
+	} else {
+		camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_FILE, $filename));
+	}
+} else {
+	camp_html_add_msg(getGS("Template $1 no longer exists!", "&quot;".$filename."&quot;"));
+	camp_html_goto_page("/$ADMIN/templates/?Path=".urlencode($Path));
 }
 
 if ($result !== false) {
 	$logtext = getGS('Template $1 was changed', $Path."/".$Name);
 	Log::Message($logtext, $g_user->getUserName(), 113);
 	camp_html_add_msg(getGS("The template '$1' was saved successfully.", $Name), "ok");
-	camp_html_goto_page("/$ADMIN/templates/edit_template.php?"
-		."f_path=".urlencode($Path)
-		."&f_name=".urlencode($Name));
-} else {
-	$errMsg = getGS("Unable to save the template '$1' to the path '$2'.", $Name, $Path) . " "
-			. getGS("Please check if the user '$1' has permission to write in this directory.", $Campsite['APACHE_USER']);
 }
-$crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
-$crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
-$crumbs[] = array(getGS("Edit template"), "");
-echo camp_html_breadcrumbs($crumbs);
-
+camp_html_goto_page("/$ADMIN/templates/edit_template.php?"
+	."f_path=".urlencode($Path)
+	."&f_name=".urlencode($Name));
 ?>
-<P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="table_input">
-<TR>
-	<TD COLSPAN="2">
-		<BLOCKQUOTE> <LI><?php echo $errMsg; ?></LI> </BLOCKQUOTE>
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/templates?Path=<?php p(urlencode($Path)); ?>'">
-	</DIV>
-	</TD>
-</TR>
-</TABLE>
-<P>
-<?php camp_html_copyright_notice(); ?>
