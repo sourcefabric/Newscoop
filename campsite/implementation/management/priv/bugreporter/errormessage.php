@@ -47,9 +47,9 @@ global $ADMIN;
                     </td>
                 </tr>
                 <tr valign="top">
-                    <td colspan="2"><?php
-                        putGS("What were you trying to do when this happened? (optional)")
-                    ?></td>
+                    <td colspan="2">
+                    	<?php putGS("What were you trying to do when this happened?") ?> <?php putGS("(optional)"); ?>
+                    </td>
                 </tr>
                 <tr>
                     <td align="left" nowrap>&nbsp;</td>
@@ -58,9 +58,8 @@ global $ADMIN;
                     </td>
                 </tr>
                 <tr>
-                    <td align="left" nowrap><?php
-                        putGS("Email (optional):");
-                    ?>
+                    <td align="left" nowrap>
+                    	<?php putGS("Email:");  ?> <?php putGS("(optional)"); ?>
                     </td>
                     <td><input type="text" class="input_text" name="f_email" value="" size="32" maxlength="255">
                     </td>

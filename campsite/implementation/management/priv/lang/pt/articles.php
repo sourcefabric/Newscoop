@@ -1,4 +1,5 @@
 <?php 
+regGS("Select location:", "");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "");
 regGS("Visible to non-subscribers", "");
 regGS("The article could not be published.", "");
@@ -33,7 +34,6 @@ regGS("You do not have the right to translate articles.", "Não tem permissão p
 regGS("You do not have the right to publish articles.", "Não tem permissão para publicar artigos");
 regGS("You do not have the right to move articles.", "Não tem permissão para mover artigos.");
 regGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", "Não pode mover os artigos assinalados a vermelho porque a edição de destino não se encontra traduzido para o idioma apropriado.");
-regGS("Select location (optional):", "Selecione a localização ( opcional ):");
 regGS("Publish?", "Publicar?");
 regGS("Publish articles", "Publicar artigos");
 regGS("Publish article", "Publicar artigo");

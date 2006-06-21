@@ -1,4 +1,8 @@
-<?php
+<?php 
+regGS("The system was unable to read the file '$1'.", "The system was unable to read the file '$1'.");
+regGS("The system was unable to delete the directory '$1'.", "The system was unable to delete the directory '$1'.");
+regGS("Please check if the user '$1' has permission to read this file.", "Please check if the user '$1' has permission to read this file.");
+regGS("Please check if the directory is empty and the user '$1' has permission to write to the directory '$2'.", "Please check if the directory is empty and the user '$1' has permission to write to the directory '$2'.");
 regGS("The system was unable to write to the file '$1'.", "The system was unable to write to the file '$1'.");
 regGS("The system was unable to delete the file '$1'.", "The system was unable to delete the file '$1'.");
 regGS("The system was unable to create the file '$1'.", "The system was unable to create the file '$1'.");

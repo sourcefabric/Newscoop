@@ -1,4 +1,5 @@
 <?php 
+regGS("Select location:", "");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "");
 regGS("Visible to non-subscribers", "");
 regGS("The article could not be published.", "");
@@ -33,7 +34,6 @@ regGS("You do not have the right to translate articles.", "K překladu článku 
 regGS("You do not have the right to publish articles.", "Nemáte práva publikovat článek.");
 regGS("You do not have the right to move articles.", "Nemáte práva přesunout článek.");
 regGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", "");
-regGS("Select location (optional):", "Zvolte lokaci (nepovinné)");
 regGS("Publish?", "Publikovat?");
 regGS("Publish articles", "Publikovat články");
 regGS("Publish article", "Publikovat článek");

@@ -1,4 +1,5 @@
 <?php 
+regGS("Select location:", "");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "");
 regGS("Visible to non-subscribers", "");
 regGS("The article could not be published.", "");
@@ -33,7 +34,6 @@ regGS("You do not have the right to translate articles.", "기사를 번역할 �
 regGS("You do not have the right to publish articles.", "기사를 출판할 권한이 없습니다.");
 regGS("You do not have the right to move articles.", "기사를 이동할 권한이 없습니다. ");
 regGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", "기사를 붉은 색으로 표시할 수 없습니다. 목표 이슈가 적당한 언어로 번역되지 않았습니다.");
-regGS("Select location (optional):", "로케이션 선택 (선택사항):");
 regGS("Publish?", "출판?");
 regGS("Publish articles", "기사 출판");
 regGS("Publish article", "기사 출판");

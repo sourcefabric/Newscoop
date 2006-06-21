@@ -1,4 +1,5 @@
 <?php 
+regGS("Select location:", "Select location:");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.");
 regGS("Visible to non-subscribers", "Visible to non-subscribers");
 regGS("The article could not be published.", "The article could not be published.");
@@ -33,7 +34,6 @@ regGS("You do not have the right to translate articles.", "You do not have the r
 regGS("You do not have the right to publish articles.", "You do not have the right to publish articles.");
 regGS("You do not have the right to move articles.", "You do not have the right to move articles.");
 regGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", "You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.");
-regGS("Select location (optional):", "Select location (optional):");
 regGS("Publish?", "Publish?");
 regGS("Publish articles", "Publish articles");
 regGS("Publish article", "Publish article");
@@ -107,7 +107,4 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("Insert Internal Link", "Insert Internal Link");
 regGS("No such article.", "No such article.");
 regGS("No such section.", "No such section.");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Are you sure you want to remove the topic \\'$1\\' from the article?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Are you sure you want to remove the file \\'$1\\' from the article?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Are you sure you want to remove the image \\'$1\\' from the article?");
 ?>

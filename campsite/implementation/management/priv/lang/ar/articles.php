@@ -1,4 +1,5 @@
 <?php 
+regGS("Select location:", "");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "");
 regGS("Visible to non-subscribers", "");
 regGS("The article could not be published.", "");
@@ -33,7 +34,6 @@ regGS("You do not have the right to translate articles.", "لا تملك صلا�
 regGS("You do not have the right to publish articles.", "لا تملك صلاحية نشر المقالات");
 regGS("You do not have the right to move articles.", "لا تملك صلاحية نقل المقالات");
 regGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", "لا يمكنك $1 المقالات المحددة باللون الأحمر لان العدد الهدف لم تتم ترجمته للغة المناسبة.");
-regGS("Select location (optional):", "إختر الموقع (إختياري)");
 regGS("Publish?", "نشر؟");
 regGS("Publish articles", "نشر المقالات");
 regGS("Publish article", "نشر المقالة");

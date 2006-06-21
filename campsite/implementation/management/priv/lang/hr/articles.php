@@ -1,4 +1,5 @@
 <?php 
+regGS("Select location:", "");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "");
 regGS("Visible to non-subscribers", "");
 regGS("The article could not be published.", "");
@@ -33,7 +34,6 @@ regGS("You do not have the right to translate articles.", "Nemate prava prevesti
 regGS("You do not have the right to publish articles.", "Nemate prava objaviti članak.");
 regGS("You do not have the right to move articles.", "Nemate prava premjestiti članak.");
 regGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", "Ne možete \"$1\" na člancima naglašenim crvenom bojom jer odredišno izdanje nije prevedeno na odgovarajući jezik.");
-regGS("Select location (optional):", "Označite lokaciju (opcija):");
 regGS("Publish?", "Objaviti?");
 regGS("Publish articles", "Objavi članke");
 regGS("Publish article", "Objavi članak");

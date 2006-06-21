@@ -1,5 +1,5 @@
 <?php 
-regGS("What were you trying to do when this happened? (optional)", "What were you trying to do when this happened? (optional)");
+regGS("What were you trying to do when this happened?", "What were you trying to do when this happened?");
 regGS("Description:", "Description:");
 regGS("We are sorry for the inconvenience.", "We are sorry for the inconvenience.");
 regGS("Show error details", "Show error details");
