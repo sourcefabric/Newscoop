@@ -449,7 +449,7 @@ class User extends DatabaseObject {
 	 */
 	function GetDefaultConfig()
 	{
-		if (isset($this->m_defaultConfig)) {
+		if (isset($this) && isset($this->m_defaultConfig)) {
 			return $this->m_defaultConfig;
 		} else {
 			$tmpUser =& new User();
