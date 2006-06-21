@@ -13,7 +13,7 @@ camp_load_translation_strings("home");
 camp_load_translation_strings("articles");
 camp_load_translation_strings("api");
 
-if ($User->hasPermission('ChangeArticle') || $User->hasPermission('Publish')) {
+if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish')) {
 	$defaultScreen = "submitted_articles";
 } else {
 	$defaultScreen = "your_articles";
@@ -108,7 +108,7 @@ if ( ($restartEngine == 'yes') && $g_user->hasPermission("InitializeTemplateEngi
 	<TD VALIGN="TOP" align="left" nowrap width="1%">
 		<table cellpadding="4" cellspacing="3">
 
-		<?php if ($User->hasPermission('ChangeArticle') || $User->hasPermission('Publish')) { ?>
+		<?php if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish')) { ?>
 		<tr><td nowrap><a href="javascript: void(0);" id="link_submitted_articles" onclick="HideAll(home_page_elements); ShowElement('submitted_articles'); on_link_click('link_submitted_articles', home_page_links);"  style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "submitted_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Submitted Articles"); ?></a></td></tr>
 		<?php } ?>
 
