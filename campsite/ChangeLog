@@ -4,7 +4,7 @@
 
   New Features
   ------------
-  - Frontend users can post comments on articles & articles can be moderated
+  - Frontend users can post comments on articles & comments can be moderated
     by the staff.
   - 'Article Types' screen re-engineered with the ability to rename article
     types, to translate them, to hide or show them, and merge them together.
@@ -12,32 +12,65 @@
     types.
   - Improved security for the login screen.  The password is encrypted when
     it is sent to the server, and if too many unsuccessful login attempts are
-    made, a CAPTCHA is displayed.  This prevents automated scripting attacks
-    trying to guess passwords.
-  - If an error occurs in the admin interface, automated bug reporter takes
+    made, a CAPTCHA (an image with text inside) is displayed.  This prevents
+    automated scripting attacks trying to guess passwords.
+  - Improved responses to user interaction.  The system now displays which
+    action the user just performed and gives a detailed explaination if
+    a particular action cannot be performed.
+  - If an error occurs in the admin interface, an automated bug reporter takes
     over and allows the user to submit the bug back to the Campsite team
     automatically.  This takes away any extra effort on the part of the users
     to submit a bug and will allow quick resolution of anything that comes up.
+  - Staff users can submit feedback directly to the Campsite team from within
+    the interface.
+  - Added Dutch translation
 
   Minor Features
   --------------
-  - You can now specify the time format (hours, minutes, seconds) for time
-    values in the templates.
   - A 'Save and Close' button has been added to the bottom of the
     'Article Edit' screen
   - Improved layout of the Article Edit screen - more compact, more obvious
     switching between the "Edit/View" modes, and the time the article was
-    saved is displayed.
+    saved is displayed.  The article number has been added, as well as a link
+    to the frontend page.
   - When an article is locked, you are given the option to view it without
     unlocking it.
   - #1844: Section number is now displayed in the Section configure screen
   - #1884: Better installation procedure for the "Parser options" section
-  - #1927: Xinha photo popup defaults to first image selected
+  - #1927: Xinha image popup now defaults to first image selected
+  - #2070: Added ability to replace a template file
+  - Template line numbers are now shown so it is easier to debug any errors
+    in the template.
+  - Template IDs are shown in the template list & template edit screen, these
+    are sometimes needed when creating a template file.
+  - #2069: Added the ability to view template images
+  - #2074: Added ability to toggle "On Front Page" and "On Section Page"
+    from the "Article List" screen
+  - #1676: Added ability to delete an issue even if it has articles in it
+  - #2052: When deleting a section, there is no need to ask whether to
+    delete all articles from the section
+  - #2050: Automatically place cursor in the first text box for relevant
+    screens
+  - #2048: Added ability to publish an issue from the issue configure screen.
+  - #1633: Issue scheduled publishing is now combined with the Issue configure
+    screen
+  - #1997: The search now works across multiple publications
   - A number of things were done to speed up the Admin interface
   - API improved & simplified
 
-  Bugs Fixed
-  ----------
+  Template Language Improvements
+  ------------------------------
+  - You can now specify the time format (hours, minutes, seconds) for time
+    values.
+  - #2034: Added ability to set topic by ID and show topic ID
+  - #2071: Added "List Images" statement
+  - #2007: Template EDIT statements can now have arbitrary HTML added to them
+  - #1828: Added ability to set "Language OFF"
+  - #1713: Added URL statement, equivalent of:
+    <!** print publication site><!** uri>
+
+  Bugs Fixed (34 total)
+  ---------------------
   - #1919: Inserting image fails when caption and alt text erased in Xinha popup
   - #1585: URL type is not localized
   - #1685: Article attachments sometimes have the wrong file name when you
@@ -47,7 +80,6 @@
   - #1821: Changing a user type does not change permissions for all users of
     that user type
   - #1827: Add "Other" option to user employer type
-  - #1828: Templates: No way to set "Language OFF"
   - #1865: Creating an article with a duplicate name gives an uninformative
     error
   - #1908: If you try to save the publication without changing anything,
@@ -67,6 +99,31 @@
     articles of that type
   - #1943: Message not clear enough when deleting an issue that contains
     articles
+  - #2037: Preview function is broken with multiple publications
+  - #2112: Home page broken when user doesnt have "ChangeArticle" and
+    "Publish" permissions
+  - #2080: Dont allow campsite-backup-instance and campsite-restore-instance
+    to be run as non-root.  It wasnt possible previously, but now we give a
+    better error message.
+  - #2084: Fixed bug where the javascript calendar did not show up for
+    the following languages: Romanian, Russian, French, Italian, Portuguese,
+    and German.
+  - #2064: "System Preferences" section missing from Localizer
+  - #2039: Install fails on Ubuntu Dapper
+  - #2057: Deleting an Issue does not delete its Scheduled publishing entries
+  - #2058: Deleting article does not delete its scheduled publishing entries
+  - #2018: In IE, various png files aren't transparent
+  - #2053: Article List -> Translate -> back to article List -> language is
+    now selected
+  - #2012: Internal/External links dont work when upgrading from 2.1
+  - #2051: Duplicate section -> pull down for "publications" doesnt always work
+  - #2045: When editing an alias, and you save with the same name as it
+    already has, it gives you an error
+  - #1971: If you edit Topic and change the name to an existing topic name,
+    it give you an error
+  - #1968: Creating a folder with ".." throws an error
+  - #1991: Localizer "Hide translated strings" checkbox doesnt work on IE
+  - #1990: Permissions not enforced for the localizer
 
 
 2.5.2 (May 11, 2006)
@@ -79,6 +136,7 @@
   - Article internal links don't work for multiple publications
   - Demo templates don't display the correct article in "About us" section
   - The script campsite-create-instance was not set executable
+
 
 2.5.1 (April 10, 2006)
   New Features
