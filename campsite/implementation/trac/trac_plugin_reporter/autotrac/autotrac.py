@@ -545,10 +545,12 @@ class AutoTrac(Component):
         ticket['error_id'] = errorId 
         ticket['reporter'] = reporter
 
-        ticket['milestone'] = ""
         ticket['status'] = "inbox"
-        ticket['priority'] = "normal"
-        ticket['component'] = ""
+
+#         --- These components should be defined in trac.ini (under [ticket]) ---
+#         ticket['milestone'] = ""
+#         ticket['priority'] = "normal"
+#         ticket['component'] = ""
         
         ticketId = ticket.insert()
         self.insert_error_id_to_db (ticketId, errorId)
