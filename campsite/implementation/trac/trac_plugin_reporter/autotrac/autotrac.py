@@ -547,7 +547,7 @@ class AutoTrac(Component):
 
         ticket['milestone'] = ""
         ticket['status'] = "inbox"
-        ticket['priority'] = "major"
+        ticket['priority'] = "normal"
         ticket['component'] = ""
         
         ticketId = ticket.insert()
@@ -830,7 +830,7 @@ class AutoTrac(Component):
         db.commit()
 
         try:
-            tn = TicketNotifyEmail(self.env)
+            #tn = TicketNotifyEmail(self.env)
             tn.notify(ticket, newticket=False, modtime=now)
         except Exception, e:
             self.log.exception("Failure sending notification on change to "
