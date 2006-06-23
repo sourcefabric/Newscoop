@@ -1,5 +1,13 @@
 <?php
 
+$processUserId = posix_geteuid();
+if ($processUserId != 0) {
+	echo "\n";
+	echo "You must run this script as root.\n";
+	echo "\n";
+	exit(1);
+}
+
 if (!is_array($GLOBALS['argv'])) {
 	echo "Can't read command line arguments\n";
 	exit(1);
@@ -35,13 +43,15 @@ exec_command($cmd);
 
 // check if the database conf file exists
 $database_conf_file = "$etc_dir/$instance_name/database_conf.php";
-if (!is_file($database_conf_file))
+if (!is_file($database_conf_file)) {
 	exit(0);
+}
 
 // drop database
 require_once($database_conf_file);
-if (connect_to_database() != 0)
+if (connect_to_database() != 0) {
 	exit_with_error($res);
+}
 mysql_query("DROP DATABASE $instance_name");
 
 // remove etc directory

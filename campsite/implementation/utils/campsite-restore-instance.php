@@ -1,10 +1,5 @@
 <?php
 
-if (!is_array($GLOBALS['argv'])) {
-	echo "Can't read command line arguments\n";
-	exit(1);
-}
-
 $processUserId = posix_geteuid();
 if ($processUserId != 0) {
 	echo "\n";
@@ -13,6 +8,10 @@ if ($processUserId != 0) {
 	exit(1);
 }
 
+if (!is_array($GLOBALS['argv'])) {
+	echo "Can't read command line arguments\n";
+	exit(1);
+}
 
 $etc_dir = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : "";
 $type = isset($GLOBALS['argv'][2]) ? trim($GLOBALS['argv'][2]) : "";
@@ -55,8 +54,9 @@ if ($type == "-a") {
 
 	// read instance name from database package
 	$db_file = glob("$tmp_dir/*-database.tar.gz");
-	if (sizeof($db_file) != 1)
+	if (sizeof($db_file) != 1) {
 		exit_with_error("Archive $archive_file is invalid.");
+	}
 	$db_file_name = file_name($db_file[0]);
 	$instance_name = substr($db_file_name, 0, strrpos($db_file_name, '-'));
 
@@ -71,8 +71,9 @@ if ($type == "-i") {
 	// look for the archive in backup directory
 	$backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/$instance_name";
 	$archive_file = "$backup_dir/$instance_name-bak.tar";
-	if (!is_file($archive_file))
+	if (!is_file($archive_file)) {
 		exit_with_error("Archive file for instance $instance_name does not exist.");
+	}
 
 	// unarchive the backup
 	$cmd = "pushd " . escapeshellarg($backup_dir) . " > /dev/null && tar xf "
@@ -94,8 +95,9 @@ foreach ($packages as $index=>$package) {
 	case "$instance_name-conf.tar.gz": $dest_dir = $etc_dir; break;
 	default: $dest_dir = $html_dir; break;
 	}
-	if ($package == "")
+	if ($package == "") {
 		continue;
+	}
 	$cmd = "pushd " . escapeshellarg($dest_dir) . " && tar xzf "
 		. escapeshellarg($package) . " && popd > /dev/null";
 	exec_command($cmd);
@@ -110,12 +112,14 @@ if (is_file($database_dump_file) && backup_file($database_dump_file, $output) !=
 }
 
 // backup the old database if exists
-if (($res = connect_to_database()) != 0)
+if (($res = connect_to_database()) != 0) {
 	exit_with_error($res);
+}
 if (database_exists($instance_name)) {
 	backup_database($instance_name, $database_dump_file, $output);
-	if (backup_file($database_dump_file, $output) != 0)
+	if (backup_file($database_dump_file, $output) != 0) {
 		exit_with_error($output);
+	}
 }
 
 // extract the database dump file now
@@ -124,8 +128,9 @@ $cmd = "pushd " . escapeshellarg($backup_dir) . " && tar xzf "
 exec_command($cmd);
 
 // restore the database and create language links
-if (($res = restore_database($instance_name, $database_dump_file)) !== 0)
+if (($res = restore_database($instance_name, $database_dump_file)) !== 0) {
 	exit_with_error($res);
+}
 require_once("$html_dir/parser_utils.php");
 camp_create_language_links($html_dir);
 
@@ -139,8 +144,9 @@ function restore_database($p_db_name, $dump_file)
 {
 	global $Campsite;
 
-	if (!is_file($dump_file))
+	if (!is_file($dump_file)) {
 		return "Can't restore database: dump file not found";
+	}
 
 	if (database_exists($p_db_name)) {
 		clean_database($p_db_name);
@@ -152,8 +158,9 @@ function restore_database($p_db_name, $dump_file)
 	$cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
 		. $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
 		. $Campsite['DATABASE_SERVER_PORT'];
-	if ($Campsite['DATABASE_PASSWORD'] != "")
+	if ($Campsite['DATABASE_PASSWORD'] != "") {
 		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
+	}
 	$cmd .= " $p_db_name < \"$dump_file\"";
 	exec_command($cmd);
 
