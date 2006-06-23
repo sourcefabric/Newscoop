@@ -19,6 +19,7 @@ $dir = urldecode($Path)."/".urldecode($Name);
 $fileFullPath = Template::GetFullPath(urldecode($Path), $Name);
 $errorMsgs = array();
 
+
 $deleted = false;
 if (!$isFile) {
 	$deleted = rmdir($fileFullPath);
@@ -31,7 +32,7 @@ if (!$isFile) {
 	}
 } else {
 	$template_path = Template::GetPath($Path, $Name);
-	if (!Template::InUse($template_path)) {
+	if (!Template::InUse($Name)) {
 		$deleted = unlink($fileFullPath);
 		if ($deleted) {
 			$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($dir));
