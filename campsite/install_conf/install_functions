@@ -114,15 +114,14 @@ choice_yn "\nCampsite configuration is completed. Do you want to review it?" Y
 if [ "$choice" = "Y" ]; then
     echo -e "\nInstall configuration"
     install_conf
-    echo -e "\nTo continue press ENTER"
-    read
+    echo ""
     for cc_mod in $NEED_CONFIG_MODULES; do
 	echo "$cc_mod configuration:"
 	modules_conf $cc_mod
 	[ $? -ne 0 ] && return $?
 	echo -e "\nTo continue press ENTER"
-	read
     done
+    read
 fi
 
 fi # interactive
