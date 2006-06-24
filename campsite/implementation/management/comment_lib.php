@@ -102,13 +102,20 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 			camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
 			exit;
 		}
+
+		if (isset($p_parameters['acid']) && $p_parameters['acid'] > 0) {
+			$parentId = 0 + $p_parameters['acid'];
+		} else {
+			$parentId = 0;
+		}
+		
 		// Create the comment
 		$commentObj =& new Phorum_message();
 		if (!$commentObj->create($forumId,
 								$f_comment_subject,
 								$f_comment_body,
 								$threadId,
-								$threadId,
+								$parentId,
 								$user->getRealName(),
 								$user->getEmail(),
 								$user->getUserId())) {

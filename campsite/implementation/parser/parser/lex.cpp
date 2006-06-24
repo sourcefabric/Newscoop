@@ -479,6 +479,7 @@ int CStatementMap::InitStatements()
 
 	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
 	pcoCtx->insertAttr(new CAttribute("fromstart"));
+	pcoCtx->insertAttr(new CAttribute("articleComment"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);

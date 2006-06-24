@@ -1527,6 +1527,10 @@ int CActFormParameters::takeAction(CContext& c, sockstream& fs)
 		FormPrintParam(P_SLSTART, c.SListStart(), fs);
 		FormPrintParam(P_ALSTART, c.AListStart(), fs);
 	}
+	if (articleComment)
+	{
+		FormPrintParam("acid", c.ArticleCommentId(), fs);
+	}
 	return RES_OK;
 	TK_CATCH_ERR
 }
@@ -3611,6 +3615,10 @@ int CActArticleCommentForm::takeAction(CContext& c, sockstream& fs)
 				<< c.Section() << "\">\n"
 				<< "<input type=\"hidden\" name=\"" << P_NRARTICLE << "\" value=\""
 				<< c.Article() << "\">\n";
+	}
+	if (c.ArticleCommentId() > 0)
+	{
+		fs << "<input type=\"hidden\" name=\"acid\" value=\"" << c.ArticleCommentId() << "\">\n";
 	}
 	fs << c.URL()->getFormString();
 	runActions(block, lc, fs);

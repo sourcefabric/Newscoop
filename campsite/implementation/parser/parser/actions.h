@@ -709,11 +709,13 @@ public:
 class CActFormParameters : public CAction
 {
 protected:
-	bool fromstart;		// if true, print url parameters using template start parameters
+	bool fromstart;		// if true, print start parameters
+	bool articleComment; // if true, print article comment identifier
 
 public:
 	// constructor
-	CActFormParameters(bool fs = false) : fromstart(fs) {}
+	CActFormParameters(bool fs = false, bool ac = false)
+	: fromstart(fs), articleComment(ac) {}
 	
 	// destructor
 	virtual ~CActFormParameters() {}

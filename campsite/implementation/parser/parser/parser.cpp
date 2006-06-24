@@ -2317,6 +2317,37 @@ inline int CParser::HURIPath(CActionList& al)
 	return 0;
 }
 
+// HFormParameters: parse FormParameters statement; add CActFormParameters action to
+// actions list (al)
+// Parameters:
+//		CActionList& al - reference to actions list
+inline int CParser::HFormParameters(CActionList& al)
+{
+	l = lex.getLexem();
+	DEBUGLexem("formparam", l);
+	bool fromstart = false, articleComment = false;
+	while (l->res() != CMS_LEX_END_STATEMENT && l->atom())
+	{
+		if (case_comp(l->atom()->identifier(), "fromstart") == 0)
+		{
+			fromstart = true;
+		}
+		else if (case_comp(l->atom()->identifier(), "articleComment") == 0)
+		{
+			articleComment = true;
+		}
+		else
+		{
+			SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
+					  lex.prevLine(), lex.prevColumn());
+		}
+	}
+	al.insert(al.end(), new CActFormParameters(fromstart, articleComment));
+	if (l->res() != CMS_LEX_END_STATEMENT)
+		WaitForStatementEnd(true);
+	return 0;
+}
+
 // HArticleCommentForm: parse ArticleCommentForm statement; add CActArticleCommentForm
 // action to actions list (al). All statements between ArticleComment and EndArticleComment
 // statements are parsed, added as actions in CActArticleComment's list of actions
@@ -2631,26 +2662,6 @@ string CParser::getTemplateInternalPath(bool p_nAddTrailingSlash) const
 			tpl_ipath = "";
 	}
 	return tpl_ipath;
-}
-
-// HFormParameters: parse FormParameters statement; add CActFormParameters action to
-// actions list (al)
-// Parameters:
-//		CActionList& al - reference to actions list
-inline int CParser::HFormParameters(CActionList& al)
-{
-	l = lex.getLexem();
-	DEBUGLexem("formparam", l);
-	bool fromstart = false;
-	if (l->res() != CMS_LEX_END_STATEMENT && l->atom()
-	    && case_comp(l->atom()->identifier(), "fromstart") == 0)
-	{
-		fromstart = true;
-	}
-	al.insert(al.end(), new CActFormParameters(fromstart));
-	if (l->res() != CMS_LEX_END_STATEMENT)
-		WaitForStatementEnd(true);
-	return 0;
 }
 
 // setMYSQL: set MySQL connection
