@@ -33,7 +33,7 @@ function escape_shell_arg($p_arg)
 
 function exec_command($cmd, $err_msg = "", $print_output = true)
 {
-	exec($cmd, $output, $result);
+	@exec($cmd, $output, $result);
 	if ($result != 0) {
 		if (!$print_output)
 			$output = array();
@@ -102,8 +102,8 @@ function archive_file($source_file, $dest_dir, $file_name, &$output)
 	$source_file_name = substr($source_file, strlen($source_dir) + 1);
 	$cmd = "pushd $source_dir > /dev/null && tar czf "
 		. escapeshellarg("$dest_dir/$file_name.tar.gz")
-		. " " . escapeshellarg($source_file_name) . " && popd > /dev/null";
-	exec($cmd, $output, $result);
+		. " " . escapeshellarg($source_file_name) . " &> /dev/null && popd > /dev/null";
+	@exec($cmd, $output, $result);
 	return $result;
 }
 
@@ -119,7 +119,7 @@ function backup_database($db_name, $dest_file, &$output)
 	if ($password != "")
 		$cmd .= " --password=$password";
 	$cmd .= " $db_name > $dest_file";
-	exec($cmd, $output, $result);
+	@exec($cmd, $output, $result);
 	return $result;
 }
 
@@ -127,7 +127,7 @@ function exit_with_error($error_str)
 {
 	if (is_array($error_str))
 		$error_str = implode("\n", $error_str);
-	echo "$error_str\n";
+	echo "ERROR!\n$error_str\n\n";
 	clean_files();
 	exit(1);
 }

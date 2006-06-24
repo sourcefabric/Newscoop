@@ -1,13 +1,5 @@
 <?php
 
-$processUserId = posix_geteuid();
-if ($processUserId != 0) {
-	echo "\n";
-	echo "You must run this script as root.\n";
-	echo "\n";
-	exit(1);
-}
-
 if (!is_array($GLOBALS['argv'])) {
 	echo "Can't read command line arguments\n";
 	exit(1);

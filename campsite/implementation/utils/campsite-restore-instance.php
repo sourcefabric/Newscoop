@@ -1,13 +1,5 @@
 <?php
 
-$processUserId = posix_geteuid();
-if ($processUserId != 0) {
-	echo "\n";
-	echo "You must run this script as root.\n";
-	echo "\n";
-	exit(1);
-}
-
 if (!is_array($GLOBALS['argv'])) {
 	echo "Can't read command line arguments\n";
 	exit(1);
@@ -41,16 +33,18 @@ if ($etc_dir == "" || $type == "" || ($type == "-a" && $archive_file == "")
 require_once("$etc_dir/install_conf.php");
 require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
 
+$adviceOnError = "Please run this script as 'root' or as '" . $Campsite['APACHE_USER'] . "'.";
+
 if ($type == "-a") {
 	// copy the archive to a temporary directory to read the instance name
 	// create temporary directory
 	$tmp_dir = $Campsite['CAMPSITE_DIR'] . "/backup/.tmp";
 	create_dir($tmp_dir, "Unable to create temporary directory.");
-	exec_command("rm -f $tmp_dir/*");
+	exec_command("rm -f $tmp_dir/*", $adviceOnError);
 
 	// unarchive the backup
 	$cmd = "tar xfC " . escapeshellarg($archive_file) . " " . escapeshellarg($tmp_dir);
-	exec_command($cmd);
+	exec_command($cmd, $adviceOnError);
 
 	// read instance name from database package
 	$db_file = glob("$tmp_dir/*-database.tar.gz");
@@ -63,8 +57,8 @@ if ($type == "-a") {
 	// move files to instance backup directory and remove temporary directory
 	$backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/$instance_name";
 	create_dir($backup_dir, "Unable to create instance backup directory.");
-	exec_command("mv -f $tmp_dir/* " . escapeshellarg($backup_dir));
-	exec_command("rmdir " . escapeshellarg($tmp_dir));
+	exec_command("mv -f $tmp_dir/* " . escapeshellarg($backup_dir), $adviceOnError);
+	exec_command("rmdir " . escapeshellarg($tmp_dir), $adviceOnError);
 }
 
 if ($type == "-i") {
@@ -77,13 +71,14 @@ if ($type == "-i") {
 
 	// unarchive the backup
 	$cmd = "pushd " . escapeshellarg($backup_dir) . " > /dev/null && tar xf "
-		. escapeshellarg($archive_file) . " && popd > /dev/null";
-	exec_command($cmd);
+		. escapeshellarg($archive_file) . " &> /dev/null && popd > /dev/null";
+	exec_command($cmd, $adviceOnError);
 }
 
 // call campsite-create-instance
 $bin_dir = $Campsite['BIN_DIR'];
-exec_command("$bin_dir/campsite-create-instance --db_name $instance_name --no_database");
+exec_command("$bin_dir/campsite-create-instance --db_name $instance_name --no_database",
+			 $adviceOnError);
 
 // extract packages
 $html_dir = $Campsite['WWW_DIR'] . "/$instance_name/html";
@@ -100,7 +95,7 @@ foreach ($packages as $index=>$package) {
 	}
 	$cmd = "pushd " . escapeshellarg($dest_dir) . " && tar xzf "
 		. escapeshellarg($package) . " && popd > /dev/null";
-	exec_command($cmd);
+	exec_command($cmd, $adviceOnError);
 }
 
 $database_dump_file = "$backup_dir/$instance_name-database.sql";
@@ -125,7 +120,7 @@ if (database_exists($instance_name)) {
 // extract the database dump file now
 $cmd = "pushd " . escapeshellarg($backup_dir) . " && tar xzf "
 	. escapeshellarg("$backup_dir/$instance_name-database.tar.gz") . " && popd > /dev/null";
-exec_command($cmd);
+exec_command($cmd, $adviceOnError);
 
 // restore the database and create language links
 if (($res = restore_database($instance_name, $database_dump_file)) !== 0) {
@@ -135,14 +130,14 @@ require_once("$html_dir/parser_utils.php");
 camp_create_language_links($html_dir);
 
 // remove packages
-exec_command("rm -f $backup_dir/*.tar.gz");
-exec_command("rm -f $backup_dir/$instance_name-database.sql");
+exec_command("rm -f $backup_dir/*.tar.gz", $adviceOnError);
+exec_command("rm -f $backup_dir/$instance_name-database.sql", $adviceOnError);
 
 
 
 function restore_database($p_db_name, $dump_file)
 {
-	global $Campsite;
+	global $Campsite, $adviceOnError;
 
 	if (!is_file($dump_file)) {
 		return "Can't restore database: dump file not found";
@@ -162,7 +157,7 @@ function restore_database($p_db_name, $dump_file)
 		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
 	}
 	$cmd .= " $p_db_name < \"$dump_file\"";
-	exec_command($cmd);
+	exec_command($cmd, $adviceOnError);
 
 	return 0;
 }

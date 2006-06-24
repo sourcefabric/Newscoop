@@ -1,13 +1,5 @@
 <?php
 
-$processUserId = posix_geteuid();
-if ($processUserId != 0) {
-	echo "\n";
-	echo "You must run this script as root.\n";
-	echo "\n";
-	exit(1);
-}
-
 if (!is_array($GLOBALS['argv'])) {
 	echo "Can't read command line arguments\n";
 	exit(1);
@@ -76,12 +68,20 @@ function create_instance($p_arguments, &$p_errors)
 
 	if (!($res = create_configuration_files($defined_parameters)) == 0) {
 		$p_errors[] = $res;
-		return false;
+		$p_errors[] = "Please run this script as user 'root' or '" . $Campsite['APACHE_USER'] . "'.";
+		foreach($p_errors as $index=>$error) {
+			echo "$error\n";
+		}
+		exit(1);
 	}
 
 	if (!($res = create_site($defined_parameters)) == 0) {
 		$p_errors[] = $res;
-		return false;
+		$p_errors[] = "Please run this script as user 'root' or '" . $Campsite['APACHE_USER'] . "'.";
+		foreach($p_errors as $index=>$error) {
+			echo "$error\n";
+		}
+		exit(1);
 	}
 
 	$instance_etc_dir = $defined_parameters['--etc_dir'] . "/" . $defined_parameters['--db_name'];
@@ -108,8 +108,8 @@ function create_configuration_files($p_defined_parameters)
 	$global_etc_dir = $Campsite['ETC_DIR'];
 	$instance_etc_dir = $global_etc_dir . "/" . $p_defined_parameters['--db_name'];
 	if (!is_dir($instance_etc_dir)) {
-		if (!mkdir($instance_etc_dir)) {
-			return "Unable to create configuration directory $instance_etc_dir";
+		if (!@mkdir($instance_etc_dir)) {
+			return "Unable to create configuration directory $instance_etc_dir.";
 		}
 	}
 
@@ -178,10 +178,10 @@ function create_database($p_defined_parameters)
 
 	$db_user = $Campsite['DATABASE_USER'];
 	$db_password = $Campsite['DATABASE_PASSWORD'];
-	$res = mysql_connect($Campsite['DATABASE_SERVER_ADDRESS'] . ":"
+	$res = @mysql_connect($Campsite['DATABASE_SERVER_ADDRESS'] . ":"
 		. $Campsite['DATABASE_SERVER_PORT'], $db_user, $db_password);
 	if (!$res) {
-		return "Unable to connect to database server";
+		return "Unable to connect to database server.";
 	}
 
 	$db_exists = database_exists($db_name);
@@ -244,8 +244,9 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 		$db_conf_file = $etc_dir . "/$p_db_name/database_conf.php";
 		$link = $upgrade_dir . "/database_conf.php";
 		@unlink($link);
-		if (!is_link($link) && !symlink($db_conf_file, $link))
+		if (!is_link($link) && !symlink($db_conf_file, $link)) {
 			return "Unable to create link to database configuration file";
+		}
 		$install_conf_file = $etc_dir . "/install_conf.php";
 		$link = $upgrade_dir . "/install_conf.php";
 		@unlink($link);
@@ -415,7 +416,7 @@ function create_site($p_defined_parameters)
 		'ATTACHMENTS_DIR'=>$instance_www_dir . "/html/files");
 	// create directories
 	foreach ($instance_dirs as $dir_type=>$dir_name) {
-		if (!is_dir($dir_name) && !mkdir($dir_name)) {
+		if (!is_dir($dir_name) && !@mkdir($dir_name)) {
 			return "Unable to create directory $dir_name";
 		}
 	}
@@ -423,7 +424,10 @@ function create_site($p_defined_parameters)
 	if (isset($CampsiteOld['.MODULES_HTML_DIR'])) {
 		$cmd = "cp -fr " . escape_shell_arg($CampsiteOld['.MODULES_HTML_DIR']) . "/look "
 			. escape_shell_arg($html_dir);
-		exec($cmd);
+		exec($cmd, $output, $exit_code);
+		if ($exit_code != 0) {
+			return "Unable to copy files to templates directory ($html_dir/look).";
+		}
 	}
 	// create symbolik links to configuration files
 	$link_files = array("$etc_dir/install_conf.php"=>"$html_dir/install_conf.php",
@@ -446,7 +450,7 @@ function create_site($p_defined_parameters)
 		"$common_html_dir/comment_lib.php"=>"$html_dir/comment_lib.php"
 		);
 	foreach ($link_files as $file=>$link) {
-		if (!is_link($link) && !symlink($file, $link)) {
+		if (!is_link($link) && !@symlink($file, $link)) {
 			return "Unable to create symbolic link to $file";
 		}
 	}
@@ -455,8 +459,20 @@ function create_site($p_defined_parameters)
 		return $res;
 	}
 
-	$cp_cmd = "cp -f " . escape_shell_arg($common_cgi_dir) . "/* " . escape_shell_arg($cgi_dir);
-	exec($cp_cmd);
+	$cp_cmd = "cp -f " . escape_shell_arg($common_cgi_dir) . "/* " . escape_shell_arg($cgi_dir)
+			. " &> /dev/null";
+	exec($cp_cmd, $output, $exit_code);
+	if ($exit_code != 0) {
+		return "Unable to copy files to CGI directory ($cgi_dir).";
+	}
+
+	$cmd = "chown -R " . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
+		. " " . escape_shell_arg($cgi_dir);
+	exec($cmd);
+	$cmd = "chmod -R u+w " . escape_shell_arg($cgi_dir);
+	exec($cmd);
+	$cmd = "chmod -R ug+r " . escape_shell_arg($cgi_dir);
+	exec($cmd);
 
 	$cmd = "chown -R " . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
 		. " " . escape_shell_arg($instance_www_dir);
@@ -496,8 +512,8 @@ function create_virtual_host(&$p_defined_parameters)
 	$replace = array($html_dir, $cgi_dir);
 	$new_file_content = str_replace($search, $replace, $file_content);
 
-	if (!$res = fopen($instance_vhost, "w")) {
-		return "Can not create instance virtual host configuration file";
+	if (!$res = @fopen($instance_vhost, "w")) {
+		return "Can not create instance virtual host configuration file.";
 	}
 	fwrite($res, $new_file_content);
 	fclose($res);
@@ -687,13 +703,19 @@ function read_cmdline_parameters($p_arguments, &$p_errors)
 			$defined_parameters['--no_database'] = true;
 			continue;
 		}
-		// read the parameter value
-		$arg_n++;
-		if ($arg_n >= sizeof($p_arguments)) {
-			$p_errors[] = "Value not specified for parameter '$param_name'";
-			break;
+		if ($param_name == '--db_password'
+				&& (($arg_n + 1) >= sizeof($p_arguments)
+					|| in_array($p_arguments[$arg_n+1], $g_instance_parameters))) {
+			$param_val = "";
+		} else {
+			// read the parameter value
+			$arg_n++;
+			if ($arg_n >= sizeof($p_arguments)) {
+				$p_errors[] = "Value not specified for parameter '$param_name'";
+				break;
+			}
+			$param_val = $p_arguments[$arg_n];
 		}
-		$param_val = $p_arguments[$arg_n];
 
 		// set the parameter value in $defined_parameters array
 		$defined_parameters[$param_name] = $param_val;
