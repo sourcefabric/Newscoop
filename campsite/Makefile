@@ -11,19 +11,19 @@ install: dummy
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(SBIN_DIR)"
 	chmod 755 "$(SBIN_DIR)"
 	mkdir -p "$(ETC_DIR)"
-	chown $(ROOT_USER):$(APACHE_GROUP) "$(ETC_DIR)"
+	chown -R $(APACHE_USER):$(APACHE_GROUP) "$(ETC_DIR)"
 	chmod 755 "$(ETC_DIR)"
 	mkdir -p "$(WWW_DIR)"
-	chown $(ROOT_USER):$(APACHE_GROUP) "$(WWW_DIR)"
+	chown -R $(APACHE_USER):$(APACHE_GROUP) "$(WWW_DIR)"
 	chmod 755 "$(WWW_DIR)"
 	mkdir -p "$(WWW_COMMON_DIR)"
-	chown $(ROOT_USER):$(APACHE_GROUP) "$(WWW_COMMON_DIR)"
+	chown -R $(APACHE_USER):$(APACHE_GROUP) "$(WWW_COMMON_DIR)"
 	chmod 755 "$(WWW_COMMON_DIR)"
 	mkdir -p "$(HTML_COMMON_DIR)"
-	chown $(ROOT_USER):$(APACHE_GROUP) "$(HTML_COMMON_DIR)"
+	chown -R $(APACHE_USER):$(APACHE_GROUP) "$(HTML_COMMON_DIR)"
 	chmod 755 "$(HTML_COMMON_DIR)"
 	mkdir -p "$(CAMPSITE_DIR)/backup"
-	chown $(ROOT_USER):$(APACHE_GROUP) "$(CAMPSITE_DIR)/backup"
+	chown -R $(APACHE_USER):$(APACHE_GROUP) "$(CAMPSITE_DIR)/backup"
 	chmod 755 "$(CAMPSITE_DIR)/backup"
 	mkdir -p "$(CAMPSITE_DIR)/instance"
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(CAMPSITE_DIR)/instance"
@@ -34,7 +34,7 @@ install: dummy
 	install -m 640 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/vhost-template.conf" "$(ETC_DIR)"
 	install -m 640 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/parser_conf.php" "$(ETC_DIR)"
 	install -m 644 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/campsite_version.php" "$(HTML_COMMON_DIR)"
-	$(MAKE) -C implementation install
+#	$(MAKE) -C implementation install
 	$(BIN_DIR)/campsite-update-instances
 
 test_install:
