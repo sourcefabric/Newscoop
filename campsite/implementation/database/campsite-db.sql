@@ -549,14 +549,12 @@ CREATE TABLE `Publications` (
   `comments_article_default_enabled` tinyint(1) NOT NULL default '0',
   `comments_subscribers_moderated` tinyint(1) NOT NULL default '0',
   `comments_public_moderated` tinyint(1) NOT NULL default '0',
+  `comments_captcha_enabled` tinyint(1) NOT NULL,
+  `comments_spam_blocking_enabled` tinyint(1) NOT NULL,
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Alias` (`IdDefaultAlias`),
   UNIQUE KEY `Name` (`Name`)
 ) TYPE=MyISAM;
-
---
--- Dumping data for table `Publications`
---
 
 
 --

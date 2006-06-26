@@ -55,7 +55,9 @@ ALTER TABLE `Publications` ADD `fk_forum_id` INT NULL,
 ADD `comments_enabled` TINYINT(1) NOT NULL DEFAULT '0',
 ADD `comments_article_default_enabled` TINYINT(1) NOT NULL DEFAULT '0',
 ADD `comments_subscribers_moderated` TINYINT(1) NOT NULL DEFAULT '0',
-ADD `comments_public_moderated` TINYINT(1) NOT NULL DEFAULT '0';
+ADD `comments_public_moderated` TINYINT(1) NOT NULL DEFAULT '0',
+ADD `comments_captcha_enabled` TINYINT(1) NOT NULL DEFAULT '0',
+ADD `comments_spam_blocking_enabled` TINYINT(1) NOT NULL DEFAULT '0';
 
 -- Add system preference for number of login attempts before CAPTCHA is shown.
 INSERT INTO `UserConfig` ( `id` , `fk_user_id` , `varname` , `value` , `last_modified` )
