@@ -1,6 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
@@ -20,8 +22,11 @@ $f_paid = Input::Get('f_paid', 'int', null, true);
 $f_trial = Input::Get('f_trial', 'int', null, true);
 $f_comments_enabled = Input::Get('f_comments_enabled', 'checkbox', 'numeric');
 $f_comments_article_default = Input::Get('f_comments_article_default', 'checkbox', 'numeric');
+$f_comments_public_enabled = Input::Get('f_comments_public_enabled', 'checkbox', 'numeric');
 $f_comments_public_moderated = Input::Get('f_comments_public_moderated', 'checkbox', 'numeric');
 $f_comments_subscribers_moderated = Input::Get('f_comments_subscribers_moderated', 'checkbox', 'numeric');
+$f_comments_captcha_enabled = Input::Get('f_comments_captcha_enabled', 'checkbox', 'numeric');
+$f_comments_spam_blocking_enabled = Input::Get('f_comments_spam_blocking_enabled', 'checkbox', 'numeric');
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -50,7 +55,7 @@ if (camp_html_has_msgs()) {
 
 $alias =& new Alias();
 $alias->create(array('Name' => $f_default_alias));
-$newPub =& new Publication();
+$publicationObj =& new Publication();
 $columns = array('Name' => $f_name,
 				 'IdDefaultAlias'=> $alias->getId(),
 				 'IdDefaultLanguage' => $f_language,
@@ -64,12 +69,29 @@ $columns = array('Name' => $f_name,
                  'comments_enabled' => $f_comments_enabled,
 			     'comments_article_default_enabled'=> $f_comments_article_default,
 			     'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
-			     'comments_public_moderated' => $f_comments_public_moderated);
-$created = $newPub->create($columns);
+			     'comments_public_moderated' => $f_comments_public_moderated,
+			     'comments_captcha_enabled' => $f_comments_captcha_enabled,
+				 'comments_spam_blocking_enabled' => $f_comments_spam_blocking_enabled);
+$created = $publicationObj->create($columns);
 if ($created) {
-	$alias->setPublicationId($newPub->getPublicationId());
+	$alias->setPublicationId($publicationObj->getPublicationId());
+
+	// create the phorum
+    $forum =& new Phorum_forum();
+    $forum->create();
+    $forum->setName($publicationObj->getName());
+    $publicationObj->setForumId($forum->getForumId());
+	if ($f_comments_public_enabled) {
+		$forum->setPublicPermissions($forum->getPublicPermissions()
+									 | PHORUM_USER_ALLOW_NEW_TOPIC
+									 | PHORUM_USER_ALLOW_REPLY);
+	} else {
+		$forum->setPublicPermissions($forum->getPublicPermissions()
+									 & !PHORUM_USER_ALLOW_NEW_TOPIC
+									 & !PHORUM_USER_ALLOW_REPLY);
+	}
 	camp_html_add_msg("Publication created.", "ok");
-	camp_html_goto_page("/$ADMIN/pub/edit.php?Pub=".$newPub->getPublicationId());
+	camp_html_goto_page("/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());
 } else {
 	$alias->delete();
 	camp_html_add_msg(getGS('The publication could not be added.'));

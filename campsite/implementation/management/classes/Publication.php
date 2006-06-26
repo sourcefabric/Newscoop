@@ -40,7 +40,9 @@ class Publication extends DatabaseObject {
 	                           'comments_enabled',
 	                           'comments_article_default_enabled',
 	                           'comments_subscribers_moderated',
-	                           'comments_public_moderated');
+	                           'comments_public_moderated',
+	                           'comments_captcha_enabled',
+	                           'comments_spam_blocking_enabled');
 
 	/**
 	 * A publication represents a magazine or newspaper.
@@ -371,6 +373,57 @@ class Publication extends DatabaseObject {
 	    $p_value = $p_value ? '1' : '0';
         return $this->setProperty('comments_public_moderated', $p_value);
     } // fn setCommentsPublicModerated
+
+
+    /**
+     * Return TRUE if a CAPTCHA is used to block comment spam when a
+     * user is posting.
+     *
+     * @return boolean
+     */
+    function isCaptchaEnabled()
+    {
+    	return $this->m_data['comments_captcha_enabled'];
+    } // fn isCaptchaEnabled
+
+
+    /**
+     * Set whether a CAPTCHA should be used to block comment spam when
+     * a user is posting.
+     *
+     * @param boolean $p_value
+     * @return boolean
+     */
+    function setCaptchaEnabled($p_value)
+    {
+	    $p_value = $p_value ? '1' : '0';
+        return $this->setProperty('comments_captcha_enabled', $p_value);
+    } // fn setCaptchaEnabled
+
+
+    /**
+     * Return TRUE if comments are checked if they are SPAM before they
+     * are accepted.
+     *
+     * @return boolean
+     */
+    function isSpamBlockingEnabled()
+    {
+    	return $this->m_data['comments_spam_blocking_enabled'];
+    } // fn isSpamBlockingEnabled
+
+
+    /**
+     * Set whether to check comments for SPAM before posting them.
+     *
+     * @param boolean $p_value
+     * @return boolean
+     */
+    function setSpamBlockingEnabled($p_value)
+    {
+	    $p_value = $p_value ? '1' : '0';
+        return $this->setProperty('comments_spam_blocking_enabled', $p_value);
+    } // fn setSpamBlockingEnabled
 
 
 	/**

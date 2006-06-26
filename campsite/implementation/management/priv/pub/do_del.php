@@ -5,6 +5,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
 
 // Check permissions
 if (!$g_user->hasPermission('DeletePub')) {
@@ -49,6 +51,8 @@ if ($subscriptionsRemaining > 0) {
 }
 
 if ($doDelete) {
+	$forum =& new Phorum_forum($publicationObj->getForumId());
+	$forum->delete();
 	$publicationObj->delete();
 	camp_html_goto_page("/$ADMIN/pub");
 } else {

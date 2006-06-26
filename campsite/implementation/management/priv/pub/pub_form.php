@@ -3,12 +3,18 @@ function onCommentsActivated(p_checkbox)
 {
     if (p_checkbox.checked) {
         document.getElementById('comment_default').disabled = false;
+        document.getElementById('public_enabled').disabled = false;
         document.getElementById('public_moderated').disabled = false;
         document.getElementById('subscriber_moderated').disabled = false;
+        document.getElementById('captcha_enabled').disabled = false;
+        document.getElementById('spam_blocking_enabled').disabled = false;
     } else {
         document.getElementById('comment_default').disabled = true;
+        document.getElementById('public_enabled').disabled = true;
         document.getElementById('public_moderated').disabled = true;
         document.getElementById('subscriber_moderated').disabled = true;
+        document.getElementById('captcha_enabled').disabled = true;
+        document.getElementById('spam_blocking_enabled').disabled = true;
     }
 }
 </script>
@@ -113,17 +119,35 @@ function onCommentsActivated(p_checkbox)
                 	</TD>
                 </TR>
                 <TR>
-                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Public comments moderated?"); ?>:</td>
-                	<td>
-                    <input type="checkbox" NAME="f_comments_public_moderated" id="public_moderated" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->commentsPublicModerated()) { ?>checked<?php } ?>>
-                	</TD>
-                </TR>
-                <TR>
                 	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Subscriber comments moderated?"); ?>:</td>
                 	<td>
                         <input type="checkbox" NAME="f_comments_subscribers_moderated" id="subscriber_moderated" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->commentsSubscribersModerated()) { ?>checked<?php } ?>>
                 	</TD>
                 </TR>
+                <TR>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Public allowed to comment?"); ?>:</td>
+                	<td>
+                    <input type="checkbox" NAME="f_comments_public_enabled" id="public_enabled" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj)) { $forum =& new Phorum_forum($publicationObj->getForumId()); if ($forum->getPublicPermissions() & (PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY)) { ?>checked<?php }} ?>>
+                	</TD>
+                </TR>
+                <TR>
+                	<TD ALIGN="left" style="padding-left: 40px;"><?php  putGS("Public comments moderated?"); ?>:</td>
+                	<td>
+                    <input type="checkbox" NAME="f_comments_public_moderated" id="public_moderated" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->commentsPublicModerated()) { ?>checked<?php } ?>>
+                	</TD>
+                </TR>
+                <TR>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Use CAPTCHA to prevent spam?"); ?>:</td>
+                	<td>
+                    <input type="checkbox" NAME="f_comments_captcha_enabled" id="captcha_enabled" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->isCaptchaEnabled()) { ?>checked<?php } ?>>
+                	</TD>
+                </TR>
+                <!--<TR>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Enable spam blocking?"); ?>:</td>
+                	<td>
+                    <input type="checkbox" NAME="f_comments_spam_blocking_enabled" id="spam_blocking_enabled" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->isSpamBlockingEnabled()) { ?>checked<?php } ?>>
+                	</TD>
+                </TR>-->
                 </table>
             </td>
         </tr>
@@ -132,7 +156,7 @@ function onCommentsActivated(p_checkbox)
     </td>
 
     <!-- BEGIN right column -->
-    <td style="">
+    <td style="" valign="top">
         <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-top: 0.5em; padding-left: 10px; padding-right: 10px;">
         <tr>
             <td colspan="2">

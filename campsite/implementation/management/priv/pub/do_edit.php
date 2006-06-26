@@ -4,6 +4,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/TimeUnit.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/UrlType.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
@@ -25,8 +27,11 @@ $f_paid = Input::Get('f_paid', 'int');
 $f_trial = Input::get('f_trial', 'int');
 $f_comments_enabled = Input::Get('f_comments_enabled', 'checkbox', 'numeric');
 $f_comments_article_default = Input::Get('f_comments_article_default', 'checkbox', 'numeric');
+$f_comments_public_enabled = Input::Get('f_comments_public_enabled', 'checkbox', 'numeric');
 $f_comments_public_moderated = Input::Get('f_comments_public_moderated', 'checkbox', 'numeric');
 $f_comments_subscribers_moderated = Input::Get('f_comments_subscribers_moderated', 'checkbox', 'numeric');
+$f_comments_captcha_enabled = Input::Get('f_comments_captcha_enabled', 'checkbox', 'numeric');
+$f_comments_spam_blocking_enabled = Input::Get('f_comments_spam_blocking_enabled', 'checkbox', 'numeric');
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -59,6 +64,19 @@ if (camp_html_has_msgs()) {
       camp_html_goto_page($backLink);
 }
 
+$forum =& new Phorum_forum($publicationObj->getForumId());
+if ($forum->exists()) {
+	if ($f_comments_public_enabled) {
+		$forum->setPublicPermissions($forum->getPublicPermissions()
+									 | PHORUM_USER_ALLOW_NEW_TOPIC
+									 | PHORUM_USER_ALLOW_REPLY);
+	} else {
+		$forum->setPublicPermissions($forum->getPublicPermissions()
+									 & !PHORUM_USER_ALLOW_NEW_TOPIC
+									 & !PHORUM_USER_ALLOW_REPLY);
+	}
+}
+
 $columns = array('Name' => $f_name,
 				 'IdDefaultAlias' => $f_default_alias,
 				 'IdDefaultLanguage' => $f_language,
@@ -72,7 +90,9 @@ $columns = array('Name' => $f_name,
 				 'comments_enabled' => $f_comments_enabled,
 				 'comments_article_default_enabled'=> $f_comments_article_default,
 				 'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
-				 'comments_public_moderated' => $f_comments_public_moderated);
+				 'comments_public_moderated' => $f_comments_public_moderated,
+				 'comments_captcha_enabled' => $f_comments_captcha_enabled,
+				 'comments_spam_blocking_enabled' => $f_comments_spam_blocking_enabled);
 $updated = $publicationObj->update($columns);
 if ($updated) {
 	camp_html_add_msg(getGS("Publication updated"), "ok");
