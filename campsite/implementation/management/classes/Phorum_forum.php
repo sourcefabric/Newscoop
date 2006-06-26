@@ -157,6 +157,16 @@ class Phorum_forum extends DatabaseObject {
 
 
 	/**
+	 * Delete the forum and all of its messages and other data.
+	 */
+	function delete()
+	{
+		phorum_db_drop_forum($this->m_data['forum_id']);
+		return true;
+	} // fn delete
+
+
+	/**
 	 * Return the unique ID for this forum.
 	 *
 	 * @return int
@@ -164,7 +174,7 @@ class Phorum_forum extends DatabaseObject {
 	function getForumId()
 	{
 		return $this->m_data["forum_id"];
-	}
+	} // fn getForumId
 
 
 	/**
