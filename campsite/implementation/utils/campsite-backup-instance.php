@@ -23,8 +23,13 @@ for ($i = 3; ; $i++) {
 		break;
 	}
 	$arg = trim($GLOBALS['argv'][$i]);
-	$silent = $arg == "--silent";
-	$default_dir = $arg == "--default_dir";
+	$silent |= ($arg == "--silent");
+	$default_dir |= ($arg == "--default_dir");
+}
+
+if (!is_readable("$etc_dir/install_conf.php")) {
+	echo "\nPlease run this script as 'root'.\n\n";
+	exit(1);
 }
 
 // include install_conf.php file
