@@ -51,11 +51,11 @@ $html_dir = $Campsite['WWW_DIR'] . "/$instance_name/html";
 if ($default_dir) {
 	$adviceOnError = "Please run this script as 'root' or as '" . $Campsite['APACHE_USER'] . "'.";
 	$backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/$instance_name";
-	exec_command("mkdir -p " . escape_shell_arg($backup_dir),
+	camp_exec_command("mkdir -p " . camp_escape_shell_arg($backup_dir),
 				 "Unable to create the default backup directory.\n$adviceOnError", !$silent);
 	$cmd = "chown " . escapeshellarg($Campsite['APACHE_USER']) . ":"
 			. escapeshellarg($Campsite['APACHE_GROUP']) . " " . escapeshellarg($backup_dir);
-	exec_command($cmd,
+	camp_exec_command($cmd,
 				 "Unable to set the ownership of the default backup directory.\n$adviceOnError",
 				 !$silent);
 } else {
@@ -66,42 +66,42 @@ if ($default_dir) {
 }
 
 // backup look (templates) directory
-if (archive_file("$html_dir/look", $backup_dir, "$instance_name-look", $output) != 0) {
-	exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
+if (camp_archive_file("$html_dir/look", $backup_dir, "$instance_name-look", $output) != 0) {
+	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
 }
 
 // backup images directory
-if (archive_file("$html_dir/images", $backup_dir, "$instance_name-images", $output) != 0) {
-	exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
+if (camp_archive_file("$html_dir/images", $backup_dir, "$instance_name-images", $output) != 0) {
+	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
 }
 
 // backup files directory
-if (archive_file("$html_dir/files", $backup_dir, "$instance_name-files", $output) != 0) {
-	exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
+if (camp_archive_file("$html_dir/files", $backup_dir, "$instance_name-files", $output) != 0) {
+	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
 }
 
 // backup configuration directory
-if (archive_file("$etc_dir/$instance_name", $backup_dir, "$instance_name-conf", $output) != 0) {
-	exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
+if (camp_archive_file("$etc_dir/$instance_name", $backup_dir, "$instance_name-conf", $output) != 0) {
+	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
 }
 
 // backup the database
 $db_file_name = "$backup_dir/$instance_name-database.sql";
-if (is_file($db_file_name) && (backup_file($db_file_name, $output) != 0)) {
-	exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
+if (is_file($db_file_name) && (camp_backup_file($db_file_name, $output) != 0)) {
+	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
 }
-if (backup_database($instance_name, $db_file_name, $output) != 0) {
-	exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
+if (camp_backup_database($instance_name, $db_file_name, $output) != 0) {
+	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
 }
-if (archive_file($db_file_name, $backup_dir, "$instance_name-database", $output) != 0) {
-	exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
+if (camp_archive_file($db_file_name, $backup_dir, "$instance_name-database", $output) != 0) {
+	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
 }
 
 // create the final archive
 $cmd = "pushd $backup_dir > /dev/null && tar cf "
 	. escapeshellarg("$instance_name-bak.tar")
 	. " *.tar.gz && popd > /dev/null";
-exec_command($cmd, $adviceOnError, !$silent);
+camp_exec_command($cmd, $adviceOnError, !$silent);
 unlink("$backup_dir/$instance_name-conf.tar.gz");
 unlink("$backup_dir/$instance_name-files.tar.gz");
 unlink("$backup_dir/$instance_name-images.tar.gz");
@@ -113,7 +113,7 @@ if ($default_dir) {
 	$cmd = "chown " . escapeshellarg($Campsite['APACHE_USER']) . ":"
 			. escapeshellarg($Campsite['APACHE_GROUP']) . " "
 			. escapeshellarg("$backup_dir/$instance_name-bak.tar");
-	exec_command($cmd, $adviceOnError, !$silent);
+	camp_exec_command($cmd, $adviceOnError, !$silent);
 }
 
 if ($silent) {

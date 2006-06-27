@@ -153,13 +153,13 @@ function create_configuration_files($p_defined_parameters)
 	}
 
 	$cmd = "chown -R \"" . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
-		. "\" " . escape_shell_arg($instance_etc_dir) . " 2>&1";
+		. "\" " . camp_escape_shell_arg($instance_etc_dir) . " 2>&1";
 	exec($cmd, $output, $res);
 	if ($res != 0) {
 		return implode("\n", $output);
 	}
 
-	$cmd = "chmod 640 " . escape_shell_arg($instance_etc_dir) . "/* 2>&1";
+	$cmd = "chmod 640 " . camp_escape_shell_arg($instance_etc_dir) . "/* 2>&1";
 	exec($cmd, $output, $res);
 	if ($res != 0) {
 		return implode("\n", $output);
@@ -184,8 +184,8 @@ function create_database($p_defined_parameters)
 		return "Unable to connect to database server.";
 	}
 
-	$db_exists = database_exists($db_name);
-	$db_is_empty = is_empty_database($db_name);
+	$db_exists = camp_database_exists($db_name);
+	$db_is_empty = camp_is_empty_database($db_name);
 	if ($db_exists && !$db_is_empty) {
 		if (!($res = backup_database_default($db_name, $p_defined_parameters)) == 0) {
 			return $res;
@@ -205,7 +205,7 @@ function create_database($p_defined_parameters)
 		if ($db_password != "") {
 			$cmd .= " --password=\"$db_password\"";
 		}
-		$cmd .= " " . escape_shell_arg($db_name) . " < " . escape_shell_arg($db_dir)
+		$cmd .= " " . camp_escape_shell_arg($db_name) . " < " . camp_escape_shell_arg($db_dir)
 			. "/campsite-db.sql 2>&1";
 		exec($cmd, $output, $res);
 		if ($res != 0) {
@@ -225,7 +225,7 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 	$db_user = $p_defined_parameters['--db_user'];
 	$db_password = $p_defined_parameters['--db_password'];
 
-	if (!database_exists($p_db_name)) {
+	if (!camp_database_exists($p_db_name)) {
 		return "Can't upgrade database $p_db_name: it doesn't exist";
 	}
 
@@ -255,13 +255,13 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 		}
 
 		// run upgrade scripts
-		$cmd_prefix = "cd " . escape_shell_arg($upgrade_dir) . " && mysql --user=$db_user --host="
+		$cmd_prefix = "cd " . camp_escape_shell_arg($upgrade_dir) . " && mysql --user=$db_user --host="
 			. $Campsite['DATABASE_SERVER_ADDRESS']
 			. " --port=" . $Campsite['DATABASE_SERVER_PORT'];
 		if ($db_password != "") {
 			$cmd_prefix .= " --password=\"$db_password\"";
 		}
-		$cmd_prefix .= " " . escape_shell_arg($p_db_name) . " < ";
+		$cmd_prefix .= " " . camp_escape_shell_arg($p_db_name) . " < ";
 		$sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql");
 		foreach ($sql_scripts as $index=>$script) {
 			if (!is_file($upgrade_dir . $script)) {
@@ -332,7 +332,7 @@ function backup_database_default($p_db_name, $p_defined_parameters)
 {
 	global $Campsite, $CampsiteVars;
 
-	if (!database_exists($p_db_name)) {
+	if (!camp_database_exists($p_db_name)) {
 		return "Can't back up database $p_db_name: it doesn't exist";
 	}
 
@@ -347,8 +347,8 @@ function backup_database_default($p_db_name, $p_defined_parameters)
 	if ($Campsite['DATABASE_PASSWORD'] != "") {
 		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
 	}
-	$cmd .= " " . escape_shell_arg($p_db_name) . " > "
-		. escape_shell_arg($backup_dir) . "/" . escape_shell_arg($p_db_name) . "-database.sql";
+	$cmd .= " " . camp_escape_shell_arg($p_db_name) . " > "
+		. camp_escape_shell_arg($backup_dir) . "/" . camp_escape_shell_arg($p_db_name) . "-database.sql";
 	exec($cmd, $output, $res);
 	if ($res != 0) {
 		return implode("\n", $output);
@@ -367,8 +367,8 @@ function restore_database($p_db_name, $p_defined_parameters)
 		return "Can't restore database: backup file not found";
 	}
 
-	if (database_exists($p_db_name)) {
-		if (($clean = clean_database($p_db_name)) !== 0) {
+	if (camp_database_exists($p_db_name)) {
+		if (($clean = camp_clean_database($p_db_name)) !== 0) {
 			return $clean;
 		}
 	} else {
@@ -383,7 +383,7 @@ function restore_database($p_db_name, $p_defined_parameters)
 	if ($Campsite['DATABASE_PASSWORD'] != "") {
 		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
 	}
-	$cmd .= " $p_db_name < " . escape_shell_arg($backup_file);
+	$cmd .= " $p_db_name < " . camp_escape_shell_arg($backup_file);
 	exec($cmd, $output, $res);
 	if ($res != 0) {
 		return implode("\n", $output);
@@ -422,8 +422,8 @@ function create_site($p_defined_parameters)
 	}
 
 	if (isset($CampsiteOld['.MODULES_HTML_DIR'])) {
-		$cmd = "cp -fr " . escape_shell_arg($CampsiteOld['.MODULES_HTML_DIR']) . "/look "
-			. escape_shell_arg($html_dir);
+		$cmd = "cp -fr " . camp_escape_shell_arg($CampsiteOld['.MODULES_HTML_DIR']) . "/look "
+			. camp_escape_shell_arg($html_dir);
 		exec($cmd, $output, $exit_code);
 		if ($exit_code != 0) {
 			return "Unable to copy files to templates directory ($html_dir/look).";
@@ -459,7 +459,7 @@ function create_site($p_defined_parameters)
 		return $res;
 	}
 
-	$cp_cmd = "cp -f " . escape_shell_arg($common_cgi_dir) . "/* " . escape_shell_arg($cgi_dir)
+	$cp_cmd = "cp -f " . camp_escape_shell_arg($common_cgi_dir) . "/* " . camp_escape_shell_arg($cgi_dir)
 			. " &> /dev/null";
 	exec($cp_cmd, $output, $exit_code);
 	if ($exit_code != 0) {
@@ -467,19 +467,19 @@ function create_site($p_defined_parameters)
 	}
 
 	$cmd = "chown -R " . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
-		. " " . escape_shell_arg($cgi_dir);
+		. " " . camp_escape_shell_arg($cgi_dir);
 	exec($cmd);
-	$cmd = "chmod -R u+w " . escape_shell_arg($cgi_dir);
+	$cmd = "chmod -R u+w " . camp_escape_shell_arg($cgi_dir);
 	exec($cmd);
-	$cmd = "chmod -R ug+r " . escape_shell_arg($cgi_dir);
+	$cmd = "chmod -R ug+r " . camp_escape_shell_arg($cgi_dir);
 	exec($cmd);
 
 	$cmd = "chown -R " . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
-		. " " . escape_shell_arg($instance_www_dir);
+		. " " . camp_escape_shell_arg($instance_www_dir);
 	exec($cmd);
-	$cmd = "chmod -R u+w " . escape_shell_arg($instance_www_dir);
+	$cmd = "chmod -R u+w " . camp_escape_shell_arg($instance_www_dir);
 	exec($cmd);
-	$cmd = "chmod -R ug+r " . escape_shell_arg($instance_www_dir);
+	$cmd = "chmod -R ug+r " . camp_escape_shell_arg($instance_www_dir);
 	exec($cmd);
 
 	return 0;

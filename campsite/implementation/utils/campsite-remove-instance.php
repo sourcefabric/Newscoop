@@ -24,14 +24,14 @@ require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
 if (!$no_backup) {
 	// backup instance
 	$cmd = $Campsite['BIN_DIR'] . "/campsite-backup-instance "
-		. escape_shell_arg($instance_name) . " --silent --default_dir";
-	exec_command($cmd);
+		. camp_escape_shell_arg($instance_name) . " --silent --default_dir";
+	camp_exec_command($cmd);
 }
 
 // remove WWW directory
 $www_dir = $Campsite['WWW_DIR'] . "/$instance_name";
-$cmd = "rm -fr " . escape_shell_arg($www_dir);
-exec_command($cmd);
+$cmd = "rm -fr " . camp_escape_shell_arg($www_dir);
+camp_exec_command($cmd);
 
 // check if the database conf file exists
 $database_conf_file = "$etc_dir/$instance_name/database_conf.php";
@@ -41,13 +41,13 @@ if (!is_file($database_conf_file)) {
 
 // drop database
 require_once($database_conf_file);
-if (connect_to_database() != 0) {
-	exit_with_error($res);
+if (camp_connect_to_database() != 0) {
+	camp_exit_with_error($res);
 }
 mysql_query("DROP DATABASE $instance_name");
 
 // remove etc directory
-$cmd = "rm -fr " . escape_shell_arg($etc_dir) . "/" . escape_shell_arg($instance_name);
-exec_command($cmd);
+$cmd = "rm -fr " . camp_escape_shell_arg($etc_dir) . "/" . camp_escape_shell_arg($instance_name);
+camp_exec_command($cmd);
 
 ?>
