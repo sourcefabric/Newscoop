@@ -54,6 +54,11 @@ function create_instance($p_arguments, &$p_errors)
 		return false;
 	}
 
+	if (!is_readable("$etc_dir/install_conf.php")) {
+		echo "\nPlease run this script as 'root'.\n\n";
+		exit(1);
+	}
+
 	require_once($etc_dir . "/install_conf.php");
 	require_once($etc_dir . "/parser_conf.php");
 	require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");

@@ -32,6 +32,11 @@ if ($etc_dir == "" || $type == "" || ($type == "-a" && $archive_file == "")
 	exit(1);
 }
 
+if (!is_readable("$etc_dir/install_conf.php")) {
+	echo "\nPlease run this script as 'root'.\n\n";
+	exit(1);
+}
+
 // include install configuration file
 require_once("$etc_dir/install_conf.php");
 require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
