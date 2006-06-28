@@ -23,10 +23,10 @@ foreach ($_REQUEST as $name => $value) {
         }
         switch ($value) {
             case "inbox":
-                $comment->setStatus(PHORUM_STATUS_HIDDEN);
+                $comment->setStatus(PHORUM_STATUS_HOLD);
                 break;
             case "hide":
-                $comment->setStatus(PHORUM_STATUS_HOLD);
+                $comment->setStatus(PHORUM_STATUS_HIDDEN);
                 break;
             case "delete":
                 $comment->delete();
