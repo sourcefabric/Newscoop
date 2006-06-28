@@ -1,5 +1,16 @@
 <?php
 
+function camp_check_maintenance_access($p_fileName)
+{
+	if (!is_readable($p_fileName)) {
+		echo "\nThis script requires access to the file $p_fileName.\n";
+		echo "Please run this script as a user with appropriate privileges.\n";
+		echo "Most often this user is 'root'";
+		exit(1);
+	}
+} // fn camp_check_maintenance_access
+
+
 /**
  * Escape special characters that are going to be passed to the shell
  * in a command line argument.
@@ -48,6 +59,7 @@ function camp_escape_shell_arg($p_arg)
  */
 function camp_exec_command($p_cmd, $p_errMsg = "", $p_printOutput = true)
 {
+	$p_cmd .= " 2> /dev/null";
 	@exec($p_cmd, $output, $result);
 	if ($result != 0) {
 		if (!$p_printOutput) {
@@ -63,12 +75,26 @@ function camp_exec_command($p_cmd, $p_errMsg = "", $p_printOutput = true)
 
 
 /**
+ * So that it also works on windows in the future...
+ *
+ * @return string
+ */
+function camp_readline()
+{
+	$fp = fopen("php://stdin", "r");
+	$in = fgets($fp, 4094); // Maximum windows buffer size
+	fclose ($fp);
+	return $in;
+} // fn camp_readline
+
+
+/**
  * Create a directory.  If this fails, print out the given error
  * message or a default one.
  *
  * @param string $p_dirName
  * @param string $p_msg
- * @return 0
+ * @return void
  */
 function camp_create_dir($p_dirName, $p_msg = "")
 {
@@ -78,8 +104,46 @@ function camp_create_dir($p_dirName, $p_msg = "")
 	if (!is_dir($p_dirName) && !mkdir($p_dirName)) {
 		camp_exit_with_error($p_msg);
 	}
-	return 0;
 } // fn camp_create_dir
+
+
+/**
+ * Remove the specified directory and everything underneath it.
+ *
+ * @param string $p_dirName
+ * @param string $p_msg
+ * @return void
+ */
+function camp_remove_dir($p_dirName, $p_msg = "")
+{
+	if ($p_dirName == "" || $p_dirName == "/") {
+		camp_exit_with_error("ERROR! camp_remove_dir: Bad directory name.");
+	}
+	if (empty($p_msg)) {
+		$p_msg = "Unable to remove directory $p_dirName";
+	}
+	$command = "rm -rf $p_dirName";
+	camp_exec_command($command, $p_msg);
+} // fn camp_remove_dir
+
+
+/**
+ * Recursively copy the given directory or file to the given
+ * destination.
+ *
+ * @param string $p_src
+ * @param string $p_dest
+ * @param string $p_msg
+ * @return void
+ */
+function camp_copy_files($p_src, $p_dest, $p_msg = "")
+{
+	if ($p_msg == "") {
+		$p_msg = "Unable to copy file/dir $p_src to $p_dest.";
+	}
+	$command = "cp -R $p_src $p_dest";
+	camp_exec_command($command, $p_msg);
+} // fn camp_copy_files
 
 
 /**
@@ -120,11 +184,11 @@ function camp_backup_file($p_filePath, &$p_output)
 
 
 /**
- * Tar the given source file into the given destination directory and
+ * Tar the given source file/dir into the given destination directory and
  * give it the name $p_fileName.  If there is an error, return an error
  * message in the $p_output variable.
  *
- * @param string $p_sourceFile
+ * @param mixed $p_sourceFile
  * @param string $p_destDir
  * @param string $p_fileName
  * @param string $p_output
@@ -132,11 +196,12 @@ function camp_backup_file($p_filePath, &$p_output)
  */
 function camp_archive_file($p_sourceFile, $p_destDir, $p_fileName, &$p_output)
 {
+	$fileStr = escapeshellarg(basename($p_sourceFile));
 	$source_dir = dirname($p_sourceFile);
-	$source_file_name = basename($p_sourceFile);
 	$cmd = "pushd $source_dir > /dev/null && tar czf "
-		. escapeshellarg("$dest_dir/$p_fileName.tar.gz")
-		. " " . escapeshellarg($source_file_name) . " &> /dev/null && popd > /dev/null";
+		. escapeshellarg("$p_destDir/$p_fileName.tar.gz")
+		. " $fileStr &> /dev/null && popd > /dev/null";
+	//echo $cmd."\n\n";
 	@exec($cmd, $p_output, $result);
 	return $result;
 } // fn camp_archive_file
@@ -180,8 +245,8 @@ function camp_exit_with_error($p_errorStr)
 	if (is_array($p_errorStr)) {
 		$p_errorStr = implode("\n", $p_errorStr);
 	}
-	echo "ERROR!\n$p_errorStr\n";
-	camp_clean_files();
+	echo "\nERROR!\n$p_errorStr\n";
+	//camp_clean_files();
 	exit(1);
 } // fn camp_exit_with_error
 
@@ -190,23 +255,22 @@ function camp_exit_with_error($p_errorStr)
  * Delete all the backup files for the current instance.
  *
  */
-function camp_clean_files()
-{
-	global $Campsite;
-
-	if (isset($Campsite['CAMPSITE_DIR']) && isset($Campsite['DATABASE_NAME'])) {
-		$backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/" . $Campsite['DATABASE_NAME'];
-		camp_exec_command("rm -f $backup_dir/*.tar.gz");
-	}
-} // fn camp_clean_files
+//function camp_clean_files()
+//{
+//	global $Campsite;
+//
+//	if (isset($Campsite['CAMPSITE_DIR']) && isset($Campsite['DATABASE_NAME'])) {
+//		$backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/" . $Campsite['DATABASE_NAME'];
+//		camp_exec_command("rm -f $backup_dir/*.tar.gz");
+//	}
+//} // fn camp_clean_files
 
 
 /**
  * Connect to the MySQL database.
  *
  * @param string $p_dbName
- * @return mixed
- * 		Zero on success, error message string on error.
+ * @return void
  */
 function camp_connect_to_database($p_dbName = "")
 {
@@ -217,14 +281,12 @@ function camp_connect_to_database($p_dbName = "")
 	$res = mysql_connect($Campsite['DATABASE_SERVER_ADDRESS'] . ":"
 		. $Campsite['DATABASE_SERVER_PORT'], $db_user, $db_password);
 	if (!$res) {
-		return "Unable to connect to database server";
+		camp_exit_with_error("Unable to connect to database server");
 	}
 
 	if ($p_dbName != "" && !mysql_select_db($p_dbName)) {
-		return "Unable to select database $p_dbName";
+		camp_exit_with_error("Unable to select database $p_dbName");
 	}
-
-	return 0;
 } // fn camp_connect_to_database
 
 
@@ -237,10 +299,10 @@ function camp_connect_to_database($p_dbName = "")
 function camp_is_empty_database($p_dbName)
 {
 	if (!mysql_select_db($p_dbName)) {
-		return "camp_is_empty_database: can't select the database";
+		camp_exit_with_error("camp_is_empty_database: can't select the database");
 	}
 	if (!($res = mysql_query("show tables"))) {
-		return "camp_is_empty_database: can't read tables";
+		camp_exit_with_error("camp_is_empty_database: can't read tables");
 	}
 	return (mysql_num_rows($res) == 0);
 } // fn camp_is_empty_database
@@ -250,22 +312,20 @@ function camp_is_empty_database($p_dbName)
  * Drop all tables in the given database.
  *
  * @param string $p_dbName
- * @return mixed
- * 		Zero on success, and an error message on error.
+ * @return void
  */
 function camp_clean_database($p_dbName)
 {
 	if (!mysql_select_db($p_dbName)) {
-		return "camp_clean_database: can't select the database";
+		camp_exit_with_error("camp_clean_database: can't select the database");
 	}
 	if (!($res = mysql_query("show tables"))) {
-		return "Can not clean the database: can't read tables";
+		camp_exit_with_error("Can not clean the database: can't read tables");
 	}
 	while ($row = mysql_fetch_row($res)) {
 		$table_name = $row[0];
 		mysql_query("drop table `" . mysql_escape_string($table_name) . "`");
 	}
-	return 0;
 } // fn camp_clean_database
 
 

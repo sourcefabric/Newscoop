@@ -5,170 +5,315 @@ if (!is_array($GLOBALS['argv'])) {
 	exit(1);
 }
 
-$etc_dir = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : "";
-$type = isset($GLOBALS['argv'][2]) ? trim($GLOBALS['argv'][2]) : "";
-$arg3 = isset($GLOBALS['argv'][3]) ? trim($GLOBALS['argv'][3]) : "";
-//$options = getopt("a:i:");
+$ETC_DIR = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : "";
+$archive_file = isset($GLOBALS['argv'][2]) ? trim($GLOBALS['argv'][2]) : "";
+$options = getopt("t:ef");
 
-if ($type == "-a") {
-	$archive_file = $arg3;
-}
-if ($type == "-i") {
-	$instance_name = $arg3;
-}
+echo "\nCampsite Restore Utility\n";
+echo "------------------------\n";
 
-if ($etc_dir == "" || $type == "" || ($type == "-a" && $archive_file == "")
-	|| ($type == "-i" && $instance_name == "") || ($type != '-a' && $type != '-i')) {
-	echo "Invalid parameters.  Usage:\n"
-		. "    campsite-restore-instance -a <backup_file>  [-i <instance_name>]\n"
-		. "\n"
-		. "    where:\n"
-		. "    [-a <backup_file>]   = Restore the instance from the backup file.\n"
-		. "                           Give the full or relative path to the file.\n"
-		. "    [-i <instance_name>] = Dont use the instance name specified in the\n"
-		. "                           backup file, instead replace a currently installed\n"
-		. "                           instance.  Note that the backup database will\n"
-		. "                           be upgraded if necessary.\n";
+$usage =
+"  Usage:
+  campsite-restore-instance <backup_file>  [-i <destination_instance_name>] [-e] [-f]
+
+  This script will replace an existing instance with the one in the
+  backup file.  You must run this script from a directory that you
+  have write access to because this script needs to create a temporary
+  directory.  Note that your backup database and files will automatically
+  be upgraded if they are older than the currently installed version
+  of Campsite.
+
+  Parameters:
+    <backup_file>
+        The tarball created by the 'campsite-backup-instance' script.
+        Give the full or relative path to the file.
+
+    [-t <destination_instance_name>]
+        If this is specified, the script will use the instance name
+        specified instead of the one specified in the backup file.
+        This is useful for site-to-site transfer of a website, that is,
+        moving your website from one server to another.
+
+    [-e]
+        Use the existing configuration files instead of the ones in the
+        backup file.  In other words, the existing config files in the
+        destination instance will not be replaced.
+
+    [-f]
+        Dont prompt, assume 'yes' to questions.
+
+  See also:
+      campsite-backup-instance
+      campsite-create-instance
+      campsite-remove-instance
+
+";
+
+$useExistingConfig = isset($options['e']);
+$doPrompt = !isset($options['f']);
+$destInstanceSpecified = isset($options['t']);
+$destInstanceName = isset($options['t']) ? $options['t'] : "";
+
+if (empty($ETC_DIR) || empty($archive_file) || ($destInstanceSpecified && $destInstanceName == "")) {
+	echo $usage;
 	exit(1);
 }
 
-if (!is_readable("$etc_dir/install_conf.php")) {
-	echo "\nPlease run this script as 'root'.\n\n";
+if (!file_exists($archive_file)) {
+	echo "ERROR!  The backup file you specified does not exist.\n\n";
+	echo $usage;
 	exit(1);
 }
+
+require_once("cli_script_lib.php");
+
+camp_check_maintenance_access("$ETC_DIR/install_conf.php");
 
 // include install configuration file
-require_once("$etc_dir/install_conf.php");
-require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
+require_once("$ETC_DIR/install_conf.php");
+
+if (!is_writable(getcwd())) {
+	echo "You do not have permissions to the currect directory.";
+	exit(1);
+}
 
 $adviceOnError = "Please run this script as 'root' or as '" . $Campsite['APACHE_USER'] . "'.";
 
-if ($type == "-a") {
-	// copy the archive to a temporary directory to read the instance name
-	// create temporary directory
-	$tmp_dir = tempnam($Campsite['CAMPSITE_DIR'] . "/backup", "tmp");
-	camp_create_dir($tmp_dir, "Unable to create temporary directory.");
-	camp_exec_command("rm -f $tmp_dir/*", $adviceOnError);
-
-	// unarchive the backup
-	$cmd = "tar xfC " . escapeshellarg($archive_file) . " " . escapeshellarg($tmp_dir);
-	camp_exec_command($cmd, $adviceOnError);
-
-	// read instance name from database package
-	$db_file = glob("$tmp_dir/*-database.tar.gz");
-	if (sizeof($db_file) != 1) {
-		camp_exit_with_error("Archive $archive_file is invalid.");
+//
+// Get the name of the directory that will be untarred.
+//
+echo " * Initializing...\n";
+$archiveExtension = pathinfo($archive_file, PATHINFO_EXTENSION);
+if ($archiveExtension == "gz") {
+	$tarGzOption = "z";
+} else {
+	$tarGzOption = "";
+}
+$isNewBackupFormat = true;
+$cmd = "tar tvf$tarGzOption " . escapeshellarg($archive_file)." |grep sql";
+exec($cmd, $output);
+if (count($output) == 0) {
+	$isNewBackupFormat = false;
+	$cmd = "tar tvf$tarGzOption " . escapeshellarg($archive_file);
+	exec($cmd, $output);
+	if (count($output) == 0) {
+		camp_exit_with_error("Invalid backup file.");
 	}
-	$db_file_name = basename($db_file[0]);
-	$instance_name = substr($db_file_name, 0, strrpos($db_file_name, '-'));
+	echo "   * Old backup file detected (pre-2.6.0)\n";
+}
+$output = array_pop($output);
+if ($isNewBackupFormat) {
+	$position1 = strpos($output, "backup-");
+	$position2 = strpos($output, "/", $position1);
+	$tempDirName = substr($output, $position1, $position2-$position1);
+} else {
+	$tempDirName = "backup-temp-".date("Y-m-d-H-i-s");
+}
+echo "   * Temp directory: $tempDirName\n";
+echo "   * Initialization done.\n";
 
-	// move files to instance backup directory and remove temporary directory
-	$backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/$instance_name";
-	camp_create_dir($backup_dir, "Unable to create instance backup directory.");
-	camp_exec_command("mv -f $tmp_dir/* " . escapeshellarg($backup_dir), $adviceOnError);
-	camp_exec_command("rmdir " . escapeshellarg($tmp_dir), $adviceOnError);
+if (file_exists($tempDirName)) {
+	echo "This script needs to create a temporary directory named '$tempDirName',\n";
+	echo "but the directory already exists.  Please delete the existing directory or move it out of the way.\n\n";
+	exit(1);
 }
 
-if ($type == "-i") {
-	// look for the archive in backup directory
-	$backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/$instance_name";
-	$archive_file = "$backup_dir/$instance_name-bak.tar";
-	if (!is_file($archive_file)) {
-		camp_exit_with_error("Archive file for instance $instance_name does not exist.");
-	}
+//
+// Untar the backup
+//
+echo " * Extracting files into temp directory...";
+if ($isNewBackupFormat) {
+	$cmd = "tar xf$tarGzOption " . escapeshellarg($archive_file);
+} else {
+	camp_create_dir($tempDirName);
+	$cmd = "pushd " . escapeshellarg($tempDirName) . " > /dev/null && tar xf$tarGzOption "
+		. escapeshellarg("../".$archive_file) . " &> /dev/null && popd > /dev/null";
+}
+camp_exec_command($cmd, $adviceOnError);
 
-	// unarchive the backup
-	$cmd = "pushd " . escapeshellarg($backup_dir) . " > /dev/null && tar xf "
-		. escapeshellarg($archive_file) . " &> /dev/null && popd > /dev/null";
-	camp_exec_command($cmd, $adviceOnError);
+if (!file_exists($tempDirName)) {
+	echo "ERROR! Could not extract archive.\n\n";
+	exit(1);
 }
 
-// call campsite-create-instance
+//
+// Get the original instance name from the extracted files.
+//
+$database_dump_file = glob("$tempDirName/*-database*");
+if (sizeof($database_dump_file) != 1) {
+	camp_exit_with_error("Archive $archive_file is invalid.");
+}
+$db_file_name = basename($database_dump_file[0]);
+$origInstanceName = substr($db_file_name, 0, strrpos($db_file_name, '-'));
+
+if (!$destInstanceSpecified) {
+	// Use the config parameters specified in the backup file.
+	$destInstanceName = $origInstanceName;
+}
+
+// If old backup format, extract the tar files inside the tar file.
+if (!$isNewBackupFormat) {
+	$packages = glob("$tempDirName/$origInstanceName-*.tar.gz");
+	foreach ($packages as $index => $package) {
+		$package_name = basename($package);
+		if ($package == "") {
+			continue;
+		}
+		$cmd = "pushd " . escapeshellarg($tempDirName) . " && tar xzf "
+			. escapeshellarg($package_name) . " && popd > /dev/null";
+		camp_exec_command($cmd, $adviceOnError);
+	}
+}
+echo "done.\n";
+
+echo " * Backup instance name is '$origInstanceName'.\n";
+echo " * Destination instance name (to be replaced) is '$destInstanceName'.\n";
+
+require_once($Campsite['WWW_DIR']."/".$destInstanceName."/html/campsite_version.php");
+
+if ($useExistingConfig) {
+	require_once("$ETC_DIR/$destInstanceName/database_conf.php");
+} else {
+	require_once("$tempDirName/$origInstanceName/database_conf.php");
+}
+
+// Create the instance if it doesnt exist.
+echo " * Creating destination instance (if necessary)...";
 $bin_dir = $Campsite['BIN_DIR'];
-camp_exec_command("$bin_dir/campsite-create-instance --db_name $instance_name --no_database",
-			 $adviceOnError);
-
-// extract packages
-$html_dir = $Campsite['WWW_DIR'] . "/$instance_name/html";
-$packages = glob("$backup_dir/$instance_name-*.tar.gz");
-foreach ($packages as $index=>$package) {
-	$package_name = basename($package);
-	switch ($package_name) {
-	case "$instance_name-database.tar.gz": $package = ""; break;
-	case "$instance_name-conf.tar.gz": $dest_dir = $etc_dir; break;
-	default: $dest_dir = $html_dir; break;
-	}
-	if ($package == "") {
-		continue;
-	}
-	$cmd = "pushd " . escapeshellarg($dest_dir) . " && tar xzf "
-		. escapeshellarg($package) . " && popd > /dev/null";
-	camp_exec_command($cmd, $adviceOnError);
+$cmd = "$bin_dir/campsite-create-instance --db_name $destInstanceName --no_database";
+@exec($cmd, $output, $result);
+if ($result != 0) {
+	echo "\n\nERROR: ";
+	echo "Unable to create instance '$destInstanceName'.\n";
+	echo "$adviceOnError\n\n";
+	echo " * Cleaning up...";
+	camp_remove_dir($tempDirName);
+	echo "done.\n\n";
+	exit(1);
 }
 
-$database_dump_file = "$backup_dir/$instance_name-database.sql";
-require_once("$etc_dir/$instance_name/database_conf.php");
+echo "done.\n";
 
-// backup old database dump if exists
-if (is_file($database_dump_file) && camp_backup_file($database_dump_file, $output) != 0) {
-	camp_exit_with_error($output);
+//
+// Restore the backup files
+//
+$lookDestDir = $Campsite['WWW_DIR']."/".$destInstanceName."/html/look";
+$lookSrcDir = "$tempDirName/look";
+$imagesDestDir = $Campsite['WWW_DIR']."/".$destInstanceName."/html/images";
+$imagesSrcDir = "$tempDirName/images";
+$filesDestDir = $Campsite['WWW_DIR']."/".$destInstanceName."/html/files";
+$fileSrcDir = "$tempDirName/files";
+$configDestDir = "$ETC_DIR/$destInstanceName";
+$configSrcDir = "$tempDirName/$origInstanceName";
+
+$destDirs = array($lookDestDir, $imagesDestDir, $filesDestDir);
+if (!$useExistingConfig) {
+	array_push($destDirs, $configDestDir);
 }
 
-// backup the old database if exists
+foreach ($destDirs as $dir) {
+	if (!file_exists($dir)) {
+		echo "ERROR! Directory $dir does not exist.  Is Campsite installed?\n\n";
+		exit(1);
+	}
+	if (!is_writable($dir)) {
+		echo "ERROR! Directory $dir is not writable by this script.\n\n";
+		exit(1);
+	}
+}
+
+if ($doPrompt) {
+	// Clear out all files currently residing in these directories
+	echo "\n All files in the following directories will be deleted.\n";
+	echo " (The backup files will be copied to these locations)\n";
+	foreach ($destDirs as $dir) {
+		echo "    ".$dir."\n";
+	}
+	$answer = "dummy_value";
+	while (!in_array($answer, array('y','n', ''))) {
+		echo " Are you sure you want to continue? (y/N) ";
+		$answer = camp_readline();
+		$answer = strtolower(trim($answer));
+	}
+	if ($answer == 'n' || $answer == '') {
+		echo "\n Restore cancelled.\n";
+		echo " * Cleaning up...";
+		camp_remove_dir($tempDirName);
+		echo "done.\n\n";
+		exit(0);
+	}
+}
+
+//
+// Remove all existing files...
+//
+foreach ($destDirs as $dir) {
+	echo " * Removing files in $dir...";
+	camp_remove_dir($dir."/*");
+	echo "done.\n";
+}
+
+//
+// Restore files from backup...
+//
+echo " * Restoring templates...";
+camp_copy_files($lookSrcDir."/*", $lookDestDir);
+echo "done.\n";
+
+echo " * Restoring images...";
+camp_copy_files($imagesSrcDir."/*", $imagesDestDir);
+echo "done.\n";
+
+echo " * Restoring file attachments...";
+camp_copy_files($fileSrcDir."/*", $filesDestDir);
+echo "done.\n";
+
+if (!$useExistingConfig) {
+	echo " * Restoring configuration...";
+	camp_copy_files($configSrcDir."/*", $configDestDir);
+	echo "done.\n";
+}
+
+//
+// Restore the database
+//
+echo " * Restoring the database...";
 if (($res = camp_connect_to_database()) != 0) {
 	camp_exit_with_error($res);
 }
-if (camp_database_exists($instance_name)) {
-	camp_backup_database($instance_name, $database_dump_file, $output);
-	if (camp_backup_file($database_dump_file, $output) != 0) {
-		camp_exit_with_error($output);
+if (camp_database_exists($destInstanceName)) {
+	camp_clean_database($destInstanceName);
+} else {
+	if (!mysql_query("CREATE DATABASE $destInstanceName")) {
+		camp_exit_with_error("Can't create database $destInstanceName");
 	}
 }
 
-// extract the database dump file now
-$cmd = "pushd " . escapeshellarg($backup_dir) . " && tar xzf "
-	. escapeshellarg("$backup_dir/$instance_name-database.tar.gz") . " && popd > /dev/null";
-camp_exec_command($cmd, $adviceOnError);
-
-// restore the database and create language links
-if (($res = restore_database($instance_name, $database_dump_file)) !== 0) {
-	camp_exit_with_error($res);
+$sqlFile = "$tempDirName/$origInstanceName-database.sql";
+$cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
+	. $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
+	. $Campsite['DATABASE_SERVER_PORT'];
+if ($Campsite['DATABASE_PASSWORD'] != "") {
+	$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
 }
-require_once("$html_dir/parser_utils.php");
-camp_create_language_links($html_dir);
+$cmd .= " $destInstanceName < $sqlFile";
+camp_exec_command($cmd, "Unable to import database. (Command: $cmd)");
+echo "done.\n";
 
-// remove packages
-camp_exec_command("rm -f $backup_dir/*.tar.gz", $adviceOnError);
-camp_exec_command("rm -f $backup_dir/$instance_name-database.sql", $adviceOnError);
+// Call campsite-create-instance to upgrade the database.
+echo " * Upgrading (if necessary)...";
+$bin_dir = $Campsite['BIN_DIR'];
+camp_exec_command("$bin_dir/campsite-create-instance --db_name $destInstanceName",
+			 	  "Upgrade failed.");
+echo "done.\n";
 
+//
+// Remove the temp dir.
+//
+echo " * Cleaning up...";
+camp_remove_dir($tempDirName);
+echo "done.\n\n";
 
-
-function restore_database($p_db_name, $dump_file)
-{
-	global $Campsite, $adviceOnError;
-
-	if (!is_file($dump_file)) {
-		return "Can't restore database: dump file not found";
-	}
-
-	if (camp_database_exists($p_db_name)) {
-		camp_clean_database($p_db_name);
-	} else {
-		if (!mysql_query("CREATE DATABASE $p_db_name")) {
-			return "Can't create database $p_db_name";
-		}
-	}
-
-	$cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
-		. $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
-		. $Campsite['DATABASE_SERVER_PORT'];
-	if ($Campsite['DATABASE_PASSWORD'] != "") {
-		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
-	}
-	$cmd .= " $p_db_name < \"$dump_file\"";
-	camp_exec_command($cmd, $adviceOnError);
-
-	return 0;
-}
+exit;
 
 ?>

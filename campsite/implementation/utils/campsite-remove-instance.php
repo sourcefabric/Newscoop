@@ -17,10 +17,7 @@ if ($instance_name == "") {
 	die("Please supply the instance name as the second argument.\n");
 }
 
-if (!is_readable("$etc_dir/install_conf.php")) {
-	echo "\nPlease run this script as 'root'.\n\n";
-	exit(1);
-}
+camp_check_maintenance_access("$etc_dir/install_conf.php");
 
 // include install_conf.php file
 require_once("$etc_dir/install_conf.php");
