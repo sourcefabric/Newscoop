@@ -74,7 +74,7 @@ class Phorum_user extends DatabaseObject {
 	    	return false;
 	    }
 
-	    if (is_numeric($p_userId)) {
+	    if (!is_null($p_userId) && is_numeric($p_userId)) {
 	        $tmpUser =& new Phorum_user($p_userId);
 	        if ($tmpUser->exists()) {
 	            return false;

@@ -26,7 +26,8 @@ class Phorum_message extends DatabaseObject {
 		"meta",
 		"viewcount",
 		"closed",
-		"thread_depth");
+		"thread_depth",
+		"thread_order");
 
 	/**
 	 * A Phorum_message is a message posted to a forum.
@@ -158,6 +159,9 @@ class Phorum_message extends DatabaseObject {
 
 		// Set the thread depth
 		$this->__initThreadDepth();
+
+		// Set the thread order.
+		$this->__initThreadOrder();
 
 		$this->__updateThreadInfo();
 
@@ -643,7 +647,7 @@ class Phorum_message extends DatabaseObject {
 			// Walk the up the tree
 			$count = 1;
 			$tmpMsg =& new Phorum_message($this->m_data['parent_id']);
-			while ($tmpMsg->m_data['message_id'] != $tmpMsg->m_data['thread']) {
+			while ($tmpMsg->m_data['parent_id'] > 0) {
 				$count++;
 				$tmpMsg =& new Phorum_message($tmpMsg->m_data['parent_id']);
 			}
@@ -653,9 +657,53 @@ class Phorum_message extends DatabaseObject {
 
 
 	/**
-	 * Get the nesting level of this comment.  The first message in a
-	 * thread has depth 0, a reply to the first message has depth 1.
-	 * A reply to the reply has depth 2, etc.
+	 * Initialize the thread order column. This column is used for displaying
+	 * the messages in the correct order.
+	 *
+	 * @return void
+	 */
+	function __initThreadOrder()
+	{
+		global $g_ado_db;
+		
+		if ($this->m_data['message_id'] == $this->m_data['thread']) {
+			$this->setProperty('thread_order', 0);
+			return true;
+		}
+		if ($this->m_data['parent_id'] == 0) {
+			$sql = 'SELECT max(thread_order) FROM ' . $this->m_dbTableName . ' '
+				. 'WHERE parent_id = 0 and thread = ' . $this->m_data['thread'];
+			$orderNr = $g_ado_db->GetOne($sql) + 1;
+		} else {
+			$nextOrderNr = null;
+			$parentId = $this->m_data['parent_id'];
+			do {
+				$orderNr = $nextOrderNr;
+				$sql = 'SELECT max(thread_order) as order_nr, max(message_id) as max_message_id '
+					. 'FROM ' . $this->m_dbTableName . ' '
+					. 'WHERE parent_id = ' . $parentId
+					. '    AND message_id != ' . $this->m_data['message_id'];
+				$row = $g_ado_db->GetRow($sql);
+				$nextOrderNr = $row['order_nr'];
+				$parentId = $row['max_message_id'];
+			} while (!is_null($parentId));
+			if (is_null($orderNr)) {
+				$tmpMsg =& new Phorum_message($this->m_data['parent_id']);
+				$orderNr = $tmpMsg->getProperty('thread_order');
+			}
+			$orderNr++;
+		}
+		$sql = 'UPDATE ' . $this->m_dbTableName . ' SET thread_order = thread_order + 1 '
+			. 'WHERE thread = ' . $this->m_data['thread'] . ' AND thread_order >= ' . $orderNr;
+		$g_ado_db->Execute($sql);
+		$this->setProperty('thread_order', $orderNr);
+	} // fn __initThreadOrder
+
+
+	/**
+	 * Get the nesting level of this comment. A message that was not a reply
+	 * to another message has the depth 0, a reply to a message with depth 0
+	 * has depth 1, a reply to a message with depth 1 has depth 2 etc.
 	 *
 	 * @return int
 	 */

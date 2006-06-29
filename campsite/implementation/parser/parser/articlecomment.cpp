@@ -148,6 +148,27 @@ bool CArticleComment::PublicModerated(id_type p_nPublicationId)
 }
 
 
+bool CArticleComment::PublicAllowed(id_type p_nPublicationId)
+{
+	stringstream buf;
+	buf << "select fk_forum_id from Publications where Id = '" << p_nPublicationId << "'";
+	CMYSQL_RES coQRes;
+	MYSQL_ROW row = QueryFetchRow(MYSQLConnection(), buf.str(), coQRes);
+	if (row == NULL || row[0] == NULL)
+	{
+		return false;
+	}
+	buf.str("");
+	buf << "select pub_perms from phorum_forums where forum_id = '" << row[0] << "'";
+	row = QueryFetchRow(MYSQLConnection(), buf.str(), coQRes);
+	if (row == NULL || row[0] == NULL)
+	{
+		return false;
+	}
+	return (strtol(row[0], 0, 10) & (8 | 2)) != 0;
+}
+
+
 bool CArticleComment::SubscribersModerated(id_type p_nPublicationId)
 {
 	stringstream buf;
@@ -166,8 +187,12 @@ bool CArticleComment::SubscribersModerated(id_type p_nPublicationId)
 ulint CArticleComment::ArticleCommentCount(id_type p_nArticleNumber, id_type p_nLanguageId)
 {
 	stringstream buf;
-	buf << "select count(*) from ArticleComments where fk_article_number = '"
-			<< p_nArticleNumber << "' and fk_language_id = '" << p_nLanguageId << "'";
+	buf << "select count(*) "
+			"from ArticleComments as ac left join phorum_messages as pm"
+			"    on ac.fk_comment_thread_id = pm.message_id "
+			"where ac.fk_article_number = '" << p_nArticleNumber << "' "
+			"    and ac.fk_language_id = '" << p_nLanguageId << "'"
+			"    and pm.status = 2";
 	CMYSQL_RES coQRes;
 	MYSQL_ROW row = QueryFetchRow(MYSQLConnection(), buf.str(), coQRes);
 	if (row == NULL || row[0] == NULL)
@@ -209,4 +234,19 @@ bool CArticleComment::ArticleCommentsEnabled(id_type p_nPublicationId,
 		return false;
 	}
 	return true;
+}
+
+
+bool CArticleComment::CAPTCHAEnabled(id_type p_nPublicationId)
+{
+	stringstream buf;
+	buf << "select comments_captcha_enabled from Publications where Id = '"
+			<< p_nPublicationId << "'";
+	CMYSQL_RES coQRes;
+	MYSQL_ROW row = QueryFetchRow(MYSQLConnection(), buf.str(), coQRes);
+	if (row == NULL || row[0] == NULL)
+	{
+		return false;
+	}
+	return strtol(row[0], 0, 10) != 0;
 }

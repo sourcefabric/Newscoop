@@ -233,6 +233,8 @@ CREATE TABLE `phorum_messages` (
 -- Campsite custom phorum addition:
 -- How many levels down in a thread is the comment?
 ALTER TABLE `phorum_messages` ADD `thread_depth` TINYINT UNSIGNED DEFAULT '0' NOT NULL ;
+-- The order of the message in the thread.
+ALTER TABLE `phorum_messages` ADD `thread_order` INT UNSIGNED DEFAULT '0' NOT NULL ;
 
 -- --------------------------------------------------------
 

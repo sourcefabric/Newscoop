@@ -914,6 +914,21 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("SubscribersModerated"));
 	pcoCtx->insertAttr(new CAttribute("Enabled"));
 	pcoCtx->insertAttr(new CAttribute("Rejected"));
+	pcoCtx->insertAttr(new CAttribute("PublicAllowed"));
+	pcoCtx->insertAttr(new CAttribute("CAPTCHAEnabled"));
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
+	// CAPTCHA statement
+	pcoSt = new CStatement(CMS_ST_CAPTCHA, ST_CAPTCHA);
+
+	pcoCtx = new CStatementContext(CMS_CT_EDIT);
+	pcoCtx->insertAttr(new CAttribute("Code"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_PRINT);
+	pcoCtx->insertAttr(new CAttribute("ImageLink"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);

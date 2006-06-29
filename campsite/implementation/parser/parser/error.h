@@ -40,7 +40,9 @@ Define error codes, macros and classes used for dealing parse and write errors
 
 using std::fstream;
 
-// ERROR CODES
+// Error codes
+
+// Error codes that may appear during template parsing and displaying
 #define RES_OK 0
 #define ERR_NOTYPE 1
 #define ERR_NOMEM 2
@@ -57,6 +59,7 @@ using std::fstream;
 #define ERR_NOKEY 13
 #define ERR_LOCKHASH 14
 
+// Error codes that may appear during template parsing
 #define PERR_ATOM_MISSING 100
 #define PERR_STATEMENT_MISSING 101
 #define PERR_ATOM_NOT_STATEMENT 102
@@ -84,6 +87,7 @@ using std::fstream;
 #define EMAP_EOPENFILE 1002
 #define EMAP_FAILED 1003
 
+// Errors that may appear during subscription and reader account creation
 #define SERR_INTERNAL 2000
 #define SERR_USER_NOT_SPECIFIED 2001
 #define SERR_USER_NOT_READER 2002
@@ -105,16 +109,14 @@ using std::fstream;
 #define UERR_PASSWORDS_DONT_MATCH 3010
 #define UERR_PASSWORD_TOO_SIMPLE 3011
 
+// Login errors
 #define LERR_INTERNAL 4000
 #define LERR_NO_UNAME 4001
 #define LERR_INVALID_UNAME 4002
 #define LERR_NO_PASSWORD 4003
 #define LERR_INVALID_PASSWORD 4004
 
-#define SRERR_INTERNAL 5000
-#define SRERR_NO_KEYWORDS 5001
-#define SRERR_INVALID_LEVEL 5002
-
+// Article comment submit errors
 #define ACERR_INTERNAL 5000
 #define ACERR_USER_NOT_DEFINED 5001
 #define ACERR_EMPTY_CONTENT 5002
@@ -122,9 +124,23 @@ using std::fstream;
 #define ACERR_COMMENTS_NOT_ALLOWED 5004
 #define ACERR_USER_BANNED 5005
 #define ACERR_REJECTED 5006
+#define ACERR_EMAIL_EMPTY 5007
 
+#define ERR_CAPTCHA_EMPTY 5008
+#define ERR_CAPTCHA_INVALID 5009
+
+// Search article errors
+#define SRERR_INTERNAL 6000
+#define SRERR_NO_KEYWORDS 6001
+#define SRERR_INVALID_LEVEL 6002
+
+
+// MODE_PARSE: this mode is set when parsing the template
 #define MODE_PARSE 0
+
+// MODE_WRITE: this mode is set when displaying the template
 #define MODE_WRITE 1
+
 
 // MACROS
 #define SetError(el, id, mod)\

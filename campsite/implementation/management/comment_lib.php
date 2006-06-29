@@ -12,45 +12,17 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/parser_utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 
 function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 {
 	global $g_ado_db;
 
-	$userInfo = array();
-	if (isset($p_cookies['LoginUserId']) && isset($p_cookies['LoginUserKey'])
-			&& $p_cookies['LoginUserId'] != '') {
-		$userInfo =& $p_cookies;
-	} elseif (isset($p_parameters['LoginUserId']) && isset($p_parameters['LoginUserKey'])) {
-		$userInfo =& $p_parameters;
-	}
-
-	$user = null;
-	if (isset($userInfo['LoginUserId']) && isset($userInfo['LoginUserKey'])
-		&& is_numeric($userInfo['LoginUserId']) && is_numeric($userInfo['LoginUserKey'])) {
-		// Check if user exists in the table.
-		$queryStr = "SELECT * FROM Users WHERE Id='".$userInfo['LoginUserId']."'";
-		$row = $g_ado_db->GetRow($queryStr);
-		if ($row && $row['KeyId'] == $userInfo['LoginUserKey']) {
-			$user =& new User($userInfo['LoginUserId']);
-		}
-	}
-	if (is_null($user) || !$user->exists()) {
-		$p_parameters["ArticleCommentSubmitResult"] = 5001;
-		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-		exit;
-	}
-
+	// Read mandatory fields.
 	$f_language_id = $p_parameters['IdLanguage'];
 	$f_article_number = $p_parameters['NrArticle'];
 	$f_comment_subject = $p_parameters['CommentSubject'];
 	$f_comment_body = $p_parameters['CommentContent'];
-
-	if (trim($f_comment_body) == '') {
-		$p_parameters["ArticleCommentSubmitResult"] = 5002;
-		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-		exit;
-	}
 
 	// Check that the article exists.
 	$articleObj =& new Article($f_language_id, $f_article_number);
@@ -82,6 +54,79 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 		$forumId = $forum->getForumId();
 	}
 
+	// Detect where to read from the user identification parameters:
+	// - cookies (default)
+	// - GET/POST parameters
+	$userInfo = array();
+	if (isset($p_cookies['LoginUserId']) && isset($p_cookies['LoginUserKey'])
+			&& $p_cookies['LoginUserId'] != '') {
+		$userInfo =& $p_cookies;
+	} elseif (isset($p_parameters['LoginUserId']) && isset($p_parameters['LoginUserKey'])) {
+		$userInfo =& $p_parameters;
+	}
+
+	// If user identification parameters were set initialize the user object.
+	// If not, set $user variable to null.
+	$user = null;
+	if (isset($userInfo['LoginUserId']) && isset($userInfo['LoginUserKey'])
+		&& is_numeric($userInfo['LoginUserId']) && is_numeric($userInfo['LoginUserKey'])) {
+		// Check if user exists in the table.
+		$queryStr = "SELECT * FROM Users WHERE Id='".$userInfo['LoginUserId']."'";
+		$row = $g_ado_db->GetRow($queryStr);
+		if ($row && $row['KeyId'] == $userInfo['LoginUserKey']) {
+			$user =& new User($userInfo['LoginUserId']);
+			if ($user->exists()) {
+				$userId = $user->getUserId();
+				$userName = $user->getUserName();
+				$userEmail = $user->getEmail();
+				$userRealName = $user->getRealName();
+			} else {
+				$user = null;
+			}
+		}
+	}
+
+	// When user unset check if public is allowed to post comments.
+	if (is_null($user)) {
+		if ($forum->getPublicPermissions() & (PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY)) {
+			$userId = null;
+			$userEmail = $p_parameters['CommentReaderEMail'];
+			if (trim($userEmail) == '') {
+				$p_parameters["ArticleCommentSubmitResult"] = 5007;
+				camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
+				exit;
+			}
+			$userName = $userEmail;
+			$userRealName = $userEmail;
+		} else {
+			$p_parameters["ArticleCommentSubmitResult"] = 5001;
+			camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
+			exit;
+		}
+	}
+
+	// Validate the CAPTCHA code if it was enabled for the current publication.
+	if ($publicationObj->isCaptchaEnabled()) {
+		$f_captcha_code = $p_parameters['f_captcha_code'];
+		if (trim($f_captcha_code) == '') {
+			$p_parameters["ArticleCommentSubmitResult"] = 5008;
+			camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
+			exit;
+		}
+		if (!PhpCaptcha::Validate($f_captcha_code, true)) {
+			$p_parameters["ArticleCommentSubmitResult"] = 5009;
+			camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
+			exit;
+		}
+	}
+
+	// Check if the comment content was filled in.
+	if (trim($f_comment_body) == '') {
+		$p_parameters["ArticleCommentSubmitResult"] = 5002;
+		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
+		exit;
+	}
+
 	// Check if this article already has a thread
 	$threadId = ArticleComment::GetCommentThreadId($f_article_number, $f_language_id);
 	if (!$threadId) {
@@ -89,49 +134,67 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 	}
 
 	// Add the user if he doesnt exist in the Phorum user table
-	$phorumUser =& new Phorum_user($user->getUserId());
-	if (!$phorumUser->exists()) {
-		$success = $phorumUser->create($user->getUserName(),
-									$user->getEmail(),
-									$user->getUserId());
-	}
-
-	if ($phorumUser->exists()) {
-		if (Phorum_user::IsBanned($user->getRealName(), $user->getEmail())) {
-			$p_parameters["ArticleCommentSubmitResult"] = 5005;
-			camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-			exit;
-		}
-
-		if (isset($p_parameters['acid']) && $p_parameters['acid'] > 0) {
-			$parentId = 0 + $p_parameters['acid'];
-		} else {
-			$parentId = 0;
-		}
-		
-		// Create the comment
-		$commentObj =& new Phorum_message();
-		if (!$commentObj->create($forumId,
-								$f_comment_subject,
-								$f_comment_body,
-								$threadId,
-								$parentId,
-								$user->getRealName(),
-								$user->getEmail(),
-								$user->getUserId())) {
-			$p_parameters["ArticleCommentSubmitResult"] = 5000;
-			camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-			exit;
-		}
-		$commentObj->setStatus(PHORUM_STATUS_APPROVED);
-		// Link the message to the article
-		$isFirstMessage = ($threadId == 0);
-		ArticleComment::Link($f_article_number, $f_language_id, $commentObj->getMessageId(), $isFirstMessage);
+	if (!is_null($userId)) {
+		$phorumUser =& new Phorum_user($userId);
 	} else {
+		$phorumUser =& Phorum_user::GetByUserName($userName);
+		if (is_null($phorumUser)) {
+			$phorumUser =& new Phorum_user();
+		}
+	}
+	
+	// Check if the phorum user existed or was created successfuly.
+	// If not, set the error code to 'internal error' and exit.
+	if (!$phorumUser->exists() && !$phorumUser->create($userName, $userEmail, $userId)) {
 		$p_parameters["ArticleCommentSubmitResult"] = 5000;
 		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
 		exit;
 	}
+
+	// Check if the reader was banned from posting comments.
+	if (Phorum_user::IsBanned($userRealName, $userEmail)) {
+		$p_parameters["ArticleCommentSubmitResult"] = 5005;
+		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
+		exit;
+	}
+
+	// Set the parent to the currently viewed comment if a certain existing
+	// comment was selected. Otherwise, set the parent identifier to 0.
+	if (isset($p_parameters['acid']) && $p_parameters['acid'] > 0) {
+		$parentId = 0 + $p_parameters['acid'];
+	} else {
+		$parentId = 0;
+	}
+
+	// Create the comment. If there was an error creating the comment set the
+	// error code to 'internal error' and exit.
+	$commentObj =& new Phorum_message();
+	if (!$commentObj->create($forumId,
+							$f_comment_subject,
+							$f_comment_body,
+							$threadId,
+							$parentId,
+							$userRealName,
+							$userEmail,
+							$phorumUser->getUserId())) {
+		$p_parameters["ArticleCommentSubmitResult"] = 5000;
+		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
+		exit;
+	}
+
+	// If the user was unknown (public comment) and public comments were moderated
+	// or the user was known (subscriber comment) and subscriber comments were moderated
+	// set the comment status to 'hold'. Otherwise, set the status to 'approved'.
+	if ((!is_null($userId) && $publicationObj->commentsSubscribersModerated())
+			|| (is_null($userId) && $publicationObj->commentsPublicModerated())) {
+		$commentObj->setStatus(PHORUM_STATUS_HOLD);
+	} else {
+		$commentObj->setStatus(PHORUM_STATUS_APPROVED);
+	}
+
+	// Link the message to the current article.
+	$isFirstMessage = ($threadId == 0);
+	ArticleComment::Link($f_article_number, $f_language_id, $commentObj->getMessageId(), $isFirstMessage);
 
 	$p_parameters["ArticleCommentSubmitResult"] = 0;
 	unset($p_parameters["CommentReaderEMail"]);

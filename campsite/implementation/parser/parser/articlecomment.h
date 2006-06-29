@@ -117,6 +117,14 @@ class CArticleComment
 		static bool PublicModerated(id_type p_nPublicationId);
 
 		/**
+		 * PublicAllowed(): returns true if the article comments are allowed
+		 * for the public in the given publication
+		 * @param p_nPublicationId
+		 * @return bool
+		 **/
+		static bool PublicAllowed(id_type p_nPublicationId);
+
+		/**
 		 * SubscribersModerated(): returns true if the article comments are moderated
 		 * for the subscribers in the given publication
 		 * @param p_nPublicationId
@@ -143,6 +151,14 @@ class CArticleComment
 		 **/
 		static bool ArticleCommentsEnabled(id_type p_nPublicationId, id_type p_nArticleNumber,
 										   id_type p_nLanguageId);
+
+		/**
+		 * CAPTCHAEnabled(): returns true if the CAPTCHA check was enabled
+		 * in the given publication
+		 * @param p_nPublicationId
+		 * @return bool
+		 **/
+		static bool CAPTCHAEnabled(id_type p_nPublicationId);
 
 	private:
 		bool m_bExists;

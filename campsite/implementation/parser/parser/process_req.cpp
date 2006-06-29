@@ -129,10 +129,16 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	{
 		// do nothing
 	}
+
+	// Set the current and initial (default) URL
 	pcoCtx->SetURL(p_pcoURL);
 	pcoCtx->SetDefURL(p_pcoURL->clone());
+
+	// delete topic parameter from URL
 	pcoCtx->URL()->deleteParameter(P_TOPIC_ID);
 	pcoCtx->DefURL()->deleteParameter(P_TOPIC_ID);
+
+	// read issue, section, article, search and subtitle lists start positions
 	if ((coStr = p_pcoURL->getValue(P_ILSTART)) != "")
 		pcoCtx->SetIListStart(atol(coStr.c_str()));
 	if ((coStr = p_pcoURL->getValue(P_SLSTART)) != "")
@@ -141,6 +147,8 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		pcoCtx->SetAListStart(atol(coStr.c_str()));
 	if ((coStr = p_pcoURL->getValue(P_SRLSTART)) != "")
 		pcoCtx->SetSrListStart(atol(coStr.c_str()));
+
+	// delete lists start positions
 	pcoCtx->URL()->deleteParameter(P_ILSTART);
 	pcoCtx->URL()->deleteParameter(P_SLSTART);
 	pcoCtx->URL()->deleteParameter(P_ALSTART);
@@ -149,6 +157,12 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	pcoCtx->DefURL()->deleteParameter(P_SLSTART);
 	pcoCtx->DefURL()->deleteParameter(P_ALSTART);
 	pcoCtx->DefURL()->deleteParameter(P_SRLSTART);
+
+	// delete CAPTCHA code from URL (it is processed in index.php)
+	pcoCtx->URL()->deleteParameter("f_captcha_code");
+	pcoCtx->DefURL()->deleteParameter("f_captcha_code");
+
+	// read the article comment id and delete it from the URL
 	if ((coStr = p_pcoURL->getValue("acid")) != "")
 	{
 		try {

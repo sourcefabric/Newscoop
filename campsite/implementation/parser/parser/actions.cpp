@@ -986,7 +986,7 @@ int CActList::WriteOrdParam(string& s)
 	}
 	if (modifier == CMS_ST_ARTICLECOMMENT)
 	{
-		s = " order by pm.message_id asc";
+		s = " order by pm.thread_order asc";
 	}
 	if (modifier == CMS_ST_ARTICLEIMAGE)
 	{
@@ -1552,6 +1552,7 @@ CPrintModifiers::CPrintModifiers()
 	insert(CMS_ST_TOPIC);
 	insert(CMS_ST_ARTICLEATTACHMENT);
 	insert(CMS_ST_ARTICLECOMMENT);
+	insert(CMS_ST_CAPTCHA);
 }
 
 CPrintModifiers CActPrint::s_coModifiers;
@@ -1944,6 +1945,11 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 				fs << nResult;
 			}
 		}
+		return RES_OK;
+	}
+	if (modifier == CMS_ST_CAPTCHA)
+	{
+		fs << "<img src=\"/include/captcha/image.php\">";
 		return RES_OK;
 	}
 	string w, table, field;
@@ -2385,29 +2391,54 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 		{
 			run = c.ArticleCommentEnabled() ? 0 : 1;
 		}
-		else
+		else if (!c.ArticleCommentEnabled())
 		{
-			if (!c.ArticleCommentEnabled())
 				return ERR_NODATA;
 		}
 		if (case_comp(param.attribute(), "Defined") == 0)
+		{
 			run = c.ArticleCommentId() > 0 ? 0 : 1;
+		}
 		if (case_comp(param.attribute(), "Submitted") == 0)
+		{
 			run = c.SubmitArticleCommentEvent() ? 0 : 1;
+		}
 		if (case_comp(param.attribute(), "SubmitError") == 0 && c.SubmitArticleCommentEvent())
+		{
 			run = c.SubmitArticleCommentResult() != 0 ? 0 : 1;
+		}
 		if (case_comp(param.attribute(), "Preview") == 0)
+		{
 			run = c.URL()->getValue("previewComment") != "" ? 0 : 1;
+		}
 		if (case_comp(param.attribute(), "Rejected") == 0 && c.SubmitArticleCommentEvent())
+		{
 			run = c.SubmitArticleCommentResult() == ACERR_REJECTED ? 0 : 1;
+		}
 		if (case_comp(param.attribute(), "PublicModerated") == 0)
+		{
 			run = CArticleComment::PublicModerated(c.Publication()) ? 0 : 1;
+		}
+		if (case_comp(param.attribute(), "PublicAllowed") == 0)
+		{
+			run = CArticleComment::PublicAllowed(c.Publication()) ? 0 : 1;
+		}
 		if (case_comp(param.attribute(), "SubscribersModerated") == 0)
+		{
 			run = CArticleComment::SubscribersModerated(c.Publication()) ? 0 : 1;
+		}
+		if (case_comp(param.attribute(), "CAPTCHAEnabled") == 0)
+		{
+			run = CArticleComment::CAPTCHAEnabled(c.Publication()) ? 0 : 1;
+		}
 		if ((run == 0 && !m_bNegated) || (run == 1 && m_bNegated))
+		{
 			runActions(block, c, fs);
+		}
 		else if ((run == 1 && !m_bNegated) || (run == 0 && m_bNegated))
+		{
 			runActions(sec_block, c, fs);
+		}
 		return RES_OK;
 	}
 	else if (modifier == CMS_ST_USER)
@@ -3098,6 +3129,7 @@ CEditModifiers::CEditModifiers()
 	insert(CMS_ST_LOGIN);
 	insert(CMS_ST_SEARCH);
 	insert(CMS_ST_ARTICLECOMMENT);
+	insert(CMS_ST_CAPTCHA);
 }
 
 CEditModifiers CActEdit::s_coModifiers;
@@ -3186,6 +3218,11 @@ int CActEdit::takeAction(CContext& c, sockstream& fs)
 					<< encodeHTML(c.URL()->getValue(coFieldName), c.EncodeHTML())
 					<< "\" " << m_coHTML << ">";
 		}
+	}
+	if (modifier == CMS_ST_CAPTCHA)
+	{
+		fs << "<input type=\"text\" name=\"f_captcha_code\" maxlength=\"255\" "
+				"size=\"" << size << "\" " << m_coHTML << ">";
 	}
 	return RES_OK;
 	TK_CATCH_ERR
