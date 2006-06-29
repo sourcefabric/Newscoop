@@ -17,7 +17,9 @@ if ($instance_name == "") {
 	die("Please supply the instance name as the second argument.\n");
 }
 
-camp_check_maintenance_access("$etc_dir/install_conf.php");
+if (!camp_is_readable("$etc_dir/install_conf.php")) {
+	exit(1);
+}
 
 // include install_conf.php file
 require_once("$etc_dir/install_conf.php");

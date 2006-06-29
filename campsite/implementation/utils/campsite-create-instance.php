@@ -56,7 +56,9 @@ function camp_create_instance($p_arguments, &$p_errors)
 
 	require_once("cli_script_lib.php");
 
-	camp_check_maintenance_access("$etc_dir/install_conf.php");
+	if (!camp_is_readable("$etc_dir/install_conf.php")) {
+		exit(1);
+	}
 
 	require_once($etc_dir . "/install_conf.php");
 	require_once($etc_dir . "/parser_conf.php");

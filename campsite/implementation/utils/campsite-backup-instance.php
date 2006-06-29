@@ -64,7 +64,9 @@ if (empty($ETC_DIR) || empty($instance_name)) {
 
 require_once("cli_script_lib.php");
 
-camp_check_maintenance_access("$ETC_DIR/install_conf.php");
+if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+	exit(1);
+}
 
 // include install_conf.php file
 require_once("$ETC_DIR/install_conf.php");

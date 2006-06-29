@@ -1,14 +1,15 @@
 <?php
 
-function camp_check_maintenance_access($p_fileName)
+function camp_is_readable($p_fileName)
 {
 	if (!is_readable($p_fileName)) {
 		echo "\nThis script requires access to the file $p_fileName.\n";
 		echo "Please run this script as a user with appropriate privileges.\n";
-		echo "Most often this user is 'root'";
-		exit(1);
+		echo "Most often this user is 'root'.\n\n";
+		return false;
 	}
-} // fn camp_check_maintenance_access
+	return true;
+} // fn camp_is_readable
 
 
 /**

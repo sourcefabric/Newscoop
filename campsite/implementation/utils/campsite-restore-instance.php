@@ -14,7 +14,7 @@ echo "------------------------\n";
 
 $usage =
 "  Usage:
-  campsite-restore-instance <backup_file>  [-i <destination_instance_name>] [-e] [-f]
+  campsite-restore-instance <backup_file>  [-t <destination_instance_name>] [-e] [-f]
 
   This script will replace an existing instance with the one in the
   backup file.  You must run this script from a directory that you
@@ -67,7 +67,9 @@ if (!file_exists($archive_file)) {
 
 require_once("cli_script_lib.php");
 
-camp_check_maintenance_access("$ETC_DIR/install_conf.php");
+if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+	exit(1);
+}
 
 // include install configuration file
 require_once("$ETC_DIR/install_conf.php");
@@ -172,10 +174,17 @@ echo " * Destination instance name (to be replaced) is '$destInstanceName'.\n";
 require_once($Campsite['WWW_DIR']."/".$destInstanceName."/html/campsite_version.php");
 
 if ($useExistingConfig) {
-	require_once("$ETC_DIR/$destInstanceName/database_conf.php");
+	$includeFile = "$ETC_DIR/$destInstanceName/database_conf.php";
 } else {
-	require_once("$tempDirName/$origInstanceName/database_conf.php");
+	$includeFile = "$tempDirName/$origInstanceName/database_conf.php";
 }
+if (!camp_is_readable($includeFile)) {
+	echo " * Cleaning up...";
+	camp_remove_dir($tempDirName);
+	echo "done.\n\n";
+	exit(1);
+}
+require_once($includeFile);
 
 // Create the instance if it doesnt exist.
 echo " * Creating destination instance (if necessary)...";
