@@ -657,15 +657,16 @@ class Phorum_message extends DatabaseObject {
 
 
 	/**
-	 * Initialize the thread order column. This column is used for displaying
-	 * the messages in the correct order.
+	 * Initialize the thread order column. This column is used for
+	 * displaying the messages in threaded order without having to do any
+	 * recursive queries or function calls.
 	 *
 	 * @return void
 	 */
 	function __initThreadOrder()
 	{
 		global $g_ado_db;
-		
+
 		if ($this->m_data['message_id'] == $this->m_data['thread']) {
 			$this->setProperty('thread_order', 0);
 			return true;
