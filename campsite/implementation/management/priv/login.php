@@ -83,7 +83,7 @@ camp_load_translation_strings("home");
 </table>
 
 <table width="400px" border="0" cellspacing="0" cellpadding="6" align="center" style="margin-top: 20px; background-color: #d5e2ee;	border: 1px solid #8baed1;">
-<form method="post" action="do_login.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<form name="login_form" method="post" action="do_login.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($error_code == "upgrade") { ?>
 <input type="hidden" name="f_is_encrypted" value="0">
 <?php } else { ?>
@@ -181,4 +181,11 @@ camp_load_translation_strings("home");
 	</tr>
 </form>
 </table>
+<script>
+<?php if ($error_code != "upgrade") { ?>
+document.forms.login_form.f_user_name.focus();
+<?php } else { ?>
+document.forms.login_form.f_password.focus();
+<?php } ?>
+</script>
 <?php camp_html_copyright_notice(false); ?>
