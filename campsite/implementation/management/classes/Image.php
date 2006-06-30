@@ -399,7 +399,9 @@ class Image extends DatabaseObject {
 	 *
 	 * @return mixed
 	 *		The Image object that was created or updated.
-	 *		NULL if there was an error.
+     * 		CAMP_ERROR_MKDIR
+     * 		CAMP_ERROR_WRITE_FILE
+     *      Or alternative strings, on other errors.
 	 */
 	function OnImageUpload($p_fileVar, $p_attributes, $p_userId = null, $p_id = null, $p_isLocalFile = false)
 	{
@@ -478,6 +480,8 @@ class Image extends DatabaseObject {
             system($cmd);
             if (file_exists($thumbnail)) {
             	chmod($thumbnail, 0644);
+            } else {
+                return getGS("Could not copy thumbnail $1", $cmd);
             }
         }
         $image->commit();
