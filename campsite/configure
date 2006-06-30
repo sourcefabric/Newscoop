@@ -160,7 +160,7 @@ CGI_COMMON_DIR=$WWW_COMMON_DIR/cgi-bin
 
 if [ "$c_define_start_env" != "--define_start_env" ]; then
 
-for m in ls gcc gpp curl; do
+for m in ls gpp curl; do
     check4_$m
     [ $? -ne 0 ] && echo $output && exit 1
 done

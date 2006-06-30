@@ -242,23 +242,6 @@ return 0
 }
 # END OF check4_clear
 
-# FUNCTION: check4_gcc
-# Description: check if gcc executable is installed
-# Parameters: none
-# Variables set:
-#	GCC - gcc full path
-#	output - error message (if any)
-check4_gcc()
-{
-is_checked gcc && return 0
-check4_file gcc --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && output="Could not find 'gcc' - GNU C compiler. Please install gcc package." && return 1
-export GPP=$file_path
-set_checked gcc
-return 0
-}
-# END OF check4_gcc
-
 # FUNCTION: check4_gpp
 # Description: check if g++ executable is installed
 # Parameters: none
@@ -771,7 +754,7 @@ return 0
 # Parameters: none
 # Variables set:
 #	LIBCRYPT - libcrypt full path
-#	LIBCRYPT_LINK - added to gcc line to link with libcrypt
+#	LIBCRYPT_LINK - added to g++ line to link with libcrypt
 #	output - error message (if any)
 check4_libcrypt()
 {
@@ -835,7 +818,7 @@ return 0
 # Variables set:
 #	LIBPTHREAD - libpthread full path
 #	LIBPTHREAD_PATH - path to pthread library
-#       PTHREAD_LINK - added to gcc line to link with pthread
+#       PTHREAD_LINK - added to g++ line to link with pthread
 #	output - error message (if any)
 check4_libpthread()
 {
@@ -894,7 +877,7 @@ return 0
 # Description: 
 # Parameters: none
 # Variables set:
-#       NSL_LINK - added to gcc line to link with nsl
+#       NSL_LINK - added to g++ line to link with nsl
 #	output - error message (if any)
 check4_libnsl()
 {
