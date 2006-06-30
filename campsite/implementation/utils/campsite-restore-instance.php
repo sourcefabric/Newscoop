@@ -323,6 +323,14 @@ echo " * Cleaning up...";
 camp_remove_dir($tempDirName);
 echo "done.\n\n";
 
+if ($useExistingConfig || $destInstanceSpecified) {
+	echo
+"Note: If you are doing a site-to-site transfer you may have to fix the
+aliases in your publications before the frontend will work.  An alias
+is the base URL for your publication.  To change an alias, login to the
+administration interface and go to the publication configure screen.\n\n";
+}
+
 exit;
 
 ?>
