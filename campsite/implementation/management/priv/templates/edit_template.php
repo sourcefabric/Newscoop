@@ -24,11 +24,16 @@ if (!file_exists($filename)) {
 $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 $imageExtensions = array("png", "jpg", "jpeg", "jpe", "gif");
 
+$templateDisplayName = $f_name;
+if ($templateObj->exists()) {
+	$templateDisplayName .= ' ('.getGS("Template ID:").' '.$templateObj->getTemplateId().')';
+}
+
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates");
 $crumbs = array_merge($crumbs, camp_template_path_crumbs($f_path));
-$crumbs[] = array(getGS("Edit template").": $f_name", "");
+$crumbs[] = array(getGS("Edit template").": $templateDisplayName", "");
 echo camp_html_breadcrumbs($crumbs);
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
@@ -58,19 +63,13 @@ if (in_array($extension, $imageExtensions)) {
 	<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  p($f_name); ?>">
 	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 	<TR>
-		<td align="left">
+		<td align="center">
 			<?php  if ($g_user->hasPermission("DeleteTempl")) { ?>
 			<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 			<?php  } else { ?>
 			<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($f_path); ?>'">
 			<?php  } ?>
 		</TD>
-
-		<TD align="right">
-			<?php if ($templateObj->exists()) { ?>
-			<b><?php putGS("Template ID:"); ?> <?php p($templateObj->getTemplateId()); ?></b>
-			<?php } ?>
-		</td>
 	</TR>
 
 	<TR>
@@ -78,7 +77,7 @@ if (in_array($extension, $imageExtensions)) {
 	</TR>
 
 	<TR>
-		<TD align="left">
+		<TD align="center" colspan="2">
 		<?php  if ($g_user->hasPermission("DeleteTempl")) { ?>
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 		<?php  } else { ?>
@@ -86,8 +85,12 @@ if (in_array($extension, $imageExtensions)) {
 		<?php  } ?>
 		</FORM>
 		</TD>
-
-		<td align="right">
+    </tr>
+	</table>
+ 	<p></p>
+	<table class="table_input">
+    <tr>
+		<td align="center" colspan="2">
 			<table >
 			<form method="POST" action="do_replace.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" ENCTYPE="multipart/form-data" >
 			<input type="hidden" name="f_path" value="<?php p(htmlspecialchars($f_path)); ?>">
