@@ -263,4 +263,5 @@ regGS("Send", "Send");
 regGS("Thank you.", "Thank you.");
 regGS("Please take a minute to send us an email.", "Please take a minute to send us an email.");
 regGS("(optional)", "(optional)");
+regGS("The URL you entered is invalid: '$1'", "The URL you entered is invalid: '$1'");
 ?>

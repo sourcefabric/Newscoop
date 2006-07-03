@@ -64,9 +64,11 @@ define('CAMP_SUCCESS', 1);
 define('CAMP_ERROR',   0);
 define('CAMP_ERROR_MKDIR',       -100);
 define('CAMP_ERROR_RMDIR',       -200);
-define('CAMP_ERROR_CREATE_FILE', -300);
-define('CAMP_ERROR_READ_FILE',   -400);
-define('CAMP_ERROR_WRITE_FILE',  -500);
-define('CAMP_ERROR_DELETE_FILE', -600);
+define('CAMP_ERROR_WRITE_DIR',   -300);
+define('CAMP_ERROR_READ_DIR',    -400);
+define('CAMP_ERROR_CREATE_FILE', -500);
+define('CAMP_ERROR_READ_FILE',   -600);
+define('CAMP_ERROR_WRITE_FILE',  -700);
+define('CAMP_ERROR_DELETE_FILE', -800);
 
 ?>

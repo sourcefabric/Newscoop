@@ -1,10 +1,7 @@
-<?php
-regGS("The file is not recognized as an image.", "");
+<?php 
+regGS("The file uploaded is not an image.", "");
 regGS("Field $1 updated", "");
-regGS("Could not delete thumbnail file $1", "");
 regGS("Could not delete record from the database.", "");
-regGS("Could not delete image file $1", "");
-regGS("Could not copy image file to directory $1", "");
 regGS("template path", "");
 regGS("short names", "");
 regGS("Unable to fetch image from remote server.", "");
@@ -56,7 +53,6 @@ regGS("The user account $1 has been deleted.", "사용자 아이디 $1 삭제됨
 regGS("Password changed for $1", "$1 패스워드 변경됨");
 regGS("User account $1 created", "사용자 아이디 $1 새로 생성됨");
 regGS("Template $1 uploaded", "템플레이트 $1 업로드됨");
-regGS("Cannot create file \"$1\"", "파일 \"$1\"을 생성할 수 없습니다.");
 regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\"은 비정상이거나 이미지가 아닙니다.");
 regGS("URL \"$1\" is not an image.", "URL \"$1\" 은 이미지가 아닙니다.");
 regGS("Topic $1 added", "토픽 $1 추가됨");

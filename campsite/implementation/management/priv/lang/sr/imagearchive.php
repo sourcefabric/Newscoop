@@ -1,4 +1,8 @@
-<?php
+<?php 
+regGS("Image updated.", "");
+regGS("Image added.", "");
+regGS("Image '$1' deleted.", "");
+regGS("Image is in use, it cannot be deleted.", "");
 regGS("You must select an image file to upload.", "Морате изабрати слику за аплоуд.");
 regGS("Add new image", "Додајте нову слику");
 regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "Датум (гггг-мм-дд)");

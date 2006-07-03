@@ -19,49 +19,16 @@ if (!$g_user->hasPermission('DeleteImage')) {
 	camp_html_goto_page("/$ADMIN/logout.php");
 }
 if ($imageObj->inUse()) {
+	camp_html_add_msg(getGS("Image is in use, it cannot be deleted."));
 	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 }
 
-$errorMsgs = $imageObj->delete();
-if (!is_array($errorMsgs)) {
-	// Go back to article image list.
-	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+$result = $imageObj->delete();
+if (PEAR::isError($result)) {
+	camp_html_add_msg($result->getMessage());
 }
+// Go back to article image list.
+camp_html_add_msg(getGS("Image '$1' deleted.", $imageObj->getDescription()), "ok");
+camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 
-$crumbs = array();
-$crumbs[] = array(getGS('Content'), "");
-$crumbs[] = array(getGS("Image Archive"), "/$ADMIN/imagearchive/index.php");
-$crumbs[] = array(getGS("Delete image $1", ""), "");
-$breadcrumbs = camp_html_breadcrumbs($crumbs);
-echo $breadcrumbs;
 ?>
-<br>
-<br>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
-<TR>
-	<TD COLSPAN="2">
-		<B> <?php  putGS("Delete image $1", ""); ?> </B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-		<BLOCKQUOTE>
-	    <?php
-	   	foreach ($errorMsgs as $errorMsg) { ?>
-	   		<li><?php echo $errorMsg; ?></li>
-	   		<?php
-	   	}
-	   	?>
-		</BLOCKQUOTE>
-	</TD>
-</TR>
-
-<TR>
-	<TD COLSPAN="2" align="center">
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/imagearchive/index.php'">
-	</TD>
-</TR>
-</TABLE>
-<P>
-<?php camp_html_copyright_notice(); ?>

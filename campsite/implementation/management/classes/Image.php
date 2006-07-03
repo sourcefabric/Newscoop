@@ -85,12 +85,9 @@ class Image extends DatabaseObject {
 	 * Delete the row from the database, all article references to this image,
 	 * and the file(s) on disk.
 	 *
-	 * @return boolean
-	 *		TRUE (1) if the record was deleted,
-	 * 		On failed, return the sum of:
-	 * 		-1 if the database query failed
-	 * 		-2 if the image file could not be deleted
-	 * 		-4 if the thumbnail could not be deleted
+	 * @return mixed
+	 *		TRUE if the record was deleted,
+	 * 		return a PEAR_Error on failure.
 	 */
 	function delete()
 	{
@@ -98,37 +95,35 @@ class Image extends DatabaseObject {
 			camp_load_translation_strings("api");
 		}
 
+		// Deleting the images from disk is the most common place for
+		// something to go wrong, so we do that first.
+		$thumb = $this->getThumbnailStorageLocation();
+		$imageFile = $this->getImageStorageLocation();
+
+		if (file_exists($thumb) && !is_writable($thumb)) {
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
+		}
+		if (file_exists($imageFile) && !is_writable($imageFile)) {
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
+		}
+		if (file_exists($thumb) && !unlink($thumb)) {
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
+		}
+		if (file_exists($imageFile) && !unlink($imageFile)) {
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
+		}
+
 		// Delete all the references to this image.
 		ArticleImage::OnImageDelete($this->getImageId());
 
 		// Delete the record in the database
-		$errorMsgs = array();
 		if (!parent::delete()) {
-			$errorMsgs[] = getGS("Could not delete record from the database.");
+			return new PEAR_Error(getGS("Could not delete record from the database."));
 		}
 
-		// Delete the images from disk
-		$thumb = $this->getThumbnailStorageLocation();
-		if (file_exists($thumb) && is_file($thumb)) {
-			if (!unlink($thumb)) {
-	            $errorMsgs[] = getGS("Could not delete thumbnail file $1", $thumb);
-			}
-		}
-
-		$imageFile = $this->getImageStorageLocation();
-		if (file_exists($imageFile)	&& is_file($imageFile)) {
-			if (!unlink($imageFile)) {
-	            $errorMsgs[] = getGS("Could not delete image file $1", $imageFile);
-			}
-		}
-
-		if (count($errorMsgs) == 0) {
-			$logtext = getGS('Image $1 deleted', $this->m_data['Id']);
-			Log::Message($logtext, null, 42);
-			return 1;
-		} else {
-			return $errorMsgs;
-		}
+		$logtext = getGS('Image $1 deleted', $this->m_data['Id']);
+		Log::Message($logtext, null, 42);
+		return true;
 	} // fn delete
 
 
@@ -155,9 +150,9 @@ class Image extends DatabaseObject {
 		global $g_ado_db;
 		// It is in use only if there is an entry in both
 		// the ArticleImages table and the Articles table.
-		$queryStr = 'SELECT Number FROM Articles, ArticleImages '
+		$queryStr = 'SELECT Articles.Number FROM Articles, ArticleImages '
 					.' WHERE IdImage='.$this->getImageId()
-					.' AND Articles.Number=ArticlesImage.NrArticle';
+					.' AND Articles.Number=ArticleImages.NrArticle';
 		if ($g_ado_db->GetOne($queryStr)) {
 			return true;
 		} else {
@@ -398,10 +393,8 @@ class Image extends DatabaseObject {
 	 *		current image ID here.
 	 *
 	 * @return mixed
-	 *		The Image object that was created or updated.
-     * 		CAMP_ERROR_MKDIR
-     * 		CAMP_ERROR_WRITE_FILE
-     *      Or alternative strings, on other errors.
+	 *		The Image object that was created or updated on success,
+     * 		return PEAR_Error on error.
 	 */
 	function OnImageUpload($p_fileVar, $p_attributes, $p_userId = null, $p_id = null, $p_isLocalFile = false)
 	{
@@ -411,15 +404,25 @@ class Image extends DatabaseObject {
 		}
 
 		if (!is_array($p_fileVar)) {
-			return "Invalid arguments given to Image::OnImageUpload()";
+			return new PEAR_Error("Invalid arguments given to Image::OnImageUpload()");
 		}
 
 		// Verify its a valid image file.
 		$imageInfo = @getimagesize($p_fileVar['tmp_name']);
 		if ($imageInfo === false) {
-			return getGS("The file is not recognized as an image.");
+			return new PEAR_Error(getGS("The file uploaded is not an image."));
 		}
 		$extension = Image::__ImageTypeToExtension($imageInfo[2]);
+
+		// Check if image & thumbnail directories are writable.
+		$imageDir = $Campsite['IMAGE_DIRECTORY'];
+		$thumbDir = $Campsite['THUMBNAIL_DIRECTORY'];
+		if (!file_exists($imageDir) || !is_writable($imageDir)) {
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $imageDir), CAMP_ERROR_WRITE_DIR);
+		}
+		if (!file_exists($thumbDir) || !is_writable($thumbDir)) {
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $thumbDir), CAMP_ERROR_WRITE_DIR);
+		}
 
 		// Are we updating or creating?
 	 	if (!is_null($p_id)) {
@@ -429,10 +432,10 @@ class Image extends DatabaseObject {
 	    	// Remove the old image & thumbnail because
 			// the new file may have a different file extension.
 			if (file_exists($image->getImageStorageLocation())) {
-	    		unlink($image->getImageStorageLocation());
+    			unlink($image->getImageStorageLocation());
 			}
 			if (file_exists($image->getThumbnailStorageLocation())) {
-	    		unlink($image->getThumbnailStorageLocation());
+    			unlink($image->getThumbnailStorageLocation());
 			}
 	    } else {
 	    	// Creating the image
@@ -464,14 +467,14 @@ class Image extends DatabaseObject {
 	        	if (is_null($p_id)) {
 	        		$image->delete();
 	        	}
-	    		return getGS("Could not copy image file to directory $1", dirname($target));
+	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
 	    	}
 	    } else {
 	        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
 	        	if (is_null($p_id)) {
 	        		$image->delete();
 	        	}
-	            return getGS("Could not copy image file to directory $1", dirname($target));
+	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
 	        }
 	    }
 		chmod($target, 0644);
@@ -481,7 +484,7 @@ class Image extends DatabaseObject {
             if (file_exists($thumbnail)) {
             	chmod($thumbnail, 0644);
             } else {
-                return getGS("Could not copy thumbnail $1", $cmd);
+	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $thumbnail), CAMP_ERROR_CREATE_FILE);
             }
         }
         $image->commit();
@@ -511,16 +514,30 @@ class Image extends DatabaseObject {
 	 *		If you are updating an image, specify its ID here.
 	 *
 	 * @return mixed
-	 * 		Return an Image object on success, return an error string otherwise.
+	 * 		Return an Image object on success, return a PEAR_Error otherwise.
 	 */
 	function OnAddRemoteImage($p_url, $p_attributes, $p_userId = null, $p_id = null)
 	{
 		global $Campsite;
-	    $client =& new HTTP_Client();
+		if (function_exists("camp_load_translation_strings")) {
+			camp_load_translation_strings("api");
+		}
+
+		// Check if thumbnail directory is writable.
+		$imageDir = $Campsite['IMAGE_DIRECTORY'];
+		$thumbDir = $Campsite['THUMBNAIL_DIRECTORY'];
+		if (!file_exists($imageDir) || !is_writable($imageDir)) {
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $imageDir), CAMP_ERROR_WRITE_DIR);
+		}
+		if (!file_exists($thumbDir) || !is_writable($thumbDir)) {
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $thumbDir), CAMP_ERROR_WRITE_DIR);
+		}
+
+		$client =& new HTTP_Client();
 	    $client->get($p_url);
 	    $response = $client->currentResponse();
 	    if ($response['code'] != 200) {
-	    	return getGS("Unable to fetch image from remote server.");
+	    	return new PEAR_Error(getGS("Unable to fetch image from remote server."));
 	    }
 	    foreach ($response['headers'] as $headerName => $value) {
 	    	if (strtolower($headerName) == "content-type") {
@@ -532,23 +549,25 @@ class Image extends DatabaseObject {
         // Check content type
         if (!preg_match('/image/', $ContentType)) {
             // wrong URL
-            return getGS('URL "$1" is invalid or is not an image.', $p_url);
+            return new PEAR_Error(getGS('URL "$1" is invalid or is not an image.', $p_url));
         }
 
     	// Save the file
         $tmpname = $Campsite['TMP_DIRECTORY'].'img'.md5(rand());
-        if ($tmphandle = fopen($tmpname, 'w')) {
-            fwrite($tmphandle, $response['body']);
-            fclose($tmphandle);
+        if (is_writable($Campsite['TMP_DIRECTORY'])) {
+	        if ($tmphandle = fopen($tmpname, 'w')) {
+	            fwrite($tmphandle, $response['body']);
+	            fclose($tmphandle);
+	        }
         } else {
-            return getGS('Cannot create file "$1"', $tmpname);
-        }
+	    	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $tmpname), CAMP_ERROR_CREATE_FILE);
+	    }
 
         // Check if it is really an image file
         $imageInfo = getimagesize($tmpname);
         if ($imageInfo === false) {
         	unlink($tmpname);
-            return getGS('URL "$1" is not an image.', $cURL);
+            return new PEAR_Error(getGS('URL "$1" is not an image.', $cURL));
         }
 
         // content-type = image
@@ -559,10 +578,18 @@ class Image extends DatabaseObject {
 	    	// Remove the old image & thumbnail because
 	    	// the new file might have a different file extension.
 	    	if (file_exists($image->getImageStorageLocation())) {
-	    		unlink($image->getImageStorageLocation());
+				if (is_writable(dirname($image->getImageStorageLocation()))) {
+		    		unlink($image->getImageStorageLocation());
+				} else {
+	    			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $image->getImageStorageLocation()), CAMP_ERROR_DELETE_FILE);
+				}
 	    	}
 	    	if (file_exists($image->getThumbnailStorageLocation())) {
-	    		unlink($image->getThumbnailStorageLocation());
+				if (is_writable(dirname($image->getThumbnailStorageLocation()))) {
+		    		unlink($image->getThumbnailStorageLocation());
+				} else {
+	    			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $image->getThumbnailStorageLocation()), CAMP_ERROR_DELETE_FILE);
+				}
 	    	}
         } else {
         	// Creating the image
@@ -591,6 +618,10 @@ class Image extends DatabaseObject {
 		    $thumbnail = $image->generateThumbnailStorageLocation($extension);
 		    $image->setProperty('ThumbnailFileName', basename($thumbnail), false);
 
+		    if (!is_writable(dirname($image->getThumbnailStorageLocation()))) {
+            	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $image->getThumbnailStorageLocation()), CAMP_ERROR_CREATE_FILE);
+		    }
+
 		    // Create the thumbnail
             $cmd = $Campsite['THUMBNAIL_COMMAND'].' '
             	. $tmpname . ' ' . $image->getThumbnailStorageLocation();
@@ -602,9 +633,6 @@ class Image extends DatabaseObject {
         unlink($tmpname);
         $image->commit();
 
-		if (function_exists("camp_load_translation_strings")) {
-			camp_load_translation_strings("api");
-		}
 		$logtext = getGS('The image $1 has been added.',
 						$image->m_data['Description']." (".$image->m_data['Id'].")");
 		Log::Message($logtext, null, 41);

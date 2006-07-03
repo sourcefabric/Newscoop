@@ -1,10 +1,7 @@
-<?php
-regGS("The file is not recognized as an image.", "");
+<?php 
+regGS("The file uploaded is not an image.", "");
 regGS("Field $1 updated", "");
-regGS("Could not delete thumbnail file $1", "");
 regGS("Could not delete record from the database.", "");
-regGS("Could not delete image file $1", "");
-regGS("Could not copy image file to directory $1", "");
 regGS("template path", "");
 regGS("short names", "");
 regGS("Unable to fetch image from remote server.", "");
@@ -56,7 +53,6 @@ regGS("The user account $1 has been deleted.", "Contul de utilizator $1 a fost �
 regGS("Password changed for $1", "Parola pentru $1 a fost schimbată");
 regGS("User account $1 created", "Contul de utilizator $1 a fost creat");
 regGS("Template $1 uploaded", "Şablonul $1 a fost încărcat în sistem");
-regGS("Cannot create file \"$1\"", "Fişierul \"$1\" nu poate fi creat");
 regGS("URL \"$1\" is invalid or is not an image.", "Adresa de Internet \"$1\" nu este validă sau nu este un fişier de tip imagine.");
 regGS("URL \"$1\" is not an image.", "Adresa de Internet \"$1\" nu este un fişier de tip imagine.");
 regGS("Topic $1 added", "Subiectul $1 a fost adăugat");

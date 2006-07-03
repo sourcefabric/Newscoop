@@ -1,4 +1,8 @@
-<?php
+<?php 
+regGS("Image updated.", "");
+regGS("Image added.", "");
+regGS("Image '$1' deleted.", "");
+regGS("Image is in use, it cannot be deleted.", "");
 regGS("You must select an image file to upload.", "업로드할 이미지 파일을 선택하시오.");
 regGS("Add new image", "새로운 이미지 추가");
 regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "일자<SMALL>(년-월-일)</SMALL)");

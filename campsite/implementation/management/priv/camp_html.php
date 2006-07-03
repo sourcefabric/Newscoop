@@ -356,7 +356,8 @@ $g_camp_msg_added = false;
  * The messages can be displayed on the destination screen by using
  * camp_html_display_msgs().
  *
- * @param string $p_errorMsg
+ * @param mixed $p_errorMsg
+ * 		This can be a string or an array of strings.
  * @param string $p_type
  * @param int $p_delay
  * 		The number of screen refreshes before this is displayed.
@@ -372,6 +373,14 @@ function camp_html_add_msg($p_errorMsg, $p_type = "error")
 		$g_camp_msg_added = true;
 		$_SESSION["camp_user_msgs"][] = array("msg" => $p_errorMsg,
 											  "type" => $p_type);
+	} elseif (is_array($p_errorMsg)) {
+		foreach ($p_errorMsg as $errorMsg) {
+			if (is_string($errorMsg) && (trim($errorMsg) != "")) {
+				$g_camp_msg_added = true;
+				$_SESSION["camp_user_msgs"][] = array("msg" => $errorMsg,
+													  "type" => $p_type);
+			}
+		}
 	}
 } // fn camp_html_add_msg
 

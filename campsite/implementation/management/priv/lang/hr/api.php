@@ -1,10 +1,7 @@
-<?php
-regGS("The file is not recognized as an image.", "");
+<?php 
+regGS("The file uploaded is not an image.", "");
 regGS("Field $1 updated", "");
-regGS("Could not delete thumbnail file $1", "");
 regGS("Could not delete record from the database.", "");
-regGS("Could not delete image file $1", "");
-regGS("Could not copy image file to directory $1", "");
 regGS("template path", "");
 regGS("short names", "");
 regGS("Unable to fetch image from remote server.", "");
@@ -56,7 +53,6 @@ regGS("The user account $1 has been deleted.", "Korisnički račun $1 je obrisan
 regGS("Password changed for $1", "Lozinka je promijenjena za $1");
 regGS("User account $1 created", "Korisnički račun $1 je kreiran");
 regGS("Template $1 uploaded", "Predložak $1 je postavljen");
-regGS("Cannot create file \"$1\"", "Datoteka \"$1\" ne može se kreirati");
 regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\" je neispravan ili nije slika.");
 regGS("URL \"$1\" is not an image.", "URL \"$1\" nije slika.");
 regGS("Topic $1 added", "Tema $1 je dodana");

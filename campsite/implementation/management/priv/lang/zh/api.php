@@ -1,10 +1,7 @@
-<?php
-regGS("The file is not recognized as an image.", "");
+<?php 
+regGS("The file uploaded is not an image.", "");
 regGS("Field $1 updated", "");
-regGS("Could not delete thumbnail file $1", "");
 regGS("Could not delete record from the database.", "");
-regGS("Could not delete image file $1", "");
-regGS("Could not copy image file to directory $1", "");
 regGS("template path", "");
 regGS("short names", "");
 regGS("Unable to fetch image from remote server.", "");
@@ -54,7 +51,6 @@ regGS("The user account $1 has been deleted.", "帐户$1已被删除");
 regGS("Password changed for $1", "$1的密码已改变");
 regGS("User account $1 created", "帐户$1已产生");
 regGS("Template $1 uploaded", "模版$1已上载");
-regGS("Cannot create file \"$1\"", "");
 regGS("URL \"$1\" is invalid or is not an image.", "");
 regGS("URL \"$1\" is not an image.", "");
 regGS("Topic $1 added", "主题$1已添加");

@@ -44,7 +44,12 @@ $attributes['Photographer'] = $f_image_photographer;
 $attributes['Place'] = $f_image_place;
 $attributes['Date'] = $f_image_date;
 if (!empty($f_image_url)) {
-	$image = Image::OnAddRemoteImage($f_image_url, $attributes, $g_user->getUserId());
+	if (camp_is_valid_url($f_image_url)) {
+		$image = Image::OnAddRemoteImage($f_image_url, $attributes, $g_user->getUserId());
+	} else {
+		camp_html_add_msg(getGS("The URL you entered is invalid: '$1'", htmlspecialchars($f_image_url)));
+		camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'images/popup.php'));
+	}
 } elseif (!empty($_FILES['f_image_file']) && !empty($_FILES['f_image_file']['name'])) {
 	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $g_user->getUserId());
 } else {
@@ -53,8 +58,8 @@ if (!empty($f_image_url)) {
 }
 
 // Check if image was added successfully
-if (!is_object($image)) {
-	camp_html_add_msg($image);
+if (PEAR::isError($image)) {
+	camp_html_add_msg($image->getMessage());
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'images/popup.php'));
 }
 

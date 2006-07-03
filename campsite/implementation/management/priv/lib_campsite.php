@@ -220,6 +220,17 @@ function camp_is_valid_url_name($p_name)
 } // fn camp_is_valid_url_name
 
 
+
+function camp_is_valid_url($p_url)
+{
+	if (preg_match('/^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\//i', $p_url, $m)) {
+		return true;
+	} else {
+		return false;
+	}
+} // fn camp_is_valid_url
+
+
 /**
  * Get the first element from the given array, but do not modify
  * the array the way array_pop() does.
@@ -307,6 +318,10 @@ function camp_dump($p_object)
 function camp_get_error_message($p_errorCode, $p_arg1 = null)
 {
 	global $Campsite;
+	if (function_exists("camp_load_translation_strings")) {
+		camp_load_translation_strings("home");
+	}
+
 	switch ($p_errorCode) {
 	case CAMP_ERROR_CREATE_FILE:
 		return getGS("The system was unable to create the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
@@ -318,13 +333,16 @@ function camp_get_error_message($p_errorCode, $p_arg1 = null)
 		return getGS("The system was unable to read the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to read this file.", $Campsite['APACHE_USER']);
 		break;
 	case CAMP_ERROR_DELETE_FILE:
-		return getGS("The system was unable to delete the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to this file.", $Campsite['APACHE_USER']);
+		return getGS("The system was unable to delete the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
 		break;
 	case CAMP_ERROR_MKDIR:
 		return getGS("The system was unable to create the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
 		break;
 	case CAMP_ERROR_RMDIR:
 		return getGS("The system was unable to delete the directory '$1'.", $p_arg1).' '.getGS("Please check if the directory is empty and the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		break;
+	case CAMP_ERROR_WRITE_DIR:
+		return getGS("The system is unable to write to the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], $p_arg1);
 		break;
 	}
 	return "";

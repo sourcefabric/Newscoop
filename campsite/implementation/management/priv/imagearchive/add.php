@@ -16,9 +16,23 @@ $crumbs[] = array(getGS('Add new image'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
 echo $breadcrumbs;
+
+camp_html_display_msgs();
 ?>
+<script>
+function checkAddForm(form) {
+	retval = ((form.f_image_url.value != '') || (form.f_image_file.value != ''));
+	if (!retval) {
+	    alert('<?php putGS("You must select an image file to upload."); ?>');
+	    return retval;
+	}
+	retval = retval && <?php camp_html_fvalidate(); ?>;
+	return retval;
+} // fn checkAddForm
+</script>
+
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" ENCTYPE="multipart/form-data">
+<FORM NAME="image_add" METHOD="POST" ACTION="do_add.php" ENCTYPE="multipart/form-data" onsubmit="return checkAddForm(this);">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -70,5 +84,7 @@ echo $breadcrumbs;
 </TABLE>
 </FORM>
 <P>
-
+<script>
+document.forms.image_add.f_image_description.focus();
+</script>
 <?php camp_html_copyright_notice(); ?>

@@ -1,4 +1,8 @@
-<?php
+<?php 
+regGS("Image updated.", "");
+regGS("Image added.", "");
+regGS("Image '$1' deleted.", "");
+regGS("Image is in use, it cannot be deleted.", "");
 regGS("Items per page", "");
 regGS("You must select an image file to upload.", "");
 regGS("Add new image", "Přidat obrázek");

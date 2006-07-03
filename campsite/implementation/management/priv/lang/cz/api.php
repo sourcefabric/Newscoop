@@ -1,10 +1,7 @@
-<?php
-regGS("The file is not recognized as an image.", "");
+<?php 
+regGS("The file uploaded is not an image.", "");
 regGS("Field $1 updated", "");
-regGS("Could not delete thumbnail file $1", "");
 regGS("Could not delete record from the database.", "");
-regGS("Could not delete image file $1", "");
-regGS("Could not copy image file to directory $1", "");
 regGS("template path", "");
 regGS("short names", "");
 regGS("Unable to fetch image from remote server.", "");
@@ -56,7 +53,6 @@ regGS("The user account $1 has been deleted.", "Uživatelský účet $1 byl smaz
 regGS("Password changed for $1", "Heslo bylo změněno na $1");
 regGS("User account $1 created", "Uživatelský účet $1 byl vytvořen");
 regGS("Template $1 uploaded", "Šablona $1 byla nahrána");
-regGS("Cannot create file \"$1\"", "Nemohu vytvořit soubor \"$1\"");
 regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\" není platné, nebo se nejedná o obrázek.");
 regGS("URL \"$1\" is not an image.", "URL \"$1\" není obrázek");
 regGS("Topic $1 added", "Téma $1 bylo přidáno");

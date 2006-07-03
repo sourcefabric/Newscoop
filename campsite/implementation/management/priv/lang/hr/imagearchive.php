@@ -1,4 +1,8 @@
-<?php
+<?php 
+regGS("Image updated.", "");
+regGS("Image added.", "");
+regGS("Image '$1' deleted.", "");
+regGS("Image is in use, it cannot be deleted.", "");
 regGS("You must select an image file to upload.", "Morate označiti sliku za postavljanje.");
 regGS("Add new image", "Dodaj novu sliku");
 regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "Datum <small>(gggg-mm-dd)</small>");

@@ -1,10 +1,7 @@
-<?php
-regGS("The file is not recognized as an image.", "");
+<?php 
+regGS("The file uploaded is not an image.", "");
 regGS("Field $1 updated", "");
-regGS("Could not delete thumbnail file $1", "");
 regGS("Could not delete record from the database.", "");
-regGS("Could not delete image file $1", "");
-regGS("Could not copy image file to directory $1", "");
 regGS("template path", "");
 regGS("short names", "");
 regGS("Unable to fetch image from remote server.", "");
@@ -56,7 +53,6 @@ regGS("The user account $1 has been deleted.", "Utilizador $1 foi eliminado");
 regGS("Password changed for $1", "Palavra-Passe de $1 foi alterada");
 regGS("User account $1 created", "Utilizador $1 foi criado");
 regGS("Template $1 uploaded", "O modelo $1 foi transferido");
-regGS("Cannot create file \"$1\"", "Não é possivel criar o ficheiro \"$1\"");
 regGS("URL \"$1\" is invalid or is not an image.", "O Endereço \"$1\" não é uma imagem ou é inválido");
 regGS("URL \"$1\" is not an image.", "O Endereço \"$1\" não é uma imagem");
 regGS("Topic $1 added", "Artigo Adicionado ao Tema $1.");

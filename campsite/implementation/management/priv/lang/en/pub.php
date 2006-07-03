@@ -1,4 +1,7 @@
 <?php 
+regGS("Use CAPTCHA to prevent spam?", "Use CAPTCHA to prevent spam?");
+regGS("Public allowed to comment?", "Public allowed to comment?");
+regGS("Enable spam blocking?", "Enable spam blocking?");
 regGS("The subscription settings for '$1' could not be added.", "The subscription settings for '$1' could not be added.");
 regGS("The publication name you specified conflicts with publication '$1'.", "The publication name you specified conflicts with publication '$1'.");
 regGS("The publication alias you specified conflicts with publication '$1'.", "The publication alias you specified conflicts with publication '$1'.");

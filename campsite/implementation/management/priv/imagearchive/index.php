@@ -40,6 +40,9 @@ $crumbs[] = array(getGS('Content'), "");
 $crumbs[] = array(getGS('Image Archive'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
+
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 ?>
 <p>
 <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
@@ -53,9 +56,10 @@ if ($g_user->hasPermission('AddImage')) { ?>
     	<A HREF="add.php"><B><?php  putGS('Add new image'); ?></B></A>
     </TD>
 <?php } ?>
-
 </tr>
 </table>
+
+<?php camp_html_display_msgs(); ?>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;">
 <form method="POST" action="index.php">

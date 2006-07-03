@@ -25,13 +25,15 @@ else {
 }
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 echo $breadcrumbs;
+
 ?>
 <p></p>
 <table cellpadding="0" cellspacing="0" class="action_buttons">
 <tr>
-<?php
-if ($g_user->hasPermission('AddImage')) { ?>
+<?php if ($g_user->hasPermission('AddImage')) { ?>
     <td>
     	<A HREF="add.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A>
     </TD>
@@ -39,14 +41,23 @@ if ($g_user->hasPermission('AddImage')) { ?>
     	<A HREF="add.php"><B><?php  putGS('Add new image'); ?></B></A>
     </TD>
 <?php } ?>
-
+<?php if ($g_user->hasPermission('DeleteImage') && !$imageObj->inUse()) { ?>
+    <td style="padding-left: 15px;">
+		<A HREF="do_del.php?f_image_id=<?php echo $f_image_id; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($imageObj->getDescription())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($imageObj->getDescription())); ?>"></A>
+    </TD>
+    <TD style="padding-left: 3px;">
+    	<A HREF="do_del.php?f_image_id=<?php echo $f_image_id; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($imageObj->getDescription())); ?>');"><b><?php putGS('Delete'); ?></b></a>
+    </TD>
+<?php } ?>
 </tr>
 </table>
+
+<?php camp_html_display_msgs(); ?>
 <p></p>
 <IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" style="padding-left:15px">
 <P>
 <?php if ($g_user->hasPermission('ChangeImage')) { ?>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" ENCTYPE="multipart/form-data">
+<FORM NAME="image_edit" METHOD="POST" ACTION="do_edit.php" ENCTYPE="multipart/form-data">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -84,7 +95,7 @@ if ($imageObj->getLocation() == 'remote') {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL"); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_uRL" VALUE="<?php echo htmlspecialchars($imageObj->getUrl()); ?>" SIZE="32" class="input_text">
+		<?php echo htmlspecialchars($imageObj->getUrl()); ?>
 	</TD>
 </TR>
 <?php
@@ -93,7 +104,7 @@ if ($imageObj->getLocation() == 'remote') {
 <TR>
 	<TD ALIGN="RIGHT"><?php  putGS("Image"); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_file" SIZE="32" VALUE="<?php echo basename($imageObj->getImageStorageLocation()); ?>" DISABLED class="input_text">
+		<?php echo basename($imageObj->getImageStorageLocation()); ?>
 	</TD>
 </TR>
 <?php
@@ -108,6 +119,9 @@ if ($imageObj->getLocation() == 'remote') {
 </TABLE>
 </FORM>
 <P>
+<script>
+document.forms.image_edit.f_image_description.focus();
+</script>
 <?php
 } // if ($g_user->hasPermission('ChangeImage'))
 

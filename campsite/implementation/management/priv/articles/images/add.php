@@ -47,7 +47,7 @@ function checkAddForm(form) {
 </script>
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/images/do_add.php" ENCTYPE="multipart/form-data" onsubmit="return checkAddForm(this);">
+<FORM NAME="image_add" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/images/do_add.php" ENCTYPE="multipart/form-data" onsubmit="return checkAddForm(this);">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -113,4 +113,8 @@ function checkAddForm(form) {
 </TR>
 </TABLE>
 </FORM>
+<script>
+document.forms.image_add.f_image_template_id.focus();
+</script>
+
 <P>
