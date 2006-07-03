@@ -634,12 +634,13 @@ const CLexem* CParser::WaitForStatementStart(CActionList& al)
 {
 	l = lex.getLexem();
 	DEBUGLexem("wf start 1", l);
-	while (l->res() != CMS_LEX_START_STATEMENT
-	        && l->res() != CMS_ERR_EOF)
+	while (l->res() != CMS_LEX_START_STATEMENT && l->res() != CMS_ERR_EOF)
 	{
 		CheckForText(al, l);
 		if (l->res() < 0)
+		{
 			return l;
+		}
 		l = lex.getLexem();
 		DEBUGLexem("wf start 2", l);
 	}
@@ -652,12 +653,13 @@ const CLexem* CParser::WaitForStatementEnd(bool write_errors)
 {
 	const CLexem *c_lexem = lex.getLexem();
 	DEBUGLexem("wf end 1", c_lexem);
-	while (c_lexem->res() != CMS_LEX_END_STATEMENT
-	        && c_lexem->res() != CMS_ERR_EOF)
+	while (c_lexem->res() != CMS_LEX_END_STATEMENT && c_lexem->res() != CMS_ERR_EOF)
 	{
 		if (write_errors == true)
+		{
 			SetPError(parse_err, PERR_END_STATEMENT_MISSING, MODE_PARSE, CLex::endToken(),
 			          lex.prevLine(), lex.prevColumn());
+		}
 		c_lexem = lex.getLexem();
 		DEBUGLexem("wf end 2", c_lexem);
 	}
@@ -690,9 +692,13 @@ int CParser::ValidDateForm(const char* df)
 	while (*df)
 	{
 		if (*df == '%' && strchr(valid_chars, *(++df)) == 0)
+		{
 			return 0;
+		}
 		if (*df)
+		{
 			df++;
+		}
 	}
 	return 1;
 }
@@ -2341,6 +2347,7 @@ inline int CParser::HFormParameters(CActionList& al)
 			SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
 					  lex.prevLine(), lex.prevColumn());
 		}
+		l = lex.getLexem();
 	}
 	al.insert(al.end(), new CActFormParameters(fromstart, articleComment));
 	if (l->res() != CMS_LEX_END_STATEMENT)
