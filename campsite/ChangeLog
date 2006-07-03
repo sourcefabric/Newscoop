@@ -1,9 +1,9 @@
-2.6.0 (June 6, 2006)
+2.6.0 (July 4, 2006)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.6.0
 
-  New Features
-  ------------
+  Major New Features
+  ------------------
   - Frontend users can post comments on articles & comments can be
     moderated by the staff.
   - 'Article Types' screen re-engineered with the ability to rename
@@ -25,7 +25,11 @@
     resolution of anything that comes up.
   - Staff users can submit feedback directly to the Campsite team from
     within the interface.
-  - Added Dutch translation
+  - Improved backup/restore scripts: you can now transfer your site
+    to another server using these scripts.  Backup file are now tagged
+    with the date and time of the backup.  Lots of help
+    documentation has been added as well as detailed status messages
+    during execution.
 
   Minor Features
   --------------
@@ -76,68 +80,74 @@
   - #1713: Added URL statement, equivalent of:
     <!** print publication site><!** uri>
 
-  Bugs Fixed (34 total)
-  ---------------------
-  - #1919: Inserting image fails when caption and alt text erased in
-    Xinha popup
-  - #1585: URL type is not localized
-  - #1685: Article attachments sometimes have the wrong file name when
-    you download them
-  - #1789: When deleting a section, only delete the articles of the same
-    language as the section
-  - #1821: Changing a user type does not change permissions for all
-    users of that user type
-  - #1827: Add "Other" option to user employer type
-  - #1865: Creating an article with a duplicate name gives an
-    uninformative error
-  - #1908: If you try to save the publication without changing anything,
-    you get an error
-  - #1914: Campsite Indexer and other scripts should display the
-    instance name
-  - #1918: Issue edit screen allows issues with number 0
-  - #1939: Trying to use an issue number that already exists crashes
-  - #1946: 'Add attachment' gives an uninformative error message when
-    the server is not able to write the file to the destination
-    directory
-  - #1938: Adding a new subscription crashes when there are no issues
-  - #1949: No error given if there is a problem uploading an image
-  - #1975: On the frontend, the subscription form javascript doesn't
-    work when some fields are predefined
-  - #1763: Article Edit: Going into view mode should automatically
-    unlock the article
-  - #1767: Deleting an article type doesnt warn you that you will delete
-    all articles of that type
-  - #1943: Message not clear enough when deleting an issue that contains
-    articles
-  - #2037: Preview function is broken with multiple publications
-  - #2112: Home page broken when user doesnt have "ChangeArticle" and
-    "Publish" permissions
-  - #2080: Dont allow campsite-backup-instance and
-    campsite-restore-instance to be run as non-root.  It wasnt possible
-    previously, but now we give a better error message.
-  - #2084: Fixed bug where the javascript calendar did not show up for
-    the following languages: Romanian, Russian, French, Italian,
-    Portuguese, and German.
-  - #2064: "System Preferences" section missing from Localizer
-  - #2039: Install fails on Ubuntu Dapper
-  - #2057: Deleting an Issue does not delete its Scheduled publishing
-    entries
-  - #2058: Deleting article does not delete its scheduled publishing
-    entries
-  - #2018: In IE, various png files aren't transparent
-  - #2053: Article List -> Translate -> back to article List -> language
-    is now selected
-  - #2012: Internal/External links dont work when upgrading from 2.1
-  - #2051: Duplicate section -> pull down for "publications" doesnt
-    always work
-  - #2045: When editing an alias, and you save with the same name as it
-    already has, it gives you an error
-  - #1971: If you edit Topic and change the name to an existing topic
-    name, it give you an error
-  - #1968: Creating a folder with ".." throws an error
-  - #1991: Localizer "Hide translated strings" checkbox doesnt work
-    on IE
-  - #1990: Permissions not enforced for the localizer
+  Bugs Fixed
+  ----------
+  01) #1919: Inserting image fails when caption and alt text erased in
+      Xinha popup
+  02) #1585: URL type is not localized
+  03) #1685: Article attachments sometimes have the wrong file name when
+      you download them
+  04) #1789: When deleting a section, only delete the articles of the
+      same language as the section
+  05) #1821: Changing a user type does not change permissions for all
+      users of that user type
+  06) #1827: Add "Other" option to user employer type
+  07) #1865: Creating an article with a duplicate name gives an
+      uninformative error
+  08) #1908: If you try to save the publication without changing
+      anything, you get an error.
+  09) #1914: Campsite Indexer and other scripts should display the
+      instance name
+  10) #1918: Issue edit screen allows issues with number 0
+  11) #1939: Trying to use an issue number that already exists crashes
+  12) #1946: 'Add attachment' gives an uninformative error message when
+      the server is not able to write the file to the destination
+      directory
+  13) #1938: Adding a new subscription crashes when there are no issues
+  14) #1949: No error given if there is a problem uploading an image
+  15) #1975: On the frontend, the subscription form javascript doesn't
+      work when some fields are predefined
+  16) #1763: Article Edit: Going into view mode should automatically
+      unlock the article
+  17) #1767: Deleting an article type doesnt warn you that you will
+      delete all articles of that type
+  18) #1943: Message not clear enough when deleting an issue that
+      contains articles.
+  19) #2037: Preview function is broken with multiple publications
+  20) #2112: Home page broken when user doesnt have "ChangeArticle" and
+      "Publish" permissions
+  21) #2080: Dont allow campsite-backup-instance and
+      campsite-restore-instance to be run as non-root.  It wasnt possible
+      previously, but now we give a better error message.
+  22) #2084: Fixed bug where the javascript calendar did not show up for
+      the following languages: Romanian, Russian, French, Italian,
+      Portuguese, and German.
+  23) #2064: "System Preferences" section missing from Localizer
+  24) #2039: Install fails on Ubuntu Dapper
+  25) #2057: Deleting an Issue does not delete its Scheduled publishing
+      entries
+  26) #2058: Deleting article does not delete its scheduled publishing
+      entries
+  27) #2018: In IE, various png files aren't transparent
+  28) #2053: Article List -> Translate -> back to article List ->
+      suddenly the language in "Article List" is selected (wrong)
+  29) #2012: Internal/External links dont work when upgrading from 2.1
+  30) #2051: Duplicate section -> pull down for "publications" doesnt
+      always work
+  31) #2045: When editing an alias, and you save with the same name as it
+      already has, it gives you an error
+  32) #1971: If you edit Topic and change the name to an existing topic
+      name, it give you an error
+  33) #1968: Creating a folder with ".." throws an error
+  34) #1991: Localizer "Hide translated strings" checkbox doesnt work
+      on IE
+  35) #1990: Permissions not enforced for the localizer
+  36) #2143: When adding an image, adding a non-URL to the URL field
+      would cause a crash.
+  37) #2122: No way to specify empty password for
+      campsite-create-instance
+  38) #2110: Creating a duplicate template name produces a crash
+  39) #2105: Unsafe template deletion
 
 
 2.5.2 (May 11, 2006)
