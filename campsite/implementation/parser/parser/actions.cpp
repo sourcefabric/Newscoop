@@ -1949,7 +1949,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	}
 	if (modifier == CMS_ST_CAPTCHA)
 	{
-		fs << "<img src=\"/include/captcha/image.php\">";
+		fs << "/include/captcha/image.php";
 		return RES_OK;
 	}
 	string w, table, field;
