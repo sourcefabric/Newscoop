@@ -79,7 +79,7 @@ INSTALLATION - the usual procedure
 
    GENTOO
    You will need to follow these special instructions at:
-   http://code.campware.org/manuals/campsite/2.5/index.php?id=152  
+   http://code.campware.org/manuals/campsite/2.6/index.php?id=152
 
 4. Configure the default instance
 
@@ -108,8 +108,7 @@ the installer.
 
 INSTALLATION of multiple instances
 
-Since 2.2.0 a new instance can be created without reinstalling Campsite. Just
-run:
+You can create new instances without reinstalling Campsite. Just run:
 
 /usr/local/campsite/bin/campsite-create-instance --db_name [instance_name]
 
@@ -122,8 +121,9 @@ the DNS (Domain Name Service).
 - Include the file "[instance_name]-vhost.conf" in the main apache
 configuration file.
 
-- Restart the apache server:
-	killall httpd
-	{PATH}/httpd
-or
-	/etc/rc.d/init.d/httpd restart
+- Stop the apache server, kill campsite_server, start apache server.  One
+way to do this is as follows:
+    apache2ctl stop
+    killall campsite_server
+    apache2ctl start
+
