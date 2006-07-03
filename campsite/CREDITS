@@ -3,16 +3,21 @@ Campsite Credits (by Version Number)
 --------------------
 Campsite 2.6 Credits
 --------------------
-Released June 6, 2006
+Released July 4, 2006
 
 - Mugurel Rus (mugur1973@yahoo.com):
   Campsite parser, install scripts, documentation
 
 - Paul Baranowski (paul@paulbaranowski.org):
-  Article comments, integration of login security, documentation
+  Article comments, integration of login security, documentation,
+  backup/restore scripts, admin interface status feedback,
+  tweaking admin interface for ease-of-use
 
 - Peter Hartman (peterjohnhartman@gmail.com):
   Redesigned article types admin
+
+- Eric Stuart (possum@n-space.org)
+  Automatic bug reporting
 
 - Raed Neshiewat (raed@tamamtech.com) & Fadi Abu Essa (fadi@tamamtech.com)
   Login security
