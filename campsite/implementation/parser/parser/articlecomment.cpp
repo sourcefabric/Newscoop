@@ -29,13 +29,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 CArticleComment::CArticleComment(id_type p_nMessageId)
 	: m_bExists(false), m_nArticleNumber(-1), m_nLanguageId(-1), m_nMessageId(-1),
 	m_nForumId(-1), m_nThreadId(-1), m_nParentId(-1), m_nStatus(-1), m_nUserId(-1),
-	m_nThreadCount(0), m_nDateStamp(0), m_nViewcount(0), m_nClosed(-1), m_nLevel(-1)
+	m_nThreadCount(0), m_nViewcount(0), m_nClosed(-1), m_nLevel(-1)
 {
 	stringstream buf;
 	buf << "select pm.forum_id, pm.thread, pm.parent_id, pm.author, pm.subject, pm.body,"
-			<< " pm.email, pm.ip, pm.status, pm.modifystamp, pm.user_id, pm.thread_count,"
-			<< " pm.datestamp, pm.viewcount, pm.closed, pm.thread_depth,"
-			<< " ac.fk_article_number, ac.fk_language_id "
+			<< " pm.email, pm.ip, pm.status, FROM_UNIXTIME(pm.modifystamp), pm.user_id,"
+			<< " pm.thread_count, FROM_UNIXTIME(pm.datestamp), pm.viewcount, pm.closed,"
+			<< " pm.thread_depth, ac.fk_article_number, ac.fk_language_id "
 			<< "from phorum_messages as pm left join ArticleComments as ac"
 			<< " on pm.message_id = ac.fk_comment_thread_id "
 			<< "where pm.message_id = '" << p_nMessageId << "'";
@@ -56,10 +56,10 @@ CArticleComment::CArticleComment(id_type p_nMessageId)
 	m_coEmail = row[6];
 	m_coIP = row[7];
 	m_nStatus = strtol(row[8], 0, 10);
-	m_nModifyStamp = strtol(row[9], 0, 10);
+	m_coModifyStamp = row[9];
 	m_nUserId = strtol(row[10], 0, 10);
 	m_nThreadCount = strtol(row[11], 0, 10);
-	m_nDateStamp = strtol(row[12], 0, 10);
+	m_coDateStamp = row[12];
 	m_nViewcount = strtol(row[13], 0, 10);
 	m_nClosed = strtol(row[14], 0, 10);
 	m_nLevel = strtol(row[15], 0, 10);
@@ -109,10 +109,10 @@ bool CArticleComment::operator == (const CArticleComment& p_rcoSource) const
 			&& m_coEmail == p_rcoSource.m_coEmail
 			&& m_coIP == p_rcoSource.m_coIP
 			&& m_nStatus == p_rcoSource.m_nStatus
-			&& m_nModifyStamp == p_rcoSource.m_nModifyStamp
+			&& m_coModifyStamp == p_rcoSource.m_coModifyStamp
 			&& m_nUserId == p_rcoSource.m_nUserId
 			&& m_nThreadCount == p_rcoSource.m_nThreadCount
-			&& m_nDateStamp == p_rcoSource.m_nDateStamp
+			&& m_coDateStamp == p_rcoSource.m_coDateStamp
 			&& m_nViewcount == p_rcoSource.m_nViewcount
 			&& m_nClosed == p_rcoSource.m_nClosed
 			&& m_nLevel == p_rcoSource.m_nLevel;

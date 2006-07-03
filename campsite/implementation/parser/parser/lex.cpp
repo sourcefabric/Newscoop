@@ -891,6 +891,7 @@ int CStatementMap::InitStatements()
 
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
 	pcoCtx->insertAttr(new CStringAttr("ReaderEMail"));
+	pcoCtx->insertAttr(new CDateAttr("SubmitDate"));
 	pcoCtx->insertAttr(new CStringAttr("Subject"));
 	pcoCtx->insertAttr(new CStringAttr("Content"));
 	pcoCtx->insertAttr(new CStringAttr("ReaderEMailPreview"));

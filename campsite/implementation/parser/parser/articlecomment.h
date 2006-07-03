@@ -78,13 +78,13 @@ class CArticleComment
 
 		int getStatus() const { return m_nStatus; }
 
-		ulint getModifyStamp() const { return m_nModifyStamp; }
+		const string& getModifyStamp() const { return m_coModifyStamp; }
 
 		id_type getUserId() const { return m_nUserId; }
 
 		ulint getThreadCount() const { return m_nThreadCount; }
 
-		ulint getDateStamp() const { return m_nDateStamp; }
+		const string& getDateStamp() const { return m_coDateStamp; }
 
 		ulint getViewCount() const { return m_nViewcount; }
 
@@ -174,10 +174,10 @@ class CArticleComment
 		string m_coEmail;
 		string m_coIP;
 		int m_nStatus;
-		ulint m_nModifyStamp;
+		string m_coModifyStamp;
 		id_type m_nUserId;
 		ulint m_nThreadCount;
-		ulint m_nDateStamp;
+		string m_coDateStamp;
 		ulint m_nViewcount;
 		int m_nClosed;
 		int m_nLevel;

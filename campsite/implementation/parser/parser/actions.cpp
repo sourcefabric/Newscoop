@@ -1899,6 +1899,19 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		{
 			fs << encodeHTML(c.ArticleComment()->getEmail(), c.EncodeHTML());
 		}
+		else if (case_comp(attr, "SubmitDate") == 0)
+		{
+			string coSubmitTime = c.ArticleComment()->getDateStamp();
+			if (format != "")
+			{
+				fs << encodeHTML(dateFormat(coSubmitTime.c_str(), format.c_str(), c.Language()),
+								 c.EncodeHTML());
+			}
+			else
+			{
+				fs << encodeHTML(coSubmitTime, c.EncodeHTML());
+			}
+		}
 		else if (case_comp(attr, "Subject") == 0)
 		{
 			fs << encodeHTML(c.ArticleComment()->getSubject(), c.EncodeHTML());
