@@ -79,7 +79,7 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 				$userId = $user->getUserId();
 				$userEmail = $user->getEmail();
 				$userRealName = $user->getRealName();
-				
+
 				$phorumUser =& new Phorum_user($userId);
 				// Check if the phorum user existed or was created successfuly.
 				// If not, set the error code to 'internal error' and exit.
@@ -115,6 +115,7 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 
 	// Validate the CAPTCHA code if it was enabled for the current publication.
 	if ($publicationObj->isCaptchaEnabled()) {
+		session_start();
 		$f_captcha_code = $p_parameters['f_captcha_code'];
 		if (trim($f_captcha_code) == '') {
 			$p_parameters["ArticleCommentSubmitResult"] = 5008;
