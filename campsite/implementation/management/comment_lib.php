@@ -77,9 +77,18 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 			$user =& new User($userInfo['LoginUserId']);
 			if ($user->exists()) {
 				$userId = $user->getUserId();
-				$userName = $user->getUserName();
 				$userEmail = $user->getEmail();
 				$userRealName = $user->getRealName();
+				
+				$phorumUser =& new Phorum_user($userId);
+				// Check if the phorum user existed or was created successfuly.
+				// If not, set the error code to 'internal error' and exit.
+				if (!$phorumUser->exists()
+						&& !$phorumUser->create($user->getUserName(), $userEmail, $userId)) {
+					$p_parameters["ArticleCommentSubmitResult"] = 5000;
+					camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
+					exit;
+				}
 			} else {
 				$user = null;
 			}
@@ -96,7 +105,6 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 				camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
 				exit;
 			}
-			$userName = $userEmail;
 			$userRealName = $userEmail;
 		} else {
 			$p_parameters["ArticleCommentSubmitResult"] = 5001;
@@ -133,24 +141,6 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 		$threadId = 0;
 	}
 
-	// Add the user if he doesnt exist in the Phorum user table
-	if (!is_null($userId)) {
-		$phorumUser =& new Phorum_user($userId);
-	} else {
-		$phorumUser =& Phorum_user::GetByUserName($userName);
-		if (is_null($phorumUser)) {
-			$phorumUser =& new Phorum_user();
-		}
-	}
-	
-	// Check if the phorum user existed or was created successfuly.
-	// If not, set the error code to 'internal error' and exit.
-	if (!$phorumUser->exists() && !$phorumUser->create($userName, $userEmail, $userId)) {
-		$p_parameters["ArticleCommentSubmitResult"] = 5000;
-		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-		exit;
-	}
-
 	// Check if the reader was banned from posting comments.
 	if (Phorum_user::IsBanned($userRealName, $userEmail)) {
 		$p_parameters["ArticleCommentSubmitResult"] = 5005;
@@ -176,7 +166,7 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 							$parentId,
 							$userRealName,
 							$userEmail,
-							$phorumUser->getUserId())) {
+							is_null($userId) ? 0 : $userId)) {
 		$p_parameters["ArticleCommentSubmitResult"] = 5000;
 		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
 		exit;
