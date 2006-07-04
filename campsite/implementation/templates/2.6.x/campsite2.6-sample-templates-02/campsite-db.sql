@@ -689,6 +689,8 @@ CREATE TABLE `Publications` (
   `comments_article_default_enabled` tinyint(1) NOT NULL default '0',
   `comments_subscribers_moderated` tinyint(1) NOT NULL default '0',
   `comments_public_moderated` tinyint(1) NOT NULL default '0',
+  `comments_captcha_enabled` tinyint(1) NOT NULL,
+  `comments_spam_blocking_enabled` tinyint(1) NOT NULL,
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Alias` (`IdDefaultAlias`),
   UNIQUE KEY `Name` (`Name`)
@@ -1397,6 +1399,7 @@ CREATE TABLE `phorum_messages` (
   `viewcount` int(10) unsigned NOT NULL default '0',
   `closed` tinyint(4) NOT NULL default '0',
   `thread_depth` tinyint(3) unsigned NOT NULL default '0',
+  `thread_order` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`message_id`),
   KEY `thread_message` (`thread`,`message_id`),
   KEY `thread_forum` (`thread`,`forum_id`),
