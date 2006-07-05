@@ -70,15 +70,17 @@
 
   Template Language Improvements
   ------------------------------
-  - You can now specify the time format (hours, minutes, seconds) for
-    time values.
+  - You can now specify the time format (hours, minutes, seconds, AM/PM)
+    for time values.
   - #2034: Added ability to set topic by ID and show topic ID
-  - #2071: Added "List Images" statement
+  - #2071: Implemented "List Images" statement
   - #2007: Template EDIT statements can now have arbitrary HTML added
     to them
   - #1828: Added ability to set "Language OFF"
   - #1713: Added URL statement, equivalent of:
     <!** print publication site><!** uri>
+  - identifiers in the template language can contain the double quote
+    character (")
 
   Bugs Fixed
   ----------
