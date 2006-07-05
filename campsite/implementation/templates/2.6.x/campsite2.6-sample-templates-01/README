@@ -1,83 +1,20 @@
-HOWTO Install the a Campsite Demo Site
---------------------------------------
+HOWTO Install a Campsite Demo Site
+----------------------------------
 
-Install this demo site after CAMPSITE 2.5 is successfully installed.
+Install this demo site after Campsite is successfully installed.
 
-Steps:
+Three step install:
+1) Run "campsite-restore-instance" on the tarball:
 
-1. Unzip the file (type: tar xzf package_name.tar.gz)
-2. Change to package directory (type: cd package_directory)
+   # /usr/local/campsite/bin/campsite-restore-instance NAME_OF_TARBALL.tar.gz -e
 
+   To get help with this command, run it without any arguments.
 
-Express Install
----------------
-If you installed Campsite to the default directories and with the default 
-instance, use this sequence of commands to install the demo site.  
-Otherwise, skip to the "Custom Install" section.
-
-For the following steps, replace [MYSQL_USER] with the database user, 
-[MYSQL_PASSWORD] with the database password (-p[password] can be dropped 
-altogether if the password was empty), [APACHE_USER] and [APACHE_GROUP]
-with the user/group under which apache is running.
-
-3. mysqladmin -u[MYSQL_USER] -p[MYSQL_PASSWORD] drop campsite
-4. mysqladmin -u[MYSQL_USER] -p[MYSQL_PASSWORD] create campsite
-5. mysql -u[MYSQL_USER] -p[MYSQL_PASSWORD] campsite < campsite-db.sql
-(Now login as root or execute the following with "sudo".)
-6. cp -fr look/* /usr/local/campsite/www/campsite/html/look
-7. cp -fr images/* /usr/local/campsite/www/campsite/html/images
-8. chown -R [APACHE_USER]:[APACHE_GROUP] /usr/local/campsite/www/campsite/html
-9. Login to the Campsite Administration (go to http://your_site_name/admin,
-   username is "admin", pasword is "admn00").  In the main menu click on 
-   Content->Publications->Configure.  Change the default site alias to be 
+2) Login to the Campsite Administration (go to http://your_site_name/admin,
+   username is "admin", pasword is "admn00").  In the main menu click on
+   Content->Publications->Configure.  Change the default site alias to be
    your web site name.
-10. Please restart the template engine: go into the admin interface, 
-menu -> Actions -> Restart the template engine.  
 
-Custom Install
---------------
-DATABASE
-For the following steps, replace [MYSQL_USER] with the database user, 
-[MYSQL_PASSWORD] with the database password (-p[password] can be dropped 
-altogether if the password was empty), [CAMPSITE_DB] with the campsite database 
-name you selected at install time.
-
-Defaults:
-[MYSQL_USER]: root
-[MYSQL_PASSWORD]: blank password (dont specify the "-p" option)
-[CAMPSITE_DB]: campsite
-
-3. Type: mysqladmin -u[MYSQL_USER] -p[MYSQL_PASSWORD] drop [CAMPSITE_DB]
-   This will drop the old campsite database.
-4. Type: mysqladmin -u[MYSQL_USER] -p[MYSQL_PASSWORD] create [CAMPSITE_DB]
-   This will create an empty database.
-5. Type: mysql -u[MYSQL_USER] -p[MYSQL_PASSWORD] [CAMPSITE_DB] < campsite-db.sql
-
-
-TEMPLATES AND IMAGES
-For the following steps, you must login as root or put the "sudo" command
-in front of each line.  Replace [DOCUMENT_ROOT] with the document 
-root directory, replace [APACHE_USER] and [APACHE_GROUP] with the 
-user/group under which apache is running.
-
-Defaults:
-[DOCUMENT_ROOT]: /usr/local/campsite/www/campsite/html
-[APACHE_USER]: apache
-[APACHE_GROUP]: apache
-
-6. Copy the "look" directory into the 
-   [DOCUMENT_ROOT]/look directory:
-   Type: cp -fr look/* [DOCUMENT_ROOT]/look
-7. Copy all of the images in the "images" directory into the 
-   [DOCUMENT_ROOT] directory:
-   Type: cp -fr images/* [DOCUMENT_ROOT]/images
-8. Type: chown -R [APACHE_USER]:[APACHE_GROUP] [DOCUMENT_ROOT]/* 
-
-ADMIN
-9. Login to the Campsite Administration (go to http://your_site_name/admin,
-   username is "admin", pasword is "admn00").  In the main menu click on 
-   Content->Publications->Configure.  Change the default site alias to be 
-   your web site name.
-10. Please restart the template engine: go into the admin interface, 
-menu -> Actions -> Restart the template engine.
+3) Restart the template engine: go into the admin interface,
+Main menu -> Actions -> Restart the template engine.
 
