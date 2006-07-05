@@ -915,10 +915,12 @@ int CStatementMap::InitStatements()
 
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
 	pcoCtx->insertAttr(new CStringAttr("ReaderEMail"));
+	pcoCtx->insertAttr(new CStringAttr("ReaderEMailObfuscated"));
 	pcoCtx->insertAttr(new CDateAttr("SubmitDate"));
 	pcoCtx->insertAttr(new CStringAttr("Subject"));
 	pcoCtx->insertAttr(new CStringAttr("Content"));
 	pcoCtx->insertAttr(new CStringAttr("ReaderEMailPreview"));
+	pcoCtx->insertAttr(new CStringAttr("ReaderEMailPreviewObfuscated"));
 	pcoCtx->insertAttr(new CStringAttr("SubjectPreview"));
 	pcoCtx->insertAttr(new CStringAttr("ContentPreview"));
 	pcoCtx->insertAttr(new CIntegerAttr("Count"));

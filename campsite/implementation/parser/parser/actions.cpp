@@ -1923,6 +1923,10 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		}
 		if (case_comp(attr, "ReaderEMail") == 0)
 		{
+			fs << encodeHTML(c.ArticleComment()->getEmail(), c.EncodeHTML());
+		}
+		if (case_comp(attr, "ReaderEMailObfuscated") == 0)
+		{
 			fs << CAction::obfuscateString(c.ArticleComment()->getEmail());
 		}
 		else if (case_comp(attr, "SubmitDate") == 0)
@@ -1947,6 +1951,10 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 			fs << encodeHTML(c.ArticleComment()->getBody(), c.EncodeHTML());
 		}
 		else if (case_comp(attr, "ReaderEMailPreview") == 0)
+		{
+			fs << encodeHTML(c.URL()->getValue("CommentReaderEMail"), c.EncodeHTML());
+		}
+		else if (case_comp(attr, "ReaderEMailPreviewObfuscated") == 0)
 		{
 			fs << CAction::obfuscateString(c.URL()->getValue("CommentReaderEMail"));
 		}
