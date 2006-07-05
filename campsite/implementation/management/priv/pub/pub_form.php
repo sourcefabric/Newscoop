@@ -29,12 +29,24 @@ function onCommentsActivated(p_checkbox)
             </td>
         </tr>
 
+        <?php if (isset($publicationObj)) { ?>
+        <TR>
+        	<TD align="right">
+        		<?php putGS("Number"); ?>:
+        	</TD>
+        	<td>
+        		<?php p($publicationObj->getPublicationId()); ?>
+        	</td>
+        </TR>
+        <?php } ?>
+
         <TR>
         	<TD ALIGN="RIGHT"><?php  putGS("Name"); ?>:</TD>
         	<TD>
         	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" VALUE="<?php  if (isset($publicationObj)) { p(htmlspecialchars($publicationObj->getName())); } ?>" SIZE="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.',getGS('Name')); ?>">
         	</TD>
         </TR>
+
         <TR>
         	<TD ALIGN="RIGHT"><?php  putGS("Default Site Alias"); ?>:</TD>
         	<TD>

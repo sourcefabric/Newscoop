@@ -45,22 +45,24 @@ camp_html_content_top(getGS('Publication List'), null);
 </TABLE>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
-    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Name<BR><SMALL>(click to see issues)</SMALL>"); ?></B></TD>
-    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Default Site Alias"); ?></B></TD>
-    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Default Language"); ?></B></TD>
+	<td align="center" valign="top"><?php putGS("Number"); ?></td>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name<BR><SMALL>(click to see issues)</SMALL>"); ?></B></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Default Site Alias"); ?></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Default Language"); ?></TD>
     <?php  if ($g_user->hasPermission("ManagePub")) { ?>
-    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Comments enabled"); ?></B></TD>
-    <TD ALIGN="center" VALIGN="TOP"><B><?php  putGS("URL Type"); ?></B></TD>
-    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Configure"); ?></B></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Comments enabled"); ?></TD>
+    <TD ALIGN="center" VALIGN="TOP"><?php  putGS("URL Type"); ?></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Configure"); ?></TD>
     <?php  }
     if ($g_user->hasPermission("DeletePub")) { ?>
-    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Delete"); ?></TD>
     <?php  } ?>
 </TR>
 <?php
 $color = 0;
 foreach ($publications as $pub) { ?>
         <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+        <td align="center"><?php p($pub->getPublicationId()); ?></td>
         <TD>
             <A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php  p($pub->getPublicationId()); ?>"><?php  p(htmlspecialchars($pub->getName())); ?></A>
         </TD>
