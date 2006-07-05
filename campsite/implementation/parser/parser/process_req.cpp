@@ -162,6 +162,17 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	pcoCtx->URL()->deleteParameter("f_captcha_code");
 	pcoCtx->DefURL()->deleteParameter("f_captcha_code");
 
+	// if no comment preview action was taken then delete the comment form fields
+	if (pcoCtx->URL()->getValue("previewComment") == "")
+	{
+		pcoCtx->URL()->deleteParameter("CommentReaderEMail");
+		pcoCtx->URL()->deleteParameter("CommentSubject");
+		pcoCtx->URL()->deleteParameter("CommentContent");
+		pcoCtx->DefURL()->deleteParameter("CommentReaderEMail");
+		pcoCtx->DefURL()->deleteParameter("CommentSubject");
+		pcoCtx->DefURL()->deleteParameter("CommentContent");
+	}
+
 	// read the article comment id and delete it from the URL
 	if ((coStr = p_pcoURL->getValue("acid")) != "")
 	{

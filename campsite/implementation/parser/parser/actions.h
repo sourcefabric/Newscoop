@@ -238,6 +238,12 @@ public:
 	//		const char* p_pchFormat - format of the date
 	//		id_type p_nLanguageId - language to use
 	string dateFormat(const char* p_pchDate, const char* p_pchFormat, id_type p_nLanguageId);
+
+	// obfuscateString: obfuscate the given string so it can't be picked up by spammers
+	// Returns obfuscated string
+	// Parameters:
+	//		const string& p_rcoStr - string to obfuscate
+	static string obfuscateString(const string& p_rcoStr);
 };
 
 

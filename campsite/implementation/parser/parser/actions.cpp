@@ -354,6 +354,21 @@ string CAction::dateFormat(const char* p_pchDate, const char* p_pchFormat, id_ty
 	return coResult;
 }
 
+// obfuscateString: obfuscate the given string so it can't be picked up by spammers
+// Returns obfuscated string
+// Parameters:
+//		const string& p_rcoStr - string to obfuscate
+string CAction::obfuscateString(const string& p_rcoStr)
+{
+	stringstream coBuf;
+	string::const_iterator coIt;
+	for (coIt = p_rcoStr.begin(); coIt != p_rcoStr.end(); ++coIt)
+	{
+		coBuf << "&#" << (int) *coIt << ";";
+	}
+	return coBuf.str();
+}
+
 // assign operator
 const CActionList& CActionList::operator =(const CActionList& o)
 {
@@ -1400,11 +1415,7 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 	{
 		return ERR_NOPARAM;
 	}
-	CURL* pcoURL = NULL;
-	if (fromstart)
-		pcoURL = m_nPubLevel < CMS_PL_ARTICLE ? c.DefURL()->clone() : c.DefURL();
-	else
-		pcoURL = m_nPubLevel < CMS_PL_ARTICLE ? c.URL()->clone() : c.URL();
+	CURL* pcoURL = (fromstart ? c.DefURL()->clone() : c.URL()->clone());
 	if (m_nPubLevel < CMS_PL_ARTICLE)
 		pcoURL->deleteParameter(P_NRARTICLE);
 	if (m_nPubLevel < CMS_PL_SECTION)
@@ -1415,6 +1426,14 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		pcoURL->deleteParameter(P_IDPUBL);
 	if (m_nPubLevel < CMS_PL_LANGUAGE)
 		pcoURL->deleteParameter(P_IDLANG);
+
+	// delete preview comment fields - we don't want to pass them along
+	pcoURL->deleteParameter("previewComment");
+	pcoURL->deleteParameter("CommentReaderEMail");
+	pcoURL->deleteParameter("CommentSubject");
+	pcoURL->deleteParameter("CommentContent");
+
+	// read the URL query string
 	string coURL = pcoURL->getQueryString();
 	coOut << (first ? "" : "&") << coURL;
 	first = coURL == "";
@@ -1904,7 +1923,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		}
 		if (case_comp(attr, "ReaderEMail") == 0)
 		{
-			fs << encodeHTML(c.ArticleComment()->getEmail(), c.EncodeHTML());
+			fs << CAction::obfuscateString(c.ArticleComment()->getEmail());
 		}
 		else if (case_comp(attr, "SubmitDate") == 0)
 		{
@@ -1929,7 +1948,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		}
 		else if (case_comp(attr, "ReaderEMailPreview") == 0)
 		{
-			fs << encodeHTML(c.URL()->getValue("CommentReaderEMail"), c.EncodeHTML());
+			fs << CAction::obfuscateString(c.URL()->getValue("CommentReaderEMail"));
 		}
 		else if (case_comp(attr, "SubjectPreview") == 0)
 		{
