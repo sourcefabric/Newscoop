@@ -1422,7 +1422,7 @@ inline int CParser::HList(CActionList& al, int level, ulint sublevel)
 	// check for order params (Article, SearchResult, Issue)
 	CParameterList ord_params;
 	if ((st->id() == CMS_ST_ARTICLE || st->id() == CMS_ST_SEARCHRESULT
-	     || st->id() == CMS_ST_ISSUE)
+	     || st->id() == CMS_ST_ISSUE || st->id() == CMS_ST_ARTICLECOMMENT)
 	    && l->res() == CMS_LEX_STATEMENT)
 	{
 		CheckForAtom(l);
@@ -1433,17 +1433,19 @@ inline int CParser::HList(CActionList& al, int level, ulint sublevel)
 			SetPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE, ST_ORDER,
 			          lex.prevLine(), lex.prevColumn());
 		}
-		st = CLex::findSt(l->atom()->identifier());
+		const CStatement* pcoOrderSt = CLex::findSt(l->atom()->identifier());
 		RequireAtom(l);
 		while (l->res() == CMS_LEX_IDENTIFIER)
 		{
 			StringSet ah;
 			StringSet::iterator ah_i;
 			CheckForAtom(l);
-			attr = st->findAttr(l->atom()->identifier(), CMS_CT_LIST);
+			attr = pcoOrderSt->findAttr(l->atom()->identifier(), st->id());
 			if ((ah_i = ah.find(l->atom()->identifier())) != ah.end())
+			{
 				SetPError(parse_err, PERR_ATTRIBUTE_REDEF, MODE_PARSE, "",
 				          lex.prevLine(), lex.prevColumn());
+			}
 			ah.insert(attr->identifier());
 			RequireAtom(l);
 			ValidateDType(l, attr);

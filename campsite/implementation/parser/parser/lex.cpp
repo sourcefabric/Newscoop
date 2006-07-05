@@ -47,6 +47,10 @@ const int CMS_CT_EDIT = CMS_ST_EDIT;
 const int CMS_CT_SELECT = CMS_ST_SELECT;
 const int CMS_CT_URLPARAMETERS = CMS_ST_URLPARAMETERS;
 const int CMS_CT_WITH = CMS_ST_WITH;
+const int CMS_CT_ISSUE = CMS_ST_ISSUE;
+const int CMS_CT_ARTICLE = CMS_ST_ARTICLE;
+const int CMS_CT_ARTICLECOMMENT = CMS_ST_ARTICLECOMMENT;
+const int CMS_CT_SEARCHRESULT = CMS_ST_SEARCHRESULT;
 
 const CStatementMap& CStatementMap::operator =(const CStatementMap& o)
 {
@@ -391,10 +395,30 @@ int CStatementMap::InitStatements()
 	// order statement
 	pcoSt = new CStatement(CMS_ST_ORDER, ST_ORDER);
 
-	pcoCtx = new CStatementContext(CMS_CT_LIST);
-	pcoCtx->insertAttr(new CEnumAttr("bydate", "order_direction"));
-	pcoCtx->insertAttr(new CEnumAttr("bycreationdate", "order_direction"));
-	pcoCtx->insertAttr(new CEnumAttr("bypublishdate", "order_direction"));
+	pcoCtx = new CStatementContext(CMS_CT_ISSUE);
+	pcoCtx->insertAttr(new CEnumAttr("bydate", "order_direction", "PublicationDate"));
+	pcoCtx->insertAttr(new CEnumAttr("bycreationdate", "order_direction", "PublicationDate"));
+	pcoCtx->insertAttr(new CEnumAttr("bypublishdate", "order_direction", "PublicationDate"));
+	pcoCtx->insertAttr(new CEnumAttr("bynumber", "order_direction", "Number"));
+	pcoCtx->insertAttr(new CEnumAttr("byname", "order_direction", "Name"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_ARTICLE);
+	pcoCtx->insertAttr(new CEnumAttr("bydate", "order_direction", "UploadDate"));
+	pcoCtx->insertAttr(new CEnumAttr("bycreationdate", "order_direction", "UploadDate"));
+	pcoCtx->insertAttr(new CEnumAttr("bypublishdate", "order_direction", "PublishDate"));
+	pcoCtx->insertAttr(new CEnumAttr("bynumber", "order_direction", "Number"));
+	pcoCtx->insertAttr(new CEnumAttr("byname", "order_direction", "Name"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_ARTICLECOMMENT);
+	pcoCtx->insertAttr(new CEnumAttr("bydate", "order_direction", "datestamp"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_SEARCHRESULT);
+	pcoCtx->insertAttr(new CEnumAttr("bydate", "order_direction", "UploadDate"));
+	pcoCtx->insertAttr(new CEnumAttr("bycreationdate", "order_direction", "UploadDate"));
+	pcoCtx->insertAttr(new CEnumAttr("bypublishdate", "order_direction", "PublishDate"));
 	pcoCtx->insertAttr(new CEnumAttr("bynumber", "order_direction", "Number"));
 	pcoCtx->insertAttr(new CEnumAttr("byname", "order_direction", "Name"));
 	pcoSt->insertCtx(pcoCtx);

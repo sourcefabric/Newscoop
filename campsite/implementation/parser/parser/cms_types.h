@@ -93,6 +93,10 @@ extern const int CMS_CT_EDIT;
 extern const int CMS_CT_SELECT;
 extern const int CMS_CT_URLPARAMETERS;
 extern const int CMS_CT_WITH;
+extern const int CMS_CT_ISSUE;
+extern const int CMS_CT_ARTICLE;
+extern const int CMS_CT_ARTICLECOMMENT;
+extern const int CMS_CT_SEARCHRESULT;
 
 // TAction: actions identifiers
 typedef enum _TAction {

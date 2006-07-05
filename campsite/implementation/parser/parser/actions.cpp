@@ -929,36 +929,32 @@ int CActList::WriteSrcParam(string& s, CContext& c, string& table)
 //		string& s - string to add conditions to (order clause)
 int CActList::WriteOrdParam(string& s)
 {
+	s = "";
 	CParameterList::iterator pl_i;
-	if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION || modifier == CMS_ST_ARTICLE)
+	if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_ARTICLE)
 	{
-		string table;
-		if (modifier == CMS_ST_ARTICLE)
-			table = "Articles.";
-		s = string(" order by ") + table + "IdLanguage desc";
-		if (modifier == CMS_ST_SECTION)
-			s += string(", Number asc");
+		string table = (modifier == CMS_ST_ARTICLE ? "Articles." : "");
 		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++pl_i)
 		{
-			string coAttribute = (*pl_i)->attribute();
-			if (case_comp(coAttribute, "bydate") == 0)
-				coAttribute = modifier == CMS_ST_ISSUE ? "PublicationDate" : "UploadDate";
-			if (case_comp(coAttribute, "bypublishdate") == 0)
-				coAttribute = modifier == CMS_ST_ISSUE ? "PublicationDate" : "PublishDate";
-			if (case_comp(coAttribute, "bycreationdate") == 0)
-				coAttribute = modifier == CMS_ST_ISSUE ? "PublicationDate" : "UploadDate";
-			s += string(", ") + table + coAttribute + " ";
-			if ((*pl_i)->spec().length())
+			s += string(s != "" ? ", " : " order by ") + table + (*pl_i)->attribute() + " ";
+			if ((*pl_i)->spec().length() > 0)
+			{
 				s += (*pl_i)->spec();
+			}
 		}
 		if (modifier == CMS_ST_ARTICLE)
 		{
-			if (ord_param.size() == 0)
+			if (ord_param.empty())
 			{
-				s += ", Articles.NrIssue desc, Articles.NrSection asc";
+				s = " order by Articles.NrIssue desc, Articles.NrSection asc";
 			}
 			s += ", Articles.ArticleOrder asc";
 		}
+		s += string(s != "" ? ", " : " order by ") + table + "IdLanguage desc";
+	}
+	if (modifier == CMS_ST_SECTION)
+	{
+		s = " order by Number asc, IdLanguage desc";
 	}
 	if (modifier == CMS_ST_SUBTOPIC)
 	{
@@ -966,19 +962,19 @@ int CActList::WriteOrdParam(string& s)
 	}
 	if (modifier == CMS_ST_SEARCHRESULT)
 	{
-		s = " order by Articles.IdPublication asc, ArticleIndex.IdLanguage desc";
 		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++pl_i)
 		{
-			s += string(", ");
-			if ((*pl_i)->attribute() == "Number")
-				s += string("NrArticle") + " ";
-			else
-				s += (*pl_i)->attribute() + " ";
-			if ((*pl_i)->spec().length())
+			s += string(s != "" ? ", " : " order by ")
+					+ string("Articles.") + (*pl_i)->attribute() + " ";
+			if ((*pl_i)->spec().length() > 0)
+			{
 				s += (*pl_i)->spec();
-			if ((*pl_i)->attribute() != "Number")
-				s += ", NrArticle asc";
+			}
 		}
+		s += (ord_param.empty() ? " order by " : ", ");
+		s += "ArticleIndex.IdPublication asc, ArticleIndex.NrIssue desc, "
+				"ArticleIndex.NrSection asc, Articles.ArticleOrder asc, "
+				"ArticleIndex.IdLanguage desc";
 	}
 	if (modifier == CMS_ST_ARTICLEATTACHMENT)
 	{
@@ -986,7 +982,18 @@ int CActList::WriteOrdParam(string& s)
 	}
 	if (modifier == CMS_ST_ARTICLECOMMENT)
 	{
-		s = " order by pm.thread_order asc";
+		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++pl_i)
+		{
+			s += string(s != "" ? ", " : " order by ") + (*pl_i)->attribute() + " ";
+			if ((*pl_i)->spec().length() > 0)
+			{
+				s += (*pl_i)->spec();
+			}
+		}
+		if (ord_param.empty())
+		{
+			s = " order by pm.thread_order asc";
+		}
 	}
 	if (modifier == CMS_ST_ARTICLEIMAGE)
 	{
@@ -1154,7 +1161,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 						+ coLanguageId + ")), MIN(Articles.IdLanguage - 1)";
 				break;
 			case CMS_ST_ARTICLETOPIC:
-				fields = "select TopicId";
+				fields = "select distinct TopicId";
 				break;
 			case CMS_ST_SUBTOPIC:
 				fields = "select distinct Id";
