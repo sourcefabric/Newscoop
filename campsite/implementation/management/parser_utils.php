@@ -261,6 +261,16 @@ function camp_read_get_parameters(&$p_queryString)
 
 
 /**
+ * @param string $p_arrayItem
+ * @param string $p_key
+ */
+function camp_stripslashes_callback(&$p_arrayItem, $p_key)
+{
+	$p_arrayItem = stripslashes($p_arrayItem);
+	return true;
+}
+
+/**
  * @param string $p_queryString
  */
 function camp_read_post_parameters(&$p_queryString)
@@ -268,7 +278,10 @@ function camp_read_post_parameters(&$p_queryString)
 	global $_POST;
 	$query_string = file_get_contents("php://stdin");
 	if (trim($query_string) == "" && isset($_POST) && is_array($_POST)) {
-		return $_POST;
+		camp_debug_msg('reading post parameters from $_POST');
+		$copyOfPost = $_POST;
+		array_walk($copyOfPost, 'camp_stripslashes_callback');
+		return $copyOfPost;
 	}
 	camp_debug_msg("query string: $query_string");
 	return camp_read_get_parameters($query_string);
