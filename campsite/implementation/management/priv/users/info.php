@@ -86,13 +86,13 @@ if (!$isNewUser) {
 			<tr>
 				<td align="right" nowrap><?php putGS("E-Mail"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="EMail" value="<?php p(htmlspecialchars($EMail)); ?>" size="32" maxlength="128" alt="email" emsg="<?php putGS("You must input a valid EMail address.");?>">
+				<input type="text" class="input_text" name="EMail" value="<?php p(htmlspecialchars($EMail)); ?>" size="32">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Phone"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Phone" value="<?php p(htmlspecialchars($Phone)); ?>" size="20" maxlength="20">
+				<input type="text" class="input_text" name="Phone" value="<?php p(htmlspecialchars($Phone)); ?>" size="20">
 				</td>
 			</tr>
 
