@@ -8,6 +8,8 @@ if (!$g_user->hasPermission('ManageTempl') || !$g_user->hasPermission("DeleteTem
 
 $f_path = Input::Get('f_path', 'string', '');
 $f_name = Input::Get('f_name', 'string', '');
+$f_content = Input::Get('f_content', 'string', '', true);
+
 $backLink  = "/$ADMIN/templates/";
 if (!Template::IsValidPath($f_path)) {
 	camp_html_goto_page($backLink);
@@ -54,7 +56,11 @@ if (in_array($extension, $imageExtensions)) {
 	<p>
 	<?php
 } else {
-	$contents = file_get_contents($filename);
+	if (empty($f_content)) {
+		$contents = file_get_contents($filename);
+	} else {
+		$contents = $f_content;
+	}
 	?>
 	<link type="text/css" rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/SyntaxHighlighter/SyntaxHighlighter.css"></link>
 	<P>

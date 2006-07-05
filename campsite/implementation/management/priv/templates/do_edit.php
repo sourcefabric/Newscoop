@@ -26,6 +26,10 @@ if (file_exists($filename)) {
 		}
 	} else {
 		camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_FILE, $filename));
+		camp_html_goto_page("/$ADMIN/templates/edit_template.php?"
+			."f_path=".urlencode($Path)
+			."&f_name=".urlencode($Name)
+			."&f_content=".urlencode($cField));
 	}
 } else {
 	camp_html_add_msg(getGS("Template $1 no longer exists!", "&quot;".$filename."&quot;"));
