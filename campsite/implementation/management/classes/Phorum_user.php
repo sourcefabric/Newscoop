@@ -178,7 +178,7 @@ class Phorum_user extends DatabaseObject {
 	    // Check if username is banned.
 	    $sql = "SELECT COUNT(*) as matches FROM ".$PHORUM['banlist_table']
 	    		." WHERE type=".PHORUM_BAD_NAMES
-	    		." AND string='".$p_username."'";
+	    		." AND string='".mysql_escape_string($p_username)."'";
 	    $result = mysql_query($sql, $conn);
 	    $row = mysql_fetch_assoc($result);
 	    if ($row['matches'] > 0) {
@@ -188,7 +188,7 @@ class Phorum_user extends DatabaseObject {
 	    // Check if email is banned.
 	    $sql = "SELECT COUNT(*) as matches FROM ".$PHORUM['banlist_table']
 	    		." WHERE type=".PHORUM_BAD_EMAILS
-	    		." AND string='".$p_email."'";
+	    		." AND string='".mysql_escape_string($p_email)."'";
 	    $result = mysql_query($sql, $conn);
 	    $row = mysql_fetch_assoc($result);
 	    if ($row['matches'] > 0) {
@@ -209,7 +209,7 @@ class Phorum_user extends DatabaseObject {
         }
 	    $sql = "SELECT COUNT(*) as matches FROM ".$PHORUM['banlist_table']
 	    		." WHERE type=".PHORUM_BAD_IPS
-	    		." AND string='$ipaddr'";
+	    		." AND string='".mysql_escape_string($ipaddr)."'";
 	    $result = mysql_query($sql, $conn);
 	    $row = mysql_fetch_assoc($result);
 	    if ($row['matches'] > 0) {
