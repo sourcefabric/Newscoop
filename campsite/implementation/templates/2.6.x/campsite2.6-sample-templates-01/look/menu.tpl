@@ -1,9 +1,9 @@
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<table border="0" cellpadding="0" cellspacing="0">
 <tr>
                 <td class="menu"><p class="indeks" align="left"><a class="indeks" href="/">HOME</a></p></td>
               </tr>
         <!** local>
-        <!** publication name Dynamic>
+        <!** publication identifier 5>
         <!** issue current>
         <!** section off>
         <!** article off>
@@ -24,7 +24,7 @@
                 </td>
               </tr>
         <!** local>
-        <!** publication name Dynamic>
+        <!** publication identifier 5>
         <!** issue current>
         <!** section off>
         <!** article off>
@@ -48,7 +48,7 @@
                 </td>
               </tr>
 	<!** local>
-        <!** publication name Dynamic>
+        <!** publication identifier 5>
         <!** issue off>
         <!** section off>
         <!** article off>
@@ -88,7 +88,7 @@
                 </td>
               </tr>
 <!** local>
-<!** publication name Dynamic>
+<!** publication identifier 5>
 <!** issue off>
 <!** section number 230>
 <!** list article type is link>
@@ -98,7 +98,4 @@
 <!** endlist>
 <!** endlocal>			  
               
-			  <tr>
-			    <td align="center"><img src="/look/img/baner4.gif" border="0"></td>
-			  </tr>
 			</table>

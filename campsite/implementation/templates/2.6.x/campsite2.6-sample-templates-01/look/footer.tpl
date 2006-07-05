@@ -1,6 +1,6 @@
 <p class="footer" align="center">|
 <!** local>
-<!** publication name Dynamic>
+<!** publication number 5>
 <!** issue current>
 <!** section off>
 <!** article off> 

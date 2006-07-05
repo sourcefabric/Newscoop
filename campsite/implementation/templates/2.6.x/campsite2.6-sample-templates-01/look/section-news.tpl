@@ -1,7 +1,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 
   				  <!** local>
-				  <!** publication name Dynamic>
+				  <!** publication identifier 5>
 				  <!** issue current>
                   <!** list article onfrontpage is off onsection is on order bynumber desc>
                  <tr>

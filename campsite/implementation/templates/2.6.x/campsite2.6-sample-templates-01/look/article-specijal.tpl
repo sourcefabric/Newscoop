@@ -3,7 +3,7 @@
              <p class="main-naslov"><!** print article name></p>
              <!** if article podnaslov not "">
              <!** if image 2>
-             <div style="float:right; margin: 5px;><img src="/cgi-bin/get_img?<!** urlparameters image 2>" width="245"><br/><span class="caption"><!** print image 2 description></span></div>
+             <div style="float:right; margin: 5px;><img src="/cgi-bin/get_img?<!** urlparameters image 2>"><br/><span class="caption"><!** print image 2 description></span></div>
              <!** endif>
              <p class="podnaslov"><!** print article podnaslov></p>
              <!** endif>

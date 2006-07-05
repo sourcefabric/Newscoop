@@ -8,7 +8,6 @@
 </head>
 
 <body topmargin="5" leftmargin="5" bgcolor="#FFFFFF">
-
 <table width="747" cellpadding="0" cellspacing="0" border="0">
 
   <!--main baner-->
@@ -107,31 +106,9 @@
 	<td width="8"></td>
     <td width="133" valign="top" bgcolor="#d3e5f1"> 
 	
-    <!--main right--> 
-	
-        <!** include right.tpl></td>
   </tr>
   
   <!-- footer -->
-  
-  <tr>
-    <td colspan="2"></td>
-	<td align="center"><!** include banner.tpl></td>
-	<td colspan="2"></td>
-  </tr>
-  <tr>
-    <td colspan="5" height="25"></td>
-  </tr>
-  <tr>
-    <td colspan="2"></td>
-	<td align="center" style="padding: 3px 0px 3px 0px">
-<!** include footer.tpl></td>
-	<td colspan="2"></td>
-  </tr>
-  <tr>
-    <td colspan="5" align="center" style="padding: 3px 0px 3px 0px">
-<!** include footer-01.tpl></td>
-  </tr>
   
 </table>
 
