@@ -29,6 +29,10 @@ if ($f_order_direction == 'DESC') {
 $orderDirectionUrl = "/$ADMIN/imagearchive/index.php?&f_order_direction=$ReverseOrderDirection";
 
 $TotalImages = Image::GetTotalImages();
+if ($f_image_offset > $TotalImages) {
+	$f_image_offset = $TotalImages - $f_items_per_page;
+	$_REQUEST["f_image_offset"] = $f_image_offset;
+}
 $imageSearch =& new ImageSearch($f_search_string, $f_order_by, $f_order_direction, $f_image_offset, $f_items_per_page);
 $imageSearch->run();
 $imageData = $imageSearch->getImages();
