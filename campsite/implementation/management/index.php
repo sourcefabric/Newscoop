@@ -12,7 +12,6 @@ $_SERVER['DOCUMENT_ROOT'] = getenv("DOCUMENT_ROOT");
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/parser_utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/comment_lib.php');
 
 // read server parameters
 $env_vars["HTTP_HOST"] = getenv("HTTP_HOST");
@@ -39,6 +38,7 @@ camp_debug_msg("cookies string: $cookies_string");
 
 if (isset($parameters["submitComment"])
 		&& trim($parameters["submitComment"]) != "") {
+	require_once($_SERVER['DOCUMENT_ROOT'].'/comment_lib.php');
 	unset($parameters["submitComment"]);
 	camp_submit_comment($env_vars, $parameters, $cookies);
 } else {
