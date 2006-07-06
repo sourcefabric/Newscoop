@@ -914,6 +914,7 @@ int CStatementMap::InitStatements()
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
+	pcoCtx->insertAttr(new CIntegerAttr("Identifier"));
 	pcoCtx->insertAttr(new CStringAttr("ReaderEMail"));
 	pcoCtx->insertAttr(new CStringAttr("ReaderEMailObfuscated"));
 	pcoCtx->insertAttr(new CDateAttr("SubmitDate"));

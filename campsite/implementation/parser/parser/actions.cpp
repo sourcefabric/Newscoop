@@ -1921,11 +1921,15 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		{
 			return ERR_NODATA;
 		}
-		if (case_comp(attr, "ReaderEMail") == 0)
+		if (case_comp(attr, "Identifier") == 0)
+		{
+			fs << c.ArticleComment()->getMessageId();
+		}
+		else if (case_comp(attr, "ReaderEMail") == 0)
 		{
 			fs << encodeHTML(c.ArticleComment()->getEmail(), c.EncodeHTML());
 		}
-		if (case_comp(attr, "ReaderEMailObfuscated") == 0)
+		else if (case_comp(attr, "ReaderEMailObfuscated") == 0)
 		{
 			fs << CAction::obfuscateString(c.ArticleComment()->getEmail());
 		}
