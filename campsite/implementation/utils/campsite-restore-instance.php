@@ -92,11 +92,11 @@ if ($archiveExtension == "gz") {
 	$tarGzOption = "";
 }
 $isNewBackupFormat = true;
-$cmd = "tar tvf$tarGzOption " . escapeshellarg($archive_file)." |grep sql";
+$cmd = "tar tf$tarGzOption " . escapeshellarg($archive_file)." |grep sql";
 exec($cmd, $output);
 if (count($output) == 0) {
 	$isNewBackupFormat = false;
-	$cmd = "tar tvf$tarGzOption " . escapeshellarg($archive_file);
+	$cmd = "tar tf$tarGzOption " . escapeshellarg($archive_file);
 	exec($cmd, $output);
 	if (count($output) == 0) {
 		camp_exit_with_error("Invalid backup file.");
@@ -105,9 +105,8 @@ if (count($output) == 0) {
 }
 $output = array_pop($output);
 if ($isNewBackupFormat) {
-	$position1 = strpos($output, "backup-");
-	$position2 = strpos($output, "/", $position1);
-	$tempDirName = substr($output, $position1, $position2-$position1);
+	$parts = split("/", $output);
+	$tempDirName = array_shift($parts);
 } else {
 	$tempDirName = "backup-temp-".date("Y-m-d-H-i-s");
 }
