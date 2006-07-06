@@ -210,7 +210,7 @@ function onSummaryClick(p_messageId)
         </table>
     </td>
 
-    <td style="border-left: 1px solid #777;">
+    <td style="border-left: 1px solid #777;" valign="top">
         <!-- The column where you can edit the comments -->
         <table class="table_input" style="margin-top: 5px; margin-left: 5px;">
         <form action="do_edit.php" method="GET">
