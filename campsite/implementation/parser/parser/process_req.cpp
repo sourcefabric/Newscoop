@@ -162,8 +162,20 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	pcoCtx->URL()->deleteParameter("f_captcha_code");
 	pcoCtx->DefURL()->deleteParameter("f_captcha_code");
 
+	// set the article comment submit result if submitted
+	try {
+		int nResult = Integer(pcoCtx->URL()->getValue("ArticleCommentSubmitResult"));
+		pcoCtx->SetArticleCommentResult(nResult);
+	}
+	catch (const InvalidValue& rcoEx) {
+		// do nothing
+	}
+	pcoCtx->URL()->deleteParameter("ArticleCommentSubmitResult");
+	pcoCtx->DefURL()->deleteParameter("ArticleCommentSubmitResult");
+	
 	// if no comment preview action was taken then delete the comment form fields
-	if (pcoCtx->URL()->getValue("previewComment") == "")
+	if (pcoCtx->URL()->getValue("previewComment") == ""
+		   && !pcoCtx->SubmitArticleCommentEvent())
 	{
 		pcoCtx->URL()->deleteParameter("CommentReaderEMail");
 		pcoCtx->URL()->deleteParameter("CommentSubject");
@@ -387,15 +399,6 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 			bTechDebug = bDebug = bPreview = false;
 		}
 	}
-	try {
-		int nResult = Integer(pcoCtx->URL()->getValue("ArticleCommentSubmitResult"));
-		pcoCtx->SetArticleCommentResult(nResult);
-	}
-	catch (const InvalidValue& rcoEx) {
-		// do nothing
-	}
-	pcoCtx->URL()->deleteParameter("ArticleCommentSubmitResult");
-	pcoCtx->DefURL()->deleteParameter("ArticleCommentSubmitResult");
 	try
 	{
 		string coDocumentRoot = p_pcoURL->getDocumentRoot();
