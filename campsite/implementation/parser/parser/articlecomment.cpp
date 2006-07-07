@@ -192,7 +192,7 @@ ulint CArticleComment::ArticleCommentCount(id_type p_nArticleNumber, id_type p_n
 			"    on ac.fk_comment_id = pm.message_id "
 			"where ac.fk_article_number = '" << p_nArticleNumber << "' "
 			"    and ac.fk_language_id = '" << p_nLanguageId << "'"
-			"    and pm.status = 2";
+			"    and pm.status = 2 and parent_id != 0";
 	CMYSQL_RES coQRes;
 	MYSQL_ROW row = QueryFetchRow(MYSQLConnection(), buf.str(), coQRes);
 	if (row == NULL || row[0] == NULL)
