@@ -40,6 +40,7 @@ class Phorum_message extends DatabaseObject {
 	{
 		global $PHORUM;
 		$this->m_dbTableName = $PHORUM['message_table'];
+		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data["message_id"] = $p_messageId;
 		if (!is_null($p_messageId)) {
 			$this->fetch();
@@ -339,6 +340,11 @@ class Phorum_message extends DatabaseObject {
 	        $threadBeginMessage = array();
 	        $message_ids = array_keys($messages);
 	        $parent_message = $messages[$thread_id];
+	        // Paul Baranowski: my hack so that multiple top-level messages
+	        // are allowed within a thread.  Disabled but here for
+	        // reference, because this worked.
+//	        $parent_message = isset($messages[$thread_id]) ? $messages[$thread_id] : current($messages);
+//			$thread_id = $parent_message->getMessageId();
 
 	        // The most recent message in the thread.
             $recent_message = end($messages);

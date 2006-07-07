@@ -39,6 +39,7 @@ class Phorum_user extends DatabaseObject {
   	{
 		global $PHORUM;
 		$this->m_dbTableName = $PHORUM['user_table'];
+		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data["user_id"] = $p_userId;
 		if (!is_null($p_userId)) {
 			$this->fetch();
