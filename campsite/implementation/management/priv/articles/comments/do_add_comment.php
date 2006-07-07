@@ -5,6 +5,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
 
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -44,18 +46,11 @@ if (!$threadId) {
 // Get the forum ID.
 $publicationObj =& new Publication($articleObj->getPublicationId());
 $forumId = $publicationObj->getForumId();
+$forum =& new Phorum_forum($forumId);
 
-// Create the forum if it doesnt exist.
-if (!$forumId) {
-    $forum =& new Phorum_forum();
-} else {
-    $forum =& new Phorum_forum($forumId);
-}
-if (!$forum->exists()) {
-    $forum->create();
-    $forum->setName($publicationObj->getName());
-    $publicationObj->setForumId($forum->getForumId());
-    $forumId = $forum->getForumId();
+// Exit if the forum hasnt been created (this should never happen).
+if (!$forumId || !$forum->exists()) {
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
 }
 
 // Create the comment
