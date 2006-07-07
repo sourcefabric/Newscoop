@@ -5,6 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAttachment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
+camp_load_translation_strings("article_comments");
 
 // These are optional, depending on whether you are in a section
 // or whether editing an article that doesnt have a location.
