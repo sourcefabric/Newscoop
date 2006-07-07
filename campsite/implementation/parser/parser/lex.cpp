@@ -412,7 +412,7 @@ int CStatementMap::InitStatements()
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoCtx = new CStatementContext(CMS_CT_ARTICLECOMMENT);
-	pcoCtx->insertAttr(new CEnumAttr("bydate", "order_direction", "datestamp"));
+	pcoCtx->insertAttr(new CEnumAttr("bydate", "order_direction", "message_id"));
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoCtx = new CStatementContext(CMS_CT_SEARCHRESULT);
