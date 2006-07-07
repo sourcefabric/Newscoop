@@ -150,11 +150,11 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 	}
 
 	// Set the parent to the currently viewed comment if a certain existing
-	// comment was selected. Otherwise, set the parent identifier to 0.
+	// comment was selected. Otherwise, set the parent identifier to the root message.
 	if (isset($p_parameters['acid']) && $p_parameters['acid'] > 0) {
 		$parentId = 0 + $p_parameters['acid'];
 	} else {
-		$parentId = 0;
+		$parentId = 0 + ArticleComment::GetCommentThreadId($f_article_number, $f_language_id);
 	}
 
 	// Create the comment. If there was an error creating the comment set the
