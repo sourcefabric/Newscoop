@@ -37,7 +37,7 @@ CArticleComment::CArticleComment(id_type p_nMessageId)
 			<< " pm.thread_count, FROM_UNIXTIME(pm.datestamp), pm.viewcount, pm.closed,"
 			<< " pm.thread_depth, ac.fk_article_number, ac.fk_language_id "
 			<< "from phorum_messages as pm left join ArticleComments as ac"
-			<< " on pm.message_id = ac.fk_comment_thread_id "
+			<< " on pm.message_id = ac.fk_comment_id "
 			<< "where pm.message_id = '" << p_nMessageId << "'";
 	CMYSQL_RES coQRes;
 	MYSQL_ROW row = QueryFetchRow(MYSQLConnection(), buf.str(), coQRes);
@@ -189,7 +189,7 @@ ulint CArticleComment::ArticleCommentCount(id_type p_nArticleNumber, id_type p_n
 	stringstream buf;
 	buf << "select count(*) "
 			"from ArticleComments as ac left join phorum_messages as pm"
-			"    on ac.fk_comment_thread_id = pm.message_id "
+			"    on ac.fk_comment_id = pm.message_id "
 			"where ac.fk_article_number = '" << p_nArticleNumber << "' "
 			"    and ac.fk_language_id = '" << p_nLanguageId << "'"
 			"    and pm.status = 2";

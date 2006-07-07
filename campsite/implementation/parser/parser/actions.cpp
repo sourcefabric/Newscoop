@@ -1144,7 +1144,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 					return ERR_NODATA;
 				}
 				table = "ArticleComments as ac left join phorum_messages as pm "
-						"on ac.fk_comment_thread_id = pm.thread";
+						"on ac.fk_comment_id = pm.thread";
 				buf << " where pm.status > 0 and ac.fk_article_number = " << lc.Article();
 				where = buf.str();
 				break;

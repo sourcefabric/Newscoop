@@ -17,7 +17,7 @@ class ArticleComment
     function GetCommentThreadId($p_articleNumber, $p_languageId)
     {
         global $g_ado_db;
-        $queryStr = "SELECT fk_comment_thread_id FROM ArticleComments"
+        $queryStr = "SELECT fk_comment_id FROM ArticleComments"
                     ." WHERE fk_article_number=$p_articleNumber"
                     ." AND fk_language_id=$p_languageId"
                     ." AND is_first=1";
@@ -41,7 +41,7 @@ class ArticleComment
         $queryStr = "INSERT INTO ArticleComments "
                     ." SET fk_article_number=$p_articleNumber,"
                     ." fk_language_id=$p_languageId,"
-                    ." fk_comment_thread_id=$p_commentId,"
+                    ." fk_comment_id=$p_commentId,"
                     ." is_first=$p_isFirstMessage";
         $g_ado_db->Execute($queryStr);
     } // fn Link
@@ -65,7 +65,7 @@ class ArticleComment
         	$constraints[] = "fk_language_id=$p_languageId";
         }
         if (!is_null($p_commentId)) {
-        	$constraints[] = "fk_comment_thread_id=$p_commentId";
+        	$constraints[] = "fk_comment_id=$p_commentId";
         }
         $queryStr = "DELETE FROM ArticleComments WHERE "
         			.implode(" AND ", $constraints);
@@ -179,7 +179,7 @@ class ArticleComment
 
         $baseQuery = "SELECT $selectClause FROM ($messageTable"
                     ." LEFT JOIN ArticleComments "
-                    ." ON $messageTable". ".message_id=ArticleComments.fk_comment_thread_id)"
+                    ." ON $messageTable". ".message_id=ArticleComments.fk_comment_id)"
                     ." LEFT JOIN Articles ON ArticleComments.fk_article_number=Articles.Number"
                     ." AND ArticleComments.fk_language_id=Articles.IdLanguage";
 
