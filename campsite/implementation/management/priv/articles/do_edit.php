@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleImage.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleComment.php");
 
 // This is used in TransformSubheads() in order to figure out when
 // a SPAN tag closes.
@@ -208,9 +209,18 @@ $articleObj->setTitle($f_article_title);
 $articleObj->setIsIndexed(false);
 if (!empty($f_comment_status)) {
     if ($f_comment_status == "enabled" || $f_comment_status == "locked") {
-        $articleObj->setCommentsEnabled(true);
+        $commentsEnabled = true;
     } else {
-        $articleObj->setCommentsEnabled(false);
+        $commentsEnabled = false;
+    }
+    // If status has changed, then you need to show/hide all the comments
+    // as appropriate.
+    if ($articleObj->commentsEnabled() != $commentsEnabled) {
+	    $articleObj->setCommentsEnabled($commentsEnabled);
+		$comments = ArticleComment::GetArticleComments($f_article_number, $f_language_selected);
+		foreach ($comments as $comment) {
+			$comment->setStatus($commentsEnabled?PHORUM_STATUS_APPROVED:PHORUM_STATUS_HIDDEN);
+		}
     }
     $articleObj->setCommentsLocked($f_comment_status == "locked");
 }
