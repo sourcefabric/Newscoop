@@ -243,6 +243,7 @@ function onSummaryClick(p_messageId)
             <td><a href="javascript: void(0);" onclick="onCommentAction('approved', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Approved"); ?></b></a>
             </td>
 
+            <?php if ($comment->getMessageId() != $comment->getThreadId()) { ?>
             <td style="padding-left: 10px;">
                 <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="delete" class="input_radio" id="delete_<?php echo $comment->getMessageId(); ?>" onchange="onCommentAction('delete', <?php p($comment->getMessageId()); ?>);">
             </td>
@@ -250,6 +251,7 @@ function onSummaryClick(p_messageId)
             <td>
                 <a href="javascript: void(0);" onclick="onCommentAction('delete', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Delete"); ?></b></a>
             </td>
+			<?php } ?>
 
             <td style="padding-left: 10px;">
                 <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="hide" class="input_radio" id="hidden_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HIDDEN) { ?>checked<?php } ?> onchange="onCommentAction('hidden', <?php p($comment->getMessageId()); ?>);">

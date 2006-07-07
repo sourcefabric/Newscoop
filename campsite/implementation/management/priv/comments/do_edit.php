@@ -29,8 +29,11 @@ foreach ($_REQUEST as $name => $value) {
                 $comment->setStatus(PHORUM_STATUS_HIDDEN);
                 break;
             case "delete":
-                $comment->delete();
-                ArticleComment::Unlink(null, null, $messageId);
+            	// Not allowed to delete first post.
+            	if ($comment->getMessageId() != $comment->getThreadId()) {
+	                $comment->delete();
+	                ArticleComment::Unlink(null, null, $messageId);
+            	}
                 break;
             case "approve":
                 $comment->setStatus(PHORUM_STATUS_APPROVED);
