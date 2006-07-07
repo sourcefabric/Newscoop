@@ -7,6 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/comment_lib.php");
 
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -37,46 +38,36 @@ if (!$phorumUser->exists()) {
                                    $g_user->getUserId());
 }
 
-// Check if this article already has a thread
-$threadId = ArticleComment::GetCommentThreadId($f_article_number, $f_language_id);
-if (!$threadId) {
-    $threadId = 0;
-}
-
 // Get the forum ID.
 $publicationObj =& new Publication($articleObj->getPublicationId());
 $forumId = $publicationObj->getForumId();
-$forum =& new Phorum_forum($forumId);
 
 // Exit if the forum hasnt been created (this should never happen).
-if (!$forumId || !$forum->exists()) {
+if (!$forumId) {
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
+}
+
+// Create/get first post.
+$firstPost = camp_comment_first_post($articleObj, $forumId);
+$threadId = $firstPost->getThreadId();
+
+// If reply isnt specified, then its a reply to the base message.
+if ($f_comment_parent_id == 0) {
+	$f_comment_parent_id = $firstPost->getMessageId();
 }
 
 // Create the comment
 $commentObj =& new Phorum_message();
-if ($f_comment_parent_id != 0) {
-	// This is a reply
-    $commentObj->create($forumId,
-                        $f_comment_subject,
-                        $f_comment_body,
-                        $threadId,
-                        $f_comment_parent_id,
-                        $g_user->getRealName(),
-                        $g_user->getEmail(),
-                        $g_user->getUserId());
-} else {
-	// Either the first message or a message replying to the first message.
-    $commentObj->create($forumId,
-                        $f_comment_subject,
-                        $f_comment_body,
-                        $threadId,
-                        $threadId,
-                        $g_user->getRealName(),
-                        $g_user->getEmail(),
-                        $g_user->getUserId());
-}
+$commentObj->create($forumId,
+                    $f_comment_subject,
+                    $f_comment_body,
+                    $threadId,
+                    $f_comment_parent_id,
+                    $g_user->getRealName(),
+                    $g_user->getEmail(),
+                    $g_user->getUserId());
 $commentObj->setStatus(PHORUM_STATUS_APPROVED);
+
 // Link the message to the article
 $isFirstMessage = ($threadId == 0);
 ArticleComment::Link($f_article_number, $f_language_id, $commentObj->getMessageId(), $isFirstMessage);

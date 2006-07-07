@@ -194,4 +194,55 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 	camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
 }
 
+/**
+ * Create the first message for an article, which is a blank message
+ * with the title of the article as the subject.
+ *
+ * @param Article $p_article
+ * @param int $p_forumId
+ * @return mixed
+ * 		The comment created (or the one that already exists) on success,
+ *  	or false on error.
+ */
+function camp_comment_first_post($p_article, $p_forumId)
+{
+	// Check if the first post already exists.
+	$articleNumber = $p_article->getArticleNumber();
+	$languageId = $p_article->getLanguageId();
+	$firstPost = ArticleComment::GetCommentThreadId($articleNumber, $languageId);
+	if ($firstPost) {
+		return new Phorum_message($firstPost);
+	}
+
+	// Get article creator
+	$user =& new User($p_article->getCreatorId());
+	$userId = $user->getUserId();
+	$userEmail = $user->getEmail();
+	$userRealName = $user->getRealName();
+
+	// Create phorum user if necessary
+	$phorumUser =& new Phorum_user($userId);
+	if (!$phorumUser->exists()
+		&& !$phorumUser->create($user->getUserName(), $userEmail, $userId)) {
+		return false;
+	}
+
+	// Create the comment.
+	$title = $p_article->getTitle();
+	$commentObj =& new Phorum_message();
+	if ($commentObj->create($p_forumId,
+							   $title,
+							   '',
+							   0,
+							   0,
+							   $userRealName,
+							   $userEmail,
+							   is_null($userId) ? 0 : $userId)) {
+		// Link the message to the current article.
+		ArticleComment::Link($articleNumber, $languageId, $commentObj->getMessageId(), true);
+		return $commentObj;
+	} else {
+		return false;
+	}
+} // fn camp_comment_first_post
 ?>
