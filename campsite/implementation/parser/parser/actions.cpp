@@ -1145,7 +1145,8 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				}
 				table = "ArticleComments as ac left join phorum_messages as pm "
 						"on ac.fk_comment_id = pm.thread";
-				buf << " where pm.status > 0 and ac.fk_article_number = " << lc.Article();
+				buf << " where pm.status > 0 and parent_id != 0 "
+						"and ac.fk_article_number = " << lc.Article();
 				where = buf.str();
 				break;
 			case CMS_ST_ARTICLEIMAGE:
