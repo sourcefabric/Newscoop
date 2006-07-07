@@ -66,19 +66,9 @@ if (camp_html_has_msgs()) {
 
 $forum =& new Phorum_forum($publicationObj->getForumId());
 if (!$forum->exists()) {
-    $forum->create();
-    $forum->setName($f_name);
-    $publicationObj->setForumId($forum->getForumId());
+	$forum = camp_forum_create($publicationObj);
 }
-if ($f_comments_public_enabled) {
-	$forum->setPublicPermissions($forum->getPublicPermissions()
-								 | PHORUM_USER_ALLOW_NEW_TOPIC
-								 | PHORUM_USER_ALLOW_REPLY);
-} else {
-	$forum->setPublicPermissions($forum->getPublicPermissions()
-								 & !PHORUM_USER_ALLOW_NEW_TOPIC
-								 & !PHORUM_USER_ALLOW_REPLY);
-}
+camp_forum_update($forum, $f_name, $f_comments_enabled, $f_comments_public_enabled);
 
 $columns = array('Name' => $f_name,
 				 'IdDefaultAlias' => $f_default_alias,

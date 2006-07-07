@@ -76,20 +76,8 @@ $created = $publicationObj->create($columns);
 if ($created) {
 	$alias->setPublicationId($publicationObj->getPublicationId());
 
-	// create the phorum
-    $forum =& new Phorum_forum();
-    $forum->create();
-    $forum->setName($publicationObj->getName());
-    $publicationObj->setForumId($forum->getForumId());
-	if ($f_comments_public_enabled) {
-		$forum->setPublicPermissions($forum->getPublicPermissions()
-									 | PHORUM_USER_ALLOW_NEW_TOPIC
-									 | PHORUM_USER_ALLOW_REPLY);
-	} else {
-		$forum->setPublicPermissions($forum->getPublicPermissions()
-									 & !PHORUM_USER_ALLOW_NEW_TOPIC
-									 & !PHORUM_USER_ALLOW_REPLY);
-	}
+	$forum = camp_forum_create($publicationObj, $f_comments_public_enabled);
+	camp_forum_update($forum, $f_name, $f_comments_enabled, $f_comments_public_enabled);
 	camp_html_add_msg("Publication created.", "ok");
 	camp_html_goto_page("/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());
 } else {
