@@ -87,11 +87,11 @@ function camp_forum_update($p_forum, $p_publicationName, $p_enabled, $p_publicPo
 {
 	$p_forum->setName($p_publicationName);
 	if ($p_publicPostingEnabled) {
-		$p_forum->setPublicPermissions($forum->getPublicPermissions()
+		$p_forum->setPublicPermissions($p_forum->getPublicPermissions()
 									 | PHORUM_USER_ALLOW_NEW_TOPIC
 									 | PHORUM_USER_ALLOW_REPLY);
 	} else {
-		$p_forum->setPublicPermissions($forum->getPublicPermissions()
+		$p_forum->setPublicPermissions($p_forum->getPublicPermissions()
 									 & !PHORUM_USER_ALLOW_NEW_TOPIC
 									 & !PHORUM_USER_ALLOW_REPLY);
 	}
