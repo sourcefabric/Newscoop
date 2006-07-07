@@ -34,10 +34,13 @@ foreach ($_REQUEST as $name => $value) {
                 $comment->setStatus(PHORUM_STATUS_HOLD);
                 break;
             case "delete":
-                $comment->delete();
-                ArticleComment::Unlink($articleObj->getArticleNumber(),
-                					   $articleObj->getLanguageId(),
-                					   $messageId);
+            	// Not allowed to delete base message.
+            	if ($comment->getMessageId() != $comment->getThreadId()) {
+	                $comment->delete();
+	                ArticleComment::Unlink($articleObj->getArticleNumber(),
+	                					   $articleObj->getLanguageId(),
+	                					   $messageId);
+            	}
                 break;
             case "approve":
                 $comment->setStatus(PHORUM_STATUS_APPROVED);
