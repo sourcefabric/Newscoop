@@ -675,11 +675,11 @@ class Phorum_message extends DatabaseObject {
 
 		if ($this->m_data['message_id'] == $this->m_data['thread']) {
 			$this->setProperty('thread_order', 0);
-			return true;
+			return;
 		}
 		if ($this->m_data['parent_id'] == 0) {
 			$sql = 'SELECT max(thread_order) FROM ' . $this->m_dbTableName . ' '
-				. 'WHERE parent_id = 0 and thread = ' . $this->m_data['thread'];
+				. 'WHERE thread = ' . $this->m_data['thread'];
 			$orderNr = $g_ado_db->GetOne($sql) + 1;
 		} else {
 			$nextOrderNr = null;
