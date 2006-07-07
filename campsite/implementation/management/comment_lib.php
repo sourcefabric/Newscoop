@@ -136,12 +136,6 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 		exit;
 	}
 
-	// Check if this article already has a thread
-	$threadId = ArticleComment::GetCommentThreadId($f_article_number, $f_language_id);
-	if (!$threadId) {
-		$threadId = 0;
-	}
-
 	// Check if the reader was banned from posting comments.
 	if (Phorum_user::IsBanned($userRealName, $userEmail)) {
 		$p_parameters["ArticleCommentSubmitResult"] = 5005;
@@ -149,12 +143,17 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 		exit;
 	}
 
+	// Create the first post message (if needed)
+	$articleObj =& new Article($f_language_id, $f_article_number);
+	$firstPost = camp_comment_first_post($articleObj, $forumId);
+	$threadId = $firstPost->getThreadId();
+
 	// Set the parent to the currently viewed comment if a certain existing
 	// comment was selected. Otherwise, set the parent identifier to the root message.
 	if (isset($p_parameters['acid']) && $p_parameters['acid'] > 0) {
 		$parentId = 0 + $p_parameters['acid'];
 	} else {
-		$parentId = 0 + ArticleComment::GetCommentThreadId($f_article_number, $f_language_id);
+		$parentId = $firstPost->getMessageId();
 	}
 
 	// Create the comment. If there was an error creating the comment set the
