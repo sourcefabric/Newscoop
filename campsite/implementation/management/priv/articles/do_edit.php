@@ -200,6 +200,15 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
 	camp_html_goto_page($BackLink);
 }
 
+// Update the first comment if the article title has changed
+if ($f_article_title != $articleObj->getTitle()) {
+	$firstPostId = ArticleComment::GetCommentThreadId($articleObj->getArticleNumber(), $articleObj->getLanguageId());
+	if ($firstPostId) {
+		$firstPost =& new Phorum_message($firstPostId);
+		$firstPost->setSubject($f_article_title);
+	}
+}
+
 // Update the article.
 $articleObj->setOnFrontPage(!empty($f_on_front_page));
 $articleObj->setOnSectionPage(!empty($f_on_section_page));
@@ -218,8 +227,10 @@ if (!empty($f_comment_status)) {
     if ($articleObj->commentsEnabled() != $commentsEnabled) {
 	    $articleObj->setCommentsEnabled($commentsEnabled);
 		$comments = ArticleComment::GetArticleComments($f_article_number, $f_language_selected);
-		foreach ($comments as $comment) {
-			$comment->setStatus($commentsEnabled?PHORUM_STATUS_APPROVED:PHORUM_STATUS_HIDDEN);
+		if ($comments) {
+			foreach ($comments as $comment) {
+				$comment->setStatus($commentsEnabled?PHORUM_STATUS_APPROVED:PHORUM_STATUS_HIDDEN);
+			}
 		}
     }
     $articleObj->setCommentsLocked($f_comment_status == "locked");
