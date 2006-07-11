@@ -189,10 +189,9 @@ function camp_create_database($p_defined_parameters)
 		return "Unable to connect to database server.";
 	}
 
-	$db_exists = camp_database_exists($db_name);
-	$db_is_empty = camp_is_empty_database($db_name);
-	if ($db_exists && !$db_is_empty) {
-		if (!($res = camp_backup_database_default($db_name, $p_defined_parameters)) == 0) {
+	if (camp_database_exists($db_name)) {
+		if (!camp_is_empty_database($db_name)
+				&& !($res = camp_backup_database_default($db_name, $p_defined_parameters)) == 0) {
 			return $res;
 		}
 		if (!($res = camp_upgrade_database($db_name, $p_defined_parameters)) == 0) {
@@ -202,7 +201,7 @@ function camp_create_database($p_defined_parameters)
 				. $Campsite['CAMPSITE_DIR'] . "/backup/$db_name directory.";
 		}
 	} else {
-		if (!$db_exists && !mysql_query("CREATE DATABASE " . $db_name)) {
+		if (!mysql_query("CREATE DATABASE " . $db_name)) {
 			return "Unable to create the database " . $db_name;
 		}
 		$cmd = "mysql --user=$db_user --host=" . $Campsite['DATABASE_SERVER_ADDRESS']
