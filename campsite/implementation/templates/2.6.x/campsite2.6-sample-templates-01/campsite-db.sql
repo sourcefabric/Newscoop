@@ -71,9 +71,9 @@ DROP TABLE IF EXISTS `ArticleComments`;
 CREATE TABLE `ArticleComments` (
   `fk_article_number` int(10) unsigned NOT NULL,
   `fk_language_id` int(10) unsigned NOT NULL,
-  `fk_comment_thread_id` int(10) unsigned NOT NULL,
+  `fk_comment_id` int(10) unsigned NOT NULL,
   `is_first` tinyint(1) NOT NULL default '0',
-  KEY `fk_comment_thread_id` (`fk_comment_thread_id`),
+  KEY `fk_comment_id` (`fk_comment_id`),
   KEY `article_index` (`fk_article_number`,`fk_language_id`),
   KEY `first_message_index` (`fk_article_number`,`fk_language_id`,`is_first`)
 ) ENGINE=MyISAM ;
