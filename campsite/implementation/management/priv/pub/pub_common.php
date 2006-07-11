@@ -70,7 +70,7 @@ function camp_forum_create($p_publicationObj)
 	// create the phorum
     $forum =& new Phorum_forum();
     $forum->create();
-    $publicationObj->setForumId($forum->getForumId());
+    $p_publicationObj->setForumId($forum->getForumId());
 	return $forum;
 } // fn camp_forum_create
 
