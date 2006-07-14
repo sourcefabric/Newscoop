@@ -17,13 +17,13 @@ if ($instance_name == "") {
 	die("Please supply the instance name as the second argument.\n");
 }
 
-if (!camp_is_readable("$etc_dir/install_conf.php")) {
-	exit(1);
-}
-
 // include install_conf.php file
 require_once("$etc_dir/install_conf.php");
 require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
+
+if (!camp_is_readable("$etc_dir/install_conf.php")) {
+	exit(1);
+}
 
 if (!$no_backup) {
 	// backup instance
