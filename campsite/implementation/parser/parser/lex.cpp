@@ -237,7 +237,7 @@ int CStatementMap::InitStatements()
 	pcoCtx = new CStatementContext(CMS_CT_IF);
 	pcoCtx->insertAttr(new CIntegerAttr("number", "Number"));
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
-	pcoCtx->insertAttr(new CDateAttr("publish_date", "PublicationDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("publish_date", "PublicationDate"));
 	pcoCtx->insertAttr(new CAttribute("iscurrent"));
 	pcoCtx->insertAttr(new CAttribute("defined"));
 	pcoCtx->insertAttr(new CAttribute("fromstart"));
@@ -246,7 +246,7 @@ int CStatementMap::InitStatements()
 	pcoCtx = new CStatementContext(CMS_CT_LIST);
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
 	pcoCtx->insertAttr(new CIntegerAttr("number", "Number"));
-	pcoCtx->insertAttr(new CDateAttr("publish_date", "PublicationDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("publish_date", "PublicationDate"));
 	pcoCtx->insertAttr(new CIntegerAttr("publish_year", "YEAR(PublicationDate)"));
 	pcoCtx->insertAttr(new CIntegerAttr("publish_month", "MONTH(PublicationDate)"));
 	pcoCtx->insertAttr(new CIntegerAttr("publish_mday", "DAYOFMONTH(PublicationDate)"));
@@ -263,7 +263,7 @@ int CStatementMap::InitStatements()
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
 	pcoCtx->insertAttr(new CIntegerAttr("number", "Number"));
-	pcoCtx->insertAttr(new CDateAttr("date", "PublicationDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("date", "PublicationDate"));
 	pcoCtx->insertAttr(new CIntegerAttr("year", "YEAR(PublicationDate)"));
 	pcoCtx->insertAttr(new CIntegerAttr("mon_nr", "MONTH(PublicationDate)"));
 	pcoCtx->insertAttr(new CIntegerAttr("mday", "DAYOFMONTH(PublicationDate)"));
@@ -321,7 +321,7 @@ int CStatementMap::InitStatements()
 
 	pcoCtx = new CStatementContext(CMS_CT_IF);
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
-	pcoCtx->insertAttr(new CDateAttr("upload_date", "UploadDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("upload_date", "UploadDate"));
 	pcoCtx->insertAttr(new CDateTimeAttr("publish_date", "PublishDate"));
 	pcoCtx->insertAttr(new CAttribute("has_keyword"));
 	pcoCtx->insertAttr(new CAttribute("public", "Public"));
@@ -337,7 +337,7 @@ int CStatementMap::InitStatements()
 	pcoCtx = new CStatementContext(CMS_CT_LIST);
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
 	pcoCtx->insertAttr(new CIntegerAttr("number", "Number"));
-	pcoCtx->insertAttr(new CDateAttr("upload_date", "UploadDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("upload_date", "UploadDate"));
 	pcoCtx->insertAttr(new CDateTimeAttr("publish_date", "PublishDate"));
 	pcoCtx->insertAttr(new CStringAttr("keyword", "Keywords"));
 	pcoCtx->insertAttr(new CStringAttr("type", "Type", CMS_TYPE_ATTR));
@@ -362,8 +362,8 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CIntegerAttr("sec", "SECOND(UploadDate)"));
 	pcoCtx->insertAttr(new CStringAttr("mon_name", "UploadDate"));
 	pcoCtx->insertAttr(new CStringAttr("wday_name", "UploadDate"));
-	pcoCtx->insertAttr(new CDateAttr("upload_date", "UploadDate"));
-	pcoCtx->insertAttr(new CDateAttr("uploaddate", "UploadDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("upload_date", "UploadDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("uploaddate", "UploadDate"));
 	pcoCtx->insertAttr(new CDateTimeAttr("publishdate", "PublishDate"));
 	pcoCtx->insertAttr(new CStringAttr("template"));
 	pcoSt->insertCtx(pcoCtx);
@@ -917,7 +917,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CIntegerAttr("Identifier"));
 	pcoCtx->insertAttr(new CStringAttr("ReaderEMail"));
 	pcoCtx->insertAttr(new CStringAttr("ReaderEMailObfuscated"));
-	pcoCtx->insertAttr(new CDateAttr("SubmitDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("SubmitDate"));
 	pcoCtx->insertAttr(new CStringAttr("Subject"));
 	pcoCtx->insertAttr(new CStringAttr("Content"));
 	pcoCtx->insertAttr(new CStringAttr("ReaderEMailPreview"));

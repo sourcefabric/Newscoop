@@ -1918,7 +1918,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	}
 	if (modifier == CMS_ST_ARTICLECOMMENT)
 	{
-		if (!c.ArticleCommentEnabled())
+		if (!c.ArticleCommentEnabled() || c.ArticleComment() == NULL)
 		{
 			return ERR_NODATA;
 		}
@@ -2443,9 +2443,9 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 		{
 			run = c.ArticleCommentEnabled() ? 0 : 1;
 		}
-		else if (!c.ArticleCommentEnabled())
+		else if (!c.ArticleCommentEnabled() || c.ArticleComment() == NULL)
 		{
-				return ERR_NODATA;
+			return ERR_NODATA;
 		}
 		if (case_comp(param.attribute(), "Defined") == 0)
 		{
@@ -2871,9 +2871,13 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 		}
 	}
 	else
+	{
 		return -1;
+	}
 	if (modifier != CMS_ST_LANGUAGE && modifier != CMS_ST_PUBLICATION && param.attrType() == "")
+	{
 		SetNrField("IdPublication", c.Publication(), buf, w);
+	}
 	if (need_lang)
 	{
 		buf.str("");
@@ -2882,16 +2886,22 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	}
 	string coQuery = string("select ") + field + " from " + tables;
 	if (w.length())
+	{
 		coQuery += string(" where ") + w;
+	}
 	if (need_lang)
+	{
 		coQuery += " order by IdLanguage desc";
+	}
 	DEBUGAct("takeAction()", coQuery.c_str(), fs);
 	SQLQuery(&m_coSql, coQuery.c_str());
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
 	if (row[0] == NULL)
+	{
 		return ERR_NODATA;
+	}
 	if (modifier == CMS_ST_ARTICLE && param.attrType() != "" && !m_bStrictType)
 	{
 		field = param.attribute();
@@ -2927,12 +2937,18 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 		}
 	}
 	else
+	{
 		run_first = row[0] == value;
+	}
 	run_first = m_bNegated ? !run_first : run_first;
 	if (run_first)
+	{
 		runActions(block, c, fs);
+	}
 	else
+	{
 		runActions(sec_block, c, fs);
+	}
 	return RES_OK;
 	TK_CATCH_ERR
 }
