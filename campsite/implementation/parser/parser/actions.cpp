@@ -1918,7 +1918,53 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	}
 	if (modifier == CMS_ST_ARTICLECOMMENT)
 	{
-		if (!c.ArticleCommentEnabled() || c.ArticleComment() == NULL)
+		if (!c.ArticleCommentEnabled())
+		{
+			return ERR_NODATA;
+		}
+
+		// Attributes for which the article comment does not need to be defined.
+		if (case_comp(attr, "ReaderEMailPreview") == 0)
+		{
+			fs << encodeHTML(c.URL()->getValue("CommentReaderEMail"), c.EncodeHTML());
+		}
+		else if (case_comp(attr, "ReaderEMailPreviewObfuscated") == 0)
+		{
+			fs << CAction::obfuscateString(c.URL()->getValue("CommentReaderEMail"));
+		}
+		else if (case_comp(attr, "SubjectPreview") == 0)
+		{
+			fs << encodeHTML(c.URL()->getValue("CommentSubject"), c.EncodeHTML());
+		}
+		else if (case_comp(attr, "ContentPreview") == 0)
+		{
+			fs << encodeHTML(c.URL()->getValue("CommentContent"), c.EncodeHTML());
+		}
+		else if (case_comp(attr, "Count") == 0)
+		{
+			fs << CArticleComment::ArticleCommentCount(c.Article(), c.Language());
+		}
+		else if (case_comp(attr, "SubmitError") == 0)
+		{
+			buf << "select Message from Errors where Number = " << c.SubmitArticleCommentResult()
+					<< " and IdLanguage = " << c.Language();
+			SQLQuery(&m_coSql, buf.str().c_str());
+			res = mysql_store_result(&m_coSql);
+			CheckForRows(*res, 1);
+			row = mysql_fetch_row(*res);
+			fs << encodeHTML(row[0], c.EncodeHTML());
+		}
+		else if (case_comp(attr, "SubmitErrorNo") == 0)
+		{
+			lint nResult = c.SubmitArticleCommentResult();
+			if (nResult > 0)
+			{
+				fs << nResult;
+			}
+		}
+
+		// Attributes for which the article comment needs to be defined.
+		if (c.ArticleComment() == NULL)
 		{
 			return ERR_NODATA;
 		}
@@ -1955,47 +2001,9 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		{
 			fs << encodeHTML(c.ArticleComment()->getBody(), c.EncodeHTML());
 		}
-		else if (case_comp(attr, "ReaderEMailPreview") == 0)
-		{
-			fs << encodeHTML(c.URL()->getValue("CommentReaderEMail"), c.EncodeHTML());
-		}
-		else if (case_comp(attr, "ReaderEMailPreviewObfuscated") == 0)
-		{
-			fs << CAction::obfuscateString(c.URL()->getValue("CommentReaderEMail"));
-		}
-		else if (case_comp(attr, "SubjectPreview") == 0)
-		{
-			fs << encodeHTML(c.URL()->getValue("CommentSubject"), c.EncodeHTML());
-		}
-		else if (case_comp(attr, "ContentPreview") == 0)
-		{
-			fs << encodeHTML(c.URL()->getValue("CommentContent"), c.EncodeHTML());
-		}
-		else if (case_comp(attr, "Count") == 0)
-		{
-			fs << CArticleComment::ArticleCommentCount(c.Article(), c.Language());
-		}
 		else if (case_comp(attr, "Level") == 0)
 		{
 			fs << c.ArticleComment()->getLevel();
-		}
-		else if (case_comp(attr, "SubmitError") == 0)
-		{
-			buf << "select Message from Errors where Number = " << c.SubmitArticleCommentResult()
-					<< " and IdLanguage = " << c.Language();
-			SQLQuery(&m_coSql, buf.str().c_str());
-			res = mysql_store_result(&m_coSql);
-			CheckForRows(*res, 1);
-			row = mysql_fetch_row(*res);
-			fs << encodeHTML(row[0], c.EncodeHTML());
-		}
-		else if (case_comp(attr, "SubmitErrorNo") == 0)
-		{
-			lint nResult = c.SubmitArticleCommentResult();
-			if (nResult > 0)
-			{
-				fs << nResult;
-			}
 		}
 		return RES_OK;
 	}
@@ -2443,7 +2451,7 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 		{
 			run = c.ArticleCommentEnabled() ? 0 : 1;
 		}
-		else if (!c.ArticleCommentEnabled() || c.ArticleComment() == NULL)
+		else if (!c.ArticleCommentEnabled())
 		{
 			return ERR_NODATA;
 		}
