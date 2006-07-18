@@ -1035,6 +1035,22 @@ return 0
 }
 # END OF check4_php_gd
 
+# FUNCTION: check4_php_session
+# Description: check if php session module was installed
+# Parameters: none
+# Variables set:
+#	output - error message (if any)
+check4_php_session()
+{
+is_checked php_session && return 0
+check4_php_cli || return 1
+"$PHP" -q "$INSTALL_CONF/php_session_exists.php"
+[ $? -ne 0 ] && output="PHP session library was not installed. Please install it." && return 1
+set_checked php_session
+return 0
+}
+# END OF check4_php_session
+
 # FUNCTION: check4_convert
 # Description: check if ImageMagic package was installed
 # Parameters: none
