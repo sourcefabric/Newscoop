@@ -281,6 +281,7 @@ function camp_read_post_parameters(&$p_queryString)
 		camp_debug_msg('reading post parameters from $_POST');
 		$copyOfPost = $_POST;
 		array_walk($copyOfPost, 'camp_stripslashes_callback');
+		array_walk($copyOfPost, 'camp_stripslashes_callback');
 		return $copyOfPost;
 	}
 	camp_debug_msg("query string: $query_string");
