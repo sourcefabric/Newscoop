@@ -280,8 +280,9 @@ function camp_read_post_parameters(&$p_queryString)
 	if (trim($query_string) == "" && isset($_POST) && is_array($_POST)) {
 		camp_debug_msg('reading post parameters from $_POST');
 		$copyOfPost = $_POST;
-		array_walk($copyOfPost, 'camp_stripslashes_callback');
-		array_walk($copyOfPost, 'camp_stripslashes_callback');
+		if (get_magic_quotes_gpc()) {
+			array_walk($copyOfPost, 'camp_stripslashes_callback');
+		}
 		return $copyOfPost;
 	}
 	camp_debug_msg("query string: $query_string");
