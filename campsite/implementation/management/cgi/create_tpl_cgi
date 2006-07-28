@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cat > tpl_cgi << EOF
 #!/bin/sh
