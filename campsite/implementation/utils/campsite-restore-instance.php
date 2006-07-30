@@ -125,12 +125,15 @@ if (file_exists($tempDirName)) {
 echo " * Extracting files into temp directory...";
 if ($isNewBackupFormat) {
 	$cmd = "tar xf$tarGzOption " . escapeshellarg($archive_file);
+	camp_exec_command($cmd, $adviceOnError);
 } else {
 	camp_create_dir($tempDirName);
-	$cmd = "pushd " . escapeshellarg($tempDirName) . " > /dev/null && tar xf$tarGzOption "
-		. escapeshellarg("../".$archive_file) . " &> /dev/null && popd > /dev/null";
+	$currentDir = getcwd();
+	chdir($tempDirName);
+	$cmd = "tar xf$tarGzOption " . escapeshellarg("../".$archive_file) . " &> /dev/null";
+	camp_exec_command($cmd, $adviceOnError);
+	chdir($currentDir);
 }
-camp_exec_command($cmd, $adviceOnError);
 
 if (!file_exists($tempDirName)) {
 	echo "ERROR! Could not extract archive.\n\n";
@@ -160,9 +163,10 @@ if (!$isNewBackupFormat) {
 		if ($package == "") {
 			continue;
 		}
-		$cmd = "pushd " . escapeshellarg($tempDirName) . " && tar xzf "
-			. escapeshellarg($package_name) . " && popd > /dev/null";
-		camp_exec_command($cmd, $adviceOnError);
+		$currentDir = getcwd();
+		chdir($tempDirName);
+		camp_exec_command("tar xzf " . escapeshellarg($package_name), $adviceOnError);
+		chdir($currentDir);
 	}
 }
 echo "done.\n";

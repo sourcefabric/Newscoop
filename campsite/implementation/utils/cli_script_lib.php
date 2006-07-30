@@ -199,11 +199,12 @@ function camp_archive_file($p_sourceFile, $p_destDir, $p_fileName, &$p_output)
 {
 	$fileStr = escapeshellarg(basename($p_sourceFile));
 	$source_dir = dirname($p_sourceFile);
-	$cmd = "pushd $source_dir > /dev/null && tar czf "
-		. escapeshellarg("$p_destDir/$p_fileName.tar.gz")
-		. " $fileStr &> /dev/null && popd > /dev/null";
+	$currentDir = getcwd();
+	chdir($source_dir);
+	$cmd = "tar czf " . escapeshellarg("$p_destDir/$p_fileName.tar.gz") . " $fileStr &> /dev/null";
 	//echo $cmd."\n\n";
 	@exec($cmd, $p_output, $result);
+	chdir($currentDir);
 	return $result;
 } // fn camp_archive_file
 
