@@ -53,7 +53,7 @@ if (empty($f_article_language)) {
 }
 
 if (camp_html_has_msgs()) {
-	camp_html_goto_page();
+	camp_html_goto_page($backLink);
 }
 $articleType =& new ArticleType($f_article_type);
 if (!$articleType->exists()) {
