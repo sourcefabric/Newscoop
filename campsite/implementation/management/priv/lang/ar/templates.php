@@ -1,4 +1,6 @@
 <?php 
+regGS("Unable to $1 template.", "");
+regGS("Unable to create folder.", "");
 regGS("Template ID:", "");
 regGS("Template ID", "");
 regGS("Template $1 no longer exists!", "");

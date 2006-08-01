@@ -11,6 +11,15 @@ if (!Template::IsValidPath($Path)) {
 	camp_html_goto_page("/$ADMIN/templates/");
 }
 
+$fullPath = $Campsite['TEMPLATE_DIRECTORY'].$Path;
+if (!is_writable($fullPath)) {
+	camp_html_add_msg(getGS("Unable to create folder."));
+	camp_html_add_msg(getGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.",
+			$fullPath, $Campsite['APACHE_USER']));
+	camp_html_goto_page("/$ADMIN/templates?Path=".urlencode($Path));
+	exit;
+}
+
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates");
