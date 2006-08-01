@@ -14,7 +14,15 @@ if (!Input::IsValid()) {
 	exit;
 }
 
+if (!is_writable($Campsite['FILE_DIRECTORY'])) {
+	camp_html_add_msg(getGS("Unable to add attachment."));
+	camp_html_add_msg(getGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.",
+			$Campsite['FILE_DIRECTORY'], $Campsite['APACHE_USER']));
+}
+
 $articleObj =& new Article($f_language_selected, $f_article_number);
+
+camp_html_display_msgs();
 ?>
 <html>
 <head>
@@ -72,8 +80,10 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
     <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
     <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
     <INPUT TYPE="HIDDEN" NAME="BackLink" VALUE="<?php  p($_SERVER['REQUEST_URI']); ?>">
+<?php if (is_writable($Campsite['FILE_DIRECTORY'])) { ?>
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
 	&nbsp;&nbsp;
+<?php } ?>
 	<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" onclick="window.close();">
 	</DIV>
 	</TD>

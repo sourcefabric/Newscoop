@@ -106,11 +106,11 @@ class Image extends DatabaseObject {
 		if (file_exists($imageFile) && !is_writable($imageFile)) {
 			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
 		}
-		if (file_exists($thumb) && !unlink($thumb)) {
-			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
-		}
 		if (file_exists($imageFile) && !unlink($imageFile)) {
 			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
+		}
+		if (file_exists($thumb) && !unlink($thumb)) {
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
 		}
 
 		// Delete all the references to this image.

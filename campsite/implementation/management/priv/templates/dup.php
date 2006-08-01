@@ -13,6 +13,15 @@ if (!Template::IsValidPath($path)) {
 }
 $print_path = ($path != "") ? $path : "/";
 
+$fullPath = $Campsite['TEMPLATE_DIRECTORY'].$path;
+if (!is_writable($fullPath)) {
+	camp_html_add_msg(getGS("Unable to $1 template.", 'duplicate'));
+	camp_html_add_msg(getGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.",
+			$fullPath, $Campsite['APACHE_USER']));
+	camp_html_goto_page("/$ADMIN/templates?Path=".urlencode($path));
+	exit;
+}
+
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates");

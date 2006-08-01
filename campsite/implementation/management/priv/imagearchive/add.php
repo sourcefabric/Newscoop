@@ -9,6 +9,14 @@ if (!$g_user->hasPermission('AddImage')) {
 }
 $q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 
+if (!is_writable($Campsite['IMAGE_DIRECTORY'])) {
+	camp_html_add_msg(getGS("Unable to add new image."));
+	camp_html_add_msg(getGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.",
+			$Campsite['IMAGE_DIRECTORY'], $Campsite['APACHE_USER']));
+	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+	exit;
+}
+
 $crumbs = array();
 $crumbs[] = array(getGS('Content'), "");
 $crumbs[] = array(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php");

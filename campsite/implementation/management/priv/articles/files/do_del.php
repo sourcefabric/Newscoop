@@ -40,6 +40,14 @@ if (!$attachmentObj->exists()) {
 	camp_html_display_error(getGS('Attachment does not exist.'), null, true);
 	exit;
 }
+$fullPath = dirname($attachmentObj->getStorageLocation());
+if (!is_writable($fullPath)) {
+	camp_html_add_msg(getGS("Unable to delete the attached file '$1'.", $attachmentObj->getFileName()));
+	camp_html_add_msg(getGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.",
+			$fullPath, $Campsite['APACHE_USER']));
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
+	exit;
+}
 ArticleAttachment::RemoveAttachmentFromArticle($f_attachment_id, $f_article_number);
 $attachmentObj->delete();
 

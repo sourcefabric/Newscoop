@@ -23,6 +23,11 @@ if (!file_exists($filename)) {
 	exit;
 }
 
+if (!is_writable($filename)) {
+	camp_html_add_msg(getGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.",
+			$filename, $Campsite['APACHE_USER']));
+}
+
 $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 $imageExtensions = array("png", "jpg", "jpeg", "jpe", "gif");
 
@@ -70,7 +75,7 @@ if (in_array($extension, $imageExtensions)) {
 	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 	<TR>
 		<td align="center">
-			<?php  if ($g_user->hasPermission("DeleteTempl")) { ?>
+			<?php  if ($g_user->hasPermission("DeleteTempl") && is_writable($filename)) { ?>
 			<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 			<?php  } else { ?>
 			<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($f_path); ?>'">
@@ -84,7 +89,7 @@ if (in_array($extension, $imageExtensions)) {
 
 	<TR>
 		<TD align="center" colspan="2">
-		<?php  if ($g_user->hasPermission("DeleteTempl")) { ?>
+		<?php  if ($g_user->hasPermission("DeleteTempl") && is_writable($filename)) { ?>
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 		<?php  } else { ?>
 		<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($f_path); ?>'">
@@ -94,6 +99,10 @@ if (in_array($extension, $imageExtensions)) {
     </tr>
 	</table>
  	<p></p>
+ 	<?php
+ 	if ($g_user->hasPermission("DeleteTempl")
+ 			&& is_writable($Campsite['TEMPLATE_DIRECTORY'].$f_path)) {
+ 	?>
 	<table class="table_input">
     <tr>
 		<td align="center" colspan="2">
@@ -114,6 +123,7 @@ if (in_array($extension, $imageExtensions)) {
 		</td>
 	</TR>
 	</TABLE>
+	<?php } ?>
 
 	<?php if (trim($contents) != "") {
 		?>
