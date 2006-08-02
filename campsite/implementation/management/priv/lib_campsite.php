@@ -315,7 +315,7 @@ function camp_dump($p_object)
  * @param int $p_errorCode
  * @param mixed $p_arg1
  */
-function camp_get_error_message($p_errorCode, $p_arg1 = null)
+function camp_get_error_message($p_errorCode, $p_arg1 = null, $p_arg2 = null)
 {
 	global $Campsite;
 	if (function_exists("camp_load_translation_strings")) {
@@ -324,16 +324,24 @@ function camp_get_error_message($p_errorCode, $p_arg1 = null)
 
 	switch ($p_errorCode) {
 	case CAMP_ERROR_CREATE_FILE:
-		return getGS("The system was unable to create the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		return getGS("The system was unable to create the file '$1'.", basename($p_arg1))
+			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
+			.' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
 		break;
 	case CAMP_ERROR_WRITE_FILE:
-		return getGS("The system was unable to write to the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to this file.", $Campsite['APACHE_USER']);
+		return getGS("The system was unable to write to the file '$1'.", basename($p_arg1))
+			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
+			.' '.getGS("Please check if the user '$1' has permission to write to this file.", $Campsite['APACHE_USER']);
 		break;
 	case CAMP_ERROR_READ_FILE:
-		return getGS("The system was unable to read the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to read this file.", $Campsite['APACHE_USER']);
+		return getGS("The system was unable to read the file '$1'.", basename($p_arg1))
+			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
+			.' '.getGS("Please check if the user '$1' has permission to read this file.", $Campsite['APACHE_USER']);
 		break;
 	case CAMP_ERROR_DELETE_FILE:
-		return getGS("The system was unable to delete the file '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		return getGS("The system was unable to delete the file '$1'.", basename($p_arg1))
+			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
+			.' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
 		break;
 	case CAMP_ERROR_MKDIR:
 		return getGS("The system was unable to create the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
