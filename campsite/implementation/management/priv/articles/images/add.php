@@ -23,8 +23,7 @@ if (!Input::IsValid()) {
 
 if (!is_writable($Campsite['IMAGE_DIRECTORY'])) {
 	camp_html_add_msg(getGS("Unable to add new image."));
-	camp_html_add_msg(getGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.",
-			$Campsite['IMAGE_DIRECTORY'], $Campsite['APACHE_USER']));
+	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['IMAGE_DIRECTORY']));
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);

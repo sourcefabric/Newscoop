@@ -42,9 +42,12 @@ if (!$attachmentObj->exists()) {
 }
 $fullPath = dirname($attachmentObj->getStorageLocation());
 if (!is_writable($fullPath)) {
-	camp_html_add_msg(getGS("Unable to delete the attached file '$1'.", $attachmentObj->getFileName()));
-	camp_html_add_msg(getGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.",
-			$fullPath, $Campsite['APACHE_USER']));
+	if (function_exists("camp_load_translation_strings")) {
+		camp_load_translation_strings("home");
+	}
+	camp_html_add_msg(getGS("The system was unable to delete the file '$1'.", $attachmentObj->getFileName()));
+	camp_html_add_msg(getGS("Please check if the user '$1' has permission to write to the directory '$2'.",
+			$Campsite['APACHE_USER'], $fullPath));
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 	exit;
 }
