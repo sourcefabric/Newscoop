@@ -156,9 +156,13 @@ $f_article_title = Input::Get('f_article_title');
 $f_message = Input::Get('f_message', 'string', '', true);
 $f_creation_date = Input::Get('f_creation_date');
 $f_comment_status = Input::Get('f_comment_status', 'string', '', true);
-$f_save_button = isset($_REQUEST['save_and_close']) ? 'save_and_close' : 'save';
-
-$BackLink = "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
+if (isset($_REQUEST['save_and_close'])) {
+	$f_save_button = 'save_and_close';
+	$BackLink = "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
+} else {
+	$f_save_button = 'save';
+	$BackLink = "/$ADMIN/";
+}
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
@@ -267,6 +271,10 @@ foreach ($articleFields as $dbColumnName => $text) {
 if ($f_save_button == "save") {
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 } elseif ($f_save_button == "save_and_close") {
-	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'index.php'));
+	if ($f_publication_id > 0) {
+		camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'index.php'));
+	} else {
+		camp_html_goto_page("/$ADMIN/");
+	}
 }
 ?>
