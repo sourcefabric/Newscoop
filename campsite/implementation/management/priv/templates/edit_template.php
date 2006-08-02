@@ -24,8 +24,7 @@ if (!file_exists($filename)) {
 }
 
 if (!is_writable($filename)) {
-	camp_html_add_msg(getGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.",
-			$filename, $Campsite['APACHE_USER']));
+	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_FILE, $filename));
 }
 
 $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));

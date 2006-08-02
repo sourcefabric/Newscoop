@@ -17,8 +17,7 @@ $languages = Language::GetLanguages();
 $fullPath = $Campsite['TEMPLATE_DIRECTORY'].$Path;
 if (!is_writable($fullPath)) {
 	camp_html_add_msg(getGS("Unable to $1 template.", 'upload'));
-	camp_html_add_msg(getGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.",
-			$fullPath, $Campsite['APACHE_USER']));
+	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $fullPath));
 	camp_html_goto_page("/$ADMIN/templates?Path=".urlencode($Path));
 	exit;
 }
