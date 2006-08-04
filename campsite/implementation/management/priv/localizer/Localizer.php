@@ -53,8 +53,10 @@ function getGS($p_translateString)
 	if ($numFunctionArgs > 1) {
 		for ($i = 1; $i < $numFunctionArgs; $i++){
 			$name = '$'.$i;
+			$nameReversed = $i.'$';
 			$val = func_get_arg($i);
 			$translatedString = str_replace($name, $val, $translatedString);
+			$translatedString = str_replace($nameReversed, $val, $translatedString);
 		}
 	}
 	return $translatedString;
