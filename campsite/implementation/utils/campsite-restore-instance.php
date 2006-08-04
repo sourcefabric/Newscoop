@@ -23,6 +23,14 @@ $usage =
   be upgraded if they are older than the currently installed version
   of Campsite.
 
+  Note: For multiple installations of Campsite on a single server, you
+  must run this script from the installation directory where you want to
+  restore the instance.  For example, if you have installed Campsite
+  in two locations: /usr/local/foo and /usr/local/bar, and you want to
+  restore an instance in the 'foo' installation, you must run
+  /usr/local/foo/bin/campsite-restore-instance,
+  and NOT /usr/local/bar/bin/campsite-restore-instance.
+
   Parameters:
     <backup_file>
         The tarball created by the 'campsite-backup-instance' script.
@@ -174,13 +182,25 @@ echo "done.\n";
 echo " * Backup instance name is '$origInstanceName'.\n";
 echo " * Destination instance name (to be replaced) is '$destInstanceName'.\n";
 
-require_once($Campsite['WWW_DIR']."/".$destInstanceName."/html/campsite_version.php");
+require_once($Campsite['WWW_COMMON_DIR']."/html/campsite_version.php");
 
 if ($useExistingConfig) {
 	$includeFile = "$ETC_DIR/$destInstanceName/database_conf.php";
 } else {
 	$includeFile = "$tempDirName/$origInstanceName/database_conf.php";
 }
+
+// Check if the instance exists.
+if (!file_exists($includeFile)) {
+    echo "\nThe destination instance ('$destInstanceName') does not exist.\n";
+    echo "You can create an instance using 'campsite-create-instance'.\n\n";
+	echo " * Cleaning up...";
+	camp_remove_dir($tempDirName);
+	echo "done.\n\n";
+	exit(1);
+}
+
+// Check if instance files are readable.
 if (!camp_is_readable($includeFile)) {
 	echo " * Cleaning up...";
 	camp_remove_dir($tempDirName);
