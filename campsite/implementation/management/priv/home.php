@@ -189,15 +189,15 @@ if ( ($restartEngine == 'yes') && $g_user->hasPermission("InitializeTemplateEngi
 				<?php p(htmlspecialchars($tmpArticle->getTranslateType())); ?>
 			</td>
 
-			<td>
+			<td valign="top">
 				<?php p(htmlspecialchars($pub->getName())); ?>
 			</td>
 
-			<td>
+			<td valign="top">
 				<?php p(htmlspecialchars($issue->getName())); ?>
 			</td>
 
-			<td>
+			<td valign="top">
 				<?php p(htmlspecialchars($section->getName())); ?>
 			</td>
 
@@ -349,15 +349,15 @@ if ( ($restartEngine == 'yes') && $g_user->hasPermission("InitializeTemplateEngi
 			</TD>
 			<td nowrap valign="top"><?php echo $tmpArticle->getPublishDate(); ?></td>
 
-			<td>
+			<td valign="top">
 				<?php p(htmlspecialchars($pub->getName())); ?>
 			</td>
 
-			<td>
+			<td valign="top">
 				<?php p(htmlspecialchars($issue->getName())); ?>
 			</td>
 
-			<td>
+			<td valign="top">
 				<?php p(htmlspecialchars($section->getName())); ?>
 			</td>
 
