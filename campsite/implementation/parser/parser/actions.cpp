@@ -1713,9 +1713,50 @@ bool CActPrint::IsBREntity(string::const_iterator& p_rcoCurrent,
 		   || (chThirdChar >= 0 && chThirdChar <= ' ')))
 	{
 		for (; p_rcoCurrent != p_rcoEnd && *p_rcoCurrent != '>'; ++p_rcoCurrent);
+		if (p_rcoCurrent != p_rcoEnd && *p_rcoCurrent == '>')
+		{
+			++p_rcoCurrent;
+		}
 		return true;
 	}
 	return false;
+}
+
+// SkipHTMLSpace: moves the string iterator past HTML space; returns true if space skipped
+// Parameters:
+//		const string& p_rcoText - the string that has to be processed
+//		string::const_iterator& p_rcoCurrent - the current position in the string
+bool CActPrint::SkipHTMLSpace(const string& p_rcoText, string::const_iterator& p_rcoCurrent)
+{
+	bool bSpaceSkipped = false;
+	string::const_iterator coEnd = p_rcoText.end();
+
+	while (p_rcoCurrent != coEnd)
+	{
+		if (case_comp(p_rcoText.substr(distance(p_rcoText.begin(), p_rcoCurrent), 6),
+			"&nbsp;") == 0)
+		{
+			p_rcoCurrent += 6;
+			bSpaceSkipped = true;
+			continue;
+		}
+		if (*p_rcoCurrent == '\\')
+		{
+			string::const_iterator coNext = p_rcoCurrent + 1;
+			if (coNext != coEnd && (*coNext == 'r' || *coNext == 'n'))
+			{
+				bSpaceSkipped = true;
+				p_rcoCurrent = ++coNext;
+			}
+		}
+		if (*p_rcoCurrent < 0 || *p_rcoCurrent > ' ')
+		{
+			break;
+		}
+		bSpaceSkipped = true;
+		++p_rcoCurrent;
+	}
+	return bSpaceSkipped;
 }
 
 // takeAction: performs the action
@@ -2192,29 +2233,36 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	TK_CATCH_ERR
 }
 
-bool CActPrint::isParagraphStart(string::const_iterator& p_rcoCurrent,
-								 const string::const_iterator& p_rcoEnd,
+// isParagraphStart: returns true if paragraph starts at the current position and
+//		sets p_rcoParagraphStart to the paragraph start position
+// Parameters:
+//		const string& p_rcoText - the string that has to be processed
+//		string::const_iterator& p_rcoCurrent - the current position in the string
+//		string::const_iterator& p_rcoParagraphStart - the paragraph start position
+bool CActPrint::isParagraphStart(const string& p_rcoText,
+								 string::const_iterator& p_rcoCurrent,
 								 string::const_iterator& p_rcoParagraphStart)
 {
 	if (*p_rcoCurrent != '<')
 	{
 		return false;
 	}
-	string::const_iterator p_rcoMyCurrent = p_rcoCurrent;
-	if (CActPrint::IsPEntity(p_rcoMyCurrent, p_rcoEnd))
+	string::const_iterator coMyCurrent = p_rcoCurrent;
+	string::const_iterator coEnd = p_rcoText.end();
+	if (CActPrint::IsPEntity(coMyCurrent, coEnd))
 	{
 		p_rcoParagraphStart = p_rcoCurrent;
-		p_rcoCurrent = p_rcoMyCurrent;
+		p_rcoCurrent = coMyCurrent;
 		return true;
 	}
-	p_rcoMyCurrent = p_rcoCurrent;
-	if (CActPrint::IsBREntity(p_rcoMyCurrent, p_rcoEnd))
+	coMyCurrent = p_rcoCurrent;
+	if (CActPrint::IsBREntity(coMyCurrent, coEnd))
 	{
-		for (; p_rcoMyCurrent != p_rcoEnd && *p_rcoMyCurrent != '<'; ++p_rcoMyCurrent);
-		if (CActPrint::IsBREntity(p_rcoMyCurrent, p_rcoEnd))
+		CActPrint::SkipHTMLSpace(p_rcoText, coMyCurrent);
+		if (CActPrint::IsBREntity(coMyCurrent, coEnd))
 		{
 			p_rcoParagraphStart = p_rcoCurrent;
-			p_rcoCurrent = p_rcoMyCurrent;
+			p_rcoCurrent = coMyCurrent;
 			return true;
 		}
 	}
@@ -2235,28 +2283,49 @@ void CActPrint::printParagraph(const string& p_rcoText, sockstream& p_rcoStream,
 		p_rcoStream << p_rcoText;
 		return;
 	}
-	int nCurrentParagraph = 1;
+	int nCurrentParagraph = 0;
 	string::const_iterator coParagraphStart = p_rcoText.begin();
 	string::const_iterator coNextParagraphStart = p_rcoText.begin();
 	string::const_iterator coFoundParagraph;
 	string::const_iterator coCurrent = p_rcoText.begin();
+	bool bHasContent = false;
+	bool bIsHtmlTag = false;
 	do {
-		for (; coCurrent != p_rcoText.end() && *coCurrent != '<'; ++coCurrent);
-		if (coCurrent == p_rcoText.end()
-					 || CActPrint::isParagraphStart(coCurrent, p_rcoText.end(),
-				coFoundParagraph))
+		while (coCurrent != p_rcoText.end() && *coCurrent != '<')
+		{
+			if (!bIsHtmlTag && CActPrint::SkipHTMLSpace(p_rcoText, coCurrent))
+			{
+				continue;
+			}
+			if (!bIsHtmlTag)
+			{
+				bHasContent = true;
+			}
+			if (*coCurrent == '>')
+			{
+				bIsHtmlTag = false;
+			}
+			++coCurrent;
+		}
+		bIsHtmlTag = true;
+		if (CActPrint::isParagraphStart(p_rcoText, coCurrent, coFoundParagraph)
+				  || coCurrent == p_rcoText.end())
 		{
 			coParagraphStart = coNextParagraphStart;
 			coNextParagraphStart = coCurrent == p_rcoText.end() ?
 					p_rcoText.end() : coFoundParagraph;
-			nCurrentParagraph++;
+			bIsHtmlTag = false;
+			if (bHasContent)
+			{
+				nCurrentParagraph++;
+			}
 		}
 		else
 		{
 			++coCurrent;
 		}
-	} while (coCurrent != p_rcoText.end() && nCurrentParagraph <= p_nParagraphNumber);
-	if (coParagraphStart != coNextParagraphStart)
+	} while (coCurrent != p_rcoText.end() && nCurrentParagraph < p_nParagraphNumber);
+	if (coParagraphStart != coNextParagraphStart && nCurrentParagraph == p_nParagraphNumber)
 	{
 		p_rcoStream << p_rcoText.substr(distance(p_rcoText.begin(), coParagraphStart),
 										distance(coParagraphStart, coNextParagraphStart));
