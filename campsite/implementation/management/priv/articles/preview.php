@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Alias.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ShortURL.php');
 
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
@@ -9,7 +10,7 @@ $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
-$languageObj = & new Language($f_language_id);
+$languageObj = & new Language($f_language_selected);
 $publicationObj = & new Publication($f_publication_id);
 $issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
@@ -29,10 +30,6 @@ if (!$articleObj->exists()) {
 	}
 }
 
-if ($errorStr != "") {
-	camp_html_display_error($errorStr, null, true);
-}
-
 $templateObj =& new Template($templateId);
 
 if (!isset($_SERVER['SERVER_PORT']))
@@ -47,19 +44,26 @@ $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_us
 				. "&AdminAccess=all";
 if ($publicationObj->getUrlTypeId() == 1) {
 	$templateObj = & new Template($templateId);
-	$uri = "$websiteURL/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
+	$url = "$websiteURL/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
 		. "&IdPublication=$f_publication_id&NrIssue=$f_issue_number&NrSection=$f_section_number"
 		. "&NrArticle=$f_article_number&$accessParams";
 } else {
-	$uri = "$websiteURL/" . $languageObj->getCode() . "/" . $issueObj->getUrlName()
-		. "/" . $sectionObj->getUrlName() . "/" . $articleObj->getUrlName() . "?$accessParams";
+	$url = ShortURL::GetURL($f_publication_id, $f_language_selected, null, null, $f_article_number);
+	if (PEAR::isError($url)) {
+		$errorStr = $url->getMessage();
+	}
+	$url .= '?' . $accessParams;
+}
+
+if ($errorStr != "") {
+	camp_html_display_error($errorStr, null, true);
 }
 
 if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
 	// Show dual-pane view for those with template management priviledges
 ?>
 	<FRAMESET ROWS="60%,*" BORDER="2">
-		<FRAME SRC="<?php print "$uri&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
+		<FRAME SRC="<?php print "$url&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
 		<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">
 	</FRAMESET>
 <?php
@@ -67,7 +71,7 @@ if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl
 	// Show single pane for everyone else.
 ?>
 	<FRAMESET ROWS="100%">
-		<FRAME SRC="<?php print $uri; ?>" NAME="body" FRAMEBORDER="1">
+		<FRAME SRC="<?php print $url; ?>" NAME="body" FRAMEBORDER="1">
 	</FRAMESET>
 <?php
 }
