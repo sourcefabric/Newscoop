@@ -1250,6 +1250,17 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Return TRUE if this article was published.
+	 *
+	 * @return boolean
+	 */
+	function isPublished()
+	{
+		return ($this->m_data['Published'] == 'Y');
+	} // fn isPublic
+
+
+	/**
 	 * Return TRUE if this article is viewable by non-subscribers.
 	 *
 	 * @return boolean

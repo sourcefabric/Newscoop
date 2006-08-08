@@ -5,6 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAttachment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ShortURL.php');
 camp_load_translation_strings("article_comments");
 
 // These are optional, depending on whether you are in a section
@@ -457,8 +458,18 @@ if ($f_edit_mode == "edit") { ?>
                     <!-- Number -->
         			<TR>
         			    <td align="right" valign="top" nowrap><b><?php putGS("Number"); ?>:</b></td>
-        			    <td align="left" valign="top"  style="padding-top: 2px; padding-left: 4px;"><?php p($articleObj->getArticleNumber()); ?> <?php if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2) { ?>
-        &nbsp;(<a href="/<?php echo $languageObj->getCode()."/".$issueObj->getUrlName()."/".$sectionObj->getUrlName()."/".$articleObj->getUrlName(); ?>"><?php putGS("Link to public page"); ?></a>)<?php } ?></td>
+        			    <td align="left" valign="top"  style="padding-top: 2px; padding-left: 4px;">
+        			    	<?php
+        			    	p($articleObj->getArticleNumber());
+        			    	if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleObj->isPublished()) {
+        			    		$url = ShortURL::GetURL($publicationObj->getPublicationId(), $articleObj->getLanguageId(), null, null, $articleObj->getArticleNumber());
+        			    		if (PEAR::isError($url)) {
+        			    			echo $url->getMessage();
+        			    		} else {
+        			    			echo '&nbsp;(<a href="' . $url . '">' . getGS("Link to public page") . '</a>)';
+        			    		}
+        			    	}
+        			    	?></td>
                     </tr>
 
                     <!-- Creation Date -->
