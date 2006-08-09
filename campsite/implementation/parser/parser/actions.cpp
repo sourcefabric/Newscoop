@@ -993,7 +993,7 @@ int CActList::WriteOrdParam(string& s)
 	}
 	if (modifier == CMS_ST_ARTICLEATTACHMENT)
 	{
-		s = " order by att.file_name asc, att.extension asc";
+		s = " order by att.time_created asc, att.file_name asc";
 	}
 	if (modifier == CMS_ST_ARTICLECOMMENT)
 	{
@@ -1135,6 +1135,11 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 					string coParameter = (*(mod_param.begin()))->attribute();
 					if (case_comp(coParameter, "ForCurrentLanguage") == 0)
 						buf << " and att.fk_language_id = " << lc.Language();
+				}
+				else
+				{
+					buf << " and (att.fk_language_id = " << lc.Language()
+							<< " or att.fk_language_id is null)";
 				}
 				where = buf.str();
 				break;
