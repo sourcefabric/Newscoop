@@ -1158,7 +1158,7 @@ inline int CParser::HPrint(CActionList& al, int level, ulint sublevel)
 		strictType = true;
 		RequireAtom(l);
 	}
-	int image = 1;
+	int image = 0;
 	SafeAutoPtr<CPairAttrType> attrType(NULL);
 	if (type != "")
 		attrType.reset(st->findTypeAttr(l->atom()->identifier(), type, CMS_CT_PRINT));

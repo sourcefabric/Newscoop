@@ -2066,7 +2066,14 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	{
 		table = "ArticleImages as ai left join Images as i on ai.IdImage = i.Id";
 		SetNrField("ai.NrArticle", c.Article(), buf, w);
-		SetNrField("ai.Number", image, buf, w);
+		if (image == 0 && c.Image() > 0)
+		{
+			SetNrField("ai.IdImage", c.Image(), buf, w);
+		}
+		else
+		{
+			SetNrField("ai.Number", (image > 0 ? image : 1), buf, w);
+		}
 	}
 	else if (modifier == CMS_ST_PUBLICATION)
 	{
