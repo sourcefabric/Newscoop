@@ -8,5 +8,5 @@
 // between different versions of the editor.
 {
 	"Subhead": "Underrubrik",
-	"Insert Internal Link": "Infoga intern länk",
+	"Insert Internal Link": "Infoga intern länk"
 };

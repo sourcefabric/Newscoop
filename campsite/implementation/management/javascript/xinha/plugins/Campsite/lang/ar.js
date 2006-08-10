@@ -17,5 +17,5 @@
 // between different versions of the editor.
 {
 	"Subhead": "Subhead (ar)",
-	"Insert Internal Link": "Insert Internal Link (ar)",
+	"Insert Internal Link": "Insert Internal Link (ar)"
 };
