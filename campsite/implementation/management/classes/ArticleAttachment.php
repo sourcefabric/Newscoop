@@ -99,7 +99,7 @@ class ArticleAttachment extends DatabaseObject {
 					.' WHERE ArticleAttachments.fk_article_number='.$p_articleNumber
 					.' AND ArticleAttachments.fk_attachment_id=Attachments.id'
 					." AND (Attachments.fk_language_id IS NULL OR $langConstraint)"
-					.' ORDER BY Attachments.time_created';
+					.' ORDER BY Attachments.time_created asc, Attachments.file_name asc';
 		$rows = $g_ado_db->GetAll($queryStr);
 		$returnArray = array();
 		if (is_array($rows)) {
