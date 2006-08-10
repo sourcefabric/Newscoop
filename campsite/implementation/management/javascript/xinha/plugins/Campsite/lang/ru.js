@@ -17,5 +17,5 @@
 // between different versions of the editor.
 {
 	"Subhead": "Подзаголовок",
-	"Insert Internal Link": "Вставить внешнюю ссылку",
+	"Insert Internal Link": "Вставить внешнюю ссылку"
 };
