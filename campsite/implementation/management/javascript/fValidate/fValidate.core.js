@@ -158,7 +158,9 @@ function validateForm( f, bConfirm, bDisable, bDisableR, groupError, errorMode )
 	} //	end of element loop
 	
 	//	If group error, show it
-	if ( groupError ) f.fv.showGroupError();
+	//	Paul Baranowski: added first condition because you dont want to show
+	//	errors useless there are some to show.  This was giving errors in IE.
+	if ( (f.fv.errors.length > 0) && groupError ) f.fv.showGroupError();
 
 	//	Return false if errors found
 	if ( f.fv.errors.length > 0 ) return false;
