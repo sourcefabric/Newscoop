@@ -155,6 +155,7 @@ $f_keywords = Input::Get('f_keywords');
 $f_article_title = Input::Get('f_article_title');
 $f_message = Input::Get('f_message', 'string', '', true);
 $f_creation_date = Input::Get('f_creation_date');
+$f_publish_date = Input::Get('f_publish_date');
 $f_comment_status = Input::Get('f_comment_status', 'string', '', true);
 if (isset($_REQUEST['save_and_close'])) {
 	$f_save_button = 'save_and_close';
@@ -247,6 +248,12 @@ $articleObj->setProperty('time_updated', 'NOW()', true, true);
 // If not, dont change it.
 if (preg_match("/\d{4}-\d{2}-\d{2}/", $f_creation_date)) {
 	$articleObj->setCreationDate($f_creation_date);
+}
+
+// Verify publish date is in the correct format.
+// If not, dont change it.
+if (preg_match("/\d{4}-\d{2}-\d{2}/", $f_publish_date)) {
+	$articleObj->setPublishDate($f_publish_date);
 }
 
 foreach ($articleFields as $dbColumnName => $text) {

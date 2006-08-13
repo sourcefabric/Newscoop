@@ -1177,6 +1177,18 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Set the date the article was published, parameter must be in the
+	 * form YYYY-MM-DD.
+	 * @param string $p_value
+	 * @return boolean
+	 */
+	function setPublishDate($p_value)
+	{
+		return $this->setProperty('PublishDate', $p_value);
+	} // fn setPublishDate
+
+
+	/**
 	 * Return the date the article was created in the
 	 * form YYYY-MM-DD HH:MM:SS.
 	 *
