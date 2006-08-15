@@ -646,12 +646,12 @@ if ($f_edit_mode == "edit") { ?>
 				if ($f_edit_mode == "edit") { ?>
 		        <INPUT NAME="<?php echo $dbColumn->getName(); ?>"
 					   TYPE="TEXT"
-					   VALUE="<?php print $articleData->getProperty($dbColumn->getName()); ?>"
+					   VALUE="<?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
 					   class="input_text"
 					   SIZE="50"
 					   MAXLENGTH="255">
 		        <?php } else {
-		        	print $articleData->getProperty($dbColumn->getName());
+		        	print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
 		        }
 		        ?>
 				</TD>
