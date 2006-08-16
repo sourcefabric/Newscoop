@@ -1,9 +1,9 @@
 <?php 
-regGS("You do not have the right to change image information.", "");
-regGS("The image number specified is already in use.", "");
-regGS("The image has been removed from the article.", "");
-regGS("Image '$1' updated.", "");
-regGS("Image '$1' added.", "");
+regGS("You do not have the right to change image information.", "Nu ai dreptul să schimbi informaţiile despre imagine.");
+regGS("The image number specified is already in use.", "Numărul specificat al imaginii este deja folosit.");
+regGS("The image has been removed from the article.", "Imaginea a fost îndepărtată de la articol.");
+regGS("Image '$1' updated.", "Imaginea '$1' a fost actualizată.");
+regGS("Image '$1' added.", "Imaginea '$1' a fost adăugată.");
 regGS("Edit article", "Modifică articolul");
 regGS("You do not have the right to attach images to articles.", "Nu ai dreptul să ataşezi imagini la articole.");
 regGS("You do not have the right to add images.", "Nu ai dreptul să adaugi imagini.");
