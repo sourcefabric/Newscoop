@@ -26,7 +26,7 @@ CREATE TABLE `Aliases` (
   `IdPublication` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Aliases`
@@ -50,7 +50,7 @@ CREATE TABLE `ArticleAttachments` (
   UNIQUE KEY `article_attachment_index` (`fk_article_number`,`fk_attachment_id`),
   KEY `fk_article_number` (`fk_article_number`),
   KEY `fk_attachment_id` (`fk_attachment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `ArticleAttachments`
@@ -76,7 +76,7 @@ CREATE TABLE `ArticleComments` (
   KEY `fk_comment_thread_id` (`fk_comment_thread_id`),
   KEY `article_index` (`fk_article_number`,`fk_language_id`),
   KEY `first_message_index` (`fk_article_number`,`fk_language_id`,`is_first`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `ArticleComments`
@@ -100,7 +100,7 @@ CREATE TABLE `ArticleImages` (
   PRIMARY KEY  (`NrArticle`,`IdImage`),
   UNIQUE KEY `ArticleImage` (`NrArticle`,`Number`),
   KEY `IdImage` (`IdImage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `ArticleImages`
@@ -126,7 +126,7 @@ CREATE TABLE `ArticleIndex` (
   `NrSection` int(10) unsigned NOT NULL default '0',
   `NrArticle` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`IdPublication`,`IdLanguage`,`IdKeyword`,`NrIssue`,`NrSection`,`NrArticle`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `ArticleIndex`
@@ -156,7 +156,7 @@ CREATE TABLE `ArticlePublish` (
   PRIMARY KEY  (`id`),
   KEY `article_index` (`fk_article_number`,`fk_language_id`),
   KEY `event_time_index` (`time_action`,`is_completed`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `ArticlePublish`
@@ -177,7 +177,7 @@ CREATE TABLE `ArticleTopics` (
   `NrArticle` int(10) unsigned NOT NULL default '0',
   `TopicId` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`NrArticle`,`TopicId`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `ArticleTopics`
@@ -195,8 +195,8 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ArticleTypeMetadata`;
 CREATE TABLE `ArticleTypeMetadata` (
-  `type_name` varchar(250) NOT NULL,
-  `field_name` varchar(250) NOT NULL default 'NULL',
+  `type_name` varchar(166) NOT NULL,
+  `field_name` varchar(166) NOT NULL default 'NULL',
   `field_weight` int(11) default NULL,
   `is_hidden` tinyint(1) NOT NULL default '0',
   `comments_enabled` tinyint(1) NOT NULL default '0',
@@ -204,7 +204,7 @@ CREATE TABLE `ArticleTypeMetadata` (
   `field_type` varchar(255) default NULL,
   `field_type_param` varchar(255) default NULL,
   PRIMARY KEY  (`type_name`,`field_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `ArticleTypeMetadata`
@@ -253,7 +253,7 @@ CREATE TABLE `Articles` (
   UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`ShortName`),
   KEY `Type` (`Type`),
   KEY `ArticleOrderIdx` (`ArticleOrder`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Articles`
@@ -285,7 +285,7 @@ CREATE TABLE `Attachments` (
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `time_created` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Attachments`
@@ -308,7 +308,7 @@ CREATE TABLE `AutoId` (
   `LogTStamp` datetime NOT NULL default '0000-00-00 00:00:00',
   `TopicId` int(10) unsigned NOT NULL default '0',
   `translation_phrase_id` int(10) unsigned NOT NULL default '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `AutoId`
@@ -332,7 +332,7 @@ CREATE TABLE `Classes` (
   `Name` varchar(140) NOT NULL default '',
   PRIMARY KEY  (`Id`,`IdLanguage`),
   UNIQUE KEY `IdLanguage` (`IdLanguage`,`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Classes`
@@ -355,7 +355,7 @@ CREATE TABLE `Countries` (
   `Name` varchar(140) NOT NULL default '',
   PRIMARY KEY  (`Code`,`IdLanguage`),
   UNIQUE KEY `IdLanguage` (`IdLanguage`,`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Countries`
@@ -379,7 +379,7 @@ CREATE TABLE `Dictionary` (
   `Keyword` varchar(140) NOT NULL default '',
   PRIMARY KEY  (`IdLanguage`,`Keyword`),
   UNIQUE KEY `Id` (`Id`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Dictionary`
@@ -401,7 +401,7 @@ CREATE TABLE `Errors` (
   `IdLanguage` int(10) unsigned NOT NULL default '0',
   `Message` char(255) NOT NULL default '',
   PRIMARY KEY  (`Number`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Errors`
@@ -426,7 +426,7 @@ CREATE TABLE `Events` (
   `IdLanguage` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Id`,`IdLanguage`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Events`
@@ -448,7 +448,7 @@ CREATE TABLE `FailedLoginAttempts` (
   `ip_address` varchar(40) NOT NULL default '',
   `time_of_attempt` bigint(20) NOT NULL default '0',
   KEY `ip_address` (`ip_address`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `FailedLoginAttempts`
@@ -481,7 +481,7 @@ CREATE TABLE `Images` (
   `LastModified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `TimeCreated` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Images`
@@ -511,7 +511,7 @@ CREATE TABLE `IssuePublish` (
   PRIMARY KEY  (`id`),
   KEY `issue_index` (`fk_publication_id`,`fk_issue_id`,`fk_language_id`),
   KEY `action_time_index` (`time_action`,`is_completed`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `IssuePublish`
@@ -541,7 +541,7 @@ CREATE TABLE `Issues` (
   `ShortName` varchar(32) NOT NULL default '',
   PRIMARY KEY  (`IdPublication`,`Number`,`IdLanguage`),
   UNIQUE KEY `ShortName` (`IdPublication`,`IdLanguage`,`ShortName`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Issues`
@@ -566,7 +566,7 @@ CREATE TABLE `KeywordClasses` (
   `Definition` mediumblob NOT NULL,
   PRIMARY KEY  (`IdDictionary`,`IdClasses`,`IdLanguage`),
   KEY `IdClasses` (`IdClasses`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `KeywordClasses`
@@ -587,7 +587,7 @@ CREATE TABLE `KeywordIndex` (
   `Keyword` varchar(70) NOT NULL default '',
   `Id` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Keyword`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `KeywordIndex`
@@ -632,7 +632,7 @@ CREATE TABLE `Languages` (
   `WDay7` varchar(140) NOT NULL default '',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Languages`
@@ -656,7 +656,7 @@ CREATE TABLE `Log` (
   `fk_user_id` int(10) unsigned default NULL,
   `text` varchar(255) NOT NULL default '',
   KEY `IdEvent` (`fk_event_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Log`
@@ -696,7 +696,7 @@ CREATE TABLE `Publications` (
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Alias` (`IdDefaultAlias`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Publications`
@@ -726,7 +726,7 @@ CREATE TABLE `Sections` (
   PRIMARY KEY  (`IdPublication`,`NrIssue`,`IdLanguage`,`Number`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`IdLanguage`,`Name`),
   UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`IdLanguage`,`ShortName`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Sections`
@@ -749,7 +749,7 @@ CREATE TABLE `SubsByIP` (
   `StartIP` int(10) unsigned NOT NULL default '0',
   `Addresses` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`IdUser`,`StartIP`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `SubsByIP`
@@ -772,7 +772,7 @@ CREATE TABLE `SubsDefTime` (
   `TrialTime` int(10) unsigned NOT NULL default '0',
   `PaidTime` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`CountryCode`,`IdPublication`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `SubsDefTime`
@@ -798,7 +798,7 @@ CREATE TABLE `SubsSections` (
   `PaidDays` int(10) unsigned NOT NULL default '0',
   `NoticeSent` enum('N','Y') NOT NULL default 'N',
   PRIMARY KEY  (`IdSubscription`,`SectionNumber`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `SubsSections`
@@ -825,7 +825,7 @@ CREATE TABLE `Subscriptions` (
   `Type` enum('T','P') NOT NULL default 'T',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `IdUser` (`IdUser`,`IdPublication`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Subscriptions`
@@ -847,7 +847,7 @@ CREATE TABLE `TemplateTypes` (
   `Name` char(20) NOT NULL default '',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `TemplateTypes`
@@ -872,7 +872,7 @@ CREATE TABLE `Templates` (
   `Level` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Templates`
@@ -895,7 +895,7 @@ CREATE TABLE `TimeUnits` (
   `IdLanguage` int(10) unsigned NOT NULL default '0',
   `Name` varchar(70) NOT NULL default '',
   PRIMARY KEY  (`Unit`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `TimeUnits`
@@ -914,11 +914,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `TopicFields`;
 CREATE TABLE `TopicFields` (
-  `ArticleType` varchar(250) NOT NULL default '',
-  `FieldName` varchar(250) NOT NULL default '',
+  `ArticleType` varchar(166) NOT NULL default '',
+  `FieldName` varchar(166) NOT NULL default '',
   `RootTopicId` int(11) NOT NULL default '0',
   PRIMARY KEY  (`ArticleType`,`FieldName`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `TopicFields`
@@ -943,7 +943,7 @@ CREATE TABLE `Topics` (
   PRIMARY KEY  (`Id`,`LanguageId`),
   UNIQUE KEY `Name` (`LanguageId`,`Name`),
   KEY `topic_id` (`Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Topics`
@@ -969,7 +969,7 @@ CREATE TABLE `Translations` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `phrase_language_index` (`phrase_id`,`fk_language_id`),
   KEY `phrase_id` (`phrase_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Translations`
@@ -993,7 +993,7 @@ CREATE TABLE `URLTypes` (
   `Description` mediumblob NOT NULL,
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `URLTypes`
@@ -1020,7 +1020,7 @@ CREATE TABLE `UserConfig` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_var_name_index` (`fk_user_id`,`varname`),
   KEY `fk_user_id` (`fk_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `UserConfig`
@@ -1047,7 +1047,7 @@ CREATE TABLE `UserTypes` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_var_name_index` (`user_type_name`,`varname`),
   KEY `user_type_name` (`user_type_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `UserTypes`
@@ -1109,7 +1109,7 @@ CREATE TABLE `Users` (
   `time_created` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `UName` (`UName`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Users`
@@ -1134,7 +1134,7 @@ CREATE TABLE `XArticle` (
   `FIntro` mediumblob NOT NULL,
   `FFull_text` mediumblob NOT NULL,
   PRIMARY KEY  (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `XArticle`
@@ -1162,7 +1162,7 @@ CREATE TABLE `XInterview` (
   `FIntro` mediumblob NOT NULL,
   `FFull_text` mediumblob NOT NULL,
   PRIMARY KEY  (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `XInterview`
@@ -1186,7 +1186,7 @@ CREATE TABLE `XService` (
   `FDeck` varchar(255) NOT NULL default '',
   `FFull_text` mediumblob NOT NULL,
   PRIMARY KEY  (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `XService`
@@ -1214,7 +1214,7 @@ CREATE TABLE `XSpecial` (
   `FIntro` mediumblob NOT NULL,
   `FFull_text` mediumblob NOT NULL,
   PRIMARY KEY  (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `XSpecial`
@@ -1237,7 +1237,7 @@ CREATE TABLE `Xlink` (
   `IdLanguage` int(10) unsigned NOT NULL default '0',
   `Furl` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `Xlink`
@@ -1263,7 +1263,7 @@ CREATE TABLE `phorum_banlists` (
   `string` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `forum_id` (`forum_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_banlists`
@@ -1292,7 +1292,7 @@ CREATE TABLE `phorum_files` (
   PRIMARY KEY  (`file_id`),
   KEY `add_datetime` (`add_datetime`),
   KEY `message_id_link` (`message_id`,`link`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_files`
@@ -1314,7 +1314,7 @@ CREATE TABLE `phorum_forum_group_xref` (
   `group_id` int(11) NOT NULL default '0',
   `permission` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`forum_id`,`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_forum_group_xref`
@@ -1373,7 +1373,7 @@ CREATE TABLE `phorum_forums` (
   KEY `name` (`name`),
   KEY `active` (`active`,`parent_id`),
   KEY `group_id` (`parent_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_forums`
@@ -1396,7 +1396,7 @@ CREATE TABLE `phorum_groups` (
   `name` varchar(255) NOT NULL default '0',
   `open` tinyint(3) NOT NULL default '0',
   PRIMARY KEY  (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_groups`
@@ -1449,7 +1449,7 @@ CREATE TABLE `phorum_messages` (
   KEY `last_post_time` (`forum_id`,`status`,`modifystamp`),
   KEY `next_prev_thread` (`forum_id`,`status`,`thread`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_messages`
@@ -1473,7 +1473,7 @@ CREATE TABLE `phorum_pm_buddies` (
   PRIMARY KEY  (`pm_buddy_id`),
   UNIQUE KEY `userids` (`user_id`,`buddy_user_id`),
   KEY `buddy_user_id` (`buddy_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_pm_buddies`
@@ -1495,7 +1495,7 @@ CREATE TABLE `phorum_pm_folders` (
   `user_id` int(10) unsigned NOT NULL default '0',
   `foldername` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`pm_folder_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_pm_folders`
@@ -1521,7 +1521,7 @@ CREATE TABLE `phorum_pm_messages` (
   `datestamp` int(10) unsigned NOT NULL default '0',
   `meta` mediumtext NOT NULL,
   PRIMARY KEY  (`pm_message_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_pm_messages`
@@ -1549,7 +1549,7 @@ CREATE TABLE `phorum_pm_xref` (
   PRIMARY KEY  (`pm_xref_id`),
   KEY `xref` (`user_id`,`pm_folder_id`,`pm_message_id`),
   KEY `read_flag` (`read_flag`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_pm_xref`
@@ -1573,7 +1573,7 @@ CREATE TABLE `phorum_search` (
   PRIMARY KEY  (`message_id`),
   KEY `forum_id` (`forum_id`),
   FULLTEXT KEY `search_text` (`search_text`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_search`
@@ -1595,7 +1595,7 @@ CREATE TABLE `phorum_settings` (
   `type` enum('V','S') NOT NULL default 'V',
   `data` text NOT NULL,
   PRIMARY KEY  (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_settings`
@@ -1620,7 +1620,7 @@ CREATE TABLE `phorum_subscribers` (
   `thread` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`user_id`,`forum_id`,`thread`),
   KEY `forum_id` (`forum_id`,`thread`,`sub_type`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_subscribers`
@@ -1642,7 +1642,7 @@ CREATE TABLE `phorum_user_custom_fields` (
   `type` int(11) NOT NULL default '0',
   `data` text NOT NULL,
   PRIMARY KEY  (`user_id`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_user_custom_fields`
@@ -1664,7 +1664,7 @@ CREATE TABLE `phorum_user_group_xref` (
   `group_id` int(11) NOT NULL default '0',
   `status` tinyint(3) NOT NULL default '1',
   PRIMARY KEY  (`user_id`,`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_user_group_xref`
@@ -1686,7 +1686,7 @@ CREATE TABLE `phorum_user_newflags` (
   `forum_id` int(11) NOT NULL default '0',
   `message_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`user_id`,`forum_id`,`message_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_user_newflags`
@@ -1709,7 +1709,7 @@ CREATE TABLE `phorum_user_permissions` (
   `permission` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`user_id`,`forum_id`),
   KEY `forum_id` (`forum_id`,`permission`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_user_permissions`
@@ -1766,7 +1766,7 @@ CREATE TABLE `phorum_users` (
   KEY `activity` (`date_last_active`,`hide_activity`,`last_active_forum`),
   KEY `date_added` (`date_added`),
   KEY `email_temp` (`email_temp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `phorum_users`
