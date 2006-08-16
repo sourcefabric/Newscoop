@@ -316,7 +316,7 @@ if (($res = camp_connect_to_database()) != 0) {
 if (camp_database_exists($destInstanceName)) {
 	camp_clean_database($destInstanceName);
 } else {
-	if (!mysql_query("CREATE DATABASE $destInstanceName")) {
+	if (!mysql_query("CREATE DATABASE $destInstanceName CHARACTER SET utf8 COLLATE utf8_bin")) {
 		camp_exit_with_error("Can't create database $destInstanceName");
 	}
 }

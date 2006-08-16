@@ -201,7 +201,7 @@ function camp_create_database($p_defined_parameters)
 				. $Campsite['CAMPSITE_DIR'] . "/backup/$db_name directory.";
 		}
 	} else {
-		if (!mysql_query("CREATE DATABASE " . $db_name)) {
+		if (!mysql_query("CREATE DATABASE $db_name CHARACTER SET utf8 COLLATE utf8_bin")) {
 			return "Unable to create the database " . $db_name;
 		}
 		$cmd = "mysql --user=$db_user --host=" . $Campsite['DATABASE_SERVER_ADDRESS']
@@ -376,7 +376,7 @@ function camp_restore_database($p_db_name, $p_defined_parameters)
 			return $clean;
 		}
 	} else {
-		if (!mysql_query("CREATE DATABASE $p_db_name")) {
+		if (!mysql_query("CREATE DATABASE $p_db_name CHARACTER SET utf8 COLLATE utf8_bin")) {
 			return "Unable to restore database: can't create the database";
 		}
 	}
