@@ -81,8 +81,12 @@ class ArticleImage extends DatabaseObject {
 	 */
 	function getImage()
 	{
-		return $this->m_image;
-	}
+		if (is_object($this->m_image)) {
+			return $this->m_image;
+		} else {
+			return new Image($this->m_data['IdImage']);
+		}
+	} // fn getImage
 
 
 	/**
