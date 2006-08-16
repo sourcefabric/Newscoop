@@ -35,7 +35,7 @@ CREATE TABLE `Aliases` (
 
 /*!40000 ALTER TABLE `Aliases` DISABLE KEYS */;
 LOCK TABLES `Aliases` WRITE;
-INSERT INTO `Aliases` (`Id`, `Name`, `IdPublication`) VALUES (5,'set.your.site.alias',5),(6,'localhost',5);
+INSERT INTO `Aliases` (`Id`, `Name`, `IdPublication`) VALUES (5,'set.your.site.alias',5);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Aliases` ENABLE KEYS */;
 
@@ -705,7 +705,7 @@ CREATE TABLE `Publications` (
 
 /*!40000 ALTER TABLE `Publications` DISABLE KEYS */;
 LOCK TABLES `Publications` WRITE;
-INSERT INTO `Publications` (`Id`, `Name`, `IdDefaultLanguage`, `TimeUnit`, `UnitCost`, `UnitCostAllLang`, `Currency`, `TrialTime`, `PaidTime`, `IdDefaultAlias`, `IdURLType`, `fk_forum_id`, `comments_enabled`, `comments_article_default_enabled`, `comments_subscribers_moderated`, `comments_public_moderated`, `comments_captcha_enabled`, `comments_spam_blocking_enabled`) VALUES (5,'My Publication',1,'D',0.00,0.00,'0',0,0,6,2,1,0,0,0,0,0,0);
+INSERT INTO `Publications` (`Id`, `Name`, `IdDefaultLanguage`, `TimeUnit`, `UnitCost`, `UnitCostAllLang`, `Currency`, `TrialTime`, `PaidTime`, `IdDefaultAlias`, `IdURLType`, `fk_forum_id`, `comments_enabled`, `comments_article_default_enabled`, `comments_subscribers_moderated`, `comments_public_moderated`, `comments_captcha_enabled`, `comments_spam_blocking_enabled`) VALUES (5,'My Publication',1,'D',0.00,0.00,'0',0,0,5,2,1,0,0,0,0,0,0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Publications` ENABLE KEYS */;
 
