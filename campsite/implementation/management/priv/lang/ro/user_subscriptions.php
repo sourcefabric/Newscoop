@@ -1,5 +1,5 @@
-<?php
-regGS("Please select one or more languages.", "");
+<?php 
+regGS("Please select one or more languages.", "Selectează una sau mai multe limbi.");
 regGS("Regardless of the language", "Indiferent de limbă");
 regGS("Individual languages", "Limbi individuale");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publicaţia<BR><SMALL>(clic pentru a vedea secţiunile)</SMALL>");

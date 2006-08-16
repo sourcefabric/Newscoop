@@ -1,14 +1,14 @@
 <?php 
-regGS("The file uploaded is not an image.", "");
-regGS("Field $1 updated", "");
-regGS("Could not delete record from the database.", "");
-regGS("template path", "");
-regGS("short names", "");
-regGS("Unable to fetch image from remote server.", "");
-regGS("The article type field $1 has been renamed to $2.", "");
-regGS("The article type $1 has been renamed to $2.", "");
-regGS("Article type field $1 changed", "");
-regGS("Article Type $1 translation updated", "");
+regGS("The file uploaded is not an image.", "Загруженный файл не является картинкой.");
+regGS("Field $1 updated", "Поле $1 обновлено");
+regGS("Could not delete record from the database.", "Не удалось удалить запись из базы данных.");
+regGS("template path", "путь к шаблону");
+regGS("short names", "короткие имена");
+regGS("Unable to fetch image from remote server.", "Невозможно извлечь картинку с удаленного сервера.");
+regGS("The article type field $1 has been renamed to $2.", "Поле $1 типа статьи переименовано в $2.");
+regGS("The article type $1 has been renamed to $2.", "Типа статьи $1 переименован в $2.");
+regGS("Article type field $1 changed", "Изменено поле $1 типа статьи");
+regGS("Article Type $1 translation updated", "Обновлен перевод типа статьи $1");
 regGS("The IP address group $1 has been deleted.", "Группа IP-адресов $1 была удалена.");
 regGS("IP Group $1 added for user $2", "Группа IP-адресов $1добавлена для пользователя $2");
 regGS("User permissions for $1 changed", "Пользовательские права для $1 изменены");

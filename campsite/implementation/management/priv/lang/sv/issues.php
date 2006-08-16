@@ -1,20 +1,21 @@
-<?php
+<?php 
+regGS("Change issue status", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
 regGS("The number must be unique for each issue in this publication of the same language.", "");
 regGS("The language and URL name must be unique for each issue in this publication.", "");
-regGS("Issue created.", "");
-regGS("Issue updated", "");
+regGS("Issue created.", "Utgåvan skapad.");
+regGS("Issue updated", "Utgåvan uppdaterad");
 regGS("Could not save the changes to the issue.", "");
 regGS("Unpublish on: $1", "");
 regGS("There are $1 articles in this issue.", "");
 regGS("The issue $1 has been deleted.", "");
-regGS("Schedule", "");
-regGS("Publish on: $1", "");
-regGS("Publish Date $1", "");
-regGS("Deleted issue", "");
-regGS("Delete issue", "");
-regGS("Click here to publish this issue", "");
-regGS("A total of $1 articles were deleted.", "");
+regGS("Schedule", "Schema");
+regGS("Publish on: $1", "Publicera: $1");
+regGS("Publish Date $1", "Publiceringsdatum $1");
+regGS("Deleted issue", "Raderade utgåva");
+regGS("Delete issue", "Radera utgåva");
+regGS("Click here to publish this issue", "Tryck här för att publicera denna utgåva");
+regGS("A total of $1 articles were deleted.", "Totalt $1 artiklar raderades.");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Namn<BR><SMALL>(klicka för att se sektioner)</SMALL>");
 regGS("Delete issue $1", "Radera utgåva $1");
 regGS("Publish articles", "Publicera artiklar");
@@ -46,10 +47,10 @@ regGS("Issue Publishing Schedule", "Utgåvepubliceringsschema");
 regGS("Invalid Input: $1", "Ogiltig inmatning: $1");
 regGS("Issue Number", "Utgåva nummer");
 regGS("Go To Sections", "Gå till sektioner");
-regGS("Add Event", "Lägg till händelse");
 regGS("There was an error reading the language parameter.", "Ett fel uppstod vid läsning av språkparametern.");
 regGS("There was an error reading the publication parameter.", "Ett fel uppstod vid läsning av publikationsparametern.");
 regGS("There was an error reading the issue parameter.", "Ett fel uppstod vid läsning av utgåveparametern.");
 regGS("There was an error scheduling the $1 action on $2", "Ett fel uppstod när $1 schemalades $2");
 regGS("The action scheduled on $1 could not be deleted.", "Händelsen schemalagd $1 kunde inte raderas.");
+regGS("Add Event", "Lägg till händelse");
 ?>

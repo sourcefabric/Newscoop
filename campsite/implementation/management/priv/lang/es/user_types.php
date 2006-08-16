@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("User types", "Tipo de usuario");
 regGS("No user types.", "Sin tipo de usuario");
 regGS("Are you sure you want to delete the user type $1?", "¿Esta seguro que desea borrar el tipo de usuario $1?");
@@ -8,6 +8,8 @@ regGS("User type", "Tipo de usuario");
 regGS("Change user type permissions", "Cambiar permisos de tipo de usuario");
 regGS("You do not have the right to change user type permissions.", "No tiene derecho a cambiar permisos de tipo de usuario");
 regGS("User type $1 changed permissions", "Permisos de tipo de usuario $1 cambiados");
+regGS("A user type with the name '$1' already exists.", "Ya existe un tipo de usuario con el nombre '$1'.");
+regGS("Access", "Acceso");
 regGS("You do not have the right to add user types.", "No tiene derecho a agregar tipo de usuario");
 regGS("Adding new user type", "Agregando nuevo tipo de usuario");
 regGS("The user type $1 has been added.", "El tipo de usuario $1 ha sido agregado.");
@@ -19,6 +21,4 @@ regGS("The user type could not be deleted.", "El tipo de usuario no pudo ser bor
 regGS("Updating user type permissions", "Actualizando permisos de tipo de usuario");
 regGS("User type permissions have been successfuly updated.", "Permisos de tipo de usuario han sido actualizado con éxito");
 regGS("User type permissions could not be updated.", "Permisos de tipo de usuario no pudo ser actualizado");
-regGS("A user type with the name '$1' already exists.", "Ya existe un tipo de usuario con el nombre '$1'.");
-regGS("Access", "Acceso");
 ?>

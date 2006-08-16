@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("User may moderate comments", "");
 regGS("User may enable comments", "");
 regGS("65 or over", "65 ili više");
@@ -80,7 +80,6 @@ regGS("User '$1' information was changed successfully.", "Podaci o korisniku '$1
 regGS("IP address", "IP adresa");
 regGS("fill in from left to right at least one input box", "popunite sa leva na desno najmanje jedno polje");
 regGS("User Type", "Tip korisnika");
-regGS("You must input a valid EMail address.", "Morate uneti ispravnu e-mail adresu.");
 regGS("The confirm password must be at least 6 characters long and both passwords should match.", "Lozinka mora biti dugačka najmanje 6 znakova i mora se poklapati sa potvrdom.");
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "Morate uneti broj između 0 i 255 u polje $1kod početne IP adrese ");
 regGS("Delete subscriptions to $1", "Obriši pretplate za $1");

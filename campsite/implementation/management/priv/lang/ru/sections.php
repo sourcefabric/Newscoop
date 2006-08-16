@@ -1,8 +1,8 @@
-<?php
-regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "");
-regGS("Section updated", "");
-regGS("There are $1 subscriptions which will be affected.", "");
-regGS("There are $1 articles in this section.", "");
+<?php 
+regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "URL должен быть уникальным для всех секций в этом выпуске.<br>Указанный URL (\"$1\") конфликтует с секцией \"$2$3. $4$5\"");
+regGS("Section updated", "Секция обновлена");
+regGS("There are $1 subscriptions which will be affected.", "Будет применено к $1 подписке(ам)");
+regGS("There are $1 articles in this section.", "Статей в этой секции: $1.");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Секция #$1 \"$2\" обновлена. (Публикация: $3, Выпуск: $4)");
 regGS("Go To Articles", "Перейти к статьям");
 regGS("Add section to all subscriptions.", "Добавить секцию ко всем подпискам");
@@ -42,11 +42,11 @@ regGS("The section number specified already exists, please specify a different v
 regGS("Warning", "Предупреждение");
 regGS("You must select a section.", "Вы должны выбрать секцию");
 regGS("You must specify a name for the section.", "Вы должны определить название секции");
+regGS("The section could not be added.", "Невозможно добавить секцию");
+regGS("Add new section", "Добавить новую секцию");
 regGS("Please check if another section with the same number does not already exist.", "Пожалуйста проверьте, что еще нет другой секции с таким же номером.");
 regGS("Short Name", "Короткое название");
 regGS("No such issue.", "Нет такого выпуска");
 regGS("No sections.", "Нет секций.:ru");
 regGS("Change section name", "Изменить название секции:ru");
-regGS("The section could not be added.", "Невозможно добавить секцию");
-regGS("Add new section", "Добавить новую секцию");
 ?>

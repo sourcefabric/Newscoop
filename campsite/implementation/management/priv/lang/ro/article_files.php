@@ -1,7 +1,7 @@
 <?php 
-regGS("File '$1' updated.", "");
-regGS("File '$1' deleted.", "");
-regGS("File '$1' added.", "");
+regGS("File '$1' updated.", "Fişierul '$1' a fost actualizat.");
+regGS("File '$1' deleted.", "Fişierul '$1' a fost şters.");
+regGS("File '$1' added.", "Fişierul '$1' a fost adăugat.");
 regGS("Edit article", "Modifică articolul");
 regGS("You do not have the right to delete file attachments.", "Nu ai dreptul să ştergi fişiere ataşate.");
 regGS("You must select a file to upload.", "Trebuie să selectezi un fişier pentru a-l încărca în sistem.");

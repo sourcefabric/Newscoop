@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("65 or over", "65+");
 regGS("User may translate articles", "Gebruiker mag artikelen vertalen");
 regGS("User may move articles", "Gebruiker mag artikelen verplaatsen");
@@ -78,7 +78,6 @@ regGS("User '$1' information was changed successfully.", "Gebruiker '$1' informa
 regGS("IP address", "IP adres");
 regGS("fill in from left to right at least one input box", "vul van links naar recht minstens een invoer veld in");
 regGS("User Type", "Gebruiker Type");
-regGS("You must input a valid EMail address.", "Je moet een echt e-mail adres invullen");
 regGS("The confirm password must be at least 6 characters long and both passwords should match.", "Het bevestig wachtwoord moet minstens 6 tekens lang zijn en beide wachtwoorden moeten overeenkomen.");
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "Je moet een nummer invoeren tussen de 0 en de 255 in het Start IP adres $1 veld.");
 regGS("Delete subscriptions to $1", "Verwijder abonnement voor $1");

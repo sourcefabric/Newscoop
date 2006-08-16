@@ -1,5 +1,5 @@
-<?php
-regGS("The topic name is already in use by another topic.", "");
+<?php 
+regGS("The topic name is already in use by another topic.", "Numele subiectului de discuţie este deja folosit de un alt subiect de discuţie.");
 regGS("You must enter a name for the topic.", "Trebuie să selectezi o denumire pentru subiect.");
 regGS("You must choose a language for the topic.", "Trebuie să selectezi o limbă pentru subiect.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "Subiectul are sub-subiecte şi de aceea nu poate fi şters.");

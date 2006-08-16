@@ -1,6 +1,6 @@
-<?php
+<?php 
 regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "");
-regGS("Section updated", "");
+regGS("Section updated", "Sektionen uppdaterad");
 regGS("There are $1 subscriptions which will be affected.", "");
 regGS("There are $1 articles in this section.", "");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Sektionen #$1 \"$2\" uppdaterad. (Publikation: $3, Utgåva: $4)");

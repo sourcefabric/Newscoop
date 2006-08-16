@@ -1,8 +1,8 @@
 <?php 
-regGS("Image updated.", "");
-regGS("Image added.", "");
-regGS("Image '$1' deleted.", "");
-regGS("Image is in use, it cannot be deleted.", "");
+regGS("Image updated.", "Картинка обновлена.");
+regGS("Image added.", "Картинка добавлена.");
+regGS("Image '$1' deleted.", "Картинка '$1' удалена.");
+regGS("Image is in use, it cannot be deleted.", "Картинка используется и не может быть удалена.");
 regGS("You must select an image file to upload.", "Вы должны выбрать файл картинки для загрузки.");
 regGS("Add new image", "Добавить новую картинки");
 regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "Дата (гггг-мм-дд)");
