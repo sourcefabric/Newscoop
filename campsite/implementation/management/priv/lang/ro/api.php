@@ -1,14 +1,14 @@
 <?php 
-regGS("The file uploaded is not an image.", "");
-regGS("Field $1 updated", "");
-regGS("Could not delete record from the database.", "");
-regGS("template path", "");
-regGS("short names", "");
-regGS("Unable to fetch image from remote server.", "");
-regGS("The article type field $1 has been renamed to $2.", "");
-regGS("The article type $1 has been renamed to $2.", "");
-regGS("Article type field $1 changed", "");
-regGS("Article Type $1 translation updated", "");
+regGS("The file uploaded is not an image.", "Fişierul încărcat în baza de date nu este o imagine.");
+regGS("Field $1 updated", "Câmpul $1 a fost actualizat.");
+regGS("Could not delete record from the database.", "Nu a putut fi ştearsă înregistrarea din baza de date.");
+regGS("template path", "calea către şablon");
+regGS("short names", "denumiri scurte");
+regGS("Unable to fetch image from remote server.", "Nu a putut fi preluată imaginea de pe serverul distant.");
+regGS("The article type field $1 has been renamed to $2.", "Câmpul $1 al articolului a fost redenumit $2.");
+regGS("The article type $1 has been renamed to $2.", "Tipul $1 al articolului a fost redenumit $2.");
+regGS("Article type field $1 changed", "Câmpul $1 al tipului de articol a fost redenumit $2.");
+regGS("Article Type $1 translation updated", "Traducerea pentru tipul $1 al articolului a fost actualizată.");
 regGS("The IP address group $1 has been deleted.", "Grupul de adrese IP $1 a fost şters.");
 regGS("IP Group $1 added for user $2", "Grupul de adrese IP $1 a fost adăugat pentru utilizatorul $2");
 regGS("User permissions for $1 changed", "Permisiunile utilizatorului pentru $1 au fost schimbate");

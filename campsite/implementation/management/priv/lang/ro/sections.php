@@ -1,8 +1,8 @@
-<?php
-regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "");
-regGS("Section updated", "");
-regGS("There are $1 subscriptions which will be affected.", "");
-regGS("There are $1 articles in this section.", "");
+<?php 
+regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "Adresa de Internet trebuie să fie unică pentru fiecare secţiune din această ediţie.<br>Adresa de Internet specificată (\"$1\") intră în conflict cu secţiunea \"$2$3. $4$5\"");
+regGS("Section updated", "Secţiunea a fost actualizată");
+regGS("There are $1 subscriptions which will be affected.", "Există $1 abonamente care vor fi afectate.");
+regGS("There are $1 articles in this section.", "Există $1 articole în această secţiune.");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Secţiunea #$1 \"$2\" a fost actualizată. (Publicaţia: $3, Ediţia: $4)");
 regGS("Go To Articles", "Mergi la articole");
 regGS("Add section to all subscriptions.", "Adaugă secţiunea la toate abonamentele.");
@@ -42,9 +42,9 @@ regGS("The section number specified already exists, please specify a different v
 regGS("Warning", "Atenţie!");
 regGS("You must select a section.", "Trebuie să selectezi o acţiune.");
 regGS("You must specify a name for the section.", "Trebuie să specifici un nume al secţiunii.");
+regGS("The section could not be added.", "Secţiunea nu a putut fi adăugată.");
+regGS("Add new section", "Adaugă secţiune");
 regGS("Please check if another section with the same number does not already exist.", "Verificaţi dacă există o altă secţiune cu acelaşi număr");
 regGS("Change section name", "Schimbă numele secţiunii");
 regGS("Destination section number", "Numărul secţiei destinaţie");
-regGS("The section could not be added.", "Secţiunea nu a putut fi adăugată.");
-regGS("Add new section", "Adaugă secţiune");
 ?>

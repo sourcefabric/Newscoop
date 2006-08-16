@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("No language.", "Nu există limbi.");
 regGS("Delete language $1", "Şterge limba $1");
 regGS("You do not have the right to add languages.", "Nu ai dreptul să adaugi limbi.");
@@ -32,6 +32,7 @@ regGS("Saturday", "Sâmbătă");
 regGS("Sunday", "Duminică");
 regGS("You do not have the right to add new languages.", "Nu ai dreptul să adaugi limbi noi.");
 regGS("There are $1 issue(s) left.", "Mai sunt $1 ediţii.");
+regGS("Native name", "Nume în limba originală");
 regGS("The language $1 has been successfuly added.", "Limba $1 a fost adaugată cu succes");
 regGS("Please check if a language with the same name does not already exist.", "Verificaţi dacă nu există o limbă cu acelaşi nume");
 regGS("The language could not be added.", "Limba nu poate fi adăugată");
@@ -41,5 +42,4 @@ regGS("Updating language information", "Modific informaţia despre limbă");
 regGS("Language information has been successfuly updated.", "Informaţia despre limbă a fost modificată");
 regGS("Language information could not be updated.", "Informaţia despre limba $1 nu poate fi modificată");
 regGS("A language with the same name already exists.", "O limba cu acelaşi nume există deja");
-regGS("Native name", "Nume în limba originală");
 ?>
