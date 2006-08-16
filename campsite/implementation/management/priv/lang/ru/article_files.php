@@ -1,8 +1,7 @@
 <?php 
-regGS("Unable to add attachment.", "");
-regGS("File '$1' updated.", "");
-regGS("File '$1' deleted.", "");
-regGS("File '$1' added.", "");
+regGS("File '$1' updated.", "Файл '$1' обновлен.");
+regGS("File '$1' deleted.", "Файл '$1' удален.");
+regGS("File '$1' added.", "Файл '$1' добавлен.");
 regGS("Edit article", "Редактировать статью");
 regGS("You do not have the right to delete file attachments.", "Вы не имеете права удалять приложения.");
 regGS("You must select a file to upload.", "Вы должны выбрать файл для загрузки.");

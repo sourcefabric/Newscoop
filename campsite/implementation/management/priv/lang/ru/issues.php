@@ -1,20 +1,21 @@
-<?php
-regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
-regGS("The number must be unique for each issue in this publication of the same language.", "");
-regGS("The language and URL name must be unique for each issue in this publication.", "");
-regGS("Issue created.", "");
-regGS("Issue updated", "");
-regGS("Could not save the changes to the issue.", "");
-regGS("Unpublish on: $1", "");
-regGS("There are $1 articles in this issue.", "");
-regGS("The issue $1 has been deleted.", "");
-regGS("Schedule", "");
-regGS("Publish on: $1", "");
-regGS("Publish Date $1", "");
-regGS("Deleted issue", "");
-regGS("Delete issue", "");
-regGS("Click here to publish this issue", "");
-regGS("A total of $1 articles were deleted.", "");
+<?php 
+regGS("Change issue status", "Изменить статус выпуска");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Величины, которые вы пытаетесь установить, конфликтуют с выпуском \"$1$2. $3 ($4)$5\".");
+regGS("The number must be unique for each issue in this publication of the same language.", "Номер должен быть уникальным для каждого выпуска в этой публикации того же языка.");
+regGS("The language and URL name must be unique for each issue in this publication.", "Язык и URL доолжен быть уникальным для каждого выпуска в этой публикации.");
+regGS("Issue created.", "Выпуск создан.");
+regGS("Issue updated", "Выпуск обновлен.");
+regGS("Could not save the changes to the issue.", "Не удалось сохранить изменения в выпуске.");
+regGS("Unpublish on: $1", "Отменить публикацию на: $1");
+regGS("There are $1 articles in this issue.", "Статей в выпуске: $1.");
+regGS("The issue $1 has been deleted.", "Выпуск $1 был удален.");
+regGS("Schedule", "Расписание");
+regGS("Publish on: $1", "Публиковать: $1");
+regGS("Publish Date $1", "Дата публикации $1");
+regGS("Deleted issue", "Удаленный выпуск");
+regGS("Delete issue", "Удалить выпуск");
+regGS("Click here to publish this issue", "Щелкните здесь для публикации выпуска");
+regGS("A total of $1 articles were deleted.", "Всего статей было удалено: $1");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Название<BR><SMALL>(щелкните для просмотра секций)</SMALL>");
 regGS("Delete issue $1", "Удаление выпуска $1");
 regGS("Publish articles", "Опубликовать статьи");
@@ -46,6 +47,11 @@ regGS("Issue Publishing Schedule", "Публикация выпуска запл
 regGS("Invalid Input: $1", "Неправильный ввод: $1");
 regGS("Issue Number", "Номер выпуска");
 regGS("Go To Sections", "Перейти к секциям");
+regGS("There was an error reading the language parameter.", "Ошибка чтения параметров языка");
+regGS("There was an error reading the publication parameter.", "Ошибка чтения параметров публикации");
+regGS("There was an error reading the issue parameter.", "Ошибка чтения параметров выпуска");
+regGS("There was an error scheduling the $1 action on $2", "Ошибка планирования операции $1 на $2");
+regGS("The action scheduled on $1 could not be deleted.", "Назначенная на $1 операция не может быть отменена");
 regGS("No such issue.", "Нет такого выпуска.");
 regGS("Change Issue Status", "Изменить состояние выпуска");
 regGS("Are you sure you want to delete this event?", "Вы уверены, что хотите удалить это событие");
@@ -68,9 +74,4 @@ regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>", "Шабло
 regGS("Preview issue", "Предварительный просмотр выпуска:ru");
 regGS("This issue cannot be previewed. Please make sure it has a $1 template selected.", "Невозможно просмотреть этот выпуск. Пожалуйста убедитесь, что у него выбран шаблон $1.:ru");
 regGS("front page", "титульная страница:ru");
-regGS("There was an error reading the language parameter.", "Ошибка чтения параметров языка");
-regGS("There was an error reading the publication parameter.", "Ошибка чтения параметров публикации");
-regGS("There was an error reading the issue parameter.", "Ошибка чтения параметров выпуска");
-regGS("There was an error scheduling the $1 action on $2", "Ошибка планирования операции $1 на $2");
-regGS("The action scheduled on $1 could not be deleted.", "Назначенная на $1 операция не может быть отменена");
 ?>

@@ -1,5 +1,5 @@
-<?php
-regGS("There are no sections in this publication.", "");
+<?php 
+regGS("There are no sections in this publication.", "В этой публикации нет секций.");
 regGS("You must input a number greater or equal to 0 into the $1 field.", "Вы должны ввести неотрицательное число в поле $1");
 regGS("Regardless of the language", "Независимо от языков");
 regGS("Individual languages", "Индивидуальные языки");
