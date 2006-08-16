@@ -145,8 +145,8 @@ CREATE TABLE `ArticleTopics` (
 
 DROP TABLE IF EXISTS `ArticleTypeMetadata`;
 CREATE TABLE `ArticleTypeMetadata` (
-  `type_name` varchar(250) NOT NULL default '',
-  `field_name` varchar(250) NOT NULL default 'NULL',
+  `type_name` varchar(166) NOT NULL default '',
+  `field_name` varchar(166) NOT NULL default 'NULL',
   `field_weight` int(11) default NULL,
   `is_hidden` tinyint(1) NOT NULL default '0',
   `comments_enabled` tinyint(1) NOT NULL default '0',
@@ -720,8 +720,8 @@ INSERT INTO `TimeUnits` (`Unit`, `IdLanguage`, `Name`) VALUES ('D',1,'days'),('W
 
 DROP TABLE IF EXISTS `TopicFields`;
 CREATE TABLE `TopicFields` (
-  `ArticleType` varchar(250) NOT NULL default '',
-  `FieldName` varchar(250) NOT NULL default '',
+  `ArticleType` varchar(166) NOT NULL default '',
+  `FieldName` varchar(166) NOT NULL default '',
   `RootTopicId` int(11) NOT NULL default '0',
   PRIMARY KEY  (`ArticleType`,`FieldName`)
 ) TYPE=MyISAM;
