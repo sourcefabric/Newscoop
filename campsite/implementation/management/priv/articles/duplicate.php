@@ -176,8 +176,9 @@ foreach ($articles as $articleNumber => $languageArray) {
 
 		// Uncheck any articles that cannot be moved/duped.
 		if ($tmpActionDenied) {
-			unset($doAction[$articleNumber][$languageId]);
-			if (count($doAction[$articleNumber]) == 0) {
+		    unset($doAction[$articleNumber][$languageId]);
+			if (isset($doAction[$articleNumber])
+			    && count($doAction[$articleNumber]) == 0) {
 				unset($doAction[$articleNumber]);
 			}
 		}
