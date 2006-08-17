@@ -14,7 +14,7 @@ regGS("Country subscription settings updated.", "");
 regGS("Country subscription settings deleted.", "");
 regGS("Change country subscription settings", "");
 regGS("Are you sure you want to delete the subscription settings for $1?", "");
-regGS("Publication updated", "");
+regGS("Publication updated", "Publikationen uppdaterad");
 regGS("Subscriber comments moderated?", "");
 regGS("Public comments moderated?", "");
 regGS("Comments enabled?", "");
@@ -71,9 +71,9 @@ regGS("The alias $1 has been deleted from publication $2.", "Aliaset $1 har rade
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 är grundpublikationsaliaset, det kan inte raderas.");
 regGS("You do not have the right to add publications.", "Du har inte rätt att lägga till publikationer.");
 regGS("There are $1 issue(s) left.", "Det finns $1 utgåva(or) kvar.");
-regGS("Select the publication", "Välj publikation");
-regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Namn<BR><SMALL>(klicka för att välja publikation)</SMALL>");
 regGS("Time Unit", "Tidsenhet");
 regGS("Currency", "Valuta");
 regGS("Edit languages", "Redigera språk");
+regGS("Select the publication", "Välj publikation");
+regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Namn<BR><SMALL>(klicka för att välja publikation)</SMALL>");
 ?>

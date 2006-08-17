@@ -1,4 +1,5 @@
-<?php
+<?php 
+regGS("Change issue status", "Verander de uitgave status");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
 regGS("The number must be unique for each issue in this publication of the same language.", "");
 regGS("The language and URL name must be unique for each issue in this publication.", "");
@@ -8,7 +9,6 @@ regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Naam<BR><SMALL>(klik om
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Gepubliceerd<BR><SMALL>(yyyy-mm-dd)</SMALL>");
 regGS("Delete issue $1", "Verwijder uitgave $1");
 regGS("Publish articles", "Publiceer artikelen");
-regGS("Change issue status", "Verander de uitgave status");
 regGS("You do not have the right to change issues.", "Je hebt niet de rechten om de uitgaven te veranderen.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Weet je zeker dat je de uitgave $1 status van $2 naar $3 wilt veranderen?");
 regGS("Add new translation", "Voeg nieuwe vertaling toe");

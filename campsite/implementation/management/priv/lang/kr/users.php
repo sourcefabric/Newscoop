@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("User may moderate comments", "");
 regGS("User may enable comments", "");
 regGS("65 or over", "65세 이상");
@@ -80,7 +80,6 @@ regGS("User '$1' information was changed successfully.", "사용자 '$1\" 정보
 regGS("IP address", "IP주소");
 regGS("fill in from left to right at least one input box", "적어도 하나 이상의 입력 박스에 왼쪽에서 오른쪽으로 채워넣으시오");
 regGS("User Type", "사용자 타입");
-regGS("You must input a valid EMail address.", "정상적인 이메일 주소를 입력하시오.");
 regGS("The confirm password must be at least 6 characters long and both passwords should match.", "패스워드는 적어도 6글자 이상이어야 합니다. ");
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "시작 IP 어드레스 $1 필드에 0에서 255 사이의 숫자를 입력하시오");
 regGS("Delete subscriptions to $1", "$1 에 구독을 삭제");

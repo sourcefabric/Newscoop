@@ -1,9 +1,9 @@
-<?php
-regGS("There are no sections in this publication.", "");
-regGS("You must input a number greater or equal to 0 into the $1 field.", "");
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
-regGS("All languages", "");
+<?php 
+regGS("There are no sections in this publication.", "No hay secciones en esta publicación.");
+regGS("You must input a number greater or equal to 0 into the $1 field.", "Debe ingresar un número mayor o igual a 0 en el campo $1.");
+regGS("Regardless of the language", "Sin importar el idioma");
+regGS("Individual languages", "Idiomas individuales");
+regGS("All languages", "Todos los idiomas");
 regGS("Subscribed sections", "Secciones suscritas");
 regGS("Add new section to subscription", "Agregar nueva sección para suscripción");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "aaaa-mm-dd");

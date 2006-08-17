@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("No language.", "Sin idioma");
 regGS("Delete language $1", "Borrar idioma $1");
 regGS("You do not have the right to add languages.", "No tiene derecho a agregar idiomas");
@@ -32,6 +32,7 @@ regGS("Saturday", "Sábado");
 regGS("Sunday", "Domingo");
 regGS("You do not have the right to add new languages.", "No tiene privilegios para añadir un nuevo idioma.");
 regGS("There are $1 issue(s) left.", "Queda(n) $1 edición(es).");
+regGS("Native name", "Nombre local");
 regGS("The language $1 has been successfuly added.", "El idioma $1 ha sido agregado con éxito");
 regGS("Please check if a language with the same name does not already exist.", "Favor revise si un idioma con el mismo nombre no existe ya");
 regGS("The language could not be added.", "El idioma no pudo ser agregado");
@@ -41,5 +42,4 @@ regGS("Updating language information", "Actualizando información de idioma");
 regGS("Language information has been successfuly updated.", "Información de idioma ha sido actualizada con éxito");
 regGS("Language information could not be updated.", "Información de idioma no pudo ser actualizado");
 regGS("A language with the same name already exists.", "Un idioma con el mismo nombre ya existe");
-regGS("Native name", "Nombre local");
 ?>

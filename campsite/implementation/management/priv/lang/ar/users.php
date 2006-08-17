@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("User may moderate comments", "");
 regGS("User may enable comments", "");
 regGS("65 or over", "");
@@ -80,7 +80,6 @@ regGS("User '$1' information was changed successfully.", "تم تعديل معل
 regGS("IP address", "عنوان الآي بي");
 regGS("fill in from left to right at least one input box", "قم بتعبئة خيار واحد على الأقل من اليسار إلى اليمين");
 regGS("User Type", "نوع المستخدم");
-regGS("You must input a valid EMail address.", "عليك إدخال عنوان بريد إلكتروني صالح.");
 regGS("The confirm password must be at least 6 characters long and both passwords should match.", "يجب أن يتطابقان كلمتي السر وأن لا يقلوا عن ستة أحرف.");
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "عليك إدخال رقم بين 0 و 255 في الحقل $1 لبداية الآي بي");
 regGS("Delete subscriptions to $1", "إلغاء الإشتراك لـ$1");

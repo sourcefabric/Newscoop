@@ -264,6 +264,4 @@ regGS("Thank you.", "Thank you.");
 regGS("Please take a minute to send us an email.", "Please take a minute to send us an email.");
 regGS("(optional)", "(optional)");
 regGS("The URL you entered is invalid: '$1'", "The URL you entered is invalid: '$1'");
-regGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.", "Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.");
-regGS("Unable to add new image.", "Unable to add new image.");
 ?>
