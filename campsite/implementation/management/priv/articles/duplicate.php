@@ -9,7 +9,7 @@ $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
-$f_article_code = Input::Get('f_article_code', 'array', 0);
+$f_article_code = Input::Get('f_article_code', 'array', array(), true);
 $f_destination_publication_id = Input::Get('f_destination_publication_id', 'int', 0, true);
 $f_destination_issue_number = Input::Get('f_destination_issue_number', 'int', 0, true);
 $f_destination_section_number = Input::Get('f_destination_section_number', 'int', 0, true);
