@@ -114,6 +114,11 @@ class Article extends DatabaseObject {
 	 * Create an article in the database.  Use the SET functions to
 	 * change individual values.
 	 *
+	 * If you would like to "place" the article using the publication ID,
+	 * issue number, and section number, you can only do so if all three
+	 * of these parameters are present.  Otherwise, the article will remain
+ 	 * unplaced.
+	 *
 	 * @param string $p_articleType
 	 * @param string $p_name
 	 * @param int $p_publicationId
@@ -133,7 +138,15 @@ class Article extends DatabaseObject {
 		if (!is_null($p_name)) {
 			$values['Name'] = $p_name;
 		}
-		if (is_numeric($p_publicationId) && is_numeric($p_issueNumber) && is_numeric($p_sectionNumber)) {
+		// Only categorize the article if all three arguments:
+		// $p_publicationId, $p_issueNumber, and $p_sectionNumber
+		// are present.
+		if (is_numeric($p_publicationId)
+		    && is_numeric($p_issueNumber)
+		    && is_numeric($p_sectionNumber)
+		    && ($p_publicationId > 0)
+		    && ($p_issueNumber > 0)
+		    && ($p_sectionNumber > 0) ) {
 			$values['IdPublication'] = $p_publicationId;
 			$values['NrIssue'] = $p_issueNumber;
 			$values['NrSection'] = $p_sectionNumber;
