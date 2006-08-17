@@ -44,16 +44,6 @@ class SubscriptionSection extends DatabaseObject {
 	} // constructor
 
 
-	function delete()
-	{
-		global $g_ado_db;
-		$deleted = parent::delete();
-	    $queryStr = "DELETE FROM SubsSections WHERE IdSubscription=".$this->m_data['Id'];
-	    $g_ado_db->Execute($queryStr);
-	    return $deleted;
-	} // fn delete
-
-
 	/**
 	 * @return int
 	 */
