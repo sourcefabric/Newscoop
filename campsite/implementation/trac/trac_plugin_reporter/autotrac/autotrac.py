@@ -4,7 +4,7 @@
 #
 #  Additionally, it creates an Inbox tab, which allows an
 #  administrator to view the error reports and determine which ones to
-#  accept as tickets, and which ones to dismiss.  
+#  accept as tickets, and which ones to dismiss.
 
 from trac import util
 from trac.attachment import attachment_to_hdf, Attachment
@@ -35,20 +35,20 @@ class AutoTrac(Component):
 
     def get_active_navigation_item(self, req):
         return 'autotrac'
-                
+
     ## Create Ticket Inbox tab
     #
     # @param Request req The HTTP Request data
     def get_navigation_items(self, req):
         if not req.perm.has_permission (self.actionPermission):
             return
-        
-        yield 'mainnav', 'autotrac', util.Markup('<a href="%s">Ticket Inbox</a>', 
+
+        yield 'mainnav', 'autotrac', util.Markup('<a href="%s">Ticket Inbox</a>',
                                             self.env.href.autotrac())
 
     # IRequestHandler methods
 
-    ## Return true if req-URL matches an Autotrac method. 
+    ## Return true if req-URL matches an Autotrac method.
     #
     # @param Request req The HTTP request data
     def match_request(self, req):
@@ -56,8 +56,8 @@ class AutoTrac(Component):
         if re.compile (r'^/autotrac([/](.*))?$').match(req.path_info, 0):
             return True
         else:
-            return False 
-    
+            return False
+
     ## Send request to the correct method.
     #
     # @param Request req The HTTP request data
@@ -76,7 +76,7 @@ class AutoTrac(Component):
         elif re.compile (r'^/autotrac/?$').match (req.path_info):
             db = self.env.get_db_cnx()
             id = 1
-        
+
             resp = self.display_report_page (req, db, id)
 
             add_stylesheet (req, 'common/css/report.css')
@@ -362,7 +362,7 @@ class AutoTrac(Component):
 
             if not self.is_valid_error_id (errorId):
                 return
-            
+
 
         time = req.args.get('f_time')
         if time == None:
@@ -379,6 +379,9 @@ class AutoTrac(Component):
             # --- Remove unwanted backslashes before quotes ---
             summary = re.sub (r'''\\(\'|\")''', r'\1', summary)
 
+        tmpSummary = summary
+        summary = "Ticket Inbox: " + summary
+
         _errorMessage = req.args.get ('f_str')
         if _errorMessage == None:
             _errorMessage = ""
@@ -389,7 +392,8 @@ class AutoTrac(Component):
         else:
             description = urllib.unquote_plus (description)
             description = "{{{\n" + _errorMessage + "\n\n" + description + "\n}}}"
-            description = summary + "\n" + description
+            description = tmpSummary + "\n" + description
+            description = "''What were you trying to do?''\n\n" + description
 
         reporter = req.args.get('f_email')
         if reporter == None or reporter == "":
@@ -414,11 +418,11 @@ class AutoTrac(Component):
         self.add_user_feedback (req, description, time, summary, reporter,
                             software, version, errorId)
 
-
         req.write ('accepted\n')
         req.write ('version: ' + version + '\n')
         req.write ('software: ' + software + '\n')
         req.write ('misc:' + str(self.debug) + '\n')
+
 
     ## Add BugReporter's feedback to the database
     #
@@ -475,7 +479,7 @@ class AutoTrac(Component):
 
         rowArray = cursor.fetchall()
 	if rowArray != None:
-            rows = len(rowArray) 
+            rows = len(rowArray)
 	else:
             rows = 0
 
@@ -497,7 +501,7 @@ class AutoTrac(Component):
                 UPDATE ticket_custom SET value = "%s" WHERE
                 name = "error_id" AND ticket > %i
                 """ % ("DUPLICATE: " + errorId, ticketId))
-            
+
 
             # Note: An alternative to flagging duplicates is to simply
             # erase them.  That scheme is used below.  To use it
@@ -520,7 +524,7 @@ class AutoTrac(Component):
 
 
             return ticketId
-        
+
     ## Insert a BugReporter report with a new Error ID into the database
     #
     # todo: this method should return False, if reports with this
@@ -536,13 +540,13 @@ class AutoTrac(Component):
     # @return True
     def insert_new_report_to_db(self, description, time, summary, reporter,
     software, version, errorId):
-        
+
         ticket = Ticket(self.env)
         ticket['description'] = description
         ticket['version'] = version
         ticket['reporter'] = reporter
         ticket['summary'] = summary
-        ticket['error_id'] = errorId 
+        ticket['error_id'] = errorId
         ticket['reporter'] = reporter
 
         ticket['status'] = "inbox"
@@ -551,7 +555,7 @@ class AutoTrac(Component):
 #         ticket['milestone'] = ""
 #         ticket['priority'] = "normal"
 #         ticket['component'] = ""
-        
+
         ticketId = ticket.insert()
         self.insert_error_id_to_db (ticketId, errorId)
         return True
@@ -611,7 +615,7 @@ class AutoTrac(Component):
         # This method is based on process_request() in TicketModule.
 
         # todo: security check should go here
-        # --- For security, only display ticket if it's 
+        # --- For security, only display ticket if it's
         req.perm.assert_permission('TICKET_VIEW')
 
         action = req.args.get('action', 'view')
@@ -644,7 +648,7 @@ class AutoTrac(Component):
                     req.hdf['ticket.comment_preview'] = wiki_to_html(comment,
                                                                      self.env,
                                                                      req, db)
-                                    
+
         else:
             req.hdf['ticket.reassign_owner'] = req.authname
             # Store a timestamp in order to detect "mid air collisions"
@@ -746,7 +750,7 @@ class AutoTrac(Component):
         for name, value in cursor:
             if name in ["error_id"]:
                 ticket.values[name] = value
-        
+
         cursor.execute ("""
             SELECT DISTINCT time FROM ticket_change WHERE ticket = %i;"""
             % (tkt_id))
@@ -756,7 +760,7 @@ class AutoTrac(Component):
         else:
             occurrences = len(row) + 1
         ticket.values["occurrences"] = int(occurrences)
-        
+
 
     ## Returns the actions that can be performed on the ticket.
     #
@@ -852,7 +856,7 @@ class AutoTrac(Component):
         if len (text) > maxLength:
             sentenceRe = re.compile (r"^(.+?[.?!]).*", re.MULTILINE+re.DOTALL)
 
-            text = re.sub (sentenceRe, r"\1", text) 
+            text = re.sub (sentenceRe, r"\1", text)
 
             # -- If text is still too long, cut it off after 'maxLength' chars --
             if len(text) > maxLength:
@@ -872,7 +876,7 @@ class AutoTrac(Component):
     ## Confirm that the 'errorId' is valid
     #
     # @param str errorId  The error ID string
-    # @return True if valid, otherwise False 
+    # @return True if valid, otherwise False
     def is_valid_error_id (self, errorId):
         if re.match (r'''[0-9]+:[^:]*:[^:]*:[^:]*:[0-9]+''', errorId) and (not re.search (r'''["]''', errorId)):
             return True
