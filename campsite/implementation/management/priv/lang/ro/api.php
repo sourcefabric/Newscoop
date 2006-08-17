@@ -1,4 +1,5 @@
 <?php 
+regGS("Template $1 no longer exists!", "");
 regGS("The file uploaded is not an image.", "Fişierul încărcat în baza de date nu este o imagine.");
 regGS("Field $1 updated", "Câmpul $1 a fost actualizat.");
 regGS("Could not delete record from the database.", "Nu a putut fi ştearsă înregistrarea din baza de date.");

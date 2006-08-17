@@ -1,4 +1,6 @@
-<?php
+<?php 
+regGS("Show translated strings", "");
+regGS("Hide translated strings", "Esconder mensagens já traduzidas");
 regGS("Feedback", "");
 regGS("You do not have the right to manage the localizer.", "");
 regGS("API", "");
@@ -11,9 +13,9 @@ regGS("The following strings are missing from the translation files:", "As segui
 regGS("Screen:", "Ecran:");
 regGS("No source strings found.", "Não existe mensagem de origem.");
 regGS("No matches found.", "Não foram encontrada");
-regGS("Hide translated strings?", "Esconder mensagens já traduzidas?");
 regGS("Globals", "Global");
 regGS("Are you sure you want to delete this entry?", "Deseja eliminar esta entrada?");
 regGS("All strings have been translated.", "Todas as mensagens foram traduzidas.");
+regGS("Bug Reporting", "");
 regGS("Article Topics", "Tópicos de artigos");
 ?>

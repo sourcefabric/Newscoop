@@ -1,4 +1,5 @@
 <?php 
+regGS("Template $1 no longer exists!", "Template $1 no longer exists!");
 regGS("The file uploaded is not an image.", "The file uploaded is not an image.");
 regGS("Field $1 updated", "Field $1 updated");
 regGS("Could not delete record from the database.", "Could not delete record from the database.");

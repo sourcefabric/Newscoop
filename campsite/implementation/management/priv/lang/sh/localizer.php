@@ -1,4 +1,6 @@
-<?php
+<?php 
+regGS("Show translated strings", "");
+regGS("Hide translated strings", "Sakrij prevedene stringove");
 regGS("Feedback", "");
 regGS("You do not have the right to manage the localizer.", "");
 regGS("API", "");
@@ -11,9 +13,9 @@ regGS("The following strings are missing from the translation files:", "Sledeći
 regGS("Screen:", "Ekran:");
 regGS("No source strings found.", "Nije pronađen izvorni string.");
 regGS("No matches found.", "Nema podudarnosti.");
-regGS("Hide translated strings?", "Sakrij prevedene stringove?");
 regGS("Globals", "Opšti stringovi");
 regGS("Are you sure you want to delete this entry?", "Da li ste sigurni da želite da obrišete ovaj unos?");
 regGS("All strings have been translated.", "Ura, svi stringovi su prevedeni. wOOt!");
+regGS("Bug Reporting", "");
 regGS("Article Topics", "Teme tekstova");
 ?>

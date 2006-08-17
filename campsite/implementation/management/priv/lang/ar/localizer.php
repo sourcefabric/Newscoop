@@ -1,4 +1,6 @@
-<?php
+<?php 
+regGS("Show translated strings", "");
+regGS("Hide translated strings", "إخفاء الجمل المترجمة");
 regGS("Feedback", "");
 regGS("You do not have the right to manage the localizer.", "");
 regGS("API", "");
@@ -11,9 +13,9 @@ regGS("The following strings are missing from the translation files:", "الجم
 regGS("Screen:", "شاشة:");
 regGS("No source strings found.", "لم يتم العثور على نصوص مصدرية");
 regGS("No matches found.", "لم يتم العثور على نتائج");
-regGS("Hide translated strings?", "إخفاء الجمل المترجمة");
 regGS("Globals", "الأساسيات");
 regGS("Are you sure you want to delete this entry?", "هل أنت متأكد من إلغاء هذا المدخل؟");
 regGS("All strings have been translated.", "تم ترجمة جميع الجمل.");
+regGS("Bug Reporting", "");
 regGS("Article Topics", "مواضيع المقال");
 ?>

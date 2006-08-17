@@ -1,4 +1,6 @@
-<?php
+<?php 
+regGS("Show translated strings", "");
+regGS("Hide translated strings", "Cacher les chaînes traduites");
 regGS("Feedback", "");
 regGS("You do not have the right to manage the localizer.", "");
 regGS("API", "");
@@ -11,9 +13,9 @@ regGS("The following strings are missing from the translation files:", "Les cha�
 regGS("Screen:", "Ecran:");
 regGS("No source strings found.", "Aucune chaîne trouvée.");
 regGS("No matches found.", "Aucune partie trouvée. ");
-regGS("Hide translated strings?", "Cacher les chaînes traduites ? ");
 regGS("Globals", "Globals");
 regGS("Are you sure you want to delete this entry?", "Etes-vous sûr que vous voulez supprimer cette entrée ? ");
 regGS("All strings have been translated.", "Toutes les chaînes ont été traduites. ");
+regGS("Bug Reporting", "");
 regGS("Article Topics", "Sujets d'Article");
 ?>

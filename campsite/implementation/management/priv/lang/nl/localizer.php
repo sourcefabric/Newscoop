@@ -1,4 +1,5 @@
-<?php
+<?php 
+regGS("Show translated strings", "");
 regGS("Feedback", "");
 regGS("Article Files", "Artikel bestanden");
 regGS("Log Messages", "Logboek Berichten");
@@ -16,7 +17,7 @@ regGS("No source strings found.", "Geen bron woorden gevonden.");
 regGS("No matches found.", "Geen overeenkomsten gevonden.");
 regGS("Localizer", "Nationaliseerder");
 regGS("Image Archive", "Afbeelding Archief");
-regGS("Hide translated strings?", "Verberg vertaalde woorden?");
+regGS("Hide translated strings", "Verberg vertaalde woorden");
 regGS("Globals", "Globale waarden");
 regGS("Article Type Fields", "Artikel Type Velden");
 regGS("Article Topics", "Artikel Onderwerpen");

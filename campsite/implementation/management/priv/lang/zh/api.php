@@ -1,4 +1,5 @@
 <?php 
+regGS("Template $1 no longer exists!", "");
 regGS("The file uploaded is not an image.", "");
 regGS("Field $1 updated", "");
 regGS("Could not delete record from the database.", "");
@@ -30,6 +31,8 @@ regGS("Article #$1: \"$2\" ($3) deleted.", "");
 regGS("Single-line Text", "");
 regGS("Multi-line Text with WYSIWYG", "");
 regGS("The default subscription time for $1 has been added.", "增加新国家的默认订阅时间");
+regGS("Image $1 linked to article $2", "");
+regGS("Image $1 unlinked from $2", "");
 regGS("The image $1 has been added.", "图片$1已被添加");
 regGS("Image $1 deleted", "图片$1已删除");
 regGS("Publication $1 changed", "出版物$1已改变");

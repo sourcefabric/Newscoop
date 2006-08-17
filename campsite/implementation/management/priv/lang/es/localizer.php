@@ -11,7 +11,7 @@ regGS("The following strings are missing from the translation files:", "Hacen fa
 regGS("Screen:", "Pantalla:");
 regGS("No source strings found.", "No se encuentran strings de fuente.");
 regGS("No matches found.", "No se encuentran coincidencias.");
-regGS("Hide translated strings?", "¿Desea ocultar las cadenas de caracteres traducidas?");
+regGS("Hide translated strings", "Desea ocultar las cadenas de caracteres traducidas");
 regGS("Globals", "Globales");
 regGS("Are you sure you want to delete this entry?", "¿Está seguro de querer eliminar esta entrada?");
 regGS("All strings have been translated.", "Todas las cadenas de caracteres han sido traducidas.");
