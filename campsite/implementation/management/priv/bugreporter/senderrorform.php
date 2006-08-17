@@ -104,8 +104,12 @@ if ($f_isPostFromBugreporter && ($_SERVER['REQUEST_METHOD'] == "POST") ) {
     // -- Attempt to send user's error (regardless of whether above report
     // was also sent) --
 
+    // Remove the code name from the version number.
+    $version = split(" ", $Campsite['VERSION']);
+    $version = array_shift($version);
+
     $reporter = new BugReporter($f_num, $f_str, $f_file, $f_line,
-                                "Campsite", $Campsite['VERSION'], $f_time,
+                                "Campsite", $version, $f_time,
                                 $f_backtrace);
     $reporter->setServer($server);
     $reporter->setEmail($f_email);

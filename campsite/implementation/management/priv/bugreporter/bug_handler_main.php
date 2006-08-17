@@ -80,9 +80,14 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
 
 	// --- If reporter doesn't exist, make one ($reporter might exist
 	//     already if this script is an 'include') ---
+
+	// Remove the code name from the version number.
+    $version = split(" ", $Campsite['VERSION']);
+    $version = array_shift($version);
+
 	if (!isset($reporter)) {
 	    $reporter = new BugReporter($p_number, $p_string, $p_file, $p_line,
-	    							"Campsite", $Campsite['VERSION']);
+	    							"Campsite", $version);
 	}
 
 	$reporter->setServer($server);

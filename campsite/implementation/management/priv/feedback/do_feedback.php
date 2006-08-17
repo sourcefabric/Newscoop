@@ -23,7 +23,11 @@ if ($f_isFromInterface && ($_SERVER['REQUEST_METHOD'] == "POST") ) {
 
     $wasSent = false;
 
-    $reporter = new BugReporter(0, "",  mktime(), "", "Campsite", $Campsite['VERSION']);
+   	// Remove the code name from the version number.
+    $version = split(" ", $Campsite['VERSION']);
+    $version = array_shift($version);
+
+    $reporter = new BugReporter(0, "",  mktime(), "", "Campsite", $version);
     $reporter->setBacktraceString($f_body);
     $reporter->setServer($server);
     $reporter->setDescription($f_description);
