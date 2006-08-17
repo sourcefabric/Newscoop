@@ -11,9 +11,15 @@ $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
-$f_article_codes = Input::Get('f_article_code', 'array', 0);
+$f_article_codes = Input::Get('f_article_code', 'array', array(), true);
 $f_article_list_action = Input::Get('f_article_list_action');
 $f_article_offset = Input::Get('f_article_offset', 'int', 0, true);
+if (sizeof($f_article_codes) == 0) {
+	camp_html_add_msg('You must select at least one article to perform an action.');
+	camp_html_goto_page("/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number"
+				."&f_section_number=$f_section_number&f_language_id=$f_language_id");
+	exit(0);
+}
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
