@@ -121,10 +121,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["bug_reporting"] = getGS("Bug Reporting");
     $mapPrefixToDisplay["feedback"] = getGS("Feedback");
 	// Whether to show translated strings or not.
-	$hideTranslated = '';
-    if (isset($p_request['hide_translated'])) {
-    	$hideTranslated = "CHECKED";
-    }
+	$hideTranslated = camp_session_get('hide_translated', 'off');
 
     camp_html_display_msgs();
 	?>
@@ -134,7 +131,7 @@ function translationForm($p_request)
 
 		<table border="0" style="background-color: #d5e2ee; border: 1px solid #8baed1; margin-left: 10px; margin-top: 5px;" width="700px;">
 		<form action="index.php" method="post">
-	    <INPUT TYPE="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLanguageId(); ?>">
+	    <input type="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLanguageId(); ?>">
 	    <input type="hidden" name="search_string" value="<?php echo htmlspecialchars($searchString); ?>">
 		<tr>
 			<td>
@@ -198,7 +195,10 @@ function translationForm($p_request)
 				<table>
 				<tr>
 					<td>
-			           	<input type="checkbox" name="hide_translated" value="" <?php echo $hideTranslated; ?> class="input_checkbox"><?php putGS('Hide translated strings?'); ?>
+						<select name="hide_translated" onChange="this.form.submit();" class="input_select">
+						<?php camp_html_select_option('off', $hideTranslated, getGS('Show translated strings')); ?>
+						<?php camp_html_select_option('on', $hideTranslated, getGS('Hide translated strings')); ?>
+						</select>
 					</td>
 
 					<td style="padding-left: 10px;">
@@ -220,9 +220,6 @@ function translationForm($p_request)
 			<table border="0" style="background-color: #FAEFFF; border: 1px solid black; margin-left: 10px;" width="700px;" align="center">
 			<form>
 	        <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
-	        <?php if (!empty($hideTranslated)) { ?>
-	        <input type="hidden" name="hide_translated" value="on">
-	        <?php } ?>
 	        <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
 	        <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
 			<tr>
@@ -253,9 +250,6 @@ function translationForm($p_request)
 		<table align="center" style="background-color: #EDFFDF; border: 1px solid #357654; margin-left: 10px; margin-bottom: 5px;" width="700px">
         <form action="do_add_missing_strings.php" method="post">
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
-        <?php if (!empty($hideTranslated)) { ?>
-        <input type="hidden" name="hide_translated" value="on">
-        <?php } ?>
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
         <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
 		<tr>
@@ -288,9 +282,6 @@ function translationForm($p_request)
 		<table style="background-color: #FFE0DF; border: 1px solid #C51325; margin-top: 3px; margin-left: 10px; margin-bottom: 5px;" width="700px">
         <form action="do_delete_unused_strings.php" method="post">
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
-        <?php if (!empty($hideTranslated)) { ?>
-        <input type="hidden" name="hide_translated" value="on">
-        <?php } ?>
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
         <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
 		<tr>
@@ -322,9 +313,6 @@ function translationForm($p_request)
 	<table border="0" class="table_input" style="padding-left: 10px; padding-bottom: 10px; margin-left: 10px;" width="700px">
 	<form action="do_save.php" method="post">
     <INPUT TYPE="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
-    <?php if (!empty($hideTranslated)) { ?>
-    <input type="hidden" name="hide_translated" value="on">
-    <?php } ?>
     <INPUT TYPE="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
     <INPUT TYPE="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
     <INPUT TYPE="hidden" name="search_string" value="<?php echo $searchString; ?>">
@@ -346,7 +334,7 @@ function translationForm($p_request)
 		$sourceKeyDisplay = htmlspecialchars(str_replace("\\", "\\\\", $sourceKey));
 
 		// Dont display translated strings
-	    if (isset($p_request['hide_translated']) && !empty($targetStrings[$sourceKey])) {
+	    if ($hideTranslated == 'on' && !empty($targetStrings[$sourceKey])) {
 	    	?>
 	        <input name="data[<?php echo $count; ?>][key]" type="hidden" value="<?php echo $sourceKeyDisplay; ?>">
 	        <input name="data[<?php echo $count; ?>][value]" type="hidden" value="<?php echo $targetValueDisplay; ?>">
@@ -395,9 +383,6 @@ function translationForm($p_request)
             	           		."&localizer_source_language=".$sourceLang->getLanguageId()
             	            	."&prefix=".urlencode($screenDropDownSelection)
             	            	."&search_string=".urlencode($searchString);
-            	        	if (!empty($hideTranslated)) {
-            	        		$fileparms .= "&hide_translated=on";
-            	        	}
 
             	            if ($count == 0) {
             	            	// swap last and first entry

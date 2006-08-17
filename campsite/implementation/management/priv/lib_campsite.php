@@ -294,6 +294,21 @@ function camp_session_set($p_name, $p_value)
 
 
 /**
+ * A wrapper around unsetting a session variable.
+ *
+ * @param string $p_name
+ * @param mixed $p_value
+ * @return void
+ */
+function camp_session_unset($p_name)
+{
+	if (isset($_SESSION[$p_name])) {
+	    unset($_SESSION[$p_name]);
+	}
+} // fn camp_session_set
+
+
+/**
  * Print out the array or object surrounded with PRE tags so that its readable.
  * @param mixed $p_object
  * @return void

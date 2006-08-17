@@ -1,4 +1,6 @@
 <?php 
+regGS("Show translated strings", "Afişează string-urile traduse");
+regGS("Hide translated strings", "Ascunde string-urile traduse");
 regGS("Feedback", "Răspuns");
 regGS("You do not have the right to manage the localizer.", "Nu ai dreptul să administrezi serviciul de regionalizare.");
 regGS("API", "API");
@@ -11,7 +13,6 @@ regGS("The following strings are missing from the translation files:", "Următoa
 regGS("Screen:", "Ecran:");
 regGS("No source strings found.", "Nu au fost găsite string-uri sursă.");
 regGS("No matches found.", "Nu s-au găsit înregistrări.");
-regGS("Hide translated strings?", "Ascunde string-urile traduse");
 regGS("Globals", "Globale");
 regGS("Are you sure you want to delete this entry?", "Eşti sigur că vrei să ştergi această înregistrare?");
 regGS("All strings have been translated.", "Toate string-urile au fost traduse.");

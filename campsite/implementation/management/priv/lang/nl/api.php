@@ -1,4 +1,5 @@
 <?php 
+regGS("Template $1 no longer exists!", "");
 regGS("The file uploaded is not an image.", "");
 regGS("The IP address group $1 has been deleted.", "De IP adres groep $1 is verwijderd.");
 regGS("IP Group $1 added for user $2", "IP Groep $1 toegevoegd voor gebruiker $1");
