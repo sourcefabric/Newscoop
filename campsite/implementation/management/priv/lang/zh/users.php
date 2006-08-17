@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("User may moderate comments", "");
 regGS("User may enable comments", "");
 regGS("65 or over", "");
@@ -80,7 +80,6 @@ regGS("User '$1' information was changed successfully.", "");
 regGS("IP address", "");
 regGS("fill in from left to right at least one input box", "");
 regGS("User Type", "");
-regGS("You must input a valid EMail address.", "");
 regGS("The confirm password must be at least 6 characters long and both passwords should match.", "");
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "");
 regGS("Delete subscriptions to $1", "");

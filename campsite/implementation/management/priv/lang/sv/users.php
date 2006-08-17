@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("User may moderate comments", "");
 regGS("User may enable comments", "");
 regGS("65 or over", "");
@@ -80,7 +80,6 @@ regGS("User '$1' information was changed successfully.", "Användaren '$1's info
 regGS("IP address", "IP-adress");
 regGS("fill in from left to right at least one input box", "fyll i åtminståne en ruta från vänster till höger");
 regGS("User Type", "Användartyp");
-regGS("You must input a valid EMail address.", "Du måste fylla i en giltig E-postadress.");
 regGS("The confirm password must be at least 6 characters long and both passwords should match.", "Bekräftelselösenordet måste vara minst 6 bokstäver långt och båda lösenorden måste överensstämma.");
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "Du måste skriva in ett tal mellan 0 och 255 i start-IP-adressfältet $1.");
 regGS("Delete subscriptions to $1", "Raderar prenumerationer på $1");

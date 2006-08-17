@@ -1,7 +1,7 @@
-<?php
-regGS("Please select one or more languages.", "");
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
+<?php 
+regGS("Please select one or more languages.", "Por favor elija uno o más idiomas.");
+regGS("Regardless of the language", "Sin importar el idioma");
+regGS("Individual languages", "Idiomas individuales");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publicación");
 regGS("Delete subscriptions to $1", "Borrar suscripción a $1");
 regGS("Paid subscription", "Suscripción pagada");

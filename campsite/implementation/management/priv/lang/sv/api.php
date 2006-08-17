@@ -1,14 +1,14 @@
 <?php 
-regGS("The file uploaded is not an image.", "");
-regGS("Field $1 updated", "");
-regGS("Could not delete record from the database.", "");
-regGS("template path", "");
-regGS("short names", "");
-regGS("Unable to fetch image from remote server.", "");
-regGS("The article type field $1 has been renamed to $2.", "");
-regGS("The article type $1 has been renamed to $2.", "");
-regGS("Article type field $1 changed", "");
-regGS("Article Type $1 translation updated", "");
+regGS("The file uploaded is not an image.", "Den uppladdade filen är inte en bild.");
+regGS("Field $1 updated", "Fältet $1 är utdaterat");
+regGS("Could not delete record from the database.", "Kunde inte radera posten från databasen.");
+regGS("template path", "mallsökväg");
+regGS("short names", "korta namn");
+regGS("Unable to fetch image from remote server.", "Kunde inte hämta bilden från servern.");
+regGS("The article type field $1 has been renamed to $2.", "Artikeltypfältet $1 har döpts om till $2.");
+regGS("The article type $1 has been renamed to $2.", "Artikeltypen $1 har döpts om till $2.");
+regGS("Article type field $1 changed", "Artikeltypfältet $1 ändrat");
+regGS("Article Type $1 translation updated", "Översättningen för artikeltypen $1 uppdaterad");
 regGS("The IP address group $1 has been deleted.", "IP-adressgruppen $1 har raderats.");
 regGS("IP Group $1 added for user $2", "IP-grupp $1 tillagd för användaren $2");
 regGS("User permissions for $1 changed", "Användarrättigheter för $1 ändrade");
