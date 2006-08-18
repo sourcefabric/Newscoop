@@ -403,7 +403,7 @@ foreach ($allArticles as $articleObj) {
 	<script>default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";</script>
 	<TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
 		<TD>
-			<input type="checkbox" value="<?php p($articleObj->getArticleNumber().'_'.$articleObj->getLanguageId()); ?>" name="f_article_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
+			<input type="checkbox" value="<?php p((int)$articleObj->getArticleNumber().'_'.(int)$articleObj->getLanguageId()); ?>" name="f_article_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
 		</TD>
 
 		<TD <?php if ($articleObj->getArticleNumber() == $previousArticleNumber) { ?>class="translation_indent"<?php } ?>>
