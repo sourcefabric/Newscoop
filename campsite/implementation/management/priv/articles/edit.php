@@ -509,7 +509,7 @@ if ($f_edit_mode == "edit") { ?>
                     <tr>
                     	<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></TD>
 				        <TD align="left" valign="top">
-        					<?php if ($f_edit_mode == "edit") { ?>
+        					<?php if ($f_edit_mode == "edit" && $articleObj->isPublished()) { ?>
         					<input type="hidden" name="f_publish_date" value="<?php p($articleObj->getPublishDate()); ?>" id="f_publish_date">
         					<table cellpadding="0" cellspacing="2"><tr>
         						<td><span id="show_date"><?php p($articleObj->getPublishDate()); ?></span></td>
@@ -532,9 +532,9 @@ if ($f_edit_mode == "edit") { ?>
         					        button:"f_trigger_c"
         					    });
         					</script>
-        					<?php } else { ?>
+        					<?php } elseif ($articleObj->isPublished()) { ?>
         					<?php print htmlspecialchars($articleObj->getPublishDate()); ?>
-        					<?php } ?>
+        					<?php } else { putGS('N/A'); } ?>
 				        </TD>
                     </tr>
                     </table>
