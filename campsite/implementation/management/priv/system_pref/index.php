@@ -22,7 +22,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 <?php camp_html_display_msgs(); ?>
 
 <form action="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-<table border="0" cellspacing="6" align="left" class="table_input" width="500px">
+<table border="0" cellspacing="6" align="left" class="table_input">
 <tr>
 	<td align="left" width="400px">
 		<?php putGS("Keyword separator:"); ?>
@@ -39,6 +39,13 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 		<input type="text" name="f_login_num" value="<?php p(SystemPref::Get("LoginFailedAttemptsNum")); ?>" maxlength="2" size="4" class="input_text" alt="number|0|0
 |10" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Login Attempts")); ?>">
 	</td>
+</tr>
+<tr>
+	<td align="left">
+		<?php putGS("Maximun upload file size (in Bytes between 0 and ".camp_convert_bytes(ini_get('upload_max_filesize'))."):"); ?>
+	</td>
+	<td>
+		<input type="text" name="f_max_upload_filesize" value="<?php p(SystemPref::Get("MaxUploadFileSize")); ?>" maxlenght="12" size="14" class="input_text" alt="blank" emsg="<?php putGS("Please enter a positive number for the '$2' field.", getGS("Max Upload File Size")); ?>" />
 </tr>
 <tr>
 	<td colspan="2" align="center" style="padding-top: 10px;">
