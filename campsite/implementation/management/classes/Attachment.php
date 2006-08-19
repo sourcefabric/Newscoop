@@ -240,6 +240,24 @@ class Attachment extends DatabaseObject {
 
 
 	/**
+         * Return the full URL to the attached image.
+         * @return string
+         */
+        function getAttachmentUrl()
+	{
+		global $Campsite;
+		$attachmentUrl = $Campsite['FILE_BASE_URL']
+				."/".$this->getLevel1DirectoryName()
+				."/".$this->getLevel2DirectoryName()
+				."/".sprintf('%09d', $this->m_data['id']);
+		if (isset($this->m_data['extension']) && !empty($this->m_data['extension'])) {
+			$attachmentUrl .= '.'.$this->m_data['extension'];
+		}
+		return $attachmentUrl;
+        } // fn getAttachmentUrl
+
+
+	/**
 	 * Get the full path to the storage location of the file on disk.
 	 *
 	 * @param string $p_fileExtension

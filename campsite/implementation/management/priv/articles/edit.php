@@ -1012,6 +1012,11 @@ if ($f_edit_mode == "edit") { ?>
 			foreach ($articleFiles as $file) {
 				$fileEditUrl = "/$ADMIN/articles/files/edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_attachment_id=".$file->getAttachmentId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
 				$deleteUrl = "/$ADMIN/articles/files/do_del.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_attachment_id=".$file->getAttachmentId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id";
+				$downloadUrl = "/attachment/".basename($file->getStorageLocation())."?g_download=1";
+				if (strstr($file->getMimeType(), "image/") && (strstr($_SERVER['HTTP_ACCEPT'], $file->getMimeType()) ||
+										(strstr($_SERVER['HTTP_ACCEPT'], "*/*")))) {
+					$previewUrl = "/attachment/".basename($file->getStorageLocation())."?g_show_in_browser=1";
+				}
 			?>
 			<tr>
 				<td align="center" width="100%">
@@ -1022,7 +1027,11 @@ if ($f_edit_mode == "edit") { ?>
 						</td>
 						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('DeleteFile')) { ?>
 						<td>
-							<a href="<?php p($deleteUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the file \\'$1\\' from the article?", camp_javascriptspecialchars($file->getFileName())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
+							<a title="<?php putGS("Delete"); ?>" href="<?php p($deleteUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the file \\'$1\\' from the article?", camp_javascriptspecialchars($file->getFileName())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0" /></a><br />
+							<a title="<?php putGS("Download"); ?>" href="<?php p($downloadUrl); ?>"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/download.png" border="0" /></a><br />
+							<?php if (!empty($previewUrl)) { ?>
+							<a title="<?php putGS("Preview"); ?>" href="javascript: void(0);" onclick="window.open('<?php echo $previewUrl; ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/preview-16x16.png" border="0" /></a>
+							<?php } ?>
 						</td>
 						<?php } ?>
 					</tr>

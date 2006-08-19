@@ -20,8 +20,27 @@ $f_content_disposition = Input::Get('f_content_disposition');
 
 $BackLink = Input::Get('BackLink', 'string', null, true);
 
-if (!isset($_FILES["f_file"]) || (filesize($_FILES["f_file"]['tmp_name']) == false)) {
-	camp_html_display_error(getGS("You must select a file to upload."), null, true);
+if (isset($_FILES["f_file"])) {
+	switch($_FILES["f_file"]['error']) {
+		case 0: // UPLOAD_ERR_OK
+			break;
+		case 1: // UPLOAD_ERR_INI_SIZE
+		case 2: // UPLOAD_ERR_FORM_SIZE
+			camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
+			break;
+		case 3: // UPLOAD_ERR_PARTIAL
+			camp_html_display_error(getGS("The uploaded file was only partially uploaded."), null, true);
+			break;
+		case 4: // UPLOAD_ERR_NO_FILE
+			camp_html_display_error(getGS("You must select a file to upload."), null, true);
+			break;
+		case 6: // UPLOAD_ERR_NO_TMP_DIR
+		case 7: // UPLOAD_ERR_CANT_WRITE
+			camp_html_display_error(getGS("There was a problem uploading the file."), null, true);
+			break;
+	}
+} else {
+	camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
 }
 
 if (!Input::IsValid()) {

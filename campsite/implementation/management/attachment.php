@@ -5,8 +5,11 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Attachment.php');
 
+$g_download = Input::Get('g_download', 'int', 0, true);
+$g_show_in_browser = Input::Get('g_show_in_browser', 'int', 0, true);
 $requestURI = $_SERVER['REQUEST_URI'];
 $attachment = substr($requestURI, strlen('/attachment/'));
 
@@ -31,10 +34,23 @@ if (!$attachmentObj->exists()) {
 	exit;
 }
 
-
 header('Content-Type: ' . $attachmentObj->getMimeType());
-header('Content-Disposition: ' . $attachmentObj->getContentDisposition()
-		. "; filename=" . $attachmentObj->getFileName());
+if ($g_download == 1) {
+	header('Content-Disposition: ' . $attachmentObj->getContentDisposition()
+					. '; filename="' . $attachmentObj->getFileName()).'"';
+} else if ($g_show_in_browser == 1) {
+	header('Content-Disposition: inline; filename="' . $attachmentObj->getFileName()).'"';
+} else {
+	if (!$attachmentObj->getContentDisposition() &&
+		strstr($attachmentObj->getMimeType(), "image/") &&
+		(strstr($_SERVER['HTTP_ACCEPT'], $attachmentObj->getMimeType()) ||
+		(strstr($_SERVER['HTTP_ACCEPT'], "*/*")))) {
+		header('Content-Disposition: inline; filename="' . $attachmentObj->getFileName()).'"';
+	} else {
+		header('Content-Disposition: ' . $attachmentObj->getContentDisposition()
+						. '; filename="' . $attachmentObj->getFileName()).'"';
+	}
+}
 header('Content-Length: ' . $attachmentObj->getSizeInBytes());
 
 $filePath = $attachmentObj->getStorageLocation();

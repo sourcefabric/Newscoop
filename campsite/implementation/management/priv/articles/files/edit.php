@@ -59,8 +59,15 @@ if ($f_publication_id > 0) {
 	<td><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
 	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>
 </table>
-
 <P>
+<?php if (strstr($attachmentObj->getMimeType(), "image/") &&
+                (strstr($_SERVER['HTTP_ACCEPT'], $attachmentObj->getMimeType()) ||
+                (strstr($_SERVER['HTTP_ACCEPT'], "*/*")))) { ?>
+<div class="indent">
+<IMG SRC="<?php echo $attachmentObj->getAttachmentUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($attachmentObj->getDescription($f_language_selected)); ?>">
+</div>
+<P>
+<?php } ?>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" width="400px">
 <TR>
@@ -70,10 +77,20 @@ if ($f_publication_id > 0) {
 	</TD>
 </TR>
 <TR>
+	<TD ALIGN="RIGHT"><?php putGS('File Name'); ?>:</TD>
+	<TD><?php echo htmlspecialchars($attachmentObj->getFileName()); ?> &nbsp; <A
+		HREF="/attachment/<?php p(basename($attachmentObj->getStorageLocation())); ?>"><IMG
+		TITLE="<?php putGS('Download'); ?>" BORDER="0" ALIGN="absmiddle" SRC="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/download.png" /></A></TD>
+</TR>
+<TR>
 	<TD ALIGN="RIGHT"><?php  putGS('Description'); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" NAME="f_description" VALUE="<?php echo htmlspecialchars($attachmentObj->getDescription($f_language_selected)); ?>" class="input_text" SIZE="32" <?php p($isReadOnly); ?>>
 	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT"><?php putGS('File Size'); ?>:</TD>
+	<TD><?php p(camp_format_bytes($attachmentObj->getSizeInBytes())); ?></TD>
 </TR>
 <TR>
 	<TD ALIGN="left" colspan="2" style="padding-left: 15px;"><?php  putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></TD>

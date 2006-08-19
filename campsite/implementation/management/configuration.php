@@ -51,6 +51,7 @@ $Campsite['THUMBNAIL_COMMAND'] = 'convert -sample 64x64';
 $Campsite['THUMBNAIL_DIRECTORY'] = $Campsite['IMAGE_DIRECTORY'].'/thumbnails/';
 $Campsite['THUMBNAIL_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/thumbnails/';
 $Campsite['THUMBNAIL_PREFIX'] = 'cms-thumb-';
+$Campsite['FILE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/files/';
 $Campsite['FILE_DIRECTORY'] = $Campsite['HTML_DIR'].'/files';
 $Campsite['FILE_NUM_DIRS_LEVEL_1'] = "1000";
 $Campsite['FILE_NUM_DIRS_LEVEL_2'] = "1000";

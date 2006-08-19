@@ -1,5 +1,6 @@
 <?PHP
 camp_load_translation_strings("article_files");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -45,7 +46,9 @@ camp_html_display_msgs();
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("File"); ?>:</TD>
 	<TD>
-		<INPUT TYPE="FILE" NAME="f_file" SIZE="32" class="input_file">
+		<INPUT TYPE="HIDDEN" NAME="MAX_FILE_SIZE" value="<?php p(SystemPref::Get('MaxUploadFileSize')); ?>" />
+		<INPUT TYPE="FILE" NAME="f_file" SIZE="32" class="input_file" /><BR />
+		<?php putGS("Maximum Upload Size"); p(" = " . camp_format_bytes(SystemPref::Get('MaxUploadFileSize'))); ?>
 	</TD>
 </TR>
 <TR>
