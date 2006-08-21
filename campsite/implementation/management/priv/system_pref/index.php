@@ -27,12 +27,12 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 <?php camp_html_display_msgs(); ?>
 
 <form action="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-<table border="0" cellspacing="6" align="left" class="table_input">
+<table border="0" cellspacing="6" align="left" class="table_input" width="500px">
 <tr>
 	<td align="left" width="400px">
 		<?php putGS("Keyword separator:"); ?>
 	</td>
-	<td align="left">
+	<td align="left" valign="top">
 		<input type="text" name="f_keyword_separator" value="<?php p(SystemPref::Get("KeywordSeparator")); ?>" maxlength="2" size="4" class="input_text" alt="blank" emsg="<?php putGS("Keyword separator must be at least one character."); ?>">
 	</td>
 </tr>
@@ -40,16 +40,17 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 	<td align="left" width="400px">
 		<?php putGS("Number of failed login attempts before showing CAPTCHA :"); ?>
 	</td>
-	<td align="left">
+	<td align="left" valign="top">
 		<input type="text" name="f_login_num" value="<?php p(SystemPref::Get("LoginFailedAttemptsNum")); ?>" maxlength="2" size="4" class="input_text" alt="number|0|0
 |10" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Login Attempts")); ?>">
 	</td>
 </tr>
 <tr>
 	<td align="left">
-		<?php putGS("Maximum upload file size (Value between 0 and ".ini_get('upload_max_filesize').". Please, use K for Kilobytes, M for Megabytes and G for Gigabytes, without white spaces between the value and the corresponding Letter --i.e. 3M):"); ?>
+		<?php putGS("Maximum upload file size:"); ?>
+		<div style="padding-top: 3px; padding-left: 15px;"><?php putGS("Enter a value between 0 and ".ini_get('upload_max_filesize')." (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'."); ?></div>
 	</td>
-	<td>
+	<td valign="top">
 		<input type="text" name="f_max_upload_filesize" value="<?php p(SystemPref::Get("MaxUploadFileSize")); ?>" maxlenght="12" size="14" class="input_text" alt="blank" emsg="<?php putGS("Please enter a positive number for the '$2' field.", getGS("Max Upload File Size")); ?>" />
 </tr>
 <tr>
