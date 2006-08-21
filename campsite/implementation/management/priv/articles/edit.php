@@ -534,7 +534,9 @@ if ($f_edit_mode == "edit") { ?>
         					</script>
         					<?php } elseif ($articleObj->isPublished()) { ?>
         					<?php print htmlspecialchars($articleObj->getPublishDate()); ?>
-        					<?php } else { putGS('N/A'); } ?>
+        					<?php } else { ?>
+        					<input type="hidden" name="f_publish_date" value="<?php p($articleObj->getPublishDate()); ?>" id="f_publish_date">
+        					<?php putGS('N/A'); } ?>
 				        </TD>
                     </tr>
                     </table>
