@@ -34,7 +34,7 @@ if (!$attachmentObj->exists()) {
 
 header('Content-Type: ' . $attachmentObj->getMimeType());
 header('Content-Disposition: ' . $attachmentObj->getContentDisposition()
-		. "; filename=" . $attachmentObj->getFileName());
+		. '; filename="' . $attachmentObj->getFileName()).'"';
 header('Content-Length: ' . $attachmentObj->getSizeInBytes());
 
 $filePath = $attachmentObj->getStorageLocation();
