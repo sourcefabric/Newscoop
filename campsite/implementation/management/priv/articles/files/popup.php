@@ -46,9 +46,9 @@ camp_html_display_msgs();
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("File"); ?>:</TD>
 	<TD>
-		<INPUT TYPE="HIDDEN" NAME="MAX_FILE_SIZE" value="<?php p(SystemPref::Get('MaxUploadFileSize')); ?>" />
+		<INPUT TYPE="HIDDEN" NAME="MAX_FILE_SIZE" value="<?php p(intval(camp_convert_bytes(SystemPref::Get('MaxUploadFileSize')))); ?>" />
 		<INPUT TYPE="FILE" NAME="f_file" SIZE="32" class="input_file" /><BR />
-		<?php putGS("Maximum Upload Size"); p(" = " . camp_format_bytes(SystemPref::Get('MaxUploadFileSize'))); ?>
+		<?php putGS("Maximum Upload Size"); p(" = " . SystemPref::Get('MaxUploadFileSize')); ?>
 	</TD>
 </TR>
 <TR>

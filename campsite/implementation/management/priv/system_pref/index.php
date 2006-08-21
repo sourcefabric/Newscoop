@@ -16,6 +16,11 @@ echo camp_html_breadcrumbs($crumbs);
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 
+$max_upload_filesize = SystemPref::Get("MaxUploadFileSize");
+if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
+	SystemPref::Set("MaxUploadFileSize",ini_get('upload_max_filesize'));
+}
+
 ?>
 <p></p>
 
@@ -42,7 +47,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 </tr>
 <tr>
 	<td align="left">
-		<?php putGS("Maximun upload file size (in Bytes between 0 and ".camp_convert_bytes(ini_get('upload_max_filesize'))."):"); ?>
+		<?php putGS("Maximum upload file size (Value between 0 and ".ini_get('upload_max_filesize').". Please, use K for Kilobytes, M for Megabytes and G for Gigabytes, without white spaces between the value and the corresponding Letter --i.e. 3M):"); ?>
 	</td>
 	<td>
 		<input type="text" name="f_max_upload_filesize" value="<?php p(SystemPref::Get("MaxUploadFileSize")); ?>" maxlenght="12" size="14" class="input_text" alt="blank" emsg="<?php putGS("Please enter a positive number for the '$2' field.", getGS("Max Upload File Size")); ?>" />
