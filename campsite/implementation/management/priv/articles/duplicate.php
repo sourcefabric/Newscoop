@@ -231,9 +231,18 @@ if (isset($_REQUEST["action_button"])) {
 							  				 $g_user->getUserId(),
 							  				 $languageArray);
 
-			// Set the names of the new copies
+			// Set properties for each new copy.
 			foreach ($newArticles as $newArticle) {
+    			// Set the name of the new copy
 				$newArticle->setTitle($articleNames[$articleNumber][$newArticle->getLanguageId()]);
+				// Set the default "comment enabled" status based
+				// on the publication config settings.
+				if ($f_destination_publication_id > 0) {
+                    $tmpPub =& new Publication($f_destination_publication_id);
+                    $commentDefault = $tmpPub->commentsArticleDefaultEnabled();
+                    $newArticle->setCommentsEnabled($commentDefault);
+            	}
+
 			}
 		}
 		if ($f_mode == "single") {
