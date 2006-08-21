@@ -198,6 +198,9 @@ function camp_convert_bytes($p_val) {
 			$p_val *= 1024;
 		case 'k':
 			$p_val *= 1024;
+			break;
+		default:
+			$p_val = false;
 	}
 	return $p_val;
 }
