@@ -70,7 +70,7 @@ if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
 
 // include install_conf.php file
 require_once("$ETC_DIR/install_conf.php");
-require_once($Campsite['WWW_DIR']."/".$instance_name."/html/campsite_version.php");
+require_once($Campsite['WWW_COMMON_DIR']."/html/campsite_version.php");
 if (!is_dir("$ETC_DIR/$instance_name")) {
 	echo "\n";
 	echo "Instance '$instance_name' does not exist!\n";

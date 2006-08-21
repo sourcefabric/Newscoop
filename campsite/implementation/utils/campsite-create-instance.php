@@ -1,31 +1,42 @@
 <?php
 
 if (!is_array($GLOBALS['argv'])) {
-	echo "Can't read command line arguments\n";
+	camp_msg("Can't read command line arguments");
 	exit(1);
 }
 
-global $Campsite, $CampsiteVars, $CampsiteOld, $info_messages;
+global $Campsite, $CampsiteVars, $CampsiteOld, $info_messages, $g_silent;
 $Campsite = array();
 $CampsiteVars = array();
 $CampsiteOld = array();
 $info_messages = array();
+$g_silent = false;
 
 $errors = array();
+camp_msg('');
+camp_msg('Campsite create instance utility');
+camp_msg('--------------------------------');
 if (!camp_create_instance($GLOBALS['argv'], $errors)) {
+	if ($g_silent) {
+		exit(1);
+	}
+	camp_msg('There were ERRORS!!!\n');
 	foreach($errors as $index=>$error) {
-		echo "$error\n";
+		camp_msg("$error", true, 2);
 	}
 	if (sizeof($Campsite) > 0) {
-		echo "Campsite parameters:\n";
+		camp_msg('');
+		camp_msg('Campsite parameters:');
 		foreach($Campsite as $var_name=>$value) {
-			echo "$var_name = $value\n";
+			camp_msg("$var_name = $value", true, 2);
 		}
 	}
 	exit(1);
 }
+camp_msg('');
+camp_msg('The instance ' . $Campsite['DATABASE_NAME'] . ' was created successfuly.');
 foreach ($info_messages as $index=>$message) {
-	echo "$message\n";
+	camp_msg($message);
 }
 
 
@@ -62,6 +73,8 @@ function camp_create_instance($p_arguments, &$p_errors)
 
 	require_once($etc_dir . "/install_conf.php");
 	require_once($etc_dir . "/parser_conf.php");
+	require_once($Campsite['WWW_COMMON_DIR']."/html/campsite_version.php");
+	camp_msg('Create instance script version: ' . $Campsite['VERSION']);
 
 	if (!is_array($CampsiteVars['install']) || !is_array($CampsiteVars['parser'])
 		|| !is_array($Campsite)) {
@@ -70,23 +83,18 @@ function camp_create_instance($p_arguments, &$p_errors)
 	}
 
 	camp_fill_missing_parameters($defined_parameters);
+	camp_msg('Creating instance: ' . $Campsite['DATABASE_NAME']);
 
 	if (!($res = camp_create_configuration_files($defined_parameters)) == 0) {
 		$p_errors[] = $res;
 		$p_errors[] = "Please run this script as user 'root' or '" . $Campsite['APACHE_USER'] . "'.";
-		foreach($p_errors as $index=>$error) {
-			echo "$error\n";
-		}
-		exit(1);
+		return false;
 	}
 
 	if (!($res = camp_create_site($defined_parameters)) == 0) {
 		$p_errors[] = $res;
 		$p_errors[] = "Please run this script as user 'root' or '" . $Campsite['APACHE_USER'] . "'.";
-		foreach($p_errors as $index=>$error) {
-			echo "$error\n";
-		}
-		exit(1);
+		return false;
 	}
 
 	$instance_etc_dir = $defined_parameters['--etc_dir'] . "/" . $defined_parameters['--db_name'];
@@ -121,6 +129,7 @@ function camp_create_configuration_files($p_defined_parameters)
 	$html_common_dir = $Campsite['WWW_COMMON_DIR'] . "/html";
 	require_once($html_common_dir . "/classes/ModuleConfiguration.php");
 
+	camp_msg(' * Creating the database configuration...', false);
 	$db_module = new ModuleConfiguration();
 	$db_variables = array('DATABASE_NAME'=>$p_defined_parameters['--db_name'],
 		'DATABASE_SERVER_ADDRESS'=>$p_defined_parameters['--db_server_address'],
@@ -131,7 +140,9 @@ function camp_create_configuration_files($p_defined_parameters)
 	if (!($res = $db_module->save($instance_etc_dir)) == 0) {
 		return $res;
 	}
+	camp_msg('done.');
 
+	camp_msg(' * Creating the template engine configuration...', false);
 	$parser_module = new ModuleConfiguration();
 	$parser_variables = array('PARSER_PORT'=>$p_defined_parameters['--parser_port'],
 		'PARSER_MAX_THREADS'=>$p_defined_parameters['--parser_max_threads']);
@@ -139,7 +150,9 @@ function camp_create_configuration_files($p_defined_parameters)
 	if (!($res = $parser_module->save($instance_etc_dir)) == 0) {
 		return $res;
 	}
+	camp_msg('done.');
 
+	camp_msg(' * Creating the email notifiers configuration...', false);
 	$smtp_module = new ModuleConfiguration();
 	$smtp_variables = array(
 		'SMTP_SERVER_ADDRESS'=>$p_defined_parameters['--smtp_server_address'],
@@ -148,7 +161,9 @@ function camp_create_configuration_files($p_defined_parameters)
 	if (!($res = $smtp_module->save($instance_etc_dir)) == 0) {
 		return $res;
 	}
+	camp_msg('done.');
 
+	camp_msg(' * Creating the Apache configuration...', false);
 	$apache_module = new ModuleConfiguration();
 	$apache_variables = array('APACHE_USER'=>$p_defined_parameters['--apache_user'],
 		'APACHE_GROUP'=>$p_defined_parameters['--apache_group']);
@@ -156,7 +171,9 @@ function camp_create_configuration_files($p_defined_parameters)
 	if (!($res = $apache_module->save($instance_etc_dir)) == 0) {
 		return $res;
 	}
+	camp_msg('done.');
 
+	camp_msg(' * Setting privileges to the configuration files...', false);
 	$cmd = "chown -R \"" . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
 		. "\" " . camp_escape_shell_arg($instance_etc_dir) . " 2>&1";
 	@exec($cmd, $output, $res);
@@ -169,6 +186,7 @@ function camp_create_configuration_files($p_defined_parameters)
 	if ($res != 0) {
 		return implode("\n", $output);
 	}
+	camp_msg('done.');
 
 	return 0;
 } // fn camp_create_configuration_files
@@ -189,11 +207,15 @@ function camp_create_database($p_defined_parameters)
 		return "Unable to connect to database server.";
 	}
 
-	if (camp_database_exists($db_name)) {
-		if (!camp_is_empty_database($db_name)
-				&& !($res = camp_backup_database_default($db_name, $p_defined_parameters)) == 0) {
+	if (camp_database_exists($db_name) && !camp_is_empty_database($db_name)) {
+		camp_msg(' * Found an already existing database.');
+		camp_msg(' * Backing up the existing database...', false);
+		if (!($res = camp_backup_database_default($db_name, $p_defined_parameters)) == 0) {
 			return $res;
 		}
+		camp_msg('done.');
+		camp_msg("   The database of the instance $db_name was saved in the file:\n   "
+				. $Campsite['CAMPSITE_DIR'] . "/backup/$db_name/$db_name-database.sql");
 		if (!($res = camp_upgrade_database($db_name, $p_defined_parameters)) == 0) {
 			camp_restore_database($db_name, $p_defined_parameters);
 			return $res . "\nThere was an error when upgrading the database; "
@@ -201,7 +223,9 @@ function camp_create_database($p_defined_parameters)
 				. $Campsite['CAMPSITE_DIR'] . "/backup/$db_name directory.";
 		}
 	} else {
-		if (!mysql_query("CREATE DATABASE $db_name CHARACTER SET utf8 COLLATE utf8_bin")) {
+		camp_msg(' * Creating the database...', false);
+		if (!camp_database_exists($db_name)
+			&& !mysql_query("CREATE DATABASE $db_name CHARACTER SET utf8 COLLATE utf8_bin")) {
 			return "Unable to create the database " . $db_name;
 		}
 		$cmd = "mysql --user=$db_user --host=" . $Campsite['DATABASE_SERVER_ADDRESS']
@@ -215,6 +239,7 @@ function camp_create_database($p_defined_parameters)
 		if ($res != 0) {
 			return implode("\n", $output);
 		}
+		camp_msg('done.');
 	}
 
 	return 0;
@@ -237,10 +262,14 @@ function camp_upgrade_database($p_db_name, $p_defined_parameters)
 		return $res;
 	}
 
+	$first = true;
 	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x");
 	foreach ($versions as $index=>$db_version) {
 		if ($old_version > $db_version) {
 			continue;
+		}
+		if ($first) {
+			camp_msg(" * Upgrading the database from version $db_version...", false);
 		}
 		$output = array();
 		// create symlinks to configuration files
@@ -276,6 +305,10 @@ function camp_upgrade_database($p_db_name, $p_defined_parameters)
 			if ($res != 0 && $script != "data-optional.sql") {
 				return "$script ($db_version): " . implode("\n", $output);
 			}
+		}
+		if ($first) {
+			camp_msg('done.');
+			$first = false;
 		}
 	}
 
@@ -342,7 +375,7 @@ function camp_backup_database_default($p_db_name, $p_defined_parameters)
 
 	$backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/$p_db_name";
 	if (!is_dir($backup_dir) && !mkdir($backup_dir)) {
-		return "Unable to create database backup directory $backup_dir";
+		return "Unable to create the database backup directory $backup_dir";
 	}
 
 	$cmd = "mysqldump --user=" . $Campsite['DATABASE_USER'] . " --host="
@@ -406,6 +439,7 @@ function camp_create_site($p_defined_parameters)
 	$instance_etc_dir = $etc_dir . "/$db_name";
 	require_once($etc_dir . "/install_conf.php");
 
+	camp_msg(' * Creating site directories...', false);
 	$instance_www_dir = $Campsite['WWW_DIR'] . "/$db_name";
 	$html_dir = $instance_www_dir . "/html";
 	$cgi_dir = $instance_www_dir . "/cgi-bin";
@@ -424,15 +458,20 @@ function camp_create_site($p_defined_parameters)
 			return "Unable to create directory $dir_name";
 		}
 	}
+	camp_msg('done.');
 
 	if (isset($CampsiteOld['.MODULES_HTML_DIR'])) {
+		camp_msg(' * Copying templates from the old 2.1 instance...', false);
 		$cmd = "cp -fr " . camp_escape_shell_arg($CampsiteOld['.MODULES_HTML_DIR']) . "/look "
 			. camp_escape_shell_arg($html_dir);
 		exec($cmd, $output, $exit_code);
 		if ($exit_code != 0) {
 			return "Unable to copy files to templates directory ($html_dir/look).";
 		}
+		camp_msg('done.');
 	}
+	
+	camp_msg(' * Creating the site structure...', false);
 	// create symbolik links to configuration files
 	$link_files = array("$etc_dir/install_conf.php"=>"$html_dir/install_conf.php",
 		"$instance_etc_dir/database_conf.php"=>"$html_dir/database_conf.php",
@@ -459,17 +498,21 @@ function camp_create_site($p_defined_parameters)
 		}
 	}
 
-	if (!($res = camp_create_virtual_host($p_defined_parameters)) == 0) {
-		return $res;
-	}
-
 	$cp_cmd = "cp -f " . camp_escape_shell_arg($common_cgi_dir) . "/* " . camp_escape_shell_arg($cgi_dir)
 			. " &> /dev/null";
 	exec($cp_cmd, $output, $exit_code);
 	if ($exit_code != 0) {
 		return "Unable to copy files to CGI directory ($cgi_dir).";
 	}
+	camp_msg('done.');
 
+	camp_msg(' * Creating the Apache virtual host configuration file...', false);
+	if (!($res = camp_create_virtual_host($p_defined_parameters)) == 0) {
+		return $res;
+	}
+	camp_msg('done.');
+
+	camp_msg(' * Setting privileges for the site directories...', false);
 	$cmd = "chown -R " . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
 		. " " . camp_escape_shell_arg($cgi_dir);
 	exec($cmd);
@@ -485,6 +528,7 @@ function camp_create_site($p_defined_parameters)
 	exec($cmd);
 	$cmd = "chmod -R ug+r " . camp_escape_shell_arg($instance_www_dir);
 	exec($cmd);
+	camp_msg('done.');
 
 	return 0;
 } // fn camp_create_site
@@ -687,7 +731,7 @@ function camp_generate_parser_port($p_defined_parameters)
 
 function camp_read_cmdline_parameters($p_arguments, &$p_errors)
 {
-	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults;
+	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults, $g_silent;
 	camp_define_globals();
 
 	$defined_parameters = array();
@@ -705,6 +749,10 @@ function camp_read_cmdline_parameters($p_arguments, &$p_errors)
 		}
 		if ($param_name == "--no_database") {
 			$defined_parameters['--no_database'] = true;
+			continue;
+		}
+		if ($param_name == "--silent") {
+			$g_silent = true;
 			continue;
 		}
 		if ($param_name == '--db_password'
@@ -742,18 +790,24 @@ function camp_read_cmdline_parameters($p_arguments, &$p_errors)
 
 function camp_print_usage()
 {
-	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults;
+	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults, $g_parameters_description;
 
 	camp_define_globals();
-	echo "Usage: campsite-create-instance [parameters]\nParameters may be:\n";
+	echo "\nCampsite create instance utility\n"
+		."--------------------------------\n"
+		."  Usage: campsite-create-instance [parameters]\n"
+		."  Parameters may be:\n";
 	foreach ($g_instance_parameters as $index=>$parameter) {
 		if ($parameter == '--etc_dir') {
 			continue;
 		}
-		if ($parameter != '--no_database') {
-			echo "\t$parameter [value]\n";
+		if ($parameter != '--no_database' && $parameter != '--silent') {
+			echo "    $parameter [value]\n";
 		} else {
-			echo "\t$parameter\n";
+			echo "    $parameter\n";
+		}
+		if (isset($g_parameters_description[$parameter])) {
+			echo "        " . $g_parameters_description[$parameter] . "\n";
 		}
 	}
 } // fn camp_print_usage
@@ -761,13 +815,13 @@ function camp_print_usage()
 
 function camp_define_globals()
 {
-	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults;
+	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults, $g_parameters_description;
 
 	// global variables
 	$g_instance_parameters = array('--etc_dir', '--db_server_address', '--db_server_port',
 		'--db_name', '--db_user', '--db_password', '--parser_port',
 		'--parser_max_threads', '--smtp_server_address', '--smtp_server_port',
-		'--apache_user', '--apache_group', '--no_database');
+		'--apache_user', '--apache_group', '--no_database', '--silent');
 	$g_mandatory_parameters = array('--etc_dir'=>false);
 	$g_parameters_defaults = array(
 		'--db_server_address'=>'___DEFAULT_DATABASE_SERVER_ADDRESS',
@@ -781,8 +835,33 @@ function camp_define_globals()
 		'--smtp_server_port'=>'___DEFAULT_SMTP_SERVER_PORT',
 		'--apache_user'=>'___APACHE_USER',
 		'--apache_group'=>'___APACHE_GROUP',
-		'--no_database'=>false
+		'--no_database'=>false,
+		'--silent'=>false
 	);
+	$g_parameters_description = array(
+		'--db_server_address'=>'Set the IP address of the MySQL database server. (default: "localhost")',
+		'--db_server_port'=>"Set the port MySQL server listens to. Use this option only if your\n"
+				   ."        server does not use the default port.",
+		'--db_name'=>'Set the name of the instance to create. (default: "campsite")',
+		'--db_user'=>"Set the user used to connect to the MySQL database server.\n"
+			.'        (default: "root")',
+		'--db_password'=>"Set the password used to connect to the MySQL database server.\n"
+				.'        (default: empty string)',
+		'--parser_port'=>"The template engine listes for new requests on this port. This port\n"
+				."        is allocated automatically by this script. Use this option if you want\n"
+				."        to set a custom port.",
+		'--parser_max_threads'=>"Set the maximum number of template engine threads. Each thread\n"
+					   ."        processes a single request. The maximum number of threads specifies\n"
+					   ."        how many requests can be served simultaneously. (default: 40)",
+		'--smtp_server_address'=>'Set the IP address of the email (SMTP) server. (default: "localhost")',
+		'--smtp_server_port'=>'Set the port SMTP server is listening to. (default: 25)',
+		'--apache_user'=>'Set this value to the user name on which the Apache server is running.',
+		'--apache_group'=>'Set this value to the user name on which the Apache server is running.',
+		'--no_database'=>"Instructs the script not to create the instance database. The script\n"
+				."        will create only the site and configuration file. The instance is not\n"
+				."        usable without a database. Use this option only if you know what you\n"
+				."        are doing.",
+		'--silent'=>'Do not output any message.');
 } // fn camp_define_globals
 
 
@@ -812,5 +891,20 @@ function camp_read_old_config($conf_dir, $module_name, &$variables)
 	return true;
 } // fn camp_read_old_config
 
+
+function camp_msg($p_message, $p_endLine = true, $p_indent = 0, $p_indentCharacter = ' ')
+{
+	global $g_silent;
+	
+	if (!$g_silent) {
+		for ($i = 0; $i < $p_indent; $i++) {
+			echo $p_indentCharacter;
+		}
+		echo "$p_message";
+		if ($p_endLine) {
+			echo "\n";
+		}
+	}
+}
 
 ?>
