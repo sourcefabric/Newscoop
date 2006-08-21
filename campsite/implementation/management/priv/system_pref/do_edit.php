@@ -24,13 +24,13 @@ SystemPref::Set("KeywordSeparator", $f_keyword_separator);
 if ($f_login_num >= 0) {
 	SystemPref::Set("LoginFailedAttemptsNum", $f_login_num);
 }
-if ($max_upload_filesize_bytes > 0 &&
-	$max_upload_filesize_bytes <= camp_convert_bytes(ini_get('upload_max_filesize'))) {
+if ($max_upload_filesize_bytes > 0
+	&& $max_upload_filesize_bytes <= camp_convert_bytes(ini_get('upload_max_filesize'))) {
 	SystemPref::Set("MaxUploadFileSize", $f_max_upload_filesize);
+	camp_html_add_msg(getGS("System preferences updated."), "ok");
 } else {
 	camp_html_add_msg(getGS('Invalid Max Upload File Size value submitted'));
 }
-camp_html_add_msg(getGS("System preferences updated."), "ok");
 
 camp_html_goto_page("/$ADMIN/system_pref/");
 ?>
