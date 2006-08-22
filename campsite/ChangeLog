@@ -1,4 +1,90 @@
-2.6.0 (July 4, 2006)
+2.6.1 (August 22, 2006)
+  For full details about these changes, see:
+  http://code.campware.org/projects/campsite/query?milestone=2.6.1
+
+  New Features
+  ------------
+  - Added verbosity to campsite-create-instance - i.e. it tells you
+    what it is doing now.
+  - In the Article Edit screen, you can now change the time the article
+    was published.
+  - User is not allowed to add images, attachments, or templates if the
+    target directory is not writable.
+  - A 'Save and Close' button has been added to the Article Edit Screen
+    even when an article is 'Pending'/'Unplaced'.
+  - All sample templates are now available for 2.6.X
+  - Campsite is now part of the Free Software Foundation/UNESCO directory:
+    http://directory.fsf.org/campsite.html
+  - A Dutch translation was added
+
+  The following translations were updated:
+  - Russian
+  - Romanian
+  - Spanish
+
+  Bugs Fixed (32 total)
+  ---------------------
+  Bugs are listed in order of oldest to newest.
+
+  01) #2175 - Failure to detect if php-session package was installed
+  02) #2178 - 'campsite-remove-instance' fails
+  03) #2179 - Error in template engine when dealing with date-time fields
+  04) #2181 - Clicking on "Add Article" sometimes gives an error
+  05) #2187 - Localizer loses "hide translated strings" preferences after
+      every save
+  06) #2191 - Error restoring backup file using -e option when the target
+      instance does not exist
+  07) #2213 - On the Article Edit page, the "Link to public page" doesn't
+      include publication url in url
+  08) #2230 - campsite-restore-instance script fails when 'pushd' and
+      'popd' arent in the system
+  09) #2239 - When duplicating a template, if the user sets an already
+      existing name campsite returns to template duplicate screen without
+      posting an error.
+  10) #2241 - There was a crash sometimes when trying to duplicate a new,
+      unassigned article
+  11) #2242 - Problem localizing Arabic (R-T-L languages)
+  12) #2244 - Template keyword "firstParagraph" doesn't work in some
+      circumstances
+  13) #2246	- Attachments listed in different order on the frontend
+      compared to the backend.
+  14) #2249 - Crash when adding existing image to article
+  15) #2250	- Invalid link to article in the edit page: When editing a
+      translated version of an article the "Link to public page" is not
+      generated correctly: the issue and section URL names are taken from
+      the default language version instead of the translation version.
+  16) #2253 - Some cells on home page not vertically aligned properly
+  17) #2257 - Sections not deleted properly.
+  18) #2259 - Unable to list all images in an article
+  19) #2260 - The template engine crashes when requesting the home page
+      (http://site/[lang_code]) for a language that is not the default
+      publication language.
+  20) #2261 - When previewing an article in a different language than the
+      section language the preview link contains the section language
+      instead of the article language.
+  21) #2262 - Duplicate article screen - if you dont select an article
+      to duplicate, there is a crash
+  22) #2263 - Javascript error when logging in under IE
+  23) #2264 - Arabic language shows a javascript error in the article
+      edit screen
+  24) #2267 - ArticleImage->getImage() doesn't return the Image object
+  25) #2268 - Strings with double quotes are truncated in article edit
+      screen inside of single-line text fields
+  26) #2269 - Campsite doesn't compile on 64 bit systems
+  27) #2272 - When the database character set was UTF8, trying to create
+      the Campsite database returns an error
+  28) #2274 - Article can be half-placed (for example, it can belong to
+      publication and issue, but not a section) when creating an unplaced
+      article
+  29) #2277 - Subscriptions are not added correctly to the database
+  30) #2284 - Attached files with spaces in their names do not have
+      correct name when you download them
+  31) #2285 - Duplicating an article does not respect preferences for
+      whether comments should default to enabled
+  32) #2290 - Cannot edit an existing language
+
+
+2.6.0 "Joey" (July 10, 2006)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.6.0
 
