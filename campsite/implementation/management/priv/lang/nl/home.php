@@ -11,9 +11,14 @@ regGS("The system was unable to create the directory '$1'.", "");
 regGS("Please check if the user '$1' has permission to write to this file.", "");
 regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "");
 regGS("Feedback", "");
+regGS("Type the code shown above:", "");
+regGS("Please enter your user name.", "");
+regGS("Please enter your password.", "");
+regGS("Please enter the code shown in the image.", "");
+regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
+regGS("CAPTCHA code is not valid.  Please try again.", "");
 regGS("There are no pending articles.", "Er zijn geen ongepubliceerde artikelen");
 regGS("Pending Articles", "Ongepubliceerde Artikelen");
-regGS("System Preferences", "Systeem Voorkeuren");
 regGS("You haven't written any articles yet.", "Je hebt nog geen artikelen geschreven.");
 regGS("There are no pending items to be published.", "Er zijn geen ongepubliceerde items om te worden gepubliceecd.");
 regGS("There are currently no submitted articles.", "Er zijn momenteel geen ingezonden artikelen.");
@@ -30,4 +35,5 @@ regGS("You do not have the right to access this page.", "Je hebt niet te rechten
 regGS("Login failed", "Login gefaald");
 regGS("Please make sure that you typed the correct user name and password.", "Zorg er voor dat de juiste gebruikernaam en wachtwoord zijn ingevuld.");
 regGS("If your problem persists please contact the site administrator $1", "Als het probleem blijf bestaan neem dan contact op met beheerder $1");
+regGS("System Preferences", "Systeem Voorkeuren");
 ?>

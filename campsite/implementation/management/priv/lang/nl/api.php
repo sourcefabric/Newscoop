@@ -1,6 +1,15 @@
 <?php 
 regGS("Template $1 no longer exists!", "");
 regGS("The file uploaded is not an image.", "");
+regGS("Field $1 updated", "");
+regGS("Could not delete record from the database.", "");
+regGS("template path", "");
+regGS("short names", "");
+regGS("Unable to fetch image from remote server.", "");
+regGS("The article type field $1 has been renamed to $2.", "");
+regGS("The article type $1 has been renamed to $2.", "");
+regGS("Article type field $1 changed", "");
+regGS("Article Type $1 translation updated", "");
 regGS("The IP address group $1 has been deleted.", "De IP adres groep $1 is verwijderd.");
 regGS("IP Group $1 added for user $2", "IP Groep $1 toegevoegd voor gebruiker $1");
 regGS("User permissions for $1 changed", "Gebruiker rechten voor $1 gewijzigd");
@@ -19,8 +28,8 @@ regGS("Article #$1 \"$2\" ($3) translated to \"$5\" ($4)", "Artikel #$1 \"$2\" (
 regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "Artikel #$1 \"$2\" ($3) gekopieerd naar Artikel #$3");
 regGS("Article #$1: \"$2\" status changed from $3 to $4.", "Artikel #$1: \"$2\" status veranderd van $3 naar $4.");
 regGS("Article #$1: \"$2\" ($3) deleted.", "Artikel #$1: \"$2\" ($3) verwijderd.");
-regGS("Text", "Tekst");
-regGS("Article body", "Artikel inhoud");
+regGS("Single-line Text", "");
+regGS("Multi-line Text with WYSIWYG", "");
 regGS("The default subscription time for $1 has been added.", "De standaard abonnement tijd voor $1 is toegevoegd.");
 regGS("Image $1 linked to article $2", "Afbeelding $1 gelinkt naar artikel $2");
 regGS("Image $1 unlinked from $2", "Afbeelding $1 ontkoppeld van $2");
@@ -45,4 +54,11 @@ regGS("The user account $1 has been deleted.", "Het gebruikerprofiel $1 is verwi
 regGS("Password changed for $1", "Wachtwoord veranderd voor $1");
 regGS("User account $1 created", "Gebruiker profiel $1 gemaakt");
 regGS("Template $1 uploaded", "Sjabloon $1 geupload");
+regGS("URL \"$1\" is invalid or is not an image.", "");
+regGS("URL \"$1\" is not an image.", "");
+regGS("Topic $1 added", "");
+regGS("Topic $1 deleted", "");
+regGS("Topic $1 updated", "");
+regGS("Text", "Tekst");
+regGS("Article body", "Artikel inhoud");
 ?>

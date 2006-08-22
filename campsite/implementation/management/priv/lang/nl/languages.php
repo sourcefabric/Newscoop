@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("No language.", "Geen taal.");
 regGS("Delete language $1", "Verwijder taal $1");
 regGS("You do not have the right to add languages.", "Je hebt niet de rechten om talen toe te voegen.");
@@ -32,4 +32,5 @@ regGS("Saturday", "zaterdag");
 regGS("Sunday", "zondag");
 regGS("You do not have the right to add new languages.", "Je hebt niet de rechten om nieuwe talen toe te voegen.");
 regGS("There are $1 issue(s) left.", "Er zijn $1 uitgave(s) over.");
+regGS("Native name", "");
 ?>

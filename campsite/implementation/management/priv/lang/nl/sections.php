@@ -1,5 +1,8 @@
-<?php
-regGS("Section List", "Sectie lijst");
+<?php 
+regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "");
+regGS("Section updated", "");
+regGS("There are $1 subscriptions which will be affected.", "");
+regGS("There are $1 articles in this section.", "");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Sectie #$1 \"$2\" bijgewerkt. (Publicatie: $3, Uitgave: $4)");
 regGS("Go To Articles", "Ga naar Artikels");
 regGS("Add section to all subscriptions.", "Voeg sectie to aan alle abonnementen.");
@@ -17,7 +20,6 @@ regGS("Are you sure you want to delete the section $1?", "Weet je zeker dat je s
 regGS("Deleting section", "Sectie wordt verwijderd");
 regGS("The section $1 has been deleted.", "De sectie $1 is verwijderd.");
 regGS("Configure section", "Configureer sectie");
-regGS("Updating section name", "Sectie naam wordt bijgewerkt");
 regGS("The section could not be changed.", "De sectie kan niet wordt veranderd");
 regGS("Duplicate section", "Dupliceer sectie");
 regGS("The destination issue is the same as the source issue.", "De doel uitgave is de zelfde als de oorspronkelijke uitgave.");
@@ -26,7 +28,6 @@ regGS("Duplicating section", "Sectie wordt gedupliceerd");
 regGS("The section $1 could not be duplicated", "De sectie $1 kan niet worden gedupliceerd");
 regGS("Section $1 has been duplicated to $2. $3 of $4", "Sectie $1 is gedupliceerd naar $2. $3 van $4");
 regGS("You do not have the right to modify sections.", "Je hebt niet de rechten om secties aan te passen.");
-regGS("Delete all articles from the section.", "Verwijder alle artikelen van de sectie.");
 regGS("A total of $1 articles were deleted.", "Een totaal van $1 articles werd verwijderd.");
 regGS("Duplicate Section:", "Depliceer Sectie:");
 regGS("Existing Section", "Huidige Sectie");
@@ -41,4 +42,9 @@ regGS("The section number specified already exists, please specify a different v
 regGS("Warning", "Waarschuwing");
 regGS("You must select a section.", "Je moet een sectie selecteren.");
 regGS("You must specify a name for the section.", "Je moet een naam geven voor de sectie.");
+regGS("The section could not be added.", "");
+regGS("Add new section", "");
+regGS("Section List", "Sectie lijst");
+regGS("Updating section name", "Sectie naam wordt bijgewerkt");
+regGS("Delete all articles from the section.", "Verwijder alle artikelen van de sectie.");
 ?>
