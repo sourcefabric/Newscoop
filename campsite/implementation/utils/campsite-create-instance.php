@@ -263,7 +263,7 @@ function camp_upgrade_database($p_db_name, $p_defined_parameters)
 	}
 
 	$first = true;
-	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x");
+	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x", "2.6.0");
 	foreach ($versions as $index=>$db_version) {
 		if ($old_version > $db_version) {
 			continue;
@@ -356,6 +356,13 @@ function camp_detect_database_version($p_db_name, &$version)
 				return "Unable to query the database $p_db_name";
 			}
 			if (mysql_num_rows($res2) > 0) {
+				$version = "2.6.0";
+			}
+			if (!$res2 = mysql_query("SHOW COLUMNS FROM ArticleTypeMetadata LIKE 'type_name'")) {
+				return "Unable to query the database $p_db_name";
+			}
+			$row = mysql_fetch_array($res2, MYSQL_ASSOC);
+			if (!is_null($row) && strstr($row['Type'], '166') != '') {
 				$version = "2.6.x";
 			}
 		}
