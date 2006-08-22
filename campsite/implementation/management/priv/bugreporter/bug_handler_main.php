@@ -71,6 +71,16 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
         return;
     }
 
+    // -- Return on chown errors --
+    if (preg_match ('/^chown/i', $p_string)){
+        return;
+    }
+
+    // -- Return on chgrp errors --
+    if (preg_match ('/^chgrp/i', $p_string)){
+        return;
+    }
+
     // --- Don't print out the previous screen (in which the error occurred). ---
     ob_end_clean();
 
