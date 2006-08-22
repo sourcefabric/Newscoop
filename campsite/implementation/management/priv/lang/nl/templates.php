@@ -7,6 +7,13 @@ regGS("If the file you specified is a text file, you can convert its character s
 regGS("Directory $1 was deleted", "");
 regGS("Directory $1 created.", "");
 regGS("You must select a file to upload.", "");
+regGS("You can only replace a file with a file of the same type.  The original file is of type \"$1\", and the file you uploaded was of type \"$2\".", "");
+regGS("Unable to save the file '$1' to the path '$2'.", "");
+regGS("Replace file:", "");
+regGS("Replace", "");
+regGS("File \"$1\" uploaded.", "");
+regGS("File \"$1\" replaced.", "");
+regGS("The folder name can't be '..' or '.'", "");
 regGS("The template '$1' was saved successfully.", "Het sjabloon '$1' was succesvol opgeslagen.");
 regGS("The template $1 is in use and can not be deleted.", "Het sjabloon $1 is in gebruik en kan niet worden verwijderd.");
 regGS("Create new folder", "Maak een nieuwe map");

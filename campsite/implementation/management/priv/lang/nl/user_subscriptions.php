@@ -1,4 +1,5 @@
-<?php
+<?php 
+regGS("Please select one or more languages.", "");
 regGS("Regardless of the language", "Onafhankelijk van de taal");
 regGS("Individual languages", "Individuele talen");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publicatie<BR><SMALL>(klik om alle secties te zien)</SMALL>");
