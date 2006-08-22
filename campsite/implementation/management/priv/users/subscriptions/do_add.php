@@ -68,7 +68,7 @@ $created = $subscription->create(array(
 	'IdUser' => $f_user_id,
 	'IdPublication' => $f_publication_id,
 	'Active' => $f_subscription_active,
-	'Type' => $f_subscription_type));
+	'Type' => $subsType));
 
 if (!$created) {
 	$errorMsgs[] = getGS('The subscription could not be added.')
