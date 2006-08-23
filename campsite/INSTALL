@@ -9,47 +9,8 @@ CONTENTS:
 ####################################################################
 
 PREPARATION - applications you need to have installed
-
-   (Most of the following should be installed with the default
-   distribution. But check for MySQL and Apache ...)
-
-1. make
-   Usually the make binary is located in /usr/bin directory.
-   On rpm systems make package should be installed.
-
-2. stat
-   Stat is a utility for displaying the file or filesystem status.
-   It is located in /bin directory. On RedHat, Suse stat package
-   must be installed. On Mandrake fileutils package must be installed.
-
-3. g++ compiler
-   Usually the g++ binary is located in /usr/bin directory.
-   On rpm systems gcc-c++ package should be installed.
-
-4. MySQL server
-   On rpm systems, MySQL, MySQL-shared, MySQL-devel and
-   MySQL-client packages should be installed.
-   Check that mysqld daemon is started:
-      type "ps ax | grep mysqld".
-   You should see one safe_mysqld process and at least
-   three mysqld processes. If not, the mysqld daemon is not
-   started. Start it typing safe_mysqld as root.
-
-5. Apache server
-   On rpm systems, apache or http packages should be installed.
-   Configure the Web server (see INSTALLATION 3.) and (re)start
-   the httpd daemon.
-
-6. PHP
-   Campsite requires PHP 4.3 or newer; the following PHP modules
-   must be installed: php-cli (command line), php-mysql, php-gd.
-
-7. Cron daemon
-   Usually the crond binary is located in /usr/sbin directory.
-   On rpm systems vixie-cron package should be installed.
-   Make sure the crond daemon is started:
-      type "ps ax|grep cron"
-   You should see a cron process.
+  see the manual page at:
+  http://code.campware.org/manuals/campsite/2.6/index.php?id=5
 
 ####################################################################
 
