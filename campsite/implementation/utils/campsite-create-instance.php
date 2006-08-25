@@ -20,7 +20,7 @@ if (!camp_create_instance($GLOBALS['argv'], $errors)) {
 	if ($g_silent) {
 		exit(1);
 	}
-	camp_msg('There were ERRORS!!!\n');
+	camp_msg('There were ERRORS!!!');
 	foreach($errors as $index=>$error) {
 		camp_msg("$error", true, 2);
 	}
@@ -217,8 +217,12 @@ function camp_create_database($p_defined_parameters)
 		camp_msg("   The database of the instance $db_name was saved in the file:\n   "
 				. $Campsite['CAMPSITE_DIR'] . "/backup/$db_name/$db_name-database.sql");
 		if (!($res = camp_upgrade_database($db_name, $p_defined_parameters)) == 0) {
-			camp_restore_database($db_name, $p_defined_parameters);
-			return $res . "\nThere was an error when upgrading the database; "
+			if (!($res2 = camp_restore_database($db_name, $p_defined_parameters)) == 0) {
+				return "$res\n$res2\nThere was an error upgrading and restoring the old database.\n"
+					. "A backup of the old database is in "
+					. $Campsite['CAMPSITE_DIR'] . "/backup/$db_name directory.";
+			}
+			return "$res\nThere was an error when upgrading the database; "
 				. "the old database was restored.\nA backup of the old database is in "
 				. $Campsite['CAMPSITE_DIR'] . "/backup/$db_name directory.";
 		}
@@ -357,13 +361,13 @@ function camp_detect_database_version($p_db_name, &$version)
 			}
 			if (mysql_num_rows($res2) > 0) {
 				$version = "2.6.0";
-			}
-			if (!$res2 = mysql_query("SHOW COLUMNS FROM ArticleTypeMetadata LIKE 'type_name'")) {
-				return "Unable to query the database $p_db_name";
-			}
-			$row = mysql_fetch_array($res2, MYSQL_ASSOC);
-			if (!is_null($row) && strstr($row['Type'], '166') != '') {
-				$version = "2.6.x";
+				if (!$res2 = mysql_query("SHOW COLUMNS FROM ArticleTypeMetadata LIKE 'type_name'")) {
+					return "Unable to query the database $p_db_name";
+				}
+				$row = mysql_fetch_array($res2, MYSQL_ASSOC);
+				if (!is_null($row) && strstr($row['Type'], '166') != '') {
+					$version = "2.6.x";
+				}
 			}
 		}
 	}
