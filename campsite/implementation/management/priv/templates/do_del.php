@@ -15,7 +15,7 @@ if (!Template::IsValidPath($Path)) {
 }
 
 $backLink = "/$ADMIN/templates?Path=".urlencode($Path);
-$dir = urldecode($Path)."/".urldecode($Name);
+$fileFullName = (!empty($Path)) ? urldecode($Path)."/".urldecode($Name) : urldecode($Name);
 $fileFullPath = Template::GetFullPath(urldecode($Path), $Name);
 $errorMsgs = array();
 
@@ -24,7 +24,7 @@ $deleted = false;
 if (!$isFile) {
 	$deleted = rmdir($fileFullPath);
 	if ($deleted) {
-		$logtext = getGS('Directory $1 was deleted', mysql_real_escape_string($dir));
+		$logtext = getGS('Directory $1 was deleted', mysql_real_escape_string($fileFullName));
 		Log::Message($logtext, $g_user->getUserName(), 112);
 		camp_html_add_msg($logtext, "ok");
 	} else {
@@ -32,18 +32,18 @@ if (!$isFile) {
 	}
 } else {
 	$template_path = Template::GetPath($Path, $Name);
-	if (!Template::InUse($Name)) {
+	if (!Template::InUse($fileFullName)) {
 		$deleted = unlink($fileFullPath);
 		if ($deleted) {
-			$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($dir));
-			Log::Message($logtext, $g_user->getUserName(), 112);
+			$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($fileFullName));
+			Log::Message($logtext, $g_user->getUserId(), 112);
 			Template::UpdateStatus();
 			camp_html_add_msg($logtext, "ok");
 		} else {
-			camp_html_add_msg(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $fileFullPath));
+			camp_html_add_msg(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $fileFullName));
 		}
 	} else {
-		camp_html_add_msg(getGS("The template $1 is in use and can not be deleted.", $fileFullPath));
+		camp_html_add_msg(getGS("The template $1 is in use and can not be deleted.", $fileFullName));
 	}
 }
 

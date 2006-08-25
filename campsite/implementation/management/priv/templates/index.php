@@ -69,9 +69,9 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 	?>
 	</TR>
 </TABLE>
-<p>
+<P>
 <?php
-camp_html_display_msgs(0);
+camp_html_display_msgs("0.5em", 0);
 
 $listbasedir = $path;
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/templates/list_dir.php");

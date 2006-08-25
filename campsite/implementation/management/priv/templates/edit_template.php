@@ -16,6 +16,9 @@ if (!Template::IsValidPath($f_path)) {
 }
 $filename = Template::GetFullPath($f_path, $f_name);
 $templateName = (!empty($f_path) ? $f_path."/" : "").$f_name;
+if ($templateName[0] == '/') {
+	$templateName = substr($templateName, 1);
+}
 $templateObj =& new Template($templateName);
 
 if (!file_exists($filename)) {

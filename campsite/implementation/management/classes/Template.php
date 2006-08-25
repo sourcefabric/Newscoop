@@ -149,7 +149,10 @@ class Template extends DatabaseObject {
 	 */
 	function InUse($p_templateName)
 	{
+		global $Campsite;
 		global $g_ado_db;
+
+		$p_templateName = ltrim($p_templateName, '/');
 		$queryStr = "SELECT * FROM Templates WHERE Name = '$p_templateName'";
 		$row = $g_ado_db->GetRow($queryStr);
 		if (!$row) {
@@ -173,6 +176,15 @@ class Template extends DatabaseObject {
 		if ($numMatches > 0) {
 			return true;
 		}
+
+		$tplFindObj = new FileTextSearch();
+		$tplFindObj->setExtensions(array('tpl'));
+		$tplFindObj->setSearchKey(' '.$p_templateName);
+		$tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
+		if ($tplFindObj->m_totalFound > 0) {
+			return true;
+		}
+
 		return false;
 	} // fn InUse
 
@@ -233,6 +245,40 @@ class Template extends DatabaseObject {
 		$fileFullPath = $Campsite['TEMPLATE_DIRECTORY'].$p_path."/".$p_filename;
 		return $fileFullPath;
 	} // fn GetFullPath
+
+
+	/**
+	 * Update the Name field for a template on Renaming/Moving.
+	 *
+	 * It is called before any UpdateStatus() when renaming/moving
+	 * a template to avoid a new Id is set for the changed template.
+	 *
+	 * @param string $p_tplOrig
+	 *		The original template Name
+	 * @param string $p_tplNew
+	 *		The new template Name
+	 * @return mixed
+	 */
+	function UpdateOnChange($p_tplOrig, $p_tplNew)
+	{
+		global $Campsite;
+		global $g_ado_db;
+
+		// Remove beginning slash
+		$p_tplOrig = ltrim($p_tplOrig, '/');
+		$p_tplNew = ltrim($p_tplNew, '/');
+
+		if (is_file($Campsite['TEMPLATE_DIRECTORY']."/".$p_tplNew)) {
+			$sql = "SELECT * FROM Templates WHERE Name = '$p_tplOrig'";
+			$row = $g_ado_db->GetRow($sql);
+			if (!$row) {
+				return false;
+			}
+			$id = $row['Id'];
+			$sql = "UPDATE Templates SET Name = '$p_tplNew' WHERE Id = '$id'";
+			$g_ado_db->Execute($sql);
+		}
+	} // fn UpdateOnChange
 
 
 	/**
@@ -389,5 +435,111 @@ class Template extends DatabaseObject {
 	} // fn GetAllTemplates
 
 
+	/**
+	 *
+	 */
+	function GetAllFolders($p_folders)
+	{
+		global $Campsite;
+
+		$path = $Campsite['TEMPLATE_DIRECTORY'] . '/';
+		if ($dirHandle = opendir($path)) {
+			$i = 0;
+			while (($file = readdir($dirHandle)) !== false) {
+				if ($file != '.' && $file != '..' && is_dir($path . $file)) {
+					$i++;
+					$p_folders[$i] = $path . $file;
+				}
+			}
+		}
+		closedir($dirHandle);
+
+		$i = count($p_folders);
+		foreach ($p_folders as $folder) {
+			if ($subDirHandle = opendir($folder)) {
+				while (($file = readdir($subDirHandle)) !== false) {
+					$pathTo = $folder. '/' . $file;
+					if ($file != '.' && $file != '..' &&
+							is_dir($pathTo) &&
+							!in_array($pathTo, $p_folders)) {
+						$i++;
+						$p_folders[$i] = $pathTo;
+						$p_folders = Template::GetAllFolders($p_folders);
+					}
+				}
+			}
+			closedir($subDirHandle);
+		}
+
+		sort($p_folders);
+		return $p_folders;
+		
+	} // fn GetAllFolders
+
+
+	/*
+	 * Deletes a template file.
+	 * @return mixed
+	 */
+	function delete() {
+		global $g_user;
+
+		$deleted = false;
+		$rootDir = '/';
+		if ($this->fileExists()) {
+			$Path = dirname($rootDir . $this->getName());
+			$Name = basename($this->getName());
+			$fileFullPath = $this->getFullPath($Path, $Name);
+			if (!Template::InUse($this->getName())) {
+				$deleted = unlink($fileFullPath);
+				if($deleted) {
+					$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($this->getName()));
+					Log::Message($logtext, $g_user->getUserId(), 112);
+				}
+			}
+		}
+		return $deleted;
+	} // fn delete
+
+
+	function move($p_current_folder, $p_destination_folder) {
+		global $Campsite;
+		global $g_user;
+
+		if (Template::IsValidPath($p_current_folder) &&
+			Template::IsValidPath($p_destination_folder)) {
+			$currentFolder = ($p_current_folder == '/') ? '' : $p_current_folder;
+			$destinationFolder = ($p_destination_folder == '/') ? '' : $p_destination_folder;
+			$currentFullPath = $Campsite['TEMPLATE_DIRECTORY']
+						. $currentFolder
+						. '/' . basename($this->getName());
+			$destinationFullPath = $Campsite['TEMPLATE_DIRECTORY']
+						. $destinationFolder
+						. '/' . basename($this->getName());
+			if (rename($currentFullPath, $destinationFullPath)) {
+				$logtext = getGS('Template $1 was moved to $2',
+						 mysql_real_escape_string($currentFolder . '/' . basename($this->getName())),
+						 mysql_real_escape_string($destinationFolder . '/' . basename($this->getName())));
+				Log::Message($logtext, $g_user->getUserId(), 117);
+				return true;
+			}
+		}
+		return false;
+	}
+
 } // class Template
+
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+

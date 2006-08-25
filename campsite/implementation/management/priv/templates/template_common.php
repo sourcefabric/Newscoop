@@ -5,6 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Template.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/FileTextSearch.php");
 
 function camp_get_text_extensions()
 {
