@@ -8,6 +8,27 @@
  * FileTextSearch provides flexible find and replace features
  * within files of a given path.
  *
+ * Usage:
+ * It is very easy to use, just look at the example below.
+ * To only search for a pattern into the text file, do not
+ * define any replacement key.
+ *
+ * Example:
+ * $path = '/path/to/search';
+ *
+ * // create a class instance
+ * $obj = new FileTextSearch();
+ * // set the extensions to search files within
+ * $obj = setExtensions(array('xml','xsl');
+ * // add an extension whenever you need
+ * $obj = addExtension('css');
+ * // set the pattern to search for
+ * $obj = setSearchKey('pattern');
+ * // set the replace key if you want to replace matches with it
+ * $obj = setReplacementKey('replace');
+ * // finally run the search
+ * $obj = findReplace($path);
+ *
  * @package Campsite
  */
 class FileTextSearch {

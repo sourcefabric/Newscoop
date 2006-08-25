@@ -264,7 +264,7 @@ class Template extends DatabaseObject {
 		global $Campsite;
 		global $g_ado_db;
 
-		// Remove beginning slash
+		// Remove beginning slashes
 		$p_tplOrig = ltrim($p_tplOrig, '/');
 		$p_tplNew = ltrim($p_tplNew, '/');
 
@@ -436,7 +436,10 @@ class Template extends DatabaseObject {
 
 
 	/**
+	 * Returns an array containing the directories tree for the given path.
 	 *
+	 * @param array $p_folders
+	 * @return array $p_folders 
 	 */
 	function GetAllFolders($p_folders)
 	{
@@ -470,15 +473,16 @@ class Template extends DatabaseObject {
 			}
 			closedir($subDirHandle);
 		}
-
 		sort($p_folders);
 		return $p_folders;
-		
 	} // fn GetAllFolders
 
 
-	/*
+	/**
 	 * Deletes a template file.
+	 * It does not take care on database info upgrade because
+	 * it trusts of the cool Template::UpdateStatus() function.
+	 *
 	 * @return mixed
 	 */
 	function delete() {
@@ -502,6 +506,15 @@ class Template extends DatabaseObject {
 	} // fn delete
 
 
+	/**
+	 * Moves a template from current folder to destination folder.
+	 * It does not take care on database info upgrade because
+	 * it trusts of the cool Template::UpdateStatus() function.
+	 *
+	 * @param string $p_current_folder
+	 * @param string $p_destination_folder
+	 * @return bool true on succes or false on failure
+	 */
 	function move($p_current_folder, $p_destination_folder) {
 		global $Campsite;
 		global $g_user;
@@ -530,16 +543,3 @@ class Template extends DatabaseObject {
 } // class Template
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
