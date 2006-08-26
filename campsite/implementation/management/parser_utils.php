@@ -12,6 +12,8 @@ $DEBUG = false;
  */
 function camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies)
 {
+	camp_debug_msg("request method: " . getenv("REQUEST_METHOD"));
+
 	$msg = camp_create_url_request_message($p_env_vars, $p_parameters, $p_cookies);
 	for ($i = 1; $i <= 10; $i++) {
 		$size_read = camp_read_parser_output(camp_send_message_to_parser($msg));
@@ -278,14 +280,12 @@ function camp_read_post_parameters(&$p_queryString)
 	global $_POST;
 	$query_string = file_get_contents("php://stdin");
 	if (trim($query_string) == "" && isset($_POST) && is_array($_POST)) {
-		camp_debug_msg('reading post parameters from $_POST');
 		$copyOfPost = $_POST;
 		if (get_magic_quotes_gpc()) {
 			array_walk($copyOfPost, 'camp_stripslashes_callback');
 		}
 		return $copyOfPost;
 	}
-	camp_debug_msg("query string: $query_string");
 	return camp_read_get_parameters($query_string);
 } // fn camp_read_post_parameters
 
