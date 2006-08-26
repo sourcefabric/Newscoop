@@ -32,10 +32,6 @@ if (isset($parameters["ArticleCommentSubmitResult"])) {
 }
 $cookies = camp_read_cookies($cookies_string);
 
-camp_debug_msg("request method: " . getenv("REQUEST_METHOD"));
-camp_debug_msg("query string: $query_string");
-camp_debug_msg("cookies string: $cookies_string");
-
 if (isset($parameters["submitComment"])
 		&& trim($parameters["submitComment"]) != "") {
 	require_once($_SERVER['DOCUMENT_ROOT'].'/comment_lib.php');
@@ -44,5 +40,6 @@ if (isset($parameters["submitComment"])
 } else {
 	camp_send_request_to_parser($env_vars, $parameters, $cookies);
 }
+camp_debug_msg("query string: $query_string");
 
 ?>
