@@ -14,7 +14,7 @@ if (!Template::IsValidPath($Path)) {
 	camp_html_goto_page("/$ADMIN/templates/");
 }
 
-$backLink = "/$ADMIN/templates?Path=".urlencode($Path);
+$backLink = "/$ADMIN/templates/?Path=".urlencode($Path);
 $dir = urldecode($Path)."/".urldecode($Name);
 $fileFullPath = Template::GetFullPath(urldecode($Path), $Name);
 $errorMsgs = array();

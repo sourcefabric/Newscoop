@@ -15,13 +15,13 @@ $fullPath = $Campsite['TEMPLATE_DIRECTORY'].$Path;
 if (!is_writable($fullPath)) {
 	camp_html_add_msg(getGS("Unable to $1 template.", 'create'));
 	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $fullPath));
-	camp_html_goto_page("/$ADMIN/templates?Path=".urlencode($Path));
+	camp_html_goto_page("/$ADMIN/templates/?Path=".urlencode($Path));
 	exit;
 }
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Templates"), "/$ADMIN/templates");
+$crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
 $crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
 $crumbs[] = array(getGS("Create new template"), "");
 echo camp_html_breadcrumbs($crumbs);

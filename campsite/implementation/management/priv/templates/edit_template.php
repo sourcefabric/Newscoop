@@ -37,7 +37,7 @@ if ($templateObj->exists()) {
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Templates"), "/$ADMIN/templates");
+$crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
 $crumbs = array_merge($crumbs, camp_template_path_crumbs($f_path));
 $crumbs[] = array(getGS("Edit template").": $templateDisplayName", "");
 echo camp_html_breadcrumbs($crumbs);
@@ -77,7 +77,7 @@ if (in_array($extension, $imageExtensions)) {
 			<?php  if ($g_user->hasPermission("DeleteTempl") && is_writable($filename)) { ?>
 			<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 			<?php  } else { ?>
-			<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($f_path); ?>'">
+			<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates/?Path=".urlencode($f_path); ?>'">
 			<?php  } ?>
 		</TD>
 	</TR>
@@ -91,7 +91,7 @@ if (in_array($extension, $imageExtensions)) {
 		<?php  if ($g_user->hasPermission("DeleteTempl") && is_writable($filename)) { ?>
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 		<?php  } else { ?>
-		<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates?Path=".urlencode($f_path); ?>'">
+		<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates/?Path=".urlencode($f_path); ?>'">
 		<?php  } ?>
 		</FORM>
 		</TD>
