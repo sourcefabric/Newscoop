@@ -17,13 +17,13 @@ $fileFullPath = Template::GetFullPath($path, $Name);
 if (!is_writable($fileFullPath)) {
 	camp_html_add_msg(getGS("Unable to $1 template.", 'rename'));
 	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $fileFullPath));
-	camp_html_goto_page("/$ADMIN/templates?Path=".urlencode($path));
+	camp_html_goto_page("/$ADMIN/templates/?Path=".urlencode($path));
 	exit;
 }
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Templates"), "/$ADMIN/templates");
+$crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
 $crumbs = array_merge($crumbs, camp_template_path_crumbs($path));
 $crumbs[] = array(getGS("Rename template").": $Name", "");
 echo camp_html_breadcrumbs($crumbs);
@@ -52,7 +52,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 	<INPUT TYPE="HIDDEN" NAME="f_path" VALUE="<?php p($path); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_orig_name" VALUE="<?php p($Name); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php putGS('Cancel'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/templates?Path=<?php p(urlencode($path)); ?>'">-->
+	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php putGS('Cancel'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/templates/?Path=<?php p(urlencode($path)); ?>'">-->
 	</DIV>
 	</TD>
 </TR>

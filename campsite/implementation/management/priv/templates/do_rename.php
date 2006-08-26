@@ -56,7 +56,7 @@ if (!$exists) {
 				."?f_path=".urlencode($f_path)."&f_name=".urlencode($f_new_name));
 		} else {
 			// Go back to file list.
-			camp_html_goto_page("/$ADMIN/templates?Path=".urlencode($f_path));
+			camp_html_goto_page("/$ADMIN/templates/?Path=".urlencode($f_path));
 		}
 	}
 } else {

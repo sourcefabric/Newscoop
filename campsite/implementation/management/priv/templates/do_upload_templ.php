@@ -21,7 +21,7 @@ $result = Template::OnUpload("f_file", $f_path, null, $f_charset);
 if (!PEAR::isError($result)) {
 	Template::UpdateStatus();
 	camp_html_add_msg(getGS('File "$1" uploaded.', $fileName), "ok");
-	camp_html_goto_page("/$ADMIN/templates?Path=" . urlencode($f_path));
+	camp_html_goto_page("/$ADMIN/templates/?Path=" . urlencode($f_path));
 } else {
 	camp_html_add_msg($result->getMessage());
 	camp_html_goto_page($backLink);

@@ -1,10 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
 
-// echo "<pre>";
-// print_r($_REQUEST);
-// echo "</pre>";
-
 // Get input
 $f_template_codes = Input::Get('f_template_code', 'array', array(), true);
 $f_template_list_action = Input::Get('f_template_list_action');

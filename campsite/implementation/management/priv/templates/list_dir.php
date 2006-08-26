@@ -118,7 +118,7 @@ function checkboxClick(theCheckbox, theRowNum)
         row.className = newClass;
 } // fn checkboxClick
 </script>
-<FORM name="template_list" action="do_template_list_action.php" method="POST">
+<FORM name="template_list" action="/<?php echo $ADMIN; ?>/templates/do_template_list_action.php" method="POST">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="background-color: #D5C3DF; border-color: #A35ACF;">
 <TR>
         <TD>
