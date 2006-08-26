@@ -1,6 +1,6 @@
 -- MySQL dump 10.9
 --
--- Host: localhost    Database: demo3-test
+-- Host: localhost    Database: campsite
 -- ------------------------------------------------------
 -- Server version	4.1.15-Debian_1ubuntu5-log
 
