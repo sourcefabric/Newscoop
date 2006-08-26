@@ -6,6 +6,33 @@ margin: 0;
 	font-size: 11px;
 	color: #333333;
 }
+.articleComment-text{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	margin: 2px 0 0 0;
+}
+#articleComment form input {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000;
+	border: 1px solid #333;
+	width: 200px; 
+        margin: 2px 0 2px 0;
+}
+#articleComment form p{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	margin: 2px 0 0 0;
+}
+#articleComment form textarea {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	background-color: white;
+	border: 1px solid #333;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 2px 0px 2px;
+}
 .login-text{
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;

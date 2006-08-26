@@ -323,6 +323,25 @@ td.menu {
 	padding: 0px 2px 0px 2px;
 }
 
+.longfield {
+	background-color: white;
+	border: 1px solid #b6c7fe;
+	width: 200px;
+	height: 20px;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 2px 0px 2px;
+}
+
+.textarea {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	background-color: white;
+	border: 1px solid #b6c7fe;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 2px 0px 2px;
+}
+
 .indeks1 {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;

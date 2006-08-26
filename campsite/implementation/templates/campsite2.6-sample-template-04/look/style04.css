@@ -43,6 +43,34 @@ padding: 0 0 0 0;
         color: #006b24;
         text-decoration:underline;
 }
+.articleComment-text{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	margin: 2px 0 0 0;
+}
+#articleComment form input {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000;
+        background-color:#dffdd4;
+	border: 1px solid #333;
+	width: 200px; 
+        margin: 2px 0 2px 0;
+}
+#articleComment form p{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	margin: 2px 0 0 0;
+}
+#articleComment form textarea {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+        background-color:#dffdd4;
+	border: 1px solid #333;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 2px 0px 2px;
+}
 #search{
 margin: 0 0 0 0;
 padding: 3px 0 3px 0;
