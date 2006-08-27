@@ -119,7 +119,7 @@ function checkboxClick(theCheckbox, theRowNum)
 } // fn checkboxClick
 </script>
 <FORM name="template_list" action="/<?php echo $ADMIN; ?>/templates/do_template_list_action.php" method="POST">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="background-color: #D5C3DF; border-color: #A35ACF;">
+<TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
 <TR>
         <TD>
                 <TABLE cellpadding="3" cellspacing="0">
