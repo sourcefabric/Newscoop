@@ -35,39 +35,51 @@ $folders = array();
 $folders = Template::GetAllFolders($folders);
 $i = 1;
 foreach ($folders as $folder) {
-        $folders[$i++] = substr($folder, strlen($Campsite['TEMPLATE_DIRECTORY']));
+	$tmpTemplateFolder = substr($folder, strlen($Campsite['TEMPLATE_DIRECTORY']));
+	if ($f_current_folder != $tmpTemplateFolder) {
+		$folders[$i++] = $tmpTemplateFolder;
+	}
 }
-$folders[0] = '/';
+if ($f_current_folder != '/') {
+	$folders[0] = '/';
+} else {
+	array_shift($folders);
+}
 
 //
 // This section is executed when the user finally hits the action button.
 //
 if (isset($_REQUEST["action_button"])) {
-	if ($f_destination_folder != '/') {
-		$url = "/$ADMIN/templates/index.php?Path=$f_destination_folder";
+	if (empty($f_destination_directory)) {
+		$errorMsg = getGS("You must select a destination folder");
+		camp_html_add_msg($errorMsg);
 	} else {
-		$url = "/$ADMIN/templates/index.php";
-	}
-
-	if ($f_action == "move") {
-		// Move all the templates requested.
-		foreach ($templates as $template) {
-			if ($template->move($f_current_folder, $f_destination_folder)) {
-				$replaceObj = new FileTextSearch();
-				$replaceObj->setExtensions(array('tpl'));
-				$replaceObj->setSearchKey(' '.$template->getName());
-				$replaceObj->setReplacementKey(' '.ltrim($f_destination_folder
-								  . '/'
-								  . basename($template->getName()), '/'));
-				$replaceObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
-				Template::UpdateOnChange($template->getName(),
-							 $f_destination_folder . '/' . basename($template->getName()));
-
-			}
+		if ($f_destination_folder != '/') {
+			$url = "/$ADMIN/templates/index.php?Path=$f_destination_folder";
+		} else {
+			$url = "/$ADMIN/templates/index.php";
 		}
-		camp_html_add_msg(getGS("Template(s) moved."), "ok");
-		camp_html_goto_page($url);
 
+		if ($f_action == "move") {
+			// Move all the templates requested.
+			foreach ($templates as $template) {
+				if ($template->move($f_current_folder, $f_destination_folder)) {
+					$replaceObj = new FileTextSearch();
+					$replaceObj->setExtensions(array('tpl'));
+					$replaceObj->setSearchKey(' '.$template->getName());
+					$replaceObj->setReplacementKey(' '.ltrim($f_destination_folder
+									  . '/'
+									  . basename($template->getName()), '/'));
+					$replaceObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
+					Template::UpdateOnChange($template->getName(),
+								 $f_destination_folder
+								 . '/'
+								 . basename($template->getName()));
+				}
+			}
+			camp_html_add_msg(getGS("Template(s) moved."), "ok");
+			camp_html_goto_page($url);
+		}
 	}
 } // END perform the action
 
@@ -77,9 +89,11 @@ $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
 $crumbs[] = array(getGS("Move templates"), "");
 echo camp_html_breadcrumbs($crumbs);
 
-?>
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 
-<?php camp_html_display_msgs(); ?>
+camp_html_display_msgs();
+
+?>
 
 <P>
 <DIV class="page_title" style="padding-left: 18px;">
@@ -87,7 +101,7 @@ echo camp_html_breadcrumbs($crumbs);
 </DIV>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" style="margin-left: 10px;">
-<FORM NAME="move" METHOD="POST">
+<FORM NAME="move" METHOD="POST" ONSUBMIT="return validateForm(this, 0, 1, 0, 1, 8);">
 <INPUT type="hidden" name="f_action" value="<?php p($f_action); ?>">
 <?php
 if (!empty($f_current_folder)) {
@@ -137,7 +151,7 @@ foreach ($templates as $template) {
 					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Folder'); ?>: </TD>
 					<TD valign="middle" ALIGN="LEFT">
 						<?php if (count($folders) > 1) { ?>
-						<SELECT NAME="f_destination_folder" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != '<?php p($f_destination_folder); ?>') {this.form.submit();}">
+						<SELECT NAME="f_destination_folder" class="input_select" alt="select" emsg="<?php putGS("You must select a destination folder"); ?>">
 						<OPTION VALUE=""><?php  putGS('---Select folder---'); ?></option>
 						<?php
 						foreach ($folders as $folder) {
@@ -160,17 +174,8 @@ foreach ($templates as $template) {
 			</TD>
 		</TR>
 		<TR>
-			<TD colspan="2">
-			<?php
-				if ($f_current_folder == $f_destination_folder) {
-					putGS("The destination folder is the same as the source folder."); echo "<BR>\n";
-				}
-			?>
-			</TD>
-		</TR>
-		<TR>
 			<TD align="center" colspan="2">
-				<INPUT TYPE="submit" Name="action_button" Value="<?php p(putGS("Move templates")); ?>" <?php if ((empty($f_destination_folder)) || $f_current_folder == $f_destination_folder) { echo 'class="button_disabled"'; } else { echo "class=\"button\""; }?> />
+				<INPUT TYPE="submit" Name="action_button" Value="<?php p(putGS("Move templates")); ?>" class="button" />
 			</TD>
 		</TR>
 		</TABLE>
