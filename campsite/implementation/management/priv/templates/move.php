@@ -50,7 +50,7 @@ if ($f_current_folder != '/') {
 // This section is executed when the user finally hits the action button.
 //
 if (isset($_REQUEST["action_button"])) {
-	if (empty($f_destination_directory)) {
+	if (empty($f_destination_folder)) {
 		$errorMsg = getGS("You must select a destination folder");
 		camp_html_add_msg($errorMsg);
 	} else {
