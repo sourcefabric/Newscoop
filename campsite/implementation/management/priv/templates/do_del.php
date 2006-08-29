@@ -25,7 +25,7 @@ if (!$isFile) {
 	$deleted = rmdir($fileFullPath);
 	if ($deleted) {
 		$logtext = getGS('Directory $1 was deleted', mysql_real_escape_string($fileFullName));
-		Log::Message($logtext, $g_user->getUserName(), 112);
+		Log::Message($logtext, $g_user->getUserId(), 112);
 		camp_html_add_msg($logtext, "ok");
 	} else {
 		camp_html_add_msg(camp_get_error_message(CAMP_ERROR_RMDIR, $fileFullPath));
