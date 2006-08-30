@@ -37,7 +37,7 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 	</td>
 </tr>
 <tr>
-	<td align="left" width="400px">
+	<td align="left" width="400px" nowrap>
 		<?php putGS("Number of failed login attempts before showing CAPTCHA :"); ?>
 	</td>
 	<td align="left" valign="top">
