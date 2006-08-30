@@ -32,7 +32,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 	</td>
 </tr>
 <tr>
-	<td align="left" width="400px">
+	<td align="left" width="400px" nowrap>
 		<?php putGS("Number of failed login attempts before showing CAPTCHA :"); ?>
 	</td>
 	<td align="left">
