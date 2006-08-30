@@ -61,15 +61,22 @@ if (isset($_REQUEST["action_button"])) {
 		}
 
 		if ($f_action == "move") {
+			$sql = "SELECT Id FROM TemplateTypes WHERE Name = 'nontpl'";
+			$nonTplTypeId = $g_ado_db->GetOne($sql);
 			// Move all the templates requested.
 			foreach ($templates as $template) {
 				if ($template->move($f_current_folder, $f_destination_folder)) {
+					$searchKey = $template->getName();
+					$replacementKey = ltrim($f_destination_folder
+							. '/' . basename($template->getName()), '/');
+					if ($template->getType() != $nonTplTypeId) {
+						$searchKey = ' ' . $searchKey;
+						$replacementKey = ' ' . $replacementKey;
+					}
 					$replaceObj = new FileTextSearch();
-					$replaceObj->setExtensions(array('tpl'));
-					$replaceObj->setSearchKey(' '.$template->getName());
-					$replaceObj->setReplacementKey(' '.ltrim($f_destination_folder
-									  . '/'
-									  . basename($template->getName()), '/'));
+					$replaceObj->setExtensions(array('tpl','css'));
+					$replaceObj->setSearchKey($searchKey);
+					$replaceObj->setReplacementKey($replacementKey);
 					$replaceObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
 					Template::UpdateOnChange($template->getName(),
 								 $f_destination_folder

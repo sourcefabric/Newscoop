@@ -302,7 +302,11 @@ function checkboxClick(theCheckbox, theRowNum)
 					print "\" NAME=\"f_template_code[]\" ID=\"checkbox_" . $counter . "\" CLASS=\"input_checkbox\" onclick=\"checkboxClick(this, " . $counter . ");\" /></TD>";
 					print "<TD valign=\"center\"><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/generic.gif' BORDER='0'>&nbsp;<A HREF='/$ADMIN/templates/edit_template.php?f_path=" .urlencode($listbasedir)."&f_name=".urlencode($filename)."'>$filename</A></TD>";
 				} elseif (camp_is_image_file($filename)) {
-					print "<TR $tr_class><TD><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/image.png' BORDER='0'> <A HREF='/$ADMIN/templates/edit_template.php?f_path=" .urlencode($listbasedir)."&f_name=".urlencode($filename)."'>$filename</a></TD>";
+					print "<TR id=\"row_" . $counter . "\" class=\"" . $tr_class . "\">";
+					print "<TD><INPUT TYPE=\"checkbox\" VALUE=\"";
+					if ($templateObj->exists()) { p($templateObj->getTemplateId()); } else { putGS("N/A"); }
+					print "\" NAME=\"f_template_code[]\" ID=\"checkbox_" . $counter . "\" CLASS=\"input_checkbox\" /></TD>";
+					print "<TD><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/image.png' BORDER='0'> <A HREF='/$ADMIN/templates/edit_template.php?f_path=" .urlencode($listbasedir)."&f_name=".urlencode($filename)."'>$filename</a></TD>";
 				} else {
 					print "<TR $tr_class><TD><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/generic.gif' BORDER='0'> $filename</TD>";
 				}
@@ -316,8 +320,9 @@ function checkboxClick(theCheckbox, theRowNum)
 					print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/rename.php?Path='.urlencode($listbasedir).'&Name='.urlencode($filename).'"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/rename.png" BORDER="0" ALT="'.getGS('Rename file').'" TITLE="'.getGS('Rename file').'"></A?</TD>';
 				}
 				if ($g_user->hasPermission("DeleteTempl")) {
-					print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/do_del.php?What=1&Path='.urlencode($listbasedir).'&Name='.urlencode($filename).'" onclick="return confirm(\''.getGS('Are you sure you want to delete the template $1 from folder $2?', htmlspecialchars($filename),htmlspecialchars($currentFolder)).'\');"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/delete.png" BORDER="0" ALT="'.getGS('Delete file').'" TITLE="'.getGS('Delete file').'"></A></TD></TR>';
+					print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/do_del.php?What=1&Path='.urlencode($listbasedir).'&Name='.urlencode($filename).'" onclick="return confirm(\''.getGS('Are you sure you want to delete the template object $1 from folder $2?', htmlspecialchars($filename),htmlspecialchars($currentFolder)).'\');"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/delete.png" BORDER="0" ALT="'.getGS('Delete file').'" TITLE="'.getGS('Delete file').'"></A></TD>';
 				}
+				print "</TR>";
 				$counter++;
 			}
 		}

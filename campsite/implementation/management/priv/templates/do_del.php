@@ -35,7 +35,7 @@ if (!$isFile) {
 	if (!Template::InUse($fileFullName)) {
 		$deleted = unlink($fileFullPath);
 		if ($deleted) {
-			$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($fileFullName));
+			$logtext = getGS('Template object $1 was deleted', mysql_real_escape_string($fileFullName));
 			Log::Message($logtext, $g_user->getUserId(), 112);
 			Template::UpdateStatus();
 			camp_html_add_msg($logtext, "ok");
@@ -43,7 +43,7 @@ if (!$isFile) {
 			camp_html_add_msg(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $fileFullName));
 		}
 	} else {
-		camp_html_add_msg(getGS("The template $1 is in use and can not be deleted.", $fileFullName));
+		camp_html_add_msg(getGS("The template object $1 is in use and can not be deleted.", $fileFullName));
 	}
 }
 

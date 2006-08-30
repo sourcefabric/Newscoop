@@ -153,6 +153,7 @@ class Template extends DatabaseObject {
 		global $g_ado_db;
 
 		$p_templateName = ltrim($p_templateName, '/');
+		// var_dump(pathinfo($p_templateName, PATHINFO_EXTENSION)); exit;
 		$queryStr = "SELECT * FROM Templates WHERE Name = '$p_templateName'";
 		$row = $g_ado_db->GetRow($queryStr);
 		if (!$row) {
@@ -177,9 +178,12 @@ class Template extends DatabaseObject {
 			return true;
 		}
 
+		if (pathinfo($p_templateName, PATHINFO_EXTENSION) == 'tpl') {
+			$p_templateName = ' ' . $p_templateName;
+		}
 		$tplFindObj = new FileTextSearch();
-		$tplFindObj->setExtensions(array('tpl'));
-		$tplFindObj->setSearchKey(' '.$p_templateName);
+		$tplFindObj->setExtensions(array('tpl','css'));
+		$tplFindObj->setSearchKey($p_templateName);
 		$tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
 		if ($tplFindObj->m_totalFound > 0) {
 			return true;
@@ -322,17 +326,25 @@ class Template extends DatabaseObject {
 				if ($fileType != "file") { // ignore special files and links
 					continue;
 				}
-				$ending = substr($file, strlen($file) - 4);
-				if ($ending != ".tpl") { // ignore files that are not templates (end in .tpl)
-					continue;
-				}
 
 				$relPath = substr($fullPath, strlen($rootDir) + 1);
 				$level = $relPath == "" ? 0 : substr_count($relPath, "/");
 				$sql = "SELECT count(*) AS nr FROM Templates WHERE Name = '" . $relPath . "'";
 				$existingTemplates = $g_ado_db->GetOne($sql);
 				if ($existingTemplates == 0) {
-					$sql = "INSERT IGNORE INTO Templates (Name, Level) VALUES('$relPath', $level)";
+					$ending = substr($file, strlen($file) - 4);
+					if ($ending != ".tpl") { // ignore files that are not templates (end in .tpl)
+						$sql = "SELECT Id FROM TemplateTypes WHERE Name = 'nontpl'";
+						$nonTplTypeId = $g_ado_db->GetOne($sql);
+						$sql = "INSERT IGNORE INTO Templates (Name, Type, Level) "
+									. "VALUES('$relPath', "
+										. "$nonTplTypeId, "
+										. "$level)";
+					} else {
+						$sql = "INSERT IGNORE INTO Templates (Name, Level) "
+									. "VALUES('$relPath', "
+										. "$level)";
+					}
 					$g_ado_db->Execute($sql);
 				}
 			}
@@ -538,7 +550,7 @@ class Template extends DatabaseObject {
 			}
 		}
 		return false;
-	}
+	} // fn move
 
 } // class Template
 

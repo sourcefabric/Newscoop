@@ -41,14 +41,18 @@ if (!$exists) {
 	$tpl2 = $Campsite['HTML_DIR']."/look/".$tpl2_name;
 	if (rename($tpl1, $tpl2)) {
 		Template::UpdateOnChange($tpl1_name, $tpl2_name);
-		$logtext = getGS('Template $1 was renamed to $2', $tpl1_name, $tpl2_name);
+		$logtext = getGS('Template object $1 was renamed to $2', $tpl1_name, $tpl2_name);
 		Log::Message($logtext, $g_user->getUserId(), 116);
 		$tpl1_name = ltrim($tpl1_name, '/');
 		$tpl2_name = ltrim($tpl2_name, '/');
+		if ($origExtension == 'tpl') {
+			$tpl1_name = ' ' . $tpl1_name;
+			$tpl2_name = ' ' . $tpl2_name;
+		}
 		$replaceObj = new FileTextSearch();
-		$replaceObj->setExtensions(array('tpl'));
-		$replaceObj->setSearchKey(' '.$tpl1_name);
-		$replaceObj->setReplacementKey(' '.$tpl2_name);
+		$replaceObj->setExtensions(array('tpl','css'));
+		$replaceObj->setSearchKey($tpl1_name);
+		$replaceObj->setReplacementKey($tpl2_name);
 		$replaceObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
 		if (camp_is_text_file($tpl2) || camp_is_image_file($tpl2)) {
 			// Go into edit mode.
@@ -64,7 +68,7 @@ if (!$exists) {
 	camp_html_goto_page("/$ADMIN/templates/");
 }
 
-camp_html_add_msg(getGS('The template $1 could not be renamed.','<b>'.$f_orig_name.'</B>'));
+camp_html_add_msg(getGS('The template object $1 could not be renamed.','<b>'.$f_orig_name.'</B>'));
 camp_html_goto_page($backLink);
 
 ?>
