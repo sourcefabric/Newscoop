@@ -23,7 +23,7 @@ if (!mysql_select_db($db_name)) {
 // 
 // populate the Events table
 //
-$sql = "INSERT INTO Events (Id, Name, Notify, IdLanguage) VALUES ('116','Rename Template','N','1'),('117','Move Template','N','1')";
+$sql = "INSERT INTO TemplateTypes (Id, Name) VALUES ('5','nontpl')";
 if (!($res = mysql_query($sql))) {
 	die("Unable to write to the database.\n");
 }
