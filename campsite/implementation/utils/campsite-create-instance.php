@@ -229,7 +229,7 @@ function camp_create_database($p_defined_parameters)
 	} else {
 		camp_msg(' * Creating the database...', false);
 		if (!camp_database_exists($db_name)
-			&& !mysql_query("CREATE DATABASE $db_name CHARACTER SET utf8 COLLATE utf8_bin")) {
+			&& !mysql_query("CREATE DATABASE `$db_name` CHARACTER SET utf8 COLLATE utf8_bin")) {
 			return "Unable to create the database " . $db_name;
 		}
 		$cmd = "mysql --user=$db_user --host=" . $Campsite['DATABASE_SERVER_ADDRESS']
@@ -420,7 +420,7 @@ function camp_restore_database($p_db_name, $p_defined_parameters)
 			return $clean;
 		}
 	} else {
-		if (!mysql_query("CREATE DATABASE $p_db_name CHARACTER SET utf8 COLLATE utf8_bin")) {
+		if (!mysql_query("CREATE DATABASE `$p_db_name` CHARACTER SET utf8 COLLATE utf8_bin")) {
 			return "Unable to restore database: can't create the database";
 		}
 	}
@@ -481,7 +481,7 @@ function camp_create_site($p_defined_parameters)
 		}
 		camp_msg('done.');
 	}
-	
+
 	camp_msg(' * Creating the site structure...', false);
 	// create symbolik links to configuration files
 	$link_files = array("$etc_dir/install_conf.php"=>"$html_dir/install_conf.php",
@@ -906,7 +906,7 @@ function camp_read_old_config($conf_dir, $module_name, &$variables)
 function camp_msg($p_message, $p_endLine = true, $p_indent = 0, $p_indentCharacter = ' ')
 {
 	global $g_silent;
-	
+
 	if (!$g_silent) {
 		for ($i = 0; $i < $p_indent; $i++) {
 			echo $p_indentCharacter;
