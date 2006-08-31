@@ -1194,7 +1194,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				fields = "select pm.message_id";
 				break;
 			case CMS_ST_ARTICLEIMAGE:
-				fields = "select IdImage";
+				fields = "select Number";
 				break;
 		}
 		
@@ -2068,7 +2068,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		SetNrField("ai.NrArticle", c.Article(), buf, w);
 		if (image == 0 && c.Image() > 0)
 		{
-			SetNrField("ai.IdImage", c.Image(), buf, w);
+			SetNrField("ai.Number", c.Image(), buf, w);
 		}
 		else
 		{
@@ -3743,7 +3743,7 @@ int CActURI::takeAction(CContext& c, sockstream& fs)
 	{
 		return ERR_NODATA;
 	}
-	if (m_nImageNr > 0)
+	if (m_nImageNr >= 0)
 	{
 		fs << "/cgi-bin/get_img";
 	}
