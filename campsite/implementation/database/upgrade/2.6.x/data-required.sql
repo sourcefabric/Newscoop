@@ -1,4 +1,9 @@
 -- Upgrade the system configuration
 system php ./upgrade_user_config.php
-system php ./upgrade_events.php
-system php ./upgrade_template_types.php
+
+-- add new events: move and rename template
+INSERT INTO Events (Id, Name, Notify, IdLanguage) VALUES ('116','Rename Template','N','1'),('117','Move Template','N','1');
+
+-- add new template type 'nontpl' for uniform file management
+INSERT INTO TemplateTypes (Id, Name) VALUES ('5','nontpl');
+
