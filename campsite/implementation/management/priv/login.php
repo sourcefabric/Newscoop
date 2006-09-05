@@ -111,10 +111,10 @@ camp_load_translation_strings("home");
 	<tr>
 		<td colspan="2">
 			<b><?php  putGS("Login"); ?></b>
-			<hr noshade size="1" color="black">
+			[ <?php putGS("Instance"); p(': '.$Campsite['DATABASE_NAME']); ?> ]
+			<hr noshade size="1"  color="black" />
 		</td>
 	</tr>
-
 	<tr>
 		<td colspan="2"><?php putGS('Please enter your user name and password'); ?></td>
 	</tr>
