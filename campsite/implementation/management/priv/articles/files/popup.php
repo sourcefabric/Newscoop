@@ -15,6 +15,12 @@ if (!Input::IsValid()) {
 	exit;
 }
 
+if (camp_convert_bytes((SystemPref::Get('MaxUploadFileSize'))) == false) {
+	camp_html_add_msg(getGS("The maximum file upload size was not configured in Campsite."));
+	camp_html_add_msg(getGS("Please make sure you upgraded the database correctly: run $1 in a shell.",
+			$Campsite['BIN_DIR'].'/campsite-create-instance --db_name '.$Campsite['DATABASE_NAME']));
+}
+
 if (!is_writable($Campsite['FILE_DIRECTORY'])) {
 	camp_html_add_msg(getGS("Unable to add attachment."));
 	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['FILE_DIRECTORY']));

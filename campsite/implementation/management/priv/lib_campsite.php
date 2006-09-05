@@ -189,6 +189,9 @@ function camp_format_bytes($p_bytes)
  */
 function camp_convert_bytes($p_val) {
 	$p_val = trim($p_val);
+	if ($p_val == '') {
+		return false;
+	}
 	$last = strtolower($p_val{strlen($p_val)-1});
 	switch($last) {
 		// The 'G' modifier is available since PHP 5.1.0
