@@ -61,7 +61,11 @@ if (in_array($extension, $imageExtensions)) {
 	<?php
 } else {
 	if (empty($f_content)) {
-		$contents = file_get_contents($filename);
+		if (is_readable($filename)) {
+			$contents = file_get_contents($filename);
+		} else {
+			$contents = getGS("File cannot be read.");
+		}
 	} else {
 		$contents = $f_content;
 	}
