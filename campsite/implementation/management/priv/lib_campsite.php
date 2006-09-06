@@ -187,7 +187,8 @@ function camp_format_bytes($p_bytes)
  * @param string $p_val
  * @return int
  */
-function camp_convert_bytes($p_val) {
+function camp_convert_bytes($p_val)
+{
 	$p_val = trim($p_val);
 	if ($p_val == '') {
 		return false;
@@ -206,7 +207,21 @@ function camp_convert_bytes($p_val) {
 			$p_val = false;
 	}
 	return $p_val;
-}
+} // fn camp_convert_bytes
+
+
+/**
+ * Find out the Mime Content Type for the given file.
+ * Replacement for the PHP native but not-always
+ * available function mime_content_type()
+ *
+ * @param string $p_file
+ * @return string
+ */
+function camp_mime_content_type($p_file)
+{
+	return exec(trim('file -bi ' . escapeshellarg($p_file)));
+} // fn camp_mime_content_type
 
 
 /**
