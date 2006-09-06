@@ -182,6 +182,20 @@ function camp_format_bytes($p_bytes)
 
 
 /**
+ * Find out the Mime Content Type for the given file.
+ * Replacement for the PHP native but not-always
+ * available function mime_content_type()
+ *
+ * @param string $p_file
+ * @return string
+ */
+function camp_mime_content_type($p_file)
+{
+        return exec(trim('file -bi ' . escapeshellarg($p_file)));
+} // fn camp_mime_content_type
+
+
+/**
  * Load the language files for the given prefix.
  *
  * @param string $p_prefix

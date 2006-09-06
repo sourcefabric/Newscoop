@@ -18,7 +18,8 @@ $backLink = "/$ADMIN/templates/edit_template.php?f_path=" . urlencode($f_path)."
 
 // Check that the mime types match
 $oldFilePath = Template::GetFullPath($f_path, $f_old_name);
-$oldMimeType = mime_content_type($oldFilePath);
+$oldMimeType = (function_exists('mime_content_type')) ? mime_content_type($oldFilePath) :
+							camp_mime_content_type($oldFilePath);
 $newMimeType = $_FILES['f_file']['type'];
 $equivalentTextTypes = array("text/plain", "text/html", "application/x-php", "application/octet-stream");
 $matched = false;
