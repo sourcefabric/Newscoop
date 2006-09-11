@@ -488,6 +488,9 @@ int CStatementMap::InitStatements()
 	pcoCtx = new CStatementContext(CMS_CT_URLPARAMETERS);
 	pcoSt->insertCtx(pcoCtx);
 
+	pcoCtx = new CStatementContext(CMS_CT_IF);
+	pcoSt->insertCtx(pcoCtx);
+
 	this->insert(pcoSt);
 
 	// ArticleImage statement
