@@ -3,6 +3,8 @@ camp_load_translation_strings("article_images");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 
+$uri = $_SERVER['REQUEST_URI'];
+
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
 $f_section_number = Input::Get('f_section_number', 'int', 0, true);
@@ -52,6 +54,9 @@ if ($f_publication_id > 0) {
 	<td><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
 	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>
 </table>
+
+<?php camp_html_display_msgs("0.25em", "0.25em"); ?>
+
 <P>
 <div class="indent">
 <IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>">
@@ -127,6 +132,7 @@ if ($f_publication_id > 0) {
     <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
     <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
     <INPUT TYPE="HIDDEN" NAME="f_image_id" VALUE="<?php  p($f_image_id); ?>">
+    <INPUT TYPE="HIDDEN" NAME="f_orig_image_template_id" VALUE="<?php p($f_image_template_id); ?>">
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
 	</DIV>
 	</TD>
