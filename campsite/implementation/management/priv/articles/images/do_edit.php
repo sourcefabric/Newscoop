@@ -58,21 +58,17 @@ if (!is_null($f_image_description) && $g_user->hasPermission('ChangeImage')) {
 	$imageObj->update($attributes);
 }
 
-$errorMsg = 0;
 if ($g_user->hasPermission('AttachImageToArticle')) {
 	if (is_numeric($f_image_template_id) && ($f_image_template_id > 0)) {
 		$updated = ArticleImage::SetTemplateId($f_article_number, $f_image_id, $f_image_template_id);
 		if ($updated == false) {
-			$errorMsg = getGS("Image number '$1' already exists", $f_image_template_id);
-			camp_html_add_msg($errorMsg);
+			camp_html_add_msg(getGS("Image number '$1' already exists", $f_image_template_id));
 			camp_html_goto_page($backLink);
 		}
 	}
 }
 
-if ($errorMsg == 0) {
-	camp_html_add_msg(getGS("Image '$1' updated.", $imageObj->getDescription()), "ok");
-	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
-}
+camp_html_add_msg(getGS("Image '$1' updated.", $imageObj->getDescription()), "ok");
+camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 
 ?>
