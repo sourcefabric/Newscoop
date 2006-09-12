@@ -11,6 +11,13 @@ if (!$g_user->hasPermission('AddFile')) {
 	exit;
 }
 
+// We set to unlimit the maximum time to execution whether
+// safe_mode is disabled. Upload is still under control of
+// max upload size.
+if (!ini_get('safe_mode')) {
+	set_time_limit(0);
+}
+
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -29,7 +36,7 @@ if (isset($_FILES["f_file"])) {
 			camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
 			break;
 		case 3: // UPLOAD_ERR_PARTIAL
-			camp_html_display_error(getGS("The uploaded file was only partially uploaded."), null, true);
+			camp_html_display_error(getGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'"), null, true);
 			break;
 		case 4: // UPLOAD_ERR_NO_FILE
 			camp_html_display_error(getGS("You must select a file to upload."), null, true);
