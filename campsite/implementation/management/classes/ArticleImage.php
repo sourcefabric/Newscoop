@@ -216,7 +216,7 @@ class ArticleImage extends DatabaseObject {
 		global $g_ado_db;
 		$queryStr = "UPDATE ArticleImages SET Number=$p_templateId"
 					." WHERE NrArticle=$p_articleNumber AND IdImage=$p_imageId";
-		$g_ado_db->Execute($queryStr);
+		return $g_ado_db->Execute($queryStr);
 	} // fn SetTemplateId
 
 
