@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_xinha.php");
 
 if (!$g_user->hasPermission('ManageSection')) {
 	camp_html_display_error(getGS("You do not have the right to add sections."));
@@ -21,10 +22,12 @@ $newSectionNumber = Section::GetUnusedSectionNumber($f_publication_id, $f_issue_
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
 camp_html_content_top(getGS('Add new section'), $topArray, true, true, array(getGS("Sections") => "/$ADMIN/sections/?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id"));
 
+editor_load_xinha('f_description', $g_user);
+
 ?>
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <FORM NAME="section_add" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Add new section"); ?></B>
@@ -35,6 +38,14 @@ camp_html_content_top(getGS('Add new section'), $topArray, true, true, array(get
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" SIZE="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.', "'".getGS('Name')."'"); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" VALIGN="TOP"><?php putGS("Description"); ?>:</TD>
+	<TD>
+	  <TEXTAREA NAME="f_description"
+		ID="f_description"
+		rows="20" cols="80"></TEXTAREA>
 	</TD>
 </TR>
 <TR>

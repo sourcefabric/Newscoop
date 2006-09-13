@@ -10,6 +10,7 @@ $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_name = trim(Input::Get('f_name', 'string', '', true));
+$f_description = trim(Input::Get('f_description', '', true));
 $f_number = trim(Input::Get('f_number', 'int', 0, true));
 $f_add_subscriptions = Input::Get('f_add_subscriptions', 'checkbox');
 $f_url_name = trim(Input::Get('f_url_name', 'string', '', true));
@@ -40,6 +41,10 @@ if ($f_name == "") {
 	$correct = false;
 	$errors[] = getGS('You must complete the $1 field.', '"'.getGS('Name').'"');
 }
+if ($f_description == "") {
+	$correct = false;
+	$errors[] = getGS('You must complete the $1 field.', '"'.getGS('Description').'"');
+}
 if ($f_number == 0) {
 	$correct= false;
 	$f_number = ($f_number + 0);
@@ -55,7 +60,9 @@ if (!$isValidShortName && trim($f_url_name) != "") {
 }
 if ($correct) {
     $newSection =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_number);
-    $created = $newSection->create($f_name, $f_url_name);
+    $columns = array();
+    $columns['Description'] = $f_description;
+    $created = $newSection->create($f_name, $f_url_name, $columns);
     if ($created) {
 	    if ($f_add_subscriptions) {
 	        $numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($f_publication_id, $f_number);

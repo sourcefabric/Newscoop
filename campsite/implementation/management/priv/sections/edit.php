@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_xinha.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Template.php');
 
 if (!$g_user->hasPermission('ManageSection')) {
@@ -22,6 +23,8 @@ camp_html_content_top(getGS("Configure section"), $topArray);
 
 $url_args1 = "Pub=$Pub&Issue=$Issue&Language=$Language";
 $url_args2 = $url_args1."&Section=$Section";
+
+editor_load_xinha('cDescription', $g_user);
 
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
@@ -52,8 +55,8 @@ $url_args2 = $url_args1."&Section=$Section";
 <?php camp_html_display_msgs(); ?>
 
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <FORM NAME="section_edit" METHOD="POST" ACTION="do_edit.php" >
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Configure section"); ?></B>
@@ -90,6 +93,14 @@ $url_args2 = $url_args1."&Section=$Section";
 	   	<OPTION VALUE="a"><?php  putGS("Add section to all subscriptions."); ?></OPTION>
 	   	<OPTION VALUE="d"><?php  putGS("Delete section from all subscriptions."); ?></OPTION>
 	  	</SELECT>
+	</TD>
+</TR>
+
+<TR>
+	<TD ALIGN="RIGHT" VALIGN="top" ><?php  putGS("Description"); ?>:</TD>
+	<TD><TEXTAREA name="cDescription"
+			id="cDescription"
+			rows="20" cols="80"><?php p($sectionObj->getDescription()); ?></TEXTAREA>
 	</TD>
 </TR>
 
@@ -137,8 +148,8 @@ $url_args2 = $url_args1."&Section=$Section";
 	  	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	</TD>
 </TR>
-</FORM>
 </TABLE>
+</FORM>
 <P>
 <SCRIPT>
 document.section_edit.cName.focus();

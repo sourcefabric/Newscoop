@@ -12,9 +12,11 @@ $Section = Input::Get('Section', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 $cSubs = Input::Get('cSubs', 'string', '', true);
 $cShortName = trim(Input::Get('cShortName', 'string'));
+$cDescription = trim(Input::Get('cDescription'));
 $cSectionTplId = Input::Get('cSectionTplId', 'int', 0);
 $cArticleTplId = Input::Get('cArticleTplId', 'int', 0);
 $cName = Input::Get('cName');
+
 
 if ($cSectionTplId < 0) {
     $cSectionTplId = 0;
@@ -52,6 +54,9 @@ if ($cName == "") {
 if ($cShortName == "")  {
 	camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('URL Name').'"'));
 }
+if ($cDescription == "") {
+	camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('Description').'"'));
+}
 $isValidShortName = camp_is_valid_url_name($cShortName);
 
 if (!$isValidShortName) {
@@ -61,12 +66,13 @@ if (!$isValidShortName) {
 $editUrl = "/$ADMIN/sections/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
 if (!camp_html_has_msgs()) {
 	$modified = true;
-    $modified &= $sectionObj->setName($cName);
-    $modified &= $sectionObj->setSectionTemplateId($cSectionTplId);
-    $modified &= $sectionObj->setArticleTemplateId($cArticleTplId);
+	$modified &= $sectionObj->setName($cName);
+	$modified &= $sectionObj->setDescription($cDescription);
+	$modified &= $sectionObj->setSectionTemplateId($cSectionTplId);
+	$modified &= $sectionObj->setArticleTemplateId($cArticleTplId);
 
 	if ($cSubs == "a") {
-        $numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($Pub, $Section);
+	$numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($Pub, $Section);
 		if ($numSubscriptionsAdded < 0) {
 			$errors[] = getGS('Error updating subscriptions.');
 		}
@@ -74,7 +80,7 @@ if (!camp_html_has_msgs()) {
 	if ($cSubs == "d") {
 		$numSubscriptionsDeleted = Subscription::DeleteSubscriptionsInSection($Pub, $Section);
 		if ($numSubscriptionsDeleted < 0) {
-            $errors[] = getGS('Error updating subscriptions.');
+			$errors[] = getGS('Error updating subscriptions.');
 		}
 	}
 
@@ -88,16 +94,16 @@ if (!camp_html_has_msgs()) {
 			$conflictingSection->getSectionNumber(),
 			htmlspecialchars($conflictingSection->getName()),
 			"</a>");
-	    camp_html_add_msg($msg);
-	    // placeholder for localization string - we might need this later.
-	    // getGS("The section could not be changed.");
+		camp_html_add_msg($msg);
+		// placeholder for localization string - we might need this later.
+		// getGS("The section could not be changed.");
 	} else {
-	    $modified &= $sectionObj->setUrlName($cShortName);
-	    camp_html_add_msg(getGS("Section updated"), "ok");
+		$modified &= $sectionObj->setUrlName($cShortName);
+		camp_html_add_msg(getGS("Section updated"), "ok");
 	}
-    $logtext = getGS('Section #$1 "$2" updated. (Publication: $3, Issue: $4)',
+	$logtext = getGS('Section #$1 "$2" updated. (Publication: $3, Issue: $4)',
     				 $Issue, $cName, $publicationObj->getPublicationId(), $issueObj->getIssueNumber());
-    Log::Message($logtext, $g_user->getUserName(), 21);
+	Log::Message($logtext, $g_user->getUserName(), 21);
 }
 camp_html_goto_page($editUrl);
 

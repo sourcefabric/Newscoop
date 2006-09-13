@@ -12,9 +12,13 @@ function editor_load_xinha($p_dbColumns, $p_user) {
 	?>
 <script type="text/javascript">
 	//<![CDATA[
-      _editor_url = "/javascript/xinha/";
-      _editor_lang = "<?php p($_REQUEST['TOL_Language']); ?>";
-      _campsite_article_id = <?php echo $_REQUEST['f_article_number']; ?>;
+	_editor_url = "/javascript/xinha/";
+	_editor_lang = "<?php p($_REQUEST['TOL_Language']); ?>";
+	<?php
+	if (is_array($p_dbColumns)) {
+	?>
+	_campsite_article_id = <?php echo $_REQUEST['f_article_number']; ?>;
+	<?php } ?>
 	//]]>
 </script>
 
@@ -187,10 +191,14 @@ xinha_init = xinha_init ? xinha_init : function()
   [
   	<?php
   	$xinhaEditors = array();
-	foreach ($p_dbColumns as $dbColumn) {
-		if (stristr($dbColumn->getType(), "blob")) {
-			$xinhaEditors[] = "'".$dbColumn->getName()."'";
+	if (is_array($p_dbColumns)) {
+		foreach ($p_dbColumns as $dbColumn) {
+			if (stristr($dbColumn->getType(), "blob")) {
+				$xinhaEditors[] = "'".$dbColumn->getName()."'";
+			}
 		}
+	} else {
+		$xinhaEditors[] = "'" . $p_dbColumns . "'";
 	}
 	echo implode(",", $xinhaEditors);
 	?>
