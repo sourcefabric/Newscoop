@@ -10,7 +10,7 @@
 // scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
-    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+	$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 }
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
@@ -22,10 +22,11 @@ require_once($g_documentRoot.'/classes/Log.php');
  */
 class Section extends DatabaseObject {
 	var $m_dbTableName = 'Sections';
-	var $m_keyColumnNames = array('IdPublication',
-								  'NrIssue',
-								  'IdLanguage',
-								  'Number');
+	var $m_keyColumnNames = array(
+		'IdPublication',
+		'NrIssue',
+		'IdLanguage',
+		'Number');
 	var $m_columnNames = array(
 		'IdPublication',
 		'NrIssue',
@@ -33,9 +34,9 @@ class Section extends DatabaseObject {
 		'Number',
 		'Name',
 		'ShortName',
+		'Description',
 		'SectionTplId',
 		'ArticleTplId');
-
 	var $m_languageName = null;
 
 	/**
@@ -66,23 +67,23 @@ class Section extends DatabaseObject {
 	 */
 	function create($p_name, $p_shortName, $p_columns = null)
 	{
-	    if (!is_array($p_columns)) {
-	        $p_columns = array();
-	    }
-	    $p_columns['Name'] = $p_name;
-	    $p_columns['ShortName'] = $p_shortName;
-	    $success = parent::create($p_columns);
-	    if ($success) {
+		if (!is_array($p_columns)) {
+			$p_columns = array();
+		}
+		$p_columns['Name'] = $p_name;
+		$p_columns['ShortName'] = $p_shortName;
+		$success = parent::create($p_columns);
+		if ($success) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-		    $logtext = getGS('Section $1 added. (Issue: $2, Publication: $3)',
-		        $this->m_data['Name']." (".$this->m_data['Number'].")",
-		        $this->m_data['NrIssue'],
-		        $this->m_data['IdPublication']);
-		    Log::Message($logtext, null, 21);
-	    }
-	    return $success;
+			$logtext = getGS('Section $1 added. (Issue: $2, Publication: $3)',
+			$this->m_data['Name']." (".$this->m_data['Number'].")",
+			$this->m_data['NrIssue'],
+			$this->m_data['IdPublication']);
+			Log::Message($logtext, null, 21);
+		}
+		return $success;
 	} // fn create
 
 
@@ -110,51 +111,51 @@ class Section extends DatabaseObject {
 				  $p_destIssueLanguageId = null,$p_destSectionNumber = null,
 				  $p_copyArticles = true)
 	{
-    	if (is_null($p_destIssueLanguageId)) {
-    	   $p_destIssueLanguageId = $this->m_data['IdLanguage'];
-    	}
-    	if (is_null($p_destSectionNumber)) {
-    	    $p_destSectionNumber = $this->m_data['Number'];
-    	}
-    	$dstSectionObj =& new Section($p_destPublicationId,
-    								  $p_destIssueNumber,
-    	                              $p_destIssueLanguageId,
-    	                              $p_destSectionNumber);
-    	// If source issue and destination issue are the same
-    	if ( ($this->m_data['IdPublication'] == $p_destPublicationId)
-    	      && ($this->m_data['NrIssue'] == $p_destIssueNumber)
-    	      && ($this->m_data['IdLanguage'] == $p_destIssueLanguageId) ) {
-    		$shortName = $p_destSectionNumber;
-    		$sectionName = $this->getName() . " (duplicate)";
-    	} else {
-    		$shortName = $this->getUrlName();
-    		$sectionName = $this->getName();
-    	}
-    	$dstSectionCols = array();
-   		$dstSectionCols['SectionTplId'] = $this->m_data['SectionTplId'];
-   		$dstSectionCols['ArticleTplId'] = $this->m_data['ArticleTplId'];
+		if (is_null($p_destIssueLanguageId)) {
+			$p_destIssueLanguageId = $this->m_data['IdLanguage'];
+		}
+		if (is_null($p_destSectionNumber)) {
+			$p_destSectionNumber = $this->m_data['Number'];
+		}
+		$dstSectionObj =& new Section($p_destPublicationId,
+					$p_destIssueNumber,
+					$p_destIssueLanguageId,
+					$p_destSectionNumber);
+		// If source issue and destination issue are the same
+		if ( ($this->m_data['IdPublication'] == $p_destPublicationId)
+			&& ($this->m_data['NrIssue'] == $p_destIssueNumber)
+			&& ($this->m_data['IdLanguage'] == $p_destIssueLanguageId) ) {
+			$shortName = $p_destSectionNumber;
+			$sectionName = $this->getName() . " (duplicate)";
+		} else {
+			$shortName = $this->getUrlName();
+			$sectionName = $this->getName();
+		}
+		$dstSectionCols = array();
+		$dstSectionCols['SectionTplId'] = $this->m_data['SectionTplId'];
+		$dstSectionCols['ArticleTplId'] = $this->m_data['ArticleTplId'];
 
-   		// Create the section if it doesnt exist yet.
-    	if (!$dstSectionObj->exists()) {
-    		$dstSectionObj->create($sectionName, $shortName, $dstSectionCols);
-    	}
+		// Create the section if it doesnt exist yet.
+		if (!$dstSectionObj->exists()) {
+			$dstSectionObj->create($sectionName, $shortName, $dstSectionCols);
+		}
 
-    	// Copy all the articles.
-    	if ($p_copyArticles) {
-        	$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'],
-                                                       $this->m_data['NrIssue'],
-                                                       $this->m_data['Number']);
-            $copiedArticles = array();
-        	foreach ($srcSectionArticles as $articleObj) {
-        	    if (!in_array($articleObj->getArticleNumber(), $copiedArticles)) {
-            		$tmpCopiedArticles = $articleObj->copy($p_destPublicationId,
-                        $p_destIssueNumber, $p_destSectionNumber, null, true);
-                    $copiedArticles[] = $articleObj->getArticleNumber();
-        	    }
-        	}
-    	}
+		// Copy all the articles.
+		if ($p_copyArticles) {
+			$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'],
+							$this->m_data['NrIssue'],
+							$this->m_data['Number']);
+			$copiedArticles = array();
+			foreach ($srcSectionArticles as $articleObj) {
+				if (!in_array($articleObj->getArticleNumber(), $copiedArticles)) {
+					$tmpCopiedArticles = $articleObj->copy($p_destPublicationId,
+					$p_destIssueNumber, $p_destSectionNumber, null, true);
+					$copiedArticles[] = $articleObj->getArticleNumber();
+				}
+			}
+		}
 
-    	return $dstSectionObj;
+		return $dstSectionObj;
 	} // fn copy
 
 
@@ -171,33 +172,33 @@ class Section extends DatabaseObject {
 	 */
 	function delete($p_deleteArticles = false, $p_deleteArticleTranslations = false)
 	{
-	    $numArticlesDeleted = 0;
-	    if ($p_deleteArticles) {
-	    	$languageId = null;
-	    	if (!$p_deleteArticleTranslations) {
-	    		$languageId = $this->m_data['IdLanguage'];
-	    	}
-	        $articles = Article::GetArticles($this->m_data['IdPublication'],
-	                                          $this->m_data['NrIssue'],
-	                                          $this->m_data['Number'],
-	                                          $languageId);
-	        $numArticlesDeleted = count($articles);
-            foreach ($articles as $deleteMe) {
-                $deleteMe->delete();
-            }
-	    }
-	    $success = parent::delete();
-	    if ($success) {
+		$numArticlesDeleted = 0;
+		if ($p_deleteArticles) {
+			$languageId = null;
+			if (!$p_deleteArticleTranslations) {
+				$languageId = $this->m_data['IdLanguage'];
+			}
+			$articles = Article::GetArticles($this->m_data['IdPublication'],
+						$this->m_data['NrIssue'],
+						$this->m_data['Number'],
+						$languageId);
+			$numArticlesDeleted = count($articles);
+			foreach ($articles as $deleteMe) {
+				$deleteMe->delete();
+			}
+		}
+		$success = parent::delete();
+		if ($success) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-	        $logtext = getGS('Section $1 deleted. (Issue: $2, Publication: $3)',
-		        $this->m_data['Name']." (".$this->m_data['Number'].")",
-		        $this->m_data['NrIssue'],
-		        $this->m_data['IdPublication']);
-		    Log::Message($logtext, null, 22);
-	    }
-	    return $numArticlesDeleted;
+			$logtext = getGS('Section $1 deleted. (Issue: $2, Publication: $3)',
+			$this->m_data['Name']." (".$this->m_data['Number'].")",
+			$this->m_data['NrIssue'],
+			$this->m_data['IdPublication']);
+			Log::Message($logtext, null, 22);
+		}
+		return $numArticlesDeleted;
 	} // fn delete
 
 
@@ -269,8 +270,27 @@ class Section extends DatabaseObject {
 	 */
 	function setName($p_value)
 	{
-	    return $this->setProperty('Name', $p_value);
+		return $this->setProperty('Name', $p_value);
 	} // fn setName
+
+
+	/**
+	 * @return string
+	 */
+	function getDescription()
+	{
+		return $this->m_data['Description'];
+	} // fn getDescription
+
+
+	/**
+	 * @param string $p_value
+	 * @return boolean
+	 */
+	function setDescription($p_value)
+	{
+		return $this->setProperty('Description', $p_value);
+	} // fn setDescription
 
 
 	/**
@@ -287,7 +307,7 @@ class Section extends DatabaseObject {
 	 */
 	function setUrlName($p_name)
 	{
-	    return $this->setProperty('ShortName', $p_name);
+		return $this->setProperty('ShortName', $p_name);
 	} // fn setUrlName
 
 
@@ -421,7 +441,7 @@ class Section extends DatabaseObject {
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT * FROM Sections WHERE IdPublication = $p_publicationId"
-			." GROUP BY Number";
+				." GROUP BY Number";
 		if ($p_byLanguage) {
 			$queryStr .= ', IdLanguage';
 		}
