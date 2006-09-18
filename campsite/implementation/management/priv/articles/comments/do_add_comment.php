@@ -30,10 +30,11 @@ if (!$articleObj->commentsEnabled() || $articleObj->commentsLocked())  {
     camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
 }
 
-// Add the user if he doesnt exist in the Phorum user table
+// Add the user if it doesnt exist in the Phorum user table
 $phorumUser =& new Phorum_user($g_user->getUserId());
-if (!$phorumUser->exists()) {
+if (!$phorumUser->CampUserExists($g_user->getUserId())) {
     $success = $phorumUser->create($g_user->getUserName(),
+				   $g_user->getPassword(),
                                    $g_user->getEmail(),
                                    $g_user->getUserId());
 }

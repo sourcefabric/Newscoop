@@ -21,6 +21,10 @@ $typeParam = 'uType=' . urlencode($uType);
 $uName = $editUser->getUserName();
 $editUser->delete();
 
+if ($phorumUser = Phorum_user::GetByUserName($uName)) {
+	$phorumUser->delete();
+}
+
 camp_html_add_msg(getGS('User account $1 was deleted successfully.', $uName), "ok");
 camp_html_goto_page("/$ADMIN/users/?$typeParam");
 

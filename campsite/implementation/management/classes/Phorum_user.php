@@ -5,38 +5,44 @@ class Phorum_user extends DatabaseObject {
 	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array(
 		'user_id',
+		'fk_campsite_user_id',
 		'username',
-  		'password',
-  		'cookie_sessid_lt',
-  		'sessid_st',
-  		'sessid_st_timeout',
-  		'password_temp',
-  		'email',
-  		'email_temp',
-  		'hide_email',
-  		'active',
-  		'user_data',
-  		'signature',
-  		'threaded_list',
-  		'posts',
-  		'admin',
-  		'threaded_read',
-  		'date_added',
-  		'date_last_active',
-  		'last_active_forum',
-  		'hide_activity',
-  		'show_signature',
-  		'email_notify',
-  		'pm_email_notify',
-  		'tz_offset',
-  		'is_dst',
-  		'user_language',
-  		'user_template',
-  		'moderator_data',
-  		'moderation_email');
+		'password',
+		'cookie_sessid_lt',
+		'sessid_st',
+		'sessid_st_timeout',
+		'password_temp',
+		'email',
+		'email_temp',
+		'hide_email',
+		'active',
+		'user_data',
+		'signature',
+		'threaded_list',
+		'posts',
+		'admin',
+		'threaded_read',
+		'date_added',
+		'date_last_active',
+		'last_active_forum',
+		'hide_activity',
+		'show_signature',
+		'email_notify',
+		'pm_email_notify',
+		'tz_offset',
+		'is_dst',
+		'user_language',
+		'user_template',
+		'moderator_data',
+		'moderation_email');
 
-  	function Phorum_user($p_userId = null)
-  	{
+	/**
+	 * Constructor
+	 *
+	 * @param int $p_userId
+	 */
+	function Phorum_user($p_userId = null)
+	{
 		global $PHORUM;
 		$this->m_dbTableName = $PHORUM['user_table'];
 		parent::DatabaseObject($this->m_columnNames);
@@ -44,7 +50,7 @@ class Phorum_user extends DatabaseObject {
 		if (!is_null($p_userId)) {
 			$this->fetch();
 		}
-  	} // constructor
+	} // constructor
 
 
   	/**
@@ -55,13 +61,14 @@ class Phorum_user extends DatabaseObject {
   	 * master application user ID for the Phorum ID.
   	 *
   	 * @param string $p_username
+	 * @param string $p_password
   	 * @param string $p_email
   	 * @param int $p_userId
   	 * @return boolean
   	 */
-  	function create($p_username, $p_email, $p_userId = null)
+  	function create($p_username, $p_password, $p_email, $p_userId = null)
   	{
-  	    $userdata = array();
+		$userdata = array();
 
 	   	if (Phorum_user::UserNameExists($p_username)) {
 	   		return false;
@@ -71,33 +78,35 @@ class Phorum_user extends DatabaseObject {
 	   		return false;
 	   	}
 
-	    if (Phorum_user::IsBanned($p_username, $p_email)) {
-	    	return false;
-	    }
+		if (Phorum_user::IsBanned($p_username, $p_email)) {
+			return false;
+		}
 
-	    if (!is_null($p_userId) && is_numeric($p_userId)) {
-	        $tmpUser =& new Phorum_user($p_userId);
-	        if ($tmpUser->exists()) {
-	            return false;
-	        }
-	        $userdata['user_id'] = $p_userId;
-	    }
+		if (!is_null($p_userId) && is_numeric($p_userId)) {
+			$tmpUser =& new Phorum_user($p_userId);
+			$userdata['user_id'] = $p_userId;
+			$userdata['fk_campsite_user_id'] = $p_userId;
+			if ($tmpUser->exists()) {
+				unset($userdata['user_id']);
+			}
+		}
 
-	    $userdata['username'] = $p_username;
-	    $userdata['email'] = $p_email;
-        $userdata['date_added'] = time();
-        $userdata['date_last_active'] = time();
-        $userdata['hide_email'] = true;
-        $userdata['active'] = PHORUM_USER_ACTIVE;
+		$userdata['username'] = $p_username;
+		$userdata['password'] = sha1($p_password);
+		$userdata['email'] = $p_email;
+		$userdata['date_added'] = time();
+		$userdata['date_last_active'] = time();
+		$userdata['hide_email'] = true;
+		$userdata['active'] = PHORUM_USER_ACTIVE;
 
-        // Create the user
-	    $this->m_data['user_id'] = phorum_db_user_add( $userdata );
+		// Create the user
+		$this->m_data['user_id'] = phorum_db_user_add( $userdata );
 
-	    // Refresh the object from the database.
-	    $this->fetch();
+		// Refresh the object from the database.
+		$this->fetch();
 
-	    return true;
-  	} // fn create
+		return true;
+	} // fn create
 
 
   	/**
@@ -135,6 +144,18 @@ class Phorum_user extends DatabaseObject {
   			return null;
   		}
   	} // fn GetByUserName
+
+
+	/**
+	 * Return TRUE if the campsite user exists in the user table.
+	 *
+	 * @param int $p_userid
+	 * @return boolean
+	 */
+	function CampUserExists($p_userid)
+	{
+		return (phorum_db_user_check_field( "fk_campsite_user_id", $p_userid ));
+	} // fn CampUserExists
 
 
   	/**
@@ -255,6 +276,18 @@ class Phorum_user extends DatabaseObject {
   	} // fn getPassword
 
 
+	/**
+	 * Set the password for the phorum user.
+	 *
+	 * @param string $p_password
+	 * @return boolean 
+	 */
+	function setPassword($p_password)
+	{
+		return $this->setProperty('password', $p_password);
+	}  // fn setPassword
+
+
   	/**
   	 * Return the user's email address.
   	 *
@@ -264,6 +297,18 @@ class Phorum_user extends DatabaseObject {
   	{
   		return $this->m_data['email'];
   	} // fn getEmail
+
+
+	/**
+	 * Set the email.
+	 *
+	 * @param string $p_email
+	 * @return boolean
+	 */
+	function setEmail($p_email)
+	{
+		return $this->setProperty('email', $p_email);
+	}
 
 
   	/**
