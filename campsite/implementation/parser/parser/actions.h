@@ -799,6 +799,13 @@ protected:
 	static bool IsBREntity(string::const_iterator& p_rcoCurrent,
 						   const string::const_iterator& p_rcoEnd);
 
+	// SkipHTMLSpace: moves the string iterator past HTML space; returns true if space skipped
+	// Parameters:
+	//		const string& p_rcoText - the string that has to be processed
+	//		string::const_iterator& p_rcoCurrent - the current position in the string
+	static bool SkipHTMLSpace(const string& p_rcoText,
+							  string::const_iterator& p_rcoCurrent);
+
 public:
 	// constructor
 	// Parameters:
@@ -832,8 +839,14 @@ public:
 	// validModifier: return true if modifier is valid; false otherwise
 	static bool validModifier(int m) { return s_coModifiers.validModifier(m); }
 
-	static bool isParagraphStart(string::const_iterator& p_rcoCurrent,
-								 const string::const_iterator& p_rcoEnd,
+	// isParagraphStart: returns true if paragraph starts at the current position and
+	//		sets p_rcoParagraphStart to the paragraph start position
+	// Parameters:
+	//		const string& p_rcoText - the string that has to be processed
+	//		string::const_iterator& p_rcoCurrent - the current position in the string
+	//		string::const_iterator& p_rcoParagraphStart - the paragraph start position
+	static bool isParagraphStart(const string& p_rcoText,
+								 string::const_iterator& p_rcoCurrent,
 								 string::const_iterator& p_rcoParagraphStart);
 
 	// printParagraph: prints only the paragraph identifier by the number "p_nParagraphNumber"

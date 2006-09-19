@@ -17,7 +17,7 @@
       <mainprogram>parser/campsite_server</mainprogram>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
-      <programargs>-i campsite -d</programargs>
+      <programargs>-i campsite26 -d</programargs>
       <terminal>false</terminal>
       <autocompile>true</autocompile>
       <envvars/>
@@ -43,7 +43,7 @@
   <kdevdebugger>
     <general>
       <dbgshell/>
-      <programargs>-i campsite</programargs>
+      <programargs>-i campsite26</programargs>
       <gdbpath/>
       <configGdbScript/>
       <runShellScript/>
@@ -134,6 +134,11 @@
       <inlineGet>true</inlineGet>
       <inlineSet>true</inlineSet>
     </creategettersetter>
+    <qt>
+      <used>false</used>
+      <version>3</version>
+      <root/>
+    </qt>
   </kdevcppsupport>
   <kdevfileview>
     <groups>

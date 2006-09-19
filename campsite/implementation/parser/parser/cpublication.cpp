@@ -42,7 +42,7 @@ string CPublication::getTemplate(id_type p_nLanguage, id_type p_nPublication, id
 		CMYSQL_RES coRes;
 		MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 		if (qRow == NULL)
-			throw InvalidValue("publication number", ((string)Integer(p_nArticle)).c_str());
+			throw InvalidValue("publication number", ((string)Integer(p_nPublication)).c_str());
 		p_nLanguage = Integer(qRow[0]);
 	}
 	if (p_nArticle > 0)
@@ -82,7 +82,7 @@ string CPublication::getTemplate(id_type p_nLanguage, id_type p_nPublication, id
 			}
 			CMYSQL_RES coRes;
 			MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
-			if (qRow == NULL)
+			if (qRow == NULL || qRow[0] == NULL)
 			{
 				throw InvalidValue("section number", ((string)Integer(p_nSection)).c_str());
 			}
@@ -101,9 +101,9 @@ string CPublication::getTemplate(id_type p_nLanguage, id_type p_nPublication, id
 		}
 		CMYSQL_RES coRes;
 		MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
-		if (qRow == NULL)
+		if (qRow == NULL || qRow[0] == NULL)
 		{
-			throw InvalidValue("publication number", ((string)Integer(p_nPublication)).c_str());
+			throw RunException("There are no published issues.");
 		}
 		p_nIssue = (id_type)Integer(string(qRow[0]));
 	}
