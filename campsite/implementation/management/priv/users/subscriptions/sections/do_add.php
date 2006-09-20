@@ -16,8 +16,8 @@ if (!$g_user->hasPermission('ManageSubscriptions')) {
 $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
-$f_section_number = Input::Get('f_section_number', 'array');
-$f_section_id = Input::Get('f_section_id', 'array');
+$f_section_number = Input::Get('f_section_number', 'array', array());
+$f_section_id = Input::Get('f_section_id', 'array', array());
 $f_language_set = Input::Get('f_language_set', 'string', 'all');
 $f_subscription_start_date = Input::Get('f_subscription_start_date');
 $f_subscription_days = Input::Get('f_subscription_days');
