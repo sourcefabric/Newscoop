@@ -72,7 +72,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 <TR id="select_section_lang" valign="top">
 	<TD ALIGN="RIGHT" ><?php  putGS("Sections"); ?>:</TD>
 	<TD>
-		<SELECT NAME="f_section_id[]" class="input_select" multiple size="3">
+		<SELECT NAME="f_section_id[]" class="input_select" multiple size="3" alt="selectm|1|*" emsg="<?php putGS("Please select one or more sections."); ?>">
 		<?php
 		foreach ($sectionsByLanguage as $section) {
 			if (SubscriptionSection::GetNumSections($f_subscription_id, $section['id'], $section['IdLanguage']) > 0) {

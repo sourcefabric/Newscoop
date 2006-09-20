@@ -1,4 +1,5 @@
-<?php
+<?php 
+regGS("Please select one or more sections.", "");
 regGS("There are no sections in this publication.", "");
 regGS("You must input a number greater or equal to 0 into the $1 field.", "Tem de inserir um numero superior a 0 no campo $1.");
 regGS("Regardless of the language", "Apesar do idioma");

@@ -1,4 +1,5 @@
-<?php
+<?php 
+regGS("Please select one or more sections.", "");
 regGS("There are no sections in this publication.", "");
 regGS("You must input a number greater or equal to 0 into the $1 field.", "$1 필드에 0 과 같거나 큰 숫자를 입력하시오");
 regGS("Regardless of the language", "언어와 관련 없음");
