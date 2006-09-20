@@ -392,7 +392,7 @@ function camp_html_add_msg($p_errorMsg, $p_type = "error")
  */
 function camp_html_has_msgs()
 {
-	return (count($_SESSION['camp_user_msgs']) > 0);
+	return (isset($_SESSION['camp_user_msgs']) && count($_SESSION['camp_user_msgs']) > 0);
 } // fn camp_html_has_msgs
 
 
