@@ -370,10 +370,10 @@ function phorum_user_check_login( $username, $password )
     $ret = false;
     $temp_check = false;
 
-    $user_id = phorum_db_user_check_pass( $username, md5( $password ) );
+    $user_id = phorum_db_user_check_pass( $username, sha1( $password ) );
     // regular password failed, try the temp password
     if ( $user_id == 0 ) {
-        $user_id = phorum_db_user_check_pass( $username, md5( $password ), true );
+        $user_id = phorum_db_user_check_pass( $username, sha1( $password ), true );
         $temp_check = true;
     }
 
@@ -395,7 +395,7 @@ function phorum_user_check_login( $username, $password )
 
 function phorum_user_verify( $user_id, $tmp_pass )
 {
-    $user_id = phorum_db_user_check_field( array( "user_id", "password_temp" ), array( $user_id, md5( $tmp_pass ) ), array( "=", "=" ) );
+    $user_id = phorum_db_user_check_field( array( "user_id", "password_temp" ), array( $user_id, sha1( $tmp_pass ) ), array( "=", "=" ) );
     return $user_id;
 }
 
@@ -493,11 +493,11 @@ function phorum_user_prepare_data( $new_user, $old_user, $pwd_unchanged = false 
             case "user_template":
             case "moderation_email":
                 break;
-            // the phorum built in user module stores md5 passwords.
+            // the phorum built in user module stores sha1 passwords.
             case "password":
             case "password_temp":
                 if ( !$pwd_unchanged ) {
-                    $user[$key] = md5( $val );
+                    $user[$key] = sha1( $val );
                 } elseif ( $pwd_unchanged == -1 ) {
                     $user[$key] = $val;
                 }

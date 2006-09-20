@@ -267,7 +267,7 @@ function camp_upgrade_database($p_db_name, $p_defined_parameters)
 	}
 
 	$first = true;
-	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x", "2.6.0");
+	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x", "2.6.0", "2.6.x");
 	foreach ($versions as $index=>$db_version) {
 		if ($old_version > $db_version) {
 			continue;

@@ -179,7 +179,7 @@ class ArticleComment
 
         $baseQuery = "SELECT $selectClause FROM ($messageTable"
                     ." LEFT JOIN ArticleComments "
-                    ." ON $messageTable". ".message_id=ArticleComments.fk_comment_id)"
+                    ." ON $messageTable". ".thread=ArticleComments.fk_comment_id)"
                     ." LEFT JOIN Articles ON ArticleComments.fk_article_number=Articles.Number"
                     ." AND ArticleComments.fk_language_id=Articles.IdLanguage";
 

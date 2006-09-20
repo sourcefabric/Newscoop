@@ -1,8 +1,10 @@
 <?php
 camp_load_translation_strings("users");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/IPAccess.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
+require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Phorum_user.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 
 function verify_user_type()

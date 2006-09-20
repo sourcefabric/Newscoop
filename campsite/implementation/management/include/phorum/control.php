@@ -205,6 +205,7 @@ function phorum_controlcenter_user_save($panel)
 
     // Set static userdata.
     $userdata["user_id"] = $PHORUM["user"]["user_id"];
+    $userdata["fk_campsite_user_id"] = $PHORUM["user"]["fk_campsite_user_id"];
 
     // Run a hook, so module writers can update and check the userdata.
     $userdata = phorum_hook("cc_save_user", $userdata);
@@ -218,6 +219,18 @@ function phorum_controlcenter_user_save($panel)
         // Updating the user failed.
         $error = $PHORUM["DATA"]["LANG"]["ErrUserAddUpdate"];
     } else {
+	// Sync the campsite user
+	require_once('../../classes/Language.php');
+	require_once('../../classes/User.php');
+	$campsiteUser = new User($userdata["fk_campsite_user_id"]);
+	if ($campsiteUser->exists()) {
+		if (array_key_exists('password', $userdata)) {
+			$campsiteUser->setPassword($userdata["password"]);
+		} elseif (array_key_exists('email', $userdata)) {
+			$campsiteUser->setProperty('EMail', $userdata["email"]);
+		}
+	}
+
         // Updating the user was successful.
         $okmsg = $PHORUM["DATA"]["LANG"]["ProfileUpdatedOk"];
 

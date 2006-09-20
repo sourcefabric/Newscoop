@@ -65,11 +65,14 @@ if (strlen($password) < 6 || $password != $passwordConf) {
 
 // create user
 $editUser = new User();
-if ($editUser->create($fieldValues)) {
+$phorumUser = new Phorum_user();
+if (!$phorumUser->UserNameExists($fieldValues['UName']) &&
+			$editUser->create($fieldValues)) {
 	$editUser->setPassword($password);
 	if ($uType == 'Staff') {
 		$editUser->setUserType($Type);
 	}
+	$phorumUser->create($fieldValues['UName'], $password, $fieldValues['EMail'], $editUser->getUserId());
 	camp_html_add_msg(getGS('User account $1 was created successfully.', $editUser->getUserName()), "ok");
 	camp_html_goto_page("/$ADMIN/users/edit.php?User=".$editUser->getUserId()."&$typeParam");
 } else {
