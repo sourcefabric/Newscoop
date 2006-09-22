@@ -27,7 +27,7 @@
 					<tr>
 					  <td>
 					    <p class="tekst-front" style="color:#CC0000;"><b>Subscription</b></p>
-                                            <p class="tekst-front">If you are new user you can subscribe on Package Templates <a href="<!** uri template subscribe.tpl>?SubsType=paid&<!** urlparameters template subscribe.tpl>" class="dalje">here.</a></p>
+                                            <p class="tekst-front">If you are new user you can subscribe on Package Templates <a href="<!** uripath template subscribe.tpl>?SubsType=paid&<!** urlparameters template subscribe.tpl>" class="dalje">here.</a></p>
 					  </td>
 					</tr>
 					<tr>

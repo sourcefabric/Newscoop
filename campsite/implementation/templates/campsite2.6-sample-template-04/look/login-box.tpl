@@ -11,7 +11,7 @@
 	<p>Password: <!** Edit Login password></p>
     <!** endlogin>
 </div>
-<span class="subscribe"><a href="<!** uri template subscribe.tpl>?SubsType=paid&<!** urlparameters template subscribe.tpl>">SUBSCRIBE HERE</a></span>
+<span class="subscribe"><a href="<!** uripath template subscribe.tpl>?SubsType=paid&<!** urlparameters template subscribe.tpl>">SUBSCRIBE HERE</a></span>
 <!** else>
   <p class="text">You are signed in as:<br><b><!** print user name></b></p>
   <p class="text" style="margin-top: 5px"><a class="indeks" href="<!** uri template logout.tpl>">Logout</a></p> 
