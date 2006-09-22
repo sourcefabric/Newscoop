@@ -267,7 +267,7 @@ function camp_upgrade_database($p_db_name, $p_defined_parameters)
 	}
 
 	$first = true;
-	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x", "2.6.0", "2.6.x");
+	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x", "2.6.0", "2.6.1", "2.6.x");
 	foreach ($versions as $index=>$db_version) {
 		if ($old_version > $db_version) {
 			continue;
@@ -366,8 +366,20 @@ function camp_detect_database_version($p_db_name, &$version)
 				}
 				$row = mysql_fetch_array($res2, MYSQL_ASSOC);
 				if (!is_null($row) && strstr($row['Type'], '166') != '') {
+					$version = "2.6.1";
+				}
+				if (!$res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'")) {
+					return "Unable to query the database $p_db_name";
+				}
+				if (mysql_num_rows($res2) > 0) {
 					$version = "2.6.x";
 				}
+			}
+			if (!$res2 = mysql_query("SHOW COLUMNS FROM Sections LIKE 'Description'")) {
+				return "Unable to query the database $p_db_name";
+			}
+			if (mysql_num_rows($res2) > 0) {
+				$version = "3.0.x";
 			}
 		}
 	}
@@ -416,9 +428,7 @@ function camp_restore_database($p_db_name, $p_defined_parameters)
 	}
 
 	if (camp_database_exists($p_db_name)) {
-		if (($clean = camp_clean_database($p_db_name)) !== 0) {
-			return $clean;
-		}
+		camp_clean_database($p_db_name);
 	} else {
 		if (!mysql_query("CREATE DATABASE `$p_db_name` CHARACTER SET utf8 COLLATE utf8_bin")) {
 			return "Unable to restore database: can't create the database";
