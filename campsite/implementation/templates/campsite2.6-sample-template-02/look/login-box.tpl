@@ -23,7 +23,7 @@
               </tr>
 <tr>
 <td  style="padding-left: 8px">
-<p class="tekst">If yor are new user you can subscribe on Package Template(No2) <a href="<!** uri template subscribe.tpl>?SubsType=paid&<!** urlparameters template subscribe.tpl>" class="plus">here.</a></p>
+<p class="tekst">If yor are new user you can subscribe on Package Template(No2) <a href="<!** uripath template subscribe.tpl>?SubsType=paid&<!** urlparameters template subscribe.tpl>" class="plus">here.</a></p>
 </td>
 </tr>
 <!** else>
