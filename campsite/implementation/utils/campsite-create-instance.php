@@ -422,9 +422,7 @@ function camp_restore_database($p_db_name, $p_defined_parameters)
 	}
 
 	if (camp_database_exists($p_db_name)) {
-		if (($clean = camp_clean_database($p_db_name)) !== 0) {
-			return $clean;
-		}
+		camp_clean_database($p_db_name);
 	} else {
 		if (!mysql_query("CREATE DATABASE `$p_db_name` CHARACTER SET utf8 COLLATE utf8_bin")) {
 			return "Unable to restore database: can't create the database";
