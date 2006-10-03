@@ -154,11 +154,12 @@ foreach ($articleTypes as $articleType) {
     	<table>
 
 		<?php
+		$color2 = 0;
 		$isFirstTranslation = true;
 		$typeTranslations = $currentArticleType->getTranslations();
 		foreach ($typeTranslations as $typeLanguageId => $typeTransName) {
 		?>
-		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>">
+		<TR <?php  if ($color2) { $color2 = 0; ?>class="list_row_even"<?php  } else { $color2 = 1; ?>class="list_row_odd"<?php  } ?>">
 			<TD <?php if ($isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="center">
 				<?php
 				$typeLanguage =& new Language($typeLanguageId);
