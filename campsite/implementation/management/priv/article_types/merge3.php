@@ -3,6 +3,7 @@ camp_load_translation_strings("article_types");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
@@ -399,7 +400,7 @@ if ($ok) {
         				if (isset($imageMatches[1][0])) {
         					foreach ($imageMatches[1] as $templateId) {
         						// Get the image URL
-        						$articleImage =& new ArticleImage($f_article_number, null, $templateId);
+        						$articleImage =& new ArticleImage($srcArticleData->getProperty('NrArticle'), null, $templateId);
         						$image =& new Image($articleImage->getImageId());
         						$imageUrl = $image->getImageUrl();
         						$text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" id="'.$templateId.'" ', $text);

@@ -600,15 +600,13 @@ class ArticleType {
 	{
 		global $g_ado_db;
 	    // non-preview mode, the actual merge
-        // all that needs to be done is to reassign a type in the Articles table
-        // and then copy entries from Xsrc to Xdest
-        $sql = "UPDATE Articles SET Type='$p_dest' WHERE Type='$p_src'";
-        $res = $g_ado_db->Execute($sql);
-        if (!$res) return 0;
-
+        // all that needs to be done is to copy entries from Xsrc to Xdest
+        // and then reassign the type in the Articles table
 	    $sql = "SELECT * FROM X$p_src";
 	    $rows = $g_ado_db->GetAll($sql);
-	    if (!count($rows)) return 0;
+	    if (!count($rows)) {
+	    	return 0;
+	    }
 	    foreach ($rows as $row) {
             $fields = array();
             $values = array();
@@ -616,7 +614,7 @@ class ArticleType {
                 $fields[] = 'F'. $destC;
                 if ($srcC == 'NULL') $values[] = "''";
                 else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC];
-                else $values[] = "'". $row['F'. $srcC] ."'";
+                else $values[] = "'". $g_ado_db->escape($row['F'. $srcC]) ."'";
             }
             $fields[] = 'NrArticle';
             $values[] = $row['NrArticle'];
@@ -624,16 +622,19 @@ class ArticleType {
             $values[] = $row['IdLanguage'];
             $fieldsString = implode(',', $fields);
             $valuesString = implode(',', $values);
-            $sql = "INSERT INTO X$p_dest ($fieldsString) VALUES ($valuesString)";
-		    $res = $g_ado_db->Execute($sql);
-		    if (!$res)
-		      return 0;
+            $sql = "INSERT IGNORE INTO X$p_dest ($fieldsString) VALUES ($valuesString)";
+		    if (!$g_ado_db->Execute($sql)) {
+		    	return 0;
+		    }
 	    }
+
+        $sql = "UPDATE Articles SET Type='$p_dest' WHERE Type='$p_src'";
+        if (!$g_ado_db->Execute($sql)) {
+        	return 0;
+        }
+        
 	    return 1;
-
-
 	} // fn merge
-
 } // class ArticleType
 
 ?>
