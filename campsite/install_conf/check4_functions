@@ -593,7 +593,7 @@ while [ "$1" != "" ]; do
     shift 1
 done
 [ "$bin_paths" = "" ] && bin_paths="/sbin /usr/sbin /usr/local/apache/bin /home/apache/bin /home/httpd/bin /opt/apache/bin"
-bin_names="apache httpd httpd2 apache2 httpds"
+bin_names="apache httpd httpd2 apache2 httpds apache22"
 for bn in $bin_names; do
     check4_file --executable "$bn" &> /dev/null
     [ $? -eq 0 ] && bin_path=$file_path && apache_bin_name="$bn" && break
