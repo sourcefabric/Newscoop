@@ -138,7 +138,8 @@ class ArticleComment
         }
         $queryStr = "SELECT $selectClause "
                     ." FROM ".$PHORUM['message_table']
-                    ." WHERE ".$PHORUM['message_table'].".thread=$threadId"
+                    ." WHERE thread=$threadId"
+                    ." AND message_id != thread"
                     . $whereClause
                     ." ORDER BY message_id";
         if ($p_countOnly) {
@@ -183,11 +184,11 @@ class ArticleComment
                     ." LEFT JOIN Articles ON ArticleComments.fk_article_number=Articles.Number"
                     ." AND ArticleComments.fk_language_id=Articles.IdLanguage";
 
-        $whereQuery = '';
+        $whereQuery = "$messageTable.message_id != $messageTable.thread";
         if ($p_status == 'approved') {
-            $whereQuery .= "status > 0";
+            $whereQuery .= " AND status > 0";
         } elseif ($p_status == 'unapproved') {
-            $whereQuery .= "status < 0";
+            $whereQuery .= " AND status < 0";
         }
 
         if (!empty($p_searchString)) {
@@ -211,6 +212,7 @@ class ArticleComment
            $baseQuery .= " ORDER BY ".$PHORUM['message_table'].".message_id";
         }
 
+        //echo $baseQuery."<br><br>";
         if ($p_getTotal) {
             $numComments = $g_ado_db->GetOne($baseQuery);
             return $numComments;
