@@ -339,38 +339,40 @@ class Phorum_message extends DatabaseObject {
 	    if ($thread_count > 0) {
 	        $threadBeginMessage = array();
 	        $message_ids = array_keys($messages);
-	        $parent_message = $messages[$thread_id];
-	        // Paul Baranowski: my hack so that multiple top-level messages
-	        // are allowed within a thread.  Disabled but here for
-	        // reference, because this worked.
-//	        $parent_message = isset($messages[$thread_id]) ? $messages[$thread_id] : current($messages);
-//			$thread_id = $parent_message->getMessageId();
+	        if (isset($messages[$thread_id])) {
+		        $parent_message = $messages[$thread_id];
+		        // Paul Baranowski: my hack so that multiple top-level messages
+		        // are allowed within a thread.  Disabled but here for
+		        // reference, because this worked.
+	//	        $parent_message = isset($messages[$thread_id]) ? $messages[$thread_id] : current($messages);
+	//			$thread_id = $parent_message->getMessageId();
 
-	        // The most recent message in the thread.
-            $recent_message = end($messages);
+		        // The most recent message in the thread.
+	            $recent_message = end($messages);
 
-            // Updates to the first thread message.
-	        $threadBeginMessage["thread_count"] = $thread_count;
-	        $threadBeginMessage["modifystamp"] = $recent_message->m_data["datestamp"];
-	        $threadBeginMessage["meta"] = $parent_message->m_data["meta"];
-	        $threadBeginMessage["meta"]["recent_post"]["user_id"] = $recent_message->m_data["user_id"];
-	        $threadBeginMessage["meta"]["recent_post"]["author"] = $recent_message->m_data["author"];
-	        $threadBeginMessage["meta"]["recent_post"]["message_id"] = $recent_message->m_data["message_id"];
-	        $threadBeginMessage["meta"]["message_ids"] = $message_ids;
+	            // Updates to the first thread message.
+		        $threadBeginMessage["thread_count"] = $thread_count;
+		        $threadBeginMessage["modifystamp"] = $recent_message->m_data["datestamp"];
+		        $threadBeginMessage["meta"] = $parent_message->m_data["meta"];
+		        $threadBeginMessage["meta"]["recent_post"]["user_id"] = $recent_message->m_data["user_id"];
+		        $threadBeginMessage["meta"]["recent_post"]["author"] = $recent_message->m_data["author"];
+		        $threadBeginMessage["meta"]["recent_post"]["message_id"] = $recent_message->m_data["message_id"];
+		        $threadBeginMessage["meta"]["message_ids"] = $message_ids;
 
-	        // Used only for mods
-	        // Get the message IDs of all messages in the thread,
-	        // regardless of status.
-	        //
-	        // ??? Note: why are these stored in this way?
-	        // Why not just grab these from the database when you
-	        // want them - it would probably be just as fast.
-    		$searchConditions = array("thread" => $thread_id,
-    								  "forum_id" => $this->m_data['forum_id']);
-    		$allMessages = Phorum_message::GetMessages($searchConditions);
-	        $threadBeginMessage["meta"]["message_ids_moderator"] = array_keys($allMessages);
+		        // Used only for mods
+		        // Get the message IDs of all messages in the thread,
+		        // regardless of status.
+		        //
+		        // ??? Note: why are these stored in this way?
+		        // Why not just grab these from the database when you
+		        // want them - it would probably be just as fast.
+	    		$searchConditions = array("thread" => $thread_id,
+	    								  "forum_id" => $this->m_data['forum_id']);
+	    		$allMessages = Phorum_message::GetMessages($searchConditions);
+		        $threadBeginMessage["meta"]["message_ids_moderator"] = array_keys($allMessages);
 
-	        phorum_db_update_message($thread_id, $threadBeginMessage);
+		        phorum_db_update_message($thread_id, $threadBeginMessage);
+	        }
 	    }
 	} // fn __updateThreadInfo
 
