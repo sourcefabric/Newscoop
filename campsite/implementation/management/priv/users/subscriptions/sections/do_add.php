@@ -31,13 +31,17 @@ $errorMsgs = array();
 
 $new_sections = array();
 if ($f_language_set == 'all') {
-	foreach ($f_section_number as $section_number) {
-		$new_sections[$section_number][] = 0;
+	if (is_array($f_section_number)) {
+		foreach ($f_section_number as $section_number) {
+			$new_sections[$section_number][] = 0;
+		}
 	}
 } else {
-	foreach ($f_section_id as $section_id) {
-		$id = explode('_', $section_id);
-		$new_sections[$id[0]][] = $id[1];
+	if (is_array($f_section_id)) {
+		foreach ($f_section_id as $section_id) {
+			$id = explode('_', $section_id);
+			$new_sections[$id[0]][] = $id[1];
+		}
 	}
 }
 
@@ -46,10 +50,10 @@ $columns = array('StartDate' => $f_subscription_start_date,
 				 'PaidDays' => $f_subscription_days);
 foreach ($new_sections as $section_number=>$section_languages) {
 	foreach ($section_languages as $section_language) {
-		echo "<p>try $section_number:$section_language</p>\n";
+		//echo "<p>try $section_number:$section_language</p>\n";
 		$subscriptionSection =& new SubscriptionSection($f_subscription_id, $section_number, $section_language);
 		if (!$subscriptionSection->exists()) {
-			echo "<p>create $section_number:$section_language</p>\n";
+			//echo "<p>create $section_number:$section_language</p>\n";
 			$success &= $subscriptionSection->create($columns);
 		}
 	}
