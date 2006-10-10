@@ -25,6 +25,25 @@ $manageUser =& new User($f_user_id);
 $sections = Section::GetUniqueSections($f_publication_id);
 $sectionsByLanguage = Section::GetUniqueSections($f_publication_id, true);
 
+$optionsAllLang = array();
+foreach ($sections as $section) {
+	if (SubscriptionSection::GetNumSections($f_subscription_id, $section['id'], 0) > 0) {
+		continue;
+	}
+	$optionsAllLang[$section['id']] = $section['id'] . ' - ' . $section['name'];
+}
+
+$optionsIndividualLang = array();
+foreach ($sectionsByLanguage as $section) {
+	if (SubscriptionSection::GetNumSections($f_subscription_id, $section['id'], $section['IdLanguage']) > 0) {
+		continue;
+	}
+	$id = $section['id'] . '_' . $section['IdLanguage'];
+	$display = $section['id'] . ' - ' . $section['name']
+		. ' (' . $section['LangName'] . ')';
+	$optionsIndividualLang[$id] = $display;
+}
+
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Subscribers"), "/$ADMIN/users/?uType=Subscribers");
@@ -36,6 +55,7 @@ $crumbs[] = array(getGS("Add new subscription"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php"  onsubmit="return <?php camp_html_fvalidate(); ?>;">
@@ -44,25 +64,20 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 	<TD ALIGN="RIGHT"><?php  putGS("Languages"); ?>:</TD>
 	<TD>
 		<select name="f_language_set" class="input_select" onchange="ToggleRowVisibility('select_section_lang'); ToggleRowVisibility('select_section_all');">
-<?php
+		<?php
 		$language_sets = array('select'=>getGS('Individual languages'), 'all'=>getGS('Regardless of the language'));
 		foreach ($language_sets as $language_set_id=>$language_set_description) {
 			camp_html_select_option($language_set_id, '', $language_set_description);
 		}
-?>
+		?>
 		</select>
 </tr>
 <TR id="select_section_all" style="display: none;">
 	<TD ALIGN="RIGHT" valign="top"><?php  putGS("Sections"); ?>:</TD>
 	<TD>
-		<SELECT NAME="f_section_number[]" class="input_select" multiple size="3">
+		<SELECT NAME="f_section_number[]" class="input_select" multiple size="5">
 		<?php
-		foreach ($sections as $section) {
-			if (SubscriptionSection::GetNumSections($f_subscription_id, $section['id'], 0) > 0) {
-				continue;
-			}
-			$id = $section['id'];
-			$display = $section['id'] . ' - ' . $section['name'];
+	    foreach ($optionsAllLang as $id => $display) {
 			camp_html_select_option($id, '', $display);
 	    }
 		?>
@@ -72,15 +87,10 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 <TR id="select_section_lang" valign="top">
 	<TD ALIGN="RIGHT" ><?php  putGS("Sections"); ?>:</TD>
 	<TD>
-		<SELECT NAME="f_section_id[]" class="input_select" multiple size="3" alt="selectm|1|*" emsg="<?php putGS("Please select one or more sections."); ?>">
+		<!-- alt="selectm|1|*" emsg="<?php putGS("Please select one or more sections."); ?>" -->
+		<SELECT NAME="f_section_id[]" class="input_select" multiple size="5">
 		<?php
-		foreach ($sectionsByLanguage as $section) {
-			if (SubscriptionSection::GetNumSections($f_subscription_id, $section['id'], $section['IdLanguage']) > 0) {
-				continue;
-			}
-			$id = $section['id'] . '_' . $section['IdLanguage'];
-			$display = $section['id'] . ' - ' . $section['name']
-				. ' (' . $section['LangName'] . ')';
+		foreach ($optionsIndividualLang as $id => $display) {
 			camp_html_select_option($id, '', $display);
 	    }
 		?>
@@ -111,5 +121,4 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 </TABLE>
 </FORM>
 <P>
-
 <?php camp_html_copyright_notice(); ?>
