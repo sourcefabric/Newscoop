@@ -1,53 +1,44 @@
-var keyStr = "ABCDEFGHIJKLMNOP" +
-                "QRSTUVWXYZabcdef" +
-                "ghijklmnopqrstuv" +
-                "wxyz0123456789+/" +
-                "=";
+b64s='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"'
 
-function encode64(input)
-{
-  var output = "";
-  var chr1, chr2, chr3 = "";
-  var enc1, enc2, enc3, enc4 = "";
-  var i = 0;
-
-  do {
-    chr1 = input.charCodeAt(i++);
-    chr2 = input.charCodeAt(i++);
-    chr3 = input.charCodeAt(i++);
-
-    enc1 = chr1 >> 2;
-    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-    enc4 = chr3 & 63;
-
-    if (isNaN(chr2)) {
-      enc3 = enc4 = 64;
-    } else if (isNaN(chr3)) {
-      enc4 = 64;
+function textToBase64(t) {
+  var r=''; var m=0; var a=0; var tl=t.length-1; var c
+  for(n=0; n<=tl; n++) {
+    c=t.charCodeAt(n)
+    r+=b64s.charAt((c << m | a) & 63)
+    a = c >> (6-m)
+    m+=2
+    if(m==6 || n==tl) {
+      r+=b64s.charAt(a)
+      if((n%45)==44) {r+="\n"}
+      m=0
+      a=0
     }
-
-    output = output +
-      keyStr.charAt(enc1) +
-      keyStr.charAt(enc2) +
-      keyStr.charAt(enc3) +
-      keyStr.charAt(enc4);
-      chr1 = chr2 = chr3 = "";
-      enc1 = enc2 = enc3 = enc4 = "";
-  } while (i < input.length);
-
-  return output;
-} // encode64
-
-function xsotrr(f,s)
-{
-  var toenc = s;
-  var xorkey = Math.round(254*Math.random())+1;
-  var r="";
-  for(i=0;i<toenc.length;++i) {
-    r+=String.fromCharCode(xorkey^toenc.charCodeAt(i));
   }
-  document.forms[f].elements.f_xkoery.value=xorkey;
-  return encode64(r);
-} // xsotrr
+  return r
+} // textToBase64
 
+function rc4(key, text) {
+  var i, x, y, t, x2, kl=key.length;
+  s=[];
+
+  for (i=0; i<256; i++) s[i]=i
+  y=0
+  for(j=0; j<2; j++) {
+    for(x=0; x<256; x++) {
+      y=(key.charCodeAt(x%kl) + s[x] + y) % 256
+      t=s[x]; s[x]=s[y]; s[y]=t
+    }
+  }
+  var z=""
+  for (x=0; x<text.length; x++) {
+    x2=x & 255
+    y=( s[x2] + y) & 255
+    t=s[x2]; s[x2]=s[y]; s[y]=t
+    z+= String.fromCharCode((text.charCodeAt(x) ^ s[(s[x2] + s[y]) % 256]))
+  }
+  return z
+} // rc4
+
+function rc4encrypt(k,p) {
+  return textToBase64(rc4(k,p))
+} // rc4encrypt

@@ -4,6 +4,8 @@ include($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/LoginAttempts.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 
+// token
+$key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
 // Delete any cookies they currently have.
 setcookie("LoginUserId", "", time() - 86400);
 setcookie("LoginUserKey", "", time() - 86400);
@@ -176,10 +178,10 @@ camp_load_translation_strings("home");
 
 	<tr>
 		<td colspan="2" align="center">
-		<input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != '' && (f_password.value.trim().length) != 0) f_password.value = xsotrr('login_form',f_password.value);" <?php } ?> />
+		<input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != '' && (f_password.value.trim().length) != 0) f_password.value = rc4encrypt(f_xkoery.value,f_password.value);" <?php } ?> />
 		</td>
 	</tr>
-	<input type="hidden" name="f_xkoery" value="" />
+	<input type="hidden" name="f_xkoery" value="<?php p($key); ?>" />
 </form>
 </table>
 <script>
