@@ -67,7 +67,7 @@ camp_load_translation_strings("home");
 
 ?>
 <head>
-	<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/sha1.js" type="text/javascript"></script>
+	<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
 	<TITLE><?php  putGS("Login"); ?></title>
@@ -111,10 +111,10 @@ camp_load_translation_strings("home");
 	<tr>
 		<td colspan="2">
 			<b><?php  putGS("Login"); ?></b>
-			<hr noshade size="1" color="black">
+			[ <?php putGS("Instance"); p(': '.$Campsite['DATABASE_NAME']); ?> ]
+			<hr noshade size="1"  color="black" />
 		</td>
 	</tr>
-
 	<tr>
 		<td colspan="2"><?php putGS('Please enter your user name and password'); ?></td>
 	</tr>
@@ -176,9 +176,10 @@ camp_load_translation_strings("home");
 
 	<tr>
 		<td colspan="2" align="center">
-		<input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != '' && (f_password.value.trim().length) != 40) f_password.value = hex_sha1(f_password.value);" <?php } ?>>
+		<input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != '' && (f_password.value.trim().length) != 0) f_password.value = xsotrr('login_form',f_password.value);" <?php } ?> />
 		</td>
 	</tr>
+	<input type="hidden" name="f_xkoery" value="" />
 </form>
 </table>
 <script>

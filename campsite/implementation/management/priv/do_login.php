@@ -8,9 +8,11 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 
 $f_user_name = Input::Get('f_user_name');
 $f_password = Input::Get('f_password');
+$f_xorkey = Input::Get('f_xkoery');
 $f_login_language = Input::Get('f_login_language', 'string', 'en');
 $f_is_encrypted = Input::Get('f_is_encrypted', 'int', '1');
 $f_captcha_code = Input::Get('f_captcha_code', 'string', '', true);
+$f_password = sha1(camp_passwd_decrypt($f_password, $f_xorkey));
 
 if (!Input::isValid()) {
 	camp_html_goto_page("/$ADMIN/login.php?error_code=userpass");
@@ -24,9 +26,20 @@ function camp_successful_login($user, $f_login_language)
 	setcookie("LoginUserId", $user->getUserId());
 	setcookie("LoginUserKey", $user->getKeyId());
 	setcookie("TOL_Language", $f_login_language);
-    Article::UnlockByUser($user->getUserId());
+	Article::UnlockByUser($user->getUserId());
 	camp_html_goto_page("/$ADMIN/index.php");
 }
+
+function camp_passwd_decrypt($p_crypted, $p_xorkey)
+{
+        $p_crypted = base64_decode($p_crypted);
+        $decrypted = '';
+        for($i = 0; $i < strlen($p_crypted); $i++) {
+                $decrypted .= chr($p_xorkey^ord($p_crypted{$i}));
+        }
+        return $decrypted;
+}
+
 
 //
 // Valid logins
