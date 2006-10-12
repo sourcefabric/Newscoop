@@ -1024,13 +1024,12 @@ if ($f_edit_mode == "edit") { ?>
 				<td align="center" width="100%">
 					<table>
 					<tr>
-						<td align="center" valign="middle">
+						<td align="center" valign="top">
 							<?php if ($f_edit_mode == "edit") { ?><a href="<?php p($fileEditUrl); ?>"><?php } p(wordwrap($file->getFileName(), "25", "<br>", true)); ?><?php if ($f_edit_mode == "edit") { ?></a><?php } ?><br><?php p(htmlspecialchars($file->getDescription($f_language_selected))); ?>
 						</td>
 						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('DeleteFile')) { ?>
 						<td>
 							<a title="<?php putGS("Delete"); ?>" href="<?php p($deleteUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the file \\'$1\\' from the article?", camp_javascriptspecialchars($file->getFileName())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0" /></a><br />
-							<a title="<?php putGS("Download"); ?>" href="<?php p($downloadUrl); ?>"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/download.png" border="0" /></a><br />
 							<?php if (!empty($previewUrl)) { ?>
 							<a title="<?php putGS("Preview"); ?>" href="javascript: void(0);" onclick="window.open('<?php echo $previewUrl; ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/preview-16x16.png" border="0" /></a>
 							<?php } ?>
@@ -1038,7 +1037,7 @@ if ($f_edit_mode == "edit") { ?>
 						<?php } ?>
 					</tr>
 					<tr>
-						<td align="center"><?php p(camp_format_bytes($file->getSizeInBytes())); ?></td>
+						<td align="center"><?php p(camp_format_bytes($file->getSizeInBytes())); ?> <a title="<?php putGS("Download"); ?>" href="<?php p($downloadUrl); ?>"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/download.png" border="0" /></a></td>
 						<td></td>
 					</tr>
 					</table>
