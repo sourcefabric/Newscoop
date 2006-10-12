@@ -6,6 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 
 // token
 $key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
+camp_session_set('xorkey', $key);
 // Delete any cookies they currently have.
 setcookie("LoginUserId", "", time() - 86400);
 setcookie("LoginUserKey", "", time() - 86400);
