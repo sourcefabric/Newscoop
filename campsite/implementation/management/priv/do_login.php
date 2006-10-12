@@ -9,11 +9,13 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/include/crypto/rc4Encrypt.php');
 
 $f_user_name = Input::Get('f_user_name');
 $f_password = Input::Get('f_password');
-$f_xorkey = Input::Get('f_xkoery');
 $f_login_language = Input::Get('f_login_language', 'string', 'en');
 $f_is_encrypted = Input::Get('f_is_encrypted', 'int', '1');
 $f_captcha_code = Input::Get('f_captcha_code', 'string', '', true);
-$f_password = sha1(camp_passwd_decrypt($f_xorkey, $f_password));
+
+$xorkey = camp_session_get('xorkey', '');
+$f_password = sha1(camp_passwd_decrypt($xorkey, $f_password));
+
 
 if (!Input::isValid()) {
 	camp_html_goto_page("/$ADMIN/login.php?error_code=userpass");
