@@ -1,9 +1,8 @@
 <?php
 camp_load_translation_strings("comments");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 
@@ -15,6 +14,11 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $articleObj =& new Article($f_language_id, $f_article_number);
 if (!$articleObj->exists()) {
     exit;
+}
+
+if (DbReplication::Connect() == false) {
+        camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
+        camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
 }
 
 // process all comments

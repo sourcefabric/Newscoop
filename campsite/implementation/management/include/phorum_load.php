@@ -3,16 +3,17 @@ global $Campsite;
 global $PHORUM;
 define( "PHORUM", "5.1-dev" );
 
-require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum/include/constants.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/phorum/include/constants.php');
 
 $PHORUM['DBCONFIG']=array(
 
     // Database connection.
     'type'          =>  'mysql',
-    'name'          =>  $Campsite['DATABASE_NAME'],
-    'server'        =>  $Campsite['DATABASE_SERVER_ADDRESS'],
-    'user'          =>  $Campsite['DATABASE_USER'],
-    'password'      =>  $Campsite['DATABASE_PASSWORD'],
+    'name'          =>  'campsite_fake_remote', // $Campsite['DATABASE_NAME'],
+    'server'        =>  SystemPref::Get('DBReplicationHost') . ':' . SystemPref::Get('DBReplicationPort'),
+    'user'          =>  SystemPref::Get('DBReplicationUser'),
+    'password'      =>  SystemPref::Get('DBReplicationPass'),
     'table_prefix'  =>  'phorum',
 
     // 'down_page'     => 'http://www.example.com/phorum/down.html',
@@ -23,4 +24,5 @@ $PHORUM['DBCONFIG']=array(
 );
 
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum/include/db/mysql.php");
+
 ?>

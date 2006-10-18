@@ -1,9 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 camp_load_translation_strings("globals");
 camp_load_translation_strings("articles");
@@ -21,21 +20,27 @@ if (!Input::IsValid()) {
 // Check that the article exists.
 $articleObj =& new Article($f_language_id, $f_article_number);
 if (!$articleObj->exists()) {
-    exit;
+	exit;
 }
 if (!$articleObj->commentsEnabled() || $articleObj->commentsLocked())  {
-    camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
 }
 
 $publicationObj =& new Publication($articleObj->getPublicationId());
 $issueObj =& new Issue($articleObj->getPublicationId(), $f_language_id, $articleObj->getIssueNumber());
 $sectionObj =& new Section($articleObj->getPublicationId(), $articleObj->getIssueNumber(), $f_language_id, $articleObj->getSectionNumber());
 $languageObj =& new Language($articleObj->getLanguageId());
-$comment =& new Phorum_message($f_comment_id);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 camp_html_content_top(getGS("Reply to comment"), $topArray);
+
+$onlineCnn = DbReplication::Connect();
+if ($onlineCnn == false) {
+	camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
+} else {
+	$comment =& new Phorum_message($f_comment_id);
+}
 
 ?>
 <table cellpadding="1" cellspacing="0" class="action_buttons" style="padding-top: 10px;">
@@ -51,6 +56,20 @@ camp_html_content_top(getGS("Reply to comment"), $topArray);
         &nbsp;<b><?php putGS("Comment"); ?></b>
    	</td>
 <tr>
+<?php
+
+if ($onlineCnn == false) {
+
+?>
+<tr>
+    <td><?php camp_html_display_msgs("0.25em", "0.25em"); ?></td>
+</tr>
+</table>
+<?php
+
+} else {
+
+?>
 <tr>
     <td align="right" valign="top" nowrap>
 			<?php putGS("From:"); ?>
@@ -115,3 +134,4 @@ camp_html_content_top(getGS("Reply to comment"), $topArray);
 </tr>
 </table>
 </form>
+<?php } // if comment enabled ?>

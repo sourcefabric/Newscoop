@@ -1,11 +1,9 @@
 <?php
 camp_load_translation_strings("comments");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_ban_item.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 
 if (!$g_user->hasPermission('CommentModerate')) {
@@ -13,34 +11,39 @@ if (!$g_user->hasPermission('CommentModerate')) {
 	exit;
 }
 
-$f_comment_id = Input::Get("f_comment_id", "int");
+$onlineCnn = DbReplication::Connect();
+if ($onlineCnn == false) {
+        camp_html_add_msg(getGS("Comments Disabled"));
+} else {
+	$f_comment_id = Input::Get("f_comment_id", "int");
 
-$banned = false;
-$comment =& new Phorum_message($f_comment_id);
-if ($comment->exists()) {
-	$banIp = Input::Get("f_ban_ip", 'checkbox');
-	if ($banIp) {
-		$banItem =& new Phorum_ban_item();
-		$banItem->create(PHORUM_BAD_IPS, false, $comment->getIpAddress());
-		$banned = true;
-	} else {
-		Phorum_ban_item::DeleteMatching(PHORUM_BAD_IPS, false, $comment->getIpAddress());
-	}
-	$banEmail = Input::Get("f_ban_email", 'checkbox');
-	if ($banEmail) {
-		$banItem =& new Phorum_ban_item();
-		$banItem->create(PHORUM_BAD_EMAILS, false, $comment->getEmail());
-		$banned = true;
-	} else {
-		Phorum_ban_item::DeleteMatching(PHORUM_BAD_EMAILS, false, $comment->getEmail());
-	}
-	$banName = Input::Get("f_ban_name", 'checkbox');
-	if ($banName) {
-		$banItem =& new Phorum_ban_item();
-		$banItem->create(PHORUM_BAD_NAMES, false, $comment->getAuthor());
-		$banned = true;
-	} else {
-		Phorum_ban_item::DeleteMatching(PHORUM_BAD_NAMES, false, $comment->getAuthor());
+	$banned = false;
+	$comment =& new Phorum_message($f_comment_id);
+	if ($comment->exists()) {
+		$banIp = Input::Get("f_ban_ip", 'checkbox');
+		if ($banIp) {
+			$banItem =& new Phorum_ban_item();
+			$banItem->create(PHORUM_BAD_IPS, false, $comment->getIpAddress());
+			$banned = true;
+		} else {
+			Phorum_ban_item::DeleteMatching(PHORUM_BAD_IPS, false, $comment->getIpAddress());
+		}
+		$banEmail = Input::Get("f_ban_email", 'checkbox');
+		if ($banEmail) {
+			$banItem =& new Phorum_ban_item();
+			$banItem->create(PHORUM_BAD_EMAILS, false, $comment->getEmail());
+			$banned = true;
+		} else {
+			Phorum_ban_item::DeleteMatching(PHORUM_BAD_EMAILS, false, $comment->getEmail());
+		}
+		$banName = Input::Get("f_ban_name", 'checkbox');
+		if ($banName) {
+			$banItem =& new Phorum_ban_item();
+			$banItem->create(PHORUM_BAD_NAMES, false, $comment->getAuthor());
+			$banned = true;
+		} else {
+			Phorum_ban_item::DeleteMatching(PHORUM_BAD_NAMES, false, $comment->getAuthor());
+		}
 	}
 }
 
@@ -54,6 +57,31 @@ if ($comment->exists()) {
 </head>
 <body>
 <center>
+<?php
+
+if ($onlineCnn == false) {
+
+?>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
+<TR>
+        <TD >
+<?php
+        camp_html_display_msgs("0.25em", "0.25em");
+?>
+        </TD>
+</TR>
+<TR>
+        <TD style="padding-left: 15px;">
+                <INPUT TYPE="button" NAME="close" VALUE="<?php putGS('Close'); ?>" class="button" onclick="window.close();">
+        </TD>
+</TR>
+</center>
+</BODY>
+</HTML>
+<?php
+        exit;
+}
+?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 20px;">
 <TR>
 	<TD align="center">

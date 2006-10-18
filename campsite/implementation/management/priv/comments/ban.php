@@ -1,11 +1,9 @@
 <?php
 camp_load_translation_strings("comments");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_ban_item.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 
 if (!$g_user->hasPermission('CommentModerate')) {
@@ -13,18 +11,22 @@ if (!$g_user->hasPermission('CommentModerate')) {
 	exit;
 }
 
-$f_comment_id = Input::Get('f_comment_id', 'int');
+$onlineCnn = DbReplication::Connect();
+if ($onlineCnn == false) {
+	camp_html_add_msg(getGS("Comments Disabled"));
+} else {
+	$f_comment_id = Input::Get('f_comment_id', 'int');
 
-// Check input
-if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;
+	// Check input
+	if (!Input::IsValid()) {
+		camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+		exit;
+	}
+
+	// load the comment
+	$comment =& new Phorum_message($f_comment_id);
+	$bans = Phorum_ban_item::IsPostBanned($comment);
 }
-
-// load the comment
-$comment =& new Phorum_message($f_comment_id);
-$bans = Phorum_ban_item::IsPostBanned($comment);
-
 ?>
 <html>
 <head>
@@ -36,6 +38,31 @@ $bans = Phorum_ban_item::IsPostBanned($comment);
 <body>
 
 <center>
+<?php
+
+if ($onlineCnn == false) {
+
+?>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
+<TR>
+        <TD >
+<?php
+	camp_html_display_msgs("0.25em", "0.25em");
+?>
+	</TD>
+</TR>
+<TR>
+	<TD style="padding-left: 15px;">
+		<INPUT TYPE="button" NAME="close" VALUE="<?php putGS('Close'); ?>" class="button" onclick="window.close();">
+	</TD>
+</TR>
+</center>
+</BODY>
+</HTML>
+<?php
+	exit;
+}
+?>
 <form action="/<?php p($ADMIN); ?>/comments/do_ban.php" method="GET">
 <INPUT type="hidden" name="f_comment_id" value="<?php p($f_comment_id); ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
@@ -60,7 +87,7 @@ $bans = Phorum_ban_item::IsPostBanned($comment);
 		    <td><?php putGS("Name:"); ?> <?php p($comment->getAuthor()); ?></td>
 		</tr>
 		<tr>
-		    <td align="center" style="padding-left: 10px;"><input type="checkbox" name="f_ban_email"  class="input_checkbox" <?php if (isset($bans[PHORUM_BAD_EMAILS])) { ?>checked<?php } ?>></td>
+		    <td align="center" style="padding-left: 10px;"><input type="checkbox" name="f_ban_email"  class="input_checkbox" <?php if (isset($bans[PHORUM_BAD_EMAILS])) { ?>checked<?php } if ($comment->getEmail() == '') { ?>disabled<?php } ?>></td>
 		    <td><?php putGS("Email:"); ?> <?php p($comment->getEmail()); ?></td>
 		</tr>
 		<tr>

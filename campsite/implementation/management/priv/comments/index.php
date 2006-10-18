@@ -1,6 +1,7 @@
 <?php
 camp_load_translation_strings("comments");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
@@ -14,6 +15,21 @@ if (!$g_user->hasPermission('CommentModerate')) {
 	exit;
 }
 
+if (DbReplication::Connect() == false) {
+
+$crumbs = array();
+$crumbs[] = array(getGS("Content"), "");
+$crumbs[] = array(getGS("Comments"), "");
+echo camp_html_breadcrumbs($crumbs);
+camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
+
+?>
+
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<?php
+	camp_html_display_msgs("0.25em", "0.25em");
+} else {
+
 // This can be 'inbox' or 'archive'
 $f_comment_screen = camp_session_get('f_comment_screen', 'inbox');
 $f_comment_start_inbox = camp_session_get('f_comment_start_inbox', 0);
@@ -21,7 +37,7 @@ $f_comment_start_archive = camp_session_get('f_comment_start_archive', 0);
 $f_comment_per_page = camp_session_get('f_comment_per_page', 20);
 $f_comment_search = trim(camp_session_get('f_comment_search', ''));
 $f_comment_order_by = camp_session_get('f_comment_order_by', 'datestamp');
-$f_comment_order_direction = camp_session_get('f_comment_order_direction', 'DESC');
+$f_comment_order_direction = camp_session_get('f_comment_order_direction', 'ASC');
 if ($f_comment_per_page < 4) {
     $f_comment_per_page = 4;
 }
@@ -347,4 +363,7 @@ function onSummaryClick(p_messageId)
     <?php
 
 } // if there are comments
+
+} // if there is connection to the replication server
+
 ?>

@@ -54,6 +54,41 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 		<input type="text" name="f_max_upload_filesize" value="<?php p(SystemPref::Get("MaxUploadFileSize")); ?>" maxlenght="12" size="14" class="input_text" alt="blank" emsg="<?php putGS("Please enter a positive number for the '$2' field.", getGS("Max Upload File Size")); ?>" />
 </tr>
 <tr>
+	<td colspan="2"><hr></td>
+</tr>
+<tr>
+	<td>
+		<?php putGS("Database Replication Host:") ?>
+	</td>
+	<td>
+		<input type="text" name="f_db_repl_host" value="<?php p(SystemPref::Get("DBReplicationHost")); ?>" maxlenght="60" size="30" class="input_text" />
+	</td>
+</tr>
+<tr>
+	<td>
+		<?php putGS("Database Replication User:") ?>
+	</td>
+	<td>
+		<input type="text" name="f_db_repl_user" value="<?php p(SystemPref::Get("DBReplicationUser")); ?>" maxlenght="20" size="22" class="input_text" />
+	</td>
+</tr>
+<tr>
+	<td>
+		<?php putGS("Database Replication Password:") ?>
+	</td>
+	<td>
+		<input type="text" name="f_db_repl_pass" value="<?php p(SystemPref::Get("DBReplicationPass")); ?>" maxlenght="20" size="22" class="input_text" />
+	</td>
+</tr>
+<tr>
+	<td>
+		<?php putGS("Database Replication Port:") ?>
+	</td>
+	<td>
+		<input type="text" name="f_db_repl_port" value="<?php p(SystemPref::Get("DBReplicationPort")); ?>" maxlenght="6" size="8" class="input_text" />
+	</td>
+</tr>
+<tr>
 	<td colspan="2" align="center" style="padding-top: 10px;">
 		<input type="submit" name="save" value="<?php putGS("Save"); ?>" class="button">
 	</td>

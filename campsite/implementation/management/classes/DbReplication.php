@@ -1,0 +1,75 @@
+<?php
+/**
+ * @package Campsite
+ */
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/adodb/adodb.inc.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
+
+/**
+ * A simple class for Database Replication.
+ * TODO: Add more replication functions.
+ *
+ * @package Campsite
+ */
+class DbReplication {
+    /**
+     * Remote (Online) db server connection details.
+     */
+    var $m_rDbName = $rDbName = $Campsite['DATABASE_NAME'];
+    var $m_rDbHost = SystemPref::Get('DBReplicationHost') . ':' . SystemPref::Get('DBReplicationPort');
+    var $m_rDbUser = SystemPref::Get('DBReplicationUser');
+    var $m_rDbPass = SystemPref::Get('DBReplicationPass');
+
+    /**
+     * Constructor
+     *
+     * @return void
+     */
+    function DbReplication() {}
+
+    /**
+     * Try to connect the resource based on supplied parameter.
+     *
+     * @param  string  (optional) Host/Server alias [online | local]
+     * @return bool
+     */
+    function Connect($host = 'online')
+    {
+	global $Campsite;
+	global $g_ado_db;
+
+	if ($host == 'local') {
+	    if (isset($g_ado_db) && $g_ado_db->host == $Campsite['DATABASE_SERVER_ADDRESS']) {
+		return true;
+	    } else {
+		$g_ado_db = ADONewConnection('mysql');
+		$g_ado_db->SetFetchMode(ADODB_FETCH_ASSOC);
+		if ($g_ado_db->Connect($Campsite['DATABASE_SERVER_ADDRESS'],
+			               $Campsite['DATABASE_USER'],
+			               $Campsite['DATABASE_PASSWORD'], $Campsite['DATABASE_NAME'])) {
+		    return true;
+		} else {
+		    return false;
+		}
+	    }
+	}
+
+        $g_ado_db_tmp = $g_ado_db;
+
+	if (isset($g_ado_db) && $g_ado_db->host == $rDbHost) {
+	    return true;
+	}
+        $g_ado_db = ADONewConnection('mysql');
+        $g_ado_db->SetFetchMode(ADODB_FETCH_ASSOC);
+        if ($g_ado_db->Connect($rDbHost, $rDbUser, $rDbPass, $rDbName) == false) {
+            $g_ado_db = $g_ado_db_tmp;
+            return false;
+        } else {
+            return true;
+        }
+    } // fn Connect
+
+} // class DbReplication
+
+?>

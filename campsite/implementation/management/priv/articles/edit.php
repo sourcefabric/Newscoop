@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_xinha.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAttachment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
@@ -76,9 +77,12 @@ if ($f_publication_id > 0) {
 }
 
 if ($showComments) {
-    // Fetch the comments attached to this article
     require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
-    $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
+    $onlineCnn = DbReplication::Connect();
+    if ($onlineCnn == true) {
+	// Fetch the comments attached to this article
+	$comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
+    }
 }
 
 
@@ -920,12 +924,21 @@ if ($f_edit_mode == "edit") { ?>
 				</td>
 			</tr>
 				<td align="left" width="100%" style="padding-left: 8px;">
-				    <?php putGS("Total:"); ?> <?php p(count($comments)); ?><br>
+				<?php
+				if ($onlineCnn == true) {
+					putGS("Total:"); ?> <?php p(count($comments));
+				?>
+				    <br />
 				    <?php if ($f_show_comments) { ?>
 				    <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&f_show_comments=0"); ?>"><?php putGS("Hide Comments"); ?></a>
 				    <?php } else { ?>
 				    <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&f_show_comments=1"); ?>"><?php putGS("Show Comments"); ?></a>
-				    <?php } ?>
+				    <?php }
+				} else {
+					putGS("Comments Disabled");
+				}
+				?>
+				
                 </td>
             </tr>
             </table>
@@ -1125,7 +1138,7 @@ if ($f_edit_mode == "edit") { ?>
 </TABLE>
 </FORM>
 <?php
-if ($showComments && $f_show_comments) {
+if ($showComments && $f_show_comments && $onlineCnn) {
     include("comments/show_comments.php");
 }
 

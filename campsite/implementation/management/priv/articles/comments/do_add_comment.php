@@ -1,10 +1,10 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/comment_lib.php");
@@ -28,6 +28,11 @@ if (!$articleObj->exists()) {
 }
 if (!$articleObj->commentsEnabled() || $articleObj->commentsLocked())  {
     camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
+}
+
+if (DbReplication::Connect() == false) {
+	camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
 }
 
 // Add the user if it doesnt exist in the Phorum user table
