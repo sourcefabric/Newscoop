@@ -47,7 +47,8 @@ class DbReplication {
 		$g_ado_db->SetFetchMode(ADODB_FETCH_ASSOC);
 		if ($g_ado_db->Connect($Campsite['DATABASE_SERVER_ADDRESS'],
 			               $Campsite['DATABASE_USER'],
-			               $Campsite['DATABASE_PASSWORD'], $Campsite['DATABASE_NAME'])) {
+			               $Campsite['DATABASE_PASSWORD'],
+				       $Campsite['DATABASE_NAME'])) {
 		    return true;
 		} else {
 		    return false;
@@ -62,7 +63,10 @@ class DbReplication {
 	}
         $g_ado_db = ADONewConnection('mysql');
         $g_ado_db->SetFetchMode(ADODB_FETCH_ASSOC);
-        if ($g_ado_db->Connect($rDbHost, $rDbUser, $rDbPass, $rDbName) == false) {
+        if ($g_ado_db->Connect($this->m_rDbHost,
+			       $this->m_rDbUser,
+			       $this->m_rDbPass,
+			       $this->m_rDbName) == false) {
             $g_ado_db = $g_ado_db_tmp;
             return false;
         } else {
