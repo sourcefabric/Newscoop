@@ -78,7 +78,8 @@ if ($f_publication_id > 0) {
 
 if ($showComments) {
     require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
-    $onlineCnn = DbReplication::Connect();
+    $rDbObj =& new DbReplication();
+    $onlineCnn = $rDbObj->Connect();
     if ($onlineCnn == true) {
 	// Fetch the comments attached to this article
 	$comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);

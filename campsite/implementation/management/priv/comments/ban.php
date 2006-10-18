@@ -11,7 +11,8 @@ if (!$g_user->hasPermission('CommentModerate')) {
 	exit;
 }
 
-$onlineCnn = DbReplication::Connect();
+$rDbObj =& new DbReplication();
+$onlineCnn = $rDbObj->Connect();
 if ($onlineCnn == false) {
 	camp_html_add_msg(getGS("Comments Disabled"));
 } else {

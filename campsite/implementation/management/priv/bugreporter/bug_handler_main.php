@@ -36,6 +36,11 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
             }
         }
 
+    // -- Return on mysql connect errors ---
+    if (preg_match ('/^mysql_connect/i', $p_string)){
+	return;
+    }
+
     // --- Return on socket errros ---
     if (preg_match ('/^fsockopen/i', $p_string)){
         return;

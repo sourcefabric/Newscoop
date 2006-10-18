@@ -30,7 +30,8 @@ if (!$articleObj->commentsEnabled() || $articleObj->commentsLocked())  {
     camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
 }
 
-if (DbReplication::Connect() == false) {
+$rDbObj =& new DbReplication();
+if ($rDbObj->Connect() == false) {
 	camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
 }

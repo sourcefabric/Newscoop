@@ -11,7 +11,8 @@ if (!$g_user->hasPermission('CommentModerate')) {
 	exit;
 }
 
-if (DbReplication::Connect() == false) {
+$rDbObj =& new DbReplication();
+if ($rDbObj->Connect() == false) {
 	camp_html_display_error(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
 	exit;
 }

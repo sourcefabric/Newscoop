@@ -35,7 +35,8 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 camp_html_content_top(getGS("Reply to comment"), $topArray);
 
-$onlineCnn = DbReplication::Connect();
+$rDbObj =& new DbReplication();
+$onlineCnn = $rDbObj->Connect();
 if ($onlineCnn == false) {
 	camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
 } else {

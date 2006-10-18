@@ -66,9 +66,14 @@ class DbReplication {
 		$this->m_rDbUser = SystemPref::Get('DBReplicationUser');
 		$this->m_rDbPass = SystemPref::Get('DBReplicationPass');
 
-                if (isset($g_ado_db) && $g_ado_db->host == $this->m_rDbHost) {
-                        return true;
-                }
+		if (isset($g_ado_db) && $g_ado_db->host == $this->m_rDbHost) {
+			return true;
+		}
+		if ($this->m_rDbHost == ':'
+				|| is_null($this->m_rDbUser)
+				|| is_null($this->m_rDbPass)) {
+			return false;
+		}
 		$g_ado_db = ADONewConnection('mysql');
 		$g_ado_db->SetFetchMode(ADODB_FETCH_ASSOC);
 		if ($g_ado_db->Connect($this->m_rDbHost,

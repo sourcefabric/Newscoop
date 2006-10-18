@@ -15,7 +15,8 @@ if (!$g_user->hasPermission('CommentModerate')) {
 	exit;
 }
 
-if (DbReplication::Connect() == false) {
+$rDbObj =& new DbReplication();
+if ($rDbObj->Connect() == false) {
 
 $crumbs = array();
 $crumbs[] = array(getGS("Content"), "");
