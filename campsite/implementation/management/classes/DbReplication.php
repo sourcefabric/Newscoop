@@ -59,10 +59,6 @@ class DbReplication {
 
 		$g_ado_db_tmp = $g_ado_db;
 
-		if (isset($g_ado_db) && $g_ado_db->host == $rDbHost) {
-			return true;
-		}
-
 		$this->m_rDbName = $Campsite['DATABASE_NAME'];
 		$this->m_rDbHost = SystemPref::Get('DBReplicationHost')
 				 . ':'
@@ -70,6 +66,9 @@ class DbReplication {
 		$this->m_rDbUser = SystemPref::Get('DBReplicationUser');
 		$this->m_rDbPass = SystemPref::Get('DBReplicationPass');
 
+                if (isset($g_ado_db) && $g_ado_db->host == $this->m_rDbHost) {
+                        return true;
+                }
 		$g_ado_db = ADONewConnection('mysql');
 		$g_ado_db->SetFetchMode(ADODB_FETCH_ASSOC);
 		if ($g_ado_db->Connect($this->m_rDbHost,
