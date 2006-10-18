@@ -10,7 +10,7 @@ $PHORUM['DBCONFIG']=array(
 
     // Database connection.
     'type'          =>  'mysql',
-    'name'          =>  'campsite_fake_remote', // $Campsite['DATABASE_NAME'],
+    'name'          =>  $Campsite['DATABASE_NAME'],
     'server'        =>  SystemPref::Get('DBReplicationHost') . ':' . SystemPref::Get('DBReplicationPort'),
     'user'          =>  SystemPref::Get('DBReplicationUser'),
     'password'      =>  SystemPref::Get('DBReplicationPass'),
