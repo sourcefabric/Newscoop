@@ -19,7 +19,13 @@ $f_subscription_start_date = Input::Get('f_subscription_start_date', 'string', d
 $f_subscription_type = Input::Get('f_subscription_type', 'string', 'PN');
 $f_subscription_days = Input::Get('f_subscription_days', 'int', 0);
 
-$uriPath = strtok($_SERVER['HTTP_REFERER'], "?");
+if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] != '') {
+	$uriPath = strtok($_SERVER['HTTP_REFERER'], "?");
+} elseif ($g_user->hasPermission('ManageUsers')) {
+	$uriPath = "/$ADMIN/users/edit.php";
+} else {
+	$uriPath = "/$ADMIN/users/subscriptions";
+}
 $inSubscriptions = (strstr($uriPath, '/subscriptions') != '')
 					|| !$g_user->hasPermission('ManageUsers');
 
