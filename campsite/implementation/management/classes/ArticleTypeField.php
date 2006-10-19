@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package Campsite
+ */
 
 /**
  * Includes
@@ -6,9 +9,8 @@
 // We indirectly reference the DOCUMENT_ROOT so we can enable
 // scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
-if (!isset($g_documentRoot)) {
-    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-}
+$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+
 require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/ParserCom.php');
 require_once($g_documentRoot.'/classes/Topic.php');

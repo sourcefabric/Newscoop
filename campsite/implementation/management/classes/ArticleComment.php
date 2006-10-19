@@ -1,8 +1,20 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+/**
+ * @package Campsite
+ */
+
+/**
+ * Includes
+ */
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, because $_SERVER['DOCUMENT_ROOT']
+// is not defined in these cases.
+$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+
+require_once($g_documentRoot.'/include/phorum_load.php');
+require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/Phorum_message.php');
+require_once($g_documentRoot.'/classes/Article.php');
 
 class ArticleComment
 {

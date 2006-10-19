@@ -7,9 +7,7 @@
 // scripts that use this file run from the command line,
 // therefore $_SERVER['DOCUMENT_ROOT'] is not defined in
 // these cases.
-if (!isset($g_documentRoot)) {
-    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-}
+$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 /**
  * Since the XML_Serializer package is not yet stable,
