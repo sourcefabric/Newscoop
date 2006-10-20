@@ -200,6 +200,7 @@ function checkboxClick(theCheckbox, theRowNum)
 <INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
 <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php p($f_language_id); ?>">
 <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php p($f_language_selected); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_total_articles" VALUE="<?php p($totalArticles); ?>">
 <TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
 <TR>
 	<TD>
