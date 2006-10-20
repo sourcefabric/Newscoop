@@ -13,7 +13,10 @@ $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_codes = Input::Get('f_article_code', 'array', array(), true);
 $f_article_list_action = Input::Get('f_article_list_action');
-$f_article_offset = Input::Get('f_article_offset', 'int', 0, true);
+$offsetVarName = "f_article_offset_".$f_publication_id."_".$f_issue_number."_".$f_language_id."_".$f_section_number;
+$f_article_offset = camp_session_get($offsetVarName, 0);
+$ArticlesPerPage = 15;
+
 if (sizeof($f_article_codes) == 0) {
 	camp_html_add_msg('You must select at least one article to perform an action.');
 	camp_html_goto_page("/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number"
@@ -24,6 +27,12 @@ if (sizeof($f_article_codes) == 0) {
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;
+}
+
+if ($f_article_offset > 15) {
+	$f_article_offset -= $ArticlesPerPage;
+} elseif ($f_article_offset < 0) {
+	$f_article_offset = 0;
 }
 
 // Validate permissions
@@ -182,5 +191,5 @@ case "translate":
 	camp_html_goto_page("/$ADMIN/articles/translate.php?".$argsStr);
 }
 
-camp_html_goto_page("/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected&f_article_offset=$f_article_offset");
+camp_html_goto_page("/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected&$offsetVarName=$f_article_offset");
 ?>
