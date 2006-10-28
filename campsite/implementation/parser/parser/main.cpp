@@ -548,7 +548,7 @@ int main(int argc, char** argv)
 		struct hostent* ph = gethostbyname(pchHostName);
 		StringSet coHostAddrs;
 		coHostAddrs.insert("127.0.0.1");
-		for(int nIndex = 0; ph->h_addr_list[nIndex] != 0; nIndex++)
+		for(int nIndex = 0; ph != 0 && ph->h_addr_list[nIndex] != 0; nIndex++)
 		{
 			struct in_addr in;
 			memcpy(&in.s_addr, ph->h_addr_list[nIndex], sizeof(struct in_addr));
