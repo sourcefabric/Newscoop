@@ -1,4 +1,6 @@
 <?php 
+regGS("This file is stored on disk as '$1'.", "");
+regGS("Instance", "");
 regGS("The system is unable to write to the directory '$1'.", "Система не может записывать в папку '$1'.");
 regGS("The system was unable to read the file '$1'.", "Система не может прочитать файл '$1'.");
 regGS("The system was unable to delete the directory '$1'.", "Система не может удалить папку '$1'.");
