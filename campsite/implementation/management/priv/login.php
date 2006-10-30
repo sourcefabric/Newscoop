@@ -85,6 +85,12 @@ camp_load_translation_strings("home");
 </tr>
 </table>
 
+<?php
+if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/demo_login.php")) {
+	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/demo_login.php");
+}
+?>
+
 <table width="400px" border="0" cellspacing="0" cellpadding="6" align="center" style="margin-top: 20px; background-color: #d5e2ee;	border: 1px solid #8baed1;">
 <form name="login_form" method="post" action="do_login.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($error_code == "upgrade") { ?>
