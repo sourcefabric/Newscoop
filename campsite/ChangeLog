@@ -1,3 +1,61 @@
+2.6.2 (October 31, 2006)
+  For full details about these changes, see:
+  http://code.campware.org/projects/campsite/query?milestone=2.6.2
+
+  Improvements
+  ------------
+  - Phorum and Campsite better integration
+
+  Documentation
+  -------------
+  - Documented cron jobs in the manual
+  - Documented the new article types screens
+  - Updated the 'Creating a publication' chapter in the manual
+  - Updated the 'Defining Article Types' chapter in the manual
+  - Updated the chapter 'Editing Articles' in the manual
+  
+  Bugs Fixed (27 total)
+  ---------------------
+  Bugs are listed in order of oldest to newest.
+
+  01) #2295 - Deleting a template within a subdir does not take care if it
+      is in use.
+  02) #2296 - Upgrading from versions older than 2.5 generates an error
+  03) #2297	- Some links are incomplete in the template screens
+  04) #2298	- In debug mode some messages are displayed before headers
+  05) #2308 - Error in template management when trying to edit a
+      non-existent file
+  06) #2311	Bad visualization of the System Preferences form (firefox)
+  07) #2313	- URLParameters and URI statements print invalid image number
+  08) #2315	- Create/restore instance utilities don't work on names with
+      spaces
+  09) #2317	- Error in user management when deleting an IP addresses group
+  10) #2318	- Replace to a template file does not work because
+      mime_content_type() is missed
+  11) #2319	- Changing the number of an image to existing number does not
+      inform the user that the number was not changed
+  12) #2323 - Error in section management when adding a new one
+  13) #2325 - Error in publication management when adding a new one
+  14) #2332	- Bug in template 02-04 v2
+  15) #2334 - Error changing the last sentence of an old article published
+      inside the secondary publication.
+  16) #2335 - Adding a subscription section gives an error.
+  17) #2337	- "Article Type Fields" row colors do not alternate properly
+  18) #2338	- Support for Apache 2.2
+  19) #2339	- Merge article types crashes on articles containing quote
+      character
+  20) #2342 - Error trying to delete a comment
+  21) #2344 - Security fix
+  22) #2345	- Unable to submit subscription section form unless individual
+      language is choosen
+  23) #2346	- Sort comments by most recently added by default
+  24) #2347	- Dont show top-level placeholder comments in Comment
+      management
+  25) #2348 - Undefined index: HTTP_REFERER in user subscription
+  26) #2349	- Register globals vulnerability
+  27) #2353	- Bug when deleting an entire page of articles in Article List
+      interface
+
 2.6.1 (August 22, 2006)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.6.1
