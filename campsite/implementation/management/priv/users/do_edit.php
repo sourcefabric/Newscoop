@@ -71,7 +71,10 @@ $logtext = getGS('User account information changed for $1', $editUser->getUserNa
 Log::Message($logtext, $g_user->getUserName(), 56);
 
 // sync base data to the corresponding phorum user
-$editUser->syncPhorumUser();
+$isPhorumUser = Phorum_user::GetByUserName($editUser->getUserName());
+if($isPhorumUser) {
+    $editUser->syncPhorumUser();
+}
 
 if ($editUser->isAdmin() && $customizeRights && $canManage) {
 	// save user customized rights
