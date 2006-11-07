@@ -215,14 +215,14 @@ function camp_create_url_request_message($p_envVars, $p_parameters, $p_cookies)
 /**
  * @param string $p_queryString
  */
-function camp_read_parameters(&$p_queryString)
+function camp_read_parameters(&$p_queryString, $p_decodeURL = false)
 {
 	switch (getenv("REQUEST_METHOD")) {
 	case "GET":
-		return camp_read_get_parameters($p_queryString);
+		return camp_read_get_parameters($p_queryString, $p_decodeURL);
 		break;
 	case "POST":
-		return camp_read_post_parameters($p_queryString);
+		return camp_read_post_parameters($p_queryString, $p_decodeURL);
 		break;
 	default:
 		echo "<p>Unable to process " . getenv("REQUEST_METHOD") . " request method</p>";
@@ -234,7 +234,7 @@ function camp_read_parameters(&$p_queryString)
 /**
  * @param string $p_queryString
  */
-function camp_read_get_parameters(&$p_queryString)
+function camp_read_get_parameters(&$p_queryString, $p_decodeURL = false)
 {
 	if ($p_queryString == "") {
 		$p_queryString = getenv("QUERY_STRING");
@@ -245,6 +245,9 @@ function camp_read_get_parameters(&$p_queryString)
 		$pair_array = explode("=", $pair);
 		$paramName = trim($pair_array[0]);
 		$paramValue = trim(isset($pair_array[1]) ? $pair_array[1] : '');
+		if ($p_decodeURL) {
+			$paramValue = urldecode($paramValue);
+		}
 		if ($paramName == "") {
 			continue;
 		}
@@ -272,10 +275,11 @@ function camp_stripslashes_callback(&$p_arrayItem, $p_key)
 	return true;
 }
 
+
 /**
  * @param string $p_queryString
  */
-function camp_read_post_parameters(&$p_queryString)
+function camp_read_post_parameters(&$p_queryString, $p_decodeURL = false)
 {
 	global $_POST;
 	$query_string = file_get_contents("php://stdin");
@@ -286,7 +290,7 @@ function camp_read_post_parameters(&$p_queryString)
 		}
 		return $copyOfPost;
 	}
-	return camp_read_get_parameters($query_string);
+	return camp_read_get_parameters($query_string, $p_decodeURL);
 } // fn camp_read_post_parameters
 
 
