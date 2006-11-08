@@ -23,6 +23,8 @@ if ($f_login_num >= 0) {
 	SystemPref::Set("LoginFailedAttemptsNum", $f_login_num);
 }
 camp_html_add_msg(getGS("System preferences updated."), "ok");
+$logtext = getGS('System preferences updated');
+Log::Message($logtext, $g_user->getUserId(), 171);
 
 camp_html_goto_page("/$ADMIN/system_pref/");
 ?>
