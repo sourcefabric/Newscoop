@@ -375,7 +375,7 @@ function camp_detect_database_version($p_db_name, &$version)
 				if (mysql_num_rows($res2) > 0) {
 					$version = "2.6.2";
 				}
-				if (!$res2 = mysql_query("SELECT COUNT(*) FROM Events WHERE Id = 171")) {
+				if (!$res2 = mysql_query("SELECT * FROM Events WHERE Id = 171")) {
 					return "Unable to query the database $p_db_name";
 				}
 				if (mysql_num_rows($res2) > 0) {
