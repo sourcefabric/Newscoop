@@ -3,6 +3,8 @@ camp_load_translation_strings("system_pref");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/XR_CcClient.php");
+
 
 if (!$g_user->hasPermission('ChangeSystemPreferences')) {
 	camp_html_display_error(getGS("You do not have the right to change system preferences."));
@@ -28,6 +30,11 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 
 <form action="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <table border="0" cellspacing="6" align="left" class="table_input" width="500px">
+<tr>
+	<td colspan="2" align="left">
+		<strong><?php putGS("General Settings"); ?></strong>
+	</td>
+</tr>
 <tr>
 	<td align="left" width="400px">
 		<?php putGS("Keyword separator:"); ?>
@@ -55,6 +62,11 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 </tr>
 <tr>
 	<td colspan="2"><hr></td>
+</tr>
+<tr>
+	<td colspan="2" align="left">
+		<strong><?php putGS("Campsite Online Server Database"); ?></strong>
+	</td>
 </tr>
 <tr>
 	<td>
@@ -86,6 +98,46 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 	</td>
 	<td>
 		<input type="text" name="f_db_repl_port" value="<?php p(SystemPref::Get("DBReplicationPort")); ?>" maxlenght="6" size="8" class="input_text" />
+	</td>
+</tr>
+<tr>
+	<td colspan="2"><hr></td>
+</tr>
+<tr>
+	<td colspan="2" align="left">
+		<strong><?php putGS("Campcaster Server"); ?></strong>
+	</td>
+</tr>
+<tr>
+	<td>
+		<?php putGS("Hostname / IP Address:") ?>
+	</td>
+	<td>
+		<input type="text" name="f_cc_hostname" value="<?php p(SystemPref::Get("CampcasterHostName")); ?>" maxlenght="60" size="30" class="input_text" />
+	</td>
+</tr>
+<tr>
+	<td>
+		<?php putGS("Port:") ?>
+	</td>
+	<td>
+		<input type="text" name="f_cc_hostport" value="<?php p(SystemPref::Get("CampcasterHostPort")); ?>" maxlenght="60" size="30" class="input_text" />
+	</td>
+</tr>
+<tr>
+	<td>
+		<?php putGS("XML RPC Path:") ?>
+	</td>
+	<td>
+		<input type="text" name="f_cc_xrpcpath" value="<?php p(SystemPref::Get("CampcasterXRPCPath")); ?>" maxlenght="100" size="30" class="input_text" />
+	</td>
+</tr>
+<tr>
+	<td>
+		<?php putGS("XML RPC File:") ?>
+	</td>
+	<td>
+		<input type="text" name="f_cc_xrpcfile" value="<?php p(SystemPref::Get("CampcasterXRPCFile")); ?>" maxlenght="50" size="30" class="input_text" />
 	</td>
 </tr>
 <tr>

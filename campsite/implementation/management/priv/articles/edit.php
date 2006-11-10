@@ -1133,6 +1133,32 @@ if ($f_edit_mode == "edit") { ?>
 			<!-- END TOPICS table -->
 		</TD></TR>
 
+
+		<TR><TD>
+			<!-- BEGIN AUDIO CLIPS table -->
+			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
+			<TR>
+				<TD>
+					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
+					<TR>
+						<TD align="left">
+						<b><?php putGS("Audio clips"); ?></b>
+						</td>
+                        <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachAudioclipToArticle')) {  ?>
+						<td align="right">
+							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
+                            <a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php"); ?>', 'attach_audioclip', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><?php putGS("Attach"); ?></a>
+						</td>
+						<?php } ?>
+					</tr>
+					</table>
+				</td>
+			</tr>
+            </table>
+            <!-- END AUDIO CLIPS table -->
+          </td></tr>
+
+
 		</TABLE>
 	</TD>
 </TR>

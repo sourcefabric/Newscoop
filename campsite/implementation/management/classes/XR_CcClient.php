@@ -442,7 +442,7 @@ $mdefs = array(
         'm'=>'locstor.createBackupList',
         'p'=>array('stat'/*string*/),
         't'=>array('string'),
-        'r'=>array('status'/*string*/, 'url'/*string*/, 'metafile'/*string*/, 'faultString'/*string*/)
+        'r'=>array('status'/*string*/, 'url'/*string*/, 'metafile'/*string*/, 'faultString'/*string*/),
         'e'=>array(
             '3'=>'incorrect parameters',
             '801'=>'bad params',
@@ -530,7 +530,7 @@ $mdefs = array(
         'm'=>'locstor.searchMetadata',
         'p'=>array('sessid'/*string*/, 'criteria'/*array*/),
         't'=>array('string', 'array'),
-        'r'=>array('cnt'/*int*/, 'results'/*array*/)
+        'r'=>array('cnt'/*int*/, 'results'/*array*/),
         'e'=>array(
             '3'=>'incorrect parameters',
             '801'=>'bad params',
@@ -621,7 +621,7 @@ $mdefs = array(
         'e'=>array(
             '3'=>'incorrect parameters',
             '801'=>'bad params',
-            '805'=>'message from lower later'
+            '805'=>'message from lower later',
             '848'=>'invalid session id',
             '872'=>'invalid transport token'
         )
@@ -784,20 +784,12 @@ class XR_CcClient {
         $this->debug = $debug;
         $this->verbose = $verbose;
 
-        $serverPath = "http://localhost:8080/livesupport/storageServer/var/xmlrpc/xrLocStor.php";
-        /*
         $serverPath = "http://"
-            . SystemPref::Get('CampcasterHost') . ":"
-            . SystemPref::Get('CampcasterPort')
-            . SystemPref::Get('CampcasterPath') . "/"
-            . SystemPref::Get('CampcasterXRPC');
+            . SystemPref::Get('CampcasterHostName') . ":"
+            . SystemPref::Get('CampcasterHostPort')
+            . SystemPref::Get('CampcasterXRPCPath')
+            . SystemPref::Get('CampcasterXRPCFile');
 
-        $confPrefix = "storage";
-        $serverPath = "http://{$config["{$confPrefix}UrlHost"]}"
-                     .":{$config["{$confPrefix}UrlPort"]}"
-                     ."{$config["{$confPrefix}UrlPath"]}"
-                     ."/{$config["{$confPrefix}XMLRPC"]}";
-        */
         if($this->verbose) echo "serverPath: $serverPath\n";
         $url = parse_url($serverPath);
         $this->client = new XML_RPC_Client($url['path'], $url['host'], $url['port']);
@@ -806,10 +798,10 @@ class XR_CcClient {
     /**
      *  Factory, create object instance
      *
-     *  In fact it doesn't create instance of SchedulerPhpClient, but
+     *  In fact it doesn't create instance of XR_CcClient, but
      *  dynamically extend this class with set of methods based on $mdefs array
      *  (using eval function) and instantiate resulting class
-     *  SchedulerPhpClientCore instead.
+     *  XR_CcClientCore instead.
      *  Each new method in this subclass accepts parameters according to $mdefs
      *  array, call wrapper callMethod(methodname, parameters) and return its
      *  result.
@@ -836,9 +828,9 @@ class XR_CcClient {
             "$f\n".
             "}\n";
         if(FALSE === eval($e)) return false; //$dbc->raiseError("Eval failed");
-        $spc =& new XR_CcClientCore($mdefs, $debug, $verbose);
+        $xrc =& new XR_CcClientCore($mdefs, $debug, $verbose);
 
-        return $spc;
+        return $xrc;
     } // fn factory
 
     /**
@@ -856,7 +848,11 @@ class XR_CcClient {
         $XML_RPC_val = new XML_RPC_Value;
         foreach($this->mdefs[$method]['p'] as $i=>$p){
             $parr[$p] = new XML_RPC_Value;
-            $parr[$p]->addScalar($gettedPars[$i], $this->mdefs[$method]['t'][$i]);
+            if ($this->mdefs[$method]['t'][$i] == 'array') {
+                $parr[$p] = XML_RPC_encode($gettedPars[$i]);
+            } else {
+                $parr[$p]->addScalar($gettedPars[$i], $this->mdefs[$method]['t'][$i]);
+            }
         }
         $XML_RPC_val->addStruct($parr);
         $fullmethod = $this->mdefs[$method]['m'];
@@ -869,6 +865,9 @@ class XR_CcClient {
         }
         $this->client->setDebug($this->debug);
         $res = $this->client->send($msg);
+        if(!$res) {
+            return $this->client->errstr;
+        }
         if($res->faultCode() > 0) {
             return PEAR::raiseError(
                 "XR_CcClient::$method:".$res->faultString()." ".

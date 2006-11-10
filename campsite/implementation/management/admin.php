@@ -27,6 +27,7 @@ $no_menu_scripts = array(
 	'/articles/images/view.php',
 	'/articles/topics/popup.php',
 	'/articles/files/popup.php',
+    '/articles/audioclips/popup.php',
 	'/articles/empty.php',
 	'/comments/ban.php',
 	'/comments/do_ban.php');

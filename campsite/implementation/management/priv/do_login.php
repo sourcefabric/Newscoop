@@ -1,5 +1,6 @@
 <?php
 camp_load_translation_strings('home');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/XR_CcClient.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
@@ -14,7 +15,8 @@ $f_is_encrypted = Input::Get('f_is_encrypted', 'int', '1');
 $f_captcha_code = Input::Get('f_captcha_code', 'string', '', true);
 
 $xorkey = camp_session_get('xorkey', '');
-$f_password = sha1(camp_passwd_decrypt($xorkey, $f_password));
+$t_password = camp_passwd_decrypt($xorkey, $f_password);
+$f_password = sha1($t_password);
 
 
 if (!Input::isValid()) {
@@ -31,6 +33,14 @@ function camp_successful_login($user, $f_login_language)
 	setcookie("TOL_Language", $f_login_language);
 	Article::UnlockByUser($user->getUserId());
 	camp_html_goto_page("/$ADMIN/index.php");
+}
+
+function camp_campcaster_login($f_user_name, $t_password)
+{
+    global $mdefs;
+    $xrc =& XR_CcClient::factory($mdefs);
+    $r = $xrc->xr_login($f_user_name, $t_password);
+    camp_session_set('cc_sessid', $r['sessid']);
 }
 
 function camp_passwd_decrypt($xorkey, $password)
@@ -67,6 +77,7 @@ if (!is_null($user)) {
 			if (!$validateCaptcha || PhpCaptcha::Validate($f_captcha_code, true)) {
 				// if user valid, password valid, encrypted, no CAPTCHA -> login
 				// if user valid, password valid, encrypted, CAPTCHA valid -> login
+                camp_campcaster_login($f_user_name, $t_password);
 				camp_successful_login($user, $f_login_language);
 			}
 		}
@@ -77,6 +88,7 @@ if (!is_null($user)) {
 				// if user valid, password valid, not encrypted, CAPTCHA valid -> upgrade, login
 				// if user valid, password valid, not encrypted, no CAPTCHA -> upgrade, login
 				$user->setPassword($f_password);
+                camp_campcaster_login($f_user_name, $f_password);
 				camp_successful_login($user, $f_login_language);
 			}
 		}
