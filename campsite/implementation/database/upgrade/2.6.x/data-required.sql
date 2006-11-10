@@ -6,3 +6,5 @@ INSERT INTO TemplateTypes (Id, Name) VALUES ('5','nontpl');
 
 -- Upgrade the system configuration
 system php ./upgrade_user_config.php
+-- Upgrade audioclip permissions
+system php ./upgrade_user_perms.php

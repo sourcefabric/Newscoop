@@ -29,7 +29,11 @@ $sql = "INSERT INTO UserConfig (fk_user_id, varname, value, last_modified) "
 			    . "(0,'DBReplicationHost','',NOW()),"
 			    . "(0,'DBReplicationUser','',NOW()),"
 			    . "(0,'DBReplicationPass','',NOW()),"
-			    . "(0,'DBReplicationPort','3306',NOW())";
+			    . "(0,'DBReplicationPort','3306',NOW()),"
+				. "(0,'CampcasterHostName','',NOW()),"
+				. "(0,'CampcasterHostPort','80',NOW()),"
+				. "(0,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/',NOW()),"
+				. "(0,'CampcasterXRPCFile','xrLocStor.php',NOW())";
 if (!($res = mysql_query($sql))) {
 	die("Unable to write to the database.\n");
 }
