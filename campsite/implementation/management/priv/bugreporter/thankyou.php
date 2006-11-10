@@ -1,4 +1,4 @@
-<?php require_once($g_documentRoot.'/classes/Language.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php'); ?>
 <br />
 <br />
 <table class="table_input" align="left" valign="top" width="800px" style="padding: 5px;">
