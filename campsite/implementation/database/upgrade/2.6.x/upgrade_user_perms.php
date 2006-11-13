@@ -24,14 +24,14 @@ if (!mysql_select_db($db_name)) {
 //
 // Add new permissions for each user.
 //
-if (!($res = mysql_query("SELECT DISTINCT(fk_user_id) FROM UserConfig WHERE fk_user_id!=0"))) {
+if (!($res = mysql_query("SELECT DISTINCT(fk_user_id) FROM UserConfig WHERE fk_user_id != 0 AND varname = 'AttachImageToArticle' AND value = 'Y'"))) {
 	die("Unable to read from the database.\n");
 }
 while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
 	// Add the "AddAudioclip" permission
 	$sql = "INSERT INTO UserConfig (fk_user_id, varname, value) "
 			." VALUES (".$row['fk_user_id'].", 'AddAudioclip', 'Y')";
-	mysql_query($sql)
+	mysql_query($sql);
 	
 	// Add the "AttachAudioclipToArticle" permission
 	$sql = "INSERT INTO UserConfig (fk_user_id, varname, value) "
@@ -43,7 +43,7 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
 // 
 // Add new permissions to the UserType table.
 //
-if (!($res = mysql_query("SELECT DISTINCT(user_type_name) FROM UserTypes"))) {
+if (!($res = mysql_query("SELECT DISTINCT(user_type_name) FROM UserTypes WHERE varname = 'AttachImageToArticle' AND value = 'Y'"))) {
 	die("Unable to read from the database.\n");
 }
 while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
