@@ -112,6 +112,8 @@ if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/demo_login.php")) {
 					 putGS('CAPTCHA code is not valid.  Please try again.');
 				} elseif ($error_code == "upgrade") {
 					putGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.");
+				} elseif ($error_code == 'xorkey') {
+					putGS("An error occured in session management. Please reload the login page.");
 				}
 				?>
 			</span>

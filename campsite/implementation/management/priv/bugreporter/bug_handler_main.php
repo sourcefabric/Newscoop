@@ -21,6 +21,7 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
     global $ADMIN;
     global $Campsite;
 	global $g_bugReporterDefaultServer;
+	global $g_user;
 
 	$server = $g_bugReporterDefaultServer;
 
@@ -35,6 +36,11 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
                 return;
             }
         }
+
+    // -- Return on mysql connect errors ---
+    if (preg_match ('/^mysql_connect/i', $p_string)){
+	return;
+    }
 
     // --- Return on socket errros ---
     if (preg_match ('/^fsockopen/i', $p_string)){
@@ -84,9 +90,11 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
     // --- Don't print out the previous screen (in which the error occurred). ---
     ob_end_clean();
 
-    echo "<html><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td>\n";
-    require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
-    echo "</td></tr>\n<tr><td>\n";
+    if (is_object($g_user)) {
+	    echo "<html><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td>\n";
+    	require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
+    	echo "</td></tr>\n<tr><td>\n";
+    }
 
 	// --- If reporter doesn't exist, make one ($reporter might exist
 	//     already if this script is an 'include') ---
