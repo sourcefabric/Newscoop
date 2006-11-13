@@ -103,6 +103,8 @@ if ( ($restartEngine == 'yes') && $g_user->hasPermission("InitializeTemplateEngi
 </table>
 <?php } ?>
 
+<?php camp_html_display_msgs("0.25em", "0.25em"); ?>
+
 <TABLE BORDER="0" CELLSPACING="4" CELLPADDING="2" WIDTH="100%">
 <TR>
 	<TD VALIGN="TOP" align="left" nowrap width="1%">
