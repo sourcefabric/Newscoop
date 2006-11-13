@@ -7,6 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/LoginAttempts.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/crypto/rc4Encrypt.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/PEAR.php');
 
 $f_user_name = Input::Get('f_user_name');
 $f_password = Input::Get('f_password');
@@ -43,6 +44,9 @@ function camp_campcaster_login($f_user_name, $t_password)
     global $mdefs;
     $xrc =& XR_CcClient::factory($mdefs);
     $r = $xrc->xr_login($f_user_name, $t_password);
+    if (PEAR::isError($r)) {
+    	return $r;
+    }
     camp_session_set('cc_sessid', $r['sessid']);
 }
 
@@ -80,7 +84,11 @@ if (!is_null($user)) {
 			if (!$validateCaptcha || PhpCaptcha::Validate($f_captcha_code, true)) {
 				// if user valid, password valid, encrypted, no CAPTCHA -> login
 				// if user valid, password valid, encrypted, CAPTCHA valid -> login
-                camp_campcaster_login($f_user_name, $t_password);
+                $ccLogin = camp_campcaster_login($f_user_name, $t_password);
+                if (PEAR::isError($ccLogin)) {
+                	camp_html_add_msg(getGS("There was an error logging in to Campcaster server: ")
+                					  . $ccLogin->getMessage());
+                }
 				camp_successful_login($user, $f_login_language);
 			}
 		}
@@ -91,7 +99,11 @@ if (!is_null($user)) {
 				// if user valid, password valid, not encrypted, CAPTCHA valid -> upgrade, login
 				// if user valid, password valid, not encrypted, no CAPTCHA -> upgrade, login
 				$user->setPassword($f_password);
-                camp_campcaster_login($f_user_name, $f_password);
+                $ccLogin = camp_campcaster_login($f_user_name, $f_password);
+                if (PEAR::isError($ccLogin)) {
+                	camp_html_add_msg(getGS("There was an error logging in to Campcaster server: ")
+                					  . $ccLogin->getMessage());
+                }
 				camp_successful_login($user, $f_login_language);
 			}
 		}
