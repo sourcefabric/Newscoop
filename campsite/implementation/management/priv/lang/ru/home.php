@@ -1,4 +1,5 @@
 <?php 
+regGS("An error occured in session management. Please reload the login page.", "");
 regGS("This file is stored on disk as '$1'.", "");
 regGS("Instance", "");
 regGS("The system is unable to write to the directory '$1'.", "Система не может записывать в папку '$1'.");

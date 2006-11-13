@@ -15,6 +15,9 @@ $f_is_encrypted = Input::Get('f_is_encrypted', 'int', '1');
 $f_captcha_code = Input::Get('f_captcha_code', 'string', '', true);
 
 $xorkey = camp_session_get('xorkey', '');
+if (trim($xorkey) == '') {
+	camp_html_goto_page("/$ADMIN/login.php?error_code=xorkey");
+}
 $t_password = camp_passwd_decrypt($xorkey, $f_password);
 $f_password = sha1($t_password);
 
