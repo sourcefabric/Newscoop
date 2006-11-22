@@ -31,6 +31,7 @@ class ArticleAudioclip extends DatabaseObject {
      *
      * @param int $p_articleNumber
      * @param int $p_audioclipId
+     *
      * @return object ArticleAudioclip
      */
     function ArticleAudioclip($p_articleNumber = null, $p_audioclipId = null)
@@ -100,17 +101,14 @@ class ArticleAudioclip extends DatabaseObject {
      *
      * @param int $p_articleNumber
      * @param int $p_languageId
-     * @return array
+     *
+     * @return array $returnArray
+     *      An array of AudioclipLocalMetadata objects
      */
     function GetAudioclipsByArticleNumber($p_articleNumber, $p_languageId = null)
     {
         global $g_ado_db;
 
-		//if (is_null($p_languageId)) {
-		//	$langConstraint = "FALSE";
-		//} else {
-		//	$langConstraint = "Attachments.fk_language_id=$p_languageId";
-		//}
         $queryStr = "SELECT fk_audioclip_gunid
                      FROM ArticleAudioclips
                      WHERE fk_article_number = '$p_articleNumber'";
@@ -118,7 +116,7 @@ class ArticleAudioclip extends DatabaseObject {
         $returnArray = array();
         if (is_array($rows)) {
             foreach ($rows as $row) {
-                $returnArray[] = AudioclipLocalMetadata::fetchAllMetadataByGunid($row['fk_audioclip_gunid']);
+                $returnArray[] = AudioclipLocalMetadata::FetchAllMetadataByGunid($row['fk_audioclip_gunid']);
             }
         }
 
@@ -131,6 +129,7 @@ class ArticleAudioclip extends DatabaseObject {
      * It will disassociate the audioclip from all articles.
      *
      * @param int $p_audioclipId
+     *
      * @return void
      */
     function OnAudioclipDelete($p_audioclipId)
@@ -147,6 +146,7 @@ class ArticleAudioclip extends DatabaseObject {
      * Remove audioclip pointers for the given article.
      *
      * @param int $p_articleNumber
+     *
      * @return void
      */
     function OnArticleDelete($p_articleNumber)
@@ -164,6 +164,7 @@ class ArticleAudioclip extends DatabaseObject {
      *
      * @param int $p_srcArticleNumber
      * @param int $p_destArticleNumber
+     *
      * @return void
      */
     function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)

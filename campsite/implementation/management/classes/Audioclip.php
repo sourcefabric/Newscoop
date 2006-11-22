@@ -403,10 +403,12 @@ class Audioclip {
     /**
      * Stores the Audioclip into the Campcaster storage server.
      *
-     * @param string $p_fileName the name of the audioclip
-     * @param array $p_xrParams params to send to the XML RPC method
+     * @param string $p_fileName
+     *      The name of the audioclip
+     * @param array $p_xrParams
+     *      Array of params to send to the XML RPC method
      *
-     * @return mixed Audioclip on success, PEAR Error on failure
+     * @return Audioclip|PEAR_Error
      */
     function storeAudioclip($p_fileName, $p_xrParams)
     {
@@ -428,9 +430,13 @@ class Audioclip {
 
 
     /**
+     * Use getid3 to retrieve all the metatags for the given audio file.
+     *
      * @param string $p_file
+     *      The file to analyze
      *
      * @return array
+     *      An array with all the id3 metatags
      */
     function analyzeFile($p_file)
     {
@@ -446,11 +452,11 @@ class Audioclip {
      * It will save the audioclip file to the temporary directory on
      * the disk before to be sent to the Campcaster storage server.
      *
-     * @param array $p_fileVar the audioclip file submited
+     * @param array $p_fileVar
+     *      The audioclip file submited
      *
-     * @return mixed
-     *         string full pathname to the file
-     *         PEAR Error on failure
+     * @return string|PEAR_Error
+     *         The full pathname to the file or Error
      */
     function OnFileUpload($p_fileVar)
     {
@@ -483,6 +489,7 @@ class Audioclip {
      * temporary audio file on Local.
      *
      * @param string $p_fileName
+     *      The temporary file to delete after stored in the Storage server
      */
     function OnFileStore($p_fileName)
     {
@@ -495,9 +502,11 @@ class Audioclip {
     /**
      * Validates an audioclip file by its extension.
      *
-     * @param $p_fileName the name of the audioclip file
+     * @param $p_fileName
+     *      The name of the audioclip file
      *
-     * @return bool TRUE on success, FALSE on failure
+     * @return boolean
+     *      TRUE on success, FALSE on failure
      */
     function isValidFileType($p_fileName)
     {
@@ -513,8 +522,10 @@ class Audioclip {
      * Changes audioclip metadata on both storage and local servers.
      *
      * @param array $p_formData
+     *      The form data submited with all the audioclip metadata
      *
-     * @return mixed TRUE on success, PEAR Error on failure
+     * @return boolean|PEAR_Error
+     *      TRUE on success, PEAR Error on failure
      */
     function editMetadata($p_formData)
     {
@@ -547,8 +558,10 @@ class Audioclip {
      * Updates metadata on storage server.
      *
      * @param array $p_mData
+     *      An array with all the audioclip metadata
      *
-     * @return bool TRUE on success, FALSE on failure
+     * @return boolean
+     *      TRUE on success, FALSE on failure
      */
     function __editStorageServerMetadata($p_mData)
     {
@@ -577,12 +590,14 @@ class Audioclip {
      * Updates metadata on local server.
      *
      * @param array $p_mData
+     *      An array with all the audioclip metadata
      *
-     * @return bool TRUE on success, FALSE on failure
+     * @return boolean
+     *      TRUE on success, FALSE on failure
      */
     function __editLocalMetadata($p_mData)
     {
-        return AudioclipLocalMetadata::editMetadata($p_mData);
+        return AudioclipLocalMetadata::UpdateAllMetadata($p_mData);
     } // fn __editLocalMetadata
 
 } // class Audioclip

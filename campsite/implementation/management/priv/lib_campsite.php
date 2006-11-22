@@ -73,6 +73,41 @@ function camp_time_diff_str($p_time1, $p_time2 = null)
 
 
 /**
+ * Format a time data given in the playtime format.
+ *
+ * @param string $p_time
+ *
+ * @return string
+ *      A string in the [H:]m:i format
+ */
+function camp_time_format($p_time)
+{
+    if (strpos($p_time, '.')) {
+        list ($p_time, $lost) = explode('.', $p_time);
+    }
+    $p_time = str_replace('&nbsp;', '', $p_time);
+
+    if (preg_match('/^[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/', $p_time)) {
+        list($h, $i, $s) = explode(':', $p_time);
+    } elseif (preg_match('/^[0-9]{1,2}:[0-9]{1,2}$/', $p_time)) {
+        list($i, $s) = explode(':', $p_time);
+    } else {
+        $s = $p_time;
+    }
+
+    if ((isset($all) && $all) || ($h > 0) ) {
+        $H = sprintf('%02d', $h).':';
+    } else {
+        $H = '&nbsp;&nbsp;&nbsp;';
+    }
+    $I = sprintf('%02d', $i).':';
+    $S = sprintf('%02d', $s);
+
+    return $H.$I.$S;
+} // fn camp_time_format
+
+
+/**
  * Return a value from the array, or if the value does not exist,
  * return the given default value.
  *

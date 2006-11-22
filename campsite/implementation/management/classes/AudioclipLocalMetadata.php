@@ -53,39 +53,6 @@ class AudioclipLocalMetadata extends DatabaseObject {
 	} // fn delete
 
 
-    function fetchAllMetadataByGunid($p_gunid)
-    {
-        global $g_ado_db;
-
-        $queryStr = "SELECT * 
-                     FROM AudioclipMetadata 
-                     WHERE object_ns <> '_blank' AND gunid='$p_gunid'";
-        $rows = $g_ado_db->GetAll($queryStr);
-        if ($rows) {
-            return $rows;
-        }
-        return null;
-    } // fn fetchMetadataByGunid
-
-
-    /**
-     * Update values for all the audioclip metadata.
-     *
-     * @param array $p_mData
-     */
-    function editMetadata($p_mData)
-    {
-        //foreach($p_mData as $key => $val) {
-            //$r = $this->__setMDataValue();
-            //if (PEAR::isError($r)) {
-                
-            //}
-        //}
-
-        //return true;
-    } // fn editMetadata
-
-
 	/**
 	 * @return int
 	 */
@@ -104,6 +71,24 @@ class AudioclipLocalMetadata extends DatabaseObject {
     } // fn getGunid
 
 
+    /**
+     * @return string
+     */
+    function getPredicate()
+    {
+        return $this->m_data['predicate'];
+    } // fn getPredicate
+
+
+    /**
+     * @return string
+     */
+    function getPredicateNs()
+    {
+        return $this->m_data['predicate_ns'];
+    } // fn getPredicateNs
+
+
 	/**
 	 * @return string
 	 */
@@ -114,13 +99,58 @@ class AudioclipLocalMetadata extends DatabaseObject {
 
 
     /**
+     * Update values for all the audioclip metadata.
+     *
+     * @param array $p_mData
+     */
+    function UpdateAllMetadata($p_mData)
+    {
+        //foreach($p_mData as $key => $val) {
+            //$r = AudioclipLocalMetadata::__setMDataValue();
+            //if (PEAR::isError($r)) {
+                
+            //}
+        //}
+
+        //return true;
+    } // fn UpdateAllMetadata
+
+
+    /**
+     * Fetch all metadata for the audioclip given.
+     *
+     * @param int $p_gunid
+     *
+     * @return array $returnArray
+     *      Array of AudioclipLocalMetadata objects
+     */
+    function FetchAllMetadataByGunid($p_gunid)
+    {
+        global $g_ado_db;
+
+        $queryStr = "SELECT * 
+                     FROM AudioclipMetadata 
+                     WHERE object_ns <> '_blank' AND gunid='$p_gunid'";
+        $rows = $g_ado_db->GetAll($queryStr);
+        $returnArray = array();
+        if ($rows) {
+            foreach ($rows as $row) {
+                $tmpMetadata =& new AudioclipLocalMetadata();
+                $tmpMetadata->fetch($row);
+                $returnArray[] =& $tmpMetadata;
+            }
+        }
+        return $returnArray;
+    } // fn FetchAllMetadataByGunid
+
+
+    /**
      * Update value for a metadata record.
      */
     function __setMDataValue()
     {
 
-    } // fn _setMDataValue
-
+    } // fn __setMDataValue
 
 } // class AudioclipLocalMetadata
 

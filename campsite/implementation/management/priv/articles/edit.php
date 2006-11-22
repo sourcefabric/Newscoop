@@ -51,7 +51,6 @@ $lockUserObj =& new User($articleObj->getLockedByUser());
 $articleCreator =& new User($articleObj->getCreatorId());
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, true);
 $articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
-
 $articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
 $articleAudioclips = ArticleAudioclip::GetAudioclipsByArticleNumber($f_article_number, $f_language_selected);
 $articleLanguages = $articleObj->getLanguages();
@@ -1033,7 +1032,7 @@ if ($f_edit_mode == "edit") { ?>
 				$downloadUrl = "/attachment/".basename($file->getStorageLocation())."?g_download=1";
 				if (strstr($file->getMimeType(), "image/") && (strstr($_SERVER['HTTP_ACCEPT'], $file->getMimeType()) ||
 										(strstr($_SERVER['HTTP_ACCEPT'], "*/*")))) {
-					$previewUrl = "/attachment/".basename($file->getStorageLocation())."?g_show_in_browser=1";
+				$previewUrl = "/attachment/".basename($file->getStorageLocation())."?g_show_in_browser=1";
 				}
 			?>
 			<tr>
@@ -1163,39 +1162,58 @@ if ($f_edit_mode == "edit") { ?>
                 var domTT_styleClass = 'domTTOverlib';
             </script>
             <?php
-            $acFields = array('title','creator','extent');
-            foreach($articleAudioclips as $aclip) {
+            $audioclipFields = array('title','creator','extent');
+            foreach($articleAudioclips as $articleAudioclip) {
+                $i = 0;
+                $tag = array();
+                $allTags = '';
             ?>
             <tr>
                 <td align="center" width="100%" style="border-top: 1px solid #EEEEEE;">
                 <?php
-                foreach($aclip as $ac) {
+                foreach($articleAudioclip as $audioclipField) {
+                    $allTags .= $audioclipField->getPredicateNs().':'.$audioclipField->getPredicate().' = '.$audioclipField->getObjectName().'<br />';
+                    if (in_array($audioclipField->getPredicate(), $audioclipFields)) {
+                        switch ($audioclipField->getPredicate()) {
+                            case 'creator':
+                                $tag[$i]['label'] = 'Creator';
+                                $tag[$i++]['value'] = $audioclipField->getObjectName();
+                                break;
+                            case 'extent':
+                                $tag[$i]['label'] = 'Duration';
+                                $tag[$i++]['value'] = camp_time_format($audioclipField->getObjectName());
+                                break;
+                            case 'title':
+                                $tag[$i]['label'] = 'Title';
+                                if (($f_edit_mode == "edit")
+                                    && $g_user->hasPermission('AttachAudioclipToArticle')) {
+                                    $audioclipEditLink = '<a href="" onmouseover="domTT_activate(this, event, \'content\', \'%ALLTAGS%\', \'trail\', true, \'delay\', 0);">'.wordwrap($audioclipField->getObjectName(), '25', '<br />', true).'</a>';
+                                    $audioclipDeleteLink = '<a href=""><img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/unlink.png" border="0" /></a>';
+                                    $tag[$i++]['value'] = $audioclipEditLink.' '.$audioclipDeleteLink;
+                                } else {
+                                    $audioclipEditLink = '<a onmouseover="domTT_activate(this, event, \'content\', \'%ALLTAGS%\', \'trail\', true, \'delay\', 0);">'.wordwrap($audioclipField->getObjectName(), '25', '<br />', true).'</a>';
+                                    $tag[$i++]['value'] = $audioclipEditLink;
+                                }
+                                break;
+                        }
+                    }
+                }
                 ?>
                     <table>
 					<tr>
 						<td align="center" valign="middle" nowrap>
                         <?php
-                        if (in_array($ac['predicate'], $acFields)) {
-                            if ($ac['predicate'] == 'creator') {
-                                p(getGS('Creator:'));
-                            } elseif ($ac['predicate'] == 'extent') {
-                                p(getGS('Length:'));
-                            } elseif ($ac['predicate'] == 'title') {
-                                $editUrl = '<a href="" onmouseover="domTT_activate(this, event, \'content\', \'Here we will show the audioclip metadata\', \'trail\', true);">'.$ac['object'].'</a> ';
-                                if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachAudioclipToArticle')) {
-                                    $deleteUrl = '<a href=""><img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/unlink.png" border="0" /></a>';
-                                }
-                                $ac['object'] = $editUrl . $deleteUrl;
+                        for($i = 0; $i < count($tag); $i++) {
+                            if ($tag[$i]['label'] == 'Title') {
+                                $tag[$i]['value'] = str_replace('%ALLTAGS%', $allTags, $tag[$i]['value']);
                             }
-                            p($ac['object']);
+                            $audioclipData = $tag[$i]['label'].': '.$tag[$i]['value'].'<br />';
+                            p($audioclipData);
                         }
                         ?>
                         </td>
                     </tr>
                     </table>
-                <?php
-                }
-                ?>
                 </td>
             </tr>
             <?php
