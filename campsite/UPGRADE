@@ -2,8 +2,8 @@ UPGRADE
 
 For upgrading from 1.x, 2.0 or 2.1.x versions of Campsite please read the
 appendinx: UPGRADING FROM OLDER VERSIONS OF CAMPSITE - in the manual.
-Upgrading from Campsite 2.2.x is automatic, the user doesn't have to take
-extra actions except the normal install.
+Upgrading from Campsite 2.2.x and newer versions is automatic, the user
+doesn't have to take extra actions except the normal install.
 
 Read INSTALL file and follow the steps; read on Compatibility issues.
 
