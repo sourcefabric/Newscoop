@@ -15,7 +15,8 @@ require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/XR_CcClient.php');
 require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/Article.php');
-require_once($g_documentRoot.'/classes/AudioclipLocalMetadata.php');
+require_once($g_documentRoot.'/classes/AudioclipXMLMetadata.php');
+require_once($g_documentRoot.'/classes/AudioclipDatabaseMetadata.php');
 require_once('HTTP/Client.php');
 
 
@@ -374,30 +375,155 @@ $mask = array(
  * @package Campsite
  */
 class Audioclip {
-    var $m_gunid = null;
+    var $m_gunId = null;
     var $m_metaData = array();
     var $m_fileTypes = array('.mp3','.ogg','.wav');
 
 
-    function Audioclip($p_gunid = null)
+    /**
+     * 
+     */
+    function Audioclip($p_gunId = null)
     {
-        global $mdefs;
+        if (!is_null($p_gunId) && is_numeric($p_gunId)) {
+            $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($p_gunId);
+            $this->aclipMetadata = $aclipDbaseMdataObj->fetch();
+            if (sizeof($this->aclipMetadata) == 0) {
+                $aclipXMLMdataObj =& new AudioclipXMLMetadata($p_gunId);
+                $this->aclipMetadata = $aclipXMLMdataObj->fetch();
 
-        $this->xrc =& XR_CcClient::factory($mdefs);
-        if (!is_null($p_gunid)) {
-            $sessid = $_SESSION['cc_sessid'];
-            if ($this->xrc->xr_existsAudioClip($sessid, $p_gunid)) {
-                $this->m_metaData = $this->xr_getAudioClip($sessid, $p_gunid);
-                $this->m_gunid = $p_gunid;
+                // We call AudioclipDatabase write() method to save
+                // metadata in local cache. Parameter is $this->aclipMetadata
+                // which is an array of AudioclipMetadataEntry objects
+                //
+                // $aclipDbaseMdataObj->write($this->aclipMetadata);
             }
+            $this->m_gunId = $p_gunId;
         }
     } // constructor
 
 
-    function getAudioclipGunid()
+    /**
+     * Returns the value of the clip's unique identifier
+     *
+     * @return string
+     *      the clip unique identifier
+     */
+    function getGunId()
     {
-        return $this->m_gunid;
-    } // fn getAudioclipGunid
+    	return $this->m_gunId;
+    } // fn getGunId
+
+
+    /**
+     * Returns the value of the give meta tag
+     *
+     * @param string $p_tagName
+     *      the name of the meta tag
+     *
+     * @return string
+     *      the meta tag value
+     */
+    function getMetaTagValue($p_tagName)
+    {
+		$p_tagName = trim(strtoupper($p_tagName));
+    	if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
+    		return null;
+    	}
+    	if (strncasecmp($p_tagName, 'dc:', 3) == 0 || strncasecmp($p_tagName, 'ls:', 3) == 0) {
+    		if (!array_key_exists($p_tagName, $this->m_metaData)) {
+	    		return null;
+    		}
+    		return $this->m_metaData[$p_tagName];
+    	}
+    	$namespaces = array('DC', 'LS', 'DCTERMS');
+    	foreach ($namespaces as $namespace) {
+    		$tag = $namespace . ':' . $p_tagName;
+    		if (array_key_exists($tag, $this->m_metaData)) {
+    			return $this->m_metaData[$tag];
+    		}
+    	}
+    	return null;
+    } // fn getMetaTagValue
+
+
+    /**
+     * Returns an array containing available meta tags
+     *
+     * @return string
+     *      the meta tag value
+     */
+    function getAvailableMetaTags()
+    {
+    	if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
+    		return null;
+    	}
+    	return array_keys($this->m_metaData);
+    } // fn getAvailableMetaTags
+
+
+    /**
+     * Retrieve a list of Audioclip objects based on the given constraints
+     * 
+     * @param array $conditions
+     *      array of struct with fields:
+     *          cat: string - metadata category name
+     *          op: string - operator, meaningful values:
+     *              'full', 'partial', 'prefix',
+     *              '=', '<', '<=', '>', '>='
+     *          val: string - search value
+     * @param string $operator
+     *      type of conditions join (any condition matches /
+     *      all conditions match), meaningful values: 'and', 'or', ''
+     *      (may be empty or ommited only with less then 2 items in
+     *      "conditions" field)
+     * @param int $limit
+     *      limit for result arrays (0 means unlimited)
+     * @param int $offset
+     *      starting point (0 means without offset)
+     * @param string $orderby
+     *      string - metadata category for sorting (optional) or array
+     *      of strings for multicolumn orderby
+     *      [default: dc:creator, dc:source, dc:title]
+     * @param bool $desc
+     *      boolean - flag for descending order (optional) or array of
+     *      boolean for multicolumn orderby (it corresponds to elements
+     *      of orderby field)
+     *      [default: all ascending]
+     *
+     * @return array
+     *      Array of Audioclip objects
+     */
+    function SearchAudioclips($offset = 0, $limit = 0, $conditions = array(),
+                              $operator = 'and',
+    						  $orderby = 'dc:creator, dc:source, dc:title',
+                              $desc = false)
+    {
+        global $mdefs;
+
+        $xrc =& XR_CcClient::Factory($mdefs);
+		if (PEAR::isError($xrc)) {
+			return $xrc;
+		}
+        $sessid = camp_session_get('cc_sessid', '');
+		$criteria = array('filetype' => 'audioclip',
+						  'operator' => $operator,
+						  'limit' => $limit,
+						  'offset' => $offset,
+						  'orderby' => $orderby,
+						  'desc' => $desc,
+						  'conditions' => $conditions
+						  );
+		$result = $xrc->xr_searchMetadata($sessid, $criteria);
+		if (PEAR::isError($result)) {
+			return $result;
+		}
+		$clips = array();
+		foreach ($result['results'] as $clip) {
+			$clips[] = new Audioclip($clip['gunid']);
+		}
+    	return $clips;
+    } // fn SearchAudioclips
 
 
     /**
@@ -412,19 +538,22 @@ class Audioclip {
      */
     function storeAudioclip($p_fileName, $p_xrParams)
     {
+        global $mdefs;
+
         if (file_exists($p_fileName) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_fileName));
         }
 
+        $xrcObj =& XR_CcClient::Factory($mdefs);
         $sessid = $_SESSION['cc_sessid'];
-        $r = $this->xrc->xr_storeAudioClipOpen($sessid, $p_xrParams['gunid'], $p_xrParams['mdata'], $p_xrParams['fname'], $p_xrParams['chsum']);
+        $r = $xrcObj->xr_storeAudioClipOpen($sessid, $p_xrParams['gunid'], $p_xrParams['mdata'], $p_xrParams['fname'], $p_xrParams['chsum']);
         if (empty($r['url']) || empty($r['token'])) {
             return false; // PEAR Error
         } else {
             exec(trim('curl -T ' . escapeshellarg($p_fileName)
                       . ' ' . $r['url']));
         }
-        $aData = $this->xrc->xr_storeAudioClipClose($sessid, $r['token']);
+        $aData = $xrcObj->xr_storeAudioClipClose($sessid, $r['token']);
         return $aData['gunid'];
     } // fn storeAudioclip
 
@@ -456,7 +585,7 @@ class Audioclip {
      *      The audioclip file submited
      *
      * @return string|PEAR_Error
-     *         The full pathname to the file or Error
+     *      The full pathname to the file or Error
      */
     function OnFileUpload($p_fileVar)
     {
@@ -535,70 +664,27 @@ class Audioclip {
             return new PEAR_Error(getGS('Invalid parameter given to Audioclip::editMetadata()'));
         }
 
+        $metaData = array();
         foreach($mask['pages'] as $key => $val) {
             foreach($mask['pages'][$key] as $k => $v) {
                 $element_encode = str_replace(':','_',$v['element']);
-                $p_formData['f_'.$key.'_'.$element_encode] ? $mData[$v['element']] = $p_formData['f_'.$key.'_'.$element_encode] : NULL;
+                $p_formData['f_'.$key.'_'.$element_encode] ? $metaData[$v['element']] = $p_formData['f_'.$key.'_'.$element_encode] : NULL;
             }
         }
 
-        if (count($mData) < 1) return;
+        if (sizeof($metaData) == 0) return;
 
-        if ($this->__editStorageServerMetadata($mData) == false) {
+        $aclipXMLMdataObj =& new AudioclipXMLMetadata($this->m_gunId);
+        if ($aclipXMLMdataObj->write($metaData) == false) {
             return new PEAR_Error(getGS('Cannot update audioclip metadata on storage server'));
         }
-        if ($this->__editLocalMetadata($mData) == false) {
+        // $metaData has to be an array of AudioclipMetadataEntry objects here
+        $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($this->m_gunId);
+        if ($aclipDbaseMdataObj->write($metaData) == false) {
             return new PEAR_Error(getGS('Cannot update audioclip metadata on Campsite'));
         }
         return true;
     } // fn editMetadata
-
-
-    /**
-     * Updates metadata on storage server.
-     *
-     * @param array $p_mData
-     *      An array with all the audioclip metadata
-     *
-     * @return boolean
-     *      TRUE on success, FALSE on failure
-     */
-    function __editStorageServerMetadata($p_mData)
-    {
-        $xmlStr = '<?xml version="1.0" encoding="utf-8"?>
-        <audioClip>
-            <metadata
-                xmlns="http://mdlf.org/campcaster/elements/1.0/"
-                xmlns:ls="http://mdlf.org/campcaster/elements/1.0/"
-                xmlns:dc="http://purl.org/dc/elements/1.1/"
-                xmlns:dcterms="http://purl.org/dc/terms/"
-                xmlns:xml="http://www.w3.org/XML/1998/namespace"
-            >';
-        foreach($p_mData as $key => $val) {
-            $xmlStr .= '<'.$key.'>'.$val.'</'.$key.'>';
-        }
-        $xmlStr .= '</metadata>
-        </audioClip>';
-
-        $sessid = $_SESSION['cc_sessid'];
-        $res = $this->xrc->xr_updateAudioClipMetadata($sessid, $this->m_gunid, $xmlStr);
-        return $res['status'];
-    } // fn __editStorageServerMetadata
-
-
-    /**
-     * Updates metadata on local server.
-     *
-     * @param array $p_mData
-     *      An array with all the audioclip metadata
-     *
-     * @return boolean
-     *      TRUE on success, FALSE on failure
-     */
-    function __editLocalMetadata($p_mData)
-    {
-        return AudioclipLocalMetadata::UpdateAllMetadata($p_mData);
-    } // fn __editLocalMetadata
 
 } // class Audioclip
 
