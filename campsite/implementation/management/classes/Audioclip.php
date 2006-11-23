@@ -381,16 +381,16 @@ class Audioclip {
 
 
     /**
-     * 
+     *
      */
     function Audioclip($p_gunId = null)
     {
         if (!is_null($p_gunId) && is_numeric($p_gunId)) {
             $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($p_gunId);
-            $this->aclipMetadata = $aclipDbaseMdataObj->fetch();
+            $this->m_metaData = $aclipDbaseMdataObj->fetch();
             if (sizeof($this->aclipMetadata) == 0) {
                 $aclipXMLMdataObj =& new AudioclipXMLMetadata($p_gunId);
-                $this->aclipMetadata = $aclipXMLMdataObj->fetch();
+                $this->m_metaData = $aclipXMLMdataObj->fetch();
 
                 // We call AudioclipDatabase write() method to save
                 // metadata in local cache. Parameter is $this->aclipMetadata
@@ -440,7 +440,7 @@ class Audioclip {
     	foreach ($namespaces as $namespace) {
     		$tag = $namespace . ':' . $p_tagName;
     		if (array_key_exists($tag, $this->m_metaData)) {
-    			return $this->m_metaData[$tag];
+    			return $this->m_metaData[$tag]->getTagValue();
     		}
     	}
     	return null;
@@ -464,7 +464,7 @@ class Audioclip {
 
     /**
      * Retrieve a list of Audioclip objects based on the given constraints
-     * 
+     *
      * @param array $conditions
      *      array of struct with fields:
      *          cat: string - metadata category name

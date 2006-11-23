@@ -60,7 +60,7 @@ class AudioclipXMLMetadata {
                         || strncasecmp($value['tag'], 'ls:', 3) == 0
                         || strncasecmp($value['tag'], 'dcterms:', 8) == 0) {
                     $tmpMetadataObj =& new AudioclipMetadataEntry(strtoupper($value['tag']), $value['value']);
-                    $metaData[] = $tmpMetadataObj;
+                    $metaData[$value['tag']] = $tmpMetadataObj;
                 }
             }
             return $metaData;
@@ -89,8 +89,8 @@ class AudioclipXMLMetadata {
                 xmlns:dcterms="http://purl.org/dc/terms/"
                 xmlns:xml="http://www.w3.org/XML/1998/namespace"
             >';
-        foreach($p_metaData as $key => $val) {
-            $xmlStr .= '<'.$key.'>'.$val.'</'.$key.'>';
+        foreach($p_metaData as $key => $metaDataEntry) {
+            $xmlStr .= '<'.$key.'>'.$metaDataEntry->getTagValue().'</'.$key.'>';
         }
         $xmlStr .= '</metadata>
         </audioClip>';

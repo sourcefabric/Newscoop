@@ -58,7 +58,7 @@ class AudioclipDatabaseMetadata {
 
         $queryStr = "SELECT CONCAT(predicate_ns, ':', predicate) AS tagName,
                             object AS tagValue
-                     FROM AudioclipMetadata 
+                     FROM AudioclipMetadata
                      WHERE object_ns <> '_blank' AND gunid = '"
                     .$this->m_gunId."'";
         $rows = $g_ado_db->GetAll($queryStr);
@@ -68,7 +68,7 @@ class AudioclipDatabaseMetadata {
                 $tagName = strtoupper($row['tagName']);
                 $tagValue = $row['tagValue'];
                 $tmpMetadataObj =& new AudioclipMetadataEntry($tagName, $tagValue);
-                $metaData[] =& $tmpMetadataObj;
+                $metaData[$tagName] =& $tmpMetadataObj;
             }
         }
         return $metaData;
