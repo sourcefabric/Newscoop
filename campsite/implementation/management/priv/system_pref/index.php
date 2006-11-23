@@ -64,41 +64,54 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 	<td colspan="2"><hr></td>
 </tr>
 <tr>
-	<td colspan="2" align="left">
-		<strong><?php putGS("Campsite Online Server Database"); ?></strong>
-	</td>
+    <td colspan="2" align="left">
+        Setting up a Campsite Replication Server?
+        <input type="radio" name="f_use_replication" onclick="ShowElement('replication_server');" value="Y" <?php if (SystemPref::Get("UseDBReplication") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_use_replication" onclick="HideElement('replication_server');" value="N" <?php if (SystemPref::Get("UseDBReplication") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
 </tr>
-<tr>
-	<td>
-		<?php putGS("Database Replication Host:") ?>
-	</td>
-	<td>
-		<input type="text" name="f_db_repl_host" value="<?php p(SystemPref::Get("DBReplicationHost")); ?>" maxlenght="60" size="30" class="input_text" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<?php putGS("Database Replication User:") ?>
-	</td>
-	<td>
-		<input type="text" name="f_db_repl_user" value="<?php p(SystemPref::Get("DBReplicationUser")); ?>" maxlenght="20" size="22" class="input_text" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<?php putGS("Database Replication Password:") ?>
-	</td>
-	<td>
-		<input type="text" name="f_db_repl_pass" value="<?php p(SystemPref::Get("DBReplicationPass")); ?>" maxlenght="20" size="22" class="input_text" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<?php putGS("Database Replication Port:") ?>
-	</td>
-	<td>
-		<input type="text" name="f_db_repl_port" value="<?php p(SystemPref::Get("DBReplicationPort")); ?>" maxlenght="6" size="8" class="input_text" />
-	</td>
+<tr id="replication_server" style="display: <?php (SystemPref::Get("UseDBReplication") == 'Y') ? p("") : p("none") ?>;">
+    <td colspan="2">
+        <table cellpadding="0" cellspacing="6">
+        <tr>
+            <td colspan="2" align="left">
+		        <strong><?php putGS("Campsite Online Server Database"); ?></strong>
+            </td>
+        </tr>
+        <tr>
+	        <td width="400px" nowrap>
+		        <?php putGS("Database Replication Host:") ?>
+	        </td>
+	        <td>
+		        <input type="text" name="f_db_repl_host" value="<?php p(SystemPref::Get("DBReplicationHost")); ?>" maxlenght="60" size="30" class="input_text" />
+	        </td>
+        </tr>
+        <tr>
+	        <td nowrap>
+		        <?php putGS("Database Replication User:") ?>
+	        </td>
+	        <td>
+		        <input type="text" name="f_db_repl_user" value="<?php p(SystemPref::Get("DBReplicationUser")); ?>" maxlenght="20" size="22" class="input_text" />
+	        </td>
+        </tr>
+        <tr>
+	        <td nowrap>
+		        <?php putGS("Database Replication Password:") ?>
+	        </td>
+	        <td>
+		        <input type="text" name="f_db_repl_pass" value="<?php p(SystemPref::Get("DBReplicationPass")); ?>" maxlenght="20" size="22" class="input_text" />
+	        </td>
+        </tr>
+        <tr>
+	        <td nowrap>
+		        <?php putGS("Database Replication Port:") ?>
+	        </td>
+	        <td>
+		        <input type="text" name="f_db_repl_port" value="<?php p(SystemPref::Get("DBReplicationPort")); ?>" maxlenght="6" size="8" class="input_text" />
+	        </td>
+        </tr>
+        </table>
+    </td>
 </tr>
 <tr>
 	<td colspan="2"><hr></td>
@@ -109,7 +122,7 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 	</td>
 </tr>
 <tr>
-	<td>
+	<td width="400px">
 		<?php putGS("Hostname / IP Address:") ?>
 	</td>
 	<td>

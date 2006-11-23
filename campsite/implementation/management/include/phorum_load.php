@@ -6,14 +6,26 @@ define( "PHORUM", "5.1-dev" );
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/phorum/include/constants.php');
 
-$PHORUM['DBCONFIG']=array(
+$dbName = $Campsite['DATABASE_NAME'];
+if (SystemPref::Get("UseDBReplication") == 'Y') {
+    $dbHost = SystemPref::Get('DBReplicationHost')
+            . ':'
+            . SystemPref::Get('DBReplicationPort');
+    $dbUser = SystemPref::Get('DBReplicationUser');
+    $dbPass = SystemPref::Get('DBReplicationPass');
+} else {
+    $dbHost = $Campsite['DATABASE_SERVER_ADDRESS'];
+    $dbUser = $Campsite['DATABASE_USER'];
+    $dbPass = $Campsite['DATABASE_PASSWORD'];
+}
 
+$PHORUM['DBCONFIG']=array(
     // Database connection.
     'type'          =>  'mysql',
-    'name'          =>  $Campsite['DATABASE_NAME'],
-    'server'        =>  SystemPref::Get('DBReplicationHost') . ':' . SystemPref::Get('DBReplicationPort'),
-    'user'          =>  SystemPref::Get('DBReplicationUser'),
-    'password'      =>  SystemPref::Get('DBReplicationPass'),
+    'name'          =>  $dbName,
+	'server'		=>  $dbHost,
+	'user'			=>  $dbUser,
+	'password'		=>  $dbPass,
     'table_prefix'  =>  'phorum',
 
     // 'down_page'     => 'http://www.example.com/phorum/down.html',
