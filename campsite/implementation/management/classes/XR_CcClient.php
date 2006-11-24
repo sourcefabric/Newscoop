@@ -812,10 +812,18 @@ class XR_CcClient {
      *
      *  @return object, created object instance
      */
-    function &factory($mdefs, $debug=0, $verbose=FALSE)
+    function &Factory($mdefs, $debug=0, $verbose=FALSE)
     {
+    	if (class_exists('XR_CcClientCore')) {
+    		$xrc =& new XR_CcClientCore($mdefs, $debug, $verbose);
+    		return $xrc;
+    	}
+    	if (!is_array($mdefs)) {
+    		$result =& new PEAR_Error("Invalid methods definition in XML-RCP client.");
+    		return $result;
+    	}
         $f = '';
-        foreach($mdefs as $fn=>$farr){
+        foreach ($mdefs as $fn=>$farr) {
             $f .=
                 '    function '.$fn.'(){'."\n".
                 '        $pars = func_get_args();'."\n".
@@ -824,10 +832,13 @@ class XR_CcClient {
                 '    }'."\n";
         }
         $e =
-            "class XR_CcClientCore extends XR_CcClient{\n".
+            "class XR_CcClientCore extends XR_CcClient {\n".
             "$f\n".
             "}\n";
-        if(FALSE === eval($e)) return false; //$dbc->raiseError("Eval failed");
+        if (FALSE === eval($e)) {
+//        	$dbc->raiseError("Eval failed");
+        	return false;
+        }
         $xrc =& new XR_CcClientCore($mdefs, $debug, $verbose);
 
         return $xrc;

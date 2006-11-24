@@ -543,15 +543,13 @@ class Audioclip {
      */
     function storeAudioclip($p_filePath, $p_xrParams)
     {
-        if (file_exists($p_fileName) == false) {
+        if (file_exists($p_filePath) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_fileName));
         }
 
         $sessid = $_SESSION['cc_sessid'];
-        echo "<pre>\n"; print_r($p_xrParams); echo "</pre>\n";
         AudioclipXMLMetadata::Upload($sessid, $p_filePath, $p_xrParams['gunid'], $p_xrParams['mdata'],
         							 $p_xrParams['chsum']);
-        exit;
     } // fn storeAudioclip
 
 

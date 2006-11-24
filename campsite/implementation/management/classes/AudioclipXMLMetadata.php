@@ -84,18 +84,14 @@ class AudioclipXMLMetadata {
         global $mdefs;
 
         $xrcObj =& XR_CcClient::Factory($mdefs);
-        $r = $xrcObj->xr_storeAudioClipOpen($p_sessionId, basename($p_filePath), $p_gunId,
-        									$p_metaData, $p_checksum);
-        echo "<pre>xr_storeAudioClipOpen:\n"; print_r($r); echo "</pre>\n";
+        $r = $xrcObj->xr_storeAudioClipOpen($p_sessionId, $p_gunId, $p_metaData,
+        									basename($p_filePath), $p_checksum);
         if (PEAR::isError($r)) {
-        echo "<pre>xr_storeAudioClipOpen:\n"; print_r($r); echo "</pre>\n";
         	return $r;
         } else {
-        echo "<pre>file name:\n"; print_r($p_filePath); echo "</pre>\n";
             exec(trim('curl -T ' . escapeshellarg($p_filePath) . ' ' . $r['url']));
         }
         $aData = $xrcObj->xr_storeAudioClipClose($p_sessionId, $r['token']);
-        echo "<pre>xr_storeAudioClipClose:\n"; print_r($aData); echo "</pre>\n";
     	return $aData['gunid'];
     }
 

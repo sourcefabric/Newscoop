@@ -72,8 +72,7 @@ if ($f_publication_id > 0) {
 	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 	$languageObj =& new Language($articleObj->getLanguageId());
 
-    $showCommentControls = ($publicationObj->commentsEnabled()
-                     && $articleType->commentsEnabled());
+    $showCommentControls = ($publicationObj->commentsEnabled() && $articleType->commentsEnabled());
     $showComments = $showCommentControls && $articleObj->commentsEnabled();
 }
 

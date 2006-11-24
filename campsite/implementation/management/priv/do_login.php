@@ -42,12 +42,20 @@ function camp_successful_login($user, $f_login_language)
 function camp_campcaster_login($f_user_name, $t_password)
 {
     global $mdefs;
-    $xrc =& XR_CcClient::factory($mdefs);
+
+    if (SystemPref::Get('CampcasterHostName') == ''
+	    	|| SystemPref::Get('CampcasterHostPort') == ''
+    	    || SystemPref::Get('CampcasterXRPCPath') == ''
+        	|| SystemPref::Get('CampcasterXRPCFile') == '') {
+       	return false;
+	}
+    $xrc =& XR_CcClient::Factory($mdefs);
     $r = $xrc->xr_login($f_user_name, $t_password);
     if (PEAR::isError($r)) {
     	return $r;
     }
     camp_session_set('cc_sessid', $r['sessid']);
+    return true;
 }
 
 function camp_passwd_decrypt($xorkey, $password)

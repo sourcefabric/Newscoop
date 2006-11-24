@@ -35,7 +35,15 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
             case E_USER_WARNING:
                 return;
             }
-        }
+    }
+
+    // -- Return on getid3 errors ---
+    if (preg_match ('/^Undefined index:/i', $p_string)){
+	return;
+    }
+    if (preg_match ('/^Undefined variable:/i', $p_string)){
+	return;
+    }
 
     // -- Return on mysql connect errors ---
     if (preg_match ('/^mysql_connect/i', $p_string)){

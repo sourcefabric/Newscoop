@@ -14,7 +14,8 @@ if (!$g_user->hasPermission("AttachAudioclipToArticle")) {
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_image_attach_mode = camp_session_get('f_image_attach_mode', 'new');
+$f_audio_attach_mode = camp_session_get('f_audio_attach_mode', 'new');
+$f_audio_search_mode = camp_session_get('f_audio_search_mode', 'browse');
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
@@ -35,16 +36,35 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 <table style="margin-top: 10px; margin-left: 5px;" cellpadding="0" cellspacing="0">
 <tr>
 	<?php if ($g_user->hasPermission('AddAudioclip')) { ?>
-	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_image_attach_mode != "new") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php", "", "&f_image_attach_mode=new"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Attach New Audio"); ?></b></a></td>
+	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_audio_attach_mode != "new") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php", "", "&f_audio_attach_mode=new"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Attach New Audio"); ?></b></a></td>
 	<?php } ?>
 
-	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_image_attach_mode != "existing") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php", "", "&f_image_attach_mode=existing"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Attach Existing Audio"); ?></b></a></td>
+	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_audio_attach_mode != "existing") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php", "", "&f_audio_attach_mode=existing"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Attach Existing Audio"); ?></b></a></td>
 </tr>
 <tr>
 	<td colspan="2" style="background-color: #EEE; padding-top: 5px; border-bottom: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1;">
 		<?php
-		if ($f_image_attach_mode == "existing") {
-			include("search.php");
+		if ($f_audio_attach_mode == "existing") {
+		?>
+<table style="margin-top: 10px; margin-left: 5px;" cellpadding="0" cellspacing="0">
+<tr>
+	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_audio_search_mode != "browse") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php", "", "&f_audio_search_mode=browse"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Browse"); ?></b></a></td>
+
+	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_audio_search_mode != "search") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php", "", "&f_audio_search_mode=search"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Search"); ?></b></a></td>
+</tr>
+<tr>
+	<td colspan="2" style="background-color: #EEE; padding-top: 5px; border-bottom: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1;">
+		<?php
+			if ($f_audio_search_mode == 'search') {
+				include("search.php");
+			} else {
+				include("browse.php");
+			}
+		?>
+	</td>
+</tr>
+</table>
+		<?php
 		} else {
 			include("add.php");
 		}?>

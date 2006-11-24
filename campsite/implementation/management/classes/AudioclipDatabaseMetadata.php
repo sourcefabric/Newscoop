@@ -73,6 +73,15 @@ class AudioclipDatabaseMetadata {
         }
         return $metaData;
     } // fn fetch
+    
+    
+    function create($p_metaData)
+    {
+    	if (!is_array($p_metaData)) {
+    		return false;
+    	}
+    	
+    }
 
 
     /**

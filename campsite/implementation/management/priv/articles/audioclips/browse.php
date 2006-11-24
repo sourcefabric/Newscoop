@@ -5,7 +5,34 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/XR_CcClient.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Audioclip.php");
 
+/**** XML RPC WORKING EXAMPLES ****/
+
+$xrc =& XR_CcClient::Factory($mdefs);
+
+echo "<pre>\n";
+
+/**** search metadata ****/
+$sessid = camp_session_get('cc_sessid', '');
+$criteria = array('filetype' => 'audioclip',
+                  'operator' => 'and',
+                  'limit' => 10,
+                  'offset' => 0,
+                  'conditions' => array()
+                  );
+echo "searchMetadata response:\n";
+$r = Audioclip::SearchAudioclips(0, 10);
+foreach ($r as $clip) {
+	print_r($clip->m_metaData);
+	echo "available meta tags:\n";
+	print_r($clip->getAvailableMetaTags());
+}
+
+echo "</pre>\n";
+exit;
+
+/**************************/
 
 $f_order_by = camp_session_get('f_order_by', 'id');
 $f_order_direction = camp_session_get('f_order_direction', 'ASC');
@@ -39,50 +66,10 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 
 //$orderDirectionUrl = camp_html_article_url($articleObj, $f_language_id, 'images/popup.php');
 
-?>
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;" align="center">
-<form method="POST" action="popup.php">
-<input type="hidden" name="f_order_direction" value="<?php echo $f_order_direction; ?>">
-<input type="hidden" name="f_image_offset" value="0">
-<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
-<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
-<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
-<tr>
-	<td><input type="submit" name="submit_button" value="Search" class="button"></td>
-	<td><input type="text" name="f_search_string" value="<?php echo $f_search_string; ?>" class="input_text" style="width: 150px;"></td>
-	<td>
-		<table cellpadding="0" cellspacing="0">
-		<tr>
-			<td>Order by:</td>
-			<td>
-				<select name="f_order_by" class="input_select" onchange="this.form.submit();">
-				<?PHP
-				camp_html_select_option('id', $f_order_by, getGS("Most Recently Added"));
-				camp_html_select_option('last_modified', $f_order_by, getGS("Most Recently Modified"));
-				camp_html_select_option('description', $f_order_by, getGS("Description"));
-				camp_html_select_option('photographer', $f_order_by, getGS("Photographer"));
-				camp_html_select_option('place', $f_order_by, getGS("Place"));
-				camp_html_select_option('date', $f_order_by, getGS("Date"));
-				camp_html_select_option('inuse', $f_order_by, getGS("In use"));
-				?>
-				</select>
-			</td>
-			<td>
-				<a href="popup.php?f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_article_number=<?php p($f_article_number); ?>&f_order_direction=<?php p($ReverseOrderDirection); ?>"><?php p($OrderSign); ?></a>
-			</td>
-		</tr>
-		</table>
-	</td>
-	<td><?php putGS("Items per page"); ?>: <input type="text" name="f_items_per_page" value="<?php p($f_items_per_page); ?>" class="input_text" size="4"></td>
-</tr>
-</form>
-</table>
-
-<?php
 if (count($imageData) > 0) {
     $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "images/popup.php")."&";
     $pager =& new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);
+
 ?>
 <table class="action_buttons">
 <tr><td><?php     echo $pager->render(); ?></td></tr>
@@ -119,7 +106,8 @@ foreach ($imageData as $image) {
           	</TD>
        		</form>
         	<?php
-     	} else {
+     	}
+     	else {
      		?>
         	<TD ALIGN="CENTER">&nbsp;</TD>
      		<?php

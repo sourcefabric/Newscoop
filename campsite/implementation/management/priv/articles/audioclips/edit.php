@@ -24,25 +24,27 @@ if (!Input::IsValid()) {
 }
 
 switch($f_action) {
- case 'add':
-     if (empty($_FILES['f_media_file'])) {
-         camp_html_display_error(getGS('Invalid file parameter'));
-     }
-     $aclipObj =& new Audioclip();
-     $audioFile = $aclipObj->OnFileUpload($_FILES['f_media_file']);
-     if (PEAR::isError($audioFile)) {
-         camp_html_display_error(getGS('Audio file could not be stored locally'));
-     }
-     $id3Data = $aclipObj->analyzeFile($audioFile);
-     $s = $id3Data['playtime_seconds'];
-     $mData['title'] = $id3Data['filename'];
-     $mData['extent'] = date('H:i:s', floor($s)-date('Z')).substr(number_format($s, 6), strpos(number_format($s, 6), '.'));
-     $mData['bitrate'] = $id3Data['audio']['bitrate'];
-     $mData['sample_rate'] = $id3Data['audio']['sample_rate'];
-     break;
- case 'edit':
-     // We retrieve all metadata by using xr_getAudioClip() to edit
-     break;
+	case 'add':
+		if (empty($_FILES['f_media_file'])) {
+			camp_html_display_error(getGS('Invalid file parameter'));
+			exit;
+		}
+		$aclipObj =& new Audioclip();
+		$audioFile = $aclipObj->OnFileUpload($_FILES['f_media_file']);
+		if (PEAR::isError($audioFile)) {
+			camp_html_display_error(getGS('Audio file could not be stored locally'));
+			exit;
+		}
+		$id3Data = $aclipObj->analyzeFile($audioFile);
+		$s = $id3Data['playtime_seconds'];
+		$mData['title'] = $id3Data['filename'];
+		$mData['extent'] = date('H:i:s', floor($s)-date('Z')).substr(number_format($s, 6), strpos(number_format($s, 6), '.'));
+		$mData['bitrate'] = $id3Data['audio']['bitrate'];
+		$mData['sample_rate'] = $id3Data['audio']['sample_rate'];
+		break;
+	case 'edit':
+		// We retrieve all metadata by using xr_getAudioClip() to edit
+		break;
 }
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
@@ -72,7 +74,7 @@ camp_html_display_msgs();
 <TR>
     <TD ALIGN="RIGHT"><?php putGS("Creator"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Main_dc_creator" VALUE="<?php p($mData['creator']; ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT TYPE="TEXT" NAME="f_Main_dc_creator" VALUE="<?php p($mData['creator']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
     </TD>
 </TR>
 <TR>
