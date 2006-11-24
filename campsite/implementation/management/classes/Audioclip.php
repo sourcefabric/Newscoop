@@ -541,7 +541,7 @@ class Audioclip {
      *
      * @return Audioclip|PEAR_Error
      */
-    function storeAudioclip($p_fileName, $p_xrParams)
+    function storeAudioclip($p_filePath, $p_xrParams)
     {
         if (file_exists($p_fileName) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_fileName));
@@ -549,8 +549,8 @@ class Audioclip {
 
         $sessid = $_SESSION['cc_sessid'];
         echo "<pre>\n"; print_r($p_xrParams); echo "</pre>\n";
-        AudioclipXMLMetadata::Upload($sessid, $p_xrParams['gunid'], $p_xrParams['mdata'],
-        							 $p_xrParams['fname'], $p_xrParams['chsum']);
+        AudioclipXMLMetadata::Upload($sessid, $p_filePath, $p_xrParams['gunid'], $p_xrParams['mdata'],
+        							 $p_xrParams['chsum']);
         exit;
     } // fn storeAudioclip
 

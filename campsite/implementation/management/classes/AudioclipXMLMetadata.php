@@ -79,18 +79,20 @@ class AudioclipXMLMetadata {
      * @return string or PEAR_Error
      *		gunId on success, PEAR_Error on failure
      */
-    function Upload($p_sessionId, $p_gunId, $p_metaData, $p_fileName, $p_checksum)
+    function Upload($p_sessionId, $p_filePath, $p_gunId, $p_metaData, $p_checksum)
     {
         global $mdefs;
 
         $xrcObj =& XR_CcClient::Factory($mdefs);
-        $r = $xrcObj->xr_storeAudioClipOpen($p_sessionId, $p_gunId, $p_metaData, $p_fileName, $p_checksum);
+        $r = $xrcObj->xr_storeAudioClipOpen($p_sessionId, basename($p_filePath), $p_gunId,
+        									$p_metaData, $p_checksum);
         echo "<pre>xr_storeAudioClipOpen:\n"; print_r($r); echo "</pre>\n";
         if (PEAR::isError($r)) {
         echo "<pre>xr_storeAudioClipOpen:\n"; print_r($r); echo "</pre>\n";
         	return $r;
         } else {
-            exec(trim('curl -T ' . escapeshellarg($p_fileName) . ' ' . $r['url']));
+        echo "<pre>file name:\n"; print_r($p_filePath); echo "</pre>\n";
+            exec(trim('curl -T ' . escapeshellarg($p_filePath) . ' ' . $r['url']));
         }
         $aData = $xrcObj->xr_storeAudioClipClose($p_sessionId, $r['token']);
         echo "<pre>xr_storeAudioClipClose:\n"; print_r($aData); echo "</pre>\n";
