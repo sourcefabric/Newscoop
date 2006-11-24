@@ -388,7 +388,7 @@ class Audioclip {
         if (!is_null($p_gunId) && is_numeric($p_gunId)) {
             $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($p_gunId);
             $this->m_metaData = $aclipDbaseMdataObj->fetch();
-            if (sizeof($this->aclipMetadata) == 0) {
+            if (sizeof($this->m_metaData) == 0) {
                 $aclipXMLMdataObj =& new AudioclipXMLMetadata($p_gunId);
                 $this->m_metaData = $aclipXMLMdataObj->fetch();
 
@@ -424,23 +424,28 @@ class Audioclip {
      * @return string
      *      the meta tag value
      */
-    function getMetaTagValue($p_tagName)
+    function getMetatagValue($p_tagName)
     {
-		$p_tagName = trim(strtoupper($p_tagName));
+    	$namespaces = array('dc', 'ls', 'dcterms');
+    	
+		$p_tagName = trim(strtolower($p_tagName));
     	if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
     		return null;
     	}
-    	if (strncasecmp($p_tagName, 'dc:', 3) == 0 || strncasecmp($p_tagName, 'ls:', 3) == 0) {
+    	$tagNs = strstr($p_tagName, ':');
+    	if ($tagNs !== false) {
+    		if (!array_key_exists($tagNs, $namespaces)) {
+	    		return PEAR_Error::PEAR_Error("Invalid metatag namespace.");
+    		}
     		if (!array_key_exists($p_tagName, $this->m_metaData)) {
 	    		return null;
     		}
-    		return $this->m_metaData[$p_tagName];
+    		return $this->m_metaData[$p_tagName]->getValue();
     	}
-    	$namespaces = array('DC', 'LS', 'DCTERMS');
     	foreach ($namespaces as $namespace) {
     		$tag = $namespace . ':' . $p_tagName;
     		if (array_key_exists($tag, $this->m_metaData)) {
-    			return $this->m_metaData[$tag]->getTagValue();
+    			return $this->m_metaData[$tag]->getValue();
     		}
     	}
     	return null;
@@ -538,23 +543,15 @@ class Audioclip {
      */
     function storeAudioclip($p_fileName, $p_xrParams)
     {
-        global $mdefs;
-
         if (file_exists($p_fileName) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_fileName));
         }
 
-        $xrcObj =& XR_CcClient::Factory($mdefs);
         $sessid = $_SESSION['cc_sessid'];
-        $r = $xrcObj->xr_storeAudioClipOpen($sessid, $p_xrParams['gunid'], $p_xrParams['mdata'], $p_xrParams['fname'], $p_xrParams['chsum']);
-        if (empty($r['url']) || empty($r['token'])) {
-            return false; // PEAR Error
-        } else {
-            exec(trim('curl -T ' . escapeshellarg($p_fileName)
-                      . ' ' . $r['url']));
-        }
-        $aData = $xrcObj->xr_storeAudioClipClose($sessid, $r['token']);
-        return $aData['gunid'];
+        echo "<pre>\n"; print_r($p_xrParams); echo "</pre>\n";
+        AudioclipXMLMetadata::Upload($sessid, $p_xrParams['gunid'], $p_xrParams['mdata'],
+        							 $p_xrParams['fname'], $p_xrParams['chsum']);
+        exit;
     } // fn storeAudioclip
 
 
@@ -598,13 +595,16 @@ class Audioclip {
         // Verify its a valid file.
 		$filesize = filesize($p_fileVar['tmp_name']);
 		if ($filesize === false) {
+			echo "l1";
 			return new PEAR_Error("Audioclip::OnFileUpload(): invalid parameters received.");
 		}
         if ($this->isValidFileType($p_fileVar['name']) == FALSE) {
+			echo "l2";
             return new PEAR_Error("Audioclip::OnFileUpload(): invalid file type.");
         }
         $target = $Campsite['TMP_DIRECTORY'] . $p_fileVar['name'];
         if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
+			echo "l3";
             return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
         }
         chmod($target, 0644);

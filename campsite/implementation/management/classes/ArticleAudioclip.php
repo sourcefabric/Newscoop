@@ -12,9 +12,7 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
-require_once($g_documentRoot.'/classes/AudioclipLocalMetadata.php');
-//require_once($g_documentRoot.'/classes/Audioclip.php');
-//require_once($g_documentRoot.'/classes/Article.php');
+require_once($g_documentRoot.'/classes/Audioclip.php');
 
 /**
  * @package Campsite
@@ -103,7 +101,7 @@ class ArticleAudioclip extends DatabaseObject {
      * @param int $p_languageId
      *
      * @return array $returnArray
-     *      An array of AudioclipLocalMetadata objects
+     *      An array of AudioclipMetadataEntry objects
      */
     function GetAudioclipsByArticleNumber($p_articleNumber, $p_languageId = null)
     {
@@ -116,7 +114,7 @@ class ArticleAudioclip extends DatabaseObject {
         $returnArray = array();
         if (is_array($rows)) {
             foreach ($rows as $row) {
-                $returnArray[] = AudioclipLocalMetadata::FetchAllMetadataByGunid($row['fk_audioclip_gunid']);
+                $returnArray[] =& new Audioclip($row['fk_audioclip_gunid']);
             }
         }
 
@@ -194,13 +192,13 @@ class ArticleAudioclip extends DatabaseObject {
      *
      * @return void
      */
-    function RemoveAudioclipFromArticle($p_audioclipId, $p_articleNumber)
+    function RemoveAudioclipFromArticle($p_audioclipGunid, $p_articleNumber)
     {
         global $g_ado_db;
 
         $queryStr = "DELETE FROM ArticleAudioclips 
                      WHERE fk_article_number='$p_articleNumber' 
-                     AND fk_audioclip_gunid='$p_attachmentId' 
+                     AND fk_audioclip_gunid='$p_audioclipGunid' 
                      LIMIT 1";
         $g_ado_db->Execute($queryStr);
     } // fn RemoveAudioclipFromArticle

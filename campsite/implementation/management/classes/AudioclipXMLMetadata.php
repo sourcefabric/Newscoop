@@ -66,6 +66,36 @@ class AudioclipXMLMetadata {
             return $metaData;
         }
     } // fn fetch
+    
+    /**
+     * Uploads an audioclip to the storage server
+     * 
+     * @param string $p_sessionId
+     * @param string $p_gunId
+     * @param string $p_metaData
+     * @param string $p_fileName
+     * @param string $p_checksum
+     * 
+     * @return string or PEAR_Error
+     *		gunId on success, PEAR_Error on failure
+     */
+    function Upload($p_sessionId, $p_gunId, $p_metaData, $p_fileName, $p_checksum)
+    {
+        global $mdefs;
+
+        $xrcObj =& XR_CcClient::Factory($mdefs);
+        $r = $xrcObj->xr_storeAudioClipOpen($p_sessionId, $p_gunId, $p_metaData, $p_fileName, $p_checksum);
+        echo "<pre>xr_storeAudioClipOpen:\n"; print_r($r); echo "</pre>\n";
+        if (PEAR::isError($r)) {
+        echo "<pre>xr_storeAudioClipOpen:\n"; print_r($r); echo "</pre>\n";
+        	return $r;
+        } else {
+            exec(trim('curl -T ' . escapeshellarg($p_fileName) . ' ' . $r['url']));
+        }
+        $aData = $xrcObj->xr_storeAudioClipClose($p_sessionId, $r['token']);
+        echo "<pre>xr_storeAudioClipClose:\n"; print_r($aData); echo "</pre>\n";
+    	return $aData['gunid'];
+    }
 
 
     /**
@@ -78,7 +108,7 @@ class AudioclipXMLMetadata {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    function write($p_metaData)
+    function update($p_metaData)
     {
         $xmlStr = '<?xml version="1.0" encoding="utf-8"?>
         <audioClip>
