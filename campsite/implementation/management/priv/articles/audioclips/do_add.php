@@ -32,43 +32,18 @@ if (!$articleObj->exists()) {
 }
 
 if (!empty($f_audiofile)) {
-    $f_xrParams = array();
-    $f_xrParams['sessid'] = $_SESSION['cc_sessid'];
-    /*************************/
-    /* This code below will be a class method */
-    $f_xrParams['mdata'] = '<?xml version="1.0" encoding="utf-8"?>
-    <audioClip>
-        <metadata
-            xmlns="http://mdlf.org/campcaster/elements/1.0/"
-            xmlns:ls="http://mdlf.org/campcaster/elements/1.0/"
-            xmlns:dc="http://purl.org/dc/elements/1.1/"
-            xmlns:dcterms="http://purl.org/dc/terms/"
-            xmlns:xml="http://www.w3.org/XML/1998/namespace"
-        >';
+    $xrParams = array();
+    $xrParams['sessid'] = camp_session_get('cc_sessid', '');
+    $xrParams['fname'] = basename($f_audiofile);
+    $xrParams['chsum'] = md5_file($f_audiofile);
+    $xrParams['mdata'] = Audioclip::CreateXMLTextFile($formData);
+    $aClipGunid = Audioclip::StoreAudioclip($f_audiofile, $xrParams);
 
-    foreach($mask['pages'] as $key => $val) {
-        foreach($mask['pages'][$key] as $k => $v) {
-            $element_encode = str_replace(':','_',$v['element']);
-            $formData['f_'.$key.'_'.$element_encode] ? $mData[$v['element']] = $formData['f_'.$key.'_'.$element_encode] : NULL;
-        }
-    }
-    foreach($mData as $key => $val) {
-        $f_xrParams['mdata'] .= '<'.$key.'>'.$val.'</'.$key.'>';
-    }
-    $f_xrParams['mdata'] .= '</metadata>
-    </audioClip>';
-    /*************************/
-    $f_xrParams['fname'] = basename($f_audiofile);
-    $f_xrParams['chsum'] = md5_file($f_audiofile);
-    $aClipObj =& new Audioclip();
-    $aClipGunid = $aClipObj->storeAudioclip($f_audiofile, $f_xrParams);
-    // Check if audioclip was added successfully to
-    // Campcaster storage server
     if (PEAR::isError($aClipGunid)) {
-        // Error
+        camp_html_display_error(getGS('Audio file could not be stored'));
         camp_html_goto_page($BackLink);
     }
-    $aClipObj->OnFileStore($f_audiofile);
+    Audioclip::OnFileStore($f_audiofile);
 } else {
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'audioclips/popup.php'));
 }

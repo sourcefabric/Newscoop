@@ -92,8 +92,11 @@ class AudioclipXMLMetadata {
             exec(trim('curl -T ' . escapeshellarg($p_filePath) . ' ' . $r['url']));
         }
         $aData = $xrcObj->xr_storeAudioClipClose($p_sessionId, $r['token']);
+        if (PEAR::isError($aData)) {
+            return $aData;
+        }
     	return $aData['gunid'];
-    }
+    } // fn Upload
 
 
     /**
@@ -126,7 +129,7 @@ class AudioclipXMLMetadata {
         $sessid = camp_session_get('cc_sessid', '');
         $res = $this->xrc->xr_updateAudioClipMetadata($sessid, $this->m_gunid, $xmlStr);
         return $res['status'];
-    } // fn write
+    } // fn update
 
 } // class AudioclipXMLMetadata
 

@@ -328,3 +328,17 @@ hr {
     background-color: #CFCFCF;
     -moz-border-radius: 20px 20px 0 0;
 }
+
+.tab_normal {
+        padding: 3px;
+        background-color: #EEE;
+        border-top: 1px solid #8baed1;
+        border-left: 1px solid #8baed1;
+        border-bottom: 1px solid #8baed1;
+}
+.tab_current {
+        padding: 3px;
+        background-color: #EEE;
+        border-top: 1px solid #8baed1;
+        border-left: 1px solid #8baed1;
+}

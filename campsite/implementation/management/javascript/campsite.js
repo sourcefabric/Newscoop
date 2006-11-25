@@ -96,6 +96,32 @@ function ShowAll(p_array)
 	return true;
 }
 
+/**
+ * Clear all the tabs and set the appropiate css classes.
+ *
+ * @param int p_elements
+ *      the total number of tabs
+ */
+function clearAllTabs(p_elements) {
+	for(k = 1; k <= p_elements; k++) {
+		document.getElementById('link' + k).className='tab_normal';
+		document.getElementById('tab' + k).style.display='none';
+	}
+}
+
+/**
+ * Set the selected tab.
+ *
+ * @param int p_id
+ *      the Id of the HTML element
+ * @param int p_elements
+ *      the total number of tabs
+ */
+function selectTab(p_id, p_elements) {
+	clearAllTabs(p_elements);
+	document.getElementById('link' + p_id).className='tab_current';
+	document.getElementById('tab' + p_id).style.display='';
+}
 
 /**
  * Fade an element by adjusting its opacity.

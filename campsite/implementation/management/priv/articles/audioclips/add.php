@@ -20,7 +20,8 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-if (!isset($_SESSION['cc_sessid']) || empty($_SESSION['cc_sessid'])) {
+$sessid = camp_session_get('cc_sessid', '');
+if (empty($sessid)) {
 	camp_html_add_msg(getGS("Unable to add new audioclip. Unable to reach the Campcaster server."));
 }
 
@@ -76,7 +77,13 @@ function checkAddForm(form) {
     <INPUT type="HIDDEN" name="f_language_selected" value="<?php p($f_language_selected); ?>">
     <INPUT type="HIDDEN" name="BackLink" value="<?php p($_SERVER['REQUEST_URI']); ?>">
     <INPUT type="HIDDEN" name="f_action" value="add">
+    <?php
+    if (!empty($sessid)) {
+    ?>
 	<INPUT type="submit" name="Save" value="<?php putGS('Save'); ?>" class="button">
+    <?php
+    }
+    ?>
 	<INPUT type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="window.close();">
 	</DIV>
 	</TD>

@@ -541,16 +541,20 @@ class Audioclip {
      *
      * @return Audioclip|PEAR_Error
      */
-    function storeAudioclip($p_filePath, $p_xrParams)
+    function StoreAudioclip($p_filePath, $p_xrParams)
     {
         if (file_exists($p_filePath) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_fileName));
         }
 
-        $sessid = $_SESSION['cc_sessid'];
-        AudioclipXMLMetadata::Upload($sessid, $p_filePath, $p_xrParams['gunid'], $p_xrParams['mdata'],
-        							 $p_xrParams['chsum']);
-    } // fn storeAudioclip
+        $sessid = camp_session_get('cc_sessid', '');
+        $gunId = AudioclipXMLMetadata::Upload($sessid, $p_filePath, $p_xrParams['gunid'],
+                                              $p_xrParams['mdata'], $p_xrParams['chsum']);
+        if (PEAR::isError($gunid)) {
+            return $gunId;
+        }
+        return $gunId;
+    } // fn StoreAudioclip
 
 
     /**
@@ -562,13 +566,13 @@ class Audioclip {
      * @return array
      *      An array with all the id3 metatags
      */
-    function analyzeFile($p_file)
+    function AnalyzeFile($p_file)
     {
         require_once($_SERVER['DOCUMENT_ROOT'].'/include/getid3/getid3.php');
 
         $getid3Obj = new getID3;
         return $getid3Obj->analyze($p_file);
-    } // fn analyzeFile
+    } // fn AnalyzeFile
 
 
     /**
@@ -582,7 +586,7 @@ class Audioclip {
      * @return string|PEAR_Error
      *      The full pathname to the file or Error
      */
-    function OnFileUpload($p_fileVar)
+    function onFileUpload($p_fileVar)
     {
         global $Campsite;
 
@@ -607,7 +611,7 @@ class Audioclip {
         }
         chmod($target, 0644);
         return $target;
-    } // fn OnFileUpload
+    } // fn onFileUpload
 
 
     /**
@@ -683,6 +687,45 @@ class Audioclip {
         }
         return true;
     } // fn editMetadata
+
+
+    /**
+     * Create a XML text file from an array coming from the
+     * Audioclip metadata edit form submited.
+     *
+     * @param array $p_formData
+     *      the form data submited
+     *
+     * @return string $xmlTextFile
+     *      the XML string
+     */
+    function CreateXMLTextFile($p_formData)
+    {
+        global $mask;
+
+        $xmlTextFile = '<?xml version="1.0" encoding="utf-8"?>
+        <audioClip>
+        <metadata
+            xmlns="http://mdlf.org/campcaster/elements/1.0/"
+            xmlns:ls="http://mdlf.org/campcaster/elements/1.0/"
+            xmlns:dc="http://purl.org/dc/elements/1.1/"
+            xmlns:dcterms="http://purl.org/dc/terms/"
+            xmlns:xml="http://www.w3.org/XML/1998/namespace"
+        >';
+
+        foreach($mask['pages'] as $key => $val) {
+            foreach($mask['pages'][$key] as $k => $v) {
+                $element_encode = str_replace(':','_',$v['element']);
+                $p_formData['f_'.$key.'_'.$element_encode] ? $metaData[$v['element']] = $p_formData['f_'.$key.'_'.$element_encode] : NULL;
+            }
+        }
+        foreach($metaData as $key => $val) {
+            $xmlTextFile .= '<'.$key.'>'.$val.'</'.$key.'>';
+        }
+        $xmlTextFile .= '</metadata>
+        </audioClip>';
+        return $xmlTextFile;
+    } // fn CreateXMLTextFile
 
 } // class Audioclip
 
