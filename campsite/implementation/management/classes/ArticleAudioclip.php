@@ -89,7 +89,8 @@ class ArticleAudioclip extends DatabaseObject {
 
         $queryStr = "INSERT IGNORE INTO ArticleAudioclips 
                      (fk_article_number, fk_audioclip_gunid, order_no) 
-                     VALUES ('$p_articleNumber', '$p_audioclipId', '$p_order.')";
+                     VALUES ('$p_articleNumber',
+                             CAST(0x$p_audioclipId AS UNSIGNED), '$p_order.')";
         $g_ado_db->Execute($queryStr);
     } // fn AddAudioclipToArticle
 

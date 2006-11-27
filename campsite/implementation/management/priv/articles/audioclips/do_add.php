@@ -48,9 +48,9 @@ if (!empty($f_audiofile)) {
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'audioclips/popup.php'));
 }
 
+
 // link the audioclip to the current article
-$p_gunid = hexdec($aClipGunid);
-ArticleAudioclip::AddAudioclipToArticle($p_gunid, $articleObj->getArticleNumber());
+ArticleAudioclip::AddAudioclipToArticle($aClipGunid, $articleObj->getArticleNumber());
 
 ?>
 <script>
