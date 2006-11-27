@@ -78,12 +78,12 @@ if ($f_publication_id > 0) {
 
 if ($showComments) {
     require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
-    $rDbObj =& new DbReplication();
-    $onlineCnn = $rDbObj->Connect();
-    if ($onlineCnn == true) {
-	// Fetch the comments attached to this article
-	$comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
+    if (SystemPref::Get("UseDBReplication") == 'Y') {
+        $dbReplicationObj =& new DbReplication();
+        $onlineCnn = $dbReplicationObj->Connect();
     }
+    // Fetch the comments attached to this article
+    $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
 }
 
 
@@ -926,7 +926,7 @@ if ($f_edit_mode == "edit") { ?>
 			</tr>
 				<td align="left" width="100%" style="padding-left: 8px;">
 				<?php
-				if ($onlineCnn == true) {
+				if (is_array($comments)) {
 					putGS("Total:"); ?> <?php p(count($comments));
 				?>
 				    <br />
@@ -1161,75 +1161,50 @@ if ($f_edit_mode == "edit") { ?>
                 var domTT_styleClass = 'domTTOverlib';
             </script>
             <?php
-            $audioclipFields = array('title','creator','extent');
             foreach($articleAudioclips as $articleAudioclip) {
-                $i = 0;
-                $tag = array();
                 $allTags = '';
+                $aClipMetatags = $articleAudioclip->getAvailableMetaTags();
+                foreach ($aClipMetatags as $metaTag) {
+                    list($nameSpace, $localPart) = explode(':', strtolower($metaTag));
+                    $allTags .= $metatagLabel[$metaTag] . ' = ' . $articleAudioclip->getMetatagValue($localPart) . '<br />';
+                }
+                if (($f_edit_mode == "edit")
+                    && $g_user->hasPermission('AttachAudioclipToArticle')) {
+                    $audioclipEditLink = '<a href="" onmouseover="domTT_activate(this, event, \'content\', \''.$allTags.'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
+                    $audioclipDeleteLink = '<a href=""><img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/unlink.png" border="0" /></a>';
+                    $audioclipLink = $audioclipEditLink . ' ' . $audioclipDeleteLink;
+                } else {
+                    $audioclipLink = '<a onmouseover="domTT_activate(this, event, \'content\', \''.$allTags.'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
+                }
             ?>
             <tr>
                 <td align="center" width="100%" style="border-top: 1px solid #EEEEEE;">
-                <?php
-                foreach($articleAudioclip as $audioclipField) {
-                    $allTags .= $audioclipField->getPredicateNs().':'.$audioclipField->getPredicate().' = '.$audioclipField->getObjectName().'<br />';
-                    if (in_array($audioclipField->getPredicate(), $audioclipFields)) {
-                        switch ($audioclipField->getPredicate()) {
-                            case 'creator':
-                                $tag[$i]['label'] = 'Creator';
-                                $tag[$i++]['value'] = $audioclipField->getObjectName();
-                                break;
-                            case 'extent':
-                                $tag[$i]['label'] = 'Duration';
-                                $tag[$i++]['value'] = camp_time_format($audioclipField->getObjectName());
-                                break;
-                            case 'title':
-                                $tag[$i]['label'] = 'Title';
-                                if (($f_edit_mode == "edit")
-                                    && $g_user->hasPermission('AttachAudioclipToArticle')) {
-                                    $audioclipEditLink = '<a href="" onmouseover="domTT_activate(this, event, \'content\', \'%ALLTAGS%\', \'trail\', true, \'delay\', 0);">'.wordwrap($audioclipField->getObjectName(), '25', '<br />', true).'</a>';
-                                    $audioclipDeleteLink = '<a href=""><img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/unlink.png" border="0" /></a>';
-                                    $tag[$i++]['value'] = $audioclipEditLink.' '.$audioclipDeleteLink;
-                                } else {
-                                    $audioclipEditLink = '<a onmouseover="domTT_activate(this, event, \'content\', \'%ALLTAGS%\', \'trail\', true, \'delay\', 0);">'.wordwrap($audioclipField->getObjectName(), '25', '<br />', true).'</a>';
-                                    $tag[$i++]['value'] = $audioclipEditLink;
-                                }
-                                break;
-                        }
-                    }
-                }
-                ?>
                     <table>
 					<tr>
 						<td align="center" valign="middle" nowrap>
-                        <?php
-                        for($i = 0; $i < count($tag); $i++) {
-                            if ($tag[$i]['label'] == 'Title') {
-                                $tag[$i]['value'] = str_replace('%ALLTAGS%', $allTags, $tag[$i]['value']);
-                            }
-                            $audioclipData = $tag[$i]['label'].': '.$tag[$i]['value'].'<br />';
-                            p($audioclipData);
-                        }
-                        ?>
+                        <?php putGS("Title"); ?>: <?php p($audioclipLink); ?>
+                        <br />
+                        <?php putGS("Creator"); ?>: <?php p($articleAudioclip->getMetatagValue('creator')); ?>
+                        <br />
+                        <?php putGS("Length"); ?>: <?php p(camp_time_format($articleAudioclip->getMetatagValue('extent'))); ?>
                         </td>
                     </tr>
                     </table>
                 </td>
             </tr>
             <?php
-            }
+            } // foreach($articleAudioclips as $articleAudioclip) {
             ?>
             </table>
             <!-- END AUDIO CLIPS table -->
           </td></tr>
-
-
 		</TABLE>
 	</TD>
 </TR>
 </TABLE>
 </FORM>
 <?php
-if ($showComments && $f_show_comments && $onlineCnn) {
+if ($showComments && $f_show_comments) {
     include("comments/show_comments.php");
 }
 
