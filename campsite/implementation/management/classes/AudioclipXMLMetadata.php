@@ -28,6 +28,9 @@ class AudioclipXMLMetadata {
 
     /**
      * Constructor
+     *
+     * @param string $p_gunId
+     *      The audioclip global unique identifier
      */
     function AudioclipXMLMetadata($p_gunId = null)
     {
@@ -44,53 +47,56 @@ class AudioclipXMLMetadata {
     /**
      * Fetch all the metadata for the audioclip.
      *
+     * @param string $p_gunId
+     *      The audioclip global unique identifier
+     *
      * @return array $metaData
      *      An array of AudioclipMetadataEntry objects
      */
     function fetch($p_gunId = null)
     {
         if (!is_null($p_gunId)) {
-        	$this->m_gunId = $p_gunId;
+            $this->m_gunId = $p_gunId;
         }
         if (is_null($this->m_gunId)) {
-        	return false;
+            return false;
         }
 
         $sessid = camp_session_get('cc_sessid', '');
         $res = $this->xrc->xr_existsAudioClip($sessid, $this->m_gunId);
         if (PEAR::isError($res)) {
-        	return $res;
+            return $res;
         }
         if ($res['exists']) {
             $xmlMetaData = $this->xrc->xr_getAudioClip($sessid, $this->m_gunId);
             if (PEAR::isError($xmlMetaData)) {
-            	return $xmlMetaData;
+                return $xmlMetaData;
             }
 
             $xmlParser = xml_parser_create();
             $result = xml_parse_into_struct($xmlParser, $xmlMetaData['metadata'], $values);
             $metaData = array();
             foreach ($values as $value) {
-            	if (!AudioclipMetadataEntry::IsValidNamespace($value['tag'])) {
-            		continue;
-            	}
-            	$recordSet['gunid'] = $this->m_gunId;
-				$recordSet['predicate_ns'] = AudioclipMetadataEntry::GetTagNS($value['tag']);
-				$recordSet['predicate'] = AudioclipMetadataEntry::GetTagName($value['tag']);
-				$recordSet['object'] = $value['value'];
+                if (!AudioclipMetadataEntry::IsValidNamespace($value['tag'])) {
+                    continue;
+                }
+                $recordSet['gunid'] = $this->m_gunId;
+                $recordSet['predicate_ns'] = AudioclipMetadataEntry::GetTagNS($value['tag']);
+                $recordSet['predicate'] = AudioclipMetadataEntry::GetTagName($value['tag']);
+                $recordSet['object'] = $value['value'];
                 $tmpMetadataObj =& new AudioclipMetadataEntry($recordSet);
                 $metaData[strtolower($value['tag'])] = $tmpMetadataObj;
             }
             $this->m_metaData = $metaData;
             return $metaData;
         }
-        return false;
     } // fn fetch
+
     
     /**
      * Uploads an audioclip to the storage server
      * 
-     * @param string $p_sessionId
+     * @param string $p_sessId
      * @param string $p_gunId
      * @param string $p_metaData
      * @param string $p_fileName
@@ -99,23 +105,23 @@ class AudioclipXMLMetadata {
      * @return string or PEAR_Error
      *		gunId on success, PEAR_Error on failure
      */
-    function Upload($p_sessionId, $p_filePath, $p_gunId, $p_metaData, $p_checksum)
+    function Upload($p_sessId, $p_filePath, $p_gunId, $p_metaData, $p_checkSum)
     {
         global $mdefs;
 
         $xrcObj =& XR_CcClient::Factory($mdefs);
-        $r = $xrcObj->xr_storeAudioClipOpen($p_sessionId, $p_gunId, $p_metaData,
-        									basename($p_filePath), $p_checksum);
+        $r = $xrcObj->xr_storeAudioClipOpen($p_sessId, $p_gunId, $p_metaData,
+                                            basename($p_filePath), $p_checkSum);
         if (PEAR::isError($r)) {
         	return $r;
         } else {
             exec(trim('curl -T ' . escapeshellarg($p_filePath) . ' ' . $r['url']));
         }
-        $aData = $xrcObj->xr_storeAudioClipClose($p_sessionId, $r['token']);
-        if (PEAR::isError($aData)) {
-            return $aData;
+        $aClipData = $xrcObj->xr_storeAudioClipClose($p_sessId, $r['token']);
+        if (PEAR::isError($aClipData)) {
+            return $aClipData;
         }
-    	return $aData['gunid'];
+    	return $aClipData['gunid'];
     } // fn Upload
 
 

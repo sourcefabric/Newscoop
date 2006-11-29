@@ -79,7 +79,8 @@ $metatagLabel = array(
     'dc:creator' => 'Creator',
     'dcterms:extent' => 'Length',
     'dc:description' => 'Description',
-    'ls:url'    => 'Stream URL'
+    'ls:url'    => 'Stream URL',
+    'ls:mtime' => 'Modified time'
 );
 
 $mask = array(
@@ -391,7 +392,10 @@ class Audioclip {
 
 
     /**
+     * Constructor
      *
+     * @param string $p_gunId
+     *      The audioclip gunid
      */
     function Audioclip($p_gunId = null)
     {
@@ -414,10 +418,10 @@ class Audioclip {
 
 
     /**
-     * Returns the value of the clip's unique identifier
+     * Returns the unique identifier value for the audioclip
      *
      * @return string
-     *      the clip unique identifier
+     *      The audioclip global unique identifier
      */
     function getGunId()
     {
@@ -429,10 +433,10 @@ class Audioclip {
      * Returns the value of the give meta tag
      *
      * @param string $p_tagName
-     *      the name of the meta tag
+     *      The name of the meta tag
      *
      * @return string
-     *      the meta tag value
+     *      The meta tag value
      */
     function getMetatagValue($p_tagName)
     {
@@ -465,8 +469,8 @@ class Audioclip {
     /**
      * Returns an array containing available meta tags
      *
-     * @return string
-     *      the meta tag value
+     * @return array
+     *      The available meta tags for the audioclip
      */
     function getAvailableMetaTags()
     {
@@ -544,26 +548,30 @@ class Audioclip {
     /**
      * Stores the Audioclip into the Campcaster storage server.
      *
-     * @param string $p_fileName
-     *      The name of the audioclip
-     * @param array $p_xrParams
-     *      Array of params to send to the XML RPC method
+     * @param string $p_sessId
+     *      The session Id
+     * @param string $p_filePath
+     *      The full path name to the audioclip
+     * @param array $p_formData
+     *      Array of form data submited
      *
-     * @return Audioclip|PEAR_Error
+     * @return int|PEAR_Error
+     *      The gunid on success, PEAR Error on failure
      */
-    function StoreAudioclip($p_filePath, $p_xrParams)
+    function StoreAudioclip($p_sessId, $p_filePath, $p_formData)
     {
         if (file_exists($p_filePath) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_fileName));
         }
-
-        $sessid = camp_session_get('cc_sessid', '');
-        $gunId = AudioclipXMLMetadata::Upload($sessid, $p_filePath, $p_xrParams['gunid'],
-                                              $p_xrParams['mdata'], $p_xrParams['chsum']);
-        if (PEAR::isError($gunid)) {
+        $gunId = null;
+        $checkSum = md5_file($p_filePath);
+        $xmlString = Audioclip::CreateXMLTextFile($p_formData);
+        $gunId = AudioclipXMLMetadata::Upload($p_sessId, $p_filePath, $gunId,
+                                              $xmlString, $checkSum);
+        if (PEAR::isError($gunId)) {
             return $gunId;
         }
-        
+
         $audioclipXMLMetadata = new AudioclipXMLMetadata($gunId);
         $audioclipDbMetadata = new AudioclipDatabaseMetadata();
         $audioclipDbMetadata->create($audioclipXMLMetadata->m_metaData);
@@ -701,14 +709,14 @@ class Audioclip {
 
 
     /**
-     * Create a XML text file from an array coming from the
-     * Audioclip metadata edit form submited.
+     * Create a XML text file from an array coming from the Audioclip
+     * metadata edit form submited.
      *
      * @param array $p_formData
-     *      the form data submited
+     *      The form data submited
      *
      * @return string $xmlTextFile
-     *      the XML string
+     *      The XML string
      */
     function CreateXMLTextFile($p_formData)
     {

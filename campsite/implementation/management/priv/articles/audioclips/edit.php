@@ -15,6 +15,7 @@ if (!$g_user->hasPermission('AddAudioclip')) {
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_audioclip_gunid = Input::Get('f_audioclip_gunid', 'string', null, true);
 $f_action = Input::Get('f_action', 'string', null, true);
 $BackLink = Input::Get('BackLink', 'string', null, true);
 
@@ -29,8 +30,8 @@ switch($f_action) {
             camp_html_display_error(getGS('Invalid file parameter'));
             exit;
         }
-        $aclipObj =& new Audioclip();
-        $audioFile = $aclipObj->onFileUpload($_FILES['f_media_file']);
+        $aClipObj =& new Audioclip();
+        $audioFile = $aClipObj->onFileUpload($_FILES['f_media_file']);
         if (PEAR::isError($audioFile)) {
             camp_html_display_error(getGS('Audio file could not be stored locally'));
             exit;
@@ -45,19 +46,26 @@ switch($f_action) {
         $mData['sample_rate'] = $id3Data['audio']['sample_rate'];
         break;
     case 'edit':
-        // We retrieve all the metadata by using the local cache
-        //$aclipObj = &new Audioclip($f_gunId);
-        // we call $aclipObj->getMetadata();
+        $audioClip =& new Audioclip($f_audioclip_gunid);
+        $aClipMetaTags = $audioClip->getAvailableMetaTags();
+        foreach ($aClipMetaTags as $metaTag) {
+            list($nameSpace, $localPart) = explode(':', strtolower($metaTag));
+            $mData[$localPart] = $audioClip->getMetatagValue($localPart);
+        }
         break;
 }
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
-
-camp_html_display_msgs();
-
 ?>
-
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<html>
+<head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<META HTTP-EQUIV="Expires" CONTENT="now">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+    <?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
+	<title><?php putGS("Edit Audioclip Metadata"); ?></title>
+</head>
+<body>
+<?php camp_html_display_msgs(); ?>
 
 <P>
 <FORM NAME="audioclip_metadata" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/audioclips/do_<?php echo $f_action; ?>.php" ENCTYPE="multipart/form-data">
@@ -100,8 +108,15 @@ camp_html_display_msgs();
                     <INPUT type="hidden" name="f_language_id" value="<?php  p($f_language_id); ?>">
                     <INPUT type="hidden" name="f_language_selected" value="<?php  p($f_language_selected); ?>">
                     <INPUT type="hidden" name="BackLink" value="<?php  p($_SERVER['REQUEST_URI']); ?>">
+                <?php if ($f_action == 'add') { ?>
                     <INPUT type="hidden" name="f_audiofile" value="<?php p($audioFile); ?>" />
+                <?php } elseif ($f_action == 'edit') { ?>
+                    <INPUT type="hidden" name="f_audioclip_gunid" value="<?php p($f_audioclip_gunid); ?>" />
+                <?php } ?>
                     <INPUT type="submit" name="Save" value="<?php putGS('Save'); ?>" class="button" />
+                <?php if ($f_action == 'edit') { ?>
+                    <INPUT type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="window.close();">
+                <?php } ?>
                 </DIV>
             </TD>
         </TR>
@@ -113,3 +128,6 @@ camp_html_display_msgs();
 </FORM>
 
 </P>
+
+</body>
+</html>

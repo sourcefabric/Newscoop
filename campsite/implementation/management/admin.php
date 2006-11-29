@@ -18,19 +18,20 @@ $no_menu_scripts = array(
     '/login.php',
     '/do_login.php',
     '/issues/preview.php',
-	'/issues/empty.php',
-	'/ad_popup.php',
-	'/articles/preview.php',
-	'/articles/autopublish.php',
-	'/articles/autopublish_do_add.php',
-	'/articles/images/popup.php',
-	'/articles/images/view.php',
-	'/articles/topics/popup.php',
-	'/articles/files/popup.php',
+    '/issues/empty.php',
+    '/ad_popup.php',
+    '/articles/preview.php',
+    '/articles/autopublish.php',
+    '/articles/autopublish_do_add.php',
+    '/articles/images/popup.php',
+    '/articles/images/view.php',
+    '/articles/topics/popup.php',
+    '/articles/files/popup.php',
     '/articles/audioclips/popup.php',
-	'/articles/empty.php',
-	'/comments/ban.php',
-	'/comments/do_ban.php');
+    '/articles/audioclips/edit.php',
+    '/articles/empty.php',
+    '/comments/ban.php',
+    '/comments/do_ban.php');
 
 $request_uri = $_SERVER['REQUEST_URI'];
 $call_script = substr($request_uri, strlen("/$ADMIN"));

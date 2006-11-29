@@ -32,13 +32,8 @@ if (!$articleObj->exists()) {
 }
 
 if (!empty($f_audiofile)) {
-    $xrParams = array();
-    $xrParams['sessid'] = camp_session_get('cc_sessid', '');
-    $xrParams['fname'] = basename($f_audiofile);
-    $xrParams['chsum'] = md5_file($f_audiofile);
-    $xrParams['mdata'] = Audioclip::CreateXMLTextFile($formData);
-    $aClipGunid = Audioclip::StoreAudioclip($f_audiofile, $xrParams);
-
+    $sessId = camp_session_get('cc_sessid', '');
+    $aClipGunid = Audioclip::StoreAudioclip($sessId, $f_audiofile, $formData);
     if (PEAR::isError($aClipGunid)) {
         camp_html_display_error(getGS('Audio file could not be stored'));
         camp_html_goto_page($BackLink);

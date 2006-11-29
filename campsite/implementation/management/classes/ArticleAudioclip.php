@@ -28,7 +28,7 @@ class ArticleAudioclip extends DatabaseObject {
      * The article audioclip table links together articles with Audioclips.
      *
      * @param int $p_articleNumber
-     * @param int $p_audioclipId
+     * @param int $p_audioclipGunId
      *
      * @return object ArticleAudioclip
      */
@@ -41,18 +41,9 @@ class ArticleAudioclip extends DatabaseObject {
             $this->m_data['fk_audioclip_gunid'] = $p_audioclipGunId;
         }
         if (!is_null($p_articleNumber) && !is_null($p_audioclipGunId)) {
-        	$this->fetch();
+            $this->fetch();
         }
     } // constructor
-
-
-    /**
-     * @return string
-     */
-    function getAudioclipId()
-    {
-        return $this->m_data['fk_audioclip_gunid'];
-    } // fn getAudioclipId
 
 
     /**
@@ -62,6 +53,15 @@ class ArticleAudioclip extends DatabaseObject {
     {
         return $this->m_data['fk_article_number'];
     } // fn getArticleNumber
+
+
+    /**
+     * @return string
+     */
+    function getAudioclipGunId()
+    {
+        return $this->m_data['fk_audioclip_gunid'];
+    } // fn getAudioclipGunId
 
 
     /*
@@ -105,7 +105,7 @@ class ArticleAudioclip extends DatabaseObject {
      * This is called when an audioclip file is deleted.
      * It will disassociate the audioclip from all articles.
      *
-     * @param int $p_audioclipId
+     * @param int $p_gunId
      *
      * @return void
      */
@@ -161,26 +161,6 @@ class ArticleAudioclip extends DatabaseObject {
             $g_ado_db->Execute($queryStr);
         }
     } // fn OnArticleCopy
-
-
-    /**
-     * Remove the linkage between the given audioclip and the given article.
-     *
-     * @param int $p_audioclipId
-     * @param int $p_articleNumber
-     *
-     * @return void
-     */
-    function RemoveAudioclipFromArticle($p_audioclipGunid, $p_articleNumber)
-    {
-        global $g_ado_db;
-
-        $queryStr = "DELETE FROM ArticleAudioclips 
-                     WHERE fk_article_number='$p_articleNumber' 
-                     AND fk_audioclip_gunid='$p_audioclipGunid' 
-                     LIMIT 1";
-        $g_ado_db->Execute($queryStr);
-    } // fn RemoveAudioclipFromArticle
 
 } // class ArticleAudioclip
 

@@ -1163,18 +1163,24 @@ if ($f_edit_mode == "edit") { ?>
             <?php
             foreach($articleAudioclips as $articleAudioclip) {
                 $allTags = '';
-                $aClipMetatags = $articleAudioclip->getAvailableMetaTags();
-                foreach ($aClipMetatags as $metaTag) {
+                $aClipMetaTags = $articleAudioclip->getAvailableMetaTags();
+                foreach ($aClipMetaTags as $metaTag) {
                     list($nameSpace, $localPart) = explode(':', strtolower($metaTag));
-                    $allTags .= $metatagLabel[$metaTag] . ' = ' . $articleAudioclip->getMetatagValue($localPart) . '<br />';
+                    if ($localPart == 'title') {
+                        $allTags .= '<strong>'.$metatagLabel[$metaTag] . ': ' . $articleAudioclip->getMetatagValue($localPart) . '</strong><br />';
+                    } else {
+                        $allTags .= $metatagLabel[$metaTag] . ': ' . $articleAudioclip->getMetatagValue($localPart) . '<br />';
+                    }
                 }
                 if (($f_edit_mode == "edit")
                     && $g_user->hasPermission('AttachAudioclipToArticle')) {
-                    $audioclipEditLink = '<a href="" onmouseover="domTT_activate(this, event, \'content\', \''.$allTags.'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
-                    $audioclipDeleteLink = '<a href=""><img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/unlink.png" border="0" /></a>';
+                    $aClipEditUrl = "/$ADMIN/articles/audioclips/edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_action=edit&f_audioclip_gunid=".$articleAudioclip->getGunId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
+                    $aClipDeleteUrl = "/$ADMIN/articles/audioclips/do_del.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_audioclip_gunid=".$articleAudioclip->getGunId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id";
+                    $audioclipEditLink = '<a href="javascript: void(0);" onclick="window.open(\''.$aClipEditUrl.'\', \'attach_audioclip\', \'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100\');" onmouseover="domTT_activate(this, event, \'content\', \''.$allTags.'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
+                    $audioclipDeleteLink = '<a href="'.$aClipDeleteUrl.'" onclick="return confirm(\''.getGS("Are you sure you want to remove the audio file \'$1\' from the article?", camp_javascriptspecialchars($articleAudioclip->getMetatagValue('title'))).'\');"><img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/unlink.png" border="0" /></a>';
                     $audioclipLink = $audioclipEditLink . ' ' . $audioclipDeleteLink;
                 } else {
-                    $audioclipLink = '<a onmouseover="domTT_activate(this, event, \'content\', \''.$allTags.'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
+                    $audioclipLink = '<a href="#" onmouseover="domTT_activate(this, event, \'content\', \''.$allTags.'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
                 }
             ?>
             <tr>
