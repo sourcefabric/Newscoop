@@ -50,7 +50,8 @@ if (!empty($f_audiofile)) {
 
 
 // link the audioclip to the current article
-ArticleAudioclip::AddAudioclipToArticle($aClipGunid, $articleObj->getArticleNumber());
+$articleAudioclip =& new ArticleAudioclip($articleObj->getArticleNumber(), $aClipGunid);
+$articleAudioclip->create();
 
 ?>
 <script>

@@ -19,19 +19,7 @@ require_once($g_documentRoot.'/classes/AudioclipMetadataEntry.php');
  * @package Campsite
  */
 class AudioclipDatabaseMetadata {
-	var $m_keyColumnNames = array('id');
-	var $m_keyIsAutoIncrement = true;
-	var $m_dbTableName = 'AudioclipMetadata';
-	var $m_columnNames = array('id',
-							   'gunid',
-							   'subject_ns',
-							   'subject',
-							   'predicate_ns',
-							   'predicate',
-							   'predicate_xml',
-							   'object_ns',
-							   'object');
-
+	var $m_metaData = array();
 
     /**
      * Constructor
@@ -40,6 +28,7 @@ class AudioclipDatabaseMetadata {
     {
         if (!is_null($p_gunId)) {
             $this->m_gunId = $p_gunId;
+            $this->fetch();
         }
     } // constructor
 
@@ -52,36 +41,50 @@ class AudioclipDatabaseMetadata {
      * @return array $returnArray
      *      Array of AudioclipMetadataEntry objects
      */
-    function fetch()
+    function fetch($p_gunId = null)
     {
         global $g_ado_db;
-
-        $queryStr = "SELECT id,
-                            CONCAT(predicate_ns, ':', predicate) AS tagName,
-                            object AS tagValue
-                     FROM AudioclipMetadata
-                     WHERE object_ns <> '_blank' AND gunid = '"
-                    .$this->m_gunId."'";
-        $rows = $g_ado_db->GetAll($queryStr);
-        $metaData = array();
-        if ($rows) {
-            foreach ($rows as $row) {
-                $tagName = strtolower($row['tagName']);
-                $tagValue = $row['tagValue'];
-                $tmpMetadataObj =& new AudioclipMetadataEntry($row['id']);
-                $metaData[$tagName] =& $tmpMetadataObj;
-            }
+        
+        if (!is_null($p_gunId)) {
+        	$this->m_gunId = $p_gunId;
         }
-        return $metaData;
+        if (is_null($this->m_gunId)) {
+        	return false;
+        }
+
+        $queryStr = "SELECT id FROM AudioclipMetadata WHERE gunid = '".$this->m_gunId."'";
+        $rows = $g_ado_db->GetAll($queryStr);
+        if (!$rows) {
+        	return false;
+        }
+        foreach ($rows as $row) {
+            $tmpMetadataObj =& new AudioclipMetadataEntry($row['id']);
+            $this->m_metaData[$tmpMetadataObj->getMetatag()] =& $tmpMetadataObj;
+        }
+        return $this->m_metaData;
     } // fn fetch
     
     
-    function create($p_metaData)
+    function create($p_metaData = null)
     {
     	if (!is_array($p_metaData)) {
     		return false;
     	}
     	
+    	$isError = false;
+    	foreach ($p_metaData as $metaDataEntry) {
+    		if (!$metaDataEntry->create()) {
+    			$isError = true;
+    			break;
+    		}
+    	}
+    	if ($isError) {
+    		foreach ($p_metaData as $metaDataEntry) {
+    			$metaDataEntry->delete();
+    		}
+    		return false;
+    	}
+    	return true;
     }
 
 

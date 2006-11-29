@@ -32,13 +32,16 @@ class ArticleAudioclip extends DatabaseObject {
      *
      * @return object ArticleAudioclip
      */
-    function ArticleAudioclip($p_articleNumber = null, $p_audioclipId = null)
+    function ArticleAudioclip($p_articleNumber = null, $p_audioclipGunId = null)
     {
         if (is_numeric($p_articleNumber)) {
             $this->m_data['fk_article_number'] = $p_articleNumber;
         }
-        if (is_numeric($p_audioclipId)) {
-            $this->m_data['fk_audioclip_gunid'] = $p_audioclipId;
+        if (!is_null($p_audioclipGunId)) {
+            $this->m_data['fk_audioclip_gunid'] = $p_audioclipGunId;
+        }
+        if (!is_null($p_articleNumber) && !is_null($p_audioclipGunId)) {
+        	$this->fetch();
         }
     } // constructor
 
@@ -68,31 +71,6 @@ class ArticleAudioclip extends DatabaseObject {
     {
         return $this->m_data['order_no'];
     } // fn getAudioclipOrder
-
-
-    /**
-     * Link the given audioclip file with the given article.
-     *
-     * @param int $p_audioclipId
-     * @param int $p_articleNumber
-     * @param int $p_order (optional)
-     *
-     * @return void
-     */
-    function AddAudioclipToArticle($p_audioclipId, $p_articleNumber, $p_order = null)
-    {
-        global $g_ado_db;
-
-        if (is_null($p_order)) {
-            $p_order = 0;
-        }
-
-        $queryStr = "INSERT IGNORE INTO ArticleAudioclips 
-                     (fk_article_number, fk_audioclip_gunid, order_no) 
-                     VALUES ('$p_articleNumber',
-                             CAST(0x$p_audioclipId AS UNSIGNED), '$p_order.')";
-        $g_ado_db->Execute($queryStr);
-    } // fn AddAudioclipToArticle
 
 
     /**
@@ -131,12 +109,12 @@ class ArticleAudioclip extends DatabaseObject {
      *
      * @return void
      */
-    function OnAudioclipDelete($p_audioclipId)
+    function OnAudioclipDelete($p_gunId)
     {
         global $g_ado_db;
 
         $queryStr = "DELETE FROM ArticleAudioclips 
-                     WHERE fk_audioclip_gunid = '$p_audioclipId'";
+                     WHERE fk_audioclip_gunid = '$p_gunId'";
         $g_ado_db->Execute($queryStr);
     } // fn OnAudioclipDelete
 

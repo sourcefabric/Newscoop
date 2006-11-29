@@ -23,6 +23,7 @@ class AudioclipXMLMetadata {
      * The gunid (Global Unique ID) of the audioclip file
      */
     var $m_gunId = null;
+    var $m_metaData = array();
 
 
     /**
@@ -35,6 +36,7 @@ class AudioclipXMLMetadata {
         $this->xrc =& XR_CcClient::Factory($mdefs);
         if (!is_null($p_gunId)) {
             $this->m_gunId = $p_gunId;
+            $this->fetch();
         }
     } // constructor
 
@@ -45,26 +47,44 @@ class AudioclipXMLMetadata {
      * @return array $metaData
      *      An array of AudioclipMetadataEntry objects
      */
-    function fetch()
+    function fetch($p_gunId = null)
     {
+        if (!is_null($p_gunId)) {
+        	$this->m_gunId = $p_gunId;
+        }
+        if (is_null($this->m_gunId)) {
+        	return false;
+        }
+
         $sessid = camp_session_get('cc_sessid', '');
-        $gunId = dechex($this->m_gunId);
-        if ($this->xrc->xr_existsAudioClip($sessid, $gunId)) {
-            $xmlMetaData = $this->xrc->xr_getAudioClip($sessid, $gunId);
+        $res = $this->xrc->xr_existsAudioClip($sessid, $this->m_gunId);
+        if (PEAR::isError($res)) {
+        	return $res;
+        }
+        if ($res['exists']) {
+            $xmlMetaData = $this->xrc->xr_getAudioClip($sessid, $this->m_gunId);
+            if (PEAR::isError($xmlMetaData)) {
+            	return $xmlMetaData;
+            }
 
             $xmlParser = xml_parser_create();
             $result = xml_parse_into_struct($xmlParser, $xmlMetaData['metadata'], $values);
             $metaData = array();
             foreach ($values as $value) {
-                if (strncasecmp($value['tag'], 'dc:', 3) == 0
-                        || strncasecmp($value['tag'], 'ls:', 3) == 0
-                        || strncasecmp($value['tag'], 'dcterms:', 8) == 0) {
-                    $tmpMetadataObj =& new AudioclipMetadataEntry(strtoupper($value['tag']), $value['value']);
-                    $metaData[$value['tag']] = $tmpMetadataObj;
-                }
+            	if (!AudioclipMetadataEntry::IsValidNamespace($value['tag'])) {
+            		continue;
+            	}
+            	$recordSet['gunid'] = $this->m_gunId;
+				$recordSet['predicate_ns'] = AudioclipMetadataEntry::GetTagNS($value['tag']);
+				$recordSet['predicate'] = AudioclipMetadataEntry::GetTagName($value['tag']);
+				$recordSet['object'] = $value['value'];
+                $tmpMetadataObj =& new AudioclipMetadataEntry($recordSet);
+                $metaData[strtolower($value['tag'])] = $tmpMetadataObj;
             }
+            $this->m_metaData = $metaData;
             return $metaData;
         }
+        return false;
     } // fn fetch
     
     /**

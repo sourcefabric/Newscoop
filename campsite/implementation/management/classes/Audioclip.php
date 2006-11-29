@@ -395,7 +395,7 @@ class Audioclip {
      */
     function Audioclip($p_gunId = null)
     {
-        if (!is_null($p_gunId) && is_numeric($p_gunId)) {
+        if (!is_null($p_gunId)) {
             $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($p_gunId);
             $this->m_metaData = $aclipDbaseMdataObj->fetch();
             if (sizeof($this->m_metaData) == 0) {
@@ -563,6 +563,10 @@ class Audioclip {
         if (PEAR::isError($gunid)) {
             return $gunId;
         }
+        
+        $audioclipXMLMetadata = new AudioclipXMLMetadata($gunId);
+        $audioclipDbMetadata = new AudioclipDatabaseMetadata();
+        $audioclipDbMetadata->create($audioclipXMLMetadata->m_metaData);
         return $gunId;
     } // fn StoreAudioclip
 
@@ -607,16 +611,13 @@ class Audioclip {
         // Verify its a valid file.
 		$filesize = filesize($p_fileVar['tmp_name']);
 		if ($filesize === false) {
-			echo "l1";
 			return new PEAR_Error("Audioclip::OnFileUpload(): invalid parameters received.");
 		}
         if ($this->isValidFileType($p_fileVar['name']) == FALSE) {
-			echo "l2";
             return new PEAR_Error("Audioclip::OnFileUpload(): invalid file type.");
         }
         $target = $Campsite['TMP_DIRECTORY'] . $p_fileVar['name'];
         if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
-			echo "l3";
             return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
         }
         chmod($target, 0644);
