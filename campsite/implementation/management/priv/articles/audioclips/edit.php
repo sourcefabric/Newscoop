@@ -12,11 +12,15 @@ if (!$g_user->hasPermission('AddAudioclip')) {
 	exit;
 }
 
+$f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
+$f_section_number = Input::Get('f_section_number', 'int', 0, true);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_audioclip_gunid = Input::Get('f_audioclip_gunid', 'string', null, true);
 $f_action = Input::Get('f_action', 'string', null, true);
+
 $BackLink = Input::Get('BackLink', 'string', null, true);
 
 if (!Input::IsValid()) {

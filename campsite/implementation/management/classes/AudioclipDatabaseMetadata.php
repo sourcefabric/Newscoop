@@ -97,6 +97,28 @@ class AudioclipDatabaseMetadata {
         return true;
     } // fn create
 
+
+    /**
+     * Deletes all the metadata for the audioclip
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+    function delete()
+    {
+        global $g_ado_db;
+
+        if (is_null($this->m_gunId)) {
+            return false;
+        }
+
+        $queryStr = "DELETE FROM AudioclipMetadata WHERE gunid = '".$this->m_gunId."'";
+        if (!$g_ado_db->Execute($queryStr)) {
+            return false;
+        }
+        return true;
+    } // fn delete
+
 } // class AudioclipDatabaseMetadata
 
 ?>

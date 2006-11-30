@@ -243,6 +243,7 @@ class Article extends DatabaseObject {
 		require_once($g_documentRoot.'/classes/ArticleImage.php');
 		require_once($g_documentRoot.'/classes/ArticleTopic.php');
 		require_once($g_documentRoot.'/classes/ArticleAttachment.php');
+        require_once($g_documentRoot.'/classes/ArticleAudioclip.php');
 
 		$copyArticles = array();
 		if ($p_copyTranslations) {
@@ -319,6 +320,9 @@ class Article extends DatabaseObject {
 
     		// Copy file pointers
     		ArticleAttachment::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
+
+            // Copy audioclip pointers
+            ArticleAudioclip::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
 
     		// Position the new article at the beginning of the section
     		$articleCopy->positionAbsolute(1);
@@ -480,6 +484,7 @@ class Article extends DatabaseObject {
 		require_once($g_documentRoot.'/classes/ArticleTopic.php');
 		require_once($g_documentRoot.'/classes/ArticleIndex.php');
 		require_once($g_documentRoot.'/classes/ArticleAttachment.php');
+        require_once($g_documentRoot.'/classes/ArticleAudioclip.php');
 		require_once($g_documentRoot.'/classes/ArticleComment.php');
 		require_once($g_documentRoot.'/classes/ArticlePublish.php');
 
@@ -499,6 +504,9 @@ class Article extends DatabaseObject {
 
 			// Delete file pointers
 			ArticleAttachment::OnArticleDelete($this->m_data['Number']);
+
+            // Delete audioclip pointers
+            ArticleAudioclip::OnArticleDelete($this->m_data['Number']);
 
 			// Delete indexes
 			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),

@@ -45,7 +45,7 @@ class AudioclipXMLMetadata {
 
 
     /**
-     * Fetch all the metadata for the audioclip.
+     * Fetch all the metadata for the audioclip
      *
      * @param string $p_gunId
      *      The audioclip global unique identifier
@@ -97,13 +97,18 @@ class AudioclipXMLMetadata {
      * Uploads an audioclip to the storage server
      * 
      * @param string $p_sessId
+     *      The session Id on the Campcaster storage server
      * @param string $p_gunId
+     *      The audioclip global unique identifier
      * @param string $p_metaData
-     * @param string $p_fileName
-     * @param string $p_checksum
+     *      A XML string of audioclip metadata
+     * @param string $p_filePath
+     *      The full path to the audioclip file
+     * @param string $p_checkSum
+     *      The md5 check sum of the audioclip file
      * 
-     * @return string or PEAR_Error
-     *		gunId on success, PEAR_Error on failure
+     * @return string|PEAR_Error
+     *		Audioclip gunid on success, PEAR_Error on failure
      */
     function Upload($p_sessId, $p_filePath, $p_gunId, $p_metaData, $p_checkSum)
     {
@@ -126,11 +131,10 @@ class AudioclipXMLMetadata {
 
 
     /**
-     * Updates metadata on storage server.
+     * Updates metadata on storage server
      *
      * @param array $p_metaData
-     *      An array with all the audioclip metadata like:
-     *      $array[namespace:predicate] = object
+     *      An array of AudioclipMetadataEntry objects
      *
      * @return boolean
      *      TRUE on success, FALSE on failure
@@ -147,13 +151,13 @@ class AudioclipXMLMetadata {
                 xmlns:xml="http://www.w3.org/XML/1998/namespace"
             >';
         foreach($p_metaData as $key => $metaDataEntry) {
-            $xmlStr .= '<'.$key.'>'.$metaDataEntry->getTagValue().'</'.$key.'>';
+            $xmlStr .= '<'.$key.'>'.$metaDataEntry->getValue().'</'.$key.'>';
         }
         $xmlStr .= '</metadata>
         </audioClip>';
 
         $sessid = camp_session_get('cc_sessid', '');
-        $res = $this->xrc->xr_updateAudioClipMetadata($sessid, $this->m_gunid, $xmlStr);
+        $res = $this->xrc->xr_updateAudioClipMetadata($sessid, $this->m_gunId, $xmlStr);
         return $res['status'];
     } // fn update
 

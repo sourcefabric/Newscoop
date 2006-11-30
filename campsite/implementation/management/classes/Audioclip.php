@@ -405,12 +405,7 @@ class Audioclip {
             if (sizeof($this->m_metaData) == 0) {
                 $aclipXMLMdataObj =& new AudioclipXMLMetadata($p_gunId);
                 $this->m_metaData = $aclipXMLMdataObj->fetch();
-
-                // We call AudioclipDatabase write() method to save
-                // metadata in local cache. Parameter is $this->aclipMetadata
-                // which is an array of AudioclipMetadataEntry objects
-                //
-                // $aclipDbaseMdataObj->write($this->aclipMetadata);
+                $aclipDbaseMdataObj->create($this->m_metaData);
             }
             $this->m_gunId = $p_gunId;
         }
@@ -430,7 +425,7 @@ class Audioclip {
 
 
     /**
-     * Returns the value of the give meta tag
+     * Returns the value of the given meta tag
      *
      * @param string $p_tagName
      *      The name of the meta tag
@@ -479,6 +474,124 @@ class Audioclip {
     	}
     	return array_keys($this->m_metaData);
     } // fn getAvailableMetaTags
+
+
+    /**
+     * Deletes all the metadata for the audioclip
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+    function deleteMetadata()
+    {
+        if (is_null($this->m_gunId)) {
+            return false;
+        }
+        $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($this->m_gunId);
+        return $aclipDbaseMdataObj->delete();
+    } // fn deleteMetadata
+
+
+    /**
+     * Changes audioclip metadata on both storage and local servers.
+     *
+     * @param array $p_formData
+     *      The form data submited with all the audioclip metadata
+     *
+     * @return boolean|PEAR_Error
+     *      TRUE on success, PEAR Error on failure
+     */
+    function editMetadata($p_formData)
+    {
+        global $mask;
+
+        if (!is_array($p_formData)) {
+            return new PEAR_Error(getGS('Invalid parameter given to Audioclip::editMetadata()'));
+        }
+
+        $metaData = array();
+        foreach ($mask['pages'] as $key => $val) {
+            foreach ($mask['pages'][$key] as $k => $v) {
+                $element_encode = str_replace(':','_',$v['element']);
+                if ($p_formData['f_'.$key.'_'.$element_encode]) {
+                    list($predicate_ns, $predicate) = explode(':', $v['element']);
+                    $recordSet['gunid'] = $this->m_gunId;
+                    $recordSet['predicate_ns'] = $predicate_ns;
+                    $recordSet['predicate'] = $predicate;
+                    $recordSet['object'] = $p_formData['f_'.$key.'_'.$element_encode];
+                    $tmpMetadataObj =& new AudioclipMetadataEntry($recordSet);
+                    $metaData[strtolower($v['element'])] = $tmpMetadataObj;
+                }
+            }
+        }
+
+        if (sizeof($metaData) == 0) return false;
+
+        $aclipXMLMdataObj =& new AudioclipXMLMetadata($this->m_gunId);
+        if ($aclipXMLMdataObj->update($metaData) == false) {
+            return new PEAR_Error(getGS('Cannot update audioclip metadata on storage server'));
+        }
+        // TODO
+        //$aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($this->m_gunId);
+        //if ($aclipDbaseMdataObj->update($metaData) == false) {
+        //    return new PEAR_Error(getGS('Cannot update audioclip metadata on Campsite'));
+        //}
+        return true;
+    } // fn editMetadata
+
+
+    /**
+     * This function should be called when an audioclip is uploaded.
+     * It will save the audioclip file to the temporary directory on
+     * the disk before to be sent to the Campcaster storage server.
+     *
+     * @param array $p_fileVar
+     *      The audioclip file submited
+     *
+     * @return string|PEAR_Error
+     *      The full pathname to the file or Error
+     */
+    function onFileUpload($p_fileVar)
+    {
+        global $Campsite;
+
+        if (!is_array($p_fileVar)) {
+			return false;
+		}
+
+		$filesize = filesize($p_fileVar['tmp_name']);
+		if ($filesize === false) {
+			return new PEAR_Error("Audioclip::OnFileUpload(): invalid parameters received.");
+		}
+        if ($this->isValidFileType($p_fileVar['name']) == FALSE) {
+            return new PEAR_Error("Audioclip::OnFileUpload(): invalid file type.");
+        }
+        $target = $Campsite['TMP_DIRECTORY'] . $p_fileVar['name'];
+        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
+            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
+        }
+        chmod($target, 0644);
+        return $target;
+    } // fn onFileUpload
+
+
+    /**
+     * Validates an audioclip file by its extension.
+     *
+     * @param $p_fileName
+     *      The name of the audioclip file
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+    function isValidFileType($p_fileName)
+    {
+        foreach ($this->m_fileTypes as $t) {
+            if (preg_match('/'.str_replace('/', '\/', $t).'$/i', $p_fileName))
+                return true;
+        }
+        return false;
+    } // fn isValidFileType
 
 
     /**
@@ -598,42 +711,6 @@ class Audioclip {
 
 
     /**
-     * This function should be called when an audioclip is uploaded.
-     * It will save the audioclip file to the temporary directory on
-     * the disk before to be sent to the Campcaster storage server.
-     *
-     * @param array $p_fileVar
-     *      The audioclip file submited
-     *
-     * @return string|PEAR_Error
-     *      The full pathname to the file or Error
-     */
-    function onFileUpload($p_fileVar)
-    {
-        global $Campsite;
-
-        if (!is_array($p_fileVar)) {
-			return null; // PEAR Error
-		}
-
-        // Verify its a valid file.
-		$filesize = filesize($p_fileVar['tmp_name']);
-		if ($filesize === false) {
-			return new PEAR_Error("Audioclip::OnFileUpload(): invalid parameters received.");
-		}
-        if ($this->isValidFileType($p_fileVar['name']) == FALSE) {
-            return new PEAR_Error("Audioclip::OnFileUpload(): invalid file type.");
-        }
-        $target = $Campsite['TMP_DIRECTORY'] . $p_fileVar['name'];
-        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
-            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
-        }
-        chmod($target, 0644);
-        return $target;
-    } // fn onFileUpload
-
-
-    /**
      * This function should be called when an audioclip has been
      * successfully sent to the Storage server. It deletes the
      * temporary audio file on Local.
@@ -647,65 +724,6 @@ class Audioclip {
             @unlink($p_fileName);
         }
     } // fn OnFileStore
-
-
-    /**
-     * Validates an audioclip file by its extension.
-     *
-     * @param $p_fileName
-     *      The name of the audioclip file
-     *
-     * @return boolean
-     *      TRUE on success, FALSE on failure
-     */
-    function isValidFileType($p_fileName)
-    {
-        foreach ($this->m_fileTypes as $t) {
-            if (preg_match('/'.str_replace('/', '\/', $t).'$/i', $p_fileName))
-                return true;
-        }
-        return false;
-    } // fn isValidFileType
-
-
-    /**
-     * Changes audioclip metadata on both storage and local servers.
-     *
-     * @param array $p_formData
-     *      The form data submited with all the audioclip metadata
-     *
-     * @return boolean|PEAR_Error
-     *      TRUE on success, PEAR Error on failure
-     */
-    function editMetadata($p_formData)
-    {
-        global $mask;
-
-        if (!is_array($p_formData)) {
-            return new PEAR_Error(getGS('Invalid parameter given to Audioclip::editMetadata()'));
-        }
-
-        $metaData = array();
-        foreach($mask['pages'] as $key => $val) {
-            foreach($mask['pages'][$key] as $k => $v) {
-                $element_encode = str_replace(':','_',$v['element']);
-                $p_formData['f_'.$key.'_'.$element_encode] ? $metaData[$v['element']] = $p_formData['f_'.$key.'_'.$element_encode] : NULL;
-            }
-        }
-
-        if (sizeof($metaData) == 0) return;
-
-        $aclipXMLMdataObj =& new AudioclipXMLMetadata($this->m_gunId);
-        if ($aclipXMLMdataObj->write($metaData) == false) {
-            return new PEAR_Error(getGS('Cannot update audioclip metadata on storage server'));
-        }
-        // $metaData has to be an array of AudioclipMetadataEntry objects here
-        $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($this->m_gunId);
-        if ($aclipDbaseMdataObj->write($metaData) == false) {
-            return new PEAR_Error(getGS('Cannot update audioclip metadata on Campsite'));
-        }
-        return true;
-    } // fn editMetadata
 
 
     /**

@@ -131,7 +131,7 @@ class ArticleAudioclip extends DatabaseObject {
         global $g_ado_db;
 
         $queryStr = "DELETE FROM ArticleAudioclips 
-                     WHERE fk_article_number='$p_articleNumber'";
+                     WHERE fk_article_number = '$p_articleNumber'";
         $g_ado_db->Execute($queryStr);
     } // fn OnArticleDelete
 
