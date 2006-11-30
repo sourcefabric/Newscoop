@@ -23,20 +23,20 @@ $criteria = array('filetype' => 'audioclip',
                   );
 echo "searchMetadata response:\n";
 $r = Audioclip::SearchAudioclips(0, 10);
-foreach ($r as $clip) {
-	print_r($clip->m_metaData);
-	echo "available meta tags:\n";
-	print_r($clip->getAvailableMetaTags());
+$clipCount = $r[0];
+$clips = $r[1];
+foreach ($clips as $clip) {
+	echo "clip:\n";
+	echo $clip->getMetatagValue('title') .', '.$clip->getMetatagValue('creator').', '.$clip->getMetatagValue('extent')."\n";
 }
 
 echo "</pre>\n";
-exit;
 
 /**************************/
 
 $f_order_by = camp_session_get('f_order_by', 'id');
 $f_order_direction = camp_session_get('f_order_direction', 'ASC');
-$f_image_offset = camp_session_get('f_image_offset', 0);
+$f_audioclip_offset = camp_session_get('f_audioclip_offset', 0);
 $f_search_string = camp_session_get('f_search_string', '');
 $f_items_per_page = camp_session_get('f_items_per_page', 4);
 if ($f_items_per_page < 4) {
@@ -58,17 +58,9 @@ if ($f_order_direction == 'DESC') {
 	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
 }
 
-$TotalImages = Image::GetTotalImages();
-$imageSearch =& new ImageSearch($f_search_string, $f_order_by, $f_order_direction, $f_image_offset, $f_items_per_page);
-$imageSearch->run();
-$imageData = $imageSearch->getImages();
-$NumImagesFound = $imageSearch->getNumImagesFound();
-
-//$orderDirectionUrl = camp_html_article_url($articleObj, $f_language_id, 'images/popup.php');
-
-if (count($imageData) > 0) {
-    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "images/popup.php")."&";
-    $pager =& new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);
+if (count($clips) > 0) {
+    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&";
+    $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
 
 ?>
 <table class="action_buttons">
@@ -91,7 +83,7 @@ if (count($imageData) > 0) {
 </TR>
 <?php
 $color = 0;
-foreach ($imageData as $image) {
+foreach ($clips as $clip) {
     ?>
     <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
         <?php
@@ -100,7 +92,7 @@ foreach ($imageData as $image) {
 			<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 			<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 			<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
-    		<input type="hidden" name="f_image_id" value="<?php echo $image['id']; ?>">
+    		<input type="hidden" name="f_audioclip_id" value="<?php echo $clip->getGunId(); ?>">
         	<TD ALIGN="CENTER">
         		<input type="checkbox" value="143_1" name="f_article_code[]" id="checkbox_0" class="input_checkbox" onclick="checkboxClick(this, 0);">
           	</TD>
@@ -115,18 +107,17 @@ foreach ($imageData as $image) {
         ?>
         <TD ALIGN="center">
             <A HREF="<?php echo
-            camp_html_article_url($articleObj, $f_language_id, "images/view.php", camp_html_article_url($articleObj, $f_language_id, "images/popup.php"))
-            .'&f_image_id='.$image['id']; ?>">
-              <img src="<?php echo $image['thumbnail_url']; ?>" border="0"><br>
-              <?php echo $image['width'].'x'.$image['height']; ?>
+            camp_html_article_url($articleObj, $f_language_id, "audioclips/edit.php", camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php"))
+            .'&f_audioclip_id='.$clip->getGunId(); ?>">
+              <?php echo htmlspecialchars($clip->getMetatagValue('title')); ?>
             </a>
         </TD>
         <TD style="padding-left: 5px;">
-            <A HREF="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/view.php", camp_html_article_url($articleObj, $f_language_id, "images/popup.php"))
-            .'&f_image_id='.$image['id']; ?>"><?php echo htmlspecialchars($image['description']); ?></A>
+            <A HREF="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/edit.php", camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php"))
+            .'&f_audioclip_id='.$clip->getGunId(); ?>"><?php echo htmlspecialchars($clip->getMetatagValue('creator')); ?></A>
         </TD>
         <TD style="padding-left: 5px;">
-            <?php echo htmlspecialchars($image['photographer']); ?>&nbsp;
+            <?php echo htmlspecialchars($clip->getMetatagValue('extent')); ?>&nbsp;
         </TD>
     </TR>
 <?php
@@ -135,7 +126,7 @@ foreach ($imageData as $image) {
 ?>
 <tr>
 	<td colspan="5" nowrap>
-	<?php putGS('$1 images found', $NumImagesFound); ?></TD>
+	<?php putGS('$1 audioclips found', $clipCount); ?></TD>
 </tr>
 </table>
 <table class="action_buttons">

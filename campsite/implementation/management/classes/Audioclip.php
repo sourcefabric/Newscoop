@@ -657,7 +657,7 @@ class Audioclip {
 		foreach ($result['results'] as $clip) {
 			$clips[] = new Audioclip($clip['gunid']);
 		}
-    	return $clips;
+    	return array($result['cnt'], $clips);
     } // fn SearchAudioclips
 
 
