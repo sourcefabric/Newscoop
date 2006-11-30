@@ -18,7 +18,9 @@ require_once($g_documentRoot.'/classes/AudioclipMetadataEntry.php');
  * @package Campsite
  */
 class AudioclipDatabaseMetadata {
+	var $m_gunId = null;
     var $m_metaData = array();
+    var $m_exists = false;
 
     /**
      * Constructor
@@ -32,6 +34,17 @@ class AudioclipDatabaseMetadata {
     } // constructor
 
 
+    /**
+     * Returns true if an audioclip having this metadata exists
+     *
+     * @return boolean
+     */
+    function exists()
+    {
+    	return $this->m_exists;
+    }
+    
+    
     /**
      * Fetch all metadata for the audioclip given.
      *
@@ -49,6 +62,7 @@ class AudioclipDatabaseMetadata {
             $this->m_gunId = $p_gunId;
         }
         if (is_null($this->m_gunId)) {
+        	$this->m_exists = false;
             return false;
         }
 
@@ -56,8 +70,10 @@ class AudioclipDatabaseMetadata {
                      WHERE gunid = '".$this->m_gunId."' ORDER BY id";
         $rows = $g_ado_db->GetAll($queryStr);
         if (!$rows) {
+        	$this->m_exists = false;
             return false;
         }
+        $this->m_exists = true;
         foreach ($rows as $row) {
             $tmpMetadataObj =& new AudioclipMetadataEntry($row['id']);
             $this->m_metaData[$tmpMetadataObj->getMetaTag()] =& $tmpMetadataObj;
@@ -78,11 +94,14 @@ class AudioclipDatabaseMetadata {
     function create($p_metaData = null)
     {
         if (!is_array($p_metaData)) {
+        	$this->m_exists = false;
             return false;
         }
 
         $isError = false;
+        $gunId = null;
         foreach ($p_metaData as $metaDataEntry) {
+        	$gunId = $metaDataEntry->getGunId();
             if (!$metaDataEntry->create()) {
                 $isError = true;
                 break;
@@ -92,12 +111,16 @@ class AudioclipDatabaseMetadata {
             foreach ($p_metaData as $metaDataEntry) {
                 $metaDataEntry->delete();
             }
+        	$this->m_exists = false;
             return false;
         }
+        $this->m_gunId = $gunId;
+        $this->m_metaData = $p_metaData;
+        $this->m_exists = true;
         return true;
     } // fn create
 
-
+    
     /**
      * Deletes all the metadata for the audioclip
      *
@@ -112,10 +135,13 @@ class AudioclipDatabaseMetadata {
             return false;
         }
 
-        $queryStr = "DELETE FROM AudioclipMetadata WHERE gunid = '".$this->m_gunId."'";
+        $queryStr = "DELETE FROM AudioclipMetadata WHERE gunid = '".$g_ado_db->escape($this->m_gunId)."'";
         if (!$g_ado_db->Execute($queryStr)) {
             return false;
         }
+        $this->m_gunId = null;
+        $this->m_metaData = array();
+        $this->m_exists = false;
         return true;
     } // fn delete
 

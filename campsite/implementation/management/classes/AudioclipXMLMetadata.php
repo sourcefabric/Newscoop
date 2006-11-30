@@ -24,6 +24,7 @@ class AudioclipXMLMetadata {
      */
     var $m_gunId = null;
     var $m_metaData = array();
+    var $m_exists = false;
 
 
     /**
@@ -42,6 +43,28 @@ class AudioclipXMLMetadata {
             $this->fetch();
         }
     } // constructor
+    
+    
+    /**
+     * Returns true if an audioclip having this metadata exists
+     *
+     * @return boolean
+     */
+    function exists()
+    {
+    	return $this->m_exists;
+    }
+    
+    
+    /**
+     * Returns the audioclip unique identifier
+     *
+     * @return unknown
+     */
+    function getGunId()
+    {
+    	return $this->m_gunId;
+    }
 
 
     /**
@@ -75,7 +98,6 @@ class AudioclipXMLMetadata {
 
             $xmlParser = xml_parser_create();
             $result = xml_parse_into_struct($xmlParser, $xmlMetaData['metadata'], $values);
-            $metaData = array();
             foreach ($values as $value) {
                 if (!AudioclipMetadataEntry::IsValidNamespace($value['tag'])) {
                     continue;
@@ -85,11 +107,12 @@ class AudioclipXMLMetadata {
                 $recordSet['predicate'] = AudioclipMetadataEntry::GetTagName($value['tag']);
                 $recordSet['object'] = $value['value'];
                 $tmpMetadataObj =& new AudioclipMetadataEntry($recordSet);
-                $metaData[strtolower($value['tag'])] = $tmpMetadataObj;
+                $this->m_metaData[strtolower($value['tag'])] = $tmpMetadataObj;
             }
-            $this->m_metaData = $metaData;
-            return $metaData;
+            $this->m_exists = true;
+            return $this->m_metaData;
         }
+        return null;
     } // fn fetch
 
     

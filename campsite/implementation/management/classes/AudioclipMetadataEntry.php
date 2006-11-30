@@ -68,7 +68,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
             return parent::fetch();
         }
         if (!isset($this->m_data['gunid']) || !isset($this->m_data['predicate_ns'])
-            || !isset($this->m_data['predicate']) || !isset($this->m_data['object'])) {
+            	|| !isset($this->m_data['predicate']) || !isset($this->m_data['object'])) {
             return false;
         }
         $sql = 'SELECT * FROM `'.$g_ado_db->escape($this->m_dbTableName)."`"

@@ -389,6 +389,7 @@ class Audioclip {
     var $m_gunId = null;
     var $m_metaData = array();
     var $m_fileTypes = array('.mp3','.ogg','.wav');
+    var $m_exists = false;
 
 
     /**
@@ -405,7 +406,9 @@ class Audioclip {
             if (sizeof($this->m_metaData) == 0) {
                 $aclipXMLMdataObj =& new AudioclipXMLMetadata($p_gunId);
                 $this->m_metaData = $aclipXMLMdataObj->fetch();
-                $aclipDbaseMdataObj->create($this->m_metaData);
+                if ($aclipXMLMdataObj->exists()) {
+                	$aclipDbaseMdataObj->create($this->m_metaData);
+                }
             }
             $this->m_gunId = $p_gunId;
         }
