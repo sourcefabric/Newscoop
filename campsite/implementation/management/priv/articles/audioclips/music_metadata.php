@@ -1,225 +1,252 @@
 <!-- START MUSIC DATA //-->
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6">
+<TABLE border="0" cellspacing="0" cellpadding="6">
 <TR>
-	<TD COLSPAN="2">
+	<TD colspan="2">
 		<B><?php  putGS("Edit Audioclip Metadata"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
+		<HR noshade size="1" color="black">
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT"><?php putGS("Title"); ?>:</TD>
+	<TD align="right"><?php putGS("Title"); ?>:</TD>
 	<TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_dc_title" VALUE="<?php p($mData['title']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_dc_title" value="<?php p($mData['title']); ?>" onchange="spread(this, 'dc_title')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a title for the audioclip."); ?>" />
 	</TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Creator"); ?>:</TD>
+    <TD align="right"><?php putGS("Creator"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_dc_creator" VALUE="<?php p($mData['creator']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_dc_creator" value="<?php p($mData['creator']); ?>" onchange="spread(this, 'dc_creator')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a creator for the audioclip."); ?>" />
     </TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT"><?php putGS("Album"); ?>:</TD>
+	<TD align="right"><?php putGS("Album"); ?>:</TD>
 	<TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_dc_source" VALUE="<?php p($mData['source']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_dc_source" value="<?php p($mData['source']); ?>" onchange="spread(this, 'dc_source')" size="50" maxlength="255" class="input_text" />
 	</TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Year"); ?>:</TD>
+    <TD align="right"><?php putGS("Year"); ?>:</TD>
     <TD>
-        <SELECT name="f_Music_ls_year"></SELECT>
+        <SELECT name="f_Music_ls_year">
+        <?php
+        for ($year = 1900; $year <= 2011; $year++) {
+            camp_html_select_option($year, $mData['year'], $year);
+        }
+        ?>
+        </SELECT>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Genre"); ?>:</TD>
+    <TD align="right"><?php putGS("Genre"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_dc_type" VALUE="<?php p($mData['type']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_dc_type" value="<?php p($mData['type']); ?>" onchange="spread(this, 'dc_type')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a genre for the audioclip."); ?>" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Description"); ?>:</TD>
+    <TD align="right" valign="top"><?php putGS("Description"); ?>:</TD>
     <TD>
-        <TEXTAREA name="f_Music_dc_description"><?php p($mData['description']); ?></TEXTAREA>
+        <TEXTAREA name="f_Music_dc_description" rows="5" cols="40" onchange="spread(this, 'dc_description')"><?php p($mData['description']); ?></TEXTAREA>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Format"); ?>:</TD>
+    <TD align="right"><?php putGS("Format"); ?>:</TD>
     <TD>
-        <SELECT name="f_Music_dc_format"></SELECT>
+        <SELECT name="f_Music_dc_format" onchange="spread(this, 'dc_format')" disabled="on">
+            <OPTION value="File">Audioclip</OPTION>
+        </SELECT>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("BPM"); ?>:</TD>
+    <TD align="right"><?php putGS("BPM"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_bpm" VALUE="<?php p($mData['bpm']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_bpm" value="<?php p($mData['bpm']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Rating"); ?>:</TD>
+    <TD align="right"><?php putGS("Rating"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_rating" VALUE="<?php p($mData['rating']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_rating" value="<?php p($mData['rating']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Length"); ?>:</TD>
+    <TD align="right"><?php putGS("Length"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_dcterms_extent" VALUE="<?php p($mData['extent']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_dcterms_extent" value="<?php p($mData['extent']); ?>" onchange="spread(this, 'dcterms_extent')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a length value for the audioclip."); ?>" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Encoded by"); ?>:</TD>
+    <TD align="right"><?php putGS("Encoded by"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_encoded_by" VALUE="<?php p($mData['encoded_by']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_encoded_by" value="<?php p($mData['encoded_by']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Track number"); ?>:</TD>
+    <TD align="right"><?php putGS("Track number"); ?>:</TD>
     <TD>
-        <SELECT name="f_Music_ls_track_num"></SELECT>
+        <SELECT name="f_Music_ls_track_num">
+        <?php
+        for ($track = 0; $track <= 99; $track++) {
+            camp_html_select_option($track, $mData['track_num'], $track);
+        }
+        ?>
+        </SELECT>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Disc number"); ?>:</TD>
+    <TD align="right"><?php putGS("Disc number"); ?>:</TD>
     <TD>
-        <SELECT name="f_Music_ls_disc_num"></SELECT>
+        <SELECT name="f_Music_ls_disc_num">
+        <?php
+        for ($dnum = 0; $dnum <= 20; $dnum++) {
+            camp_html_select_option($dnum, $mData['disc_num'], $dnum);
+        }
+        ?>
+        </SELECT>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Mood"); ?>:</TD>
+    <TD align="right"><?php putGS("Mood"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_mood" VALUE="<?php p($mData['mood']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_mood" value="<?php p($mData['mood']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Label"); ?>:</TD>
+    <TD align="right"><?php putGS("Label"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_dc_publisher" VALUE="<?php p($mData['publisher']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_dc_publisher" value="<?php p($mData['publisher']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Composer"); ?>:</TD>
+    <TD align="right"><?php putGS("Composer"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_composer" VALUE="<?php p($mData['composer']); ?>" SIZE="50" MAXLENGHT="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_composer" value="<?php p($mData['composer']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Bitrate"); ?>:</TD>
+    <TD align="right"><?php putGS("Bitrate"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_bitrate" VALUE="<?php p($mData['bitrate']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_bitrate" value="<?php p($mData['bitrate']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Channels"); ?>:</TD>
+    <TD align="right"><?php putGS("Channels"); ?>:</TD>
     <TD>
-        <SELECT NAME="f_Music_ls_channels"></SELECT>
+        <SELECT name="f_Music_ls_channels">
+        <?php
+        camp_html_select_option("", $mData['channels'], "");
+        camp_html_select_option("1", $mData['channels'], getGS("Mono"));
+        camp_html_select_option("2", $mData['channels'], getGS("Stereo"));
+        camp_html_select_option("6", $mData['channels'], getGS("5.1"));
+        ?>
+        </SELECT>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Sample rate"); ?>:</TD>
+    <TD align="right"><?php putGS("Sample rate"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_samplerate" VALUE="<?php p($mData['sample_rate']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_samplerate" value="<?php p($mData['sample_rate']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Encoder software used"); ?>:</TD>
+    <TD align="right"><?php putGS("Encoder software used"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_encoder" VALUE="<?php p($mData['encoder']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_encoder" value="<?php p($mData['encoder']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Checksum"); ?>:</TD>
+    <TD align="right"><?php putGS("Checksum"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_crc" VALUE="<?php p($mData['crc']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_crc" value="<?php p($mData['crc']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Lyrics"); ?>:</TD>
+    <TD align="right" valign="top"><?php putGS("Lyrics"); ?>:</TD>
     <TD>
-        <SELECT NAME="f_Music_ls_lyrics"></SELECT>
+        <TEXTAREA name="f_Music_ls_lyrics" rows="5" cols="40" onchange="spread(this, 'ls_lyrics')"><?php p($mData['lyrics']); ?></TEXTAREA>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Orchestra or band"); ?>:</TD>
+    <TD align="right"><?php putGS("Orchestra or band"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_orchestra" VALUE="<?php p($mData['orchestra']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_orchestra" value="<?php p($mData['orchestra']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Conductor"); ?>:</TD>
+    <TD align="right"><?php putGS("Conductor"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_conductor" VALUE="<?php p($mData['conductor']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_conductor" value="<?php p($mData['conductor']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Lyricist"); ?>:</TD>
+    <TD align="right"><?php putGS("Lyricist"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_lyricist" VALUE="<?php p($mData['lyricist']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_lyricist" value="<?php p($mData['lyricist']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Original lyricist"); ?>:</TD>
+    <TD align="right"><?php putGS("Original lyricist"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_originallyricist" VALUE="<?php p($mData['originallyricist']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_originallyricist" value="<?php p($mData['originallyricist']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Radio station name"); ?>:</TD>
+    <TD align="right"><?php putGS("Radio station name"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_radiostationname" VALUE="<?php p($mData['radiostationname']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_radiostationname" value="<?php p($mData['radiostationname']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Audio file information web page"); ?>:</TD>
+    <TD align="right"><?php putGS("Audio file information web page"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_audiofileinfourl" VALUE="<?php p($mData['audiofileinfourl']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_audiofileinfourl" value="<?php p($mData['audiofileinfourl']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Artist web page"); ?>:</TD>
+    <TD align="right"><?php putGS("Artist web page"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_artisturl" VALUE="<?php p($mData['artisturl']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_artisturl" value="<?php p($mData['artisturl']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Audio source web page"); ?>:</TD>
+    <TD align="right"><?php putGS("Audio source web page"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_audiosourceurl" VALUE="<?php p($mData['audiosourceurl']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_audiosourceurl" value="<?php p($mData['audiosourceurl']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Radio station web page"); ?>:</TD>
+    <TD align="right"><?php putGS("Radio station web page"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_radiostationurl" VALUE="<?php p($mData['radiostationurl']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_radiostationurl" value="<?php p($mData['radiostationurl']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Buy CD web page"); ?>:</TD>
+    <TD align="right"><?php putGS("Buy CD web page"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_buycdurl" VALUE="<?php p($mData['buycdurl']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_buycdurl" value="<?php p($mData['buycdurl']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("ISRC number"); ?>:</TD>
+    <TD align="right"><?php putGS("ISRC number"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_dc_isrcnumber" VALUE="<?php p($mData['isrcnumber']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_dc_isrcnumber" value="<?php p($mData['isrcnumber']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Catalog number"); ?>:</TD>
+    <TD align="right"><?php putGS("Catalog number"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_catalognumber" VALUE="<?php p($mData['catalognumber']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_catalognumber" value="<?php p($mData['catalognumber']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Original artist"); ?>:</TD>
+    <TD align="right"><?php putGS("Original artist"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_ls_originalartist" VALUE="<?php p($mData['originalartist']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_ls_originalartist" value="<?php p($mData['originalartist']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Copyright"); ?>:</TD>
+    <TD align="right"><?php putGS("Copyright"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Music_dc_rights" VALUE="<?php p($mData['rights']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Music_dc_rights" value="<?php p($mData['rights']); ?>" onchange="spread(this, 'dc_rights')" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 </TABLE>

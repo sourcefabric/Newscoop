@@ -29,7 +29,7 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<title><?php putGS("Attach Audio clip To Article"); ?></title>
+	<title><?php putGS("Attach Audioclip To Article"); ?></title>
 </head>
 <body>
 <?php camp_html_display_msgs(); ?>
@@ -46,7 +46,7 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 		<?php
 		if ($f_audio_attach_mode == "existing") {
 		?>
-<table style="margin-top: 10px; margin-left: 5px;" cellpadding="0" cellspacing="0">
+<table style="margin-top: 10px; margin-left: 5px; margin-right: 5px; margin-bottom: 5px;" cellpadding="0" cellspacing="0">
 <tr>
 	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_audio_search_mode != "browse") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php", "", "&f_audio_search_mode=browse"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Browse"); ?></b></a></td>
 

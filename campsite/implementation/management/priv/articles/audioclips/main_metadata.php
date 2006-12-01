@@ -1,41 +1,41 @@
 <!-- START GENERAL DATA  //-->
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6">
+<TABLE border="0" cellspacing="0" cellpadding="6">
 <TR>
-	<TD COLSPAN="2">
+	<TD colspan="2">
 		<B><?php  putGS("Edit Audioclip Metadata"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
+		<HR noshade size="1" color="black">
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT"><?php putGS("Title"); ?>:</TD>
+	<TD align="right"><?php putGS("Title"); ?>:</TD>
 	<TD>
-        <INPUT TYPE="TEXT" NAME="f_Main_dc_title" VALUE="<?php p($mData['title']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Main_dc_title" value="<?php p($mData['title']); ?>" onchange="spread(this, 'dc_title')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a title for the audioclip."); ?>" />
 	</TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Creator"); ?>:</TD>
+    <TD align="right"><?php putGS("Creator"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Main_dc_creator" VALUE="<?php p($mData['creator']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Main_dc_creator" value="<?php p($mData['creator']); ?>" onchange="spread(this, 'dc_creator')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a creator for the audioclip."); ?>" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Genre"); ?>:</TD>
+    <TD align="right"><?php putGS("Genre"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Main_dc_type" VALUE="<?php p($mData['type']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Main_dc_type" value="<?php p($mData['type']); ?>" onchange="spread(this, 'dc_type')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a genre for the audioclip."); ?>" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("File format"); ?>:</TD>
+    <TD align="right"><?php putGS("File format"); ?>:</TD>
     <TD>
-        <SELECT NAME="f_Main_dc_format" DISABLED="ON">
-        <OPTION VALUE="File" selected>Audioclip</OPTION>
+        <SELECT name="f_Main_dc_format" onchange="spread(this, 'dc_format')" disabled="on">
+            <OPTION value="File" selected>Audioclip</OPTION>
         </SELECT>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Length"); ?>:</TD>
+    <TD align="right"><?php putGS("Length"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Main_dcterms_extent" VALUE="<?php p($mData['extent']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Main_dcterms_extent" value="<?php p($mData['extent']); ?>" onchange="spread(this, 'dcterms_extent')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a length value for the audioclip."); ?>" />
     </TD>
 </TR>
 </TABLE>

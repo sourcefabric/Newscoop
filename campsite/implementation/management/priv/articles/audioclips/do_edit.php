@@ -15,7 +15,7 @@ $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_audioclip_gunid = Input::Get('f_audioclip_gunid', 'string', null, true);
+$f_audioclip_id = Input::Get('f_audioclip_id', 'string', null, true);
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 
 $BackLink = Input::Get('BackLink', 'string', null, true);
@@ -33,7 +33,7 @@ if (!$g_user->hasPermission('AttachAudioclipToArticle')) {
     exit;
 }
 
-$audioclipObj =& new Audioclip($f_audioclip_gunid);
+$audioclipObj =& new Audioclip($f_audioclip_id);
 $res = $audioclipObj->editMetadata($formData);
 if (PEAR::isError($res)) {
     camp_html_display_error(getGS("Failed to update audioclip information."));

@@ -1,81 +1,83 @@
 <!-- START VOICE DATA //-->
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6">
+<TABLE border="0" cellspacing="0" cellpadding="6">
 <TR>
-	<TD COLSPAN="2">
+	<TD colspan="2">
 		<B><?php  putGS("Edit Audioclip Metadata"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
+		<HR noshade size="1" color="black">
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT"><?php putGS("Title"); ?>:</TD>
+	<TD align="right"><?php putGS("Title"); ?>:</TD>
 	<TD>
-        <INPUT TYPE="TEXT" NAME="f_Voice_dc_title" VALUE="<?php p($mData['title']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Voice_dc_title" value="<?php p($mData['title']); ?>" onchange="spread(this, 'dc_title')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a title for the audioclip."); ?>" />
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT"><?php putGS("Report date/time"); ?>:</TD>
+	<TD align="right"><?php putGS("Report date/time"); ?>:</TD>
 	<TD>
-        <INPUT TYPE="TEXT" NAME="f_Voice_dcterms_temporal" VALUE="<?php p($mData['temporal']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Voice_dcterms_temporal" value="<?php p($mData['temporal']); ?>" size="50" maxlength="255" class="input_text" />
 	</TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Report location"); ?>:</TD>
+    <TD align="right" valign="top"><?php putGS("Report location"); ?>:</TD>
     <TD>
-        <TEXTAREA NAME="f_Voice_dcterms_spatial"><?php p($mData['spatial']); ?></TEXTAREA>
+        <TEXTAREA name="f_Voice_dcterms_spatial" rows="5" cols="40"><?php p($mData['spatial']); ?></TEXTAREA>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Report organizations"); ?>:</TD>
+    <TD align="right" valign="top"><?php putGS("Report organizations"); ?>:</TD>
     <TD>
-        <TEXTAREA NAME="f_Voice_dcterms_entity"><?php p($mData['entity']); ?></TEXTAREA>
+        <TEXTAREA name="f_Voice_dcterms_entity" rows="5" cols="40"><?php p($mData['entity']); ?></TEXTAREA>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Description"); ?>:</TD>
+    <TD align="right" valign="top"><?php putGS("Description"); ?>:</TD>
     <TD>
-        <TEXTAREA NAME="f_Voice_dc_description"><?php p($mData['description']); ?></TEXTAREA>
+        <TEXTAREA name="f_Voice_dc_description" rows="5" cols="40" onchange="spread(this, 'dc_description')"><?php p($mData['description']); ?></TEXTAREA>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Creator"); ?>:</TD>
+    <TD align="right"><?php putGS("Creator"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Voice_dc_creator" VALUE="<?php p($mData['creator']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Voice_dc_creator" value="<?php p($mData['creator']); ?>" onchange="spread(this, 'dc_creator')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a creator for the audioclip."); ?>" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Subject"); ?>:</TD>
+    <TD align="right"><?php putGS("Subject"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Voice_dc_subject" VALUE="<?php p($mData['subject']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Voice_dc_subject" value="<?php p($mData['subject']); ?>" onchange="spread(this, 'dc_subject')" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Genre"); ?>:</TD>
+    <TD align="right"><?php putGS("Genre"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Voice_dc_type" VALUE="<?php p($mData['type']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Voice_dc_type" value="<?php p($mData['type']); ?>" onchange="spread(this, 'dc_type')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a genre for the audioclip."); ?>" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Format"); ?>:</TD>
+    <TD align="right"><?php putGS("Format"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Voice_dc_format" VALUE="<?php p($mData['format']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <SELECT name="f_Music_dc_format" onchange="spread(this, 'dc_format')" disabled="on">
+            <OPTION value="File">Audioclip</OPTION>
+        </SELECT>
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Contributor"); ?>:</TD>
+    <TD align="right"><?php putGS("Contributor"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Voice_dc_contributor" VALUE="<?php p($mData['contributor']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Voice_dc_contributor" value="<?php p($mData['contributor']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Language"); ?>:</TD>
+    <TD align="right"><?php putGS("Language"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Voice_dc_language" VALUE="<?php p($mData['language']); ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Voice_dc_language" value="<?php p($mData['language']); ?>" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 <TR>
-    <TD ALIGN="RIGHT"><?php putGS("Copyright"); ?>:</TD>
+    <TD align="right"><?php putGS("Copyright"); ?>:</TD>
     <TD>
-        <INPUT TYPE="TEXT" NAME="f_Voice_dc_rights" VALUE="<?php p($mData['rights']) ; ?>" SIZE="50" MAXLENGTH="255" class="input_text" />
+        <INPUT type="text" name="f_Voice_dc_rights" value="<?php p($mData['rights']) ; ?>" onchange="spread(this, 'dc_rights')" size="50" maxlength="255" class="input_text" />
     </TD>
 </TR>
 </TABLE>

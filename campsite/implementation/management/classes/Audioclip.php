@@ -403,7 +403,7 @@ class Audioclip {
         if (!is_null($p_gunId)) {
             $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($p_gunId);
             $this->m_metaData = $aclipDbaseMdataObj->fetch();
-            if (sizeof($this->m_metaData) == 0) {
+            if ($this->m_metaData == false || sizeof($this->m_metaData) == 0) {
                 $aclipXMLMdataObj =& new AudioclipXMLMetadata($p_gunId);
                 $this->m_metaData = $aclipXMLMdataObj->fetch();
                 if ($aclipXMLMdataObj->exists()) {

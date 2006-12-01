@@ -42,23 +42,23 @@ function checkAddForm(form) {
 </script>
 
 <P>
-<FORM NAME="audioclip_add" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/audioclips/edit.php" ENCTYPE="multipart/form-data" onsubmit="return checkAddForm(this);">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
+<FORM name="audioclip_add" method="POST" action="/<?php echo $ADMIN; ?>/articles/audioclips/edit.php" enctype="multipart/form-data" onsubmit="return checkAddForm(this);">
+<TABLE border="0" cellspacing="0" cellpadding="6" class="table_input">
 <TR>
-	<TD COLSPAN="2">
+	<TD colspan="2">
 		<B><?php  putGS("Add New Audioclip"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
+		<HR noshade size="1" color="BLACK">
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php putGS("Media file"); ?>:</TD>
+	<TD align="right" ><?php putGS("Media file"); ?>:</TD>
 	<TD>
         <INPUT type="hidden" name="MAX_FILE_SIZE" value="<?php p(intval(camp_convert_bytes(SystemPref::Get('MaxUploadFileSize')))); ?>" />
 		<INPUT type="file" name="f_media_file" size="32" class="input_file" alt="file|mp3,ogg,wav|bok" emsg="<?php putGS("You must select an audio file to upload."); ?>">
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="left" colspan="2" style="padding-left: 15px;"><?php putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></TD>
+	<TD align="left" colspan="2" style="padding-left: 15px;"><?php putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></TD>
 </TR>
 <TR>
 	<TD colspan="2" class="indent"  style="padding-left: 30px;">
@@ -67,16 +67,16 @@ function checkAddForm(form) {
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-    <INPUT type="HIDDEN" name="f_publication_id" value="<?php p($f_publication_id); ?>">
-    <INPUT type="HIDDEN" name="f_issue_number" value="<?php p($f_issue_number); ?>">
-    <INPUT type="HIDDEN" name="f_section_number" value="<?php p($f_section_number); ?>">
-    <INPUT type="HIDDEN" name="f_article_number" value="<?php p($f_article_number); ?>">
-    <INPUT type="HIDDEN" name="f_language_id" value="<?php p($f_language_id); ?>">
-    <INPUT type="HIDDEN" name="f_language_selected" value="<?php p($f_language_selected); ?>">
-    <INPUT type="HIDDEN" name="BackLink" value="<?php p($_SERVER['REQUEST_URI']); ?>">
-    <INPUT type="HIDDEN" name="f_action" value="add">
+	<TD colspan="2">
+	<DIV align="center">
+    <INPUT type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
+    <INPUT type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
+    <INPUT type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
+    <INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
+    <INPUT type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
+    <INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
+    <INPUT type="hidden" name="BackLink" value="<?php p($_SERVER['REQUEST_URI']); ?>">
+    <INPUT type="hidden" name="f_action" value="add">
     <?php
     if (!empty($sessid)) {
     ?>

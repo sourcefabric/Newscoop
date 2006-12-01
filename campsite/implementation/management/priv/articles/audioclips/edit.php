@@ -18,7 +18,7 @@ $f_section_number = Input::Get('f_section_number', 'int', 0, true);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_audioclip_gunid = Input::Get('f_audioclip_gunid', 'string', null, true);
+$f_audioclip_id = Input::Get('f_audioclip_id', 'string', null, true);
 $f_action = Input::Get('f_action', 'string', null, true);
 
 $BackLink = Input::Get('BackLink', 'string', null, true);
@@ -50,7 +50,7 @@ switch($f_action) {
         $mData['sample_rate'] = $id3Data['audio']['sample_rate'];
         break;
     case 'edit':
-        $audioClip =& new Audioclip($f_audioclip_gunid);
+        $audioClip =& new Audioclip($f_audioclip_id);
         $aClipMetaTags = $audioClip->getAvailableMetaTags();
         foreach ($aClipMetaTags as $metaTag) {
             list($nameSpace, $localPart) = explode(':', strtolower($metaTag));
@@ -66,20 +66,28 @@ switch($f_action) {
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
     <?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
+    <script language="JavaScript">
+    function spread(element, name)
+    {
+        if (document.forms['audioclip_metadata'].elements['f_Main_'+name]) document.forms['audioclip_metadata'].elements['f_Main_'+name].value = element.value;
+        if (document.forms['audioclip_metadata'].elements['f_Music_'+name]) document.forms['audioclip_metadata'].elements['f_Music_'+name].value = element.value;
+        if (document.forms['audioclip_metadata'].elements['f_Voice_'+name]) document.forms['audioclip_metadata'].elements['f_Voice_'+name].value = element.value;
+    }
+    </script>
 	<title><?php putGS("Edit Audioclip Metadata"); ?></title>
 </head>
 <body>
 <?php camp_html_display_msgs(); ?>
 
 <P>
-<FORM NAME="audioclip_metadata" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/audioclips/do_<?php echo $f_action; ?>.php" ENCTYPE="multipart/form-data">
+<FORM name="audioclip_metadata" id="audioclip_metadata" method="POST" action="/<?php echo $ADMIN; ?>/articles/audioclips/do_<?php echo $f_action; ?>.php" enctype="multipart/form-data" onsubmit="return validateForm(this, 0, 1, 0, 0, 8);">
 <TABLE style="margin-top: 10px; margin-left: 5px;" cellpadding="0" cellspacing="0">
 <TR>
 	<?php if ($g_user->hasPermission('AddAudioclip')) { ?>
 	<TD id="link1" class="tab_current"><a href="#" onclick="javascript:selectTab('1', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Main"); ?></b></a></td>
 	<?php } ?>
 
-	<TD id="link2" class="tab_normal"><a href="javascript:selectTab('2', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Music"); ?></b></a></td>
+	<TD id="link2" class="tab_normal"><a href="#" onclick="javascript:selectTab('2', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Music"); ?></b></a></td>
 
     <TD id="link3" class="tab_normal" style="border-right: 1px solid #8baed1;"><a href="#" onclick="javascript:selectTab('3', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Voice"); ?></b></a></td>
 </TR>
@@ -115,7 +123,7 @@ switch($f_action) {
                 <?php if ($f_action == 'add') { ?>
                     <INPUT type="hidden" name="f_audiofile" value="<?php p($audioFile); ?>" />
                 <?php } elseif ($f_action == 'edit') { ?>
-                    <INPUT type="hidden" name="f_audioclip_gunid" value="<?php p($f_audioclip_gunid); ?>" />
+                    <INPUT type="hidden" name="f_audioclip_id" value="<?php p($f_audioclip_id); ?>" />
                 <?php } ?>
                     <INPUT type="submit" name="Save" value="<?php putGS('Save'); ?>" class="button" />
                 <?php if ($f_action == 'edit') { ?>

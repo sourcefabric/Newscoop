@@ -98,7 +98,7 @@ function camp_time_format($p_time)
     if ((isset($all) && $all) || ($h > 0) ) {
         $H = sprintf('%02d', $h).':';
     } else {
-        $H = '&nbsp;&nbsp;&nbsp;';
+        $H = '';
     }
     $I = sprintf('%02d', $i).':';
     $S = sprintf('%02d', $s);
