@@ -27,7 +27,7 @@
 <TR>
     <TD align="right"><?php putGS("File format"); ?>:</TD>
     <TD>
-        <SELECT name="f_Main_dc_format" onchange="spread(this, 'dc_format')" disabled="on">
+        <SELECT name="f_Main_dc_format" class="input_select" onchange="spread(this, 'dc_format')" disabled="on">
             <OPTION value="File" selected>Audioclip</OPTION>
         </SELECT>
     </TD>

@@ -21,19 +21,19 @@
 <TR>
     <TD align="right" valign="top"><?php putGS("Report location"); ?>:</TD>
     <TD>
-        <TEXTAREA name="f_Voice_dcterms_spatial" rows="5" cols="40"><?php p($mData['spatial']); ?></TEXTAREA>
+        <TEXTAREA name="f_Voice_dcterms_spatial" rows="5" cols="40" class="input_text"><?php p($mData['spatial']); ?></TEXTAREA>
     </TD>
 </TR>
 <TR>
     <TD align="right" valign="top"><?php putGS("Report organizations"); ?>:</TD>
     <TD>
-        <TEXTAREA name="f_Voice_dcterms_entity" rows="5" cols="40"><?php p($mData['entity']); ?></TEXTAREA>
+        <TEXTAREA name="f_Voice_dcterms_entity" rows="5" cols="40" class="input_text"><?php p($mData['entity']); ?></TEXTAREA>
     </TD>
 </TR>
 <TR>
     <TD align="right" valign="top"><?php putGS("Description"); ?>:</TD>
     <TD>
-        <TEXTAREA name="f_Voice_dc_description" rows="5" cols="40" onchange="spread(this, 'dc_description')"><?php p($mData['description']); ?></TEXTAREA>
+        <TEXTAREA name="f_Voice_dc_description" rows="5" cols="40" class="input_text" onchange="spread(this, 'dc_description')"><?php p($mData['description']); ?></TEXTAREA>
     </TD>
 </TR>
 <TR>
@@ -57,7 +57,7 @@
 <TR>
     <TD align="right"><?php putGS("Format"); ?>:</TD>
     <TD>
-        <SELECT name="f_Music_dc_format" onchange="spread(this, 'dc_format')" disabled="on">
+        <SELECT name="f_Music_dc_format" class="input_select" onchange="spread(this, 'dc_format')" disabled="on">
             <OPTION value="File">Audioclip</OPTION>
         </SELECT>
     </TD>

@@ -27,7 +27,7 @@
 <TR>
     <TD align="right"><?php putGS("Year"); ?>:</TD>
     <TD>
-        <SELECT name="f_Music_ls_year">
+        <SELECT name="f_Music_ls_year" class="input_select">
         <?php
         for ($year = 1900; $year <= 2011; $year++) {
             camp_html_select_option($year, $mData['year'], $year);
@@ -45,13 +45,13 @@
 <TR>
     <TD align="right" valign="top"><?php putGS("Description"); ?>:</TD>
     <TD>
-        <TEXTAREA name="f_Music_dc_description" rows="5" cols="40" onchange="spread(this, 'dc_description')"><?php p($mData['description']); ?></TEXTAREA>
+        <TEXTAREA name="f_Music_dc_description" rows="5" cols="40" class="input_text" onchange="spread(this, 'dc_description')"><?php p($mData['description']); ?></TEXTAREA>
     </TD>
 </TR>
 <TR>
     <TD align="right"><?php putGS("Format"); ?>:</TD>
     <TD>
-        <SELECT name="f_Music_dc_format" onchange="spread(this, 'dc_format')" disabled="on">
+        <SELECT name="f_Music_dc_format" class="input_select" onchange="spread(this, 'dc_format')" disabled="on">
             <OPTION value="File">Audioclip</OPTION>
         </SELECT>
     </TD>
@@ -83,7 +83,7 @@
 <TR>
     <TD align="right"><?php putGS("Track number"); ?>:</TD>
     <TD>
-        <SELECT name="f_Music_ls_track_num">
+        <SELECT name="f_Music_ls_track_num" class="input_select">
         <?php
         for ($track = 0; $track <= 99; $track++) {
             camp_html_select_option($track, $mData['track_num'], $track);
@@ -95,7 +95,7 @@
 <TR>
     <TD align="right"><?php putGS("Disc number"); ?>:</TD>
     <TD>
-        <SELECT name="f_Music_ls_disc_num">
+        <SELECT name="f_Music_ls_disc_num" class="input_select">
         <?php
         for ($dnum = 0; $dnum <= 20; $dnum++) {
             camp_html_select_option($dnum, $mData['disc_num'], $dnum);
@@ -131,7 +131,7 @@
 <TR>
     <TD align="right"><?php putGS("Channels"); ?>:</TD>
     <TD>
-        <SELECT name="f_Music_ls_channels">
+        <SELECT name="f_Music_ls_channels" class="input_select">
         <?php
         camp_html_select_option("", $mData['channels'], "");
         camp_html_select_option("1", $mData['channels'], getGS("Mono"));
@@ -162,7 +162,7 @@
 <TR>
     <TD align="right" valign="top"><?php putGS("Lyrics"); ?>:</TD>
     <TD>
-        <TEXTAREA name="f_Music_ls_lyrics" rows="5" cols="40" onchange="spread(this, 'ls_lyrics')"><?php p($mData['lyrics']); ?></TEXTAREA>
+        <TEXTAREA name="f_Music_ls_lyrics" rows="5" cols="40" class="input_text" onchange="spread(this, 'ls_lyrics')"><?php p($mData['lyrics']); ?></TEXTAREA>
     </TD>
 </TR>
 <TR>

@@ -46,11 +46,6 @@ if (!Input::IsValid()) {
     exit;
 }
 
-// Gets all the available audioclips
-$r = Audioclip::SearchAudioclips(0, 10);
-$clipCount = $r[0];
-$clips = $r[1];
-
 // Build the links for ordering search results
 $OrderSign = '';
 if ($f_order_direction == 'DESC') {
@@ -61,10 +56,16 @@ if ($f_order_direction == 'DESC') {
     $OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
 }
 
+// Gets all the available audioclips
+$r = Audioclip::SearchAudioclips(0, 10);
+$clipCount = $r[0];
+$clips = $r[1];
+
 if (count($clips) > 0) {
     $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&";
     $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
 ?>
+
 <TABLE class="action_buttons">
 <TR>
     <TD>

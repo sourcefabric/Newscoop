@@ -76,6 +76,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
                 ." AND predicate = '".$g_ado_db->escape($this->m_data['predicate'])."'";
         $resultSet = $g_ado_db->GetRow($sql);
         if ($resultSet) {
+            $this->m_data['id'] = $resultSet['id'];
             $this->m_exists = true;
         } else {
             $this->m_exists = false;

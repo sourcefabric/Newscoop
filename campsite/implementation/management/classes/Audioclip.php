@@ -499,7 +499,7 @@ class Audioclip {
      * Changes audioclip metadata on both storage and local servers.
      *
      * @param array $p_formData
-     *      The form data submited with all the audioclip metadata
+     *      The form data submitted with all the audioclip metadata
      *
      * @return boolean|PEAR_Error
      *      TRUE on success, PEAR Error on failure
@@ -534,11 +534,10 @@ class Audioclip {
         if ($aclipXMLMdataObj->update($metaData) == false) {
             return new PEAR_Error(getGS('Cannot update audioclip metadata on storage server'));
         }
-        // TODO
-        //$aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($this->m_gunId);
-        //if ($aclipDbaseMdataObj->update($metaData) == false) {
-        //    return new PEAR_Error(getGS('Cannot update audioclip metadata on Campsite'));
-        //}
+        $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($this->m_gunId);
+        if ($aclipDbaseMdataObj->update($metaData) == false) {
+            return new PEAR_Error(getGS('Cannot update audioclip metadata on Campsite'));
+        }
         return true;
     } // fn editMetadata
 

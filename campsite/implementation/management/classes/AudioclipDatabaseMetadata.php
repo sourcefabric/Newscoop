@@ -145,6 +145,48 @@ class AudioclipDatabaseMetadata {
         return true;
     } // fn delete
 
+
+    /**
+     * Updates the audioclip metadata in local database
+     *
+     * @param array $p_metaData
+     *      An array of AudioclipMetadataEntry objects
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+    function update($p_metaData)
+    {
+        if (!is_array($p_metaData)) {
+        	$this->m_exists = false;
+            return false;
+        }
+        foreach ($p_metaData as $metadataEntry) {
+            $attributes = array();
+            if ($metadataEntry->exists()) {
+                $attributes['id'] = $metadataEntry->getId();
+                $attributes['gunid'] = $metadataEntry->getGunId();
+                $attributes['predicate_ns'] = $metadataEntry->getMetatagNS();
+                $attributes['predicate'] = $metadataEntry->getMetatagName();
+                $attributes['object'] = $metadataEntry->getValue('object');
+                $currMetadataEntry =& new AudioclipMetadataEntry($metadataEntry->getId());
+                if (!$currMetadataEntry->update($attributes)) {
+                    $isError = true;
+                    break;
+                }
+            } else {
+                if (!$metadataEntry->create()) {
+                    $isError = true;
+                    break;
+                }
+            }
+        }
+        if ($isError) {
+            return false;
+        }
+        return true;
+    } // fn update
+
 } // class AudioclipDatabaseMetadata
 
 ?>
