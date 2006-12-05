@@ -75,11 +75,12 @@ function attach_submit(buttonElement)
 
 <?php
     require('cliplist.php');
+} else {
 ?>
-<TABLE class="action_buttons">
+<TABLE border="0" cellspacing="1" cellpadding="6" class="table_list">
 <TR>
     <TD>
-    <?php echo $pager->render(); ?>
+        <?php putGS("No audioclips found"); ?>
     </TD>
 </TR>
 </TABLE>
