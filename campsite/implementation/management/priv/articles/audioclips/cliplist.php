@@ -1,3 +1,9 @@
+<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domTT.css);</style>
+<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domLib.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domTT.js"></script>
+<script type="text/javascript">
+    var domTT_styleClass = 'domTTOverlib';
+</script>
 <TABLE class="table_actions">
 <TR>
     <TD align="right">
@@ -30,6 +36,16 @@
 $color = 0;
 $counter = 0;
 foreach ($clips as $clip) {
+    $allTags = '';
+    $aClipMetaTags = $clip->getAvailableMetaTags();
+    foreach ($aClipMetaTags as $metaTag) {
+        list($nameSpace, $localPart) = explode(':', strtolower($metaTag));
+        if ($localPart == 'title') {
+            $allTags .= '<strong>'.$metatagLabel[$metaTag] . ': ' . $clip->getMetatagValue($localPart) . '</strong><br />';
+        } else {
+            $allTags .= $metatagLabel[$metaTag] . ': ' . $clip->getMetatagValue($localPart) . '<br />';
+        }
+    }
     if ($color == 1) {
         $color = 0;
         $rowClass = 'list_row_even';
@@ -57,7 +73,7 @@ foreach ($clips as $clip) {
     ?>
         <TD>
             <A href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/edit.php", camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php"))
-            .'&f_action=edit&f_audioclip_id='.$clip->getGunId(); ?>">
+            .'&f_action=edit&f_audioclip_id='.$clip->getGunId(); ?>" onmouseover="domTT_activate(this, event, 'content', '<?php p(addslashes($allTags)); ?>', 'trail', true, 'delay', 0);">
             <?php echo htmlspecialchars($clip->getMetatagValue('title')); ?>
             </A>
         </TD>

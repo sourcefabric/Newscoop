@@ -1176,11 +1176,11 @@ if ($f_edit_mode == "edit") { ?>
                     && $g_user->hasPermission('AttachAudioclipToArticle')) {
                     $aClipEditUrl = "/$ADMIN/articles/audioclips/edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_action=edit&f_audioclip_id=".$articleAudioclip->getGunId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
                     $aClipDeleteUrl = "/$ADMIN/articles/audioclips/do_del.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_audioclip_id=".$articleAudioclip->getGunId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id";
-                    $audioclipEditLink = '<a href="javascript: void(0);" onclick="window.open(\''.$aClipEditUrl.'\', \'attach_audioclip\', \'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100\');" onmouseover="domTT_activate(this, event, \'content\', \''.$allTags.'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
+                    $audioclipEditLink = '<a href="javascript: void(0);" onclick="window.open(\''.$aClipEditUrl.'\', \'attach_audioclip\', \'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100\');" onmouseover="domTT_activate(this, event, \'content\', \''.addslashes($allTags).'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
                     $audioclipDeleteLink = '<a href="'.$aClipDeleteUrl.'" onclick="return confirm(\''.getGS("Are you sure you want to remove the audio file \'$1\' from the article?", camp_javascriptspecialchars($articleAudioclip->getMetatagValue('title'))).'\');"><img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/unlink.png" border="0" /></a>';
                     $audioclipLink = $audioclipEditLink . ' ' . $audioclipDeleteLink;
                 } else {
-                    $audioclipLink = '<a href="#" onmouseover="domTT_activate(this, event, \'content\', \''.$allTags.'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
+                    $audioclipLink = '<a href="#" onmouseover="domTT_activate(this, event, \'content\', \''.addslashes($allTags).'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
                 }
             ?>
             <tr>
