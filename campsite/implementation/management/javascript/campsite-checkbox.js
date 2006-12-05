@@ -77,8 +77,11 @@ function setPointer(theRow, theRowNum, theAction)
  * @param object  The checkbox object.
  * @param int     The row number.
  */
-function checkboxClick(theCheckbox, theRowNum)
+function checkboxClick(theCheckbox, theRowNum, rowPrefix)
 {
+	if (rowPrefix == null) {
+		rowPrefix = defaultRowPrefix;
+	}
 	if (theCheckbox.checked) {
         newClass = 'list_row_click';
         marked_row[theRowNum] = (typeof(marked_row[theRowNum]) == 'undefined' || !marked_row[theRowNum])
@@ -88,6 +91,6 @@ function checkboxClick(theCheckbox, theRowNum)
         newClass = 'list_row_hover';
         marked_row[theRowNum] = false;
 	}
-   	row = document.getElementById("row_"+theRowNum);
+   	row = document.getElementById(rowPrefix+theRowNum);
    	row.className = newClass;
 } // fn checkboxClick

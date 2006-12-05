@@ -62,7 +62,7 @@ foreach ($clips as $clip) {
     if ($articleObj->userCanModify($g_user)) {
     ?>
         <TD align="center">
-            <INPUT type="checkbox" value="<?php p($clip->getGunId()); ?>" name="f_audioclip_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);" />
+            <INPUT type="checkbox" value="<?php p($clip->getGunId()); ?>" name="f_audioclip_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>, 'rw_');" />
         </TD>
     <?php
     } else {
