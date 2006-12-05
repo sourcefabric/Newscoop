@@ -1,3 +1,31 @@
+<TABLE class="table_actions">
+<TR>
+    <TD align="right">
+        <INPUT type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p($clipCount); ?>, 'rw_');">
+        <INPUT type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p($clipCount); ?>, 'rw_');">
+    </TD>
+</TR>
+</TABLE>
+<TABLE border="0" cellspacing="1" cellpadding="6" class="table_list">
+<FORM method="POST" name="audioclip_list" action="do_link.php">
+<INPUT type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>" />
+<INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
+<INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
+<TR class="table_list_header">
+    <?php if ($articleObj->userCanModify($g_user)) { ?>
+    <TD align="center" valign="top" style="padding: 3px;"></TD>
+    <?php } ?>
+    <TD align="left" valign="top">
+    <?php putGS("Title"); ?>
+    </TD>
+    <TD align="left" valign="top">
+    <?php putGS("Creator"); ?>
+    </TD>
+    <TD align="left" valign="top">
+    <?php putGS("Duration"); ?>
+    </TD>
+</TR>
+
 <?php
 $color = 0;
 $counter = 0;
@@ -45,3 +73,21 @@ foreach ($clips as $clip) {
     $counter++;
 } // foreach
 ?>
+
+<TR>
+    <TD colspan="2" nowrap>
+    <?php putGS('$1 audioclips found', $clipCount); ?>
+    </TD>
+    <TD colspan="2" align="right">
+        <INPUT type="button" class="button" onclick="attach_submit(this);" value="Attach" />
+    </TD>
+</TR>
+</FORM>
+</TABLE>
+<TABLE class="action_buttons">
+<TR>
+    <TD>
+    <?php echo $pager->render(); ?>
+    </TD>
+</TR>
+</TABLE>
