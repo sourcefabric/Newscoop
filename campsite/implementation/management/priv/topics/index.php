@@ -26,20 +26,20 @@ echo camp_html_breadcrumbs($crumbs);
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <script>
-function checkAll()
+function checkAllLang()
 {
 	<?php foreach ($allLanguages as $tmpLanguage) { ?>
 	document.getElementById("checkbox_<?php p($tmpLanguage->getLanguageId()); ?>").checked = true;
 	<?php } ?>
-} // fn checkAll
+} // fn checkAllLang
 
 
-function uncheckAll()
+function uncheckAllLang()
 {
 	<?php foreach ($allLanguages as $tmpLanguage) { ?>
 	document.getElementById("checkbox_<?php p($tmpLanguage->getLanguageId()); ?>").checked = false;
 	<?php } ?>
-} // fn uncheckAll
+} // fn uncheckAllLang
 </script>
 
 <P>
@@ -49,8 +49,8 @@ function uncheckAll()
 	<td>
 		<table cellpadding="1" cellspacing="3"><tr>
 		<td><b><?php putGS("Show languages:"); ?></b></td>
-		<td><input type="button" value="<?php putGS("Select All"); ?>" onclick="checkAll();" class="button" style="font-size: smaller;"></td>
-		<td><input type="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll();" class="button" style="font-size:smaller;"></td>
+		<td><input type="button" value="<?php putGS("Select All"); ?>" onclick="checkAllLang();" class="button" style="font-size: smaller;"></td>
+		<td><input type="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAllLang();" class="button" style="font-size:smaller;"></td>
 		</tr></table>
 	</td>
 </tr>
