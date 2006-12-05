@@ -1,5 +1,5 @@
 <?php
-camp_load_translation_strings("article_images");
+camp_load_translation_strings("article_audioclips");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Audioclip.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
@@ -54,8 +54,8 @@ $clips = $r[1];
 
 ?>
 
-<FORM method="POST" action="popup.php">
 <TABLE cellspacing="1" cellpadding="2" class="table_list">
+<FORM method="POST" action="popup.php">
 <TR>
     <TD>
         <DIV id="row_1">
@@ -99,7 +99,6 @@ $clips = $r[1];
         <INPUT type="submit" name="" class="button" value="<?php putGS("Submit"); ?>" />
     </TD>
 </TR>
-</TABLE>
 <INPUT type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
 <INPUT type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
 <INPUT type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
@@ -110,6 +109,7 @@ $clips = $r[1];
 <INPUT type="hidden" name="f_audio_attach_mode" value="existing" />
 <INPUT type="hidden" name="f_audio_search_mode" value="search" />
 </FORM>
+</TABLE>
 <?php
 if (count($clips) > 0) {
     $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&";
