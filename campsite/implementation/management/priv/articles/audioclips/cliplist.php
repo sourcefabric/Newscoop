@@ -1,27 +1,25 @@
 <?php
 $color = 0;
+$counter = 0;
 foreach ($clips as $clip) {
     if ($color == 1) {
         $color = 0;
-        $class = 'list_row_even';
+        $rowClass = 'list_row_even';
     } else {
         $color = 1;
-        $class = 'list_row_odd';
+        $rowClass = 'list_row_odd';
     }
 ?>
-    <TR class="<?php echo $class; ?>">
+    <script>
+        default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";
+    </script>
+    <TR id="rw_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
     <?php
     if ($articleObj->userCanModify($g_user)) {
     ?>
-        <FORM method="POST" action="do_link.php">
-        <INPUT type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>" />
-        <INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
-        <INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
-        <INPUT type="hidden" name="f_audioclip_id" value="<?php echo $clip->getGunId(); ?>" />
         <TD align="center">
-            <INPUT type="checkbox" value="143_1" name="f_article_code[]" id="checkbox_0" class="input_checkbox" onclick="checkboxClick(this, 0);" />
+            <INPUT type="checkbox" value="<?php p($clip->getGunId()); ?>" name="f_audioclip_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);" />
         </TD>
-        </FORM>
     <?php
     } else {
     ?>
@@ -44,5 +42,6 @@ foreach ($clips as $clip) {
         </TD>
     </TR>
 <?php
+    $counter++;
 } // foreach
 ?>

@@ -94,7 +94,6 @@ $mask = array(
             array(
                 'element' => 'dc:creator',
                 'type' => 'text',
-                'label' => 'Creator',
                 'required' => TRUE,
             ),
             array(
@@ -411,8 +410,21 @@ class Audioclip {
                 }
             }
             $this->m_gunId = $p_gunId;
+            $this->m_exists = true;
         }
     } // constructor
+
+
+    /**
+     * Returns whether the audioclip exists
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+    function exists()
+    {
+        return $this->m_exists;
+    } // fn exists
 
 
     /**

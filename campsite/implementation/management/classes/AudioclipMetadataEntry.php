@@ -18,14 +18,14 @@ require_once($g_documentRoot.'/classes/Translation.php');
  * @package Campsite
  */
 class AudioclipMetadataEntry extends DatabaseObject {
-	var $m_keyColumnNames = array('id');
-	var $m_keyIsAutoIncrement = true;
-	var $m_dbTableName = 'AudioclipMetadata';
-	var $m_columnNames = array('id',
-							   'gunid',
-							   'predicate_ns',
-							   'predicate',
-							   'object');
+    var $m_keyColumnNames = array('id');
+    var $m_keyIsAutoIncrement = true;
+    var $m_dbTableName = 'AudioclipMetadata';
+    var $m_columnNames = array('id',
+                               'gunid',
+                               'predicate_ns',
+                               'predicate',
+                               'object');
 
     /**
      * Constructor
@@ -34,19 +34,19 @@ class AudioclipMetadataEntry extends DatabaseObject {
      *      The audioclip metadata entry id
      *      An array of metadata values
      */
-	function AudioclipMetadataEntry($p_data = null)
-	{
-		if (is_null($p_data)) {
+    function AudioclipMetadataEntry($p_data = null)
+    {
+        if (is_null($p_data)) {
             return;
         }
         if (is_numeric($p_data)) {
-			$this->m_data['id'] = $p_data;
-			$this->fetch();
-		}
+            $this->m_data['id'] = $p_data;
+            $this->fetch();
+        }
         if (is_array($p_data)) {
             $this->fetch($p_data);
         }
-	} // constructor
+    } // constructor
 
 
     /**
@@ -68,7 +68,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
             return parent::fetch();
         }
         if (!isset($this->m_data['gunid']) || !isset($this->m_data['predicate_ns'])
-            	|| !isset($this->m_data['predicate']) || !isset($this->m_data['object'])) {
+                || !isset($this->m_data['predicate']) || !isset($this->m_data['object'])) {
             return false;
         }
         $sql = 'SELECT * FROM `'.$g_ado_db->escape($this->m_dbTableName)."`"
@@ -90,23 +90,22 @@ class AudioclipMetadataEntry extends DatabaseObject {
      *
      * @return boolean
      */
-	function delete()
-	{
-		if (!$this->exists()) {
-			return false;
-		}
-
+    function delete()
+    {
+        if (!$this->exists()) {
+            return false;
+        }
         return parent::delete();
-	} // fn delete
+    } // fn delete
 
 
-	/**
-	 * @return int
-	 */
-	function getId()
-	{
-		return $this->m_data['id'];
-	} // fn getId
+    /**
+     * @return int
+     */
+    function getId()
+    {
+        return $this->m_data['id'];
+    } // fn getId
 
 
     /**
@@ -146,12 +145,12 @@ class AudioclipMetadataEntry extends DatabaseObject {
 
 
 	/**
-	 * @return string
-	 */
-	function getValue()
-	{
-		return $this->m_data['object'];
-	} // fn getValue
+     * @return string
+     */
+    function getValue()
+    {
+        return $this->m_data['object'];
+    } // fn getValue
 
 
     /**

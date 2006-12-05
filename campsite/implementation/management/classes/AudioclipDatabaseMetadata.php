@@ -161,6 +161,14 @@ class AudioclipDatabaseMetadata {
         	$this->m_exists = false;
             return false;
         }
+        $newDataKeys = array_keys($p_metaData);
+        $oldDataKeys = array_keys($this->m_metaData);
+        $metaDataToDelete = array_diff($oldDataKeys, $newDataKeys);
+        foreach ($this->m_metaData as $metadataEntry) {
+            if (in_array($metadataEntry->getMetatag(), $metaDataToDelete)) {
+                $metadataEntry->delete();
+            }
+        }
         foreach ($p_metaData as $metadataEntry) {
             $attributes = array();
             if ($metadataEntry->exists()) {
@@ -168,7 +176,7 @@ class AudioclipDatabaseMetadata {
                 $attributes['gunid'] = $metadataEntry->getGunId();
                 $attributes['predicate_ns'] = $metadataEntry->getMetatagNS();
                 $attributes['predicate'] = $metadataEntry->getMetatagName();
-                $attributes['object'] = $metadataEntry->getValue('object');
+                $attributes['object'] = $metadataEntry->getValue();
                 $currMetadataEntry =& new AudioclipMetadataEntry($metadataEntry->getId());
                 if (!$currMetadataEntry->update($attributes)) {
                     $isError = true;

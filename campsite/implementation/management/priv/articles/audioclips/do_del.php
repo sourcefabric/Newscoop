@@ -15,7 +15,7 @@ if (!$g_user->hasPermission('AttachAudioclipToArticle')) {
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_audioclip_gunid = Input::Get('f_audioclip_gunid', 'string', null, true);
+$f_audioclip_id = Input::Get('f_audioclip_id', 'string', null, true);
 
 // Check input
 if (!Input::IsValid()) {
@@ -30,7 +30,7 @@ if (!$articleObj->exists()) {
     exit;
 }
 
-$audioclipObj =& new Audioclip($f_audioclip_gunid);
+$audioclipObj =& new Audioclip($f_audioclip_id);
 if (is_null($audioclipObj->getGunId())) {
     camp_html_display_error(getGS('Audioclip does not exist.'), null, true);
     exit;

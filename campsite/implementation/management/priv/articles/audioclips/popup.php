@@ -1,4 +1,4 @@
-<?PHP
+<?php
 camp_load_translation_strings("article_audioclips");
 camp_load_translation_strings('api');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
