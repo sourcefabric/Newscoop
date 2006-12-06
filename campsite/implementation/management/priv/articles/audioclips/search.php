@@ -17,6 +17,7 @@ $row_3 = Input::Get('row_3', 'array', array(), true);
 $row_4 = Input::Get('row_4', 'array', array(), true);
 $row_5 = Input::Get('row_5', 'array', array(), true);
 
+// Maximum number of criteria input allowed
 $maxCriteria = 5;
 
 if ($f_items_per_page < 4) {
@@ -38,6 +39,7 @@ if ($f_order_direction == 'DESC') {
 	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
 }
 
+// Gets all the criteria to search by
 $conditions = array();
 for ($c = 1, $counter = 0; $c <= $maxCriteria; $c++) {
     if (${'row_'.$c}['active'] == 1) {
@@ -47,16 +49,21 @@ for ($c = 1, $counter = 0; $c <= $maxCriteria; $c++) {
         $counter++;
     }
 }
-
+// Set default values when criteria has not been submitted
+if ($counter == 0) {
+    $counter = 1;
+    $row_1['active'] = 1;
+}
 // Gets all the available audioclips
 if (sizeof($conditions) > 0) {
     $r = Audioclip::SearchAudioclips(0, 10, $conditions, $f_operator);
 } else {
     $r = Audioclip::SearchAudioclips(0, 10);
 }
-
+// Sets clips amount and clips data from SearchAudioclips result
 $clipCount = $r[0];
 $clips = $r[1];
+// Array of comparison operators
 $operators = array('partial',
                    'full',
                    'prefix',
@@ -66,16 +73,14 @@ $operators = array('partial',
                    '>',
                    '>='
              );
-
 ?>
 
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-audiosearch.js"></script>
 
 <TABLE cellspacing="1" cellpadding="2" class="table_list">
 <FORM method="POST" name="search" action="popup.php">
-<INPUT type="hidden" name="row_1[active]" value="1" />
 <?php
-for ($c = 2; $c <= $maxCriteria; $c++) {
+for ($c = 1; $c <= $maxCriteria; $c++) {
 ?>
 <INPUT type="hidden" name="row_<?php p($c); ?>[active]" value="<?php p(${'row_'.$c}['active']); ?>" />
 <?php
@@ -119,14 +124,9 @@ for ($c = 2; $c <= $maxCriteria; $c++) {
         </SELECT>
         <SELECT name="row_<?php p($i); ?>[1]" class="input_select">
         <?php
-            camp_html_select_option('partial', '', 'partial');
-            camp_html_select_option('full', '', 'full');
-            camp_html_select_option('prefix', '', 'prefix');
-            camp_html_select_option('=', '', '=');
-            camp_html_select_option('<', '', '<');
-            camp_html_select_option('<=', '', '<=');
-            camp_html_select_option('>', '', '>');
-            camp_html_select_option('>=', '', '>=');
+        foreach ($operators as $op) {
+            camp_html_select_option($op, '', $op);
+        }
         ?>
         </SELECT>
         <INPUT type="text" name="row_<?php p($i); ?>[2]" class="input_text" size="25" maxlength="255" value="<?php p(${'row_'.$i}[2]); ?>" />
