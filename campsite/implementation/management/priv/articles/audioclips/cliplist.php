@@ -4,6 +4,7 @@
 <script type="text/javascript">
     var domTT_styleClass = 'domTTOverlib';
 </script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 <TABLE class="table_actions">
 <TR>
     <TD align="right">
@@ -57,7 +58,7 @@ foreach ($clips as $clip) {
     <script>
         default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";
     </script>
-    <TR id="rw_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
+    <TR id="rw_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over'); domTT_activate(this, event, 'content', '<?php p(addslashes($allTags)); ?>', 'trail', true, 'delay', 300);" onmouseout="setPointer(this, <?php p($counter); ?>, 'out'); domTT_close(this);">
     <?php
     if ($articleObj->userCanModify($g_user)) {
     ?>
@@ -73,13 +74,14 @@ foreach ($clips as $clip) {
     ?>
         <TD>
             <A href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/edit.php", camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php"))
-            .'&f_action=edit&f_audioclip_id='.$clip->getGunId(); ?>" onmouseover="domTT_activate(this, event, 'content', '<?php p(addslashes($allTags)); ?>', 'trail', true, 'delay', 0);">
+            .'&f_action=edit&f_audioclip_id='.$clip->getGunId(); ?>" >
             <?php echo htmlspecialchars($clip->getMetatagValue('title')); ?>
             </A>
         </TD>
         <TD style="padding-left: 5px;">
             <A href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/edit.php", camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php"))
-            .'&f_action=edit&f_audioclip_id='.$clip->getGunId(); ?>"><?php echo htmlspecialchars($clip->getMetatagValue('creator')); ?></A>
+            .'&f_action=edit&f_audioclip_id='.$clip->getGunId(); ?>" >
+            <?php echo htmlspecialchars($clip->getMetatagValue('creator')); ?></A>
         </TD>
         <TD style="padding-left: 5px;">
         <?php echo htmlspecialchars(camp_time_format($clip->getMetatagValue('extent'))); ?>&nbsp;
@@ -95,7 +97,7 @@ foreach ($clips as $clip) {
     <?php putGS('$1 audioclips found', $clipCount); ?>
     </TD>
     <TD colspan="2" align="right">
-        <INPUT type="button" class="button" onclick="attach_submit(this);" value="Attach" />
+        <INPUT type="button" class="button" onclick="if (validateCheckboxes('audioclip_list', 'f_audioclip_code[]', 1, '*', '<?php putGS("You must select at least one audioclip to attach."); ?>')) { this.form.submit(); }" value="Attach" />
     </TD>
 </TR>
 </FORM>

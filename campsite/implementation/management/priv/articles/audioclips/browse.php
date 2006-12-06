@@ -12,6 +12,12 @@ $f_items_per_page = camp_session_get('f_items_per_page', 4);
 if ($f_items_per_page < 4) {
     $f_items_per_page = 4;
 }
+$f_category_1_name = camp_session_get('f_category1_name', 'dc:type');
+$f_category_1_value = camp_session_get('f_category1_value', null);
+$f_category_2_name = camp_session_get('f_category2_name', 'dc:creator');
+$f_category_2_value = camp_session_get('f_category2_value', null);
+$f_category_3_name = camp_session_get('f_category3_name', 'dc:source');
+$f_category_3_value = camp_session_get('f_category3_value', null);
 
 if (!Input::IsValid()) {
     camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
@@ -37,42 +43,18 @@ if (count($clips) > 0) {
     $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&";
     $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
 ?>
-
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
-
-<script type="text/javascript">
-function attach_submit(buttonElement)
-{
-    // Verify that at least one checkbox has been selected.
-    checkboxes = document.forms.audioclip_list["f_audioclip_code[]"];
-    if (checkboxes) {
-        isValid = false;
-        numCheckboxesChecked = 0;
-        // Special case for single checkbox
-        // (when there is only one article in the section).
-        if (!checkboxes.length) {
-            isValid = checkboxes.checked;
-            numCheckboxesChecked = isValid ? 1 : 0;
-        } else {
-            // Multiple checkboxes
-            for (var index = 0; index < checkboxes.length; index++) {
-                if (checkboxes[index].checked) {
-                    isValid = true;
-                    numCheckboxesChecked++;
-                }
-            }
-        }
-        if (!isValid) {
-            alert("<?php putGS("You must select at least one audioclip to attach."); ?>");
-            return;
-        }
-    } else {
-        return;
-    }
-    buttonElement.form.submit();
-} // fn attach_submit
-</script>
-
+<table>
+	<tr>
+		<td><?php putGS('Category'); ?>:</td>
+		<td><?php putGS('Category'); ?>:</td>
+		<td><?php putGS('Category'); ?>:</td>
+	</tr>
+	<tr>
+		<td><?php putGS($metatagLabel[$f_category_1_name]); ?></td>
+		<td><?php putGS($metatagLabel[$f_category_2_name]); ?></td>
+		<td><?php putGS($metatagLabel[$f_category_3_name]); ?></td>
+	</tr>
+</table>
 <?php
     require('cliplist.php');
 } else {

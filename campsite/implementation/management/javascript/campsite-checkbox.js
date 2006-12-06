@@ -94,3 +94,46 @@ function checkboxClick(theCheckbox, theRowNum, rowPrefix)
    	row = document.getElementById(rowPrefix+theRowNum);
    	row.className = newClass;
 } // fn checkboxClick
+
+/**
+ * Returns true if at least minChecked and at most maxChecked checkboxes were checked,
+ * otherwise returns false. You may pass the wildcard * for maxChecked
+ *
+ * @param string formName      The name of the form containing the checkboxes
+ * @param string fieldName     The name of the checkbox field
+ * @param int minChecked       The minimum number of checkboxes that must be checked
+ * @param int maxChecked       The maximum number of checkboxes that must be checked
+ * @param string errorMessage  The error message to be displayed if the checkbox 
+ *                             selection was not valid
+ */
+function validateCheckboxes(formName, fieldName, minChecked, maxChecked, errorMessage)
+{
+    // Verify that at least one checkbox has been selected.
+    checkboxes = document.forms[formName][fieldName];
+    if (checkboxes) {
+        isValid = false;
+        numCheckboxesChecked = 0;
+        // Special case for single checkbox
+        // (when there is only one article in the section).
+        if (!checkboxes.length) {
+            numCheckboxesChecked = checkboxes.checked ? 1 : 0;
+        } else {
+            // Multiple checkboxes
+            for (var index = 0; index < checkboxes.length; index++) {
+                if (checkboxes[index].checked) {
+                    numCheckboxesChecked++;
+                }
+            }
+        }
+        isValid = numCheckboxesChecked >= minChecked;
+        if (maxChecked != "*") {
+        	isValid = isValid && numCheckboxesChecked <= maxChecked;
+        }
+        if (!isValid) {
+            alert(errorMessage);
+        }
+        return isValid;
+    } else {
+        return true;
+    }
+} // fn validateCheckboxes

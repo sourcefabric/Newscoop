@@ -114,45 +114,6 @@ $clips = $r[1];
 if (count($clips) > 0) {
     $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&";
     $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
-
-?>
-
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
-
-<script>
-function attach_submit(buttonElement)
-{
-    // Verify that at least one checkbox has been selected.
-    checkboxes = document.forms.audioclip_list["f_audioclip_code[]"];
-    if (checkboxes) {
-        isValid = false;
-        numCheckboxesChecked = 0;
-        // Special case for single checkbox
-        // (when there is only one article in the section).
-        if (!checkboxes.length) {
-            isValid = checkboxes.checked;
-            numCheckboxesChecked = isValid ? 1 : 0;
-        } else {
-            // Multiple checkboxes
-            for (var index = 0; index < checkboxes.length; index++) {
-                if (checkboxes[index].checked) {
-                    isValid = true;
-                    numCheckboxesChecked++;
-                }
-            }
-        }
-        if (!isValid) {
-            alert("<?php putGS("You must select at least one audioclip to attach."); ?>");
-            return;
-        }
-    } else {
-        return;
-    }
-    buttonElement.form.submit();
-} // fn attach_submit
-</script>
-
-<?php
     require('cliplist.php');
 } else {
 ?>
