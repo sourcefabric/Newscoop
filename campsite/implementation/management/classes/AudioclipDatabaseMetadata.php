@@ -43,8 +43,8 @@ class AudioclipDatabaseMetadata {
     {
     	return $this->m_exists;
     }
-    
-    
+
+
     /**
      * Fetch all metadata for the audioclip given.
      *
@@ -120,7 +120,7 @@ class AudioclipDatabaseMetadata {
         return true;
     } // fn create
 
-    
+
     /**
      * Deletes all the metadata for the audioclip
      *
@@ -202,18 +202,15 @@ class AudioclipDatabaseMetadata {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    function hasLock()
+    function inUse()
     {
         global $g_ado_db;
 
         $queryStr = "SELECT COUNT(*) AS count FROM ArticleAudioclips
-                     WHERE fk_audioclip_gunid = '".$this->m_gunId."'";
+                     WHERE fk_audioclip_gunid != '".$g_ado_db->escape($this->m_gunId)."'";
         $row = $g_ado_db->GetRow($queryStr);
-        if ($row['count'] < 2) {
-            return false;
-        }
-        return true;
-    } // fn hasLock
+        return $row['count'] > 0;
+    } // fn inUse
 
 } // class AudioclipDatabaseMetadata
 

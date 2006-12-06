@@ -404,13 +404,16 @@ class Audioclip {
             $this->m_metaData = $aclipDbaseMdataObj->fetch();
             if ($this->m_metaData == false || sizeof($this->m_metaData) == 0) {
                 $aclipXMLMdataObj =& new AudioclipXMLMetadata($p_gunId);
-                $this->m_metaData = $aclipXMLMdataObj->fetch();
+                $this->m_metaData = $aclipXMLMdataObj->m_metaData;
                 if ($aclipXMLMdataObj->exists()) {
+		            $this->m_gunId = $p_gunId;
+    		        $this->m_exists = true;
                 	$aclipDbaseMdataObj->create($this->m_metaData);
                 }
+            } else {
+	            $this->m_gunId = $p_gunId;
+    	        $this->m_exists = true;
             }
-            $this->m_gunId = $p_gunId;
-            $this->m_exists = true;
         }
     } // constructor
 
@@ -451,7 +454,7 @@ class Audioclip {
     function getMetatagValue($p_tagName)
     {
     	$namespaces = array('dc', 'ls', 'dcterms');
-    	
+
 		$p_tagName = trim(strtolower($p_tagName));
     	if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
     		return null;
@@ -505,7 +508,7 @@ class Audioclip {
             return false;
         }
         $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($this->m_gunId);
-        if ($aclipDbaseMdataObj->hasLock() == false) {
+        if ($aclipDbaseMdataObj->inUse() == false) {
             return $aclipDbaseMdataObj->delete();
         }
         return true;
@@ -670,8 +673,11 @@ class Audioclip {
 			return $result;
 		}
 		$clips = array();
-		foreach ($result['results'] as $clip) {
-			$clips[] = new Audioclip($clip['gunid']);
+		foreach ($result['results'] as $clipMetaData) {
+			$clip = new Audioclip($clipMetaData['gunid']);
+			if ($clip->exists()) {
+				$clips[] =& $clip;
+			}
 		}
     	return array($result['cnt'], $clips);
     } // fn SearchAudioclips
