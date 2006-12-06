@@ -342,3 +342,6 @@ hr {
         border-top: 1px solid #8baed1;
         border-left: 1px solid #8baed1;
 }
+.audiosearch_container {
+	padding: 1px;
+}
