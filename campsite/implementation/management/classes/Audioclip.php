@@ -492,7 +492,9 @@ class Audioclip {
 
 
     /**
-     * Deletes all the metadata for the audioclip
+     * Deletes all the metadata for the audioclip.
+     * It checks whether the audioclip is attached to multiple articles
+     * before deletes metadata.
      *
      * @return boolean
      *      TRUE on success, FALSE on failure
@@ -503,7 +505,10 @@ class Audioclip {
             return false;
         }
         $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($this->m_gunId);
-        return $aclipDbaseMdataObj->delete();
+        if ($aclipDbaseMdataObj->hasLock() == false) {
+            return $aclipDbaseMdataObj->delete();
+        }
+        return true;
     } // fn deleteMetadata
 
 

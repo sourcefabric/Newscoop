@@ -36,13 +36,12 @@ if (is_null($audioclipObj->getGunId())) {
     exit;
 }
 
+// Deletes metadata from local database if the audioclip
+// is not in use by other article(s)
+$audioclipObj->deleteMetadata();
 // Deletes the link to the article
 $articleAudioclipObj =& new ArticleAudioclip($articleObj->getArticleNumber(), $audioclipObj->getGunId());
 $articleAudioclipObj->delete();
-// Deletes all the audioclip metadata
-//if (!$audioclipObj->hasLock()) {
-    $audioclipObj->deleteMetadata();
-//}
 
 // Go back to article.
 camp_html_add_msg(getGS("Audioclip '$1' deleted.", $audioclipObj->getMetatagValue('title')), "ok");

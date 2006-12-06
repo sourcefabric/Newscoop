@@ -195,6 +195,26 @@ class AudioclipDatabaseMetadata {
         return true;
     } // fn update
 
+
+    /**
+     * Checks whether the audioclip is in use by multiple articles
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+    function hasLock()
+    {
+        global $g_ado_db;
+
+        $queryStr = "SELECT COUNT(*) AS count FROM ArticleAudioclips
+                     WHERE fk_audioclip_gunid = '".$this->m_gunId."'";
+        $row = $g_ado_db->GetRow($queryStr);
+        if ($row['count'] < 2) {
+            return false;
+        }
+        return true;
+    } // fn hasLock
+
 } // class AudioclipDatabaseMetadata
 
 ?>
