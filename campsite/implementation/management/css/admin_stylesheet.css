@@ -166,6 +166,13 @@ hr {
 	font-weight: bold;
 }
 
+.table_actions {
+	background-color: #D5C3DF;
+	border: 1px solid #A35ACF;
+	padding: 3px;
+	margin-left: 15px;
+}
+
 .table_input {
 	background-color: #d5e2ee;
 	border: 1px solid #8baed1;
