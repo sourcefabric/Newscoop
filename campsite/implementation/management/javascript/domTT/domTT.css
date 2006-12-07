@@ -1,132 +1,17 @@
-/* Default DOM Tooltip Style */
-div.domTT {
-	border: 1px solid #333333;
-	background-color: #333333;
-}
-div.domTT .caption {
-	font-family: serif;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 1px 2px;
-	color: #FFFFFF;
-}
-div.domTT .contents {
-	font-size: 12px;
-	font-family: sans-serif;
-	padding: 3px 2px;
-	background-color: #F1F1FF;
-}
-
-/* Classic Style */
-div.domTTClassic {
-	border: 1px solid black;
-	background-color: InfoBackground;
-}
-div.domTTClassic .caption {
-	font-family: serif;
-	font-size: 13px;
-	_font-size: 12px;
-	font-weight: bold;
-	font-style: italic;
-	padding: 1px 2px;
-}
-div.domTTClassic .contents {
-	color: InfoText;
-	font-size: 13px;
-	_font-size: 12px;
-	font-family: Arial, sans-serif;
-	padding: 1px 2px;
-	_padding-bottom: 0;
-}
-
-/* Win9x Style */
-div.domTTWin {
-  border: 2px outset #BFBFBF;
-  background-color: #808080
-}
-div.domTTWin .caption {
-  border: 0px solid #BFBFBF;
-  border-width: 1px 1px 0px 1px;
-  background-color: #00007F;
-  padding: 2px;
-  font-size: 12px;
-  font-weight: bold;
-  font-family: sans-serif;
-  color: white;
-}
-div.domTTWin .contents {
-  border: 1px solid #BFBFBF;
-}
-
 /* Overlib Style */
 div.domTTOverlib {
 	border: 1px solid #333366;
 	background-color: #333366;
 }
 div.domTTOverlib .caption {
-	font-family: Verdana, Helvetica;
+	font-family: Helvetica;
 	font-size: 10px;
 	font-weight: bold;
 	color: #FFFFFF;
 }
 div.domTTOverlib .contents {
+	font-family: Helvetica;
 	font-size: 10px;
-	font-family: Verdana, Helvetica;
 	padding: 2px;
 	background-color: #F1F1FF;
-}
-
-/* Nicetitle Style */
-div.niceTitle
-{
-	background-color: #333333;
-	color: #FFFFFF;
-	font-weight: bold;
-	font-size: 13px;
-	font-family: "Trebuchet MS", sans-serif;
-	width: 250px;
-	left: 0;
-	top: 0;
-	padding: 4px;
-	position: absolute;
-	text-align: left;
-	z-index: 20;
-	-moz-border-radius: 0 10px 10px 10px;
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=87);
-	-moz-opacity: .87;
-	-khtml-opacity: .87;
-	opacity: .87;
-}
-div.niceTitle .contents
-{
-	margin: 0;
-	padding: 0 3px;
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=100);
-	-moz-opacity: 1;
-	-khtml-opacity: 1;
-	opacity: 1;
-}
-div.niceTitle p
-{
-	color: #D17E62;
-	font-size: 9px;
-	padding: 3px 0 0 0;
-	margin: 0;
-	text-align: left;
-	-moz-opacity: 1;
-}
-
-/* Context Menu Style */
-div.domTTMenu {
-  width: 150px;
-  border: 2px outset #E6E6E6;
-}
-div.domTTMenu .caption {
-  font-size: 12px;
-  font-family: sans-serif;
-  background-color: #E6E6E6;
-}
-div.domTTMenu .contents {
-  padding: 1px 0;
-  background-color: #E6E6E6;
 }

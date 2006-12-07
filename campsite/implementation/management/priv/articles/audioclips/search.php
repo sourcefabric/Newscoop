@@ -7,7 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
 
 $f_order_by = camp_session_get('f_order_by', 'id');
 $f_order_direction = camp_session_get('f_order_direction', 'ASC');
-$f_audioclip_offset = camp_session_get('f_image_offset', 0);
+$f_audioclip_offset = camp_session_get('f_audioclip_offset', 0);
 $f_operator = Input::Get('f_operator', 'string', 'and', true);
 $f_items_per_page = camp_session_get('f_items_per_page', 4);
 
@@ -20,8 +20,8 @@ $row_5 = Input::Get('row_5', 'array', array(), true);
 // Maximum number of criteria input allowed
 $maxCriteria = 5;
 
-if ($f_items_per_page < 4) {
-	$f_items_per_page = 4;
+if ($f_items_per_page < 8) {
+	$f_items_per_page = 8;
 }
 
 if (!Input::IsValid()) {
@@ -52,14 +52,22 @@ for ($c = 1, $counter = 0; $c <= $maxCriteria; $c++) {
 // Set default values when criteria has not been submitted
 if ($counter == 0) {
     $counter = 1;
-    $row_1['active'] = 1;
+    $row_1 = array('active' => 1,
+                   0 => 'dc:title',
+                   1 => 'partial');
 }
 // Gets all the available audioclips
 if (sizeof($conditions) > 0) {
-    $r = Audioclip::SearchAudioclips(0, 10, $conditions, $f_operator);
+    $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, $conditions, $f_operator);
 } else {
-    $r = Audioclip::SearchAudioclips(0, 10);
+    $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page);
 }
+
+if (PEAR::isError($r)) {
+    camp_html_display_error(getGS('There was a problem trying to communicate to Campcaster'));
+    exit;
+}
+
 // Sets clips amount and clips data from SearchAudioclips result
 $clipCount = $r[0];
 $clips = $r[1];
@@ -106,12 +114,19 @@ for ($c = 1; $c <= $maxCriteria; $c++) {
                 echo "}, ";
             }
             echo "} ]\n";
+            if (sizeof(${'row_'.$i}) != 0) {
             ?>
             _hs_defaults['row_<?php p($i); ?>'] = ['<?php p(${'row_'.$i}[0]); ?>', '<?php p(${'row_'.$i}[1]); ?>'];
+            <?php
+            } else {
+            ?>
+            _hs_defaults['row_<?php p($i); ?>'] = ['', ''];
+            <?php
+            }
+            ?>
         </script>
         <?php
         $rowStyle = (${'row_'.$i}['active'] != 1) ? 'display:none' : '';
-        if ($i == 1) $rowStyle = '';
         ?>
         <DIV id="searchRow_<?php p($i); ?>" style="<?php p($rowStyle); ?>">
         <DIV class="audiosearch_container">

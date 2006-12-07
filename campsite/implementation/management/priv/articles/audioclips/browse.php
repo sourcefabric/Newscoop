@@ -9,8 +9,8 @@ $f_order_by = camp_session_get('f_order_by', 'id');
 $f_order_direction = camp_session_get('f_order_direction', 'ASC');
 $f_audioclip_offset = camp_session_get('f_audioclip_offset', 0);
 $f_items_per_page = camp_session_get('f_items_per_page', 4);
-if ($f_items_per_page < 4) {
-    $f_items_per_page = 4;
+if ($f_items_per_page < 8) {
+    $f_items_per_page = 8;
 }
 $f_category_1_name = camp_session_get('f_category1_name', 'dc:type');
 $f_category_1_value = camp_session_get('f_category1_value', null);
@@ -35,7 +35,7 @@ if ($f_order_direction == 'DESC') {
 }
 
 // Gets all the available audioclips
-$r = Audioclip::SearchAudioclips(0, 10);
+$r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page);
 $clipCount = $r[0];
 $clips = $r[1];
 
