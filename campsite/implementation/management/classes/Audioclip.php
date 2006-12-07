@@ -676,7 +676,7 @@ class Audioclip {
 		foreach ($result['results'] as $clipMetaData) {
 			$clip = new Audioclip($clipMetaData['gunid']);
 			if ($clip->exists()) {
-				$clips[] =& $clip;
+				$clips[] = $clip;
 			}
 		}
     	return array($result['cnt'], $clips);
