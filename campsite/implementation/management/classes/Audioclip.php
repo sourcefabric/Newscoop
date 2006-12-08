@@ -674,13 +674,72 @@ class Audioclip {
 		}
 		$clips = array();
 		foreach ($result['results'] as $clipMetaData) {
-			$clip = new Audioclip($clipMetaData['gunid']);
+			$clip =& new Audioclip($clipMetaData['gunid']);
 			if ($clip->exists()) {
 				$clips[] = $clip;
 			}
 		}
     	return array($result['cnt'], $clips);
     } // fn SearchAudioclips
+
+
+    /**
+     * Retrieve a list of values of the give category that meet the given constraints
+     *
+     * @param string $p_category
+     *		
+     * @param array $conditions
+     *      array of struct with fields:
+     *          cat: string - metadata category name
+     *          op: string - operator, meaningful values:
+     *              'full', 'partial', 'prefix',
+     *              '=', '<', '<=', '>', '>='
+     *          val: string - search value
+     * @param string $operator
+     *      type of conditions join (any condition matches /
+     *      all conditions match), meaningful values: 'and', 'or', ''
+     *      (may be empty or ommited only with less then 2 items in
+     *      "conditions" field)
+     * @param int $limit
+     *      limit for result arrays (0 means unlimited)
+     * @param int $offset
+     *      starting point (0 means without offset)
+     * @param string $orderby
+     *      string - metadata category for sorting (optional) or array
+     *      of strings for multicolumn orderby
+     *      [default: dc:creator, dc:source, dc:title]
+     * @param bool $desc
+     *      boolean - flag for descending order (optional) or array of
+     *      boolean for multicolumn orderby (it corresponds to elements
+     *      of orderby field)
+     *      [default: all ascending]
+     *
+     * @return array
+     *      Array of Audioclip objects
+     */
+    function BrowseCategory($p_category, $offset = 0, $limit = 0,
+    						$conditions = array(),
+                            $operator = 'and',
+    						$orderby = 'dc:creator, dc:source, dc:title',
+                            $desc = false)
+    {
+        global $mdefs;
+
+        $xrc =& XR_CcClient::Factory($mdefs);
+		if (PEAR::isError($xrc)) {
+			return $xrc;
+		}
+        $sessid = camp_session_get('cc_sessid', '');
+		$criteria = array('filetype' => 'audioclip',
+						  'operator' => $operator,
+						  'limit' => $limit,
+						  'offset' => $offset,
+						  'orderby' => $orderby,
+						  'desc' => $desc,
+						  'conditions' => $conditions
+						  );
+		return $xrc->xr_browseCategory($sessid, $p_category, $criteria);
+    } // fn BrowseCategory
 
 
     /**

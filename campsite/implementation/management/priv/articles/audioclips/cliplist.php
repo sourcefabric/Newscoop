@@ -13,7 +13,7 @@
     </TD>
 </TR>
 </TABLE>
-<TABLE border="0" cellspacing="1" cellpadding="6" class="table_list">
+<TABLE border="0" cellspacing="1" cellpadding="6" class="table_list" width="100%">
 <FORM method="POST" name="audioclip_list" action="do_link.php">
 <INPUT type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>" />
 <INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />

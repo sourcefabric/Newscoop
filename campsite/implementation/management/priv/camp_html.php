@@ -21,9 +21,16 @@ function camp_html_select_option($p_value, $p_selectedValue, $p_printValue)
 {
 	$selected = false;
 	$str = '<OPTION VALUE="'.htmlspecialchars($p_value, ENT_QUOTES).'"';
-	if (!strcmp($p_value, $p_selectedValue)) {
-		$str .= ' SELECTED';
-		$selected = true;
+	if (is_array($p_selectedValue)) {
+		if (in_array($p_value, $p_selectedValue)) {
+			$str .= ' SELECTED';
+			$selected = true;
+		}
+	} else {
+		if (!strcmp($p_value, $p_selectedValue)) {
+			$str .= ' SELECTED';
+			$selected = true;
+		}
 	}
 	$str .= '>'.htmlspecialchars($p_printValue)."</OPTION>\n";
 	echo $str;
