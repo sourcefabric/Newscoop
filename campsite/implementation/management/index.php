@@ -28,7 +28,7 @@ if ($env_vars["SERVER_PORT"] == "") {
 // read parameters
 // do we need to decode the parameter values?
 // if run as CGI yes, otherwise no
-$g_decodeURL = $argc > 0;
+$g_decodeURL = isset($argc) && $argc > 0;
 $parameters = camp_read_parameters($query_string, $g_decodeURL);
 if (isset($parameters["ArticleCommentSubmitResult"])) {
 	unset($parameters["ArticleCommentSubmitResult"]);
