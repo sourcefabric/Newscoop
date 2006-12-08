@@ -345,3 +345,30 @@ hr {
 .audiosearch_container {
 	padding: 1px;
 }
+
+/* Drag-and-drop ordering */
+div#audioclip_sortlist div {
+	cursor: move;
+	padding: 2px;
+	text-align: center;
+	border-bottom: 1px solid #EEE;
+	background-color: #c1d3e3;
+}
+
+/* Tooltip Overlib Style */
+div.domTTOverlib {
+	border: 1px solid #8baed1;
+	background-color: #d5e2ee;
+}
+div.domTTOverlib .caption {
+	font-size: 10px;
+	font-weight: bold;
+	color: #000;
+	background-color: #fff;
+	padding: 2px;
+}
+div.domTTOverlib .contents {
+	font-size: 10px;
+	padding: 2px;
+	background-color: #d5e2ee;
+}

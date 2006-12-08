@@ -1,4 +1,3 @@
-<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domTT.css);</style>
 <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domLib.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domTT.js"></script>
 <script type="text/javascript">
@@ -37,14 +36,15 @@
 $color = 0;
 $counter = 0;
 foreach ($clips as $clip) {
-    $allTags = '';
+    $toolTipCaption = '';
+    $toolTipContent = '';
     $aClipMetaTags = $clip->getAvailableMetaTags();
     foreach ($aClipMetaTags as $metaTag) {
         list($nameSpace, $localPart) = explode(':', strtolower($metaTag));
         if ($localPart == 'title') {
-            $allTags .= '<strong>'.$metatagLabel[$metaTag] . ': ' . $clip->getMetatagValue($localPart) . '</strong><br />';
+            $toolTipCaption = '<strong>'.$metatagLabel[$metaTag] . ': ' . $clip->getMetatagValue($localPart) . '</strong><br />';
         } else {
-            $allTags .= $metatagLabel[$metaTag] . ': ' . $clip->getMetatagValue($localPart) . '<br />';
+            $toolTipContent .= $metatagLabel[$metaTag] . ': ' . $clip->getMetatagValue($localPart) . '<br />';
         }
     }
     if ($color == 1) {
@@ -58,7 +58,7 @@ foreach ($clips as $clip) {
     <script>
         default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";
     </script>
-    <TR id="rw_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over'); domTT_activate(this, event, 'content', '<?php p(addslashes($allTags)); ?>', 'trail', true, 'delay', 300);" onmouseout="setPointer(this, <?php p($counter); ?>, 'out'); domTT_close(this);">
+    <TR id="rw_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over'); domTT_activate(this, event, 'caption', '<?php p(addslashes($toolTipCaption)); ?>', 'content', '<?php p(addslashes($toolTipContent)); ?>', 'trail', true, 'delay', 300);" onmouseout="setPointer(this, <?php p($counter); ?>, 'out'); domTT_close(this);">
     <?php
     if ($articleObj->userCanModify($g_user)) {
     ?>

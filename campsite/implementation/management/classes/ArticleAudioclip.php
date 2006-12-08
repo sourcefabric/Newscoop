@@ -23,6 +23,7 @@ class ArticleAudioclip extends DatabaseObject {
     var $m_columnNames = array('fk_article_number',
                                'fk_audioclip_gunid',
                                'order_no');
+    var $m_exists = false;
 
     /**
      * The article audioclip table links together articles with Audioclips.
@@ -42,6 +43,7 @@ class ArticleAudioclip extends DatabaseObject {
         }
         if (!is_null($p_articleNumber) && !is_null($p_audioclipGunId)) {
             $this->fetch();
+            $this->m_exists = true;
         }
     } // constructor
 
@@ -74,6 +76,27 @@ class ArticleAudioclip extends DatabaseObject {
 
 
     /**
+     * Sets the order for the article audioclip
+     *
+     * @param int $p_orderNo
+     *      The order number to be set
+     */
+    function setOrder($p_orderNo)
+    {
+        global $g_ado_db;
+
+        if (!$this->m_exists) {
+            return false;
+        }
+        $queryStr = "UPDATE ".$this->m_dbTableName."
+                     SET order_no = '".intval($p_orderNo)."' "
+                   ."WHERE fk_article_number = '".$this->getArticleNumber()."' "
+                   ."AND fk_audioclip_gunid = '".$g_ado_db->escape($this->getAudioclipGunId())."'";
+        $g_ado_db->Execute($queryStr);
+    } // fn setOrder
+
+
+    /**
      * Get all the audioclips that belong to this article.
      *
      * @param int $p_articleNumber
@@ -88,7 +111,8 @@ class ArticleAudioclip extends DatabaseObject {
 
         $queryStr = "SELECT fk_audioclip_gunid
                      FROM ArticleAudioclips
-                     WHERE fk_article_number = '$p_articleNumber'";
+                     WHERE fk_article_number = '$p_articleNumber'
+                     ORDER BY order_no";
         $rows = $g_ado_db->GetAll($queryStr);
         $returnArray = array();
         if (is_array($rows)) {

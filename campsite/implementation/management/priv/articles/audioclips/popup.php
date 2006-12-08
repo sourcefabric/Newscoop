@@ -2,8 +2,6 @@
 camp_load_translation_strings("article_audioclips");
 camp_load_translation_strings('api');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 
 if (!$g_user->hasPermission("AttachAudioclipToArticle")) {
 	$errorStr = getGS('You do not have the right to attach audio clips to articles.');

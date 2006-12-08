@@ -820,7 +820,7 @@ if ($f_edit_mode == "edit") { ?>
 		</TD>
 	</TR>
 	<?php } ?>
-
+    </FORM>
 	</TABLE>
 	<!-- END Article Content -->
 </TD>
@@ -829,386 +829,54 @@ if ($f_edit_mode == "edit") { ?>
 	<!-- BEGIN right side of article screen -->
 	<TD valign="top" style="border-left: 1px solid #8baed1;" width="200px">
 		<TABLE width="100%">
-		<!-- Begin Scheduled Publishing section -->
 		<?php if ($articleObj->getWorkflowStatus() != 'N') { ?>
 		<TR><TD>
-			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
-			<TR>
-				<TD>
-					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
-					<TR>
-						<TD align="left">
-						<b><?php putGS("Publish Schedule"); ?></b>
-						</td>
-						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('Publish')) {  ?>
-						<td align="right">
-							<table cellpadding="2" cellspacing="0"><tr><td><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></td>
-							<td><a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "autopublish.php"); ?>', 'autopublish_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=450, height=500, top=200, left=200');"><?php putGS("Add Event"); ?></a></td></tr></table>
-						</td>
-						<?php } ?>
-					</tr>
-					</table>
-				</td>
-			</tr>
-			<?php foreach ($articleEvents as $event) { ?>
-			<tr>
-				<td style="padding-left: 8px;">
-					<table cellpadding="0" cellspacing="2">
-					<tr>
-						<td valign="middle" style="padding-top: 3px;">
-							<?php p(htmlspecialchars($event->getActionTime())); ?>
-						</td>
-
-						<td style="padding-left: 3px;" valign="middle">
-						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('Publish')) { ?>
-						<a href="<?php p(camp_html_article_url($articleObj, $f_language_id, "autopublish_del.php", '', '&f_event_id='.$event->getArticlePublishId())); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the event scheduled on $1?", camp_javascriptspecialchars($event->getActionTime())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
-						<?php } ?>
-						</td>
-					</tr>
-					<?php
-					$publishAction = $event->getPublishAction();
-					if (!empty($publishAction)) {
-						echo "<tr><td colspan=2 style='padding-left: 7px;'>";
-						if ($publishAction == "P") {
-							putGS("Publish");
-						}
-						if ($publishAction == "U") {
-							putGS("Unpublish");
-						}
-						echo "</td></tr>";
-					}
-					$frontPageAction = $event->getFrontPageAction();
-					if (!empty($frontPageAction)) {
-						echo "<tr><td colspan=2 style='padding-left: 7px;'>";
-						if ($frontPageAction == "S") {
-							putGS("Show on front page");
-						}
-						if ($frontPageAction == "R") {
-							putGS("Remove from front page");
-						}
-						echo "</td></tr>";
-					}
-					$sectionPageAction = $event->getSectionPageAction();
-					if (!empty($sectionPageAction)) {
-						echo "<tr><td colspan=2 style='padding-left: 7px;'>";
-						if ($sectionPageAction == "S") {
-							putGS("Show on section page");
-						}
-						if ($sectionPageAction == "R") {
-							putGS("Remove from section page");
-						}
-						echo "</td></tr>";
-					}
-					?>
-					</table>
-				</td>
-			</tr>
-			<?php } ?>
-			</table>
+            <!-- BEGIN Scheduled Publishing table -->
+            <?php require('edit_schedule_box.php'); ?>
+		    <!-- END Scheduled Publishing table -->
 		</TD></TR>
 		<?php } ?>
-		<!-- End Scheduled Publishing section -->
+
 
 		<?php if ($showComments) { ?>
-		<!-- Begin Comment Info -->
-		<tr><td>
-			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
-			<TR>
-				<TD>
-					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
-					<TR>
-						<TD align="left">
-						<b><?php putGS("Comments"); ?></b>
-						</td>
-					</tr>
-					</table>
-				</td>
-			</tr>
-				<td align="left" width="100%" style="padding-left: 8px;">
-				<?php
-				if (is_array($comments)) {
-					putGS("Total:"); ?> <?php p(count($comments));
-				?>
-				    <br />
-				    <?php if ($f_show_comments) { ?>
-				    <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&f_show_comments=0"); ?>"><?php putGS("Hide Comments"); ?></a>
-				    <?php } else { ?>
-				    <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&f_show_comments=1"); ?>"><?php putGS("Show Comments"); ?></a>
-				    <?php }
-				} else {
-					putGS("Comments Disabled");
-				}
-				?>
-				
-                </td>
-            </tr>
-            </table>
-		</td></tr>
-		<!-- End Comment Info -->
+		<TR><TD>
+		    <!-- BEGIN Comments table -->
+            <?php require('edit_comments_box.php'); ?>
+		    <!-- END Comments table -->
+		</TD></TR>
         <?php } ?>
+
 
 		<TR><TD>
 			<!-- BEGIN Images table -->
-			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
-			<TR>
-				<TD>
-					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
-					<TR>
-						<TD align="left">
-						<b><?php putGS("Images"); ?></b>
-						</td>
-						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachImageToArticle')) {  ?>
-						<td align="right">
-							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
-							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php"); ?>', 'attach_image', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><?php putGS("Attach"); ?></a>
-						</td>
-						<?php } ?>
-					</tr>
-					</table>
-				</td>
-			</tr>
-			<?PHP
-			foreach ($articleImages as $tmpArticleImage) {
-				$image = $tmpArticleImage->getImage();
-				$imageEditUrl = "/$ADMIN/articles/images/edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_image_id=".$image->getImageId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected&f_image_template_id=".$tmpArticleImage->getTemplateId();
-				$detachUrl = "/$ADMIN/articles/images/do_unlink.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_image_id=".$image->getImageId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id&f_image_template_id=".$tmpArticleImage->getTemplateId();
-				$imageSize = getimagesize($image->getImageStorageLocation());
-			?>
-			<tr>
-				<td align="center" width="100%">
-					<table>
-					<tr>
-						<td align="center" valign="middle">
-							<?php echo $tmpArticleImage->getTemplateId(); ?>.
-						</td>
-						<td align="center" valign="middle">
-							<?php if ($f_edit_mode == "edit") { ?><a href="<?php p($imageEditUrl); ?>"><?php } ?><img src="<?php p($image->getThumbnailUrl()); ?>" border="0"><?php if ($f_edit_mode == "edit") { ?></a><?php } ?>
-						</td>
-						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachImageToArticle')) { ?>
-						<td>
-							<a href="<?php p($detachUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the image \\'$1\\' from the article?", camp_javascriptspecialchars($image->getDescription())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
-						</td>
-						<?php } ?>
-					</tr>
-					<tr>
-						<td></td>
-						<td align="center"><?php p($imageSize[0]."x".$imageSize[1]); ?></td>
-						<td></td>
-					</tr>
-					</table>
-				</td>
-			</tr>
-			<?php } ?>
-			</TABLE>
+            <?php require('edit_images_box.php'); ?>
 			<!-- END Images table -->
 		</TD></TR>
 
 
 		<TR><TD>
 			<!-- BEGIN Files table -->
-			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
-			<TR>
-				<TD>
-					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
-					<TR>
-						<TD align="left">
-						<b><?php putGS("Files"); ?></b>
-						</td>
-						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AddFile')) {  ?>
-						<td align="right">
-							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
-							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "files/popup.php"); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');"><?php putGS("Attach"); ?></a>
-						</td>
-						<?php } ?>
-					</tr>
-					</table>
-				</td>
-			</tr>
-			<?PHP
-			foreach ($articleFiles as $file) {
-				$fileEditUrl = "/$ADMIN/articles/files/edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_attachment_id=".$file->getAttachmentId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
-				$deleteUrl = "/$ADMIN/articles/files/do_del.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_attachment_id=".$file->getAttachmentId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id";
-				$downloadUrl = "/attachment/".basename($file->getStorageLocation())."?g_download=1";
-				if (strstr($file->getMimeType(), "image/") && (strstr($_SERVER['HTTP_ACCEPT'], $file->getMimeType()) ||
-										(strstr($_SERVER['HTTP_ACCEPT'], "*/*")))) {
-				$previewUrl = "/attachment/".basename($file->getStorageLocation())."?g_show_in_browser=1";
-				}
-			?>
-			<tr>
-				<td align="center" width="100%">
-					<table>
-					<tr>
-						<td align="center" valign="top">
-							<?php if ($f_edit_mode == "edit") { ?><a href="<?php p($fileEditUrl); ?>"><?php } p(wordwrap($file->getFileName(), "25", "<br>", true)); ?><?php if ($f_edit_mode == "edit") { ?></a><?php } ?><br><?php p(htmlspecialchars($file->getDescription($f_language_selected))); ?>
-						</td>
-						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('DeleteFile')) { ?>
-						<td>
-							<a title="<?php putGS("Delete"); ?>" href="<?php p($deleteUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the file \\'$1\\' from the article?", camp_javascriptspecialchars($file->getFileName())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0" /></a><br />
-							<?php if (!empty($previewUrl)) { ?>
-							<a title="<?php putGS("Preview"); ?>" href="javascript: void(0);" onclick="window.open('<?php echo $previewUrl; ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/preview-16x16.png" border="0" /></a>
-							<?php } ?>
-						</td>
-						<?php } ?>
-					</tr>
-					<tr>
-						<td align="center"><?php p(camp_format_bytes($file->getSizeInBytes())); ?> <a title="<?php putGS("Download"); ?>" href="<?php p($downloadUrl); ?>"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/download.png" border="0" /></a></td>
-						<td></td>
-					</tr>
-					</table>
-				</td>
-			</tr>
-			<?php } ?>
-			</TABLE>
+			<?php require('edit_files_box.php'); ?>
 			<!-- END Files table -->
 		</TD></TR>
 
 
-
 		<TR><TD>
-			<!-- BEGIN TOPICS table -->
-			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
-			<TR>
-				<TD>
-					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
-					<TR>
-						<TD align="left">
-						<b><?php putGS("Topics"); ?></b>
-						</td>
-						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachTopicToArticle')) {  ?>
-						<td align="right">
-							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
-							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>', 'attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><?php putGS("Attach"); ?></a>
-						</td>
-						<?php } ?>
-					</tr>
-					</table>
-				</td>
-			</tr>
-			<?PHP
-			foreach ($articleTopics as $tmpArticleTopic) {
-				$detachUrl = "/$ADMIN/articles/topics/do_del.php?f_article_number=$f_article_number&f_topic_id=".$tmpArticleTopic->getTopicId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id";
-			?>
-			<tr>
-				<td align="center" width="100%" style="border-top: 1px solid #EEEEEE;">
-					<table>
-					<tr>
-						<td align="center" valign="middle">
-							<?php
-							$path = $tmpArticleTopic->getPath();
-							$pathStr = "";
-							foreach ($path as $element) {
-								$name = $element->getName($f_language_selected);
-								if (empty($name)) {
-									// For backwards compatibility -
-									// get the english translation if the translation
-									// doesnt exist for the article's language.
-									$name = $element->getName(1);
-									if (empty($name)) {
-										$name = "-----";
-									}
-								}
-								$pathStr .= " / ". htmlspecialchars($name);
-							}
-
-							// Get the topic name for the 'detach topic' dialog box, below.
-							$tmpTopicName = $tmpArticleTopic->getName($f_language_selected);
-							// For backwards compatibility.
-							if (empty($tmpTopicName)) {
-								$tmpTopicName = $tmpArticleTopic->getName(1);
-							}
-							?>
-							<?php p(wordwrap($pathStr, 25, "<br>&nbsp;&nbsp;")); ?>
-						</td>
-						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachTopicToArticle')) { ?>
-						<td>
-							<a href="<?php p($detachUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the topic \\'$1\\' from the article?", camp_javascriptspecialchars($tmpTopicName)); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
-						</td>
-						<?php } ?>
-					</tr>
-					</table>
-				</td>
-			</tr>
-			<?php } ?>
-			</TABLE>
-			<!-- END TOPICS table -->
+			<!-- BEGIN Topics table -->
+			<?php require('edit_topics_box.php'); ?>
+			<!-- END Topics table -->
 		</TD></TR>
 
 
 		<TR><TD>
-			<!-- BEGIN AUDIO CLIPS table -->
-			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
-			<TR>
-				<TD>
-					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
-					<TR>
-						<TD align="left">
-						<b><?php putGS("Audio clips"); ?></b>
-						</td>
-                        <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachAudioclipToArticle')) {  ?>
-						<td align="right">
-							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
-                            <a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php"); ?>', 'attach_audioclip', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><?php putGS("Attach"); ?></a>
-						</td>
-						<?php } ?>
-					</tr>
-					</table>
-				</td>
-			</tr>
-            <style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domTT.css);</style>
-            <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domLib.js"></script>
-            <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domTT.js"></script>
-            <script type="text/javascript">
-                var domTT_styleClass = 'domTTOverlib';
-            </script>
-            <?php
-            foreach($articleAudioclips as $articleAudioclip) {
-                $allTags = '';
-                $aClipMetaTags = $articleAudioclip->getAvailableMetaTags();
-                foreach ($aClipMetaTags as $metaTag) {
-                    list($nameSpace, $localPart) = explode(':', strtolower($metaTag));
-                    if ($localPart == 'title') {
-                        $allTags .= '<strong>'.$metatagLabel[$metaTag] . ': ' . $articleAudioclip->getMetatagValue($localPart) . '</strong><br />';
-                    } else {
-                        $allTags .= $metatagLabel[$metaTag] . ': ' . $articleAudioclip->getMetatagValue($localPart) . '<br />';
-                    }
-                }
-                if (($f_edit_mode == "edit")
-                    && $g_user->hasPermission('AttachAudioclipToArticle')) {
-                    $aClipEditUrl = "/$ADMIN/articles/audioclips/edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_action=edit&f_audioclip_id=".$articleAudioclip->getGunId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
-                    $aClipDeleteUrl = "/$ADMIN/articles/audioclips/do_del.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_audioclip_id=".$articleAudioclip->getGunId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id";
-                    $audioclipEditLink = '<a href="javascript: void(0);" onclick="window.open(\''.$aClipEditUrl.'\', \'attach_audioclip\', \'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100\');" onmouseover="domTT_activate(this, event, \'content\', \''.addslashes($allTags).'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
-                    $audioclipDeleteLink = '<a href="'.$aClipDeleteUrl.'" onclick="return confirm(\''.getGS("Are you sure you want to remove the audio file \'$1\' from the article?", camp_javascriptspecialchars($articleAudioclip->getMetatagValue('title'))).'\');"><img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/unlink.png" border="0" /></a>';
-                    $audioclipLink = $audioclipEditLink . ' ' . $audioclipDeleteLink;
-                } else {
-                    $audioclipLink = '<a href="#" onmouseover="domTT_activate(this, event, \'content\', \''.addslashes($allTags).'\', \'trail\', true, \'delay\', 0);">'.wordwrap($articleAudioclip->getMetatagValue('title'), '25', '<br />', true).'</a>';
-                }
-            ?>
-            <tr>
-                <td align="center" width="100%" style="border-top: 1px solid #EEEEEE;">
-                    <table>
-					<tr>
-						<td align="center" valign="middle" nowrap>
-                        <?php putGS("Title"); ?>: <?php p($audioclipLink); ?>
-                        <br />
-                        <?php putGS("Creator"); ?>: <?php p($articleAudioclip->getMetatagValue('creator')); ?>
-                        <br />
-                        <?php putGS("Length"); ?>: <?php p(camp_time_format($articleAudioclip->getMetatagValue('extent'))); ?>
-                        </td>
-                    </tr>
-                    </table>
-                </td>
-            </tr>
-            <?php
-            } // foreach($articleAudioclips as $articleAudioclip) {
-            ?>
-            </table>
-            <!-- END AUDIO CLIPS table -->
-          </td></tr>
+            <!-- BEGIN Audioclips table -->
+            <?php require('edit_audioclips_box.php'); ?>
+            <!-- END Audioclips table -->
+        </TD></TR>
 		</TABLE>
 	</TD>
 </TR>
 </TABLE>
-</FORM>
 <?php
 if ($showComments && $f_show_comments) {
     include("comments/show_comments.php");
