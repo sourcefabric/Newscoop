@@ -4,50 +4,59 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php"
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Audioclip.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
 
+define('VALUE_ALL', '-1');
 
 $f_order_by = camp_session_get('f_order_by', 'id');
 $f_order_direction = camp_session_get('f_order_direction', 'ASC');
 $f_audioclip_offset = camp_session_get('f_audioclip_offset', 0);
-$f_items_per_page = camp_session_get('f_items_per_page', 4);
-if ($f_items_per_page < 8) {
-    $f_items_per_page = 8;
+$f_items_per_page = camp_session_get('f_items_per_page', 10);
+if ($f_items_per_page < 4) {
+    $f_items_per_page = 4;
 }
 
 $f_category_3_name = camp_session_get('f_category_3_name', 'dc:source');
 $f_category_3_name_prev = camp_session_get('f_category_3_name_prev', 'dc:source');
 if ($f_category_3_name == $f_category_3_name_prev) {
-	$f_category_3_value = Input::Get('f_category_3_value', 'array', array(), true);
+	$f_category_3_value = Input::Get('f_category_3_value', 'array', array(VALUE_ALL), true);
 } else {
-	$f_category_3_value = array();
+	$f_category_3_value = array(VALUE_ALL);
+	$f_audioclip_offset = 0;
 }
 
 $f_category_2_name = camp_session_get('f_category_2_name', 'dc:creator');
 $f_category_2_name_prev = camp_session_get('f_category_2_name_prev', 'dc:creator');
+$f_category_2_value_prev = Input::Get('f_category_2_value_prev', 'array', array(VALUE_ALL), true);
 if ($f_category_2_name == $f_category_2_name_prev) {
-	$f_category_2_value = Input::Get('f_category_2_value', 'array', array(), true);
+	$f_category_2_value = Input::Get('f_category_2_value', 'array', array(VALUE_ALL), true);
+	if ($f_category_2_value != $f_category_2_value_prev) {
+		$f_category_3_value = array(VALUE_ALL);
+	}
 } else {
-	$f_category_2_value = array();
-	$f_category_3_value = array();
+	$f_category_2_value = array(VALUE_ALL);
+	$f_category_3_value = array(VALUE_ALL);
+	$f_audioclip_offset = 0;
 }
 
 $f_category_1_name = camp_session_get('f_category_1_name', 'dc:type');
 $f_category_1_name_prev = camp_session_get('f_category_1_name_prev', 'dc:type');
+$f_category_1_value_prev = Input::Get('f_category_1_value_prev', 'array', array(VALUE_ALL), true);
 if ($f_category_1_name == $f_category_1_name_prev) {
-	$f_category_1_value = Input::Get('f_category_1_value', 'array', array(), true);
+	$f_category_1_value = Input::Get('f_category_1_value', 'array', array(VALUE_ALL), true);
+	if ($f_category_1_value != $f_category_1_value_prev) {
+		$f_category_2_value = array(VALUE_ALL);
+		$f_category_3_value = array(VALUE_ALL);
+	}
 } else {
-	$f_category_1_value = array();
-	$f_category_2_value = array();
-	$f_category_3_value = array();
+	$f_category_1_value = array(VALUE_ALL);
+	$f_category_2_value = array(VALUE_ALL);
+	$f_category_3_value = array(VALUE_ALL);
+	$f_audioclip_offset = 0;
 }
 
 if (!Input::IsValid()) {
     camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
     exit;
 }
-
-$category1_values = Audioclip::BrowseCategory($f_category_1_name);
-$category2_values = Audioclip::BrowseCategory($f_category_2_name);
-$category3_values = Audioclip::BrowseCategory($f_category_3_name);
 
 // Build the links for ordering search results
 $OrderSign = '';
@@ -59,16 +68,33 @@ if ($f_order_direction == 'DESC') {
     $OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
 }
 
-// Gets all the available audioclips
-$r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page);
+$search_conditions = array();
+for ($varIndex = 1; $varIndex <= 3; $varIndex++) {
+	$f_curr_category_value =& ${'f_category_'.$varIndex.'_value'};
+	$f_curr_category_name =& ${'f_category_'.$varIndex.'_name'};
+	$category_conditions[$varIndex] = array();
+	foreach ($f_curr_category_value as $categoryValue) {
+		if ($categoryValue == '-1') {
+			continue;
+		}
+		$condition = array('cat' => $f_curr_category_name,
+						   'op' => '=',
+						   'val' => $categoryValue);
+		$category_conditions[$varIndex][] = $condition;
+	}
+	$search_conditions = array_merge($search_conditions, $category_conditions[$varIndex]);
+}
+$browse_category_2_conditions = $category_conditions[1];
+$browse_category_3_conditions = array_merge($category_conditions[1], $category_conditions[2]);
+$category_1_values = Audioclip::BrowseCategory($f_category_1_name);
+$category_2_values = Audioclip::BrowseCategory($f_category_2_name, 0, 0, $browse_category_2_conditions);
+$category_3_values = Audioclip::BrowseCategory($f_category_3_name, 0, 0, $browse_category_3_conditions);
+
+$r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, $search_conditions);
 $clipCount = $r[0];
 $clips = $r[1];
-
-if (count($clips) > 0) {
-    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&";
-    $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
 ?>
-<form name="browse" action="popup.php" method="GET">
+<form name="browse" action="popup.php" method="POST">
 <INPUT type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
 <INPUT type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
 <INPUT type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
@@ -77,9 +103,18 @@ if (count($clips) > 0) {
 <INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 <INPUT type="hidden" name="f_audio_attach_mode" value="existing" />
 <INPUT type="hidden" name="f_audio_search_mode" value="browse" />
-<input type="hidden" name="f_category_1_name_prev" value="<?php p($f_category_1_name); ?>"
-<input type="hidden" name="f_category_2_name_prev" value="<?php p($f_category_2_name); ?>"
-<input type="hidden" name="f_category_3_name_prev" value="<?php p($f_category_3_name); ?>"
+<input type="hidden" name="f_category_1_name_prev" value="<?php p($f_category_1_name); ?>">
+<input type="hidden" name="f_category_2_name_prev" value="<?php p($f_category_2_name); ?>">
+<input type="hidden" name="f_category_3_name_prev" value="<?php p($f_category_3_name); ?>">
+<?php
+for ($catIndex = 1; $catIndex <= 2; $catIndex++) {
+	foreach (${'f_category_'.$catIndex.'_value'} as $categoryValue) {
+?>
+<input type="hidden" name="f_category_<?php echo $catIndex; ?>_value_prev[]" value="<?php echo htmlspecialchars($categoryValue); ?>">
+<?php
+	}
+}
+?>
 <table border="0" cellspacing="1" cellpadding="6" class="table_list" width="100%">
 	<tr>
 		<td><?php putGS('Category'); ?>:</td>
@@ -126,31 +161,31 @@ if (count($clips) > 0) {
 	</tr>
 	<tr>
 		<td>
-			<select name="f_category_1_value[]" class="input_select" multiple size="4" style="width: 180px;" onchange="document.forms.browse.submit();">
-			<option value="-1">---</option>
+			<select name="f_category_1_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
+			<option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
 			<?php
-			foreach ($category1_values['results'] as $index=>$value) {
-				camp_html_select_option($index, $f_category_1_value, $value);
+			foreach ($category_1_values['results'] as $index=>$value) {
+				camp_html_select_option($value, $f_category_1_value, $value);
 			}
 			?>
 			</select>
 		</td>
 		<td>
-			<select name="f_category_2_value[]" class="input_select" multiple size="4" style="width: 180px;" onchange="document.forms.browse.submit();">
-			<option value="-1">---</option>
+			<select name="f_category_2_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
+			<option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
 			<?php
-			foreach ($category2_values['results'] as $index=>$value) {
-				camp_html_select_option($index, $f_category_2_value, $value);
+			foreach ($category_2_values['results'] as $index=>$value) {
+				camp_html_select_option($value, $f_category_2_value, $value);
 			}
 			?>
 			</select>
 		</td>
 		<td>
-			<select name="f_category_3_value[]" class="input_select" multiple size="4" style="width: 180px;" onchange="document.forms.browse.submit();">
-			<option value="-1">---</option>
+			<select name="f_category_3_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
+			<option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
 			<?php
-			foreach ($category3_values['results'] as $index=>$value) {
-				camp_html_select_option($index, $f_category_3_value, $value);
+			foreach ($category_3_values['results'] as $index=>$value) {
+				camp_html_select_option($value, $f_category_3_value, $value);
 			}
 			?>
 			</select>
@@ -159,6 +194,9 @@ if (count($clips) > 0) {
 </table>
 </form>
 <?php
+if (count($clips) > 0) {
+    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&";
+    $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
     require('cliplist.php');
 } else {
 ?>

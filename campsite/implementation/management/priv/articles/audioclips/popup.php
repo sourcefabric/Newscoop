@@ -50,7 +50,6 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 <table style="margin-top: 10px; margin-left: 5px; margin-right: 5px; margin-bottom: 5px;" cellpadding="0" cellspacing="0" width="100%">
 <tr>
 	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_audio_search_mode != "browse") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php", "", "&f_audio_search_mode=browse"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Browse"); ?></b></a></td>
-
 	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_audio_search_mode != "search") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php", "", "&f_audio_search_mode=search"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Search"); ?></b></a></td>
 </tr>
 <tr>
