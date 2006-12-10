@@ -23,7 +23,6 @@ class ArticleAudioclip extends DatabaseObject {
     var $m_columnNames = array('fk_article_number',
                                'fk_audioclip_gunid',
                                'order_no');
-    var $m_exists = false;
 
     /**
      * The article audioclip table links together articles with Audioclips.
@@ -43,7 +42,6 @@ class ArticleAudioclip extends DatabaseObject {
         }
         if (!is_null($p_articleNumber) && !is_null($p_audioclipGunId)) {
             $this->fetch();
-            $this->m_exists = true;
         }
     } // constructor
 

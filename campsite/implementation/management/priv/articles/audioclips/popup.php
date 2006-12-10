@@ -9,6 +9,9 @@ if (!$g_user->hasPermission("AttachAudioclipToArticle")) {
 	exit;
 }
 
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
