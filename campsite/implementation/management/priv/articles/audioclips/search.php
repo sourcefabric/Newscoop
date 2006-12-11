@@ -4,12 +4,11 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php"
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Audioclip.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
 
-
 $f_order_by = camp_session_get('f_order_by', 'id');
 $f_order_direction = camp_session_get('f_order_direction', 'ASC');
 $f_audioclip_offset = camp_session_get('f_audioclip_offset', 0);
 $f_operator = Input::Get('f_operator', 'string', 'and', true);
-$f_items_per_page = camp_session_get('f_items_per_page', 4);
+$f_items_per_page = camp_session_get('f_items_per_page', 10);
 
 $row_1 = Input::Get('row_1', 'array', array(), true);
 $row_2 = Input::Get('row_2', 'array', array(), true);
@@ -20,8 +19,8 @@ $row_5 = Input::Get('row_5', 'array', array(), true);
 // Maximum number of criteria input allowed
 $maxCriteria = 5;
 
-if ($f_items_per_page < 8) {
-	$f_items_per_page = 8;
+if ($f_items_per_page < 4) {
+	$f_items_per_page = 4;
 }
 
 if (!Input::IsValid()) {
@@ -176,7 +175,8 @@ for ($c = 1; $c <= $maxCriteria; $c++) {
 </TR>
 <TR>
     <TD align="right">
-        <INPUT type="submit" name="" class="button" value="<?php putGS("Submit"); ?>" />
+        <INPUT type="button" class="button" onclick="this.form.reset();" value="<?php putGS("Reset Criteria"); ?>" />
+        <INPUT type="submit" class="button" value="<?php putGS("Submit"); ?>" />
     </TD>
 </TR>
 <INPUT type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
