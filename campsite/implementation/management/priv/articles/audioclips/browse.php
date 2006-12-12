@@ -6,8 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
 
 define('VALUE_ALL', '-1');
 
-$f_order_by = camp_session_get('f_order_by', 'id');
-$f_order_direction = camp_session_get('f_order_direction', 'ASC');
+$f_order_by = Input::Get('f_order_by', 'string', 'dc:title', true);
+$f_order_direction = Input::Get('f_order_direction', 'string', 0, true);
 $f_audioclip_offset = camp_session_get('f_audioclip_offset', 0);
 $f_items_per_page = camp_session_get('f_items_per_page', 10);
 if ($f_items_per_page < 4) {
@@ -58,16 +58,6 @@ if (!Input::IsValid()) {
     exit;
 }
 
-// Build the links for ordering search results
-$OrderSign = '';
-if ($f_order_direction == 'DESC') {
-    $ReverseOrderDirection = "ASC";
-    $OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/descending.png\" border=\"0\">";
-} else {
-    $ReverseOrderDirection = "DESC";
-    $OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
-}
-
 $search_conditions = array();
 for ($varIndex = 1; $varIndex <= 3; $varIndex++) {
 	$f_curr_category_value =& ${'f_category_'.$varIndex.'_value'};
@@ -90,22 +80,35 @@ $category_1_values = Audioclip::BrowseCategory($f_category_1_name);
 $category_2_values = Audioclip::BrowseCategory($f_category_2_name, 0, 0, $browse_category_2_conditions);
 $category_3_values = Audioclip::BrowseCategory($f_category_3_name, 0, 0, $browse_category_3_conditions);
 
-$r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, $search_conditions);
+$r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, $search_conditions, null, $f_order_by, $f_order_direction);
 $clipCount = $r[0];
 $clips = $r[1];
+
+// Build the links for ordering search results
+// 1 = DESC, 0 = ASC
+$orderDirections = array('dc:title' => 0,
+                         'dc:creator' => 0,
+                         'dcterms:extent' => 0
+                         );
+if (array_key_exists($f_order_by, $orderDirections)) {
+    $orderDirections[$f_order_by] = ($f_order_direction == 1) ? 0 : 1;
+}
+
 ?>
 <form name="browse" action="popup.php" method="POST">
-<INPUT type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
-<INPUT type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
-<INPUT type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
-<INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
-<INPUT type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
-<INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
-<INPUT type="hidden" name="f_audio_attach_mode" value="existing" />
-<INPUT type="hidden" name="f_audio_search_mode" value="browse" />
+<input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
+<input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
+<input type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
+<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
+<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
+<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
+<input type="hidden" name="f_audio_attach_mode" value="existing" />
+<input type="hidden" name="f_audio_search_mode" value="browse" />
 <input type="hidden" name="f_category_1_name_prev" value="<?php p($f_category_1_name); ?>">
 <input type="hidden" name="f_category_2_name_prev" value="<?php p($f_category_2_name); ?>">
 <input type="hidden" name="f_category_3_name_prev" value="<?php p($f_category_3_name); ?>">
+<input type="hidden" name="f_order_by" value="" />
+<input type="hidden" name="f_order_direction" value="" />
 <?php
 for ($catIndex = 1; $catIndex <= 2; $catIndex++) {
 	foreach (${'f_category_'.$catIndex.'_value'} as $categoryValue) {
@@ -195,18 +198,18 @@ for ($catIndex = 1; $catIndex <= 2; $catIndex++) {
 </form>
 <?php
 if (count($clips) > 0) {
-    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&";
+    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";
     $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
     require('cliplist.php');
 } else {
 ?>
-<TABLE border="0" cellspacing="1" cellpadding="6" class="table_list">
-<TR>
-    <TD>
+<table border="0" cellspacing="1" cellpadding="6" class="table_list">
+<tr>
+    <td>
         <?php putGS("No audioclips found"); ?>
-    </TD>
-</TR>
-</TABLE>
+    </td>
+</tr>
+</table>
 <?php
 }
 ?>

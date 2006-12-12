@@ -4,8 +4,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php"
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Audioclip.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
 
-$f_order_by = camp_session_get('f_order_by', 'id');
-$f_order_direction = camp_session_get('f_order_direction', 'ASC');
+$f_order_by = Input::Get('f_order_by', 'string', 'dc:title', true);
+$f_order_direction = Input::Get('f_order_direction', 'string', 0, true);
 $f_audioclip_offset = camp_session_get('f_audioclip_offset', 0);
 $f_operator = Input::Get('f_operator', 'string', 'and', true);
 $f_items_per_page = camp_session_get('f_items_per_page', 10);
@@ -16,9 +16,6 @@ $row_3 = Input::Get('row_3', 'array', array(), true);
 $row_4 = Input::Get('row_4', 'array', array(), true);
 $row_5 = Input::Get('row_5', 'array', array(), true);
 
-// Maximum number of criteria input allowed
-$maxCriteria = 5;
-
 if ($f_items_per_page < 4) {
 	$f_items_per_page = 4;
 }
@@ -28,15 +25,8 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-// Build the links for ordering search results
-$OrderSign = '';
-if ($f_order_direction == 'DESC') {
-	$ReverseOrderDirection = "ASC";
-	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/descending.png\" border=\"0\">";
-} else {
-	$ReverseOrderDirection = "DESC";
-	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
-}
+// Maximum number of criteria input allowed
+$maxCriteria = 5;
 
 // Gets all the criteria to search by
 $conditions = array();
@@ -44,7 +34,8 @@ for ($c = 1, $counter = 0; $c <= $maxCriteria; $c++) {
     if (${'row_'.$c}['active'] == 1) {
         $conditions['row_'.$c] = array ('cat' => ${'row_'.$c}[0],
                                         'op' => ${'row_'.$c}[1],
-                                        'val' => ${'row_'.$c}[2]);
+                                        'val' => ${'row_'.$c}[2]
+                                        );
         $counter++;
     }
 }
@@ -53,13 +44,15 @@ if ($counter == 0) {
     $counter = 1;
     $row_1 = array('active' => 1,
                    0 => 'dc:title',
-                   1 => 'partial');
+                   1 => 'partial'
+                   );
 }
+
 // Gets all the available audioclips
 if (sizeof($conditions) > 0) {
-    $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, $conditions, $f_operator);
+    $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, $conditions, $f_operator, $f_order_by, $f_order_direction);
 } else {
-    $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page);
+    $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, null, $f_operator, $f_order_by, $f_order_direction);
 }
 
 if (PEAR::isError($r)) {
@@ -79,24 +72,34 @@ $operators = array('partial',
                    '<=',
                    '>',
                    '>='
-             );
+                   );
+// Build the links for ordering search results
+// 1 = DESC, 0 = ASC
+$orderDirections = array('dc:title' => 0,
+                         'dc:creator' => 0,
+                         'dcterms:extent' => 0
+                         );
+if (array_key_exists($f_order_by, $orderDirections)) {
+    $orderDirections[$f_order_by] = ($f_order_direction == 1) ? 0 : 1;
+}
+
 ?>
 
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-audiosearch.js"></script>
 
-<TABLE cellspacing="1" cellpadding="2" class="table_list">
-<FORM method="POST" name="search" action="popup.php">
+<table cellspacing="1" cellpadding="2" class="table_list">
+<form method="POST" name="search" action="popup.php">
 <?php
 for ($c = 1; $c <= $maxCriteria; $c++) {
 ?>
-<INPUT type="hidden" name="row_<?php p($c); ?>[active]" value="<?php p(${'row_'.$c}['active']); ?>" />
+<input type="hidden" name="row_<?php p($c); ?>[active]" value="<?php p(${'row_'.$c}['active']); ?>" />
 <?php
 }
 ?>
-<INPUT type="hidden" name="counter" value="<?php p($counter); ?>" />
-<INPUT type="hidden" name="max_rows" value="<?php p($maxCriteria); ?>" />
-<TR>
-    <TD>
+<input type="hidden" name="counter" value="<?php p($counter); ?>" />
+<input type="hidden" name="max_rows" value="<?php p($maxCriteria); ?>" />
+<tr>
+    <td>
     <?php
     for ($i = 1; $i <= $maxCriteria; $i++) {
     ?>
@@ -127,85 +130,86 @@ for ($c = 1; $c <= $maxCriteria; $c++) {
         <?php
         $rowStyle = (${'row_'.$i}['active'] != 1) ? 'display:none' : '';
         ?>
-        <DIV id="searchRow_<?php p($i); ?>" style="<?php p($rowStyle); ?>">
-        <DIV class="audiosearch_container">
-        <SELECT name="row_<?php p($i); ?>[0]" class="input_select" onchange="_hs_swapOptions(this.form, 'row_<?php p($i); ?>', 0">
+        <div id="searchRow_<?php p($i); ?>" style="<?php p($rowStyle); ?>">
+        <div class="audiosearch_container">
+        <select name="row_<?php p($i); ?>[0]" class="input_select" onchange="_hs_swapOptions(this.form, 'row_<?php p($i); ?>', 0">
         <?php
         foreach ($metatagLabel as $tag => $value) {
             camp_html_select_option($tag, '', $value);
         }
         ?>
-        </SELECT>
-        <SELECT name="row_<?php p($i); ?>[1]" class="input_select">
+        </select>
+        <select name="row_<?php p($i); ?>[1]" class="input_select">
         <?php
         foreach ($operators as $op) {
             camp_html_select_option($op, '', $op);
         }
         ?>
-        </SELECT>
-        <INPUT type="text" name="row_<?php p($i); ?>[2]" class="input_text" size="25" maxlength="255" value="<?php p(${'row_'.$i}[2]); ?>" />
+        </select>
+        <input type="text" name="row_<?php p($i); ?>[2]" class="input_text" size="25" maxlength="255" value="<?php p(${'row_'.$i}[2]); ?>" />
         <?php
         if ($i == 1) {
         ?>
-        <INPUT type="button" class="button" name="addRow" onclick="SearchForm_addRow('<?php putGS("Maximum reached"); ?>');" value="<?php putGS("Add"); ?>" />
+        <input type="button" class="button" name="addRow" onclick="SearchForm_addRow('<?php putGS("Maximum reached"); ?>');" value="<?php putGS("Add"); ?>" />
         <?php
         } else {
         ?>
-        <INPUT type="button" class="button" name="dropRow_<?php p($i); ?>" onclick="SearchForm_dropRow('<?php p($i); ?>');" value="-" />
+        <input type="button" class="button" name="dropRow_<?php p($i); ?>" onclick="SearchForm_dropRow('<?php p($i); ?>');" value="-" />
         <?php
         }
         ?>
-        </DIV>
-        </DIV id="searchRow_<?php p($i); ?>">
+        </div>
+        </div id="searchRow_<?php p($i); ?>">
     <?php
     }
     ?>
-    </TD>
-</TR>
-<TR>
-    <TD align="center">
+    </td>
+</tr>
+<tr>
+    <td align="center">
         <?php putGS("Operator"); ?>:
-        <SELECT name="f_operator" class="input_select">
+        <select name="f_operator" class="input_select">
         <?php
             camp_html_select_option('or', $f_operator, 'Or');
             camp_html_select_option('and', $f_operator, 'And');
         ?>
-        </SELECT>
-    </TD>
-</TR>
-<TR>
-    <TD align="right">
-        <INPUT type="button" class="button" onclick="this.form.reset();" value="<?php putGS("Reset Criteria"); ?>" />
-        <INPUT type="submit" class="button" value="<?php putGS("Submit"); ?>" />
-    </TD>
-</TR>
-<INPUT type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
-<INPUT type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
-<INPUT type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
-<INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
-<INPUT type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
-<INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
-<INPUT type="hidden" name="BackLink" value="<?php p($_SERVER['REQUEST_URI']); ?>">
-<INPUT type="hidden" name="f_audio_attach_mode" value="existing" />
-<INPUT type="hidden" name="f_audio_search_mode" value="search" />
-
-</FORM>
-</TABLE>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td align="right">
+        <input type="button" class="button" onclick="this.form.reset();" value="<?php putGS("Reset Criteria"); ?>" />
+        <input type="submit" class="button" value="<?php putGS("Submit"); ?>" />
+    </td>
+</tr>
+<input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>" />
+<input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>" />
+<input type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>" />
+<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
+<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>" />
+<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
+<input type="hidden" name="BackLink" value="<?php p($_SERVER['REQUEST_URI']); ?>" />
+<input type="hidden" name="f_audio_attach_mode" value="existing" />
+<input type="hidden" name="f_audio_search_mode" value="search" />
+<input type="hidden" name="f_order_by" value="" />
+<input type="hidden" name="f_order_direction" value="" />
+</form>
+</table>
 <?php
 if (count($clips) > 0) {
-    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&";
+    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";
     $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
 
     require('cliplist.php');
 } else {
 ?>
-<TABLE border="0" cellspacing="1" cellpadding="6" class="table_list">
-<TR>
-    <TD>
+<table border="0" cellspacing="1" cellpadding="6" class="table_list">
+<tr>
+    <td>
         <?php putGS("No audioclips found"); ?>
-    </TD>
-</TR>
-</TABLE>
+    </td>
+</tr>
+</table>
 <?php
 }
 ?>
