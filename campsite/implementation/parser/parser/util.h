@@ -37,6 +37,8 @@ General purpose functions
 #include <new>
 #include <iostream>
 
+#include "globals.h"
+
 using std::cout;
 using std::endl;
 using std::ostream;
@@ -170,6 +172,13 @@ public:
 private:
 	MYSQL_RES* m_pRes;
 };
+
+// SQLEscapeString: escape given string for sql query; returns escaped string
+// The returned string must be deallocated by the user using delete operator.
+// Parameters:
+//		const char* src - source string
+//		ulint p_nLength - string length
+char* SQLEscapeString(const char* src, ulint p_nLength);
 
 MYSQL_ROW QueryFetchRow(MYSQL* p_pDBConn, const string& p_rcoQuery, CMYSQL_RES& p_rcoQRes);
 

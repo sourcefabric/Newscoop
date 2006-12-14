@@ -73,6 +73,7 @@ using std::endl;
 	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
 	ST_LIST " " ST_ARTICLECOMMENT ", " \
 	ST_LIST " " ST_ARTICLEIMAGE ", " \
+	ST_LIST " " ST_AUDIOATTACHMENT ", " \
 	ST_URL ", " \
 	ST_URLPARAMETERS ", " \
 	ST_URI ", " \
@@ -104,6 +105,7 @@ using std::endl;
 	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
 	ST_LIST " " ST_ARTICLECOMMENT ", " \
 	ST_LIST " " ST_ARTICLEIMAGE ", " \
+	ST_LIST " " ST_AUDIOATTACHMENT ", " \
 	ST_URL ", " \
 	ST_URLPARAMETERS ", " \
 	ST_URI ", " \
@@ -133,6 +135,7 @@ using std::endl;
 	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
 	ST_LIST " " ST_ARTICLECOMMENT ", " \
 	ST_LIST " " ST_ARTICLEIMAGE ", " \
+	ST_LIST " " ST_AUDIOATTACHMENT ", " \
 	ST_URL ", " \
 	ST_URLPARAMETERS ", " \
 	ST_URI ", " \
@@ -157,6 +160,7 @@ using std::endl;
 	ST_LIST " " ST_SUBTOPIC ", " \
 	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
 	ST_LIST " " ST_ARTICLEIMAGE ", " \
+	ST_LIST " " ST_AUDIOATTACHMENT ", " \
 	ST_URL ", " \
 	ST_URLPARAMETERS ", " \
 	ST_URI ", " \
@@ -202,6 +206,7 @@ using std::endl;
 #define SUBLV_LISTARTICLECOMMENT 2097152
 #define SUBLV_ARTICLECOMMENT 4194304
 #define SUBLV_LISTIMAGE 8388608
+#define SUBLV_LISTAUDIOATTACHMENT 16777216
 
 
 // macro definition
@@ -490,24 +495,25 @@ const char* CParser::LvListSt(int level)
 	if (level & LV_LARTICLE || level & LV_LSUBTITLE)
 	{
 		return ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC
-				", " ST_ARTICLECOMMENT ", " ST_ARTICLEIMAGE;
+				", " ST_ARTICLECOMMENT ", " ST_ARTICLEIMAGE ", " ST_AUDIOATTACHMENT;
 	}
 	else if (level & LV_LSECTION)
 	{
-		return ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT ", "
-				ST_SUBTOPIC ", " ST_ARTICLECOMMENT ", " ST_ARTICLEIMAGE;
+		return ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT
+				", " ST_SUBTOPIC ", " ST_ARTICLECOMMENT ", " ST_ARTICLEIMAGE
+				", " ST_AUDIOATTACHMENT;
 	}
 	else if (level & LV_LISSUE)
 	{
 		return ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC
 				", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC ", " ST_ARTICLECOMMENT
-				", " ST_ARTICLEIMAGE;
+				", " ST_ARTICLEIMAGE ", " ST_AUDIOATTACHMENT;
 	}
 	else if (level & LV_ROOT)
 	{
 		return ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC
 				", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC ", " ST_ARTICLECOMMENT
-				", " ST_ARTICLEIMAGE;
+				", " ST_ARTICLEIMAGE ", " ST_AUDIOATTACHMENT;
 	}
 	else
 	{
@@ -560,8 +566,8 @@ string CParser::IfStatements(int level, ulint sublevel)
 string CParser::PrintStatements(int level, ulint sublevel)
 {
 	string s_str;
-	s_str = ST_PUBLICATION ", " ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_IMAGE ", "
-	        ST_SEARCH ", " ST_SUBSCRIPTION ", " ST_USER;
+	s_str = ST_PUBLICATION ", " ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_IMAGE
+			", " ST_AUDIOATTACHMENT ", " ST_SEARCH ", " ST_SUBSCRIPTION ", " ST_USER;
 	if (level > LV_ROOT || sublevel & SUBLV_SEARCHRESULT)
 		s_str += ", " ST_LIST;
 	if ((sublevel & SUBLV_LOGIN) == 0)
@@ -944,15 +950,19 @@ inline int CParser::HHTMLEncoding(CActionList& al, int level, ulint sublevel)
 //		CActionList& al - reference to actions list
 inline int CParser::HURLParameters(CActionList& al)
 {
-	l = lex.getLexem();
-	DEBUGLexem("urlparam", l);
-	lint img = -1, nTemplate = -1;
-	bool fromstart = false, allsubtitles = false;
+	lint img = -1;
+	lint nTemplate = -1;
+	bool fromstart = false;
+	bool allsubtitles = false;
 	bool bArticleAttachment = false;
 	bool bArticleComment = false;
+	bool bAudioAttachment = false;
 	bool bFirst = true;
 	CListLevel nResetList = CLV_ROOT;
 	TPubLevel nLevel = CMS_PL_SUBTITLE;
+
+	l = lex.getLexem();
+	DEBUGLexem("urlparam", l);
 	while (l->res() != CMS_LEX_END_STATEMENT)
 	{
 		if (!l->atom())
@@ -965,6 +975,17 @@ inline int CParser::HURLParameters(CActionList& al)
 		if (case_comp(l->atom()->identifier(), "articleAttachment") == 0)
 		{
 			bArticleAttachment = true;
+			if (!bFirst)
+			{
+				SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
+						  lex.prevLine(), lex.prevColumn());
+			}
+			l = lex.getLexem();
+			continue;
+		}
+		if (case_comp(l->atom()->identifier(), "audioAttachment") == 0)
+		{
+			bAudioAttachment = true;
 			if (!bFirst)
 			{
 				SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
@@ -1053,16 +1074,19 @@ inline int CParser::HURLParameters(CActionList& al)
 	}
 	if (st->id() == CMS_ST_URLPARAMETERS)
 		al.insert(al.end(),
-		          new CActURLParameters(fromstart, allsubtitles, img, nResetList, nTemplate, 
-										nLevel, bArticleAttachment, bArticleComment));
+		          new CActURLParameters(fromstart, allsubtitles, img, nResetList,
+										nTemplate, nLevel, bArticleAttachment,
+										bArticleComment, bAudioAttachment));
 	if (st->id() == CMS_ST_URI)
 		al.insert(al.end(),
-		          new CActURI(fromstart, allsubtitles, img, nResetList, nTemplate, nLevel,
-							  bArticleAttachment, bArticleComment));
+		          new CActURI(fromstart, allsubtitles, img, nResetList, nTemplate,
+							  nLevel, bArticleAttachment, bArticleComment,
+							  bAudioAttachment));
 	if (st->id() == CMS_ST_URL)
 		al.insert(al.end(),
-				  new CActURL(fromstart, allsubtitles, img, nResetList, nTemplate, nLevel,
-							  bArticleAttachment, bArticleComment));
+				  new CActURL(fromstart, allsubtitles, img, nResetList, nTemplate,
+							  nLevel, bArticleAttachment, bArticleComment,
+							  bAudioAttachment));
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
 	return 0;
@@ -1134,7 +1158,7 @@ inline int CParser::HPrint(CActionList& al, int level, ulint sublevel)
 	if (st->id() == CMS_ST_LIST
 		   && (level & (LV_LISSUE | LV_LSECTION | LV_LARTICLE | LV_LSUBTITLE)) == 0
 		   && (sublevel & (SUBLV_SEARCHRESULT | SUBLV_LISTARTICLECOMMENT
-		   | SUBLV_ARTICLEATTACHMENT)) == 0)
+		   | SUBLV_ARTICLEATTACHMENT | SUBLV_LISTAUDIOATTACHMENT)) == 0)
 	{
 		SetPError(parse_err, PERR_INVALID_STATEMENT, MODE_PARSE,
 		          LvStatements(level), lex.prevLine(), lex.prevColumn());
@@ -1472,6 +1496,8 @@ inline int CParser::HList(CActionList& al, int level, ulint sublevel)
 		sublevel |= SUBLV_ARTICLEATTACHMENT;
 	if (mod == CMS_ST_ARTICLECOMMENT)
 		sublevel |= SUBLV_LISTARTICLECOMMENT;
+	if (mod == CMS_ST_AUDIOATTACHMENT)
+		sublevel |= SUBLV_LISTAUDIOATTACHMENT;
 	int tmp_level = LMod2Level(mod);
 	if (tmp_level == 0)
 		tmp_level = level;
@@ -1635,7 +1661,8 @@ inline int CParser::HIf(CActionList& al, int level, ulint sublevel)
 		if ((sublevel & SUBLV_EMPTYLIST)
 			    || (level == LV_ROOT
 				    && (sublevel & (SUBLV_SEARCHRESULT | SUBLV_ARTICLETOPIC | SUBLV_SUBTOPIC
-				        | SUBLV_ARTICLEATTACHMENT | SUBLV_LISTARTICLECOMMENT)) == 0))
+				        | SUBLV_ARTICLEATTACHMENT | SUBLV_LISTARTICLECOMMENT
+						| SUBLV_LISTAUDIOATTACHMENT)) == 0))
 		{
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 			            IfStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
@@ -1703,9 +1730,10 @@ inline int CParser::HIf(CActionList& al, int level, ulint sublevel)
 			param = CParameter(attr->attribute());
 		sublevel |= SUBLV_IFISSUE;
 	}
-	else if (st->id() == CMS_ST_SECTION || st->id() == CMS_ST_ARTICLE || st->id() == CMS_ST_TOPIC
-				|| st->id() == CMS_ST_LANGUAGE || st->id() == CMS_ST_PUBLICATION
-				|| st->id() == CMS_ST_ARTICLEATTACHMENT)
+	else if (st->id() == CMS_ST_LANGUAGE || st->id() == CMS_ST_PUBLICATION
+				|| st->id() == CMS_ST_SECTION || st->id() == CMS_ST_ARTICLE
+				|| st->id() == CMS_ST_TOPIC || st->id() == CMS_ST_ARTICLEATTACHMENT
+				|| st->id() == CMS_ST_AUDIOATTACHMENT)
 	{
 		RequireAtom(l);
 		string type;
@@ -2273,7 +2301,9 @@ inline int CParser::HURIPath(CActionList& al)
 	TPubLevel nLevel = CMS_PL_SUBTITLE;
 	const CLexem *l;
 	StringSet ah;
-	bool bArticleAttachment = false, bFirst = true;
+	bool bArticleAttachment = false;
+	bool bAudioAttachment = false;
+	bool bFirst = true;
 	l = lex.getLexem();
 	while (l->res() != CMS_LEX_END_STATEMENT)
 	{
@@ -2281,6 +2311,17 @@ inline int CParser::HURIPath(CActionList& al)
 		if (case_comp(l->atom()->identifier(), "articleAttachment") == 0)
 		{
 			bArticleAttachment = true;
+			if (!bFirst)
+			{
+				SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
+						  lex.prevLine(), lex.prevColumn());
+			}
+			l = lex.getLexem();
+			continue;
+		}
+		if (case_comp(l->atom()->identifier(), "audioAttachment") == 0)
+		{
+			bAudioAttachment = true;
 			if (!bFirst)
 			{
 				SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
@@ -2321,7 +2362,8 @@ inline int CParser::HURIPath(CActionList& al)
 			nLevel = CMS_PL_ARTICLE;
 		l = lex.getLexem();
 	}
-	al.insert(al.end(), new CActURIPath(nTemplate, nLevel, bArticleAttachment));
+	al.insert(al.end(), new CActURIPath(nTemplate, nLevel, bArticleAttachment,
+			  bAudioAttachment));
 	return 0;
 }
 

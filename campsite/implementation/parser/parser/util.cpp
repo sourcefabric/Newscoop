@@ -381,6 +381,20 @@ ostream& outEncodeHTML(ostream& p_rcoOutStream, const char* p_pchString, bool p_
 	return p_rcoOutStream << p_pchString;
 }
 
+// SQLEscapeString: escape given string for sql query; returns escaped string
+// The returned string must be deallocated by the user using delete operator.
+// Parameters:
+//		const char* src - source string
+//		ulint p_nLength - string length
+char* SQLEscapeString(const char* src, ulint p_nLength)
+{
+	char* pchDst = new char[2 * p_nLength + 1];
+	if (pchDst == NULL)
+		return NULL;
+	pchDst[mysql_real_escape_string(MYSQLConnection(), pchDst, src, p_nLength) + 1] = 0;
+	return pchDst;
+}
+
 MYSQL_ROW QueryFetchRow(MYSQL* p_pDBConn, const string& p_rcoQuery, CMYSQL_RES& p_rcoQRes)
 {
 	if (p_pDBConn == NULL)

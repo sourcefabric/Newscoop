@@ -39,6 +39,7 @@ index etc.
 #include "cms_types.h"
 #include "curl.h"
 #include "articlecomment.h"
+#include "audioclip.h"
 
 // TLMode: describe the list context mode
 //	LM_PREV: inside an "if previousitems" statement
@@ -121,8 +122,6 @@ typedef map <lint, LIntMultiMap, less <lint> > LInt2LIntMultiMap;
 
 typedef map <string, lint, str_case_less> String2LInt;
 
-typedef set <string, str_case_less> StringSet;
-
 typedef list <string> StringList;
 
 typedef map <string, StringList, str_case_less> String2StringList;
@@ -200,9 +199,10 @@ private:
 	mutable bool m_bArticleCommentEnabled;	// true if add comment event occurred
 	mutable bool m_bArticleCommentEnabledValid; // true if the m_bArticleCommentEnabled member
 											// was computed for the current context
-	CArticleComment* m_pcoArticleComment;	// article comment identifier
+	CArticleComment* m_pcoArticleComment;	// article comment object
 	id_type m_nSubmitArticleCommentResult;	// result of the add comment event
 	id_type m_nImageId;						// article image identifier
+	CAudioclip* m_pcoAudioclip;				// audioclip object
 	CURL* m_pcoURL;
 	CURL* m_pcoDefURL;
 
@@ -468,6 +468,7 @@ public:
 	{
 		m_nImageId = p_nImageId;
 	}
+	void SetAudioclip(const string& p_rcoGunId);
 	void SetURL(CURL* p_pcoURL)
 	{
 		m_pcoURL = p_pcoURL;
@@ -774,6 +775,10 @@ public:
 	id_type Image() const
 	{
 		return m_nImageId;
+	}
+	CAudioclip* const Audioclip() const
+	{
+		return m_pcoAudioclip;
 	}
 	CURL* URL() const
 	{

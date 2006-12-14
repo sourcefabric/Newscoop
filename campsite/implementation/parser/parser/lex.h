@@ -98,6 +98,7 @@ using std::map;
 #define CMS_ST_URL 51
 #define CMS_ST_ARTICLEIMAGE 52
 #define CMS_ST_CAPTCHA 53
+#define CMS_ST_AUDIOATTACHMENT 54
 
 // statement names
 #define ST_LANGUAGE "Language"
@@ -153,6 +154,7 @@ using std::map;
 #define ST_URL "URL"
 #define ST_ARTICLEIMAGE "ArticleImage"
 #define ST_CAPTCHA "CAPTCHA"
+#define ST_AUDIOATTACHMENT "AudioAttachment"
 
 // The lexem returned by lex class
 class CLexem

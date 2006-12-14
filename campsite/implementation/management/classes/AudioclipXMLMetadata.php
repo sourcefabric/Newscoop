@@ -181,6 +181,9 @@ class AudioclipXMLMetadata {
 
         $sessid = camp_session_get('cc_sessid', '');
         $res = $this->xrc->xr_updateAudioClipMetadata($sessid, $this->m_gunId, $xmlStr);
+        if (PEAR::isError($res)) {
+        	return $res;
+        }
         return $res['status'];
     } // fn update
 

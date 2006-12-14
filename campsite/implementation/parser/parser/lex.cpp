@@ -530,6 +530,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("allsubtitles"));
 	pcoCtx->insertAttr(new CAttribute("articleAttachment"));
 	pcoCtx->insertAttr(new CAttribute("articleComment"));
+	pcoCtx->insertAttr(new CAttribute("audioAttachment"));
 	pcoCtx->insertAttr(new CIntegerAttr("image"));
 	pcoCtx->insertAttr(new CStringAttr("template"));
 	pcoSt->insertCtx(pcoCtx);
@@ -838,6 +839,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("section"));
 	pcoCtx->insertAttr(new CAttribute("article"));
 	pcoCtx->insertAttr(new CAttribute("articleAttachment"));
+	pcoCtx->insertAttr(new CAttribute("audioAttachment"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
@@ -960,6 +962,56 @@ int CStatementMap::InitStatements()
 
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
 	pcoCtx->insertAttr(new CAttribute("ImageLink"));
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
+	// AudioAttachment statement
+	pcoSt = new CStatement(CMS_ST_AUDIOATTACHMENT, ST_AUDIOATTACHMENT);
+
+	pcoCtx = new CStatementContext(CMS_CT_LIST);
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_PRINT);
+	pcoCtx->insertAttr(new CStringAttr("Title"));
+	pcoCtx->insertAttr(new CStringAttr("Creator"));
+	pcoCtx->insertAttr(new CStringAttr("Genre"));
+	pcoCtx->insertAttr(new CStringAttr("Length"));
+	pcoCtx->insertAttr(new CIntegerAttr("Year"));
+	pcoCtx->insertAttr(new CStringAttr("Bitrate"));
+	pcoCtx->insertAttr(new CIntegerAttr("Samplerate"));
+	pcoCtx->insertAttr(new CStringAttr("Album"));
+	pcoCtx->insertAttr(new CStringAttr("Description"));
+	pcoCtx->insertAttr(new CStringAttr("Format"));
+	pcoCtx->insertAttr(new CStringAttr("Label"));
+	pcoCtx->insertAttr(new CStringAttr("Composer"));
+	pcoCtx->insertAttr(new CIntegerAttr("Channels"));
+	pcoCtx->insertAttr(new CStringAttr("Rating"));
+	pcoCtx->insertAttr(new CIntegerAttr("TrackNum"));
+	pcoCtx->insertAttr(new CIntegerAttr("DiskNum"));
+	pcoCtx->insertAttr(new CStringAttr("Lyrics"));
+	pcoCtx->insertAttr(new CStringAttr("Copyright"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_IF);
+	pcoCtx->insertAttr(new CStringAttr("Title"));
+	pcoCtx->insertAttr(new CStringAttr("Creator"));
+	pcoCtx->insertAttr(new CStringAttr("Genre"));
+	pcoCtx->insertAttr(new CStringAttr("Length"));
+	pcoCtx->insertAttr(new CIntegerAttr("Year"));
+	pcoCtx->insertAttr(new CStringAttr("Bitrate"));
+	pcoCtx->insertAttr(new CIntegerAttr("Samplerate"));
+	pcoCtx->insertAttr(new CStringAttr("Album"));
+	pcoCtx->insertAttr(new CStringAttr("Description"));
+	pcoCtx->insertAttr(new CStringAttr("Format"));
+	pcoCtx->insertAttr(new CStringAttr("Label"));
+	pcoCtx->insertAttr(new CStringAttr("Composer"));
+	pcoCtx->insertAttr(new CIntegerAttr("Channels"));
+	pcoCtx->insertAttr(new CStringAttr("Rating"));
+	pcoCtx->insertAttr(new CIntegerAttr("TrackNum"));
+	pcoCtx->insertAttr(new CIntegerAttr("DiskNum"));
+	pcoCtx->insertAttr(new CStringAttr("Lyrics"));
+	pcoCtx->insertAttr(new CStringAttr("Copyright"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);

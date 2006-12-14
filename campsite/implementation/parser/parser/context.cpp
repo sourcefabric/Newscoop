@@ -76,9 +76,13 @@ CContext::CContext()
 			= def_issue_nr
 			= def_section_nr
 			= def_article_nr
+			= m_nTopicId
+			= m_nDefTopicId
+			= m_nAttachment
+			= m_nImageId
 			= -1;
-	m_nTopicId = m_nDefTopicId = m_nAttachment = -1;
 	m_pcoArticleComment = NULL;
+	m_pcoAudioclip = NULL;
 	lmode = LM_NORMAL;
 	stmode = STM_NORMAL;
 	do_subscribe = false;
@@ -88,9 +92,16 @@ CContext::CContext()
 	nSubsTimeUnits = 0;
 	m_bArticleCommentEnabled = false;
 	m_bArticleCommentEnabledValid = false;
-	adduser = modifyuser = login = search = search_and = false;
-	adduser_res = modifyuser_res = login_res = search_res = m_nSubmitArticleCommentResult = -1;
-	m_nImageId = -1;
+	adduser = false;
+	modifyuser = false;
+	login = false;
+	search = false;
+	search_and = false;
+	adduser_res = -1;
+	modifyuser_res = -1;
+	login_res = -1;
+	search_res = -1;
+	m_nSubmitArticleCommentResult = -1;
 	search_level = 0;
 	m_bMultiplePublicationSearch = false;
 	m_pcoURL = NULL;
@@ -99,7 +110,8 @@ CContext::CContext()
 }
 
 // copy constructor
-CContext::CContext(const CContext& c) : m_pcoArticleComment(NULL)
+CContext::CContext(const CContext& c)
+	: m_pcoArticleComment(NULL), m_pcoAudioclip(NULL), m_pcoURL(NULL), m_pcoDefURL(NULL)
 {
 	*this = c;
 }
@@ -180,7 +192,10 @@ int CContext::operator ==(const CContext& c) const
 			&& m_bArticleCommentEnabledValid == c.m_bArticleCommentEnabledValid
 			&& ((m_pcoArticleComment == NULL && c.m_pcoArticleComment == NULL)
 				|| (m_pcoArticleComment != NULL && c.m_pcoArticleComment != NULL
-				&& *m_pcoArticleComment == *c.m_pcoArticleComment))
+					&& *m_pcoArticleComment == *c.m_pcoArticleComment))
+			&& ((m_pcoAudioclip == NULL && c.m_pcoAudioclip == NULL)
+				|| (m_pcoAudioclip != NULL && c.m_pcoAudioclip != NULL
+					&& *m_pcoAudioclip == *m_pcoAudioclip))
 			&& m_nSubmitArticleCommentResult == c.m_nSubmitArticleCommentResult
 			&& m_nImageId == c.m_nImageId
 			&& m_pcoURL->equalTo(c.m_pcoURL)
@@ -276,14 +291,37 @@ const CContext& CContext::operator =(const CContext& s)
 	}
 	m_nSubmitArticleCommentResult = s.m_nSubmitArticleCommentResult;
 	m_nImageId = s.m_nImageId;
-	if (s.m_pcoURL != NULL)
-		m_pcoURL = s.m_pcoURL->clone();
-	else
+	if (m_pcoAudioclip != NULL)
+	{
+		delete m_pcoAudioclip;
+		m_pcoAudioclip = NULL;
+	}
+	if (s.m_pcoAudioclip != NULL)
+	{
+		m_pcoAudioclip = new CAudioclip(*s.m_pcoAudioclip);
+	}
+	if (m_pcoURL != NULL)
+	{
+		delete m_pcoURL;
 		m_pcoURL = NULL;
-	if (s.m_pcoDefURL != NULL)
-		m_pcoDefURL = s.m_pcoDefURL->clone();
-	else
+	}
+	if (s.m_pcoURL != NULL)
+	{
+		m_pcoURL = s.m_pcoURL->clone();
+	}
+	if (m_pcoDefURL != NULL)
+	{
+		delete m_pcoDefURL;
 		m_pcoDefURL = NULL;
+	}
+	if (s.m_pcoDefURL != NULL)
+	{
+		m_pcoDefURL = s.m_pcoDefURL->clone();
+	}
+	else
+	{
+		m_pcoDefURL = NULL;
+	}
 	ResetKwdIt();
 	return *this;
 }
@@ -308,6 +346,16 @@ id_type CContext::ArticleCommentId() const
 		return m_pcoArticleComment->getMessageId();
 	}
 	return -1;
+}
+
+void CContext::SetAudioclip(const string& p_rcoGunId)
+{
+	m_pcoAudioclip = new CAudioclip(p_rcoGunId);
+	if (!m_pcoAudioclip->exists())
+	{
+		delete m_pcoAudioclip;
+		m_pcoAudioclip = NULL;
+	}
 }
 
 int CContext::ArticleCommentLevel() const

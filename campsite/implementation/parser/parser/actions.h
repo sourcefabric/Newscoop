@@ -181,13 +181,6 @@ protected:
 protected:
 	// DEBUGAct: print debug information
 	inline void DEBUGAct(const char*, const char*, sockstream&, bool = true);
-	
-	// SQLEscapeString: escape given string for sql query; returns escaped string
-	// The returned string must be deallocated by the user using delete operator.
-	// Parameters:
-	//		const char* src - source string
-	//		ulint p_nLength - string length
-	char* SQLEscapeString(const char* src, ulint p_nLength);
 
 public:
 	// destructor
@@ -677,6 +670,7 @@ protected:
 							// above this level are cut
 	bool m_bArticleAttachment;
 	bool m_bArticleComment;
+	bool m_bAudioAttachment;
 
 	// PrintSubtitlesURL: print url parameters for subtitle list/printing
 	// Parameters:
@@ -687,12 +681,13 @@ protected:
 
 public:
 	// constructor
-	CActURLParameters(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
-					  id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE,
-					  bool p_bArticleAttachment = false, bool p_bArticleComment = false)
+	CActURLParameters(bool fs = false, bool as = false, id_type i = -1,
+					  CListLevel r_fl = CLV_ROOT, id_type tpl = -1,
+					  TPubLevel lvl = CMS_PL_ARTICLE, bool p_bArticleAttachment = false,
+					  bool p_bArticleComment = false, bool p_bAudioAttachment = false)
 	: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl), m_coTemplate(tpl),
 	m_nPubLevel(lvl), m_bArticleAttachment(p_bArticleAttachment),
-	m_bArticleComment(p_bArticleComment) {}
+	m_bArticleComment(p_bArticleComment), m_bAudioAttachment(p_bAudioAttachment) {}
 
 	// destructor
 	virtual ~CActURLParameters() {}
@@ -1290,13 +1285,14 @@ protected:
 	id_type m_nTemplate;
 	TPubLevel m_nPubLevel;
 	bool m_bArticleAttachment;
+	bool m_bAudioAttachment;
 
 public:
 	// constructor
 	CActURIPath(id_type p_nTemplate = -1, TPubLevel p_nPubLevel = CMS_PL_ARTICLE,
-				bool p_bArticleAttachment = false)
+				bool p_bArticleAttachment = false, bool p_bAudioAttachment = false)
 	: m_nTemplate(p_nTemplate), m_nPubLevel(p_nPubLevel),
-	m_bArticleAttachment(p_bArticleAttachment) {}
+	m_bArticleAttachment(p_bArticleAttachment), m_bAudioAttachment(p_bAudioAttachment) {}
 
 	// destructor
 	virtual ~CActURIPath() {}
@@ -1326,9 +1322,11 @@ public:
 	// constructor
 	CActURI(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
 			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE,
-			bool p_bArticleAttachment = false, bool p_bArticleComment = false)
-	: m_coURIPath(tpl, lvl, p_bArticleAttachment),
-	m_coURLParameters(fs, as, i, r_fl, tpl, lvl, p_bArticleAttachment, p_bArticleComment),
+			bool p_bArticleAttachment = false, bool p_bArticleComment = false,
+			bool p_bAudioAttachment = false)
+	: m_coURIPath(tpl, lvl, p_bArticleAttachment, p_bAudioAttachment),
+	m_coURLParameters(fs, as, i, r_fl, tpl, lvl, p_bArticleAttachment, p_bArticleComment,
+					  p_bAudioAttachment),
 	m_nImageNr(i) {}
 
 	// destructor
@@ -1357,8 +1355,10 @@ public:
 	// constructor
 	CActURL(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
 			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE,
-			bool p_bArticleAttachment = false, bool p_bArticleComment = false)
-	: m_coURI(fs, as, i, r_fl, tpl, lvl, p_bArticleAttachment, p_bArticleComment) {}
+			bool p_bArticleAttachment = false, bool p_bArticleComment = false,
+			bool p_bAudioAttachment = false)
+	: m_coURI(fs, as, i, r_fl, tpl, lvl, p_bArticleAttachment, p_bArticleComment,
+			  p_bAudioAttachment) {}
 
 	// destructor
 	virtual ~CActURL() {}

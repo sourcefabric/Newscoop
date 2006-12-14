@@ -6,7 +6,12 @@
     <version>$VERSION$</version>
     <projectmanagement>KDevCustomProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
-    <ignoreparts/>
+    <ignoreparts>
+      <part>kdevdistpart</part>
+      <part>kdevopenwith</part>
+      <part>kdevscripting</part>
+      <part>kdevtexttools</part>
+    </ignoreparts>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
     <description/>
@@ -14,10 +19,10 @@
   </general>
   <kdevcustomproject>
     <run>
-      <mainprogram>parser/campsite_server</mainprogram>
-      <directoryradio>executable</directoryradio>
+      <mainprogram>./parser/campsite_server</mainprogram>
+      <directoryradio>build</directoryradio>
       <customdirectory>/</customdirectory>
-      <programargs>-i campsite26 -d</programargs>
+      <programargs/>
       <terminal>false</terminal>
       <autocompile>true</autocompile>
       <envvars/>
@@ -43,7 +48,7 @@
   <kdevdebugger>
     <general>
       <dbgshell/>
-      <programargs>-i campsite26</programargs>
+      <programargs>-i campsite</programargs>
       <gdbpath/>
       <configGdbScript/>
       <runShellScript/>
@@ -53,7 +58,7 @@
       <floatingtoolbar>false</floatingtoolbar>
     </general>
     <display>
-      <staticmembers>false</staticmembers>
+      <staticmembers>true</staticmembers>
       <demanglenames>true</demanglenames>
       <outputradix>10</outputradix>
     </display>
@@ -112,38 +117,10 @@
       <type ext="h" />
     </useglobaltypes>
   </kdevfilecreate>
-  <kdevcppsupport>
-    <references/>
-    <codecompletion>
-      <includeGlobalFunctions>true</includeGlobalFunctions>
-      <includeTypes>true</includeTypes>
-      <includeEnums>true</includeEnums>
-      <includeTypedefs>false</includeTypedefs>
-      <automaticCodeCompletion>true</automaticCodeCompletion>
-      <automaticArgumentsHint>true</automaticArgumentsHint>
-      <automaticHeaderCompletion>true</automaticHeaderCompletion>
-      <codeCompletionDelay>250</codeCompletionDelay>
-      <argumentsHintDelay>400</argumentsHintDelay>
-      <headerCompletionDelay>250</headerCompletionDelay>
-    </codecompletion>
-    <creategettersetter>
-      <prefixGet/>
-      <prefixSet>set</prefixSet>
-      <prefixVariable>m_,_</prefixVariable>
-      <parameterName>theValue</parameterName>
-      <inlineGet>true</inlineGet>
-      <inlineSet>true</inlineSet>
-    </creategettersetter>
-    <qt>
-      <used>false</used>
-      <version>3</version>
-      <root/>
-    </qt>
-  </kdevcppsupport>
   <kdevfileview>
     <groups>
-      <group pattern="*.h" name="headers" />
-      <group pattern="*.cpp" name="sources" />
+      <group pattern="*.h" name="Headers" />
+      <group pattern="*.cpp" name="Sources" />
       <hidenonprojectfiles>false</hidenonprojectfiles>
       <hidenonlocation>false</hidenonlocation>
     </groups>
@@ -153,21 +130,40 @@
       <showvcsfields>false</showvcsfields>
     </tree>
   </kdevfileview>
+  <kdevcppsupport>
+    <references/>
+    <codecompletion>
+      <includeGlobalFunctions>true</includeGlobalFunctions>
+      <includeTypes>true</includeTypes>
+      <includeEnums>true</includeEnums>
+      <includeTypedefs>true</includeTypedefs>
+      <automaticCodeCompletion>true</automaticCodeCompletion>
+      <automaticArgumentsHint>true</automaticArgumentsHint>
+      <automaticHeaderCompletion>true</automaticHeaderCompletion>
+      <codeCompletionDelay>250</codeCompletionDelay>
+      <argumentsHintDelay>400</argumentsHintDelay>
+      <headerCompletionDelay>250</headerCompletionDelay>
+    </codecompletion>
+    <qt>
+      <used>false</used>
+      <version>3</version>
+      <root/>
+    </qt>
+    <creategettersetter>
+      <prefixGet/>
+      <prefixSet>set</prefixSet>
+      <prefixVariable>m_,_</prefixVariable>
+      <parameterName>theValue</parameterName>
+      <inlineGet>true</inlineGet>
+      <inlineSet>true</inlineSet>
+    </creategettersetter>
+  </kdevcppsupport>
   <cppsupportpart>
     <filetemplates>
       <interfacesuffix>.h</interfacesuffix>
       <implementationsuffix>.cpp</implementationsuffix>
     </filetemplates>
   </cppsupportpart>
-  <kdevvisualadvance>
-    <emulator>VisualBoyAdvance</emulator>
-    <binary/>
-    <addOptions/>
-    <terminal>false</terminal>
-    <fullscreen>false</fullscreen>
-    <graphicFilter>-f0</graphicFilter>
-    <scaling>-1</scaling>
-  </kdevvisualadvance>
   <kdevdocumentation>
     <projectdoc>
       <docsystem/>
@@ -175,4 +171,8 @@
       <usermanualurl/>
     </projectdoc>
   </kdevdocumentation>
+  <ctagspart>
+    <customArguments/>
+    <customTagfilePath/>
+  </ctagspart>
 </kdevelop>

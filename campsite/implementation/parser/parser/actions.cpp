@@ -180,20 +180,6 @@ inline void CAction::DEBUGAct(const char* method, const char* expl, sockstream& 
 	}
 }
 
-// SQLEscapeString: escape given string for sql query; returns escaped string
-// The returned string must be deallocated by the user using delete operator.
-// Parameters:
-//		const char* src - source string
-//		ulint p_nLength - string length
-char* CAction::SQLEscapeString(const char* src, ulint p_nLength)
-{
-	char* pchDst = new char[2 * p_nLength + 1];
-	if (pchDst == NULL)
-		return NULL;
-	pchDst[mysql_real_escape_string(&m_coSql, pchDst, src, p_nLength) + 1] = 0;
-	return pchDst;
-}
-
 // InitTempMembers: init thread specific variables
 void CAction::initTempMembers()
 {
@@ -679,6 +665,7 @@ CListModifiers::CListModifiers()
 	insert(CMS_ST_ARTICLEATTACHMENT);
 	insert(CMS_ST_ARTICLECOMMENT);
 	insert(CMS_ST_ARTICLEIMAGE);
+	insert(CMS_ST_AUDIOATTACHMENT);
 }
 
 CListModifiers CActList::s_coModifiers;
@@ -1014,6 +1001,10 @@ int CActList::WriteOrdParam(string& s)
 	{
 		s = " order by Number asc";
 	}
+	if (modifier == CMS_ST_AUDIOATTACHMENT)
+	{
+		s = " order by order_no asc";
+	}
 	return RES_OK;
 }
 
@@ -1159,6 +1150,11 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				buf << " where NrArticle = " << lc.Article();
 				where = buf.str();
 				break;
+			case CMS_ST_AUDIOATTACHMENT:
+				table = "ArticleAudioclips";
+				buf << " where fk_article_number = " << lc.Article();
+				where = buf.str();
+				break;
 		}
 		WriteOrdParam(order);
 		WriteLimit(limit, lc);
@@ -1195,6 +1191,9 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				break;
 			case CMS_ST_ARTICLEIMAGE:
 				fields = "select Number";
+				break;
+			case CMS_ST_AUDIOATTACHMENT:
+				fields = "select fk_audioclip_gunid";
 				break;
 		}
 		
@@ -1291,6 +1290,10 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 			if (modifier == CMS_ST_ARTICLEIMAGE)
 			{
 				lc.SetImage(strtol(row[0], 0, 10));
+			}
+			if (modifier == CMS_ST_AUDIOATTACHMENT)
+			{
+				lc.SetAudioclip(row[0]);
 			}
 		}
 		else
@@ -1393,6 +1396,15 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 			return ERR_NODATA;
 		}
 		return 0;
+	}
+	if (m_bAudioAttachment)
+	{
+		if (c.Audioclip() == NULL)
+		{
+			return ERR_NODATA;
+		}
+		fs << "gunid=" << encodeHTML(c.Audioclip()->getGunId(), c.EncodeHTML());
+		return RES_OK;
 	}
 	if (image_nr >= 0)
 	{
@@ -1585,6 +1597,7 @@ CPrintModifiers::CPrintModifiers()
 	insert(CMS_ST_ARTICLEATTACHMENT);
 	insert(CMS_ST_ARTICLECOMMENT);
 	insert(CMS_ST_CAPTCHA);
+	insert(CMS_ST_AUDIOATTACHMENT);
 }
 
 CPrintModifiers CActPrint::s_coModifiers;
@@ -2053,6 +2066,22 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		}
 		return RES_OK;
 	}
+	if (modifier == CMS_ST_AUDIOATTACHMENT)
+	{
+		CAudioclip* const pcoAudioclip = c.Audioclip();
+		if (pcoAudioclip == NULL)
+		{
+			return ERR_NODATA;
+		}
+		try {
+			fs << pcoAudioclip->getMetatagValue(attr);
+			return RES_OK;
+		}
+		catch (InvalidValue& rcoEx)
+		{
+			return ERR_NODATA;
+		}
+	}
 	if (modifier == CMS_ST_CAPTCHA)
 	{
 		fs << "/include/captcha/image.php";
@@ -2367,6 +2396,7 @@ CIfModifiers::CIfModifiers()
 	insert(CMS_ST_TOPIC);
 	insert(CMS_ST_ARTICLEATTACHMENT);
 	insert(CMS_ST_ARTICLECOMMENT);
+	insert(CMS_ST_AUDIOATTACHMENT);
 }
 
 CIfModifiers CActIf::s_coModifiers;
@@ -2841,6 +2871,22 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 			runActions(block, c, fs);
 		else
 			runActions(sec_block, c, fs);
+		return RES_OK;
+	}
+	if (modifier == CMS_ST_AUDIOATTACHMENT)
+	{
+		CAudioclip* const pcoAudioclip = c.Audioclip();
+		if (pcoAudioclip == NULL)
+		{
+			return ERR_NODATA;
+		}
+		run_first = param.applyOp(pcoAudioclip->getMetatagValue(param.attribute()));
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
+			runActions(block, c, fs);
+		else
+			runActions(sec_block, c, fs);
+		return RES_OK;
 	}
 	if (case_comp(param.attribute(), "hasAttachments") == 0 && modifier == CMS_ST_ARTICLE)
 	{
@@ -3707,6 +3753,15 @@ int CActURIPath::takeAction(CContext& c, sockstream& fs)
 		}
 		fs << "/attachment/" << setw(9) << setfill('0') << right << c.Attachment()
 				<< "." << encodeHTML(c.AttachmentExtension(), c.EncodeHTML());
+		return RES_OK;
+	}
+	if (m_bAudioAttachment)
+	{
+		if (c.Audioclip() == NULL)
+		{
+			return ERR_NODATA;
+		}
+		fs << "/audioclip/";
 		return RES_OK;
 	}
 	if (m_nTemplate > 0 || m_nPubLevel < CMS_PL_SUBTITLE)
