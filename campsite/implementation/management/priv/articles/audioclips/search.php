@@ -102,6 +102,10 @@ for ($c = 1; $c <= $maxCriteria; $c++) {
     <td>
     <?php
     for ($i = 1; $i <= $maxCriteria; $i++) {
+        $row_active = (array_key_exists('active', ${'row_'.$i})) ? ${'row_'.$i}['active'] : null;
+        $row_cat = (array_key_exists('0', ${'row_'.$i})) ? ${'row_'.$i}[0] : null;
+        $row_op = (array_key_exists('1', ${'row_'.$i})) ? ${'row_'.$i}[1] : null;
+        $row_val = (array_key_exists('2', ${'row_'.$i})) ? ${'row_'.$i}[2] : null;
     ?>
         <script type="text/javascript">
             _hs_options['row_<?php p($i); ?>'] = [
@@ -116,19 +120,11 @@ for ($c = 1; $c <= $maxCriteria; $c++) {
                 echo "}, ";
             }
             echo "} ]\n";
-            if (sizeof(${'row_'.$i}) != 0) {
             ?>
-            _hs_defaults['row_<?php p($i); ?>'] = ['<?php p(${'row_'.$i}[0]); ?>', '<?php p(${'row_'.$i}[1]); ?>'];
-            <?php
-            } else {
-            ?>
-            _hs_defaults['row_<?php p($i); ?>'] = ['', ''];
-            <?php
-            }
-            ?>
+            _hs_defaults['row_<?php p($i); ?>'] = ['<?php p($row_cat); ?>', '<?php p($row_op); ?>'];
         </script>
         <?php
-        $rowStyle = (${'row_'.$i}['active'] != 1) ? 'display:none' : '';
+        $rowStyle = ($row_active != 1) ? 'display:none' : '';
         ?>
         <div id="searchRow_<?php p($i); ?>" style="<?php p($rowStyle); ?>">
         <div class="audiosearch_container">
@@ -146,7 +142,7 @@ for ($c = 1; $c <= $maxCriteria; $c++) {
         }
         ?>
         </select>
-        <input type="text" name="row_<?php p($i); ?>[2]" class="input_text" size="25" maxlength="255" value="<?php p(${'row_'.$i}[2]); ?>" />
+        <input type="text" name="row_<?php p($i); ?>[2]" class="input_text" size="25" maxlength="255" value="<?php p($row_val); ?>" />
         <?php
         if ($i == 1) {
         ?>
