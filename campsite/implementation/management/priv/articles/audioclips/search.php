@@ -25,6 +25,31 @@ if (!Input::IsValid()) {
 	exit;
 }
 
+// we check for the Campcaster session and show
+// the login form if necessary
+$isCcOnline = true;
+$sessid = camp_session_get('cc_sessid', '');
+if (empty($sessid)) {
+    camp_html_goto_page('campcaster_login.php');
+}
+
+// ... is something wrong with either the sessid
+// or the communication to Campcaster
+$xrc =& XR_CcClient::Factory($mdefs);
+$resp = $xrc->ping($sessid);
+if (PEAR::isError($resp)) {
+    switch ($resp->getCode()) {
+        case '805':
+            camp_html_goto_page('campcaster_login.php');
+            break;
+        default:
+            camp_html_add_msg(getGS("Unable to reach the Campcaster server."));
+            camp_html_add_msg(getGS("Try again later."));
+            $isCcOnline = false;
+            break;
+    }
+}
+
 // Maximum number of criteria input allowed
 $maxCriteria = 5;
 
@@ -48,11 +73,14 @@ if ($counter == 0) {
                    );
 }
 
-// Gets all the available audioclips
-if (sizeof($conditions) > 0) {
-    $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, $conditions, $f_operator, $f_order_by, $f_order_direction);
-} else {
-    $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, null, $f_operator, $f_order_by, $f_order_direction);
+$r = array();
+if ($isCcOnline) {
+    // Gets all the available audioclips
+    if (sizeof($conditions) > 0) {
+        $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, $conditions, $f_operator, $f_order_by, $f_order_direction);
+    } else {
+        $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, null, $f_operator, $f_order_by, $f_order_direction);
+    }
 }
 
 if (PEAR::isError($r)) {
@@ -61,8 +89,10 @@ if (PEAR::isError($r)) {
 }
 
 // Sets clips amount and clips data from SearchAudioclips result
-$clipCount = $r[0];
-$clips = $r[1];
+if (sizeof($r) > 0) {
+    $clipCount = $r[0];
+    $clips = $r[1];
+}
 // Array of comparison operators
 $operators = array('partial',
                    'full',
@@ -83,6 +113,9 @@ if (array_key_exists($f_order_by, $orderDirections)) {
     $orderDirections[$f_order_by] = ($f_order_direction == 1) ? 0 : 1;
 }
 
+camp_html_display_msgs();
+
+if ($isCcOnline && count($clips) > 0) {
 ?>
 
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-audiosearch.js"></script>
@@ -192,12 +225,11 @@ for ($c = 1; $c <= $maxCriteria; $c++) {
 </form>
 </table>
 <?php
-if (count($clips) > 0) {
     $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";
     $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
 
     require('cliplist.php');
-} else {
+} else { // if ($isCcOnline && count($clips) > 0)
 ?>
 <table border="0" cellspacing="1" cellpadding="6" class="table_list">
 <tr>

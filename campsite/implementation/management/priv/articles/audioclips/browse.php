@@ -58,6 +58,31 @@ if (!Input::IsValid()) {
     exit;
 }
 
+// we check for the Campcaster session and show
+// the login form if necessary
+$isCcOnline = true;
+$sessid = camp_session_get('cc_sessid', '');
+if (empty($sessid)) {
+    camp_html_goto_page('campcaster_login.php');
+}
+
+// ... is something wrong with either the sessid
+// or the communication to Campcaster
+$xrc =& XR_CcClient::Factory($mdefs);
+$resp = $xrc->ping($sessid);
+if (PEAR::isError($resp)) {
+    switch ($resp->getCode()) {
+        case '805':
+            camp_html_goto_page('campcaster_login.php');
+            break;
+        default:
+            camp_html_add_msg(getGS("Unable to reach the Campcaster server."));
+            camp_html_add_msg(getGS("Try again later."));
+            $isCcOnline = false;
+            break;
+    }
+}
+
 $search_conditions = array();
 for ($varIndex = 1; $varIndex <= 3; $varIndex++) {
 	$f_curr_category_value =& ${'f_category_'.$varIndex.'_value'};
@@ -80,9 +105,12 @@ $category_1_values = Audioclip::BrowseCategory($f_category_1_name);
 $category_2_values = Audioclip::BrowseCategory($f_category_2_name, 0, 0, $browse_category_2_conditions);
 $category_3_values = Audioclip::BrowseCategory($f_category_3_name, 0, 0, $browse_category_3_conditions);
 
-$r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, $search_conditions, null, $f_order_by, $f_order_direction);
-$clipCount = $r[0];
-$clips = $r[1];
+$r = array();
+if ($isCcOnline) {
+    $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, $search_conditions, null, $f_order_by, $f_order_direction);
+    $clipCount = $r[0];
+    $clips = $r[1];
+}
 
 // Build the links for ordering search results
 // 1 = DESC, 0 = ASC
@@ -94,6 +122,9 @@ if (array_key_exists($f_order_by, $orderDirections)) {
     $orderDirections[$f_order_by] = ($f_order_direction == 1) ? 0 : 1;
 }
 
+camp_html_display_msgs();
+
+if ($isCcOnline && count($clips) > 0) {
 ?>
 <form name="browse" action="popup.php" method="POST">
 <input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
@@ -197,11 +228,10 @@ for ($catIndex = 1; $catIndex <= 2; $catIndex++) {
 </table>
 </form>
 <?php
-if (count($clips) > 0) {
     $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";
     $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
     require('cliplist.php');
-} else {
+} else { // if ($isCcOnline && count($clips) > 0)
 ?>
 <table border="0" cellspacing="1" cellpadding="6" class="table_list">
 <tr>

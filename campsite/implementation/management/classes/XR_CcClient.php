@@ -745,6 +745,7 @@ $mdefs = array(
     )
 );
 
+
 /**
  * XR_CcClient provides a XML RPC client for the Campcaster
  * XML RPC API.
@@ -768,6 +769,7 @@ class XR_CcClient {
      *  XMLRPC debug flag
      */
     var $debug = 0;
+
 
     /**
      *  Constructor - pelase DON'T CALL IT, use factory method instead
@@ -794,6 +796,7 @@ class XR_CcClient {
         $url = parse_url($serverPath);
         $this->client = new XML_RPC_Client($url['path'], $url['host'], $url['port']);
     } // constructor
+
 
     /**
      *  Factory, create object instance
@@ -835,14 +838,15 @@ class XR_CcClient {
             "class XR_CcClientCore extends XR_CcClient {\n".
             "$f\n".
             "}\n";
-        if (FALSE === eval($e)) {
-//        	$dbc->raiseError("Eval failed");
-        	return false;
+        $r = eval($e);
+        if ($r === FALSE) {
+            $result =& new PEAR_Error("There was a problem trying to execute the XML RPC function");
+        	return $result;
         }
         $xrc =& new XR_CcClientCore($mdefs, $debug, $verbose);
-
         return $xrc;
     } // fn factory
+
 
     /**
      *  XMLRPC methods wrapper
@@ -895,6 +899,37 @@ class XR_CcClient {
 
         return $resp;
     } // fn callMethod
+
+
+    /**
+     * Test whether the Campcaster server is reachable or not
+     * Uses xr_getVersion() to check communication and xr_loadPref
+     * to validate the session id
+     *
+     * @param void/string
+     *      void to check communication
+     *      $sessid the session id to validate
+     *
+     * @return boolean|PEAR_Error
+     *      TRUE on success, PEAR_Error on failure
+     */
+    function ping($sessid = null)
+    {
+        if (is_null($sessid)) {
+            $resp = $this->xr_getVersion();
+        } else {
+            $resp = $this->xr_loadPref($sessid, 'stationName');
+        }
+        if ($resp == 'Connection refused') {
+            return new PEAR_Error(getGS("Communication error: ".$this->client->errstr));
+        }
+        if (PEAR::isError($resp)) {
+            if ($resp->getCode() == 805) {
+                return $resp;
+            }
+        }
+        return true;
+    } // fn ping
     
 } // class XR_CcClient
 

@@ -27,6 +27,7 @@ $no_menu_scripts = array(
     '/articles/images/view.php',
     '/articles/topics/popup.php',
     '/articles/files/popup.php',
+    '/articles/audioclips/campcaster_login.php',
     '/articles/audioclips/popup.php',
     '/articles/audioclips/edit.php',
     '/articles/empty.php',

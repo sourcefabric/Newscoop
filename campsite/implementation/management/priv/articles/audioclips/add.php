@@ -1,6 +1,7 @@
 <?php
 camp_load_translation_strings("article_audioclips");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/XR_CcClient.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 
 if (!$g_user->hasPermission("AddAudioclip")) {
@@ -20,9 +21,29 @@ if (!Input::IsValid()) {
 	exit;
 }
 
+// we check for the Campcaster session and show
+// the login form if necessary
+$isCcOnline = true;
 $sessid = camp_session_get('cc_sessid', '');
 if (empty($sessid)) {
-	camp_html_add_msg(getGS("Unable to add new audioclip. Unable to reach the Campcaster server."));
+    camp_html_goto_page('campcaster_login.php');
+}
+
+// ... is something wrong with either the sessid
+// or the communication to Campcaster
+$xrc =& XR_CcClient::Factory($mdefs);
+$resp = $xrc->ping($sessid);
+if (PEAR::isError($resp)) {
+    switch ($resp->getCode()) {
+        case '805':
+            camp_html_goto_page('campcaster_login.php');
+            break;
+        default:
+            camp_html_add_msg(getGS("Unable to reach the Campcaster server."));
+            camp_html_add_msg(getGS("Try again later."));
+            $isCcOnline = false;
+            break;
+    }
 }
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
@@ -41,54 +62,54 @@ function checkAddForm(form) {
 } // fn checkAddForm
 </script>
 
-<P>
-<FORM name="audioclip_add" method="POST" action="/<?php echo $ADMIN; ?>/articles/audioclips/edit.php" enctype="multipart/form-data" onsubmit="return checkAddForm(this);">
-<TABLE border="0" cellspacing="0" cellpadding="6" class="table_input">
-<TR>
-	<TD colspan="2">
+<p>
+<form name="audioclip_add" method="POST" action="/<?php echo $ADMIN; ?>/articles/audioclips/edit.php" enctype="multipart/form-data" onsubmit="return checkAddForm(this);">
+<table border="0" cellspacing="0" cellpadding="6" class="table_input">
+<tr>
+	<td colspan="2">
 		<B><?php  putGS("Add New Audioclip"); ?></B>
 		<HR noshade size="1" color="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD align="right" ><?php putGS("Media file"); ?>:</TD>
-	<TD>
-        <INPUT type="hidden" name="MAX_FILE_SIZE" value="<?php p(intval(camp_convert_bytes(SystemPref::Get('MaxUploadFileSize')))); ?>" />
-		<INPUT type="file" name="f_media_file" size="32" class="input_file" alt="file|mp3,ogg,wav|bok" emsg="<?php putGS("You must select an audio file to upload."); ?>">
-	</TD>
-</TR>
-<TR>
-	<TD align="left" colspan="2" style="padding-left: 15px;"><?php putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></TD>
-</TR>
-<TR>
-	<TD colspan="2" class="indent"  style="padding-left: 30px;">
-	<INPUT type="radio" name="f_language_specific" value="yes"><?php putGS("Only this translation"); ?><br>
-	<INPUT type="radio" name="f_language_specific" value="no" checked><?php putGS("All translations"); ?>
-	</TD>
-</TR>
-<TR>
-	<TD colspan="2">
-	<DIV align="center">
-    <INPUT type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
-    <INPUT type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
-    <INPUT type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
-    <INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
-    <INPUT type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
-    <INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
-    <INPUT type="hidden" name="BackLink" value="<?php p($_SERVER['REQUEST_URI']); ?>">
-    <INPUT type="hidden" name="f_action" value="add">
+	</td>
+</tr>
+<tr>
+	<td align="right" ><?php putGS("Media file"); ?>:</td>
+	<td>
+        <input type="hidden" name="MAX_FILE_SIZE" value="<?php p(intval(camp_convert_bytes(SystemPref::Get('MaxUploadFileSize')))); ?>" />
+		<input type="file" name="f_media_file" size="32" class="input_file" alt="file|mp3,ogg,wav|bok" emsg="<?php putGS("You must select an audio file to upload."); ?>">
+	</td>
+</tr>
+<tr>
+	<td align="left" colspan="2" style="padding-left: 15px;"><?php putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></td>
+</tr>
+<tr>
+	<td colspan="2" class="indent"  style="padding-left: 30px;">
+	<input type="radio" name="f_language_specific" value="yes"><?php putGS("Only this translation"); ?><br>
+	<input type="radio" name="f_language_specific" value="no" checked><?php putGS("All translations"); ?>
+	</td>
+</tr>
+<tr>
+	<td colspan="2">
+	<div align="center">
+    <input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
+    <input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
+    <input type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
+    <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
+    <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
+    <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
+    <input type="hidden" name="BackLink" value="<?php p($_SERVER['REQUEST_URI']); ?>">
+    <input type="hidden" name="f_action" value="add">
     <?php
-    if (!empty($sessid)) {
+    if ($isCcOnline) {
     ?>
-	<INPUT type="submit" name="Save" value="<?php putGS('Save'); ?>" class="button">
+	<input type="submit" name="Save" value="<?php putGS('Save'); ?>" class="button">
     <?php
     }
     ?>
-	<INPUT type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="window.close();">
-	</DIV>
-	</TD>
-</TR>
-</TABLE>
-</FORM>
+	<input type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="window.close();">
+	</div>
+	</td>
+</tr>
+</table>
+</form>
 
-<P>
+<p>
