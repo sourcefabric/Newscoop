@@ -80,12 +80,18 @@ if ($showComments) {
     require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
     if (SystemPref::Get("UseDBReplication") == 'Y') {
         $dbReplicationObj =& new DbReplication();
-        $onlineCnn = $dbReplicationObj->Connect();
+        $connectedToOnlineServer = $dbReplicationObj->connect();
+        if ($connectedToOnlineServer == true) {
+            // Fetch the comments attached to this article
+            // (from replication database)
+            $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
+        }
+    } else {
+        // Fetch the comments attached to this article
+        // (from local database)
+        $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
     }
-    // Fetch the comments attached to this article
-    $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
 }
-
 
 // Automatically switch to "view" mode if user doesnt have permissions.
 if (!$articleObj->userCanModify($g_user)) {
@@ -169,17 +175,17 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 // If the article is locked.
 if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) {
 	?><P>
-	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-	<TR>
-		<TD COLSPAN="2">
+	<table border="0" cellspacing="0" cellpadding="6" class="table_input">
+	<tr>
+		<td colspan="2">
 			<B><?php  putGS("Article is locked"); ?> </B>
-			<HR NOSHADE SIZE="1" COLOR="BLACK">
-		</TD>
-	</TR>
-	<TR>
-		<TD COLSPAN="2" align="center">
-			<BLOCKQUOTE>
-				<?PHP
+			<hr noshade size="1" color="black">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<blockquote>
+				<?php
 				$timeDiff = camp_time_diff_str($articleObj->getLockTime());
 				if ($timeDiff['hours'] > 0) {
 					putGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
@@ -195,19 +201,19 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
 				}
 				?>
 				<br>
-			</BLOCKQUOTE>
-		</TD>
-	</TR>
-	<TR>
-		<TD COLSPAN="2">
-		<DIV ALIGN="CENTER">
-		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Unlock'); ?>" class="button" ONCLICK="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php"); ?>'">
-		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('View'); ?>" class="button" ONCLICK="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_edit_mode=view"); ?>'">
-		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'">
-		</DIV>
-		</TD>
-	</TR>
-	</TABLE>
+			</blockquote>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<div align="CENTER">
+		<input type="button" name="Yes" value="<?php  putGS('Unlock'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php"); ?>'" />
+		<input type="button" name="Yes" value="<?php  putGS('View'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_edit_mode=view"); ?>'" />
+		<input type="button" name="No" value="<?php  putGS('Cancel'); ?>" class="button" onclick="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'" />
+		</div>
+		</td>
+	</tr>
+	</table>
 	<P>
 	<?php
 	return;
@@ -221,40 +227,40 @@ if ($f_edit_mode == "edit") { ?>
 <?php } // if edit mode ?>
 
 <?php if ($f_publication_id > 0) { ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
-<TR>
-	<TD><A HREF="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-	<TD><A HREF="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><B><?php  putGS("Article List"); ?></B></A></TD>
+<table border="0" cellspacing="0" cellpadding="1" class="action_buttons" style="padding-top: 5px;">
+<tr>
+	<td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" border="0"></a></td>
+	<td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><B><?php  putGS("Article List"); ?></B></a></td>
 
 	<?php if ($g_user->hasPermission('AddArticle')) { ?>
-	<TD style="padding-left: 20px;"><A HREF="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-	<TD><A HREF="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><B><?php  putGS("Add new article"); ?></B></A></TD>
+	<td style="padding-left: 20px;"><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a></td>
+	<td><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><B><?php  putGS("Add new article"); ?></B></a></td>
 <?php  } ?>
 </tr>
-</TABLE>
+</table>
 <?php } ?>
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
 
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" class="table_input" width="900px" style="margin-top: 5px;">
-<TR>
-	<TD width="700px" style="border-bottom: 1px solid #8baed1;" colspan="2">
+<table border="0" cellspacing="1" cellpadding="0" class="table_input" width="900px" style="margin-top: 5px;">
+<tr>
+	<td width="700px" style="border-bottom: 1px solid #8baed1;" colspan="2">
 		<!-- for the left side of the article edit screen -->
-		<TABLE cellpadding="0" cellspacing="0">
+		<table cellpadding="0" cellspacing="0">
 		<tr>
 			<td width="100%" valign="middle">
 
     			<!-- BEGIN the article control bar -->
-    			<FORM name="article_actions" action="do_article_action.php" method="POST">
-    			<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
-    			<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php  p($f_issue_number); ?>">
-    			<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php  p($f_section_number); ?>">
-    			<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
-    			<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
-    			<INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php  p($f_article_number); ?>">
-    			<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
-    			<TR>
-					<TD style="padding-left: 1em;">
+    			<form name="article_actions" action="do_article_action.php" method="POST">
+    			<input type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>" />
+    			<input type="hidden" name="f_issue_number" value="<?php  p($f_issue_number); ?>" />
+    			<input type="hidden" name="f_section_number" value="<?php  p($f_section_number); ?>" />
+    			<input type="hidden" name="f_language_id" value="<?php  p($f_language_id); ?>" />
+    			<input type="hidden" name="f_language_selected" value="<?php  p($f_language_selected); ?>" />
+    			<input type="hidden" name="f_article_number" value="<?php  p($f_article_number); ?>" />
+    			<table border="0" cellspacing="1" cellpadding="0">
+    			<tr>
+					<td style="padding-left: 1em;">
 						<script>
 						function action_selected(dropdownElement)
 						{
@@ -281,58 +287,58 @@ if ($f_edit_mode == "edit") { ?>
 							}
 						}
 						</script>
-						<SELECT name="f_action" class="input_select" onchange="action_selected(this);">
-						<OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
-						<OPTION value="">-----------</OPTION>
+						<select name="f_action" class="input_select" onchange="action_selected(this);">
+						<option value=""><?php putGS("Actions"); ?>...</option>
+						<option value="">-----------</option>
 
 						<?php if ($articleObj->userCanModify($g_user) && $articleObj->isLocked()) { ?>
-						<OPTION value="unlock"><?php putGS("Unlock"); ?></OPTION>
+						<option value="unlock"><?php putGS("Unlock"); ?></option>
 						<?php } ?>
 
 						<?php  if ($g_user->hasPermission('DeleteArticle')) { ?>
-						<OPTION value="delete"><?php putGS("Delete"); ?></OPTION>
+						<option value="delete"><?php putGS("Delete"); ?></option>
 						<?php } ?>
 
 						<?php  if ($g_user->hasPermission('AddArticle')) { ?>
-						<OPTION value="copy"><?php putGS("Duplicate"); ?></OPTION>
+						<option value="copy"><?php putGS("Duplicate"); ?></option>
 						<?php } ?>
 
 						<?php if ($g_user->hasPermission('TranslateArticle')) { ?>
-						<OPTION value="translate"><?php putGS("Translate"); ?></OPTION>
+						<option value="translate"><?php putGS("Translate"); ?></option>
 						<?php } ?>
 
 						<?php if ($g_user->hasPermission('MoveArticle')) { ?>
-						<OPTION value="move"><?php putGS("Move"); ?></OPTION>
+						<option value="move"><?php putGS("Move"); ?></option>
 						<?php } ?>
-						</SELECT>
-					</TD>
+						</select>
+					</td>
 
 					<?php if ($f_publication_id > 0) { ?>
-					<TD>
+					<td>
 						<!-- Preview Link -->
-						<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php  p($f_article_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0" alt="<?php putGS("Preview"); ?>" title="<?php putGS("Preview"); ?>"></A>
-					</TD>
+						<a href="" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php  p($f_article_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" border="0" alt="<?php putGS("Preview"); ?>" title="<?php putGS("Preview"); ?>"></a>
+					</td>
 					<?php } ?>
 
 					<!-- BEGIN Workflow -->
-					<TD style="padding-left: 1em;">
+					<td style="padding-left: 1em;">
 						<?php
 						// Show a different menu depending on the rights of the user.
 						if ($g_user->hasPermission("Publish")) { ?>
-						<SELECT name="f_action_workflow" class="input_select" onchange="this.form.submit();">
+						<select name="f_action_workflow" class="input_select" onchange="this.form.submit();">
 						<?php
 						camp_html_select_option("Y", $articleObj->getWorkflowStatus(), getGS("Status: Published"));
 						camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
 						camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
 						?>
-						</SELECT>
+						</select>
 						<?php } elseif ($articleObj->userCanModify($g_user) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
-						<SELECT name="f_action_workflow" class="input_select" onchange="this.form.submit();">
+						<select name="f_action_workflow" class="input_select" onchange="this.form.submit();">
 						<?php
 						camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
 						camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
 						?>
-						</SELECT>
+						</select>
 						<?php } else {
 							switch ($articleObj->getWorkflowStatus()) {
 								case 'Y':
@@ -353,14 +359,14 @@ if ($f_edit_mode == "edit") { ?>
 						}
 						?>
 
-					</TD>
+					</td>
 					<!-- END Workflow -->
 
-					<TD style="padding-left: 1em;">
-		        		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3">
-		        		<TR>
-		        			<TD><?php  putGS('Language'); ?>:</TD>
-		        			<TD>
+					<td style="padding-left: 1em;">
+		        		<table border="0" cellspacing="0" cellpadding="3">
+		        		<tr>
+		        			<td><?php  putGS('Language'); ?>:</td>
+		        			<td>
 								<?php
 								if (count($articleLanguages) > 1) {
 				        		$languageUrl = "edit.php?f_publication_id=$f_publication_id"
@@ -370,50 +376,50 @@ if ($f_edit_mode == "edit") { ?>
 				        			."&f_language_id=$f_language_id"
 				        			."&f_language_selected=";
 		        				?>
-		        				<SELECT NAME="f_language_selected" class="input_select" onchange="dest = '<?php p($languageUrl); ?>'+this.options[this.selectedIndex].value; location.href=dest;">
+		        				<select name="f_language_selected" class="input_select" onchange="dest = '<?php p($languageUrl); ?>'+this.options[this.selectedIndex].value; location.href=dest;">
 		    					<?php
 		    					foreach ($articleLanguages as $articleLanguage) {
 		    					    camp_html_select_option($articleLanguage->getLanguageId(), $f_language_selected, htmlspecialchars($articleLanguage->getNativeName()));
 		    					}
-		        				?></SELECT>
+		        				?></select>
 		        				<?php } else {
 		        					$articleLanguage = camp_array_peek($articleLanguages);
 		        					echo '<b>'.htmlspecialchars($articleLanguage->getNativeName()).'</b>';
 		        				}
 		        				?>
 
-		        			</TD>
-		        		</TR>
-		        		</TABLE>
-					</TD>
-				</TR>
-				</TABLE>
+		        			</td>
+		        		</tr>
+		        		</table>
+					</td>
+				</tr>
+				</table>
 				</form>
 				<!-- END the article control bar -->
-			</TD>
+			</td>
 
-			<?PHP
+			<?php
 			if ($articleObj->userCanModify($g_user)) {
 			$switchModeUrl = camp_html_article_url($articleObj, $f_language_id, "edit.php")
 				."&f_edit_mode=".( ($f_edit_mode =="edit") ? "view" : "edit");
 			?>
-			<TD align="right" style="padding-top: 1px;" valign="top">
+			<td align="right" style="padding-top: 1px;" valign="top">
 			     <table cellpadding="0" cellspacing="0" border="0">
 			     <tr><td>
-			     <input type="button" name="edit" value="<?php putGS("Edit"); ?>" <?php if ($f_edit_mode == "edit") {?> disabled class="button_disabled" <?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="button" <?php } ?>>
+			     <input type="button" name="edit" value="<?php putGS("Edit"); ?>" <?php if ($f_edit_mode == "edit") {?> disabled class="button_disabled" <?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="button" <?php } ?> />
 			     </td>
 
 			     <td style="padding-left: 5px; padding-right: 10px;">
-			     <input type="button" name="edit" value="<?php putGS("View"); ?>" <?php if ($f_edit_mode == "view") {?> disabled class="button_disabled" <?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="button" <?php } ?>>
+			     <input type="button" name="edit" value="<?php putGS("View"); ?>" <?php if ($f_edit_mode == "view") {?> disabled class="button_disabled" <?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="button" <?php } ?> />
 			     </td>
 
 			     <td style="background-color: #00CB38; color: #FFF; border: 1px solid white; padding-left: 5px; padding-right: 10px;" align="center" nowrap>
 			     <b><?php putGS("Saved:"); ?> <?php if ($savedToday) { p(date("H:i", $lastModified)); } else { p(date("Y-m-d H:i", $lastModified)); } ?></b>
 			     </td>
 			     </tr></table>
-			</TD>
+			</td>
 			<?php } ?>
-		</TR>
+		</tr>
 		</table>
 	</td>
 </tr>
@@ -421,28 +427,28 @@ if ($f_edit_mode == "edit") { ?>
 <tr>
 	<td valign="top">
 	<!-- BEGIN article content -->
-	<FORM name="article_edit" action="do_edit.php" method="POST">
-	<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php  p($f_issue_number); ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php  p($f_section_number); ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php  p($f_article_number); ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_message" VALUE="">
+	<form name="article_edit" action="do_edit.php" method="POST">
+	<input type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>" />
+	<input type="hidden" name="f_issue_number" value="<?php  p($f_issue_number); ?>" />
+	<input type="hidden" name="f_section_number" value="<?php  p($f_section_number); ?>" />
+	<input type="hidden" name="f_language_id" value="<?php  p($f_language_id); ?>" />
+	<input type="hidden" name="f_language_selected" value="<?php  p($f_language_selected); ?>" />
+	<input type="hidden" name="f_article_number" value="<?php  p($f_article_number); ?>" />
+	<input type="hidden" name="f_message" value="" />
 	<table width="100%">
-	<TR>
-		<TD style="padding-top: 3px;">
-			<TABLE width="100%" style="border-bottom: 1px solid #8baed1; padding-bottom: 3px;">
-			<TR>
-				<TD ALIGN="left" valign="top"><b><?php putGS("Name"); ?>:</b>
+	<tr>
+		<td style="padding-top: 3px;">
+			<table width="100%" style="border-bottom: 1px solid #8baed1; padding-bottom: 3px;">
+			<tr>
+				<td align="left" valign="top"><b><?php putGS("Name"); ?>:</b>
 					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="text" name="f_article_title" size="60" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>">
+					<input type="text" name="f_article_title" size="60" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" />
 					<?php } else {
 						print wordwrap(htmlspecialchars($articleObj->getTitle()), 60, "<br>");
 					}
 					?>
-				</TD>
-				<TD ALIGN="RIGHT" valign="top" style="padding-right: 0.5em;"><b><?php  putGS("Created by"); ?>:</b> <?php p(htmlspecialchars($articleCreator->getRealName())); ?></TD>
+				</td>
+				<td align="right" valign="top" style="padding-right: 0.5em;"><b><?php  putGS("Created by"); ?>:</b> <?php p(htmlspecialchars($articleCreator->getRealName())); ?></td>
 		    </tr>
 		    </table>
 
@@ -454,14 +460,14 @@ if ($f_edit_mode == "edit") { ?>
 
 				    <!-- Type -->
 				    <tr>
-				        <TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Type"); ?>:</b></TD>
-				        <TD align="left" valign="top">
+				        <td align="right" valign="top" style="padding-left: 1em;"><b><?php  putGS("Type"); ?>:</b></td>
+				        <td align="left" valign="top">
 					<?php print htmlspecialchars($articleType->getDisplayName()); ?>
-				        </TD>
+				        </td>
                     </tr>
 
                     <!-- Number -->
-        			<TR>
+        			<tr>
         			    <td align="right" valign="top" nowrap><b><?php putGS("Number"); ?>:</b></td>
         			    <td align="left" valign="top"  style="padding-top: 2px; padding-left: 4px;">
         			    	<?php
@@ -478,11 +484,11 @@ if ($f_edit_mode == "edit") { ?>
                     </tr>
 
                     <!-- Creation Date -->
-        			<TR>
-        				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><nobr><?php  putGS("Creation date"); ?>:</nobr></b></TD>
-        				<TD align="left" valign="top" nowrap>
+        			<tr>
+        				<td align="right" valign="top" style="padding-left: 1em;"><b><nobr><?php  putGS("Creation date"); ?>:</nobr></b></td>
+        				<td align="left" valign="top" nowrap>
         					<?php if ($f_edit_mode == "edit") { ?>
-        					<input type="hidden" name="f_creation_date" value="<?php p($articleObj->getCreationDate()); ?>" id="f_creation_date">
+        					<input type="hidden" name="f_creation_date" value="<?php p($articleObj->getCreationDate()); ?>" id="f_creation_date" />
         					<table cellpadding="0" cellspacing="2"><tr>
         						<td><span id="show_date"><?php p($articleObj->getCreationDate()); ?></span></td>
         						<td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
@@ -507,15 +513,15 @@ if ($f_edit_mode == "edit") { ?>
         					<?php } else { ?>
         					<?php print htmlspecialchars($articleObj->getCreationDate()); ?>
         					<?php } ?>
-        				</TD>
+        				</td>
                     </tr>
                     <!-- End creation date -->
 
                     <tr>
-                    	<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></TD>
-				        <TD align="left" valign="top">
+                    	<td align="right" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></td>
+				        <td align="left" valign="top">
         					<?php if ($f_edit_mode == "edit" && $articleObj->isPublished()) { ?>
-        					<input type="hidden" name="f_publish_date" value="<?php p($articleObj->getPublishDate()); ?>" id="f_publish_date">
+        					<input type="hidden" name="f_publish_date" value="<?php p($articleObj->getPublishDate()); ?>" id="f_publish_date" />
         					<table cellpadding="0" cellspacing="2"><tr>
         						<td><span id="show_date"><?php p($articleObj->getPublishDate()); ?></span></td>
         						<td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
@@ -540,9 +546,9 @@ if ($f_edit_mode == "edit") { ?>
         					<?php } elseif ($articleObj->isPublished()) { ?>
         					<?php print htmlspecialchars($articleObj->getPublishDate()); ?>
         					<?php } else { ?>
-        					<input type="hidden" name="f_publish_date" value="<?php p($articleObj->getPublishDate()); ?>" id="f_publish_date">
+        					<input type="hidden" name="f_publish_date" value="<?php p($articleObj->getPublishDate()); ?>" id="f_publish_date" />
         					<?php putGS('N/A'); } ?>
-				        </TD>
+				        </td>
                     </tr>
                     </table>
                 </td>
@@ -553,26 +559,26 @@ if ($f_edit_mode == "edit") { ?>
 
                     <!-- Show article on front page -->
                     <tr>
-				        <TD ALIGN="RIGHT" valign="top"><INPUT TYPE="CHECKBOX" NAME="f_on_front_page" class="input_checkbox" <?php  if ($articleObj->onFrontPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
-				        <TD align="left" valign="top" style="padding-top: 0.1em;">
+				        <td align="right" valign="top"><input type="CHECKBOX" name="f_on_front_page" class="input_checkbox" <?php  if ($articleObj->onFrontPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?> /></td>
+				        <td align="left" valign="top" style="padding-top: 0.1em;">
         				<?php  putGS('Show article on front page'); ?>
-        				</TD>
-        			</TR>
+        				</td>
+        			</tr>
 
         			<!-- Show article on section page -->
         			<tr>
-				        <TD ALIGN="RIGHT" valign="top"><INPUT TYPE="CHECKBOX" NAME="f_on_section_page" class="input_checkbox" <?php  if ($articleObj->onSectionPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
-				        <TD align="left" valign="top"  style="padding-top: 0.1em;">
+				        <td align="right" valign="top"><input type="CHECKBOX" name="f_on_section_page" class="input_checkbox" <?php  if ($articleObj->onSectionPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?> /></td>
+				        <td align="left" valign="top"  style="padding-top: 0.1em;">
 				            <?php  putGS('Show article on section page'); ?>
-				        </TD>
-			        </TR>
+				        </td>
+			        </tr>
 
 			        <!-- Article viewable by public -->
 			        <tr>
-				        <TD ALIGN="RIGHT" valign="top"><INPUT TYPE="CHECKBOX" NAME="f_is_public" class="input_checkbox" <?php  if ($articleObj->isPublic()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
-				        <TD align="left" valign="top" style="padding-top: 0.1em;">
+				        <td align="right" valign="top"><input type="CHECKBOX" name="f_is_public" class="input_checkbox" <?php  if ($articleObj->isPublic()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?> /></td>
+				        <td align="left" valign="top" style="padding-top: 0.1em;">
 							<?php putGS('Visible to non-subscribers'); ?>
-				        </TD>
+				        </td>
 				    </tr>
 
 				    <!-- Comments enabled -->
@@ -603,30 +609,30 @@ if ($f_edit_mode == "edit") { ?>
                     <?php } // end if comments enabled ?>
 				    </table>
 				</td>
-			</TR>
-			</TABLE>
-		</TD>
-	</TR>
+			</tr>
+			</table>
+		</td>
+	</tr>
 
-	<TR>
-		<TD style="border-top: 1px solid #8baed1; padding-top: 3px;">
-			<TABLE>
-			<TR>
+	<tr>
+		<td style="border-top: 1px solid #8baed1; padding-top: 3px;">
+			<table>
+			<tr>
 				<td align="left" style="padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-					<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save">
+					<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save" />
 				<?php } ?>
 				</td>
-				<TD ALIGN="RIGHT" ><?php  putGS("Keywords"); ?>:</TD>
-				<TD>
+				<td align="right" ><?php  putGS("Keywords"); ?>:</td>
+				<td>
 					<?php if ($f_edit_mode == "edit") { ?>
-					<INPUT TYPE="TEXT" NAME="f_keywords" VALUE="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" SIZE="50" MAXLENGTH="255">
+					<input type="TEXT" name="f_keywords" value="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" size="50" maxlength="255" />
 					<?php } else {
 						print htmlspecialchars($articleObj->getKeywords());
 					}
 					?>
-				</TD>
-			</TR>
+				</td>
+			</tr>
 
 			<?php
 			// Display the article type fields.
@@ -639,30 +645,30 @@ if ($f_edit_mode == "edit") { ?>
 
 					// Single line text fields
 			?>
-			<TR>
+			<tr>
 				<td align="left" style="padding-right: 5px;">
 					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save">
+					<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save" />
 					<?php } ?>
 				</td>
 				<td align="right">
 					<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
 				</td>
-				<TD>
+				<td>
 				<?php
 				if ($f_edit_mode == "edit") { ?>
-		        <INPUT NAME="<?php echo $dbColumn->getName(); ?>"
-					   TYPE="TEXT"
-					   VALUE="<?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
+		        <input name="<?php echo $dbColumn->getName(); ?>"
+					   type="TEXT"
+					   value="<?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
 					   class="input_text"
-					   SIZE="50"
-					   MAXLENGTH="255">
+					   size="50"
+					   maxlength="255" />
 		        <?php } else {
 		        	print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
 		        }
 		        ?>
-				</TD>
-			</TR>
+				</td>
+			</tr>
 			<?php
 			} elseif (stristr($dbColumn->getType(), "date")) {
 				// Date fields
@@ -670,31 +676,31 @@ if ($f_edit_mode == "edit") { ?>
 					$articleData->setProperty($dbColumn->getName(), "CURDATE()", true, true);
 				}
 			?>
-			<TR>
+			<tr>
 				<td align="left" style="padding-right: 5px;">
 					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save">
+					<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save" />
 					<?php } ?>
 				</td>
 				<td align="right">
 					<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
 				</td>
-				<TD>
+				<td>
 				<?php if ($f_edit_mode == "edit") { ?>
-				<INPUT NAME="<?php echo $dbColumn->getName(); ?>"
-					   TYPE="TEXT"
-					   VALUE="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
+				<input name="<?php echo $dbColumn->getName(); ?>"
+					   type="TEXT"
+					   value="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
 					   class="input_text"
-					   SIZE="11"
-					   MAXLENGTH="10">
+					   size="11"
+					   maxlength="10" />
 				<?php } else { ?>
 					<span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;"><?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?></span>
 					<?php
 				}
 				?>
 				<?php putGS('YYYY-MM-DD'); ?>
-				</TD>
-			</TR>
+				</td>
+			</tr>
 			<?php
 			} elseif (stristr($dbColumn->getType(), "blob")) {
 				// Multiline text fields
@@ -731,16 +737,16 @@ if ($f_edit_mode == "edit") { ?>
 					}
 				}
 			?>
-			<TR>
-			<TD ALIGN="RIGHT" VALIGN="TOP" style="padding-top: 8px; padding-right: 5px;">
+			<tr>
+			<td align="right" valign="top" style="padding-top: 8px; padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-				<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save">
+				<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save" />
 				<?php } ?>
 			</td>
 			<td align="right" valign="top" style="padding-top: 8px;">
 				<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
 			</td>
-			<TD align="left" valign="top">
+			<td align="left" valign="top">
 				<table cellpadding="0" cellspacing="0" width="100%">
 				<tr>
 					<?php if ($f_edit_mode == "edit") { ?>
@@ -753,8 +759,8 @@ if ($f_edit_mode == "edit") { ?>
 					<?php } ?>
 				</tr>
 				</table>
-			</TD>
-			</TR>
+			</td>
+			</tr>
 			<?php
 			} elseif (stristr($dbColumn->getType(), "topic")) {
 				$articleTypeField = new ArticleTypeField($articleObj->getType(),
@@ -765,9 +771,9 @@ if ($f_edit_mode == "edit") { ?>
 				$articleTopicId = $articleData->getProperty($dbColumn->getName());
 			?>
 			<tr>
-			<TD ALIGN="RIGHT" VALIGN="TOP" style="padding-top: 8px; padding-right: 5px;">
+			<td align="right" valign="top" style="padding-top: 8px; padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-				<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save">
+				<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save" />
 				<?php } ?>
 			</td>
 			<td align="right">
@@ -807,76 +813,76 @@ if ($f_edit_mode == "edit") { ?>
 			}
 		} // foreach ($dbColumns as $dbColumn)
 		?>
-			</TABLE>
-		</TD>
-	</TR>
+			</table>
+		</td>
+	</tr>
 
 	<?php if ($f_edit_mode == "edit") { ?>
-	<TR>
-		<TD COLSPAN="2" align="center">
-			<INPUT TYPE="submit" NAME="save" VALUE="<?php putGS('Save'); ?>" class="button">
+	<tr>
+		<td colspan="2" align="center">
+			<input type="submit" name="save" value="<?php putGS('Save'); ?>" class="button" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<INPUT TYPE="submit" NAME="save_and_close" VALUE="<?php putGS('Save and Close'); ?>" class="button">
-		</TD>
-	</TR>
+			<input type="submit" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
+		</td>
+	</tr>
 	<?php } ?>
-    </FORM>
-	</TABLE>
+    </form>
+	</table>
 	<!-- END Article Content -->
-</TD>
+</td>
 	<!-- END left side of article screen -->
 
 	<!-- BEGIN right side of article screen -->
-	<TD valign="top" style="border-left: 1px solid #8baed1;" width="200px">
-		<TABLE width="100%">
+	<td valign="top" style="border-left: 1px solid #8baed1;" width="200px">
+		<table width="100%">
 		<?php if ($articleObj->getWorkflowStatus() != 'N') { ?>
-		<TR><TD>
+		<tr><td>
             <!-- BEGIN Scheduled Publishing table -->
             <?php require('edit_schedule_box.php'); ?>
 		    <!-- END Scheduled Publishing table -->
-		</TD></TR>
+		</td></tr>
 		<?php } ?>
 
 
 		<?php if ($showComments) { ?>
-		<TR><TD>
+		<tr><td>
 		    <!-- BEGIN Comments table -->
             <?php require('edit_comments_box.php'); ?>
 		    <!-- END Comments table -->
-		</TD></TR>
+		</td></tr>
         <?php } ?>
 
 
-		<TR><TD>
+		<tr><td>
 			<!-- BEGIN Images table -->
             <?php require('edit_images_box.php'); ?>
 			<!-- END Images table -->
-		</TD></TR>
+		</td></tr>
 
 
-		<TR><TD>
+		<tr><td>
 			<!-- BEGIN Files table -->
 			<?php require('edit_files_box.php'); ?>
 			<!-- END Files table -->
-		</TD></TR>
+		</td></tr>
 
 
-		<TR><TD>
+		<tr><td>
 			<!-- BEGIN Topics table -->
 			<?php require('edit_topics_box.php'); ?>
 			<!-- END Topics table -->
-		</TD></TR>
+		</td></tr>
 
 
-		<TR><TD>
+		<tr><td>
             <!-- BEGIN Audioclips table -->
             <?php require('edit_audioclips_box.php'); ?>
             <!-- END Audioclips table -->
-        </TD></TR>
-		</TABLE>
-	</TD>
-</TR>
-</TABLE>
+        </td></tr>
+		</table>
+	</td>
+</tr>
+</table>
 <?php
 if ($showComments && $f_show_comments) {
     include("comments/show_comments.php");

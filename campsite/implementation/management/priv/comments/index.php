@@ -15,22 +15,6 @@ if (!$g_user->hasPermission('CommentModerate')) {
 	exit;
 }
 
-$rDbObj =& new DbReplication();
-if ($rDbObj->Connect() == false) {
-
-$crumbs = array();
-$crumbs[] = array(getGS("Content"), "");
-$crumbs[] = array(getGS("Comments"), "");
-echo camp_html_breadcrumbs($crumbs);
-camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
-
-?>
-
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
-<?php
-	camp_html_display_msgs("0.25em", "0.25em");
-} else {
-
 // This can be 'inbox' or 'archive'
 $f_comment_screen = camp_session_get('f_comment_screen', 'inbox');
 $f_comment_start_inbox = camp_session_get('f_comment_start_inbox', 0);
@@ -53,33 +37,43 @@ if ($f_comment_order_direction == 'DESC') {
 }
 $orderDirectionUrl = "/$ADMIN/comments/index.php?f_comment_order_direction=$ReverseOrderDirection";
 
-$numInbox = ArticleComment::GetComments('unapproved', true, $f_comment_search);
-$numArchive = ArticleComment::GetComments('approved', true, $f_comment_search);
-
-if ($f_comment_screen == 'inbox') {
-    $pager =& new SimplePager($numInbox, $f_comment_per_page, 'f_comment_start_inbox', "/$ADMIN/comments/index.php?");
-
-} elseif ($f_comment_screen == 'archive') {
-    $pager =& new SimplePager($numArchive, $f_comment_per_page, 'f_comment_start_archive', "/$ADMIN/comments/index.php?");
+// We check if a Campsite Online server is being used
+if (SystemPref::Get("UseDBReplication") == 'Y') {
+    $dbReplicationObj =& new DbReplication();
+    $connectedToOnlineServer = $dbReplicationObj->connect();
 }
 
-// This is here again on purpose because sometimes the pager
-// must correct this value.
-$f_comment_start_inbox = camp_session_get('f_comment_start_inbox', 0);
-$f_comment_start_archive = camp_session_get('f_comment_start_archive', 0);
+$numInbox = 0;
+$numArchive = 0;
+if (!isset($connectedToOnlineServer)
+        || $connectedToOnlineServer == true) {
+    $numInbox = ArticleComment::GetComments('unapproved', true, $f_comment_search);
+    $numArchive = ArticleComment::GetComments('approved', true, $f_comment_search);
 
-if ($f_comment_screen == 'inbox') {
-    $comments = ArticleComment::GetComments('unapproved', false,
-            $f_comment_search,
-            array('ORDER BY' => array($f_comment_order_by => $f_comment_order_direction),
-                  'LIMIT' => array('START'=> $f_comment_start_inbox,
-                                   'MAX_ROWS' => $f_comment_per_page)));
-} elseif ($f_comment_screen == 'archive') {
-    $comments = ArticleComment::GetComments('approved', false,
-            $f_comment_search,
-            array('ORDER BY' => array($f_comment_order_by => $f_comment_order_direction),
-                  'LIMIT' => array('START'=> $f_comment_start_archive,
-                                   'MAX_ROWS' => $f_comment_per_page)));
+    if ($f_comment_screen == 'inbox') {
+        $pager =& new SimplePager($numInbox, $f_comment_per_page, 'f_comment_start_inbox', "/$ADMIN/comments/index.php?");
+    } elseif ($f_comment_screen == 'archive') {
+        $pager =& new SimplePager($numArchive, $f_comment_per_page, 'f_comment_start_archive', "/$ADMIN/comments/index.php?");
+    }
+
+    // This is here again on purpose because sometimes the pager
+    // must correct this value.
+    $f_comment_start_inbox = camp_session_get('f_comment_start_inbox', 0);
+    $f_comment_start_archive = camp_session_get('f_comment_start_archive', 0);
+
+    if ($f_comment_screen == 'inbox') {
+        $comments = ArticleComment::GetComments('unapproved', false,
+                                                $f_comment_search,
+                                                array('ORDER BY' => array($f_comment_order_by => $f_comment_order_direction),
+                                                      'LIMIT' => array('START'=> $f_comment_start_inbox,
+                                                                       'MAX_ROWS' => $f_comment_per_page)));
+    } elseif ($f_comment_screen == 'archive') {
+        $comments = ArticleComment::GetComments('approved', false,
+                                                $f_comment_search,
+                                                array('ORDER BY' => array($f_comment_order_by => $f_comment_order_direction),
+                                                      'LIMIT' => array('START'=> $f_comment_start_archive,
+                                                                       'MAX_ROWS' => $f_comment_per_page)));
+    }
 }
 
 $crumbs = array();
@@ -100,18 +94,40 @@ echo camp_html_breadcrumbs($crumbs);
         <a href="?f_comment_screen=archive" <?php if ($f_comment_screen != "archive") { ?>style="color: #555;"<?php } ?>><b><?php putGS("Published"); ?> (<?php p($numArchive); ?>)</b></a>
     </td>
 
-    <td width="98%" style="border-bottom: 1px solid #777;">&nbsp;</td>
+    <td width="98%" style="border-bottom: 1px solid #777;">
+    <?php
+    if (SystemPref::Get("UseDBReplication") == 'Y') {
+        if ($connectedToOnlineServer) {
+    ?>
+        <span class="success_message">
+    <?php
+            putGS("You are connected to the Online server");
+        } elseif (isset($connectedToOnlineServer)
+                  &&$connectedToOnlineServer == false) {
+    ?>
+        <span class="failure_message">
+    <?php
+            putGS("Unable to connect to the Online Server");
+        }
+    ?>
+    </span>
+    <?php
+    }
+    ?>
+    </td>
 </tr>
 </table>
 
 <?php
-$pagerStr = $pager->render();
+if (is_object($pager)) {
+    $pagerStr = $pager->render();
+}
 ?>
 <table width="100%" style="padding-top: 2px;">
 <tr>
     <td style="padding-left: 13px;">
         <table cellpadding="0" cellspacing="0">
-        <form method="POST">
+        <form method="GET">
         <tr>
             <td <?php if (!empty($pagerStr)) { ?>style="padding-right: 15px;"<?php } ?>>
                 <?php echo $pagerStr; ?>
@@ -230,7 +246,7 @@ function onSummaryClick(p_messageId)
     <td style="border-left: 1px solid #777;" valign="top">
         <!-- The column where you can edit the comments -->
         <table class="table_input" style="margin-top: 5px; margin-left: 5px;">
-        <form action="do_edit.php" method="POST">
+        <form action="do_edit.php" method="GET">
         <?php
         $count = 1;
         foreach ($comments as $commentPack) {
@@ -354,7 +370,6 @@ function onSummaryClick(p_messageId)
         </tr>
             <!-- END table with comment content -->
             <?php } ?>
-        </form>
         </table>
         <!-- END table containing comment controls+content -->
         <br>
@@ -362,10 +377,6 @@ function onSummaryClick(p_messageId)
     </tr>
     </table>
     <!-- END table contain left & right pane for editing comments -->
-    <?php
-
+<?php
 } // if there are comments
-
-} // if there is connection to the replication server
-
 ?>

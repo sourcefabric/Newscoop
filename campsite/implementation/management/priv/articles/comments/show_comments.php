@@ -17,6 +17,25 @@ function onCommentAction(p_type, p_commentId)
 <tr>
     <td style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #8EAED7;"">
         &nbsp;<b><?php putGS("Comments"); ?></b>
+        <?php
+        if (SystemPref::Get("UseDBReplication") == 'Y') {
+            if ($connectedToOnlineServer) {
+        ?>
+        &nbsp;[ <span class="success_message">
+        <?php
+                putGS("You are connected to the Online Server");
+            } elseif (isset($connectedToOnlineServer)
+                      &&$connectedToOnlineServer == false) {
+        ?>
+        &nbsp;[ <span class="failure_message">
+        <?php
+                putGS("Unable to connect to the Online Server");
+            }
+        ?>
+        </span> ]
+        <?php
+        }
+        ?>
    	</td>
 <tr>
 

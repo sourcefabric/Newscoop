@@ -241,6 +241,16 @@ hr {
 	color: #E30000;
 }
 
+.success_message {
+	font-weight: bold;
+	color: green;
+}
+
+.failure_message {
+	font-weight: bold;
+	color: red;
+}
+
 .action_link {
 	font-weight: bold;
 }

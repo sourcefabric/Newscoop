@@ -16,11 +16,17 @@ if (!$articleObj->exists()) {
     exit;
 }
 
-$rDbObj =& new DbReplication();
-if ($rDbObj->Connect() == false) {
+if (SystemPref::Get("UseDBReplication") == 'Y') {
+    $dbReplicationObj =& new DbReplication();
+    $connectedToOnlineServer = $dbReplicationObj->connect();
+    if ($connectedToOnlineServer == false) {
         camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
         camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
+    }
 }
+
+// Fetch the comments attached to this article
+$comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
 
 // process all comments
 foreach ($_REQUEST as $name => $value) {

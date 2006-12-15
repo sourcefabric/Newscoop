@@ -35,12 +35,16 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 camp_html_content_top(getGS("Reply to comment"), $topArray);
 
-$rDbObj =& new DbReplication();
-$onlineCnn = $rDbObj->Connect();
-if ($onlineCnn == false) {
-	camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
+if (SystemPref::Get("UseDBReplication") == 'Y') {
+    $dbReplicationObj =& new DbReplication();
+    $connectedToOnlineServer = $dbReplicationObj->connect();
+    if ($connectedToOnlineServer == false) {
+        camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
+    } else {
+        $comment =& new Phorum_message($f_comment_id);
+    }
 } else {
-	$comment =& new Phorum_message($f_comment_id);
+    $comment =& new Phorum_message($f_comment_id);
 }
 
 ?>
@@ -58,18 +62,15 @@ if ($onlineCnn == false) {
    	</td>
 <tr>
 <?php
-
-if ($onlineCnn == false) {
-
+if (isset($connectedToOnlineServer)
+        && $connectedToOnlineServer == false) {
 ?>
 <tr>
     <td><?php camp_html_display_msgs("0.25em", "0.25em"); ?></td>
 </tr>
 </table>
 <?php
-
 } else {
-
 ?>
 <tr>
     <td align="right" valign="top" nowrap>

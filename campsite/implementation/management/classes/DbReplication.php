@@ -16,10 +16,10 @@ class DbReplication {
 	/**
 	 * Remote (Online) db server connection details.
 	 */
-	var $m_rDbName = '';
-	var $m_rDbHost = '';
-	var $m_rDbUser = '';
-	var $m_rDbPass = '';
+	var $m_rDbName = null;
+	var $m_rDbHost = null;
+	var $m_rDbUser = null;
+	var $m_rDbPass = null;
 
 	/**
 	 * Constructor
@@ -31,10 +31,13 @@ class DbReplication {
 	/**
 	 * Try to connect the resource based on supplied parameter.
 	 *
-	 * @param  string  (optional) Host/Server alias [online | local]
-	 * @return bool
+	 * @param string (optional)
+     *      Host/Server alias [online | local]
+     *
+	 * @return boolean|PEAR_Error
+     *
 	 */
-	function Connect($host = 'online')
+	function connect($host = null)
 	{
 		global $Campsite;
 		global $g_ado_db;
@@ -59,10 +62,11 @@ class DbReplication {
 
 		$g_ado_db_tmp = $g_ado_db;
 
-		$this->m_rDbName = $Campsite['DATABASE_NAME'];
+        //		$this->m_rDbName = $Campsite['DATABASE_NAME'];
+        $this->m_rDbName = 'campsite_fake_remote';
 		$this->m_rDbHost = SystemPref::Get('DBReplicationHost')
-				 . ':'
-				 . SystemPref::Get('DBReplicationPort');
+                           . ':'
+                           . SystemPref::Get('DBReplicationPort');
 		$this->m_rDbUser = SystemPref::Get('DBReplicationUser');
 		$this->m_rDbPass = SystemPref::Get('DBReplicationPass');
 
@@ -85,7 +89,7 @@ class DbReplication {
 		} else {
 			return true;
 		}
-	} // fn Connect
+	} // fn connect
 
 } // class DbReplication
 

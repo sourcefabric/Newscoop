@@ -11,19 +11,24 @@ if (!$g_user->hasPermission('CommentModerate')) {
 	exit;
 }
 
-$rDbObj =& new DbReplication();
-$onlineCnn = $rDbObj->Connect();
-if ($onlineCnn == false) {
-	camp_html_add_msg(getGS("Comments Disabled"));
-} else {
-	$f_comment_id = Input::Get('f_comment_id', 'int');
+$f_comment_id = Input::Get('f_comment_id', 'int');
 
-	// Check input
-	if (!Input::IsValid()) {
-		camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-		exit;
-	}
+// Check input
+if (!Input::IsValid()) {
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+    exit;
+}
 
+if (SystemPref::Get("UseDBReplication") == 'Y') {
+    $dbReplicationObj =& new DbReplication();
+    $connectedToOnlineServer = $dbReplicationObj->connect();
+    if ($connectedToOnlineServer == false) {
+        camp_html_add_msg(getGS("No connected to Online server"));
+    }
+}
+
+if (!isset($connectedToOnlineServer)
+        || $connectedToOnlineServer == true) {
 	// load the comment
 	$comment =& new Phorum_message($f_comment_id);
 	$bans = Phorum_ban_item::IsPostBanned($comment);
@@ -40,9 +45,8 @@ if ($onlineCnn == false) {
 
 <center>
 <?php
-
-if ($onlineCnn == false) {
-
+if (isset($connectedToOnlineServer)
+    && $connectedToOnlineServer == false) {
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
 <TR>
@@ -61,7 +65,7 @@ if ($onlineCnn == false) {
 </BODY>
 </HTML>
 <?php
-	exit;
+    exit;
 }
 ?>
 <form action="/<?php p($ADMIN); ?>/comments/do_ban.php" method="GET">

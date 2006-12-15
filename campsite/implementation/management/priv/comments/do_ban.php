@@ -11,11 +11,16 @@ if (!$g_user->hasPermission('CommentModerate')) {
 	exit;
 }
 
-$rDbObj =& new DbReplication();
-$onlineCnn = $rDbObj->Connect();
-if ($onlineCnn == false) {
-        camp_html_add_msg(getGS("Comments Disabled"));
-} else {
+if (SystemPref::Get("UseDBReplication") == 'Y') {
+    $dbReplicationObj =& new DbReplication();
+    $connectedToOnlineServer = $dbReplicationObj->connect();
+    if ($connectedToOnlineServer == false) {
+        camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
+    }
+}
+
+if (!isset($connectedToOnlineServer)
+        || $connectedToOnlineServer == true) {
 	$f_comment_id = Input::Get("f_comment_id", "int");
 
 	$banned = false;
@@ -59,9 +64,8 @@ if ($onlineCnn == false) {
 <body>
 <center>
 <?php
-
-if ($onlineCnn == false) {
-
+if (isset($connectedToOnlineServer)
+        && $connectedToOnlineServer == false) {
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
 <TR>
@@ -80,7 +84,6 @@ if ($onlineCnn == false) {
 </BODY>
 </HTML>
 <?php
-        exit;
 }
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 20px;">
