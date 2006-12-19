@@ -8,6 +8,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/LoginAttempts.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/crypto/rc4Encrypt.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/PEAR.php');
+camp_load_translation_strings("api");
 
 $f_user_name = Input::Get('f_user_name');
 $f_password = Input::Get('f_password');
@@ -37,25 +38,6 @@ function camp_successful_login($user, $f_login_language)
 	setcookie("TOL_Language", $f_login_language);
 	Article::UnlockByUser($user->getUserId());
 	camp_html_goto_page("/$ADMIN/index.php");
-}
-
-function camp_campcaster_login($f_user_name, $t_password)
-{
-    global $mdefs;
-
-    if (SystemPref::Get('CampcasterHostName') == ''
-	    	|| SystemPref::Get('CampcasterHostPort') == ''
-    	    || SystemPref::Get('CampcasterXRPCPath') == ''
-        	|| SystemPref::Get('CampcasterXRPCFile') == '') {
-       	return false;
-	}
-    $xrc =& XR_CcClient::Factory($mdefs);
-    $r = $xrc->xr_login($f_user_name, $t_password);
-    if (PEAR::isError($r)) {
-    	return $r;
-    }
-    camp_session_set('cc_sessid', $r['sessid']);
-    return true;
 }
 
 function camp_passwd_decrypt($xorkey, $password)

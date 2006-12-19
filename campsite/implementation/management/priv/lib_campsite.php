@@ -387,6 +387,30 @@ function camp_session_unset($p_name)
 
 
 /**
+ * Performs Campcaster authentication
+ *
+ * @param string $f_cc_username
+ * @param string $f_cc_password
+ * @return boolean true or PEAR_Error
+ */
+function camp_campcaster_login($f_cc_username, $f_cc_password)
+{
+    global $mdefs;
+
+    $xrc =& XR_CcClient::Factory($mdefs);
+    if (PEAR::isError($xrc)) {
+    	return $xrc;
+    }
+    $r = $xrc->xr_login($f_cc_username, $f_cc_password);
+    if (PEAR::isError($r)) {
+    	return $r;
+    }
+    camp_session_set('cc_sessid', $r['sessid']);
+    return true;
+} // fn camp_campcaster_login
+
+
+/**
  * Print out the array or object surrounded with PRE tags so that its readable.
  * @param mixed $p_object
  * @return void
