@@ -1,4 +1,5 @@
 <?php 
+regGS("Article Audioclips", "");
 regGS("Show translated strings", "");
 regGS("Feedback", "Обратная связь");
 regGS("You do not have the right to manage the localizer.", "Вы не имеете права управлять локализацией");

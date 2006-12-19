@@ -278,5 +278,5 @@ regGS("There are $1 issue(s) left.", "Existe(m) ainda $1 Edição(ões).");
 regGS("There are $1 keyword(s) left.", "Existe(m) ainda $1 Palavra(s)-Chave.");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nome <br> (Carregue para Alterar)");
 regGS("New field", "Novo Campo");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Confirma eliminação da imagem \\'$1\\'?");
+regGS("There was an error logging in to the Campcaster server", "");
 ?>

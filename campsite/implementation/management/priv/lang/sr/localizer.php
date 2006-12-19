@@ -1,4 +1,5 @@
 <?php 
+regGS("Article Audioclips", "");
 regGS("Show translated strings", "");
 regGS("Hide translated strings", "Сакриј преведене стрингове");
 regGS("Feedback", "");

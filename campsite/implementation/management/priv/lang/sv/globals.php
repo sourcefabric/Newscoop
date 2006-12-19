@@ -264,5 +264,5 @@ regGS("Thank you.", "Tack.");
 regGS("Please take a minute to send us an email.", "");
 regGS("(optional)", "(frivilligt)");
 regGS("The URL you entered is invalid: '$1'", "Den URL du skrev in är ogiltig: '$1'");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Är du säker att du vill radera bilden \\'$1\\'?");
+regGS("There was an error logging in to the Campcaster server", "");
 ?>

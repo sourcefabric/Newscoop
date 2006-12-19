@@ -1,4 +1,7 @@
 <?php 
+regGS("User may attach audioclips to articles", "");
+regGS("User may add audioclips", "");
+regGS("Are you sure you want to delete the IP Group $1:$2?", "");
 regGS("User may moderate comments", "");
 regGS("User may enable comments", "");
 regGS("65 or over", "");
@@ -74,7 +77,6 @@ regGS("Start IP", "启动IP");
 regGS("Number of addresses", "地址数量");
 regGS("The IP Group $1 has been created.", "IP组$1已建立");
 regGS("There was an error creating the IP address group.", "");
-regGS("Are you sure you want to delete the IP Group $1?", "您确认要删除IP组$1？");
 regGS("The IP address group $1 has been deleted.", "IP地址组$1已被删除");
 regGS("User '$1' information was changed successfully.", "");
 regGS("IP address", "");

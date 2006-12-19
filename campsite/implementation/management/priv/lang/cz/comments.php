@@ -1,4 +1,8 @@
-<?php
+<?php 
+regGS("You are connected to the Online server", "");
+regGS("Unable to connect to the Online Server", "");
+regGS("No connected to Online server", "");
+regGS("Comments Disabled: you are either offline or not able to reach the Online server", "");
 regGS("You do not have the right to moderate comments.", "");
 regGS("Thread", "");
 regGS("The user is now allowed to post comments.", "");

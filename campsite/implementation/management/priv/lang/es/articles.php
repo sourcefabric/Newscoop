@@ -1,4 +1,12 @@
 <?php 
+regGS("Title", "");
+regGS("Length", "");
+regGS("Download", "");
+regGS("Creator", "");
+regGS("Comments Disabled", "");
+regGS("Audioclips order saved.", "");
+regGS("Audioclips", "");
+regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "");
 regGS("Select location:", "Elija ubicación:");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "No puede tener dos artículos con el mismo nombre en la misma sección.  El nombre de artículo que especificó ya se está utilizando en el artículo '$1'. ");
 regGS("Visible to non-subscribers", "Visible a no suscriptores");
@@ -110,7 +118,4 @@ regGS("No such section.", "No existe sección");
 regGS("Reorder", "");
 regGS("Author", "");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el tópico \\'$1\\' del artículo?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el archivo \\'$1\\' del artículo?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "¿Está seguro de que desea eliminar la imagen \\'$1\\' del artículo?");
 ?>

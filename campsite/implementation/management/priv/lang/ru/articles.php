@@ -1,4 +1,12 @@
 <?php 
+regGS("Title", "");
+regGS("Length", "");
+regGS("Download", "");
+regGS("Creator", "");
+regGS("Comments Disabled", "");
+regGS("Audioclips order saved.", "");
+regGS("Audioclips", "");
+regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "");
 regGS("Select location:", "Выберите расположение:");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "Вы не можете иметь две статьи в одной секции с одинаковым названием. Указанное название уже используется статьей '$1'.");
 regGS("Visible to non-subscribers", "Видно не только подписчикам");
@@ -115,7 +123,4 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад к подробностям статьи");
 regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
 regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Вы уверены, что хотите удалить топик \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Вы уверены, что хотите удалить файл \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Вы уверены, что хотите удалить картинку \\'$1\\' из статьи?");
 ?>

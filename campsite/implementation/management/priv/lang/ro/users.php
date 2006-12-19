@@ -1,4 +1,7 @@
 <?php 
+regGS("User may attach audioclips to articles", "");
+regGS("User may add audioclips", "");
+regGS("Are you sure you want to delete the IP Group $1:$2?", "");
 regGS("User may moderate comments", "Utilizatorul poate modera comentariile");
 regGS("User may enable comments", "Utilizatorul poate activa comentariile");
 regGS("65 or over", "65 sau mai mult");
@@ -74,7 +77,6 @@ regGS("Start IP", "Adresa IP de start.");
 regGS("Number of addresses", "Numărul de adrese");
 regGS("The IP Group $1 has been created.", "Grupul de adrese IP $1 a fost creat.");
 regGS("There was an error creating the IP address group.", "S-a produs o eroare la crearea grupului de adrese IP.");
-regGS("Are you sure you want to delete the IP Group $1?", "Eşti sigur că vrei să ştergi grupul de adrese IP $1?");
 regGS("The IP address group $1 has been deleted.", "Grupul de adrese IP $1 a fost şters.");
 regGS("User '$1' information was changed successfully.", "Informaţiile despre utilizatorul '$1' au fost schimbate.");
 regGS("IP address", "Adresa IP");

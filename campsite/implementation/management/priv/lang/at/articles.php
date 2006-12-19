@@ -1,4 +1,12 @@
 <?php 
+regGS("Title", "");
+regGS("Length", "");
+regGS("Download", "");
+regGS("Creator", "");
+regGS("Comments Disabled", "");
+regGS("Audioclips order saved.", "");
+regGS("Audioclips", "");
+regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "");
 regGS("Select location:", "");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "");
 regGS("Visible to non-subscribers", "");

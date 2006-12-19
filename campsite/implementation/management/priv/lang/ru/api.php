@@ -1,4 +1,14 @@
 <?php 
+regGS("There was a problem trying to execute the XML RPC function.", "");
+regGS("The Campcaster server configuration is invalid.", "");
+regGS("Template $1 was moved to $2", "");
+regGS("Template $1 was deleted", "");
+regGS("Invalid parameter given to Audioclip::editMetadata()", "");
+regGS("File $1 does not exist", "");
+regGS("Communication error: ", "");
+regGS("Cannot update audioclip metadata on storage server", "");
+regGS("Cannot update audioclip metadata on Campsite", "");
+regGS("Base data synchronized to phorum user for $1", "");
 regGS("Template $1 no longer exists!", "");
 regGS("The file uploaded is not an image.", "Загруженный файл не является картинкой.");
 regGS("Field $1 updated", "Поле $1 обновлено");

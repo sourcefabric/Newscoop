@@ -1,4 +1,7 @@
 <?php 
+regGS("User may attach audioclips to articles", "");
+regGS("User may add audioclips", "");
+regGS("Are you sure you want to delete the IP Group $1:$2?", "");
 regGS("User may moderate comments", "");
 regGS("User may enable comments", "");
 regGS("65 or over", "");
@@ -103,7 +106,6 @@ regGS("The IP Group could not be created.", "IP skupina nemohla být vytvořena"
 regGS("Please check if an account with the same IP Group does not already exist.", "Zkontrolujte prosím, zda již neexistuje účet se stejnou IP skupinou");
 regGS("Delete IP Group", "Smazat IP skupinu");
 regGS("You do not have the right to delete IP Groups.", "Nemáte právo smazat IP skupinu");
-regGS("Are you sure you want to delete the IP Group $1?", "Určitě chcete smazat IP skupinu $1?");
 regGS("No such IP Group.", "IP skupina neexistuje");
 regGS("Deleting IP Group", "Mazání IP skupiny");
 regGS("The IP address group $1 has been deleted.", "IP skupina $1 byla smazána");

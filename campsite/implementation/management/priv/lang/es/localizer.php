@@ -1,4 +1,5 @@
 <?php 
+regGS("Article Audioclips", "");
 regGS("Feedback", "Retroalimentación");
 regGS("You do not have the right to manage the localizer.", "No tiene los privilegios para administrar el traductor.");
 regGS("API", "API");

@@ -1,4 +1,12 @@
 <?php 
+regGS("Title", "");
+regGS("Length", "");
+regGS("Download", "");
+regGS("Creator", "");
+regGS("Comments Disabled", "");
+regGS("Audioclips order saved.", "");
+regGS("Audioclips", "");
+regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "");
 regGS("Select location:", "Selectează locul:");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "Nu pot exista două articole cu acelaşi nume în aceeaşi secţiune. Numele articolului pe care l-ai specificat este deja folosit de articolul '$1'.");
 regGS("Visible to non-subscribers", "Vizibil pentru cei care nu sunt abonaţi.");
@@ -108,7 +116,4 @@ regGS("Insert Internal Link", "Inserează link intern");
 regGS("No such article.", "Articolul nu există");
 regGS("No such section.", "Secţiunea nu există.");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Eşti sigur că vrei să ştergi subiectul \\'$1\\' de la articol?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Eşti sigur că vrei să ştergi fişierul \\'$1\\' de la articol?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Eşti sigur că vrei să ştergi imaginea \\'$1\\' de la articol?");
 ?>

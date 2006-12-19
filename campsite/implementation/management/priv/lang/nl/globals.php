@@ -407,5 +407,5 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("New Field", "Nieuw Veld");
 regGS("Add New Field", "Voeg nieuw veld toe");
 regGS("No such section.", "Sectie bestaat niet.");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Weet je zeker dat je afbeelding \\'$1\\' wilt verwijderen?");
+regGS("There was an error logging in to the Campcaster server", "");
 ?>
