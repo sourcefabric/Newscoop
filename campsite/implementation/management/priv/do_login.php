@@ -94,7 +94,7 @@ if (!is_null($user)) {
 				// if user valid, password valid, encrypted, CAPTCHA valid -> login
                 $ccLogin = camp_campcaster_login($f_user_name, $t_password);
                 if (PEAR::isError($ccLogin)) {
-                	camp_html_add_msg(getGS("There was an error logging in to Campcaster server: ")
+                	camp_html_add_msg(getGS("There was an error logging in to the Campcaster server").": "
                 					  . $ccLogin->getMessage());
                 }
 				camp_successful_login($user, $f_login_language);
@@ -109,7 +109,7 @@ if (!is_null($user)) {
 				$user->setPassword($f_password);
                 $ccLogin = camp_campcaster_login($f_user_name, $f_password);
                 if (PEAR::isError($ccLogin)) {
-                	camp_html_add_msg(getGS("There was an error logging in to Campcaster server: ")
+                	camp_html_add_msg(getGS("There was an error logging in to the Campcaster server").": "
                 					  . $ccLogin->getMessage());
                 }
 				camp_successful_login($user, $f_login_language);

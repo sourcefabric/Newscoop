@@ -159,7 +159,7 @@ foreach ($templates as $template) {
 					<TD valign="middle" ALIGN="LEFT">
 						<?php if (count($folders) > 1) { ?>
 						<SELECT NAME="f_destination_folder" class="input_select" alt="select" emsg="<?php putGS("You must select a destination folder"); ?>">
-						<OPTION VALUE=""><?php  putGS('---Select folder---'); ?></option>
+						<OPTION VALUE="">---<?php  putGS('Select folder'); ?>---</option>
 						<?php
 						foreach ($folders as $folder) {
 							camp_html_select_option($folder, $f_destination_folder, $folder);
