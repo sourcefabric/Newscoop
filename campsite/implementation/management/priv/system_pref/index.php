@@ -64,8 +64,18 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 	<td colspan="2"><hr></td>
 </tr>
 <tr>
+	<td colspan="2" align="left">
+        <?php putGS("Reader subscriptions managed externally?"); ?>
+        <input type="radio" name="f_external_subs_management" value="Y" <?php if (SystemPref::Get("ExternalSubscriptionManagement") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_external_subs_management" value="N" <?php if (SystemPref::Get("ExternalSubscriptionManagement") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+	</td>
+</tr>
+<tr>
+	<td colspan="2"><hr></td>
+</tr>
+<tr>
     <td colspan="2" align="left">
-        Setting up a Campsite Replication Server?
+        <?php putGS("Setting up a Campsite Replication Server?"); ?>
         <input type="radio" name="f_use_replication" onclick="ShowElement('replication_server');" value="Y" <?php if (SystemPref::Get("UseDBReplication") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
         <input type="radio" name="f_use_replication" onclick="HideElement('replication_server');" value="N" <?php if (SystemPref::Get("UseDBReplication") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
     </td>
@@ -83,7 +93,7 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 		        <?php putGS("Database Replication Host:") ?>
 	        </td>
 	        <td>
-		        <input type="text" name="f_db_repl_host" value="<?php p(SystemPref::Get("DBReplicationHost")); ?>" maxlenght="60" size="30" class="input_text" />
+		        <input type="text" name="f_db_repl_host" value="<?php p(SystemPref::Get("DBReplicationHost")); ?>" maxlenght="60" size="28" class="input_text" />
 	        </td>
         </tr>
         <tr>

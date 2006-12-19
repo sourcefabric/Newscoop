@@ -21,19 +21,19 @@ if (!mysql_select_db($db_name)) {
     die("Unable to use the database " . $db_name . ".\n");
 }
 
-// 
+//
 // populate the UserConfig table
 //
-$sql = "INSERT INTO UserConfig (fk_user_id, varname, value, last_modified) 
-        VALUES (0,'MaxUploadFileSize','".$max_upload_filesize."',NOW()), 
-               (0,'UseDBReplication','N',NOW()), 
-               (0,'DBReplicationHost','',NOW()), 
-               (0,'DBReplicationUser','',NOW()), 
-               (0,'DBReplicationPass','',NOW()), 
-               (0,'DBReplicationPort','3306',NOW()), 
-               (0,'CampcasterHostName','',NOW()), 
-               (0,'CampcasterHostPort','80',NOW()), 
-               (0,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/',NOW()), 
+$sql = "INSERT INTO UserConfig (fk_user_id, varname, value, last_modified)
+        VALUES (0,'MaxUploadFileSize','".$max_upload_filesize."',NOW()),
+               (0,'UseDBReplication','N',NOW()),
+               (0,'DBReplicationHost','',NOW()),
+               (0,'DBReplicationUser','',NOW()),
+               (0,'DBReplicationPass','',NOW()),
+               (0,'DBReplicationPort','3306',NOW()),
+               (0,'CampcasterHostName','',NOW()),
+               (0,'CampcasterHostPort','80',NOW()),
+               (0,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/',NOW()),
                (0,'CampcasterXRPCFile','xrLocStor.php',NOW())";
 if (!($res = mysql_query($sql))) {
     die("Unable to write to the database.\n");

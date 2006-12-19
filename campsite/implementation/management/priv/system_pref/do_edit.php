@@ -22,7 +22,10 @@ $f_cc_hostname = Input::Get('f_cc_hostname');
 $f_cc_hostport = intval(Input::Get('f_cc_hostport'));
 $f_cc_xrpcpath = Input::Get('f_cc_xrpcpath');
 $f_cc_xrpcfile = Input::Get('f_cc_xrpcfile');
-
+$f_external_subs_management = Input::Get('f_external_subs_management');
+if ($f_external_subs_management != 'Y' && $f_external_subs_management != 'N') {
+	$f_external_subs_management = SystemPref::Get('ExternalSubscriptionManagement');
+}
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -45,10 +48,11 @@ if ($max_upload_filesize_bytes > 0 &&
 	camp_html_add_msg(getGS('Invalid Max Upload File Size value submitted'));
 }
 
+SystemPref::Set('ExternalSubscriptionManagement', $f_external_subs_management);
+
 if ($f_use_replication == 'Y') {
     // Database Replication Host, User and Password
-    if (!empty($f_db_repl_host)
-        && !empty($f_db_repl_user) && !empty($f_db_repl_pass)) {
+    if (!empty($f_db_repl_host) && !empty($f_db_repl_user)) {
         SystemPref::Set("DBReplicationHost", $f_db_repl_host);
         SystemPref::Set("DBReplicationUser", $f_db_repl_user);
         SystemPref::Set("DBReplicationPass", $f_db_repl_pass);
