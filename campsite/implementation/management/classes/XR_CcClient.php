@@ -920,10 +920,10 @@ class XR_CcClient {
         } else {
             $resp = $this->xr_loadPref($sessid, 'stationName');
         }
-        if ($resp == 'Connection refused') {
-            return new PEAR_Error(getGS("Communication error: ".$this->client->errstr));
-        }
         if (PEAR::isError($resp)) {
+	        if ($resp->getMessage() == 'Connection refused') {
+    	        return new PEAR_Error(getGS("Communication error: ".$this->client->errstr));
+        	}
             if ($resp->getCode() == 805) {
                 return $resp;
             }
