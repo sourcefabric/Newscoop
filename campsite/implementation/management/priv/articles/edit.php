@@ -9,6 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAudioclip.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ShortURL.php');
 camp_load_translation_strings("article_comments");
+camp_load_translation_strings("api");
 
 // These are optional, depending on whether you are in a section
 // or whether editing an article that doesnt have a location.

@@ -4,6 +4,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/XR_CcClient.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+camp_load_translation_strings("article_audioclips");
+camp_load_translation_strings("api");
 
 $f_cc_username = Input::Get('f_cc_username');
 $f_cc_password = Input::Get('f_cc_password');

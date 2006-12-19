@@ -6,6 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/LoginAttempts.php');
 // Load the language files.
 camp_load_translation_strings("globals");
 camp_load_translation_strings("home");
+camp_load_translation_strings("article_audioclips");
 
 ?>
 <html>
@@ -15,10 +16,10 @@ camp_load_translation_strings("home");
 	<title><?php putGS("Campcaster Login"); ?></title>
 </head>
 <body>
-<table border="0" cellspacing="0" cellpadding="1" width="100%" >
+<table border="0" cellspacing="0" cellpadding="1" width="100%" align="center" >
 <tr>
 	<td align="center" style="padding-top: 50px;">
-		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campcaster_logo.png" width="90" height="59" border="0" />
+		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campcaster_logo.png" border="0" />
 	</td>
 </tr>
 </table>
