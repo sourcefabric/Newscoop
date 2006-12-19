@@ -41,6 +41,16 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 	</td>
 </tr>
 <tr>
+	<td colspan="2"><hr></td>
+</tr>
+<tr>
+	<td colspan="2" align="left">
+        <?php putGS("Reader subscriptions managed externally?"); ?>
+        <input type="radio" name="f_external_subs_management" value="Y" <?php if (SystemPref::Get("ExternalSubscriptionManagement") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_external_subs_management" value="N" <?php if (SystemPref::Get("ExternalSubscriptionManagement") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+	</td>
+</tr>
+<tr>
 	<td colspan="2" align="center" style="padding-top: 10px;">
 		<input type="submit" name="save" value="<?php putGS("Save"); ?>" class="button">
 	</td>

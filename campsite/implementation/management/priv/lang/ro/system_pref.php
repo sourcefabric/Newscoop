@@ -1,4 +1,6 @@
 <?php 
+regGS("System preferences updated", "");
+regGS("Reader subscriptions managed externally?", "");
 regGS("System preferences updated.", "Preferinţele de sistem au fost actualizate.");
 regGS("Please enter a positive number for the '$1' field.", "Introdu un număr pozitiv pentru câmpul '$1'.");
 regGS("Login Attempts", "Încercări de intrare în sistem");

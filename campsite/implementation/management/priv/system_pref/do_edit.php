@@ -12,6 +12,7 @@ if (!$g_user->hasPermission('ChangeSystemPreferences')) {
 
 $f_keyword_separator = Input::Get('f_keyword_separator');
 $f_login_num = Input::Get('f_login_num', 'int');
+$f_external_subs_management = Input::Get('f_external_subs_management');
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -22,6 +23,8 @@ SystemPref::Set("KeywordSeparator", $f_keyword_separator);
 if ($f_login_num >= 0) {
 	SystemPref::Set("LoginFailedAttemptsNum", $f_login_num);
 }
+SystemPref::Set('ExternalSubscriptionManagement', $f_external_subs_management);
+
 camp_html_add_msg(getGS("System preferences updated."), "ok");
 $logtext = getGS('System preferences updated');
 Log::Message($logtext, $g_user->getUserId(), 171);

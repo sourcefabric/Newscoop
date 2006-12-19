@@ -268,7 +268,7 @@ function camp_upgrade_database($p_db_name, $p_defined_parameters)
 
 	$first = true;
 	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
-					  "2.6.0", "2.6.1", "2.6.2");
+					  "2.6.0", "2.6.1", "2.6.2", "2.6.3");
 	foreach ($versions as $index=>$db_version) {
 		if ($old_version > $db_version) {
 			continue;
@@ -376,6 +376,13 @@ function camp_detect_database_version($p_db_name, &$version)
 					$version = "2.6.2";
 				}
 				if (!$res2 = mysql_query("SELECT * FROM Events WHERE Id = 171")) {
+					return "Unable to query the database $p_db_name";
+				}
+				if (mysql_num_rows($res2) > 0) {
+					$version = "2.6.3";
+				}
+				if (!$res2 = mysql_query("SELECT * FROM UserConfig "
+										 . "WHERE varname = 'ExternalSubscriptionManagement'")) {
 					return "Unable to query the database $p_db_name";
 				}
 				if (mysql_num_rows($res2) > 0) {

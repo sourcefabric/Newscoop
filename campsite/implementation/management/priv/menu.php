@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/DynMenuItem.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
 camp_load_translation_strings("home");
 global $ADMIN;
 global $g_user;
@@ -246,7 +247,8 @@ if ($showUserMenu) {
             array("icon" => sprintf($iconTemplateStr, "users.png")));
         $menu_users->addItem($menu_item);
 	}
-	if ($g_user->hasPermission("ManageReaders") || $g_user->hasPermission("ManageSubscriptions")) {
+	if (($g_user->hasPermission("ManageReaders") || $g_user->hasPermission("ManageSubscriptions"))
+			&& SystemPref::Get("ExternalSubscriptionManagement") != 'Y') {
         $menu_item =& DynMenuItem::Create(getGS("Subscribers"),
             "/$ADMIN/users/?uType=Subscribers",
             array("icon" => sprintf($iconTemplateStr, "users.png")));
