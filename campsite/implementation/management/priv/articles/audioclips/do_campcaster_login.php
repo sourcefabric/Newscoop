@@ -24,6 +24,9 @@ function camp_campcaster_login($f_cc_username, $f_cc_password)
        	return false;
 	}
     $xrc =& XR_CcClient::Factory($mdefs);
+    if (PEAR::isError($xrc)) {
+    	return $xrc;
+    }
     $r = $xrc->xr_login($f_cc_username, $f_cc_password);
     if (PEAR::isError($r)) {
     	return $r;
@@ -34,10 +37,20 @@ function camp_campcaster_login($f_cc_username, $f_cc_password)
 
 $ccLogin = camp_campcaster_login($f_user_name, $t_password);
 if (PEAR::isError($ccLogin)) {
-    camp_html_add_msg(getGS("There was an error logging in to Campcaster server: ")
+    camp_html_add_msg(getGS("There was an error logging in to the Campcaster server") . ": "
                       . $ccLogin->getMessage());
 }
 
-camp_html_goto_page("$BackLink");
-
+$BackLink = trim($BackLink);
+if (empty($BackLink)) {
+?>
+<script>
+window.opener.document.forms.article_edit.onsubmit();
+window.opener.document.forms.article_edit.submit();
+window.close();
+</script>
+<?php
+} else {
+	camp_html_goto_page("$BackLink");
+}
 ?>
