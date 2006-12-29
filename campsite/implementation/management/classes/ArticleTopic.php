@@ -137,14 +137,17 @@ class ArticleTopic extends DatabaseObject {
 		if ($p_countOnly) {
 			$selectStr = "COUNT(*)";
 		}
-    	$queryStr = "SELECT $selectStr FROM ArticleTopics, Topics "
-    				." WHERE ArticleTopics.NrArticle = $p_articleNumber"
-    				.' AND ArticleTopics.TopicId = Topics.Id '
-					.' ORDER BY Topics.Id ';
+    	$queryStr = "SELECT $selectStr FROM ArticleTopics "
+    				." WHERE NrArticle = $p_articleNumber"
+					.' ORDER BY TopicId';
 		if ($p_countOnly) {
 			return $g_ado_db->GetOne($queryStr);
 		} else {
-			$topics = DbObjectArray::Create("Topic", $queryStr);
+			$rows = $g_ado_db->GetAll($queryStr);
+			$topics = array();
+			foreach ($rows as $row) {
+				$topics[] =& new Topic($row['TopicId']);
+			}
 			return $topics;
 		}
 	} // fn GetArticleTopics
