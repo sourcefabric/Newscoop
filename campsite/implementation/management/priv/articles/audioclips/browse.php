@@ -124,7 +124,7 @@ if (array_key_exists($f_order_by, $orderDirections)) {
 
 camp_html_display_msgs();
 
-if ($isCcOnline && count($clips) > 0) {
+if ($isCcOnline) {
 ?>
 <form name="browse" action="popup.php" method="POST">
 <input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
@@ -228,15 +228,27 @@ for ($catIndex = 1; $catIndex <= 2; $catIndex++) {
 </table>
 </form>
 <?php
-    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";
-    $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
-    require('cliplist.php');
-} else { // if ($isCcOnline && count($clips) > 0)
+	if (count($clips) > 0) {
+	    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";
+    	$pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
+    	require('cliplist.php');
+    } else {
 ?>
 <table border="0" cellspacing="1" cellpadding="6" class="table_list">
 <tr>
     <td>
         <?php putGS("No audioclips found"); ?>
+    </td>
+</tr>
+</table>
+<?php
+    }
+} else { // if ($isCcOnline)
+?>
+<table border="0" cellspacing="1" cellpadding="6" class="table_list">
+<tr>
+    <td class="error_message">
+        <?php putGS("Unable to contact the Campcaster server!"); ?>
     </td>
 </tr>
 </table>
