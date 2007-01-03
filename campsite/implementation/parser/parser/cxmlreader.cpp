@@ -56,6 +56,11 @@ string CXMLReader::nextElementContent(const char* p_pchName, int p_nDepth, bool 
 		throw invalid_message_content(string(p_pchName) + " element is missing");
 	if (p_nDepth >= 0 && elementDepth() != p_nDepth)
 		throw invalid_message_content("element depth must be " + int2string(p_nDepth));
+	int nRes = xmlTextReaderIsEmptyElement(m_pReader);
+	if (nRes == -1)
+		throw invalid_message_content(string("error reading node '") + pchName + "'");
+	if (nRes > 0)
+		return string("");
 	string coContent;
 	try {
 		pchName = nextElement("#text");
