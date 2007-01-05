@@ -44,28 +44,45 @@ if ($setPassword) {
 	}
 
 	$editUser->setPassword($password);
+    $liveUserValues['passwd'] = $password;
 }
 
+$userData = array(
+                  'Name',
+                  'Title',
+                  'Gender',
+                  'Age',
+                  'EMail',
+                  'City',
+                  'StrAddress',
+                  'State',
+                  'CountryCode',
+                  'Phone',
+                  'Fax',
+                  'Contact',
+                  'Phone2',
+                  'PostalCode',
+                  'Employer',
+                  'EmployerType',
+                  'Position'
+                  );
 
 // save user data
-$editUser->setProperty('Name', Input::Get('Name', 'string', ''), false);
-$editUser->setProperty('Title', Input::Get('Title', 'string', ''), false);
-$editUser->setProperty('Gender', Input::Get('Gender', 'string', ''), false);
-$editUser->setProperty('Age', Input::Get('Age', 'string', ''), false);
-$editUser->setProperty('EMail', Input::Get('EMail', 'string', ''), false);
-$editUser->setProperty('City', Input::Get('City', 'string', ''), false);
-$editUser->setProperty('StrAddress', Input::Get('StrAddress', 'string', ''), false);
-$editUser->setProperty('State', Input::Get('State', 'string', ''), false);
-$editUser->setProperty('CountryCode', Input::Get('CountryCode', 'string', ''), false);
-$editUser->setProperty('Phone', Input::Get('Phone', 'string', ''), false);
-$editUser->setProperty('Fax', Input::Get('Fax', 'string', ''), false);
-$editUser->setProperty('Contact', Input::Get('Contact', 'string', ''), false);
-$editUser->setProperty('Phone2', Input::Get('Phone2', 'string', ''), false);
-$editUser->setProperty('PostalCode', Input::Get('PostalCode', 'string', ''), false);
-$editUser->setProperty('Employer', Input::Get('Employer', 'string', ''), false);
-$editUser->setProperty('EmployerType', Input::Get('EmployerType', 'string', ''), false);
-$editUser->setProperty('Position', Input::Get('Position', 'string', ''), false);
-$editUser->commit();
+foreach ($userData as $value) {
+    $liveUserValues[$value] = Input::Get($value, 'string', '');
+    $editUser->setProperty($value, $liveUserValues[$value], false);
+}
+
+$backLink = "/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getUserId();
+$params = array('filters' => array('auth_user_id' => $editUser->m_liveUserData['auth_user_id']));
+$permData = $LiveUserAdmin->perm->getUsers($params);
+$permUserId = $permData[0]['perm_user_id'];
+if ($LiveUserAdmin->updateUser($liveUserValues, $permUserId) === false) {
+    camp_html_add_msg(getGS('There was an error when trying to update the user info.'));
+    camp_html_goto_page($backLink);
+} else {
+    $editUser->commit();
+}
 
 $logtext = getGS('User account information changed for $1', $editUser->getUserName());
 Log::Message($logtext, $g_user->getUserName(), 56);
@@ -85,6 +102,18 @@ if ($editUser->isAdmin() && $customizeRights && $canManage) {
 		$permissionEnabled = ($val == 'on') ? true : false;
 		$permissions[$field] = $permissionEnabled;
 	}
+
+    foreach ($permissions as $perm => $value) {
+        $updateData = array('perm_user_id' => $permUserId,
+                            'right_id' => $g_permissions[$perm]
+                            );
+        if ($value == true) {
+            $updateData['right_level'] = 1;
+            $LiveUserAdmin->perm->grantUserRight($updateData);
+        } else {
+            $LiveUserAdmin->perm->revokeUserRight($updateData);
+        }
+    }
 	$editUser->updatePermissions($permissions);
 
 	$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());

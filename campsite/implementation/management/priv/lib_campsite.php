@@ -10,11 +10,15 @@ function camp_check_admin_access($p_request)
 {
 	global $ADMIN;
 	global $g_ado_db;
+    global $LiveUser;
 	require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 	$access = false;
 	$XPerm = array();
 	$user = array();
 
+    if (!$LiveUser->isLoggedIn()) {
+        return array($access, $user, $XPerm);
+    }
 	// Check for required info.
 	if (!isset($p_request['LoginUserId']) || !isset($p_request['LoginUserKey'])
 	 	|| !is_numeric($p_request['LoginUserId']) || !is_numeric($p_request['LoginUserKey'])) {

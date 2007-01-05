@@ -61,6 +61,16 @@ function camp_passwd_decrypt($xorkey, $password)
 // password invalid, encrypted -> upgrade
 // password invalid, not encrypted -> userpass
 
+if (!$LiveUser->isLoggedIn() ||
+        ($f_user_name && $LiveUser->getProperty('handle') != $f_user_name)) {
+    if (!$f_user_name) {
+        $LiveUser->login(null, null, true);
+    } else {
+        if (!$LiveUser->login($f_user_name, $t_password, false)) {
+            camp_html_goto_page("/$ADMIN/login.php?error_code=userpass");
+        }
+    }
+}
 
 $user = User::FetchUserByName($f_user_name, true);
 $validateCaptcha = LoginAttempts::MaxLoginAttemptsExceeded();
@@ -68,36 +78,20 @@ $validateCaptcha = LoginAttempts::MaxLoginAttemptsExceeded();
 //
 // Valid login section
 //
-if (!is_null($user)) {
-	if ($f_is_encrypted) {
-		if ($user->isValidPassword($f_password, true)) {
-			if (!$validateCaptcha || PhpCaptcha::Validate($f_captcha_code, true)) {
-				// if user valid, password valid, encrypted, no CAPTCHA -> login
-				// if user valid, password valid, encrypted, CAPTCHA valid -> login
-                $ccLogin = camp_campcaster_login($f_user_name, $t_password);
-                if (PEAR::isError($ccLogin)) {
-                	camp_html_add_msg(getGS("There was an error logging in to the Campcaster server").": "
-                					  . $ccLogin->getMessage());
-                }
-				camp_successful_login($user, $f_login_language);
-			}
-		}
-	} else {
-		// not encrypted
-		if ($user->isValidOldPassword($f_password)) {
-			if (!$validateCaptcha || PhpCaptcha::Validate($f_captcha_code, true)) {
-				// if user valid, password valid, not encrypted, CAPTCHA valid -> upgrade, login
-				// if user valid, password valid, not encrypted, no CAPTCHA -> upgrade, login
-				$user->setPassword($f_password);
-                $ccLogin = camp_campcaster_login($f_user_name, $f_password);
-                if (PEAR::isError($ccLogin)) {
-                	camp_html_add_msg(getGS("There was an error logging in to the Campcaster server").": "
-                					  . $ccLogin->getMessage());
-                }
-				camp_successful_login($user, $f_login_language);
-			}
-		}
-	}
+if ($LiveUser->isLoggedIn()) {
+    if (is_null($user)) {
+        // load data to User from liveuser_users
+        // and create the user object
+    }
+    if (!$validateCaptcha || PhpCaptcha::Validate($f_captcha_code, true)) {
+        // if user valid, password valid, encrypted, no CAPTCHA -> login
+        // if user valid, password valid, encrypted, CAPTCHA valid -> login
+        $ccLogin = camp_campcaster_login($f_user_name, $t_password);
+        if (PEAR::isError($ccLogin)) {
+            camp_html_add_msg(getGS("There was an error logging in to the Campcaster server").": ".$ccLogin->getMessage());
+        }
+        camp_successful_login($user, $f_login_language);
+    }
 }
 
 //

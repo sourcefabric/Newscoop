@@ -39,7 +39,7 @@ foreach ($rights as $group_name => $group) {
 ?>
 	<tr>
 		<td align="right" style="padding-left: 10px;">
-			<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox" <?php  if ($editUser->hasPermission($right_name)) { p("CHECKED"); } ?>>
+			<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox" <?php if ($editUser->hasPermission($right_name)) { p("CHECKED"); } ?>>
 		</td>
 		<td style="padding-right: 10px;">
 			<?php p($right_text); ?>

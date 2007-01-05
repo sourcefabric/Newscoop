@@ -67,7 +67,7 @@ if (strlen($password) < 6 || $password != $passwordConf) {
 $editUser = new User();
 $phorumUser = new Phorum_user();
 if (!$phorumUser->UserNameExists($fieldValues['UName']) &&
-			$editUser->create($fieldValues)) {
+			$editUser->create($fieldValues, $password)) {
 	$editUser->setPassword($password);
 	if ($uType == 'Staff') {
 		$editUser->setUserType($Type);

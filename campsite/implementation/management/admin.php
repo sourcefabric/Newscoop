@@ -4,8 +4,8 @@
  * Think of it as a wrapper for all admin interface scripts.
  * Here you can set up anything that should be applied globally to all scripts.
  */
-session_start();
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/liveuser_configuration.php');
 global $ADMIN_DIR;
 global $ADMIN;
 global $g_user;

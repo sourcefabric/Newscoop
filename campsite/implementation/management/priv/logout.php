@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 
+$LiveUser->logout();
 // Delete the cookies
 setcookie("LoginUserId", "", time() - 86400);
 setcookie("LoginUserKey", "", time() - 86400);
