@@ -65,7 +65,7 @@ if ($canManage) {
 	</td>
 <?php if (user_search_is_set()) { ?>
 	<td style="padding-left: 20px;" valign="bottom">
-		<a href="?reset_search=true<?php echo get_user_urlparams(0, false, true); ?>">
+		<a href="?reset_search=true&<?php echo get_user_urlparams(0, false, true); ?>">
 		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/clear.png" border="0">
 		<b><?php putGS("Reset search form"); ?></b>
 		</a>
