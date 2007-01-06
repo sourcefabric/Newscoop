@@ -45,7 +45,9 @@ $Campsite['IMAGE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/';
 $Campsite['ADMIN_IMAGE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/css';
 $Campsite['IMAGE_PREFIX'] = 'cms-image-';
 $Campsite['IMAGEMAGICK_INSTALLED'] = true;
-$Campsite['THUMBNAIL_COMMAND'] = 'convert -sample 64x64';
+$Campsite['THUMBNAIL_MAX_SIZE'] = 64;
+$Campsite['THUMBNAIL_COMMAND'] = 'convert -sample '
+		.$Campsite['THUMBNAIL_MAX_SIZE'].'x'.$Campsite['THUMBNAIL_MAX_SIZE'];
 $Campsite['THUMBNAIL_DIRECTORY'] = $Campsite['IMAGE_DIRECTORY'].'/thumbnails/';
 $Campsite['THUMBNAIL_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/thumbnails/';
 $Campsite['THUMBNAIL_PREFIX'] = 'cms-thumb-';

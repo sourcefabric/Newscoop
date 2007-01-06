@@ -344,24 +344,49 @@ class Image extends DatabaseObject {
 	{
 		$extension = '';
 		switch($p_imageType) {
-           case 1:  $extension = 'gif'; break;
-           case 2:  $extension = 'jpg'; break;
-           case 3:  $extension = 'png'; break;
-           case 4:  $extension = 'swf'; break;
-           case 5:  $extension = 'psd'; break;
-           case 6:  $extension = 'bmp'; break;
-           case 7:  $extension = 'tiff'; break;
-           case 8:  $extension = 'tiff'; break;
-           case 9:  $extension = 'jpc'; break;
-           case 10: $extension = 'jp2'; break;
-           case 11: $extension = 'jpx'; break;
-           case 12: $extension = 'jb2'; break;
-           case 13: $extension = 'swc'; break;
-           case 14: $extension = 'aiff'; break;
-           case 15: $extension = 'wbmp'; break;
-           case 16: $extension = 'xbm'; break;
+           case IMAGETYPE_GIF: $extension = 'gif'; break;
+           case IMAGETYPE_JPEG: $extension = 'jpg'; break;
+           case IMAGETYPE_PNG: $extension = 'png'; break;
+           case IMAGETYPE_SWF: $extension = 'swf'; break;
+           case IMAGETYPE_PSD: $extension = 'psd'; break;
+           case IMAGETYPE_BMP: $extension = 'bmp'; break;
+           case IMAGETYPE_TIFF_II: $extension = 'tiff'; break;
+           case IMAGETYPE_TIFF_MM: $extension = 'tiff'; break;
+           case IMAGETYPE_JPC: $extension = 'jpc'; break;
+           case IMAGETYPE_JP2: $extension = 'jp2'; break;
+           case IMAGETYPE_JPX: $extension = 'jpx'; break;
+           case IMAGETYPE_JB2: $extension = 'jb2'; break;
+           case IMAGETYPE_SWC: $extension = 'swc'; break;
+           case IMAGETYPE_IFF: $extension = 'aiff'; break;
+           case IMAGETYPE_WBMP: $extension = 'wbmp'; break;
+           case IMAGETYPE_XBM: $extension = 'xbm'; break;
         }
         return $extension;
+	}
+	
+	
+	function __GetImageTypeCreateMethod($p_imageType)
+	{
+		$method = null;
+		switch ($p_imageType) {
+           case IMAGETYPE_GIF: $method = 'imagecreatefromgif'; break;
+           case IMAGETYPE_JPEG: $method = 'imagecreatefromjpeg'; break;
+           case IMAGETYPE_PNG: $method = 'imagecreatefrompng'; break;
+           case IMAGETYPE_SWF: $method = null; break;
+           case IMAGETYPE_PSD: $method = null; break;
+           case IMAGETYPE_BMP: $method = null; break;
+           case IMAGETYPE_TIFF_II: $method = null; break;
+           case IMAGETYPE_TIFF_MM: $method = null; break;
+           case IMAGETYPE_JPC: $method = null; break;
+           case IMAGETYPE_JP2: $method = null; break;
+           case IMAGETYPE_JPX: $method = null; break;
+           case IMAGETYPE_JB2: $method = null; break;
+           case IMAGETYPE_SWC: $method = null; break;
+           case IMAGETYPE_IFF: $method = null; break;
+           case IMAGETYPE_WBMP: $method = 'imagecreatefromwbmp'; break;
+           case IMAGETYPE_XBM: $method = 'imagecreatefromxbm'; break;
+		}
+		return $method;
 	}
 
 
@@ -417,10 +442,12 @@ class Image extends DatabaseObject {
 		$imageDir = $Campsite['IMAGE_DIRECTORY'];
 		$thumbDir = $Campsite['THUMBNAIL_DIRECTORY'];
 		if (!file_exists($imageDir) || !is_writable($imageDir)) {
-			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $imageDir), CAMP_ERROR_WRITE_DIR);
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $imageDir),
+								  CAMP_ERROR_WRITE_DIR);
 		}
 		if (!file_exists($thumbDir) || !is_writable($thumbDir)) {
-			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $thumbDir), CAMP_ERROR_WRITE_DIR);
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $thumbDir),
+								  CAMP_ERROR_WRITE_DIR);
 		}
 
 		// Are we updating or creating?
@@ -466,25 +493,42 @@ class Image extends DatabaseObject {
 	        	if (is_null($p_id)) {
 	        		$image->delete();
 	        	}
-	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
+	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target),
+	    							  CAMP_ERROR_CREATE_FILE);
 	    	}
 	    } else {
 	        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
 	        	if (is_null($p_id)) {
 	        		$image->delete();
 	        	}
-	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
+	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target),
+	    							  CAMP_ERROR_CREATE_FILE);
 	        }
 	    }
 		chmod($target, 0644);
-        if ($Campsite['IMAGEMAGICK_INSTALLED']) {
+		
+		$createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
+		if ($createMethodName != null) {
+			$imageHandler = $createMethodName($target);
+			$thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'],
+												 $Campsite['THUMBNAIL_MAX_SIZE']);
+			$result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
+			if (PEAR::isError($result)) {
+				return $result;
+			}
+           	chmod($thumbnail, 0644);
+		} elseif ($Campsite['IMAGEMAGICK_INSTALLED']) {
             $cmd = $Campsite['THUMBNAIL_COMMAND'].' '.$target.' '.$thumbnail;
             system($cmd);
             if (file_exists($thumbnail)) {
             	chmod($thumbnail, 0644);
             } else {
-	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $thumbnail), CAMP_ERROR_CREATE_FILE);
+	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $thumbnail),
+	    							  CAMP_ERROR_CREATE_FILE);
             }
+        } else {
+        	return new PEAR_Error(getGS("Image type $1 is not supported.",
+								  image_type_to_mime_type($p_imageType)));
         }
         $image->commit();
 		$logtext = getGS('The image $1 has been added.',
@@ -493,6 +537,81 @@ class Image extends DatabaseObject {
 
         return $image;
 	} // fn OnImageUpload
+	
+	
+	/**
+	 * Saves the image refered by the resource handler to a file
+	 *
+	 * @param resource $p_image
+	 * 		Image resource handler
+	 * @param string $p_fileName
+	 * 		The full path of the file
+	 * @param int $p_type
+	 * 		The image type
+	 * @param bool $p_addExtension
+	 * 		If true it will add the proper extension to the file name.
+	 * @return mixed
+	 * 		true if successful, PEAR_Error object in case of error
+	 */
+	function SaveImageToFile($p_image, $p_fileName, $p_imageType, $p_addExtension = true)
+	{
+		$method = null;
+		switch ($p_imageType) {
+           case IMAGETYPE_GIF: $method = 'imagegif'; break;
+           case IMAGETYPE_JPEG: $method = 'imagejpeg'; break;
+           case IMAGETYPE_PNG: $method = 'imagepng'; break;
+           case IMAGETYPE_WBMP: $method = 'imagewbmp'; break;
+           case IMAGETYPE_XBM: $method = 'imagexbm'; break;
+		} // these are the supported image types
+		if ($method == null) {
+			return new PEAR_Error(getGS("Image type $1 is not supported.",
+								  image_type_to_mime_type($p_imageType)));
+		}
+		if (!$method($p_image, $p_fileName)) {
+			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $p_fileName),
+	    						  CAMP_ERROR_CREATE_FILE);
+		}
+		return true;
+	}
+	
+	
+	/**
+	 * Resizes the given image
+	 *
+	 * @param resource $p_image
+	 * 		The image resource handler
+	 * @param int $p_maxWidth
+	 * 		The maximum width of the resized image
+	 * @param int $p_maxHeight
+	 * 		The maximum height of the resized image
+	 * @param bool $p_keepRatio
+	 * 		If true keep the image ratio
+	 * @return int
+	 * 		Return the new image resource handler.
+	 */
+	function ResizeImage($p_image, $p_maxWidth, $p_maxHeight, $p_keepRatio = true)
+	{
+		$origImageWidth = imagesx($p_image);
+		$origImageHeight = imagesy($p_image);
+		if ($p_keepRatio) {
+			$ratioOrig = $origImageWidth / $origImageHeight;
+			$ratioNew = $p_maxWidth / $p_maxHeight;
+			if ($ratioNew > $ratioOrig) {
+				$newImageWidth = $p_maxHeight * $ratioOrig;
+				$newImageHeight = $p_maxHeight;
+			} else {
+				$newImageWidth = $p_maxWidth;
+				$newImageHeight = $p_maxWidth / $ratioOrig;
+			}
+		} else {
+			$newImageWidth = $p_maxWidth;
+			$newImageHeight = $p_maxHeight;
+		}
+		$newImage = imagecreatetruecolor($newImageWidth, $newImageHeight);
+		imagecopyresampled($newImage, $p_image, 0, 0, 0, 0, $newImageWidth, $newImageHeight,
+						   $origImageWidth, $origImageHeight);
+		return $newImage;
+	}
 
 
 	/**
