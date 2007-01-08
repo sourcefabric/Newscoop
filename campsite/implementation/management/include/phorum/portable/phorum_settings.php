@@ -1,9 +1,16 @@
 <?php
+
+// include Campsite configuration settings
+require ("./configuration.php");
+
 // needed to really load the alternate db-config in common.php
 define("PHORUM_WRAPPER",1);
 
 // set the Phorum install dir
 $PHORUM_DIR="/www/dev.phorum/phorum5";
+
+// set the Phorum images url
+$PHORUM_IMAGES_URL="$Campsite[WEBSITE_URL]/include/phorum/images";
 
 // set the databse settings for this Phorum Install
 $PHORUM_ALT_DBCONFIG=array(
