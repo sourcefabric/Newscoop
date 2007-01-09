@@ -1,3 +1,10 @@
+<?php
+if ($f_order_direction == 1) {
+    $arrowImage = "<img align=\"absmiddle\" src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/search_order_direction_up.png\" border=\"0\" />";
+} else {
+    $arrowImage = "<img align=\"absmiddle\" src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/search_order_direction_down.png\" border=\"0\" />";
+}
+?>
 <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domLib.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domTT.js"></script>
 <script type="text/javascript">
@@ -6,7 +13,7 @@
         document.forms[formName].elements['f_order_by'].value = orderBy;
         document.forms[formName].elements['f_order_direction'].value = orderDirection;
         return document.forms[formName].submit();
-    }
+    } // fn ClipList_reOrder
 
     var domTT_styleClass = 'domTTOverlib';
 </script>
@@ -31,12 +38,15 @@
     <?php $formName = ($f_audio_search_mode == 'search') ? 'search' : 'browse'; ?>
     <td align="left" valign="top">
         <a href="#" onclick="ClipList_reOrder('<?php p($formName); ?>', 'dc:title', '<?php p($orderDirections['dc:title']); ?>');"><?php putGS("Title"); ?></a>
+        <?php if ($f_order_by == 'dc:title') echo $arrowImage; ?>
     </td>
     <td align="left" valign="top">
         <a href="#" onclick="ClipList_reOrder('<?php p($formName); ?>', 'dc:creator', '<?php p($orderDirections['dc:creator']); ?>');"><?php putGS("Creator"); ?></a>
+        <?php if ($f_order_by == 'dc:creator') echo $arrowImage; ?>
     </td>
     <td align="left" valign="top">
         <a href="#" onclick="ClipList_reOrder('<?php p($formName); ?>', 'dcterms:extent', '<?php p($orderDirections['dcterms:extent']); ?>');"><?php putGS("Duration"); ?></a>
+        <?php if ($f_order_by == 'dcterms:extent') echo $arrowImage; ?>
     </td>
 </tr>
 
