@@ -22,6 +22,7 @@ class ArticleAudioclip extends DatabaseObject {
     var $m_dbTableName = 'ArticleAudioclips';
     var $m_columnNames = array('fk_article_number',
                                'fk_audioclip_gunid',
+                               'fk_language_id',
                                'order_no');
 
     /**
@@ -62,6 +63,15 @@ class ArticleAudioclip extends DatabaseObject {
     {
         return $this->m_data['fk_audioclip_gunid'];
     } // fn getAudioclipGunId
+
+
+    /**
+     * @return int
+     */
+    function getLanguageId()
+    {
+        return $this->m_data['fk_language_id'];
+    } // fn getLanguageId
 
 
     /*
@@ -107,9 +117,15 @@ class ArticleAudioclip extends DatabaseObject {
     {
         global $g_ado_db;
 
+        if (is_null($p_languageId)) {
+            $langConstraint = "FALSE";
+        } else {
+            $langConstraint = "fk_language_id=$p_languageId";
+        }
         $queryStr = "SELECT fk_audioclip_gunid
                      FROM ArticleAudioclips
                      WHERE fk_article_number = '$p_articleNumber'
+                     AND (fk_language_id IS NULL OR $langConstraint)
                      ORDER BY order_no";
         $rows = $g_ado_db->GetAll($queryStr);
         $returnArray = array();

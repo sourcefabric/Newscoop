@@ -46,7 +46,11 @@ if (!empty($f_audiofile)) {
 
 // link the audioclip to the current article
 $articleAudioclip =& new ArticleAudioclip($articleObj->getArticleNumber(), $aClipGunid);
-$articleAudioclip->create();
+$attributes = null;
+if ($f_language_specific == 'yes') {
+    $attributes['fk_language_id'] = $f_language_id;
+}
+$articleAudioclip->create($attributes);
 
 ?>
 <script>

@@ -17,6 +17,7 @@ $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
 $f_section_number = Input::Get('f_section_number', 'int', 0, true);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_language_specific = Input::Get('f_language_specific', 'string', null, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_audioclip_id = Input::Get('f_audioclip_id', 'string', null, true);
 $f_action = Input::Get('f_action', 'string', null, true);
@@ -62,9 +63,9 @@ switch($f_action) {
 ?>
 <html>
 <head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Expires" content="now" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css" />
     <?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
     <script language="JavaScript">
     function spread(element, name)
@@ -72,74 +73,75 @@ switch($f_action) {
         if (document.forms['audioclip_metadata'].elements['f_Main_'+name]) document.forms['audioclip_metadata'].elements['f_Main_'+name].value = element.value;
         if (document.forms['audioclip_metadata'].elements['f_Music_'+name]) document.forms['audioclip_metadata'].elements['f_Music_'+name].value = element.value;
         if (document.forms['audioclip_metadata'].elements['f_Voice_'+name]) document.forms['audioclip_metadata'].elements['f_Voice_'+name].value = element.value;
-    }
+    } // fn spread
     </script>
 	<title><?php putGS("Edit Audioclip Metadata"); ?></title>
 </head>
 <body>
 <?php camp_html_display_msgs(); ?>
 
-<P>
-<FORM name="audioclip_metadata" id="audioclip_metadata" method="POST" action="/<?php echo $ADMIN; ?>/articles/audioclips/do_<?php echo $f_action; ?>.php" enctype="multipart/form-data" onsubmit="return validateForm(this, 0, 1, 0, 0, 8);">
-<TABLE style="margin-top: 10px; margin-left: 5px;" cellpadding="0" cellspacing="0">
-<TR>
+<p>
+<form name="audioclip_metadata" id="audioclip_metadata" method="POST" action="/<?php echo $ADMIN; ?>/articles/audioclips/do_<?php echo $f_action; ?>.php" enctype="multipart/form-data" onsubmit="return validateForm(this, 0, 1, 0, 0, 8);">
+<table style="margin-top: 10px; margin-left: 5px; margin-right: 5px;" cellpadding="0" cellspacing="0">
+<tr>
 	<?php if ($g_user->hasPermission('AddAudioclip')) { ?>
-	<TD id="link1" class="tab_current"><a href="#" onclick="javascript:selectTab('1', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Main"); ?></b></a></td>
+	<td id="link1" class="tab_current"><a href="#" onclick="javascript:selectTab('1', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Main"); ?></b></a></td>
 	<?php } ?>
 
-	<TD id="link2" class="tab_normal"><a href="#" onclick="javascript:selectTab('2', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Music"); ?></b></a></td>
+	<td id="link2" class="tab_normal"><a href="#" onclick="javascript:selectTab('2', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Music"); ?></b></a></td>
 
-    <TD id="link3" class="tab_normal" style="border-right: 1px solid #8baed1;"><a href="#" onclick="javascript:selectTab('3', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Voice"); ?></b></a></td>
-</TR>
-<TR>
-    <TD colspan="3" style="background-color: #EEE; padding-top: 5px; border-bottom: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1;">
-        <BR />
-        <TABLE cellpadding="5" cellspacing="0" class="table_input">
-        <TR id="tab1">
-            <TD>
+    <td id="link3" class="tab_normal" style="border-right: 1px solid #8baed1;"><a href="#" onclick="javascript:selectTab('3', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Voice"); ?></b></a></td>
+</tr>
+<tr>
+    <td colspan="3" style="background-color: #EEE; padding-top: 5px; border-bottom: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1;">
+        <br />
+        <table cellpadding="5" cellspacing="0" class="table_input">
+        <tr id="tab1">
+            <td>
                 <?php include('main_metadata.php'); ?>
-            </TD>
-        </TR>
-        <TR id="tab2" style="display: none;">
-            <TD>
+            </td>
+        </tr>
+        <tr id="tab2" style="display: none;">
+            <td>
                 <?php include('music_metadata.php'); ?>
-            </TD>
-        </TR>
-        <TR id="tab3" style="display: none;">
-            <TD>
+            </td>
+        </tr>
+        <tr id="tab3" style="display: none;">
+            <td>
                 <?php include('voice_metadata.php'); ?>
-            </TD>
-        </TR>
-        <TR>
-            <TD>
-                <DIV align="center">
-                    <INPUT type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>">
-                    <INPUT type="hidden" name="f_issue_number" value="<?php  p($f_issue_number); ?>">
-                    <INPUT type="hidden" name="f_section_number" value="<?php  p($f_section_number); ?>">
-                    <INPUT type="hidden" name="f_article_number" value="<?php  p($f_article_number); ?>">
-                    <INPUT type="hidden" name="f_language_id" value="<?php  p($f_language_id); ?>">
-                    <INPUT type="hidden" name="f_language_selected" value="<?php  p($f_language_selected); ?>">
-                    <INPUT type="hidden" name="BackLink" value="<?php  p($_SERVER['REQUEST_URI']); ?>">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div align="center">
+                    <input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>" />
+                    <input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>" />
+                    <input type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>" />
+                    <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
+                    <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>" />
+                    <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
+                    <input type="hidden" name="f_language_specific" value="<?php p($f_language_specific); ?>" />
+                    <input type="hidden" name="BackLink" value="<?php p($_SERVER['REQUEST_URI']); ?>" />
                 <?php if ($f_action == 'add') { ?>
-                    <INPUT type="hidden" name="f_audiofile" value="<?php p($audioFile); ?>" />
+                    <input type="hidden" name="f_audiofile" value="<?php p($audioFile); ?>" />
                 <?php } elseif ($f_action == 'edit') { ?>
-                    <INPUT type="hidden" name="f_audioclip_id" value="<?php p($f_audioclip_id); ?>" />
+                    <input type="hidden" name="f_audioclip_id" value="<?php p($f_audioclip_id); ?>" />
                 <?php } ?>
-                    <INPUT type="submit" name="Save" value="<?php putGS('Save'); ?>" class="button" />
+                    <input type="submit" name="Save" value="<?php putGS('Save'); ?>" class="button" />
                 <?php if ($f_action == 'edit') { ?>
-                    <INPUT type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="window.close();">
+                    <input type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="window.close();" />
                 <?php } ?>
-                </DIV>
-            </TD>
-        </TR>
-        </TABLE>
-        <BR />
-    </TD>
-</TR>
-</TABLE>
-</FORM>
+                </div>
+            </td>
+        </tr>
+        </table>
+        <br />
+    </td>
+</tr>
+</table>
+</form>
 
-</P>
+</p>
 
 </body>
 </html>
