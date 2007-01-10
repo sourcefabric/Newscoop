@@ -6,8 +6,6 @@ global $g_permissions;
 // Data Source Name (DSN)
 $dsn = 'mysql://'.$Campsite['DATABASE_USER'].':'.$Campsite['DATABASE_PASSWORD'].'@'.$Campsite['DATABASE_SERVER_ADDRESS'].'/'.$Campsite['DATABASE_NAME'];
 
-//$dsn = 'mysql://luser:romero@192.168.0.1/liveuser_fake_remote';
-
 // Define the LiveUser configuration
 $liveuserConfig = array (
     'session' => array(
@@ -185,7 +183,7 @@ $liveuserConfig = array (
     );
 
 
-require_once('LiveUser/Admin.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/LiveUser/Admin.php');
 
 $LiveUser =& LiveUser::factory($liveuserConfig);
 if (!$LiveUser->init()) {
