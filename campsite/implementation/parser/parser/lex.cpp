@@ -345,6 +345,8 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CSwitchAttr("OnSection", "OnSection"));
 	pcoCtx->insertAttr(new CSwitchAttr("public", "Public"));
 	pcoCtx->insertAttr(new CTopicAttr("topic"));
+	pcoCtx->insertAttr(new CAttribute("matchAllTopics"));
+	pcoCtx->insertAttr(new CAttribute("matchAnyTopic"));
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);

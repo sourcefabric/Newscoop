@@ -584,10 +584,11 @@ protected:
 	// WriteArtParam: add conditions - corresponding to modifier parameters -
 	// to where clause of the query. Used for Article modifier.
 	// Parameters:
-	//		string& s - string to add conditions to (where clause)
+	//		StringSet& p_rcoWhereClauses - the set of strings to add
+	//			conditions to (where clauses)
 	//		CContext& c - current context
 	//		string& table - string containig tables used in query
-	int WriteArtParam(string& s, CContext& c, string& table);
+	int WriteArtParam(StringSet& p_rcoWhereClauses, CContext& c, string& table);
 	
 	// WriteSrcParam: add conditions - corresponding to modifier parameters -
 	// to where clause of the query. Used for SearchResult modifier.
