@@ -742,10 +742,11 @@ int CActList::WriteModParam(string& s, CContext& c, string& table)
 // WriteArtParam: add conditions - corresponding to modifier parameters -
 // to where clause of the query. Used for Article modifier.
 // Parameters:
-//		string& s - string to add conditions to (where clause)
+//		StringSet& p_rcoWhereClauses - the set of strings to add
+//			conditions to (where clauses)
 //		CContext& c - current context
 //		string& table - string containig tables used in query
-int CActList::WriteArtParam(string& s, CContext& c, string& table)
+int CActList::WriteArtParam(StringSet& p_rcoWhereClauses, CContext& c, string& table)
 {
 	CParameterList::iterator pl_i;
 	for (pl_i = mod_param.begin(); pl_i != mod_param.end(); ++pl_i)
@@ -760,6 +761,7 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 		w = "Published = 'Y'";
 	table = "Articles";
 	bool bTopic = false;
+	string coTopicsMatchMode = "or";
 	set<string> coNotTopics;
 	stringstream buf;
 	for (pl_i = mod_param.begin(); pl_i != mod_param.end(); ++pl_i)
@@ -780,20 +782,17 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 			const char* pchVal = case_comp((*pl_i)->value(), "on") == 0 ? "Y" : "N";
 			AppendConstraint(w, (*pl_i)->attribute(), (*pl_i)->opSymbol(), pchVal, "and");
 		}
+		else if (case_comp((*pl_i)->attribute(), "matchAllTopics") == 0)
+		{
+			coTopicsMatchMode = "and";
+		}
+		else if (case_comp((*pl_i)->attribute(), "matchAnyTopic") == 0)
+		{
+			coTopicsMatchMode = "or";
+		}
 		else if (case_comp((*pl_i)->attribute(), "topic") == 0)
 		{
 			bTopic = true;
-			buf.str("");
-			buf << ((const CTopicCompOperation*)(*pl_i)->operation())->secondId();
-			if ((*pl_i)->operation()->symbol() == g_coEQUAL_Symbol)
-			{
-				AppendConstraint(topic_equal_op, "ArticleTopics.TopicId", 
-				                 (*pl_i)->operation()->symbol(), buf.str(), "or");
-			}
-			else
-			{
-				coNotTopics.insert(buf.str());
-			}
 		}
 		else if ((*pl_i)->attrType() != "")
 		{
@@ -828,13 +827,44 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 			delete []pchVal;
 		}
 	}
+	StringSet coTopicConstraints;
+	for (pl_i = mod_param.begin(); pl_i != mod_param.end() && bTopic; ++pl_i)
+	{
+		if (case_comp((*pl_i)->attribute(), "topic") == 0)
+		{
+			buf.str("");
+			buf << ((const CTopicCompOperation*)(*pl_i)->operation())->secondId();
+			if ((*pl_i)->operation()->symbol() == g_coEQUAL_Symbol)
+			{
+				AppendConstraint(topic_equal_op, "ArticleTopics.TopicId", 
+								 (*pl_i)->operation()->symbol(), buf.str(), coTopicsMatchMode);
+			}
+			else
+			{
+				coNotTopics.insert(buf.str());
+			}
+			if (coTopicsMatchMode == "and")
+			{
+				coTopicConstraints.insert(topic_equal_op);
+				topic_equal_op = "";
+			}
+		}
+	}
 	if (c.Topic() > 0)
 	{
 		bTopic = true;
 		buf.str("");
 		buf << c.Topic();
 		AppendConstraint(topic_equal_op, "ArticleTopics.TopicId", g_coEQUAL_Symbol,
-		                 buf.str(), "or");
+						 buf.str(), coTopicsMatchMode);
+		if (coTopicsMatchMode == "and")
+		{
+			coTopicConstraints.insert(topic_equal_op);
+		}
+	}
+	if (coTopicsMatchMode == "or" && topic_equal_op != "")
+	{
+		coTopicConstraints.insert(topic_equal_op);
 	}
 	CheckFor("IdPublication", c.Publication(), buf, w);
 	CheckFor("NrIssue", c.Issue(), buf, w);
@@ -857,8 +887,6 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 		w += " and (" + types_w + ")";
 	if (typef_w != "")
 		w += " and (" + typef_w + ")";
-	if (topic_equal_op != "")
-		w += " and (" + topic_equal_op + ")";
 	if (!coNotTopics.empty())
 	{
 		string coQuery = "select NrArticle from ArticleTopics where ";
@@ -880,8 +908,23 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 			w += ")";
 		}
 	}
-	if (w.length())
-		s = string(" where ") + w;
+	if (coTopicConstraints.size() > 0)
+	{
+		StringSet::const_iterator coIt = coTopicConstraints.begin();
+		for (; coIt != coTopicConstraints.end(); ++coIt)
+		{
+			string coWith = string(" where ") + w + " and (" + *coIt + ")";
+			p_rcoWhereClauses.insert(coWith);
+		}
+	}
+	else
+	{
+		if (w.length())
+		{
+			w = string(" where ") + w;
+			p_rcoWhereClauses.insert(w);
+		}
+	}
 	return RES_OK;
 }
 
@@ -961,9 +1004,9 @@ int CActList::WriteOrdParam(string& s)
 		{
 			if (ord_param.empty())
 			{
-				s = " order by Articles.NrIssue desc, Articles.NrSection asc";
+				s = " order by " + table + "NrIssue desc, " + table + "NrSection asc";
 			}
-			s += ", Articles.ArticleOrder asc";
+			s += ", " + table + "ArticleOrder asc";
 		}
 		s += string(s != "" ? ", " : " order by ") + table + "IdLanguage desc";
 	}
@@ -1093,13 +1136,14 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 	{
 		string where, order, limit, fields, prefix, table, having;
 		stringstream buf;
+		StringSet artWhere;
 		switch (modifier) {
 			case CMS_ST_ISSUE:
 			case CMS_ST_SECTION:
 				WriteModParam(where, lc, table);
 				break;
 			case CMS_ST_ARTICLE:
-				WriteArtParam(where, lc, table);
+				WriteArtParam(artWhere, lc, table);
 				prefix = "Articles.";
 				break;
 			case CMS_ST_SEARCHRESULT:
@@ -1172,8 +1216,8 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 					fields += ", NrIssue";
 				break;
 			case CMS_ST_ARTICLE:
-				fields = "select Number, Articles.IdLanguage, IdPublication"
-						", Articles.NrIssue, Articles.NrSection";
+				fields = "select Number, Articles.IdLanguage, IdPublication, "
+						"Articles.NrIssue, Articles.NrSection";
 				break;
 			case CMS_ST_SEARCHRESULT:
 				coLanguageId = (string)Integer(c.Language());
@@ -1207,7 +1251,32 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 		{
 			group = " group by NrArticle";
 		}
-		string coQuery = fields + " from " + table + where + group + having + order + limit;
+		string coQuery;
+		if (modifier == CMS_ST_ARTICLE)
+		{
+			StringSet::const_iterator coIt = artWhere.begin();
+			for (; coIt != artWhere.end(); ++coIt)
+			{
+				if (coIt == artWhere.begin())
+				{
+					coQuery += fields;
+				}
+				else
+				{
+					coQuery += " and Articles.Number in ( select distinct Number";
+				}
+				coQuery += " from " + table + *coIt;
+			}
+			for (ulint nIndex = 1; nIndex < artWhere.size(); nIndex++)
+			{
+				coQuery += " ) ";
+			}
+			coQuery += group + having + order + limit;
+		}
+		else
+		{
+			coQuery = fields + " from " + table + where + group + having + order + limit;
+		}
 		DEBUGAct("takeAction()", coQuery.c_str(), fs);
 		SQLQuery(&m_coSql, coQuery.c_str());
 		res = mysql_store_result(&m_coSql);
