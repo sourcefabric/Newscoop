@@ -2,13 +2,13 @@
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.6.4
   
-  Small Improvements
-  ---------------------
+  Small Improvements (3 total)
+  ----------------------------
   01) #2359 - Hack for integration with Cream on subscription management
   02) #2382 - Improve selection by topic in articles list
   03) #2383 - Replace ImageMagic with PHP GD
   
-  Bugs Fixed (3 total)
+  Bugs Fixed (5 total)
   ---------------------
   Bugs are listed in order of oldest to newest.
   
