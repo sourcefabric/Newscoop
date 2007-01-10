@@ -48,23 +48,10 @@ if ($setPassword) {
 }
 
 $userData = array(
-                  'Name',
-                  'Title',
-                  'Gender',
-                  'Age',
-                  'EMail',
-                  'City',
-                  'StrAddress',
-                  'State',
-                  'CountryCode',
-                  'Phone',
-                  'Fax',
-                  'Contact',
-                  'Phone2',
-                  'PostalCode',
-                  'Employer',
-                  'EmployerType',
-                  'Position'
+                  'Name', 'Title', 'Gender', 'Age', 'EMail', 'City',
+                  'StrAddress', 'State', 'CountryCode', 'Phone', 'Fax',
+                  'Contact', 'Phone2', 'PostalCode', 'Employer',
+                  'EmployerType', 'Position'
                   );
 
 // save user data
@@ -74,10 +61,7 @@ foreach ($userData as $value) {
 }
 
 $backLink = "/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getUserId();
-$params = array('filters' => array('auth_user_id' => $editUser->m_liveUserData['auth_user_id']));
-$permData = $LiveUserAdmin->perm->getUsers($params);
-$permUserId = $permData[0]['perm_user_id'];
-if ($LiveUserAdmin->updateUser($liveUserValues, $permUserId) === false) {
+if ($LiveUserAdmin->updateUser($liveUserValues, $editUser->getPermUserId()) === false) {
     camp_html_add_msg(getGS('There was an error when trying to update the user info.'));
     camp_html_goto_page($backLink);
 } else {
@@ -102,9 +86,9 @@ if ($editUser->isAdmin() && $customizeRights && $canManage) {
 		$permissionEnabled = ($val == 'on') ? true : false;
 		$permissions[$field] = $permissionEnabled;
 	}
-
+    // set permissions into LiveUser
     foreach ($permissions as $perm => $value) {
-        $updateData = array('perm_user_id' => $permUserId,
+        $updateData = array('perm_user_id' => $editUser->getPermUserId(),
                             'right_id' => $g_permissions[$perm]
                             );
         if ($value == true) {
@@ -114,6 +98,7 @@ if ($editUser->isAdmin() && $customizeRights && $canManage) {
             $LiveUserAdmin->perm->revokeUserRight($updateData);
         }
     }
+
 	$editUser->updatePermissions($permissions);
 
 	$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());

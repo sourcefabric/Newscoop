@@ -68,6 +68,7 @@ $editUser = new User();
 $phorumUser = new Phorum_user();
 if (!$phorumUser->UserNameExists($fieldValues['UName']) &&
 			$editUser->create($fieldValues, $password)) {
+    $editUser->fetch();
 	$editUser->setPassword($password);
 	if ($uType == 'Staff') {
 		$editUser->setUserType($Type);

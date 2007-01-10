@@ -246,10 +246,13 @@ class User extends DatabaseObject {
                     $this->m_config[$value['varname']] = $value['value'];
                 }
             }
-            $param = array('filters' => array('handle' => $this->getUserName()));
+            $param = array('filters' => array('handle' => $this->m_data['UName']));
             $liveUserData = $LiveUserAdmin->auth->getUsers($param);
             if (is_array($liveUserData) && sizeof($liveUserData) > 0) {
                 $this->m_liveUserData = $liveUserData[0];
+                $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
+                $permData = $LiveUserAdmin->perm->getUsers($params);
+                $this->m_liveUserData['perm_user_id'] = $permData[0]['perm_user_id'];
             }
         }
     } // fn fetch
@@ -294,6 +297,8 @@ class User extends DatabaseObject {
     function setUserType($p_userType)
     {
         global $g_ado_db;
+        global $g_permissions;
+        global $LiveUserAdmin;
 
         if (!$this->exists()) {
             return;
@@ -303,6 +308,19 @@ class User extends DatabaseObject {
         $userType =& new UserType($p_userType);
         if ($userType->exists()) {
             $configVars = $userType->getConfig();
+            // Set permissions into LiveUser
+            foreach ($configVars as $perm => $value) {
+                $updateData = array('perm_user_id' => $this->m_liveUserData['perm_user_id'],
+                                    'right_id' => $g_permissions[$perm]
+                                    );
+                if ($value == 'Y') {
+                    $updateData['right_level'] = 1;
+                    $LiveUserAdmin->perm->grantUserRight($updateData);
+                } else {
+                    $LiveUserAdmin->perm->revokeUserRight($updateData);
+                }
+            }
+            // Set permissions into native Campsite tables
             foreach ($configVars as $varname => $value) {
                 $queryStr = "SELECT value FROM UserConfig "
                             ." WHERE fk_user_id=".$this->m_data['Id']
@@ -345,6 +363,24 @@ class User extends DatabaseObject {
     {
         return $this->m_data['Id'];
     } // fn getUserId
+
+
+    /**
+     * @return int
+     */
+    function getAuthUserId()
+    {
+        return $this->m_liveUserData['auth_user_id'];
+    } // fn getAuthUserId
+
+
+    /**
+     * @return int
+     */
+    function getPermUserId()
+    {
+        return $this->m_liveUserData['perm_user_id'];
+    } // fn getPermUserId
 
 
     /**
