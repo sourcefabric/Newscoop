@@ -1,3 +1,23 @@
+2.6.4 (January 10, 2007)
+  For full details about these changes, see:
+  http://code.campware.org/projects/campsite/query?milestone=2.6.4
+  
+  Small Improvements (3 total)
+  ----------------------------
+  01) #2359 - Hack for integration with Cream on subscription management
+  02) #2382 - Improve selection by topic in articles list
+  03) #2383 - Replace ImageMagic with PHP GD
+  
+  Bugs Fixed (5 total)
+  ---------------------
+  Bugs are listed in order of oldest to newest.
+  
+  01) #2375 - Translated topics are shown twice in article edit screen
+  02) #2376 - Error when executing user subscription page
+  03) #2377 - Error: Undefined variable 'key' in Localizer.php:78
+  04) #2381 - "Reset search form" link broken in Users search screen
+  05) #2384 - Phorum images in the admin area are broken
+
 2.6.3 (October 30, 2006)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.6.3
