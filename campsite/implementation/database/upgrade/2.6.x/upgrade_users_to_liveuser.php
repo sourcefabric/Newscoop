@@ -8,8 +8,8 @@ if (!is_array($Campsite)) {
     exit(1);
 }
 
-$campsite_db_name = $Campsite['LIVEUSER_DATABASE_NAME'];
-$liveuser_db_name = $Campsite['DATABASE_NAME'];
+$campsite_db_name = $Campsite['DATABASE_NAME'];
+$liveuser_db_name = $Campsite['LIVEUSER_DATABASE_NAME'];
 $db_user = $Campsite['DATABASE_USER'];
 $db_passwd = $Campsite['DATABASE_PASSWORD'];
 $db_host = $Campsite['DATABASE_SERVER_ADDRESS'];
@@ -233,7 +233,6 @@ $LiveUserAdmin =& LiveUser_Admin::factory($liveuserConfig);
 $LiveUserAdmin->init();
 $permissions = $LiveUserAdmin->perm->outputRightsConstants('array');
 
-
 // Get all the campsite users
 if (!($res = mysql_query("SELECT * FROM Users ORDER BY Id", $campsiteConn))) {
     echo "Unable to read from the database $campsite_db_name.\n";
@@ -246,13 +245,16 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
     foreach ($row as $key => $value) {
         switch ($key) {
             case 'UName': $key = 'handle'; break;
-            case 'Password': $key = 'passwd'; break;
+            case 'Password': continue;
             case 'Id': continue;
         }
         $liveUserData[$key] = $value;
     }
     $liveUserData['perm_type'] = 1;
     $authUserId = $LiveUserAdmin->addUser($liveUserData);
+    $queryStr = "UPDATE liveuser_users SET Password = '".$row['Password']."' "
+                ."WHERE Id = '".$authUserId."'";
+    mysql_query($queryStr, $liveUserConn);
 
     $params = array('filters' => array('auth_user_id' => $authUserId));
     $userPermData = $LiveUserAdmin->perm->getUsers($params);
