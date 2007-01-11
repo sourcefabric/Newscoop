@@ -439,6 +439,17 @@ if ($f_edit_mode == "edit") { ?>
 	<table width="100%">
 	<tr>
 		<td style="padding-top: 3px;">
+			<?php if ($f_edit_mode == "edit") { ?>
+			<table width="100%" style="border-bottom: 1px solid #8baed1; padding: 0px;">
+			<tr>
+				<td align="center">
+					<input type="submit" name="save" value="<?php putGS('Save'); ?>" class="button" />
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="submit" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
+				</td>
+			</tr>
+			</table>
+			<?php } ?>
 			<table width="100%" style="border-bottom: 1px solid #8baed1; padding-bottom: 3px;">
 			<tr>
 				<td align="left" valign="top"><b><?php putGS("Name"); ?>:</b>
