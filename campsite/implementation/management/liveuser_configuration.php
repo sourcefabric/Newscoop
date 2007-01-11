@@ -4,7 +4,10 @@
 global $g_permissions;
 
 // Data Source Name (DSN)
-$dsn = 'mysql://'.$Campsite['DATABASE_USER'].':'.$Campsite['DATABASE_PASSWORD'].'@'.$Campsite['DATABASE_SERVER_ADDRESS'].'/'.$Campsite['DATABASE_NAME'];
+$dsn = 'mysql://'.$Campsite['DATABASE_USER']
+		.':'.$Campsite['DATABASE_PASSWORD']
+		.'@'.$Campsite['DATABASE_SERVER_ADDRESS']
+		.'/'.$Campsite['LIVEUSER_DATABASE_NAME'];
 
 // Define the LiveUser configuration
 $liveuserConfig = array (

@@ -8,17 +8,32 @@ if (!is_array($Campsite)) {
     exit(1);
 }
 
-$db_name = $Campsite['DATABASE_NAME'];
+$campsite_db_name = $Campsite['LIVEUSER_DATABASE_NAME'];
+$liveuser_db_name = $Campsite['DATABASE_NAME'];
 $db_user = $Campsite['DATABASE_USER'];
 $db_passwd = $Campsite['DATABASE_PASSWORD'];
 $db_host = $Campsite['DATABASE_SERVER_ADDRESS'];
 
-if (!mysql_connect($db_host, $db_user, $db_passwd)) {
-    die("Unable to connect to the database server.\n");
+$liveUserConn = mysql_connect($db_host, $db_user, $db_passwd);
+if (!$liveUserConn) {
+    echo "Unable to connect to the database server.\n";
+    exit(1);
 }
 
-if (!mysql_select_db($db_name)) {
-    die("Unable to use the database " . $db_name . ".\n");
+if (!mysql_select_db($liveuser_db_name, $liveUserConn)) {
+    echo "Unable to use the database " . $db_name . ".\n";
+    exit(1);
+}
+
+$campsiteConn = mysql_connect($db_host, $db_user, $db_passwd);
+if (!$campsiteConn) {
+    echo "Unable to connect to the database server.\n";
+    exit(1);
+}
+
+if (!mysql_select_db($campsite_db_name, $campsiteConn)) {
+    echo "Unable to use the database " . $db_name . ".\n";
+    exit(1);
 }
 
 
@@ -27,7 +42,7 @@ if (!mysql_select_db($db_name)) {
 // Data Source Name (DSN)
 // Edit the dsn value to fit your requirements.
 // Default value means LiveUser tables are in the local Campsite server.
-$dsn = 'mysql://'.$db_user.':'.$db_passwd.'@'.$db_host.'/'.$db_name;
+$dsn = 'mysql://'.$db_user.':'.$db_passwd.'@'.$db_host.'/'.$liveuser_db_name;
 
 // Define the LiveUser configuration
 $liveuserConfig = array (
@@ -205,12 +220,14 @@ $liveuserConfig = array (
         )
     );
 
-
+$localPearPath = $Campsite['WWW_COMMON_DIR'].'/html/include/pear';
+set_include_path(get_include_path() . PATH_SEPARATOR . $localPearPath);
 require_once('LiveUser/Admin.php');
 
 $LiveUser =& LiveUser::factory($liveuserConfig);
 if (!$LiveUser->init()) {
-    die();
+    echo "Error when initializing the authentication system.";
+    exit(1);
 }
 $LiveUserAdmin =& LiveUser_Admin::factory($liveuserConfig);
 $LiveUserAdmin->init();
@@ -218,8 +235,9 @@ $permissions = $LiveUserAdmin->perm->outputRightsConstants('array');
 
 
 // Get all the campsite users
-if (!($res = mysql_query("SELECT * FROM Users ORDER BY Id"))) {
-    die("Unable to read from the database.\n");
+if (!($res = mysql_query("SELECT * FROM Users ORDER BY Id", $campsiteConn))) {
+    echo "Unable to read from the database $campsite_db_name.\n";
+    exit(1);
 }
 
 // Create LiveUser users
@@ -241,7 +259,7 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
     $permUserId = $userPermData[0]['perm_user_id'];
     $sql = "SELECT varname FROM UserConfig "
             ."WHERE fk_user_id = ".$row['Id']." AND value = 'Y'";
-    $result = mysql_query($sql);
+    $result = mysql_query($sql, $campsiteConn);
     if ($result) {
         while ($data = mysql_fetch_array($result, MYSQL_ASSOC)) {
             $permData = array('perm_user_id' => $permUserId,
