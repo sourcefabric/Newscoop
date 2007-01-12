@@ -243,22 +243,27 @@ if (!($res = mysql_query("SELECT * FROM Users ORDER BY Id", $campsiteConn))) {
 while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
     $liveUserData = array();
     foreach ($row as $key => $value) {
-        switch ($key) {
-            case 'UName': $key = 'handle'; break;
-            case 'Password': $key = 'passwd'; break;
-            case 'Id': continue;
-        }
+		if ($key == 'UName') {
+			$key = 'handle';
+		} elseif ($key == 'Password') {
+			$key = 'passwd';
+		} elseif ($key == 'Id') {
+			continue;
+		}
         $liveUserData[$key] = $value;
     }
     $liveUserData['perm_type'] = 1;
-    $authUserId = $LiveUserAdmin->addUser($liveUserData);
-    $queryStr = "UPDATE liveuser_users SET Password = '".$row['Password']."' "
-                ."WHERE Id = '".$authUserId."'";
-    mysql_query($queryStr, $liveUserConn);
-
-    $params = array('filters' => array('auth_user_id' => $authUserId));
-    $userPermData = $LiveUserAdmin->perm->getUsers($params);
-    $permUserId = $userPermData[0]['perm_user_id'];
+    $permUserId = $LiveUserAdmin->addUser($liveUserData);
+	$queryStr = "SELECT auth_user_id FROM liveuser_perm_users "
+				."WHERE perm_user_id = '".$permUserId."'";
+	$result = mysql_query($queryStr, $liveUserConn);
+	if ($result) {
+		$permUserData = mysql_fetch_array($result, MYSQL_ASSOC);
+		$authUserId = $permUserData['auth_user_id'];
+	    $queryStr = "UPDATE liveuser_users SET Password = '".$row['Password']."' "
+	                ."WHERE Id = '".$authUserId."'";
+	    mysql_query($queryStr, $liveUserConn);
+	}
     $sql = "SELECT varname FROM UserConfig "
             ."WHERE fk_user_id = ".$row['Id']." AND value = 'Y'";
     $result = mysql_query($sql, $campsiteConn);

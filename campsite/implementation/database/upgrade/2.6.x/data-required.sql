@@ -8,3 +8,5 @@ INSERT INTO TemplateTypes (Id, Name) VALUES ('5','nontpl');
 system php ./upgrade_user_config.php
 -- Upgrade audioclip permissions
 system php ./upgrade_user_perms.php
+-- Upgrade Campsite users to LiveUser database
+system php ./upgrade_liveuser.php

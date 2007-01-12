@@ -571,7 +571,6 @@ CREATE TABLE `Sections` (
   `Number` int(10) unsigned NOT NULL default '0',
   `Name` varchar(255) NOT NULL default '',
   `ShortName` varchar(32) NOT NULL default '',
-  `Description` blob NOT NULL,
   `SectionTplId` int(10) unsigned default NULL,
   `ArticleTplId` int(10) unsigned default NULL,
   PRIMARY KEY  (`IdPublication`,`NrIssue`,`IdLanguage`,`Number`),
