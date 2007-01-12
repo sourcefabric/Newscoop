@@ -14,28 +14,6 @@ $db_user = $Campsite['DATABASE_USER'];
 $db_passwd = $Campsite['DATABASE_PASSWORD'];
 $db_host = $Campsite['DATABASE_SERVER_ADDRESS'];
 
-$liveUserConn = mysql_connect($db_host, $db_user, $db_passwd);
-if (!$liveUserConn) {
-    echo "Unable to connect to the database server.\n";
-    exit(1);
-}
-
-if (!mysql_select_db($liveuser_db_name, $liveUserConn)) {
-    echo "Unable to use the database " . $db_name . ".\n";
-    exit(1);
-}
-
-$campsiteConn = mysql_connect($db_host, $db_user, $db_passwd);
-if (!$campsiteConn) {
-    echo "Unable to connect to the database server.\n";
-    exit(1);
-}
-
-if (!mysql_select_db($campsite_db_name, $campsiteConn)) {
-    echo "Unable to use the database " . $db_name . ".\n";
-    exit(1);
-}
-
 
 // LiveUser settings
 //
@@ -232,6 +210,28 @@ if (!$LiveUser->init()) {
 $LiveUserAdmin =& LiveUser_Admin::factory($liveuserConfig);
 $LiveUserAdmin->init();
 $permissions = $LiveUserAdmin->perm->outputRightsConstants('array');
+
+$liveUserConn = mysql_connect($db_host, $db_user, $db_passwd, true);
+if (!$liveUserConn) {
+    echo "Unable to connect to the database server.\n";
+    exit(1);
+}
+
+if (!mysql_select_db($liveuser_db_name, $liveUserConn)) {
+    echo "Unable to use the database " . $db_name . ".\n";
+    exit(1);
+}
+
+$campsiteConn = mysql_connect($db_host, $db_user, $db_passwd, true);
+if (!$campsiteConn) {
+    echo "Unable to connect to the database server.\n";
+    exit(1);
+}
+
+if (!mysql_select_db($campsite_db_name, $campsiteConn)) {
+    echo "Unable to use the database " . $db_name . ".\n";
+    exit(1);
+}
 
 // Get all the campsite users
 if (!($res = mysql_query("SELECT * FROM Users ORDER BY Id", $campsiteConn))) {
