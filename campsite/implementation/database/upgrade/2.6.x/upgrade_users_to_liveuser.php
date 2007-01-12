@@ -245,7 +245,7 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
     foreach ($row as $key => $value) {
         switch ($key) {
             case 'UName': $key = 'handle'; break;
-            case 'Password': continue;
+            case 'Password': $key = 'passwd'; break;
             case 'Id': continue;
         }
         $liveUserData[$key] = $value;
