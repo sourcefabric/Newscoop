@@ -15,7 +15,7 @@
                         <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachAudioclipToArticle')) {  ?>
 						<TD align="right">
                             <A href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php"); ?>', 'attach_audioclip', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0" title="Attach" /></A>&nbsp;
-                            <INPUT type="image" src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]); ?>/save.png" name="save" title="Save Order" />
+                            <INPUT type="image" src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]); ?>/save.png" name="save" title="Save Order" <?php if (!$articleAudioclips) { p('disabled'); } ?> />
 						</TD>
 						<?php } ?>
 					</TR>
