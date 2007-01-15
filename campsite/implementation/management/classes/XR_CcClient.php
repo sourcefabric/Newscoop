@@ -928,11 +928,14 @@ class XR_CcClient {
         } else {
             $resp = $this->xr_loadPref($sessid, 'stationName');
         }
+        if ($resp == 'Connection refused') {
+            $resp = new PEAR_Error('Connection refused');
+        }
         if (PEAR::isError($resp)) {
 	        if ($resp->getMessage() == 'Connection refused') {
     	        return new PEAR_Error(getGS("Communication error: ".$this->client->errstr));
         	}
-            if ($resp->getCode() == 805) {
+            if ($resp->getCode() == 805 || $resp->getCode() == 804) {
                 return $resp;
             }
         }

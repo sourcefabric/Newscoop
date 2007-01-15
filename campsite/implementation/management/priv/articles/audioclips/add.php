@@ -24,6 +24,7 @@ if (!Input::IsValid()) {
 // we check for the Campcaster session and show
 // the login form if necessary
 $isCcOnline = true;
+$sessid = null;
 $sessid = camp_session_get('cc_sessid', '');
 if (empty($sessid)) {
     camp_html_goto_page('campcaster_login.php');
@@ -38,6 +39,7 @@ if (PEAR::isError($resp)) {
         case '805':
             camp_html_goto_page('campcaster_login.php');
             break;
+        case '804':
         default:
             camp_html_add_msg(getGS("Unable to reach the Campcaster server."));
             camp_html_add_msg(getGS("Try again later."));

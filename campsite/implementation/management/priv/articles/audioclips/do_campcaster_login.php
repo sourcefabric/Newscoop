@@ -15,22 +15,24 @@ if (!Input::isValid()) {
 	camp_html_goto_page("/$ADMIN/priv/articles/audioclips/campcaster_login.php?error_code=userpass");
 }
 
-$ccLogin = camp_campcaster_login($f_user_name, $t_password);
+$ccLogin = camp_campcaster_login($f_cc_username, $f_cc_password);
 if (PEAR::isError($ccLogin)) {
-    camp_html_add_msg(getGS("There was an error logging in to the Campcaster server") . ": "
-                      . $ccLogin->getMessage());
+    if ($ccLogin->getCode() == '802') {
+        camp_html_add_msg(getGS("Incorrect password or your user is not a valid Campcaster user"));
+    } else {
+        camp_html_add_msg(getGS("There was an error logging in to the Campcaster server"));
+    }
+} else {
+    $BackLink = trim($BackLink);
+    if (empty($BackLink)) {
+        camp_html_add_msg(getGS("Campcaster session started successfully"), "Ok");
+    } else {
+        camp_html_goto_page("$BackLink");
+    }
 }
-
-$BackLink = trim($BackLink);
-if (empty($BackLink)) {
 ?>
 <script>
 window.opener.document.forms.article_edit.onsubmit();
 window.opener.document.forms.article_edit.submit();
 window.close();
 </script>
-<?php
-} else {
-	camp_html_goto_page("$BackLink");
-}
-?>

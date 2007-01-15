@@ -88,7 +88,11 @@ if ($LiveUser->isLoggedIn()) {
         // if user valid, password valid, encrypted, CAPTCHA valid -> login
         $ccLogin = camp_campcaster_login($f_user_name, $t_password);
         if (PEAR::isError($ccLogin)) {
-            camp_html_add_msg(getGS("There was an error logging in to the Campcaster server").": ".$ccLogin->getMessage());
+            if ($ccLogin->getCode() == '802') {
+                camp_html_add_msg(getGS("Your user is not a valid Campcaster user"));
+            } else {
+                camp_html_add_msg(getGS("There was an error logging in to the Campcaster server"));
+            }
         }
         camp_successful_login($user, $f_login_language);
     }

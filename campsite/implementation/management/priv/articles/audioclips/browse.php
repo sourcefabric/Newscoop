@@ -61,6 +61,7 @@ if (!Input::IsValid()) {
 // we check for the Campcaster session and show
 // the login form if necessary
 $isCcOnline = true;
+$sessid = null;
 $sessid = camp_session_get('cc_sessid', '');
 if (empty($sessid)) {
     camp_html_goto_page('campcaster_login.php');
@@ -75,6 +76,7 @@ if (PEAR::isError($resp)) {
         case '805':
             camp_html_goto_page('campcaster_login.php');
             break;
+        case '804':
         default:
             camp_html_add_msg(getGS("Unable to reach the Campcaster server."));
             camp_html_add_msg(getGS("Try again later."));
@@ -245,10 +247,10 @@ for ($catIndex = 1; $catIndex <= 2; $catIndex++) {
     }
 } else { // if ($isCcOnline)
 ?>
-<table border="0" cellspacing="1" cellpadding="6" class="table_list">
+<table border="0" width="100%" cellspacing="1" cellpadding="6" class="table_list">
 <tr>
-    <td class="error_message">
-        <?php putGS("Unable to contact the Campcaster server!"); ?>
+    <td align="center">
+        <input type="button" name="close" class="button" value="<?php putGS("Close"); ?>" onclick="window.close();" />
     </td>
 </tr>
 </table>
