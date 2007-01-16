@@ -923,11 +923,7 @@ class XR_CcClient {
      */
     function ping($sessid = null)
     {
-        if (is_null($sessid)) {
-            $resp = $this->xr_getVersion();
-        } else {
-            $resp = $this->xr_loadPref($sessid, 'stationName');
-        }
+        $resp = $this->xr_loadPref($sessid, 'stationName');
         if ($resp == 'Connection refused') {
             $resp = new PEAR_Error('Connection refused');
         }

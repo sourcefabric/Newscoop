@@ -60,6 +60,12 @@ if (($extension == '.php') || ($extension == '')) {
 		// Check if the user is logged in already
 		list($access, $g_user) = camp_check_admin_access($_REQUEST);
 		if (!$access) {
+            if ($call_script == '/articles/audioclips/popup.php') {
+                print("<script>\n");
+                print("window.opener.document.forms.article_edit.submit();");
+                print("window.close();");
+                print("</script>");
+            }
 			// If not logged in, show the login screen.
 			header("Location: /$ADMIN/login.php");
 			return;

@@ -27,9 +27,11 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 ?>
 <html>
 <head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Expires" content="now" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<title><?php putGS("Attach Audioclip To Article"); ?></title>
 </head>
 <body>

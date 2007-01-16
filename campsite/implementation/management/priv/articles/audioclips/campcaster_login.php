@@ -14,7 +14,7 @@ $isCcOnline = true;
 // or the communication to Campcaster
 $xrc =& XR_CcClient::Factory($mdefs);
 $resp = $xrc->ping();
-if (PEAR::isError($resp)) {
+if (PEAR::isError($resp) && $resp->getCode() != 805) {
     camp_html_add_msg(getGS("Unable to reach the Campcaster server."));
     camp_html_add_msg(getGS("Try again later."));
     $isCcOnline = false;
