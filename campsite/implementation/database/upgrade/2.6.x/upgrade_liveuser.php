@@ -9,7 +9,7 @@ if (!is_array($Campsite)) {
 }
 
 $campsite_db_name = $Campsite['DATABASE_NAME'];
-$liveuser_db_name = $Campsite['LIVEUSER_DATABASE_NAME'];
+$liveuser_db_name = $Campsite['DATABASE_NAME'];
 $db_user = $Campsite['DATABASE_USER'];
 $db_passwd = $Campsite['DATABASE_PASSWORD'];
 $db_host = $Campsite['DATABASE_SERVER_ADDRESS'];
