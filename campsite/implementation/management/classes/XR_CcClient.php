@@ -924,7 +924,7 @@ class XR_CcClient {
     function ping($sessid = null)
     {
         $resp = $this->xr_loadPref($sessid, 'stationName');
-        if ($resp == 'Connection refused') {
+        if (is_string($resp) && $resp == 'Connection refused') {
             $resp = new PEAR_Error('Connection refused');
         }
         if (PEAR::isError($resp)) {

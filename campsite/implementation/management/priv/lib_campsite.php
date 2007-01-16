@@ -406,7 +406,7 @@ function camp_campcaster_login($f_cc_username, $f_cc_password)
     	return $xrc;
     }
     $r = $xrc->xr_login($f_cc_username, $f_cc_password);
-    if ($r == 'Connection refused') {
+    if (is_string($r) && $r == 'Connection refused') {
         $r = new PEAR_Error(getGS("Connection refused"));
     }
     if (PEAR::isError($r)) {
