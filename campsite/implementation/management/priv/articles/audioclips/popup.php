@@ -1,7 +1,13 @@
 <?php
 camp_load_translation_strings("article_audioclips");
 camp_load_translation_strings('api');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
+
+if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
+    camp_html_display_error(getGS("Campcaster integration is disabled"), null, true);
+    exit;
+}
 
 if (!$g_user->hasPermission("AttachAudioclipToArticle")) {
 	$errorStr = getGS('You do not have the right to attach audio clips to articles.');

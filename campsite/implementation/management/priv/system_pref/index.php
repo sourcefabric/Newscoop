@@ -93,7 +93,7 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 		        <?php putGS("Database Replication Host:") ?>
 	        </td>
 	        <td>
-		        <input type="text" name="f_db_repl_host" value="<?php p(SystemPref::Get("DBReplicationHost")); ?>" maxlenght="60" size="28" class="input_text" />
+		        <input type="text" name="f_db_repl_host" value="<?php p(SystemPref::Get("DBReplicationHost")); ?>" maxlenght="60" size="30" class="input_text" />
 	        </td>
         </tr>
         <tr>
@@ -127,41 +127,54 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 	<td colspan="2"><hr></td>
 </tr>
 <tr>
+    <td colspan="2" align="left">
+        <?php putGS("Enable Campcaster audioclip attachments?"); ?>
+        <input type="radio" name="f_use_campcaster" onclick="ShowElement('campcaster_server');" value="Y" <?php if (SystemPref::Get("UseCampcasterAudioclips") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_use_campcaster" onclick="HideElement('campcaster_server');" value="N" <?php if (SystemPref::Get("UseCampcasterAudioclips") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+<tr id="campcaster_server" style="display: <?php (SystemPref::Get("UseCampcasterAudioclips") == 'Y') ? p("") : p("none") ?>;">
 	<td colspan="2" align="left">
-		<strong><?php putGS("Campcaster Server"); ?></strong>
-	</td>
-</tr>
-<tr>
-	<td width="400px">
-		<?php putGS("Hostname / IP Address:") ?>
-	</td>
-	<td>
-		<input type="text" name="f_cc_hostname" value="<?php p(SystemPref::Get("CampcasterHostName")); ?>" maxlenght="60" size="30" class="input_text" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<?php putGS("Port:") ?>
-	</td>
-	<td>
-		<input type="text" name="f_cc_hostport" value="<?php p(SystemPref::Get("CampcasterHostPort")); ?>" maxlenght="60" size="30" class="input_text" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<?php putGS("XML RPC Path:") ?>
-	</td>
-	<td>
-		<input type="text" name="f_cc_xrpcpath" value="<?php p(SystemPref::Get("CampcasterXRPCPath")); ?>" maxlenght="100" size="30" class="input_text" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<?php putGS("XML RPC File:") ?>
-	</td>
-	<td>
-		<input type="text" name="f_cc_xrpcfile" value="<?php p(SystemPref::Get("CampcasterXRPCFile")); ?>" maxlenght="50" size="30" class="input_text" />
-	</td>
+        <table cellpadding="0" cellspacing="6">
+        <tr>
+            <td>
+                <strong><?php putGS("Campcaster Server"); ?></strong>
+            </td>
+        </tr>
+        <tr>
+            <td width="400px">
+                <?php putGS("Hostname / IP Address:"); ?>
+            </td>
+            <td>
+                <input type="text" name="f_cc_hostname" value="<?php p(SystemPref::Get("CampcasterHostName")); ?>" maxlenght="60" size="30" class="input_text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php putGS("Port:"); ?>
+            </td>
+            <td>
+                <input type="text" name="f_cc_hostport" value="<?php p(SystemPref::Get("CampcasterHostPort")); ?>" maxlenght="60" size="30" class="input_text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php putGS("XML RPC Path:"); ?>
+            </td>
+            <td>
+                <input type="text" name="f_cc_xrpcpath" value="<?php p(SystemPref::Get("CampcasterXRPCPath")); ?>" maxlenght="100" size="30" class="input_text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php putGS("XML RPC File:"); ?>
+            </td>
+            <td>
+                <input type="text" name="f_cc_xrpcfile" value="<?php p(SystemPref::Get("CampcasterXRPCFile")); ?>" maxlenght="50" size="30" class="input_text" />
+            </td>
+        </tr>
+        </table>
+    </td>
 </tr>
 <tr>
 	<td colspan="2" align="center" style="padding-top: 10px;">

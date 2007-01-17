@@ -886,11 +886,13 @@ if ($f_edit_mode == "edit") { ?>
 		</td></tr>
 
 
+        <?php if (SystemPref::Get("UseCampcasterAudioclips") == 'Y') { ?>
 		<tr><td>
             <!-- BEGIN Audioclips table -->
             <?php require('edit_audioclips_box.php'); ?>
             <!-- END Audioclips table -->
         </td></tr>
+        <?php } ?>
 		</table>
 	</td>
 </tr>

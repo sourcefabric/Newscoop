@@ -7,6 +7,11 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 camp_load_translation_strings("article_audioclips");
 camp_load_translation_strings("api");
 
+if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
+    camp_html_display_error(getGS("Campcaster integration is disabled"), null, true);
+    exit;
+}
+
 $f_cc_username = Input::Get('f_cc_username');
 $f_cc_password = Input::Get('f_cc_password');
 $BackLink = Input::Get('f_backlink', 'string', null, true);

@@ -5,6 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/LoginAttempts.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/crypto/rc4Encrypt.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/PEAR.php');
@@ -86,12 +87,14 @@ if ($LiveUser->isLoggedIn()) {
     if (!$validateCaptcha || PhpCaptcha::Validate($f_captcha_code, true)) {
         // if user valid, password valid, encrypted, no CAPTCHA -> login
         // if user valid, password valid, encrypted, CAPTCHA valid -> login
-        $ccLogin = camp_campcaster_login($f_user_name, $t_password);
-        if (PEAR::isError($ccLogin)) {
-            if ($ccLogin->getCode() == '802') {
-                camp_html_add_msg(getGS("Your user is not a valid Campcaster user"));
-            } else {
-                camp_html_add_msg(getGS("There was an error logging in to the Campcaster server"));
+        if (SystemPref::Get("UseCampcasterAudioclips") == 'Y') {
+            $ccLogin = camp_campcaster_login($f_user_name, $t_password);
+            if (PEAR::isError($ccLogin)) {
+                if ($ccLogin->getCode() == '802') {
+                    camp_html_add_msg(getGS("Your user is not a valid Campcaster user"));
+                } else {
+                    camp_html_add_msg(getGS("There was an error logging in to the Campcaster server"));
+                }
             }
         }
         camp_successful_login($user, $f_login_language);

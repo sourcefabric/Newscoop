@@ -6,6 +6,11 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAudioclip.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Translation.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 
+if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
+    camp_html_display_error(getGS("Campcaster integration is disabled"), null, true);
+    exit;
+}
+
 if (!$g_user->hasPermission('AddAudioclip')) {
 	camp_html_display_error(getGS('You do not have the right to add audioclips.'), null, true);
 	exit;

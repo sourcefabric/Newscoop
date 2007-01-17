@@ -9,6 +9,11 @@ camp_load_translation_strings("globals");
 camp_load_translation_strings("home");
 camp_load_translation_strings("article_audioclips");
 
+if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
+    camp_html_display_error(getGS("Campcaster integration is disabled"), null, true);
+    exit;
+}
+
 $isCcOnline = true;
 // ... is something wrong with either the sessid
 // or the communication to Campcaster

@@ -10,6 +10,11 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 
+if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
+    camp_html_display_error(getGS("Campcaster integration is disabled"), null, true);
+    exit;
+}
+
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);

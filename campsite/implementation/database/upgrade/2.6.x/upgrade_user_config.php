@@ -31,6 +31,7 @@ $sql = "INSERT INTO UserConfig (fk_user_id, varname, value, last_modified)
                (0,'DBReplicationUser','',NOW()),
                (0,'DBReplicationPass','',NOW()),
                (0,'DBReplicationPort','3306',NOW()),
+               (0,'UseCampcasterAudioclips','N',NOW()),
                (0,'CampcasterHostName','localhost',NOW()),
                (0,'CampcasterHostPort','80',NOW()),
                (0,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/',NOW()),

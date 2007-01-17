@@ -18,6 +18,7 @@ $f_db_repl_host = Input::Get('f_db_repl_host');
 $f_db_repl_user = Input::Get('f_db_repl_user');
 $f_db_repl_pass = Input::Get('f_db_repl_pass');
 $f_db_repl_port = intval(Input::Get('f_db_repl_port'));
+$f_use_campcaster = Input::Get('f_use_campcaster');
 $f_cc_hostname = Input::Get('f_cc_hostname');
 $f_cc_hostport = intval(Input::Get('f_cc_hostport'));
 $f_cc_xrpcpath = Input::Get('f_cc_xrpcpath');
@@ -70,11 +71,16 @@ if ($f_use_replication == 'Y') {
     SystemPref::Set("UseDBReplication", 'N');
 }
 
-// Campcaster Server
-SystemPref::Set("CampcasterHostName", $f_cc_hostname);
-SystemPref::Set("CampcasterHostPort", $f_cc_hostport);
-SystemPref::Set("CampcasterXRPCPath", $f_cc_xrpcpath);
-SystemPref::Set("CampcasterXRPCFile", $f_cc_xrpcfile);
+if ($f_use_campcaster == 'Y') {
+    // Campcaster Server
+    SystemPref::Set("CampcasterHostName", $f_cc_hostname);
+    SystemPref::Set("CampcasterHostPort", $f_cc_hostport);
+    SystemPref::Set("CampcasterXRPCPath", $f_cc_xrpcpath);
+    SystemPref::Set("CampcasterXRPCFile", $f_cc_xrpcfile);
+    SystemPref::Set("UseCampcasterAudioclips", $f_use_campcaster);
+} else {
+    SystemPref::Set("UseCampcasterAudioclips", 'N');
+}
 
 $logtext = getGS('System preferences updated');
 Log::Message($logtext, $g_user->getUserId(), 171);
