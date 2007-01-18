@@ -1,9 +1,10 @@
 <?php 
+regGS("Online Server: On", "");
+regGS("Online Server: Off", "");
 regGS("Title", "");
 regGS("Length", "");
 regGS("Download", "");
 regGS("Creator", "");
-regGS("Comments Disabled", "");
 regGS("Audioclips order saved.", "");
 regGS("Audioclips", "");
 regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "");

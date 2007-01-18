@@ -1,9 +1,10 @@
 <?php 
+regGS("Online Server: On", "Online Server: On");
+regGS("Online Server: Off", "Online Server: Off");
 regGS("Title", "Title");
 regGS("Length", "Length");
 regGS("Download", "Download");
 regGS("Creator", "Creator");
-regGS("Comments Disabled", "Comments Disabled");
 regGS("Audioclips order saved.", "Audioclips order saved.");
 regGS("Audioclips", "Audioclips");
 regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "Are you sure you want to remove the audio file \'$1\' from the article?");

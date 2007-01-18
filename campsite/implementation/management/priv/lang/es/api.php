@@ -1,4 +1,5 @@
 <?php 
+regGS("Image type $1 is not supported.", "");
 regGS("There was a problem trying to execute the XML RPC function.", "");
 regGS("The Campcaster server configuration is invalid.", "");
 regGS("Template $1 was moved to $2", "");

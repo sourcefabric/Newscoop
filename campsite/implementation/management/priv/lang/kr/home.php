@@ -1,4 +1,6 @@
 <?php 
+regGS("Your user is not a valid Campcaster user", "");
+regGS("Connection refused", "");
 regGS("An error occured in session management. Please reload the login page.", "");
 regGS("This file is stored on disk as '$1'.", "");
 regGS("Instance", "");

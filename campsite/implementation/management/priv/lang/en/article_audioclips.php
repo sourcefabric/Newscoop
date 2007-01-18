@@ -1,4 +1,7 @@
 <?php 
+regGS("Incorrect password or your user is not a valid Campcaster user", "Incorrect password or your user is not a valid Campcaster user");
+regGS("Campcaster session started successfully", "Campcaster session started successfully");
+regGS("Campcaster integration is disabled", "Campcaster integration is disabled");
 regGS("You must select at least one audioclip to attach.", "You must select at least one audioclip to attach.");
 regGS("You must select an audio file to upload.", "You must select an audio file to upload.");
 regGS("You do not have the right to delete audioclips.", "You do not have the right to delete audioclips.");
@@ -25,7 +28,6 @@ regGS("Report date/time", "Report date/time");
 regGS("Rating", "Rating");
 regGS("Radio station web page", "Radio station web page");
 regGS("Radio station name", "Radio station name");
-regGS("Please enter your user name.", "Please enter your user name.");
 regGS("Please enter your user name and password", "Please enter your user name and password");
 regGS("Please enter your password.", "Please enter your password.");
 regGS("Please enter a title for the audioclip.", "Please enter a title for the audioclip.");

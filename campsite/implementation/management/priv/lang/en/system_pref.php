@@ -1,4 +1,5 @@
 <?php 
+regGS("Enable Campcaster audioclip attachments?", "Enable Campcaster audioclip attachments?");
 regGS("XML RPC Path:", "XML RPC Path:");
 regGS("XML RPC File:", "XML RPC File:");
 regGS("System preferences updated", "System preferences updated");
