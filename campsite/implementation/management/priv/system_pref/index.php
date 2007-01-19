@@ -55,7 +55,7 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 <tr>
 	<td align="left">
 		<?php putGS("Maximum upload file size:"); ?>
-		<div style="padding-top: 3px; padding-left: 15px;"><?php putGS("Enter a value between 0 and ".ini_get('upload_max_filesize')." (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'."); ?></div>
+		<div style="padding-top: 3px; padding-left: 15px;"><?php putGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", ini_get('upload_max_filesize')); ?></div>
 	</td>
 	<td valign="top">
 		<input type="text" name="f_max_upload_filesize" value="<?php p(SystemPref::Get("MaxUploadFileSize")); ?>" maxlenght="12" size="14" class="input_text" alt="blank" emsg="<?php putGS("Please enter a positive number for the '$2' field.", getGS("Max Upload File Size")); ?>" />
