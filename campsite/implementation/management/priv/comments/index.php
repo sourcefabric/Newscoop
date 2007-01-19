@@ -114,6 +114,7 @@ echo camp_html_breadcrumbs($crumbs);
     <?php
     }
     ?>
+        &nbsp;
     </td>
 </tr>
 </table>
