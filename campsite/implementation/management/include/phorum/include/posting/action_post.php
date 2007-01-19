@@ -118,6 +118,9 @@ $success = phorum_db_post_message($message);
 
 if ($success)
 {
+	// Relate the message posted to Campsite
+	phorum_db_relate_message_to_campsite($message);
+
     // Handle linking and deleting of attachments to synchronize
     // the message attachments with the working copy list
     // of attachments.

@@ -542,6 +542,55 @@ function phorum_db_post_message(&$message,$convert=false){
     return $success;
 }
 
+
+/**
+ * Relate a message to Campsite.
+ *
+ * It affects campsite.ArticleComments
+ *
+ * @param array $message
+ *  The $message array must contain the following indexes:
+ *      thread, message_id
+ *
+ * @return boolean
+ *      TRUE on success, FALSE on failure.
+ *
+ */
+function phorum_db_relate_message_to_campsite($message)
+{
+	$PHORUM = $GLOBALS["PHORUM"];
+
+	$conn = phorum_db_mysql_connect();
+
+	$success = false;
+	$sql = "SELECT fk_article_number, fk_language_id
+			FROM ArticleComments
+			WHERE fk_comment_id = '".$message['thread']."'";
+	$res = mysql_query($sql, $conn);
+	if ($err = mysql_error()) phorum_db_mysql_error("$err: $sql");
+
+	if ($res) {
+		$data = mysql_fetch_array($res);
+		if (!empty($data['fk_article_number'])) {
+			$article_number = $data['fk_article_number'];
+			$article_language = $data['fk_language_id'];
+			$sql = "INSERT INTO ArticleComments
+					(fk_article_number, fk_language_id, fk_comment_id, is_first)
+					VALUES ('".$article_number."', '".$article_language."', '".
+							$message['message_id']."', '0')";
+			$res = mysql_query($sql, $conn);
+			if ($err = mysql_error()) phorum_db_mysql_error("$err: $sql");
+
+			if ($res) {
+				$success = true;
+			}
+		}
+	}
+
+	return $success;
+}
+
+
 /**
  * Delete a message.
  *
