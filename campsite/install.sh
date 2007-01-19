@@ -90,7 +90,7 @@ install_campsite()
 	echo "For help with this command, run:"
 	echo "    $BIN_DIR/campsite-create-instance --help"
 	echo "or read the manual at:"
-	echo "    http://code.campware.org/manuals/campsite/2.6/index.php?id=147"
+	echo "    http://code.campware.org/manuals/campsite/2.7/index.php?id=147"
 	echo
     fi
 }

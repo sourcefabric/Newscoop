@@ -1,4 +1,4 @@
-INSTALLATION PROCEDURE FOR CAMPSITE V.2.6.x
+INSTALLATION PROCEDURE FOR CAMPSITE V.2.7.x
 http://www.campware.org
 
 CONTENTS:
@@ -10,7 +10,7 @@ CONTENTS:
 
 PREPARATION - applications you need to have installed
   see the manual page at:
-  http://code.campware.org/manuals/campsite/2.6/index.php?id=5
+  http://code.campware.org/manuals/campsite/2.7/index.php?id=5
 
 ####################################################################
 
@@ -40,7 +40,7 @@ INSTALLATION - the usual procedure
 
    GENTOO
    You will need to follow these special instructions at:
-   http://code.campware.org/manuals/campsite/2.6/index.php?id=152
+   http://code.campware.org/manuals/campsite/2.7/index.php?id=152
 
 4. Configure the default instance
 

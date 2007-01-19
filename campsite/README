@@ -1,11 +1,11 @@
 Campsite
 version     : 2.7-dev
-release date: June 6, 2006
+release date: January 23, 2007
 contact     : contact@campware.org
 url         : http://www.campware.org
 copyright   : (c)1999-2007 Media Development Loan Fund
 support     : mailto: campsite-support@campware.org; subject: subscribe
-manual      : http://code.campware.org/manuals/campsite/2.6/
+manual      : http://code.campware.org/manuals/campsite/2.7/
 
 INTRODUCTION
 
@@ -67,11 +67,11 @@ See the INSTALL file
 
 
 MANUAL
-See http://code.campware.org/manuals/campsite/2.6/
+See http://code.campware.org/manuals/campsite/2.7/
 
 
 TECHNICAL REQUIREMENTS
-See http://code.campware.org/manuals/campsite/2.6/index.php?id=5
+See http://code.campware.org/manuals/campsite/2.7/index.php?id=5
 
 
 COPYRIGHT
