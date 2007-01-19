@@ -1,4 +1,5 @@
 <?php 
+regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "");
 regGS("Enable Campcaster audioclip attachments?", "");
 regGS("XML RPC Path:", "");
 regGS("XML RPC File:", "");
@@ -12,7 +13,6 @@ regGS("Max Upload File Size", "");
 regGS("Invalid Max Upload File Size value submitted", "");
 regGS("Hostname / IP Address:", "");
 regGS("General Settings", "");
-regGS("Enter a value between 0 and ", "");
 regGS("Database Replication data incomplete", "");
 regGS("Database Replication User:", "");
 regGS("Database Replication Port:", "");
