@@ -39,7 +39,8 @@ if (!$exists) {
 	$tpl1_name = urldecode($f_path)."/$f_orig_name";
 	$tpl1 = $Campsite['HTML_DIR']."/look/".urldecode($f_path)."/$f_orig_name";
 	$fd = fopen($tpl1, "r");
-	$contents = fread($fd, filesize ($tpl1));
+	$fileSize = filesize($tpl1);
+	$contents = $fileSize > 0 ? fread($fd, $fileSize) : '';
 	fclose($fd);
 
 	$tpl2_name = urldecode($f_path)."/$f_new_name";
