@@ -4,6 +4,15 @@
 -- ------------------------------------------------------
 -- Server version	4.1.15-Debian_1ubuntu5-log
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
 --
 -- Table structure for table `Aliases`
 --
@@ -15,12 +24,17 @@ CREATE TABLE `Aliases` (
   `IdPublication` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Aliases`
 --
 
+
+/*!40000 ALTER TABLE `Aliases` DISABLE KEYS */;
+LOCK TABLES `Aliases` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Aliases` ENABLE KEYS */;
 
 --
 -- Table structure for table `ArticleAttachments`
@@ -33,12 +47,40 @@ CREATE TABLE `ArticleAttachments` (
   UNIQUE KEY `article_attachment_index` (`fk_article_number`,`fk_attachment_id`),
   KEY `fk_article_number` (`fk_article_number`),
   KEY `fk_attachment_id` (`fk_attachment_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ArticleAttachments`
 --
 
+
+/*!40000 ALTER TABLE `ArticleAttachments` DISABLE KEYS */;
+LOCK TABLES `ArticleAttachments` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `ArticleAttachments` ENABLE KEYS */;
+
+--
+-- Table structure for table `ArticleAudioclips`
+--
+
+DROP TABLE IF EXISTS `ArticleAudioclips`;
+CREATE TABLE `ArticleAudioclips` (
+  `fk_article_number` int(10) unsigned NOT NULL default '0',
+  `fk_audioclip_gunid` varchar(20) NOT NULL default '0',
+  `fk_language_id` int(10) unsigned default NULL,
+  `order_no` smallint(5) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`fk_article_number`,`fk_audioclip_gunid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ArticleAudioclips`
+--
+
+
+/*!40000 ALTER TABLE `ArticleAudioclips` DISABLE KEYS */;
+LOCK TABLES `ArticleAudioclips` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `ArticleAudioclips` ENABLE KEYS */;
 
 --
 -- Table structure for table `ArticleComments`
@@ -53,12 +95,17 @@ CREATE TABLE `ArticleComments` (
   KEY `fk_comment_id` (`fk_comment_id`),
   KEY `article_index` (`fk_article_number`,`fk_language_id`),
   KEY `first_message_index` (`fk_article_number`,`fk_language_id`,`is_first`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ArticleComments`
 --
 
+
+/*!40000 ALTER TABLE `ArticleComments` DISABLE KEYS */;
+LOCK TABLES `ArticleComments` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `ArticleComments` ENABLE KEYS */;
 
 --
 -- Table structure for table `ArticleImages`
@@ -72,12 +119,17 @@ CREATE TABLE `ArticleImages` (
   PRIMARY KEY  (`NrArticle`,`IdImage`),
   UNIQUE KEY `ArticleImage` (`NrArticle`,`Number`),
   KEY `IdImage` (`IdImage`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ArticleImages`
 --
 
+
+/*!40000 ALTER TABLE `ArticleImages` DISABLE KEYS */;
+LOCK TABLES `ArticleImages` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `ArticleImages` ENABLE KEYS */;
 
 --
 -- Table structure for table `ArticleIndex`
@@ -92,12 +144,17 @@ CREATE TABLE `ArticleIndex` (
   `NrSection` int(10) unsigned NOT NULL default '0',
   `NrArticle` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`IdPublication`,`IdLanguage`,`IdKeyword`,`NrIssue`,`NrSection`,`NrArticle`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ArticleIndex`
 --
 
+
+/*!40000 ALTER TABLE `ArticleIndex` DISABLE KEYS */;
+LOCK TABLES `ArticleIndex` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `ArticleIndex` ENABLE KEYS */;
 
 --
 -- Table structure for table `ArticlePublish`
@@ -116,12 +173,17 @@ CREATE TABLE `ArticlePublish` (
   PRIMARY KEY  (`id`),
   KEY `article_index` (`fk_article_number`,`fk_language_id`),
   KEY `event_time_index` (`time_action`,`is_completed`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ArticlePublish`
 --
 
+
+/*!40000 ALTER TABLE `ArticlePublish` DISABLE KEYS */;
+LOCK TABLES `ArticlePublish` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `ArticlePublish` ENABLE KEYS */;
 
 --
 -- Table structure for table `ArticleTopics`
@@ -132,12 +194,17 @@ CREATE TABLE `ArticleTopics` (
   `NrArticle` int(10) unsigned NOT NULL default '0',
   `TopicId` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`NrArticle`,`TopicId`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ArticleTopics`
 --
 
+
+/*!40000 ALTER TABLE `ArticleTopics` DISABLE KEYS */;
+LOCK TABLES `ArticleTopics` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `ArticleTopics` ENABLE KEYS */;
 
 --
 -- Table structure for table `ArticleTypeMetadata`
@@ -154,12 +221,17 @@ CREATE TABLE `ArticleTypeMetadata` (
   `field_type` varchar(255) default NULL,
   `field_type_param` varchar(255) default NULL,
   PRIMARY KEY  (`type_name`,`field_name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ArticleTypeMetadata`
 --
 
+
+/*!40000 ALTER TABLE `ArticleTypeMetadata` DISABLE KEYS */;
+LOCK TABLES `ArticleTypeMetadata` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `ArticleTypeMetadata` ENABLE KEYS */;
 
 --
 -- Table structure for table `Articles`
@@ -189,7 +261,7 @@ CREATE TABLE `Articles` (
   `ArticleOrder` int(10) unsigned NOT NULL default '0',
   `comments_enabled` tinyint(1) NOT NULL default '0',
   `comments_locked` tinyint(1) NOT NULL default '0',
-  `time_updated` timestamp NOT NULL,
+  `time_updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -197,12 +269,17 @@ CREATE TABLE `Articles` (
   UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`ShortName`),
   KEY `Type` (`Type`),
   KEY `ArticleOrderIdx` (`ArticleOrder`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Articles`
 --
 
+
+/*!40000 ALTER TABLE `Articles` DISABLE KEYS */;
+LOCK TABLES `Articles` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Articles` ENABLE KEYS */;
 
 --
 -- Table structure for table `Attachments`
@@ -220,15 +297,45 @@ CREATE TABLE `Attachments` (
   `size_in_bytes` bigint(20) unsigned default NULL,
   `fk_description_id` int(11) default NULL,
   `fk_user_id` int(10) unsigned default NULL,
-  `last_modified` timestamp NOT NULL,
+  `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `time_created` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Attachments`
 --
 
+
+/*!40000 ALTER TABLE `Attachments` DISABLE KEYS */;
+LOCK TABLES `Attachments` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Attachments` ENABLE KEYS */;
+
+--
+-- Table structure for table `AudioclipMetadata`
+--
+
+DROP TABLE IF EXISTS `AudioclipMetadata`;
+CREATE TABLE `AudioclipMetadata` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `gunid` varchar(20) NOT NULL default '0',
+  `predicate_ns` varchar(10) default '',
+  `predicate` varchar(30) NOT NULL default '',
+  `object` text,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `gunid_tag_id` (`gunid`,`predicate_ns`,`predicate`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `AudioclipMetadata`
+--
+
+
+/*!40000 ALTER TABLE `AudioclipMetadata` DISABLE KEYS */;
+LOCK TABLES `AudioclipMetadata` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `AudioclipMetadata` ENABLE KEYS */;
 
 --
 -- Table structure for table `AutoId`
@@ -240,13 +347,18 @@ CREATE TABLE `AutoId` (
   `LogTStamp` datetime NOT NULL default '0000-00-00 00:00:00',
   `TopicId` int(10) unsigned NOT NULL default '0',
   `translation_phrase_id` int(10) unsigned NOT NULL default '0'
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `AutoId`
 --
 
-INSERT INTO `AutoId` (`ArticleId`, `LogTStamp`, `TopicId`, `translation_phrase_id`) VALUES (0,'0000-00-00 00:00:00',0,0);
+
+/*!40000 ALTER TABLE `AutoId` DISABLE KEYS */;
+LOCK TABLES `AutoId` WRITE;
+INSERT INTO `AutoId` VALUES (0,'0000-00-00 00:00:00',0,0);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `AutoId` ENABLE KEYS */;
 
 --
 -- Table structure for table `Classes`
@@ -259,12 +371,17 @@ CREATE TABLE `Classes` (
   `Name` varchar(140) NOT NULL default '',
   PRIMARY KEY  (`Id`,`IdLanguage`),
   UNIQUE KEY `IdLanguage` (`IdLanguage`,`Name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Classes`
 --
 
+
+/*!40000 ALTER TABLE `Classes` DISABLE KEYS */;
+LOCK TABLES `Classes` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Classes` ENABLE KEYS */;
 
 --
 -- Table structure for table `Countries`
@@ -272,18 +389,23 @@ CREATE TABLE `Classes` (
 
 DROP TABLE IF EXISTS `Countries`;
 CREATE TABLE `Countries` (
-  `Code` char(2) NOT NULL default '',
+  `Code` varchar(2) NOT NULL default '',
   `IdLanguage` int(10) unsigned NOT NULL default '0',
   `Name` varchar(140) NOT NULL default '',
   PRIMARY KEY  (`Code`,`IdLanguage`),
   UNIQUE KEY `IdLanguage` (`IdLanguage`,`Name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Countries`
 --
 
-INSERT INTO `Countries` (`Code`, `IdLanguage`, `Name`) VALUES ('AR',1,'Argentina'),('AG',1,'Antigua and Barbuda'),('AQ',1,'Antarctica'),('AI',1,'Anguilla'),('AO',1,'Angola'),('AD',1,'Andorra'),('AS',1,'American Samoa'),('DZ',1,'Algeria'),('AL',1,'Albania'),('AF',1,'Afghanistan'),('AM',1,'Armenia'),('AW',1,'Aruba'),('AU',1,'Australia'),('AT',1,'Austria'),('AZ',1,'Azerbaijan'),('BS',1,'Bahamas'),('BH',1,'Bahrain'),('BD',1,'Bangladesh'),('BB',1,'Barbados'),('BY',1,'Belarus'),('BE',1,'Belgium'),('BZ',1,'Belize'),('BJ',1,'Benin'),('BM',1,'Bermuda'),('BT',1,'Bhutan'),('BO',1,'Bolivia'),('BA',1,'Bosnia and Herzegovina'),('BW',1,'Botswana'),('BV',1,'Bouvet Island'),('BR',1,'Brazil'),('IO',1,'British Indian Ocean Territory'),('BN',1,'Brunei Darussalam'),('BG',1,'Bulgaria'),('BF',1,'Burkina Faso'),('BI',1,'Burundi'),('KH',1,'Cambodia'),('CM',1,'Cameroon'),('CA',1,'Canada'),('CV',1,'Cape Verde'),('KY',1,'Cayman Islands'),('CF',1,'Central African Republic'),('TD',1,'Chad'),('CL',1,'Chile'),('CN',1,'China'),('CX',1,'Christmas Island'),('CC',1,'Cocos (Keeling) Islands'),('CO',1,'Colombia'),('KM',1,'Comoros'),('CG',1,'Congo'),('CD',1,'Congo, The Democratic Republic Of The'),('CK',1,'Cook Islands'),('CR',1,'Costa Rica'),('CI',1,'Côte d\'Ivoire'),('HR',1,'Croatia'),('CU',1,'Cuba'),('CY',1,'Cyprus'),('CZ',1,'Czech Republic'),('DK',1,'Denmark'),('DJ',1,'Djibouti'),('DM',1,'Dominica'),('DO',1,'Dominican Republic'),('TP',1,'Timor-Leste'),('EC',1,'Ecuador'),('EG',1,'Egypt'),('SV',1,'El Salvador'),('GQ',1,'Equatorial Guinea'),('ER',1,'Eritrea'),('EE',1,'Estonia'),('ET',1,'Ethiopia'),('FK',1,'Falkland Islands (Malvinas)'),('FO',1,'Faroe Islands'),('FJ',1,'Fiji'),('FI',1,'Finland'),('FR',1,'France'),('FX',1,'France, Metropolitan'),('GF',1,'French Guiana'),('PF',1,'French Polynesia'),('TF',1,'French Southern Territories'),('GA',1,'Gabon'),('GM',1,'Gambia'),('GE',1,'Georgia'),('DE',1,'Germany'),('GH',1,'Ghana'),('GI',1,'Gibraltar'),('GR',1,'Greece'),('GL',1,'Greenland'),('GD',1,'Grenada'),('GP',1,'Guadeloupe'),('GU',1,'Guam'),('GT',1,'Guatemala'),('GN',1,'Guinea'),('GW',1,'Guinea-bissau'),('GY',1,'Guyana'),('HT',1,'Haiti'),('HM',1,'Heard Island and Mcdonald Islands'),('VA',1,'Holy See (Vatican City State)'),('HN',1,'Honduras'),('HK',1,'Hong Kong'),('HU',1,'Hungary'),('IS',1,'Iceland'),('IN',1,'India'),('ID',1,'Indonesia'),('IR',1,'Iran, Islamic Republic of'),('IQ',1,'Iraq'),('IE',1,'Ireland'),('IL',1,'Israel'),('IT',1,'Italy'),('JM',1,'Jamaica'),('JP',1,'Japan'),('JO',1,'Jordan'),('KZ',1,'Kazakstan'),('KE',1,'Kenya'),('KI',1,'Kiribati'),('KP',1,'Korea, Democratic Peoples Republic of'),('KR',1,'Korea, Republic of'),('KW',1,'Kuwait'),('KG',1,'Kyrgyzstan'),('LA',1,'Lao People\'s Democratic Republic'),('LV',1,'Latvia'),('LB',1,'Lebanon'),('LS',1,'Lesotho'),('LR',1,'Liberia'),('LY',1,'Libyan Arab Jamahiriya'),('LI',1,'Liechtenstein'),('LT',1,'Lithuania'),('LU',1,'Luxembourg'),('MO',1,'Macau'),('MK',1,'Macedonia, The Former Yugoslav Republic of'),('MG',1,'Madagascar'),('MW',1,'Malawi'),('MY',1,'Malaysia'),('MV',1,'Maldives'),('ML',1,'Mali'),('MT',1,'Malta'),('MH',1,'Marshall Islands'),('MQ',1,'Martinique'),('MR',1,'Mauritania'),('MU',1,'Mauritius'),('YT',1,'Mayotte'),('MX',1,'Mexico'),('FM',1,'Micronesia, Federated States of'),('MD',1,'Moldova, Republic of'),('MC',1,'Monaco'),('MN',1,'Mongolia'),('MS',1,'Montserrat'),('MA',1,'Morocco'),('MZ',1,'Mozambique'),('MM',1,'Myanmar'),('NA',1,'Namibia'),('NR',1,'Nauru'),('NP',1,'Nepal'),('NL',1,'Netherlands'),('AN',1,'Netherlands Antilles'),('NC',1,'New Caledonia'),('NZ',1,'New Zealand'),('NI',1,'Nicaragua'),('NE',1,'Niger'),('NG',1,'Nigeria'),('NU',1,'Niue'),('NF',1,'Norfolk Island'),('MP',1,'Northern Mariana Islands'),('NO',1,'Norway'),('OM',1,'Oman'),('PK',1,'Pakistan'),('PW',1,'Palau'),('PS',1,'Palestinian Territory, Occupied'),('PA',1,'Panama'),('PG',1,'Papua New Guinea'),('PY',1,'Paraguay'),('PE',1,'Peru'),('PH',1,'Philippines'),('PN',1,'Pitcairn'),('PL',1,'Poland'),('PT',1,'Portugal'),('PR',1,'Puerto Rico'),('QA',1,'Qatar'),('RE',1,'Réunion'),('RO',1,'Romania'),('RU',1,'Russian Federation'),('RW',1,'Rwanda'),('SH',1,'Saint Helena'),('KN',1,'Saint Kitts and Nevis'),('LC',1,'Saint Lucia'),('PM',1,'Saint Pierre and Miquelon'),('VC',1,'Saint Vincent and The Grenadines'),('WS',1,'Samoa'),('SM',1,'San Marino'),('ST',1,'Sao Tome and Principe'),('SA',1,'Saudi Arabia'),('SN',1,'Senegal'),('SX',1,'Serbia'),('MB',1,'Montenegro'),('SC',1,'Seychelles'),('SL',1,'Sierra Leone'),('SG',1,'Singapore'),('SK',1,'Slovakia'),('SI',1,'Slovenia'),('SB',1,'Solomon Islands'),('SO',1,'Somalia'),('ZA',1,'South Africa'),('GS',1,'South Georgia and The South Sandwich Islands'),('ES',1,'Spain'),('LK',1,'Sri Lanka'),('SD',1,'Sudan'),('SR',1,'Suriname'),('SJ',1,'Svalbard and Jan Mayen'),('SZ',1,'Swaziland'),('SE',1,'Sweden'),('CH',1,'Switzerland'),('SY',1,'Syrian Arab Republic'),('TW',1,'Taiwan, Province Of China'),('TJ',1,'Tajikistan'),('TZ',1,'Tanzania, United Republic of'),('TH',1,'Thailand'),('TG',1,'Togo'),('TK',1,'Tokelau'),('TO',1,'Tonga'),('TT',1,'Trinidad and Tobago'),('TN',1,'Tunisia'),('TR',1,'Turkey'),('TM',1,'Turkmenistan'),('TC',1,'Turks and Caicos Islands'),('TV',1,'Tuvalu'),('UG',1,'Uganda'),('UA',1,'Ukraine'),('AE',1,'United Arab Emirates'),('GB',1,'United Kingdom'),('US',1,'United States'),('UM',1,'United States Minor Outlying Islands'),('UY',1,'Uruguay'),('UZ',1,'Uzbekistan'),('VU',1,'Vanuatu'),('VE',1,'Venezuela'),('VN',1,'Vietnam'),('VG',1,'Virgin Islands, British'),('VI',1,'Virgin Islands, U.S.'),('WF',1,'Wallis And Futuna'),('EH',1,'Western Sahara'),('YE',1,'Yemen'),('ZM',1,'Zambia'),('ZW',1,'Zimbabwe'),('AX',1,'Åland Islands');
+
+/*!40000 ALTER TABLE `Countries` DISABLE KEYS */;
+LOCK TABLES `Countries` WRITE;
+INSERT INTO `Countries` VALUES ('AR',1,'Argentina'),('AG',1,'Antigua and Barbuda'),('AQ',1,'Antarctica'),('AI',1,'Anguilla'),('AO',1,'Angola'),('AD',1,'Andorra'),('AS',1,'American Samoa'),('DZ',1,'Algeria'),('AL',1,'Albania'),('AF',1,'Afghanistan'),('AM',1,'Armenia'),('AW',1,'Aruba'),('AU',1,'Australia'),('AT',1,'Austria'),('AZ',1,'Azerbaijan'),('BS',1,'Bahamas'),('BH',1,'Bahrain'),('BD',1,'Bangladesh'),('BB',1,'Barbados'),('BY',1,'Belarus'),('BE',1,'Belgium'),('BZ',1,'Belize'),('BJ',1,'Benin'),('BM',1,'Bermuda'),('BT',1,'Bhutan'),('BO',1,'Bolivia'),('BA',1,'Bosnia and Herzegovina'),('BW',1,'Botswana'),('BV',1,'Bouvet Island'),('BR',1,'Brazil'),('IO',1,'British Indian Ocean Territory'),('BN',1,'Brunei Darussalam'),('BG',1,'Bulgaria'),('BF',1,'Burkina Faso'),('BI',1,'Burundi'),('KH',1,'Cambodia'),('CM',1,'Cameroon'),('CA',1,'Canada'),('CV',1,'Cape Verde'),('KY',1,'Cayman Islands'),('CF',1,'Central African Republic'),('TD',1,'Chad'),('CL',1,'Chile'),('CN',1,'China'),('CX',1,'Christmas Island'),('CC',1,'Cocos (Keeling) Islands'),('CO',1,'Colombia'),('KM',1,'Comoros'),('CG',1,'Congo'),('CD',1,'Congo, The Democratic Republic Of The'),('CK',1,'Cook Islands'),('CR',1,'Costa Rica'),('CI',1,'CÃ´te d\'Ivoire'),('HR',1,'Croatia'),('CU',1,'Cuba'),('CY',1,'Cyprus'),('CZ',1,'Czech Republic'),('DK',1,'Denmark'),('DJ',1,'Djibouti'),('DM',1,'Dominica'),('DO',1,'Dominican Republic'),('TP',1,'Timor-Leste'),('EC',1,'Ecuador'),('EG',1,'Egypt'),('SV',1,'El Salvador'),('GQ',1,'Equatorial Guinea'),('ER',1,'Eritrea'),('EE',1,'Estonia'),('ET',1,'Ethiopia'),('FK',1,'Falkland Islands (Malvinas)'),('FO',1,'Faroe Islands'),('FJ',1,'Fiji'),('FI',1,'Finland'),('FR',1,'France'),('FX',1,'France, Metropolitan'),('GF',1,'French Guiana'),('PF',1,'French Polynesia'),('TF',1,'French Southern Territories'),('GA',1,'Gabon'),('GM',1,'Gambia'),('GE',1,'Georgia'),('DE',1,'Germany'),('GH',1,'Ghana'),('GI',1,'Gibraltar'),('GR',1,'Greece'),('GL',1,'Greenland'),('GD',1,'Grenada'),('GP',1,'Guadeloupe'),('GU',1,'Guam'),('GT',1,'Guatemala'),('GN',1,'Guinea'),('GW',1,'Guinea-bissau'),('GY',1,'Guyana'),('HT',1,'Haiti'),('HM',1,'Heard Island and Mcdonald Islands'),('VA',1,'Holy See (Vatican City State)'),('HN',1,'Honduras'),('HK',1,'Hong Kong'),('HU',1,'Hungary'),('IS',1,'Iceland'),('IN',1,'India'),('ID',1,'Indonesia'),('IR',1,'Iran, Islamic Republic of'),('IQ',1,'Iraq'),('IE',1,'Ireland'),('IL',1,'Israel'),('IT',1,'Italy'),('JM',1,'Jamaica'),('JP',1,'Japan'),('JO',1,'Jordan'),('KZ',1,'Kazakstan'),('KE',1,'Kenya'),('KI',1,'Kiribati'),('KP',1,'Korea, Democratic Peoples Republic of'),('KR',1,'Korea, Republic of'),('KW',1,'Kuwait'),('KG',1,'Kyrgyzstan'),('LA',1,'Lao People\'s Democratic Republic'),('LV',1,'Latvia'),('LB',1,'Lebanon'),('LS',1,'Lesotho'),('LR',1,'Liberia'),('LY',1,'Libyan Arab Jamahiriya'),('LI',1,'Liechtenstein'),('LT',1,'Lithuania'),('LU',1,'Luxembourg'),('MO',1,'Macau'),('MK',1,'Macedonia, The Former Yugoslav Republic of'),('MG',1,'Madagascar'),('MW',1,'Malawi'),('MY',1,'Malaysia'),('MV',1,'Maldives'),('ML',1,'Mali'),('MT',1,'Malta'),('MH',1,'Marshall Islands'),('MQ',1,'Martinique'),('MR',1,'Mauritania'),('MU',1,'Mauritius'),('YT',1,'Mayotte'),('MX',1,'Mexico'),('FM',1,'Micronesia, Federated States of'),('MD',1,'Moldova, Republic of'),('MC',1,'Monaco'),('MN',1,'Mongolia'),('MS',1,'Montserrat'),('MA',1,'Morocco'),('MZ',1,'Mozambique'),('MM',1,'Myanmar'),('NA',1,'Namibia'),('NR',1,'Nauru'),('NP',1,'Nepal'),('NL',1,'Netherlands'),('AN',1,'Netherlands Antilles'),('NC',1,'New Caledonia'),('NZ',1,'New Zealand'),('NI',1,'Nicaragua'),('NE',1,'Niger'),('NG',1,'Nigeria'),('NU',1,'Niue'),('NF',1,'Norfolk Island'),('MP',1,'Northern Mariana Islands'),('NO',1,'Norway'),('OM',1,'Oman'),('PK',1,'Pakistan'),('PW',1,'Palau'),('PS',1,'Palestinian Territory, Occupied'),('PA',1,'Panama'),('PG',1,'Papua New Guinea'),('PY',1,'Paraguay'),('PE',1,'Peru'),('PH',1,'Philippines'),('PN',1,'Pitcairn'),('PL',1,'Poland'),('PT',1,'Portugal'),('PR',1,'Puerto Rico'),('QA',1,'Qatar'),('RE',1,'RÃ©union'),('RO',1,'Romania'),('RU',1,'Russian Federation'),('RW',1,'Rwanda'),('SH',1,'Saint Helena'),('KN',1,'Saint Kitts and Nevis'),('LC',1,'Saint Lucia'),('PM',1,'Saint Pierre and Miquelon'),('VC',1,'Saint Vincent and The Grenadines'),('WS',1,'Samoa'),('SM',1,'San Marino'),('ST',1,'Sao Tome and Principe'),('SA',1,'Saudi Arabia'),('SN',1,'Senegal'),('SX',1,'Serbia'),('MB',1,'Montenegro'),('SC',1,'Seychelles'),('SL',1,'Sierra Leone'),('SG',1,'Singapore'),('SK',1,'Slovakia'),('SI',1,'Slovenia'),('SB',1,'Solomon Islands'),('SO',1,'Somalia'),('ZA',1,'South Africa'),('GS',1,'South Georgia and The South Sandwich Islands'),('ES',1,'Spain'),('LK',1,'Sri Lanka'),('SD',1,'Sudan'),('SR',1,'Suriname'),('SJ',1,'Svalbard and Jan Mayen'),('SZ',1,'Swaziland'),('SE',1,'Sweden'),('CH',1,'Switzerland'),('SY',1,'Syrian Arab Republic'),('TW',1,'Taiwan, Province Of China'),('TJ',1,'Tajikistan'),('TZ',1,'Tanzania, United Republic of'),('TH',1,'Thailand'),('TG',1,'Togo'),('TK',1,'Tokelau'),('TO',1,'Tonga'),('TT',1,'Trinidad and Tobago'),('TN',1,'Tunisia'),('TR',1,'Turkey'),('TM',1,'Turkmenistan'),('TC',1,'Turks and Caicos Islands'),('TV',1,'Tuvalu'),('UG',1,'Uganda'),('UA',1,'Ukraine'),('AE',1,'United Arab Emirates'),('GB',1,'United Kingdom'),('US',1,'United States'),('UM',1,'United States Minor Outlying Islands'),('UY',1,'Uruguay'),('UZ',1,'Uzbekistan'),('VU',1,'Vanuatu'),('VE',1,'Venezuela'),('VN',1,'Vietnam'),('VG',1,'Virgin Islands, British'),('VI',1,'Virgin Islands, U.S.'),('WF',1,'Wallis And Futuna'),('EH',1,'Western Sahara'),('YE',1,'Yemen'),('ZM',1,'Zambia'),('ZW',1,'Zimbabwe'),('AX',1,'Ã…land Islands');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Countries` ENABLE KEYS */;
 
 --
 -- Table structure for table `Dictionary`
@@ -296,12 +418,17 @@ CREATE TABLE `Dictionary` (
   `Keyword` varchar(140) NOT NULL default '',
   PRIMARY KEY  (`IdLanguage`,`Keyword`),
   UNIQUE KEY `Id` (`Id`,`IdLanguage`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Dictionary`
 --
 
+
+/*!40000 ALTER TABLE `Dictionary` DISABLE KEYS */;
+LOCK TABLES `Dictionary` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Dictionary` ENABLE KEYS */;
 
 --
 -- Table structure for table `Errors`
@@ -313,13 +440,18 @@ CREATE TABLE `Errors` (
   `IdLanguage` int(10) unsigned NOT NULL default '0',
   `Message` char(255) NOT NULL default '',
   PRIMARY KEY  (`Number`,`IdLanguage`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Errors`
 --
 
-INSERT INTO `Errors` (`Number`, `IdLanguage`, `Message`) VALUES (4000,1,'Internal error.'),(4001,1,'Username not specified.'),(4002,1,'Invalid username.'),(4003,1,'Password not specified.'),(4004,1,'Invalid password.'),(2000,1,'Internal error'),(2001,1,'Username is not specified. Please fill out login name field.'),(2002,1,'You are not a reader.'),(2003,1,'Publication not specified.'),(2004,1,'There are other subscriptions not payed.'),(2005,1,'Time unit not specified.'),(3000,1,'Internal error.'),(3001,1,'Username already exists.'),(3002,1,'Name is not specified. Please fill out name field.'),(3003,1,'Username is not specified. Please fill out login name field.'),(3004,1,'Password is not specified. Please fill out password field.'),(3005,1,'EMail is not specified. Please fill out EMail field.'),(3006,1,'EMail address already exists. Please try to login with your old account.'),(3007,1,'Invalid user identifier'),(3008,1,'No country specified. Please select a country.'),(3009,1,'Password (again) is not specified. Please fill out password (again) field.'),(3010,1,'Passwords do not match. Please fill out the same password to both password fields.'),(3011,1,'Password is too simple. Please choose a better password (at least 6 characters).'),(5009,1,'The code you entered is not the same with the one shown in the image.'),(5008,1,'Please enter the code shown in the image.'),(5007,1,'EMail field is empty. You must fill in your EMail address.'),(5006,1,'The comment was rejected by the spam filters.'),(5005,1,'You are banned from submitting comments.'),(5004,1,'Comments are not enabled for this publication/article.'),(5003,1,'The article was not selected. You must view an article in order to post comments.'),(5002,1,'The comment content was empty.'),(5001,1,'You must be a registered user in order to submit a comment. Please subscribe or log in if you already have a subscription.'),(5000,1,'There was an internal error when submitting the comment.');
+
+/*!40000 ALTER TABLE `Errors` DISABLE KEYS */;
+LOCK TABLES `Errors` WRITE;
+INSERT INTO `Errors` VALUES (4000,1,'Internal error.'),(4001,1,'Username not specified.'),(4002,1,'Invalid username.'),(4003,1,'Password not specified.'),(4004,1,'Invalid password.'),(2000,1,'Internal error'),(2001,1,'Username is not specified. Please fill out login name field.'),(2002,1,'You are not a reader.'),(2003,1,'Publication not specified.'),(2004,1,'There are other subscriptions not payed.'),(2005,1,'Time unit not specified.'),(3000,1,'Internal error.'),(3001,1,'Username already exists.'),(3002,1,'Name is not specified. Please fill out name field.'),(3003,1,'Username is not specified. Please fill out login name field.'),(3004,1,'Password is not specified. Please fill out password field.'),(3005,1,'EMail is not specified. Please fill out EMail field.'),(3006,1,'EMail address already exists. Please try to login with your old account.'),(3007,1,'Invalid user identifier'),(3008,1,'No country specified. Please select a country.'),(3009,1,'Password (again) is not specified. Please fill out password (again) field.'),(3010,1,'Passwords do not match. Please fill out the same password to both password fields.'),(3011,1,'Password is too simple. Please choose a better password (at least 6 characters).'),(5009,1,'The code you entered is not the same with the one shown in the image.'),(5008,1,'Please enter the code shown in the image.'),(5007,1,'EMail field is empty. You must fill in your EMail address.'),(5006,1,'The comment was rejected by the spam filters.'),(5005,1,'You are banned from submitting comments.'),(5004,1,'Comments are not enabled for this publication/article.'),(5003,1,'The article was not selected. You must view an article in order to post comments.'),(5002,1,'The comment content was empty.'),(5001,1,'You must be a registered user in order to submit a comment. Please subscribe or log in if you already have a subscription.'),(5000,1,'There was an internal error when submitting the comment.');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Errors` ENABLE KEYS */;
 
 --
 -- Table structure for table `Events`
@@ -333,13 +465,18 @@ CREATE TABLE `Events` (
   `IdLanguage` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Id`,`IdLanguage`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Events`
 --
 
-INSERT INTO `Events` (`Id`, `Name`, `Notify`, `IdLanguage`) VALUES (1,'Add Publication','N',1),(2,'Delete Publication','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(112,'Delete templates','N',1),(111,'Add templates','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(3,'Change publication information','N',1),(36,'Change article template','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1),(154,'Duplicate section','N',1),(155,'Duplicate article','N',1),(161,'Sync campsite and phorum users','N',1);
+
+/*!40000 ALTER TABLE `Events` DISABLE KEYS */;
+LOCK TABLES `Events` WRITE;
+INSERT INTO `Events` VALUES (1,'Add Publication','N',1),(2,'Delete Publication','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(112,'Delete templates','N',1),(111,'Add templates','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(3,'Change publication information','N',1),(36,'Change article template','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1),(154,'Duplicate section','N',1),(155,'Duplicate article','N',1),(161,'Sync campsite and phorum users','N',1),(171,'Change system preferences','N',1),(116,'Rename Template','N',1),(117,'Move Template','N',1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Events` ENABLE KEYS */;
 
 --
 -- Table structure for table `FailedLoginAttempts`
@@ -350,12 +487,17 @@ CREATE TABLE `FailedLoginAttempts` (
   `ip_address` varchar(40) NOT NULL default '',
   `time_of_attempt` bigint(20) NOT NULL default '0',
   KEY `ip_address` (`ip_address`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `FailedLoginAttempts`
 --
 
+
+/*!40000 ALTER TABLE `FailedLoginAttempts` DISABLE KEYS */;
+LOCK TABLES `FailedLoginAttempts` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `FailedLoginAttempts` ENABLE KEYS */;
 
 --
 -- Table structure for table `Images`
@@ -375,15 +517,20 @@ CREATE TABLE `Images` (
   `ThumbnailFileName` varchar(50) NOT NULL default '',
   `ImageFileName` varchar(50) NOT NULL default '',
   `UploadedByUser` int(11) default NULL,
-  `LastModified` timestamp NOT NULL,
+  `LastModified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `TimeCreated` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`Id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Images`
 --
 
+
+/*!40000 ALTER TABLE `Images` DISABLE KEYS */;
+LOCK TABLES `Images` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Images` ENABLE KEYS */;
 
 --
 -- Table structure for table `IssuePublish`
@@ -402,12 +549,17 @@ CREATE TABLE `IssuePublish` (
   PRIMARY KEY  (`id`),
   KEY `issue_index` (`fk_publication_id`,`fk_issue_id`,`fk_language_id`),
   KEY `action_time_index` (`time_action`,`is_completed`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `IssuePublish`
 --
 
+
+/*!40000 ALTER TABLE `IssuePublish` DISABLE KEYS */;
+LOCK TABLES `IssuePublish` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `IssuePublish` ENABLE KEYS */;
 
 --
 -- Table structure for table `Issues`
@@ -427,12 +579,17 @@ CREATE TABLE `Issues` (
   `ShortName` varchar(32) NOT NULL default '',
   PRIMARY KEY  (`IdPublication`,`Number`,`IdLanguage`),
   UNIQUE KEY `ShortName` (`IdPublication`,`IdLanguage`,`ShortName`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Issues`
 --
 
+
+/*!40000 ALTER TABLE `Issues` DISABLE KEYS */;
+LOCK TABLES `Issues` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Issues` ENABLE KEYS */;
 
 --
 -- Table structure for table `KeywordClasses`
@@ -446,12 +603,17 @@ CREATE TABLE `KeywordClasses` (
   `Definition` mediumblob NOT NULL,
   PRIMARY KEY  (`IdDictionary`,`IdClasses`,`IdLanguage`),
   KEY `IdClasses` (`IdClasses`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `KeywordClasses`
 --
 
+
+/*!40000 ALTER TABLE `KeywordClasses` DISABLE KEYS */;
+LOCK TABLES `KeywordClasses` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `KeywordClasses` ENABLE KEYS */;
 
 --
 -- Table structure for table `KeywordIndex`
@@ -462,12 +624,17 @@ CREATE TABLE `KeywordIndex` (
   `Keyword` varchar(70) NOT NULL default '',
   `Id` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Keyword`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `KeywordIndex`
 --
 
+
+/*!40000 ALTER TABLE `KeywordIndex` DISABLE KEYS */;
+LOCK TABLES `KeywordIndex` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `KeywordIndex` ENABLE KEYS */;
 
 --
 -- Table structure for table `Languages`
@@ -501,15 +668,18 @@ CREATE TABLE `Languages` (
   `WDay7` varchar(140) NOT NULL default '',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Languages`
 --
 
-INSERT INTO `Languages` (`Id`, `Name`, `CodePage`, `OrigName`, `Code`, `Month1`, `Month2`, `Month3`, `Month4`, `Month5`, `Month6`, `Month7`, `Month8`, `Month9`, `Month10`, `Month11`, `Month12`, `WDay1`, `WDay2`, `WDay3`, `WDay4`, `WDay5`, `WDay6`, `WDay7`) VALUES (1,'English','ISO_8859-1','English','en','January','February','March','April','May','June','July','August','September','October','November','December','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'),(5,'German','ISO_8859-1','Deutsch','de','Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember','Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'),(9,'Portuguese','ISO_8859-1','Português','pt','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro','Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'),(12,'French','ISO_8859-1','Français','fr','Janvier','Février','Mars','Avril','Peut','Juin','Juli','Août','Septembre','Octobre','Novembre','Décembre','Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'),(13,'Spanish','ISO_8859-1','Español','es','Enero','Febrero','Marcha','Abril','Puede','Junio','Juli','Agosto','Septiembre','Octubre','Noviembre','Diciembre','Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'),(2,'Romanian','ISO_8859-2','Română','ro','Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie','Duminică','Luni','Marţi','Miercuri','Joi','Vineri','Sâmbătă'),(7,'Croatian','ISO_8859-2','Hrvatski','hr','Siječanj','Veljača','Ožujak','Travanj','Svibanj','Lipanj','Srpanj','Kolovoz','Rujan','Listopad','Studeni','Prosinac','Nedjelja','Ponedjeljak','Utorak','Srijeda','Četvrtak','Petak','Subota'),(8,'Czech','ISO_8859-2','Český','cz','Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec','Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota'),(11,'Serbo-Croatian','ISO_8859-2','Srpskohrvatski','sh','januar','februar','mart','april','maj','jun','jul','avgust','septembar','oktobar','novembar','decembar','nedelja','ponedeljak','utorak','sreda','četvrtak','petak','subota'),(10,'Serbian (Cyrillic)','ISO_8859-5','Српски (Ћирилица)','sr','јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар','недеља','понедељак','уторак','среда','четвртак','петак','субота'),(15,'Russian','ISO_8859-5','Русский','ru','январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь','воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'),(18,'Swedish','','Svenska','sv','januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december','söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag'),(16,'Chinese','UTF-8','中文','zh','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期','星期','星期','星期','星期','星期','星期'),(17,'Arabic','UTF-8','عربي','ar','كانون الثاني','شباط','آذار','نيسان','آيار','حزيران','تموز','آب','أيلول','تشرين أول','تشرين الثاني','كانون أول','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'),(19,'Korean','','한국어','kr','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월','일요일','월요일','화요일','수요일','목요일','금요일','토요일');
 
-INSERT INTO `Languages` (`Id`, `Name`, `CodePage`, `OrigName`, `Code`, `Month1`, `Month2`, `Month3`, `Month4`, `Month5`, `Month6`, `Month7`, `Month8`, `Month9`, `Month10`, `Month11`, `Month12`, `WDay1`, `WDay2`, `WDay3`, `WDay4`, `WDay5`, `WDay6`, `WDay7`) VALUES (20, 'Dutch', '', 'Nederlands', 'nl', 'januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december', 'zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag');
+/*!40000 ALTER TABLE `Languages` DISABLE KEYS */;
+LOCK TABLES `Languages` WRITE;
+INSERT INTO `Languages` VALUES (1,'English','ISO_8859-1','English','en','January','February','March','April','May','June','July','August','September','October','November','December','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'),(5,'German','ISO_8859-1','Deutsch','de','Januar','Februar','MÃ¤rz','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember','Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'),(9,'Portuguese','ISO_8859-1','PortuguÃªs','pt','Janeiro','Fevereiro','MarÃ§o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro','Domingo','Segunda-feira','TerÃ§a-feira','Quarta-feira','Quinta-feira','Sexta-feira','SÃ¡bado'),(12,'French','ISO_8859-1','FranÃ§ais','fr','Janvier','FÃ©vrier','Mars','Avril','Peut','Juin','Juli','AoÃ»t','Septembre','Octobre','Novembre','DÃ©cembre','Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'),(13,'Spanish','ISO_8859-1','EspaÃ±ol','es','Enero','Febrero','Marcha','Abril','Puede','Junio','Juli','Agosto','Septiembre','Octubre','Noviembre','Diciembre','Domingo','Lunes','Martes','MiÃ©rcoles','Jueves','Viernes','SÃ¡bado'),(2,'Romanian','ISO_8859-2','RomÃ¢nÄƒ','ro','Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie','DuminicÄƒ','Luni','MarÅ£i','Miercuri','Joi','Vineri','SÃ¢mbÄƒtÄƒ'),(7,'Croatian','ISO_8859-2','Hrvatski','hr','SijeÄanj','VeljaÄa','OÅ¾ujak','Travanj','Svibanj','Lipanj','Srpanj','Kolovoz','Rujan','Listopad','Studeni','Prosinac','Nedjelja','Ponedjeljak','Utorak','Srijeda','ÄŒetvrtak','Petak','Subota'),(8,'Czech','ISO_8859-2','ÄŒeskÃ½','cz','Leden','Ãšnor','BÅ™ezen','Duben','KvÄ›ten','ÄŒerven','ÄŒervenec','Srpen','ZÃ¡Å™Ã­','Å˜Ã­jen','Listopad','Prosinec','NedÄ›le','PondÄ›lÃ­','ÃšterÃ½','StÅ™eda','ÄŒtvrtek','PÃ¡tek','Sobota'),(11,'Serbo-Croatian','ISO_8859-2','Srpskohrvatski','sh','januar','februar','mart','april','maj','jun','jul','avgust','septembar','oktobar','novembar','decembar','nedelja','ponedeljak','utorak','sreda','Äetvrtak','petak','subota'),(10,'Serbian (Cyrillic)','ISO_8859-5','Ð¡Ñ€Ð¿ÑÐºÐ¸ (Ð‹Ð¸Ñ€Ð¸Ð»Ð¸Ñ†Ð°)','sr','Ñ˜Ð°Ð½ÑƒÐ°Ñ€','Ñ„ÐµÐ±Ñ€ÑƒÐ°Ñ€','Ð¼Ð°Ñ€Ñ‚','Ð°Ð¿Ñ€Ð¸Ð»','Ð¼Ð°Ñ˜','Ñ˜ÑƒÐ½','Ñ˜ÑƒÐ»','Ð°Ð²Ð³ÑƒÑÑ‚','ÑÐµÐ¿Ñ‚ÐµÐ¼Ð±Ð°Ñ€','Ð¾ÐºÑ‚Ð¾Ð±Ð°Ñ€','Ð½Ð¾Ð²ÐµÐ¼Ð±Ð°Ñ€','Ð´ÐµÑ†ÐµÐ¼Ð±Ð°Ñ€','Ð½ÐµÐ´ÐµÑ™Ð°','Ð¿Ð¾Ð½ÐµÐ´ÐµÑ™Ð°Ðº','ÑƒÑ‚Ð¾Ñ€Ð°Ðº','ÑÑ€ÐµÐ´Ð°','Ñ‡ÐµÑ‚Ð²Ñ€Ñ‚Ð°Ðº','Ð¿ÐµÑ‚Ð°Ðº','ÑÑƒÐ±Ð¾Ñ‚Ð°'),(15,'Russian','ISO_8859-5','Ð ÑƒÑÑÐºÐ¸Ð¹','ru','ÑÐ½Ð²Ð°Ñ€ÑŒ','Ñ„ÐµÐ²Ñ€Ð°Ð»ÑŒ','Ð¼Ð°Ñ€Ñ‚','Ð°Ð¿Ñ€ÐµÐ»ÑŒ','Ð¼Ð°Ð¹','Ð¸ÑŽÐ½ÑŒ','Ð¸ÑŽÐ»ÑŒ','Ð°Ð²Ð³ÑƒÑÑ‚','ÑÐµÐ½Ñ‚ÑÐ±Ñ€ÑŒ','Ð¾ÐºÑ‚ÑÐ±Ñ€ÑŒ','Ð½Ð¾ÑÐ±Ñ€ÑŒ','Ð´ÐµÐºÐ°Ð±Ñ€ÑŒ','Ð²Ð¾ÑÐºÑ€ÐµÑÐµÐ½ÑŒÐµ','Ð¿Ð¾Ð½ÐµÐ´ÐµÐ»ÑŒÐ½Ð¸Ðº','Ð²Ñ‚Ð¾Ñ€Ð½Ð¸Ðº','ÑÑ€ÐµÐ´Ð°','Ñ‡ÐµÑ‚Ð²ÐµÑ€Ð³','Ð¿ÑÑ‚Ð½Ð¸Ñ†Ð°','ÑÑƒÐ±Ð±Ð¾Ñ‚Ð°'),(18,'Swedish','','Svenska','sv','januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december','sÃ¶ndag','mÃ¥ndag','tisdag','onsdag','torsdag','fredag','lÃ¶rdag'),(16,'Chinese','UTF-8','ä¸­æ–‡','zh','ä¸€æœˆ','äºŒæœˆ','ä¸‰æœˆ','å››æœˆ','äº”æœˆ','å…­æœˆ','ä¸ƒæœˆ','å…«æœˆ','ä¹æœˆ','åæœˆ','åä¸€æœˆ','åäºŒæœˆ','æ˜ŸæœŸ','æ˜ŸæœŸ','æ˜ŸæœŸ','æ˜ŸæœŸ','æ˜ŸæœŸ','æ˜ŸæœŸ','æ˜ŸæœŸ'),(17,'Arabic','UTF-8','Ø¹Ø±Ø¨ÙŠ','ar','ÙƒØ§Ù†ÙˆÙ† Ø§Ù„Ø«Ø§Ù†ÙŠ','Ø´Ø¨Ø§Ø·','Ø¢Ø°Ø§Ø±','Ù†ÙŠØ³Ø§Ù†','Ø¢ÙŠØ§Ø±','Ø­Ø²ÙŠØ±Ø§Ù†','ØªÙ…ÙˆØ²','Ø¢Ø¨','Ø£ÙŠÙ„ÙˆÙ„','ØªØ´Ø±ÙŠÙ† Ø£ÙˆÙ„','ØªØ´Ø±ÙŠÙ† Ø§Ù„Ø«Ø§Ù†ÙŠ','ÙƒØ§Ù†ÙˆÙ† Ø£ÙˆÙ„','Ø§Ù„Ø£Ø­Ø¯','Ø§Ù„Ø§Ø«Ù†ÙŠÙ†','Ø§Ù„Ø«Ù„Ø§Ø«Ø§Ø¡','Ø§Ù„Ø£Ø±Ø¨Ø¹Ø§Ø¡','Ø§Ù„Ø®Ù…ÙŠØ³','Ø§Ù„Ø¬Ù…Ø¹Ø©','Ø§Ù„Ø³Ø¨Øª'),(19,'Korean','','í•œêµ­ì–´','kr','1ì›”','2ì›”','3ì›”','4ì›”','5ì›”','6ì›”','7ì›”','8ì›”','9ì›”','10ì›”','11ì›”','12ì›”','ì¼ìš”ì¼','ì›”ìš”ì¼','í™”ìš”ì¼','ìˆ˜ìš”ì¼','ëª©ìš”ì¼','ê¸ˆìš”ì¼','í† ìš”ì¼'),(20,'Dutch','','Nederlands','nl','januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december','zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Languages` ENABLE KEYS */;
 
 --
 -- Table structure for table `Log`
@@ -522,12 +692,17 @@ CREATE TABLE `Log` (
   `fk_user_id` int(10) unsigned default NULL,
   `text` varchar(255) NOT NULL default '',
   KEY `IdEvent` (`fk_event_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Log`
 --
 
+
+/*!40000 ALTER TABLE `Log` DISABLE KEYS */;
+LOCK TABLES `Log` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Log` ENABLE KEYS */;
 
 --
 -- Table structure for table `Publications`
@@ -551,13 +726,22 @@ CREATE TABLE `Publications` (
   `comments_article_default_enabled` tinyint(1) NOT NULL default '0',
   `comments_subscribers_moderated` tinyint(1) NOT NULL default '0',
   `comments_public_moderated` tinyint(1) NOT NULL default '0',
-  `comments_captcha_enabled` tinyint(1) NOT NULL,
-  `comments_spam_blocking_enabled` tinyint(1) NOT NULL,
+  `comments_captcha_enabled` tinyint(1) NOT NULL default '0',
+  `comments_spam_blocking_enabled` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Alias` (`IdDefaultAlias`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `Publications`
+--
+
+
+/*!40000 ALTER TABLE `Publications` DISABLE KEYS */;
+LOCK TABLES `Publications` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Publications` ENABLE KEYS */;
 
 --
 -- Table structure for table `Sections`
@@ -571,17 +755,23 @@ CREATE TABLE `Sections` (
   `Number` int(10) unsigned NOT NULL default '0',
   `Name` varchar(255) NOT NULL default '',
   `ShortName` varchar(32) NOT NULL default '',
+  `Description` blob,
   `SectionTplId` int(10) unsigned default NULL,
   `ArticleTplId` int(10) unsigned default NULL,
   PRIMARY KEY  (`IdPublication`,`NrIssue`,`IdLanguage`,`Number`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`IdLanguage`,`Name`),
   UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`IdLanguage`,`ShortName`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Sections`
 --
 
+
+/*!40000 ALTER TABLE `Sections` DISABLE KEYS */;
+LOCK TABLES `Sections` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Sections` ENABLE KEYS */;
 
 --
 -- Table structure for table `SubsByIP`
@@ -593,12 +783,17 @@ CREATE TABLE `SubsByIP` (
   `StartIP` int(10) unsigned NOT NULL default '0',
   `Addresses` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`IdUser`,`StartIP`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `SubsByIP`
 --
 
+
+/*!40000 ALTER TABLE `SubsByIP` DISABLE KEYS */;
+LOCK TABLES `SubsByIP` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `SubsByIP` ENABLE KEYS */;
 
 --
 -- Table structure for table `SubsDefTime`
@@ -611,12 +806,17 @@ CREATE TABLE `SubsDefTime` (
   `TrialTime` int(10) unsigned NOT NULL default '0',
   `PaidTime` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`CountryCode`,`IdPublication`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `SubsDefTime`
 --
 
+
+/*!40000 ALTER TABLE `SubsDefTime` DISABLE KEYS */;
+LOCK TABLES `SubsDefTime` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `SubsDefTime` ENABLE KEYS */;
 
 --
 -- Table structure for table `SubsSections`
@@ -632,12 +832,17 @@ CREATE TABLE `SubsSections` (
   `PaidDays` int(10) unsigned NOT NULL default '0',
   `NoticeSent` enum('N','Y') NOT NULL default 'N',
   PRIMARY KEY  (`IdSubscription`,`SectionNumber`,`IdLanguage`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `SubsSections`
 --
 
+
+/*!40000 ALTER TABLE `SubsSections` DISABLE KEYS */;
+LOCK TABLES `SubsSections` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `SubsSections` ENABLE KEYS */;
 
 --
 -- Table structure for table `Subscriptions`
@@ -654,12 +859,17 @@ CREATE TABLE `Subscriptions` (
   `Type` enum('T','P') NOT NULL default 'T',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `IdUser` (`IdUser`,`IdPublication`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Subscriptions`
 --
 
+
+/*!40000 ALTER TABLE `Subscriptions` DISABLE KEYS */;
+LOCK TABLES `Subscriptions` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Subscriptions` ENABLE KEYS */;
 
 --
 -- Table structure for table `TemplateTypes`
@@ -671,13 +881,18 @@ CREATE TABLE `TemplateTypes` (
   `Name` char(20) NOT NULL default '',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `TemplateTypes`
 --
 
-INSERT INTO `TemplateTypes` (`Id`, `Name`) VALUES (1,'default'),(2,'issue'),(3,'section'),(4,'article');
+
+/*!40000 ALTER TABLE `TemplateTypes` DISABLE KEYS */;
+LOCK TABLES `TemplateTypes` WRITE;
+INSERT INTO `TemplateTypes` VALUES (1,'default'),(2,'issue'),(3,'section'),(4,'article'),(5,'nontpl');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `TemplateTypes` ENABLE KEYS */;
 
 --
 -- Table structure for table `Templates`
@@ -691,12 +906,17 @@ CREATE TABLE `Templates` (
   `Level` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Templates`
 --
 
+
+/*!40000 ALTER TABLE `Templates` DISABLE KEYS */;
+LOCK TABLES `Templates` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Templates` ENABLE KEYS */;
 
 --
 -- Table structure for table `TimeUnits`
@@ -708,13 +928,18 @@ CREATE TABLE `TimeUnits` (
   `IdLanguage` int(10) unsigned NOT NULL default '0',
   `Name` varchar(70) NOT NULL default '',
   PRIMARY KEY  (`Unit`,`IdLanguage`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `TimeUnits`
 --
 
-INSERT INTO `TimeUnits` (`Unit`, `IdLanguage`, `Name`) VALUES ('D',1,'days'),('W',1,'weeks'),('M',1,'months'),('Y',1,'years'),('D',18,'dagar'),('W',18,'veckor'),('M',18,'månader'),('Y',18,'år');
+
+/*!40000 ALTER TABLE `TimeUnits` DISABLE KEYS */;
+LOCK TABLES `TimeUnits` WRITE;
+INSERT INTO `TimeUnits` VALUES ('D',1,'days'),('W',1,'weeks'),('M',1,'months'),('Y',1,'years'),('D',18,'dagar'),('W',18,'veckor'),('M',18,'mÃ¥nader'),('Y',18,'Ã¥r');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `TimeUnits` ENABLE KEYS */;
 
 --
 -- Table structure for table `TopicFields`
@@ -726,12 +951,17 @@ CREATE TABLE `TopicFields` (
   `FieldName` varchar(166) NOT NULL default '',
   `RootTopicId` int(11) NOT NULL default '0',
   PRIMARY KEY  (`ArticleType`,`FieldName`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `TopicFields`
 --
 
+
+/*!40000 ALTER TABLE `TopicFields` DISABLE KEYS */;
+LOCK TABLES `TopicFields` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `TopicFields` ENABLE KEYS */;
 
 --
 -- Table structure for table `Topics`
@@ -746,12 +976,17 @@ CREATE TABLE `Topics` (
   PRIMARY KEY  (`Id`,`LanguageId`),
   UNIQUE KEY `Name` (`LanguageId`,`Name`),
   KEY `topic_id` (`Id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Topics`
 --
 
+
+/*!40000 ALTER TABLE `Topics` DISABLE KEYS */;
+LOCK TABLES `Topics` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Topics` ENABLE KEYS */;
 
 --
 -- Table structure for table `Translations`
@@ -766,12 +1001,17 @@ CREATE TABLE `Translations` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `phrase_language_index` (`phrase_id`,`fk_language_id`),
   KEY `phrase_id` (`phrase_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Translations`
 --
 
+
+/*!40000 ALTER TABLE `Translations` DISABLE KEYS */;
+LOCK TABLES `Translations` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Translations` ENABLE KEYS */;
 
 --
 -- Table structure for table `URLTypes`
@@ -784,13 +1024,18 @@ CREATE TABLE `URLTypes` (
   `Description` mediumblob NOT NULL,
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `URLTypes`
 --
 
-INSERT INTO `URLTypes` (`Id`, `Name`, `Description`) VALUES (1,'template path',''),(2,'short names','');
+
+/*!40000 ALTER TABLE `URLTypes` DISABLE KEYS */;
+LOCK TABLES `URLTypes` WRITE;
+INSERT INTO `URLTypes` VALUES (1,'template path',''),(2,'short names','');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `URLTypes` ENABLE KEYS */;
 
 --
 -- Table structure for table `UserConfig`
@@ -802,17 +1047,22 @@ CREATE TABLE `UserConfig` (
   `fk_user_id` int(10) unsigned NOT NULL default '0',
   `varname` varchar(100) NOT NULL default '',
   `value` varchar(100) default NULL,
-  `last_modified` timestamp NOT NULL,
+  `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_var_name_index` (`fk_user_id`,`varname`),
   KEY `fk_user_id` (`fk_user_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `UserConfig`
 --
 
-INSERT INTO `UserConfig` (`id`, `fk_user_id`, `varname`, `value`, `last_modified`) VALUES (1,1,'ManagePub','Y','2005-12-13 15:57:00'),(2,1,'DeletePub','Y','2005-12-13 15:57:00'),(3,1,'ManageIssue','Y','2005-12-13 15:57:00'),(4,1,'DeleteIssue','Y','2005-12-13 15:57:00'),(5,1,'ManageSection','Y','2005-12-13 15:57:00'),(6,1,'DeleteSection','Y','2005-12-13 15:57:00'),(7,1,'AddArticle','Y','2005-12-13 15:57:00'),(8,1,'ChangeArticle','Y','2005-12-13 15:57:00'),(9,1,'DeleteArticle','Y','2005-12-13 15:57:00'),(10,1,'AddImage','Y','2005-12-13 15:57:00'),(11,1,'AddFile','Y','2005-12-13 15:57:00'),(12,1,'ChangeImage','Y','2005-12-13 15:57:00'),(13,1,'ChangeFile','Y','2005-12-13 15:57:00'),(14,1,'DeleteImage','Y','2005-12-13 15:57:00'),(15,1,'DeleteFile','Y','2005-12-13 15:57:00'),(16,1,'ManageTempl','Y','2005-12-13 15:57:00'),(17,1,'DeleteTempl','Y','2005-12-13 15:57:00'),(18,1,'ManageUsers','Y','2005-12-13 15:57:00'),(19,1,'ManageSubscriptions','Y','2005-12-13 15:57:00'),(20,1,'DeleteUsers','Y','2005-12-13 15:57:00'),(21,1,'ManageUserTypes','Y','2005-12-13 15:57:00'),(22,1,'ManageArticleTypes','Y','2005-12-13 15:57:00'),(23,1,'DeleteArticleTypes','Y','2005-12-13 15:57:00'),(24,1,'ManageLanguages','Y','2005-12-13 15:57:00'),(25,1,'DeleteLanguages','Y','2005-12-13 15:57:00'),(26,1,'ManageCountries','Y','2005-12-13 15:57:00'),(27,1,'DeleteCountries','Y','2005-12-13 15:57:00'),(28,1,'MailNotify','N','2005-12-13 15:57:00'),(29,1,'ViewLogs','Y','2005-12-13 15:57:00'),(30,1,'ManageLocalizer','Y','2005-12-13 15:57:00'),(31,1,'ManageIndexer','N','2006-03-06 15:08:55'),(32,1,'Publish','Y','2005-12-13 15:57:00'),(33,1,'ManageTopics','Y','2005-12-13 15:57:00'),(34,1,'EditorImage','Y','2005-12-13 15:57:00'),(35,1,'EditorTextAlignment','Y','2005-12-13 15:57:00'),(36,1,'EditorFontColor','Y','2005-12-13 15:57:00'),(37,1,'EditorFontSize','Y','2005-12-13 15:57:00'),(38,1,'EditorFontFace','Y','2005-12-13 15:57:00'),(39,1,'EditorTable','Y','2005-12-13 15:57:00'),(40,1,'EditorSuperscript','Y','2005-12-13 15:57:00'),(41,1,'EditorSubscript','Y','2005-12-13 15:57:00'),(42,1,'EditorStrikethrough','Y','2005-12-13 15:57:00'),(43,1,'EditorIndent','Y','2005-12-13 15:57:00'),(44,1,'EditorListBullet','Y','2005-12-13 15:57:00'),(45,1,'EditorListNumber','Y','2005-12-13 15:57:00'),(46,1,'EditorHorizontalRule','Y','2005-12-13 15:57:00'),(47,1,'EditorSourceView','Y','2005-12-13 15:57:00'),(48,1,'EditorEnlarge','Y','2005-12-13 15:57:00'),(49,1,'EditorTextDirection','Y','2005-12-13 15:57:00'),(50,1,'EditorLink','Y','2005-12-13 15:57:00'),(51,1,'EditorSubhead','Y','2005-12-13 15:57:00'),(52,1,'EditorBold','Y','2005-12-13 15:57:00'),(53,1,'EditorItalic','Y','2005-12-13 15:57:00'),(54,1,'EditorUnderline','Y','2005-12-13 15:57:00'),(55,1,'EditorUndoRedo','Y','2005-12-13 15:57:00'),(56,1,'EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(57,1,'ManageReaders','Y','2005-12-13 15:57:00'),(58,1,'InitializeTemplateEngine','Y','2005-12-13 15:57:00'),(59,0,'KeywordSeparator',',','2006-03-06 14:33:50'),(60,1,'MoveArticle','Y','2006-03-06 14:33:50'),(61,1,'TranslateArticle','Y','2006-03-06 14:33:50'),(62,1,'AttachImageToArticle','Y','2006-03-06 14:33:50'),(63,1,'ChangeSystemPreferences','Y','2006-03-06 14:33:50'),(64,1,'AttachTopicToArticle','Y','2006-03-06 14:33:50'),(65,1,'EditorFindReplace','Y','2006-03-06 14:33:50'),(66,1,'EditorCharacterMap','Y','2006-03-06 14:33:50'),(67,0,'LoginFailedAttemptsNum','3','2006-06-12 17:01:34'),(68,1,'CommentModerate','Y','2006-06-12 17:01:34'),(69,1,'CommentEnable','Y','2006-06-12 17:01:34');
+
+/*!40000 ALTER TABLE `UserConfig` DISABLE KEYS */;
+LOCK TABLES `UserConfig` WRITE;
+INSERT INTO `UserConfig` VALUES (1,1,'ManagePub','Y','2005-12-13 15:57:00'),(2,1,'DeletePub','Y','2005-12-13 15:57:00'),(3,1,'ManageIssue','Y','2005-12-13 15:57:00'),(4,1,'DeleteIssue','Y','2005-12-13 15:57:00'),(5,1,'ManageSection','Y','2005-12-13 15:57:00'),(6,1,'DeleteSection','Y','2005-12-13 15:57:00'),(7,1,'AddArticle','Y','2005-12-13 15:57:00'),(8,1,'ChangeArticle','Y','2005-12-13 15:57:00'),(9,1,'DeleteArticle','Y','2005-12-13 15:57:00'),(10,1,'AddImage','Y','2005-12-13 15:57:00'),(11,1,'AddFile','Y','2005-12-13 15:57:00'),(12,1,'ChangeImage','Y','2005-12-13 15:57:00'),(13,1,'ChangeFile','Y','2005-12-13 15:57:00'),(14,1,'DeleteImage','Y','2005-12-13 15:57:00'),(15,1,'DeleteFile','Y','2005-12-13 15:57:00'),(16,1,'ManageTempl','Y','2005-12-13 15:57:00'),(17,1,'DeleteTempl','Y','2005-12-13 15:57:00'),(18,1,'ManageUsers','Y','2005-12-13 15:57:00'),(19,1,'ManageSubscriptions','Y','2005-12-13 15:57:00'),(20,1,'DeleteUsers','Y','2005-12-13 15:57:00'),(21,1,'ManageUserTypes','Y','2005-12-13 15:57:00'),(22,1,'ManageArticleTypes','Y','2005-12-13 15:57:00'),(23,1,'DeleteArticleTypes','Y','2005-12-13 15:57:00'),(24,1,'ManageLanguages','Y','2005-12-13 15:57:00'),(25,1,'DeleteLanguages','Y','2005-12-13 15:57:00'),(26,1,'ManageCountries','Y','2005-12-13 15:57:00'),(27,1,'DeleteCountries','Y','2005-12-13 15:57:00'),(28,1,'MailNotify','N','2005-12-13 15:57:00'),(29,1,'ViewLogs','Y','2005-12-13 15:57:00'),(30,1,'ManageLocalizer','Y','2005-12-13 15:57:00'),(31,1,'ManageIndexer','N','2006-03-06 15:08:55'),(32,1,'Publish','Y','2005-12-13 15:57:00'),(33,1,'ManageTopics','Y','2005-12-13 15:57:00'),(34,1,'EditorImage','Y','2005-12-13 15:57:00'),(35,1,'EditorTextAlignment','Y','2005-12-13 15:57:00'),(36,1,'EditorFontColor','Y','2005-12-13 15:57:00'),(37,1,'EditorFontSize','Y','2005-12-13 15:57:00'),(38,1,'EditorFontFace','Y','2005-12-13 15:57:00'),(39,1,'EditorTable','Y','2005-12-13 15:57:00'),(40,1,'EditorSuperscript','Y','2005-12-13 15:57:00'),(41,1,'EditorSubscript','Y','2005-12-13 15:57:00'),(42,1,'EditorStrikethrough','Y','2005-12-13 15:57:00'),(43,1,'EditorIndent','Y','2005-12-13 15:57:00'),(44,1,'EditorListBullet','Y','2005-12-13 15:57:00'),(45,1,'EditorListNumber','Y','2005-12-13 15:57:00'),(46,1,'EditorHorizontalRule','Y','2005-12-13 15:57:00'),(47,1,'EditorSourceView','Y','2005-12-13 15:57:00'),(48,1,'EditorEnlarge','Y','2005-12-13 15:57:00'),(49,1,'EditorTextDirection','Y','2005-12-13 15:57:00'),(50,1,'EditorLink','Y','2005-12-13 15:57:00'),(51,1,'EditorSubhead','Y','2005-12-13 15:57:00'),(52,1,'EditorBold','Y','2005-12-13 15:57:00'),(53,1,'EditorItalic','Y','2005-12-13 15:57:00'),(54,1,'EditorUnderline','Y','2005-12-13 15:57:00'),(55,1,'EditorUndoRedo','Y','2005-12-13 15:57:00'),(56,1,'EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(57,1,'ManageReaders','Y','2005-12-13 15:57:00'),(58,1,'InitializeTemplateEngine','Y','2005-12-13 15:57:00'),(59,0,'KeywordSeparator',',','2006-03-06 14:33:50'),(60,1,'MoveArticle','Y','2006-03-06 14:33:50'),(61,1,'TranslateArticle','Y','2006-03-06 14:33:50'),(62,1,'AttachImageToArticle','Y','2006-03-06 14:33:50'),(63,1,'ChangeSystemPreferences','Y','2006-03-06 14:33:50'),(64,1,'AttachTopicToArticle','Y','2006-03-06 14:33:50'),(65,1,'EditorFindReplace','Y','2006-03-06 14:33:50'),(66,1,'EditorCharacterMap','Y','2006-03-06 14:33:50'),(67,0,'LoginFailedAttemptsNum','3','2006-06-12 17:01:34'),(68,1,'CommentModerate','Y','2006-06-12 17:01:34'),(69,1,'CommentEnable','Y','2006-06-12 17:01:34'),(70,0,'ExternalSubscriptionManagement','N','2007-01-20 14:42:07'),(71,0,'MaxUploadFileSize','100M','2007-01-20 14:42:07'),(72,0,'UseDBReplication','N','2007-01-20 14:42:07'),(73,0,'DBReplicationHost','','2007-01-20 14:42:07'),(74,0,'DBReplicationUser','','2007-01-20 14:42:07'),(75,0,'DBReplicationPass','','2007-01-20 14:42:07'),(76,0,'DBReplicationPort','3306','2007-01-20 14:42:07'),(77,0,'UseCampcasterAudioclips','N','2007-01-20 14:42:07'),(78,0,'CampcasterHostName','localhost','2007-01-20 14:42:07'),(79,0,'CampcasterHostPort','80','2007-01-20 14:42:07'),(80,0,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-01-20 14:42:07'),(81,0,'CampcasterXRPCFile','xrLocStor.php','2007-01-20 14:42:07'),(82,1,'AddAudioclip','Y','2007-01-20 14:42:07'),(83,1,'AttachAudioclipToArticle','Y','2007-01-20 14:42:07');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `UserConfig` ENABLE KEYS */;
 
 --
 -- Table structure for table `UserTypes`
@@ -824,17 +1074,22 @@ CREATE TABLE `UserTypes` (
   `user_type_name` varchar(140) NOT NULL default '',
   `varname` varchar(100) NOT NULL default '',
   `value` varchar(100) default NULL,
-  `last_modified` timestamp NOT NULL,
+  `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_var_name_index` (`user_type_name`,`varname`),
   KEY `user_type_name` (`user_type_name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `UserTypes`
 --
 
-INSERT INTO `UserTypes` (`id`, `user_type_name`, `varname`, `value`, `last_modified`) VALUES (1,'Administrator','ManagePub','Y','2005-12-13 15:57:00'),(2,'Administrator','DeletePub','Y','2005-12-13 15:57:00'),(3,'Administrator','ManageIssue','Y','2005-12-13 15:57:00'),(4,'Administrator','DeleteIssue','Y','2005-12-13 15:57:00'),(5,'Administrator','ManageSection','Y','2005-12-13 15:57:00'),(6,'Administrator','DeleteSection','Y','2005-12-13 15:57:00'),(7,'Administrator','AddArticle','Y','2005-12-13 15:57:00'),(8,'Administrator','ChangeArticle','Y','2005-12-13 15:57:00'),(9,'Administrator','DeleteArticle','Y','2005-12-13 15:57:00'),(10,'Administrator','AddImage','Y','2005-12-13 15:57:00'),(11,'Administrator','AddFile','Y','2005-12-13 15:57:00'),(12,'Administrator','ChangeImage','Y','2005-12-13 15:57:00'),(13,'Administrator','ChangeFile','Y','2005-12-13 15:57:00'),(14,'Administrator','DeleteImage','Y','2005-12-13 15:57:00'),(15,'Administrator','DeleteFile','Y','2005-12-13 15:57:00'),(16,'Administrator','ManageTempl','Y','2005-12-13 15:57:00'),(17,'Administrator','DeleteTempl','Y','2005-12-13 15:57:00'),(18,'Administrator','ManageUsers','Y','2005-12-13 15:57:00'),(19,'Administrator','ManageSubscriptions','Y','2005-12-13 15:57:00'),(20,'Administrator','DeleteUsers','Y','2005-12-13 15:57:00'),(21,'Administrator','ManageUserTypes','Y','2005-12-13 15:57:00'),(22,'Administrator','ManageArticleTypes','Y','2005-12-13 15:57:00'),(23,'Administrator','DeleteArticleTypes','Y','2005-12-13 15:57:00'),(24,'Administrator','ManageLanguages','Y','2005-12-13 15:57:00'),(25,'Administrator','DeleteLanguages','Y','2005-12-13 15:57:00'),(26,'Administrator','ManageCountries','Y','2005-12-13 15:57:00'),(27,'Administrator','DeleteCountries','Y','2005-12-13 15:57:00'),(28,'Administrator','MailNotify','N','2005-12-13 15:57:00'),(29,'Administrator','ViewLogs','Y','2005-12-13 15:57:00'),(30,'Administrator','ManageLocalizer','Y','2005-12-13 15:57:00'),(31,'Administrator','ManageIndexer','N','2006-01-04 00:21:55'),(32,'Administrator','Publish','Y','2005-12-13 15:57:00'),(33,'Administrator','ManageTopics','Y','2005-12-13 15:57:00'),(34,'Administrator','EditorImage','Y','2005-12-13 15:57:00'),(35,'Administrator','EditorTextAlignment','Y','2005-12-13 15:57:00'),(36,'Administrator','EditorFontColor','Y','2005-12-13 15:57:00'),(37,'Administrator','EditorFontSize','Y','2005-12-13 15:57:00'),(38,'Administrator','EditorFontFace','Y','2005-12-13 15:57:00'),(39,'Administrator','EditorTable','Y','2005-12-13 15:57:00'),(40,'Administrator','EditorSuperscript','Y','2005-12-13 15:57:00'),(41,'Administrator','EditorSubscript','Y','2005-12-13 15:57:00'),(42,'Administrator','EditorStrikethrough','Y','2005-12-13 15:57:00'),(43,'Administrator','EditorIndent','Y','2005-12-13 15:57:00'),(44,'Administrator','EditorListBullet','Y','2005-12-13 15:57:00'),(45,'Administrator','EditorListNumber','Y','2005-12-13 15:57:00'),(46,'Administrator','EditorHorizontalRule','Y','2005-12-13 15:57:00'),(47,'Administrator','EditorSourceView','Y','2005-12-13 15:57:00'),(48,'Administrator','EditorEnlarge','Y','2005-12-13 15:57:00'),(49,'Administrator','EditorTextDirection','Y','2005-12-13 15:57:00'),(50,'Administrator','EditorLink','Y','2005-12-13 15:57:00'),(51,'Administrator','EditorSubhead','Y','2005-12-13 15:57:00'),(52,'Administrator','EditorBold','Y','2005-12-13 15:57:00'),(53,'Administrator','EditorItalic','Y','2005-12-13 15:57:00'),(54,'Administrator','EditorUnderline','Y','2005-12-13 15:57:00'),(55,'Administrator','EditorUndoRedo','Y','2005-12-13 15:57:00'),(56,'Administrator','EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(57,'Administrator','ManageReaders','Y','2005-12-13 15:57:00'),(58,'Administrator','InitializeTemplateEngine','Y','2006-01-04 00:21:55'),(59,'Editor','ManagePub','N','2005-12-13 15:57:00'),(60,'Editor','DeletePub','N','2005-12-13 15:57:00'),(61,'Editor','ManageIssue','N','2005-12-13 15:57:00'),(62,'Editor','DeleteIssue','N','2005-12-13 15:57:00'),(63,'Editor','ManageSection','N','2005-12-13 15:57:00'),(64,'Editor','DeleteSection','N','2005-12-13 15:57:00'),(65,'Editor','AddArticle','Y','2005-12-13 15:57:00'),(66,'Editor','ChangeArticle','Y','2005-12-13 15:57:00'),(67,'Editor','DeleteArticle','Y','2005-12-13 15:57:00'),(68,'Editor','AddImage','Y','2005-12-13 15:57:00'),(69,'Editor','AddFile','Y','2005-12-13 15:57:00'),(70,'Editor','ChangeImage','Y','2005-12-13 15:57:00'),(71,'Editor','ChangeFile','Y','2005-12-13 15:57:00'),(72,'Editor','DeleteImage','Y','2005-12-13 15:57:00'),(73,'Editor','DeleteFile','Y','2005-12-13 15:57:00'),(74,'Editor','ManageTempl','N','2005-12-13 15:57:00'),(75,'Editor','DeleteTempl','N','2005-12-13 15:57:00'),(76,'Editor','ManageUsers','N','2005-12-13 15:57:00'),(77,'Editor','ManageSubscriptions','N','2005-12-13 15:57:00'),(78,'Editor','DeleteUsers','N','2005-12-13 15:57:00'),(79,'Editor','ManageUserTypes','N','2005-12-13 15:57:00'),(80,'Editor','ManageArticleTypes','N','2005-12-13 15:57:00'),(81,'Editor','DeleteArticleTypes','N','2005-12-13 15:57:00'),(82,'Editor','ManageLanguages','N','2005-12-13 15:57:00'),(83,'Editor','DeleteLanguages','N','2005-12-13 15:57:00'),(84,'Editor','ManageCountries','N','2005-12-13 15:57:00'),(85,'Editor','DeleteCountries','N','2005-12-13 15:57:00'),(86,'Editor','MailNotify','Y','2005-12-13 15:57:00'),(87,'Editor','ViewLogs','N','2005-12-13 15:57:00'),(88,'Editor','ManageLocalizer','N','2005-12-13 15:57:00'),(89,'Editor','ManageIndexer','N','2005-12-13 15:57:00'),(90,'Editor','Publish','N','2005-12-13 15:57:00'),(91,'Editor','ManageTopics','N','2005-12-13 15:57:00'),(92,'Editor','EditorImage','Y','2005-12-13 15:57:00'),(93,'Editor','EditorTextAlignment','Y','2005-12-13 15:57:00'),(94,'Editor','EditorFontColor','N','2005-12-13 15:57:00'),(95,'Editor','EditorFontSize','N','2005-12-13 15:57:00'),(96,'Editor','EditorFontFace','N','2005-12-13 15:57:00'),(97,'Editor','EditorTable','Y','2005-12-13 15:57:00'),(98,'Editor','EditorSuperscript','N','2006-03-06 15:34:26'),(99,'Editor','EditorSubscript','N','2006-03-06 15:34:26'),(100,'Editor','EditorStrikethrough','N','2005-12-13 15:57:00'),(101,'Editor','EditorIndent','Y','2005-12-13 15:57:00'),(102,'Editor','EditorListBullet','Y','2005-12-13 15:57:00'),(103,'Editor','EditorListNumber','Y','2005-12-13 15:57:00'),(104,'Editor','EditorHorizontalRule','N','2005-12-13 15:57:00'),(105,'Editor','EditorSourceView','N','2005-12-13 15:57:00'),(106,'Editor','EditorEnlarge','Y','2005-12-13 15:57:00'),(107,'Editor','EditorTextDirection','Y','2005-12-13 15:57:00'),(108,'Editor','EditorLink','Y','2005-12-13 15:57:00'),(109,'Editor','EditorSubhead','Y','2005-12-13 15:57:00'),(110,'Editor','EditorBold','Y','2005-12-13 15:57:00'),(111,'Editor','EditorItalic','Y','2005-12-13 15:57:00'),(112,'Editor','EditorUnderline','Y','2005-12-13 15:57:00'),(113,'Editor','EditorUndoRedo','Y','2005-12-13 15:57:00'),(114,'Editor','EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(115,'Editor','ManageReaders','N','2005-12-13 15:57:00'),(116,'Editor','InitializeTemplateEngine','N','2005-12-13 15:57:00'),(117,'Chief Editor','ManagePub','N','2005-12-13 15:57:00'),(118,'Chief Editor','DeletePub','N','2005-12-13 15:57:00'),(119,'Chief Editor','ManageIssue','Y','2005-12-13 15:57:00'),(120,'Chief Editor','DeleteIssue','Y','2005-12-13 15:57:00'),(121,'Chief Editor','ManageSection','Y','2005-12-13 15:57:00'),(122,'Chief Editor','DeleteSection','Y','2005-12-13 15:57:00'),(123,'Chief Editor','AddArticle','Y','2005-12-13 15:57:00'),(124,'Chief Editor','ChangeArticle','Y','2005-12-13 15:57:00'),(125,'Chief Editor','DeleteArticle','Y','2005-12-13 15:57:00'),(126,'Chief Editor','AddImage','Y','2005-12-13 15:57:00'),(127,'Chief Editor','AddFile','Y','2005-12-13 15:57:00'),(128,'Chief Editor','ChangeImage','Y','2005-12-13 15:57:00'),(129,'Chief Editor','ChangeFile','Y','2005-12-13 15:57:00'),(130,'Chief Editor','DeleteImage','Y','2005-12-13 15:57:00'),(131,'Chief Editor','DeleteFile','Y','2005-12-13 15:57:00'),(132,'Chief Editor','ManageTempl','N','2006-03-06 15:35:40'),(133,'Chief Editor','DeleteTempl','N','2006-03-06 15:35:40'),(134,'Chief Editor','ManageUsers','Y','2006-03-06 15:35:40'),(135,'Chief Editor','ManageSubscriptions','N','2005-12-13 15:57:00'),(136,'Chief Editor','DeleteUsers','Y','2006-03-06 15:35:40'),(137,'Chief Editor','ManageUserTypes','N','2005-12-13 15:57:00'),(138,'Chief Editor','ManageArticleTypes','Y','2005-12-13 15:57:00'),(139,'Chief Editor','DeleteArticleTypes','Y','2005-12-13 15:57:00'),(140,'Chief Editor','ManageLanguages','N','2005-12-13 15:57:00'),(141,'Chief Editor','DeleteLanguages','N','2005-12-13 15:57:00'),(142,'Chief Editor','ManageCountries','N','2005-12-13 15:57:00'),(143,'Chief Editor','DeleteCountries','N','2005-12-13 15:57:00'),(144,'Chief Editor','MailNotify','N','2005-12-13 15:57:00'),(145,'Chief Editor','ViewLogs','Y','2005-12-13 15:57:00'),(146,'Chief Editor','ManageLocalizer','Y','2005-12-13 15:57:00'),(147,'Chief Editor','ManageIndexer','N','2005-12-13 15:57:00'),(148,'Chief Editor','Publish','Y','2005-12-13 15:57:00'),(149,'Chief Editor','ManageTopics','Y','2005-12-13 15:57:00'),(150,'Chief Editor','EditorImage','Y','2005-12-13 15:57:00'),(151,'Chief Editor','EditorTextAlignment','N','2005-12-13 15:57:00'),(152,'Chief Editor','EditorFontColor','Y','2005-12-13 15:57:00'),(153,'Chief Editor','EditorFontSize','N','2005-12-13 15:57:00'),(154,'Chief Editor','EditorFontFace','N','2005-12-13 15:57:00'),(155,'Chief Editor','EditorTable','Y','2005-12-13 15:57:00'),(156,'Chief Editor','EditorSuperscript','Y','2005-12-13 15:57:00'),(157,'Chief Editor','EditorSubscript','Y','2005-12-13 15:57:00'),(158,'Chief Editor','EditorStrikethrough','Y','2005-12-13 15:57:00'),(159,'Chief Editor','EditorIndent','Y','2005-12-13 15:57:00'),(160,'Chief Editor','EditorListBullet','Y','2005-12-13 15:57:00'),(161,'Chief Editor','EditorListNumber','Y','2005-12-13 15:57:00'),(162,'Chief Editor','EditorHorizontalRule','N','2005-12-13 15:57:00'),(163,'Chief Editor','EditorSourceView','N','2005-12-13 15:57:00'),(164,'Chief Editor','EditorEnlarge','Y','2005-12-13 15:57:00'),(165,'Chief Editor','EditorTextDirection','Y','2005-12-13 15:57:00'),(166,'Chief Editor','EditorLink','Y','2005-12-13 15:57:00'),(167,'Chief Editor','EditorSubhead','Y','2005-12-13 15:57:00'),(168,'Chief Editor','EditorBold','Y','2005-12-13 15:57:00'),(169,'Chief Editor','EditorItalic','Y','2005-12-13 15:57:00'),(170,'Chief Editor','EditorUnderline','Y','2005-12-13 15:57:00'),(171,'Chief Editor','EditorUndoRedo','Y','2005-12-13 15:57:00'),(172,'Chief Editor','EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(173,'Chief Editor','ManageReaders','Y','2005-12-13 15:57:00'),(174,'Chief Editor','InitializeTemplateEngine','N','2005-12-13 15:57:00'),(175,'Journalist','ManagePub','N','2006-01-03 23:10:30'),(176,'Journalist','DeletePub','N','2006-01-03 23:10:30'),(177,'Journalist','ManageIssue','N','2006-01-03 23:10:30'),(178,'Journalist','DeleteIssue','N','2006-01-03 23:10:30'),(179,'Journalist','ManageSection','N','2006-01-03 23:10:30'),(180,'Journalist','DeleteSection','N','2006-01-03 23:10:30'),(181,'Journalist','AddArticle','Y','2006-01-03 23:10:30'),(182,'Journalist','ChangeArticle','N','2006-01-03 23:10:30'),(183,'Journalist','DeleteArticle','N','2006-01-03 23:10:30'),(184,'Journalist','AddImage','Y','2006-01-03 23:10:30'),(185,'Journalist','ChangeImage','Y','2006-01-03 23:10:30'),(186,'Journalist','DeleteImage','N','2006-01-03 23:10:30'),(187,'Journalist','ManageTempl','N','2006-01-03 23:10:30'),(188,'Journalist','DeleteTempl','N','2006-01-03 23:10:30'),(189,'Journalist','ManageUsers','N','2006-01-03 23:10:30'),(190,'Journalist','ManageReaders','N','2006-01-03 23:10:30'),(191,'Journalist','ManageSubscriptions','N','2006-01-03 23:10:30'),(192,'Journalist','DeleteUsers','N','2006-01-03 23:10:30'),(193,'Journalist','ManageUserTypes','N','2006-01-03 23:10:30'),(194,'Journalist','ManageArticleTypes','N','2006-01-03 23:10:30'),(195,'Journalist','DeleteArticleTypes','N','2006-01-03 23:10:30'),(196,'Journalist','ManageLanguages','N','2006-01-03 23:10:30'),(197,'Journalist','DeleteLanguages','N','2006-01-03 23:10:30'),(198,'Journalist','MailNotify','N','2006-01-03 23:10:30'),(199,'Journalist','ManageCountries','N','2006-01-03 23:10:30'),(200,'Journalist','DeleteCountries','N','2006-01-03 23:10:30'),(201,'Journalist','ViewLogs','N','2006-01-03 23:10:30'),(202,'Journalist','ManageLocalizer','N','2006-01-03 23:10:30'),(203,'Journalist','ManageIndexer','N','2006-01-03 23:10:30'),(204,'Journalist','Publish','N','2006-01-03 23:10:30'),(205,'Journalist','ManageTopics','N','2006-01-03 23:10:30'),(206,'Journalist','EditorBold','Y','2006-01-03 23:10:30'),(207,'Journalist','EditorItalic','Y','2006-01-03 23:10:30'),(208,'Journalist','EditorUnderline','Y','2006-01-03 23:10:30'),(209,'Journalist','EditorUndoRedo','Y','2006-03-06 15:30:35'),(210,'Journalist','EditorCopyCutPaste','Y','2006-01-03 23:10:30'),(211,'Journalist','EditorImage','Y','2006-01-03 23:10:30'),(212,'Journalist','EditorTextAlignment','N','2006-03-06 15:30:35'),(213,'Journalist','EditorFontColor','N','2006-03-06 15:30:35'),(214,'Journalist','EditorFontSize','N','2006-01-03 23:10:30'),(215,'Journalist','EditorFontFace','N','2006-01-03 23:10:30'),(216,'Journalist','EditorTable','N','2006-03-06 15:32:48'),(217,'Journalist','EditorSuperscript','N','2006-01-03 23:10:30'),(218,'Journalist','EditorSubscript','N','2006-01-03 23:10:30'),(219,'Journalist','EditorStrikethrough','N','2006-03-06 15:30:35'),(220,'Journalist','EditorIndent','N','2006-03-06 15:30:35'),(221,'Journalist','EditorListBullet','Y','2006-01-03 23:10:30'),(222,'Journalist','EditorListNumber','Y','2006-01-03 23:10:30'),(223,'Journalist','EditorHorizontalRule','N','2006-01-03 23:10:30'),(224,'Journalist','EditorSourceView','N','2006-01-03 23:10:30'),(225,'Journalist','EditorEnlarge','Y','2006-01-03 23:10:30'),(226,'Journalist','EditorTextDirection','N','2006-03-06 15:30:35'),(227,'Journalist','EditorLink','Y','2006-01-03 23:10:30'),(228,'Journalist','EditorSubhead','Y','2006-01-03 23:10:30'),(229,'Journalist','InitializeTemplateEngine','N','2006-01-03 23:10:30'),(230,'Journalist','AddFile','Y','2006-01-03 23:10:30'),(231,'Journalist','ChangeFile','Y','2006-01-03 23:10:30'),(232,'Journalist','DeleteFile','N','2006-01-03 23:10:30'),(233,'Administrator','MoveArticle','Y','2006-03-06 14:33:50'),(234,'Administrator','TranslateArticle','Y','2006-03-06 14:33:50'),(235,'Administrator','AttachImageToArticle','Y','2006-03-06 14:33:50'),(236,'Administrator','ChangeSystemPreferences','Y','2006-03-06 14:33:50'),(237,'Administrator','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(238,'Administrator','EditorFindReplace','Y','2006-03-06 14:33:50'),(239,'Administrator','EditorCharacterMap','Y','2006-03-06 14:33:50'),(240,'Chief Editor','MoveArticle','Y','2006-03-06 14:33:50'),(241,'Chief Editor','TranslateArticle','Y','2006-03-06 14:33:50'),(242,'Chief Editor','AttachImageToArticle','Y','2006-03-06 14:33:50'),(243,'Chief Editor','ChangeSystemPreferences','N','2006-03-06 14:33:50'),(244,'Chief Editor','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(245,'Chief Editor','EditorFindReplace','Y','2006-03-06 14:33:50'),(246,'Chief Editor','EditorCharacterMap','Y','2006-03-06 14:33:50'),(247,'Editor','MoveArticle','Y','2006-03-06 14:33:50'),(248,'Editor','TranslateArticle','Y','2006-03-06 14:33:50'),(249,'Editor','AttachImageToArticle','Y','2006-03-06 14:33:50'),(250,'Editor','ChangeSystemPreferences','N','2006-03-06 14:33:50'),(251,'Editor','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(252,'Editor','EditorFindReplace','Y','2006-03-06 14:33:50'),(253,'Editor','EditorCharacterMap','Y','2006-03-06 14:33:50'),(254,'Journalist','MoveArticle','N','2006-03-06 14:33:50'),(255,'Journalist','TranslateArticle','Y','2006-03-06 14:33:50'),(256,'Journalist','AttachImageToArticle','Y','2006-03-06 14:33:50'),(257,'Journalist','ChangeSystemPreferences','N','2006-03-06 14:33:50'),(258,'Journalist','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(259,'Journalist','EditorFindReplace','Y','2006-03-06 14:33:50'),(260,'Journalist','EditorCharacterMap','Y','2006-03-06 14:33:50'),(261,'Subscription manager','ManagePub','N','2006-03-06 15:36:24'),(262,'Subscription manager','DeletePub','N','2006-03-06 15:36:24'),(263,'Subscription manager','ManageIssue','N','2006-03-06 15:36:24'),(264,'Subscription manager','DeleteIssue','N','2006-03-06 15:36:24'),(265,'Subscription manager','ManageSection','N','2006-03-06 15:36:24'),(266,'Subscription manager','DeleteSection','N','2006-03-06 15:36:24'),(267,'Subscription manager','AddArticle','N','2006-03-06 15:36:24'),(268,'Subscription manager','ChangeArticle','N','2006-03-06 15:36:24'),(269,'Subscription manager','MoveArticle','N','2006-03-06 15:36:24'),(270,'Subscription manager','TranslateArticle','N','2006-03-06 15:36:24'),(271,'Subscription manager','DeleteArticle','N','2006-03-06 15:36:24'),(272,'Subscription manager','AttachImageToArticle','N','2006-03-06 15:36:24'),(273,'Subscription manager','AttachTopicToArticle','N','2006-03-06 15:36:24'),(274,'Subscription manager','AddImage','N','2006-03-06 15:36:24'),(275,'Subscription manager','ChangeImage','N','2006-03-06 15:36:24'),(276,'Subscription manager','DeleteImage','N','2006-03-06 15:36:24'),(277,'Subscription manager','ManageTempl','N','2006-03-06 15:36:24'),(278,'Subscription manager','DeleteTempl','N','2006-03-06 15:36:24'),(279,'Subscription manager','ManageUsers','N','2006-03-06 15:36:24'),(280,'Subscription manager','ManageReaders','Y','2006-03-06 15:36:24'),(281,'Subscription manager','ManageSubscriptions','Y','2006-03-06 15:36:24'),(282,'Subscription manager','DeleteUsers','N','2006-03-06 15:36:24'),(283,'Subscription manager','ManageUserTypes','N','2006-03-06 15:36:24'),(284,'Subscription manager','ManageArticleTypes','N','2006-03-06 15:36:24'),(285,'Subscription manager','DeleteArticleTypes','N','2006-03-06 15:36:24'),(286,'Subscription manager','ManageLanguages','N','2006-03-06 15:36:24'),(287,'Subscription manager','DeleteLanguages','N','2006-03-06 15:36:24'),(288,'Subscription manager','MailNotify','N','2006-03-06 15:36:24'),(289,'Subscription manager','ManageCountries','N','2006-03-06 15:36:24'),(290,'Subscription manager','DeleteCountries','N','2006-03-06 15:36:24'),(291,'Subscription manager','ViewLogs','N','2006-03-06 15:36:24'),(292,'Subscription manager','ManageLocalizer','N','2006-03-06 15:36:24'),(293,'Subscription manager','ManageIndexer','N','2006-03-06 15:36:24'),(294,'Subscription manager','Publish','N','2006-03-06 15:36:24'),(295,'Subscription manager','ManageTopics','N','2006-03-06 15:36:24'),(296,'Subscription manager','EditorBold','N','2006-03-06 15:36:24'),(297,'Subscription manager','EditorItalic','N','2006-03-06 15:36:24'),(298,'Subscription manager','EditorUnderline','N','2006-03-06 15:36:24'),(299,'Subscription manager','EditorUndoRedo','N','2006-03-06 15:36:24'),(300,'Subscription manager','EditorCopyCutPaste','N','2006-03-06 15:36:24'),(301,'Subscription manager','EditorFindReplace','N','2006-03-06 15:36:24'),(302,'Subscription manager','EditorCharacterMap','N','2006-03-06 15:36:24'),(303,'Subscription manager','EditorImage','N','2006-03-06 15:36:24'),(304,'Subscription manager','EditorTextAlignment','N','2006-03-06 15:36:24'),(305,'Subscription manager','EditorFontColor','N','2006-03-06 15:36:24'),(306,'Subscription manager','EditorFontSize','N','2006-03-06 15:36:24'),(307,'Subscription manager','EditorFontFace','N','2006-03-06 15:36:24'),(308,'Subscription manager','EditorTable','N','2006-03-06 15:36:24'),(309,'Subscription manager','EditorSuperscript','N','2006-03-06 15:36:24'),(310,'Subscription manager','EditorSubscript','N','2006-03-06 15:36:24'),(311,'Subscription manager','EditorStrikethrough','N','2006-03-06 15:36:24'),(312,'Subscription manager','EditorIndent','N','2006-03-06 15:36:24'),(313,'Subscription manager','EditorListBullet','N','2006-03-06 15:36:24'),(314,'Subscription manager','EditorListNumber','N','2006-03-06 15:36:24'),(315,'Subscription manager','EditorHorizontalRule','N','2006-03-06 15:36:24'),(316,'Subscription manager','EditorSourceView','N','2006-03-06 15:36:24'),(317,'Subscription manager','EditorEnlarge','N','2006-03-06 15:36:24'),(318,'Subscription manager','EditorTextDirection','N','2006-03-06 15:36:24'),(319,'Subscription manager','EditorLink','N','2006-03-06 15:36:24'),(320,'Subscription manager','EditorSubhead','N','2006-03-06 15:36:24'),(321,'Subscription manager','InitializeTemplateEngine','N','2006-03-06 15:36:24'),(322,'Subscription manager','ChangeSystemPreferences','N','2006-03-06 15:36:24'),(323,'Subscription manager','AddFile','N','2006-03-06 15:36:24'),(324,'Subscription manager','ChangeFile','N','2006-03-06 15:36:24'),(325,'Subscription manager','DeleteFile','N','2006-03-06 15:36:24'),(326,'Administrator','CommentModerate','Y','2006-06-12 17:01:34'),(327,'Administrator','CommentEnable','Y','2006-06-12 17:01:34'),(328,'Chief Editor','CommentModerate','Y','2006-06-12 17:01:34'),(329,'Chief Editor','CommentEnable','Y','2006-06-12 17:01:34'),(330,'Editor','CommentModerate','N','2006-06-12 17:01:34'),(331,'Editor','CommentEnable','N','2006-06-12 17:01:34'),(332,'Journalist','CommentModerate','N','2006-06-12 17:01:34'),(333,'Journalist','CommentEnable','N','2006-06-12 17:01:34'),(334,'Subscription manager','CommentModerate','N','2006-06-12 17:01:34'),(335,'Subscription manager','CommentEnable','N','2006-06-12 17:01:34');
+
+/*!40000 ALTER TABLE `UserTypes` DISABLE KEYS */;
+LOCK TABLES `UserTypes` WRITE;
+INSERT INTO `UserTypes` VALUES (1,'Administrator','ManagePub','Y','2005-12-13 15:57:00'),(2,'Administrator','DeletePub','Y','2005-12-13 15:57:00'),(3,'Administrator','ManageIssue','Y','2005-12-13 15:57:00'),(4,'Administrator','DeleteIssue','Y','2005-12-13 15:57:00'),(5,'Administrator','ManageSection','Y','2005-12-13 15:57:00'),(6,'Administrator','DeleteSection','Y','2005-12-13 15:57:00'),(7,'Administrator','AddArticle','Y','2005-12-13 15:57:00'),(8,'Administrator','ChangeArticle','Y','2005-12-13 15:57:00'),(9,'Administrator','DeleteArticle','Y','2005-12-13 15:57:00'),(10,'Administrator','AddImage','Y','2005-12-13 15:57:00'),(11,'Administrator','AddFile','Y','2005-12-13 15:57:00'),(12,'Administrator','ChangeImage','Y','2005-12-13 15:57:00'),(13,'Administrator','ChangeFile','Y','2005-12-13 15:57:00'),(14,'Administrator','DeleteImage','Y','2005-12-13 15:57:00'),(15,'Administrator','DeleteFile','Y','2005-12-13 15:57:00'),(16,'Administrator','ManageTempl','Y','2005-12-13 15:57:00'),(17,'Administrator','DeleteTempl','Y','2005-12-13 15:57:00'),(18,'Administrator','ManageUsers','Y','2005-12-13 15:57:00'),(19,'Administrator','ManageSubscriptions','Y','2005-12-13 15:57:00'),(20,'Administrator','DeleteUsers','Y','2005-12-13 15:57:00'),(21,'Administrator','ManageUserTypes','Y','2005-12-13 15:57:00'),(22,'Administrator','ManageArticleTypes','Y','2005-12-13 15:57:00'),(23,'Administrator','DeleteArticleTypes','Y','2005-12-13 15:57:00'),(24,'Administrator','ManageLanguages','Y','2005-12-13 15:57:00'),(25,'Administrator','DeleteLanguages','Y','2005-12-13 15:57:00'),(26,'Administrator','ManageCountries','Y','2005-12-13 15:57:00'),(27,'Administrator','DeleteCountries','Y','2005-12-13 15:57:00'),(28,'Administrator','MailNotify','N','2005-12-13 15:57:00'),(29,'Administrator','ViewLogs','Y','2005-12-13 15:57:00'),(30,'Administrator','ManageLocalizer','Y','2005-12-13 15:57:00'),(31,'Administrator','ManageIndexer','N','2006-01-04 00:21:55'),(32,'Administrator','Publish','Y','2005-12-13 15:57:00'),(33,'Administrator','ManageTopics','Y','2005-12-13 15:57:00'),(34,'Administrator','EditorImage','Y','2005-12-13 15:57:00'),(35,'Administrator','EditorTextAlignment','Y','2005-12-13 15:57:00'),(36,'Administrator','EditorFontColor','Y','2005-12-13 15:57:00'),(37,'Administrator','EditorFontSize','Y','2005-12-13 15:57:00'),(38,'Administrator','EditorFontFace','Y','2005-12-13 15:57:00'),(39,'Administrator','EditorTable','Y','2005-12-13 15:57:00'),(40,'Administrator','EditorSuperscript','Y','2005-12-13 15:57:00'),(41,'Administrator','EditorSubscript','Y','2005-12-13 15:57:00'),(42,'Administrator','EditorStrikethrough','Y','2005-12-13 15:57:00'),(43,'Administrator','EditorIndent','Y','2005-12-13 15:57:00'),(44,'Administrator','EditorListBullet','Y','2005-12-13 15:57:00'),(45,'Administrator','EditorListNumber','Y','2005-12-13 15:57:00'),(46,'Administrator','EditorHorizontalRule','Y','2005-12-13 15:57:00'),(47,'Administrator','EditorSourceView','Y','2005-12-13 15:57:00'),(48,'Administrator','EditorEnlarge','Y','2005-12-13 15:57:00'),(49,'Administrator','EditorTextDirection','Y','2005-12-13 15:57:00'),(50,'Administrator','EditorLink','Y','2005-12-13 15:57:00'),(51,'Administrator','EditorSubhead','Y','2005-12-13 15:57:00'),(52,'Administrator','EditorBold','Y','2005-12-13 15:57:00'),(53,'Administrator','EditorItalic','Y','2005-12-13 15:57:00'),(54,'Administrator','EditorUnderline','Y','2005-12-13 15:57:00'),(55,'Administrator','EditorUndoRedo','Y','2005-12-13 15:57:00'),(56,'Administrator','EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(57,'Administrator','ManageReaders','Y','2005-12-13 15:57:00'),(58,'Administrator','InitializeTemplateEngine','Y','2006-01-04 00:21:55'),(59,'Editor','ManagePub','N','2005-12-13 15:57:00'),(60,'Editor','DeletePub','N','2005-12-13 15:57:00'),(61,'Editor','ManageIssue','N','2005-12-13 15:57:00'),(62,'Editor','DeleteIssue','N','2005-12-13 15:57:00'),(63,'Editor','ManageSection','N','2005-12-13 15:57:00'),(64,'Editor','DeleteSection','N','2005-12-13 15:57:00'),(65,'Editor','AddArticle','Y','2005-12-13 15:57:00'),(66,'Editor','ChangeArticle','Y','2005-12-13 15:57:00'),(67,'Editor','DeleteArticle','Y','2005-12-13 15:57:00'),(68,'Editor','AddImage','Y','2005-12-13 15:57:00'),(69,'Editor','AddFile','Y','2005-12-13 15:57:00'),(70,'Editor','ChangeImage','Y','2005-12-13 15:57:00'),(71,'Editor','ChangeFile','Y','2005-12-13 15:57:00'),(72,'Editor','DeleteImage','Y','2005-12-13 15:57:00'),(73,'Editor','DeleteFile','Y','2005-12-13 15:57:00'),(74,'Editor','ManageTempl','N','2005-12-13 15:57:00'),(75,'Editor','DeleteTempl','N','2005-12-13 15:57:00'),(76,'Editor','ManageUsers','N','2005-12-13 15:57:00'),(77,'Editor','ManageSubscriptions','N','2005-12-13 15:57:00'),(78,'Editor','DeleteUsers','N','2005-12-13 15:57:00'),(79,'Editor','ManageUserTypes','N','2005-12-13 15:57:00'),(80,'Editor','ManageArticleTypes','N','2005-12-13 15:57:00'),(81,'Editor','DeleteArticleTypes','N','2005-12-13 15:57:00'),(82,'Editor','ManageLanguages','N','2005-12-13 15:57:00'),(83,'Editor','DeleteLanguages','N','2005-12-13 15:57:00'),(84,'Editor','ManageCountries','N','2005-12-13 15:57:00'),(85,'Editor','DeleteCountries','N','2005-12-13 15:57:00'),(86,'Editor','MailNotify','Y','2005-12-13 15:57:00'),(87,'Editor','ViewLogs','N','2005-12-13 15:57:00'),(88,'Editor','ManageLocalizer','N','2005-12-13 15:57:00'),(89,'Editor','ManageIndexer','N','2005-12-13 15:57:00'),(90,'Editor','Publish','N','2005-12-13 15:57:00'),(91,'Editor','ManageTopics','N','2005-12-13 15:57:00'),(92,'Editor','EditorImage','Y','2005-12-13 15:57:00'),(93,'Editor','EditorTextAlignment','Y','2005-12-13 15:57:00'),(94,'Editor','EditorFontColor','N','2005-12-13 15:57:00'),(95,'Editor','EditorFontSize','N','2005-12-13 15:57:00'),(96,'Editor','EditorFontFace','N','2005-12-13 15:57:00'),(97,'Editor','EditorTable','Y','2005-12-13 15:57:00'),(98,'Editor','EditorSuperscript','N','2006-03-06 15:34:26'),(99,'Editor','EditorSubscript','N','2006-03-06 15:34:26'),(100,'Editor','EditorStrikethrough','N','2005-12-13 15:57:00'),(101,'Editor','EditorIndent','Y','2005-12-13 15:57:00'),(102,'Editor','EditorListBullet','Y','2005-12-13 15:57:00'),(103,'Editor','EditorListNumber','Y','2005-12-13 15:57:00'),(104,'Editor','EditorHorizontalRule','N','2005-12-13 15:57:00'),(105,'Editor','EditorSourceView','N','2005-12-13 15:57:00'),(106,'Editor','EditorEnlarge','Y','2005-12-13 15:57:00'),(107,'Editor','EditorTextDirection','Y','2005-12-13 15:57:00'),(108,'Editor','EditorLink','Y','2005-12-13 15:57:00'),(109,'Editor','EditorSubhead','Y','2005-12-13 15:57:00'),(110,'Editor','EditorBold','Y','2005-12-13 15:57:00'),(111,'Editor','EditorItalic','Y','2005-12-13 15:57:00'),(112,'Editor','EditorUnderline','Y','2005-12-13 15:57:00'),(113,'Editor','EditorUndoRedo','Y','2005-12-13 15:57:00'),(114,'Editor','EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(115,'Editor','ManageReaders','N','2005-12-13 15:57:00'),(116,'Editor','InitializeTemplateEngine','N','2005-12-13 15:57:00'),(117,'Chief Editor','ManagePub','N','2005-12-13 15:57:00'),(118,'Chief Editor','DeletePub','N','2005-12-13 15:57:00'),(119,'Chief Editor','ManageIssue','Y','2005-12-13 15:57:00'),(120,'Chief Editor','DeleteIssue','Y','2005-12-13 15:57:00'),(121,'Chief Editor','ManageSection','Y','2005-12-13 15:57:00'),(122,'Chief Editor','DeleteSection','Y','2005-12-13 15:57:00'),(123,'Chief Editor','AddArticle','Y','2005-12-13 15:57:00'),(124,'Chief Editor','ChangeArticle','Y','2005-12-13 15:57:00'),(125,'Chief Editor','DeleteArticle','Y','2005-12-13 15:57:00'),(126,'Chief Editor','AddImage','Y','2005-12-13 15:57:00'),(127,'Chief Editor','AddFile','Y','2005-12-13 15:57:00'),(128,'Chief Editor','ChangeImage','Y','2005-12-13 15:57:00'),(129,'Chief Editor','ChangeFile','Y','2005-12-13 15:57:00'),(130,'Chief Editor','DeleteImage','Y','2005-12-13 15:57:00'),(131,'Chief Editor','DeleteFile','Y','2005-12-13 15:57:00'),(132,'Chief Editor','ManageTempl','N','2006-03-06 15:35:40'),(133,'Chief Editor','DeleteTempl','N','2006-03-06 15:35:40'),(134,'Chief Editor','ManageUsers','Y','2006-03-06 15:35:40'),(135,'Chief Editor','ManageSubscriptions','N','2005-12-13 15:57:00'),(136,'Chief Editor','DeleteUsers','Y','2006-03-06 15:35:40'),(137,'Chief Editor','ManageUserTypes','N','2005-12-13 15:57:00'),(138,'Chief Editor','ManageArticleTypes','Y','2005-12-13 15:57:00'),(139,'Chief Editor','DeleteArticleTypes','Y','2005-12-13 15:57:00'),(140,'Chief Editor','ManageLanguages','N','2005-12-13 15:57:00'),(141,'Chief Editor','DeleteLanguages','N','2005-12-13 15:57:00'),(142,'Chief Editor','ManageCountries','N','2005-12-13 15:57:00'),(143,'Chief Editor','DeleteCountries','N','2005-12-13 15:57:00'),(144,'Chief Editor','MailNotify','N','2005-12-13 15:57:00'),(145,'Chief Editor','ViewLogs','Y','2005-12-13 15:57:00'),(146,'Chief Editor','ManageLocalizer','Y','2005-12-13 15:57:00'),(147,'Chief Editor','ManageIndexer','N','2005-12-13 15:57:00'),(148,'Chief Editor','Publish','Y','2005-12-13 15:57:00'),(149,'Chief Editor','ManageTopics','Y','2005-12-13 15:57:00'),(150,'Chief Editor','EditorImage','Y','2005-12-13 15:57:00'),(151,'Chief Editor','EditorTextAlignment','N','2005-12-13 15:57:00'),(152,'Chief Editor','EditorFontColor','Y','2005-12-13 15:57:00'),(153,'Chief Editor','EditorFontSize','N','2005-12-13 15:57:00'),(154,'Chief Editor','EditorFontFace','N','2005-12-13 15:57:00'),(155,'Chief Editor','EditorTable','Y','2005-12-13 15:57:00'),(156,'Chief Editor','EditorSuperscript','Y','2005-12-13 15:57:00'),(157,'Chief Editor','EditorSubscript','Y','2005-12-13 15:57:00'),(158,'Chief Editor','EditorStrikethrough','Y','2005-12-13 15:57:00'),(159,'Chief Editor','EditorIndent','Y','2005-12-13 15:57:00'),(160,'Chief Editor','EditorListBullet','Y','2005-12-13 15:57:00'),(161,'Chief Editor','EditorListNumber','Y','2005-12-13 15:57:00'),(162,'Chief Editor','EditorHorizontalRule','N','2005-12-13 15:57:00'),(163,'Chief Editor','EditorSourceView','N','2005-12-13 15:57:00'),(164,'Chief Editor','EditorEnlarge','Y','2005-12-13 15:57:00'),(165,'Chief Editor','EditorTextDirection','Y','2005-12-13 15:57:00'),(166,'Chief Editor','EditorLink','Y','2005-12-13 15:57:00'),(167,'Chief Editor','EditorSubhead','Y','2005-12-13 15:57:00'),(168,'Chief Editor','EditorBold','Y','2005-12-13 15:57:00'),(169,'Chief Editor','EditorItalic','Y','2005-12-13 15:57:00'),(170,'Chief Editor','EditorUnderline','Y','2005-12-13 15:57:00'),(171,'Chief Editor','EditorUndoRedo','Y','2005-12-13 15:57:00'),(172,'Chief Editor','EditorCopyCutPaste','Y','2005-12-13 15:57:00'),(173,'Chief Editor','ManageReaders','Y','2005-12-13 15:57:00'),(174,'Chief Editor','InitializeTemplateEngine','N','2005-12-13 15:57:00'),(175,'Journalist','ManagePub','N','2006-01-03 23:10:30'),(176,'Journalist','DeletePub','N','2006-01-03 23:10:30'),(177,'Journalist','ManageIssue','N','2006-01-03 23:10:30'),(178,'Journalist','DeleteIssue','N','2006-01-03 23:10:30'),(179,'Journalist','ManageSection','N','2006-01-03 23:10:30'),(180,'Journalist','DeleteSection','N','2006-01-03 23:10:30'),(181,'Journalist','AddArticle','Y','2006-01-03 23:10:30'),(182,'Journalist','ChangeArticle','N','2006-01-03 23:10:30'),(183,'Journalist','DeleteArticle','N','2006-01-03 23:10:30'),(184,'Journalist','AddImage','Y','2006-01-03 23:10:30'),(185,'Journalist','ChangeImage','Y','2006-01-03 23:10:30'),(186,'Journalist','DeleteImage','N','2006-01-03 23:10:30'),(187,'Journalist','ManageTempl','N','2006-01-03 23:10:30'),(188,'Journalist','DeleteTempl','N','2006-01-03 23:10:30'),(189,'Journalist','ManageUsers','N','2006-01-03 23:10:30'),(190,'Journalist','ManageReaders','N','2006-01-03 23:10:30'),(191,'Journalist','ManageSubscriptions','N','2006-01-03 23:10:30'),(192,'Journalist','DeleteUsers','N','2006-01-03 23:10:30'),(193,'Journalist','ManageUserTypes','N','2006-01-03 23:10:30'),(194,'Journalist','ManageArticleTypes','N','2006-01-03 23:10:30'),(195,'Journalist','DeleteArticleTypes','N','2006-01-03 23:10:30'),(196,'Journalist','ManageLanguages','N','2006-01-03 23:10:30'),(197,'Journalist','DeleteLanguages','N','2006-01-03 23:10:30'),(198,'Journalist','MailNotify','N','2006-01-03 23:10:30'),(199,'Journalist','ManageCountries','N','2006-01-03 23:10:30'),(200,'Journalist','DeleteCountries','N','2006-01-03 23:10:30'),(201,'Journalist','ViewLogs','N','2006-01-03 23:10:30'),(202,'Journalist','ManageLocalizer','N','2006-01-03 23:10:30'),(203,'Journalist','ManageIndexer','N','2006-01-03 23:10:30'),(204,'Journalist','Publish','N','2006-01-03 23:10:30'),(205,'Journalist','ManageTopics','N','2006-01-03 23:10:30'),(206,'Journalist','EditorBold','Y','2006-01-03 23:10:30'),(207,'Journalist','EditorItalic','Y','2006-01-03 23:10:30'),(208,'Journalist','EditorUnderline','Y','2006-01-03 23:10:30'),(209,'Journalist','EditorUndoRedo','Y','2006-03-06 15:30:35'),(210,'Journalist','EditorCopyCutPaste','Y','2006-01-03 23:10:30'),(211,'Journalist','EditorImage','Y','2006-01-03 23:10:30'),(212,'Journalist','EditorTextAlignment','N','2006-03-06 15:30:35'),(213,'Journalist','EditorFontColor','N','2006-03-06 15:30:35'),(214,'Journalist','EditorFontSize','N','2006-01-03 23:10:30'),(215,'Journalist','EditorFontFace','N','2006-01-03 23:10:30'),(216,'Journalist','EditorTable','N','2006-03-06 15:32:48'),(217,'Journalist','EditorSuperscript','N','2006-01-03 23:10:30'),(218,'Journalist','EditorSubscript','N','2006-01-03 23:10:30'),(219,'Journalist','EditorStrikethrough','N','2006-03-06 15:30:35'),(220,'Journalist','EditorIndent','N','2006-03-06 15:30:35'),(221,'Journalist','EditorListBullet','Y','2006-01-03 23:10:30'),(222,'Journalist','EditorListNumber','Y','2006-01-03 23:10:30'),(223,'Journalist','EditorHorizontalRule','N','2006-01-03 23:10:30'),(224,'Journalist','EditorSourceView','N','2006-01-03 23:10:30'),(225,'Journalist','EditorEnlarge','Y','2006-01-03 23:10:30'),(226,'Journalist','EditorTextDirection','N','2006-03-06 15:30:35'),(227,'Journalist','EditorLink','Y','2006-01-03 23:10:30'),(228,'Journalist','EditorSubhead','Y','2006-01-03 23:10:30'),(229,'Journalist','InitializeTemplateEngine','N','2006-01-03 23:10:30'),(230,'Journalist','AddFile','Y','2006-01-03 23:10:30'),(231,'Journalist','ChangeFile','Y','2006-01-03 23:10:30'),(232,'Journalist','DeleteFile','N','2006-01-03 23:10:30'),(233,'Administrator','MoveArticle','Y','2006-03-06 14:33:50'),(234,'Administrator','TranslateArticle','Y','2006-03-06 14:33:50'),(235,'Administrator','AttachImageToArticle','Y','2006-03-06 14:33:50'),(236,'Administrator','ChangeSystemPreferences','Y','2006-03-06 14:33:50'),(237,'Administrator','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(238,'Administrator','EditorFindReplace','Y','2006-03-06 14:33:50'),(239,'Administrator','EditorCharacterMap','Y','2006-03-06 14:33:50'),(240,'Chief Editor','MoveArticle','Y','2006-03-06 14:33:50'),(241,'Chief Editor','TranslateArticle','Y','2006-03-06 14:33:50'),(242,'Chief Editor','AttachImageToArticle','Y','2006-03-06 14:33:50'),(243,'Chief Editor','ChangeSystemPreferences','N','2006-03-06 14:33:50'),(244,'Chief Editor','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(245,'Chief Editor','EditorFindReplace','Y','2006-03-06 14:33:50'),(246,'Chief Editor','EditorCharacterMap','Y','2006-03-06 14:33:50'),(247,'Editor','MoveArticle','Y','2006-03-06 14:33:50'),(248,'Editor','TranslateArticle','Y','2006-03-06 14:33:50'),(249,'Editor','AttachImageToArticle','Y','2006-03-06 14:33:50'),(250,'Editor','ChangeSystemPreferences','N','2006-03-06 14:33:50'),(251,'Editor','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(252,'Editor','EditorFindReplace','Y','2006-03-06 14:33:50'),(253,'Editor','EditorCharacterMap','Y','2006-03-06 14:33:50'),(254,'Journalist','MoveArticle','N','2006-03-06 14:33:50'),(255,'Journalist','TranslateArticle','Y','2006-03-06 14:33:50'),(256,'Journalist','AttachImageToArticle','Y','2006-03-06 14:33:50'),(257,'Journalist','ChangeSystemPreferences','N','2006-03-06 14:33:50'),(258,'Journalist','AttachTopicToArticle','Y','2006-03-06 14:33:50'),(259,'Journalist','EditorFindReplace','Y','2006-03-06 14:33:50'),(260,'Journalist','EditorCharacterMap','Y','2006-03-06 14:33:50'),(261,'Subscription manager','ManagePub','N','2006-03-06 15:36:24'),(262,'Subscription manager','DeletePub','N','2006-03-06 15:36:24'),(263,'Subscription manager','ManageIssue','N','2006-03-06 15:36:24'),(264,'Subscription manager','DeleteIssue','N','2006-03-06 15:36:24'),(265,'Subscription manager','ManageSection','N','2006-03-06 15:36:24'),(266,'Subscription manager','DeleteSection','N','2006-03-06 15:36:24'),(267,'Subscription manager','AddArticle','N','2006-03-06 15:36:24'),(268,'Subscription manager','ChangeArticle','N','2006-03-06 15:36:24'),(269,'Subscription manager','MoveArticle','N','2006-03-06 15:36:24'),(270,'Subscription manager','TranslateArticle','N','2006-03-06 15:36:24'),(271,'Subscription manager','DeleteArticle','N','2006-03-06 15:36:24'),(272,'Subscription manager','AttachImageToArticle','N','2006-03-06 15:36:24'),(273,'Subscription manager','AttachTopicToArticle','N','2006-03-06 15:36:24'),(274,'Subscription manager','AddImage','N','2006-03-06 15:36:24'),(275,'Subscription manager','ChangeImage','N','2006-03-06 15:36:24'),(276,'Subscription manager','DeleteImage','N','2006-03-06 15:36:24'),(277,'Subscription manager','ManageTempl','N','2006-03-06 15:36:24'),(278,'Subscription manager','DeleteTempl','N','2006-03-06 15:36:24'),(279,'Subscription manager','ManageUsers','N','2006-03-06 15:36:24'),(280,'Subscription manager','ManageReaders','Y','2006-03-06 15:36:24'),(281,'Subscription manager','ManageSubscriptions','Y','2006-03-06 15:36:24'),(282,'Subscription manager','DeleteUsers','N','2006-03-06 15:36:24'),(283,'Subscription manager','ManageUserTypes','N','2006-03-06 15:36:24'),(284,'Subscription manager','ManageArticleTypes','N','2006-03-06 15:36:24'),(285,'Subscription manager','DeleteArticleTypes','N','2006-03-06 15:36:24'),(286,'Subscription manager','ManageLanguages','N','2006-03-06 15:36:24'),(287,'Subscription manager','DeleteLanguages','N','2006-03-06 15:36:24'),(288,'Subscription manager','MailNotify','N','2006-03-06 15:36:24'),(289,'Subscription manager','ManageCountries','N','2006-03-06 15:36:24'),(290,'Subscription manager','DeleteCountries','N','2006-03-06 15:36:24'),(291,'Subscription manager','ViewLogs','N','2006-03-06 15:36:24'),(292,'Subscription manager','ManageLocalizer','N','2006-03-06 15:36:24'),(293,'Subscription manager','ManageIndexer','N','2006-03-06 15:36:24'),(294,'Subscription manager','Publish','N','2006-03-06 15:36:24'),(295,'Subscription manager','ManageTopics','N','2006-03-06 15:36:24'),(296,'Subscription manager','EditorBold','N','2006-03-06 15:36:24'),(297,'Subscription manager','EditorItalic','N','2006-03-06 15:36:24'),(298,'Subscription manager','EditorUnderline','N','2006-03-06 15:36:24'),(299,'Subscription manager','EditorUndoRedo','N','2006-03-06 15:36:24'),(300,'Subscription manager','EditorCopyCutPaste','N','2006-03-06 15:36:24'),(301,'Subscription manager','EditorFindReplace','N','2006-03-06 15:36:24'),(302,'Subscription manager','EditorCharacterMap','N','2006-03-06 15:36:24'),(303,'Subscription manager','EditorImage','N','2006-03-06 15:36:24'),(304,'Subscription manager','EditorTextAlignment','N','2006-03-06 15:36:24'),(305,'Subscription manager','EditorFontColor','N','2006-03-06 15:36:24'),(306,'Subscription manager','EditorFontSize','N','2006-03-06 15:36:24'),(307,'Subscription manager','EditorFontFace','N','2006-03-06 15:36:24'),(308,'Subscription manager','EditorTable','N','2006-03-06 15:36:24'),(309,'Subscription manager','EditorSuperscript','N','2006-03-06 15:36:24'),(310,'Subscription manager','EditorSubscript','N','2006-03-06 15:36:24'),(311,'Subscription manager','EditorStrikethrough','N','2006-03-06 15:36:24'),(312,'Subscription manager','EditorIndent','N','2006-03-06 15:36:24'),(313,'Subscription manager','EditorListBullet','N','2006-03-06 15:36:24'),(314,'Subscription manager','EditorListNumber','N','2006-03-06 15:36:24'),(315,'Subscription manager','EditorHorizontalRule','N','2006-03-06 15:36:24'),(316,'Subscription manager','EditorSourceView','N','2006-03-06 15:36:24'),(317,'Subscription manager','EditorEnlarge','N','2006-03-06 15:36:24'),(318,'Subscription manager','EditorTextDirection','N','2006-03-06 15:36:24'),(319,'Subscription manager','EditorLink','N','2006-03-06 15:36:24'),(320,'Subscription manager','EditorSubhead','N','2006-03-06 15:36:24'),(321,'Subscription manager','InitializeTemplateEngine','N','2006-03-06 15:36:24'),(322,'Subscription manager','ChangeSystemPreferences','N','2006-03-06 15:36:24'),(323,'Subscription manager','AddFile','N','2006-03-06 15:36:24'),(324,'Subscription manager','ChangeFile','N','2006-03-06 15:36:24'),(325,'Subscription manager','DeleteFile','N','2006-03-06 15:36:24'),(326,'Administrator','CommentModerate','Y','2006-06-12 17:01:34'),(327,'Administrator','CommentEnable','Y','2006-06-12 17:01:34'),(328,'Chief Editor','CommentModerate','Y','2006-06-12 17:01:34'),(329,'Chief Editor','CommentEnable','Y','2006-06-12 17:01:34'),(330,'Editor','CommentModerate','N','2006-06-12 17:01:34'),(331,'Editor','CommentEnable','N','2006-06-12 17:01:34'),(332,'Journalist','CommentModerate','N','2006-06-12 17:01:34'),(333,'Journalist','CommentEnable','N','2006-06-12 17:01:34'),(334,'Subscription manager','CommentModerate','N','2006-06-12 17:01:34'),(335,'Subscription manager','CommentEnable','N','2006-06-12 17:01:34'),(336,'Administrator','AddAudioclip','Y','2007-01-20 14:42:07'),(337,'Administrator','AttachAudioclipToArticle','Y','2007-01-20 14:42:07'),(338,'Chief Editor','AddAudioclip','Y','2007-01-20 14:42:07'),(339,'Chief Editor','AttachAudioclipToArticle','Y','2007-01-20 14:42:07'),(340,'Editor','AddAudioclip','Y','2007-01-20 14:42:07'),(341,'Editor','AttachAudioclipToArticle','Y','2007-01-20 14:42:07'),(342,'Journalist','AddAudioclip','Y','2007-01-20 14:42:07'),(343,'Journalist','AttachAudioclipToArticle','Y','2007-01-20 14:42:07');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `UserTypes` ENABLE KEYS */;
 
 --
 -- Table structure for table `Users`
@@ -881,17 +1136,565 @@ CREATE TABLE `Users` (
   `Text1` mediumblob NOT NULL,
   `Text2` mediumblob NOT NULL,
   `Text3` mediumblob NOT NULL,
-  `time_updated` timestamp NOT NULL,
+  `time_updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `time_created` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `UName` (`UName`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Users`
 --
 
-INSERT INTO `Users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `fk_user_type`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`, `time_updated`, `time_created`) VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','','N','Administrator','','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2006-06-12 17:01:33','0000-00-00 00:00:00');
+
+/*!40000 ALTER TABLE `Users` DISABLE KEYS */;
+LOCK TABLES `Users` WRITE;
+INSERT INTO `Users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','','N','Administrator','','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2006-06-12 17:01:33','0000-00-00 00:00:00');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `Users` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_applications`
+--
+
+DROP TABLE IF EXISTS `liveuser_applications`;
+CREATE TABLE `liveuser_applications` (
+  `application_id` int(11) NOT NULL default '0',
+  `application_define_name` varchar(32) NOT NULL default '',
+  PRIMARY KEY  (`application_id`),
+  UNIQUE KEY `applications_define_name_i_idx` (`application_define_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_applications`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_applications` DISABLE KEYS */;
+LOCK TABLES `liveuser_applications` WRITE;
+INSERT INTO `liveuser_applications` VALUES (1,'Campsite'),(2,'Campcaster');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_applications` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_applications_application_id_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_applications_application_id_seq`;
+CREATE TABLE `liveuser_applications_application_id_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_applications_application_id_seq`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_applications_application_id_seq` DISABLE KEYS */;
+LOCK TABLES `liveuser_applications_application_id_seq` WRITE;
+INSERT INTO `liveuser_applications_application_id_seq` VALUES (2);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_applications_application_id_seq` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_applications_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_applications_seq`;
+CREATE TABLE `liveuser_applications_seq` (
+  `sequence` int(11) NOT NULL auto_increment,
+  PRIMARY KEY  (`sequence`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_applications_seq`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_applications_seq` DISABLE KEYS */;
+LOCK TABLES `liveuser_applications_seq` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_applications_seq` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_area_admin_areas`
+--
+
+DROP TABLE IF EXISTS `liveuser_area_admin_areas`;
+CREATE TABLE `liveuser_area_admin_areas` (
+  `area_id` int(11) NOT NULL default '0',
+  `perm_user_id` int(11) NOT NULL default '0',
+  UNIQUE KEY `area_admin_areas_id_i_idx` (`area_id`,`perm_user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_area_admin_areas`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_area_admin_areas` DISABLE KEYS */;
+LOCK TABLES `liveuser_area_admin_areas` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_area_admin_areas` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_areas`
+--
+
+DROP TABLE IF EXISTS `liveuser_areas`;
+CREATE TABLE `liveuser_areas` (
+  `area_id` int(11) NOT NULL default '0',
+  `application_id` int(11) NOT NULL default '0',
+  `area_define_name` varchar(32) NOT NULL default '',
+  PRIMARY KEY  (`area_id`),
+  UNIQUE KEY `areas_define_name_i_idx` (`application_id`,`area_define_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_areas`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_areas` DISABLE KEYS */;
+LOCK TABLES `liveuser_areas` WRITE;
+INSERT INTO `liveuser_areas` VALUES (1,1,'Articles');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_areas` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_areas_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_areas_seq`;
+CREATE TABLE `liveuser_areas_seq` (
+  `sequence` int(11) NOT NULL auto_increment,
+  PRIMARY KEY  (`sequence`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_areas_seq`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_areas_seq` DISABLE KEYS */;
+LOCK TABLES `liveuser_areas_seq` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_areas_seq` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_group_subgroups`
+--
+
+DROP TABLE IF EXISTS `liveuser_group_subgroups`;
+CREATE TABLE `liveuser_group_subgroups` (
+  `group_id` int(11) NOT NULL default '0',
+  `subgroup_id` int(11) NOT NULL default '0',
+  UNIQUE KEY `group_subgroups_id_i_idx` (`group_id`,`subgroup_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_group_subgroups`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_group_subgroups` DISABLE KEYS */;
+LOCK TABLES `liveuser_group_subgroups` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_group_subgroups` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_grouprights`
+--
+
+DROP TABLE IF EXISTS `liveuser_grouprights`;
+CREATE TABLE `liveuser_grouprights` (
+  `group_id` int(11) NOT NULL default '0',
+  `right_id` int(11) NOT NULL default '0',
+  `right_level` int(11) NOT NULL default '3',
+  UNIQUE KEY `grouprights_id_i_idx` (`group_id`,`right_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_grouprights`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_grouprights` DISABLE KEYS */;
+LOCK TABLES `liveuser_grouprights` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_grouprights` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_groups`
+--
+
+DROP TABLE IF EXISTS `liveuser_groups`;
+CREATE TABLE `liveuser_groups` (
+  `group_id` int(11) NOT NULL default '0',
+  `group_type` int(11) NOT NULL default '0',
+  `group_define_name` varchar(32) NOT NULL default '',
+  PRIMARY KEY  (`group_id`),
+  UNIQUE KEY `groups_define_name_i_idx` (`group_define_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_groups`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_groups` DISABLE KEYS */;
+LOCK TABLES `liveuser_groups` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_groups` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_groups_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_groups_seq`;
+CREATE TABLE `liveuser_groups_seq` (
+  `sequence` int(11) NOT NULL auto_increment,
+  PRIMARY KEY  (`sequence`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_groups_seq`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_groups_seq` DISABLE KEYS */;
+LOCK TABLES `liveuser_groups_seq` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_groups_seq` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_groupusers`
+--
+
+DROP TABLE IF EXISTS `liveuser_groupusers`;
+CREATE TABLE `liveuser_groupusers` (
+  `perm_user_id` int(11) NOT NULL default '0',
+  `group_id` int(11) NOT NULL default '0',
+  UNIQUE KEY `groupusers_id_i_idx` (`perm_user_id`,`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_groupusers`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_groupusers` DISABLE KEYS */;
+LOCK TABLES `liveuser_groupusers` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_groupusers` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_perm_users`
+--
+
+DROP TABLE IF EXISTS `liveuser_perm_users`;
+CREATE TABLE `liveuser_perm_users` (
+  `perm_user_id` int(11) NOT NULL default '0',
+  `auth_user_id` varchar(32) NOT NULL default '',
+  `auth_container_name` varchar(32) NOT NULL default '',
+  `perm_type` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`perm_user_id`),
+  UNIQUE KEY `perm_users_auth_id_i_idx` (`auth_user_id`,`auth_container_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_perm_users`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_perm_users` DISABLE KEYS */;
+LOCK TABLES `liveuser_perm_users` WRITE;
+INSERT INTO `liveuser_perm_users` VALUES (1,'1','DB',1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_perm_users` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_perm_users_perm_user_id_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_perm_users_perm_user_id_seq`;
+CREATE TABLE `liveuser_perm_users_perm_user_id_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_perm_users_perm_user_id_seq`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` DISABLE KEYS */;
+LOCK TABLES `liveuser_perm_users_perm_user_id_seq` WRITE;
+INSERT INTO `liveuser_perm_users_perm_user_id_seq` VALUES (1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_perm_users_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_perm_users_seq`;
+CREATE TABLE `liveuser_perm_users_seq` (
+  `sequence` int(11) NOT NULL auto_increment,
+  PRIMARY KEY  (`sequence`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_perm_users_seq`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_perm_users_seq` DISABLE KEYS */;
+LOCK TABLES `liveuser_perm_users_seq` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_perm_users_seq` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_right_implied`
+--
+
+DROP TABLE IF EXISTS `liveuser_right_implied`;
+CREATE TABLE `liveuser_right_implied` (
+  `right_id` int(11) NOT NULL default '0',
+  `implied_right_id` int(11) NOT NULL default '0',
+  UNIQUE KEY `right_implied_id_i_idx` (`right_id`,`implied_right_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_right_implied`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_right_implied` DISABLE KEYS */;
+LOCK TABLES `liveuser_right_implied` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_right_implied` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_rights`
+--
+
+DROP TABLE IF EXISTS `liveuser_rights`;
+CREATE TABLE `liveuser_rights` (
+  `right_id` int(11) NOT NULL default '0',
+  `area_id` int(11) NOT NULL default '0',
+  `right_define_name` varchar(32) NOT NULL default '',
+  `has_implied` tinyint(1) default '1',
+  PRIMARY KEY  (`right_id`),
+  UNIQUE KEY `rights_define_name_i_idx` (`area_id`,`right_define_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_rights`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_rights` DISABLE KEYS */;
+LOCK TABLES `liveuser_rights` WRITE;
+INSERT INTO `liveuser_rights` VALUES (1,0,'AddArticle',1),(2,0,'AddAudioclip',1),(3,0,'AddFile',1),(4,0,'AddImage',1),(5,0,'AttachAudioclipToArticle',1),(6,0,'AttachImageToArticle',1),(7,0,'AttachTopicToArticle',1),(8,0,'ChangeArticle',1),(9,0,'ChangeFile',1),(10,0,'ChangeImage',1),(11,0,'ChangeSystemPreferences',1),(12,0,'CommentEnable',1),(13,0,'CommentModerate',1),(14,0,'DeleteArticle',1),(15,0,'DeleteArticleTypes',1),(16,0,'DeleteCountries',1),(17,0,'DeleteFile',1),(18,0,'DeleteImage',1),(19,0,'DeleteIssue',1),(20,0,'DeleteLanguages',1),(21,0,'DeletePub',1),(22,0,'DeleteSection',1),(23,0,'DeleteTempl',1),(24,0,'DeleteUsers',1),(25,0,'EditorBold',1),(26,0,'EditorCharacterMap',1),(27,0,'EditorCopyCutPaste',1),(28,0,'EditorEnlarge',1),(29,0,'EditorFindReplace',1),(30,0,'EditorFontColor',1),(31,0,'EditorFontFace',1),(32,0,'EditorFontSize',1),(33,0,'EditorHorizontalRule',1),(34,0,'EditorImage',1),(35,0,'EditorIndent',1),(36,0,'EditorItalic',1),(37,0,'EditorLink',1),(38,0,'EditorListBullet',1),(39,0,'EditorListNumber',1),(40,0,'EditorSourceView',1),(41,0,'EditorStrikethrough',1),(42,0,'EditorSubhead',1),(43,0,'EditorSubscript',1),(44,0,'EditorSuperscript',1),(45,0,'EditorTable',1),(46,0,'EditorTextAlignment',1),(47,0,'EditorTextDirection',1),(48,0,'EditorUnderline',1),(49,0,'EditorUndoRedo',1),(50,0,'InitializeTemplateEngine',1),(51,0,'MailNotify',1),(52,0,'ManageArticleTypes',1),(53,0,'ManageCountries',1),(54,0,'ManageIndexer',1),(55,0,'ManageIssue',1),(56,0,'ManageLanguages',1),(57,0,'ManageLocalizer',1),(58,0,'ManagePub',1),(59,0,'ManageReaders',1),(60,0,'ManageSection',1),(61,0,'ManageSubscriptions',1),(62,0,'ManageTempl',1),(63,0,'ManageTopics',1),(64,0,'ManageUserTypes',1),(65,0,'ManageUsers',1),(66,0,'MoveArticle',1),(67,0,'Publish',1),(68,0,'TranslateArticle',1),(69,0,'ViewLogs',1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_rights` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_rights_right_id_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_rights_right_id_seq`;
+CREATE TABLE `liveuser_rights_right_id_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_rights_right_id_seq`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_rights_right_id_seq` DISABLE KEYS */;
+LOCK TABLES `liveuser_rights_right_id_seq` WRITE;
+INSERT INTO `liveuser_rights_right_id_seq` VALUES (69);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_rights_right_id_seq` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_rights_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_rights_seq`;
+CREATE TABLE `liveuser_rights_seq` (
+  `sequence` int(11) NOT NULL auto_increment,
+  PRIMARY KEY  (`sequence`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_rights_seq`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_rights_seq` DISABLE KEYS */;
+LOCK TABLES `liveuser_rights_seq` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_rights_seq` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_translations`
+--
+
+DROP TABLE IF EXISTS `liveuser_translations`;
+CREATE TABLE `liveuser_translations` (
+  `translation_id` int(11) NOT NULL default '0',
+  `section_id` int(11) NOT NULL default '0',
+  `section_type` int(11) NOT NULL default '0',
+  `language_id` varchar(32) NOT NULL default '',
+  `name` varchar(32) NOT NULL default '',
+  `description` varchar(255) default NULL,
+  PRIMARY KEY  (`translation_id`),
+  UNIQUE KEY `translations_translation_i_idx` (`section_id`,`section_type`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_translations`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_translations` DISABLE KEYS */;
+LOCK TABLES `liveuser_translations` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_translations` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_translations_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_translations_seq`;
+CREATE TABLE `liveuser_translations_seq` (
+  `sequence` int(11) NOT NULL auto_increment,
+  PRIMARY KEY  (`sequence`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_translations_seq`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_translations_seq` DISABLE KEYS */;
+LOCK TABLES `liveuser_translations_seq` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_translations_seq` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_userrights`
+--
+
+DROP TABLE IF EXISTS `liveuser_userrights`;
+CREATE TABLE `liveuser_userrights` (
+  `perm_user_id` int(11) NOT NULL default '0',
+  `right_id` int(11) NOT NULL default '0',
+  `right_level` int(11) NOT NULL default '3',
+  UNIQUE KEY `userrights_id_i_idx` (`perm_user_id`,`right_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_userrights`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_userrights` DISABLE KEYS */;
+LOCK TABLES `liveuser_userrights` WRITE;
+INSERT INTO `liveuser_userrights` VALUES (1,58,1),(1,21,1),(1,55,1),(1,19,1),(1,60,1),(1,22,1),(1,1,1),(1,8,1),(1,14,1),(1,4,1),(1,3,1),(1,10,1),(1,9,1),(1,18,1),(1,17,1),(1,62,1),(1,23,1),(1,65,1),(1,61,1),(1,24,1),(1,64,1),(1,52,1),(1,15,1),(1,56,1),(1,20,1),(1,53,1),(1,16,1),(1,69,1),(1,57,1),(1,67,1),(1,63,1),(1,34,1),(1,46,1),(1,30,1),(1,32,1),(1,31,1),(1,45,1),(1,44,1),(1,43,1),(1,41,1),(1,35,1),(1,38,1),(1,39,1),(1,33,1),(1,40,1),(1,28,1),(1,47,1),(1,37,1),(1,42,1),(1,25,1),(1,36,1),(1,48,1),(1,49,1),(1,27,1),(1,59,1),(1,50,1),(1,66,1),(1,68,1),(1,6,1),(1,11,1),(1,7,1),(1,29,1),(1,26,1),(1,13,1),(1,12,1),(1,2,1),(1,5,1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_userrights` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_users`
+--
+
+DROP TABLE IF EXISTS `liveuser_users`;
+CREATE TABLE `liveuser_users` (
+  `Id` int(10) unsigned NOT NULL auto_increment,
+  `KeyId` int(10) unsigned default NULL,
+  `Name` varchar(255) character set utf8 collate utf8_bin NOT NULL default '',
+  `UName` varchar(70) character set utf8 collate utf8_bin NOT NULL default '',
+  `Password` varchar(64) character set utf8 collate utf8_bin NOT NULL default '',
+  `EMail` varchar(255) character set utf8 collate utf8_bin NOT NULL default '',
+  `Reader` enum('Y','N') character set utf8 collate utf8_bin NOT NULL default 'Y',
+  `fk_user_type` varchar(140) character set utf8 collate utf8_bin default NULL,
+  `City` varchar(100) character set utf8 collate utf8_bin NOT NULL default '',
+  `StrAddress` varchar(255) character set utf8 collate utf8_bin NOT NULL default '',
+  `State` varchar(32) character set utf8 collate utf8_bin NOT NULL default '',
+  `CountryCode` varchar(21) character set utf8 collate utf8_bin default NULL,
+  `Phone` varchar(20) character set utf8 collate utf8_bin NOT NULL default '',
+  `Fax` varchar(20) character set utf8 collate utf8_bin NOT NULL default '',
+  `Contact` varchar(64) character set utf8 collate utf8_bin NOT NULL default '',
+  `Phone2` varchar(20) character set utf8 collate utf8_bin NOT NULL default '',
+  `Title` enum('Mr.','Mrs.','Ms.','Dr.') character set utf8 collate utf8_bin NOT NULL default 'Mr.',
+  `Gender` enum('M','F') character set utf8 collate utf8_bin default NULL,
+  `Age` enum('0-17','18-24','25-39','40-49','50-65','65-') character set utf8 collate utf8_bin NOT NULL default '0-17',
+  `PostalCode` varchar(70) character set utf8 collate utf8_bin NOT NULL default '',
+  `Employer` varchar(140) character set utf8 collate utf8_bin NOT NULL default '',
+  `EmployerType` varchar(140) character set utf8 collate utf8_bin NOT NULL default '',
+  `Position` varchar(70) character set utf8 collate utf8_bin NOT NULL default '',
+  `Interests` mediumblob NOT NULL,
+  `How` varchar(255) character set utf8 collate utf8_bin NOT NULL default '',
+  `Languages` varchar(100) character set utf8 collate utf8_bin NOT NULL default '',
+  `Improvements` mediumblob NOT NULL,
+  `Pref1` enum('N','Y') character set utf8 collate utf8_bin NOT NULL default 'N',
+  `Pref2` enum('N','Y') character set utf8 collate utf8_bin NOT NULL default 'N',
+  `Pref3` enum('N','Y') character set utf8 collate utf8_bin NOT NULL default 'N',
+  `Pref4` enum('N','Y') character set utf8 collate utf8_bin NOT NULL default 'N',
+  `Field1` varchar(150) character set utf8 collate utf8_bin NOT NULL default '',
+  `Field2` varchar(150) character set utf8 collate utf8_bin NOT NULL default '',
+  `Field3` varchar(150) character set utf8 collate utf8_bin NOT NULL default '',
+  `Field4` varchar(150) character set utf8 collate utf8_bin NOT NULL default '',
+  `Field5` varchar(150) character set utf8 collate utf8_bin NOT NULL default '',
+  `Text1` mediumblob NOT NULL,
+  `Text2` mediumblob NOT NULL,
+  `Text3` mediumblob NOT NULL,
+  `time_updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `time_created` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `lastLogin` datetime default '1970-01-01 00:00:00',
+  `isActive` tinyint(1) default '1',
+  PRIMARY KEY  (`Id`),
+  UNIQUE KEY `UName` (`UName`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_users`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
+LOCK TABLES `liveuser_users` WRITE;
+INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','','N','Administrator','','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2007-01-20 14:42:07','0000-00-00 00:00:00','1970-01-01 00:00:00',1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
+
+--
+-- Table structure for table `liveuser_users_auth_user_id_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_users_auth_user_id_seq`;
+CREATE TABLE `liveuser_users_auth_user_id_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liveuser_users_auth_user_id_seq`
+--
+
+
+/*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` DISABLE KEYS */;
+LOCK TABLES `liveuser_users_auth_user_id_seq` WRITE;
+INSERT INTO `liveuser_users_auth_user_id_seq` VALUES (1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_banlists`
@@ -906,12 +1709,17 @@ CREATE TABLE `phorum_banlists` (
   `string` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `forum_id` (`forum_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_banlists`
 --
 
+
+/*!40000 ALTER TABLE `phorum_banlists` DISABLE KEYS */;
+LOCK TABLES `phorum_banlists` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_banlists` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_files`
@@ -930,12 +1738,17 @@ CREATE TABLE `phorum_files` (
   PRIMARY KEY  (`file_id`),
   KEY `add_datetime` (`add_datetime`),
   KEY `message_id_link` (`message_id`,`link`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_files`
 --
 
+
+/*!40000 ALTER TABLE `phorum_files` DISABLE KEYS */;
+LOCK TABLES `phorum_files` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_files` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_forum_group_xref`
@@ -947,12 +1760,17 @@ CREATE TABLE `phorum_forum_group_xref` (
   `group_id` int(11) NOT NULL default '0',
   `permission` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`forum_id`,`group_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_forum_group_xref`
 --
 
+
+/*!40000 ALTER TABLE `phorum_forum_group_xref` DISABLE KEYS */;
+LOCK TABLES `phorum_forum_group_xref` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_forum_group_xref` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_forums`
@@ -1001,12 +1819,17 @@ CREATE TABLE `phorum_forums` (
   KEY `name` (`name`),
   KEY `active` (`active`,`parent_id`),
   KEY `group_id` (`parent_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_forums`
 --
 
+
+/*!40000 ALTER TABLE `phorum_forums` DISABLE KEYS */;
+LOCK TABLES `phorum_forums` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_forums` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_groups`
@@ -1018,12 +1841,17 @@ CREATE TABLE `phorum_groups` (
   `name` varchar(255) NOT NULL default '0',
   `open` tinyint(3) NOT NULL default '0',
   PRIMARY KEY  (`group_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_groups`
 --
 
+
+/*!40000 ALTER TABLE `phorum_groups` DISABLE KEYS */;
+LOCK TABLES `phorum_groups` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_groups` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_messages`
@@ -1066,12 +1894,17 @@ CREATE TABLE `phorum_messages` (
   KEY `last_post_time` (`forum_id`,`status`,`modifystamp`),
   KEY `next_prev_thread` (`forum_id`,`status`,`thread`),
   KEY `user_id` (`user_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_messages`
 --
 
+
+/*!40000 ALTER TABLE `phorum_messages` DISABLE KEYS */;
+LOCK TABLES `phorum_messages` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_messages` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_pm_buddies`
@@ -1085,12 +1918,17 @@ CREATE TABLE `phorum_pm_buddies` (
   PRIMARY KEY  (`pm_buddy_id`),
   UNIQUE KEY `userids` (`user_id`,`buddy_user_id`),
   KEY `buddy_user_id` (`buddy_user_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_pm_buddies`
 --
 
+
+/*!40000 ALTER TABLE `phorum_pm_buddies` DISABLE KEYS */;
+LOCK TABLES `phorum_pm_buddies` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_pm_buddies` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_pm_folders`
@@ -1102,12 +1940,17 @@ CREATE TABLE `phorum_pm_folders` (
   `user_id` int(10) unsigned NOT NULL default '0',
   `foldername` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`pm_folder_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_pm_folders`
 --
 
+
+/*!40000 ALTER TABLE `phorum_pm_folders` DISABLE KEYS */;
+LOCK TABLES `phorum_pm_folders` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_pm_folders` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_pm_messages`
@@ -1123,12 +1966,17 @@ CREATE TABLE `phorum_pm_messages` (
   `datestamp` int(10) unsigned NOT NULL default '0',
   `meta` mediumtext NOT NULL,
   PRIMARY KEY  (`pm_message_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_pm_messages`
 --
 
+
+/*!40000 ALTER TABLE `phorum_pm_messages` DISABLE KEYS */;
+LOCK TABLES `phorum_pm_messages` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_pm_messages` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_pm_xref`
@@ -1146,12 +1994,17 @@ CREATE TABLE `phorum_pm_xref` (
   PRIMARY KEY  (`pm_xref_id`),
   KEY `xref` (`user_id`,`pm_folder_id`,`pm_message_id`),
   KEY `read_flag` (`read_flag`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_pm_xref`
 --
 
+
+/*!40000 ALTER TABLE `phorum_pm_xref` DISABLE KEYS */;
+LOCK TABLES `phorum_pm_xref` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_pm_xref` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_search`
@@ -1165,12 +2018,17 @@ CREATE TABLE `phorum_search` (
   PRIMARY KEY  (`message_id`),
   KEY `forum_id` (`forum_id`),
   FULLTEXT KEY `search_text` (`search_text`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_search`
 --
 
+
+/*!40000 ALTER TABLE `phorum_search` DISABLE KEYS */;
+LOCK TABLES `phorum_search` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_search` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_settings`
@@ -1182,13 +2040,18 @@ CREATE TABLE `phorum_settings` (
   `type` enum('V','S') NOT NULL default 'V',
   `data` text NOT NULL,
   PRIMARY KEY  (`name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_settings`
 --
 
-INSERT INTO `phorum_settings` (`name`, `type`, `data`) VALUES ('title','V','Phorum 5'),('cache','V','/tmp'),('session_timeout','V','30'),('short_session_timeout','V','60'),('tight_security','V','0'),('session_path','V','/'),('session_domain','V',''),('admin_session_salt','V','0.62629000 1146135136'),('cache_users','V','0'),('register_email_confirm','V','0'),('default_template','V','default'),('default_language','V','english'),('use_cookies','V','1'),('use_bcc','V','1'),('use_rss','V','1'),('internal_version','V','2006032300'),('PROFILE_FIELDS','S','a:1:{i:0;a:3:{s:4:\"name\";s:9:\"real_name\";s:6:\"length\";i:255;s:13:\"html_disabled\";i:1;}}'),('enable_pm','V','0'),('user_edit_timelimit','V','0'),('enable_new_pm_count','V','1'),('enable_dropdown_userlist','V','1'),('enable_moderator_notifications','V','1'),('show_new_on_index','V','1'),('dns_lookup','V','1'),('tz_offset','V','0'),('user_time_zone','V','1'),('user_template','V','0'),('registration_control','V','1'),('file_uploads','V','0'),('file_types','V',''),('max_file_size','V',''),('file_space_quota','V',''),('file_offsite','V','0'),('system_email_from_name','V',''),('hide_forums','V','1'),('track_user_activity','V','86400'),('html_title','V','Phorum'),('head_tags','V',''),('redirect_after_post','V','list'),('reply_on_read_page','V','1'),('status','V','normal'),('use_new_folder_style','V','1'),('default_forum_options','S','a:24:{s:8:\"forum_id\";i:0;s:10:\"moderation\";i:0;s:16:\"email_moderators\";i:0;s:9:\"pub_perms\";i:1;s:9:\"reg_perms\";i:15;s:13:\"display_fixed\";i:0;s:8:\"template\";s:7:\"default\";s:8:\"language\";s:7:\"english\";s:13:\"threaded_list\";i:0;s:13:\"threaded_read\";i:0;s:17:\"reverse_threading\";i:0;s:12:\"float_to_top\";i:1;s:16:\"list_length_flat\";i:30;s:20:\"list_length_threaded\";i:15;s:11:\"read_length\";i:30;s:18:\"display_ip_address\";i:0;s:18:\"allow_email_notify\";i:0;s:15:\"check_duplicate\";i:1;s:11:\"count_views\";i:2;s:15:\"max_attachments\";i:0;s:22:\"allow_attachment_types\";s:0:\"\";s:19:\"max_attachment_size\";i:0;s:24:\"max_totalattachment_size\";i:0;s:5:\"vroot\";i:0;}'),('hooks','S','a:1:{s:6:\"format\";a:2:{s:4:\"mods\";a:2:{i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";}s:5:\"funcs\";a:2:{i:0;s:18:\"phorum_mod_smileys\";i:1;s:14:\"phorum_bb_code\";}}}'),('mods','S','a:4:{s:4:\"html\";i:0;s:7:\"replace\";i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";i:1;}');
+
+/*!40000 ALTER TABLE `phorum_settings` DISABLE KEYS */;
+LOCK TABLES `phorum_settings` WRITE;
+INSERT INTO `phorum_settings` VALUES ('title','V','Phorum 5'),('cache','V','/tmp'),('session_timeout','V','30'),('short_session_timeout','V','60'),('tight_security','V','0'),('session_path','V','/'),('session_domain','V',''),('admin_session_salt','V','0.62629000 1146135136'),('cache_users','V','0'),('register_email_confirm','V','0'),('default_template','V','default'),('default_language','V','english'),('use_cookies','V','1'),('use_bcc','V','1'),('use_rss','V','1'),('internal_version','V','2006032300'),('PROFILE_FIELDS','S','a:1:{i:0;a:3:{s:4:\"name\";s:9:\"real_name\";s:6:\"length\";i:255;s:13:\"html_disabled\";i:1;}}'),('enable_pm','V','0'),('user_edit_timelimit','V','0'),('enable_new_pm_count','V','1'),('enable_dropdown_userlist','V','1'),('enable_moderator_notifications','V','1'),('show_new_on_index','V','1'),('dns_lookup','V','1'),('tz_offset','V','0'),('user_time_zone','V','1'),('user_template','V','0'),('registration_control','V','1'),('file_uploads','V','0'),('file_types','V',''),('max_file_size','V',''),('file_space_quota','V',''),('file_offsite','V','0'),('system_email_from_name','V',''),('hide_forums','V','1'),('track_user_activity','V','86400'),('html_title','V','Phorum'),('head_tags','V',''),('redirect_after_post','V','list'),('reply_on_read_page','V','1'),('status','V','normal'),('use_new_folder_style','V','1'),('default_forum_options','S','a:24:{s:8:\"forum_id\";i:0;s:10:\"moderation\";i:0;s:16:\"email_moderators\";i:0;s:9:\"pub_perms\";i:1;s:9:\"reg_perms\";i:15;s:13:\"display_fixed\";i:0;s:8:\"template\";s:7:\"default\";s:8:\"language\";s:7:\"english\";s:13:\"threaded_list\";i:0;s:13:\"threaded_read\";i:0;s:17:\"reverse_threading\";i:0;s:12:\"float_to_top\";i:1;s:16:\"list_length_flat\";i:30;s:20:\"list_length_threaded\";i:15;s:11:\"read_length\";i:30;s:18:\"display_ip_address\";i:0;s:18:\"allow_email_notify\";i:0;s:15:\"check_duplicate\";i:1;s:11:\"count_views\";i:2;s:15:\"max_attachments\";i:0;s:22:\"allow_attachment_types\";s:0:\"\";s:19:\"max_attachment_size\";i:0;s:24:\"max_totalattachment_size\";i:0;s:5:\"vroot\";i:0;}'),('hooks','S','a:1:{s:6:\"format\";a:2:{s:4:\"mods\";a:2:{i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";}s:5:\"funcs\";a:2:{i:0;s:18:\"phorum_mod_smileys\";i:1;s:14:\"phorum_bb_code\";}}}'),('mods','S','a:4:{s:4:\"html\";i:0;s:7:\"replace\";i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";i:1;}');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_settings` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_subscribers`
@@ -1202,12 +2065,17 @@ CREATE TABLE `phorum_subscribers` (
   `thread` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`user_id`,`forum_id`,`thread`),
   KEY `forum_id` (`forum_id`,`thread`,`sub_type`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_subscribers`
 --
 
+
+/*!40000 ALTER TABLE `phorum_subscribers` DISABLE KEYS */;
+LOCK TABLES `phorum_subscribers` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_subscribers` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_user_custom_fields`
@@ -1219,12 +2087,17 @@ CREATE TABLE `phorum_user_custom_fields` (
   `type` int(11) NOT NULL default '0',
   `data` text NOT NULL,
   PRIMARY KEY  (`user_id`,`type`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_user_custom_fields`
 --
 
+
+/*!40000 ALTER TABLE `phorum_user_custom_fields` DISABLE KEYS */;
+LOCK TABLES `phorum_user_custom_fields` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_user_custom_fields` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_user_group_xref`
@@ -1236,12 +2109,17 @@ CREATE TABLE `phorum_user_group_xref` (
   `group_id` int(11) NOT NULL default '0',
   `status` tinyint(3) NOT NULL default '1',
   PRIMARY KEY  (`user_id`,`group_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_user_group_xref`
 --
 
+
+/*!40000 ALTER TABLE `phorum_user_group_xref` DISABLE KEYS */;
+LOCK TABLES `phorum_user_group_xref` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_user_group_xref` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_user_newflags`
@@ -1253,12 +2131,17 @@ CREATE TABLE `phorum_user_newflags` (
   `forum_id` int(11) NOT NULL default '0',
   `message_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`user_id`,`forum_id`,`message_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_user_newflags`
 --
 
+
+/*!40000 ALTER TABLE `phorum_user_newflags` DISABLE KEYS */;
+LOCK TABLES `phorum_user_newflags` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_user_newflags` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_user_permissions`
@@ -1271,12 +2154,17 @@ CREATE TABLE `phorum_user_permissions` (
   `permission` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`user_id`,`forum_id`),
   KEY `forum_id` (`forum_id`,`permission`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_user_permissions`
 --
 
+
+/*!40000 ALTER TABLE `phorum_user_permissions` DISABLE KEYS */;
+LOCK TABLES `phorum_user_permissions` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_user_permissions` ENABLE KEYS */;
 
 --
 -- Table structure for table `phorum_users`
@@ -1285,7 +2173,7 @@ CREATE TABLE `phorum_user_permissions` (
 DROP TABLE IF EXISTS `phorum_users`;
 CREATE TABLE `phorum_users` (
   `user_id` int(10) unsigned NOT NULL auto_increment,
-  `fk_campsite_user_id` int(10) unsigned NOT NULL,
+  `fk_campsite_user_id` int(10) unsigned NOT NULL default '0',
   `username` varchar(50) NOT NULL default '',
   `password` varchar(50) NOT NULL default '',
   `cookie_sessid_lt` varchar(50) NOT NULL default '',
@@ -1325,9 +2213,23 @@ CREATE TABLE `phorum_users` (
   KEY `activity` (`date_last_active`,`hide_activity`,`last_active_forum`),
   KEY `date_added` (`date_added`),
   KEY `email_temp` (`email_temp`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `phorum_users`
 --
+
+
+/*!40000 ALTER TABLE `phorum_users` DISABLE KEYS */;
+LOCK TABLES `phorum_users` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `phorum_users` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
