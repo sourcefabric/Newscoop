@@ -50,6 +50,7 @@ switch($f_action) {
         $s = $id3Data['playtime_seconds'];
         $mData['title'] = $id3Data['filename'];
         $mData['creator'] = $id3Data['id3v1']['artist'];
+        $mData['source'] = $id3Data['id3v1']['album'];
         $mData['type'] = $id3Data['id3v1']['genre'];
         $mData['extent'] = date('H:i:s', floor($s)-date('Z')).substr(number_format($s, 6), strpos(number_format($s, 6), '.'));
         $mData['bitrate'] = $id3Data['audio']['bitrate'];
