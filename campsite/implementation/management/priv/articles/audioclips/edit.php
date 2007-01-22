@@ -48,7 +48,11 @@ switch($f_action) {
         }
         $id3Data = Audioclip::AnalyzeFile($audioFile);
         $s = $id3Data['playtime_seconds'];
-        $mData['title'] = $id3Data['filename'];
+        if (isset($id3Data['id3v1']['title']) && !empty($id3Data['id3v1']['title'])) {
+            $mData['title'] = $id3Data['id3v1']['title'];
+        } else {
+            $mData['title'] = $id3Data['filename'];
+        }
         $mData['creator'] = $id3Data['id3v1']['artist'];
         $mData['source'] = $id3Data['id3v1']['album'];
         $mData['type'] = $id3Data['id3v1']['genre'];
