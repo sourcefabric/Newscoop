@@ -39,7 +39,7 @@
   12) #2394 - Ordering button works even when there is no audioclips
   13) #2398 - Bad visualization on Comments index page
   14) #2401 - The title is not retrieved properly when uploading an audioclip
-  15) #2402 - The album is not retrieved when uploading and audioclip
+  15) #2402 - The album is not retrieved when uploading an audioclip
 
 2.6.4 (January 11, 2007)
   For full details about these changes, see:
