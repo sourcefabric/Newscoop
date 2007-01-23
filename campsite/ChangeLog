@@ -41,6 +41,23 @@
   14) #2401 - The title is not retrieved properly when uploading an audioclip
   15) #2402 - The album is not retrieved when uploading an audioclip
 
+2.6.5 (January 23, 2007)
+  For full details about these changes, see:
+  http://code.campware.org/projects/campsite/query?milestone=2.6.5
+
+  Bugs Fixed (7 total)
+  ---------------------
+  Bugs are listed in order of oldest to newest.
+  
+  01) #2391 - Error when duplicating an empty template
+  02) #2396 - campsite-upgrade-instances fails when run from bin folder
+  03) #2397 - The image link is not processed when saving the article
+  04) #2399 - Messages posted in Phorum break the comment list in the
+              frontend
+  05) #2400 - The template engine can't read the request in some instances
+  06) #2405 - Invalid pager functionality in section article list
+  07) #2406 - The install script allows invalid etc directory
+
 2.6.4 (January 11, 2007)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.6.4
