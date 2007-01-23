@@ -662,6 +662,16 @@ echo -n "Testing install configuration..."
 if [ -f "$OLD_CAMPSITE_REGISTER" ]; then
     is_installed=true
 fi
+dir_path=`dirname "$ETC_DIR"`
+file_count=0
+if [ -d "$ETC_DIR" ] && [ ! -f "$ETC_DIR/install_conf.php" ]; then
+    file_count=`ls -1a "$ETC_DIR" | wc -l`
+fi
+if [ "$ETC_DIR" = "/etc" ] || [ "$ETC_DIR" = "/etc/" ] || [ $file_count -gt 0 ]; then
+    echo -e "ERROR\nThe Campsite ETC_DIR path must point to it's own directory which"
+    echo "is empth and is not in use by any other application."
+    return 1
+fi
 echo "OK"
 return 0
 }
