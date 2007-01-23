@@ -2,7 +2,8 @@
 
 bin_path=`dirname $0`
 if [ "$bin_path" = "." ]; then
-        script_call="./campsite-create-instance"
+        BIN_DIR=`./campsite_config --bin_dir`
+        script_call="$BIN_DIR/campsite-create-instance"
         ETC_DIR=`./campsite_config --etc_dir`
         PHP=`./campsite_config --php_cli`
 elif [ "$bin_path" = "" ]; then
