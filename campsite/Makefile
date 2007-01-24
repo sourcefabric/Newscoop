@@ -4,21 +4,17 @@ all:
 	$(MAKE) -C implementation all
 
 install: dummy
-	mkdir -p "$(BIN_DIR)"
-	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)"
-	chmod 755 "$(BIN_DIR)"
-	mkdir -p "$(SBIN_DIR)"
-	chown $(ROOT_USER):$(APACHE_GROUP) "$(SBIN_DIR)"
-	chmod 755 "$(SBIN_DIR)"
-	mkdir -p "$(ETC_DIR)"
-	chown -R $(APACHE_USER):$(APACHE_GROUP) "$(ETC_DIR)"
-	chmod 755 "$(ETC_DIR)"
-	mkdir -p "$(WWW_DIR)"
-	chown -R $(APACHE_USER):$(APACHE_GROUP) "$(WWW_DIR)"
-	chmod 755 "$(WWW_DIR)"
-	mkdir -p "$(WWW_COMMON_DIR)"
-	chown -R $(APACHE_USER):$(APACHE_GROUP) "$(WWW_COMMON_DIR)"
-	chmod 755 "$(WWW_COMMON_DIR)"
+	@for dir in "$(BIN_DIR)" "$(SBIN_DIR)" "$(ETC_DIR)" "$(WWW_DIR)" "$(WWW_COMMON_DIR)"; do \
+	    if [ ! -d "$$dir" ]; then \
+		echo -n "Creating directory $$dir..."; \
+		mkdir -p "$$dir"; \
+		chown $(ROOT_USER):$(ROOT_GROUP) "$$dir"; \
+		chmod 755 "$$dir"; \
+		echo "done"; \
+	    else \
+		echo "Directory $$dir already exists."; \
+	    fi; \
+	done
 	mkdir -p "$(HTML_COMMON_DIR)"
 	chown -R $(APACHE_USER):$(APACHE_GROUP) "$(HTML_COMMON_DIR)"
 	chmod 755 "$(HTML_COMMON_DIR)"
@@ -26,7 +22,7 @@ install: dummy
 	chown -R $(APACHE_USER):$(APACHE_GROUP) "$(CAMPSITE_DIR)/backup"
 	chmod 755 "$(CAMPSITE_DIR)/backup"
 	mkdir -p "$(CAMPSITE_DIR)/instance"
-	chown $(ROOT_USER):$(APACHE_GROUP) "$(CAMPSITE_DIR)/instance"
+	chown $(APACHE_USER):$(APACHE_GROUP) "$(CAMPSITE_DIR)/instance"
 	chmod 755 "$(CAMPSITE_DIR)/instance"
 	install -m 755 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/campsite_config" "$(BIN_DIR)"
 	install -m 755 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/campsite_config" "$(SBIN_DIR)"
