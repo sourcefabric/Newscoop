@@ -166,6 +166,8 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	try {
 		int nResult = Integer(pcoCtx->URL()->getValue("ArticleCommentSubmitResult"));
 		pcoCtx->SetArticleCommentResult(nResult);
+		pcoCtx->URL()->deleteParameter("previewComment");
+		pcoCtx->DefURL()->deleteParameter("previewComment");
 	}
 	catch (const InvalidValue& rcoEx) {
 		// do nothing
