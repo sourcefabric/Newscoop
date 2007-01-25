@@ -131,7 +131,18 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 	while (coReader.elementDepth() == 2)
 	{
 		if (strcasecmp(pchElement, "Parameter") != 0)
+		{
+			pchElement = coReader.nextElement();
 			continue;
+		}
+		if (coReader.isEmpty())
+		{
+			string coName = coReader.getAttributeValue("Name");
+			string coAttr = coReader.getAttributeValue("Type");
+			setParameter(coName, string(""));
+			pchElement = coReader.nextElement();
+			continue;
+		}
 		string coName = coReader.getAttributeValue("Name");
 		string coAttr = coReader.getAttributeValue("Type");
 		lint nSize;
@@ -163,7 +174,17 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 	while (coReader.elementDepth() == 2)
 	{
 		if (strcasecmp(pchElement, "Cookie") != 0)
+		{
+			pchElement = coReader.nextElement();
 			continue;
+		}
+		if (coReader.isEmpty())
+		{
+			string coName = coReader.getAttributeValue("Name");
+			m_coCookies[coName] = string(coReader.elementContent());
+			pchElement = coReader.nextElement();
+			continue;
+		}
 		string coName = coReader.getAttributeValue("Name");
 		try {
 			coReader.nextElement("#text");
