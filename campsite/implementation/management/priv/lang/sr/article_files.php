@@ -1,7 +1,8 @@
 <?php 
-regGS("File '$1' updated.", "");
-regGS("File '$1' deleted.", "");
-regGS("File '$1' added.", "");
+regGS("Unable to add attachment.", "Није могуће додати атачмент");
+regGS("File '$1' updated.", "Фајл '$1'ј е изменњен");
+regGS("File '$1' deleted.", "Фајл '$1' је избрисан");
+regGS("File '$1' added.", "Фајл '$1' је додат");
 regGS("Edit article", "Уреди текст");
 regGS("You do not have the right to delete file attachments.", "Немате право да бришете прикачене фајлове.");
 regGS("You must select a file to upload.", "Морате изабрати фајл за аплоуд.");

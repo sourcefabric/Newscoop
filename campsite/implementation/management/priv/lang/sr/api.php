@@ -1,15 +1,17 @@
 <?php 
-regGS("Template $1 no longer exists!", "");
-regGS("The file uploaded is not an image.", "");
-regGS("Field $1 updated", "");
-regGS("Could not delete record from the database.", "");
-regGS("template path", "");
-regGS("short names", "");
-regGS("Unable to fetch image from remote server.", "");
-regGS("The article type field $1 has been renamed to $2.", "");
-regGS("The article type $1 has been renamed to $2.", "");
-regGS("Article type field $1 changed", "");
-regGS("Article Type $1 translation updated", "");
+regGS("Image type $1 is not supported.", "Тип слике $1 није подржан");
+regGS("Base data synchronized to phorum user for $1", "Подаци су синхронизовани са корисником форума $1");
+regGS("Template $1 no longer exists!", "Шаблон $1 више не постоји");
+regGS("The file uploaded is not an image.", "Аплоудовани фајл није слика");
+regGS("Field $1 updated", "Поље $1 је промењено");
+regGS("Could not delete record from the database.", "Није могуће обрисати унос из базе података");
+regGS("template path", "дуга путања");
+regGS("short names", "кратка путања");
+regGS("Unable to fetch image from remote server.", "Није могуће преузети слику са другог сервера");
+regGS("The article type field $1 has been renamed to $2.", "Поље $1 је преименовано у $2");
+regGS("The article type $1 has been renamed to $2.", "Тип текста $1 је преименован у $2");
+regGS("Article type field $1 changed", "Поље $1 је промењено");
+regGS("Article Type $1 translation updated", "Превод назива типа чланка $1 је промењен");
 regGS("The IP address group $1 has been deleted.", "ИП група адреса $1 је обрисана.");
 regGS("IP Group $1 added for user $2", "ИП група $1 додата за корисника $2 ");
 regGS("User permissions for $1 changed", "Корисничка права за $1 су промењена");

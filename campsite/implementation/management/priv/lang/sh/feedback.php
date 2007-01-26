@@ -1,7 +1,7 @@
 <?php 
-regGS("Simply copy and paste your message below and send it to: $1.", "");
-regGS("There was a problem sending your feedback.", "");
-regGS("Thanks for your feedback!  We'll read it and get back to you if appropriate.", "");
-regGS("Please feel free to tell us about a problem you are having, make a suggestion, or offer any other feedback.", "");
-regGS("Feedback", "");
+regGS("Simply copy and paste your message below and send it to: $1.", "Jednostavno kopi-pejstujte vašu poruku dole i pošaljite na: $1.");
+regGS("There was a problem sending your feedback.", "Pojavio se problem pri slanju vašeg fidbeka");
+regGS("Thanks for your feedback!  We'll read it and get back to you if appropriate.", "Hvala vam za fidbek! Pročitaćemo ga i kontaktirati vas ukoliko bude potrebe");
+regGS("Please feel free to tell us about a problem you are having, make a suggestion, or offer any other feedback.", "Molimo vas da se ne ustežete da nam kažete ukoliko imate probleme, predloge, ili želite da iznesete svoj stav o nečemu što je u vezi sa Kempsajtom");
+regGS("Feedback", "Fidbek");
 ?>

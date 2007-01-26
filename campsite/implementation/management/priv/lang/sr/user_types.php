@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("User types", "Типови корисника");
 regGS("No user types.", "Нема типова корисника");
 regGS("Are you sure you want to delete the user type $1?", "Сигурни сте да желите да обришете тип корисника $1?");
@@ -8,6 +8,8 @@ regGS("User type", "Тип корисника");
 regGS("Change user type permissions", "Промени права додељена типу корисника");
 regGS("You do not have the right to change user type permissions.", "Немате право да мењате додељена права типу корисника");
 regGS("User type $1 changed permissions", "Права додељена типу корисника $1 су промењена");
+regGS("A user type with the name '$1' already exists.", "Тип корисника са именом '$1' већ постоји.");
+regGS("Access", "Приступ");
 regGS("You do not have the right to add user types.", "Немате право да додајете типове корисника");
 regGS("Adding new user type", "Додавање новог типа корисника");
 regGS("The user type $1 has been added.", "Тип корисника $1 је додат");
@@ -19,6 +21,4 @@ regGS("The user type could not be deleted.", "Тип корисника не м�
 regGS("Updating user type permissions", "Мењање права додељених типу корисника");
 regGS("User type permissions have been successfuly updated.", "Права додељена типу корисника успешно су измењена");
 regGS("User type permissions could not be updated.", "Права додељена типу корисника не могу бити измењена");
-regGS("A user type with the name '$1' already exists.", "Тип корисника са именом '$1' већ постоји.");
-regGS("Access", "Приступ");
 ?>

@@ -1,8 +1,8 @@
-<?php
-regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "");
-regGS("Section updated", "");
-regGS("There are $1 subscriptions which will be affected.", "");
-regGS("There are $1 articles in this section.", "");
+<?php 
+regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "УРЛ име мора бити је4динствено за све рубрике у издању.<br>УРЛ име које сте навели (\"$1\") је у конфликту са рубриком  \"$2$3. $4$5\"");
+regGS("Section updated", "Рубрика је измењена");
+regGS("There are $1 subscriptions which will be affected.", "Укупно ће $1 претплата претрпети измене");
+regGS("There are $1 articles in this section.", "Укупно је $1 чланака у овој рубрици");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "рубрика #$1 \"$2\" је измењена. (публикација: $3, издање: $4)");
 regGS("Go To Articles", "Иди на текстове");
 regGS("Add section to all subscriptions.", "Додај рубрику у све претплате.");
@@ -42,9 +42,9 @@ regGS("The section number specified already exists, please specify a different v
 regGS("Warning", "Упозорење");
 regGS("You must select a section.", "Морате изабрати рубрику");
 regGS("You must specify a name for the section.", "Морате унети име рубрике.");
+regGS("The section could not be added.", "Рубрика не може бити додата");
+regGS("Add new section", "Додај нову рубрику");
 regGS("Please check if another section with the same number does not already exist.", "Проверите да ли већ не постоји рубрика са истим бројем");
 regGS("Short Name", "Скраћено име");
 regGS("Destination section number", "Број циљне рубрике");
-regGS("The section could not be added.", "Рубрика не може бити додата");
-regGS("Add new section", "Додај нову рубрику");
 ?>

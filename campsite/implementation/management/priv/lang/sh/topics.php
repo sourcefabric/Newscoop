@@ -1,5 +1,5 @@
-<?php
-regGS("The topic name is already in use by another topic.", "");
+<?php 
+regGS("The topic name is already in use by another topic.", "Naziv teme je već korišćen kod druge teme");
 regGS("You must enter a name for the topic.", "Morate uneti ime teme.");
 regGS("You must choose a language for the topic.", "Morate izabrati jezik za temu.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "Ova tema ima pod-teme, pa ne može biti obrisana.");

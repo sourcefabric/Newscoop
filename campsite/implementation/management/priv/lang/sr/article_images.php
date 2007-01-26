@@ -1,9 +1,11 @@
 <?php 
-regGS("You do not have the right to change image information.", "");
-regGS("The image number specified is already in use.", "");
-regGS("The image has been removed from the article.", "");
-regGS("Image '$1' updated.", "");
-regGS("Image '$1' added.", "");
+regGS("Unable to add new image.", "Није могуће додати нову слику");
+regGS("Image number '$1' already exists", "Број слике '$1' већ постоји");
+regGS("You do not have the right to change image information.", "Немате право да мењате податке о слици");
+regGS("The image number specified is already in use.", "Тај број за слику је већ у употреби");
+regGS("The image has been removed from the article.", "Слика је уклоњена из чланка");
+regGS("Image '$1' updated.", "Слика '$1'изменњена");
+regGS("Image '$1' added.", "Слика '$1'додата");
 regGS("Edit article", "Уреди текст");
 regGS("You do not have the right to attach images to articles.", "Немате право да качите слике уз текстове.");
 regGS("You do not have the right to add images.", "Немате право да додајете слике.");
@@ -23,4 +25,5 @@ regGS("Delete image $1", "Избриши слику $1");
 regGS("Click one of the ", "Кликните на један од понуђених 'додај слику'линкова");
 regGS("Are you sure you want to delete the image '$1'?", "Да ли сте сигурни да желите да обришете слику '$1'?");
 regGS("Unlink image $1", "Уклони везу слике $1");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Да ли сте сигурни да желите да уконите слику \\'$1\\' из текста?");
 ?>
