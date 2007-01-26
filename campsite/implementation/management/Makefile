@@ -17,6 +17,12 @@ install: $(ALL)
 	cp -rf javascript $(HTML_COMMON_DIR)
 	cp -f javascript/xinha/htmlarea-compressed.js $(HTML_COMMON_DIR)/javascript/xinha/htmlarea.js
 	cp -rf include $(HTML_COMMON_DIR)
+	@if [ ! -f "$(HTML_COMMON_DIR)/include/phorum/portable/phorum_settings.php" ]; then \
+		echo -n "Creating phorum settings file..."; \
+		cp -f "$(HTML_COMMON_DIR)/include/phorum/portable/phorum_settings.php.sample" \
+			"$(HTML_COMMON_DIR)/include/phorum/portable/phorum_settings.php" || exit 1; \
+		echo "done"; \
+	fi
 	cp -rf priv $(HTML_COMMON_DIR)
 	cp -f *.php $(HTML_COMMON_DIR)
 	$(MAKE) -C bin install
