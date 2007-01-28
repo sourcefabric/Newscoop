@@ -41,6 +41,21 @@
   14) #2401 - The title is not retrieved properly when uploading an audioclip
   15) #2402 - The album is not retrieved when uploading an audioclip
 
+2.6.6 (January 26, 2007)
+  For full details about these changes, see:
+  http://code.campware.org/projects/campsite/query?milestone=2.6.5
+
+  Small Improvements (1 total)
+  ----------------------------
+  01) #2409 - Update Serbian and Serbo-Croatian localizations
+  
+  Bugs Fixed (2 total)
+  ---------------------
+  Bugs are listed in order of oldest to newest.
+  
+  01) #2408 - The template engine skips empty parameters
+  02) #2410 - Fix phorum configuration issue
+
 2.6.5 (January 23, 2007)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.6.5
