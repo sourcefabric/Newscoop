@@ -20,7 +20,7 @@ $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_language_specific = Input::Get('f_language_specific', 'string', null, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_audiofile = Input::Get('f_audiofile', 'string', null, true);
+$f_audiofile = Input::Get('f_audiofile', 'string', null);
 
 $BackLink = Input::Get('BackLink', 'string', null, true);
 $formData = $_POST;
@@ -36,18 +36,31 @@ if (!$articleObj->exists()) {
 	exit;
 }
 
-if (!empty($f_audiofile)) {
-    $sessId = camp_session_get('cc_sessid', '');
-    $aClipGunid = Audioclip::StoreAudioclip($sessId, $f_audiofile, $formData);
-    if (PEAR::isError($aClipGunid)) {
-        camp_html_display_error(getGS('Audio file could not be stored'));
-        camp_html_goto_page($BackLink);
-    }
-    Audioclip::OnFileStore($f_audiofile);
-} else {
+if (empty($f_audiofile)) {
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'audioclips/popup.php'));
+	exit(0);
 }
 
+$sessId = camp_session_get('cc_sessid', '');
+$metaData = array();
+foreach($mask['pages'] as $key => $val) {
+	foreach($mask['pages'][$key] as $k => $v) {
+		$element_encode = str_replace(':','_',$v['element']);
+		$inputValue = Input::Get('f_'.$key.'_'.$element_encode, 'string', null, true);
+		if (!is_null($inputValue) && $inputValue != '') {
+			$metaData[$v['element']] = $inputValue;
+		}
+	}
+}
+
+$aClipGunid = Audioclip::StoreAudioclip($sessId, $f_audiofile, $metaData);
+if (PEAR::isError($aClipGunid)) {
+	camp_html_display_error(getGS('There was an error while saving the audioclip: $1',
+									$aClipGunid->getMessage()), null, true);
+	exit(0);
+}
+
+Audioclip::OnFileStore($f_audiofile);
 
 // link the audioclip to the current article
 $articleAudioclip =& new ArticleAudioclip($articleObj->getArticleNumber(), $aClipGunid);
@@ -56,10 +69,10 @@ if ($f_language_specific == 'yes') {
     $attributes['fk_language_id'] = $f_language_id;
 }
 $articleAudioclip->create($attributes);
+camp_html_add_msg(getGS("Audioclip '$1' added.", basename($f_audiofile)), 'ok');
 
 ?>
 <script>
-window.opener.document.forms.article_edit.f_message.value = "<?php putGS("Audioclip '$1' added.", basename($f_audiofile)); ?>";
 window.opener.document.forms.article_edit.onsubmit();
 window.opener.document.forms.article_edit.submit();
 window.close();

@@ -86,7 +86,7 @@ if ($isCcOnline) {
 }
 
 if (PEAR::isError($r)) {
-    camp_html_display_error(getGS('There was a problem trying to communicate to Campcaster'));
+    camp_html_display_error(getGS('There was a problem trying to communicate to Campcaster'), null, true);
     exit;
 }
 

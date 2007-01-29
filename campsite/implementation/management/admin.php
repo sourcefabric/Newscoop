@@ -68,7 +68,7 @@ if (($extension == '.php') || ($extension == '')) {
             }
 			// If not logged in, show the login screen.
 			header("Location: /$ADMIN/login.php");
-			return;
+			exit(0);
 		}
 	}
 

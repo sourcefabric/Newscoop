@@ -131,7 +131,10 @@ class ArticleAudioclip extends DatabaseObject {
         $returnArray = array();
         if (is_array($rows)) {
             foreach ($rows as $row) {
-                $returnArray[] =& new Audioclip($row['fk_audioclip_gunid']);
+                $audioClip =& new Audioclip($row['fk_audioclip_gunid']);
+                if ($audioClip->exists()) {
+                	$returnArray[] =& $audioClip;
+                }
             }
         }
 
