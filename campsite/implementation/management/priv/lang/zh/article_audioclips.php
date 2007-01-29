@@ -1,4 +1,5 @@
 <?php 
+regGS("There was an error while saving the audioclip: $1", "");
 regGS("Incorrect password or your user is not a valid Campcaster user", "");
 regGS("Campcaster session started successfully", "");
 regGS("Campcaster integration is disabled", "");
@@ -83,7 +84,6 @@ regGS("Audioclip '$1' added.", "");
 regGS("Audio source web page", "");
 regGS("Audio file information web page", "");
 regGS("Audio file could not be stored locally", "");
-regGS("Audio file could not be stored", "");
 regGS("Attach New Audio", "");
 regGS("Attach Existing Audio", "");
 regGS("Attach Audioclip To Article", "");
