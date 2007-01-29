@@ -36,14 +36,17 @@ if (!Input::IsValid()) {
 
 switch($f_action) {
     case 'add':
-        if (empty($_FILES['f_media_file'])) {
-            camp_html_display_error(getGS('Invalid file parameter'));
+        if (empty($_FILES['f_media_file']) || !isset($_FILES['f_media_file']['name'])
+        		|| !isset($_FILES['f_media_file']['tmp_name'])
+        		|| $_FILES['f_media_file']['name'] == ''
+        		|| $_FILES['f_media_file']['tmp_name'] == '') {
+            camp_html_display_error(getGS('Invalid file parameter'), null, true);
             exit;
         }
         $aClipObj =& new Audioclip();
         $audioFile = $aClipObj->onFileUpload($_FILES['f_media_file']);
         if (PEAR::isError($audioFile)) {
-            camp_html_display_error(getGS('Audio file could not be stored locally'));
+            camp_html_display_error(getGS('Audio file could not be stored locally'), null, true);
             exit;
         }
         $id3Data = Audioclip::AnalyzeFile($audioFile);

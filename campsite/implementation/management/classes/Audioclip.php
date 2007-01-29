@@ -13,6 +13,7 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/XR_CcClient.php');
+require_once($g_documentRoot.'/classes/Input.php');
 require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/AudioclipXMLMetadata.php');
@@ -585,10 +586,15 @@ class Audioclip {
 		if ($filesize === false) {
 			return new PEAR_Error("Audioclip::OnFileUpload(): invalid parameters received.");
 		}
-        if ($this->isValidFileType($p_fileVar['name']) == FALSE) {
+		if (get_magic_quotes_gpc()) {
+			$fileName = stripslashes($p_fileVar['name']);
+		} else {
+			$fileName = $p_fileVar['name'];
+		}
+        if ($this->isValidFileType($fileName) == FALSE) {
             return new PEAR_Error("Audioclip::OnFileUpload(): invalid file type.");
         }
-        $target = $Campsite['TMP_DIRECTORY'] . $p_fileVar['name'];
+        $target = $Campsite['TMP_DIRECTORY'] . $fileName;
         if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
             return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
         }
@@ -755,14 +761,14 @@ class Audioclip {
      * @return int|PEAR_Error
      *      The gunid on success, PEAR Error on failure
      */
-    function StoreAudioclip($p_sessId, $p_filePath, $p_formData)
+    function StoreAudioclip($p_sessId, $p_filePath, $p_metaData)
     {
         if (file_exists($p_filePath) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_fileName));
         }
         $gunId = null;
         $checkSum = md5_file($p_filePath);
-        $xmlString = Audioclip::CreateXMLTextFile($p_formData);
+        $xmlString = Audioclip::CreateXMLTextFile($p_metaData);
         $gunId = AudioclipXMLMetadata::Upload($p_sessId, $p_filePath, $gunId,
                                               $xmlString, $checkSum);
         if (PEAR::isError($gunId)) {
@@ -820,31 +826,24 @@ class Audioclip {
      * @return string $xmlTextFile
      *      The XML string
      */
-    function CreateXMLTextFile($p_formData)
+    function CreateXMLTextFile($p_metaData)
     {
         global $mask;
 
-        $xmlTextFile = '<?xml version="1.0" encoding="utf-8"?>
-        <audioClip>
-        <metadata
-            xmlns="http://mdlf.org/campcaster/elements/1.0/"
-            xmlns:ls="http://mdlf.org/campcaster/elements/1.0/"
-            xmlns:dc="http://purl.org/dc/elements/1.1/"
-            xmlns:dcterms="http://purl.org/dc/terms/"
-            xmlns:xml="http://www.w3.org/XML/1998/namespace"
-        >';
+        $xmlTextFile = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+        			  ."<audioClip>\n"
+        			  ."\t<metadata\n"
+            			  ."\t\txmlns=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+            			  ."\t\txmlns:ls=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+            			  ."\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
+            			  ."\t\txmlns:dcterms=\"http://purl.org/dc/terms/\"\n"
+            			  ."\t\txmlns:xml=\"http://www.w3.org/XML/1998/namespace\"\n"
+        			  ."\t>\n";
 
-        foreach($mask['pages'] as $key => $val) {
-            foreach($mask['pages'][$key] as $k => $v) {
-                $element_encode = str_replace(':','_',$v['element']);
-                $p_formData['f_'.$key.'_'.$element_encode] ? $metaData[$v['element']] = $p_formData['f_'.$key.'_'.$element_encode] : NULL;
-            }
+        foreach($p_metaData as $key => $val) {
+        	$xmlTextFile .= "\t\t" . XML_Util::createTag($key, array(), $val) . "\n";
         }
-        foreach($metaData as $key => $val) {
-            $xmlTextFile .= '<'.$key.'>'.$val.'</'.$key.'>';
-        }
-        $xmlTextFile .= '</metadata>
-        </audioClip>';
+        $xmlTextFile .= "\t</metadata>\n</audioClip>\n";
         return $xmlTextFile;
     } // fn CreateXMLTextFile
 
