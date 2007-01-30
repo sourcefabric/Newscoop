@@ -739,13 +739,27 @@ if ($f_edit_mode == "edit") { ?>
 				$text = preg_replace("/<!\*\*\s*EndLink\s*>/i", "</a>", $text);
 				// Images
 				preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*/i",$text, $imageMatches);
+
 				if (isset($imageMatches[1][0])) {
+					$formattingErrors = false;
 					foreach ($imageMatches[1] as $templateId) {
 						// Get the image URL
 						$articleImage =& new ArticleImage($f_article_number, null, $templateId);
+						if (!$articleImage->exists()) {
+							ArticleImage::RemoveImageTagsFromArticleText($f_article_number, $templateId);
+							$formattingErrors = true;
+							continue;
+						}
 						$image =& new Image($articleImage->getImageId());
 						$imageUrl = $image->getImageUrl();
 						$text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" id="'.$templateId.'" ', $text);
+					}
+					if ($formattingErrors) {
+						?>
+<script type="text/javascript">
+window.location.reload();
+</script>
+						<?php
 					}
 				}
 			?>
