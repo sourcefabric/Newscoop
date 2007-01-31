@@ -33,7 +33,12 @@ function translationForm($p_request)
 	$localizerTargetLanguage = camp_session_get('localizer_target_language', $g_localizerConfig['DEFAULT_LANGUAGE']);
 	$localizerSourceLanguage = camp_session_get('localizer_source_language', '');
 	if (empty($localizerSourceLanguage)) {
-		$tmpLanguage =& new LocalizerLanguage(null, $p_request['TOL_Language']);
+		if (isset($p_request['TOL_Language'])) {
+			$lang = $p_request['TOL_Language'];
+		} else {
+			$lang = $g_localizerConfig['DEFAULT_LANGUAGE'];
+		}
+		$tmpLanguage =& new LocalizerLanguage(null, $lang);
 		$localizerSourceLanguage = $tmpLanguage->getLanguageId();
 	}
 
