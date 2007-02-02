@@ -1,5 +1,5 @@
 Source: campsite
-Section: web
+Section: universe/web
 Priority: optional
 Maintainer: The Campsite Team <campsite-support@campware.org>
 Build-Depends: autotools-dev,
