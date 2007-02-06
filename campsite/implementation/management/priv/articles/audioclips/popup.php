@@ -46,7 +46,11 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 <tr>
 	<?php if ($g_user->hasPermission('AddAudioclip')) { ?>
 	<td style="padding: 3px; border-top: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_audio_attach_mode != "new") { ?>border-bottom: 1px solid #8baed1; background-color: #BBB;<?php } else { ?>background-color: #EEE;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php", "", "&f_audio_attach_mode=new"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Attach New Audio"); ?></b></a></td>
-	<?php } ?>
+	<?php
+          } else {
+              $f_audio_attach_mode = 'existing';
+          }
+    ?>
 	<td style="padding: 3px; border-top: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_audio_attach_mode != "existing") { ?>border-bottom: 1px solid #8baed1; background-color: #BBB;<?php } else { ?>background-color: #EEE;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php", "", "&f_audio_attach_mode=existing"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Attach Existing Audio"); ?></b></a></td>
 </tr>
 <tr>
