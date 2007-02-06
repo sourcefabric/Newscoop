@@ -256,6 +256,7 @@ class User extends DatabaseObject {
                     $this->m_liveUserData['perm_user_id'] = $permData[0]['perm_user_id'];
                 }
             }
+            $this->m_exists = true;
         }
     } // fn fetch
 
