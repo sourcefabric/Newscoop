@@ -62,8 +62,7 @@ class DbReplication {
 
 		$g_ado_db_tmp = $g_ado_db;
 
-        //		$this->m_rDbName = $Campsite['DATABASE_NAME'];
-        $this->m_rDbName = 'campsite_fake_remote';
+       	$this->m_rDbName = $Campsite['DATABASE_NAME'];
 		$this->m_rDbHost = SystemPref::Get('DBReplicationHost')
                            . ':'
                            . SystemPref::Get('DBReplicationPort');
