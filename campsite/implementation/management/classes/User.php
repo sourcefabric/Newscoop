@@ -247,12 +247,14 @@ class User extends DatabaseObject {
                 }
             }
             $param = array('filters' => array('handle' => $this->m_data['UName']));
-            $liveUserData = $LiveUserAdmin->auth->getUsers($param);
-            if (is_array($liveUserData) && sizeof($liveUserData) > 0) {
-                $this->m_liveUserData = $liveUserData[0];
-                $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
-                $permData = $LiveUserAdmin->perm->getUsers($params);
-                $this->m_liveUserData['perm_user_id'] = $permData[0]['perm_user_id'];
+            if (is_object($LiveUserAdmin)) {
+                $liveUserData = $LiveUserAdmin->auth->getUsers($param);
+                if (is_array($liveUserData) && sizeof($liveUserData) > 0) {
+                    $this->m_liveUserData = $liveUserData[0];
+                    $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
+                    $permData = $LiveUserAdmin->perm->getUsers($params);
+                    $this->m_liveUserData['perm_user_id'] = $permData[0]['perm_user_id'];
+                }
             }
         }
     } // fn fetch
