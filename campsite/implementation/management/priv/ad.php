@@ -1,7 +1,7 @@
 <?php
-require_once('db_connect.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 camp_load_translation_strings("home");
-require_once('classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to access this page.'), true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 ?>
