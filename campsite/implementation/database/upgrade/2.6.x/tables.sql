@@ -21,6 +21,17 @@ CREATE TABLE  `AudioclipMetadata` (
 );
 
 
+-- create table for system preferences
+CREATE TABLE `SystemPreferences` (
+  `id` smallint(5) unsigned NOT NULL auto_increment,
+  `varname` varchar(100) NOT NULL default '',
+  `value` varchar(100) default NULL,
+  `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `varname` (`varname`)
+);
+
+
 -- create table for LiveUser single sign-on
 CREATE TABLE `liveuser_applications` (
   `application_id` int(11) NOT NULL default '0',
