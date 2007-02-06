@@ -5,7 +5,7 @@ INSERT INTO Events (Id, Name, Notify, IdLanguage) VALUES (116, 'Rename Template'
 INSERT INTO TemplateTypes (Id, Name) VALUES ('5','nontpl');
 
 -- Upgrade the system configuration
-system php ./upgrade_user_config.php
+system php ./upgrade_system_pref.php
 -- Upgrade audioclip permissions
 system php ./upgrade_user_perms.php
 -- Upgrade Campsite users to LiveUser database

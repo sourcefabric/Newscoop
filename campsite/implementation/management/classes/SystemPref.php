@@ -26,7 +26,6 @@ class SystemPref {
 	var $m_config = array();
 	var $m_columnNames = array(
 		'id',
-		'fk_user_id',
 		'varname',
 		'value',
 		'last_modified');
@@ -43,8 +42,7 @@ class SystemPref {
 			$Campsite['system_preferences'] = array();
 		}
 		// Fetch the user's permissions.
-		$queryStr = 'SELECT varname, value FROM UserConfig '
-					.' WHERE fk_user_id=0';
+		$queryStr = 'SELECT varname, value FROM SystemPreferences';
 		$config = $g_ado_db->GetAll($queryStr);
 		if ($config) {
 			// Make m_config an associative array.
@@ -97,9 +95,8 @@ class SystemPref {
 
 		if (isset($Campsite['system_preferences'][$p_varName])) {
 			if ($Campsite['system_preferences'][$p_varName] != $p_value) {
-				$sql = "UPDATE UserConfig SET value='".mysql_real_escape_string($p_value)."'"
-					   ." WHERE fk_user_id=0"
-					   ." AND varname='".mysql_real_escape_string($p_varName)."'";
+				$sql = "UPDATE SystemPreferences SET value='".mysql_real_escape_string($p_value)."'"
+					   ." WHERE varname='".mysql_real_escape_string($p_varName)."'";
 				$g_ado_db->Execute($sql);
 				$Campsite['system_preferences'][$p_varName] = $p_value;
 			}
