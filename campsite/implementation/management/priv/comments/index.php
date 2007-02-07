@@ -127,7 +127,7 @@ $pagerStr = $pager->render();
                <a href="<?php p($orderDirectionUrl); ?>"><?php p($OrderSign); ?></a>
             </td>
             <td style="padding-left: 15px;">
-                <input type="submit" value="<?php putGS("Submit"); ?>" class="button">
+                <input type="submit" value="<?php putGS("Search"); ?>" class="button">
             </td>
 
         </tr>
@@ -226,10 +226,7 @@ function onSummaryClick(p_messageId)
             <!-- table for the action controls -->
             <table>
             <tr>
-
-            <td><input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save"></td>
-
-            <td style="padding-left: 10px;">
+            <td>
                 <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="inbox" class="input_radio" id="inbox_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HOLD) { ?>checked<?php } ?> onchange="onCommentAction('inbox', <?php p($comment->getMessageId()); ?>);">
             </td>
 
@@ -268,6 +265,11 @@ function onSummaryClick(p_messageId)
 	        <td>
             	<a href="javascript: void(0);" onclick="window.open('/<?php p($ADMIN); ?>/comments/ban.php?f_comment_id=<?php p($comment->getMessageId()); ?>', null, 'resizable=yes, menubar=no, toolbar=no, width=400, height=200, top=200, left=200'); return false;"><b><?php putGS("Ban user"); ?></b></a>
 	        </td>
+
+	        <td style="padding-left: 10px;">
+	        	<input type="submit" name="save" value="<?php putGS("Save"); ?>" class="button">
+	        </td>
+
             </tr>
             </table>
             <!-- END table for the action controls -->
