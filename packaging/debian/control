@@ -25,6 +25,7 @@ Depends: apache2,
 		 locales (>= 2.3.5-1ubuntu12 ),
 		 mysql-client,
 		 mysql-server,
+		 php5-cli,
 		 php5-gd,
 		 php5-mysql,
 		 zlib1g (>= 1 )
