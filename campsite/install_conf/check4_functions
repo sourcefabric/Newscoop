@@ -1001,7 +1001,7 @@ check4_php_cli()
 {
 is_checked php_cli && return 0
 export PHP=
-for p in /usr/local/bin /bin /usr/bin /opt/bin; do
+for p in /bin /usr/bin /opt/bin /usr/local/bin /usr/local/php/bin; do
     [ -x "$p/php" ] && export PHP="$p/php" && break
 done
 [ "$PHP" = "" ] && output="PHP CLI (Command Line Interface) not found. Please install this package" && return 1
