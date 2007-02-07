@@ -19,4 +19,14 @@ if (!isset($g_ado_db)) {
 		$Campsite['DATABASE_PASSWORD'], $Campsite['DATABASE_NAME']);
 }
 
+if (!$g_ado_db->IsConnected()) {
+?>
+	<font color="red" size="3">
+	<p>ERROR connecting to the MySQL server!</p>
+	<p>Please start the MySQL database server and verify if the connection configuration is valid.</p>
+	</font>
+<?php
+	exit(0);
+}
+
 ?>
