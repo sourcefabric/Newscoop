@@ -27,7 +27,14 @@ endif
 config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
-	CFLAGS="$(CFLAGS)" ./configure --apache_user www-data --apache_group www-data --apache_conf_path /etc/apache2 --apache_bin_path /usr/sbin --prefix /usr/local --campsite_dir /usr/local --www_dir /var/www/campsite/www --www_common_dir /var/www/campsite/www-common
+	CFLAGS="$(CFLAGS)" ./configure --apache_user www-data \
+								   --apache_group www-data \
+								   --apache_conf_path /etc/apache2 \
+								   --apache_bin_path /usr/sbin \
+								   --prefix /usr/local \
+								   --campsite_dir /usr/local \
+								   --www_dir /var/www/campsite/www \
+								   --www_common_dir /var/www/campsite/www-common
 
 
 build: build-stamp
@@ -67,6 +74,11 @@ install: build
 	# Add here commands to install the package into debian/campsite.
 	$(MAKE) install prefix=$(CURDIR)/debian/campsite/usr
 
+	# move the installation to debian/campsite
+	mkdir -p $(CURDIR)/debian/campsite/usr/local
+	mkdir -p $(CURDIR)/debian/campsite/var/www
+	mv -f /usr/local/campsite $(CURDIR)/debian/campsite/usr/local
+	mv -f /var/www/campsite $(CURDIR)/debian/campsite/var/www
 
 # Build architecture-independent files here.
 binary-indep: build install
