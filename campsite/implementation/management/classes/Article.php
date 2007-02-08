@@ -429,6 +429,8 @@ class Article extends DatabaseObject {
 		$values['OnSection'] = $this->m_data['OnFrontPage'];
 		$values['Public'] = $this->m_data['Public'];
 		$values['ArticleOrder'] = $this->m_data['ArticleOrder'];
+		$values['comments_enabled'] = $this->m_data['comments_enabled'];
+		$values['comments_locked'] = $this->m_data['comments_locked'];
 		// Change some attributes
 		$values['Name'] = $p_name;
 		$values['Published'] = 'N';
