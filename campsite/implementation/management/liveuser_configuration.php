@@ -190,10 +190,23 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/LiveUser/Admin.php');
 
 $LiveUser =& LiveUser::factory($liveuserConfig);
 if (!$LiveUser->init()) {
-    die();
+    exit(0);
 }
 $LiveUserAdmin =& LiveUser_Admin::factory($liveuserConfig);
-$LiveUserAdmin->init();
+if (!$LiveUserAdmin->init()) {
+    exit(0);
+}
+
+if ($LiveUserAdmin->auth->_storage->dbc == false) {
+?>
+	<font color="red" size="3">
+	<p>ERROR connecting to the MySQL server!</p>
+	<p>Please start the MySQL database server and verify if the connection configuration is valid.</p>
+	</font>
+<?php
+    exit(0);
+}
+
 $g_permissions = $LiveUserAdmin->perm->outputRightsConstants('array');
 
 ?>
