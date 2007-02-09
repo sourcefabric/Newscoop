@@ -76,20 +76,27 @@ function on_link_click(id, home_page_links)
 <?php
 echo $breadcrumbs;
 
+$syncUsers = Input::Get('sync_users', 'string', 'no', true);
+if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
+    require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/users/sync_phorum_users.php");
+    $actionMsg = getGS('Campsite and Phorum users were synchronized');
+    $res = 'OK';
+}
+
 $restartEngine = Input::Get('restart_engine', 'string', 'no', true);
-if ( ($restartEngine == 'yes') && $g_user->hasPermission("InitializeTemplateEngine")) {
+if (($restartEngine == 'yes') && $g_user->hasPermission("InitializeTemplateEngine")) {
 	require_once($_SERVER['DOCUMENT_ROOT']."/parser_utils.php");
 	if (camp_stop_parser()) {
-		$resetMsg = getGS("The template engine was (re)started.");
+		$actionMsg = getGS("The template engine was (re)started.");
 		$res = "OK";
 	} else {
-		$resetMsg = getGS("The template engine could not be restarted! Please verify if the template engine was started by other user than $1.", $Campsite['APACHE_USER']);
+		$actionMsg = getGS("The template engine could not be restarted! Please verify if the template engine was started by other user than $1.", $Campsite['APACHE_USER']);
 		$res = "ERROR";
 	}
 	camp_start_parser();
 }
 ?>
-<?php if (!empty($resetMsg)) { ?>
+<?php if (!empty($actionMsg)) { ?>
 <table border="0" cellpadding="0" cellspacing="0" align="center">
 <tr>
 <?php if ($res == 'OK') { ?>
@@ -97,7 +104,7 @@ if ( ($restartEngine == 'yes') && $g_user->hasPermission("InitializeTemplateEngi
 <?php } else { ?>
 	<td class="error_message" align="center">
 <?php } ?>
-		<?php echo $resetMsg; ?>
+		<?php echo $actionMsg; ?>
 	</td>
 </tr>
 </table>
