@@ -269,7 +269,7 @@ function camp_upgrade_database($p_db_name, $p_defined_parameters)
 
 	$first = true;
 	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
-					  "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.x");
+					  "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x");
 	foreach ($versions as $index=>$db_version) {
 		if ($old_version > $db_version) {
 			continue;
@@ -387,14 +387,21 @@ function camp_detect_database_version($p_db_name, &$version)
 					return "Unable to query the database $p_db_name";
 				}
 				if (mysql_num_rows($res2) > 0) {
+					$version = "2.6.4";
+				}
+				if (!$res2 = mysql_query("SELECT * from phorum_users "
+										 . "WHERE fk_campsite_user_id IS NULL")) {
+					return "Unable to query the database $p_db_name";
+				}
+				if (mysql_num_rows($res2) == 0) {
 					$version = "2.6.x";
 				}
 			}
-			if (!$res2 = mysql_query("SHOW COLUMNS FROM Sections LIKE 'Description'")) {
+			if (!$res2 = mysql_query("SHOW TABLES LIKE '%Audioclip%'")) {
 				return "Unable to query the database $p_db_name";
 			}
 			if (mysql_num_rows($res2) > 0) {
-				$version = "3.0.x";
+				$version = "2.7.x";
 			}
 		}
 	}
