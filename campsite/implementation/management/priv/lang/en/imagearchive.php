@@ -1,4 +1,5 @@
 <?php 
+regGS("Unable to add new image.", "Unable to add new image.");
 regGS("Image updated.", "Image updated.");
 regGS("Image added.", "Image added.");
 regGS("Image '$1' deleted.", "Image '$1' deleted.");

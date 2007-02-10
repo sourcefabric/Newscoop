@@ -1,4 +1,7 @@
 <?php 
+regGS("Unable to create folder.", "");
+regGS("Unable to $1 template.", "");
+regGS("File cannot be read.", "");
 regGS("Template ID:", "ID шаблона:");
 regGS("Template ID", "ID шаблона");
 regGS("Template $1 no longer exists!", "Шаблон $1 больше не существует!");

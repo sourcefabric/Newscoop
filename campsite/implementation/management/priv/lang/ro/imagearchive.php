@@ -1,4 +1,5 @@
 <?php 
+regGS("Unable to add new image.", "");
 regGS("Image updated.", "Imaginea a fost actualizată.");
 regGS("Image added.", "Imaginea a fost adăugată.");
 regGS("Image '$1' deleted.", "Imaginea '$1' a fost ştearsă.");

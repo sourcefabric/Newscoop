@@ -1,4 +1,6 @@
 <?php 
+regGS("Synchronize Campsite and Phorum users", "");
+regGS("Campsite and Phorum users were synchronized", "");
 regGS("An error occured in session management. Please reload the login page.", "Došlo je do greške, molimo osvežite login stranicu.");
 regGS("This file is stored on disk as '$1'.", "Fajl je snimljen na disk kao '$1'.");
 regGS("Instance", "Instanca");

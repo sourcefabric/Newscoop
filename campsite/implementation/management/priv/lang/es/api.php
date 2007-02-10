@@ -1,4 +1,6 @@
 <?php 
+regGS("Image type $1 is not supported.", "");
+regGS("Base data synchronized to phorum user for $1", "");
 regGS("The file uploaded is not an image.", "El archivo cargado no es una imagen");
 regGS("Field $1 updated", "Se actualizó el campo $1");
 regGS("Could not delete record from the database.", "No se pudo eliminar el archivo de la base de datos.");

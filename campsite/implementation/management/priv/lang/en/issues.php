@@ -1,5 +1,4 @@
 <?php 
-regGS("Change issue status", "Change issue status");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "The number must be unique for each issue in this publication of the same language.");
 regGS("The language and URL name must be unique for each issue in this publication.", "The language and URL name must be unique for each issue in this publication.");

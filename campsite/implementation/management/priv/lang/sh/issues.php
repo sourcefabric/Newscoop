@@ -1,5 +1,4 @@
 <?php 
-regGS("Change issue status", "Promeni status izdanja");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Vrednost koju pokušavate sa postavite je u konfliktu sa izdanjem \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Broj mora biti jedinstven za svako izdanje u publikaciji u okviru jednog jezika.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Jezik i URL ime moraju biti jedinstveni za svako izdanje u ovoj publikaciji.");

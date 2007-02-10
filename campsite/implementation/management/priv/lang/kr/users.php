@@ -1,4 +1,7 @@
 <?php 
+regGS("You do not have the right to sync Campsite and Phorum users.", "");
+regGS("User may synchronize Campsite and Phorum users", "");
+regGS("Are you sure you want to delete the IP Group $1:$2?", "");
 regGS("User may moderate comments", "");
 regGS("User may enable comments", "");
 regGS("65 or over", "65세 이상");
@@ -74,7 +77,6 @@ regGS("Start IP", "시작  IP ");
 regGS("Number of addresses", "어드레스 수");
 regGS("The IP Group $1 has been created.", "IP 그룹 $1 이 생성되었습니다.");
 regGS("There was an error creating the IP address group.", " IP 어드레스 그룹을 생성하는데 에러가 있습니다. ");
-regGS("Are you sure you want to delete the IP Group $1?", "IP 그룹 $1 을 삭제합니까? ");
 regGS("The IP address group $1 has been deleted.", "IP  어드레스 그룹 $1 이 삭제되었습니다. ");
 regGS("User '$1' information was changed successfully.", "사용자 '$1\" 정보가 성공적으로 변경되었습니다. ");
 regGS("IP address", "IP주소");

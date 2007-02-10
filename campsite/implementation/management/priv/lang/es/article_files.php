@@ -1,4 +1,5 @@
 <?php 
+regGS("Unable to add attachment.", "");
 regGS("File '$1' updated.", "Se actualizó el archivo '$1' ");
 regGS("File '$1' deleted.", "Se eliminó el artículo '$1' ");
 regGS("File '$1' added.", "Se añadió el artículo '$1' ");

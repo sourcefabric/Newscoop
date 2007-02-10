@@ -1,4 +1,6 @@
 <?php 
+regGS("Image type $1 is not supported.", "");
+regGS("Base data synchronized to phorum user for $1", "");
 regGS("Template $1 no longer exists!", "");
 regGS("The file uploaded is not an image.", "Fişierul încărcat în baza de date nu este o imagine.");
 regGS("Field $1 updated", "Câmpul $1 a fost actualizat.");

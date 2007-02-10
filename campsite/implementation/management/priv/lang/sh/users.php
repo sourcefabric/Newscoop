@@ -1,4 +1,6 @@
 <?php 
+regGS("You do not have the right to sync Campsite and Phorum users.", "");
+regGS("User may synchronize Campsite and Phorum users", "");
 regGS("Are you sure you want to delete the IP Group $1:$2?", "Da li ste sigurni da želite da obrišete IP grupu $1:$2?");
 regGS("User may moderate comments", "Korisnik može da moderiše komentare");
 regGS("User may enable comments", "Korisnik može da odobrava komentare");

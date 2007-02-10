@@ -1,4 +1,7 @@
 <?php 
+regGS("You do not have the right to sync Campsite and Phorum users.", "");
+regGS("User may synchronize Campsite and Phorum users", "");
+regGS("Are you sure you want to delete the IP Group $1:$2?", "");
 regGS("User may moderate comments", "Вы можете модерировать комментарии");
 regGS("User may enable comments", "Пользователь может разрешать комментарии");
 regGS("65 or over", "65 и выше");
@@ -74,7 +77,6 @@ regGS("Start IP", "Начальный IP");
 regGS("Number of addresses", "Количество адресов");
 regGS("The IP Group $1 has been created.", "IP-группа $1 была создана");
 regGS("There was an error creating the IP address group.", "Ошибка создания группы IP адресов.");
-regGS("Are you sure you want to delete the IP Group $1?", "Вы уверены, что хотите удалить группу IP-адресов $1");
 regGS("The IP address group $1 has been deleted.", "Группа IP-адресов $1 была удалена.");
 regGS("User '$1' information was changed successfully.", "Информация пользователя '$1' была успешно изменена.");
 regGS("IP address", "IP-адрес");
