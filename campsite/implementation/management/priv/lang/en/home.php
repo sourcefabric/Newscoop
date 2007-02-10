@@ -1,4 +1,6 @@
 <?php 
+regGS("Synchronize Campsite and Phorum users", "Synchronize Campsite and Phorum users");
+regGS("Campsite and Phorum users were synchronized", "Campsite and Phorum users were synchronized");
 regGS("Your user is not a valid Campcaster user", "Your user is not a valid Campcaster user");
 regGS("Connection refused", "Connection refused");
 regGS("An error occured in session management. Please reload the login page.", "An error occured in session management. Please reload the login page.");

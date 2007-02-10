@@ -1,4 +1,6 @@
 <?php 
+regGS("You do not have the right to sync Campsite and Phorum users.", "");
+regGS("User may synchronize Campsite and Phorum users", "");
 regGS("There was an error when trying to update the user info.", "");
 regGS("User may attach audioclips to articles", "");
 regGS("User may add audioclips", "");
