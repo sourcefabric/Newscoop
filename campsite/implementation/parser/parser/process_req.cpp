@@ -614,6 +614,8 @@ int AddUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 		return -1;
 	c.SetAddUser(true);
 	string field_pref = "User", q, fn, fv, uname, email, password;
+
+	// prepare the insert field values
 	fn = "KeyId";
 	fv = "RAND()*1000000000+RAND()*1000000+RAND()*1000";
 	for (int i = 0; i < param_nr; i++)
@@ -653,18 +655,26 @@ int AddUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 				fv += ", \'N\'";
 		}
 	}
+
+	// verify if the user already existed
 	q = "select * from Users where UName = \"" + uname + "\"";
 	SQLQuery(pSql, q.c_str());
 	StoreResult(pSql, coSqlRes);
 	if (mysql_num_rows(*coSqlRes) > 0)
 		return UERR_USER_EXISTS;
+
+	// verify if a user with the same email existed
 	q = "select * from Users where EMail = \"" + email + "\"";
 	SQLQuery(pSql, q.c_str());
 	coSqlRes = mysql_store_result(pSql);
 	if (mysql_num_rows(*coSqlRes) > 0)
 		return UERR_DUPLICATE_EMAIL;
+
+	// create the user record
 	q = "insert into Users (" + fn + ") values(" + fv + ")";
 	SQLQuery(pSql, q.c_str());
+
+	// read record identifier
 	q = "select Id, KeyId from Users where UName = \"" + uname + "\"";
 	SQLQuery(pSql, q.c_str());
 	coSqlRes = mysql_store_result(pSql);
@@ -672,10 +682,30 @@ int AddUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 	FetchRow(*coSqlRes, row);
 	c.SetUser(atol(row[0]));
 	c.SetKey(atol(row[1]));
+
+	// create the liveuser record
+	q = "insert into liveuser_users (" + fn + ") values(" + fv + ")";
+	SQLQuery(pSql, q.c_str());
+
+	// read record identifier
+	q = "select Id from liveuser_users where UName = \"" + uname + "\"";
+	SQLQuery(pSql, q.c_str());
+	coSqlRes = mysql_store_result(pSql);
+	CheckForRows(*coSqlRes, 1);
+	FetchRow(*coSqlRes, row2);
+
+	// create liveuser permissions record
+	q = string("insert into liveuser_perm_users ") +
+			+ "(perm_user_id, auth_user_id, auth_container_name, perm_type) "
+			+ "values ('" + row2[0] + "', '" + row2[0] + "', 'DB', '1')";
+	SQLQuery(pSql, q.c_str());
+
+	// create phorum user
 	q = string("INSERT INTO phorum_users (fk_campsite_user_id, username, password, email) ")
 			+ "VALUES (" + row[0] + ", '" + uname + "', SHA1('" + password
 			+ "'), '" + email + "')";
 	SQLQuery(pSql, q.c_str());
+
 	return 0;
 }
 
