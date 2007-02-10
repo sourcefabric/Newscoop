@@ -81,10 +81,13 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 				$userPasswd = $user->getPassword();
 				$userRealName = $user->getRealName();
 
-				$phorumUser =& new Phorum_user($userId);
+				$phorumUser =& Phorum_user::GetByUserName($user->getUserName());
+				if (is_null($phorumUser)) {
+					$phorumUser =& new Phorum_user();
+				}
 				// Check if the phorum user existed or was created successfuly.
 				// If not, set the error code to 'internal error' and exit.
-				if (!$phorumUser->CampUserExists($userId)
+				if (!Phorum_user::CampUserExists($userId)
 						&& !$phorumUser->create($user->getUserName(), $userPasswd, $userEmail, $userId)) {
 					$p_parameters["ArticleCommentSubmitResult"] = 5000;
 					camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
