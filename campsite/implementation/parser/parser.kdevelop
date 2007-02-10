@@ -153,10 +153,10 @@
     <qt>
       <used>false</used>
       <version>3</version>
-      <root></root>
+      <root>/usr/share/qt3</root>
       <includestyle>3</includestyle>
       <designerintegration>EmbeddedKDevDesigner</designerintegration>
-      <qmake></qmake>
+      <qmake>/usr/bin/qmake-qt3</qmake>
       <designer></designer>
       <designerpluginpaths/>
     </qt>
