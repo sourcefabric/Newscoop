@@ -198,30 +198,33 @@ class User extends DatabaseObject {
         global $g_ado_db;
         global $LiveUserAdmin;
 
+        if ($this->exists()) {
+        	parent::delete();
+        	$g_ado_db->Execute("DELETE FROM UserConfig WHERE fk_user_id = ".$this->m_data['Id']);
+        	$res = $g_ado_db->Execute("SELECT Id FROM Subscriptions WHERE IdUser = ".$this->m_data['Id']);
+        	while ($row = $res->FetchRow()) {
+        		$g_ado_db->Execute("DELETE FROM SubsSections WHERE IdSubscription=".$row['Id']);
+        	}
+        	$g_ado_db->Execute("DELETE FROM Subscriptions WHERE IdUser=".$this->m_data['Id']);
+        	$g_ado_db->Execute("DELETE FROM SubsByIP WHERE IdUser=".$this->m_data['Id']);
+        	if (function_exists("camp_load_translation_strings")) {
+        		camp_load_translation_strings("api");
+        	}
+        	$logtext = getGS('The user account $1 has been deleted.', $this->m_data['Name']." (".$this->m_data['UName'].")");
+        	Log::Message($logtext, null, 52);
+        	$campsiteUserDeleted = true;
+        } else {
+        	$campsiteUserDeleted = false;
+        }
+
         $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
         $permData = $LiveUserAdmin->perm->getUsers($params);
         if (!is_array($permData) || sizeof($permData) < 1) {
-            return false;
+            return $campsiteUserDeleted;
         }
-        if ($LiveUserAdmin->removeUser($permData[0]['perm_user_id'])) {
-            if ($this->exists()) {
-                parent::delete();
-                $g_ado_db->Execute("DELETE FROM UserConfig WHERE fk_user_id = ".$this->m_data['Id']);
-                $res = $g_ado_db->Execute("SELECT Id FROM Subscriptions WHERE IdUser = ".$this->m_data['Id']);
-                while ($row = $res->FetchRow()) {
-                    $g_ado_db->Execute("DELETE FROM SubsSections WHERE IdSubscription=".$row['Id']);
-                }
-                $g_ado_db->Execute("DELETE FROM Subscriptions WHERE IdUser=".$this->m_data['Id']);
-                $g_ado_db->Execute("DELETE FROM SubsByIP WHERE IdUser=".$this->m_data['Id']);
-                if (function_exists("camp_load_translation_strings")) {
-                    camp_load_translation_strings("api");
-                }
-                $logtext = getGS('The user account $1 has been deleted.', $this->m_data['Name']." (".$this->m_data['UName'].")");
-                Log::Message($logtext, null, 52);
-            }
-            return true;
-        }
-        return false;
+        $liveUserDelete = $LiveUserAdmin->removeUser($permData[0]['perm_user_id']);
+
+        return $campsiteUserDeleted || $liveUserDeleted;
     } // fn delete
 
 
@@ -677,7 +680,7 @@ class User extends DatabaseObject {
         // Generate the Key ID
         $this->setProperty('KeyId', 'RAND()*1000000000+RAND()*1000000+RAND()*1000', true, true);
     } // fn initLoginKey
- 
+
 
     /**
      * Return true if the user name exists.
