@@ -12,19 +12,19 @@ if (!$canDelete) {
 }
 
 $userId = Input::Get('User', 'int', 0);
-$editUser = new User($userId);
-if ($editUser->getUserName() == '') {
+$editUser =& new User($userId);
+if (!$editUser->exists()) {
 	camp_html_display_error(getGS('No such user account.'));
 	exit;
 }
-$typeParam = 'uType=' . urlencode($uType);
-$uName = $editUser->getUserName();
 $editUser->delete();
 
+$uName = $editUser->getUserName();
 if ($phorumUser = Phorum_user::GetByUserName($uName)) {
 	$phorumUser->delete();
 }
 
+$typeParam = 'uType=' . urlencode($uType);
 camp_html_add_msg(getGS('User account $1 was deleted successfully.', $uName), "ok");
 camp_html_goto_page("/$ADMIN/users/?$typeParam");
 
