@@ -31,8 +31,10 @@ config.status: configure
 								   --apache_group www-data \
 								   --apache_conf_path /etc/apache2 \
 								   --apache_bin_path /usr/sbin \
-								   --prefix /usr/local \
 								   --campsite_dir /usr/local \
+								   --bin_dir /usr/bin \
+								   --sbin_dir /usr/sbin \
+								   --etc_dir /etc/campsite \
 								   --www_dir /var/www/campsite/www \
 								   --www_common_dir /var/www/campsite/www-common
 
@@ -74,10 +76,34 @@ install: build
 	# Add here commands to install the package into debian/campsite.
 	$(MAKE) install prefix=$(CURDIR)/debian/campsite/usr
 
-	# move the installation to debian/campsite
-	mkdir -p $(CURDIR)/debian/campsite/usr/local
+	### move the installation to the packaging directory first (debian/campsite)
+	# create directories first
+	mkdir -p $(CURDIR)/debian/campsite/usr/bin
+	mkdir -p $(CURDIR)/debian/campsite/usr/sbin
+	mkdir -p $(CURDIR)/debian/campsite/usr/share
+	mkdir -p $(CURDIR)/debian/campsite/etc
+	mkdir -p $(CURDIR)/debian/campsite/etc/cron.d
 	mkdir -p $(CURDIR)/debian/campsite/var/www
-	mv -f /usr/local/campsite $(CURDIR)/debian/campsite/usr/local
+
+	# move files from the bin directory
+	mv -f /usr/bin/campsite-* $(CURDIR)/debian/campsite/usr/bin
+	mv -f /usr/bin/campsite_* $(CURDIR)/debian/campsite/usr/bin
+	mv -f /usr/bin/cli_script_lib.php $(CURDIR)/debian/campsite/usr/bin
+	mv -f /usr/bin/smtp_wrapper $(CURDIR)/debian/campsite/usr/bin
+
+	# move files from the sbin directory
+	mv -f /usr/sbin/campsite_* $(CURDIR)/debian/campsite/usr/sbin
+
+	# move files from the share directory
+	mv -f /usr/share/campsite $(CURDIR)/debian/campsite/usr/share
+
+	# move files from the etc directory
+	mv -f /etc/campsite $(CURDIR)/debian/campsite/etc
+
+	# move files from the cron directory
+	mv -f /etc/cron.d/campsite_* $(CURDIR)/debian/campsite/etc/cron.d
+
+	# move files from the www directory
 	mv -f /var/www/campsite $(CURDIR)/debian/campsite/var/www
 
 # Build architecture-independent files here.

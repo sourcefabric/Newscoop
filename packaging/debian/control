@@ -1,7 +1,7 @@
 Source: campsite
 Section: universe/web
 Priority: optional
-Maintainer: The Campsite Team <campsite-support@campware.org>
+Maintainer: Campware <campsite-support@campware.org>
 Build-Depends: autotools-dev,
 			   libc6-dev (>= 2.4-1ubuntu12 ),
 			   libcurl3-dev (>= 7.14.0-2ubuntu1 ),
