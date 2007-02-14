@@ -219,16 +219,22 @@ function camp_comment_first_post($p_article, $p_forumId)
 
 	// Get article creator
 	$user =& new User($p_article->getCreatorId());
-	$userId = $user->getUserId();
-	$userEmail = $user->getEmail();
-	$userPasswd = $user->getPassword();
-	$userRealName = $user->getRealName();
+	if ($user->exists()) {
+		$userId = $user->getUserId();
+		$userEmail = $user->getEmail();
+		$userPasswd = $user->getPassword();
+		$userRealName = $user->getRealName();
 
-	// Create phorum user if necessary
-	$phorumUser =& new Phorum_user($userId);
-	if (!$phorumUser->CampUserExists($userId)
-		&& !$phorumUser->create($user->getUserName(), $userPasswd, $userEmail, $userId)) {
-		return false;
+		// Create phorum user if necessary
+		$phorumUser =& new Phorum_user($userId);
+		if (!$phorumUser->CampUserExists($userId)
+			&& !$phorumUser->create($user->getUserName(), $userPasswd, $userEmail, $userId)) {
+			return false;
+		}
+	} else {
+		$userId = null;
+		$userEmail = '';
+		$userRealName = '';
 	}
 
 	// Create the comment.
