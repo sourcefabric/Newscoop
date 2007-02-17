@@ -363,8 +363,13 @@ function translationForm($p_request)
 	            }
 	            // Otherwise, display it in the default language.
 	            else {
+	            	if (isset($defaultStrings[$sourceKey])) {
+	            		$defaultValue = $defaultStrings[$sourceKey];
+	            	} else {
+	            		$defaultValue = '';
+	            	}
 	            	?>
-	                <b><?php echo $g_localizerConfig['DEFAULT_LANGUAGE']; ?>:</b> <?php echo $pre.$defaultStrings[$sourceKey].$post; ?>
+	                <b><?php echo $g_localizerConfig['DEFAULT_LANGUAGE']; ?>:</b> <?php echo $pre.$defaultValue.$post; ?>
 	                <?php
 	            }
 				?>
