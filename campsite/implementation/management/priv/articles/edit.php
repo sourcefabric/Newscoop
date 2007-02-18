@@ -170,7 +170,9 @@ foreach ($dbColumns as $dbColumn) {
 	}
 }
 if (($f_edit_mode == "edit") && $hasArticleBodyField) {
-	editor_load_xinha($dbColumns, $g_user);
+	$languageSelectedObj =& new Language($f_language_selected);
+	$editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
+	editor_load_xinha($dbColumns, $g_user, $editorLanguage);
 }
 
 // If the article is locked.
