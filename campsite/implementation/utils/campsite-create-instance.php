@@ -230,7 +230,7 @@ function camp_create_database($p_defined_parameters)
 	} else {
 		camp_msg(' * Creating the database...', false);
 		if (!camp_database_exists($db_name)
-			&& !mysql_query("CREATE DATABASE `$db_name` CHARACTER SET utf8 COLLATE utf8_bin")) {
+			&& !mysql_query("CREATE DATABASE `$db_name` CHARACTER SET utf8")) {
 			return "Unable to create the database " . $db_name;
 		}
 		$cmd = "mysql --user=$db_user --host=" . $Campsite['DATABASE_SERVER_ADDRESS']
@@ -369,18 +369,24 @@ function camp_detect_database_version($p_db_name, &$version)
 				$row = mysql_fetch_array($res2, MYSQL_ASSOC);
 				if (!is_null($row) && strstr($row['Type'], '166') != '') {
 					$version = "2.6.1";
+				} else {
+					return 0;
 				}
 				if (!$res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'")) {
 					return "Unable to query the database $p_db_name";
 				}
 				if (mysql_num_rows($res2) > 0) {
 					$version = "2.6.2";
+				} else {
+					return 0;
 				}
 				if (!$res2 = mysql_query("SELECT * FROM Events WHERE Id = 171")) {
 					return "Unable to query the database $p_db_name";
 				}
 				if (mysql_num_rows($res2) > 0) {
 					$version = "2.6.3";
+				} else {
+					return 0;
 				}
 				if (!$res2 = mysql_query("SELECT * FROM UserConfig "
 										 . "WHERE varname = 'ExternalSubscriptionManagement'")) {
@@ -388,6 +394,8 @@ function camp_detect_database_version($p_db_name, &$version)
 				}
 				if (mysql_num_rows($res2) > 0) {
 					$version = "2.6.4";
+				} else {
+					return 0;
 				}
 				if (!$res2 = mysql_query("SELECT * from phorum_users "
 										 . "WHERE fk_campsite_user_id IS NULL")) {
@@ -446,7 +454,7 @@ function camp_restore_database($p_db_name, $p_defined_parameters)
 	if (camp_database_exists($p_db_name)) {
 		camp_clean_database($p_db_name);
 	} else {
-		if (!mysql_query("CREATE DATABASE `$p_db_name` CHARACTER SET utf8 COLLATE utf8_bin")) {
+		if (!mysql_query("CREATE DATABASE `$p_db_name` CHARACTER SET utf8")) {
 			return "Unable to restore database: can't create the database";
 		}
 	}
