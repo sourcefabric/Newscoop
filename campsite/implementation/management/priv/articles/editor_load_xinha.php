@@ -5,7 +5,7 @@
  * @param User p_user
  * @return void
  */
-function editor_load_xinha($p_dbColumns, $p_user) {
+function editor_load_xinha($p_dbColumns, $p_user, $p_editorLanguage) {
 	global $Campsite;
 	$stylesheetFile = $Campsite['HTML_COMMON_DIR']
 		."/priv/articles/article_stylesheet.css";
@@ -13,7 +13,7 @@ function editor_load_xinha($p_dbColumns, $p_user) {
 <script type="text/javascript">
 	//<![CDATA[
       _editor_url = "/javascript/xinha/";
-      _editor_lang = "<?php p($_REQUEST['TOL_Language']); ?>";
+      _editor_lang = "<?php p($p_editorLanguage); ?>";
       _campsite_article_id = <?php echo $_REQUEST['f_article_number']; ?>;
 	//]]>
 </script>
