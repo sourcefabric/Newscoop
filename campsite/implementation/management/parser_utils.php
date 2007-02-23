@@ -17,12 +17,12 @@ function camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies)
 	camp_debug_msg("request method: " . getenv("REQUEST_METHOD"));
 
 	$msg = camp_create_url_request_message($p_env_vars, $p_parameters, $p_cookies);
-	for ($i = 1; $i <= 10; $i++) {
+	for ($i = 1; $i <= 3; $i++) {
 		$size_read = camp_read_parser_output(camp_send_message_to_parser($msg));
 		if ($size_read > 0) {
 			break;
 		}
-		usleep(200000);
+		usleep(1000000);
 	}
 }
 
@@ -43,7 +43,7 @@ function camp_start_parser()
 		return -1;
 	}
 	$childOutput = popen("$binFile$args", "r");
-	usleep(300000);
+	usleep(500000);
 	pclose($childOutput);
 } // fn camp_start_parser
 
@@ -111,13 +111,15 @@ function camp_send_message_to_parser($p_msg, $p_closeSocket = false)
 	for ($i = 1; $i <= 3; $i++) {
 		@$socket = fsockopen('127.0.0.1', $Campsite['PARSER_PORT'], $errno, $errstr, 30);
 		if (!$socket) {
+			camp_debug_msg("Can't open parser socket: restaring the parser...");
 			camp_start_parser();
-			usleep(100000);
 		} else {
-			camp_debug_msg("OK.");
+			camp_debug_msg("Success opening connection to the parser.");
+			break;
 		}
 	}
 	if (!$socket) {
+		camp_debug_msg("Can't open parser socket after 3 restarts. Giving up...");
 		exit(0);
 	}
 	$final_msg = "0001 $size $p_msg";
