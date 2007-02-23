@@ -40,6 +40,41 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+class outbuf : public std::streambuf
+{
+public:
+	outbuf(int p_nFileId = -1) : m_nFileId(p_nFileId) {}
+
+protected:
+	// central output function
+	virtual int overflow (int c)
+	{
+		if (m_nFileId == -1)
+			return EOF;
+		if (c != EOF)
+		{
+			// write the character to the output file
+			if (write(m_nFileId, &c, 1) != 1)
+				return EOF;
+		}
+		return c;
+	}
+
+private:
+	int m_nFileId;
+};
+
+#ifdef _DEBUG
+#define DEBUG_FD 2
+#else
+#define DEBUG_FD -1
+#endif
+outbuf g_coDebugBuf(DEBUG_FD);
+ostream g_coDebug(&g_coDebugBuf);
+
+outbuf g_coNoDebugBuf(-1);
+ostream g_coNoDebug(&g_coNoDebugBuf);
+
 class Exception
 {
 public:
