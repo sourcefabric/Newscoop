@@ -1502,7 +1502,7 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 	{
 		return ERR_NOPARAM;
 	}
-	CURL* pcoURL = (fromstart ? c.DefURL()->clone() : c.URL()->clone());
+	SafeAutoPtr<CURL> pcoURL(fromstart ? c.DefURL()->clone() : c.URL()->clone());
 	if (m_nPubLevel < CMS_PL_ARTICLE)
 		pcoURL->deleteParameter(P_NRARTICLE);
 	if (m_nPubLevel < CMS_PL_SECTION)
@@ -1538,10 +1538,6 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 	if (m_nPubLevel > CMS_PL_ARTICLE)
 	{
 		PrintSubtitlesURL(c, coOut, first);
-	}
-	if (m_nPubLevel < CMS_PL_ARTICLE)
-	{
-		delete pcoURL;
 	}
 	if (c.Level() == CLV_ROOT)
 	{

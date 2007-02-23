@@ -79,13 +79,24 @@ using std::flush;
 #warning *******************************************************************************
 #endif
 
+outbuf g_coDebugBuf(1);
+ostream g_coDebug(&g_coDebugBuf);
+
+outbuf g_coNoDebugBuf(-1);
+ostream g_coNoDebug(&g_coNoDebugBuf);
+
 CMessage* readMessage(CTCPSocket* p_pcoClSock, CMessageFactoryRegister& p_rcoMFReg)
 {
 	char pchContent[11];
 
 	int nMsgLen = p_pcoClSock->Recv(pchContent, 10, 0);
 	if (nMsgLen < 9)
+	{
+#ifdef _DEBUG
+		g_coDebug << debugHeader("readMessage") << "receive error" << endl;
+#endif
 		throw SocketErrorException("Receive error");
+	}
 
 	pchContent[10] = 0;
 	uint nDataSize = strtol(pchContent + 5, NULL, 16);
@@ -171,7 +182,7 @@ void* MyThreadRoutine(void* p_pArg)
 {
 	if (p_pArg == 0)
 	{
-		cerr << "MyThreadRoutine: Invalid arg\n";
+		g_coDebug << debugHeader("MyThreadRoutine") << "Invalid (NULL) arg\n";
 		return NULL;
 	}
 
@@ -202,11 +213,12 @@ void* MyThreadRoutine(void* p_pArg)
 			throw RunException("Error on select");
 		}
 #ifdef _DEBUG
-		cout << "MyThreadRoutine: reading message" << endl;
+		g_coDebug << debugHeader("MyThreadRoutine") << "reading message" << endl;
 #endif
 		pcoMessage = readMessage(pcoClSock, CMessageFactoryRegister::getInstance());
 #ifdef _DEBUG
-		cout << "received message " << pcoMessage->getMessageTypeId() << endl;
+		g_coDebug << debugHeader("MyThreadRoutine") << "received message "
+				<< pcoMessage->getMessageTypeId() << endl;
 #endif
 		if (pcoMessage->getMessageTypeId() == 2) {
 			resetCache((CMsgResetCache*)pcoMessage);
@@ -216,14 +228,15 @@ void* MyThreadRoutine(void* p_pArg)
 			return NULL;
 		string coAlias = ((CMsgURLRequest*)pcoMessage)->getHTTPHost();
 #ifdef _DEBUG
-		cout << "alias: " << coAlias << endl;
+		g_coDebug << debugHeader("MyThreadRoutine") << "alias: " << coAlias << endl;
 #endif
 		const CPublication* pcoPub = CPublicationsRegister::getInstance().getPublication(coAlias);
 		const CURLType* pcoURLType = pcoPub->getURLType();
 		CURL* pcoURL = pcoURLType->getURL(*((CMsgURLRequest*)pcoMessage));
 		string coRemoteAddress = ((CMsgURLRequest*)pcoMessage)->getRemoteAddress();
 #ifdef _DEBUG
-		cout << "url type: " << pcoURLType->getTypeName() << endl;
+		g_coDebug << debugHeader("MyThreadRoutine") << "url type: "
+				<< pcoURLType->getTypeName() << endl;
 #endif
 
 		pSql = MYSQLConnection();
@@ -241,7 +254,8 @@ void* MyThreadRoutine(void* p_pArg)
 	{
 		coErrorMsg = coEx.what();
 #ifdef _DEBUG
-		cerr << "MyThreadRoutine: " << coEx.what() << " (RunException)" << endl;
+		g_coDebug << debugHeader("MyThreadRoutine") << coEx.what()
+				<< " (RunException)" << endl;
 #endif
 	}
 	catch (SocketErrorException& coEx)
@@ -249,35 +263,47 @@ void* MyThreadRoutine(void* p_pArg)
 		coErrorMsg = string("There was an error communicating with the template engine: ")
 				+ coEx.Message() + "! Please restart the template engine.";
 #ifdef _DEBUG
-		cerr << "MyThreadRoutine: " << coEx.Message() << " (SocketErrorException)" << endl;
+		g_coDebug << debugHeader("MyThreadRoutine") << coEx.Message()
+				<< " (SocketErrorException)" << endl;
+#endif
+	}
+	catch (ExMutex& coEx)
+	{
+		coErrorMsg = string("Internal error: ") + coEx.Message();
+#ifdef _DEBUG
+		g_coDebug << debugHeader("MyThreadRoutine") << coEx.Message()
+				<< " (ExMutex)" << endl;
 #endif
 	}
 	catch (out_of_range& coEx)
 	{
 		coErrorMsg = string("Internal out of range error: ") + coEx.what();
 #ifdef _DEBUG
-		cerr << "MyThreadRoutine: " << coEx.what() << " (out_of_range)" << endl;
+		g_coDebug << debugHeader("MyThreadRoutine")<< coEx.what()
+				<< " (out_of_range)" << endl;
 #endif
 	}
 	catch (bad_alloc& coEx)
 	{
 		coErrorMsg = string("Internal memory allocation error: ") + coEx.what();
 #ifdef _DEBUG
-		cerr << "MyThreadRoutine: " << coEx.what() << " (bad_alloc)" << endl;
+		g_coDebug << debugHeader("MyThreadRoutine") << coEx.what()
+				<< " (bad_alloc)" << endl;
 #endif
 	}
 	catch (exception& coEx)
 	{
 		coErrorMsg = string("Internal error: ") + coEx.what();
 #ifdef _DEBUG
-		cerr << "MyThreadRoutine: " << coEx.what() << " (exception)" << endl;
+		g_coDebug << debugHeader("MyThreadRoutine") << coEx.what()
+				<< " (exception)" << endl;
 #endif
 	}
 	catch (...)
 	{
 		coErrorMsg = "Unknown internal error";
 #ifdef _DEBUG
-		cerr << "MyThreadRoutine: other exception" << endl;
+		g_coDebug << debugHeader("MyThreadRoutine") << "other exception" << endl;
 #endif
 	}
 	if (coErrorMsg != "")

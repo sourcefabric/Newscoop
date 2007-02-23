@@ -35,6 +35,7 @@ Implementation of the classes defined in mutex.h
 #include <unistd.h>
 
 #include "mutex.h"
+#include "globals.h"
 
 using std::cout;
 using std::endl;
@@ -42,10 +43,12 @@ using std::map;
 using std::queue;
 using std::pair;
 
-const int g_nMaxTries = 1000;
+
+const int g_nMaxTries = 30;
+
 
 // CMutex (default constructor)
-CMutex::CMutex()
+CMutex::CMutex() : m_pcoDebug(&g_coNoDebug)
 {
 	sem_init(&m_Semaphore, 0, 0);
 	m_bLocked = false;
@@ -54,6 +57,7 @@ CMutex::CMutex()
 	m_bClosing = false;
 	sem_post(&m_Semaphore);
 }
+
 
 // ~CMutex (destructor)
 CMutex::~CMutex() throw()
@@ -68,12 +72,19 @@ CMutex::~CMutex() throw()
 	sem_post(&m_Semaphore);
 }
 
+
 // lock: locks mutex
 int CMutex::lock() throw(ExMutex)
 {
+	*m_pcoDebug << debugHeader(debugHeaderStr("lock")) << "begin; lock: "
+			<< (int)m_bLocked << ", closing: " << (int)m_bClosing << ", count: "
+			<< m_nLockCnt << ", thread: " << m_LockingThread << endl;
 	sem_wait(&m_Semaphore);		// wait for semaphore in order to work with members
+	*m_pcoDebug << debugHeader(debugHeaderStr("lock")) << "passed the semaphore" << endl;
 	if (m_bClosing)
 	{
+		*m_pcoDebug << debugHeader(debugHeaderStr("lock"))
+				<< "error: lock when closing" << endl;
 		sem_post(&m_Semaphore);
 		throw ExMutex(MutexSvAbort, "Mutex is closing");
 		return 1;
@@ -81,21 +92,36 @@ int CMutex::lock() throw(ExMutex)
 	if (m_bLocked && m_LockingThread == pthread_self())
 	{							// if locked by myself just increment the lock counter
 		m_nLockCnt++;
+		*m_pcoDebug << debugHeader(debugHeaderStr("lock")) << "lock by self; count: "
+				<< m_nLockCnt << endl;
 		sem_post(&m_Semaphore);
 		return 0;
 	}
+	*m_pcoDebug << debugHeader(debugHeaderStr("lock")) << "release semaphore" << endl;
 	sem_post(&m_Semaphore);		// release semaphore
 	int i;
 	for (i = 1; i < g_nMaxTries; i++)
 	{
 		sem_wait(&m_Semaphore);
+		*m_pcoDebug << debugHeader(debugHeaderStr("lock"))
+				<< "loop - acquired semaphore" << endl;
 		if (!m_bLocked)			// wait until mutex is not locked
+		{
+			*m_pcoDebug << debugHeader(debugHeaderStr("lock"))
+					<< "loop - found unlocked mutex" << endl;
 			break;
+		}
+		*m_pcoDebug << debugHeader(debugHeaderStr("lock")) << "loop - mutex locked by "
+				<< m_LockingThread << ", releasing semaphore" << endl;
 		sem_post(&m_Semaphore);
-		usleep(200);
+		uint nRandState;
+		usleep(300000 + rand_r(&nRandState) % 500000);
 	}
 	if (i >= g_nMaxTries)
 	{
+		*m_pcoDebug << debugHeader(debugHeaderStr("lock"))
+				<< "error - couldn't lock mutex in "
+				<< g_nMaxTries << " tries" << endl;
 		sem_post(&m_Semaphore);
 		throw ExMutex(MutexSvAbort, "Error locking mutex");
 		return 1;
@@ -103,30 +129,62 @@ int CMutex::lock() throw(ExMutex)
 	m_bLocked = true;
 	m_LockingThread = pthread_self();
 	m_nLockCnt = 1;
+	*m_pcoDebug << debugHeader(debugHeaderStr("lock")) << "locked by thread "
+			<< m_LockingThread << ", releasing semaphore" << endl;
 	sem_post(&m_Semaphore);
 	return 0;
 }
 
+
 // unlock: unlocks mutex
 int CMutex::unlock() throw()
 {
+	*m_pcoDebug << debugHeader(debugHeaderStr("unlock")) << "begin; lock: "
+			<< (int)m_bLocked << ", closing: " << (int)m_bClosing << ", count: "
+			<< m_nLockCnt << ", thread: " << m_LockingThread << endl;
 	sem_wait(&m_Semaphore);
+	*m_pcoDebug << debugHeader(debugHeaderStr("unlock"))
+			<< "passed the semaphore" << endl;
 	if (m_bClosing)
 	{
+		*m_pcoDebug << debugHeader(debugHeaderStr("unlock"))
+				<< "closing - release semaphore" << endl;
 		sem_post(&m_Semaphore);
 		return 0;
 	}
 	if (m_bLocked && m_LockingThread == pthread_self())
 	{							// if locked by myself decrement lock count
 		m_nLockCnt--;
+		*m_pcoDebug << debugHeader(debugHeaderStr("unlock")) << "lock count: "
+				<< m_nLockCnt << endl;
 		if (m_nLockCnt == 0)	// when lock count reach 0 unlock mutex
 		{
+			*m_pcoDebug << debugHeader(debugHeaderStr("unlock")) << "unlocked" << endl;
 			m_bLocked = false;
+			m_nLockCnt = 0;
+			m_LockingThread = 0;
 		}
 	}
+	*m_pcoDebug << debugHeader(debugHeaderStr("unlock"))
+			<< "releasing the semaphore" << endl;
 	sem_post(&m_Semaphore);
 	return 0;
 }
+
+
+void CMutex::setDebug(bool p_bDebug) throw()
+{
+	m_bDebug = p_bDebug;
+	if (p_bDebug)
+	{
+		m_pcoDebug = &g_coDebug;
+	}
+	else
+	{
+		m_pcoDebug = &g_coNoDebug;
+	}
+}
+
 
 /*  CRWMutex description
 

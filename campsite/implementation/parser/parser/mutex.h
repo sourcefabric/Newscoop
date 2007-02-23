@@ -34,6 +34,13 @@ Define CMutex class; this is a C++ wrapper of POSIX mutex.
 
 #include <pthread.h>
 #include <semaphore.h>
+#include <iostream>
+#include <string>
+#include <sstream>
+
+using std::ostream;
+using std::string;
+using std::stringstream;
 
 #define MutexSvLow 0
 #define MutexSvRetry 1
@@ -73,12 +80,28 @@ public:
 	// unlock: unlock mutex
 	int unlock() throw();
 
+	void setDebug(bool p_bDebug) throw();
+
+	bool getDebug() const throw()
+	{
+		return m_bDebug;
+	}
+
+	string debugHeaderStr(const string& p_rcoMethod)
+	{
+		stringstream coHeaderStr;
+		coHeaderStr << "CMutex::" << p_rcoMethod << "(addr: " << this << ")";
+		return coHeaderStr.str();
+	}
+
 private:
 	sem_t m_Semaphore;	// semaphore used to lock access to members
 	bool m_bLocked;
 	pthread_t m_LockingThread;
 	int m_nLockCnt;
 	bool m_bClosing;
+	bool m_bDebug;
+	ostream *m_pcoDebug;
 };
 
 // CMutexHandler: handler for mutex class; when the object is instantiated it locks the mutex
@@ -87,17 +110,22 @@ class CMutexHandler
 {
 public:
 	// CMutexHandler constructor; locks the mutex
-	CMutexHandler(CMutex* m) : m_pcoMutex(m)
+	CMutexHandler(CMutex* m, bool p_bDebug = false) : m_pcoMutex(m)
 	{
+		m_pcoMutex->setDebug(p_bDebug);
 		if (m_pcoMutex)
+		{
 			m_pcoMutex->lock();
+		}
 	}
 
 	//CMutexHandler destructor; unlocks the mutex
 	~CMutexHandler() throw()
 	{
 		if (m_pcoMutex)
+		{
 			m_pcoMutex->unlock();
+		}
 	}
 
 	//get: returns pointer to handled mutex

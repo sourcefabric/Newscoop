@@ -51,7 +51,7 @@ typedef map <string, id_type, less<string> > CPublicationsAliases;
 class CPublicationsRegister
 {
 	public:
-		CPublicationsRegister() {}
+		CPublicationsRegister();
 
 		static CPublicationsRegister& getInstance();
 
@@ -61,16 +61,17 @@ class CPublicationsRegister
 
 		bool has(id_type p_nPublicationId) const;
 
-		const CPublication* getPublication(const string& p_rcoAlias) const throw (out_of_range);
+		const CPublication* getPublication(const string& p_rcoAlias) const throw (out_of_range, ExMutex);
 
-		const CPublication* getPublication(id_type p_nPublicationId) const throw (out_of_range);
+		const CPublication* getPublication(id_type p_nPublicationId) const throw (out_of_range, ExMutex);
 
 	private:
 		CPublicationsMap m_coPublications;
 		CPublicationsAliases m_coAliases;
+		ostream *m_pcoAliasDebug;
 
 #ifdef _REENTRANT
-	mutable CMutex m_coMutex;
+		mutable CMutex m_coMutex;
 #endif
 };
 
@@ -94,31 +95,18 @@ inline bool CPublicationsRegister::has(id_type p_nPublicationId) const
 	return m_coPublications.find(p_nPublicationId) != m_coPublications.end();
 }
 
-inline const CPublication* CPublicationsRegister::getPublication(const string& p_rcoAlias) const
-		throw (out_of_range)
-{
-#ifdef _REENTRANT
-	CMutexHandler coLockHandler(&m_coMutex);
-#endif
-	CPublicationsAliases::const_iterator coIt = m_coAliases.find(p_rcoAlias);
-	if (coIt == m_coAliases.end())
-		throw out_of_range(string("invalid publication alias ") + p_rcoAlias);
-	CPublicationsMap::const_iterator coIt2 = m_coPublications.find((*coIt).second);
-	if (coIt2 == m_coPublications.end())
-		throw out_of_range(string("internal error: publication missing for alias ") + p_rcoAlias);
-	return (*coIt2).second;
-}
-
 inline const CPublication* CPublicationsRegister::getPublication(id_type p_nPublicationId) const
-		throw (out_of_range)
+		throw (out_of_range, ExMutex)
 {
 #ifdef _REENTRANT
 	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	CPublicationsMap::const_iterator coIt2 = m_coPublications.find(p_nPublicationId);
 	if (coIt2 == m_coPublications.end())
+	{
 		throw out_of_range(string("invalid publication identifier ")
 				+ (string)Integer(p_nPublicationId));
+	}
 	return (*coIt2).second;
 }
 

@@ -51,6 +51,17 @@ string SQL_DATABASE;
 int SQL_SRV_PORT = 0;
 char *prog_name = 0;
 
+#ifdef _DEBUG
+#define DEBUG_FD 2
+#else
+#define DEBUG_FD -1
+#endif
+outbuf g_coDebugBuf(DEBUG_FD);
+ostream g_coDebug(&g_coDebugBuf);
+
+outbuf g_coNoDebugBuf(-1);
+ostream g_coNoDebug(&g_coNoDebugBuf);
+
 struct article_t {
 	unsigned IdPublication;
 	unsigned NrIssue;

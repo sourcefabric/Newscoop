@@ -38,6 +38,7 @@ Implementation of CCLexem, CCLex, CCParser methods.
 #include "error.h"
 #include "curl.h"
 #include "cpublication.h"
+#include "auto_ptr.h"
 
 
 using std::cout;
@@ -771,7 +772,7 @@ const CCLexem* CCParser::DoParse(CContext& p_rcoContext, sockstream& p_rcoOut,
 			if (case_comp(mode, "internal") == 0)
 			{
 				CContext rcoContext = p_rcoContext;
-				String2StringMMap* pcoParams = CURL::readQueryString(link);
+				SafeAutoPtr<String2StringMMap> pcoParams(CURL::readQueryString(link));
 				String2StringMMap::const_iterator coIt = pcoParams->find(P_IDLANG);
 				if (coIt == pcoParams->end())
 					return l;
