@@ -41,9 +41,39 @@
   14) #2401 - The title is not retrieved properly when uploading an audioclip
   15) #2402 - The album is not retrieved when uploading an audioclip
 
+2.6.7 (February 23, 2007)
+  For full details about these changes, see:
+  http://code.campware.org/projects/campsite/query?milestone=2.6.7
+
+  Small Improvements (2 total)
+  ----------------------------
+  01) #2421 - Improve the comments management UI
+  02) #2422 - Base files for the .deb package
+  
+  Bugs Fixed (13 total)
+  ---------------------
+  Bugs are listed in order of oldest to newest.
+  
+  01) #2407 - Error in localizer when the source language was not defined
+  02) #2412 - Error when an image was deleted from the article but the
+              link to it from the article content was not
+  03) #2413 - Check for PHP GD fails
+  04) #2418 - Bad includes in ad.php and ad_popup.php generates errors
+  05) #2420 - Ugly error message when can't connect to the MySQL server
+  06) #2423 - When using translate feature some properties of original
+              article are lost
+  07) #2425 - Campsite and phorum users may become unsynchronized
+  08) #2427 - Phorum user is not initialized properly when submitting a
+              commment
+  09) #2429 - Error posting comment
+  10) #2430 - Localizer error message when logging in
+  11) #2431 - Error when editing article: Undefined index: TOL_Language
+  12) #2432 - Error when upgrading the database from 2.6.0
+  13) #2434 - Error processing requests in the template engine
+
 2.6.6 (January 26, 2007)
   For full details about these changes, see:
-  http://code.campware.org/projects/campsite/query?milestone=2.6.5
+  http://code.campware.org/projects/campsite/query?milestone=2.6.6
 
   Small Improvements (1 total)
   ----------------------------
