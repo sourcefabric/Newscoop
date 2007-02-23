@@ -38,7 +38,6 @@ CURLShortNames::CURLShortNames(const CURLShortNames& p_rcoSrc)
 	m_bValidURI = p_rcoSrc.m_bValidURI;
 	m_coURIPath = p_rcoSrc.m_coURIPath;
 	m_coQueryString = p_rcoSrc.m_coQueryString;
-	m_pDBConn = p_rcoSrc.m_pDBConn;
 	m_coHTTPHost = p_rcoSrc.m_coHTTPHost;
 	m_coTemplate = p_rcoSrc.m_coTemplate;
 	m_bLockTemplate = p_rcoSrc.m_bLockTemplate;
@@ -59,14 +58,21 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLockT
 	string coURI = p_rcoURLMessage.getReqestURI();
 	m_bValidURI = true;
 
-	CMYSQL_RES coRes;
-	string coQuery = string("select IdPublication from Aliases where Name = '")
-	               + m_coHTTPHost + "'";
-	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
-	if (qRow == NULL)
+	id_type nPublication = -1;
+	try
+	{
+		const CPublication* pcoPub = CPublicationsRegister::getInstance().getPublication(m_coHTTPHost);
+		nPublication = pcoPub->getId();
+		setPublication(nPublication);
+	}
+	catch (...)
+	{
+#ifdef _DEBUG_ALIAS
+		g_coDebug << debugHeader("CURLTemplatePath::setURL") << "invalid site alias: "
+				<< m_coHTTPHost << endl;
+#endif
 		throw InvalidValue("site alias", m_coHTTPHost.c_str());
-	id_type nPublication = Integer(qRow[0]);
-	setPublication(nPublication);
+	}
 
 	// prepare the path string
 	string::size_type nQMark = coURI.find('?');
@@ -84,6 +90,8 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLockT
 	// read the language code
 	coLangCode = m_coURIPath.substr(nCurrent, nNext - nCurrent);
 
+	CMYSQL_RES coRes;
+	string coQuery;
 	if ("" != coLangCode)
 		// query the database for the language code
 		coQuery = string("select Id from Languages where Code = '") + coLangCode + "'";
@@ -91,7 +99,7 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLockT
 		// read the default publication language
 		coQuery = string("select IdDefaultLanguage from Publications where Id = ")
 		        + getValue(P_IDPUBL);
-	qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+	MYSQL_ROW qRow = QueryFetchRow(MYSQLConnection(), coQuery.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("language code", coLangCode.c_str());
 	id_type nLanguage = Integer(qRow[0]);
@@ -114,7 +122,7 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLockT
 		coQuery = string("select Number from Issues where IdPublication = ")
 		        + getValue(P_IDPUBL) + " and IdLanguage = " + getValue(P_IDLANG)
 		        + " and ShortName = '" + coIssue + "'";
-		qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+		qRow = QueryFetchRow(MYSQLConnection(), coQuery.c_str(), coRes);
 		if (qRow == NULL)
 			throw InvalidValue("issue short name", coIssue.c_str());
 		nIssue = Integer(qRow[0]);
@@ -125,7 +133,7 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLockT
 		coQuery = string("select max(Number) from Issues where IdPublication = ")
 		        + (string)Integer(nPublication) + " and IdLanguage = "
 		        + (string)Integer(nLanguage) + " and Published = 'Y'";
-		qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+		qRow = QueryFetchRow(MYSQLConnection(), coQuery.c_str(), coRes);
 		if (qRow != NULL)
 		{
 			if (qRow[0] == NULL || atol(qRow[0]) <= 0)
@@ -154,7 +162,7 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLockT
 		coQuery = string("select Number from Sections where IdPublication = ")
 		        + getValue(P_IDPUBL) + coIssueCond + " and IdLanguage = " + getValue(P_IDLANG)
 		        + " and ShortName = '" + coSection + "'";
-		qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+		qRow = QueryFetchRow(MYSQLConnection(), coQuery.c_str(), coRes);
 		if (qRow == NULL)
 			throw InvalidValue("section short name", coSection.c_str());
 		nSection = Integer(qRow[0]);
@@ -179,7 +187,7 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLockT
 		        + getValue(P_IDPUBL) + coIssueCond + coSectCond
 		        + " and IdLanguage = " + getValue(P_IDLANG)
 		        + " and ShortName = '" + coArticle + "'";
-		qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+		qRow = QueryFetchRow(MYSQLConnection(), coQuery.c_str(), coRes);
 		if (qRow == NULL)
 			throw InvalidValue("article short name", coArticle.c_str());
 		nArticle = Integer(qRow[0]);
@@ -266,7 +274,7 @@ string CURLShortNames::setTemplate(const string& p_rcoTemplate) throw (InvalidVa
 	}
 	string coSql = string("select Id from Templates where Name = '") + coTemplate + "'";
 	CMYSQL_RES coRes;
-	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
+	MYSQL_ROW qRow = QueryFetchRow(MYSQLConnection(), coSql.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("template name", p_rcoTemplate.c_str());
 	m_coTemplate = coTemplate;
@@ -280,7 +288,7 @@ string CURLShortNames::setTemplate(id_type p_nTemplateId) throw (InvalidValue)
 	string coSql = string("select Name from Templates where Id = ")
 	             + (string)Integer(p_nTemplateId);
 	CMYSQL_RES coRes;
-	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
+	MYSQL_ROW qRow = QueryFetchRow(MYSQLConnection(), coSql.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("template identifier", (string)Integer(p_nTemplateId));
 	m_coTemplate = qRow[0];
@@ -297,13 +305,13 @@ string CURLShortNames::getTemplate() const
 	{
 		string coSql = string("select Name from Templates where Id = ") + getValue(P_TEMPLATE_ID);
 		CMYSQL_RES coRes;
-		MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
+		MYSQL_ROW qRow = QueryFetchRow(MYSQLConnection(), coSql.c_str(), coRes);
 		m_coTemplate = qRow == NULL ? "" : qRow[0];
 	}
 	else
 	{
 		m_coTemplate = CPublication::getTemplate(getLanguage(), getPublication(), getIssue(),
-		                                         getSection(), getArticle(), m_pDBConn, true);
+				getSection(), getArticle(), MYSQLConnection(), true);
 	}
 	m_bValidTemplate = true;
 	return m_coTemplate;
@@ -325,7 +333,7 @@ void CURLShortNames::BuildURI() const
 
 	CMYSQL_RES coRes;
 	string coQuery = string("select Code from Languages where Id = ") + getValue(P_IDLANG);
-	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+	MYSQL_ROW qRow = QueryFetchRow(MYSQLConnection(), coQuery.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("language identifier", getValue(P_IDLANG));
 	m_coURIPath = string("/") + qRow[0] + "/";
@@ -352,7 +360,7 @@ void CURLShortNames::BuildURI() const
 	{
 		coQuery = string("select ShortName from Issues where IdLanguage = ") + coLang
 		        + coPubCond + " and Number = " + getValue(P_NRISSUE);
-		qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+		qRow = QueryFetchRow(MYSQLConnection(), coQuery.c_str(), coRes);
 		if (qRow == NULL)
 			throw InvalidValue("issue number", getValue(P_NRISSUE));
 		coIssueSN = qRow[0];
@@ -362,7 +370,7 @@ void CURLShortNames::BuildURI() const
 	{
 		coQuery = string("select ShortName from Sections where IdLanguage = ") + coLang 
 		        + coPubCond + coIssueCond + " and Number = " + getValue(P_NRSECTION);
-		qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+		qRow = QueryFetchRow(MYSQLConnection(), coQuery.c_str(), coRes);
 		if (qRow == NULL)
 			throw InvalidValue("section number", getValue(P_NRSECTION));
 		coSectionSN = qRow[0];
@@ -372,7 +380,7 @@ void CURLShortNames::BuildURI() const
 	{
 		coQuery = string("select ShortName from Articles where IdLanguage = ") + coLang 
 		        + coPubCond + coIssueCond + coSectionCond + coArticleCond;
-		qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+		qRow = QueryFetchRow(MYSQLConnection(), coQuery.c_str(), coRes);
 		if (qRow == NULL)
 			throw InvalidValue("article number", getValue(P_NRARTICLE));
 		coArticleSN = qRow[0];

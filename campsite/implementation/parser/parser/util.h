@@ -52,7 +52,7 @@ extern int SQL_SRV_PORT;
 // SQLConnection: initialise connection to MySQL server
 // Parameters: none
 // Returns: pointer to MYSQL structure; NULL if error
-MYSQL* MYSQLConnection();
+MYSQL* MYSQLConnection(bool p_bForceNew = false);
 
 // UpdateTopics: update topics values from campsite database
 // Parameters: bool& p_rbUpdated - out parameter: set true if values changed

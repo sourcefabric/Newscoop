@@ -43,7 +43,6 @@ CURLTemplatePath::CURLTemplatePath(const CURLTemplatePath& p_rcoSrc)
 	m_bValidURI = p_rcoSrc.m_bValidURI;
 	m_coURIPath = p_rcoSrc.m_coURIPath;
 	m_coQueryString = p_rcoSrc.m_coQueryString;
-	m_pDBConn = p_rcoSrc.m_pDBConn;
 	m_coHTTPHost = p_rcoSrc.m_coHTTPHost;
 	m_coTemplate = p_rcoSrc.m_coTemplate;
 	m_bLockTemplate = p_rcoSrc.m_bLockTemplate;
@@ -64,20 +63,21 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLoc
 	string coURI = p_rcoURLMessage.getReqestURI();
 	m_bValidURI = true;
 
-	CMYSQL_RES coRes;
-	string coQuery = string("select IdPublication from Aliases where Name = '")
-	               + m_coHTTPHost + "'";
-	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
-#ifdef _DEBUG
-	cout << "CURLTemplatePath alias query: " << coQuery << endl;
-#endif
-	if (qRow == NULL)
+	id_type nPublication = -1;
+	try
 	{
-		cout << "CURLTemplatePath query: result is NULL" << endl;
+		const CPublication* pcoPub = CPublicationsRegister::getInstance().getPublication(m_coHTTPHost);
+		nPublication = pcoPub->getId();
+		setPublication(nPublication);
+	}
+	catch (...)
+	{
+#ifdef _DEBUG_ALIAS
+		g_coDebug << debugHeader("CURLTemplatePath::setURL") << "invalid site alias: "
+				<< m_coHTTPHost << endl;
+#endif
 		throw InvalidValue("site alias", m_coHTTPHost.c_str());
 	}
-	id_type nPublication = Integer(qRow[0]);
-	setPublication(nPublication);
 
 	// prepare the path string
 	string::size_type nQMark = coURI.find('?');
@@ -91,13 +91,15 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLoc
 		if ((*coIt).first != P_IDPUBL)
 			setValue((*coIt).first, (*coIt).second->asString());
 
+	CMYSQL_RES coRes;
+	string coQuery;
 	if ("" == m_coURIPath || "/" == m_coURIPath)
 	{
 		if (0 == getLanguage())
 		{
 			coQuery = string("select IdDefaultLanguage from Publications where Id = ")
 					+ getValue(P_IDPUBL);
-			qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+			MYSQL_ROW qRow = QueryFetchRow(MYSQLConnection(), coQuery.c_str(), coRes);
 #ifdef _DEBUG
 			cout << "CURLTemplatePath def lang query: " << coQuery << endl;
 #endif
@@ -110,7 +112,7 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLoc
 			coQuery = string("select max(Number) from Issues where IdPublication = ")
 					+ getValue(P_IDPUBL) + " and IdLanguage = " + getValue(P_IDLANG)
 					+ " and Published = 'Y'";
-			qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+			MYSQL_ROW qRow = QueryFetchRow(MYSQLConnection(), coQuery.c_str(), coRes);
 			if (qRow != NULL)
 			{
 				if (qRow[0] == NULL || atol(qRow[0]) <= 0)
@@ -121,14 +123,14 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLoc
 			}
 		}
 		m_coTemplate = CPublication::getIssueTemplate(getIntValue(P_IDLANG), getIntValue(P_IDPUBL),
-				getIntValue(P_NRISSUE), m_pDBConn);
+				getIntValue(P_NRISSUE), MYSQLConnection());
 	}
 	else
 	{
 		if (strncmp(m_coURIPath.c_str(), "/look/", 6) != 0)
 			throw InvalidValue("template name", m_coURIPath);
 		m_coTemplate = m_coURIPath.substr(6);
-		CPublication::getTemplateId(m_coTemplate, m_pDBConn);
+		CPublication::getTemplateId(m_coTemplate, MYSQLConnection());
 	}
 	m_bValidTemplate = true;
 
@@ -199,7 +201,7 @@ string CURLTemplatePath::setTemplate(const string& p_rcoTemplate) throw (Invalid
 	}
 	string coSql = string("select Id from Templates where Name = '") + coTemplate + "'";
 	CMYSQL_RES coRes;
-	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
+	MYSQL_ROW qRow = QueryFetchRow(MYSQLConnection(), coSql.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("template name", p_rcoTemplate.c_str());
 	m_coTemplate = coTemplate;
@@ -214,7 +216,7 @@ string CURLTemplatePath::setTemplate(id_type p_nTemplateId) throw (InvalidValue)
 	string coSql = string("select Name from Templates where Id = ")
 	             + (string)Integer(p_nTemplateId);
 	CMYSQL_RES coRes;
-	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
+	MYSQL_ROW qRow = QueryFetchRow(MYSQLConnection(), coSql.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("template identifier", (string)Integer(p_nTemplateId));
 	m_coTemplate = qRow[0];
@@ -228,7 +230,7 @@ string CURLTemplatePath::getTemplate() const
 	if (m_bValidTemplate)
 		return m_coTemplate;
 	m_coTemplate = CPublication::getTemplate(getLanguage(), getPublication(), getIssue(),
-	                                         getSection(), getArticle(), m_pDBConn, true);
+											 getSection(), getArticle(), MYSQLConnection(), true);
 	return m_coTemplate;
 }
 
