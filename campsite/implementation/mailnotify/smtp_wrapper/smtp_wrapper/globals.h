@@ -36,6 +36,7 @@ Global types
 
 #undef _REENTRANT
 
+using std::ostream;
 using std::exception;
 using std::string;
 
@@ -112,6 +113,47 @@ inline string ulong2string(ulint p_nValue)
 	stringstream coStr("");
 	coStr << p_nValue;
 	return coStr.str();
+}
+
+extern ostream g_coDebug;
+extern ostream g_coNoDebug;
+
+struct DebugHeaderContent {
+	ostream& (*m_pDebugMethod)(ostream&, const char*);
+	const char* m_pchString;
+	
+	DebugHeaderContent(ostream& (*p_pDebugMethod)(ostream&, const char* p_pchString),
+				const char* p_pchString)
+	: m_pDebugMethod(p_pDebugMethod), m_pchString(p_pchString) {}
+};
+
+inline ostream& operator << (ostream& p_rOutStream,
+							 DebugHeaderContent p_rDebugHeaderContent)
+{
+	return p_rDebugHeaderContent.m_pDebugMethod(p_rOutStream,
+			p_rDebugHeaderContent.m_pchString);
+}
+
+inline ostream& outDebugHeader(ostream& p_rcoOutStream, const char* p_pchString)
+{
+	if (p_pchString != "")
+	{
+		p_rcoOutStream << p_pchString << " ";
+	}
+#ifdef _REENTRANT
+	p_rcoOutStream << "(th: " << pthread_self() << ") ";
+#endif
+	return p_rcoOutStream;
+}
+
+inline DebugHeaderContent debugHeader(const string& p_rcoString)
+{
+	return DebugHeaderContent(outDebugHeader, p_rcoString.c_str());
+}
+
+inline DebugHeaderContent debugHeader(const char* p_pchString)
+{
+	return DebugHeaderContent(outDebugHeader, p_pchString);
 }
 
 #endif
