@@ -37,8 +37,6 @@ General purpose functions
 #include <new>
 #include <iostream>
 
-#include "globals.h"
-
 using std::cout;
 using std::endl;
 using std::ostream;
@@ -54,7 +52,7 @@ extern int SQL_SRV_PORT;
 // SQLConnection: initialise connection to MySQL server
 // Parameters: none
 // Returns: pointer to MYSQL structure; NULL if error
-MYSQL* MYSQLConnection();
+MYSQL* MYSQLConnection(bool p_bForceNew = false);
 
 // UpdateTopics: update topics values from campsite database
 // Parameters: bool& p_rbUpdated - out parameter: set true if values changed
@@ -172,13 +170,6 @@ public:
 private:
 	MYSQL_RES* m_pRes;
 };
-
-// SQLEscapeString: escape given string for sql query; returns escaped string
-// The returned string must be deallocated by the user using delete operator.
-// Parameters:
-//		const char* src - source string
-//		ulint p_nLength - string length
-char* SQLEscapeString(const char* src, ulint p_nLength);
 
 MYSQL_ROW QueryFetchRow(MYSQL* p_pDBConn, const string& p_rcoQuery, CMYSQL_RES& p_rcoQRes);
 
