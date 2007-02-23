@@ -43,8 +43,8 @@ public:
 	// CURLTemplatePath(): constructor: takes a URLRequest message and reads the URL
 	// Needs a database connection pointer to read the publication parameters from
 	// the database.
-	CURLTemplatePath(const CMsgURLRequest& p_rcoURLMessage, MYSQL* p_pDBConn)
-		: m_pDBConn(p_pDBConn), m_bValidTemplate(false), m_bLockTemplate(false)
+	CURLTemplatePath(const CMsgURLRequest& p_rcoURLMessage)
+		: m_bValidTemplate(false), m_bLockTemplate(false)
 		{ setURL(p_rcoURLMessage); }
 
 	// CURLTemplatePath(): copy constructor
@@ -96,7 +96,6 @@ private:
 	mutable bool m_bValidURI;
 	mutable string m_coURIPath;  // caches the path component of the URI
 	mutable string m_coQueryString;  // caches the query string component of the URI
-	mutable MYSQL* m_pDBConn;  // caches the connection to the database
 	mutable bool m_bValidTemplate;
 	mutable string m_coTemplate;
 
@@ -179,5 +178,5 @@ inline bool CURLTemplatePath::needTemplateParameter() const
 
 inline CURL* CURLTemplatePathType::getURL(const CMsgURLRequest& p_rcoMsg) const
 {
-	return new CURLTemplatePath(p_rcoMsg, MYSQLConnection());
+	return new CURLTemplatePath(p_rcoMsg);
 }

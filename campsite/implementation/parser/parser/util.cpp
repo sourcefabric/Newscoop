@@ -54,13 +54,13 @@ int SQL_SRV_PORT = 0;
 // SQLConnection: initialise connection to MySQL server
 // Parameters: none
 // Returns: pointer to MYSQL structure; NULL if error
-MYSQL* MYSQLConnection()
+MYSQL* MYSQLConnection(bool p_bForceNew)
 {
 	// Each thread should use at most on database connection; this is accomplished
 	// using a static key variable; this is initialised to NULL at program start
 	static TK_MYSQL coMySql(NULL);
 	// connect to mysql server (if not already connected)
-	if (&coMySql != NULL)
+	if (&coMySql != NULL && !p_bForceNew)
 		return &coMySql; 					// already connected
 	MYSQL* pSQL = NULL;
 	if ((pSQL = mysql_init(pSQL)) == NULL)	// initialise connection to MySQL server
@@ -384,7 +384,9 @@ ostream& outEncodeHTML(ostream& p_rcoOutStream, const char* p_pchString, bool p_
 MYSQL_ROW QueryFetchRow(MYSQL* p_pDBConn, const string& p_rcoQuery, CMYSQL_RES& p_rcoQRes)
 {
 	if (p_pDBConn == NULL)
+	{
 		p_pDBConn = MYSQLConnection();
+	}
 	for (int nAttempt = 0; nAttempt < 10; nAttempt++)
 	{
 		if (mysql_query(p_pDBConn, p_rcoQuery.c_str()) != 0)
@@ -399,8 +401,8 @@ MYSQL_ROW QueryFetchRow(MYSQL* p_pDBConn, const string& p_rcoQuery, CMYSQL_RES& 
 		{
 			break;
 		}
-		usleep(100000);
-		p_pDBConn = MYSQLConnection();
+		p_pDBConn = MYSQLConnection(true);
+		usleep(300000);
 	}
 	p_rcoQRes = mysql_store_result(p_pDBConn);
 	return mysql_fetch_row(*p_rcoQRes);
