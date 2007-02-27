@@ -146,6 +146,8 @@ class CCampsiteInstanceRegister
 
 		CCampsiteInstance* getCampsiteInstance(const string& p_rcoInstanceName) const throw (InvalidValue);
 
+		void debug() const;
+
 	private:
 		CCampsiteInstanceMap m_coCCampsiteInstances;
 		map < pid_t, string, less<pid_t> > m_coInstancePIDs;
