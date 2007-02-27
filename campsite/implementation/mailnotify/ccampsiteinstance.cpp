@@ -45,12 +45,13 @@ using std::endl;
 
 bool CCampsiteInstance::isRunning() const
 {
-	int nStatus;
 	if (m_bRunning)
 	{
+		int nStatus;
 		int nRes = waitpid(m_nChildPID, &nStatus, WNOHANG);
-		m_bRunning = nRes >= 0;
-//		m_bRunning = !WIFEXITED(nStatus) && !WIFSIGNALED(nStatus);
+		m_bRunning = nRes == 0;
+		g_coDebug << "***" << m_coName << "* (" << m_nChildPID << ") isRunning res: "
+			<< nRes << ", running: " << m_bRunning << ", status: " << nStatus << endl;
 		if (!m_bRunning)
 		{
 			CCampsiteInstanceRegister::get().unsetPID(m_nChildPID);
@@ -74,14 +75,16 @@ pid_t CCampsiteInstance::run() throw (RunException)
 	pid_t nPid = fork();
 	if (nPid == 0) // this is the child - call InstanceFunction
 	{
-		m_pInstanceFunction(m_coAttributes);
-		exit(0);
+		int nRes = m_pInstanceFunction(m_coAttributes);
+		g_coDebug << "* child " << m_coName << "(" << getpid()
+			<< ") exited with the code: " << nRes << endl;
+		exit(nRes);
 	}
 	else  // this is the parent, register PID
 	{
-		CCampsiteInstanceRegister::get().insert(*this);
 		m_nChildPID = nPid;
 		m_bRunning = true;
+		CCampsiteInstanceRegister::get().insert(*this);
 	}
 	return nPid;
 #endif
@@ -268,4 +271,25 @@ CCampsiteInstance* CCampsiteInstanceRegister::getCampsiteInstance(const string& 
 	if (coIt == m_coCCampsiteInstances.end())
 		throw InvalidValue("Campsite instance PID");
 	return (*coIt).second;
+}
+
+void CCampsiteInstanceRegister::debug() const
+{
+	CCampsiteInstanceMap::const_iterator coIt = m_coCCampsiteInstances.begin();
+	for (; coIt != m_coCCampsiteInstances.end(); ++coIt)
+	{
+		CCampsiteInstance* pcoInstance = (*coIt).second;
+		int isRunning = (int)pcoInstance->isRunning();
+		g_coDebug << "[CCampsiteInstanceRegister::debug] instance: "
+			<< pcoInstance->getName() << ", running: " << isRunning;
+		if (isRunning)
+			cout << ", pid: " << pcoInstance->getPID();
+		cout << endl;
+	}
+	map < pid_t, string, less<pid_t> >::const_iterator coIt2 = m_coInstancePIDs.begin();
+	for (; coIt2 != m_coInstancePIDs.end(); ++coIt2)
+	{
+		g_coDebug << "[CCampsiteInstanceRegister::debug] * instance: " << (*coIt2).second
+			<< ", pid: " << (*coIt2).first << endl;
+	}
 }
