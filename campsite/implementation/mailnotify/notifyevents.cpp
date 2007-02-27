@@ -54,7 +54,7 @@ int SQL_SRV_PORT = 0;
 #define MAX_TRIES 5
 
 #ifdef _DEBUG
-#define DEBUG_FD 2
+#define DEBUG_FD 1
 #else
 #define DEBUG_FD -1
 #endif
@@ -77,20 +77,34 @@ int main()
 	CCampsiteInstanceMap::const_iterator coIt = rcoInstances.begin();
 	for (; coIt != rcoInstances.end(); ++coIt)
 	{
-		(*coIt).second->run();
+		try
+		{
+			(*coIt).second->run();
+		}
+		catch (RunException& rcoEx)
+		{
+		}
 	}
 	while (true)
 	{
 		waitpid(-1, 0, 0);
+		g_coDebug << "*** a child has exited: " << endl;
 		for (coIt = rcoInstances.begin(); coIt != rcoInstances.end(); ++coIt)
 		{
+			g_coDebug << "*** verifying instance: " << (*coIt).second->getName() << endl;
 			if (!(*coIt).second->isRunning())
 			{
+				g_coDebug << "*** erase instance: " << (*coIt).second->getName() << endl;
 				CCampsiteInstanceRegister::get().erase((*coIt).second->getName());
+				break;
 			}
 		}
+		g_coDebug << "***** after cleaning" << endl;
 		if (CCampsiteInstanceRegister::get().isEmpty())
-			break;
+		{
+			g_coDebug << "**** all instances are dead; exiting" << endl;
+			return 0;
+		}
 	}
 
 	return 0;
