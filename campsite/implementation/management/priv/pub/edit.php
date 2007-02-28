@@ -6,6 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_setting.php');
 camp_load_translation_strings("api");
 
 // Check permissions
