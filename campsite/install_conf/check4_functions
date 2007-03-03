@@ -7,7 +7,7 @@
 ###########################################################
 
 # FUNCTION: is_checked
-# Description: check dependancy is already checked
+# Description: test if the dependancy was already checked
 # Parameters:
 #	$1 - dependancy name
 # Variables set: none
@@ -491,7 +491,7 @@ return 0
 check4_curl()
 {
 is_checked curl && return 0
-check4_file libidn.so --file --path "/usr/lib:/usr/local/lib:/opt/lib:/usr/lib64"
+check4_file libidn.so --file --path "/usr/lib64:/usr/lib:/usr/local/lib:/opt/lib"
 result=$? && [ $result -ne 0 ] && output="Could not find IDN library. Please install libidn-dev package." && return 1
 check4_file curl-config --executable --path "/usr/bin:/usr/local/bin:/opt/bin"
 result=$? && [ $result -ne 0 ] && output="Could not find CURL development files. Please install libcurl-devel package." && return 1
@@ -741,7 +741,7 @@ return 0
 check4_libz()
 {
 is_checked libz && return 0
-check4_file libz.so --file --path "/usr/lib:/usr/local/lib:/usr/lib64"
+check4_file libz.so --file --path "/usr/lib64:/usr/local/lib:/usr/lib"
 result=$? && [ $result -ne 0 ] && output="Could not find z compression library. Please install zlib1-devel package." && return 1
 export LIBZ=$file_path
 set_checked libz
@@ -763,7 +763,7 @@ if [ $OPENBSD -eq 1 ]; then
     export LIBCRYPT=
     export LIBCRYPT_LINK=
 else
-    check4_file libcrypt.so --file --path "/usr/lib:/usr/local/lib:/usr/lib64:/usr/local/lib64"
+    check4_file libcrypt.so --file --path "/usr/lib64:/usr/local/lib64:/usr/lib:/usr/local/lib"
     result=$? && [ $result -ne 0 ] && output="Could not find crypt library. Please install glibc-devel package." && return 1
     export LIBCRYPT=$file_path
     export LIBCRYPT_LINK=-lcrypt
@@ -783,14 +783,14 @@ return 0
 check4_libmysqlclient()
 {
 is_checked libmysqlclient && return 0
-output=`check4_file libmysqlclient.a --file --path "/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib:/usr/lib64/mysql"`
+output=`check4_file libmysqlclient.a --file --path "/usr/lib64:/usr/lib64/mysql:/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib"`
 result=$?
 if [ $result -ne 0 ]; then
-    output=`check4_file libmysqlclient_r.a --file --path "/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib:/usr/lib64/mysql"`
+    output=`check4_file libmysqlclient_r.a --file --path "/usr/lib64:/usr/lib64/mysql:/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib"`
     result=$? && [ $result -ne 0 ] && echo "Could not find libmysqlclient library. Please install mysqlclient-devel package." && return 1
-    check4_file libmysqlclient_r.a --file --path "/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib:/usr/lib64/mysql"
+    check4_file libmysqlclient_r.a --file --path "/usr/lib64:/usr/lib64/mysql:/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib"
 else
-    check4_file libmysqlclient.a --file --path "/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib:/usr/lib64/mysql"
+    check4_file libmysqlclient.a --file --path "/usr/lib64:/usr/lib64/mysql:/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib"
 fi
 export LIBMYSQLCLIENT=$file_path
 export LIBMYSQLCLIENT_PATH=`cut_last_dirs $LIBMYSQLCLIENT 1`
@@ -836,7 +836,7 @@ if [ $BSD -eq 1 ]; then
 	export PTHREAD_LINK=-pthread
 	return 0
 fi
-check4_file libpthread.so --file --path "/usr/lib:/usr/local/lib:/usr/lib64:/usr/local/lib64"
+check4_file libpthread.so --file --path "/usr/lib64:/usr/local/lib64:/usr/lib:/usr/local/lib"
 result=$? && [ $result -ne 0 ] && return 1
 export LIBPTHREAD=$file_path
 export LIBPTHREAD_PATH=`cut_last_dirs $LIBPTHREAD 1`
@@ -902,7 +902,7 @@ set_checked libnsl
 libcnames="libc.a libc_r.a libc.so libc_r.so"
 
 # list of possible lisc directories
-libcdirs="/usr/lib:/usr/lib64:/lib"
+libcdirs="/usr/lib64:/usr/lib:/lib64:/lib"
 
 # FUNCTION: check4_gethostbyaddr_r
 # Description:
@@ -1072,20 +1072,3 @@ set_checked convert
 return 0
 }
 # END OF check4_convert
-
-# FUNCTION: check4_
-# Description: check if  is installed
-# Parameters: none
-# Variables set:
-#	 -  full path
-#	output - error message (if any)
-#check4_()
-#{
-#is_checked  && return 0
-#check4_file  --file --path ""
-#result=$? && [ $result -ne 0 ] && return 1
-#export =$file_path
-#set_checked
-#return 0
-#}
-# END OF check4_
