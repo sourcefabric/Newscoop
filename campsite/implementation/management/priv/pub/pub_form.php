@@ -160,6 +160,25 @@ function onCommentsActivated(p_checkbox)
                     <input type="checkbox" NAME="f_comments_spam_blocking_enabled" id="spam_blocking_enabled" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->isSpamBlockingEnabled()) { ?>checked<?php } ?>>
                 	</TD>
                 </TR>-->
+                
+                <?php
+                $setting =& new Phorum_setting('mod_emailcomments', 'S');
+                $current = $setting->get();
+                $addresses = $current['addresses'];
+                $from_addresses = $current['from_addresses'];
+                ?>
+                <TR>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Moderator Address"); ?>:</td>
+                	<td>
+                    <input type="text" NAME="f_comments_moderator_to" id="modarator_from" value="<?php echo $addresses[$forum->getForumId()] ?>">
+                	</TD>
+                </TR>
+                <TR>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("From Address"); ?>:</td>
+                	<td>
+                    <input type="text" NAME="f_comments_moderator_from" id="modarator_to" value="<?php echo $from_addresses[$forum->getForumId()] ?>">
+                	</TD>
+                </TR>
                 </table>
             </td>
         </tr>
