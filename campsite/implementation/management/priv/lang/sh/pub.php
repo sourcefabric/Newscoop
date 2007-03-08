@@ -1,4 +1,6 @@
 <?php 
+regGS("Moderator Address", "");
+regGS("From Address", "");
 regGS("Use CAPTCHA to prevent spam?", "Koristi CAPTCHA u borbi protiv spama?");
 regGS("Public allowed to comment?", "Dozvoli opšte pravo komentarisanja?");
 regGS("Enable spam blocking?", "Uključi blokiranje spama?");
