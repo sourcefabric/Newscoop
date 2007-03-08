@@ -36,6 +36,9 @@ class Phorum_setting extends DatabaseObject {
 	function get()
 	{
 		if ($this->m_data['type'] == 'S' && is_string($this->m_data['data'])) {
+			if (empty($this->m_data['data'])) {
+				return array();
+			}
 			return unserialize($this->m_data['data']);
 		}
 		return $this->m_data['data'];

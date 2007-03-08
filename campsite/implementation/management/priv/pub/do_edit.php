@@ -74,6 +74,9 @@ if (!$forum->exists()) {
 camp_forum_update($forum, $f_name, $f_comments_enabled, $f_comments_public_enabled);
 
 $setting =& new Phorum_setting('mod_emailcomments', 'S');
+if (!$setting->exists()) {
+	$setting->create();
+}
 $setting->update(array('addresses' => array($forum->getForumId() => $f_comments_moderator_to)));
 $setting->update(array('from_addresses' => array($forum->getForumId() => $f_comments_moderator_from)));
 
