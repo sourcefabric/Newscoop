@@ -41,7 +41,7 @@ CArticleComment::CArticleComment(id_type p_nMessageId)
 			<< "where pm.message_id = '" << p_nMessageId << "'";
 	CMYSQL_RES coQRes;
 	MYSQL_ROW row = QueryFetchRow(MYSQLConnection(), buf.str(), coQRes);
-	if (row == NULL || row[0] == NULL)
+	if (row == NULL || row[0] == NULL || row[16] == NULL || row[17] == NULL)
 	{
 		return;
 	}
