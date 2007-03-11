@@ -1,4 +1,4 @@
-2.7.0-rc1 (January 22, 2007)
+2.7.0 "Tomas" (March 12, 2007)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.7.0
   
@@ -17,6 +17,7 @@
   04) #2224 - Possibility to copy/move/rename templates
   05) #2281 - Show max upload file size in file attachment window
   06) #2283 - Show additional info in the ATTACHMENT EDIT screen
+  07) #2436 - Mailout for article comments
   
   Bugs Fixed (14 total)
   ---------------------

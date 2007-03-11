@@ -1,7 +1,8 @@
 UPGRADE
 
 For upgrading from 1.x, 2.0 or 2.1.x versions of Campsite please read the
-appendinx: UPGRADING FROM OLDER VERSIONS OF CAMPSITE - in the manual.
+chapters: "Upgrading from versions 2.1.x" and "Upgrading from versions 1.x
+or 2.0" - in the manual.
 Upgrading from Campsite 2.2.x and newer versions is automatic, the user
 doesn't have to take extra actions except the normal install.
 
@@ -28,6 +29,5 @@ Replacing unsupported attributes:
 
 For details see "List of Articles" chapter in the Campsite manual.
 
-
-If upgrading from Campsite 2.1.x please read "8.2. Compatibility Issues" in
-the manual.
+If upgrading from Campsite 2.1.x please read "Compatibility Issues Upgrading
+from 2.1" in the manual.
