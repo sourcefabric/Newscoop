@@ -394,8 +394,6 @@ function camp_detect_database_version($p_db_name, &$version)
 				}
 				if (mysql_num_rows($res2) > 0) {
 					$version = "2.6.4";
-				} else {
-					return 0;
 				}
 				if (!$res2 = mysql_query("SELECT * from phorum_users "
 										 . "WHERE fk_campsite_user_id IS NULL")) {
