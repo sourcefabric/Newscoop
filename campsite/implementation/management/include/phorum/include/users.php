@@ -342,6 +342,15 @@ function phorum_user_save( $user )
         $GLOBALS["PHORUM"]["user"] = phorum_user_get( $user["user_id"] );
     }
 
+    // Sync the campsite user
+    require_once('../../priv/localizer/Localizer.php');
+    require_once('../../classes/User.php');
+    $campsiteUser = new User($user["fk_campsite_user_id"]);
+    if ($campsiteUser->exists()) {
+        if (array_key_exists('password', $user)) {
+            $campsiteUser->setPassword($user["password"]);
+        }
+    }
 
     return $ret;
 }
