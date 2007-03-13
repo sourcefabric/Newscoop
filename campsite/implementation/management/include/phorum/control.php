@@ -220,7 +220,7 @@ function phorum_controlcenter_user_save($panel)
         $error = $PHORUM["DATA"]["LANG"]["ErrUserAddUpdate"];
     } else {
 	// Sync the campsite user
-	require_once('../../classes/Language.php');
+	require_once('../../priv/localizer/Localizer.php');
 	require_once('../../classes/User.php');
 	$campsiteUser = new User($userdata["fk_campsite_user_id"]);
 	if ($campsiteUser->exists()) {

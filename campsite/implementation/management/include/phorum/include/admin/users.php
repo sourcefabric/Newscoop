@@ -327,6 +327,8 @@ EOT;
 
             $frm->hidden("user_id", $_REQUEST["user_id"]);
 
+            $frm->hidden("fk_campsite_user_id", $user["fk_campsite_user_id"]);
+
             $frm->addbreak("Edit User");
 
             $frm->addrow("User Name", htmlspecialchars($user["username"])."&nbsp;&nbsp;<a href=\"#forums\">Edit Forum Permissions</a>&nbsp;&nbsp;<a href=\"#groups\">Edit Groups</a>");
