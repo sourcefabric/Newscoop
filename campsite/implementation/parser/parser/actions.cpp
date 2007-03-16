@@ -3683,7 +3683,7 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 	        "PostalCode", "Employer", "EmployerType", "Position", "Languages", "Pref1",
 	        "Pref2", "Pref3", "Pref4", "Field1", "Field2", "Field3", "Field4", "Field5"
 	    };
-	if (c.Key() <= 0 && !add)
+	if (c.Key() <= 0 && !add && !c.AccessByIP())
 		return ERR_NOKEY;
 	SafeAutoPtr<CURL> pcoURL(c.URL()->clone());
 	try {
