@@ -14,6 +14,8 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once('PEAR.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
 
+define('DB_OBJECTS_CACHE_DIR', $_SERVER['DOCUMENT_ROOT'].'/dbcache');
+
 /**
  * @package Campsite
  */
@@ -64,6 +66,13 @@ class DatabaseObject {
 	 * @var array
 	 */
 	var $m_oldKeyValues = array();
+	
+	/**
+	 * If true it will use the caching feature
+	 *
+	 * @var bool
+	 */
+	private static $m_useCache = true;
 
 	/**
 	 * DatabaseObject represents a row in a database table.
@@ -220,6 +229,11 @@ class DatabaseObject {
 		global $g_ado_db;
 
 		if (is_null($p_recordSet)) {
+			$object = $this->readFromCache();
+			if ($object !== false) {
+				return true;
+			}
+
 			$queryStr = 'SELECT ';
 			$tmpColumnNames = array();
 			foreach ($this->getColumnNames() as $columnName) {
@@ -240,6 +254,11 @@ class DatabaseObject {
 				return false;
 			}
 		} else {
+			$object = $this->readFromCache($p_recordSet);
+			if ($object !== false) {
+				return true;
+			}
+
 		    // We were given a pre-fetched recordset.
 		    $this->m_data =& $p_recordSet;
 		    // Make sure all columns have a value even if they arent in the dataset.
@@ -251,6 +270,10 @@ class DatabaseObject {
 		}
 		// Reset old key values - we are now synced with the database.
 		$this->m_oldKeyValues = array();
+
+		// Write the object cache
+		$this->writeCache();
+
 		return true;
 	} // fn fetch
 
@@ -335,10 +358,7 @@ class DatabaseObject {
 		$columns = array();
 		if ($this->keyValuesExist()) {
 			// If the key values exist, use those.
-			$columns =  $this->getKey();
-			foreach ($columns as $tmpKey => $tmpValue) {
-				$columnValues[$tmpKey] = "'".mysql_real_escape_string($tmpValue)."'";
-			}
+			$columns = $this->getKey();
 		} elseif (!$this->m_keyIsAutoIncrement) {
 			// We dont have the key values and
 			// the key is not an auto-increment value,
@@ -765,6 +785,161 @@ class DatabaseObject {
 	} // fn ProcessOptions
 
 
+	/**
+	 * Initializes the current object from cache if it exists
+	 *
+	 * @param array $p_recordSet
+	 *
+	 * @return object or bool false if the object didn't exist
+	 */
+	function readFromCache($p_recordSet = null)
+	{
+		if (!DatabaseObject::GetUseCache()) {
+			return false;
+		}
+		
+		if (is_array($p_recordSet) && sizeof($p_recordSet) > 0) {
+			foreach ($this->m_keyColumnNames as $columnName) {
+				if (!isset($p_recordSet[$columnName])) {
+					return false;
+				}
+			}
+			// key values exist in the record set, we can continue
+			$fileName = $this->getCacheFileName($p_recordSet);
+		} else {
+			if (!$this->keyValuesExist()) {
+				return false;
+			}
+			$fileName = $this->getCacheFileName();
+		}
+
+		$cacheFileName = $this->getCacheFileName();
+		
+		$cacheDir = DB_OBJECTS_CACHE_DIR . '/' . $this->m_dbTableName . '/'
+				. DatabaseObject::GetCacheFilePath($cacheFileName);
+		if (!file_exists("$cacheDir/$cacheFileName")) {
+			return false;
+		}
+		$object = unserialize(file_get_contents("$cacheDir/$cacheFileName"));
+		if ($object === false) {
+			return false;
+		}
+		$this->duplicateObject($object);
+		
+		return $this;
+	}
+	
+	
+	/**
+	 * Copies the given object 
+	 *
+	 * @param object $p_source
+	 * @return object
+	 */
+	function duplicateObject($p_source)
+	{
+		foreach ($p_source as $key=>$value) {
+			$this->$key = $value;
+		}
+		return $this;
+	}
+	
+	
+	/**
+	 * Returns true if cache use was enabled
+	 *
+	 * @return bool
+	 */
+	function GetUseCache()
+	{
+		return DatabaseObject::$m_useCache;
+	}
+	
+	
+	/**
+	 * Sets cache enabled/disabled
+	 *
+	 * @param bool $p_useCache
+	 * 
+	 * @return void
+	 */
+	function SetUseCache($p_useCache)
+	{
+		DatabaseObject::$m_useCache = $p_useCache;
+	}
+
+
+	/**
+	 * Writes the serialized object to a file.
+	 *
+	 * @param bool $p_bOverwriteExisting
+	 *
+	 * @return bool
+	 */
+	function writeCache($p_bOverwriteExisting = true)
+	{
+		if (!DatabaseObject::GetUseCache()) {
+			return false;
+		}
+		
+		if (!$this->exists()) {
+			return false;
+		}
+
+		$cacheFileName = $this->getCacheFileName();
+		
+		$cacheDir = DB_OBJECTS_CACHE_DIR . '/' . $this->m_dbTableName . '/'
+				. DatabaseObject::GetCacheFilePath($cacheFileName);
+		if (!is_dir($cacheDir)) {
+			if (!mkdir($cacheDir, 0775, true)) {
+				return false;
+			}
+		}
+
+		$cacheFile = fopen("$cacheDir/$cacheFileName", 'w+');
+		fwrite($cacheFile, serialize($this));
+		fclose($cacheFile);
+
+		return true;
+	}
+
+
+	/**
+	 * Generates the cache file name for the current object
+	 *
+	 * @return string or bool false if the object the key was not defined
+	 */
+	function getCacheFileName($p_recordSet = null)
+	{
+		if (is_array($p_recordSet)) {
+			$recordSet =& $p_recordSet;
+		} else {
+			$recordSet =& $this->m_data;
+		}
+
+		$fileName = '';
+		foreach ($this->m_keyColumnNames as $key) {
+			if (!isset($recordSet[$key])) {
+				return false;
+			}
+			$fileName .= '_' . str_replace('/', '%2f', $recordSet[$key]);
+		}
+
+		return $fileName;
+	}
+	
+	
+	/**
+	 * Computes the path corresponding to the given cache file
+	 *
+	 * @param string $p_fileName
+	 * 
+	 * @return string
+	 */
+	function GetCacheFilePath($p_fileName)
+	{
+		return substr($p_fileName, 1, 3);
+	}
 } // class DatabaseObject
 
 ?>
