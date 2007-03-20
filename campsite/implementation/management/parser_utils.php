@@ -2,9 +2,10 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/XML/Util.php');
 
-global $DEBUG;
+global $DEBUG, $g_evalPHPCode;
 
 $DEBUG = false;
+$g_evalPHPCode = true;
 
 
 /**
@@ -144,14 +145,24 @@ function camp_send_message_to_parser($p_msg, $p_closeSocket = false)
  */
 function camp_read_parser_output($p_socket)
 {
+	global $g_evalPHPCode;
+	
 	$size_read = 0;
 	stream_set_timeout($p_socket, 10);
+	$output = '';
 	do {
 		$str = fread($p_socket, 1000);
-		$size_read += strlen($str);
-		echo $str;
+		$output .= $str;
 	} while ($str != "");
 	fclose($p_socket);
+	
+	if ($g_evalPHPCode) {
+		eval('?>'.$output);
+	} else {
+		echo $output;
+	}
+	
+	$size_read += strlen($output);
 	camp_debug_msg("size read: $size_read");
 	return $size_read;
 } // fn camp_read_parser_output
