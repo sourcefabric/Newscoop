@@ -61,6 +61,11 @@ $Campsite['ABOUT_URL'] = 'http://www.campware.org/en/camp/campsite_news/';
 $Campsite['SUPPORT_EMAIL'] = 'campsite-support@lists.campware.org';
 $Campsite['DEBUG'] = true;
 
+$Campsite['ENABLE_CACHE'] = true;
+$Campsite['CACHE_PATH'] = '/usr/local/campsite/var/cache/';
+$Campsite['CACHE_EXPIRATION_TIME'] = 900;
+
+
 define('CAMP_SUCCESS', 1);
 define('CAMP_ERROR',   0);
 define('CAMP_ERROR_MKDIR',       -100);
