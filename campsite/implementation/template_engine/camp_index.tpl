@@ -3,6 +3,69 @@
   <title>Camp Smarty</title>
 </head>
 <body>
+
+{{*** Language ***}}
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#6a6a6a"><font color="#ffffff">Topic</font></td>
+</tr>
+</table>
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#efefef" nowrap>Identifier:</td>
+  <td bgcolor="#efefef">
+    {{ $topic.identifier }}
+  </td>
+  <td>{{ literal }}{{ $language.identifier }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#ffffff" nowrap>Name:</td>
+  <td bgcolor="#ffffff">
+    {{ $topic.name }}
+  </td>
+  <td>{{ literal }}{{ $topic.name }}{{ /literal }}</td>
+</tr>
+</table>
+
+
+{{*** Language ***}}
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#6a6a6a"><font color="#ffffff">Language</font></td>
+</tr>
+</table>
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#efefef" nowrap>Identifier:</td>
+  <td bgcolor="#efefef">
+    {{ $language.number }}
+  </td>
+  <td>{{ literal }}{{ $language.number }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#ffffff" nowrap>Name:</td>
+  <td bgcolor="#ffffff">
+    {{ $language.name }}
+  </td>
+  <td>{{ literal }}{{ $language.name }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#efefef" nowrap>English Name:</td>
+  <td bgcolor="#efefef">
+    {{ $language.englname }}
+  </td>
+  <td>{{ literal }}{{ $language.englname }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#ffffff" nowrap>Code:</td>
+  <td bgcolor="#ffffff">
+    {{ $language.code }}
+  </td>
+  <td>{{ literal }}{{ $language.code }}{{ /literal }}</td>
+</tr>
+</table>
+
+
 {{**** User ****}}
 <table cellspacing="1" cellpadding="4">
 <tr>
@@ -246,6 +309,13 @@
 </tr>
 </table>
 
+{{ $smarty.now }}<br />
+{{ $smarty.now|date_format:'%Y-%m-%d %H:%M:%S' }}<br />
+{{ $smarty.now|camp_date_format:'%M %W, %Y %H:%i:%s %p' }}
+
+{{ list_articles length="5" repeat="5" }}
+	{{ $article.name }}<br />
+{{ /list_articles }}
 
 </body>
 </html>

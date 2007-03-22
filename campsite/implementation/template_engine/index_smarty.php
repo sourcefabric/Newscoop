@@ -12,6 +12,7 @@ $_SERVER['DOCUMENT_ROOT'] = getenv("DOCUMENT_ROOT");
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/parser_utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 
 // Meta classes
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaPublication.php');
@@ -20,12 +21,38 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaSection.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaArticle.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaAttachment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaUser.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaLanguage.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaTopic.php');
 
 // Campsite template class (Smarty extended)
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/CampTemplate.php');
 
+camp_cache_init();
+
 // Smarty instance
 $tpl = new CampTemplate();
+
+
+/**** Language test ****/
+$topicObj = new MetaTopic(2);
+if ($topicObj->defined()) {
+    $topic['identifier'] = $topicObj->Id;
+    $topic['name'] = $topicObj->Name;
+
+    $tpl->assign('topic', $topic);
+}
+
+
+/**** Language test ****/
+$langObj = new MetaLanguage(1);
+if ($langObj->defined()) {
+    $language['name'] = $langObj->OrigName;
+    $language['number'] = $langObj->Id;
+    $language['englname'] = $langObj->Name;
+    $language['code'] = $langObj->Code;
+
+    $tpl->assign('language', $language);
+}
 
 
 /*** Publication test ***/
@@ -118,6 +145,10 @@ if ($userObj->defined()) {
 
 	$tpl->assign('user', $user);
 }
+
+
+//$tpl->smarty_list_articles(null, 'holman, romero', $tpl, 5);
+
 
 
 /**** Exception test ****/
