@@ -11,36 +11,41 @@
 // is not defined in these cases.
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
-require_once($g_documentRoot.'/classes/Alias.php');
-require_once($g_documentRoot.'/classes/Publication.php');
+require_once($g_documentRoot.'/classes/Attachment.php');
+require_once($g_documentRoot.'/classes/Exceptions.php');
+
 
 /**
  * @package Campsite
  */
-class MetaPublication {
+final class MetaAttachment {
     //
     private $m_data = null;
     //
-	private $m_instance = false;
-	//
+    private $m_instance = false;
+    //
     private $m_baseFields = array(
-                                  'Id',
-                                  'Name'
+                                  'file_name',
+                                  'mime_type',
+                                  'extension',
+                                  'fk_description_id',
+                                  'size_in_bytes'
                                   );
 
 
-    public function __construct($p_publicationId)
+    public function __construct($p_attachId)
     {
-        $publicationObj = new Publication($p_publicationId);
-		if (!is_object($publicationObj) || !$publicationObj->exists()) {
-			return false;
-		}
-		foreach ($publicationObj->m_data as $key => $value) {
+        $attachObj = new Attachment($p_attachId);
+
+        if (!is_object($attachObj) || !$attachObj->exists()) {
+            return false;
+        }
+        foreach ($attachObj->m_data as $key => $value) {
             if (in_array($key, $this->m_baseFields)) {
                 $this->m_data[$key] = $value;
             }
-		}
-		$this->m_instance = true;
+        }
+        $this->m_instance = true;
     } // fn __construct
 
 
@@ -65,9 +70,9 @@ class MetaPublication {
 
     public function defined()
     {
-		return $this->m_instance;
+        return $this->m_instance;
     } // fn defined
 
-} // class MetaPublication
+} // class MetaAttachment
 
 ?>

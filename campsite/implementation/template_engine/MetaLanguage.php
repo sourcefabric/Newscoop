@@ -11,13 +11,12 @@
 // is not defined in these cases.
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
-require_once($g_documentRoot.'/classes/Alias.php');
-require_once($g_documentRoot.'/classes/Publication.php');
+require_once($g_documentRoot.'/classes/Language.php');
 
 /**
  * @package Campsite
  */
-class MetaPublication {
+class MetaLanguage {
     //
     private $m_data = null;
     //
@@ -25,17 +24,19 @@ class MetaPublication {
 	//
     private $m_baseFields = array(
                                   'Id',
-                                  'Name'
+                                  'Name',
+                                  'OrigName',
+                                  'Code'
                                   );
 
 
-    public function __construct($p_publicationId)
+    public function __construct($p_languageId)
     {
-        $publicationObj = new Publication($p_publicationId);
-		if (!is_object($publicationObj) || !$publicationObj->exists()) {
+        $langObj = new Language($p_languageId);
+		if (!is_object($langObj) || !$langObj->exists()) {
 			return false;
 		}
-		foreach ($publicationObj->m_data as $key => $value) {
+		foreach ($langObj->m_data as $key => $value) {
             if (in_array($key, $this->m_baseFields)) {
                 $this->m_data[$key] = $value;
             }
@@ -68,6 +69,6 @@ class MetaPublication {
 		return $this->m_instance;
     } // fn defined
 
-} // class MetaPublication
+} // class MetaLanguage
 
 ?>

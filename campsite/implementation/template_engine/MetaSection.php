@@ -11,31 +11,32 @@
 // is not defined in these cases.
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
-require_once($g_documentRoot.'/classes/Alias.php');
-require_once($g_documentRoot.'/classes/Publication.php');
+require_once($g_documentRoot.'/classes/Section.php');
 
 /**
  * @package Campsite
  */
-class MetaPublication {
+class MetaSection {
     //
     private $m_data = null;
     //
 	private $m_instance = false;
 	//
     private $m_baseFields = array(
-                                  'Id',
-                                  'Name'
+                                  'Name',
+                                  'Number'
                                   );
 
 
-    public function __construct($p_publicationId)
+    public function __construct($p_publicationId, $p_issueNumber,
+                                $p_languageId, $p_sectionNumber)
     {
-        $publicationObj = new Publication($p_publicationId);
-		if (!is_object($publicationObj) || !$publicationObj->exists()) {
+        $sectionObj = new Section($p_publicationId, $p_issueNumber,
+                                  $p_languageId, $p_sectionNumber);
+		if (!is_object($sectionObj) || !$sectionObj->exists()) {
 			return false;
 		}
-		foreach ($publicationObj->m_data as $key => $value) {
+		foreach ($sectionObj->m_data as $key => $value) {
             if (in_array($key, $this->m_baseFields)) {
                 $this->m_data[$key] = $value;
             }
@@ -68,6 +69,6 @@ class MetaPublication {
 		return $this->m_instance;
     } // fn defined
 
-} // class MetaPublication
+} // class MetaSection
 
 ?>

@@ -11,13 +11,12 @@
 // is not defined in these cases.
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
-require_once($g_documentRoot.'/classes/Alias.php');
-require_once($g_documentRoot.'/classes/Publication.php');
+require_once($g_documentRoot.'/classes/Topic.php');
 
 /**
  * @package Campsite
  */
-class MetaPublication {
+class MetaTopic {
     //
     private $m_data = null;
     //
@@ -29,17 +28,23 @@ class MetaPublication {
                                   );
 
 
-    public function __construct($p_publicationId)
+    public function __construct($p_topicId, $p_languageId = null)
     {
-        $publicationObj = new Publication($p_publicationId);
-		if (!is_object($publicationObj) || !$publicationObj->exists()) {
+        if (is_null($p_languageId)) {
+            $p_languageId = 1;
+        }
+
+        $topicObj = new Topic($p_topicId);
+		if (!is_object($topicObj) || !$topicObj->exists()) {
 			return false;
 		}
-		foreach ($publicationObj->m_data as $key => $value) {
+		foreach ($topicObj->m_data as $key => $value) {
             if (in_array($key, $this->m_baseFields)) {
                 $this->m_data[$key] = $value;
             }
 		}
+
+        $this->m_data['Name'] = $topicObj->getName($p_languageId);
 		$this->m_instance = true;
     } // fn __construct
 
@@ -68,6 +73,6 @@ class MetaPublication {
 		return $this->m_instance;
     } // fn defined
 
-} // class MetaPublication
+} // class MetaTopic
 
 ?>
