@@ -12,7 +12,7 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/User.php');
-require_once($g_documentRoot.'/classes/Exceptions.php');
+require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
 
 
 /**

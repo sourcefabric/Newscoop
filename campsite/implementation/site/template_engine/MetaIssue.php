@@ -12,60 +12,21 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/Issue.php');
+require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
 
 /**
  * @package Campsite
  */
-class MetaIssue {
-    //
-    private $m_data = null;
-    //
-	private $m_instance = false;
-	//
-    private $m_baseFields = array(
-                                  'Name',
-                                  'Number'
-                                  );
-
+class MetaIssue extends MetaDbObject {
 
     public function __construct($p_publicationId, $p_languageId, $p_issueNumber)
     {
-        $issueObj = new Issue($p_publicationId, $p_languageId, $p_issueNumber);
+        $issueObj =& new Issue($p_publicationId, $p_languageId, $p_issueNumber);
 		if (!is_object($issueObj) || !$issueObj->exists()) {
 			return false;
 		}
-		foreach ($issueObj->m_data as $key => $value) {
-            if (in_array($key, $this->m_baseFields)) {
-                $this->m_data[$key] = $value;
-            }
-		}
-		$this->m_instance = true;
+		$this->m_dbObject =& $issueObj;
     } // fn __construct
-
-
-    public function __get($p_property)
-    {
-        if (!is_array($this->m_data)) {
-            return false;
-        }
-        if (!array_key_exists($p_property, $this->m_data)) {
-            return false;
-        }
-
-        return $this->m_data[$p_property];
-    } // fn __get
-
-
-    public function __set($p_property, $p_value)
-    {
-        throw new InvalidFunctionException(get_class($this), '__set');
-    } // fn __set
-
-
-    public function defined()
-    {
-		return $this->m_instance;
-    } // fn defined
 
 } // class MetaIssue
 

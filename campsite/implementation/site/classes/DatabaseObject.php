@@ -13,8 +13,9 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once('PEAR.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/CampCache.php');
+require_once($g_documentRoot.'/classes/Exceptions.php');
 
-define('DB_OBJECTS_CACHE_DIR', $_SERVER['DOCUMENT_ROOT'].'/dbcache');
 
 /**
  * @package Campsite
@@ -66,7 +67,7 @@ class DatabaseObject {
 	 * @var array
 	 */
 	var $m_oldKeyValues = array();
-	
+
 	/**
 	 * If true it will use the caching feature
 	 *
@@ -272,7 +273,7 @@ class DatabaseObject {
 		$this->m_oldKeyValues = array();
 
 		// Write the object cache
-		$this->writeCache();
+        $this->writeCache();
 
 		return true;
 	} // fn fetch
@@ -447,6 +448,9 @@ class DatabaseObject {
 	function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false)
 	{
 		global $g_ado_db;
+		if (!in_array($p_dbColumnName, $this->m_columnNames)) {
+			throw new InvalidPropertyException(get_class($this), $p_dbColumnName);
+		}
 		if (isset($this->m_data[$p_dbColumnName])) {
 			if ($p_forceFetchFromDatabase) {
 				if ($this->keyValuesExist() && in_array($p_dbColumnName, $this->m_columnNames)) {
@@ -797,41 +801,35 @@ class DatabaseObject {
 		if (!DatabaseObject::GetUseCache()) {
 			return false;
 		}
-		
+
 		if (is_array($p_recordSet) && sizeof($p_recordSet) > 0) {
 			foreach ($this->m_keyColumnNames as $columnName) {
 				if (!isset($p_recordSet[$columnName])) {
 					return false;
 				}
 			}
-			// key values exist in the record set, we can continue
-			$fileName = $this->getCacheFileName($p_recordSet);
+            $cacheKey = $this->getCacheKey($p_recordSet);
 		} else {
 			if (!$this->keyValuesExist()) {
 				return false;
 			}
-			$fileName = $this->getCacheFileName();
+            $cacheKey = $this->getCacheKey();
 		}
 
-		$cacheFileName = $this->getCacheFileName();
-		
-		$cacheDir = DB_OBJECTS_CACHE_DIR . '/' . $this->m_dbTableName . '/'
-				. DatabaseObject::GetCacheFilePath($cacheFileName);
-		if (!file_exists("$cacheDir/$cacheFileName")) {
-			return false;
-		}
-		$object = unserialize(file_get_contents("$cacheDir/$cacheFileName"));
+        $cacheObj = CampCache::singleton();
+        $object = $cacheObj->get($cacheKey, $this->getCacheGroup());
+
 		if ($object === false) {
 			return false;
 		}
 		$this->duplicateObject($object);
-		
+
 		return $this;
 	}
-	
-	
+
+
 	/**
-	 * Copies the given object 
+	 * Copies the given object
 	 *
 	 * @param object $p_source
 	 * @return object
@@ -843,8 +841,8 @@ class DatabaseObject {
 		}
 		return $this;
 	}
-	
-	
+
+
 	/**
 	 * Returns true if cache use was enabled
 	 *
@@ -854,13 +852,13 @@ class DatabaseObject {
 	{
 		return DatabaseObject::$m_useCache;
 	}
-	
-	
+
+
 	/**
 	 * Sets cache enabled/disabled
 	 *
 	 * @param bool $p_useCache
-	 * 
+	 *
 	 * @return void
 	 */
 	function SetUseCache($p_useCache)
@@ -881,65 +879,48 @@ class DatabaseObject {
 		if (!DatabaseObject::GetUseCache()) {
 			return false;
 		}
-		
+
 		if (!$this->exists()) {
 			return false;
 		}
 
-		$cacheFileName = $this->getCacheFileName();
-		
-		$cacheDir = DB_OBJECTS_CACHE_DIR . '/' . $this->m_dbTableName . '/'
-				. DatabaseObject::GetCacheFilePath($cacheFileName);
-		if (!is_dir($cacheDir)) {
-			if (!mkdir($cacheDir, 0775, true)) {
-				return false;
-			}
-		}
-
-		$cacheFile = fopen("$cacheDir/$cacheFileName", 'w+');
-		fwrite($cacheFile, serialize($this));
-		fclose($cacheFile);
-
-		return true;
-	}
+        $cacheKey = $this->getCacheKey();
+        $cacheObj = CampCache::singleton();
+        return $cacheObj->add($cacheKey, $this, $this->getCacheGroup());
+	} // fn writeCache
 
 
-	/**
-	 * Generates the cache file name for the current object
-	 *
-	 * @return string or bool false if the object the key was not defined
-	 */
-	function getCacheFileName($p_recordSet = null)
-	{
+    /**
+     *
+     */
+    function getCacheGroup()
+    {
+        return get_class($this);
+    } // fn getCacheGroup
+
+
+    /**
+     *
+     */
+    function getCacheKey($p_recordSet = null)
+    {
 		if (is_array($p_recordSet)) {
 			$recordSet =& $p_recordSet;
 		} else {
 			$recordSet =& $this->m_data;
 		}
 
-		$fileName = '';
+		$cacheKey = '';
 		foreach ($this->m_keyColumnNames as $key) {
 			if (!isset($recordSet[$key])) {
 				return false;
 			}
-			$fileName .= '_' . str_replace('/', '%2f', $recordSet[$key]);
+			$cacheKey .= $recordSet[$key];
 		}
 
-		return $fileName;
-	}
-	
-	
-	/**
-	 * Computes the path corresponding to the given cache file
-	 *
-	 * @param string $p_fileName
-	 * 
-	 * @return string
-	 */
-	function GetCacheFilePath($p_fileName)
-	{
-		return substr($p_fileName, 1, 3);
-	}
+        return $cacheKey;
+    } // fn genCacheKey
+
 } // class DatabaseObject
 
 ?>

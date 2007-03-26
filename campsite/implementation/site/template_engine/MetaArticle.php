@@ -12,78 +12,66 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/Article.php');
-require_once($g_documentRoot.'/classes/Exceptions.php');
+require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
 
 
 /**
  * @package Campsite
  */
-final class MetaArticle {
-    //
-    private $m_data = null;
-    //
-    private $m_instance = false;
-    //
-    private $m_baseFields = array(
-                                  'Number',
-                                  'Name',
-                                  'Type',
-                                  'PublishDate',
-                                  'UploadDate',
-                                  'Keywords'
-                                  );
-    public $m_customFields = null;
+final class MetaArticle extends MetaDbObject {
+	private $m_articleData = null;
+
+	private $m_state = null;
 
 
     public function __construct($p_languageId, $p_articleId)
     {
-        $articleObj = new Article($p_languageId, $p_articleId);
+        $articleObj =& new Article($p_languageId, $p_articleId);
 
         if (!is_object($articleObj) || !$articleObj->exists()) {
             return false;
         }
-        foreach ($articleObj->m_data as $key => $value) {
-            if (in_array($key, $this->m_baseFields)) {
-                $this->m_data[$key] = $value;
-            }
-        }
-        $articleDataObj = new ArticleData($articleObj->getType(),
-                                          $articleObj->getArticleNumber(),
-                                          $articleObj->getLanguageId());
-        foreach ($articleDataObj->m_data as $key => $value) {
-            if (substr($key, 0, 1) == 'F') {
-                $customFieldName = substr($key, 1, strlen($key) - 1);
-                $this->m_data[$customFieldName] = $value;
-                $this->m_customFields[] = $customFieldName;
-            }
-        }
-        $this->m_instance = true;
+        $this->m_dbObject =& $articleObj;
+        $this->m_articleData =& new ArticleData($articleObj->getType(),
+                                               $articleObj->getArticleNumber(),
+                                               $articleObj->getLanguageId());
     } // fn __construct
 
 
-    public function __get($p_property)
+    final public function __get($p_property)
     {
-        if (!is_array($this->m_data)) {
-            return false;
-        }
-        if (!array_key_exists($p_property, $this->m_data)) {
-            return false;
-        }
+    	if ($this->m_state == 'type_name_error') {
+    		$this->m_state = null;
+    		return null;
+    	}
 
-        return $this->m_data[$p_property];
+    	if ($p_property == 'type' && $this->m_state == null) {
+    		$this->m_state = 'type';
+    		return $this;
+    	}
+
+    	if ($this->m_state == 'type') {
+    		if ($this->m_dbObject->getType() != $p_property) {
+    			$this->m_state = 'type_name_error';
+    		} else {
+	    		$this->m_state = null;
+    		}
+    		return $this;
+    	} else {
+	    	try {
+    			return parent::__get($p_property);
+    		} catch (InvalidPropertyException $e) {
+    			// do nothing if property not from the article base fields
+    		}
+    	}
+
+    	try {
+	    	return $this->m_articleData->getProperty("F$p_property");
+    	} catch (InvalidPropertyException $e) {
+    		// do nothing if property not from the article custom fields
+    	}
+    	throw new InvalidPropertyException(get_class($this->m_dbObject), $p_property);
     } // fn __get
-
-
-    public function __set($p_property, $p_value)
-    {
-        throw new InvalidFunctionException(get_class($this), '__set');
-    } // fn __set
-
-
-    public function defined()
-    {
-        return $this->m_instance;
-    } // fn defined
 
 } // class MetaArticle
 

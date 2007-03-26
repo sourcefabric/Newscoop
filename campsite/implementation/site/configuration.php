@@ -61,11 +61,20 @@ $Campsite['ABOUT_URL'] = 'http://www.campware.org/en/camp/campsite_news/';
 $Campsite['SUPPORT_EMAIL'] = 'campsite-support@lists.campware.org';
 $Campsite['DEBUG'] = true;
 
-$Campsite['ENABLE_CACHE'] = true;
-$Campsite['CACHE_PATH'] = '/usr/local/campsite/var/cache/';
+$Campsite['ENABLE_CACHE'] = false;
+$Campsite['CACHE_PATH'] = '/usr/local/campsite/var/templates_c/';
 $Campsite['CACHE_EXPIRATION_TIME'] = 900;
 
+// Smarty config
+$Campsite['smarty']['caching'] = false;
+$Campsite['smarty']['cache_lifetime'] = 1;
+$Campsite['smarty']['debugging'] = false;
+$Campsite['smarty']['force_compile'] = true;
+$Campsite['smarty']['compile_check'] = true;
+$Campsite['smarty']['use_sub_dirs'] = false;
 
+
+// Camsite error codes
 define('CAMP_SUCCESS', 1);
 define('CAMP_ERROR',   0);
 define('CAMP_ERROR_MKDIR',       -100);

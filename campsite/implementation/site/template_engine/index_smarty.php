@@ -15,150 +15,72 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 
 // Meta classes
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaPublication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaIssue.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaSection.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaArticle.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaAttachment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaUser.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaLanguage.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/MetaTopic.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaPublication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaIssue.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaSection.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaArticle.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaAttachment.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaUser.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaLanguage.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaTopic.php');
 
 // Campsite template class (Smarty extended)
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/CampTemplate.php');
-
-camp_cache_init();
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/CampTemplate.php');
 
 // Smarty instance
 $tpl = new CampTemplate();
 
 
-/**** Language test ****/
-$topicObj = new MetaTopic(2);
-if ($topicObj->defined()) {
-    $topic['identifier'] = $topicObj->Id;
-    $topic['name'] = $topicObj->Name;
-
-    $tpl->assign('topic', $topic);
-}
+// Topic object
+$tpl->assign('topic', new MetaTopic(14));
 
 
-/**** Language test ****/
-$langObj = new MetaLanguage(1);
-if ($langObj->defined()) {
-    $language['name'] = $langObj->OrigName;
-    $language['number'] = $langObj->Id;
-    $language['englname'] = $langObj->Name;
-    $language['code'] = $langObj->Code;
-
-    $tpl->assign('language', $language);
-}
+// Language object
+$tpl->assign('language', new MetaLanguage(1));
 
 
-/*** Publication test ***/
-$pubObj = new MetaPublication(1);
-if ($pubObj->defined()) {
-    $publication['name'] = $pubObj->Name;
-    $publication['identifier'] = $pubObj->Id;
-
-	$tpl->assign('publication', $publication);
-}
+// Publication object
+$tpl->assign('publication', new MetaPublication(6));
 
 
-/**** Issue test ****/
-$issueObj = new MetaIssue(1, 1, 1);
-if ($issueObj->defined()) {
-    $issue['name'] = $issueObj->Name;
-    $issue['number'] = $issueObj->Number;
-
-	$tpl->assign('issue', $issue);
-}
+// Issue object
+$tpl->assign('issue', new MetaIssue(6, 1, 1));
 
 
-/**** Section test ****/
-$sectionObj = new MetaSection(1, 1, 1, 50);
-if ($sectionObj->defined()) {
-    $section['name'] = $sectionObj->Name;
-    $section['number'] = $sectionObj->Number;
-
-	$tpl->assign('section', $section);
-}
+// Section object
+$tpl->assign('section', new MetaSection(6, 1, 1, 1));
 
 
-/**** Article test ****/
-$article = array();
-$articleObj = new MetaArticle(1, 8);
-
-if ($articleObj->defined()) {
-    // load article base fields
-    $article['number'] = $articleObj->Number;
-    $article['name'] = $articleObj->Name;
-    $article['type'] = $articleObj->Type;
-    $article['keywords'] = $articleObj->Keywords;
-    $article['publish_date'] = $articleObj->PublishDate;
-    $article['publishDate'] = &$article['publish_date']; 
-    $article['upload_date'] = $articleObj->UploadDate;
-    $article['uploadDate'] = &$article['upload_date'];
-    // load article customized fields
-    if ($articleObj->Type == 'Article') {
-        foreach($articleObj->m_customFields as $customField) {
-            $article[strtolower($customField)] = $articleObj->$customField;
-        }
-    } else {
-        foreach($articleObj->m_customFields as $customField) {
-            $article[strtolower($article['type'])][strtolower($customField)] = $articleObj->$customField;
-        }
-    }
-
-    $tpl->assign('article', $article);
-}
+// Article object
+$articleObj = new MetaArticle(1, 143);
+//$tpl->register_object('article', $articleObj);
+$tpl->assign('article', $articleObj);
 
 
-/*** Attachment test ***/
-$attachObj = new MetaAttachment(1);
-if ($attachObj->defined()) {
-    $article['attachment']['filename'] = $attachObj->file_name;
-    $article['attachment']['mimetype'] = $attachObj->mime_type;
-    $article['attachment']['extension'] = $attachObj->extension;
-    $article['attachment']['sizeb'] = $attachObj->size_in_bytes;
-    $article['attachment']['sizekb'] = $attachObj->size_in_bytes / 1024;
-    $article['attachment']['sizemb'] = $attachObj->size_in_bytes / 1048576;
-
-	$tpl->assign('article', $article);
-}
+// Article attachment object
+$tpl->assign('articleAttachment', new MetaAttachment(1));
 
 
-/***** User test *****/
+// User object
 $userObj = new MetaUser(1);
 if ($userObj->defined()) {
-    $user['identifier'] = $userObj->Id;
-    $user['name'] = $userObj->Name;
-    $user['uname'] = $userObj->UName;
-    $user['email'] = $userObj->EMail;
-    $user['city'] = $userObj->City;
-    $user['straddress'] = $userObj->StrAddress;
-    $user['state'] = $userObj->State;
-    $user['country'] = $userObj->CountryCode;
-    $user['phone'] = $userObj->Phone;
-    $user['fax'] = $userObj->Fax;
-    $user['employer'] = $userObj->Employer;
-
-	$tpl->assign('user', $user);
+	$tpl->assign('user', $userObj);
 }
-
-
-//$tpl->smarty_list_articles(null, 'holman, romero', $tpl, 5);
-
 
 
 /**** Exception test ****/
 try {
-    $articleObj->Name = 'holman';
+    $articleObj->Name = 'test';
+    echo "<h3>Set property test: failed</h3>.";
 } catch (Exception $e) {
-    echo $e->getMessage();
+    echo "<h3>Set property test: success</h3>";
 }
 
 
-$tpl->display('camp_index.tpl');
+try {
+	$tpl->display('camp_index.tpl');
+} catch (InvalidPropertyException $e) {
+	echo "<p>Invalid property " . $e->getProperty() . " of object " . $e->getClassName() . "</p>\n";
+}
 
 ?>
