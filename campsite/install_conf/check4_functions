@@ -1010,7 +1010,7 @@ return 0
 }
 # END OF check4_php_cli
 
-# FUNCTION: check4_php_myslq
+# FUNCTION: check4_php_mysql
 # Description: check if php mysql module was installed
 # Parameters: none
 # Variables set:
@@ -1024,7 +1024,23 @@ check4_php_cli || return 1
 set_checked php_mysql
 return 0
 }
-# END OF check4_php_myslq
+# END OF check4_php_mysql
+
+# FUNCTION: check4_php_apc
+# Description: check if php apc extension was installed
+# Parameters: none
+# Variables set:
+#	output - error message (if any)
+check4_php_apc()
+{
+is_checked php_apc && return 0
+check4_php_cli || return 1
+"$PHP" -q "$INSTALL_CONF/php_apc_exists.php"
+[ $? -ne 0 ] && output="PHP APC extension was not installed. Please install it." && return 1
+set_checked php_apc
+return 0
+}
+# END OF check4_php_apc
 
 # FUNCTION: check4_php_gd
 # Description: check if php gd module was installed
