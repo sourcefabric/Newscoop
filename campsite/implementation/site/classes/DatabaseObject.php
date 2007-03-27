@@ -67,7 +67,7 @@ class DatabaseObject {
 	 * @var array
 	 */
 	var $m_oldKeyValues = array();
-
+	
 	/**
 	 * If true it will use the caching feature
 	 *
@@ -286,10 +286,12 @@ class DatabaseObject {
 	 */
 	function exists()
 	{
+		global $g_ado_db;
+
 		if (!is_null($this->m_exists)) {
 			return $this->m_exists;
 		}
-		global $g_ado_db;
+
 		$queryStr = 'SELECT `'.$this->m_keyColumnNames[0].'`';
 		$queryStr .= ' FROM ' . $this->m_dbTableName;
 		$queryStr .= ' WHERE ' . $this->getKeyWhereClause();
@@ -352,6 +354,7 @@ class DatabaseObject {
 	function create($p_values = null)
 	{
 		global $g_ado_db;
+
 		$queryStr = 'INSERT IGNORE INTO ' . $this->m_dbTableName;
 
 		// Make sure we have the key required to create the row.
@@ -418,6 +421,7 @@ class DatabaseObject {
 	function delete()
 	{
 		global $g_ado_db;
+
 		$queryStr = 'DELETE FROM ' . $this->m_dbTableName
 					.' WHERE ' . $this->getKeyWhereClause()
 					.' LIMIT 1';
@@ -448,9 +452,10 @@ class DatabaseObject {
 	function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false)
 	{
 		global $g_ado_db;
-		if (!in_array($p_dbColumnName, $this->m_columnNames)) {
-			throw new InvalidPropertyException(get_class($this), $p_dbColumnName);
-		}
+
+        if (!in_array($p_dbColumnName, $this->m_columnNames)) {
+            throw new InvalidPropertyException(get_class($this), $p_dbColumnName);
+        }
 		if (isset($this->m_data[$p_dbColumnName])) {
 			if ($p_forceFetchFromDatabase) {
 				if ($this->keyValuesExist() && in_array($p_dbColumnName, $this->m_columnNames)) {
@@ -511,6 +516,7 @@ class DatabaseObject {
 	function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
 	{
 		global $g_ado_db;
+
 		// If we are not committing, the value cannot be SQL.
 		if (!$p_commit && $p_isSql) {
 			return false;
@@ -576,6 +582,12 @@ class DatabaseObject {
 				$errorMsg = $g_ado_db->ErrorMsg();
 			}
 		}
+
+        // Write the object cache
+        if ($success !== false) {
+            $this->writeCache();
+        }
+
 		return $success;
 	} // fn setProperty
 
@@ -648,6 +660,12 @@ class DatabaseObject {
         	$this->fetch();
         	$this->m_oldKeyValues = array();
         }
+
+        // Write the object cache
+        if ($success !== false) {
+            $this->writeCache();
+        }
+
 		return $success;
 	} // fn update
 
@@ -667,6 +685,7 @@ class DatabaseObject {
 	function commit($p_ignoreColumns = null)
 	{
 		global $g_ado_db;
+
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
         	if (is_null($p_ignoreColumns) || !in_array($columnName, $p_ignoreColumns)) {
@@ -682,6 +701,12 @@ class DatabaseObject {
 		if ($result !== false) {
 			$this->m_exists = true;
 		}
+
+        // Write the object cache
+        if ($success !== false) {
+            $this->writeCache();
+        }
+
 		return $success;
 	} // fn commit
 
@@ -801,7 +826,7 @@ class DatabaseObject {
 		if (!DatabaseObject::GetUseCache()) {
 			return false;
 		}
-
+		
 		if (is_array($p_recordSet) && sizeof($p_recordSet) > 0) {
 			foreach ($this->m_keyColumnNames as $columnName) {
 				if (!isset($p_recordSet[$columnName])) {
@@ -817,19 +842,20 @@ class DatabaseObject {
 		}
 
         $cacheObj = CampCache::singleton();
-        $object = $cacheObj->get($cacheKey, $this->getCacheGroup());
+        $object = $cacheObj->fetch($cacheKey);
 
 		if ($object === false) {
 			return false;
 		}
-		$this->duplicateObject($object);
 
+		$this->duplicateObject($object);
+		
 		return $this;
 	}
-
-
+	
+	
 	/**
-	 * Copies the given object
+	 * Copies the given object 
 	 *
 	 * @param object $p_source
 	 * @return object
@@ -839,10 +865,11 @@ class DatabaseObject {
 		foreach ($p_source as $key=>$value) {
 			$this->$key = $value;
 		}
+
 		return $this;
 	}
-
-
+	
+	
 	/**
 	 * Returns true if cache use was enabled
 	 *
@@ -852,13 +879,13 @@ class DatabaseObject {
 	{
 		return DatabaseObject::$m_useCache;
 	}
-
-
+	
+	
 	/**
 	 * Sets cache enabled/disabled
 	 *
 	 * @param bool $p_useCache
-	 *
+	 * 
 	 * @return void
 	 */
 	function SetUseCache($p_useCache)
@@ -870,33 +897,23 @@ class DatabaseObject {
 	/**
 	 * Writes the serialized object to a file.
 	 *
-	 * @param bool $p_bOverwriteExisting
-	 *
 	 * @return bool
 	 */
-	function writeCache($p_bOverwriteExisting = true)
+	function writeCache()
 	{
 		if (!DatabaseObject::GetUseCache()) {
 			return false;
 		}
-
+		
 		if (!$this->exists()) {
 			return false;
 		}
 
         $cacheKey = $this->getCacheKey();
         $cacheObj = CampCache::singleton();
-        return $cacheObj->add($cacheKey, $this, $this->getCacheGroup());
+
+        return $cacheObj->add($cacheKey, $this);
 	} // fn writeCache
-
-
-    /**
-     *
-     */
-    function getCacheGroup()
-    {
-        return get_class($this);
-    } // fn getCacheGroup
 
 
     /**
@@ -918,8 +935,8 @@ class DatabaseObject {
 			$cacheKey .= $recordSet[$key];
 		}
 
-        return $cacheKey;
-    } // fn genCacheKey
+        return $cacheKey.get_class($this);
+    } // fn getCacheKey
 
 } // class DatabaseObject
 
