@@ -272,7 +272,7 @@ class DatabaseObject {
 		// Reset old key values - we are now synced with the database.
 		$this->m_oldKeyValues = array();
 
-		// Write the object cache
+		// Write the object to cache
         $this->writeCache();
 
 		return true;
@@ -453,9 +453,16 @@ class DatabaseObject {
 	{
 		global $g_ado_db;
 
-        if (!in_array($p_dbColumnName, $this->m_columnNames)) {
-            throw new InvalidPropertyException(get_class($this), $p_dbColumnName);
+        try {
+            if (!in_array($p_dbColumnName, $this->m_columnNames)
+                    && !array_key_exists($p_dbColumnName, $this->m_data)) {
+                throw new InvalidPropertyException(get_class($this), $p_dbColumnName);
+            }
+        } catch (InvalidPropertyException $e) {
+            // do something
+            // echo "<p>Invalid property ".$e->getProperty()." of object ".$e->getClassName()."</p>\n";
         }
+
 		if (isset($this->m_data[$p_dbColumnName])) {
 			if ($p_forceFetchFromDatabase) {
 				if ($this->keyValuesExist() && in_array($p_dbColumnName, $this->m_columnNames)) {
@@ -583,7 +590,7 @@ class DatabaseObject {
 			}
 		}
 
-        // Write the object cache
+        // Write the object to cache
         if ($success !== false) {
             $this->writeCache();
         }
@@ -661,7 +668,7 @@ class DatabaseObject {
         	$this->m_oldKeyValues = array();
         }
 
-        // Write the object cache
+        // Write the object to cache
         if ($success !== false) {
             $this->writeCache();
         }
@@ -702,7 +709,7 @@ class DatabaseObject {
 			$this->m_exists = true;
 		}
 
-        // Write the object cache
+        // Write the object to cache
         if ($success !== false) {
             $this->writeCache();
         }
@@ -819,7 +826,9 @@ class DatabaseObject {
 	 *
 	 * @param array $p_recordSet
 	 *
-	 * @return object or bool false if the object didn't exist
+	 * @return mixed
+     *    object The cached object on success
+     *    boolean FALSE if the object did not exist
 	 */
 	function readFromCache($p_recordSet = null)
 	{
@@ -895,9 +904,10 @@ class DatabaseObject {
 
 
 	/**
-	 * Writes the serialized object to a file.
+	 * Writes the object to cache.
 	 *
 	 * @return bool
+     *    TRUE on success, FALSE on failure
 	 */
 	function writeCache()
 	{
@@ -917,7 +927,10 @@ class DatabaseObject {
 
 
     /**
+     * Generates the cache key for the object.
      *
+     * @param array optional
+     *    $p_recordSet The object data
      */
     function getCacheKey($p_recordSet = null)
     {

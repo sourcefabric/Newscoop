@@ -11,7 +11,7 @@ define('CACHE_SERIAL_FOOTER', "*/\n?".">");
  /**
  * @package Campsite
  */
-class CampCache {
+final class CampCache {
     /**
      * The cache key for the current cache object.
      *
@@ -35,6 +35,7 @@ class CampCache {
 
 
     /**
+     * CampCache class constructor.
      *
      */
     private function __construct()
