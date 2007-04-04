@@ -21,9 +21,17 @@ require_once($g_documentRoot.'/include/smarty/Smarty.class.php');
 /**
  * @package Campsite
  */
-class CampTemplate extends Smarty {
+final class CampTemplate extends Smarty {
 
-    public function __construct()
+    /**
+     * Holds instance of the class.
+     *
+     * @var object
+     */
+    private static $m_instance = null;
+
+
+    private function __construct()
     {
         global $Campsite;
 
@@ -48,6 +56,22 @@ class CampTemplate extends Smarty {
                                    $Campsite['CAMPSITE_DIR'].'/var/smarty/plugins'
                                    );
     } // fn __constructor
+
+
+    /**
+     * Singleton function that returns the global class object.
+     *
+     * @return object
+     *    CampCache
+     */
+    public static function singleton()
+    {
+        if (!isset(self::$m_instance)) {
+            self::$m_instance = new CampTemplate();
+        }
+
+        return self::$m_instance;
+    } // fn singleton
 
 } // class CampTemplate
 

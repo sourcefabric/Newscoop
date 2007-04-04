@@ -453,14 +453,9 @@ class DatabaseObject {
 	{
 		global $g_ado_db;
 
-        try {
-            if (!in_array($p_dbColumnName, $this->m_columnNames)
-                    && !array_key_exists($p_dbColumnName, $this->m_data)) {
-                throw new InvalidPropertyException(get_class($this), $p_dbColumnName);
-            }
-        } catch (InvalidPropertyException $e) {
-            // do something
-            // echo "<p>Invalid property ".$e->getProperty()." of object ".$e->getClassName()."</p>\n";
+        if (!in_array($p_dbColumnName, $this->m_columnNames)
+                && !array_key_exists($p_dbColumnName, $this->m_data)) {
+            throw new InvalidPropertyException(get_class($this), $p_dbColumnName);
         }
 
 		if (isset($this->m_data[$p_dbColumnName])) {

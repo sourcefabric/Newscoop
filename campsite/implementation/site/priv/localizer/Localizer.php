@@ -51,12 +51,23 @@ function getGS($p_translateString)
 		$translatedString = $g_translationStrings[$p_translateString];
 	}
 	if ($numFunctionArgs > 1) {
-		for ($i = 1; $i < $numFunctionArgs; $i++){
+		for ($i = 1; $i < $numFunctionArgs;){
 			$name = '$'.$i;
 			$nameReversed = $i.'$';
-			$val = func_get_arg($i);
-			$translatedString = str_replace($name, $val, $translatedString);
-			$translatedString = str_replace($nameReversed, $val, $translatedString);
+			$parameter = func_get_arg($i);
+			if (is_array($parameter)) {
+				foreach ($parameter as $array_parameter) {
+					$translatedString = str_replace($name, $array_parameter, $translatedString);
+					$translatedString = str_replace($nameReversed, $array_parameter, $translatedString);
+					$i++;
+					$name = '$'.$i;
+					$nameReversed = $i.'$';
+				}
+			} else {
+				$translatedString = str_replace($name, $parameter, $translatedString);
+				$translatedString = str_replace($nameReversed, $parameter, $translatedString);
+			}
+			$i++;
 		}
 	}
 	return $translatedString;

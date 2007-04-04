@@ -4,215 +4,11 @@
 </head>
 <body>
 
-{{*** Language ***}}
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#6a6a6a"><font color="#ffffff">Topic</font></td>
-</tr>
-</table>
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#efefef" nowrap>Identifier:</td>
-  <td bgcolor="#efefef">
-    {{ $topic.identifier }}
-  </td>
-  <td>{{ literal }}{{ $language.identifier }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Name:</td>
-  <td bgcolor="#ffffff">
-    {{ $topic.name }}
-  </td>
-  <td>{{ literal }}{{ $topic.name }}{{ /literal }}</td>
-</tr>
-</table>
+{{ invalid_tag }}
 
+{{ $smarty.invalid_reference }}
 
-{{*** Language ***}}
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#6a6a6a"><font color="#ffffff">Language</font></td>
-</tr>
-</table>
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#efefef" nowrap>Identifier:</td>
-  <td bgcolor="#efefef">
-    {{ $language.number }}
-  </td>
-  <td>{{ literal }}{{ $language.number }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Name:</td>
-  <td bgcolor="#ffffff">
-    {{ $language.name }}
-  </td>
-  <td>{{ literal }}{{ $language.name }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#efefef" nowrap>English Name:</td>
-  <td bgcolor="#efefef">
-    {{ $language.englname }}
-  </td>
-  <td>{{ literal }}{{ $language.englname }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Code:</td>
-  <td bgcolor="#ffffff">
-    {{ $language.code }}
-  </td>
-  <td>{{ literal }}{{ $language.code }}{{ /literal }}</td>
-</tr>
-</table>
-
-
-{{**** User ****}}
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#6a6a6a"><font color="#ffffff">User</font></td>
-</tr>
-</table>
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#efefef" nowrap>Identifier:</td>
-  <td bgcolor="#efefef">
-    {{ $user.identifier }}
-  </td>
-  <td>{{ literal }}{{ $user.identifier }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Name:</td>
-  <td bgcolor="#ffffff">
-    {{ $user.name }}
-  </td>
-  <td>{{ literal }}{{ $user.name }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#efefef" nowrap>UserName:</td>
-  <td bgcolor="#efefef">
-    {{ $user.uname }}
-  </td>
-  <td>{{ literal }}{{ $user.uname }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>E-mail:</td>
-  <td bgcolor="#ffffff">
-    {{ $user.email }}
-  </td>
-  <td>{{ literal }}{{ $user.email }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#efefef" nowrap>City:</td>
-  <td bgcolor="#efefef">
-    {{ $user.city }}
-  </td>
-  <td>{{ literal }}{{ $user.city }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Street Address:</td>
-  <td bgcolor="#ffffff">
-    {{ $user.straddress }}
-  </td>
-  <td>{{ literal }}{{ $user.straddress }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#efefef" nowrap>State:</td>
-  <td bgcolor="#efefef">
-    {{ $user.state }}
-  </td>
-  <td>{{ literal }}{{ $user.state }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Country:</td>
-  <td bgcolor="#ffffff">
-    {{ $user.country }}
-  </td>
-  <td>{{ literal }}{{ $user.country }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#efefef" nowrap>Phone:</td>
-  <td bgcolor="#efefef">
-    {{ $user.phone }}
-  </td>
-  <td>{{ literal }}{{ $user.phone }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Employer:</td>
-  <td bgcolor="#ffffff">
-    {{ $user.employer }}
-  </td>
-  <td>{{ literal }}{{ $user.employer }}{{ /literal }}</td>
-</tr>
-</table>
-
-{{**** Publication ****}}
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#6a6a6a"><font color="#ffffff">Publication</font></td>
-</tr>
-</table>
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#efefef" nowrap>Name:</td>
-  <td bgcolor="#efefef">
-    {{ $publication.name }}
-  </td>
-  <td>{{ literal }}{{ $publication.name }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Identifier:</td>
-  <td bgcolor="#ffffff">
-    {{ $publication.identifier }}
-  </td>
-  <td>{{ literal }}{{ $publication.identifier }}{{ /literal }}</td>
-</tr>
-</table>
-
-{{**** Issue ****}}
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#6a6a6a"><font color="#ffffff">Issue</font></td>
-</tr>
-</table>
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#efefef" nowrap>Name:</td>
-  <td bgcolor="#efefef">
-    {{ $issue.name }}
-  </td>
-  <td>{{ literal }}{{ $issue.name }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Number:</td>
-  <td bgcolor="#ffffff">
-    {{ $issue.number }}
-  </td>
-  <td>{{ literal }}{{ $issue.number }}{{ /literal }}</td>
-</tr>
-</table>
-
-{{**** Section ****}}
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#6a6a6a"><font color="#ffffff">Section</font></td>
-</tr>
-</table>
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#efefef" nowrap>Name:</td>
-  <td bgcolor="#efefef">
-    {{ $section.name }}
-  </td>
-  <td>{{ literal }}{{ $section.name }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Number:</td>
-  <td bgcolor="#ffffff">
-    {{ $section.number }}
-  </td>
-  <td>{{ literal }}{{ $section.number }}{{ /literal }}</td>
-</tr>
-</table>
+{{ $article->invalid_property }}
 
 {{**** Article ****}}
 <table cellspacing="1" cellpadding="4">
@@ -222,100 +18,228 @@
 </table>
 <table cellspacing="1" cellpadding="4">
 <tr>
-  <td bgcolor="#efefef" nowrap>Title:</td>
-  <td bgcolor="#efefef">
-    {{ $article.name }}
-  </td>
-  <td nowrap>{{ literal }}{{ $article.title }}{{ /literal }}</td>
+  <td bgcolor="Aqua" align="center" colspan="3">Base Fields</td>
 </tr>
 <tr>
-  <td bgcolor="#ffffff" nowrap>Intro:</td>
-  <td bgcolor="#ffffff">
-    {{ $article.intro }}
+  <td bgcolor="#9cf0ff" nowrap valign="top">Number:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $article->number }}
   </td>
-  <td nowrap>{{ literal }}{{ $article.intro }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $article->number }}{{ /literal }}</td>
 </tr>
 <tr>
-  <td bgcolor="#efefef" nowrap>Body:</td>
-  <td bgcolor="#efefef">
-    {{ $article.full_text }}
+  <td bgcolor="#9cf0ff" nowrap valign="top">Type:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $article->type_name }}
   </td>
-  <td nowrap>{{ literal }}{{ $article.body }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $article->type_name }}{{ /literal }}</td>
 </tr>
 <tr>
-  <td bgcolor="#ffffff" nowrap>Link - URL:</td>
-  <td bgcolor="#ffffff">
-    {{ $article.link.url }}
+  <td bgcolor="#9cf0ff" nowrap valign="top">Name:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $article->name }}
   </td>
-  <td nowrap>{{ literal }}{{ $article.link.url }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $article->name }}{{ /literal }}</td>
 </tr>
 <tr>
-  <td bgcolor="#efefef" nowrap>Service - Full Text:</td>
-  <td bgcolor="#efefef">
-    {{ $article.service.full_text }}
+  <td bgcolor="#9cf0ff" nowrap valign="top">Publish Date:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $article->publish_date }}
   </td>
-  <td nowrap>{{ literal }}{{ $article.service.full_text }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $article->publish_date }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Creation Date:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $article->creation_date }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->creation_date }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Keywords:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $article->keywords }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->keywords }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">URL Name:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $article->url_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->url_name }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Comments Enabled:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $article->comments_enabled }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->comments_enabled }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Comments Locked:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $article->comments_locked }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->comments_locked }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Last Update:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $article->last_update }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->last_update }}{{ /literal }}</td>
+</tr>
+
+
+<tr>
+  <td bgcolor="#cdff59" align="center" colspan="3">Custom Fields</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Year:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->year }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->year }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Month:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->mon }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->mon }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Week Day:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->wday }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->wday }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Month Day:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->mon }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->mon }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Year Day:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->yday }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->yday }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Hour:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->hour }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->hour }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Minute:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->min }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->min }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Second:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->sec }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->sec }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">On Front Page:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->on_front_page }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->on_front_page }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">On Section Page:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->on_section_page }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->on_section_page }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Published:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->is_published }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->is_published }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Public:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->is_public }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->is_public }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Indexed:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->is_indexed }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->is_indexed }}{{ /literal }}</td>
+</tr>
+
+
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Publication:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->publication }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->publication }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Issue:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->issue }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->issue }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Section:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->section }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->section }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Language:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->language }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->language }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Owner:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->owner }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->owner }}{{ /literal }}</td>
+</tr>
+
+
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Intro:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->type->fastnews->intro }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->type->fastnews->intro }}{{ /literal }}</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Body:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $article->type->fastnews->body }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $article->type->fastnews->body }}{{ /literal }}</td>
 </tr>
 </table>
-
-{{**** Attachment ****}}
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#6a6a6a"><font color="#ffffff">Article Attachment</font></td>
-</tr>
-</table>
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#efefef" nowrap>File Name:</td>
-  <td bgcolor="#efefef">
-    {{ $article.attachment.filename }}
-  </td>
-  <td nowrap>{{ literal }}{{ $article.attachment.filename }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Mime Type:</td>
-  <td bgcolor="#ffffff">
-    {{ $article.attachment.mimetype }}
-  </td>
-  <td nowrap>{{ literal }}{{ $article.attachment.mimetype }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#efefef" nowrap>Extension:</td>
-  <td bgcolor="#efefef">
-    {{ $article.attachment.extension }}
-  </td>
-  <td nowrap>{{ literal }}{{ $article.attachment.extension }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Size In Bytes:</td>
-  <td bgcolor="#ffffff">
-    {{ $article.attachment.sizeb }}
-  </td>
-  <td nowrap>{{ literal }}{{ $article.attachment.sizeb }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Size In Kb:</td>
-  <td bgcolor="#ffffff">
-    {{ $article.attachment.sizekb }}
-  </td>
-  <td nowrap>{{ literal }}{{ $article.attachment.sizekb }}{{ /literal }}</td>
-</tr>
-<tr>
-  <td bgcolor="#ffffff" nowrap>Size In Mb:</td>
-  <td bgcolor="#ffffff">
-    {{ $article.attachment.sizemb }}
-  </td>
-  <td nowrap>{{ literal }}{{ $article.attachment.sizemb }}{{ /literal }}</td>
-</tr>
-</table>
-
-{{ $smarty.now }}<br />
-{{ $smarty.now|date_format:'%Y-%m-%d %H:%M:%S' }}<br />
-{{ $smarty.now|camp_date_format:'%M %W, %Y %H:%i:%s %p' }}
-
-{{ list_articles length="5" repeat="5" }}
-	{{ $article.name }}<br />
-{{ /list_articles }}
 
 </body>
 </html>

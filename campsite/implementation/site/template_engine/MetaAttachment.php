@@ -28,6 +28,10 @@ final class MetaAttachment {
             return false;
         }
         $this->m_dbObject =& $attachmentObj;
+
+        foreach ($this->m_dbObject->m_columnNames as $property) {
+        	$this->m_properties[strtolower($property)] = $property;
+        }
     } // fn __construct
 
 } // class MetaAttachment
