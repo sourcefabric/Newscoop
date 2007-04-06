@@ -12,6 +12,9 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/Article.php');
+require_once($g_documentRoot.'/classes/ArticleAttachment.php');
+require_once($g_documentRoot.'/classes/Template.php');
+require_once($g_documentRoot.'/classes/Language.php');
 require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
 
 
@@ -24,21 +27,21 @@ final class MetaArticle extends MetaDbObject {
 	private $m_state = null;
 
 
-	public static function InitProperties()
+	private function InitProperties()
 	{
-		if (!is_null(MetaDbObject::$m_properties)) {
+		if (!is_null($this->m_properties)) {
 			return;
 		}
-		MetaDbObject::$m_properties['number'] = 'Number';
-		MetaDbObject::$m_properties['type_name'] = 'Type';
-		MetaDbObject::$m_properties['name'] = 'Name';
-		MetaDbObject::$m_properties['publish_date'] = 'PublishDate';
-		MetaDbObject::$m_properties['creation_date'] = 'UploadDate';
-		MetaDbObject::$m_properties['keywords'] = 'Keywords';
-		MetaDbObject::$m_properties['url_name'] = 'ShortName';
-		MetaDbObject::$m_properties['comments_enabled'] = 'comments_enabled';
-		MetaDbObject::$m_properties['comments_locked'] = 'comments_locked';
-		MetaDbObject::$m_properties['last_update'] = 'time_updated';
+		$this->m_properties['number'] = 'Number';
+		$this->m_properties['type_name'] = 'Type';
+		$this->m_properties['name'] = 'Name';
+		$this->m_properties['publish_date'] = 'PublishDate';
+		$this->m_properties['creation_date'] = 'UploadDate';
+		$this->m_properties['keywords'] = 'Keywords';
+		$this->m_properties['url_name'] = 'ShortName';
+		$this->m_properties['comments_enabled'] = 'comments_enabled';
+		$this->m_properties['comments_locked'] = 'comments_locked';
+		$this->m_properties['last_update'] = 'time_updated';
 	}
 
 
@@ -50,6 +53,7 @@ final class MetaArticle extends MetaDbObject {
             return false;
         }
         $this->m_dbObject =& $articleObj;
+        $this->InitProperties();
 
         $this->m_articleData =& new ArticleData($articleObj->getType(),
                                                 $articleObj->getArticleNumber(),
@@ -80,6 +84,9 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['section'] = 'getSection';
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['owner'] = 'getOwner';
+        $this->m_customProperties['template'] = 'getTemplate';
+        $this->m_customProperties['defined'] = 'defined';
+        $this->m_customProperties['has_attachments'] = 'hasAttachments';
     } // fn __construct
 
 
@@ -231,43 +238,77 @@ final class MetaArticle extends MetaDbObject {
 
     public function getPublication()
     {
-    	return new Publication($this->m_dbObject->getProperty('IdPublication'));
+    	return new MetaPublication($this->m_dbObject->getProperty('IdPublication'));
     }
 
 
     public function getIssue()
     {
-    	return new Issue($this->m_dbObject->getProperty('IdPublication'),
-    					 $this->m_dbObject->getProperty('IdLanguage'),
-    					 $this->m_dbObject->getProperty('NrIssue'));
+    	return new MetaIssue($this->m_dbObject->getProperty('IdPublication'),
+    						 $this->m_dbObject->getProperty('IdLanguage'),
+    						 $this->m_dbObject->getProperty('NrIssue'));
     }
 
 
     public function getSection()
     {
-    	return new Section($this->m_dbObject->getProperty('IdPublication'),
-    					   $this->m_dbObject->getProperty('NrIssue'),
-    					   $this->m_dbObject->getProperty('IdLanguage'),
-    					   $this->m_dbObject->getProperty('NrSection'));
-
+    	return new MetaSection($this->m_dbObject->getProperty('IdPublication'),
+    						   $this->m_dbObject->getProperty('NrIssue'),
+    						   $this->m_dbObject->getProperty('IdLanguage'),
+    						   $this->m_dbObject->getProperty('NrSection'));
     }
 
 
     public function getLanguage()
     {
-    	return new Language($this->m_dbObject->getProperty('IdLanguage'));
+    	return new MetaLanguage($this->m_dbObject->getProperty('IdLanguage'));
     }
 
 
     public function getOwner()
     {
-    	return new User($this->m_dbObject->getProperty('IdUser'));
+    	return new MetaUser($this->m_dbObject->getProperty('IdUser'));
+    }
+
+
+    public function getTemplate()
+    {
+    	$articleSection =& new Section($this->m_dbObject->getProperty('IdPublication'),
+    								   $this->m_dbObject->getProperty('NrIssue'),
+    								   $this->m_dbObject->getProperty('IdLanguage'),
+    								   $this->m_dbObject->getProperty('NrSection'));
+    	if (!is_null($articleSection->getArticleTemplateId())) {
+    		return new Template($articleSection->getArticleTemplateId());
+    	}
+    	$articleIssue =& new Issue($this->m_dbObject->getProperty('IdPublication'),
+    							   $this->m_dbObject->getProperty('IdLanguage'),
+    							   $this->m_dbObject->getProperty('NrIssue'));
+   		return new Template($articleIssue->getArticleTemplateId());
+    }
+
+
+    public function hasAttachments()
+    {
+    	$attachments = ArticleAttachment::GetAttachmentsByArticleNumber($this->m_dbObject->getProperty('Number'));
+    	return (int)(sizeof($attachments) > 0);
+    }
+
+
+    public function translated_to($p_language)
+    {
+    	if (is_string($p_language)) {
+    		$languages = Language::GetLanguages(null, $p_language);
+    		if (sizeof($languages) == 0) {
+    			return (int)false;
+    		}
+    		$language = $languages[0];
+    	} else {
+    		$language = $p_language;
+    	}
+    	$article =& new Article($language->getLanguageId(), $this->m_dbObject->getArticleNumber());
+    	return (int)$article->exists();
     }
 
 } // class MetaArticle
-
-
-MetaArticle::InitProperties();
-
 
 ?>

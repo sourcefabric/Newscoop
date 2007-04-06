@@ -18,7 +18,7 @@ class MetaDbObject {
     //
     protected $m_dbObject = null;
 
-    protected static $m_properties = null;
+    protected $m_properties = null;
 
     protected $m_customProperties = null;
 
@@ -62,12 +62,12 @@ class MetaDbObject {
 
     final public function translateProperty($p_property)
     {
-        if (is_array(MetaDbObject::$m_properties)) {
+        if (is_array($this->m_properties)) {
         	$property = strtolower($p_property);
-        	if (!isset(MetaDbObject::$m_properties[$property])) {
+        	if (!isset($this->m_properties[$property])) {
         		throw new InvalidPropertyException(get_class($this->m_dbObject), $p_property);
         	}
-        	return MetaDbObject::$m_properties[$property];
+        	return $this->m_properties[$property];
         }
     	return $p_property;
     }
