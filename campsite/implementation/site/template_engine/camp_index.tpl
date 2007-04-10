@@ -112,6 +112,178 @@
 </table>
 
 
+{{**** Issue ****}}
+<table>
+<tr>
+  <td bgcolor="#6a6a6a"><font color="#ffffff">Issue</font></td>
+</tr>
+</table>
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="Aqua" align="center" colspan="3">Fields</td>
+  <td bgcolor="Aqua" align="center">Type</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Name:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $issue->name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->name }}{{ /literal }}</td>
+  <td nowrap valign="top">base</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Number:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $issue->number }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->number }}{{ /literal }}</td>
+  <td nowrap valign="top">base</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Year:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $issue->year }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->year }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Month:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $issue->mon }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->mon }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Week Day:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $issue->wday }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->wday }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Month Day:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $issue->mday }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->mday }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Year Day:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $issue->yday }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->yday }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Hour:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $issue->hour }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->hour }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Minute:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $issue->min }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->min }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Second:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $issue->sec }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->sec }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Date:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $issue->date }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->date }}{{ /literal }}</td>
+  <td nowrap valign="top">base</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Publish Date:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $issue->publish_date }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->publish_date }}{{ /literal }}</td>
+  <td nowrap valign="top">base</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Template:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $issue->template }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->template }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $issue->defined }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $issue->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+</table>
+
+
+
+{{**** Section ****}}
+<table>
+<tr>
+  <td bgcolor="#6a6a6a"><font color="#ffffff">Section</font></td>
+</tr>
+</table>
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="Aqua" align="center" colspan="3">Fields</td>
+  <td bgcolor="Aqua" align="center">Type</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Name:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $section->name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $section->name }}{{ /literal }}</td>
+  <td nowrap valign="top">base</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Number:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $section->number }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $section->number }}{{ /literal }}</td>
+  <td nowrap valign="top">base</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Description:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $section->description }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $section->description }}{{ /literal }}</td>
+  <td nowrap valign="top">base</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $section->defined }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $section->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+</table>
+
 
 {{**** Article ****}}
 <table cellspacing="1" cellpadding="4">

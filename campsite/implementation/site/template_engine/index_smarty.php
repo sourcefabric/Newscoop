@@ -125,8 +125,6 @@ set_error_handler('templateErrorHandler');
 
 try {
 	$tpl->display('camp_index.tpl');
-} catch (InvalidPropertyException $e) {
-	echo "<p>Invalid property " . $e->getProperty() . " of object " . $e->getClassName() . "</p>\n";
 } catch (InvalidPropertyHandlerException $e) {
 	echo "<p>Internal error: handler was not specified for property " . $e->getPropertyName()
 		. " of object " . $e->getClassName() . "</p>\n";

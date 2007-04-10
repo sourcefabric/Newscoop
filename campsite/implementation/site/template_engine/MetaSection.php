@@ -19,6 +19,17 @@ require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
  */
 class MetaSection extends MetaDbObject {
 
+	private function InitProperties()
+	{
+		if (!is_null($this->m_properties)) {
+			return;
+		}
+		$this->m_properties['name'] = 'Name';
+		$this->m_properties['number'] = 'Number';
+		$this->m_properties['description'] = 'Description';
+	}
+
+
     public function __construct($p_publicationId, $p_issueNumber,
                                 $p_languageId, $p_sectionNumber)
     {
@@ -28,6 +39,8 @@ class MetaSection extends MetaDbObject {
 			return false;
 		}
 		$this->m_dbObject = $sectionObj;
+		$this->InitProperties();
+        $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 } // class MetaSection
