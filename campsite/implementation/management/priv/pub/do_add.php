@@ -3,6 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_setting.php');
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
@@ -27,6 +28,8 @@ $f_comments_public_moderated = Input::Get('f_comments_public_moderated', 'checkb
 $f_comments_subscribers_moderated = Input::Get('f_comments_subscribers_moderated', 'checkbox', 'numeric');
 $f_comments_captcha_enabled = Input::Get('f_comments_captcha_enabled', 'checkbox', 'numeric');
 $f_comments_spam_blocking_enabled = Input::Get('f_comments_spam_blocking_enabled', 'checkbox', 'numeric');
+$f_comments_moderator_to = Input::Get('f_comments_moderator_to', 'text', 'string');
+$f_comments_moderator_from = Input::Get('f_comments_moderator_from', 'text', 'string');
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -78,6 +81,13 @@ if ($created) {
 
 	$forum = camp_forum_create($publicationObj, $f_comments_public_enabled);
 	camp_forum_update($forum, $f_name, $f_comments_enabled, $f_comments_public_enabled);
+	$setting =& new Phorum_setting('mod_emailcomments', 'S');
+	if (!$setting->exists()) {
+		$setting->create();
+	}
+	$setting->update(array('addresses' => array($forum->getForumId() => $f_comments_moderator_to)));
+	$setting->update(array('from_addresses' => array($forum->getForumId() => $f_comments_moderator_from)));
+
 	camp_html_add_msg("Publication created.", "ok");
 	camp_html_goto_page("/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());
 } else {
