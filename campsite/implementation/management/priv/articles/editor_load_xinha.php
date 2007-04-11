@@ -61,7 +61,7 @@ function CampsiteInternalLink(editor, objectName, object, link) {
 			}
 		}
 	}
-	popupWindowTarget = "campsite_internal_link.php?TOL_Language=<?php p($_REQUEST["TOL_Language"]); ?>";
+	popupWindowTarget = "campsite_internal_link.php?TOL_Language=<?php p(camp_session_get('TOL_Language', 'en')); ?>";
 	if (!link) {
     	var sel = editor._getSelection();
     	var range = editor._createRange(sel);

@@ -16,9 +16,10 @@ if (!$g_user->hasPermission('ManagePub')) {
 }
 
 $languages = Language::GetLanguages();
-$defaultLanguage = array_pop(Language::GetLanguages(null, $_REQUEST['TOL_Language']));
+$TOL_Language = camp_session_get('TOL_Language', 'en');
+$defaultLanguage = array_pop(Language::GetLanguages(null, $TOL_Language));
 $urlTypes = UrlType::GetUrlTypes();
-$timeUnits = TimeUnit::GetTimeUnits($_REQUEST['TOL_Language']);
+$timeUnits = TimeUnit::GetTimeUnits($TOL_Language);
 $shortNameUrlType = UrlType::GetByName('short names');
 $aliases = array();
 

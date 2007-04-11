@@ -207,6 +207,8 @@ function camp_load_translation_strings($p_prefix)
     $langCode = null;
      if (isset($_REQUEST['TOL_Language'])) {
          $langCode = $_REQUEST['TOL_Language'];
+    } else {
+    	$langCode = 'en';
     }
     Localizer::LoadLanguageFiles($p_prefix, $langCode);
 } // fn camp_load_translation_strings

@@ -8,7 +8,8 @@ $topics = Topic::GetTree();
 $allLanguages = Language::GetLanguages();
 
 $loginLanguageId = 0;
-$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
+$TOL_Language = camp_session_get('TOL_Language', 'en');
+$loginLanguage = Language::GetLanguages(null, $TOL_Language);
 if (is_array($loginLanguage)) {
 	$loginLanguage = array_pop($loginLanguage);
 	$loginLanguageId = $loginLanguage->getLanguageId();
