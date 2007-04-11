@@ -15,7 +15,7 @@ if (!$g_user->hasPermission('ManagePub')) {
 }
 
 $f_publication_id = Input::Get('f_publication_id', 'int');
-$TOL_Language = Input::Get('TOL_Language');
+$TOL_Language = camp_session_get('TOL_Language', 'en');
 $f_name = trim(Input::Get('f_name'));
 $f_default_alias = Input::Get('f_default_alias', 'int');
 $f_language = Input::Get('f_language', 'int');

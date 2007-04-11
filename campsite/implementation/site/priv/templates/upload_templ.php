@@ -7,7 +7,7 @@ if (!$g_user->hasPermission('ManageTempl')) {
 }
 
 $Path = Input::Get('Path', 'string', '');
-$TOL_Language = Input::Get('TOL_Language');
+$TOL_Language = camp_session_get('TOL_Language', 'en');
 
 if (!Template::IsValidPath($Path)) {
 	camp_html_goto_page("/$ADMIN/templates/");

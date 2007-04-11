@@ -90,7 +90,7 @@ function regGS($p_key, $p_value)
 		}
 	}
 	else{
-		if (substr($p_value, strlen($p_value)-3)==(":".$_REQUEST["TOL_Language"])){
+		if (substr($p_value, strlen($p_value)-3)==(":".camp_session_get('TOL_Language', 'en'))){
 			$p_value = substr($p_value, 0, strlen($p_value)-3);
 		}
 		$g_translationStrings[$p_key] = $p_value;
