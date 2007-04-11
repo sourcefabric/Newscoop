@@ -160,23 +160,28 @@ function onCommentsActivated(p_checkbox)
                     <input type="checkbox" NAME="f_comments_spam_blocking_enabled" id="spam_blocking_enabled" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->isSpamBlockingEnabled()) { ?>checked<?php } ?>>
                 	</TD>
                 </TR>-->
-                
+
                 <?php
-                $setting =& new Phorum_setting('mod_emailcomments', 'S');
-                $current = $setting->get();
-                $addresses = $current['addresses'];
-                $from_addresses = $current['from_addresses'];
+                if (isset($forum) && is_object($forum)) {
+	                $setting =& new Phorum_setting('mod_emailcomments', 'S');
+    	            $current = $setting->get();
+	                $address_to = $current['addresses'][$forum->getForumId()];
+	                $address_from = $current['from_addresses'][$forum->getForumId()];
+                } else {
+                	$address_to = '';
+                	$address_from = '';
+                }
                 ?>
                 <TR>
                 	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Moderator Address"); ?>:</td>
                 	<td>
-                    <input type="text" NAME="f_comments_moderator_to" id="modarator_from" value="<?php echo $addresses[$forum->getForumId()] ?>">
+                    <input type="text" class="input_text" NAME="f_comments_moderator_to" id="moderator_to" value="<?php echo $address_to ?>">
                 	</TD>
                 </TR>
                 <TR>
                 	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("From Address"); ?>:</td>
                 	<td>
-                    <input type="text" NAME="f_comments_moderator_from" id="modarator_to" value="<?php echo $from_addresses[$forum->getForumId()] ?>">
+                    <input type="text" class="input_text" NAME="f_comments_moderator_from" id="moderator_from" value="<?php echo $address_from ?>">
                 	</TD>
                 </TR>
                 </table>
