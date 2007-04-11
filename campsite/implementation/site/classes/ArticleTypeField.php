@@ -641,6 +641,7 @@ class ArticleTypeField {
 		            ." AND field_name != 'NULL' "
 		            ." ORDER BY field_weight DESC";
 		$queryArray = $g_ado_db->GetAll($queryStr);
+		$orderArray = array();
 		foreach ($queryArray as $row => $values) {
 			if ($values['field_weight'] == NULL) {
 			    $values['field_weight'] = $this->getNextOrder();
