@@ -17,7 +17,7 @@ require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
 /**
  * @package Campsite
  */
-class MetaSection extends MetaDbObject {
+final class MetaSection extends MetaDbObject {
 
 	private function InitProperties()
 	{
@@ -39,9 +39,23 @@ class MetaSection extends MetaDbObject {
 			return false;
 		}
 		$this->m_dbObject = $sectionObj;
+
 		$this->InitProperties();
+		$this->m_customProperties['template'] = 'getTemplate';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
+
+
+    public function getTemplate()
+    {
+    	if ($this->m_dbObject->getSectionTemplateId() > 0) {
+   			return new MetaTemplate($this->m_dbObject->getSectionTemplateId());
+    	}
+    	$sectionIssue =& new Issue($this->m_dbObject->getProperty('IdPublication'),
+    							   $this->m_dbObject->getProperty('IdLanguage'),
+    							   $this->m_dbObject->getProperty('NrIssue'));
+   		return new MetaTemplate($sectionIssue->getSectionTemplateId());
+    }
 
 } // class MetaSection
 

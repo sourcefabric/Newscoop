@@ -17,14 +17,18 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/SyntaxError.php');
 
 // Meta classes
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaLanguage.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaPublication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaIssue.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaSection.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaArticle.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaImage.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaAttachment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaUser.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaLanguage.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaAudioclip.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaComment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaTopic.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaUser.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaTemplate.php');
 
 // Campsite template class (Smarty extended)
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/CampTemplate.php');
@@ -76,10 +80,6 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 $tpl = CampTemplate::singleton();
 
 
-// Topic object
-$tpl->assign('topic', new MetaTopic(14));
-
-
 // Language object
 $tpl->assign('language', new MetaLanguage(1));
 
@@ -97,25 +97,42 @@ $tpl->assign('section', new MetaSection(6, 1, 1, 1));
 
 
 // Article object
-$articleObj = new MetaArticle(1, 143);
-$tpl->assign('article', $articleObj);
+$tpl->assign('article', new MetaArticle(1, 143));
+
+
+// Image object
+$tpl->assign('image', new MetaImage(11));
 
 
 // Article attachment object
-$tpl->assign('articleAttachment', new MetaAttachment(1));
+$tpl->assign('attachment', new MetaAttachment(3));
+
+
+// Audioclip object
+$tpl->assign('audioclip', new MetaAudioclip('0b340462201a93d1'));
+
+
+// Article comment
+$tpl->assign('comment', new MetaComment(2));
+
+
+// Topic object
+$tpl->assign('topic', new MetaTopic(14));
 
 
 // User object
-$userObj = new MetaUser(1);
-if ($userObj->defined()) {
-	$tpl->assign('user', $userObj);
-}
+$tpl->assign('user', new MetaUser(1));
+
+
+// Template object
+$tpl->assign('template', new MetaTemplate(101));
 
 
 /**** Exception test ****/
 try {
+	$articleObj =& new MetaArticle(1, 143);
     $articleObj->Name = 'test';
-    echo "<h3>Set property test: failed</h3>.";
+    echo "<h3>Set property test: failed</h3>";
 } catch (Exception $e) {
     echo "<h3>Set property test: success</h3>";
 }

@@ -2,6 +2,9 @@
 // For phorum_email_moderators() and phorum_email_notice().
 //include_once("./include/email_functions.php");
 
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/phorum_load.php');
+
+
 class Phorum_message extends DatabaseObject {
 	var $m_keyColumnNames = array('message_id');
 	var $m_keyIsAutoIncrement = true;
@@ -141,7 +144,7 @@ class Phorum_message extends DatabaseObject {
 		$message["ip"] = $user_ip;
 
 		phorum_db_post_message($message);
-		
+
 		$this->mod_emailcomments($message);
 
 		// Update the thread count.
@@ -796,7 +799,7 @@ class Phorum_message extends DatabaseObject {
 
 	    return $returnArray;
 	} // fn GetMessages
-	
+
 	/**
 	 * Build Email to send new comment to moderator.
 	 * Based on emailallposts module, and use it's admin settings.
@@ -804,39 +807,39 @@ class Phorum_message extends DatabaseObject {
 	 * @param array $data
 	 */
 	function mod_emailcomments($data)
-    { 
+    {
 		$PHORUM = $GLOBALS["PHORUM"];
-		
+
 		if (empty($PHORUM['mod_emailcomments']['addresses'][$data["forum_id"]])) {
-			return;	
+			return;
 		}
-		
+
 		$forum = phorum_db_get_forums($data["forum_id"]);
-		
+
 		$subject = "{$forum["$data[forum_id]"]["name"]} : {$_REQUEST['IdLanguage']} : {$_REQUEST['NrArticle']}";
-		
+
 		$body = "Name/Email: " . stripslashes( $data["author"] );
-		$body .= "<br>Subject: " . stripslashes( $data["subject"] ); 
+		$body .= "<br>Subject: " . stripslashes( $data["subject"] );
 		$body .= "<br>Comment:<br>" . $data['body'];
 		$body .= "<br>------------------------------------------------------------------------------------------------
 		          Admin Comments: <a href=\"http://{$_SERVER['HTTP_HOST']}/admin/comments/index.php?f_comment_screen=archive\">http://{$_SERVER['HTTP_HOST']}/admin/comments/index.php?f_comment_screen=archive</a>
 		          View Article: <a href=\"http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\">http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}</a>";
-		
+
 		$toAddress = array();
 		if ( !empty( $PHORUM["mod_emailcomments"]["email_to"] ) ) {
 		    array_push( $toAddress, $PHORUM["mod_emailcomments"]["email_to"] );
-		} 
+		}
 		if ( !empty( $PHORUM["mod_emailcomments"]["addresses"]["$data[forum_id]"] ) ) {
 		    array_push( $toAddress, $PHORUM["mod_emailcomments"]["addresses"]["$data[forum_id]"] );
-		} 
-		
+		}
+
 		$from = $PHORUM["mod_emailcomments"]["from_addresses"]["$data[forum_id]"];
 		#$from = "\"".$PHORUM['system_email_from_name']."\" <".$PHORUM["mod_emailcomments"]["from_addresses"]["$data[forum_id]"].">";
 		$header = array("msgid" => $data["msgid"], "from" => $from);
-		
+
 		$this->mail_mime( $toAddress, $subject, $body, $header);
-    } 
-    
+    }
+
     /**
      * Construct and send mime mail
      *
@@ -849,16 +852,16 @@ class Phorum_message extends DatabaseObject {
     {
 		require_once 'Mail.php';
 		require_once 'Mail/mime.php';
-		
+
 		$mime = new Mail_mime("\n");
 		$message = preg_replace('/(\\\r)?\\\n/', "\n", $message);
 		$mime->setHTMLBody(nl2br($message));
 		$mime->setTxtBody($message);
-		
+
 		$body = $mime->get(array('head_charset' => 'UTF-8' , 'text_charset' => 'UTF-8', 'html_charset' => 'UTF-8'));
 		$hdrs = $mime->headers(array_merge($header, array('Subject' => $subject)));
 		$mail =& Mail::factory('mail');
-		
+
 		foreach ($adresses as $to) {
 		   $mail->send($to, $hdrs, $body);
 		}

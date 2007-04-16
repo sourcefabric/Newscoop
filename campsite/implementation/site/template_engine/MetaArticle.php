@@ -92,8 +92,6 @@ final class MetaArticle extends MetaDbObject {
 
     final public function __get($p_property)
     {
-    	global $tpl;
-
     	if ($this->m_state == 'type_name_error') {
     		$this->m_state = null;
     		return null;
@@ -114,7 +112,8 @@ final class MetaArticle extends MetaDbObject {
     	}
 
     	try {
-	    	return $this->m_dbObject->getProperty($this->translateProperty($p_property));
+        	$methodName = $this->m_getPropertyMethod;
+	    	return $this->m_dbObject->$methodName($this->translateProperty($p_property));
     	} catch (InvalidPropertyException $e) {
     		try {
     			return $this->getCustomProperty($p_property);
@@ -208,31 +207,31 @@ final class MetaArticle extends MetaDbObject {
 
     public function getOnFrontPage()
     {
-    	return $this->m_dbObject->getProperty('OnFrontPage') == 'Y';
+    	return (int)($this->m_dbObject->getProperty('OnFrontPage') == 'Y');
     }
 
 
     public function getOnSectionPage()
     {
-    	return $this->m_dbObject->getProperty('OnSection') == 'Y';
+    	return (int)($this->m_dbObject->getProperty('OnSection') == 'Y');
     }
 
 
     public function getIsPublished()
     {
-    	return $this->m_dbObject->getProperty('Published') == 'Y';
+    	return (int)($this->m_dbObject->getProperty('Published') == 'Y');
     }
 
 
     public function getIsPublic()
     {
-    	return $this->m_dbObject->getProperty('Public') == 'Y';
+    	return (int)($this->m_dbObject->getProperty('Public') == 'Y');
     }
 
 
     public function getIsIndexed()
     {
-    	return $this->m_dbObject->getProperty('IsIndexed') == 'Y';
+    	return (int)($this->m_dbObject->getProperty('IsIndexed') == 'Y');
     }
 
 
@@ -277,13 +276,13 @@ final class MetaArticle extends MetaDbObject {
     								   $this->m_dbObject->getProperty('NrIssue'),
     								   $this->m_dbObject->getProperty('IdLanguage'),
     								   $this->m_dbObject->getProperty('NrSection'));
-    	if (!is_null($articleSection->getArticleTemplateId())) {
-    		return new Template($articleSection->getArticleTemplateId());
+    	if ($articleSection->getArticleTemplateId() > 0) {
+    		return new MetaTemplate($articleSection->getArticleTemplateId());
     	}
     	$articleIssue =& new Issue($this->m_dbObject->getProperty('IdPublication'),
     							   $this->m_dbObject->getProperty('IdLanguage'),
     							   $this->m_dbObject->getProperty('NrIssue'));
-   		return new Template($articleIssue->getArticleTemplateId());
+   		return new MetaTemplate($articleIssue->getArticleTemplateId());
     }
 
 

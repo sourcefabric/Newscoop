@@ -22,6 +22,8 @@ class MetaDbObject {
 
     protected $m_customProperties = null;
 
+    protected $m_getPropertyMethod = 'getProperty';
+
 
     public function __get($p_property)
     {
@@ -30,7 +32,8 @@ class MetaDbObject {
         }
 
         try {
-        	return $this->m_dbObject->getProperty($this->translateProperty($p_property));
+        	$methodName = $this->m_getPropertyMethod;
+        	return $this->m_dbObject->$methodName($this->translateProperty($p_property));
         } catch (InvalidPropertyException $e) {
         	try {
 		        return $this->getCustomProperty($p_property);

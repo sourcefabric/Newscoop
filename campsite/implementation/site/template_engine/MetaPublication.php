@@ -18,7 +18,7 @@ require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
 /**
  * @package Campsite
  */
-class MetaPublication extends MetaDbObject {
+final class MetaPublication extends MetaDbObject {
 
 	private function InitProperties()
 	{

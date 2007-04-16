@@ -12,40 +12,47 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/Topic.php');
+require_once($g_documentRoot.'/classes/Language.php');
 require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
+require_once($g_documentRoot.'/template_engine/CampTemplate.php');
 
 /**
  * @package Campsite
  */
-class MetaTopic {
+final class MetaTopic extends MetaDbObject {
 
-    public function __construct($p_topicId, $p_languageId = null)
+	private function InitProperties()
+	{
+		if (!is_null($this->m_properties)) {
+			return;
+		}
+		$this->m_properties['identifier'] = 'Id';
+	}
+
+
+    public function __construct($p_topicId)
     {
-        if (is_null($p_languageId)) {
-            $p_languageId = 1;
-        }
-
         $topicObj = new Topic($p_topicId);
 		if (!is_object($topicObj) || !$topicObj->exists()) {
 			return false;
 		}
+        $this->m_dbObject =& $topicObj;
 
-        $this->m_data['Name'] = $topicObj->getName($p_languageId);
-		$this->m_instance = true;
+		$this->InitProperties();
+		$this->m_customProperties['name'] = 'getName';
+        $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 
-    public function __get($p_property)
+    public function getName($p_languageId = null)
     {
-        if (!is_array($this->m_data)) {
-            return false;
-        }
-        if (!array_key_exists($p_property, $this->m_data)) {
-            return false;
-        }
-
-        return $this->m_data[$p_property];
-    } // fn __get
+    	if (is_null($p_languageId)) {
+    		$smartyObj = CampTemplate::singleton();
+    		$languageObj = $smartyObj->get_template_vars('language');
+    		$p_languageId = $languageObj->number;
+    	}
+    	return $this->m_dbObject->getName($p_languageId);
+    }
 
 } // class MetaTopic
 

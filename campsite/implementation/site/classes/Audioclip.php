@@ -460,9 +460,9 @@ class Audioclip {
     	if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
     		return null;
     	}
-    	$tagNs = strstr($p_tagName, ':');
+    	$tagNs = substr($p_tagName, 0, strpos($p_tagName, ':'));
     	if ($tagNs !== false) {
-    		if (!array_key_exists($tagNs, $namespaces)) {
+    		if (!in_array($tagNs, $namespaces)) {
 	    		return PEAR_Error::PEAR_Error("Invalid metatag namespace.");
     		}
     		if (!array_key_exists($p_tagName, $this->m_metaData)) {
@@ -693,7 +693,7 @@ class Audioclip {
      * Retrieve a list of values of the give category that meet the given constraints
      *
      * @param string $p_category
-     *		
+     *
      * @param array $conditions
      *      array of struct with fields:
      *          cat: string - metadata category name

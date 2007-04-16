@@ -17,7 +17,7 @@ require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
 /**
  * @package Campsite
  */
-class MetaIssue extends MetaDbObject {
+final class MetaIssue extends MetaDbObject {
 
 	private function InitProperties()
 	{
@@ -119,7 +119,7 @@ class MetaIssue extends MetaDbObject {
 
     public function getTemplate()
     {
-   		return new Template($this->m_dbObject->getIssueTemplateId());
+   		return new MetaTemplate($this->m_dbObject->getIssueTemplateId());
     }
 
 
