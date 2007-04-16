@@ -1,3 +1,31 @@
+2.6.8 (April 16, 2007)
+  For full details about these changes, see:
+  http://code.campware.org/projects/campsite/query?milestone=2.6.8
+
+  Small Improvements (1 total)
+  ----------------------------
+  01) #2436 - Mailout for article comments
+  
+  Bugs Fixed (12 total)
+  --------------------
+  01) #2435 - Mailnotifier hangs on multiple instances
+  02) #2437 - 64 bit libraries are not detected correctly
+  03) #2438 - The template engine crashes when the database is corrupted
+  04) #2440 - Changing user password from Phorum breaks the corresponding
+              Campsite user
+  05) #2441 - User statement in the template language doesn't work for IP
+              based authentication
+  06) #2442 - "If User Loggedin" template statement doesn't work for users
+              without subscription
+  07) #2443 - Implement PHP code evaluation directly in Campsite
+  08) #2447 - Error when the display language cookie was deleted
+  09) #2448 - Error editing an empty article type
+  10) #2452 - Error adding a new publication
+  11) #2454 - SyncPhorumUsers permission is not set when creating a new
+              instance
+  12) #2455 - Unable to update permissions if the corresponding user type
+              table record didn't exist
+
 2.6.7 (February 23, 2007)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.6.7
