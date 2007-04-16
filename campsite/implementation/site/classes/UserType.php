@@ -150,7 +150,7 @@ class UserType {
 
 	/**
 	 * Set the default config value for the given variable.
-	 * Note that this does not create a new config variable.
+	 * This creates the new config variable if it didn't exist.
 	 *
 	 * @param string $p_varName
 	 * @param mixed $p_value
@@ -160,21 +160,26 @@ class UserType {
 	function setValue($p_varName, $p_value)
 	{
 		global $g_ado_db;
+
 		if (isset($this->m_config[$p_varName]) && ($this->m_config[$p_varName] != $p_value) ) {
 			$sql = "UPDATE UserTypes SET value='".mysql_real_escape_string($p_value)."'"
 				   ." WHERE user_type_name='".$this->m_userTypeName."'"
 				   ." AND varname='".mysql_real_escape_string($p_varName)."'";
-			$g_ado_db->Execute($sql);
-
-			// Update all the users of this user type
-			$users = User::GetUsers(true, $this->m_userTypeName);
-			$userIds = DbObjectArray::GetColumn($users, "Id");
-			$userIds = implode(",", $userIds);
-			$sql = "UPDATE UserConfig SET value='".mysql_real_escape_string($p_value)."'"
-					." WHERE varname='".mysql_real_escape_string($p_varName)."'"
-					." AND fk_user_id IN ($userIds)";
-			$g_ado_db->Execute($sql);
+		} else {
+			$sql = "INSERT INTO UserTypes SET user_type_name = '" . $this->m_userTypeName . "', "
+					. "varname = '" . mysql_real_escape_string($p_varName) . "', "
+					. "value = '" . mysql_real_escape_string($p_value) . "'";
 		}
+		$g_ado_db->Execute($sql);
+
+		// Update all the users of this user type
+		$users = User::GetUsers(true, $this->m_userTypeName);
+		$userIds = DbObjectArray::GetColumn($users, "Id");
+		$userIds = implode(",", $userIds);
+		$sql = "UPDATE UserConfig SET value='".mysql_real_escape_string($p_value)."'"
+				." WHERE varname='".mysql_real_escape_string($p_varName)."'"
+				." AND fk_user_id IN ($userIds)";
+		$g_ado_db->Execute($sql);
 	} // fn setValue
 
 
