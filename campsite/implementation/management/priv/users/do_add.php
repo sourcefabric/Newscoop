@@ -54,6 +54,12 @@ if (User::UserNameExists($fieldValues['UName'])) {
 	camp_html_goto_page($backLink);
 }
 
+if (User::EmailExists($fieldValues['EMail'])) {
+	$errorMsg = getGS('Another user is registered with that e-mail address, please choose a different one.');
+	camp_html_add_msg($errorMsg);
+	camp_html_goto_page($backLink);
+}
+
 // read password
 $password = Input::Get('password', 'string', '');
 $passwordConf = Input::Get('passwordConf', 'string', '');
