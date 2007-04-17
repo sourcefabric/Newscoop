@@ -702,6 +702,37 @@ class User extends DatabaseObject {
 
 
     /**
+     * Return wheather a user exists with the given e-mail address.
+     *
+     * @param string
+     *    $p_email The e-mail address to look for
+     * @param string
+     *    $p_userName (optional) The user name
+     *
+     * @return boolean
+     *    TRUE if the e-mail address already exists, otherwise FALSE
+     */
+    function EmailExists($p_email, $p_userName = null)
+    {
+        global $g_ado_db;
+
+        $sql = "SELECT UName, EMail FROM Users "
+              ."WHERE EMail = '".$g_ado_db->escape($p_email)."'";
+        $row = $g_ado_db->GetOne($sql);
+        if (!$row) {
+            return false;
+        }
+        if (!is_null($p_userName)) {
+            if ($row['UName'] == $p_userName) {
+                return false;
+            }
+        }
+
+        return true;
+    } // fn EmailExists
+
+
+    /**
      * Get all users matching the given parameters.
      *
      * @param boolean $p_onlyAdmin

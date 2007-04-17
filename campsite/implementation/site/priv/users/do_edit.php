@@ -22,6 +22,16 @@ if (!$canManage && $editUser->getUserId() != $g_user->getUserId()) {
 }
 
 $typeParam = 'uType=' . urlencode($uType);
+$userEmail = Input::Get('EMail', 'string', 0);
+if ($userEmail != $editUser->getEmail()) {
+    if (User::EmailExists($userEmail, $editUser->getUserName())) {
+        $backLink = "/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getUserId();
+        $errMsg = getGS('Another user is registered with that e-mail address, please choose a different one.');
+        camp_html_add_msg($errMsg);
+        camp_html_goto_page($backLink);
+    }
+}
+
 $setPassword = Input::Get('setPassword', 'string', 'false') == 'true';
 $customizeRights = Input::Get('customizeRights', 'string', 'false') == 'true';
 
