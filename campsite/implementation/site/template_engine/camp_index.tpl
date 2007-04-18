@@ -1344,5 +1344,52 @@
 </tr>
 </table>
 
+
+{{**** Subscription ****}}
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#6a6a6a"><font color="#ffffff">Subscription</font></td>
+</tr>
+</table>
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="Aqua" align="center" colspan="3">Fields</td>
+  <td bgcolor="Aqua" align="center">Type</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Currency:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $subscription->currency }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $subscription->currency }}{{ /literal }}</td>
+  <td nowrap valign="top">base</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Type:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $subscription->type }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $subscription->type }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Active:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $subscription->active }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $subscription->active }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $subscription->defined }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $subscription->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+</table>
+
+
 </body>
 </html>

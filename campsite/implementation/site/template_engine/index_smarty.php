@@ -29,6 +29,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaComment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaTopic.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaUser.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaTemplate.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaSubscription.php');
 
 // Campsite template class (Smarty extended)
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/CampTemplate.php');
@@ -126,6 +127,10 @@ $tpl->assign('user', new MetaUser(1));
 
 // Template object
 $tpl->assign('template', new MetaTemplate(101));
+
+
+// Subscription object
+$tpl->assign('subscription', new MetaSubscription(5));
 
 
 /**** Exception test ****/
