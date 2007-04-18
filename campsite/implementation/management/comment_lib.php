@@ -223,12 +223,16 @@ function camp_comment_first_post($p_article, $p_forumId)
 		$userId = $user->getUserId();
 		$userEmail = $user->getEmail();
 		$userPasswd = $user->getPassword();
+		$userName = $user->getUserName();
 		$userRealName = $user->getRealName();
 
 		// Create phorum user if necessary
-		$phorumUser =& new Phorum_user($userId);
+		$phorumUser = Phorum_user::GetByUserName($userName);
+		if (!is_object($phorumUser)) {
+			$phorumUser =& new Phorum_user();
+		}
 		if (!$phorumUser->CampUserExists($userId)
-			&& !$phorumUser->create($user->getUserName(), $userPasswd, $userEmail, $userId)) {
+			&& !$phorumUser->create($userName, $userPasswd, $userEmail, $userId)) {
 			return false;
 		}
 	} else {
