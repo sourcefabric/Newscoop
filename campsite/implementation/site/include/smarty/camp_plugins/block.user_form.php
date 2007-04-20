@@ -4,8 +4,6 @@
  * @package Campsite
  */
 
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
 
 /**
  * Campsite user_form block plugin
@@ -26,6 +24,12 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
  */
 function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
+    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
+
+    // gets the context variable
+    $camp = $p_smarty->get_template_vars('camp');
+    $html = '';
+
     if (!isset($p_params['template'])) {
         return false;
     }
@@ -34,12 +38,14 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     }
 
     if (isset($p_content)) {
-        $html = "<form name=\"user\" action=\"peco.html\" method=\"post\">\n"
-            ."<input type=\"hidden\" name=\"tpl\" value=\"27\" />\n"
-            ."<input type=\"hidden\" name=\"f_substype\" value=\"paid\" />\n";
+        $subsType = $camp->subscription->type == 'T' ? 'trial' : 'paid';
+        $html = "<form name=\"user\" action=\"\" method=\"post\">\n"
+            ."<input type=\"hidden\" name=\"f_tpl\" value=\"\" />\n"
+            ."<input type=\"hidden\" name=\"f_substype\" value=\"".$subsType."\" />\n";
         $html.= $p_content;
         $html.= "<input type=\"submit\" name=\"f_useradd\" value=\""
-            .$p_params['submit_button']."\" />\n</form>\n";
+            .smarty_function_escape_special_chars($p_params['submit_button'])
+            ."\" />\n</form>\n";
     }
 
     return $html;

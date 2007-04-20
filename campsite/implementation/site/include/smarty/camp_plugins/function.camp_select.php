@@ -4,8 +4,6 @@
  * @package Campsite
  */
 
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
 
 /**
  * Campsite camp_select function plugin
@@ -25,7 +23,7 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
  */
 function smarty_function_camp_select($p_params, &$p_smarty)
 {
-    global $g_context, $g_ado_db;
+    global $g_ado_db;
 
     require_once $p_smarty->_get_plugin_filepath('function','html_options');
 
@@ -33,17 +31,17 @@ function smarty_function_camp_select($p_params, &$p_smarty)
         return;
     }
 
-    // TODO: fetch the attribute value to set the right option
-    //
-    // $attrValue = $g_context->get();
-
+    // gets the context variable
+    $camp = $p_smarty->get_template_vars('camp');
     $html = '';
+
     $object = strtolower($p_params['object']);
     $attribute = strtolower($p_params['attribute']);
-
     $selectTag = false;
+
     switch($object) {
     case 'user':
+        $attrValue = $camp->$object->$attribute;
         if ($attribute == 'gender') {
             $html = '<input type="radio" name="f_user_'.$attribute
                 .'" value="M" '.(($attrValue == 'M') ? 'checked' : '').' /> '
@@ -68,14 +66,14 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $html = '<select name="f_user_'.$attribute.'">';
         } elseif ($attribute == 'age') {
             $selectTag = true;
-            $html = '<select name="f_user_'.$attribute.'">';
             $output = array('0-17', '18-24', '25-39', '40-49', '50-65', '65 or over');
             $values = array('0-17', '18-24', '25-39', '40-49', '50-65', '65-');
+            $html = '<select name="f_user_'.$attribute.'">';
         } elseif ($attribute == 'employertype') {
             $selectTag = true;
-            $html = '<select name="f_user_'.$attribute.'">';
             $output = array('Corporate', 'Non-Governmental', 'Government Agency', 'Academic', 'Media', 'Other');
             $values = array('Corporate', 'NGO', 'Government Agency', 'Academic', 'Media', 'Other');
+            $html = '<select name="f_user_'.$attribute.'">';
         } elseif (substr($attribute, 0, 4) == 'pref') {
             $html = '<input type="checkbox" name="f_user_'$attribute.'" '
                 .(($attrValue == 'Y') ? ' value="on" checked />' : ' />')
@@ -90,12 +88,12 @@ function smarty_function_camp_select($p_params, &$p_smarty)
         }
         break;
 
-    case 'Subscription':
+    case 'subscription':
         if ($attribute == 'languages') {
             $sqlQuery = "SELECT l.Id, l.OrigName "
                 ."FROM Issues as i, Languages as l "
                 ."WHERE  i.IdLanguage = l.Id and i.IdPublication = "
-                .'1 ' // TODO set this to the current pub id
+                .$camp->publication->id
                 ."GROUP BY l.Id";
             $data = $g_ado_db->GetAll($sqlQuery);
             foreach ($data as $language) {
@@ -104,7 +102,6 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             }
             $selectTag = true;
             $html = '<select name="subscription_language[]" '
-                .' ' // TODO set the style class
                 .'size="3" ' // TODO set the size value
                 .' ' // TODO set multipleability
                 .'onchange="update_subscription_payment();" '
@@ -116,14 +113,11 @@ function smarty_function_camp_select($p_params, &$p_smarty)
         } elseif ($attribute == 'section') {
             if (1) {
                 $html = '<input type="hidden" name="cb_subs[]" value="'
-                    .' ' // TODO set to current section
-                    .'" '
-                    .' '; // TODO set the style class
+                    .$camp->section->number.'" ';
             } else {
                 $html = '<input type="checkbox" name="cb_subs[]" value="'
-                    .' ' // TODO set to current section
-                    .'onchange="update_subscription_payment();" '
-                    .' '; // TODO set the style class
+                    .$camp->section->number.'" '
+                    .'onchange="update_subscription_payment();" ';
             }
         }
         break;

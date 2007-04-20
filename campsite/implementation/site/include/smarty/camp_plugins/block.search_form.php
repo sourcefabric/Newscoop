@@ -4,8 +4,6 @@
  * @package Campsite
  */
 
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
 
 /**
  * Campsite search_form block plugin
@@ -28,6 +26,10 @@ function smarty_block_search_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
 
+    // gets the context variable
+    $camp = $p_smarty->get_template_vars('camp');
+    $html = '';
+
     if (!isset($p_params['template'])) {
         return false;
     }
@@ -37,9 +39,9 @@ function smarty_block_search_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 
     if (isset($p_content)) {
         $html = "<form name=\"search\" action=\"\" method=\"post\">\n"
-            ."<input type=\"hidden\" name=\"tpl\" value=\"27\" />\n";
+            ."<input type=\"hidden\" name=\"f_tpl\" value=\"27\" />\n";
         $html .= $p_content;
-        $html .= "<input type=\"submit\" name=\"search\" value=\""
+        $html .= "<input type=\"submit\" name=\"f_search\" value=\""
             .smarty_function_escape_special_chars($p_params['submit_button'])
             ."\" />\n</form>\n";
     }
