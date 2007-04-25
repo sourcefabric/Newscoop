@@ -6,6 +6,10 @@
 Calendar._DN = new Array
 ("Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela");
 
+// First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+Calendar._FD = 0;
+
 Calendar._SDN = new Array
 ("N", "Pn", "Wt", "Śr", "Cz", "Pt", "So", "N");
 

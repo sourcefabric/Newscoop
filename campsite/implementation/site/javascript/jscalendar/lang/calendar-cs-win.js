@@ -8,6 +8,10 @@
 
 // ** I18N
 Calendar._DN  = new Array('Nedìle','Pondìlí','Úterý','Støeda','Ètvrtek','Pátek','Sobota','Nedìle');
+// First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+Calendar._FD = 0;
+
 Calendar._SDN = new Array('Ne','Po','Út','St','Èt','Pá','So','Ne');
 Calendar._MN  = new Array('Leden','Únor','Bøezen','Duben','Kvìten','Èerven','Èervenec','Srpen','Záøí','Øíjen','Listopad','Prosinec');
 Calendar._SMN = new Array('Led','Úno','Bøe','Dub','Kvì','Èrv','Èvc','Srp','Záø','Øíj','Lis','Pro');

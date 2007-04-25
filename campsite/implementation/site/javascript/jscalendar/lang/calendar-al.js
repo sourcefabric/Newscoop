@@ -12,6 +12,10 @@ Calendar._DN = new Array
 "E Shtune",
 "E Diele");
 
+// First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+Calendar._FD = 0;
+
 //ditet shkurt
 Calendar._SDN = new Array
 ("Die",
