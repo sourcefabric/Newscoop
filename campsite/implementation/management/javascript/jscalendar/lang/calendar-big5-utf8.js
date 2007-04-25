@@ -20,6 +20,10 @@ Calendar._DN = new Array
  "星期六",
  "星期日");
 
+// First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+Calendar._FD = 0;
+
 // Please note that the following array of short day names (and the same goes
 // for short month names, _SMN) isn't absolutely necessary.  We give it here
 // for exemplification on how one can customize the short day names, but if

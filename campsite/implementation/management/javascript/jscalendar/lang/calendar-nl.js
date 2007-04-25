@@ -9,6 +9,10 @@ Calendar._DN = new Array
  "Zaterdag",
  "Zondag");
 
+// First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+Calendar._FD = 0;
+
 Calendar._SDN_len = 2;
 
 Calendar._MN = new Array

@@ -16,6 +16,10 @@ Calendar._DN = new Array
  "Lauantai",
  "Sunnuntai");
 
+// First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+Calendar._FD = 0;
+
 // short day names
 Calendar._SDN = new Array
 ("Su",

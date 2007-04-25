@@ -8,6 +8,10 @@ Calendar._DN = new Array
  "Vrydag",
  "Saterdag",
  "Sondag");
+// First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+Calendar._FD = 0;
+
 Calendar._MN = new Array
 ("Januarie",
  "Februarie",
