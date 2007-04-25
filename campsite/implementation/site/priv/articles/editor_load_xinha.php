@@ -2,7 +2,9 @@
 
 /**
  * @param array p_dbColumns
- * @param User p_user
+ * @param object p_user The User object
+ * @param int p_editorLanguage The current or selected language
+ *
  * @return void
  */
 function editor_load_xinha($p_dbColumns, $p_user, $p_editorLanguage) {
@@ -65,7 +67,7 @@ function CampsiteInternalLink(editor, objectName, object, link) {
 			}
 		}
 	}
-	popupWindowTarget = "campsite_internal_link.php?TOL_Language=<?php p(camp_session_get('TOL_Language', 'en')); ?>";
+	popupWindowTarget = "campsite_internal_link.php?TOL_Language=<?php p($_REQUEST["TOL_Language"]); ?>";
 	if (!link) {
     	var sel = editor._getSelection();
     	var range = editor._createRange(sel);

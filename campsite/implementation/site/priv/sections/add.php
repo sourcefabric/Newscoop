@@ -22,7 +22,12 @@ $newSectionNumber = Section::GetUnusedSectionNumber($f_publication_id, $f_issue_
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
 camp_html_content_top(getGS('Add new section'), $topArray, true, true, array(getGS("Sections") => "/$ADMIN/sections/?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id"));
 
-editor_load_xinha('f_description', $g_user);
+$languageObj =& new Language($f_language_id);
+if (!is_object($languageObj)) {
+  $languageObj =& new Language(1);
+}
+$editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
+editor_load_xinha('f_description', $g_user, $editorLanguage);
 
 ?>
 <P>
