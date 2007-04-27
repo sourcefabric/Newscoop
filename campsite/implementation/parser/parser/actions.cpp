@@ -2971,13 +2971,16 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 			runActions(sec_block, c, fs);
 		return RES_OK;
 	}
-	if (c.Language() < 0 || c.Publication() < 0 || c.Issue() < 0)
+	if ((c.Language() < 0 || c.Publication() < 0 || c.Issue() < 0)
+			&& modifier != CMS_ST_LANGUAGE && modifier != CMS_ST_PUBLICATION)
 		return ERR_NOPARAM;
 	string w, field, tables, value;
 	field = param.attribute();
 	bool need_lang = false;
 	if (modifier == CMS_ST_LANGUAGE)
 	{
+		if (c.Language() < 0)
+			return ERR_NOPARAM;
 		tables = "Languages";
 		SetNrField("Id", c.Language(), buf, w);
 		need_lang = false;
@@ -2985,6 +2988,8 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	}
 	else if (modifier == CMS_ST_PUBLICATION)
 	{
+		if (c.Publication() < 0)
+			return ERR_NOPARAM;
 		tables = "Publications";
 		SetNrField("Id", c.Publication(), buf, w);
 		need_lang = false;
