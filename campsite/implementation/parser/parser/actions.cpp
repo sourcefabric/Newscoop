@@ -2894,6 +2894,8 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 			nVal = c.Issue();
 		else if (modifier == CMS_ST_SECTION)
 			nVal = c.Section();
+		else if (modifier == CMS_ST_ARTICLE)
+			nVal = c.Article();
 		else
 			return -1;
 		run_first = param.applyOp(Integer(nVal));
@@ -3068,6 +3070,10 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 				field = "Languages.Code";
 				value = param.spec();
 				need_lang = false;
+				if (c.Access() == A_PUBLISHED)
+				{
+					AppendConstraint(w, "Published", "=", "Y", "and");
+				}
 			}
 			else if (param.attrType() == "")
 			{
