@@ -321,6 +321,7 @@ int CStatementMap::InitStatements()
 
 	pcoCtx = new CStatementContext(CMS_CT_IF);
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
+	pcoCtx->insertAttr(new CIntegerAttr("number", "Number"));
 	pcoCtx->insertAttr(new CDateTimeAttr("upload_date", "UploadDate"));
 	pcoCtx->insertAttr(new CDateTimeAttr("publish_date", "PublishDate"));
 	pcoCtx->insertAttr(new CAttribute("has_keyword"));
