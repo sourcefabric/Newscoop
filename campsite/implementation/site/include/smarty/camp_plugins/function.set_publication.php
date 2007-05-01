@@ -12,12 +12,10 @@
  * Purpose:  
  *
  * @param array
- *     $p_params the date in unixtime format from $smarty.now
+ *     $p_params[name] The Name of the publication to be set
+ *     $p_params[identifier] The Identifier of the publication to be set
  * @param object
  *     $p_smarty The Smarty object
- *
- * @return
- *     string the html string for the breadcrumb
  */
 function smarty_function_set_publication($p_params, &$p_smarty)
 {
