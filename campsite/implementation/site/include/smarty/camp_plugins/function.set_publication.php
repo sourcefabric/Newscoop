@@ -1,0 +1,56 @@
+<?php
+/**
+ * Campsite customized Smarty plugin
+ * @package Campsite
+ */
+
+/**
+ * Campsite set_publication function plugin
+ *
+ * Type:     function
+ * Name:     set_publication
+ * Purpose:  
+ *
+ * @param array
+ *     $p_params the date in unixtime format from $smarty.now
+ * @param object
+ *     $p_smarty The Smarty object
+ *
+ * @return
+ *     string the html string for the breadcrumb
+ */
+function smarty_function_set_publication($p_params, &$p_smarty)
+{
+    global $g_ado_db;
+
+    $attrValue = 0;
+    if (isset($p_params['identifier']) && !empty($p_params['identifier'])) {
+        $attrValue = intval($p_params['identifier']);
+    } elseif (isset($p_params['name']) && !empty($p_params['name'])) {
+        $queryStr = "SELECT Id FROM Publications "
+            . "WHERE Name = '".$g_ado_db->escape($p_params['name'])."'";
+        $row = $g_ado_db->GetRow($queryStr);
+        if ($row['Id'] > 0) {
+            $attrValue = $row['Id'];
+        }
+    }
+
+    if (!$attrValue) {
+        return false;
+    }
+
+    // gets the context variable
+    $camp = $p_smarty->get_template_vars('camp');
+    if ($camp->publication->defined && $camp->publication->identifier == $attrValue) {
+        return;
+    }
+
+    $publication = new MetaPublication($attrValue);
+    if ($publication->defined == 'defined') {
+        $camp->publication = $publication;
+        $p_smarty->assign('publication', $camp->publication);
+    }
+
+} // fn smarty_function_set_publication
+
+?>
