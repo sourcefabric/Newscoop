@@ -19,13 +19,13 @@
 function smarty_function_unset_issue($p_params, &$p_smarty)
 {
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
-    if (!is_object($camp->issue) || !$camp->issue->defined) {
+    $campsite = $p_smarty->get_template_vars('campsite');
+    if (!is_object($campsite->issue) || !$campsite->issue->defined) {
         return;
     }
 
-    unset($camp->issue);
-    $p_smarty->assign('issue', null);
+    $campsite->issue = new MetaIssue();
+
 } // fn smarty_function_unset_issue
 
 ?>

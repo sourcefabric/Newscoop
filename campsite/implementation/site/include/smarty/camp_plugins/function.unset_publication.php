@@ -19,13 +19,13 @@
 function smarty_function_unset_publication($p_params, &$p_smarty)
 {
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
-    if (!is_object($camp->publication) || !$camp->publication->defined) {
+    $campsite = $p_smarty->get_template_vars('campsite');
+    if (!is_object($campsite->publication) || !$campsite->publication->defined) {
         return;
     }
 
-    unset($camp->publication);
-    $p_smarty->assign('publication', null);
+    $campsite->publication = new MetaPublication();
+
 } // fn smarty_function_unset_publication
 
 ?>

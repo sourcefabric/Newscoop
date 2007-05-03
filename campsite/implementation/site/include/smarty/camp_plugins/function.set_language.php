@@ -25,8 +25,9 @@ function smarty_function_set_language($p_params, &$p_smarty)
     }
 
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
-    if ($camp->language->defined && $camp->language->english_name == $p_params['name']) {
+    $campsite = $p_smarty->get_template_vars('campsite');
+    if ($campsite->language->defined
+            && $campsite->language->english_name == $p_params['name']) {
         return;
     }
 
@@ -38,8 +39,7 @@ function smarty_function_set_language($p_params, &$p_smarty)
     }
     $language = new MetaLanguage($row['Id']);
     if ($language->defined == 'defined') {
-        $camp->language = $language;
-        $p_smarty->assign('language', $camp->language);
+        $campsite->language = $language;
     }
 
 } // fn smarty_function_set_language

@@ -22,15 +22,15 @@ function smarty_function_set_section($p_params, &$p_smarty)
     global $g_ado_db;
 
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
+    $campsite = $p_smarty->get_template_vars('campsite');
 
     $attrValue = 0;
     if (isset($p_params['number']) && !empty($p_params['number'])) {
         $attrValue = intval($p_params['number']);
     } elseif (isset($p_params['name']) && !empty($p_params['name'])) {
         $queryStr = "SELECT Number FROM Sections "
-            . "WHERE IdPublication = ".$camp->publication->identifier
-            . " AND NrIssue = ".$camp->issue->number
+            . "WHERE IdPublication = ".$campsite->publication->identifier
+            . " AND NrIssue = ".$campsite->issue->number
             . " AND Name = '".$g_ado_db->escape($p_params['name'])."'";
         $row = $g_ado_db->GetRow($queryStr);
         if ($row['Number'] > 0) {
@@ -41,16 +41,16 @@ function smarty_function_set_section($p_params, &$p_smarty)
     if (!$attrValue) {
         return false;
     }
-    if ($camp->section->defined && $camp->section->number == $attrValue) {
+    if ($campsite->section->defined
+            && $campsite->section->number == $attrValue) {
         return;
     }
 
-    $section = new MetaSection($camp->publication->identifier,
-                               $camp->issue->number,
-                               $camp->language->number, $attrValue);
+    $section = new MetaSection($campsite->publication->identifier,
+                               $campsite->issue->number,
+                               $campsite->language->number, $attrValue);
     if ($section->defined == 'defined') {
-        $camp->section = $section;
-        $p_smarty->assign('section', $camp->section);
+        $campsite->section = $section;
     }
 
 } // fn smarty_function_set_section

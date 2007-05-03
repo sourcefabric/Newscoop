@@ -25,16 +25,16 @@ function smarty_function_set_issue($p_params, &$p_smarty)
     }
 
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
-    if ($camp->issue->defined && $camp->issue->number == $p_params['number']) {
+    $campsite = $p_smarty->get_template_vars('campsite');
+    if ($campsite->issue->defined
+            && $campsite->issue->number == $p_params['number']) {
         return;
     }
 
-    $issue = new MetaIssue($camp->publication->identifier,
-                           $camp->language->number, $p_params['number']);
+    $issue = new MetaIssue($campsite->publication->identifier,
+                           $campsite->language->number, $p_params['number']);
     if ($issue->defined == 'defined') {
-        $camp->issue = $issue;
-        $p_smarty->assign('issue', $camp->issue);
+        $campsite->issue = $issue;
     }
 
 } // fn smarty_function_set_issue

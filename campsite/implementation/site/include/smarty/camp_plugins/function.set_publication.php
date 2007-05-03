@@ -38,15 +38,15 @@ function smarty_function_set_publication($p_params, &$p_smarty)
     }
 
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
-    if ($camp->publication->defined && $camp->publication->identifier == $attrValue) {
+    $campsite = $p_smarty->get_template_vars('campsite');
+    if ($campsite->publication->defined
+            && $campsite->publication->identifier == $attrValue) {
         return;
     }
 
     $publication = new MetaPublication($attrValue);
     if ($publication->defined == 'defined') {
-        $camp->publication = $publication;
-        $p_smarty->assign('publication', $camp->publication);
+        $campsite->publication = $publication;
     }
 
 } // fn smarty_function_set_publication

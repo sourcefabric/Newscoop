@@ -22,11 +22,11 @@ function smarty_function_set_current_issue($p_params, &$p_smarty)
     global $g_ado_db;
 
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
+    $campsite = $p_smarty->get_template_vars('campsite');
 
     $queryStr = "SELECT MAX(Number) AS MaxIssueNr FROM Issues "
-               ."WHERE IdPublication = " . $camp->publication->identifier
-               ." AND IdLanguage = " . $camp->language->number
+               ."WHERE IdPublication = " . $campsite->publication->identifier
+               ." AND IdLanguage = " . $campsite->language->number
                ." AND Published = 'Y'";
     $row = $g_ado_db->GetRow($queryStr);
 
@@ -34,15 +34,15 @@ function smarty_function_set_current_issue($p_params, &$p_smarty)
         return false; // or trhow an error?
     }
     // if the current issue is already the context, it just return nothing
-    if ($camp->issue->defined && $camp->issue->number == $row['MaxIssueNr']) {
+    if ($campsite->issue->defined
+            && $campsite->issue->number == $row['MaxIssueNr']) {
         return;
     }
 
-    $issue = new MetaIssue($camp->publication->identifier,
-                           $camp->language->number, $row['MaxIssueNr']);
+    $issue = new MetaIssue($campsite->publication->identifier,
+                           $campsite->language->number, $row['MaxIssueNr']);
     if ($issue->defined == 'defined') {
-        $camp->issue = $issue;
-        $p_smarty->assign('issue', $camp->issue);
+        $campsite->issue = $issue;
     }
 
 } // fn smarty_function_set_current_issue

@@ -19,13 +19,13 @@
 function smarty_function_unset_section($p_params, &$p_smarty)
 {
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
-    if (!is_object($camp->section) || !$camp->section->defined) {
+    $campsite = $p_smarty->get_template_vars('campsite');
+    if (!is_object($campsite->section) || !$campsite->section->defined) {
         return;
     }
 
-    unset($camp->section);
-    $p_smarty->assign('section', null);
+    $campsite->section = new MetaSection();
+
 } // fn smarty_function_unset_section
 
 ?>

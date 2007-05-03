@@ -19,13 +19,14 @@
 function smarty_function_unset_language($p_params, &$p_smarty)
 {
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
-    if (!is_object($camp->language) || !$camp->language->defined) {
+    $campsite = $p_smarty->get_template_vars('campsite');
+
+    if (!is_object($campsite->language) || !$campsite->language->defined) {
         return;
     }
 
-    unset($camp->language);
-    $p_smarty->assign('language', null);
+    $campsite->language = new MetaLanguage();
+
 } // fn smarty_function_unset_language
 
 ?>

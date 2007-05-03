@@ -32,7 +32,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
     }
 
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
+    $campsite = $p_smarty->get_template_vars('campsite');
     $html = '';
 
     $object = strtolower($p_params['object']);
@@ -41,7 +41,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
 
     switch($object) {
     case 'user':
-        $attrValue = $camp->$object->$attribute;
+        $attrValue = $campsite->$object->$attribute;
         if ($attribute == 'gender') {
             $html = '<input type="radio" name="f_user_'.$attribute
                 .'" value="M" '.(($attrValue == 'M') ? 'checked' : '').' /> '
@@ -93,7 +93,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $sqlQuery = "SELECT l.Id, l.OrigName "
                 ."FROM Issues as i, Languages as l "
                 ."WHERE  i.IdLanguage = l.Id and i.IdPublication = "
-                .$camp->publication->id
+                .$campsite->publication->id
                 ."GROUP BY l.Id";
             $data = $g_ado_db->GetAll($sqlQuery);
             foreach ($data as $language) {
@@ -113,10 +113,10 @@ function smarty_function_camp_select($p_params, &$p_smarty)
         } elseif ($attribute == 'section') {
             if (1) {
                 $html = '<input type="hidden" name="cb_subs[]" value="'
-                    .$camp->section->number.'" ';
+                    .$campsite->section->number.'" ';
             } else {
                 $html = '<input type="checkbox" name="cb_subs[]" value="'
-                    .$camp->section->number.'" '
+                    .$campsite->section->number.'" '
                     .'onchange="update_subscription_payment();" ';
             }
         }

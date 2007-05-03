@@ -65,6 +65,52 @@
 </table>
 
 
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ unset_language }}
+    Unset by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ unset_language }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->language->english_name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->language->defined }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ set_language name="English" }}
+    Set by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ set_language name="English" }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->language->english_name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->language->defined }}
+  </td>
+</tr>
+</table>
+<br />
+
 
 {{**** Publication ****}}
 <table cellspacing="1" cellpadding="4">
@@ -110,6 +156,53 @@
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
+
+
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ unset_publication }}
+    Unset by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ unset_publication }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->publication->name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->publication->defined }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ set_publication identifier="6" }}
+    Set by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ set_publication identifier="6" }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->publication->name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->publication->defined }}
+  </td>
+</tr>
+</table>
+<br />
 
 
 {{**** Issue ****}}
@@ -238,6 +331,52 @@
 </table>
 
 
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ unset_issue }}
+    Unset by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ unset_issue }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->issue->name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->issue->defined }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ set_issue number="6" }}
+    Set by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ set_issue number="6" }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->issue->name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->issue->defined }}
+  </td>
+</tr>
+</table>
+<br />
+
 
 {{**** Section ****}}
 <table>
@@ -293,6 +432,53 @@
 </table>
 
 
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ unset_section }}
+    Unset by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ unset_section }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->section->name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->section->defined }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ set_section number="1" }}
+    Set by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ set_section number="1" }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->section->name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->section->defined }}
+  </td>
+</tr>
+</table>
+<br />
+
+
 {{**** Article ****}}
 <table cellspacing="1" cellpadding="4">
 <tr>
@@ -336,8 +522,6 @@
   <td nowrap valign="top">{{ literal }}{{ $campsite->article->type_name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
-
-
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Year:</td>
   <td bgcolor="#d4ffa2" valign="top">
@@ -586,6 +770,53 @@
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
+
+
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ unset_article }}
+    Unset by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ unset_article }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->article->name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->article->defined }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ set_article number="143" }}
+    Set by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ set_article number="143" }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->article->name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->article->defined }}
+  </td>
+</tr>
+</table>
+<br />
 
 
 {{**** Image ****}}

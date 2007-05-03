@@ -19,13 +19,13 @@
 function smarty_function_unset_article($p_params, &$p_smarty)
 {
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
-    if (!is_object($camp->article) || !$camp->article->defined) {
+    $campsite = $p_smarty->get_template_vars('campsite');
+    if (!is_object($campsite->article) || !$campsite->article->defined) {
         return;
     }
 
-    unset($camp->article);
-    $p_smarty->assign('article', null);
+    $campsite->article = new MetaArticle();
+
 } // fn smarty_function_unset_article
 
 ?>
