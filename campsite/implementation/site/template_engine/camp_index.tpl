@@ -25,41 +25,41 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Name:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $language->name }}
+    {{ $campsite->language->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $language->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->language->name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Number:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $language->number }}
+    {{ $campsite->language->number }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $language->number }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->language->number }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">English Name:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $language->english_name }}
+    {{ $campsite->language->english_name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $language->english_name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->language->english_name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Code:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $language->code }}
+    {{ $campsite->language->code }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $language->code }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->language->code }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $language->defined }}
+    {{ $campsite->language->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $language->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->language->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -80,33 +80,33 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Name:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $publication->name }}
+    {{ $campsite->publication->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $publication->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->publication->name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Identifier:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $publication->identifier }}
+    {{ $campsite->publication->identifier }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $publication->identifier }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->publication->identifier }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Site:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $publication->site }}
+    {{ $campsite->publication->site }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $publication->site }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->publication->site }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $publication->defined }}
+    {{ $campsite->publication->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $publication->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->publication->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -126,113 +126,113 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Name:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $issue->name }}
+    {{ $campsite->issue->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Number:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $issue->number }}
+    {{ $campsite->issue->number }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->number }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->number }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Year:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $issue->year }}
+    {{ $campsite->issue->year }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->year }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->year }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Month:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $issue->mon }}
+    {{ $campsite->issue->mon }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->mon }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->mon }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Week Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $issue->wday }}
+    {{ $campsite->issue->wday }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->wday }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->wday }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Month Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $issue->mday }}
+    {{ $campsite->issue->mday }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->mday }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->mday }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Year Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $issue->yday }}
+    {{ $campsite->issue->yday }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->yday }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->yday }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Hour:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $issue->hour }}
+    {{ $campsite->issue->hour }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->hour }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->hour }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Minute:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $issue->min }}
+    {{ $campsite->issue->min }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->min }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->min }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Second:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $issue->sec }}
+    {{ $campsite->issue->sec }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->sec }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->sec }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Date:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $issue->date }}
+    {{ $campsite->issue->date }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->date }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->date }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Publish Date:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $issue->publish_date }}
+    {{ $campsite->issue->publish_date }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->publish_date }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->publish_date }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Template:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $issue->template->name }}
+    {{ $campsite->issue->template->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->template->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->template->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $issue->defined }}
+    {{ $campsite->issue->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $issue->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -253,41 +253,41 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Name:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $section->name }}
+    {{ $campsite->section->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $section->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->section->name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Number:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $section->number }}
+    {{ $campsite->section->number }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $section->number }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->section->number }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Description:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $section->description }}
+    {{ $campsite->section->description }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $section->description }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->section->description }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Template:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $section->template->name }}
+    {{ $campsite->section->template->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $section->template->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->section->template->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $section->defined }}
+    {{ $campsite->section->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $section->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->section->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -307,33 +307,33 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Name:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $article->name }}
+    {{ $campsite->article->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Number:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $article->number }}
+    {{ $campsite->article->number }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->number }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->number }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Keywords:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $article->keywords }}
+    {{ $campsite->article->keywords }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->keywords }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->keywords }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Type:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $article->type_name }}
+    {{ $campsite->article->type_name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->type_name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->type_name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 
@@ -341,248 +341,248 @@
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Year:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->year }}
+    {{ $campsite->article->year }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->year }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->year }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Month:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->mon }}
+    {{ $campsite->article->mon }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->mon }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->mon }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Week Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->wday }}
+    {{ $campsite->article->wday }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->wday }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->wday }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Month Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->mday }}
+    {{ $campsite->article->mday }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->mday }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->mday }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Year Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->yday }}
+    {{ $campsite->article->yday }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->yday }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->yday }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Hour:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->hour }}
+    {{ $campsite->article->hour }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->hour }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->hour }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Minute:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->min }}
+    {{ $campsite->article->min }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->min }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->min }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Second:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->sec }}
+    {{ $campsite->article->sec }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->sec }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->sec }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Creation Date:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $article->creation_date }}
+    {{ $campsite->article->creation_date }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->creation_date }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->creation_date }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Publish Date:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $article->publish_date }}
+    {{ $campsite->article->publish_date }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->publish_date }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->publish_date }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Template:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->template->name }}
+    {{ $campsite->article->template->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->template->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->template->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Intro:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->type->fastnews->intro }}
+    {{ $campsite->article->type->fastnews->intro }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->type->fastnews->intro }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->type->fastnews->intro }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Body:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->type->fastnews->body }}
+    {{ $campsite->article->type->fastnews->body }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->type->fastnews->body }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->type->fastnews->body }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">URL Name:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $article->url_name }}
+    {{ $campsite->article->url_name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->url_name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->url_name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Comments Enabled:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $article->comments_enabled }}
+    {{ $campsite->article->comments_enabled }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->comments_enabled }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->comments_enabled }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Comments Locked:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $article->comments_locked }}
+    {{ $campsite->article->comments_locked }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->comments_locked }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->comments_locked }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Last Update:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $article->last_update }}
+    {{ $campsite->article->last_update }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->last_update }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->last_update }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">On Front Page:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->on_front_page }}
+    {{ $campsite->article->on_front_page }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->on_front_page }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->on_front_page }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">On Section Page:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->on_section_page }}
+    {{ $campsite->article->on_section_page }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->on_section_page }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->on_section_page }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Published:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->is_published }}
+    {{ $campsite->article->is_published }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->is_published }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->is_published }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Public:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->is_public }}
+    {{ $campsite->article->is_public }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->is_public }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->is_public }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Indexed:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->is_indexed }}
+    {{ $campsite->article->is_indexed }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->is_indexed }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->is_indexed }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Publication:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->publication->name }}
+    {{ $campsite->article->publication->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->publication }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->publication }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Issue:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->issue->name }}
+    {{ $campsite->article->issue->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->issue }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->issue }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Section:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->section->name }}
+    {{ $campsite->article->section->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->section }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->section }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Language:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->language->name }}
+    {{ $campsite->article->language->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->language->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->language->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Owner:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->owner->name }}
+    {{ $campsite->article->owner->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->owner }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->owner->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->defined }}
+    {{ $campsite->article->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Translated to:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->translated_to('ro') }}
+    {{ $campsite->article->translated_to('ro') }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->translated_to('ro') }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->translated_to('ro') }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Has Attachments:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $article->has_attachments }}
+    {{ $campsite->article->has_attachments }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $article->has_attachments }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->has_attachments }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -602,41 +602,41 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Number:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $image->number }}
+    {{ $campsite->image->number }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->number }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->number }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Photographer:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $image->photographer }}
+    {{ $campsite->image->photographer }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->photographer }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->photographer }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Place:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $image->place }}
+    {{ $campsite->image->place }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->place }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->place }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Description:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $image->description }}
+    {{ $campsite->image->description }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->description }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->description }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Date:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $image->date }}
+    {{ $campsite->image->date }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->date }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->date }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 
@@ -644,74 +644,74 @@
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Year:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $image->year }}
+    {{ $campsite->image->year }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->year }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->year }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Month:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $image->mon }}
+    {{ $campsite->image->mon }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->mon }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->mon }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Week Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $image->wday }}
+    {{ $campsite->image->wday }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->wday }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->wday }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Month Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $image->mday }}
+    {{ $campsite->image->mday }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->mday }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->mday }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Year Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $image->yday }}
+    {{ $campsite->image->yday }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->yday }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->yday }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Hour:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $image->hour }}
+    {{ $campsite->image->hour }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->hour }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->hour }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Minute:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $image->min }}
+    {{ $campsite->image->min }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->min }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->min }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Second:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $image->sec }}
+    {{ $campsite->image->sec }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->sec }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->sec }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $image->defined }}
+    {{ $campsite->image->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $image->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -731,65 +731,65 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">File Name:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $attachment->file_name }}
+    {{ $campsite->attachment->file_name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $attachment->file_name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->attachment->file_name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Mime Type:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $attachment->mime_type }}
+    {{ $campsite->attachment->mime_type }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $attachment->mime_type }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->attachment->mime_type }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Extension:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $attachment->extension }}
+    {{ $campsite->attachment->extension }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $attachment->extension }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->attachment->extension }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Description:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $attachment->description }}
+    {{ $campsite->attachment->description }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $attachment->description }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->attachment->description }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Size B:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $attachment->size_b }}
+    {{ $campsite->attachment->size_b }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $attachment->size_b }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->attachment->size_b }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Size KB:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $attachment->size_kb }}
+    {{ $campsite->attachment->size_kb }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $attachment->size_kb }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->attachment->size_kb }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Size MB:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $attachment->size_mb }}
+    {{ $campsite->attachment->size_mb }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $attachment->size_mb }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->attachment->size_mb }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $attachment->defined }}
+    {{ $campsite->attachment->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $attachment->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->attachment->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -809,25 +809,25 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Identifier:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $topic->identifier }}
+    {{ $campsite->topic->identifier }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $topic->identifier }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->topic->identifier }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Name:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $topic->name }}
+    {{ $campsite->topic->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $topic->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->topic->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $topic->defined }}
+    {{ $campsite->topic->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $topic->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->topic->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -847,225 +847,225 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Identifier:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->identifier }}
+    {{ $campsite->user->identifier }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->identifier }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->identifier }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Name:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->name }}
+    {{ $campsite->user->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">User Name:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->uname }}
+    {{ $campsite->user->uname }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->uname }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->uname }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">EMail:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->email }}
+    {{ $campsite->user->email }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->email }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->email }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">City:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->city }}
+    {{ $campsite->user->city }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->city }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->city }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Street Address:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->str_address }}
+    {{ $campsite->user->str_address }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->str_address }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->str_address }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">State:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->state }}
+    {{ $campsite->user->state }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->state }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->state }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Country:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $user->country }}
+    {{ $campsite->user->country }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->country }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->country }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Phone:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->phone }}
+    {{ $campsite->user->phone }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->phone }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->phone }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Contact:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->contact }}
+    {{ $campsite->user->contact }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->contact }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->contact }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Postal Code:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->postal_code }}
+    {{ $campsite->user->postal_code }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->postal_code }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->postal_code }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Employer:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->employer }}
+    {{ $campsite->user->employer }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->employer }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->employer }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Position:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->position }}
+    {{ $campsite->user->position }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->position }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->position }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Interests:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->interests }}
+    {{ $campsite->user->interests }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->interests }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->interests }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">How:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->how }}
+    {{ $campsite->user->how }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->how }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->how }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Languages:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->languages }}
+    {{ $campsite->user->languages }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->languages }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->languages }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Improvements:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->improvements }}
+    {{ $campsite->user->improvements }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->improvements }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->improvements }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Field 1:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->field1 }}
+    {{ $campsite->user->field1 }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->field1 }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->field1 }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Field 2:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->field2 }}
+    {{ $campsite->user->field2 }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->field2 }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->field2 }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Field 3:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->field3 }}
+    {{ $campsite->user->field3 }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->field3 }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->field3 }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Field 4:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->field4 }}
+    {{ $campsite->user->field4 }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->field4 }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->field4 }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Field 5:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->field5 }}
+    {{ $campsite->user->field5 }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->field5 }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->field5 }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Text 1:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->text1 }}
+    {{ $campsite->user->text1 }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->text1 }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->text1 }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Text 2:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->text2 }}
+    {{ $campsite->user->text2 }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->text2 }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->text2 }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Text 3:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->text3 }}
+    {{ $campsite->user->text3 }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->text3 }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->text3 }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Title:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->title }}
+    {{ $campsite->user->title }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->title }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->title }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Age:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $user->age }}
+    {{ $campsite->user->age }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->age }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->age }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $user->defined }}
+    {{ $campsite->user->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $user->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -1085,153 +1085,153 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Title:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->title }}
+    {{ $campsite->audioclip->title }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->title }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->title }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Creator:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->creator }}
+    {{ $campsite->audioclip->creator }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->creator }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->creator }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Genre:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->genre }}
+    {{ $campsite->audioclip->genre }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->genre }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->genre }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Length:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->length }}
+    {{ $campsite->audioclip->length }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->length }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->length }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Year:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->year }}
+    {{ $campsite->audioclip->year }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->year }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->year }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Bitrate:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->bitrate }}
+    {{ $campsite->audioclip->bitrate }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->bitrate }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->bitrate }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Samplerate:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->samplerate }}
+    {{ $campsite->audioclip->samplerate }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->samplerate }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->samplerate }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Album:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->album }}
+    {{ $campsite->audioclip->album }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->album }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->album }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Description:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->description }}
+    {{ $campsite->audioclip->description }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->description }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->description }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Format:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->format }}
+    {{ $campsite->audioclip->format }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->format }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->format }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Label:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->label }}
+    {{ $campsite->audioclip->label }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->label }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->label }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Composer:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->composer }}
+    {{ $campsite->audioclip->composer }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->composer }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->composer }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Channels:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->channels }}
+    {{ $campsite->audioclip->channels }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->channels }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->channels }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Rating:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->rating }}
+    {{ $campsite->audioclip->rating }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->rating }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->rating }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Track No:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->track_no }}
+    {{ $campsite->audioclip->track_no }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->track_no }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->track_no }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Disk No:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->disk_no }}
+    {{ $campsite->audioclip->disk_no }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->disk_no }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->disk_no }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Lyrics:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->lyrics }}
+    {{ $campsite->audioclip->lyrics }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->lyrics }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->lyrics }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Copyright:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $audioclip->copyright }}
+    {{ $campsite->audioclip->copyright }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->copyright }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->copyright }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $audioclip->defined }}
+    {{ $campsite->audioclip->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $audioclip->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->audioclip->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -1251,57 +1251,57 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Identifier:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $comment->identifier }}
+    {{ $campsite->comment->identifier }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $comment->identifier }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->comment->identifier }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Reader EMail:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $comment->reader_email }}
+    {{ $campsite->comment->reader_email }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $comment->reader_email }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->comment->reader_email }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Submit Date:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $comment->submit_date }}
+    {{ $campsite->comment->submit_date }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $comment->submit_date }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->comment->submit_date }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Subject:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $comment->subject }}
+    {{ $campsite->comment->subject }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $comment->subject }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->comment->subject }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Content:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $comment->content }}
+    {{ $campsite->comment->content }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $comment->content }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->comment->content }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Level:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $comment->level }}
+    {{ $campsite->comment->level }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $comment->level }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->comment->level }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $comment->defined }}
+    {{ $campsite->comment->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $comment->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->comment->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -1321,25 +1321,25 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Name:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $template->name }}
+    {{ $campsite->template->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $template->name }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->template->name }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Type:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $template->type }}
+    {{ $campsite->template->type }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $template->type }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->template->type }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $template->defined }}
+    {{ $campsite->template->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $template->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->template->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -1359,33 +1359,33 @@
 <tr>
   <td bgcolor="#9cf0ff" nowrap valign="top">Currency:</td>
   <td bgcolor="#9cf0ff" valign="top">
-    {{ $subscription->currency }}
+    {{ $campsite->subscription->currency }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $subscription->currency }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->subscription->currency }}{{ /literal }}</td>
   <td nowrap valign="top">base</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Type:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $subscription->type }}
+    {{ $campsite->subscription->type }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $subscription->type }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->subscription->type }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Active:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $subscription->active }}
+    {{ $campsite->subscription->active }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $subscription->active }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->subscription->active }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $subscription->defined }}
+    {{ $campsite->subscription->defined }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $subscription->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->subscription->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>

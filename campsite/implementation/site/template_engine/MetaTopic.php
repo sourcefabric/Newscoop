@@ -30,13 +30,9 @@ final class MetaTopic extends MetaDbObject {
 	}
 
 
-    public function __construct($p_topicId)
+    public function __construct($p_topicId = null)
     {
-        $topicObj = new Topic($p_topicId);
-		if (!is_object($topicObj) || !$topicObj->exists()) {
-			return false;
-		}
-        $this->m_dbObject =& $topicObj;
+        $this->m_dbObject =& new Topic($p_topicId);
 
 		$this->InitProperties();
 		$this->m_customProperties['name'] = 'getName';
@@ -48,8 +44,8 @@ final class MetaTopic extends MetaDbObject {
     {
     	if (is_null($p_languageId)) {
     		$smartyObj = CampTemplate::singleton();
-    		$languageObj = $smartyObj->get_template_vars('language');
-    		$p_languageId = $languageObj->number;
+    		$contextObj = $smartyObj->get_template_vars('campsite');
+    		$p_languageId = $contextObj->language->number;
     	}
     	return $this->m_dbObject->getName($p_languageId);
     }

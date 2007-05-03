@@ -33,13 +33,9 @@ final class MetaComment extends MetaDbObject {
 	}
 
 
-    public function __construct($p_messageId)
+    public function __construct($p_messageId = null)
     {
-        $phorumMessageObj = new Phorum_message($p_messageId);
-		if (!is_object($phorumMessageObj) || !$phorumMessageObj->exists()) {
-			return false;
-		}
-        $this->m_dbObject =& $phorumMessageObj;
+        $this->m_dbObject =& new Phorum_message($p_messageId);
 
 		$this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';

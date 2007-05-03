@@ -46,13 +46,9 @@ final class MetaAudioclip extends MetaDbObject {
 	}
 
 
-    public function __construct($p_gunId)
+    public function __construct($p_gunId = null)
     {
-        $audioclipObj = new Audioclip($p_gunId);
-		if (!is_object($audioclipObj) || !$audioclipObj->exists()) {
-			return false;
-		}
-        $this->m_dbObject =& $audioclipObj;
+        $this->m_dbObject =& new Audioclip($p_gunId);
 
         $this->m_getPropertyMethod = 'getMetatagValue';
 

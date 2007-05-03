@@ -30,15 +30,11 @@ final class MetaSection extends MetaDbObject {
 	}
 
 
-    public function __construct($p_publicationId, $p_issueNumber,
-                                $p_languageId, $p_sectionNumber)
+    public function __construct($p_publicationId = null, $p_issueNumber = null,
+                                $p_languageId = null, $p_sectionNumber = null)
     {
-        $sectionObj = new Section($p_publicationId, $p_issueNumber,
-                                  $p_languageId, $p_sectionNumber);
-		if (!is_object($sectionObj) || !$sectionObj->exists()) {
-			return false;
-		}
-		$this->m_dbObject = $sectionObj;
+		$this->m_dbObject =& new Section($p_publicationId, $p_issueNumber,
+										 $p_languageId, $p_sectionNumber);
 
 		$this->InitProperties();
 		$this->m_customProperties['template'] = 'getTemplate';

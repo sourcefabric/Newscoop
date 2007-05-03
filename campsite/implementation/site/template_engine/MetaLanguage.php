@@ -31,13 +31,10 @@ final class MetaLanguage extends MetaDbObject {
 	}
 
 
-    public function __construct($p_languageId)
+    public function __construct($p_languageId = null)
     {
-        $languageObj =& new Language($p_languageId);
-		if (!is_object($languageObj) || !$languageObj->exists()) {
-			return false;
-		}
-		$this->m_dbObject =& $languageObj;
+		$this->m_dbObject =& new Language($p_languageId);
+
 		$this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct

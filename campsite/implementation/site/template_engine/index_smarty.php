@@ -17,6 +17,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/SyntaxError.php');
 
 // Meta classes
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/CampContext.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaLanguage.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaPublication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaIssue.php');
@@ -81,56 +82,62 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 $tpl = CampTemplate::singleton();
 
 
+$context =& new CampContext();
+
+
 // Language object
-$tpl->assign('language', new MetaLanguage(1));
+$context->language = new MetaLanguage(1);
 
 
 // Publication object
-$tpl->assign('publication', new MetaPublication(6));
+$context->publication = new MetaPublication(6);
 
 
 // Issue object
-$tpl->assign('issue', new MetaIssue(6, 1, 1));
+$context->issue = new MetaIssue(6, 1, 1);
 
 
 // Section object
-$tpl->assign('section', new MetaSection(6, 1, 1, 1));
+$context->section = new MetaSection(6, 1, 1, 1);
 
 
 // Article object
-$tpl->assign('article', new MetaArticle(1, 143));
+$context->article = new MetaArticle(1, 143);
 
 
 // Image object
-$tpl->assign('image', new MetaImage(11));
+$context->image = new MetaImage(11);
 
 
 // Article attachment object
-$tpl->assign('attachment', new MetaAttachment(3));
-
-
-// Audioclip object
-$tpl->assign('audioclip', new MetaAudioclip('0b340462201a93d1'));
-
-
-// Article comment
-$tpl->assign('comment', new MetaComment(2));
+$context->attachment = new MetaAttachment(3);
 
 
 // Topic object
-$tpl->assign('topic', new MetaTopic(14));
+$context->topic = new MetaTopic(14);
 
 
 // User object
-$tpl->assign('user', new MetaUser(1));
+$context->user = new MetaUser(1);
+
+
+// Audioclip object
+$context->audioclip = new MetaAudioclip('7426a84892288c93');
+
+
+// Article comment
+$context->comment = new MetaComment(2);
 
 
 // Template object
-$tpl->assign('template', new MetaTemplate(101));
+$context->template = new MetaTemplate(101);
 
 
 // Subscription object
-$tpl->assign('subscription', new MetaSubscription(5));
+$context->subscription = new MetaSubscription(5);
+
+
+$tpl->assign('campsite', $context);
 
 
 /**** Exception test ****/

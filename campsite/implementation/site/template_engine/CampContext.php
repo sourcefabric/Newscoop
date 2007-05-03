@@ -34,26 +34,28 @@ define('INVALID_OBJECT_STRING', 'invalid object');
  */
 final class CampContext {
     //
-    private $m_objects = array('publication',
-                               'issue',
-                               'section',
-                               'article',
-                               'language',
-                               'image',
-                               'attachment',
-                               'audioclip',
-                               'comment',
-                               'topic',
-                               'user',
-                               'template',
-                               'subscription'
-                               );
+    private $m_objectTypes = array('publication'=>'Publication',
+								   'issue'=>'Issue',
+								   'section'=>'Section',
+								   'article'=>'Article',
+								   'language'=>'Language',
+								   'image'=>'Image',
+								   'attachment'=>'Attachment',
+								   'audioclip'=>'Audioclip',
+								   'comment'=>'Comment',
+								   'topic'=>'Topic',
+								   'user'=>'User',
+								   'template'=>'Template',
+								   'subscription'=>'Subscription'
+								   );
+
+	private $m_objects = array();
 
 
     /**
      *
      */
-    public function __construct()
+    final public function __construct()
     {
 
     } // fn __construct
@@ -62,12 +64,23 @@ final class CampContext {
     /**
      *
      */
-    public function __get($p_object)
+    final public function __get($p_objectType)
     {
         try {
-            return $this->getObject($p_object);
+	    	$p_objectType = CampContext::TranslateObjectType($p_objectType);
+
+        	if (!array_key_exists($p_objectType, $this->m_objectTypes)) {
+        		throw new InvalidObjectException($p_objectType);
+        	}
+
+        	if (!isset($this->m_objects[$p_objectType])
+        			|| is_null($this->m_objects[$p_objectType])) {
+        		$this->createObject($p_objectType);
+        	}
+
+            return $this->m_objects[$p_objectType];
         } catch (InvalidObjectException $e) {
-            $this->trigger_invalid_object_error($p_object);
+            $this->trigger_invalid_object_error($e->getClassName());
             return null;
         }
     } // fn __get
@@ -76,33 +89,55 @@ final class CampContext {
     /**
      *
      */
-    public function __set($p_object, $p_value)
+    final public function __set($p_objectType, $p_value)
     {
-        if (!in_array($p_object, $this->m_objects)
-                || !is_object($p_value)
-                || !$p_value->defined()) {
-            return false;
-        }
+    	$p_objectType = CampContext::TranslateObjectType($p_objectType);
 
-        $this->$p_object = $p_value;
+    	try {
+	    	if (!array_key_exists($p_objectType, $this->m_objectTypes)) {
+    			throw new InvalidObjectException($p_objectType);
+    		}
+
+    		if (!is_object($p_value)) {
+    			throw new InvalidObjectException($p_objectType);
+    		}
+
+    		if (!is_a($p_value, 'Meta'.$this->m_objectTypes[$p_objectType])) {
+    			throw new InvalidObjectException($p_objectType);
+    		}
+
+    		$this->m_objects[$p_objectType] = $p_value;
+    	} catch (InvalidObjectException $e) {
+            $this->trigger_invalid_object_error($e->getClassName());
+            return null;
+    	}
     } // fn __set
 
 
     /**
      *
      */
-    protected function getObject($p_object)
+    private function createObject($p_objectType)
     {
-        if (!is_array($this->m_objects)
-            || !in_array($p_object, $this->m_objects)) {
-            throw new InvalidObjectException($p_object);
-        }
-        if (!is_object($this->$p_object)) {
-            return null;
-        }
+    	global $_SERVER;
 
-        return $this->$p_object;
-    } // fn getObject
+    	$p_objectType = CampContext::TranslateObjectType($p_objectType);
+
+    	$classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/Meta'
+    					. $this->m_objectTypes[$p_objectType].'.php';
+    	if (!file_exists($classFullPath)) {
+    		throw new InvalidObjectException($p_objectType);
+    	}
+    	$className = 'Meta'.$p_objectType;
+    	$this->m_objects[$p_objectType] =& new $className;
+    	return $this->m_objects[$p_objectType];
+    } // fn createObject
+
+
+    static function TranslateObjectType($p_objectType)
+    {
+    	return strtolower($p_objectType);
+    }
 
 
     /**

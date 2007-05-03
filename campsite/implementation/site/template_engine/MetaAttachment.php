@@ -33,13 +33,9 @@ final class MetaAttachment extends MetaDbObject {
 	}
 
 
-    public function __construct($p_attachmentId)
+    public function __construct($p_attachmentId = null)
     {
-        $attachmentObj =& new Attachment($p_attachmentId);
-        if (!is_object($attachmentObj) || !$attachmentObj->exists()) {
-            return false;
-        }
-        $this->m_dbObject =& $attachmentObj;
+        $this->m_dbObject =& new Attachment($p_attachmentId);
 
 		$this->InitProperties();
         $this->m_customProperties['description'] = 'getDescription';
@@ -53,8 +49,8 @@ final class MetaAttachment extends MetaDbObject {
     {
     	if (is_null($p_languageId)) {
     		$smartyObj = CampTemplate::singleton();
-    		$languageObj = $smartyObj->get_template_vars('language');
-    		$p_languageId = $languageObj->number;
+    		$contextObj = $smartyObj->get_template_vars('campsite');
+    		$p_languageId = $contextObj->language->number;
     	}
     	return $this->m_dbObject->getDescription($p_languageId);
     }

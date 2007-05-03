@@ -45,13 +45,9 @@ final class MetaArticle extends MetaDbObject {
 	}
 
 
-    public function __construct($p_languageId, $p_articleId)
+    public function __construct($p_languageId = null, $p_articleId = null)
     {
         $articleObj =& new Article($p_languageId, $p_articleId);
-
-        if (!is_object($articleObj) || !$articleObj->exists()) {
-            return false;
-        }
         $this->m_dbObject =& $articleObj;
         $this->InitProperties();
 

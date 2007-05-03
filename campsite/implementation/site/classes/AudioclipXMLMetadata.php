@@ -11,6 +11,7 @@
 // is not defined in these cases.
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
+require_once($g_documentRoot."/$ADMIN_DIR/lib_campsite.php");
 require_once($g_documentRoot.'/classes/XR_CcClient.php');
 require_once($g_documentRoot.'/classes/AudioclipMetadataEntry.php');
 
@@ -43,8 +44,8 @@ class AudioclipXMLMetadata {
             $this->fetch();
         }
     } // constructor
-    
-    
+
+
     /**
      * Returns true if an audioclip having this metadata exists
      *
@@ -54,8 +55,8 @@ class AudioclipXMLMetadata {
     {
     	return $this->m_exists;
     }
-    
-    
+
+
     /**
      * Returns the audioclip unique identifier
      *
@@ -115,10 +116,10 @@ class AudioclipXMLMetadata {
         return null;
     } // fn fetch
 
-    
+
     /**
      * Uploads an audioclip to the storage server
-     * 
+     *
      * @param string $p_sessId
      *      The session Id on the Campcaster storage server
      * @param string $p_gunId
@@ -129,7 +130,7 @@ class AudioclipXMLMetadata {
      *      The full path to the audioclip file
      * @param string $p_checkSum
      *      The md5 check sum of the audioclip file
-     * 
+     *
      * @return string|PEAR_Error
      *		Audioclip gunid on success, PEAR_Error on failure
      */
