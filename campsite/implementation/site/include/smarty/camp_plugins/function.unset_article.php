@@ -9,7 +9,7 @@
  *
  * Type:     function
  * Name:     unset_article
- * Purpose:  
+ * Purpose:
  *
  * @param empty
  *     $p_params
@@ -25,7 +25,6 @@ function smarty_function_unset_article($p_params, &$p_smarty)
     }
 
     $campsite->article = new MetaArticle();
-
 } // fn smarty_function_unset_article
 
 ?>

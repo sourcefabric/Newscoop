@@ -9,7 +9,7 @@
  *
  * Type:     function
  * Name:     set_current_issue
- * Purpose:  
+ * Purpose:
  *
  * @param array
  *     $p_params[name] The Name of the publication to be set
@@ -19,32 +19,27 @@
  */
 function smarty_function_set_current_issue($p_params, &$p_smarty)
 {
-    global $g_ado_db;
-
     // gets the context variable
     $campsite = $p_smarty->get_template_vars('campsite');
 
-    $queryStr = "SELECT MAX(Number) AS MaxIssueNr FROM Issues "
-               ."WHERE IdPublication = " . $campsite->publication->identifier
-               ." AND IdLanguage = " . $campsite->language->number
-               ." AND Published = 'Y'";
-    $row = $g_ado_db->GetRow($queryStr);
-
-    if (!is_array($row) || $row['MaxIssueNr'] < 1) {
-        return false; // or trhow an error?
+    $currentIssue = Issue::GetCurrentIssue($campsite->publication->identifier,
+    										$campsite->language->number);
+    if (is_null($currentIssue)) {
+        return false;
     }
-    // if the current issue is already the context, it just return nothing
+
+    // if the current issue was already the context do nothing
     if ($campsite->issue->defined
-            && $campsite->issue->number == $row['MaxIssueNr']) {
+            && $campsite->issue->number == $currentIssue->getIssueNumber()) {
         return;
     }
 
-    $issue = new MetaIssue($campsite->publication->identifier,
-                           $campsite->language->number, $row['MaxIssueNr']);
-    if ($issue->defined == 'defined') {
-        $campsite->issue = $issue;
+    $issueObj = new MetaIssue($campsite->publication->identifier,
+                              $campsite->language->number,
+                              $currentIssue->getIssueNumber());
+    if ($issueObj->defined) {
+        $campsite->issue = $issueObj;
     }
-
 } // fn smarty_function_set_current_issue
 
 ?>

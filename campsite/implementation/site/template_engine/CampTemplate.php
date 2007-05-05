@@ -51,10 +51,8 @@ final class CampTemplate extends Smarty {
         $this->config_dir = $Campsite['CAMPSITE_DIR'].'/var/smarty/configs';
         $this->template_dir = $Campsite['CAMPSITE_DIR'].'/var/smarty/templates';
         $this->compile_dir = $Campsite['CAMPSITE_DIR'].'/var/smarty/templates_c';
-        $this->plugins_dir = array(
-                                   $Campsite['CAMPSITE_DIR'].'/var/smarty/camp_plugins',
-                                   $Campsite['CAMPSITE_DIR'].'/var/smarty/plugins'
-                                   );
+        $this->plugins_dir = array($Campsite['CAMPSITE_DIR'].'/var/smarty/camp_plugins',
+                                   $Campsite['CAMPSITE_DIR'].'/var/smarty/plugins');
     } // fn __constructor
 
 
@@ -72,6 +70,16 @@ final class CampTemplate extends Smarty {
 
         return self::$m_instance;
     } // fn singleton
+
+
+    public function trigger_error($p_message, $p_smarty = null)
+    {
+    	if (!is_null($p_smarty)) {
+    		return $p_smarty->trigger_error($p_message);
+    	} else {
+    		return trigger_error("Campsite error: $p_message");
+    	}
+    }
 
 } // class CampTemplate
 

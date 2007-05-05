@@ -149,7 +149,7 @@ if ($f_destination_publication_id > 0) {
 $allSections = array();
 if ($f_destination_issue_number > 0) {
 	$destIssue =& new Issue($f_destination_publication_id);
-	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $firstArticle->getLanguageId(), null, array("ORDER BY" => array("Number" => "DESC")));
+	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $firstArticle->getLanguageId(), null, null, array("ORDER BY" => array("Number" => "DESC")));
 	// Automatically select the section if there is only one.
 	if (count($allSections) == 1) {
 		$tmpSection = camp_array_peek($allSections);

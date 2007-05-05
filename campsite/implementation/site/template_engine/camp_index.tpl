@@ -4,11 +4,29 @@
 </head>
 <body>
 
+
 {{ invalid_tag }}
+
 
 {{ $smarty.invalid_reference }}
 
-{{ $article->invalid_property }}
+
+{{ $campsite->article->invalid_property }}
+
+
+{{ set_language set_invalid_property="1" }}
+
+
+{{ set_publication set_invalid_property="6" }}
+
+
+{{ set_issue set_invalid_property="1" }}
+
+
+{{ set_section set_invalid_property="1" }}
+
+
+{{ set_article set_invalid_property="143" }}
 
 
 {{**** Language ****}}
@@ -355,11 +373,11 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_issue number="6" }}
+    {{ set_issue number="1" }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
-    {{ literal }}{{ set_issue number="6" }}{{ /literal }}
+    {{ literal }}{{ set_issue number="1" }}{{ /literal }}
   </td>
 </tr>
 <tr>

@@ -137,7 +137,8 @@ class Issue extends DatabaseObject {
         if ($created) {
         	// Copy the sections in the issue
             $sections = Section::GetSections($this->m_data['IdPublication'],
-                $this->m_data['Number'], $this->m_data['IdLanguage']);
+                							 $this->m_data['Number'],
+                							 $this->m_data['IdLanguage']);
             foreach ($sections as $section) {
                 $section->copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId, null, false);
             }
@@ -608,6 +609,31 @@ class Issue extends DatabaseObject {
 
 
 	/**
+	 * Returns the last published issue for the given publication / language.
+	 * Returns null if no issue was found.
+	 *
+	 * @param int $p_publicationId
+	 * @param int $p_languageId
+	 * @return mixed
+	 */
+	function GetCurrentIssue($p_publicationId, $p_languageId = null)
+	{
+		global $g_ado_db;
+		$queryStr = "SELECT Number, IdLanguage FROM Issues WHERE Published = 'Y' AND "
+					. "IdPublication = $p_publicationId";
+		if (!is_null($p_languageId)) {
+			$queryStr .= " AND IdLanguage = $p_languageId";
+		}
+		$queryStr .= " ORDER BY Number DESC LIMIT 0, 1";
+		$result = $g_ado_db->GetRow($queryStr);
+		if (is_null($result)) {
+	    	return null;
+		}
+		return new Issue($p_publicationId, $result['IdLanguage'], $result['Number']);
+	}
+
+
+	/**
 	 * Return the last Issue created in this publication or NULL if there
 	 * are no previous issues.
 	 *
@@ -616,16 +642,16 @@ class Issue extends DatabaseObject {
 	 */
 	function GetLastCreatedIssue($p_publicationId)
 	{
-	   global $g_ado_db;
-	   $queryStr = "SELECT MAX(Number) FROM Issues WHERE IdPublication=$p_publicationId";
-	   $maxIssueNumber = $g_ado_db->GetOne($queryStr);
-	   if (empty($maxIssueNumber)) {
-	       return null;
-	   }
-	   $queryStr = "SELECT IdLanguage FROM Issues WHERE IdPublication=$p_publicationId AND Number=$maxIssueNumber";
-	   $idLanguage = $g_ado_db->GetOne($queryStr);
-	   $issue =& new Issue($p_publicationId, $idLanguage, $maxIssueNumber);
-	   return $issue;
+		global $g_ado_db;
+		$queryStr = "SELECT MAX(Number) FROM Issues WHERE IdPublication=$p_publicationId";
+		$maxIssueNumber = $g_ado_db->GetOne($queryStr);
+		if (empty($maxIssueNumber)) {
+			 return null;
+		}
+		$queryStr = "SELECT IdLanguage FROM Issues WHERE IdPublication=$p_publicationId AND Number=$maxIssueNumber";
+		$idLanguage = $g_ado_db->GetOne($queryStr);
+		$issue =& new Issue($p_publicationId, $idLanguage, $maxIssueNumber);
+		return $issue;
 	} // fn GetLastCreatedIssue
 
 } // class Issue

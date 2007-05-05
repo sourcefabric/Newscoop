@@ -9,7 +9,7 @@
  *
  * Type:     function
  * Name:     set_publication
- * Purpose:  
+ * Purpose:
  *
  * @param array
  *     $p_params[name] The Name of the publication to be set
@@ -19,36 +19,38 @@
  */
 function smarty_function_set_publication($p_params, &$p_smarty)
 {
-    global $g_ado_db;
+    // gets the context variable
+    $campsite = $p_smarty->get_template_vars('campsite');
 
-    $attrValue = 0;
-    if (isset($p_params['identifier']) && !empty($p_params['identifier'])) {
-        $attrValue = intval($p_params['identifier']);
-    } elseif (isset($p_params['name']) && !empty($p_params['name'])) {
-        $queryStr = "SELECT Id FROM Publications "
-            . "WHERE Name = '".$g_ado_db->escape($p_params['name'])."'";
-        $row = $g_ado_db->GetRow($queryStr);
-        if ($row['Id'] > 0) {
-            $attrValue = $row['Id'];
+    if (isset($p_params['identifier'])) {
+    	$attrName = 'identifier';
+        $attrValue = $p_params['identifier'];
+        $publicationId = intval($p_params['identifier']);
+    } elseif (isset($p_params['name'])) {
+    	$attrName = 'name';
+    	$attrValue = $p_params['name'];
+    	$publications = Publication::GetPublications($p_params['name']);
+        if (!empty($publications)) {
+            $publicationId = $publications[0]->getPublicationId();
+        } else {
+	    	$campsite->publication->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
+        	return false;
         }
-    }
-
-    if (!$attrValue) {
+    } else {
+    	$property = array_shift(array_keys($p_params));
+    	$campsite->publication->trigger_invalid_property_error($property, $p_smarty);
         return false;
     }
 
-    // gets the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
     if ($campsite->publication->defined
-            && $campsite->publication->identifier == $attrValue) {
+            && $campsite->publication->identifier == $publicationId) {
         return;
     }
 
-    $publication = new MetaPublication($attrValue);
-    if ($publication->defined == 'defined') {
-        $campsite->publication = $publication;
+    $publicationObj = new MetaPublication($publicationId);
+    if ($publicationObj->defined) {
+        $campsite->publication = $publicationObj;
     }
-
 } // fn smarty_function_set_publication
 
 ?>

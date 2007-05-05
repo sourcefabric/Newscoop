@@ -43,7 +43,8 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 {
 	global $g_errorList;
 
-	if (strncasecmp($p_errorString, "Smarty error:", strlen("Smarty error:")) != 0) {
+	if (strncasecmp($p_errorString, 'Campsite error:', strlen("Campsite error:")) != 0
+		&& strncasecmp($p_errorString, 'Smarty error:' ,strlen('Smarty error:')) != 0) {
 		return;
 	}
 
@@ -59,6 +60,9 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 	} elseif (preg_match('/invalid\s+property\s+(.+)\s+of\s+object\s+(.*)/', $errorString, $matches)) {
 		$errorCode = SYNTAX_ERROR_INVALID_PROPERTY;
 		$what = array($matches[1], $matches[2]);
+	} elseif (preg_match('/invalid\s+value\s+(.+)\s+of\s+property\s+(.*)\s+of\s+object\s+(.*)/', $errorString, $matches)) {
+		$errorCode = SYNTAX_ERROR_INVALID_VALUE;
+		$what = array($matches[1], $matches[2], $matches[3]);
 	} else {
 		$errorCode = SYNTAX_ERROR_UNKNOWN;
 		$what = array($errorString);
@@ -138,6 +142,7 @@ $context->subscription = new MetaSubscription(5);
 
 
 $tpl->assign('campsite', $context);
+//$tpl->debugging = true;
 
 
 /**** Exception test ****/

@@ -9,7 +9,7 @@
  *
  * Type:     function
  * Name:     set_language
- * Purpose:  
+ * Purpose:
  *
  * @param array
  *     $p_params The English name of the language to be set
@@ -18,30 +18,28 @@
  */
 function smarty_function_set_language($p_params, &$p_smarty)
 {
-    global $g_ado_db;
+    // gets the context variable
+    $campsite = $p_smarty->get_template_vars('campsite');
 
-    if (!isset($p_params['name']) || empty($p_params['name'])) {
+    if (isset($p_params['name'])) {
+    	$languageName = $p_params['name'];
+    } else {
+    	$property = array_shift(array_keys($p_params));
+    	$campsite->language->trigger_invalid_property_error($property, $p_smarty);
         return false;
     }
 
-    // gets the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
     if ($campsite->language->defined
-            && $campsite->language->english_name == $p_params['name']) {
+            && $campsite->language->english_name == $languageName) {
         return;
     }
 
-    $queryStr = "SELECT Id FROM Languages WHERE Name = '"
-               .$g_ado_db->escape($p_params['name'])."'";
-    $row = $g_ado_db->GetRow($queryStr);
-    if (!sizeof($row) || $row['Id'] < 1) {
-        return false;
+    $languages = Language::GetLanguages(null, null, $languageName);
+    if (empty($languages)) {
+    	$campsite->language->trigger_invalid_value_error('name', $languageName, $p_smarty);
+    	return false;
     }
-    $language = new MetaLanguage($row['Id']);
-    if ($language->defined == 'defined') {
-        $campsite->language = $language;
-    }
-
+    $campsite->language = new MetaLanguage($languages[0]->getLanguageId());
 } // fn smarty_function_set_language
 
 ?>

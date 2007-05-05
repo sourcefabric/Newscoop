@@ -8,6 +8,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/Exceptions.php');
 
 
 define('INVALID_PROPERTY_STRING', 'invalid property');
+define('INVALID_VALUE_STRING', 'invalid value');
+define('OF_PROPERTY_STRING', 'of property');
 define('OF_OBJECT_STRING', 'of object');
 
 
@@ -28,7 +30,7 @@ class MetaDbObject {
     public function __get($p_property)
     {
         if (!$this->defined()) {
-            return false;
+            return null;
         }
 
         try {
@@ -90,11 +92,20 @@ class MetaDbObject {
     }
 
 
-    final protected function trigger_invalid_property_error($p_property)
+    final public function trigger_invalid_property_error($p_property, $p_smarty = null)
     {
-		CampTemplate::singleton()->trigger_error(INVALID_PROPERTY_STRING . " $p_property "
-        										 . OF_OBJECT_STRING . ' ' . get_class($this->m_dbObject));
+    	$errorMessage = INVALID_PROPERTY_STRING . " $p_property "
+        				. OF_OBJECT_STRING . ' ' . get_class($this->m_dbObject);
+		CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
+    }
 
+
+    final public function trigger_invalid_value_error($p_property, $p_value, $p_smarty = null)
+    {
+    	$errorMessage = INVALID_VALUE_STRING . " $p_value "
+        				. OF_PROPERTY_STRING . " $p_property "
+        				. OF_OBJECT_STRING . ' ' . get_class($this->m_dbObject);
+		CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     }
 }
 

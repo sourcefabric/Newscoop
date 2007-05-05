@@ -1453,17 +1453,19 @@ class Article extends DatabaseObject {
     /*****************************************************************/
 
     /**
-     * Return true if the article of that name already exists
-     * in the given publication / issue / section.  If not, return false.
+     * Return an array of article having the given name
+     * in the given publication / issue / section / language.
      *
      * @param string $p_name
      * @param int $p_publicationId
      * @param int $p_issueId
      * @param int $p_sectionId
+     * @param int $p_languageId
      *
      * @return array
      */
-    function GetByName($p_name, $p_publicationId = null, $p_issueId = null, $p_sectionId = null)
+    function GetByName($p_name, $p_publicationId = null, $p_issueId = null,
+    					$p_sectionId = null, $p_languageId = null)
     {
         global $g_ado_db;
         $queryStr = 'SELECT * FROM Articles';
@@ -1476,6 +1478,9 @@ class Article extends DatabaseObject {
 		}
 		if (!is_null($p_sectionId)) {
 			$whereClause[] = "NrSection=$p_sectionId";
+		}
+		if (!is_null($p_languageId)) {
+			$whereClause[] = "IdLanguage=$p_languageId";
 		}
 		$whereClause[] = "Name='$p_name'";
 		if (count($whereClause) > 0) {

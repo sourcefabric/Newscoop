@@ -3,28 +3,6 @@
  * @package Campsite
  */
 
-/**
- * Includes
- */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-// Meta classes
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaLanguage.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaPublication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaIssue.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaSection.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaArticle.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaImage.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaAttachment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaAudioclip.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaComment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaTopic.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaUser.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaTemplate.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaSubscription.php');
 
 define('INVALID_OBJECT_STRING', 'invalid object');
 
@@ -102,6 +80,13 @@ final class CampContext {
     			throw new InvalidObjectException($p_objectType);
     		}
 
+	    	$classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/Meta'
+    						. $this->m_objectTypes[$p_objectType].'.php';
+    		if (!file_exists($classFullPath)) {
+    			throw new InvalidObjectException($p_objectType);
+    		}
+    		require_once($classFullPath);
+
     		if (!is_a($p_value, 'Meta'.$this->m_objectTypes[$p_objectType])) {
     			throw new InvalidObjectException($p_objectType);
     		}
@@ -111,6 +96,8 @@ final class CampContext {
             $this->trigger_invalid_object_error($e->getClassName());
             return null;
     	}
+
+    	return $this->m_objects[$p_objectType];
     } // fn __set
 
 
@@ -128,8 +115,11 @@ final class CampContext {
     	if (!file_exists($classFullPath)) {
     		throw new InvalidObjectException($p_objectType);
     	}
+    	require_once($classFullPath);
+
     	$className = 'Meta'.$p_objectType;
     	$this->m_objects[$p_objectType] =& new $className;
+
     	return $this->m_objects[$p_objectType];
     } // fn createObject
 

@@ -9,7 +9,7 @@
  *
  * Type:     function
  * Name:     set_section
- * Purpose:  
+ * Purpose:
  *
  * @param array
  *     $p_params[name] The Name of the section to be set
@@ -19,40 +19,45 @@
  */
 function smarty_function_set_section($p_params, &$p_smarty)
 {
-    global $g_ado_db;
-
     // gets the context variable
     $campsite = $p_smarty->get_template_vars('campsite');
 
-    $attrValue = 0;
-    if (isset($p_params['number']) && !empty($p_params['number'])) {
-        $attrValue = intval($p_params['number']);
-    } elseif (isset($p_params['name']) && !empty($p_params['name'])) {
-        $queryStr = "SELECT Number FROM Sections "
-            . "WHERE IdPublication = ".$campsite->publication->identifier
-            . " AND NrIssue = ".$campsite->issue->number
-            . " AND Name = '".$g_ado_db->escape($p_params['name'])."'";
-        $row = $g_ado_db->GetRow($queryStr);
-        if ($row['Number'] > 0) {
-            $attrValue = $row['Number'];
+    if (isset($p_params['number'])) {
+    	$attrName = 'number';
+        $attrValue = $p_params['number'];
+        $sectionNumber = intval($p_params['number']);
+    } elseif (isset($p_params['name'])) {
+    	$sections = Section::GetSections($campsite->publication->identifier,
+    									 $campsite->issue->number,
+    									 $campsite->language->number,
+    									 null,
+    									 $p_params['name']);
+        if (isset($sections[0])) {
+        	$attrName = 'name';
+        	$attrValue = $p_params['name'];
+            $sectionNumber = intval($sections[0]->getSectionNumber());
+        } else {
+	    	$campsite->section->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
+        	return false;
         }
-    }
-
-    if (!$attrValue) {
+    } else {
+    	$property = array_shift(array_keys($p_params));
+    	$campsite->section->trigger_invalid_property_error($property, $p_smarty);
         return false;
     }
+
     if ($campsite->section->defined
-            && $campsite->section->number == $attrValue) {
+            && $campsite->section->number == $sectionNumber) {
         return;
     }
 
-    $section = new MetaSection($campsite->publication->identifier,
-                               $campsite->issue->number,
-                               $campsite->language->number, $attrValue);
-    if ($section->defined == 'defined') {
-        $campsite->section = $section;
+    $sectionObj = new MetaSection($campsite->publication->identifier,
+								  $campsite->issue->number,
+								  $campsite->language->number,
+								  $sectionNumber);
+    if ($sectionObj->defined) {
+        $campsite->section = $sectionObj;
     }
-
 } // fn smarty_function_set_section
 
 ?>

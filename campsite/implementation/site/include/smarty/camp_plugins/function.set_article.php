@@ -9,7 +9,7 @@
  *
  * Type:     function
  * Name:     set_article
- * Purpose:  
+ * Purpose:
  *
  * @param array
  *     $p_params[name] The Name of the article to be set
@@ -19,37 +19,43 @@
  */
 function smarty_function_set_article($p_params, &$p_smarty)
 {
-    global $g_ado_db;
-
     // gets the context variable
     $campsite = $p_smarty->get_template_vars('campsite');
 
-    $attrValue = 0;
-    if (isset($p_params['number']) && !empty($p_params['number'])) {
-        $attrValue = intval($p_params['number']);
-    } elseif (isset($p_params['name']) && !empty($p_params['name'])) {
-        $queryStr = "SELECT Number FROM Articles "
-                  . "WHERE IdLanguage = ".$campsite->language->number
-                  . " AND Name = '".$g_ado_db->escape($p_params['name'])."'";
-        $row = $g_ado_db->GetRow($queryStr);
-        if ($row['Number'] > 0) {
-            $attrValue = $row['Number'];
+    if (isset($p_params['number'])) {
+    	$attrName = 'number';
+        $attrValue = $p_params['number'];
+        $articleNumber = intval($p_params['number']);
+    } elseif (isset($p_params['name'])) {
+    	$articles = Article::GetByName($p_params['name'],
+    								   $campsite->publication->identifier,
+    								   $campsite->issue->number,
+    								   $campsite->section->number,
+    								   $campsite->language->number);
+        if (isset($articles[0])) {
+        	$attrName = 'name';
+        	$attrValue = $p_params['name'];
+            $articleNumber = intval($articles[0]->getArticleNumber());
+        } else {
+	    	$campsite->article->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
+        	return false;
         }
-    }
-
-    if (!$attrValue) {
+    } else {
+    	$property = array_shift(array_keys($p_params));
+    	$campsite->article->trigger_invalid_property_error($property, $p_smarty);
         return false;
     }
-    if ($campsite->article->defined
-            && $campsite->article->number == $attrValue) {
+
+    if ($campsite->article->defined && $campsite->article->number == $attrValue) {
         return;
     }
 
-    $article = new MetaArticle($campsite->language->number, $attrValue);
-    if ($article->defined == 'defined') {
-        $campsite->article = $article;
+    $articleObj = new MetaArticle($campsite->language->number, $articleNumber);
+    if ($articleObj->defined) {
+        $campsite->article = $articleObj;
+    } else {
+    	$campsite->article->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
     }
-
 } // fn smarty_function_set_article
 
 ?>
