@@ -29,6 +29,74 @@
 {{ set_article set_invalid_property="143" }}
 
 
+{{ $campsite->invalid_property }}
+
+
+{{** HTMLEncoding **}}
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#6a6a6a"><font color="#ffffff">HTMLEncoding</font></td>
+</tr>
+</table>
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#9cf0ff">
+    Default HTMLEncoding value:
+  </td>
+  <td bgcolor="#9cf0ff" align="center">
+    {{ if $campsite->htmlencoding eq false }}
+      false
+    {{ else }}
+      {{ $campsite->htmlencoding }}
+    {{ /if }}
+  </td>
+  <td>
+    {{ literal }}
+      {{ $campsite->htmlencoding }}
+    {{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff">
+    Enabling HTMLEncoding:
+  </td>
+  <td bgcolor="#9cf0ff" align="center">
+    {{ enable_html_encoding }}
+
+    {{ if $campsite->htmlencoding eq false }}
+      false
+    {{ else }}
+      {{ $campsite->htmlencoding }}
+    {{ /if }}
+  </td>
+  <td>
+    {{ literal }}
+      {{ enable_html_encoding }}
+    {{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff">
+    Disabling HTMLEncoding:
+  </td>
+  <td bgcolor="#9cf0ff" align="center">
+    {{ disable_html_encoding }}
+
+    {{ if $campsite->htmlencoding eq false }}
+      false
+    {{ else }}
+      {{ $campsite->htmlencoding }}
+    {{ /if }}
+  </td>
+  <td>
+    {{ literal }}
+      {{ disable_html_encoding }}
+    {{ /literal }}
+  </td>
+</tr>
+</table><br />
+
+
 {{**** Language ****}}
 <table cellspacing="1" cellpadding="4">
 <tr>
