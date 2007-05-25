@@ -8,9 +8,9 @@ if (!$canManage) {
 	exit;
 }
 
-$uType = Input::Get('UType', 'string', '');
-if (!empty($uType)) {
-	$userType = new UserType($uType);
+$uTypeId = Input::Get('UType', 'string', '');
+if (is_numeric($uTypeId) && $uTypeId > 0) {
+	$userType = new UserType($uTypeId);
 	if (!$userType->exists()) {
 		camp_html_display_error(getGS('No such user type.'));
 		exit;
@@ -21,6 +21,8 @@ if (!empty($uType)) {
 	exit;
 }
 
+$msg = getGS("User Type '$1' successfully deleted", $userType->getName());
+camp_html_add_msg($msg);
 camp_html_goto_page("/$ADMIN/user_types/");
 
 ?>

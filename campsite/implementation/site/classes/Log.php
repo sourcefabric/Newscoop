@@ -121,9 +121,11 @@ class Log extends DatabaseObject {
 		$tmpLog =& new Log();
 		$columns = $tmpLog->getColumnNames(true);
 		$queryStr = "SELECT ".implode(", ", $columns)
-					.", Users.Name as full_name, Users.UName as user_name"
+					.", liveuser_users.Name as full_name"
+                    .", liveuser_users.UName as user_name"
 					." FROM Log"
-					." LEFT JOIN Users ON Log.fk_user_id = Users.Id";
+					." LEFT JOIN liveuser_users"
+                    ." ON Log.fk_user_id = liveuser_users.Id";
 		if (!is_null($p_eventId)) {
 			$queryStr .= " WHERE Log.fk_event_id=$p_eventId";
 		}

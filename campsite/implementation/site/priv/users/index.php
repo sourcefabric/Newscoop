@@ -133,7 +133,7 @@ if ($canManage) {
 <?php camp_html_display_msgs(); ?>
 
 <?php
-$sqlBase = "SELECT DISTINCT u.Id, u.Name, u.UName, u.EMail, DATE_FORMAT(u.time_created, '%Y-%m-%d %T') as time_created FROM Users AS u";
+$sqlBase = "SELECT DISTINCT u.Id, u.Name, u.UName, u.EMail, DATE_FORMAT(u.time_created, '%Y-%m-%d %T') as time_created FROM liveuser_users AS u";
 $sql = '';
 if ($userSearchParameters['startIP1'] != 0) {
 	$sql .= " LEFT JOIN SubsByIP AS sip ON u.Id = sip.IdUser";
@@ -189,7 +189,7 @@ $sql .= " ORDER BY " . $orderFields[$orderField] . " $orderDir";
 $searchSql = $sqlBase.$sql." LIMIT $userOffs, $ItemsPerPage";
 $res = $g_ado_db->Execute($searchSql);
 
-$countSql = "SELECT COUNT(*) FROM Users as u ".$sql;
+$countSql = "SELECT COUNT(*) FROM liveuser_users as u ".$sql;
 $totalUsers = $g_ado_db->GetOne($countSql);
 
 $pager =& new SimplePager($totalUsers, $ItemsPerPage, "userOffs", "index.php?".get_user_urlparams(0)."&", false);
@@ -269,7 +269,13 @@ for($loop = 0; $loop < $last; $loop++) {
 		<?php } ?>
 
 		<?php if ($uType == "Staff") { ?>
-		<td><?php echo htmlspecialchars($editUser->getUserType()); ?></td>
+		<td><?php
+                $userType = new UserType($editUser->getUserType());
+                if ($userType) {
+                    echo htmlspecialchars($userType->getName());
+                }
+                unset($userType);
+        ?></td>
 		<?php } ?>
 
 		<td>

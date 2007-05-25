@@ -18,6 +18,7 @@ $crumbs[] = array(getGS("User types"), "/$ADMIN/user_types");
 $crumbs[] = array(getGS("Add new user type"), "");
 echo camp_html_breadcrumbs($crumbs);
 
+camp_html_display_msgs("0.25em", "0.25em");
 ?>
 
 <form name="user_type_add" method="post" action="do_add.php">

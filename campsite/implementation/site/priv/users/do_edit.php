@@ -96,18 +96,6 @@ if ($editUser->isAdmin() && $customizeRights && $canManage) {
 		$permissionEnabled = ($val == 'on') ? true : false;
 		$permissions[$field] = $permissionEnabled;
 	}
-    // set permissions into LiveUser
-    foreach ($permissions as $perm => $value) {
-        $updateData = array('perm_user_id' => $editUser->getPermUserId(),
-                            'right_id' => $g_permissions[$perm]
-                            );
-        if ($value == true) {
-            $updateData['right_level'] = 1;
-            $LiveUserAdmin->perm->grantUserRight($updateData);
-        } else {
-            $LiveUserAdmin->perm->revokeUserRight($updateData);
-        }
-    }
 
 	$editUser->updatePermissions($permissions);
 
@@ -116,9 +104,9 @@ if ($editUser->isAdmin() && $customizeRights && $canManage) {
 }
 if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 	// save user rights based on existing user type
-	$userTypeName = Input::Get('UserType', 'string', '');
-	if ($userTypeName != "") {
-		$editUser->setUserType($userTypeName);
+	$userTypeId = Input::Get('UserType', 'int', 0);
+	if ($userTypeId != 0) {
+		$editUser->setUserType($userTypeId);
 	}
 }
 

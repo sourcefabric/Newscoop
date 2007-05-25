@@ -105,9 +105,9 @@ if (!$isNewUser) {
 				<select name="Type" class="input_select" alt="select" emsg="<?php putGS("You must select a $1", "Type"); ?>">
 				<option value=""><?php putGS("Make a selection"); ?></option>
 				<?php
-				$Type = Input::Get('Type', 'string', '');
+				$Type = Input::Get('Type', 'int', 0);
 				foreach ($userTypes as $tmpUserType) {
-					camp_html_select_option($tmpUserType->getName(), $Type, $tmpUserType->getName());
+					camp_html_select_option($tmpUserType->getId(), $Type, $tmpUserType->getName());
 				}
 				?>
 				</select>
@@ -328,7 +328,7 @@ if ($editUser->isAdmin() && $canManage) {
 		<option value="">---</option>
 		<?php
 		foreach ($userTypes as $user_type) {
-			camp_html_select_option($user_type->getName(), $my_user_type, $user_type->getName());
+			camp_html_select_option($user_type->getId(), $my_user_type, $user_type->getName());
 		}
 		?>
 		</select>

@@ -769,11 +769,12 @@ class Image extends DatabaseObject {
 		$columnNames = $tmpUser->getColumnNames();
 		$queryColumnNames = array();
 		foreach ($columnNames as $columnName) {
-			$queryColumnNames[] = 'Users.'.$columnName;
+			$queryColumnNames[] = 'liveuser_users.'.$columnName;
 		}
 		$queryColumnNames = implode(",", $queryColumnNames);
-		$queryStr = 'SELECT DISTINCT Users.Id, '.$queryColumnNames
-					.' FROM Images, Users WHERE Images.UploadedByUser = Users.Id';
+		$queryStr = 'SELECT DISTINCT liveuser_users.Id, '.$queryColumnNames
+					.' FROM Images, liveuser_users '
+                    .' WHERE Images.UploadedByUser = liveuser_users.Id';
 		$users = DbObjectArray::Create('User', $queryStr);
 		return $users;
 	} // fn GetUploadUsers

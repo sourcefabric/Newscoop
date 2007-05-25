@@ -8,10 +8,10 @@ $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
  */
 function camp_check_admin_access($p_request)
 {
-	global $ADMIN;
-	global $g_ado_db;
-    global $LiveUser;
+	global $ADMIN, $g_ado_db, $LiveUser;
+
 	require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
+
 	$access = false;
 	$XPerm = array();
 	$user = array();
@@ -19,23 +19,19 @@ function camp_check_admin_access($p_request)
     if (!$LiveUser->isLoggedIn()) {
         return array($access, $user, $XPerm);
     }
-	// Check for required info.
+
+	// check for required info
 	if (!isset($p_request['LoginUserId']) || !isset($p_request['LoginUserKey'])
 	 	|| !is_numeric($p_request['LoginUserId']) || !is_numeric($p_request['LoginUserKey'])) {
 		return array($access, $user, $XPerm);
 	}
 
-	// Check if user exists in the table.
-	$queryStr = 'SELECT * FROM Users '
-				.' WHERE Id='.$p_request['LoginUserId']
-				." AND Reader='N'";
-	$row = $g_ado_db->GetRow($queryStr);
-	if ($row && $row['KeyId'] == $p_request['LoginUserKey']) {
-		// User exists.
-		$access = true;
-		$user =& new User();
-		$user->fetch($row);
-	}
+	// we passed LiveUser->isLoggedIn() so we can be sure the user
+    // actually exists in database table
+    if ($LiveUser->getProperty('keyid') == $p_request['LoginUserKey']) {
+        $access = true;
+        $user =& new User($LiveUser->getProperty('auth_user_id'));
+    }
 	return array($access, $user);
 } // fn check_basic_access
 

@@ -8,9 +8,9 @@ if (!$canManage) {
 	exit;
 }
 
-$uType = Input::Get('UType', 'string', '');
-if ($uType != '') {
-	$userType = new UserType($uType);
+$uTypeId = Input::Get('UType', 'string', '');
+if (is_numeric($uTypeId) && $uTypeId > 0) {
+	$userType = new UserType($uTypeId);
 	if ($userType->getName() == '') {
 		camp_html_display_error(getGS('No such user type.'));
 		exit;
@@ -28,6 +28,8 @@ foreach ($rightsFields as $field=>$value) {
 $logtext = getGS('User type $1 changed permissions', $userType->getName());
 Log::Message($logtext, $userType->getName(), 123);
 
-camp_html_goto_page("/$ADMIN/user_types/access.php?UType=$uType");
+$msg = getGS("Permissions successfully modified");
+camp_html_add_msg($msg);
+camp_html_goto_page("/$ADMIN/user_types/access.php?UType=$uTypeId");
 
 ?>

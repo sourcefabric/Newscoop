@@ -30,9 +30,9 @@ foreach ($fields as $index=>$field) {
 }
 
 // set the Reader field
-$Type = Input::Get('Type', 'string', '');
+$Type = Input::Get('Type', 'int', 0);
 $fieldValues['Reader'] = ($uType == 'Subscribers') ? 'Y' : 'N';
-if ( ($uType == 'Staff') && ($Type == '') && ($errorField == '') ) {
+if ( ($uType == 'Staff') && !$Type && ($errorField == '') ) {
 	$errorField = 'Type';
 }
 
@@ -68,14 +68,13 @@ if (strlen($password) < 6 || $password != $passwordConf) {
 	camp_html_add_msg($errorMsg);
 	camp_html_goto_page($backLink);
 }
+$fieldValues['passwd'] = $password;
 
 // create user
 $editUser = new User();
 $phorumUser = new Phorum_user();
 if (!$phorumUser->UserNameExists($fieldValues['UName']) &&
-			$editUser->create($fieldValues, $password)) {
-    $editUser->fetch();
-	$editUser->setPassword($password);
+			$editUser->create($fieldValues)) {
 	if ($uType == 'Staff') {
 		$editUser->setUserType($Type);
 	}

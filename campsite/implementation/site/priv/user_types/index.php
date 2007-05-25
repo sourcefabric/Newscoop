@@ -32,8 +32,9 @@ echo camp_html_breadcrumbs($crumbs);
 
 <P>
 <?php
-$userTypes = UserType::GetUserTypes();
+camp_html_display_msgs("0.25em", "0.25em");
 
+$userTypes = UserType::GetUserTypes();
 if (count($userTypes) > 0) {
 	$color= 0;
 ?>
@@ -54,11 +55,11 @@ foreach ($userTypes as $userType) { ?>
 
 	<?php if ($canManage) { ?>
 	<td align="center">
-		<a href="/<?php echo $ADMIN; ?>/user_types/access.php?UType=<?php p(urlencode($userType->getName())); ?>"><?php  putGS('Change'); ?></a>
+		<a href="/<?php echo $ADMIN; ?>/user_types/access.php?UType=<?php p(urlencode($userType->getId())); ?>"><?php  putGS('Change'); ?></a>
 	</td>
 
 	<td align="center">
-		<a href="/<?php echo $ADMIN; ?>/user_types/do_del.php?UType=<?php p(urlencode($userType->getName())); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user type $1?', $userType->getName()); ?>');">
+		<a href="/<?php echo $ADMIN; ?>/user_types/do_del.php?UType=<?php p(urlencode($userType->getId())); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user type $1?', $userType->getName()); ?>');">
 		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" alt="Delete user type <?php p(htmlspecialchars($userType->getName())); ?>" title="Delete user type <?php p(htmlspecialchars($userType->getName())); ?>"></a>
 	</td>
 <?php  } ?>

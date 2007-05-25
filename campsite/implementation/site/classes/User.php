@@ -13,6 +13,7 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/UserType.php');
 require_once($g_documentRoot.'/classes/Log.php');
 
 
@@ -20,7 +21,7 @@ require_once($g_documentRoot.'/classes/Log.php');
  * @package Campsite
  */
 class User extends DatabaseObject {
-    var $m_dbTableName = 'Users';
+    var $m_dbTableName = 'liveuser_users';
     var $m_keyColumnNames = array('Id');
     var $m_keyIsAutoIncrement = true;
     var $m_config = array();
@@ -64,8 +65,12 @@ class User extends DatabaseObject {
         'Text1',
         'Text2',
         'Text3',
-        'time_created');
+        'time_updated',
+        'time_created',
+        'lastLogin',
+        'isActive');
 
+    // TODO: Put it out, it does nothing. This could be a global array.
     var $m_defaultConfig = array(
         'ManagePub'=>'N',
         'DeletePub'=>'N',
@@ -158,7 +163,16 @@ class User extends DatabaseObject {
     } // constructor
 
 
-    function create($p_values = null, $p_password = null)
+    /**
+     * Creates a new user.
+     *
+     * @param array
+     *    $p_values The user data
+     *
+     * @param bool
+     *    TRUE on success, FALSE on failure
+     */
+    function create($p_values = null)
     {
         global $LiveUserAdmin;
 
@@ -171,60 +185,60 @@ class User extends DatabaseObject {
             }
             $values[$key] = $value;
         }
-        $values['passwd'] = $p_password;
         $values['perm_type'] = 1;
-        if ($userId = $LiveUserAdmin->addUser($values)) {
-            $success = parent::create($p_values);
-            if ($success) {
-                if (function_exists("camp_load_translation_strings")) {
-                    camp_load_translation_strings("api");
-                }
-                $logtext = getGS('User account $1 created', $this->m_data['Name']." (".$this->m_data['UName'].")");
-                Log::Message($logtext, null, 51);
+
+        if ($permUserId = $LiveUserAdmin->addUser($values)) {
+            $filter = array('container' => 'perm',
+                            'filters' => array('perm_user_id' => $permUserId));
+            $user = $LiveUserAdmin->getUsers($filter);
+            $p_values['Id'] = $user[0]['auth_user_id'];
+            $this->fetch($p_values);
+            if (function_exists("camp_load_translation_strings")) {
+                camp_load_translation_strings("api");
             }
-            return $success;
+            $logtext = getGS('User account $1 created', $this->m_data['Name']." (".$this->m_data['UName'].")");
+            Log::Message($logtext, null, 51);
+
+            return true;
         }
+
         return false;
     } // fn create
 
 
     /**
-     * Delete the user.  This will delete all config values and subscriptions of the user.
+     * Deletes the user.
+     * This will delete all config values and subscriptions of the user.
      *
      * @return boolean
      */
     function delete()
     {
-        global $g_ado_db;
-        global $LiveUserAdmin;
+        global $g_ado_db, $LiveUserAdmin;
 
         if ($this->exists()) {
-        	parent::delete();
-        	$g_ado_db->Execute("DELETE FROM UserConfig WHERE fk_user_id = ".$this->m_data['Id']);
         	$res = $g_ado_db->Execute("SELECT Id FROM Subscriptions WHERE IdUser = ".$this->m_data['Id']);
         	while ($row = $res->FetchRow()) {
         		$g_ado_db->Execute("DELETE FROM SubsSections WHERE IdSubscription=".$row['Id']);
         	}
         	$g_ado_db->Execute("DELETE FROM Subscriptions WHERE IdUser=".$this->m_data['Id']);
         	$g_ado_db->Execute("DELETE FROM SubsByIP WHERE IdUser=".$this->m_data['Id']);
-        	if (function_exists("camp_load_translation_strings")) {
-        		camp_load_translation_strings("api");
-        	}
-        	$logtext = getGS('The user account $1 has been deleted.', $this->m_data['Name']." (".$this->m_data['UName'].")");
-        	Log::Message($logtext, null, 52);
-        	$campsiteUserDeleted = true;
-        } else {
-        	$campsiteUserDeleted = false;
+            $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
+            $permData = $LiveUserAdmin->perm->getUsers($params);
+            if (!is_array($permData) || sizeof($permData) < 1) {
+                return false;
+            }
+            if ($LiveUserAdmin->removeUser($permData[0]['perm_user_id'])) {
+                if (function_exists("camp_load_translation_strings")) {
+                    camp_load_translation_strings("api");
+                }
+                $logtext = getGS('The user account $1 has been deleted.', $this->m_data['Name']." (".$this->m_data['UName'].")");
+                Log::Message($logtext, null, 52);
+                return true;
+            }
         }
 
-        $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
-        $permData = $LiveUserAdmin->perm->getUsers($params);
-        if (!is_array($permData) || sizeof($permData) < 1) {
-            return $campsiteUserDeleted;
-        }
-        $liveUserDelete = $LiveUserAdmin->removeUser($permData[0]['perm_user_id']);
-
-        return $campsiteUserDeleted || $liveUserDeleted;
+        return false;
     } // fn delete
 
 
@@ -232,32 +246,48 @@ class User extends DatabaseObject {
      * Get the user from the database.
      *
      * @param array $p_recordSet
+     *
+     * @return void
      */
     function fetch($p_recordSet = null)
     {
-        global $g_ado_db;
-        global $LiveUserAdmin;
+        global $g_ado_db, $LiveUserAdmin;
 
         $success = parent::fetch($p_recordSet);
         if ($success) {
-            // Fetch the user's permissions
-            $queryStr = 'SELECT varname, value FROM UserConfig '
-                        .'WHERE fk_user_id = '.$this->m_data['Id'];
-            $config = $g_ado_db->GetAll($queryStr);
-            if ($config) {
-                // Make m_config an associative array
-                foreach ($config as $value) {
-                    $this->m_config[$value['varname']] = $value['value'];
-                }
-            }
+            // find out LiveUser perm and auth identifiers
             $param = array('filters' => array('handle' => $this->m_data['UName']));
-            if (is_object($LiveUserAdmin)) {
-                $liveUserData = $LiveUserAdmin->auth->getUsers($param);
-                if (is_array($liveUserData) && sizeof($liveUserData) > 0) {
-                    $this->m_liveUserData = $liveUserData[0];
-                    $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
-                    $permData = $LiveUserAdmin->perm->getUsers($params);
-                    $this->m_liveUserData['perm_user_id'] = $permData[0]['perm_user_id'];
+            $liveUserData = $LiveUserAdmin->auth->getUsers($param);
+            if (is_array($liveUserData) && sizeof($liveUserData) > 0) {
+                $this->m_liveUserData['auth_user_id'] = $liveUserData[0]['auth_user_id'];
+                $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
+                $permData = $LiveUserAdmin->perm->getUsers($params);
+                $this->m_liveUserData['perm_user_id'] = $permData[0]['perm_user_id'];
+            }
+
+            // fetch the permissions for this user
+            if ($this->getUserType()) {
+                $userType = new UserType($this->getUserType());
+                if ($userType) {
+                    $this->m_config = $userType->getConfig();
+                }
+            } else {
+                $queryStr = 'SELECT r.right_id as value, '
+                                  .'r.right_define_name as varname '
+                           .'FROM liveuser_users as u, '
+                                .'liveuser_rights as r, '
+                                .'liveuser_perm_users p, '
+                                .'liveuser_userrights as l '
+                           .'WHERE u.Id=p.auth_user_id AND '
+                                .'p.perm_user_id=l.perm_user_id AND '
+                                .'r.right_id=l.right_id AND '
+                                .'p.perm_user_id='.$this->getPermUserId();
+                $config = $g_ado_db->GetAll($queryStr);
+                if ($config) {
+                    // make m_config an associative array
+                    foreach ($config as $value) {
+                        $this->m_config[$value['varname']] = $value['value'];
+                    }
                 }
             }
             $this->m_exists = true;
@@ -265,11 +295,23 @@ class User extends DatabaseObject {
     } // fn fetch
 
 
+    /**
+     * Fetch the user by given username
+     *
+     * @param string
+     *    $p_username The user name
+     * @param bool
+     *    $p_adminOnly Whether we want to be sure to get only an admin user
+     *
+     * @return mixed
+     *    null No one user found
+     *    object User object
+     */
     function FetchUserByName($p_username, $p_adminOnly = false)
     {
         global $g_ado_db;
 
-        $queryStr = "SELECT * FROM Users WHERE UName='$p_username'";
+        $queryStr = "SELECT * FROM liveuser_users WHERE UName='$p_username'";
         if ($p_adminOnly) {
             $queryStr .= " AND Reader='N'";
         }
@@ -301,55 +343,39 @@ class User extends DatabaseObject {
      *
      * @return void
      */
-    function setUserType($p_userType)
+    function setUserType($p_userTypeId)
     {
-        global $g_ado_db;
-        global $g_permissions;
-        global $LiveUserAdmin;
+        global $g_ado_db, $LiveUserAdmin;
 
-        if (!$this->exists()) {
+        if (!$this->exists() || !is_numeric($p_userTypeId)) {
             return;
         }
 
-        // Fetch the user type's permissions.
-        $userType =& new UserType($p_userType);
+        // if current user type is the same as p_userTypeId, do nothing
+        if ($this->getUserType() == $p_userTypeId) {
+            return;
+        }
+
+        // fetch the given user type
+        $userType =& new UserType($p_userTypeId);
         if ($userType->exists()) {
-            $configVars = $userType->getConfig();
-            // Set permissions into LiveUser
-            foreach ($configVars as $perm => $value) {
-                $updateData = array('perm_user_id' => $this->m_liveUserData['perm_user_id'],
-                                    'right_id' => $g_permissions[$perm]
-                                    );
-                if ($value == 'Y') {
-                    $updateData['right_level'] = 1;
-                    $LiveUserAdmin->perm->grantUserRight($updateData);
-                } else {
-                    $LiveUserAdmin->perm->revokeUserRight($updateData);
-                }
+            // delete permissions at user level if any
+            $queryStr = 'DELETE FROM liveuser_userrights '
+                       .'WHERE perm_user_id = '.$this->getPermUserId();
+            $g_ado_db->Execute($queryStr);
+            // current user type is different than p_userTypeId
+            if ($this->getUserType() != $p_userTypeId) {
+                $filter = array('group_id' => $this->getUserType(),
+                                'perm_user_id' => $this->getPermUserId());
+                $LiveUserAdmin->perm->removeUserFromGroup($filter);
             }
-            // Set permissions into native Campsite tables
-            foreach ($configVars as $varname => $value) {
-                $queryStr = "SELECT value FROM UserConfig "
-                            ." WHERE fk_user_id=".$this->m_data['Id']
-                            ." AND varname='$varname'";
-                $exists = $g_ado_db->GetOne($queryStr);
-                if ($exists !== false) {
-                    if ($value != $this->m_config[$varname]) {
-                        $queryStr = "UPDATE UserConfig SET value='$value' "
-                                    ." WHERE fk_user_id=".$this->m_data['Id']
-                                    ." AND varname='$varname'";
-                        $g_ado_db->Execute($queryStr);
-                    }
-                } else {
-                    $queryStr = "INSERT INTO UserConfig SET "
-                                ." fk_user_id=".$this->m_data['Id'].","
-                                ." varname='$varname',"
-                                ." value='$value'";
-                    $g_ado_db->Execute($queryStr);
-                }
-            }
-            // Update the user type in the user table.
-            $this->setProperty('fk_user_type', $p_userType);
+            // add this user to the given user type
+            $data = array('group_id' => $p_userTypeId,
+                          'perm_user_id' => $this->getPermUserId());
+            $LiveUserAdmin->perm->addUserToGroup($data);
+
+            // update the user type in the user table
+            $this->setProperty('fk_user_type', $p_userTypeId);
             $this->fetch();
 
             if (function_exists("camp_load_translation_strings")) {
@@ -373,7 +399,12 @@ class User extends DatabaseObject {
 
 
     /**
+     * Get the user identifier.
+     *
      * @return int
+     *
+     * TODO: This could be an alias of getUserId() since both of them
+     *       refer to the same data.
      */
     function getAuthUserId()
     {
@@ -382,6 +413,8 @@ class User extends DatabaseObject {
 
 
     /**
+     * Get the user identifier for the permissions configuration.
+     *
      * @return int
      */
     function getPermUserId()
@@ -393,6 +426,7 @@ class User extends DatabaseObject {
     /**
      * Get unique login key for this user - login key is only good for the
      * time the user is logged in.
+     *
      * @return int
      */
     function getKeyId()
@@ -403,6 +437,7 @@ class User extends DatabaseObject {
 
     /**
      * Get the real name of the user.
+     *
      * @return string
      */
     function getRealName()
@@ -413,6 +448,7 @@ class User extends DatabaseObject {
 
     /**
      * Get the login name of the user.
+     *
      * @return string
      */
     function getUserName()
@@ -448,6 +484,7 @@ class User extends DatabaseObject {
      * If the variable name does not exist, return null.
      *
      * @param string $p_varName
+     *
      * @return mixed
      */
     function getConfigValue($p_varName)
@@ -468,35 +505,40 @@ class User extends DatabaseObject {
      * @param mixed $p_value
      *
      * @return void
+     *
+     * TODO: Check it out. It is unused so far.
      */
     function setConfigValue($p_varName, $p_value)
     {
-		global $g_ado_db;
+		global $LiveUser, $LiveUserAdmin;
 
         if (!$this->exists() || empty($p_varName) || !is_string($p_varName)) {
             return;
         }
 
+        // get the id for the given right name
+        $filter = array('filters' => array('right_define_name' => $p_varName));
+        $right = $LiveUserAdmin->perm->getRights($filter);
+        if (!is_array($right) || sizeof($right) < 1) {
+            return;
+        }
+
         if (strtolower($p_varName) == "reader") {
-            // Special case for the "Reader" property.
+            // special case for the "Reader" property
             $this->setProperty("Reader", $p_value);
         } else {
+            $rightId = $right[0]['right_id'];
+            $params = array('right_id' => $rightId,
+                            'group_id' => $this->m_data['group_id']);
             if (isset($this->m_config[$p_varName])) {
-                if ($this->m_config[$p_varName] != $p_value) {
-                    $sql = "UPDATE UserConfig SET value='".$g_ado_db->escape($p_value)."'"
-                            ." WHERE fk_user_id=".$this->m_data['Id']
-                            ." AND varname='".$g_ado_db->escape($p_varName)."'";
-                    $g_ado_db->Execute($sql);
-                    $this->m_config[$p_varName] = $p_value;
+                if (!$p_value) {
+                    $LiveUserAdmin->perm->revokeGroupRight($params);
                 }
-            } else {
-                $sql = "INSERT INTO UserConfig SET "
-                        ." fk_user_id=".$this->m_data['Id'].", "
-                        ." varname='".$g_ado_db->escape($p_varName)."', "
-                        ." value='".$g_ado_db->escape($p_value)."'";
-                $g_ado_db->Execute($sql);
-                $this->m_config[$p_varName] = $p_value;
+            } elseif ($p_value) {
+                $LiveUserAdmin->perm->grantGroupRight($params);
             }
+            // update the auth and perm user data to reload changes
+            $LiveUser->updateProperty(true, true);
 
             // Figure out the new User Type for the user.
             $userType = UserType::GetUserTypeFromConfig($this->m_config);
@@ -545,8 +587,7 @@ class User extends DatabaseObject {
      */
     function hasPermission($p_permissionString)
     {
-        return (isset($this->m_config[$p_permissionString])
-                    && ($this->m_config[$p_permissionString] == 'Y'));
+        return array_key_exists($p_permissionString, $this->m_config);
     } // fn hasPermission
 
 
@@ -560,33 +601,53 @@ class User extends DatabaseObject {
      */
     function setPermission($p_permissionString, $p_value)
     {
-        $p_value = $p_value ? 'Y' : 'N';
         $this->setConfigValue($p_permissionString, $p_value);
     } // fn setPermission
 
 
+    /**
+     * Updates the permissions for the user.
+     *
+     * @param array
+     *    $p_permissions The list of permissions
+     *
+     * @return void
+     */
     function updatePermissions($p_permissions)
     {
-        global $g_ado_db;
+        global $LiveUserAdmin;
 
-        $config = array_keys($this->m_config);
-        $updateArray = array();
+        // generate an array of granted permissions
         foreach ($p_permissions as $permission => $value) {
-            if (in_array($permission, $config)) {
-                $value = $value ? 'Y' : 'N';
-                if ($value != $this->m_config[$permission]) {
-                    $sql = "UPDATE UserConfig SET value='$value' "
-                            ." WHERE fk_user_id=".$this->m_data['Id']
-                            ." AND varname='$permission'";
-                    $g_ado_db->Execute($sql);
-                    $this->m_config[$permission] = $value;
-                }
+            if ($value) {
+                $permissions[$permission] = $value;
             }
         }
-        $userType = UserType::GetUserTypeFromConfig($this->m_config);
+        // find out whether the given config matches an specific user type
+        $userType = UserType::GetUserTypeFromConfig($permissions);
         if ($userType) {
-            $this->setProperty('fk_user_type', $userType->getName());
+            $this->setUserType($userType->getId());
+            $this->setProperty('fk_user_type', $userType->getId());
         } else {
+            foreach ($p_permissions as $permission => $value) {
+                $filter = array('filters' => array('right_define_name' => $permission));
+                $right = $LiveUserAdmin->perm->getRights($filter);
+                $params = array('right_id' => $right[0]['right_id'],
+                                'perm_user_id' => $this->getPermUserId());
+                // revoke or grant the given right
+                if (isset($this->m_config[$permission])) {
+                    if (!$value) {
+                        $LiveUserAdmin->perm->revokeUserRight($params);
+                    }
+                }
+                if ($value) {
+                    $LiveUserAdmin->perm->grantUserRight($params);
+                }
+            }
+            // remove this user from current user type if any
+            $filter = array('group_id' => $this->getUserType(),
+                            'perm_user_id' => $this->getPermUserId());
+            $LiveUserAdmin->perm->removeUserFromGroup($filter);
             $this->setProperty('fk_user_type', 'NULL', true, true);
         }
     } // fn updatePermissions
@@ -614,7 +675,7 @@ class User extends DatabaseObject {
 
         $queryStr = "SELECT PASSWORD('".$g_ado_db->escape($p_password)."') AS old_password_1, "
                     ." OLD_PASSWORD('".$g_ado_db->escape($p_password)."') AS old_password_2"
-                    ." FROM Users "
+                    ." FROM liveuser_users "
                     ." WHERE Id = '".$this->m_data['Id']."' ";
         if (!($row = $g_ado_db->GetRow($queryStr))) {
             return false;
@@ -631,9 +692,12 @@ class User extends DatabaseObject {
     /**
      * Return TRUE if the given password matches the one in the database.
      *
-     * @param string $p_password
-     * @param boolean $p_isEncrypted
-     * 		Set to true if the password is already encrypted in SHA1 format.
+     * @param string
+     *    $p_password
+     * @param boolean
+     *    $p_isEncrypted Set to true if the password is already encrypted
+     *                   in SHA1 format.
+     *
      * @return boolean
      */
     function isValidPassword($p_password, $p_isEncrypted = false)
@@ -641,8 +705,9 @@ class User extends DatabaseObject {
         global $g_ado_db;
 
         if (!$p_isEncrypted) {
-            $queryStr = "SELECT SHA1('".$g_ado_db->escape($p_password)."') as encrypted_password FROM Users "
-                        ." WHERE Id = '".$this->m_data['Id']."' ";
+            $queryStr = "SELECT SHA1('".$g_ado_db->escape($p_password)."') as encrypted_password "
+                       ."FROM liveuser_users "
+                       ."WHERE Id = '".$this->m_data['Id']."' ";
             $encryptedPassword = $g_ado_db->GetOne($queryStr);
             return ($encryptedPassword == $this->getPassword());
         }
@@ -652,6 +717,7 @@ class User extends DatabaseObject {
 
     /**
      * @param string $p_password
+     *
      * @return void
      */
     function setPassword($p_password)
@@ -670,7 +736,7 @@ class User extends DatabaseObject {
 
 
     /**
-     * Initialize the per-session login key.  This makes sure the user can only
+     * Initialize the per-session login key. This makes sure the user can only
      * login from one location at a time.
      *
      * @return void
@@ -686,13 +752,15 @@ class User extends DatabaseObject {
      * Return true if the user name exists.
      *
      * @param string $p_userName
+     *
      * @return boolean
      */
     function UserNameExists($p_userName)
     {
         global $g_ado_db;
 
-        $sql = "SELECT UName FROM Users WHERE UName='".$g_ado_db->escape($p_userName)."'";
+        $sql = "SELECT UName FROM liveuser_users "
+              ."WHERE UName='".$g_ado_db->escape($p_userName)."'";
         if ($g_ado_db->GetOne($sql)) {
             return true;
         } else {
@@ -716,7 +784,7 @@ class User extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $sql = "SELECT UName, EMail FROM Users "
+        $sql = "SELECT UName, EMail FROM liveuser_users "
               ."WHERE EMail = '".$g_ado_db->escape($p_email)."'";
         $row = $g_ado_db->GetOne($sql);
         if (!$row) {
@@ -737,6 +805,7 @@ class User extends DatabaseObject {
      *
      * @param boolean $p_onlyAdmin
      * @param string $p_userType
+     *
      * @return array
      */
     function GetUsers($p_onlyAdmin = true, $p_userType = null)
@@ -753,7 +822,7 @@ class User extends DatabaseObject {
         if (count($constraints) > 0) {
             $whereStr = " WHERE ".implode(" AND ", $constraints);
         }
-        $sql = "SELECT * FROM Users " . $whereStr;
+        $sql = "SELECT * FROM liveuser_users " . $whereStr;
         return DbObjectArray::Create("User", $sql);
     } // fn GetUsers
 

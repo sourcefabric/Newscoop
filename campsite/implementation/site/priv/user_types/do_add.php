@@ -8,16 +8,19 @@ if (!$canManage) {
 	exit;
 }
 
+$BackLink = "add.php";
 $uType = Input::Get('Name', 'string', '');
 if ($uType != '') {
-	$userType = new UserType($uType);
+	$userType = UserType::GetByName($uType);
 	if ($userType->exists()) {
 		$errMsg = getGS("A user type with the name '$1' already exists.", $uType);
-		camp_html_display_error($errMsg);
+		camp_html_add_msg($errMsg);
+        camp_html_goto_page($BackLink);
 		exit;
 	}
 } else {
-	camp_html_display_error(getGS('You must complete the $1 field.', getGS('Name')));
+	camp_html_add_msg(getGS('You must complete the $1 field.', getGS('Name')));
+    camp_html_goto_page($BackLink);
 	exit;
 }
 
@@ -25,11 +28,11 @@ $rightsFields = User::GetDefaultConfig();
 foreach ($rightsFields as $field=>$value) {
 	$val = Input::Get($field, 'string', 'off');
 	if ($val == 'on') {
-		$rightsFields[$field] = 'Y';
+		$rights[$field] = 1;
 	}
 }
-$userType->create($uType, $rightsFields);
+$userType->create($uType, $rights);
 
-camp_html_goto_page("/$ADMIN/user_types/access.php?UType=$uType");
+camp_html_goto_page("/$ADMIN/user_types/access.php?UType=".$userType->getId());
 
 ?>

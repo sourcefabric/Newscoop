@@ -6,7 +6,7 @@ if (!$g_user->hasPermission('SyncPhorumUsers')) {
 }
 
 $queryStr = "SELECT u.Id, pu.user_id "
-            . "FROM Users AS u LEFT JOIN phorum_users AS pu "
+            . "FROM liveuser_users AS u LEFT JOIN phorum_users AS pu "
             . "ON u.UName = pu.username "
             . "WHERE fk_campsite_user_id IS NULL";
 $nullUsers = $g_ado_db->GetAll($queryStr);

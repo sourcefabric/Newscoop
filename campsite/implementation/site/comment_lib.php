@@ -71,7 +71,7 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 	if (isset($userInfo['LoginUserId']) && isset($userInfo['LoginUserKey'])
 		&& is_numeric($userInfo['LoginUserId']) && is_numeric($userInfo['LoginUserKey'])) {
 		// Check if user exists in the table.
-		$queryStr = "SELECT * FROM Users WHERE Id='".$userInfo['LoginUserId']."'";
+		$queryStr = "SELECT * FROM liveuser_users WHERE Id='".$userInfo['LoginUserId']."'";
 		$row = $g_ado_db->GetRow($queryStr);
 		if ($row && $row['KeyId'] == $userInfo['LoginUserKey']) {
 			$user =& new User($userInfo['LoginUserId']);
