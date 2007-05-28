@@ -10,6 +10,7 @@ global $DEBUG;
 $_SERVER['DOCUMENT_ROOT'] = getenv("DOCUMENT_ROOT");
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/liveuser_configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/parser_utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
