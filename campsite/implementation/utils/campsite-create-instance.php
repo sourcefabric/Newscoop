@@ -269,7 +269,8 @@ function camp_upgrade_database($p_db_name, $p_defined_parameters)
 
 	$first = true;
 	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
-					  "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x");
+					  "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x",
+					  "2.7.x");
 	foreach ($versions as $index=>$db_version) {
 		if ($old_version > $db_version) {
 			continue;
@@ -322,96 +323,91 @@ function camp_upgrade_database($p_db_name, $p_defined_parameters)
 } // fn camp_upgrade_database
 
 
+function camp_check_db_version($p_db_name, $p_version, &$p_default_version, $p_query,
+								$p_conditions = null)
+{
+	if (!$res = mysql_query($p_query)) {
+		return "Unable to query the database $p_db_name";
+	}
+	if (is_null($p_conditions) && mysql_num_rows($res) > 0) {
+		echo "setting version to $p_version on query $p_query\n";
+		$p_default_version = $p_version;
+		return true;
+	}
+	if (is_array($p_conditions) && $row = mysql_fetch_array($res, MYSQL_ASSOC)) {
+		foreach ($p_conditions as $field_name=>$field_value) {
+			if (strncasecmp($row[$field_name], $field_value, strlen($field_value)) != 0) {
+				return false;
+			}
+		}
+		echo "setting version to $p_version on query $p_query and conditions\n\t";
+		print_r($p_conditions);
+		$p_default_version = $p_version;
+		return true;
+	}
+	return false;
+}
+
+
 function camp_detect_database_version($p_db_name, &$version)
 {
 	if (!mysql_select_db($p_db_name)) {
 		return "Can't select the database $p_db_name";
 	}
 
+	$db_version_queries = array(
+		"2.1.x"=>"SHOW TABLES LIKE '%ArticleTopics%'",
+		"2.2.x"=>"SHOW TABLES LIKE '%URLTypes%'",
+		"2.3.x"=>"DESC Articles PublishDate",
+		"2.4.x"=>"SHOW TABLES LIKE 'ArticleAttachments'",
+		"2.5.x"=>"SHOW TABLES LIKE 'TopicFields'",
+		"2.6.0"=>"SHOW TABLES LIKE 'ArticleTypeMetadata'",
+		"2.6.1"=>array("SHOW COLUMNS FROM ArticleTypeMetadata LIKE 'type_name'",
+						array('Type'=>'varchar(166)')),
+		"2.6.2"=>"SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'",
+		"2.6.3"=>"SELECT * FROM Events WHERE Id = 171",
+		"2.6.4"=>"SELECT * FROM UserConfig WHERE varname = 'ExternalSubscriptionManagement'",
+		"2.6.x"=>array("SELECT COUNT(*) AS null_users FROM phorum_users WHERE fk_campsite_user_id IS NULL",
+						array('null_users'=>'0')),
+		"2.7.x"=>"SHOW TABLES LIKE '%ArticleAudioclips%'",
+		"3.0.x"=>array("SHOW COLUMNS FROM liveuser_users LIKE 'fk_user_type'",
+						array('Type'=>'int'))
+	);
+
 	if (!$res = mysql_query("SHOW TABLES")) {
 		return "Unable to query the database $p_db_name";
 	}
-
-	$version = "2.0.x";
-	while ($row = mysql_fetch_row($res)) {
-		if (in_array($row[0], array("ArticleTopics", "Topics"))) {
-			$version = $version < "2.1.x" ? "2.1.x" : $version;
-		}
-		if (in_array($row[0], array("URLTypes", "TemplateTypes", "Templates", "Aliases",
-				"ArticlePublish", "IssuePublish", "ArticleImages"))) {
-			$version = "2.2.x";
-			if (!$res2 = mysql_query("DESC UserTypes ManageReaders")) {
-				return "Unable to query the database $p_db_name";
-			}
-			if (mysql_num_rows($res2) > 0) {
-				$version = "2.3.x";
-			}
-			if (!$res2 = mysql_query("SHOW TABLES LIKE 'UserConfig'")) {
-				return "Unable to query the database $p_db_name";
-			}
-			if (mysql_num_rows($res2) > 0) {
-				$version = "2.4.x";
-			}
-			if (!$res2 = mysql_query("DESC SubsSections IdLanguage")) {
-				return "Unable to query the database $p_db_name";
-			}
-			if (mysql_num_rows($res2) > 0) {
-				$version = "2.5.x";
-			}
-			if (!$res2 = mysql_query("SHOW TABLES LIKE 'ArticleTypeMetadata'")) {
-				return "Unable to query the database $p_db_name";
-			}
-			if (mysql_num_rows($res2) > 0) {
-				$version = "2.6.0";
-				if (!$res2 = mysql_query("SHOW COLUMNS FROM ArticleTypeMetadata LIKE 'type_name'")) {
-					return "Unable to query the database $p_db_name";
-				}
-				$row = mysql_fetch_array($res2, MYSQL_ASSOC);
-				if (!is_null($row) && strstr($row['Type'], '166') != '') {
-					$version = "2.6.1";
-				} else {
-					return 0;
-				}
-				if (!$res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'")) {
-					return "Unable to query the database $p_db_name";
-				}
-				if (mysql_num_rows($res2) > 0) {
-					$version = "2.6.2";
-				} else {
-					return 0;
-				}
-				if (!$res2 = mysql_query("SELECT * FROM Events WHERE Id = 171")) {
-					return "Unable to query the database $p_db_name";
-				}
-				if (mysql_num_rows($res2) > 0) {
-					$version = "2.6.3";
-				} else {
-					return 0;
-				}
-				if (!$res2 = mysql_query("SELECT * FROM UserConfig "
-										 . "WHERE varname = 'ExternalSubscriptionManagement'")) {
-					return "Unable to query the database $p_db_name";
-				}
-				if (mysql_num_rows($res2) > 0) {
-					$version = "2.6.4";
-				}
-				if (!$res2 = mysql_query("SELECT * from phorum_users "
-										 . "WHERE fk_campsite_user_id IS NULL")) {
-					return "Unable to query the database $p_db_name";
-				}
-				if (mysql_num_rows($res2) == 0) {
-					$version = "2.6.x";
-				}
-			}
-			if (!$res2 = mysql_query("SHOW TABLES LIKE '%Audioclip%'")) {
-				return "Unable to query the database $p_db_name";
-			}
-			if (mysql_num_rows($res2) > 0) {
-				$version = "2.7.x";
-			}
-		}
+	if (mysql_num_rows($res) == 0) {
+		return "The database $p_db_name is empty.";
 	}
 
+	$version = "2.0.x";
+
+	if (!$res = mysql_query("SHOW TABLES LIKE '%Users%'")) {
+		return "Unable to query the database $p_db_name";
+	}
+	if (mysql_num_rows($res) == 0) {
+		echo "setting version to 3.0.x\n";
+		$version = "3.0.x";
+	}
+
+	foreach ($db_version_queries as $check_version=>$query) {
+		if ($check_version <= $version) {
+			continue;
+		}
+
+		$conditions = null;
+		if (is_array($query)) {
+			list($query, $conditions) = $query;
+		}
+		$res = camp_check_db_version($p_db_name, $check_version, $version, $query, $conditions);
+		if (is_string($res)) {
+			return $res;
+		}
+		if (!$res) {
+			return 0;
+		}
+	}
 	return 0;
 } // fn camp_detect_database_version
 
