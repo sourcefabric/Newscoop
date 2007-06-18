@@ -330,7 +330,6 @@ function camp_check_db_version($p_db_name, $p_version, &$p_default_version, $p_q
 		return "Unable to query the database $p_db_name";
 	}
 	if (is_null($p_conditions) && mysql_num_rows($res) > 0) {
-		echo "setting version to $p_version on query $p_query\n";
 		$p_default_version = $p_version;
 		return true;
 	}
@@ -340,8 +339,6 @@ function camp_check_db_version($p_db_name, $p_version, &$p_default_version, $p_q
 				return false;
 			}
 		}
-		echo "setting version to $p_version on query $p_query and conditions\n\t";
-		print_r($p_conditions);
 		$p_default_version = $p_version;
 		return true;
 	}
@@ -387,7 +384,6 @@ function camp_detect_database_version($p_db_name, &$version)
 		return "Unable to query the database $p_db_name";
 	}
 	if (mysql_num_rows($res) == 0) {
-		echo "setting version to 3.0.x\n";
 		$version = "3.0.x";
 	}
 
