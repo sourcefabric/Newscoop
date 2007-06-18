@@ -268,7 +268,7 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
     $filter = array('container' => 'auth',
                     'filters' => array('handle' => $row['UName']));
     $user_auth_data = $LiveUserAdmin->getUsers($filter);
-    if (!is_array($user_auth_data) || sizeof($user_auth_data) < 1)) {
+    if (!is_array($user_auth_data) || sizeof($user_auth_data) < 1) {
         $liveUserData = array();
         foreach ($row as $key => $value) {
             if ($key == 'UName') {
