@@ -22,7 +22,7 @@ if (is_numeric($uTypeId) && $uTypeId > 0) {
 }
 
 $msg = getGS("User Type '$1' successfully deleted", $userType->getName());
-camp_html_add_msg($msg);
+camp_html_add_msg($msg, 'ok');
 camp_html_goto_page("/$ADMIN/user_types/");
 
 ?>

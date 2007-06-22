@@ -29,7 +29,7 @@ $logtext = getGS('User type $1 changed permissions', $userType->getName());
 Log::Message($logtext, $userType->getName(), 123);
 
 $msg = getGS("Permissions successfully modified");
-camp_html_add_msg($msg);
+camp_html_add_msg($msg, 'ok');
 camp_html_goto_page("/$ADMIN/user_types/access.php?UType=$uTypeId");
 
 ?>
