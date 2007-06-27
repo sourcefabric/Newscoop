@@ -39,7 +39,6 @@ final class MetaArticle extends MetaDbObject {
 		$this->m_properties['creation_date'] = 'UploadDate';
 		$this->m_properties['keywords'] = 'Keywords';
 		$this->m_properties['url_name'] = 'ShortName';
-		$this->m_properties['comments_enabled'] = 'comments_enabled';
 		$this->m_properties['comments_locked'] = 'comments_locked';
 		$this->m_properties['last_update'] = 'time_updated';
 	}
@@ -83,6 +82,7 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['template'] = 'getTemplate';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['has_attachments'] = 'hasAttachments';
+        $this->m_customProperties['comments_enabled'] = 'getCommentsEnabled';
     } // fn __construct
 
 
@@ -286,6 +286,16 @@ final class MetaArticle extends MetaDbObject {
     {
     	$attachments = ArticleAttachment::GetAttachmentsByArticleNumber($this->m_dbObject->getProperty('Number'));
     	return (int)(sizeof($attachments) > 0);
+    }
+
+
+    public function getCommentsEnabled()
+    {
+    	$publicationObj = new Publication($this->m_dbObject->getProperty('IdPublication'));
+    	$articleTypeObj = new ArticleType($this->m_dbObject->getProperty('Type'));
+    	return $publicationObj->commentsEnabled()
+    			&& $articleTypeObj->commentsEnabled()
+    			&& $this->m_dbObject->getProperty('comments_enabled');
     }
 
 
