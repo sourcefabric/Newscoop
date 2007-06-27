@@ -16,6 +16,7 @@ require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/ArticleTypeField.php');
 require_once($g_documentRoot.'/classes/ParserCom.php');
 require_once($g_documentRoot.'/classes/Translation.php');
+require_once($g_documentRoot.'/'.$ADMIN_DIR.'/localizer/Localizer.php');
 
 /**
  * @package Campsite
@@ -75,7 +76,6 @@ class ArticleType {
 			}
 		    $logtext = getGS('The article type $1 has been added.', $this->m_name);
 	    	Log::Message($logtext, null, 61);
-			ParserCom::SendMessage('article_types', 'create', array("article_type"=>$this->m_name));
 		} else {
 			$queryStr = "DROP TABLE ".$this->m_dbTableName;
 			$result = $g_ado_db->Execute($queryStr);
@@ -113,6 +113,8 @@ class ArticleType {
 		$queryStr = "DROP TABLE ".$this->m_dbTableName;
 		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
+			$queryStr = "DELETE FROM Translations WHERE phrase_id = '" . $this->m_metadata['fk_phrase_id'] . "'";
+			$g_ado_db->Execute($queryStr);
 			$queryStr = "DELETE FROM ArticleTypeMetadata WHERE type_name='".$this->m_name."'";
 			$success2 = $g_ado_db->Execute($queryStr);
 		}
@@ -123,7 +125,6 @@ class ArticleType {
 			}
 			$logtext = getGS('The article type $1 has been deleted.', $this->m_name);
 			Log::Message($logtext, null, 62);
-			ParserCom::SendMessage('article_types', 'delete', array("article_type" => $this->m_name));
 		}
 	} // fn delete
 
@@ -154,7 +155,6 @@ class ArticleType {
 			}
 			$logText = getGS('The article type $1 has been renamed to $2.', $this->m_name, $p_newName);
 			Log::Message($logText, null, 62);
-			ParserCom::SendMessage('article_types', 'rename', array('article_type' => $this->m_name));
 		}
 
 	} // fn rename
@@ -237,7 +237,6 @@ class ArticleType {
 			}
 			$logtext = getGS('Article Type $1 translation updated', $this->m_name);
 			Log::Message($logtext, null, 143);
-			ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_name));
 		}
 		return $changed;
 	} // fn setName
@@ -271,6 +270,15 @@ class ArticleType {
 			$return[$k] = $v;
 		return $return;
 	} // fn getTranslations
+
+
+	/**
+	 * @return string
+	 */
+	function getTypeName()
+	{
+		return $this->m_name;
+	} // fn getTypeName
 
 
 	/**
@@ -627,7 +635,7 @@ class ArticleType {
         if (!$g_ado_db->Execute($sql)) {
         	return 0;
         }
-        
+
 	    return 1;
 	} // fn merge
 } // class ArticleType
