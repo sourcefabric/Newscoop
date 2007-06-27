@@ -67,10 +67,13 @@ foreach ($publications as $pub) { ?>
             <A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php  p($pub->getPublicationId()); ?>"><?php  p(htmlspecialchars($pub->getName())); ?></A>
         </TD>
         <TD>
-            <?php  p(htmlspecialchars($pub->getProperty("Alias"))); ?>&nbsp;
+            <?php
+            	$aliasObj =& new Alias($pub->getDefaultAliasId());
+            	p(htmlspecialchars($aliasObj->getName()));
+            ?>&nbsp;
         </TD>
         <TD>
-            <?php  p(htmlspecialchars($pub->getProperty("NativeName"))); ?>&nbsp;
+            <?php  p(htmlspecialchars($pub->getProperty("Name"))); ?>&nbsp;
         </TD>
         <?php  if ($g_user->hasPermission("ManagePub")) { ?>
         <TD align="center">
@@ -81,7 +84,10 @@ foreach ($publications as $pub) { ?>
             <?php } ?>
         </TD>
         <TD align="center">
-            <?php  p(htmlspecialchars($pub->getProperty('URLType'))); ?>&nbsp;
+            <?php
+            	$urlTypeObj =& new UrlType($pub->getUrlTypeId());
+            	p(htmlspecialchars($urlTypeObj->getName()));
+            ?>&nbsp;
         </TD>
         <TD ALIGN="CENTER">
             <A HREF="/<?php p($ADMIN); ?>/pub/edit.php?Pub=<?php p($pub->getPublicationId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
