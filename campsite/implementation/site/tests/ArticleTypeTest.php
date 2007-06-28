@@ -33,41 +33,179 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$this->articleType =& new ArticleType('test_article_type');
 	}
 
-	public function testArticleTypeCreate()
+	public function test_IsValidFieldName()
+	{
+		$this->assertTrue(ArticleType::IsValidFieldName('_a'));
+		$this->assertTrue(ArticleType::IsValidFieldName('az'));
+		$this->assertTrue(ArticleType::IsValidFieldName('a_'));
+		$this->assertFalse(ArticleType::IsValidFieldName(''));
+		$this->assertFalse(ArticleType::IsValidFieldName('_'));
+		$this->assertFalse(ArticleType::IsValidFieldName('2'));
+		$this->assertFalse(ArticleType::IsValidFieldName('_2'));
+		$this->assertFalse(ArticleType::IsValidFieldName('2_'));
+		$this->assertFalse(ArticleType::IsValidFieldName('a2'));
+		$this->assertFalse(ArticleType::IsValidFieldName('a '));
+	}
+
+	public function test_create()
 	{
 		$this->assertType('ADORecordSet_empty', $this->articleType->create(), 'The test article type can not be created.');
 	}
 
-	public function testArticleTypeExist()
+	public function test_exist()
 	{
 		$this->assertTrue($this->articleType->exists(), 'The test article type does not exist after creation.');
 	}
 
-	public function testSetName()
+	public function test_getTypeName()
+	{
+		$this->assertEquals('test_article_type', $this->articleType->getTypeName());
+	}
+
+	public function test_getTableName()
+	{
+		$this->assertEquals('Xtest_article_type', $this->articleType->getTableName());
+	}
+
+	public function test_setName()
 	{
 		global $g_ado_db;
 
-		$this->articleType->setName($this->testLanguageId, 'test_name_language_id_1');
+		$this->articleType->setName($this->testLanguageId, 'test_name_language');
 		$query = "SELECT t.translation_text "
 				. "FROM ArticleTypeMetadata atm, Translations t "
 				. "WHERE atm.type_name= '" . $this->articleType->getTypeName() . "' "
 				. "AND atm.field_name = 'NULL' AND atm.fk_phrase_id = t.phrase_id "
 				. "AND t.fk_language_id = '" . $this->testLanguageId . "'";
-		$this->assertEquals('test_name_language_id_1', $g_ado_db->GetOne($query));
+		$this->assertEquals('test_name_language', $g_ado_db->GetOne($query));
 	}
 
-	public function testTranslationExists()
+	public function test_getDisplayName()
+	{
+		$this->assertEquals('test_name_language', $this->articleType->getDisplayName($this->testLanguageId));
+	}
+
+	public function test_translationExists()
 	{
 		$this->assertNotEquals(0, $this->articleType->translationExists($this->testLanguageId));
 	}
 
-	public function testUnsetName()
+	public function test_getTranslations()
+	{
+		$this->assertEquals(array($this->testLanguageId =>'test_name_language'), $this->articleType->getTranslations());
+	}
+
+	public function test_getPhraseId()
+	{
+		global $g_ado_db;
+
+		$query = "SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name = '"
+				. $this->articleType->getTypeName() . "' AND field_name = 'NULL'";
+		$this->assertEquals($g_ado_db->GetOne($query), $this->articleType->getPhraseId());
+	}
+
+	public function test_getMetadata()
+	{
+		global $g_ado_db;
+
+		$query = "SELECT * FROM ArticleTypeMetadata WHERE type_name = '"
+				. $this->articleType->getTypeName() . "' AND field_name = 'NULL'";
+		$row = $g_ado_db->GetRow($query);
+		$this->assertEquals($row, $this->articleType->getMetadata());
+	}
+
+	public function test_unsetName()
 	{
 		$this->articleType->setName($this->testLanguageId, NULL);
 		$this->assertEquals(0, $this->articleType->translationExists($this->testLanguageId));
 	}
 
-	public function testDelete()
+	public function test_setCommentsEnabled()
+	{
+		global $g_ado_db;
+
+		$this->articleType->setCommentsEnabled(true);
+		$query = "SELECT comments_enabled FROM ArticleTypeMetadata WHERE type_name = '"
+				. $this->articleType->getTypeName() . "' AND field_name = 'NULL'";
+		$this->assertEquals(1, $g_ado_db->GetOne($query));
+		$this->assertEquals(1, $this->articleType->commentsEnabled());
+	}
+
+	public function test_commentsEnabled()
+	{
+		$this->articleType->setCommentsEnabled(false);
+		$this->assertEquals(0, $this->articleType->commentsEnabled());
+		$this->articleType->setCommentsEnabled(true);
+		$this->assertEquals(1, $this->articleType->commentsEnabled());
+	}
+
+	public function test_setStatus()
+	{
+		global $g_ado_db;
+
+		$this->articleType->setStatus('hide');
+		$query = "SELECT is_hidden FROM ArticleTypeMetadata WHERE type_name = '"
+				. $this->articleType->getTypeName() . "' AND field_name = 'NULL'";
+		$this->assertEquals(1, $g_ado_db->GetOne($query));
+		$this->articleType->setStatus('show');
+		$query = "SELECT is_hidden FROM ArticleTypeMetadata WHERE type_name = '"
+				. $this->articleType->getTypeName() . "' AND field_name = 'NULL'";
+		$this->assertEquals(0, $g_ado_db->GetOne($query));
+	}
+
+	public function test_getStatus()
+	{
+		$this->articleType->setStatus('hide');
+		$this->assertEquals('hidden', $this->articleType->getStatus());
+		$this->articleType->setStatus('show');
+		$this->assertEquals('shown', $this->articleType->getStatus());
+	}
+
+	public function test_getArticlesArray()
+	{
+		$this->markTestIncomplete('This test has not been implemented yet.');
+	}
+
+	public function test_GetArticleTypes()
+	{
+		$this->markTestIncomplete('This test has not been implemented yet.');
+	}
+
+	public function test_getDisplayNameLanguageCode()
+	{
+		$this->markTestIncomplete('This test has not been implemented yet.');
+	}
+
+	public function test_getNumArticles()
+	{
+		$this->markTestIncomplete('This test has not been implemented yet.');
+	}
+
+	public function test_getPreviewArticleData()
+	{
+		$this->markTestIncomplete('This test has not been implemented yet.');
+	}
+
+	public function test_getUserDefinedColumns()
+	{
+		$this->markTestIncomplete('This test has not been implemented yet.');
+	}
+
+	public function test_rename()
+	{
+		global $g_ado_db;
+
+		$this->articleType->rename('test_article_type_second');
+		$count = $g_ado_db->GetOne("SELECT COUNT(*) FROM ArticleTypeMetadata WHERE type_name = 'test_article_type_second'");
+		$this->assertNotEquals(0, $count);
+	}
+
+	public function test_merge()
+	{
+		$this->markTestIncomplete('This test has not been implemented yet.');
+	}
+
+	public function test_delete()
 	{
 		$this->articleType->delete();
 		$this->assertFalse($this->articleType->exists());

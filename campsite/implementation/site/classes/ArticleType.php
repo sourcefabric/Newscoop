@@ -346,14 +346,17 @@ class ArticleType {
 		if (empty($p_name)) {
 			return false;
 		}
+		$hasLetter = false;
 		for ($i = 0; $i < strlen($p_name); $i++) {
 			$c = $p_name[$i];
-			$valid = ($c >= 'A' && $c <= 'Z') || ($c >= 'a' && $c <= 'z') || $c == '_';
+			$isLetter = ($c >= 'A' && $c <= 'Z') || ($c >= 'a' && $c <= 'z');
+			$hasLetter = $hasLetter || $isLetter;
+			$valid = $isLetter || $c == '_';
 			if (!$valid) {
 			  return false;
 			}
 		}
-		return true;
+		return true && $hasLetter;
 	} // fn IsValidFieldName
 
 
@@ -392,17 +395,21 @@ class ArticleType {
 	{
 		global $g_ado_db;
 		if ($p_status == 'hide') {
-			$set = "is_hidden=1";
+			$status = 1;
 		} elseif ($p_status == 'show') {
-			$set = "is_hidden=0";
+			$status = 0;
 		} else {
 		    return;
 		}
 		$queryStr = "UPDATE ArticleTypeMetadata "
-		            ." SET $set "
+		            ." SET is_hidden = $status "
 		            ." WHERE type_name='". $this->m_name."'"
 		            ." AND field_name='NULL'";
 		$ret = $g_ado_db->Execute($queryStr);
+		if ($ret) {
+			$this->m_metadata['is_hidden'] = $status;
+		}
+		return $ret;
 	} // fn setStatus
 
 
@@ -449,6 +456,10 @@ class ArticleType {
 		            ." WHERE type_name='". $this->m_name ."'"
 		            ." AND field_name='NULL'";
 		$ret = $g_ado_db->Execute($queryStr);
+		if ($ret) {
+			$this->m_metadata['comments_enabled'] = $p_value;
+		}
+		return $ret;
 	} // fn setCommentsEnabled
 
 
