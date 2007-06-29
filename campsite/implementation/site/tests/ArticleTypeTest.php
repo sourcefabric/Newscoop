@@ -13,24 +13,34 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 
 	protected $articleType;
 
+	protected $testTypeName = 'test_article_type';
+
 	protected $testLanguageId = 88888888;
 
 	public function ArticleTypeTest()
 	{
 		global $g_ado_db;
 
-		$phraseId = $g_ado_db->GetOne("SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name = 'test_article_type'");
+		// make sure to clean the database in case the test type already existed
+		$phraseId = $g_ado_db->GetOne("SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name = '".$this->testTypeName."'");
 		if ($phraseId > 0) {
 			$g_ado_db->Execute('DELETE FROM Translations WHERE phrase_id = ' . $phraseId);
 		}
-		$g_ado_db->Execute('DROP TABLE Xtest_article_type');
-		$g_ado_db->Execute("DELETE FROM ArticleTypeMetadata WHERE type_name = 'test_article_type'");
+		$g_ado_db->Execute('DROP TABLE X'.$this->testTypeName);
+		$g_ado_db->Execute("DELETE FROM ArticleTypeMetadata WHERE type_name = '".$this->testTypeName."'");
+
+		$phraseId = $g_ado_db->GetOne("SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name = '".$this->testTypeName."_second'");
+		if ($phraseId > 0) {
+			$g_ado_db->Execute('DELETE FROM Translations WHERE phrase_id = ' . $phraseId);
+		}
+		$g_ado_db->Execute('DROP TABLE X'.$this->testTypeName.'_second');
+		$g_ado_db->Execute("DELETE FROM ArticleTypeMetadata WHERE type_name = '".$this->testTypeName."_second'");
 	}
 
 	protected function setUp()
 	{
 		// initialize the test object
-		$this->articleType =& new ArticleType('test_article_type');
+		$this->articleType =& new ArticleType($this->testTypeName);
 	}
 
 	public function test_IsValidFieldName()
@@ -59,12 +69,12 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 
 	public function test_getTypeName()
 	{
-		$this->assertEquals('test_article_type', $this->articleType->getTypeName());
+		$this->assertEquals($this->testTypeName, $this->articleType->getTypeName());
 	}
 
 	public function test_getTableName()
 	{
-		$this->assertEquals('Xtest_article_type', $this->articleType->getTableName());
+		$this->assertEquals('X'.$this->testTypeName, $this->articleType->getTableName());
 	}
 
 	public function test_setName()
@@ -78,6 +88,7 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 				. "AND atm.field_name = 'NULL' AND atm.fk_phrase_id = t.phrase_id "
 				. "AND t.fk_language_id = '" . $this->testLanguageId . "'";
 		$this->assertEquals('test_name_language', $g_ado_db->GetOne($query));
+		$this->assertNotEquals(-1, $this->articleType->getPhraseId());
 	}
 
 	public function test_getDisplayName()
@@ -191,24 +202,34 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
-	public function test_rename()
-	{
-		global $g_ado_db;
-
-		$this->articleType->rename('test_article_type_second');
-		$count = $g_ado_db->GetOne("SELECT COUNT(*) FROM ArticleTypeMetadata WHERE type_name = 'test_article_type_second'");
-		$this->assertNotEquals(0, $count);
-	}
-
 	public function test_merge()
 	{
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
+	public function test_rename()
+	{
+		global $g_ado_db;
+
+		$this->articleType->rename($this->testTypeName.'_second');
+		$count = $g_ado_db->GetOne("SELECT COUNT(*) FROM ArticleTypeMetadata WHERE type_name = '".$this->testTypeName."_second'");
+		$this->assertNotEquals(0, $count);
+		$tableName = $g_ado_db->GetOne("SHOW TABLES LIKE '%X".$this->testTypeName."_second%'");
+		$this->assertEquals('X'.$this->testTypeName.'_second', $tableName);
+
+		$this->articleType->rename($this->testTypeName);
+	}
+
 	public function test_delete()
 	{
+		global $g_ado_db;
+
 		$this->articleType->delete();
 		$this->assertFalse($this->articleType->exists());
+		$tableName = $g_ado_db->GetOne("SHOW TABLES LIKE '%X".$this->testTypeName."'");
+		$this->assertEquals('', $tableName);
+		$count = $g_ado_db->GetOne("SELECT COUNT(*) FROM ArticleTypeMetadata WHERE type_name = '".$this->testTypeName."'");
+		$this->assertEquals(0, $count);
 	}
 }
 

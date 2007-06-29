@@ -149,6 +149,7 @@ class ArticleType {
             $success3 = $g_ado_db->Execute($queryStr);
         }
 		if ($success3) {
+			$this->m_name = $p_newName;
 			$this->m_dbTableName = 'X'. $p_newName;
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
@@ -200,6 +201,7 @@ class ArticleType {
 			if ($phrase_id = $this->translationExists($p_languageId)) {
 			    $trans =& new Translation($p_languageId, $phrase_id);
 			    $trans->delete();
+			    $this->m_metadata['fk_phrase_id'] = null;
 				$changed = true;
 			} else { $changed = false; }
 		} else if ($phrase_id = $this->translationExists($p_languageId)) {
@@ -221,13 +223,14 @@ class ArticleType {
 				// if the phrase_id isn't there, insert it.
 				$sql = "UPDATE ArticleTypeMetadata SET fk_phrase_id=".$phrase_id ." WHERE type_name='". $this->m_name ."' AND field_name='NULL'";
 				$changed = $g_ado_db->Execute($sql);
-
+				if ($changed) {
+					$this->m_metadata['fk_phrase_id'] = $phrase_id;
+				}
 			} else {
 				// if the phrase is already translated into atleast one language, just reuse that fk_phrase_id
 				$desc =& new Translation($p_languageId, $row);
 				$desc->create($p_value);
 				$changed = true;
-
 			}
 		}
 
