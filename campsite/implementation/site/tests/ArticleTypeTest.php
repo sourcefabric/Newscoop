@@ -1,22 +1,48 @@
 <?php
+// Call ArticleTypeTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "ArticleTypeTest::main");
+}
 
-$_SERVER['DOCUMENT_ROOT'] = '/usr/local/campsite/www/campsite/html';
+require_once('PHPUnit/Framework/TestCase.php');
+require_once('PHPUnit/Framework/TestSuite.php');
 
-set_include_path(get_include_path() . PATH_SEPARATOR . '/usr/local/campsite/www/campsite/html');
-
-require_once('PHPUnit/Framework.php');
-require_once('configuration.php');
+require_once('set_path.php');
 require_once('db_connect.php');
 require_once('classes/ArticleType.php');
 
+/**
+ * Test class for ArticleType.
+ */
 class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 
+	/**
+	 * ArticleType object
+	 *
+	 * @var object
+	 */
 	protected $articleType;
 
+	/**
+	 * The name of the test article type.
+	 *
+	 * @var string
+	 */
 	protected $testTypeName = 'test_article_type';
 
+	/**
+	 * The test language identifier.
+	 *
+	 * @var int
+	 */
 	protected $testLanguageId = 88888888;
 
+
+	/**
+	 * Constructor
+	 *
+	 * @return ArticleTypeTest
+	 */
 	public function ArticleTypeTest()
 	{
 		global $g_ado_db;
@@ -37,13 +63,41 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$g_ado_db->Execute("DELETE FROM ArticleTypeMetadata WHERE type_name = '".$this->testTypeName."_second'");
 	}
 
-	protected function setUp()
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main() {
+        require_once('PHPUnit/TextUI/TestRunner.php');
+
+        $suite  = new PHPUnit_Framework_TestSuite("ArticleTypeTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
+    /**
+     * Sets up the fixture, for example, open a network connection.
+     * This method is called before a test is executed.
+     *
+     * @access protected
+     */
+    protected function setUp()
 	{
 		// initialize the test object
 		$this->articleType =& new ArticleType($this->testTypeName);
 	}
 
-	public function test_IsValidFieldName()
+    /**
+     * Tears down the fixture, for example, close a network connection.
+     * This method is called after a test is executed.
+     *
+     * @access protected
+     */
+    protected function tearDown() {
+    }
+
+    public function testIsValidFieldName()
 	{
 		$this->assertTrue(ArticleType::IsValidFieldName('_a'));
 		$this->assertTrue(ArticleType::IsValidFieldName('az'));
@@ -57,27 +111,27 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse(ArticleType::IsValidFieldName('a '));
 	}
 
-	public function test_create()
+	public function testCreate()
 	{
 		$this->assertType('ADORecordSet_empty', $this->articleType->create(), 'The test article type can not be created.');
 	}
 
-	public function test_exist()
+	public function testExist()
 	{
 		$this->assertTrue($this->articleType->exists(), 'The test article type does not exist after creation.');
 	}
 
-	public function test_getTypeName()
+	public function testGetTypeName()
 	{
 		$this->assertEquals($this->testTypeName, $this->articleType->getTypeName());
 	}
 
-	public function test_getTableName()
+	public function testGetTableName()
 	{
 		$this->assertEquals('X'.$this->testTypeName, $this->articleType->getTableName());
 	}
 
-	public function test_setName()
+	public function testSetName()
 	{
 		global $g_ado_db;
 
@@ -91,22 +145,22 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$this->assertNotEquals(-1, $this->articleType->getPhraseId());
 	}
 
-	public function test_getDisplayName()
+	public function testGetDisplayName()
 	{
 		$this->assertEquals('test_name_language', $this->articleType->getDisplayName($this->testLanguageId));
 	}
 
-	public function test_translationExists()
+	public function testTranslationExists()
 	{
 		$this->assertNotEquals(0, $this->articleType->translationExists($this->testLanguageId));
 	}
 
-	public function test_getTranslations()
+	public function testGetTranslations()
 	{
 		$this->assertEquals(array($this->testLanguageId =>'test_name_language'), $this->articleType->getTranslations());
 	}
 
-	public function test_getPhraseId()
+	public function testGetPhraseId()
 	{
 		global $g_ado_db;
 
@@ -115,7 +169,7 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($g_ado_db->GetOne($query), $this->articleType->getPhraseId());
 	}
 
-	public function test_getMetadata()
+	public function testGetMetadata()
 	{
 		global $g_ado_db;
 
@@ -125,13 +179,13 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($row, $this->articleType->getMetadata());
 	}
 
-	public function test_unsetName()
+	public function testUnsetName()
 	{
 		$this->articleType->setName($this->testLanguageId, NULL);
 		$this->assertEquals(0, $this->articleType->translationExists($this->testLanguageId));
 	}
 
-	public function test_setCommentsEnabled()
+	public function testSetCommentsEnabled()
 	{
 		global $g_ado_db;
 
@@ -142,7 +196,7 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(1, $this->articleType->commentsEnabled());
 	}
 
-	public function test_commentsEnabled()
+	public function testCommentsEnabled()
 	{
 		$this->articleType->setCommentsEnabled(false);
 		$this->assertEquals(0, $this->articleType->commentsEnabled());
@@ -150,7 +204,7 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(1, $this->articleType->commentsEnabled());
 	}
 
-	public function test_setStatus()
+	public function testSetStatus()
 	{
 		global $g_ado_db;
 
@@ -164,7 +218,7 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(0, $g_ado_db->GetOne($query));
 	}
 
-	public function test_getStatus()
+	public function testGetStatus()
 	{
 		$this->articleType->setStatus('hide');
 		$this->assertEquals('hidden', $this->articleType->getStatus());
@@ -172,42 +226,42 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('shown', $this->articleType->getStatus());
 	}
 
-	public function test_getArticlesArray()
+	public function testGetArticlesArray()
 	{
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
-	public function test_GetArticleTypes()
+	public function testGetArticleTypes()
 	{
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
-	public function test_getDisplayNameLanguageCode()
+	public function testGetDisplayNameLanguageCode()
 	{
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
-	public function test_getNumArticles()
+	public function testGetNumArticles()
 	{
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
-	public function test_getPreviewArticleData()
+	public function testGetPreviewArticleData()
 	{
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
-	public function test_getUserDefinedColumns()
+	public function testGetUserDefinedColumns()
 	{
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
-	public function test_merge()
+	public function testMerge()
 	{
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
-	public function test_rename()
+	public function testRename()
 	{
 		global $g_ado_db;
 
@@ -220,7 +274,7 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 		$this->articleType->rename($this->testTypeName);
 	}
 
-	public function test_delete()
+	public function testDelete()
 	{
 		global $g_ado_db;
 
@@ -233,4 +287,8 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 	}
 }
 
+// Call ArticleTypeTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "ArticleTypeTest::main") {
+    ArticleTypeTest::main();
+}
 ?>
