@@ -67,7 +67,7 @@ class DatabaseObject {
 	 * @var array
 	 */
 	var $m_oldKeyValues = array();
-	
+
 	/**
 	 * If true it will use the caching feature
 	 *
@@ -257,6 +257,7 @@ class DatabaseObject {
 		} else {
 			$object = $this->readFromCache($p_recordSet);
 			if ($object !== false) {
+				$this->m_exists = true;
 				return true;
 			}
 
@@ -266,6 +267,13 @@ class DatabaseObject {
 			foreach ($this->getColumnNames() as $dbColumnName) {
 				if (!isset($p_recordSet[$dbColumnName])) {
 					$this->m_data[$dbColumnName] = null;
+				}
+			}
+			if ($this->keyValuesExist()) {
+				$queryStr = 'SELECT * FROM ' . $this->m_dbTableName
+							. ' WHERE ' . $this->getKeyWhereClause();
+				if ($g_ado_db->GetRow($queryStr)) {
+					$this->m_exists = true;
 				}
 			}
 		}
@@ -430,6 +438,7 @@ class DatabaseObject {
 		// Always set "exists" to false because if a row wasnt
 		// deleted it means it probably didnt exist in the first place.
 		$this->m_exists = false;
+		$this->m_data = array();
 		return $wasDeleted;
 	} // fn delete
 
@@ -830,7 +839,7 @@ class DatabaseObject {
 		if (!DatabaseObject::GetUseCache()) {
 			return false;
 		}
-		
+
 		if (is_array($p_recordSet) && sizeof($p_recordSet) > 0) {
 			foreach ($this->m_keyColumnNames as $columnName) {
 				if (!isset($p_recordSet[$columnName])) {
@@ -853,13 +862,13 @@ class DatabaseObject {
 		}
 
 		$this->duplicateObject($object);
-		
+
 		return $this;
 	}
-	
-	
+
+
 	/**
-	 * Copies the given object 
+	 * Copies the given object
 	 *
 	 * @param object $p_source
 	 * @return object
@@ -872,8 +881,8 @@ class DatabaseObject {
 
 		return $this;
 	}
-	
-	
+
+
 	/**
 	 * Returns true if cache use was enabled
 	 *
@@ -883,13 +892,13 @@ class DatabaseObject {
 	{
 		return DatabaseObject::$m_useCache;
 	}
-	
-	
+
+
 	/**
 	 * Sets cache enabled/disabled
 	 *
 	 * @param bool $p_useCache
-	 * 
+	 *
 	 * @return void
 	 */
 	function SetUseCache($p_useCache)
@@ -909,7 +918,7 @@ class DatabaseObject {
 		if (!DatabaseObject::GetUseCache()) {
 			return false;
 		}
-		
+
 		if (!$this->exists()) {
 			return false;
 		}

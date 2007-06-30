@@ -47,8 +47,9 @@ class Alias extends DatabaseObject {
 	{
 		$created = parent::create($p_values);
 		if ($created && ($this->m_data["IdPublication"] > 0)) {
-			ParserCom::SendMessage('publications', 'modify',
-								   array("IdPublication" => $this->m_data['IdPublication']));
+// no need to connect to the template engine anymore
+//			ParserCom::SendMessage('publications', 'modify',
+//								   array("IdPublication" => $this->m_data['IdPublication']));
 		}
 		return $created;
 	} // fn create
@@ -61,8 +62,9 @@ class Alias extends DatabaseObject {
 	{
 		$deleted = parent::delete();
 		if ($deleted) {
-			ParserCom::SendMessage('publications', 'modify',
-								   array("IdPublication" => $this->m_data['IdPublication']));
+// no need to connect to the template engine anymore
+//			ParserCom::SendMessage('publications', 'modify',
+//								   array("IdPublication" => $this->m_data['IdPublication']));
 		}
 		return $deleted;
 	} // fn delete
@@ -93,8 +95,9 @@ class Alias extends DatabaseObject {
 	{
 		$changed = $this->setProperty('Name', $p_name);
 		if ($changed) {
-			ParserCom::SendMessage('publications', 'modify',
-								   array("IdPublication"=>$this->m_data['IdPublication']));
+// no need to connect to the template engine anymore
+//			ParserCom::SendMessage('publications', 'modify',
+//								   array("IdPublication"=>$this->m_data['IdPublication']));
 		}
 		return $changed;
 	} // fn setName

@@ -39,11 +39,11 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 
 
 	/**
-	 * Constructor
+	 * Deletes the test data.
 	 *
-	 * @return ArticleTypeTest
+	 * @return void
 	 */
-	public function ArticleTypeTest()
+	protected function clear()
 	{
 		global $g_ado_db;
 
@@ -84,6 +84,21 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
      */
     protected function setUp()
 	{
+		global $g_ado_db;
+
+		$this->clear();
+
+		// create the article type
+		$queryStr = "CREATE TABLE `X".$this->testTypeName."`"
+					."(NrArticle INT UNSIGNED NOT NULL, "
+					." IdLanguage INT UNSIGNED NOT NULL, "
+					." PRIMARY KEY(NrArticle, IdLanguage))";
+		$g_ado_db->Execute($queryStr);
+		$queryStr = "INSERT INTO ArticleTypeMetadata"
+					."(type_name, field_name) "
+					."VALUES ('".$this->testTypeName."', 'NULL')";
+		$g_ado_db->Execute($queryStr);
+
 		// initialize the test object
 		$this->articleType =& new ArticleType($this->testTypeName);
 	}
@@ -94,7 +109,9 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
      *
      * @access protected
      */
-    protected function tearDown() {
+    protected function tearDown()
+    {
+    	$this->clear();
     }
 
     public function testIsValidFieldName()
@@ -113,6 +130,7 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 
 	public function testCreate()
 	{
+		$this->clear();
 		$this->assertType('ADORecordSet_empty', $this->articleType->create(), 'The test article type can not be created.');
 	}
 
@@ -147,16 +165,19 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetDisplayName()
 	{
+		$this->articleType->setName($this->testLanguageId, 'test_name_language');
 		$this->assertEquals('test_name_language', $this->articleType->getDisplayName($this->testLanguageId));
 	}
 
 	public function testTranslationExists()
 	{
+		$this->articleType->setName($this->testLanguageId, 'test_name_language');
 		$this->assertNotEquals(0, $this->articleType->translationExists($this->testLanguageId));
 	}
 
 	public function testGetTranslations()
 	{
+		$this->articleType->setName($this->testLanguageId, 'test_name_language');
 		$this->assertEquals(array($this->testLanguageId =>'test_name_language'), $this->articleType->getTranslations());
 	}
 
@@ -164,6 +185,7 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase {
 	{
 		global $g_ado_db;
 
+		$this->articleType->setName($this->testLanguageId, 'test_name_language');
 		$query = "SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name = '"
 				. $this->articleType->getTypeName() . "' AND field_name = 'NULL'";
 		$this->assertEquals($g_ado_db->GetOne($query), $this->articleType->getPhraseId());

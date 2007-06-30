@@ -230,6 +230,7 @@ class ArticleType {
 				// if the phrase is already translated into atleast one language, just reuse that fk_phrase_id
 				$desc =& new Translation($p_languageId, $row);
 				$desc->create($p_value);
+				$this->m_metadata['fk_phrase_id'] = $phrase_id;
 				$changed = true;
 			}
 		}
