@@ -355,8 +355,8 @@ function camp_create_language_links($p_document_root = "")
 		if (!is_link($link)) {
 			symlink($index_file, $link);
 		}
-		chown($link, $Campsite['APACHE_USER']);
-		chgrp($link, $Campsite['APACHE_GROUP']);
+		@chown($link, $Campsite['APACHE_USER']);
+		@chgrp($link, $Campsite['APACHE_GROUP']);
 	}
 } // fn camp_create_language_links
 

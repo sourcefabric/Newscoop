@@ -679,6 +679,7 @@ class Localizer {
             	}
             }
         }
+        @rmdir($langDir);
         return true;
     } // fn DeleteLanguageFiles
 

@@ -94,7 +94,7 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @todo Implement testCreate().
+     * Test for create() method.
      */
     public function testCreate()
     {
@@ -113,7 +113,7 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @todo Implement testGetId().
+     * Test for getId() method.
      */
     public function testGetId()
     {
@@ -121,7 +121,7 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @todo Implement testGetName().
+     * Test for getName() method.
      */
     public function testGetName()
     {
@@ -129,7 +129,7 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @todo Implement testSetName().
+     * Test for setName() method.
      */
     public function testSetName()
     {
@@ -141,7 +141,7 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @todo Implement testGetPublicationId().
+     * Test for getPublicationId() method.
      */
     public function testGetPublicationId()
     {
@@ -149,7 +149,7 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @todo Implement testSetPublicationId().
+     * Test for setPublicationId() method.
      */
     public function testSetPublicationId()
     {
@@ -158,17 +158,24 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @todo Implement testGetAliases().
+     * Test for GetAliases() method
      */
     public function testGetAliases()
     {
-    	$aliases = $this->alias->GetAliases($this->alias->getId());
     	$expectedAliases = array($this->alias);
+
+    	$aliases = $this->alias->GetAliases($this->alias->getId());
+    	$this->assertEquals($expectedAliases, $aliases);
+
+    	$aliases = $this->alias->GetAliases(null, $this->testPublicationId);
+    	$this->assertEquals($expectedAliases, $aliases);
+
+    	$aliases = $this->alias->GetAliases(null, null, $this->testName);
     	$this->assertEquals($expectedAliases, $aliases);
     }
 
     /**
-     * @todo Implement testDelete().
+     * Test for delete() method.
      */
     public function testDelete()
     {

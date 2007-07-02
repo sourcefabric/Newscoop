@@ -8,6 +8,8 @@ require_once('PHPUnit/TextUI/TestRunner.php');
 
 require_once('AliasTest.php');
 require_once('ArticleTypeTest.php');
+require_once('MetaLanguageTest.php');
+require_once('CampContextTest.php');
 
 class Framework_AllTests
 {
@@ -22,6 +24,9 @@ class Framework_AllTests
 
         $suite->addTestSuite('ArticleTypeTest');
         $suite->addTestSuite('AliasTest');
+
+        $suite->addTestSuite('MetaLanguageTest');
+        $suite->addTestSuite('CampContextTest');
 
         return $suite;
     }

@@ -101,7 +101,9 @@ class Language extends DatabaseObject {
 	function delete($p_deleteLanguageFiles = true)
 	{
 		global $g_documentRoot;
-		unlink($g_documentRoot . "/" . $this->getCode() . ".php");
+		if (is_link($g_documentRoot . "/" . $this->getCode() . ".php")) {
+			unlink($g_documentRoot . "/" . $this->getCode() . ".php");
+		}
 		if ($p_deleteLanguageFiles) {
 			$result = Localizer::DeleteLanguageFiles($this->getCode());
 			if (PEAR::isError($result)) {

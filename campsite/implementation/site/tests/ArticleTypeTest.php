@@ -14,7 +14,8 @@ require_once('classes/ArticleType.php');
 /**
  * Test class for ArticleType.
  */
-class ArticleTypeTest extends PHPUnit_Framework_TestCase {
+class ArticleTypeTest extends PHPUnit_Framework_TestCase
+{
 
 	/**
 	 * ArticleType object
