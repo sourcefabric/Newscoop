@@ -39,14 +39,15 @@ final class CampDatabase {
     final public function __construct()
     {
         // gets the config object from the main class
-        $config = CampSite::getConfig();
+        $config = CampSite::GetConfig();
+
         // sets the new connection resource
-        $this->m_db = ADONewConnection($config->getVar('db_type'));
+        $this->m_db = ADONewConnection($config->getSetting('db_type'));
         $this->m_db->SetFetchMode(ADODB_FETCH_ASSOC);
-        $this->m_db->Connect($config->getVar('db_host'),
-                             $config->getVar('db_user'),
-                             $config->getVar('db_pass'),
-                             $config->getVar('db_name'));
+        $this->m_db->Connect($config->getSetting('db_host'),
+                             $config->getSetting('db_user'),
+                             $config->getSetting('db_pass'),
+                             $config->getSetting('db_name'));
     } // fn __construct
 
 

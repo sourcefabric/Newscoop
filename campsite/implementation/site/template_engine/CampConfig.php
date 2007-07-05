@@ -35,19 +35,12 @@ final class CampConfig {
             $p_configFile = CS_PATH_CONFIG.DIR_SEP.'configuration.php';
         }
 
-        try {
-            if (!file_exists($p_configFile)) {
-                throw new InvalidFileException($p_configFile);
-            }
-            require_once($p_configFile);
-        } catch (InvalidFileException $e) {
-            $this->trigger_invalid_file_error($p_configFile);
-            return null;
+        if (!file_exists($p_configFile)) {
+            return new PEAR_Error('No such file: '.$p_configFile);
         }
 
-        foreach($CampCfg as $key => $value) {
-            $this->m_config[$key] = $value;
-        }
+        require_once($p_configFile);
+        $this->m_config = $CampCfg;
     } // fn __construct
 
 
@@ -76,29 +69,66 @@ final class CampConfig {
      * @return array
      *    m_config The array of settings
      */
-    public function getSettings()
+    public function getAllSettings()
     {
         return $this->m_config;
-    } // fn getSettings
+    } // fn getAllSettings
 
 
     /**
-     * Gets a var value from configuration.
+     * Gets a setting var value from configuration.
      *
      * @param string
-     *    $p_varName The name of the directive
+     *    $p_varName The name of the setting variable
      *
      * @return mixed
-     *    null Var passed is no valid
-     *    mixed The value of the directive
+     *    null Var name passed is no valid
+     *    mixed The value of the setting variable
      */
-    public function getVar($p_varName)
+    public function getSetting($p_varName)
     {
-        if (!array_key_exists($p_varName, $this->m_config)) {
+        if (empty($p_varName)) {
             return null;
         }
-        return $this->m_config[$p_varName];
-    } // fn getVar
+
+        $settingVar = CampConfig::TranslateSettingName($p_varName);
+        if (!$settingVar) {
+            return null;
+        }
+
+        $varname = $settingVar['varname'];
+        $namespace = $settingVar['namespace'];
+
+        if (!array_key_exists($varname, $this->m_config[$namespace])) {
+            return null;
+        }
+
+        return $this->m_config[$namespace][$varname];
+    } // fn getSetting
+
+
+    /**
+     * Translates the given setting variable name into the form
+     * namespace and var name.
+     *
+     * @param string
+     *    p_varName The full variable name
+     *
+     * @return mixed
+     *    null If the given value is not appropriate
+     *    settingVar An array containing the namespace and variable actual name
+     */
+    public static function TranslateSettingName($p_varName)
+    {
+        $settingVar = null;
+        list($namespace, $varname) = explode('.', $p_varName);
+        if (!empty($namespace) && !empty($varname)) {
+            $settingVar['namespace'] = $namespace;
+            $settingVar['varname'] = $varname;
+        }
+
+        return $settingVar;
+    } // fn TranslateVarName
 
 } // class CampConfig
 
