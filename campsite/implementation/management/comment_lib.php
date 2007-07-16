@@ -29,12 +29,12 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 	if (!$articleObj->exists()) {
 		$p_parameters["ArticleCommentSubmitResult"] = 5003;
 		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-		exit;
+		return;
 	}
 	if (!$articleObj->commentsEnabled() || $articleObj->commentsLocked())  {
 		$p_parameters["ArticleCommentSubmitResult"] = 5004;
 		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-		exit;
+		return;
 	}
 
 	// Get the publication.
@@ -91,7 +91,7 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 						&& !$phorumUser->create($user->getUserName(), $userPasswd, $userEmail, $userId)) {
 					$p_parameters["ArticleCommentSubmitResult"] = 5000;
 					camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-					exit;
+					return;
 				}
 			} else {
 				$user = null;
@@ -107,13 +107,13 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 			if (trim($userEmail) == '') {
 				$p_parameters["ArticleCommentSubmitResult"] = 5007;
 				camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-				exit;
+				return;
 			}
 			$userRealName = $userEmail;
 		} else {
 			$p_parameters["ArticleCommentSubmitResult"] = 5001;
 			camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-			exit;
+			return;
 		}
 	}
 
@@ -124,12 +124,12 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 		if (trim($f_captcha_code) == '') {
 			$p_parameters["ArticleCommentSubmitResult"] = 5008;
 			camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-			exit;
+			return;
 		}
 		if (!PhpCaptcha::Validate($f_captcha_code, true)) {
 			$p_parameters["ArticleCommentSubmitResult"] = 5009;
 			camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-			exit;
+			return;
 		}
 	}
 
@@ -137,14 +137,14 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 	if (trim($f_comment_body) == '') {
 		$p_parameters["ArticleCommentSubmitResult"] = 5002;
 		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-		exit;
+		return;
 	}
 
 	// Check if the reader was banned from posting comments.
 	if (Phorum_user::IsBanned($userRealName, $userEmail)) {
 		$p_parameters["ArticleCommentSubmitResult"] = 5005;
 		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-		exit;
+		return;
 	}
 
 	// Create the first post message (if needed)
@@ -173,7 +173,7 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 							is_null($userId) ? 0 : $userId)) {
 		$p_parameters["ArticleCommentSubmitResult"] = 5000;
 		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
-		exit;
+		return;
 	}
 
 	// If the user was unknown (public comment) and public comments were moderated
