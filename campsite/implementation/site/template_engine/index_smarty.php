@@ -44,12 +44,14 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 {
 	global $g_errorList;
 
-	if (strncasecmp($p_errorString, 'Campsite error:', strlen("Campsite error:")) != 0
-		&& strncasecmp($p_errorString, 'Smarty error:' ,strlen('Smarty error:')) != 0) {
+	if (strncasecmp($p_errorString, 'Campsite error:', strlen("Campsite error:")) == 0) {
+		$errorString = substr($p_errorString, strlen("Campsite error:"));
+	} elseif(strncasecmp($p_errorString, 'Smarty error:' ,strlen('Smarty error:')) == 0) {
+		$errorString = substr($p_errorString, strlen("Smarty error:"));
+	} else {
 		return;
 	}
 
-	$errorString = substr($p_errorString, strlen("Smarty error:"));
 	$what = null;
 
 	if (preg_match('/unrecognized tag:?\s*\'?([^\(]*)\'?\s*\(/', $errorString, $matches)) {

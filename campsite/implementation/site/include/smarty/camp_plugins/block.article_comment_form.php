@@ -27,7 +27,7 @@ function smarty_block_article_comment_form($p_params, $p_content, &$p_smarty, &$
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
 
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
+    $camp = $p_smarty->get_template_vars('campsite');
     $html = '';
 
     if ($camp->articlecomment->enabled == true) {
@@ -56,7 +56,7 @@ function smarty_block_article_comment_form($p_params, $p_content, &$p_smarty, &$
                 ."<input type=\"hidden\" name=\"f_article_nr\" "
                 ."value=\"".$camp->article->number."\" />\n";
         }
-    if ($camp->articlecomment->id > 0) {
+    	if ($camp->articlecomment->id > 0) {
             $html .= "<input type=\"hidden\" name=\"f_acid\" "
                 ."value=\"".$camp->articlecomment->id."\" />\n";
         }

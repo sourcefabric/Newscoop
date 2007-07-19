@@ -20,7 +20,7 @@ final class CampURI {
      *
      * @var string
      */
-    var $m_uri = null
+    var $m_uri = null;
 
     /**
      * The URI parts

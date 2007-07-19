@@ -27,7 +27,7 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
 
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
+    $camp = $p_smarty->get_template_vars('campsite');
     $html = '';
 
     if (!isset($p_params['template'])) {

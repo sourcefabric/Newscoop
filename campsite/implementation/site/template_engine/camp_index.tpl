@@ -5,6 +5,11 @@
 <body>
 
 
+{{ list_article length="10" }}
+sample content
+{{ /list_article }}
+
+
 {{ invalid_tag }}
 
 

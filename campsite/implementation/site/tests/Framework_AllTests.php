@@ -10,6 +10,8 @@ require_once('AliasTest.php');
 require_once('ArticleTypeTest.php');
 require_once('MetaLanguageTest.php');
 require_once('CampContextTest.php');
+require_once('ListObjectTest.php');
+require_once('ArticleListTest.php');
 
 class Framework_AllTests
 {
@@ -27,6 +29,9 @@ class Framework_AllTests
 
         $suite->addTestSuite('MetaLanguageTest');
         $suite->addTestSuite('CampContextTest');
+
+        $suite->addTestSuite('ListObjectTest');
+        $suite->addTestSuite('ArticleListTest');
 
         return $suite;
     }
