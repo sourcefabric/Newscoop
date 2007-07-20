@@ -31,12 +31,33 @@ function smarty_block_list_article($p_params, $p_content, &$p_smarty, &$p_repeat
     $html = '';
 
     if (isset($p_content)) {
-	    CampTemplate::singleton()->trigger_error("Campsite error: cucu", $p_smarty);
-
-    	$html .= "<pre>parameters:\n";
     	foreach ($p_params as $param=>$value) {
-    		$html .= "$param = $value\n";
+    		$param = strtolower($param);
+    		switch ($param) {
+    			case 'length':
+    			case 'columns':
+    			case 'name':
+    			case 'constraints':
+    			case 'order':
+    				if ($param == 'length' || $param == 'columns') {
+    					$intValue = (int)$value;
+    					if ("$intValue" != $value) {
+    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $param in statement list_article");
+    					}
+	    				$$param = (int)$value;
+    				} else {
+	    				$$param = $value;
+    				}
+    				break;
+    			default:
+    				CampTemplate::singleton()->trigger_error("invalid parameter $param in list_article", $p_smarty);
+    		}
     	}
+    	echo "<p>length: $length</p>\n";
+    	echo "<p>columns: $columns</p>\n";
+    	echo "<p>name: $name</p>\n";
+    	echo "<p>constraints: $constraints</p>\n";
+    	echo "<p>order: $order</p>\n";
     	$html .= "</pre>\n";
     	$html .= "<pre>content:\n$p_content\n</pre>\n";
     }

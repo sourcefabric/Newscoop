@@ -5,7 +5,7 @@
 <body>
 
 
-{{ list_article length="10" }}
+{{ list_article length="10" columns="invalid_value" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
 sample content
 {{ /list_article }}
 
@@ -19,19 +19,22 @@ sample content
 {{ $campsite->article->invalid_property }}
 
 
-{{ set_language set_invalid_property="1" }}
+{{ set_language invalid_property="1" }}
 
 
-{{ set_publication set_invalid_property="6" }}
+{{ set_publication invalid_property="6" }}
 
 
-{{ set_issue set_invalid_property="1" }}
+{{ set_publication identifier="invalid_value" }}
 
 
-{{ set_section set_invalid_property="1" }}
+{{ set_issue invalid_property="1" }}
 
 
-{{ set_article set_invalid_property="143" }}
+{{ set_section invalid_property="1" }}
+
+
+{{ set_article invalid_property="143" }}
 
 
 {{ $campsite->invalid_property }}

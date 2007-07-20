@@ -24,7 +24,7 @@ function smarty_function_set_publication($p_params, &$p_smarty)
 
     if (isset($p_params['identifier'])) {
     	$attrName = 'identifier';
-        $attrValue = $p_params['identifier'];
+    	$attrValue = $p_params['identifier'];
         $publicationId = intval($p_params['identifier']);
     } elseif (isset($p_params['name'])) {
     	$attrName = 'name';
@@ -50,6 +50,8 @@ function smarty_function_set_publication($p_params, &$p_smarty)
     $publicationObj = new MetaPublication($publicationId);
     if ($publicationObj->defined) {
         $campsite->publication = $publicationObj;
+    } else {
+    	$campsite->publication->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
     }
 } // fn smarty_function_set_publication
 

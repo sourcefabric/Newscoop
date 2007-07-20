@@ -64,7 +64,13 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 		$errorCode = SYNTAX_ERROR_INVALID_PROPERTY;
 		$what = array($matches[1], $matches[2]);
 	} elseif (preg_match('/invalid\s+value\s+(.+)\s+of\s+property\s+(.*)\s+of\s+object\s+(.*)/', $errorString, $matches)) {
-		$errorCode = SYNTAX_ERROR_INVALID_VALUE;
+		$errorCode = SYNTAX_ERROR_INVALID_PROPERTY_VALUE;
+		$what = array($matches[1], $matches[2], $matches[3]);
+	} elseif (preg_match('/invalid\s+parameter\s+(.+)\s+in\s+(.*)/', $errorString, $matches)) {
+		$errorCode = SYNTAX_ERROR_INVALID_PARAMETER;
+		$what = array($matches[1], $matches[2]);
+	} elseif (preg_match('/invalid\s+value\s+(.+)\s+of\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
+		$errorCode = SYNTAX_ERROR_INVALID_PARAMETER_VALUE;
 		$what = array($matches[1], $matches[2], $matches[3]);
 	} else {
 		$errorCode = SYNTAX_ERROR_UNKNOWN;
