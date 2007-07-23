@@ -92,7 +92,7 @@ final class CampContext {
                     throw new InvalidObjectException($p_element);
                 }
 
-                $classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/Meta'
+                $classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/Meta'
                                . $this->m_objectTypes[$p_element].'.php';
                 if (!file_exists($classFullPath)) {
                     throw new InvalidObjectException($p_element);
@@ -133,7 +133,7 @@ final class CampContext {
 
     	$p_objectType = CampContext::TranslateProperty($p_objectType);
 
-    	$classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/Meta'
+    	$classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/Meta'
     					. $this->m_objectTypes[$p_objectType].'.php';
     	if (!file_exists($classFullPath)) {
     		throw new InvalidObjectException($p_objectType);

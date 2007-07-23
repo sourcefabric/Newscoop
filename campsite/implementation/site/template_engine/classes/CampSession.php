@@ -16,7 +16,7 @@ final class CampSession {
      *
      * @var object
      */
-    private $m_instance = null;
+    private static $m_instance = null;
 
     /**
      * Status of the current session
@@ -208,8 +208,8 @@ final class CampSession {
      */
     function setData($p_name, $p_value, $p_namespace = 'default')
     {
-        if ($this->dataExists($p_name, $p_namespace)) {
-            if ($value !== null) {
+        if (!$this->dataExists($p_name, $p_namespace)) {
+            if ($p_value !== null) {
                 $_SESSION[$p_namespace][$p_name] = $p_value;
             } else {
                 unset($_SESSION[$p_namespace][$p_name]);
@@ -223,8 +223,8 @@ final class CampSession {
      */
     function setCounter()
     {
-        $cnt = $this->get('session.counter');
-        $this->set('session.counter', ++$cnt);
+        $cnt = $this->getData('session.counter');
+        $this->setData('session.counter', ++$cnt);
     } // fn setCounter
 
 
@@ -235,12 +235,12 @@ final class CampSession {
     {
         if (!$this->dataExists('session.timer.start')) {
             $now = time();
-            $this->setData('session.time.start', $now);
-            $this->setData('session.time.current', $now);
-            $this->setData('session.time.finish', $now);
+            $this->setData('session.timer.start', $now);
+            $this->setData('session.timer.current', $now);
+            $this->setData('session.timer.finish', $now);
         }
 
-        $this->setData('session.timer.finish', $this->get('session.timer.current'));
+        $this->setData('session.timer.finish', $this->getData('session.timer.current'));
         $this->setData('session.timer.current', time());
     } // fn setTimer
 

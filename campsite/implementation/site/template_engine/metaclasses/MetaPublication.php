@@ -13,7 +13,7 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/Publication.php');
 require_once($g_documentRoot.'/classes/Alias.php');
-require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
+require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
 
 /**
  * @package Campsite

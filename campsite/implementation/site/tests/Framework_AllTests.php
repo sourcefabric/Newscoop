@@ -12,6 +12,9 @@ require_once('MetaLanguageTest.php');
 require_once('CampContextTest.php');
 require_once('ListObjectTest.php');
 require_once('ArticleListTest.php');
+require_once('CampDatabaseTest.php');
+require_once('CampConfigTest.php');
+
 
 class Framework_AllTests
 {
@@ -32,6 +35,9 @@ class Framework_AllTests
 
         $suite->addTestSuite('ListObjectTest');
         $suite->addTestSuite('ArticleListTest');
+
+        $suite->addTestSuite('CampDatabaseTest');
+        $suite->addTestSuite('CampConfigTest');
 
         return $suite;
     }

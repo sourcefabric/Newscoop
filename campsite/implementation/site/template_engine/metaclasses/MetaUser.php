@@ -14,8 +14,7 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once($g_documentRoot.'/classes/User.php');
 require_once($g_documentRoot.'/classes/Language.php');
 require_once($g_documentRoot.'/classes/Country.php');
-require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
-
+require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
 
 /**
  * @package Campsite

@@ -31,8 +31,10 @@ final class CampConfig {
      */
     private function __construct($p_configFile = null)
     {
+        global $g_documentRoot;
+
         if (empty($p_configFile)) {
-            $p_configFile = CS_PATH_CONFIG.DIR_SEP.'configuration.php';
+            $p_configFile = $g_documentRoot.'/template_engine/configuration.php';
         }
 
         if (!file_exists($p_configFile)) {

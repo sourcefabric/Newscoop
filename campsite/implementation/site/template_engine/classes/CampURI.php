@@ -260,7 +260,11 @@ final class CampURI {
      */
     public function getQueryVar($p_varName)
     {
+        if (!isset($this->m_queryArray[$p_varName])) {
+            return null;
+        }
 
+        return $this->m_queryArray[$p_varName];
     } // fn getQueryVar
 
 

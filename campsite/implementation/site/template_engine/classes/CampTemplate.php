@@ -3,10 +3,6 @@
  * @package Campsite
  */
 
-//if (!defined('CAMPSITE')) {
-//    exit();
-//}
-
 /**
  * Includes
  */
@@ -33,26 +29,25 @@ final class CampTemplate extends Smarty {
 
     private function __construct()
     {
-        global $Campsite;
-
         parent::Smarty();
 
-        $this->caching = $Campsite['smarty']['caching'];
-        $this->cache_lifetime = $Campsite['smarty']['cache_lifetime'];
-        $this->debugging = $Campsite['smarty']['debugging'];
-        $this->force_compile = $Campsite['smarty']['force_compile'];
-        $this->compile_check = $Campsite['smarty']['compile_check'];
-        $this->use_sub_dirs = $Campsite['smarty']['use_sub_dirs'];
+        $config = CampSite::GetConfig();
 
-        $this->left_delimiter = '{{';
-        $this->right_delimiter = '}}';
+        $this->caching = $config->getSetting('smarty.caching');
+        $this->debugging = $config->getSetting('smarty.debugging');
+        $this->force_compile = $config->getSetting('smarty.force_compile');
+        $this->compile_check = $config->getSetting('smarty.compile_check');
+        $this->use_sub_dirs = $config->getSetting('smarty.use_subdirs');
 
-        $this->cache_dir = $Campsite['CAMPSITE_DIR'].'/var/smarty/cache';
-        $this->config_dir = $Campsite['CAMPSITE_DIR'].'/var/smarty/configs';
-        $this->template_dir = $Campsite['CAMPSITE_DIR'].'/var/smarty/templates';
+        $this->left_delimiter = $config->getSetting('smarty.left_delimeter');
+        $this->right_delimiter = $config->getSetting('smarty.right_delimeter');
+
+        $this->cache_dir = CS_PATH_SMARTY.DIR_SEP.'cache';
+        $this->config_dir = CS_PATH_SMARTY.DIR_SEP.'configs';
+        $this->plugins_dir = array(CS_PATH_SMARTY.DIR_SEP.'camp_plugins',
+                                   CS_PATH_SMARTY.DIR_SEP.'plugins');
+        $this->template_dir = CS_PATH_SMARTY_TEMPLATES.DIR_SEP.$config->getSetting('site.theme');
         $this->compile_dir = $Campsite['CAMPSITE_DIR'].'/var/smarty/templates_c';
-        $this->plugins_dir = array($Campsite['CAMPSITE_DIR'].'/var/smarty/camp_plugins',
-                                   $Campsite['CAMPSITE_DIR'].'/var/smarty/plugins');
     } // fn __constructor
 
 

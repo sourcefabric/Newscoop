@@ -15,7 +15,7 @@ require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/ArticleAttachment.php');
 require_once($g_documentRoot.'/classes/Template.php');
 require_once($g_documentRoot.'/classes/Language.php');
-require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
+require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
 
 
 /**

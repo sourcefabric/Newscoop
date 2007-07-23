@@ -3,10 +3,18 @@
  * @package Campsite
  */
 
-global $Campsite;
+global $Campsite, $CampCfg;
 
-require_once(CS_PATH_DOCROOT.DIR_SEP.'database_conf.php');
-require_once(CS_PATH_DOCROOT.DIR_SEP.'smtp_conf.php');
+/**
+ * Includes
+ */
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
+// is not defined in these cases.
+$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+
+require_once($g_documentRoot.'/database_conf.php');
+require_once($g_documentRoot.'/smtp_conf.php');
 
 
 /** System settings **/
@@ -25,8 +33,10 @@ $CampCfg['site']['email'] = 'campsite-support@lists.campware.org';
 
 
 /** Locale settings **/
-$CampCfg['locale']['lang'] = 'en-US';
-$CampCfg['locale']['language'] = 'english';
+$CampCfg['locale']['lang_id'] = 1;
+$CampCfg['locale']['lang_iso'] = 'en-US';
+$CampCfg['locale']['lang_code'] = 'en';
+$CampCfg['locale']['lang_name'] = 'english';
 
 
 /** Database settings **/

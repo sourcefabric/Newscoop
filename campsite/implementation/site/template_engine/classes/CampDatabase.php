@@ -12,6 +12,7 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/include/adodb/adodb.inc.php');
+require_once($g_documentRoot.'/template_engine/classes/CampSite.php');
 
 
 /**
@@ -42,12 +43,12 @@ final class CampDatabase {
         $config = CampSite::GetConfig();
 
         // sets the new connection resource
-        $this->m_db = ADONewConnection($config->getSetting('db_type'));
+        $this->m_db = ADONewConnection($config->getSetting('db.type'));
         $this->m_db->SetFetchMode(ADODB_FETCH_ASSOC);
-        $this->m_db->Connect($config->getSetting('db_host'),
-                             $config->getSetting('db_user'),
-                             $config->getSetting('db_pass'),
-                             $config->getSetting('db_name'));
+        $this->m_db->Connect($config->getSetting('db.host'),
+                             $config->getSetting('db.user'),
+                             $config->getSetting('db.pass'),
+                             $config->getSetting('db.name'));
     } // fn __construct
 
 
@@ -62,6 +63,7 @@ final class CampDatabase {
         if (!isset(self::$m_instance)) {
             self::$m_instance = new CampDatabase();
         }
+
         return self::$m_instance;
     } // fn singleton
 

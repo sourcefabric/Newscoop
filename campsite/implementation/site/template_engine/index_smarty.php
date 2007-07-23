@@ -18,23 +18,23 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/SyntaxError.php');
 
 // Meta classes
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/CampContext.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaLanguage.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaPublication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaIssue.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaSection.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaArticle.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaImage.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaAttachment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaAudioclip.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaComment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaTopic.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaUser.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaTemplate.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/MetaSubscription.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/CampContext.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaLanguage.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaPublication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaIssue.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaSection.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaArticle.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaImage.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaAttachment.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaAudioclip.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaComment.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaTopic.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaUser.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaTemplate.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaSubscription.php');
 
 // Campsite template class (Smarty extended)
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/CampTemplate.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/classes/CampTemplate.php');
 
 
 $g_errorList = array();

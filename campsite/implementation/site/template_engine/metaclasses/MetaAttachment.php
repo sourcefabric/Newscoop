@@ -12,8 +12,8 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/Attachment.php');
-require_once($g_documentRoot.'/template_engine/MetaDbObject.php');
-require_once($g_documentRoot.'/template_engine/CampTemplate.php');
+require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
+require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 
 
 /**
