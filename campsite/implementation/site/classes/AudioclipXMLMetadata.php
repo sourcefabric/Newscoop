@@ -3,6 +3,8 @@
  * @package Campsite
  */
 
+global $ADMIN_DIR;
+
 /**
  * Includes
  */
