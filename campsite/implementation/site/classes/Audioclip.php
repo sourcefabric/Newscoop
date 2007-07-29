@@ -460,9 +460,9 @@ class Audioclip {
     	if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
     		return null;
     	}
-    	$tagNs = substr($p_tagName, 0, strpos($p_tagName, ':'));
+    	$tagNs = strstr($p_tagName, ':');
     	if ($tagNs !== false) {
-    		if (!in_array($tagNs, $namespaces)) {
+    		if (!array_key_exists($tagNs, $namespaces)) {
 	    		return PEAR_Error::PEAR_Error("Invalid metatag namespace.");
     		}
     		if (!array_key_exists($p_tagName, $this->m_metaData)) {
