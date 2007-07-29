@@ -86,4 +86,31 @@ define('CAMP_ERROR_READ_FILE',   -600);
 define('CAMP_ERROR_WRITE_FILE',  -700);
 define('CAMP_ERROR_DELETE_FILE', -800);
 
+/**
+ * Try to autoload class definitions before failing. This makes the Campsite
+ * class definition file inclusion optional.
+ *
+ * @param string $class_name
+ */
+function __autoload($p_className)
+{
+	global $Campsite, $ADMIN_DIR, $ADMIN, $g_documentRoot;
+
+	if (!is_string($p_className)) {
+		return;
+	}
+
+	$classDirectories = array('classes',
+							  'template_engine',
+							  'template_engine/clases',
+							  'template_engine/metaclasses');
+	foreach ($classDirectories as $dirName) {
+		$fileName = "$g_documentRoot/$dirName/$p_className.php";
+		if (file_exists($fileName)) {
+			require_once($fileName);
+			return;
+		}
+	}
+}
+
 ?>

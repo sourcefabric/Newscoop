@@ -5,9 +5,16 @@
 <body>
 
 
-{{ list_article length="10" columns="invalid_value" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
-sample content
+{{ list_article length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
+<p>current article: {{ $campsite->current_article_list->getCurrent() }}</p>
+<p>article list index: {{ $campsite->current_article_list->getIndex() }}</p>
+<p>article list column: {{ $campsite->current_article_list->getColumn() }}</p>
 {{ /list_article }}
+
+
+{{ if $campsite->hasProperty('invalid_property') }}
+	<h3>Context error: 'invalid_property' was reported as valid.</h3>
+{{ /if }}
 
 
 {{ invalid_tag }}

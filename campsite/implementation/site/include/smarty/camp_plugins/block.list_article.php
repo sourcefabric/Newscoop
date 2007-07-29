@@ -30,36 +30,34 @@ function smarty_block_list_article($p_params, $p_content, &$p_smarty, &$p_repeat
     $campContext = $p_smarty->get_template_vars('campsite');
     $html = '';
 
+    if (!isset($p_content)) {
+    	$start = 4;
+    	$articleList = new ArticleList($start, $p_params);
+    	$campContext->setCurrentArticleList($articleList);
+    	echo "<p>start: " . $campContext->current_article_list->getStart()
+    		. ", length: " . $campContext->current_article_list->getLength()
+    		. ", limit: " . $campContext->current_article_list->getLimit()
+    		. ", columns: " . $campContext->current_article_list->getColumns()
+			. ", has next elements: " . (int)$campContext->current_article_list->hasNextElements() . "</p>\n";
+    	echo "<p>name: " . $campContext->current_article_list->getName() . "</p>\n";
+    	echo "<p>constraints: " . $campContext->current_article_list->getConstraintsString() . "</p>\n";
+    	echo "<p>order: " . $campContext->current_article_list->getOrderString() . "</p>\n";
+    }
+
+    $currentArticle = $campContext->current_article_list->defaultIterator()->current();
+    if (is_null($currentArticle)) {
+	    $p_repeat = false;
+	    $campContext->resetCurrentArticleList();
+    	return $html;
+    } else {
+    	$p_repeat = true;
+    }
+
     if (isset($p_content)) {
-    	foreach ($p_params as $param=>$value) {
-    		$param = strtolower($param);
-    		switch ($param) {
-    			case 'length':
-    			case 'columns':
-    			case 'name':
-    			case 'constraints':
-    			case 'order':
-    				if ($param == 'length' || $param == 'columns') {
-    					$intValue = (int)$value;
-    					if ("$intValue" != $value) {
-    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $param in statement list_article");
-    					}
-	    				$$param = (int)$value;
-    				} else {
-	    				$$param = $value;
-    				}
-    				break;
-    			default:
-    				CampTemplate::singleton()->trigger_error("invalid parameter $param in list_article", $p_smarty);
-    		}
+		$html = $p_content;
+	    if ($p_repeat) {
+    		$campContext->current_article_list->defaultIterator()->next();
     	}
-    	echo "<p>length: $length</p>\n";
-    	echo "<p>columns: $columns</p>\n";
-    	echo "<p>name: $name</p>\n";
-    	echo "<p>constraints: $constraints</p>\n";
-    	echo "<p>order: $order</p>\n";
-    	$html .= "</pre>\n";
-    	$html .= "<pre>content:\n$p_content\n</pre>\n";
     }
 
     return $html;

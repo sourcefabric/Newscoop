@@ -75,6 +75,16 @@ class ArticleListTest extends PHPUnit_Framework_TestCase {
           'This test has not been implemented yet.'
         );
     }
+
+    /**
+     * @todo Implement testProcessParameters().
+     */
+    public function testProcessParameters() {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
 }
 
 // Call ArticleListTest::main() if this source file is executed directly.

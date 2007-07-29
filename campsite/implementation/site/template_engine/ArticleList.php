@@ -22,10 +22,18 @@ class ArticleList extends ListObject
 	 * @param bool $p_hasNextElements
 	 * @return array
 	 */
-	public function createList($p_start = 0, $p_limit = 0, &$p_hasNextElements)
+	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements)
 	{
-		$p_hasNextElements = false;
-		return array();
+		if ($p_start < 1) {
+			$p_start = 1;
+		}
+		$articlesList = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
+		$p_hasNextElements = $p_limit > 0
+							&& (($p_start + $p_limit - 1) < count($articlesList));
+		if ($p_limit > 0) {
+			return array_slice($articlesList, $p_start - 1, $p_limit);
+		}
+		return array_slice($articlesList, $p_start - 1);
 	}
 
 	/**
@@ -34,7 +42,7 @@ class ArticleList extends ListObject
 	 * @param string $p_constraintsStr
 	 * @return array
 	 */
-	public function processConstraints($p_constraintsStr)
+	protected function ProcessConstraints($p_constraintsStr)
 	{
 		return array();
 	}
@@ -45,9 +53,45 @@ class ArticleList extends ListObject
 	 * @param string $p_orderStr
 	 * @return array
 	 */
-	public function processOrderString($p_orderStr)
+	protected function ProcessOrderString($p_orderStr)
 	{
 		return array();
+	}
+
+	/**
+	 * Processes the input parameters passed in an array; drops the invalid
+	 * parameters and parameters with invalid values. Returns an array of
+	 * valid parameters.
+	 *
+	 * @param array $p_parameters
+	 * @return array
+	 */
+	protected function ProcessParameters($p_parameters)
+	{
+		$parameters = array();
+    	foreach ($p_parameters as $parameter=>$value) {
+    		$parameter = strtolower($parameter);
+    		switch ($parameter) {
+    			case 'length':
+    			case 'columns':
+    			case 'name':
+    			case 'constraints':
+    			case 'order':
+    				if ($parameter == 'length' || $parameter == 'columns') {
+    					$intValue = (int)$value;
+    					if ("$intValue" != $value || $intValue < 0) {
+    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article");
+    					}
+	    				$parameters[$parameter] = (int)$value;
+    				} else {
+	    				$parameters[$parameter] = $value;
+    				}
+    				break;
+    			default:
+    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article", $p_smarty);
+    		}
+    	}
+    	return $parameters;
 	}
 }
 

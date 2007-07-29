@@ -24,7 +24,7 @@ class ListObjectSample extends ListObject
 	 * @param bool $p_hasNextElements
 	 * @return array
 	 */
-	public function createList($p_start, $p_limit, &$p_hasNextElements)
+	protected function CreateList($p_start, $p_limit, &$p_hasNextElements)
 	{
 		$objects = array('element 1', 'element 2', 'element 3', 'element 4',
 						 'element 5', 'element 6', 'element 7', 'element 8');
@@ -61,7 +61,7 @@ class ListObjectSample extends ListObject
 	 * @param string $p_constraintsStr
 	 * @return array
 	 */
-	public function processConstraints($p_constraintsStr)
+	protected function ProcessConstraints($p_constraintsStr)
 	{
 		return array();
 	}
@@ -72,9 +72,22 @@ class ListObjectSample extends ListObject
 	 * @param string $p_orderStr
 	 * @return array
 	 */
-	public function processOrderString($p_orderStr)
+	protected function ProcessOrderString($p_orderStr)
 	{
 		return array();
+	}
+
+	/**
+	 * Processes the input parameters passed in an array; drops the invalid
+	 * parameters and parameters with invalid values. Returns an array of
+	 * valid parameters.
+	 *
+	 * @param array $p_parameters
+	 * @return array
+	 */
+	protected function ProcessParameters($p_parameters)
+	{
+		return $p_parameters;
 	}
 }
 
@@ -133,7 +146,7 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     public function testIterator()
     {
     	$sampleListObject = new ListObjectSample();
-    	$this->assertTrue(is_a($sampleListObject->iterator(), 'ArrayIterator'));
+    	$this->assertTrue(is_a($sampleListObject->getIterator(), 'ArrayIterator'));
     }
 
     /**
@@ -144,10 +157,10 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$sampleListObject = new ListObjectSample();
     	$this->assertFalse($sampleListObject->isLimited());
 
-    	$sampleListObject = new ListObjectSample(0, 10);
+    	$sampleListObject = new ListObjectSample(0, array('length'=>10));
     	$this->assertTrue($sampleListObject->isLimited());
 
-    	$sampleListObject = new ListObjectSample(5, 5);
+    	$sampleListObject = new ListObjectSample(5, array('length'=>5));
     	$this->assertTrue($sampleListObject->isLimited());
     }
 
@@ -159,10 +172,10 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$sampleListObject = new ListObjectSample();
     	$this->assertEquals(0, $sampleListObject->getLimit());
 
-    	$sampleListObject = new ListObjectSample(0, 10);
+    	$sampleListObject = new ListObjectSample(0, array('length'=>10));
     	$this->assertEquals(10, $sampleListObject->getLimit());
 
-    	$sampleListObject = new ListObjectSample(0, 'invalid value');
+    	$sampleListObject = new ListObjectSample(0, array('length'=>'invalid value'));
     	$this->assertEquals(0, $sampleListObject->getLimit());
     }
 
@@ -195,7 +208,7 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$sampleListObject = new ListObjectSample(10);
     	$this->assertEquals(10, $sampleListObject->getEnd());
 
-    	$sampleListObject = new ListObjectSample(4, 2);
+    	$sampleListObject = new ListObjectSample(4, array('length'=>2));
     	$this->assertEquals(6, $sampleListObject->getEnd());
     }
 
@@ -210,10 +223,10 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$sampleListObject = new ListObjectSample(10);
     	$this->assertFalse($sampleListObject->hasNextElements());
 
-    	$sampleListObject = new ListObjectSample(5, 5);
+    	$sampleListObject = new ListObjectSample(5, array('length'=>5));
     	$this->assertFalse($sampleListObject->hasNextElements());
 
-    	$sampleListObject = new ListObjectSample(4, 2);
+    	$sampleListObject = new ListObjectSample(4, array('length'=>2));
     	$this->assertTrue($sampleListObject->hasNextElements());
     }
 
@@ -222,29 +235,31 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
      */
     public function testGetColumn()
     {
-    	$sampleListObject = new ListObjectSample(0, 0, null, null, 3);
+    	$sampleListObject = new ListObjectSample(0, array('columns'=>3));
 
-    	$iterator = $sampleListObject->iterator();
-    	$this->assertEquals(0, $sampleListObject->getColumn($iterator));
-
-    	$iterator->next();
+    	$iterator = $sampleListObject->getIterator();
     	$this->assertEquals(1, $sampleListObject->getColumn($iterator));
 
     	$iterator->next();
+    	$this->assertEquals(2, $sampleListObject->getColumn($iterator));
+
     	$iterator->next();
-    	$this->assertEquals(0, $sampleListObject->getColumn($iterator));
+    	$this->assertEquals(3, $sampleListObject->getColumn($iterator));
+
+    	$iterator->next();
+    	$this->assertEquals(1, $sampleListObject->getColumn($iterator));
     }
 
     /**
      * @todo Implement testColumns().
      */
-    public function testColumns()
+    public function testGetColumns()
     {
     	$sampleListObject = new ListObjectSample();
-    	$this->assertEquals(0, $sampleListObject->columns());
+    	$this->assertEquals(0, $sampleListObject->getColumns());
 
-    	$sampleListObject = new ListObjectSample(0, 0, null, null, 3);
-    	$this->assertEquals(3, $sampleListObject->columns());
+    	$sampleListObject = new ListObjectSample(0, array('columns'=>3));
+    	$this->assertEquals(3, $sampleListObject->getColumns());
     }
 }
 

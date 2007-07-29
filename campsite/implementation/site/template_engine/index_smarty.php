@@ -13,28 +13,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/liveuser_configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/parser_utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
-
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/SyntaxError.php');
-
-// Meta classes
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/CampContext.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaLanguage.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaPublication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaIssue.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaSection.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaArticle.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaImage.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaAttachment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaAudioclip.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaComment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaTopic.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaUser.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaTemplate.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/MetaSubscription.php');
-
-// Campsite template class (Smarty extended)
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/classes/CampTemplate.php');
 
 
 $g_errorList = array();
@@ -95,7 +73,7 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 $tpl = CampTemplate::singleton();
 
 
-$context =& new CampContext();
+$context = $tpl->context();
 
 
 // Language object

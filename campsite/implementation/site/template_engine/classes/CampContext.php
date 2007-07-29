@@ -13,9 +13,7 @@ define('OF_OBJECT_STRING', 'of object');
  * @package Campsite
  */
 final class CampContext {
-    //
-    private $m_properties = null;
-    //
+	// Defines the object types
     private $m_objectTypes = array('publication'=>'Publication',
 								   'issue'=>'Issue',
 								   'section'=>'Section',
@@ -30,11 +28,19 @@ final class CampContext {
 								   'template'=>'Template',
 								   'subscription'=>'Subscription'
 								   );
-    //
+
+    // Stores the context objects.
 	private $m_objects = array();
+
+    // Stores the context properties.
+    private $m_properties = null;
+
+    // Stores the readonly properties; the users can't modify them directly.
+    private $m_readonlyProperties = null;
 
 
     /**
+     * constructor
      *
      */
     final public function __construct()
@@ -45,19 +51,26 @@ final class CampContext {
 
         $this->m_properties['htmlencoding'] = false;
         // ...
-        // complet list of misc properties
+        // complete list of misc properties
         // ...
+
+        $this->m_readonlyProperties['current_article_list'] = new ArticleList(-1);
+        $this->m_readonlyProperties['article_list'] = array($this->m_readonlyProperties['current_article_list']);
     } // fn __construct
 
 
     /**
+     * Overloaded method call to give access to context properties.
      *
+     * @param string $p_element - the property name
+     * @return mix - the property value
      */
     final public function __get($p_element)
     {
         try {
 	    	$p_element = CampContext::TranslateProperty($p_element);
 
+	    	// Verify if an object of this type exists
         	if (array_key_exists($p_element, $this->m_objectTypes)) {
                 if (!isset($this->m_objects[$p_element])
         			    || is_null($this->m_objects[$p_element])) {
@@ -66,28 +79,41 @@ final class CampContext {
                 return $this->m_objects[$p_element];
             }
 
+            // Verify if a property with this name exists
             if (is_array($this->m_properties)
                     && array_key_exists($p_element, $this->m_properties)) {
                 return $this->m_properties[$p_element];
             }
 
-            throw new InvalidPropertyException(get_class($this), $p_element);
-        } catch (InvalidPropertyException $e) {
+            // Verify if a readonly property with this name exists
+            if (is_array($this->m_readonlyProperties)
+                    && array_key_exists($p_element, $this->m_readonlyProperties)) {
+                return $this->m_readonlyProperties[$p_element];
+            }
+
+            // No object of this type of property with this name exist.
             $this->trigger_invalid_property_error($p_element);
-            return null;
+        } catch (InvalidObjectException $e) {
+        	$this->trigger_invalid_object_error($e->getClassName());
         }
+		return null;
     } // fn __get
 
 
     /**
+     * Overloade method call to set the context properties.
      *
+     * @param string $p_element - property name
+     * @param string $p_value - value of the property
+     * @return mix - the property value
      */
     final public function __set($p_element, $p_value)
     {
     	$p_element = CampContext::TranslateProperty($p_element);
 
-    	try {
-	    	if (array_key_exists($p_element, $this->m_objectTypes)) {
+    	// Verify if an object of this type exists
+    	if (array_key_exists($p_element, $this->m_objectTypes)) {
+	    	try {
                 if (!is_object($p_value)) {
                     throw new InvalidObjectException($p_element);
                 }
@@ -104,28 +130,82 @@ final class CampContext {
                 }
 
                 return $this->m_objects[$p_element] = $p_value;
-            }
+	    	} catch (InvalidObjectException $e) {
+    	        $this->trigger_invalid_object_error($e->getClassName());
+        	    return null;
+    		}
+        }
 
-            try {
-                if (is_array($this->m_properties)
-                        && array_key_exists($p_element, $this->m_properties)) {
-                    return $this->m_properties[$p_element] = $p_value;
-                }
+        // Verify if a property with this name exists
+		if (is_array($this->m_properties)
+				&& array_key_exists($p_element, $this->m_properties)) {
+			return $this->m_properties[$p_element] = $p_value;
+		}
 
-                throw new InvalidPropertyException(get_class($this), $p_element);
-            } catch (InvalidPropertyException $e) {
-                $this->trigger_invalid_property_error($p_element);
-                return null;
-            }
-    	} catch (InvalidObjectException $e) {
-            $this->trigger_invalid_object_error($e->getClassName());
-            return null;
-    	}
+		// No object of this type of property with this name exist.
+		$this->trigger_invalid_property_error($p_element);
+		return null;
     } // fn __set
 
 
+	/**
+	 * Returns true if the given property exists.
+	 *
+	 * @param bool $p_property
+	 */
+    public function hasProperty($p_property)
+    {
+    	return array_key_exists($p_property, $this->m_objectTypes)
+    			|| (is_array($this->m_properties)
+					&& array_key_exists($p_property, $this->m_properties))
+    			|| (is_array($this->m_readonlyProperties)
+					&& array_key_exists($p_property, $this->m_readonlyProperties));
+    }
+
+
     /**
+     * Sets the current article list.
      *
+     * @param object $p_list
+     * @return void
+     */
+	public function setCurrentArticleList(&$p_list)
+    {
+    	if (!is_object($p_list)) {
+    		throw new InvalidObjectException($p_list);
+    	}
+    	if (!is_a($p_list, 'ArticleList')) {
+    		throw new InvalidObjectException($p_list);
+    	}
+    	$this->m_readonlyProperties['article_list'][] =& $p_list;
+    	$this->m_readonlyProperties['current_article_list'] =& $p_list;
+    }
+
+
+    /**
+     * Resets the current article list.
+     *
+     * @return void
+     */
+    public function resetCurrentArticleList()
+    {
+    	if ($this->current_article_list->isBlank()) {
+    		return;
+    	}
+   		array_pop($this->m_readonlyProperties['article_list']);
+	    if (count($this->m_readonlyProperties['article_list']) > 1) {
+	    	$this->m_readonlyProperties['current_article_list'] = array_pop($this->m_readonlyProperties['article_list']);
+	    } else {
+	   		$this->m_readonlyProperties['current_article_list'] = new ArticleList(-1);
+	    }
+    }
+
+
+    /**
+     * Creates an object of the given type. Returns the created object.
+     *
+     * @param string $p_objectType
+     * @return object
      */
     private function createObject($p_objectType)
     {
@@ -140,13 +220,19 @@ final class CampContext {
     	}
     	require_once($classFullPath);
 
-    	$className = 'Meta'.$p_objectType;
+    	$className = 'Meta'.$this->m_objectTypes[$p_objectType];
     	$this->m_objects[$p_objectType] =& new $className;
 
     	return $this->m_objects[$p_objectType];
     } // fn createObject
 
 
+    /**
+     * Processes a property name; returns a valid property name.
+     *
+     * @param string $p_property
+     * @return string
+     */
     static function TranslateProperty($p_property)
     {
     	return strtolower($p_property);
@@ -154,7 +240,9 @@ final class CampContext {
 
 
     /**
+     * Triggers an invalid object error.
      *
+     * @param string $p_object - object name
      */
     final protected function trigger_invalid_object_error($p_object)
     {
@@ -162,9 +250,11 @@ final class CampContext {
     } // fn trigger_invalid_object_error
 
 
-    /**
-     *
-     */
+	/**
+	 * Triggers an invalid property error.
+	 *
+	 * @param string $p_property - property name
+	 */
     final protected function trigger_invalid_property_error($p_property)
     {
         $errorMessage = INVALID_PROPERTY_STRING . " $p_property "

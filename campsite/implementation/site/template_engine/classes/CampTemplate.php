@@ -17,14 +17,23 @@ require_once($g_documentRoot.'/include/smarty/Smarty.class.php');
 /**
  * @package Campsite
  */
-final class CampTemplate extends Smarty {
+final class CampTemplate extends Smarty
+{
 
     /**
      * Holds instance of the class.
      *
      * @var object
      */
-    private static $m_instance = null;
+	private static $m_instance = null;
+
+
+	/**
+	 * Holds the context object;
+	 *
+	 * @var object
+	 */
+	private $m_context = null;
 
 
     private function __construct()
@@ -47,7 +56,7 @@ final class CampTemplate extends Smarty {
         $this->plugins_dir = array(CS_PATH_SMARTY.DIR_SEP.'camp_plugins',
                                    CS_PATH_SMARTY.DIR_SEP.'plugins');
         $this->template_dir = CS_PATH_SMARTY_TEMPLATES.DIR_SEP.$config->getSetting('site.theme');
-        $this->compile_dir = $Campsite['CAMPSITE_DIR'].'/var/smarty/templates_c';
+        $this->compile_dir = CS_PATH_SMARTY_TEMPLATES.DIR_SEP.'templates_c';
     } // fn __constructor
 
 
@@ -67,12 +76,33 @@ final class CampTemplate extends Smarty {
     } // fn singleton
 
 
+    /**
+     * Returns the template context object.
+     *
+     * @return object
+     */
+    public function &context()
+    {
+    	if (!isset($this->m_context)) {
+    		$this->m_context = new CampContext();
+    	}
+    	return $this->m_context;
+    }
+
+
+    /**
+     * Inserts an error message into the errors list.
+     *
+     * @param string $p_message
+     * @param object $p_smarty
+     * @return void
+     */
     public function trigger_error($p_message, $p_smarty = null)
     {
     	if (!is_null($p_smarty)) {
-    		return $p_smarty->trigger_error($p_message);
+    		$p_smarty->trigger_error($p_message);
     	} else {
-    		return trigger_error("Campsite error: $p_message");
+    		trigger_error("Campsite error: $p_message");
     	}
     }
 

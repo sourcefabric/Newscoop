@@ -1,8 +1,22 @@
 <?php
 
-//require_once('spl.php');
 require_once('Operator.php');
 require_once('ComparisonOperation.php');
+
+
+/**
+ * DO NOT DELETE THIS CLASS. Deleting this class will generate hazardous
+ * behavior of the iterator: after reaching the array end, the next()
+ * method will rewind the pointer.
+ *
+ */
+class MyArrayObject extends ArrayObject
+{
+	public function getIterator()
+	{
+		return new ArrayIterator($this);
+	}
+}
 
 
 /**
@@ -82,7 +96,16 @@ abstract class ListObject
 	protected $m_objects;
 
 	/**
+	 * The default iterator for the current object.
+	 *
+	 * @var object
+	 */
+	protected $m_defaultIterator = null;
+
+	/**
 	 * constructor
+	 * For blank lists the start element index ($p_start) is smaller
+	 * than 0.
 	 *
 	 * @param int $p_start
 	 * @param int $p_limit
@@ -91,19 +114,56 @@ abstract class ListObject
 	 * @param int $p_columns
 	 * @param string $p_name
 	 */
-	public function __construct($p_start = 0, $p_limit = 0, $p_constraintsStr = null,
-								$p_orderStr = null, $p_columns = 0, $p_name = null)
+	public function __construct($p_start = 0, $p_parameters = array())
 	{
+		/**
+		 * For blank lists the start element index ($p_start) is smaller
+		 * than 0.
+		 */
+		if ($p_start < 0) {
+			$this->m_start = -1;
+			$this->m_limit = -1;
+			$this->m_columns = 0;
+			$this->m_objects = new MyArrayObject(array());
+			return;
+		}
+
+		/**
+		 * Processes the input parameters passed in an array; drops the invalid
+		 * parameters and parameters with invalid values. Returns an array of
+		 * valid parameters.
+		 */
+		$parameters = $this->ProcessParameters($p_parameters);
+
+		/**
+		 * Set common parameters:
+		 * - start element index (m_start)
+		 * - maximum list length (m_limit)
+		 * - list columns (m_columns)
+		 * - constraints string (m_constraintsStr)
+		 * - order string (m_orderStr)
+		 * - list name (m_name)
+		 */
 		$this->m_start = is_numeric($p_start) ? $p_start : 0;
-		$this->m_limit = is_numeric($p_limit) ? $p_limit : 0;
-		$this->m_constraints = $p_constraintsStr;
-		$this->m_constraints = $this->processConstraints($p_constraintsStr);
-		$this->m_orderStr = $p_orderStr;
-		$this->m_order = $this->processOrderString($p_orderStr);
-		$this->m_columns = $p_columns;
-		$this->m_name = is_string($p_name) && trim($p_name) != '' ? $p_name : $this->defaultName();
-		$objects = $this->createList($p_start, $p_limit, $this->m_hasNextElements);
-		$this->m_objects = new ArrayObject($objects);
+		$this->m_limit = isset($parameters['length']) ? $parameters['length'] : 0;
+		$this->m_columns = isset($parameters['columns']) ? $parameters['columns'] : 0;
+		$this->m_constraintsStr = isset($parameters['constraints']) ? $parameters['constraints'] : '';
+		$this->m_orderStr = isset($parameters['order']) ? $parameters['order'] : '';
+		$name = isset($parameters['name']) ? $parameters['name'] : '';
+		$this->m_name = is_string($name) && trim($name) != '' ? $name : $this->defaultName();
+
+		/**
+		 * Process the list constraints.
+		 */
+		$this->m_constraints = $this->ProcessConstraints($this->m_constraintsStr);
+
+		/**
+		 * Process order constraints.
+		 */
+		$this->m_order = $this->ProcessOrderString($this->m_orderStr);
+
+		$objects = $this->CreateList($this->m_start, $this->m_limit, $this->m_hasNextElements);
+		$this->m_objects = new MyArrayObject($objects);
 	}
 
 	/**
@@ -117,7 +177,7 @@ abstract class ListObject
 	 * @param bool $p_hasNextElements
 	 * @return array
 	 */
-	abstract public function createList($p_start = 0, $p_limit = 0, &$p_hasNextElements);
+	abstract protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements);
 
 	/**
 	 * Processes list constraints passed in a string.
@@ -125,7 +185,7 @@ abstract class ListObject
 	 * @param string $p_constraintsStr
 	 * @return array
 	 */
-	abstract public function processConstraints($p_constraintsStr);
+	abstract protected function ProcessConstraints($p_constraintsStr);
 
 	/**
 	 * Processes order constraints passed in a string.
@@ -133,7 +193,17 @@ abstract class ListObject
 	 * @param string $p_orderStr
 	 * @return array
 	 */
-	abstract public function processOrderString($p_orderStr);
+	abstract protected function ProcessOrderString($p_orderStr);
+
+	/**
+	 * Processes the input parameters passed in an array; drops the invalid
+	 * parameters and parameters with invalid values. Returns an array of
+	 * valid parameters.
+	 *
+	 * @param array $p_parameters
+	 * @return array
+	 */
+	abstract protected function ProcessParameters($p_parameters);
 
 	/**
 	 * Generates a unique name for this list object.
@@ -146,13 +216,92 @@ abstract class ListObject
 	}
 
 	/**
+	 * Returns the default iterator of this list.
+	 *
+	 * @return object of type ArrayIterator
+	 */
+	public function defaultIterator()
+	{
+		if (!isset($this->m_defaultIterator)) {
+			$this->m_defaultIterator = $this->getIterator();
+		}
+		return $this->m_defaultIterator;
+	}
+
+	/**
+	 * Returns the index of the current element of the default iterator.
+	 *
+	 * @return int
+	 */
+	public function getCurrent()
+	{
+		if ($this->isEmpty()) {
+			return 0;
+		}
+		return $this->defaultIterator()->current();
+	}
+
+	/**
+	 * Returns the index of the current element of the default iterator.
+	 *
+	 * @return int
+	 */
+	public function getIndex()
+	{
+		if ($this->isEmpty()) {
+			return 0;
+		}
+		return 1 + $this->defaultIterator()->key();
+	}
+
+	/**
 	 * Returns an iterator for this list.
 	 *
 	 * @return object of type ArrayIterator
 	 */
-	public function iterator()
+	public function getIterator()
 	{
 		return $this->m_objects->getIterator();
+	}
+
+	/**
+	 * Returns the list name.
+	 *
+	 * @return string
+	 */
+	public function getName()
+	{
+		return $this->m_name;
+	}
+
+	/**
+	 * Returns the length of the list.
+	 *
+	 * @return int
+	 */
+	public function getLength()
+	{
+		return $this->m_objects->count();
+	}
+
+	/**
+	 * Return true if the list is blank (see the constructor documentation).
+	 *
+	 * @return bool
+	 */
+	public function isBlank()
+	{
+		return $this->m_start < 0;
+	}
+
+	/**
+	 * Return true if the list is empty.
+	 *
+	 * @return bool
+	 */
+	public function isEmpty()
+	{
+		return $this->m_objects->count() == 0;
 	}
 
 	/**
@@ -162,7 +311,7 @@ abstract class ListObject
 	 */
 	public function isLimited()
 	{
-		return $this->m_limit != 0;
+		return $this->m_limit > 0;
 	}
 
 	/**
@@ -176,10 +325,10 @@ abstract class ListObject
 	}
 
 	/**
-	 * Returns the number of the start element of this list in the
+	 * Returns the index of the start element of this list in the
 	 * original list from which this was truncated.
 	 *
-	 * @return unknown
+	 * @return int
 	 */
 	public function getStart()
 	{
@@ -187,10 +336,10 @@ abstract class ListObject
 	}
 
 	/**
-	 * Returns the number of the last element of this list in the
+	 * Returns the index of the last element of this list in the
 	 * original list from which this was truncated.
 	 *
-	 * @return unknown
+	 * @return int
 	 */
 	public function getEnd()
 	{
@@ -212,11 +361,17 @@ abstract class ListObject
 	/**
 	 * Returns the column number for the given iterator
 	 *
-	 * @param object of type ArrayIterator $p_iterator
+	 * @param int
 	 */
-	public function getColumn($p_iterator)
+	public function getColumn($p_iterator = null)
 	{
-		return $p_iterator->key() % $this->m_columns;
+		if (!isset($p_iterator)) {
+			$p_iterator = $this->defaultIterator();
+		}
+		if ($this->m_columns == 0 || $p_iterator->count() == 0) {
+			return 0;
+		}
+		return 1 + ($p_iterator->key() % $this->m_columns);
 	}
 
 	/**
@@ -224,9 +379,29 @@ abstract class ListObject
 	 *
 	 * @return int
 	 */
-	public function columns()
+	public function getColumns()
 	{
 		return $this->m_columns;
+	}
+
+	/**
+	 * Returns the constraints string.
+	 *
+	 * @return string
+	 */
+	public function getConstraintsString()
+	{
+		return $this->m_constraintsStr;
+	}
+
+	/**
+	 * Returns the order string.
+	 *
+	 * @return string
+	 */
+	public function getOrderString()
+	{
+		return $this->m_orderStr;
 	}
 }
 
