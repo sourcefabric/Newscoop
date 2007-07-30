@@ -102,7 +102,7 @@ function __autoload($p_className)
 
 	$classDirectories = array('classes',
 							  'template_engine',
-							  'template_engine/clases',
+							  'template_engine/classes',
 							  'template_engine/metaclasses');
 	foreach ($classDirectories as $dirName) {
 		$fileName = "$g_documentRoot/$dirName/$p_className.php";
