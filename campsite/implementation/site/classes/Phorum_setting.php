@@ -15,10 +15,10 @@ class Phorum_setting extends DatabaseObject {
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['name'] = $p_name;
 		$this->fetch();
-		
+
 		if (is_null($this->m_data['type'])) {
 			$this->m_data['type'] = $p_type;
-			$this->create();			
+			$this->create();
 		}
 	} // constructor
 
@@ -43,11 +43,12 @@ class Phorum_setting extends DatabaseObject {
 		}
 		return $this->m_data['data'];
 	}
-	
+
 	function update($p_value)
 	{
 		if ($this->m_data['type'] == 'S') {
 			$current = $this->get();
+			$current = is_array($current) ? $current : array();
 			$merged  = array_merge($current, $p_value);
 			$this->setProperty('data', serialize($merged));
 		} else {
