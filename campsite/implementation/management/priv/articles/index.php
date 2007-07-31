@@ -17,7 +17,7 @@ if (isset($_SESSION['f_language_selected'])) {
 } else {
 	$f_old_language_selected = 0;
 }
-$f_language_selected = camp_session_get('f_language_selected', 0);
+$f_language_selected = (int)camp_session_get('f_language_selected', 0);
 $offsetVarName = "f_article_offset_".$f_publication_id."_".$f_issue_number."_".$f_language_id."_".$f_section_number;
 $f_article_offset = camp_session_get($offsetVarName, 0);
 $ArticlesPerPage = 15;

@@ -9,7 +9,7 @@ $f_section_number = Input::Get('f_section_number', 'int', 0, true);
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 
 $f_article_code = Input::Get('f_article_code', 'string', 0);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/", true);
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id", true);
 
 list($articleNumber, $languageId) = split("_", $f_article_code);
 

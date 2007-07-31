@@ -25,7 +25,7 @@ $f_edit_mode = camp_session_get('f_edit_mode', 'edit');
 // (you may not want to show them to speed up your loading time)
 $f_show_comments = camp_session_get('f_show_comments', 1);
 // Selected language of the article
-$f_language_selected = camp_session_get('f_language_selected', 0);
+$f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
