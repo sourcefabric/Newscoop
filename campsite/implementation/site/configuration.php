@@ -74,7 +74,7 @@ $Campsite['smarty']['compile_check'] = true;
 $Campsite['smarty']['use_sub_dirs'] = false;
 
 
-// Camsite error codes
+// Campsite error codes
 define('CAMP_SUCCESS', 1);
 define('CAMP_ERROR',   0);
 define('CAMP_ERROR_MKDIR',       -100);
@@ -85,6 +85,7 @@ define('CAMP_ERROR_CREATE_FILE', -500);
 define('CAMP_ERROR_READ_FILE',   -600);
 define('CAMP_ERROR_WRITE_FILE',  -700);
 define('CAMP_ERROR_DELETE_FILE', -800);
+define('CAMP_ERROR_UPLOAD_FILE', -900);
 
 /**
  * Try to autoload class definitions before failing. This makes the Campsite

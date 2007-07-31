@@ -463,6 +463,10 @@ function camp_get_error_message($p_errorCode, $p_arg1 = null, $p_arg2 = null)
 			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
 			.' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
 		break;
+    case CAMP_ERROR_UPLOAD_FILE:
+        return getGS("The system was unable to upload the file '$1'. ", basename($p_arg1))
+            .getGS('Please check the file you are trying to upload, it might be corrupted.');
+        break;
 	case CAMP_ERROR_MKDIR:
 		return getGS("The system was unable to create the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
 		break;

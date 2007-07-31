@@ -55,23 +55,28 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
 	return;
     }
 
-    // --- Return on socket errros ---
+    // --- Return on socket errors ---
     if (preg_match ('/^fsockopen/i', $p_string)){
         return;
     }
 
-    // --- Return on unlink errros ---
+    // --- Return on unlink errors ---
     if (preg_match ('/^unlink/i', $p_string)){
         return;
     }
 
-    // --- Return on upload file errros ---
+    // --- Return on upload file errors ---
     if (preg_match ('/^move_uploaded_file/i', $p_string)){
         return;
     }
 
     // -- Return on getimagesize errors --
     if (preg_match ('/^getimagesize/i', $p_string)){
+        return;
+    }
+
+    // -- Return on imagecreate* errors --
+    if (preg_match ('/^imagecreate/i', $p_string)) {
         return;
     }
 

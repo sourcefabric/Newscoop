@@ -506,10 +506,13 @@ class Image extends DatabaseObject {
 	        }
 	    }
 		chmod($target, 0644);
-		
+
 		$createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
 		if ($createMethodName != null) {
 			$imageHandler = $createMethodName($target);
+            if ($imageHandler == false) {
+                return new PEAR_Error(camp_get_error_message(CAMP_ERROR_UPLOAD_FILE, $p_fileVar['name']), CAMP_ERROR_UPLOAD_FILE);
+            }
 			$thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'],
 												 $Campsite['THUMBNAIL_MAX_SIZE']);
 			$result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
