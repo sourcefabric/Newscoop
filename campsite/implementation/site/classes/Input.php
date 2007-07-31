@@ -118,7 +118,7 @@ class Input {
 						.', but received type '.gettype($_REQUEST[$p_varName]).'.'
 						.' Value is "'.$_REQUEST[$p_varName].'".';
 				}
-				return $p_defaultValue;
+				return (int)$p_defaultValue;
 			}
 			break;
 		case 'string':

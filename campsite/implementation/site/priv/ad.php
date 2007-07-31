@@ -6,6 +6,7 @@ $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 ?>
 <p>
+<FORM>
 <CENTER>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER" style="margin-top: 50px; margin-bottom: 50px;">
 <TR>
