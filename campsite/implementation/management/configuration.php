@@ -70,5 +70,6 @@ define('CAMP_ERROR_CREATE_FILE', -500);
 define('CAMP_ERROR_READ_FILE',   -600);
 define('CAMP_ERROR_WRITE_FILE',  -700);
 define('CAMP_ERROR_DELETE_FILE', -800);
+define('CAMP_ERROR_UPLOAD_FILE', -900);
 
 ?>
