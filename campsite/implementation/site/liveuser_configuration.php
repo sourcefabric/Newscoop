@@ -185,7 +185,7 @@ $liveuserConfig = array (
         )
     );
 
-
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/DB.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/LiveUser/Admin.php');
 
 $LiveUser =& LiveUser::factory($liveuserConfig);
