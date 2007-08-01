@@ -24,8 +24,11 @@ camp_html_content_top(getGS("Configure section"), $topArray);
 $url_args1 = "Pub=$Pub&Issue=$Issue&Language=$Language";
 $url_args2 = $url_args1."&Section=$Section";
 
-$languageSelectedObj =& new Language($Language);
-$editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
+$languageObj =& new Language($Language);
+if (!is_object($languageObj)) {
+  $languageObj =& new Language(1);
+}
+$editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
 editor_load_xinha('cDescription', $g_user, $editorLanguage);
 
 ?>
