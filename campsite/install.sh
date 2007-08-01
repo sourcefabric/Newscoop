@@ -1,5 +1,19 @@
 #!/bin/bash
 
+
+detect_ubuntu()
+{
+    is_ubuntu=false
+    if [ ! -f /proc/version ]; then
+        is_ubuntu=false
+    else
+        count_def=`cat /proc/version | grep -i ubuntu | wc -l`
+        if [ $count_def -gt 0 ]; then
+            is_ubuntu=true
+        fi
+    fi
+}
+
 do_configure()
 {
     rm -f install_log
@@ -90,13 +104,14 @@ install_campsite()
 	echo "For help with this command, run:"
 	echo "    $BIN_DIR/campsite-create-instance --help"
 	echo "or read the manual at:"
-	echo "    http://code.campware.org/manuals/campsite/2.7/index.php?id=147"
+	echo "    http://code.campware.org/manuals/campsite/3.0/index.php?id=147"
 	echo
     fi
 }
 
 
 # start execution
+detect_ubuntu
 if [ ! -x ./configure ]; then
     echo -e "Install script must be started from campsite directory!\nAborting..."
     exit 1
@@ -141,9 +156,17 @@ do_configure --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_b
 compile_sources
 $MAKE test_install &> /dev/null
 if [ $? -ne 0 ] && [ $my_id -ne 0 ] && ! $USER_INSTALL; then
-    echo -e "\nThe root password is needed in order to install campsite."
+    echo -e "\nYou need administrative rights in order to install Campsite."
+    if $is_ubuntu; then
+	admin_user="Your"
+	echo -e "\nYou are required to input your password in order to receive"
+	echo "administrative rights."
+    else
+	admin_user="Root"
+        echo -e "\nThe root password is needed in order to receive adminnistrative rights."
+    fi
     while true; do
-	echo -n "Root password: "
+	echo -n "$admin_user password: "
 	archive_path=`pwd`
 	su - $ROOT_USER -c "echo \"\"; cd $archive_path; ./install.sh --go_to_install" 2> /dev/null
 	err_code=$?
