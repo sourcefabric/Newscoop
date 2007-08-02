@@ -115,11 +115,20 @@ final class CampURI {
             } else {
                 // ... otherwise we build the uri from the server itself.
                 //
+                // checks whether the site is being queried through SSL
+                if (isset($_SERVER['HTTPS'])
+                        && !empty($_SERVER['HTTPS'])
+                        && (strtolower($_SERVER['HTTPS']) != 'off')) {
+                    $ssl = 's://';
+                } else {
+                    $ssl = '://';
+                }
+
                 // this works at least for apache, some research is needed
                 // in order to support other web servers.
                 if (!empty($_SERVER['PHP_SELF'])
                         && !empty($_SERVER['REQUEST_URI'])) {
-                    $uriString = 'http'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+                    $uriString = 'http' . $ssl . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                 }
 
                 // some cleaning directives
@@ -164,7 +173,8 @@ final class CampURI {
 
         // sets the value for every URI part
         foreach ($this->m_parts as $part) {
-            $this->m_$part = (isset($parts[$part])) ? $parts[$part] : null;
+            $member = 'm_'.$part;
+            $this->$member = (isset($parts[$part])) ? $parts[$part] : null;
         }
 
         // populates the query array
@@ -192,15 +202,16 @@ final class CampURI {
         }
         $uriString = '';
         foreach ($p_parts as $part) {
-            if (!empty($this->m_$part)) {
-                $uriString .= ($part == 'scheme') ? $this->m_$part.'://' : '';
-                $uriString .= ($part == 'user') ? $this->m_$part : '';
-                $uriString .= ($part == 'password') ? ':'.$this->m_$part.'@' : '';
-                $urlString .= ($part == 'host') ? $this->m_$part : '';
-                $urlString .= ($part == 'port') ? ':'.$this->m_$part : '';
-                $urlString .= ($part == 'path') ? $this->m_$part : '';
-                $urlString .= ($part == 'query') ? '?'.$this->m_$part : '';
-                $urlString .= ($part == 'fragment') ? '#'.$this->m_$part : '';
+            $member = 'm_'.$part;
+            if (!empty($this->$member)) {
+                $uriString .= ($part == 'scheme') ? $this->$member.'://' : '';
+                $uriString .= ($part == 'user') ? $this->$member : '';
+                $uriString .= ($part == 'password') ? ':'.$this->$member.'@' : '';
+                $urlString .= ($part == 'host') ? $this->$member : '';
+                $urlString .= ($part == 'port') ? ':'.$this->$member : '';
+                $urlString .= ($part == 'path') ? $this->$member : '';
+                $urlString .= ($part == 'query') ? '?'.$this->$member : '';
+                $urlString .= ($part == 'fragment') ? '#'.$this->$member : '';
             }
         }
 
@@ -216,9 +227,9 @@ final class CampURI {
      */
     public function getBase()
     {
-        $base = $this->getScheme.'://'.$this->getHost;
-        if (is_numeric($this->getPort)) {
-            $base .= ':'.$this->getPort;
+        $base = $this->getScheme().'://'.$this->getHost();
+        if (is_numeric($this->getPort())) {
+            $base .= ':'.$this->getPort();
         }
 
         return $base;
@@ -410,7 +421,7 @@ final class CampURI {
      */
     public function setPort($p_port)
     {
-        $this->m_port = $p_port;
+        $this->m_port = (int)$p_port;
     } // fn setPort
 
 
@@ -448,6 +459,18 @@ final class CampURI {
     {
         $this->m_fragment = $p_fragment;
     } // fn setFragment
+
+
+    /**
+     * Returns whether the site is running over SSL or not.
+     *
+     * @return boolean
+     *    true on success, false on failure
+     */
+    public function isSSL()
+    {
+        return ($this->getScheme() == 'https') ? true : false;
+    } // fn isSSL
 
 
     /**
