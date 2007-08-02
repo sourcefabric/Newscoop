@@ -4,13 +4,19 @@
  */
 
 
-define('INVALID_OBJECT_STRING', 'invalid object');
-define('INVALID_PROPERTY_STRING', 'invalid property');
-define('OF_OBJECT_STRING', 'of object');
+/**
+ * Includes
+ */
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
+// is not defined in these cases.
+$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+
+require_once($g_documentRoot.'/template_engine/include/constants.php');
 
 
 /**
- * @package Campsite
+ * definition of CampContext class
  */
 final class CampContext {
 	// Defines the object types

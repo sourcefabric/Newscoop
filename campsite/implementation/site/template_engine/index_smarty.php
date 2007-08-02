@@ -113,7 +113,7 @@ $context->user = new MetaUser(1);
 
 
 // Audioclip object
-$context->audioclip = new MetaAudioclip('7426a84892288c93');
+$context->audioclip = new MetaAudioclip('7160d04166d69f50');
 
 
 // Article comment

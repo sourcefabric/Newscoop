@@ -12,12 +12,7 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/template_engine/Exceptions.php');
-
-
-define('INVALID_PROPERTY_STRING', 'invalid property');
-define('INVALID_VALUE_STRING', 'invalid value');
-define('OF_PROPERTY_STRING', 'of property');
-define('OF_OBJECT_STRING', 'of object');
+require_once($g_documentRoot.'/template_engine/include/constants.php');
 
 
 /**
