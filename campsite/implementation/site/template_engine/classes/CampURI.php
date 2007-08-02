@@ -28,7 +28,7 @@ final class CampURI {
      * @var array
      */
     var $m_parts = array('scheme',
-                         'username',
+                         'user',
                          'password',
                          'host',
                          'port',
@@ -54,7 +54,7 @@ final class CampURI {
     /**
      * @var string
      */
-    var $m_username = null;
+    var $m_user = null;
 
     /**
      * @var string
@@ -333,10 +333,10 @@ final class CampURI {
      * @return string
      *    m_username The username value
      */
-    public function getUsername()
+    public function getUser()
     {
-        return $this->m_username;
-    } // fn getUsername
+        return $this->m_user;
+    } // fn getUser
 
 
     /**
@@ -428,10 +428,10 @@ final class CampURI {
     /**
      *
      */
-    public function setUsername($p_username)
+    public function setUser($p_user)
     {
-        $this->m_username = $p_username;
-    } // fn setUsername
+        $this->m_user = $p_user;
+    } // fn setUser
 
 
     /**

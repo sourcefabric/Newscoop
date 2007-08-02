@@ -14,6 +14,7 @@ require_once('ListObjectTest.php');
 require_once('ArticleListTest.php');
 require_once('CampDatabaseTest.php');
 require_once('CampConfigTest.php');
+require_once('CampURITest.php');
 
 
 class Framework_AllTests
@@ -38,6 +39,8 @@ class Framework_AllTests
 
         $suite->addTestSuite('CampDatabaseTest');
         $suite->addTestSuite('CampConfigTest');
+
+        $suite->addTestSuite('CampURITest');
 
         return $suite;
     }
