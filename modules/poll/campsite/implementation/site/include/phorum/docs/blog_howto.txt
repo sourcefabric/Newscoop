@@ -1,0 +1,63 @@
+Phorum Blog How-To
+==================
+
+This document describes how to create a forum which can be used as a blog.
+
+
+1. Create the Blog Forum
+------------------------
+
+   1. When creating the forum, you should set `Visible` to `No`.  This
+      will keep it out of the normal forum list;
+
+   2. The template will use the forum's name as the title of the page;
+
+   3. Set the forum to allow only reading by anyone.
+
+
+2. Create a write group
+-----------------------
+
+   1. Go to `Edit Groups`;
+
+   2. Add a group by creating a new group.  e.g. Blog Writers;
+
+   3. Click on the group name to edit it;
+
+   4. Add the blog forum to the group and grant `Read`, `Reply`,
+      `Create New Topics`, `Edit Their Posts`;
+
+   5. You can create additional groups for moderation of comments, etc.
+
+
+3. Make a cool script (optional)
+--------------------------------
+
+   Somehow, you have to point people at the blog. You could make a redirect
+   using any number of things to redirect your readers to the appropriate URL
+   (list.php?1, where 1 is the forum id of the blog forum). However, I like
+   the following method. Let's asume you want the blog to be a page called 
+   blog.php. Then create blog.php like this:
+
+      <?php
+
+      chdir("/full/path/to/phorum");
+
+      // Below, "1" is the forum_id for the blog forum
+      $PHORUM_CUSTOM_QUERY_STRING="1";
+
+      include_once "./list.php";
+
+      ?>
+
+   If you wanted your front page to be the blog, just create index.php and 
+   put this in it.
+
+
+TODO
+----
+
+   At the time of writing, there are still several parts of the default
+   template that are not yet converted to the blog template. Control Center
+   for example.
+

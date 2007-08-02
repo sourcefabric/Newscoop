@@ -1,0 +1,42 @@
+PUBLICATION SITE ALIASES
+
+TABLES
+
+- PublicationAliases
+Id int(10) unsigned NOT NULL autoincrement PRIMARY KEY,
+IdPublication int(10) unsigned NOT NULL, (references Publications.Id)
+Alias varchar(128) NOT NULL UNIQUE
+
+- Publications
+- create field:
+SiteName int(10) unsigned NOT NULL, (references PublicationAliases.Id)
+- create a new PublicationAliases record and copy Site field to Alias
+- delete Site field
+
+USER INTERFACE
+
+The publication edit page will have two forms:
+* old form having the following fields:
+- Name: input field
+- Site name: dropdown list containing the list of aliases
+- Default language: dropdown list containing the list of available languages
+- Pay period: input field
+- Time unit: dropdown list
+- Unit cost: input field
+- Currency: input field
+- Paid period: input field
+- Trial period: input field
+
+Site name was modified from input field to dropdown list.
+
+* form allowing alias input:
+- Alias: input field
+- Add alias button
+
+* form allowing alias deletion:
+- list containing all aliases
+- Delete button
+
+When pushing delete the selected aliases in the list will be deleted. If the
+alias selected as the site name was selected the script will display an error
+message: the site name alias may not be deleted.

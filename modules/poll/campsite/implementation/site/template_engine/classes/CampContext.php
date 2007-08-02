@@ -1,0 +1,273 @@
+<?php
+/**
+ * @package Campsite
+ */
+
+
+/**
+ * Includes
+ */
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
+// is not defined in these cases.
+$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+
+require_once($g_documentRoot.'/template_engine/include/constants.php');
+
+
+/**
+ * definition of CampContext class
+ */
+final class CampContext {
+	// Defines the object types
+    private $m_objectTypes = array('publication'=>'Publication',
+								   'issue'=>'Issue',
+								   'section'=>'Section',
+								   'article'=>'Article',
+								   'language'=>'Language',
+								   'image'=>'Image',
+								   'attachment'=>'Attachment',
+								   'audioclip'=>'Audioclip',
+								   'comment'=>'Comment',
+								   'topic'=>'Topic',
+								   'user'=>'User',
+								   'template'=>'Template',
+								   'subscription'=>'Subscription'
+								   );
+
+    // Stores the context objects.
+	private $m_objects = array();
+
+    // Stores the context properties.
+    private $m_properties = null;
+
+    // Stores the readonly properties; the users can't modify them directly.
+    private $m_readonlyProperties = null;
+
+
+    /**
+     * constructor
+     *
+     */
+    final public function __construct()
+    {
+        if (!is_null($this->m_properties)) {
+			return;
+		}
+
+        $this->m_properties['htmlencoding'] = false;
+        // ...
+        // complete list of misc properties
+        // ...
+
+        $this->m_readonlyProperties['current_article_list'] = new ArticleList(-1);
+        $this->m_readonlyProperties['article_list'] = array($this->m_readonlyProperties['current_article_list']);
+    } // fn __construct
+
+
+    /**
+     * Overloaded method call to give access to context properties.
+     *
+     * @param string $p_element - the property name
+     * @return mix - the property value
+     */
+    final public function __get($p_element)
+    {
+        try {
+	    	$p_element = CampContext::TranslateProperty($p_element);
+
+	    	// Verify if an object of this type exists
+        	if (array_key_exists($p_element, $this->m_objectTypes)) {
+                if (!isset($this->m_objects[$p_element])
+        			    || is_null($this->m_objects[$p_element])) {
+                    $this->createObject($p_element);
+                }
+                return $this->m_objects[$p_element];
+            }
+
+            // Verify if a property with this name exists
+            if (is_array($this->m_properties)
+                    && array_key_exists($p_element, $this->m_properties)) {
+                return $this->m_properties[$p_element];
+            }
+
+            // Verify if a readonly property with this name exists
+            if (is_array($this->m_readonlyProperties)
+                    && array_key_exists($p_element, $this->m_readonlyProperties)) {
+                return $this->m_readonlyProperties[$p_element];
+            }
+
+            // No object of this type of property with this name exist.
+            $this->trigger_invalid_property_error($p_element);
+        } catch (InvalidObjectException $e) {
+        	$this->trigger_invalid_object_error($e->getClassName());
+        }
+		return null;
+    } // fn __get
+
+
+    /**
+     * Overloade method call to set the context properties.
+     *
+     * @param string $p_element - property name
+     * @param string $p_value - value of the property
+     * @return mix - the property value
+     */
+    final public function __set($p_element, $p_value)
+    {
+    	$p_element = CampContext::TranslateProperty($p_element);
+
+    	// Verify if an object of this type exists
+    	if (array_key_exists($p_element, $this->m_objectTypes)) {
+	    	try {
+                if (!is_object($p_value)) {
+                    throw new InvalidObjectException($p_element);
+                }
+
+                $classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/Meta'
+                               . $this->m_objectTypes[$p_element].'.php';
+                if (!file_exists($classFullPath)) {
+                    throw new InvalidObjectException($p_element);
+                }
+                require_once($classFullPath);
+
+                if (!is_a($p_value, 'Meta'.$this->m_objectTypes[$p_element])) {
+                    throw new InvalidObjectException($p_element);
+                }
+
+                return $this->m_objects[$p_element] = $p_value;
+	    	} catch (InvalidObjectException $e) {
+    	        $this->trigger_invalid_object_error($e->getClassName());
+        	    return null;
+    		}
+        }
+
+        // Verify if a property with this name exists
+		if (is_array($this->m_properties)
+				&& array_key_exists($p_element, $this->m_properties)) {
+			return $this->m_properties[$p_element] = $p_value;
+		}
+
+		// No object of this type of property with this name exist.
+		$this->trigger_invalid_property_error($p_element);
+		return null;
+    } // fn __set
+
+
+	/**
+	 * Returns true if the given property exists.
+	 *
+	 * @param bool $p_property
+	 */
+    public function hasProperty($p_property)
+    {
+    	return array_key_exists($p_property, $this->m_objectTypes)
+    			|| (is_array($this->m_properties)
+					&& array_key_exists($p_property, $this->m_properties))
+    			|| (is_array($this->m_readonlyProperties)
+					&& array_key_exists($p_property, $this->m_readonlyProperties));
+    }
+
+
+    /**
+     * Sets the current article list.
+     *
+     * @param object $p_list
+     * @return void
+     */
+	public function setCurrentArticleList(&$p_list)
+    {
+    	if (!is_object($p_list)) {
+    		throw new InvalidObjectException($p_list);
+    	}
+    	if (!is_a($p_list, 'ArticleList')) {
+    		throw new InvalidObjectException($p_list);
+    	}
+    	$this->m_readonlyProperties['article_list'][] =& $p_list;
+    	$this->m_readonlyProperties['current_article_list'] =& $p_list;
+    }
+
+
+    /**
+     * Resets the current article list.
+     *
+     * @return void
+     */
+    public function resetCurrentArticleList()
+    {
+    	if ($this->current_article_list->isBlank()) {
+    		return;
+    	}
+   		array_pop($this->m_readonlyProperties['article_list']);
+	    if (count($this->m_readonlyProperties['article_list']) > 1) {
+	    	$this->m_readonlyProperties['current_article_list'] = array_pop($this->m_readonlyProperties['article_list']);
+	    } else {
+	   		$this->m_readonlyProperties['current_article_list'] = new ArticleList(-1);
+	    }
+    }
+
+
+    /**
+     * Creates an object of the given type. Returns the created object.
+     *
+     * @param string $p_objectType
+     * @return object
+     */
+    private function createObject($p_objectType)
+    {
+    	global $_SERVER;
+
+    	$p_objectType = CampContext::TranslateProperty($p_objectType);
+
+    	$classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/Meta'
+    					. $this->m_objectTypes[$p_objectType].'.php';
+    	if (!file_exists($classFullPath)) {
+    		throw new InvalidObjectException($p_objectType);
+    	}
+    	require_once($classFullPath);
+
+    	$className = 'Meta'.$this->m_objectTypes[$p_objectType];
+    	$this->m_objects[$p_objectType] =& new $className;
+
+    	return $this->m_objects[$p_objectType];
+    } // fn createObject
+
+
+    /**
+     * Processes a property name; returns a valid property name.
+     *
+     * @param string $p_property
+     * @return string
+     */
+    static function TranslateProperty($p_property)
+    {
+    	return strtolower($p_property);
+    } // fn TranslateProperty
+
+
+    /**
+     * Triggers an invalid object error.
+     *
+     * @param string $p_object - object name
+     */
+    final protected function trigger_invalid_object_error($p_object)
+    {
+		CampTemplate::singleton()->trigger_error(INVALID_OBJECT_STRING . " $p_object ");
+    } // fn trigger_invalid_object_error
+
+
+	/**
+	 * Triggers an invalid property error.
+	 *
+	 * @param string $p_property - property name
+	 */
+    final protected function trigger_invalid_property_error($p_property)
+    {
+        $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
+                      . OF_OBJECT_STRING . ' ' . get_class($this);
+		CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
+    } // fn trigger_invalid_property_error
+
+} // class CampContext
+
+?>

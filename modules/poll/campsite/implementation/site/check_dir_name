@@ -1,0 +1,13 @@
+#!/bin/bash
+
+[ "$1" = "" ] && echo "Invalid directory" && exit 1
+
+check_dir="$1"
+dir_parts=`namei $check_dir | grep d | grep -v "/" | grep -v "?" | cut -f 2 -d "d"`
+dir="" && for p in $dir_parts; do dir="$dir/$p"; done
+[ "$dir" = "" ] && echo "Invalid directory $check_dir" && exit 1
+[ "$dir" = "/" ] && echo "Invalid directory $check_dir" && exit 1
+second=`echo "$dir" | cut -f 3 -d "/"`
+[ "$second" = "" ] && echo "Invalid directory $check_dir" && exit 1
+
+echo "Removing directory $check_dir"

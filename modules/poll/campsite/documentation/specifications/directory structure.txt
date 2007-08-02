@@ -1,0 +1,174 @@
+Campsite Install API
+
+
+Directory Structure
+
+[campsite_dir]/
+               |- bin
+               |- etc/
+               |      |- [instance_name]
+               |- www/
+               |      |- [instance_name]/
+               |                         |- html
+               |                         |- cgi-bin
+               |                         |- script
+               |                         |- include
+               |- www-common/
+                      |- html
+                      |- cgi-bin
+                      |- script
+                      |- include
+
+By default [campsite_dir] is [prefix]/campsite and can be set to a different value by the user.
+By default [prefix] is /usr/local and can be set to a different value by the user.
+
+The user will be able to set one of the two directories, but not both at the same time.
+Examples:
+- [prefix] = /usr - set by the user; [campsite_dir] = /usr/campsite - set by campsite install scripts
+- [campsite_dir] = /home/user - set by the user; [prefix] not needed anymore
+
+
+Binaries directory
+[campsite_dir]/bin (default; can be set to a different value by the user)
+- all binaries are put here
+
+
+Configuration files directory
+[etc_common_dir] = [campsite_dir]/etc (default; can be set to a different value by the user)
+- all common configuration files are put here
+
+[common_etc_dir]/[instance_name]
+- instance specific configuration files are put here
+
+
+Common WWW directory
+[www_common_dir] = [campsite_dir]/www-common
+
+Subdirectories:
+[campsite_dir]/www-common/html
+[campsite_dir]/www-common/cgi-bin
+[campsite_dir]/www-common/script
+[campsite_dir]/www-common/include
+
+
+WWW directories of campsite instances
+[www_dir] = [campsite_dir]/www (default; can be set to a different value by the user)
+
+[www_dir] contains the follwing subdirectories:
+[www_dir]/[instance_name]/html
+- contains the following files:
+	* link to [www_common_dir]/html/index.php
+	* link to [www_common_dir]/html/priv.php
+	* link to [etc_common_dir]/path_config.php
+	* link to [etc_common_dir]/[instance_name]/database_config.php
+
+[www_dir]/[instance_name]/cgi-bin
+[www_dir]/[instance_name]/script
+[www_dir]/[instance_name]/include
+
+
+Configuration Files
+
+Description of install_conf.php file
+
+- format:
+<?php
+
+$Campsite["CAMPSITE_DIR"] = "[campsite_dir]"); // default = /usr/local/bin
+$Campsite["BIN_DIR"] = "[bin_dir]"); // default = CAMPSITE_DIR . "/bin"
+$Campsite["ETC_DIR"] = "[etc_dir]"); // default = CAMPSITE_DIR . "/etc"
+$Campsite["WWW_DIR"] = "[www_dir]"); // default = CAMPSITE_DIR . "/www"
+$Campsite["WWW_COMMON_DIR"] = "[www_common_dir");
+	// default =  CAMPSITE_DIR . "/www-common"
+$Campsite["HTML_COMMON_DIR"] = "[html_common_dir]");
+	// default = CAMPSITE_DIR . "/www-common/html"
+$Campsite["CGI_COMMON_DIR"] = "[cgi_common_dir]");
+	// default = CAMPSITE_DIR . "/www-common/cgi-bin"
+
+$CampsiteVars['install'] = array("CAMPSITE_DIR", "BIN_DIR", "ETC_DIR",
+	"WWW_DIR", "WWW_COMMON_DIR", "HTML_COMMON_DIR", "CGI_COMMON_DIR");
+
+?>
+
+- path: [etc_dir]/install_conf.php
+- owner: [apache_user]:[apache_user]
+- rights: owner: read/write, group: read/write, other: read
+
+
+Description of apache_conf.php file
+
+- format:
+<?php
+
+$Campsite["APACHE_USER"] = "[apache_user]"); // must be set when creating instance
+$Campsite["APACHE_GROUP"] = "[apache_group]"); // must be set when creating instance
+
+$CampsiteVars['apache'] = array("APACHE_USER", "APACHE_GROUP");
+
+?>
+
+- path: [etc_dir]/[instance_name]/apache_conf.php
+
+- owner: [apache_user]:[apache_user]
+- rights: owner: read/write, group: read/write, other: none
+
+
+Description of database_conf.php file
+
+- format:
+<?php
+
+$Campsite["DATABASE_NAME"] = "[database_name]");
+$Campsite["DATABASE_SERVER_ADDRESS"] = "[database_server_address]");
+$Campsite["DATABASE_SERVER_PORT"] = "[database_server_port]");
+$Campsite["DATABASE_USER"] = "[database_user]");
+$Campsite["DATABASE_PASSWORD"] = "[database_password]");
+
+$CampsiteVars['database'] = array("DATABASE_NAME",
+	"DATABASE_SERVER_ADDRESS", "DATABASE_SERVER_PORT", "DATABASE_USER",
+	"DATABASE_PASSWORD");
+
+?>
+
+- path: [etc_dir]/[instance_name]/database_conf.php
+
+- owner: [apache_user]:[apache_user]
+- rights: owner: read/write, group: read/write, other: none
+
+
+Description of parser_conf.php file
+
+- format:
+<?php
+
+$Campsite["PARSER_MAX_THREADS"] = "[parser_max_threads]"); // 0 means use hardcoded default
+$Campsite["PARSER_PORT"] = "[parser_port]"); // must be set when creating instance
+
+$CampsiteVars['parser'] = array("PARSER_MAX_THREADS", "PARSER_PORT");
+
+?>
+
+- path: [etc_dir]/[instance_name]/parser_conf.php
+
+- owner: [apache_user]:[apache_user]
+- rights: owner: read/write, group: read/write, other: none
+
+
+Description of smtp_conf.php file
+
+- format:
+<?php
+
+$Campsite["SMTP_SERVER_ADDRESS"] = "[smtp_server_address]");
+	// must be set when creating instance
+$Campsite["SMTP_SERVER_PORT"] = "[smtp_server_port]");
+	// must be set when creating instance
+
+$CampsiteVars['smtp'] = array("SMTP_SERVER_ADDRESS", "SMTP_SERVER_PORT");
+
+?>
+
+- path: [etc_dir]/[instance_name]/smtp_conf.php
+
+- owner: [apache_user]:[apache_user]
+- rights: owner: read/write, group: read/write, other: none

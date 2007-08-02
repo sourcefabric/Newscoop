@@ -1,0 +1,5 @@
+DATABASE:implementation/database::make mysql mysqladmin:
+PARSER:implementation/parser::make killall libz libmysqlclient libcrypt libpthread:gpp mysql_h socket_h pthread_h semaphore_h stl libnsl gethostbyaddr_r gethostbyname_r getservbyname_r xml
+EVENT_HANDLERS:implementation/mailnotify::crond make libz libmysqlclient libcrypt:gpp mysql_h socket_h
+SEARCH_ENGINE:implementation/search::crond make libz libmysqlclient libcrypt:gpp mysql_h socket_h
+ADMIN_INTERFACE:implementation/site::make apache iconv libz libmysqlclient libcrypt convert php_cli php_mysql php_gd:gpp mysql_h socket_h stl libnsl xml curl

@@ -1,0 +1,8 @@
+[
+PARSER
+# The parser interprets the templates and returns a HTML page. 
+# You will be able to configure the number from which Campsite will
+# start allocating ports for the parser in each new instance.
+# Example: if PARSER_START_PORT=2000 then first Campsite instance
+# will be allocated the port 2001.
+]

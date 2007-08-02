@@ -1,0 +1,41 @@
+#!/bin/bash
+
+cut_last_dirs()
+{
+path=$1
+nr=1
+[ "$2" != "" ] && nr=$2
+dirs=""
+i=1
+abs_path=false
+while true; do
+    dir=`echo $path | cut -f $i -d "/"`
+    [ "$dir" = "" ] && [ $i -eq 1 ] && abs_path=true
+    [ "$dir" = "" ] && [ $i -gt 1 ] && break
+    dirs="$dirs $dir"
+    i=`expr $i + 1`
+done
+i=`expr $i - $nr`
+$abs_path && i=`expr $i - 1`
+j=1
+new_path=""
+for d in $dirs; do
+     [ $j -eq 1 ] && $abs_path && new_path="/"
+     [ $j -eq 1 ] && new_path="$new_path$d"
+     [ $i -gt $j ] && [ $j -gt 1 ] && new_path="${new_path}/$d"
+     j=`expr $j + 1`
+done
+echo $new_path
+return 0
+}
+
+path_to_copy=$1
+dst_dir=$2
+if [ "$path_to_copy" = "" ] || [ "$dst_dir" = "" ]; then
+    echo "usage: cp_pach <path_to_copy> <destination_directory>"
+    exit 1
+fi
+
+src_path=`cut_last_dirs $path_to_copy 1`
+mkdir -p $dst_dir/$src_path
+cp -f $path_to_copy $dst_dir/$src_path
