@@ -89,6 +89,9 @@ class AudioclipXMLMetadata {
         }
 
         $sessid = camp_session_get('cc_sessid', '');
+        if (PEAR::isError($this->xrc)) {
+            return $res;
+        }
         $res = $this->xrc->xr_existsAudioClip($sessid, $this->m_gunId);
         if (PEAR::isError($res)) {
             return $res;
