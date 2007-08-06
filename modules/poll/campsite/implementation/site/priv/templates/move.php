@@ -11,23 +11,23 @@ $f_current_folder = urldecode($f_current_folder);
 // Check permissions
 //
 if ($f_action == "move") {
-	if (!$g_user->hasPermission("ManageTempl")) {
-		camp_html_display_error(getGS("You do not have the right to move articles."));
-		exit;
-	}
+    if (!$g_user->hasPermission("ManageTempl")) {
+        camp_html_display_error(getGS("You do not have the right to move articles."));
+        exit;
+    }
 }
 
 // $articles array:
 // The articles that were initially selected to perform the move or duplicate upon.
 $templates = array();
 for ($i = 0; $i < count($f_template_code); $i++) {
-	$tmpTemplate =& new Template($f_template_code[$i]);
-	$templates[] = $tmpTemplate;
+    $tmpTemplate =& new Template($f_template_code[$i]);
+    $templates[] = $tmpTemplate;
 }
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+    exit;
 }
 
 // Get all the templates
@@ -35,59 +35,59 @@ $folders = array();
 $folders = Template::GetAllFolders($folders);
 $i = 1;
 foreach ($folders as $folder) {
-	$tmpTemplateFolder = substr($folder, strlen($Campsite['TEMPLATE_DIRECTORY']));
-	if ($f_current_folder != $tmpTemplateFolder) {
-		$folders[$i++] = $tmpTemplateFolder;
-	}
+    $tmpTemplateFolder = substr($folder, strlen($Campsite['TEMPLATE_DIRECTORY']));
+    if ($f_current_folder != $tmpTemplateFolder) {
+        $folders[$i++] = $tmpTemplateFolder;
+    }
 }
 if ($f_current_folder != '/') {
-	$folders[0] = '/';
+    $folders[0] = '/';
 } else {
-	array_shift($folders);
+    array_shift($folders);
 }
 
 //
 // This section is executed when the user finally hits the action button.
 //
 if (isset($_REQUEST["action_button"])) {
-	if (empty($f_destination_folder)) {
-		$errorMsg = getGS("You must select a destination folder");
-		camp_html_add_msg($errorMsg);
-	} else {
-		if ($f_destination_folder != '/') {
-			$url = "/$ADMIN/templates/index.php?Path=$f_destination_folder";
-		} else {
-			$url = "/$ADMIN/templates/index.php";
-		}
+    if (empty($f_destination_folder)) {
+        $errorMsg = getGS("You must select a destination folder");
+        camp_html_add_msg($errorMsg);
+    } else {
+        if ($f_destination_folder != '/') {
+            $url = "/$ADMIN/templates/index.php?Path=$f_destination_folder";
+        } else {
+            $url = "/$ADMIN/templates/index.php";
+        }
 
-		if ($f_action == "move") {
-			$sql = "SELECT Id FROM TemplateTypes WHERE Name = 'nontpl'";
-			$nonTplTypeId = $g_ado_db->GetOne($sql);
-			// Move all the templates requested.
-			foreach ($templates as $template) {
-				if ($template->move($f_current_folder, $f_destination_folder)) {
-					$searchKey = $template->getName();
-					$replacementKey = ltrim($f_destination_folder
-							. '/' . basename($template->getName()), '/');
-					if ($template->getType() != $nonTplTypeId) {
-						$searchKey = ' ' . $searchKey;
-						$replacementKey = ' ' . $replacementKey;
-					}
-					$replaceObj = new FileTextSearch();
-					$replaceObj->setExtensions(array('tpl','css'));
-					$replaceObj->setSearchKey($searchKey);
-					$replaceObj->setReplacementKey($replacementKey);
-					$replaceObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
-					Template::UpdateOnChange($template->getName(),
-								 $f_destination_folder
-								 . '/'
-								 . basename($template->getName()));
-				}
-			}
-			camp_html_add_msg(getGS("Template(s) moved."), "ok");
-			camp_html_goto_page($url);
-		}
-	}
+        if ($f_action == "move") {
+            $sql = "SELECT Id FROM TemplateTypes WHERE Name = 'nontpl'";
+            $nonTplTypeId = $g_ado_db->GetOne($sql);
+            // Move all the templates requested.
+            foreach ($templates as $template) {
+                if ($template->move($f_current_folder, $f_destination_folder)) {
+                    $searchKey = $template->getName();
+                    $replacementKey = ltrim($f_destination_folder
+                            . '/' . basename($template->getName()), '/');
+                    if ($template->getType() != $nonTplTypeId) {
+                        $searchKey = ' ' . $searchKey;
+                        $replacementKey = ' ' . $replacementKey;
+                    }
+                    $replaceObj = new FileTextSearch();
+                    $replaceObj->setExtensions(array('tpl','css'));
+                    $replaceObj->setSearchKey($searchKey);
+                    $replaceObj->setReplacementKey($replacementKey);
+                    $replaceObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
+                    Template::UpdateOnChange($template->getName(),
+                                 $f_destination_folder
+                                 . '/'
+                                 . basename($template->getName()));
+                }
+            }
+            camp_html_add_msg(getGS("Template(s) moved."), "ok");
+            camp_html_goto_page($url);
+        }
+    }
 } // END perform the action
 
 $crumbs = array();
@@ -123,20 +123,20 @@ foreach ($templates as $template) {
 }
 ?>
 <TR>
-	<TD>
-		<TABLE cellpadding="3">
-		<?php
-		$class = 0;
-		foreach ($templates as $template) {
-		?>
-		<TR class="<?php if ($class) { ?>list_row_even<?php } else { ?>list_row_odd<?php } $class = !$class; ?>">
-			<TD><?php p($template->getName()); ?></TD>
-		</TR>
-		<?php
-		}
-		?>
-		</TABLE>
-	</TD>
+    <TD>
+        <TABLE cellpadding="3">
+        <?php
+        $class = 0;
+        foreach ($templates as $template) {
+        ?>
+        <TR class="<?php if ($class) { ?>list_row_even<?php } else { ?>list_row_odd<?php } $class = !$class; ?>">
+            <TD><?php p($template->getName()); ?></TD>
+        </TR>
+        <?php
+        }
+        ?>
+        </TABLE>
+    </TD>
 </TR>
 </TABLE>
 <P>
@@ -146,47 +146,47 @@ foreach ($templates as $template) {
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" width="400px" style="margin-left: 18px;">
 <TR>
-	<TD align="left">
-		<TABLE align="left" border="0" width="100%">
-		<TR>
-			<TD colspan="2" style="padding-left: 20px; padding-bottom: 5px;font-size: 12pt; font-weight: bold;"><?php  putGS("Select destination"); ?></TD>
-		</TR>
-		<TR>
-			<TD>
-				<TABLE border="0">
-				<TR>
-					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Folder'); ?>: </TD>
-					<TD valign="middle" ALIGN="LEFT">
-						<?php if (count($folders) > 1) { ?>
-						<SELECT NAME="f_destination_folder" class="input_select" alt="select" emsg="<?php putGS("You must select a destination folder"); ?>">
-						<OPTION VALUE="">---<?php  putGS('Select folder'); ?>---</option>
-						<?php
-						foreach ($folders as $folder) {
-							camp_html_select_option($folder, $f_destination_folder, $folder);
-						}
-						?>
-						</SELECT>
-						<?php } elseif (count($folders) == 1) {
-							$tmpFolder = camp_array_peek($folders);
-							p(htmlspecialchars($tmpFolder));
-							?>
-							<INPUT type="hidden" name="f_destination_folder" value="<?php p($folder); ?>">
+    <TD align="left">
+        <TABLE align="left" border="0" width="100%">
+        <TR>
+            <TD colspan="2" style="padding-left: 20px; padding-bottom: 5px;font-size: 12pt; font-weight: bold;"><?php  putGS("Select destination"); ?></TD>
+        </TR>
+        <TR>
+            <TD>
+                <TABLE border="0">
+                <TR>
+                    <TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Folder'); ?>: </TD>
+                    <TD valign="middle" ALIGN="LEFT">
+                        <?php if (count($folders) > 1) { ?>
+                        <SELECT NAME="f_destination_folder" class="input_select" alt="select" emsg="<?php putGS("You must select a destination folder"); ?>">
+                        <OPTION VALUE="">---<?php  putGS('Select folder'); ?>---</option>
+                        <?php
+                        foreach ($folders as $folder) {
+                            camp_html_select_option($folder, $f_destination_folder, $folder);
+                        }
+                        ?>
+                        </SELECT>
+                        <?php } elseif (count($folders) == 1) {
+                            $tmpFolder = camp_array_peek($folders);
+                            p(htmlspecialchars($tmpFolder));
+                            ?>
+                            <INPUT type="hidden" name="f_destination_folder" value="<?php p($folder); ?>">
 
-						<?php } else { ?>
-							<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No folders'); ?></option></SELECT>
-						<?php }	?>
-					</TD>
-				</TR>
-				</TABLE>
-			</TD>
-		</TR>
-		<TR>
-			<TD align="center" colspan="2">
-				<INPUT TYPE="submit" Name="action_button" Value="<?php p(putGS("Move templates")); ?>" class="button" />
-			</TD>
-		</TR>
-		</TABLE>
-	</TD>
+                        <?php } else { ?>
+                            <SELECT class="input_select" DISABLED><OPTION><?php  putGS('No folders'); ?></option></SELECT>
+                        <?php }    ?>
+                    </TD>
+                </TR>
+                </TABLE>
+            </TD>
+        </TR>
+        <TR>
+            <TD align="center" colspan="2">
+                <INPUT TYPE="submit" Name="action_button" Value="<?php p(putGS("Move templates")); ?>" class="button" />
+            </TD>
+        </TR>
+        </TABLE>
+    </TD>
 </TR>
 </FORM>
 </TABLE>

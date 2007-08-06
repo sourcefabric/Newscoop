@@ -23,9 +23,9 @@ $PHORUM['DBCONFIG']=array(
     // Database connection.
     'type'          =>  'mysql',
     'name'          =>  $dbName,
-	'server'		=>  $dbHost,
-	'user'			=>  $dbUser,
-	'password'		=>  $dbPass,
+    'server'        =>  $dbHost,
+    'user'            =>  $dbUser,
+    'password'        =>  $dbPass,
     'table_prefix'  =>  'phorum',
 
     // 'down_page'     => 'http://www.example.com/phorum/down.html',

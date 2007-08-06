@@ -5,15 +5,15 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 
 if (!$g_user->hasPermission('AddImage')) {
-	camp_html_goto_page("/$ADMIN/logout.php");
+    camp_html_goto_page("/$ADMIN/logout.php");
 }
 $q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 
 if (!is_writable($Campsite['IMAGE_DIRECTORY'])) {
-	camp_html_add_msg(getGS("Unable to add new image."));
-	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['IMAGE_DIRECTORY']));
-	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
-	exit;
+    camp_html_add_msg(getGS("Unable to add new image."));
+    camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['IMAGE_DIRECTORY']));
+    camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+    exit;
 }
 
 $crumbs = array();
@@ -28,13 +28,13 @@ camp_html_display_msgs();
 ?>
 <script>
 function checkAddForm(form) {
-	retval = ((form.f_image_url.value != '') || (form.f_image_file.value != ''));
-	if (!retval) {
-	    alert('<?php putGS("You must select an image file to upload."); ?>');
-	    return retval;
-	}
-	retval = retval && <?php camp_html_fvalidate(); ?>;
-	return retval;
+    retval = ((form.f_image_url.value != '') || (form.f_image_file.value != ''));
+    if (!retval) {
+        alert('<?php putGS("You must select an image file to upload."); ?>');
+        return retval;
+    }
+    retval = retval && <?php camp_html_fvalidate(); ?>;
+    return retval;
 } // fn checkAddForm
 </script>
 
@@ -42,51 +42,51 @@ function checkAddForm(form) {
 <FORM NAME="image_add" METHOD="POST" ACTION="do_add.php" ENCTYPE="multipart/form-data" onsubmit="return checkAddForm(this);">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
-	<TD COLSPAN="2">
-		<B><?php putGS('Add new image'); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
+    <TD COLSPAN="2">
+        <B><?php putGS('Add new image'); ?></B>
+        <HR NOSHADE SIZE="1" COLOR="BLACK">
+    </TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php putGS('Description'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="Image <?php echo Image::GetMaxId(); ?>" SIZE="32" class="input_text">
-	</TD>
+    <TD ALIGN="RIGHT" ><?php putGS('Description'); ?>:</TD>
+    <TD align="left">
+    <INPUT TYPE="TEXT" NAME="f_image_description" VALUE="Image <?php echo Image::GetMaxId(); ?>" SIZE="32" class="input_text">
+    </TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php putGS('Photographer'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($g_user->getRealName()); ?>" SIZE="32" class="input_text">
-	</TD>
+    <TD ALIGN="RIGHT" ><?php putGS('Photographer'); ?>:</TD>
+    <TD align="left">
+    <INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($g_user->getRealName()); ?>" SIZE="32" class="input_text">
+    </TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php putGS('Place'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_place" SIZE="32" class="input_text">
-	</TD>
+    <TD ALIGN="RIGHT" ><?php putGS('Place'); ?>:</TD>
+    <TD align="left">
+    <INPUT TYPE="TEXT" NAME="f_image_place" SIZE="32" class="input_text">
+    </TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php putGS('Date'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_date" VALUE="<?php  p($q_now); ?>" SIZE="11" MAXLENGTH="10" class="input_text"> <?php  putGS('YYYY-MM-DD'); ?>
-	</TD>
+    <TD ALIGN="RIGHT" ><?php putGS('Date'); ?>:</TD>
+    <TD align="left">
+    <INPUT TYPE="TEXT" NAME="f_image_date" VALUE="<?php  p($q_now); ?>" SIZE="11" MAXLENGTH="10" class="input_text"> <?php  putGS('YYYY-MM-DD'); ?>
+    </TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php putGS('URL'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_url" SIZE="32" class="input_text">
-	</TD>
+    <TD ALIGN="RIGHT" ><?php putGS('URL'); ?>:</TD>
+    <TD align="left">
+    <INPUT TYPE="TEXT" NAME="f_image_url" SIZE="32" class="input_text">
+    </TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php putGS('Image'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="FILE" NAME="f_image_file" SIZE="32" class="input_file">
-	</TD>
+    <TD ALIGN="RIGHT" ><?php putGS('Image'); ?>:</TD>
+    <TD align="left">
+    <INPUT TYPE="FILE" NAME="f_image_file" SIZE="32" class="input_file">
+    </TD>
 </TR>
 <TR>
-	<TD COLSPAN="2" align="center">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
-	</TD>
+    <TD COLSPAN="2" align="center">
+        <INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
+    </TD>
 </TR>
 </TABLE>
 </FORM>

@@ -10,59 +10,59 @@ $Issue = Input::Get('Issue', 'int', 0);
 $errorStr = "";
 $languageObj = & new Language($Language);
 if (!$languageObj->exists()) {
-	$errorStr = getGS('There was an error reading the language parameter.');
+    $errorStr = getGS('There was an error reading the language parameter.');
 }
 if ($errorStr == "") {
-	$publicationObj = & new Publication($Pub);
-	if (!$publicationObj->exists())
-		$errorStr = getGS('There was an error reading the publication parameter.');
+    $publicationObj = & new Publication($Pub);
+    if (!$publicationObj->exists())
+        $errorStr = getGS('There was an error reading the publication parameter.');
 }
 if ($errorStr == "") {
-	$issueObj = & new Issue($Pub, $Language, $Issue);
-	if (!$issueObj->exists())
-		$errorStr = getGS('There was an error reading the issue parameter.');
+    $issueObj = & new Issue($Pub, $Language, $Issue);
+    if (!$issueObj->exists())
+        $errorStr = getGS('There was an error reading the issue parameter.');
 }
 if ($errorStr == "" && ($templateId = $issueObj->getIssueTemplateId()) == 0)
-	$errorStr = 'This issue cannot be previewed. Please make sure it has the front page template selected.';
+    $errorStr = 'This issue cannot be previewed. Please make sure it has the front page template selected.';
 
 if ($errorStr != "") {
-	camp_html_display_error($errorStr, null, true);
+    camp_html_display_error($errorStr, null, true);
 }
 
 if (!isset($_SERVER['SERVER_PORT']))
 {
-	$_SERVER['SERVER_PORT'] = 80;
+    $_SERVER['SERVER_PORT'] = 80;
 }
 $scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
 $siteAlias = new Alias($publicationObj->getDefaultAliasId());
 $websiteURL = $scheme.$siteAlias->getName();
 
 $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_user->getKeyId()
-				. "&AdminAccess=all";
+                . "&AdminAccess=all";
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
-	$templateObj = & new Template($templateId);
-	$uri = "$websiteURL/look/" . $templateObj->getName()
-		. "?IdLanguage=$Language&IdPublication=$Pub&NrIssue=$Issue&$accessParams";
+    $templateObj = & new Template($templateId);
+    $uri = "$websiteURL/look/" . $templateObj->getName()
+        . "?IdLanguage=$Language&IdPublication=$Pub&NrIssue=$Issue&$accessParams";
 } else {
-	$uri = "$websiteURL/" . $languageObj->getCode()
-		. "/" . $issueObj->getUrlName() . "?$accessParams";
+    $uri = "$websiteURL/" . $languageObj->getCode()
+        . "/" . $issueObj->getUrlName() . "?$accessParams";
 }
 
 if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
-	// Show dual-pane view for those with template management priviledges
+    // Show dual-pane view for those with template management priviledges
 ?>
 <FRAMESET ROWS="60%,*" BORDER="1">
-	<FRAME SRC="<?php echo "$uri&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
-	<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">
+    <FRAME SRC="<?php echo "$uri&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
+    <FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">
 </FRAMESET>
 <?php
 } else {
-	// Show single pane for everyone else.
+    // Show single pane for everyone else.
 ?>
-	<FRAMESET ROWS="100%">
-		<FRAME SRC="<?php print $uri; ?>" NAME="body" FRAMEBORDER="1">
-	</FRAMESET>
+    <FRAMESET ROWS="100%">
+        <FRAME SRC="<?php print $uri; ?>" NAME="body" FRAMEBORDER="1">
+    </FRAMESET>
 <?php
 }
 ?>

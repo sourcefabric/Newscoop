@@ -1,16 +1,16 @@
 BODY, TH, TD, FORM, BLOCKQUOTE, UL, LI { 
-	font-family: Tahoma, Arial, Helvetica, sans-serif; 
-	font-size: 10pt; 
+    font-family: Tahoma, Arial, Helvetica, sans-serif; 
+    font-size: 10pt; 
 }
 
 SMALL, ADDRESS { 
-	font-family: Tahoma, Arial, Helvetica, sans-serif; 
-	font-size: 8pt; 
+    font-family: Tahoma, Arial, Helvetica, sans-serif; 
+    font-size: 8pt; 
 }
 
 A { 
-	font-family: Tahoma, Arial, Helvetica, sans-serif; 
-	font-size: 10pt; 
-	text-decoration: none; 
-	color: darkblue; 
+    font-family: Tahoma, Arial, Helvetica, sans-serif; 
+    font-size: 10pt; 
+    text-decoration: none; 
+    color: darkblue; 
 }

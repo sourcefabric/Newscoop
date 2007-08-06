@@ -71,16 +71,16 @@ class ArticleComment
         global $g_ado_db;
         $constraints = array();
         if (!is_null($p_articleNumber)) {
-        	$constraints[] = "fk_article_number=$p_articleNumber";
+            $constraints[] = "fk_article_number=$p_articleNumber";
         }
         if (!is_null($p_languageId)) {
-        	$constraints[] = "fk_language_id=$p_languageId";
+            $constraints[] = "fk_language_id=$p_languageId";
         }
         if (!is_null($p_commentId)) {
-        	$constraints[] = "fk_comment_id=$p_commentId";
+            $constraints[] = "fk_comment_id=$p_commentId";
         }
         $queryStr = "DELETE FROM ArticleComments WHERE "
-        			.implode(" AND ", $constraints);
+                    .implode(" AND ", $constraints);
         $g_ado_db->Execute($queryStr);
     } // fn Unlink
 
@@ -94,17 +94,17 @@ class ArticleComment
      */
     function OnArticleDelete($p_articleNumber, $p_languageId)
     {
-    	if (!is_numeric($p_articleNumber) || !is_numeric($p_languageId)) {
-    		return;
-    	}
+        if (!is_numeric($p_articleNumber) || !is_numeric($p_languageId)) {
+            return;
+        }
 
-    	$threadId = ArticleComment::GetCommentThreadId($p_articleNumber, $p_languageId);
-		// Delete all comments for this article
-		$threadHead = new Phorum_message($threadId);
-		$threadHead->delete(PHORUM_DELETE_TREE);
+        $threadId = ArticleComment::GetCommentThreadId($p_articleNumber, $p_languageId);
+        // Delete all comments for this article
+        $threadHead = new Phorum_message($threadId);
+        $threadHead->delete(PHORUM_DELETE_TREE);
 
-		// Delete all links to this article.
-		ArticleComment::Unlink($p_articleNumber, $p_languageId);
+        // Delete all links to this article.
+        ArticleComment::Unlink($p_articleNumber, $p_languageId);
     } // fn OnArticleDelete
 
 
@@ -126,11 +126,11 @@ class ArticleComment
         $threadId = ArticleComment::GetCommentThreadId($p_articleNumber,
                                                        $p_languageId);
         if (!$threadId) {
-        	if ($p_countOnly) {
-        		return 0;
-        	} else {
-            	return null;
-        	}
+            if ($p_countOnly) {
+                return 0;
+            } else {
+                return null;
+            }
         }
 
         // Are we counting or getting the comments?
@@ -155,11 +155,11 @@ class ArticleComment
                     . $whereClause
                     ." ORDER BY message_id";
         if ($p_countOnly) {
-        	$count = $g_ado_db->GetOne($queryStr);
-       		return $count;
+            $count = $g_ado_db->GetOne($queryStr);
+               return $count;
         } else {
-	        $messages = DbObjectArray::Create("Phorum_message", $queryStr);
-	        return $messages;
+            $messages = DbObjectArray::Create("Phorum_message", $queryStr);
+            return $messages;
         }
     } // fn GetArticleComments
 

@@ -10,26 +10,26 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 <CENTER>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER" style="margin-top: 50px; margin-bottom: 50px;">
 <TR>
-	<TD COLSPAN="2">
-		<B><font color="red"><?php  putGS("Error"); ?> </font></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
+    <TD COLSPAN="2">
+        <B><font color="red"><?php  putGS("Error"); ?> </font></B>
+        <HR NOSHADE SIZE="1" COLOR="BLACK">
+    </TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-		<BLOCKQUOTE>
-		<font color="red">
-		<li><?php  print htmlspecialchars($ADReason); ?></li>
-		</font>
-		</BLOCKQUOTE>
-	</TD>
+    <TD COLSPAN="2">
+        <BLOCKQUOTE>
+        <font color="red">
+        <li><?php  print htmlspecialchars($ADReason); ?></li>
+        </font>
+        </BLOCKQUOTE>
+    </TD>
 </TR>
 <TR>
-	<TD COLSPAN="2" align="center">
-		<DIV ALIGN="CENTER">
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'">
-		</DIV>
-	</TD>
+    <TD COLSPAN="2" align="center">
+        <DIV ALIGN="CENTER">
+        <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'">
+        </DIV>
+    </TD>
 </TR>
 </TABLE>
 </CENTER>

@@ -13,17 +13,17 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_comment_id = Input::Get('f_comment_id');
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
-	exit;
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+    exit;
 }
 
 // Check that the article exists.
 $articleObj =& new Article($f_language_id, $f_article_number);
 if (!$articleObj->exists()) {
-	exit;
+    exit;
 }
 if (!$articleObj->commentsEnabled() || $articleObj->commentsLocked())  {
-	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
+    camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
 }
 
 $publicationObj =& new Publication($articleObj->getPublicationId());
@@ -32,7 +32,7 @@ $sectionObj =& new Section($articleObj->getPublicationId(), $articleObj->getIssu
 $languageObj =& new Language($articleObj->getLanguageId());
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
-				  'Section' => $sectionObj, 'Article'=>$articleObj);
+                  'Section' => $sectionObj, 'Article'=>$articleObj);
 camp_html_content_top(getGS("Reply to comment"), $topArray);
 
 if (SystemPref::Get("UseDBReplication") == 'Y') {
@@ -50,8 +50,8 @@ if (SystemPref::Get("UseDBReplication") == 'Y') {
 ?>
 <table cellpadding="1" cellspacing="0" class="action_buttons" style="padding-top: 10px;">
 <tr>
-	<td><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
-	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>
+    <td><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
+    <td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>
 </tr>
 </table>
 <p>
@@ -59,7 +59,7 @@ if (SystemPref::Get("UseDBReplication") == 'Y') {
 <tr>
     <td colspan="2" style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid black;"">
         &nbsp;<b><?php putGS("Comment"); ?></b>
-   	</td>
+       </td>
 <tr>
 <?php
 if (isset($connectedToOnlineServer)
@@ -74,7 +74,7 @@ if (isset($connectedToOnlineServer)
 ?>
 <tr>
     <td align="right" valign="top" nowrap>
-			<?php putGS("From:"); ?>
+            <?php putGS("From:"); ?>
     </td>
     <td><?php p(htmlspecialchars($comment->getAuthor())); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
 </tr>
@@ -105,7 +105,7 @@ if (isset($connectedToOnlineServer)
 <tr>
     <td colspan="2" style="padding-left: 5px;">
         <b><?php putGS("Reply to comment"); ?></b>
-   		<HR NOSHADE SIZE="1" COLOR="BLACK">
+           <HR NOSHADE SIZE="1" COLOR="BLACK">
     </td>
 </tr>
 

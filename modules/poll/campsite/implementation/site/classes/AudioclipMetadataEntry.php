@@ -144,7 +144,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
     } // fn getMetatagNs
 
 
-	/**
+    /**
      * @return string
      */
     function getValue()

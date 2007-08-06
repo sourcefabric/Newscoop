@@ -25,12 +25,12 @@ camp_html_content_top(getGS('Publication List'), null);
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
-	<TD>
-		<A HREF="/<?php echo $ADMIN; ?>/pub/add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
-	</TD>
-	<TD>
-		<A HREF="/<?php echo $ADMIN; ?>/pub/add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><B><?php  putGS("Add new publication"); ?></B></A>
-	</TD>
+    <TD>
+        <A HREF="/<?php echo $ADMIN; ?>/pub/add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
+    </TD>
+    <TD>
+        <A HREF="/<?php echo $ADMIN; ?>/pub/add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><B><?php  putGS("Add new publication"); ?></B></A>
+    </TD>
 </TR>
 </TABLE>
 <?php  } ?>
@@ -38,14 +38,14 @@ camp_html_content_top(getGS('Publication List'), null);
 <?php if ($numPublications > 0) { ?>
 <table class="indent">
 <TR>
-	<TD>
-		<?php echo $pager->render(); ?>
+    <TD>
+        <?php echo $pager->render(); ?>
     </TD>
 </TR>
 </TABLE>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
-	<td align="center" valign="top"><?php putGS("Number"); ?></td>
+    <td align="center" valign="top"><?php putGS("Number"); ?></td>
     <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name<BR><SMALL>(click to see issues)</SMALL>"); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Default Site Alias"); ?></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Default Language"); ?></TD>
@@ -68,8 +68,8 @@ foreach ($publications as $pub) { ?>
         </TD>
         <TD>
             <?php
-            	$aliasObj =& new Alias($pub->getDefaultAliasId());
-            	p(htmlspecialchars($aliasObj->getName()));
+                $aliasObj =& new Alias($pub->getDefaultAliasId());
+                p(htmlspecialchars($aliasObj->getName()));
             ?>&nbsp;
         </TD>
         <TD>
@@ -85,8 +85,8 @@ foreach ($publications as $pub) { ?>
         </TD>
         <TD align="center">
             <?php
-            	$urlTypeObj =& new UrlType($pub->getUrlTypeId());
-            	p(htmlspecialchars($urlTypeObj->getName()));
+                $urlTypeObj =& new UrlType($pub->getUrlTypeId());
+                p(htmlspecialchars($urlTypeObj->getName()));
             ?>&nbsp;
         </TD>
         <TD ALIGN="CENTER">
@@ -104,17 +104,17 @@ foreach ($publications as $pub) { ?>
 </table>
 <table class="indent">
 <TR>
-	<TD>
-		<?php echo $pager->render(); ?>
+    <TD>
+        <?php echo $pager->render(); ?>
     </TD>
 </TR>
 </TABLE>
 <?php
 } else {
-	?>
-	<BLOCKQUOTE>
-	<LI><?php  putGS('No publications.'); ?></LI>
-	</BLOCKQUOTE>
-	<?php
+    ?>
+    <BLOCKQUOTE>
+    <LI><?php  putGS('No publications.'); ?></LI>
+    </BLOCKQUOTE>
+    <?php
 }
 camp_html_copyright_notice(); ?>

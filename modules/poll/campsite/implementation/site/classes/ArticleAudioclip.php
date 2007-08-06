@@ -133,12 +133,12 @@ class ArticleAudioclip extends DatabaseObject {
             foreach ($rows as $row) {
                 $audioClip =& new Audioclip($row['fk_audioclip_gunid']);
                 if ($audioClip->exists()) {
-                	$returnArray[] =& $audioClip;
+                    $returnArray[] =& $audioClip;
                 }
             }
         }
 
-		return $returnArray;
+        return $returnArray;
     } // fn GetAudioclipsByArticleNumber
 
 

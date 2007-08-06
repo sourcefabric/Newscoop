@@ -1,9 +1,9 @@
 .campsite_subhead {
-	border: 1px dashed #444444;
-	padding: 2px;
+    border: 1px dashed #444444;
+    padding: 2px;
 }
 
 .campsite_external_link {
-	text-decoration: underline;
-	color: blue;
+    text-decoration: underline;
+    color: blue;
 }

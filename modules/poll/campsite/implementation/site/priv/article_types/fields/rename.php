@@ -6,8 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Topic.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-	camp_html_display_error(getGS("You do not have the right to rename article type fields."));
-	exit;
+    camp_html_display_error(getGS("You do not have the right to rename article type fields."));
+    exit;
 }
 
 $articleTypeName = Input::Get('f_article_type');
@@ -30,20 +30,20 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_new_field_name" SIZE="20" VALUE="<?php print htmlspecialchars($articleTypeFieldName); ?>" MAXLENGTH="32" alt="alnum|1|A|false|false|_" emsg="<?php putGS("You can only use letters or the underscore (_).") ?>">
-	</TD>
+    <TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
+    <TD>
+    <INPUT TYPE="TEXT" class="input_text" NAME="f_new_field_name" SIZE="20" VALUE="<?php print htmlspecialchars($articleTypeFieldName); ?>" MAXLENGTH="32" alt="alnum|1|A|false|false|_" emsg="<?php putGS("You can only use letters or the underscore (_).") ?>">
+    </TD>
 </TR>
 
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php  print htmlspecialchars($articleTypeName); ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_old_field_name" VALUE="<?php print htmlspecialchars($articleTypeFieldName); ?>">
-	<INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php  putGS('Save'); ?>">
-	</DIV>
-	</TD>
+    <TD COLSPAN="2">
+    <DIV ALIGN="CENTER">
+    <INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php  print htmlspecialchars($articleTypeName); ?>">
+    <INPUT TYPE="HIDDEN" NAME="f_old_field_name" VALUE="<?php print htmlspecialchars($articleTypeFieldName); ?>">
+    <INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php  putGS('Save'); ?>">
+    </DIV>
+    </TD>
 </TR>
 </TABLE>
 </FORM>

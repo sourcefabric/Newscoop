@@ -5,8 +5,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Country.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
-	camp_html_display_error(getGS("You do not have the right to change publication information."));
-	exit;
+    camp_html_display_error(getGS("You do not have the right to change publication information."));
+    exit;
 }
 
 $Pub = Input::Get('Pub', 'int', 0);
@@ -16,8 +16,8 @@ $cPaidTime = Input::Get('cPaidTime', 'int', 0);
 $cTrialTime = Input::Get('cTrialTime', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+    exit;
 }
 
 $publicationObj =& new Publication($Pub);

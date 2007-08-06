@@ -1,27 +1,27 @@
-			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
+            <TABLE width="100%" style="border: 1px solid #EEEEEE;">
             <FORM action="do_sortlist.php" method="POST" name="audioclip_sortlist_form" id="audioclip_sortlist_form" onsubmit="populateHiddenVars('audioclip_sortlist');">
             <INPUT type="hidden" name="f_sortlist_order" id="f_sortlist_order" size="60" />
             <INPUT type="hidden" name="f_sortlist_name" value="audioclip_sortlist" />
             <INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
             <INPUT type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>" />
             <INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
-			<TR>
-				<TD>
-					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
-					<TR>
-						<TD align="left">
-						<STRONG><?php putGS("Audioclips"); ?></STRONG>
-						</TD>
+            <TR>
+                <TD>
+                    <TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
+                    <TR>
+                        <TD align="left">
+                        <STRONG><?php putGS("Audioclips"); ?></STRONG>
+                        </TD>
                         <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachAudioclipToArticle')) {  ?>
-						<TD align="right">
+                        <TD align="right">
                             <A href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php"); ?>', 'attach_audioclip', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0" title="Attach" /></A>&nbsp;
                             <INPUT type="image" src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]); ?>/save.png" name="save" title="Save Order" <?php if (!$articleAudioclips) { p('disabled'); } ?> />
-						</TD>
-						<?php } ?>
-					</TR>
-					</TABLE>
-				</TD>
-			</TR>
+                        </TD>
+                        <?php } ?>
+                    </TR>
+                    </TABLE>
+                </TD>
+            </TR>
             <SCRIPT type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domLib.js"></SCRIPT>
             <SCRIPT type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domTT.js"></SCRIPT>
             <SCRIPT type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/scriptaculous/prototype.js"></SCRIPT>

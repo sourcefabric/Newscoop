@@ -13,8 +13,8 @@ if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
 }
 
 if (!$g_user->hasPermission('AttachAudioclipToArticle')) {
-	camp_html_display_error(getGS('You do not have the right to delete audioclips.' ), null, true);
-	exit;
+    camp_html_display_error(getGS('You do not have the right to delete audioclips.' ), null, true);
+    exit;
 }
 
 $f_language_id = Input::Get('f_language_id', 'int', 0);

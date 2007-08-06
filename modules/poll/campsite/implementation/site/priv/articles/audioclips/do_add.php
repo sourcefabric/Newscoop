@@ -12,8 +12,8 @@ if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
 }
 
 if (!$g_user->hasPermission('AddAudioclip')) {
-	camp_html_display_error(getGS('You do not have the right to add audioclips.'), null, true);
-	exit;
+    camp_html_display_error(getGS('You do not have the right to add audioclips.'), null, true);
+    exit;
 }
 
 $f_language_id = Input::Get('f_language_id', 'int', 0);
@@ -26,38 +26,38 @@ $BackLink = Input::Get('BackLink', 'string', null, true);
 $formData = $_POST;
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
-	exit;
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+    exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
-	camp_html_display_error(getGS("Article does not exist."), null, true);
-	exit;
+    camp_html_display_error(getGS("Article does not exist."), null, true);
+    exit;
 }
 
 if (empty($f_audiofile)) {
-	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'audioclips/popup.php'));
-	exit(0);
+    camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'audioclips/popup.php'));
+    exit(0);
 }
 
 $sessId = camp_session_get('cc_sessid', '');
 $metaData = array();
 foreach($mask['pages'] as $key => $val) {
-	foreach($mask['pages'][$key] as $k => $v) {
-		$element_encode = str_replace(':','_',$v['element']);
-		$inputValue = Input::Get('f_'.$key.'_'.$element_encode, 'string', null, true);
-		if (!is_null($inputValue) && $inputValue != '') {
-			$metaData[$v['element']] = $inputValue;
-		}
-	}
+    foreach($mask['pages'][$key] as $k => $v) {
+        $element_encode = str_replace(':','_',$v['element']);
+        $inputValue = Input::Get('f_'.$key.'_'.$element_encode, 'string', null, true);
+        if (!is_null($inputValue) && $inputValue != '') {
+            $metaData[$v['element']] = $inputValue;
+        }
+    }
 }
 
 $aClipGunid = Audioclip::StoreAudioclip($sessId, $f_audiofile, $metaData);
 if (PEAR::isError($aClipGunid)) {
-	camp_html_display_error(getGS('There was an error while saving the audioclip: $1',
-									$aClipGunid->getMessage()), null, true);
-	exit(0);
+    camp_html_display_error(getGS('There was an error while saving the audioclip: $1',
+                                    $aClipGunid->getMessage()), null, true);
+    exit(0);
 }
 
 Audioclip::OnFileStore($f_audiofile);

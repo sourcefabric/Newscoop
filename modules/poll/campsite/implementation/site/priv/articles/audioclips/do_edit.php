@@ -27,14 +27,14 @@ $BackLink = Input::Get('BackLink', 'string', null, true);
 $formData = $_POST;
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
-	exit;
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+    exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
 
 if (!$g_user->hasPermission('AttachAudioclipToArticle')) {
-	camp_html_display_error(getGS("You do not have the right to change audioclip information."), null, true);
+    camp_html_display_error(getGS("You do not have the right to change audioclip information."), null, true);
     exit;
 }
 

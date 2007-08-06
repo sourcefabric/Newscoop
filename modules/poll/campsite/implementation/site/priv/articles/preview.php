@@ -18,61 +18,61 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 
 $errorStr = "";
 if (!$articleObj->exists()) {
-	$errorStr = getGS('There was an error reading request parameters.');
+    $errorStr = getGS('There was an error reading request parameters.');
 } else {
-	$templateId = $sectionObj->getArticleTemplateId();
-	if ($templateId == 0) {
-		$templateId = $issueObj->getArticleTemplateId();
-	}
-	//getGS("This article cannot be previewed. Please make sure it has the front page template selected.");
-	if ($templateId == 0) {
-		$errorStr = getGS('This article cannot be previewed. Please make sure it has the article template selected.');
-	}
+    $templateId = $sectionObj->getArticleTemplateId();
+    if ($templateId == 0) {
+        $templateId = $issueObj->getArticleTemplateId();
+    }
+    //getGS("This article cannot be previewed. Please make sure it has the front page template selected.");
+    if ($templateId == 0) {
+        $errorStr = getGS('This article cannot be previewed. Please make sure it has the article template selected.');
+    }
 }
 
 $templateObj =& new Template($templateId);
 
 if (!isset($_SERVER['SERVER_PORT']))
 {
-	$_SERVER['SERVER_PORT'] = 80;
+    $_SERVER['SERVER_PORT'] = 80;
 }
 $scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
 $siteAlias = new Alias($publicationObj->getDefaultAliasId());
 $websiteURL = $scheme.$siteAlias->getName();
 
 $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_user->getKeyId()
-				. "&AdminAccess=all";
+                . "&AdminAccess=all";
 if ($publicationObj->getUrlTypeId() == 1) {
-	$templateObj = & new Template($templateId);
-	$url = "$websiteURL/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
-		. "&IdPublication=$f_publication_id&NrIssue=$f_issue_number&NrSection=$f_section_number"
-		. "&NrArticle=$f_article_number&$accessParams";
+    $templateObj = & new Template($templateId);
+    $url = "$websiteURL/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
+        . "&IdPublication=$f_publication_id&NrIssue=$f_issue_number&NrSection=$f_section_number"
+        . "&NrArticle=$f_article_number&$accessParams";
 } else {
-	$url = ShortURL::GetURL($f_publication_id, $f_language_selected, null, null, $f_article_number);
-	if (PEAR::isError($url)) {
-		$errorStr = $url->getMessage();
-	}
-	$url .= '?' . $accessParams;
+    $url = ShortURL::GetURL($f_publication_id, $f_language_selected, null, null, $f_article_number);
+    if (PEAR::isError($url)) {
+        $errorStr = $url->getMessage();
+    }
+    $url .= '?' . $accessParams;
 }
 
 if ($errorStr != "") {
-	camp_html_display_error($errorStr, null, true);
+    camp_html_display_error($errorStr, null, true);
 }
 
 if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
-	// Show dual-pane view for those with template management priviledges
+    // Show dual-pane view for those with template management priviledges
 ?>
-	<FRAMESET ROWS="60%,*" BORDER="2">
-		<FRAME SRC="<?php print "$url&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
-		<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">
-	</FRAMESET>
+    <FRAMESET ROWS="60%,*" BORDER="2">
+        <FRAME SRC="<?php print "$url&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
+        <FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">
+    </FRAMESET>
 <?php
 } else {
-	// Show single pane for everyone else.
+    // Show single pane for everyone else.
 ?>
-	<FRAMESET ROWS="100%">
-		<FRAME SRC="<?php print $url; ?>" NAME="body" FRAMEBORDER="1">
-	</FRAMESET>
+    <FRAMESET ROWS="100%">
+        <FRAME SRC="<?php print $url; ?>" NAME="body" FRAMEBORDER="1">
+    </FRAMESET>
 <?php
 }
 ?>

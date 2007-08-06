@@ -7,8 +7,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-	camp_html_display_error(getGS("You do not have the right to add article types."));
-	exit;
+    camp_html_display_error(getGS("You do not have the right to add article types."));
+    exit;
 }
 
 
@@ -23,26 +23,26 @@ $created = false;
 
 $errorMsgs = array();
 if (empty($f_field_translation_name)) {
-	$correct = false;
-	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
+    $correct = false;
+    $errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
 }
 
 if ($f_field_language_id <= 0) {
-	$correct = false;
-	$errorMsgs[] = getGS('You must choose a language for the field.');
+    $correct = false;
+    $errorMsgs[] = getGS('You must choose a language for the field.');
 }
 
 if ($correct) {
-	// Translate existing type
-	$field =& new ArticleTypeField($f_article_type, $f_field_id);
-	$created = $field->setName($f_field_language_id, $f_field_translation_name);
-	if ($created) {
-		camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=". $f_article_type);
-		exit;
-	}
-	else {
-		$errorMsgs[] = getGS('The translation could not be added.');
-	}
+    // Translate existing type
+    $field =& new ArticleTypeField($f_article_type, $f_field_id);
+    $created = $field->setName($f_field_language_id, $f_field_translation_name);
+    if ($created) {
+        camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=". $f_article_type);
+        exit;
+    }
+    else {
+        $errorMsgs[] = getGS('The translation could not be added.');
+    }
 }
 
 $crumbs = array();
@@ -55,28 +55,28 @@ echo camp_html_breadcrumbs($crumbs);
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
-	<TD COLSPAN="2">
-		<B> <?php  putGS("Translating field"); ?> </B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
+    <TD COLSPAN="2">
+        <B> <?php  putGS("Translating field"); ?> </B>
+        <HR NOSHADE SIZE="1" COLOR="BLACK">
+    </TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-		<BLOCKQUOTE>
-		<?php
-		foreach ($errorMsgs as $errorMsg) {
-			echo "<li>".$errorMsg."</li>";
-		}
-		?>
-		</BLOCKQUOTE>
-	</TD>
+    <TD COLSPAN="2">
+        <BLOCKQUOTE>
+        <?php
+        foreach ($errorMsgs as $errorMsg) {
+            echo "<li>".$errorMsg."</li>";
+        }
+        ?>
+        </BLOCKQUOTE>
+    </TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/fields/?f_article_type=<?php p($f_article_type); ?>'">
-	</DIV>
-	</TD>
+    <TD COLSPAN="2">
+    <DIV ALIGN="CENTER">
+    <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/fields/?f_article_type=<?php p($f_article_type); ?>'">
+    </DIV>
+    </TD>
 </TR>
 </TABLE>
 <P>

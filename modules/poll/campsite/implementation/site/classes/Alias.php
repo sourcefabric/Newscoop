@@ -20,130 +20,130 @@ require_once($g_documentRoot.'/classes/ParserCom.php');
  * @package Campsite
  */
 class Alias extends DatabaseObject {
-	var $m_dbTableName = 'Aliases';
-	var $m_keyColumnNames = array('Id');
-	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('Id', 'Name', 'IdPublication');
+    var $m_dbTableName = 'Aliases';
+    var $m_keyColumnNames = array('Id');
+    var $m_keyIsAutoIncrement = true;
+    var $m_columnNames = array('Id', 'Name', 'IdPublication');
 
-	/**
-	 * Constructor.
-	 * @param int $p_id
-	 */
-	function Alias($p_id = null)
-	{
-		parent::DatabaseObject($this->m_columnNames);
-		if (!is_null($p_id)) {
-    		$this->m_data['Id'] = $p_id;
-			$this->fetch();
-		}
-	} // constructor
+    /**
+     * Constructor.
+     * @param int $p_id
+     */
+    function Alias($p_id = null)
+    {
+        parent::DatabaseObject($this->m_columnNames);
+        if (!is_null($p_id)) {
+            $this->m_data['Id'] = $p_id;
+            $this->fetch();
+        }
+    } // constructor
 
 
-	/**
-	 * @param array $p_values
-	 * @return boolean
-	 */
-	function create($p_values = null)
-	{
-		$created = parent::create($p_values);
-		if ($created && ($this->m_data["IdPublication"] > 0)) {
+    /**
+     * @param array $p_values
+     * @return boolean
+     */
+    function create($p_values = null)
+    {
+        $created = parent::create($p_values);
+        if ($created && ($this->m_data["IdPublication"] > 0)) {
 // no need to connect to the template engine anymore
-//			ParserCom::SendMessage('publications', 'modify',
-//								   array("IdPublication" => $this->m_data['IdPublication']));
-		}
-		return $created;
-	} // fn create
+//            ParserCom::SendMessage('publications', 'modify',
+//                                   array("IdPublication" => $this->m_data['IdPublication']));
+        }
+        return $created;
+    } // fn create
 
 
-	/**
-	 * @return boolean
-	 */
-	function delete()
-	{
-		$deleted = parent::delete();
-		if ($deleted) {
+    /**
+     * @return boolean
+     */
+    function delete()
+    {
+        $deleted = parent::delete();
+        if ($deleted) {
 // no need to connect to the template engine anymore
-//			ParserCom::SendMessage('publications', 'modify',
-//								   array("IdPublication" => $this->m_data['IdPublication']));
-		}
-		return $deleted;
-	} // fn delete
+//            ParserCom::SendMessage('publications', 'modify',
+//                                   array("IdPublication" => $this->m_data['IdPublication']));
+        }
+        return $deleted;
+    } // fn delete
 
 
-	/**
-	 * @return int
-	 */
-	function getId()
-	{
-		return $this->m_data['Id'];
-	} // fn getId
+    /**
+     * @return int
+     */
+    function getId()
+    {
+        return $this->m_data['Id'];
+    } // fn getId
 
 
-	/**
-	 * @return string
-	 */
-	function getName()
-	{
-		return $this->m_data['Name'];
-	} // fn getName
+    /**
+     * @return string
+     */
+    function getName()
+    {
+        return $this->m_data['Name'];
+    } // fn getName
 
 
-	/**
-	 *
-	 */
-	function setName($p_name)
-	{
-		$changed = $this->setProperty('Name', $p_name);
-		if ($changed) {
+    /**
+     *
+     */
+    function setName($p_name)
+    {
+        $changed = $this->setProperty('Name', $p_name);
+        if ($changed) {
 // no need to connect to the template engine anymore
-//			ParserCom::SendMessage('publications', 'modify',
-//								   array("IdPublication"=>$this->m_data['IdPublication']));
-		}
-		return $changed;
-	} // fn setName
+//            ParserCom::SendMessage('publications', 'modify',
+//                                   array("IdPublication"=>$this->m_data['IdPublication']));
+        }
+        return $changed;
+    } // fn setName
 
 
-	/**
-	 * @return int
-	 */
-	function getPublicationId()
-	{
-		return $this->m_data['IdPublication'];
-	} // fn getPublicationId
+    /**
+     * @return int
+     */
+    function getPublicationId()
+    {
+        return $this->m_data['IdPublication'];
+    } // fn getPublicationId
 
 
-	/**
-	 * @param int $p_value
-	 * @return boolean
-	 */
-	function setPublicationId($p_value)
-	{
-		return $this->setProperty('IdPublication', $p_value);
-	} // fn setPublicationId
+    /**
+     * @param int $p_value
+     * @return boolean
+     */
+    function setPublicationId($p_value)
+    {
+        return $this->setProperty('IdPublication', $p_value);
+    } // fn setPublicationId
 
 
-	/**
-	 * Get all the aliases that match the given criteria.
-	 *
-	 * @param int $p_id
-	 * @param int $p_publicationId
-	 * @param string $p_name
-	 * @return array
-	 */
-	function GetAliases($p_id = null, $p_publicationId = null, $p_name = null)
-	{
-		$contraints = array();
-		if (!is_null($p_publicationId)) {
-			$contraints[] = array("IdPublication", $p_publicationId);
-		}
-		if (!is_null($p_name)) {
-			$contraints[] = array("Name", $p_name);
-		}
-		if (!is_null($p_id)) {
-			$contraints[] = array("Id", $p_id);
-		}
-		return DatabaseObject::Search('Alias', $contraints);
-	} // fn GetAliases
+    /**
+     * Get all the aliases that match the given criteria.
+     *
+     * @param int $p_id
+     * @param int $p_publicationId
+     * @param string $p_name
+     * @return array
+     */
+    function GetAliases($p_id = null, $p_publicationId = null, $p_name = null)
+    {
+        $contraints = array();
+        if (!is_null($p_publicationId)) {
+            $contraints[] = array("IdPublication", $p_publicationId);
+        }
+        if (!is_null($p_name)) {
+            $contraints[] = array("Name", $p_name);
+        }
+        if (!is_null($p_id)) {
+            $contraints[] = array("Id", $p_id);
+        }
+        return DatabaseObject::Search('Alias', $contraints);
+    } // fn GetAliases
 
 } // class Alias
 

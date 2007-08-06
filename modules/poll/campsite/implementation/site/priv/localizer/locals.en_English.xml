@@ -1,132 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<Id>en_English</Id>
-	<item>
-		<key>fail</key>
-		<value>fail</value>
-	</item>
-	<item>
-		<key>No source strings found.</key>
-		<value>No source strings found.</value>
-	</item>
-	<item>
-		<key>Globals</key>
-		<value>Globals</value>
-	</item>
-	<item>
-		<key>success</key>
-		<value>success</value>
-	</item>
-	<item>
-		<key>edit</key>
-		<value>edit</value>
-	</item>
-	<item>
-		<key>delete</key>
-		<value>delete</value>
-	</item>
-	<item>
-		<key>The following strings are not used:</key>
-		<value>The following strings are not used:</value>
-	</item>
-	<item>
-		<key>The following strings are missing from the translation files:</key>
-		<value>The following strings are missing from the translation files:</value>
-	</item>
-	<item>
-		<key>Converting...</key>
-		<value>Converting...</value>
-	</item>
-	<item>
-		<key>Click Here to Convert</key>
-		<value>Click Here to Convert</value>
-	</item>
-	<item>
-		<key>Are you sure you want to delete this entry?</key>
-		<value>Are you sure you want to delete this entry?</value>
-	</item>
-	<item>
-		<key>All strings have been translated.</key>
-		<value>All strings have been translated.</value>
-	</item>
-	<item>
-		<key>Add</key>
-		<value>Add</value>
-	</item>
-	<item>
-		<key>Hide translated strings?</key>
-		<value>Hide translated strings?</value>
-	</item>
-	<item>
-		<key>Translate to:</key>
-		<value>Translate to:</value>
-	</item>
-	<item>
-		<key>User Subscriptions Sections</key>
-		<value>User Subscriptions Sections</value>
-	</item>
-	<item>
-		<key>User Subscriptions</key>
-		<value>User Subscriptions</value>
-	</item>
-	<item>
-		<key>Image Archive</key>
-		<value>Image Archive</value>
-	</item>
-	<item>
-		<key>Article Type Fields</key>
-		<value>Article Type Fields</value>
-	</item>
-	<item>
-		<key>Article Topics</key>
-		<value>Article Topics</value>
-	</item>
-	<item>
-		<key>Article Images</key>
-		<value>Article Images</value>
-	</item>
-	<item>
-		<key>Localizer</key>
-		<value>Localizer</value>
-	</item>
-	<item>
-		<key>edit &quot;$1&quot;</key>
-		<value>edit &quot;$1&quot;</value>
-	</item>
-	<item>
-		<key>edit &apos;$1&apos;</key>
-		<value>edit &apos;$1&apos;</value>
-	</item>
-	<item>
-		<key>name</key>
-		<value>name</value>
-	</item>
-	<item>
-		<key>native name</key>
-		<value>native name</value>
-	</item>
-	<item>
-		<key>code</key>
-		<value>code</value>
-	</item>
-	<item>
-		<key>cannot read $1</key>
-		<value>cannot read $1</value>
-	</item>
-	<item>
-		<key>Save</key>
-		<value>Save</value>
-	</item>
-	<item>
-		<key>Translate from:</key>
-		<value>Translate from:</value>
-	</item>
-	<item>
-		<key>Screen:</key>
-		<value>Screen:</value>
-	</item>
-	<item>
-		<key>No matches found.</key>
-		<value>No matches found.</value>
-	</item>
+    <Id>en_English</Id>
+    <item>
+        <key>fail</key>
+        <value>fail</value>
+    </item>
+    <item>
+        <key>No source strings found.</key>
+        <value>No source strings found.</value>
+    </item>
+    <item>
+        <key>Globals</key>
+        <value>Globals</value>
+    </item>
+    <item>
+        <key>success</key>
+        <value>success</value>
+    </item>
+    <item>
+        <key>edit</key>
+        <value>edit</value>
+    </item>
+    <item>
+        <key>delete</key>
+        <value>delete</value>
+    </item>
+    <item>
+        <key>The following strings are not used:</key>
+        <value>The following strings are not used:</value>
+    </item>
+    <item>
+        <key>The following strings are missing from the translation files:</key>
+        <value>The following strings are missing from the translation files:</value>
+    </item>
+    <item>
+        <key>Converting...</key>
+        <value>Converting...</value>
+    </item>
+    <item>
+        <key>Click Here to Convert</key>
+        <value>Click Here to Convert</value>
+    </item>
+    <item>
+        <key>Are you sure you want to delete this entry?</key>
+        <value>Are you sure you want to delete this entry?</value>
+    </item>
+    <item>
+        <key>All strings have been translated.</key>
+        <value>All strings have been translated.</value>
+    </item>
+    <item>
+        <key>Add</key>
+        <value>Add</value>
+    </item>
+    <item>
+        <key>Hide translated strings?</key>
+        <value>Hide translated strings?</value>
+    </item>
+    <item>
+        <key>Translate to:</key>
+        <value>Translate to:</value>
+    </item>
+    <item>
+        <key>User Subscriptions Sections</key>
+        <value>User Subscriptions Sections</value>
+    </item>
+    <item>
+        <key>User Subscriptions</key>
+        <value>User Subscriptions</value>
+    </item>
+    <item>
+        <key>Image Archive</key>
+        <value>Image Archive</value>
+    </item>
+    <item>
+        <key>Article Type Fields</key>
+        <value>Article Type Fields</value>
+    </item>
+    <item>
+        <key>Article Topics</key>
+        <value>Article Topics</value>
+    </item>
+    <item>
+        <key>Article Images</key>
+        <value>Article Images</value>
+    </item>
+    <item>
+        <key>Localizer</key>
+        <value>Localizer</value>
+    </item>
+    <item>
+        <key>edit &quot;$1&quot;</key>
+        <value>edit &quot;$1&quot;</value>
+    </item>
+    <item>
+        <key>edit &apos;$1&apos;</key>
+        <value>edit &apos;$1&apos;</value>
+    </item>
+    <item>
+        <key>name</key>
+        <value>name</value>
+    </item>
+    <item>
+        <key>native name</key>
+        <value>native name</value>
+    </item>
+    <item>
+        <key>code</key>
+        <value>code</value>
+    </item>
+    <item>
+        <key>cannot read $1</key>
+        <value>cannot read $1</value>
+    </item>
+    <item>
+        <key>Save</key>
+        <value>Save</value>
+    </item>
+    <item>
+        <key>Translate from:</key>
+        <value>Translate from:</value>
+    </item>
+    <item>
+        <key>Screen:</key>
+        <value>Screen:</value>
+    </item>
+    <item>
+        <key>No matches found.</key>
+        <value>No matches found.</value>
+    </item>
 </language>

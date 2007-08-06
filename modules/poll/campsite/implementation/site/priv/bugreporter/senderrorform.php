@@ -47,42 +47,42 @@ if ($f_isPostFromBugreporter && ($_SERVER['REQUEST_METHOD'] == "POST") ) {
             $f_num = 0;
             $notIncluded .= "f_num \n";
         } else {
-        	$included .= "f_num:" . urldecode($f_num) . " \n";
+            $included .= "f_num:" . urldecode($f_num) . " \n";
         }
 
         if (!isset($f_str)) {
             $f_str = "";
             $notIncluded .= "f_str \n";
         } else {
-        	$included .= "f_str:" . urldecode($f_str) . " \n";
+            $included .= "f_str:" . urldecode($f_str) . " \n";
         }
 
         if (!isset($f_file)) {
             $f_file = "";
             $notIncluded .= "f_file \n";
         } else {
-        	$included .= "f_file:" . urldecode($f_file) . " \n";
+            $included .= "f_file:" . urldecode($f_file) . " \n";
         }
 
         if (!isset($f_line)) {
             $f_line = 0;
             $notIncluded .= "f_line \n";
         } else {
-        	$included .= "f_line:" . urldecode($f_line) . " \n";
+            $included .= "f_line:" . urldecode($f_line) . " \n";
         }
 
         if (!isset($f_time)) {
             $f_time = date("r");
             $notIncluded .= "f_time \n";
         } else {
-        	$included .= "f_time:" . urldecode($f_time) . " \n";
+            $included .= "f_time:" . urldecode($f_time) . " \n";
         }
 
         if (!isset($f_backtrace)) {
             $f_backtrace = "";
             $notIncluded .= "f_backtrace \n";
         } else {
-        	$included .= "f_backtrace:" . urldecode($f_backtrace) . " \n";
+            $included .= "f_backtrace:" . urldecode($f_backtrace) . " \n";
         }
 
         $description .= "{{{\nVariables Included: \n$included\n"
@@ -122,7 +122,7 @@ if ($f_isPostFromBugreporter && ($_SERVER['REQUEST_METHOD'] == "POST") ) {
     if ($wasSent == true) {
         include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/thankyou.php");
     } else {
-    	include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/emailus.php");
+        include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/emailus.php");
     }
 }
 

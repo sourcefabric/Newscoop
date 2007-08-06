@@ -28,7 +28,7 @@ $ADMIN = "admin";
 
 if (!isset($_SERVER['SERVER_PORT']))
 {
-	$_SERVER['SERVER_PORT'] = 80;
+    $_SERVER['SERVER_PORT'] = 80;
 }
 $scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
 $Campsite['HOSTNAME'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : "";
@@ -47,7 +47,7 @@ $Campsite['IMAGE_PREFIX'] = 'cms-image-';
 $Campsite['IMAGEMAGICK_INSTALLED'] = true;
 $Campsite['THUMBNAIL_MAX_SIZE'] = 64;
 $Campsite['THUMBNAIL_COMMAND'] = 'convert -sample '
-		.$Campsite['THUMBNAIL_MAX_SIZE'].'x'.$Campsite['THUMBNAIL_MAX_SIZE'];
+        .$Campsite['THUMBNAIL_MAX_SIZE'].'x'.$Campsite['THUMBNAIL_MAX_SIZE'];
 $Campsite['THUMBNAIL_DIRECTORY'] = $Campsite['IMAGE_DIRECTORY'].'/thumbnails/';
 $Campsite['THUMBNAIL_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/thumbnails/';
 $Campsite['THUMBNAIL_PREFIX'] = 'cms-thumb-';
@@ -95,23 +95,23 @@ define('CAMP_ERROR_UPLOAD_FILE', -900);
  */
 function __autoload($p_className)
 {
-	global $Campsite, $ADMIN_DIR, $ADMIN, $g_documentRoot;
+    global $Campsite, $ADMIN_DIR, $ADMIN, $g_documentRoot;
 
-	if (!is_string($p_className)) {
-		return;
-	}
+    if (!is_string($p_className)) {
+        return;
+    }
 
-	$classDirectories = array('classes',
-							  'template_engine',
-							  'template_engine/classes',
-							  'template_engine/metaclasses');
-	foreach ($classDirectories as $dirName) {
-		$fileName = "$g_documentRoot/$dirName/$p_className.php";
-		if (file_exists($fileName)) {
-			require_once($fileName);
-			return;
-		}
-	}
+    $classDirectories = array('classes',
+                              'template_engine',
+                              'template_engine/classes',
+                              'template_engine/metaclasses');
+    foreach ($classDirectories as $dirName) {
+        $fileName = "$g_documentRoot/$dirName/$p_className.php";
+        if (file_exists($fileName)) {
+            require_once($fileName);
+            return;
+        }
+    }
 }
 
 ?>

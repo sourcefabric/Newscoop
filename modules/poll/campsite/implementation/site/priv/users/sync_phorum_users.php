@@ -2,7 +2,7 @@
 
 if (!$g_user->hasPermission('SyncPhorumUsers')) {
     camp_html_display_error(getGS("You do not have the right to sync Campsite and Phorum users."));
-	exit;
+    exit;
 }
 
 $queryStr = "SELECT u.Id, pu.user_id "

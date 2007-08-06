@@ -7,8 +7,8 @@ $f_backlink = Input::Get('Back', 'string', '');
 $f_image_id = Input::Get('f_image_id', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
-	exit;
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+    exit;
 }
 
 $imageObj =& new Image($f_image_id);

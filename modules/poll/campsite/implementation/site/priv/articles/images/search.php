@@ -11,22 +11,22 @@ $f_image_offset = camp_session_get('f_image_offset', 0);
 $f_search_string = camp_session_get('f_search_string', '');
 $f_items_per_page = camp_session_get('f_items_per_page', 4);
 if ($f_items_per_page < 4) {
-	$f_items_per_page = 4;
+    $f_items_per_page = 4;
 }
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
-	exit;
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+    exit;
 }
 
 // Build the links for ordering search results
 $OrderSign = '';
 if ($f_order_direction == 'DESC') {
-	$ReverseOrderDirection = "ASC";
-	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/descending.png\" border=\"0\">";
+    $ReverseOrderDirection = "ASC";
+    $OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/descending.png\" border=\"0\">";
 } else {
-	$ReverseOrderDirection = "DESC";
-	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
+    $ReverseOrderDirection = "DESC";
+    $OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
 }
 
 $TotalImages = Image::GetTotalImages();
@@ -47,32 +47,32 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
 <tr>
-	<td><input type="submit" name="submit_button" value="Search" class="button"></td>
-	<td><input type="text" name="f_search_string" value="<?php echo $f_search_string; ?>" class="input_text" style="width: 150px;"></td>
-	<td>
-		<table cellpadding="0" cellspacing="0">
-		<tr>
-			<td>Order by:</td>
-			<td>
-				<select name="f_order_by" class="input_select" onchange="this.form.submit();">
-				<?PHP
-				camp_html_select_option('id', $f_order_by, getGS("Most Recently Added"));
-				camp_html_select_option('last_modified', $f_order_by, getGS("Most Recently Modified"));
-				camp_html_select_option('description', $f_order_by, getGS("Description"));
-				camp_html_select_option('photographer', $f_order_by, getGS("Photographer"));
-				camp_html_select_option('place', $f_order_by, getGS("Place"));
-				camp_html_select_option('date', $f_order_by, getGS("Date"));
-				camp_html_select_option('inuse', $f_order_by, getGS("In use"));
-				?>
-				</select>
-			</td>
-			<td>
-				<a href="popup.php?f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_article_number=<?php p($f_article_number); ?>&f_order_direction=<?php p($ReverseOrderDirection); ?>"><?php p($OrderSign); ?></a>
-			</td>
-		</tr>
-		</table>
-	</td>
-	<td><?php putGS("Items per page"); ?>: <input type="text" name="f_items_per_page" value="<?php p($f_items_per_page); ?>" class="input_text" size="4"></td>
+    <td><input type="submit" name="submit_button" value="Search" class="button"></td>
+    <td><input type="text" name="f_search_string" value="<?php echo $f_search_string; ?>" class="input_text" style="width: 150px;"></td>
+    <td>
+        <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td>Order by:</td>
+            <td>
+                <select name="f_order_by" class="input_select" onchange="this.form.submit();">
+                <?PHP
+                camp_html_select_option('id', $f_order_by, getGS("Most Recently Added"));
+                camp_html_select_option('last_modified', $f_order_by, getGS("Most Recently Modified"));
+                camp_html_select_option('description', $f_order_by, getGS("Description"));
+                camp_html_select_option('photographer', $f_order_by, getGS("Photographer"));
+                camp_html_select_option('place', $f_order_by, getGS("Place"));
+                camp_html_select_option('date', $f_order_by, getGS("Date"));
+                camp_html_select_option('inuse', $f_order_by, getGS("In use"));
+                ?>
+                </select>
+            </td>
+            <td>
+                <a href="popup.php?f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_article_number=<?php p($f_article_number); ?>&f_order_direction=<?php p($ReverseOrderDirection); ?>"><?php p($OrderSign); ?></a>
+            </td>
+        </tr>
+        </table>
+    </td>
+    <td><?php putGS("Items per page"); ?>: <input type="text" name="f_items_per_page" value="<?php p($f_items_per_page); ?>" class="input_text" size="4"></td>
 </tr>
 </form>
 </table>
@@ -90,7 +90,7 @@ if (count($imageData) > 0) {
 <TR class="table_list_header">
     <?php if ($articleObj->userCanModify($g_user)) { ?>
     <TD ALIGN="center" VALIGN="top" style="padding: 3px;"><B><?php p(getGS("Attach")); ?></B></TD>
-	<?php } ?>
+    <?php } ?>
     <TD ALIGN="LEFT" VALIGN="TOP">
       <?php  putGS("Thumbnail"); ?>
     </TD>
@@ -117,22 +117,22 @@ foreach ($imageData as $image) {
     <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
         <?php
         if ($articleObj->userCanModify($g_user)) { ?>
-    		<form method="POST" action="do_link.php">
-			<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
-			<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
-			<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
-    		<input type="hidden" name="f_image_id" value="<?php echo $image['id']; ?>">
-        	<TD ALIGN="CENTER">
-				<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png"></td>
-          	</TD>
-       		</form>
-        	<?php
-     	}
-     	else {
-     		?>
-        	<TD ALIGN="CENTER">&nbsp;</TD>
-     		<?php
-     	}
+            <form method="POST" action="do_link.php">
+            <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
+            <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
+            <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
+            <input type="hidden" name="f_image_id" value="<?php echo $image['id']; ?>">
+            <TD ALIGN="CENTER">
+                <input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png"></td>
+              </TD>
+               </form>
+            <?php
+         }
+         else {
+             ?>
+            <TD ALIGN="CENTER">&nbsp;</TD>
+             <?php
+         }
         ?>
         <TD ALIGN="center">
             <A HREF="<?php echo
@@ -164,8 +164,8 @@ foreach ($imageData as $image) {
 
 ?>
 <tr>
-	<td colspan="5" nowrap>
-	<?php putGS('$1 images found', $NumImagesFound); ?></TD>
+    <td colspan="5" nowrap>
+    <?php putGS('$1 images found', $NumImagesFound); ?></TD>
 </tr>
 </table>
 <table class="action_buttons">

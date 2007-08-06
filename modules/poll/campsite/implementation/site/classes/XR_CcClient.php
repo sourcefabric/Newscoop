@@ -795,9 +795,9 @@ class XR_CcClient {
         if($this->verbose) echo "serverPath: $serverPath\n";
         $url = parse_url($serverPath);
         if ($url === false) {
-        	$this->client = null;
+            $this->client = null;
         } else {
-	        $this->client = new XML_RPC_Client($url['path'], $url['host'], $url['port']);
+            $this->client = new XML_RPC_Client($url['path'], $url['host'], $url['port']);
         }
     } // constructor
 
@@ -821,14 +821,14 @@ class XR_CcClient {
      */
     function &Factory($mdefs, $debug=0, $verbose=FALSE)
     {
-    	if (class_exists('XR_CcClientCore')) {
-    		$xrc =& new XR_CcClientCore($mdefs, $debug, $verbose);
-    		return $xrc;
-    	}
-    	if (!is_array($mdefs)) {
-    		$result =& new PEAR_Error("Invalid methods definition in XML-RCP client.");
-    		return $result;
-    	}
+        if (class_exists('XR_CcClientCore')) {
+            $xrc =& new XR_CcClientCore($mdefs, $debug, $verbose);
+            return $xrc;
+        }
+        if (!is_array($mdefs)) {
+            $result =& new PEAR_Error("Invalid methods definition in XML-RCP client.");
+            return $result;
+        }
         $f = '';
         foreach ($mdefs as $fn=>$farr) {
             $f .=
@@ -845,12 +845,12 @@ class XR_CcClient {
         $r = eval($e);
         if ($r === FALSE) {
             $result =& new PEAR_Error(getGS("There was a problem trying to execute the XML RPC function."));
-        	return $result;
+            return $result;
         }
         $xrc =& new XR_CcClientCore($mdefs, $debug, $verbose);
         if (is_null($xrc->client)) {
-        	$result =& new PEAR_Error(getGS("The Campcaster server configuration is invalid."));
-        	return $result;
+            $result =& new PEAR_Error(getGS("The Campcaster server configuration is invalid."));
+            return $result;
         }
         return $xrc;
     } // fn factory
@@ -928,9 +928,9 @@ class XR_CcClient {
             $resp = new PEAR_Error('Connection refused');
         }
         if (PEAR::isError($resp)) {
-	        if ($resp->getMessage() == 'Connection refused') {
-    	        return new PEAR_Error(getGS("Communication error: ".$this->client->errstr));
-        	}
+            if ($resp->getMessage() == 'Connection refused') {
+                return new PEAR_Error(getGS("Communication error: ".$this->client->errstr));
+            }
             if ($resp->getCode() == 805 || $resp->getCode() == 804) {
                 return $resp;
             }

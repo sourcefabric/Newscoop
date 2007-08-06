@@ -23,7 +23,7 @@ if ($f_isFromInterface && ($_SERVER['REQUEST_METHOD'] == "POST") ) {
 
     $wasSent = false;
 
-   	// Remove the code name from the version number.
+       // Remove the code name from the version number.
     $version = split(" ", $Campsite['VERSION']);
     $version = array_shift($version);
 
@@ -40,7 +40,7 @@ if ($f_isFromInterface && ($_SERVER['REQUEST_METHOD'] == "POST") ) {
     if ($wasSent == true) {
         include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/feedback/thankyou.php");
     } else {
-    	include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/feedback/emailus.php");
+        include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/feedback/emailus.php");
     }
 }
 

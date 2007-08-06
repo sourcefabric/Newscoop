@@ -17,40 +17,40 @@ if ($f_items_per_page < 4) {
 $f_category_3_name = camp_session_get('f_category_3_name', 'dc:source');
 $f_category_3_name_prev = camp_session_get('f_category_3_name_prev', 'dc:source');
 if ($f_category_3_name == $f_category_3_name_prev) {
-	$f_category_3_value = Input::Get('f_category_3_value', 'array', array(VALUE_ALL), true);
+    $f_category_3_value = Input::Get('f_category_3_value', 'array', array(VALUE_ALL), true);
 } else {
-	$f_category_3_value = array(VALUE_ALL);
-	$f_audioclip_offset = 0;
+    $f_category_3_value = array(VALUE_ALL);
+    $f_audioclip_offset = 0;
 }
 
 $f_category_2_name = camp_session_get('f_category_2_name', 'dc:creator');
 $f_category_2_name_prev = camp_session_get('f_category_2_name_prev', 'dc:creator');
 $f_category_2_value_prev = Input::Get('f_category_2_value_prev', 'array', array(VALUE_ALL), true);
 if ($f_category_2_name == $f_category_2_name_prev) {
-	$f_category_2_value = Input::Get('f_category_2_value', 'array', array(VALUE_ALL), true);
-	if ($f_category_2_value != $f_category_2_value_prev) {
-		$f_category_3_value = array(VALUE_ALL);
-	}
+    $f_category_2_value = Input::Get('f_category_2_value', 'array', array(VALUE_ALL), true);
+    if ($f_category_2_value != $f_category_2_value_prev) {
+        $f_category_3_value = array(VALUE_ALL);
+    }
 } else {
-	$f_category_2_value = array(VALUE_ALL);
-	$f_category_3_value = array(VALUE_ALL);
-	$f_audioclip_offset = 0;
+    $f_category_2_value = array(VALUE_ALL);
+    $f_category_3_value = array(VALUE_ALL);
+    $f_audioclip_offset = 0;
 }
 
 $f_category_1_name = camp_session_get('f_category_1_name', 'dc:type');
 $f_category_1_name_prev = camp_session_get('f_category_1_name_prev', 'dc:type');
 $f_category_1_value_prev = Input::Get('f_category_1_value_prev', 'array', array(VALUE_ALL), true);
 if ($f_category_1_name == $f_category_1_name_prev) {
-	$f_category_1_value = Input::Get('f_category_1_value', 'array', array(VALUE_ALL), true);
-	if ($f_category_1_value != $f_category_1_value_prev) {
-		$f_category_2_value = array(VALUE_ALL);
-		$f_category_3_value = array(VALUE_ALL);
-	}
+    $f_category_1_value = Input::Get('f_category_1_value', 'array', array(VALUE_ALL), true);
+    if ($f_category_1_value != $f_category_1_value_prev) {
+        $f_category_2_value = array(VALUE_ALL);
+        $f_category_3_value = array(VALUE_ALL);
+    }
 } else {
-	$f_category_1_value = array(VALUE_ALL);
-	$f_category_2_value = array(VALUE_ALL);
-	$f_category_3_value = array(VALUE_ALL);
-	$f_audioclip_offset = 0;
+    $f_category_1_value = array(VALUE_ALL);
+    $f_category_2_value = array(VALUE_ALL);
+    $f_category_3_value = array(VALUE_ALL);
+    $f_audioclip_offset = 0;
 }
 
 if (!Input::IsValid()) {
@@ -87,19 +87,19 @@ if (PEAR::isError($resp)) {
 
 $search_conditions = array();
 for ($varIndex = 1; $varIndex <= 3; $varIndex++) {
-	$f_curr_category_value =& ${'f_category_'.$varIndex.'_value'};
-	$f_curr_category_name =& ${'f_category_'.$varIndex.'_name'};
-	$category_conditions[$varIndex] = array();
-	foreach ($f_curr_category_value as $categoryValue) {
-		if ($categoryValue == '-1') {
-			continue;
-		}
-		$condition = array('cat' => $f_curr_category_name,
-						   'op' => '=',
-						   'val' => $categoryValue);
-		$category_conditions[$varIndex][] = $condition;
-	}
-	$search_conditions = array_merge($search_conditions, $category_conditions[$varIndex]);
+    $f_curr_category_value =& ${'f_category_'.$varIndex.'_value'};
+    $f_curr_category_name =& ${'f_category_'.$varIndex.'_name'};
+    $category_conditions[$varIndex] = array();
+    foreach ($f_curr_category_value as $categoryValue) {
+        if ($categoryValue == '-1') {
+            continue;
+        }
+        $condition = array('cat' => $f_curr_category_name,
+                           'op' => '=',
+                           'val' => $categoryValue);
+        $category_conditions[$varIndex][] = $condition;
+    }
+    $search_conditions = array_merge($search_conditions, $category_conditions[$varIndex]);
 }
 $browse_category_2_conditions = $category_conditions[1];
 $browse_category_3_conditions = array_merge($category_conditions[1], $category_conditions[2]);
@@ -144,96 +144,96 @@ if ($isCcOnline) {
 <input type="hidden" name="f_order_direction" value="" />
 <?php
 for ($catIndex = 1; $catIndex <= 2; $catIndex++) {
-	foreach (${'f_category_'.$catIndex.'_value'} as $categoryValue) {
+    foreach (${'f_category_'.$catIndex.'_value'} as $categoryValue) {
 ?>
 <input type="hidden" name="f_category_<?php echo $catIndex; ?>_value_prev[]" value="<?php echo htmlspecialchars($categoryValue); ?>">
 <?php
-	}
+    }
 }
 ?>
 <table border="0" cellspacing="1" cellpadding="6" class="table_list" width="100%">
-	<tr>
-		<td><?php putGS('Category'); ?>:</td>
-		<td><?php putGS('Category'); ?>:</td>
-		<td><?php putGS('Category'); ?>:</td>
-	</tr>
-	<tr>
-		<td>
-			<select name="f_category_1_name" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
-			<?php
-			foreach ($metatagLabel as $tagName=>$tagDescription) {
-				if (AudioclipMetadataEntry::GetTagNS($tagName) != 'dc') {
-					continue;
-				}
-				camp_html_select_option($tagName, $f_category_1_name, getGS($tagDescription));
-			}
-			?>
-			</select>
-		</td>
-		<td>
-			<select name="f_category_2_name" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
-			<?php
-			foreach ($metatagLabel as $tagName=>$tagDescription) {
-				if (AudioclipMetadataEntry::GetTagNS($tagName) != 'dc') {
-					continue;
-				}
-				camp_html_select_option($tagName, $f_category_2_name, getGS($tagDescription));
-			}
-			?>
-			</select>
-		</td>
-		<td>
-			<select name="f_category_3_name" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
-			<?php
-			foreach ($metatagLabel as $tagName=>$tagDescription) {
-				if (AudioclipMetadataEntry::GetTagNS($tagName) != 'dc') {
-					continue;
-				}
-				camp_html_select_option($tagName, $f_category_3_name, getGS($tagDescription));
-			}
-			?>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<select name="f_category_1_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
-			<option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
-			<?php
-			foreach ($category_1_values['results'] as $index=>$value) {
-				camp_html_select_option($value, $f_category_1_value, $value);
-			}
-			?>
-			</select>
-		</td>
-		<td>
-			<select name="f_category_2_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
-			<option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
-			<?php
-			foreach ($category_2_values['results'] as $index=>$value) {
-				camp_html_select_option($value, $f_category_2_value, $value);
-			}
-			?>
-			</select>
-		</td>
-		<td>
-			<select name="f_category_3_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
-			<option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
-			<?php
-			foreach ($category_3_values['results'] as $index=>$value) {
-				camp_html_select_option($value, $f_category_3_value, $value);
-			}
-			?>
-			</select>
-		</td>
-	</tr>
+    <tr>
+        <td><?php putGS('Category'); ?>:</td>
+        <td><?php putGS('Category'); ?>:</td>
+        <td><?php putGS('Category'); ?>:</td>
+    </tr>
+    <tr>
+        <td>
+            <select name="f_category_1_name" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
+            <?php
+            foreach ($metatagLabel as $tagName=>$tagDescription) {
+                if (AudioclipMetadataEntry::GetTagNS($tagName) != 'dc') {
+                    continue;
+                }
+                camp_html_select_option($tagName, $f_category_1_name, getGS($tagDescription));
+            }
+            ?>
+            </select>
+        </td>
+        <td>
+            <select name="f_category_2_name" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
+            <?php
+            foreach ($metatagLabel as $tagName=>$tagDescription) {
+                if (AudioclipMetadataEntry::GetTagNS($tagName) != 'dc') {
+                    continue;
+                }
+                camp_html_select_option($tagName, $f_category_2_name, getGS($tagDescription));
+            }
+            ?>
+            </select>
+        </td>
+        <td>
+            <select name="f_category_3_name" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
+            <?php
+            foreach ($metatagLabel as $tagName=>$tagDescription) {
+                if (AudioclipMetadataEntry::GetTagNS($tagName) != 'dc') {
+                    continue;
+                }
+                camp_html_select_option($tagName, $f_category_3_name, getGS($tagDescription));
+            }
+            ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <select name="f_category_1_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
+            <option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
+            <?php
+            foreach ($category_1_values['results'] as $index=>$value) {
+                camp_html_select_option($value, $f_category_1_value, $value);
+            }
+            ?>
+            </select>
+        </td>
+        <td>
+            <select name="f_category_2_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
+            <option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
+            <?php
+            foreach ($category_2_values['results'] as $index=>$value) {
+                camp_html_select_option($value, $f_category_2_value, $value);
+            }
+            ?>
+            </select>
+        </td>
+        <td>
+            <select name="f_category_3_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
+            <option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
+            <?php
+            foreach ($category_3_values['results'] as $index=>$value) {
+                camp_html_select_option($value, $f_category_3_value, $value);
+            }
+            ?>
+            </select>
+        </td>
+    </tr>
 </table>
 </form>
 <?php
-	if (count($clips) > 0) {
-	    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";
-    	$pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
-    	require('cliplist.php');
+    if (count($clips) > 0) {
+        $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";
+        $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
+        require('cliplist.php');
     } else {
 ?>
 <table border="0" cellspacing="1" cellpadding="6" class="table_list">

@@ -12,8 +12,8 @@ if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
 }
 
 if (!$g_user->hasPermission('AttachAudioclipToArticle')) {
-	camp_html_display_error(getGS('You do not have the right to attach audioclips to articles.'), null, true);
-	exit;
+    camp_html_display_error(getGS('You do not have the right to attach audioclips to articles.'), null, true);
+    exit;
 }
 
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -21,14 +21,14 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_audioclip_codes = Input::Get('f_audioclip_code', 'array', array(), true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
-	exit;
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+    exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
-	camp_html_display_error(getGS("Article does not exist."), null, true);
-	exit;
+    camp_html_display_error(getGS("Article does not exist."), null, true);
+    exit;
 }
 
 if (sizeof($f_audioclip_codes) == 0) {
