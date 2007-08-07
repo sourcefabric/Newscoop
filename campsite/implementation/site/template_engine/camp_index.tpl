@@ -7,8 +7,8 @@
 
 {{ list_article length="4" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
 <li>current article: {{ $campsite->current_article_list->getCurrent() }},
-   article list index: {{ $campsite->current_article_list->getIndex() }},
-   article list column: {{ $campsite->current_article_list->getColumn() }}</li>
+   list index: {{ $campsite->current_article_list->getIndex() }},
+   column: {{ $campsite->current_article_list->getColumn() }}</li>
 {{ /list_article }}
 
 

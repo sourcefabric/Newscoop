@@ -6,7 +6,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once('PHPUnit/Framework.php');
 
-require_once('template_engine/ListObject.php');
+require_once('template_engine/classes/ListObject.php');
 
 require_once('set_path.php');
 
