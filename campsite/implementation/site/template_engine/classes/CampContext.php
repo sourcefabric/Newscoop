@@ -60,8 +60,10 @@ final class CampContext {
         // complete list of misc properties
         // ...
 
-        $this->m_readonlyProperties['current_article_list'] = new ArticleList(-1);
-        $this->m_readonlyProperties['article_list'] = array($this->m_readonlyProperties['current_article_list']);
+        $this->m_readonlyProperties['current_issues_list'] = new IssueList(-1);
+        $this->m_readonlyProperties['issues_list'] = array($this->m_readonlyProperties['current_issues_list']);
+        $this->m_readonlyProperties['current_articles_list'] = new ArticleList(-1);
+        $this->m_readonlyProperties['articles_list'] = array($this->m_readonlyProperties['current_articles_list']);
     } // fn __construct
 
 
@@ -170,6 +172,25 @@ final class CampContext {
 
 
     /**
+     * Sets the current issue list.
+     *
+     * @param object $p_list
+     * @return void
+     */
+	public function setCurrentIssueList(&$p_list)
+    {
+    	if (!is_object($p_list)) {
+    		throw new InvalidObjectException($p_list);
+    	}
+    	if (!is_a($p_list, 'IssueList')) {
+    		throw new InvalidObjectException($p_list);
+    	}
+    	$this->m_readonlyProperties['issues_list'][] =& $p_list;
+    	$this->m_readonlyProperties['current_issues_list'] =& $p_list;
+    }
+
+
+    /**
      * Sets the current article list.
      *
      * @param object $p_list
@@ -183,8 +204,27 @@ final class CampContext {
     	if (!is_a($p_list, 'ArticleList')) {
     		throw new InvalidObjectException($p_list);
     	}
-    	$this->m_readonlyProperties['article_list'][] =& $p_list;
-    	$this->m_readonlyProperties['current_article_list'] =& $p_list;
+    	$this->m_readonlyProperties['articles_list'][] =& $p_list;
+    	$this->m_readonlyProperties['current_articles_list'] =& $p_list;
+    }
+
+
+    /**
+     * Resets the current issue list.
+     *
+     * @return void
+     */
+    public function resetCurrentIssueList()
+    {
+    	if ($this->current_issues_list->isBlank()) {
+    		return;
+    	}
+   		array_pop($this->m_readonlyProperties['issues_list']);
+	    if (count($this->m_readonlyProperties['issues_list']) > 1) {
+	    	$this->m_readonlyProperties['current_issues_list'] = array_pop($this->m_readonlyProperties['issues_list']);
+	    } else {
+	   		$this->m_readonlyProperties['current_issues_list'] = new ArticleList(-1);
+	    }
     }
 
 
@@ -195,14 +235,14 @@ final class CampContext {
      */
     public function resetCurrentArticleList()
     {
-    	if ($this->current_article_list->isBlank()) {
+    	if ($this->current_articles_list->isBlank()) {
     		return;
     	}
-   		array_pop($this->m_readonlyProperties['article_list']);
-	    if (count($this->m_readonlyProperties['article_list']) > 1) {
-	    	$this->m_readonlyProperties['current_article_list'] = array_pop($this->m_readonlyProperties['article_list']);
+   		array_pop($this->m_readonlyProperties['articles_list']);
+	    if (count($this->m_readonlyProperties['articles_list']) > 1) {
+	    	$this->m_readonlyProperties['current_articles_list'] = array_pop($this->m_readonlyProperties['articles_list']);
 	    } else {
-	   		$this->m_readonlyProperties['current_article_list'] = new ArticleList(-1);
+	   		$this->m_readonlyProperties['current_articles_list'] = new ArticleList(-1);
 	    }
     }
 

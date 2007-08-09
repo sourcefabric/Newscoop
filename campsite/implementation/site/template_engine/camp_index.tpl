@@ -5,11 +5,18 @@
 <body>
 
 
-{{ list_article length="4" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
-<li>current article: {{ $campsite->current_article_list->getCurrent() }},
-   list index: {{ $campsite->current_article_list->getIndex() }},
-   column: {{ $campsite->current_article_list->getColumn() }}</li>
-{{ /list_article }}
+{{ list_issues length="4" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
+<li>current issue: {{ $campsite->current_issues_list->getCurrent() }},
+   list index: {{ $campsite->current_issues_list->getIndex() }},
+   column: {{ $campsite->current_issues_list->getColumn() }}</li>
+{{ /list_issues }}
+
+
+{{ list_articles length="4" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
+<li>current article: {{ $campsite->current_articles_list->getCurrent() }},
+   list index: {{ $campsite->current_articles_list->getIndex() }},
+   column: {{ $campsite->current_articles_list->getColumn() }}</li>
+{{ /list_articles }}
 
 
 {{ if $campsite->hasProperty('invalid_property') }}
