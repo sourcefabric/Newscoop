@@ -50,7 +50,7 @@ camp_html_display_msgs();
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
     <TD COLSPAN="2">
-        <B><?php  putGS("Translate poll"); ?></B>
+        <B><?php  putGS("Translate Poll"); ?></B>
         <HR NOSHADE SIZE="1" COLOR="BLACK">
     </TD>
 </TR>
@@ -102,7 +102,7 @@ camp_html_display_msgs();
             <tr>
                 <TD ALIGN="RIGHT" ><?php  putGS("Answer $1", $answer->getNumber()); ?>:</TD>
                 <TD>
-                <INPUT TYPE="TEXT" NAME="f_answer[<?php p($answer->getNumber()); ?>]" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Answer $1', $answer->getNumber())); ?>" value="<?php p(htmlspecialchars($answer->getNumber())); ?>">
+                <INPUT TYPE="TEXT" NAME="f_answer[<?php p($answer->getNumber()); ?>]" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Answer $1', $answer->getNumber())); ?>" value="<?php p(htmlspecialchars($answer->getProperty('answer'))); ?>">
                 </TD>
             </TR>
             <?php

@@ -10,7 +10,7 @@ if (!$g_user->hasPermission('ManagePoll')) {
     exit;
 }
 
-$f_poll_id = Input::Get('f_poll_id', 'int');
+$f_poll_nr = Input::Get('f_poll_nr', 'int');
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 
 $f_title = Input::Get('f_title', 'string');
@@ -22,9 +22,29 @@ $f_nr_of_answers = Input::Get('f_nr_of_answers', 'int');
 
 $f_answers = Input::Get('f_answer', 'array');
 
-if ($f_poll_id) {
+if ($f_poll_nr) {
     // update existing poll   
+    $poll = new Poll($f_fk_language_id, $f_poll_nr);
+    $poll->setProperty('title', $f_title);
+    $poll->setProperty('question', $f_question);
+    $poll->setProperty('date_begin', $f_date_begin);
+    $poll->setProperty('date_end', $f_date_end);
+    $poll->setProperty('show_after_expiration', $f_show_after_expiration);
+    $poll->setProperty('nr_of_answers', $f_nr_of_answers);
+
+    foreach ($f_answers as $nr_answer => $text) {
+        if ($text !== '__undefined__') {
+            $answer =& new PollAnswer($f_fk_language_id, $poll->getNumber(), $nr_answer);
+            if ($answer->exists()) {
+                $answer->setProperty('answer', $text);   
+            } else {
+                $answer->create($text);
+            }
+        }
+    }
     
+    PollAnswer::SyncNrOfAnswers($poll->getLanguageId(), $poll->getNumber());   
+
 } else {
     // create new poll
     $poll =& new Poll($f_fk_language_id);   

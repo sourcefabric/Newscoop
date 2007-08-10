@@ -58,7 +58,7 @@ camp_html_display_msgs();
 <P>
 <FORM NAME="edit_poll" METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($poll) { ?>
-<INPUT TYPE="HIDDEN" NAME="poll_nr" VALUE="<?php  p($poll_nr); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_poll_nr" VALUE="<?php p($poll->getNumber()); ?>">
 <?php } ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>

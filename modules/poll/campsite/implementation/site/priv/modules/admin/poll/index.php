@@ -136,70 +136,87 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 
 </TR>
 </TABLE>
+</FORM>
 
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;">
-    <TR class="table_list_header">
-        <TD>&nbsp;</TD>
-        <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Title <SMALL>(click to edit)</SMALL>"); ?></TD>
-        <TD ALIGN="center" VALIGN="TOP"><?php  putGS("From"); ?></TD>
-        <TD ALIGN="center" VALIGN="TOP"><?php  putGS("To"); ?></TD>
-        <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Translate"); ?></TD>
-        <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Show Results"); ?></TD>
-        <TD align="center" valign="top"><?php putGS("Delete"); ?></TD>
-    </TR>
-    <?php
+<?php
+$polls = Poll::getPolls($f_language_selected);
 
-    $used = array();
-    
-    foreach (Poll::getPolls($f_language_selected) as $poll) {
-        if ($color) {
-            $rowClass = "list_row_even";
-        } else {
-            $rowClass = "list_row_odd";
-        }
-        $color = !$color;
-        ?>
-        <script>default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";</script>
-        <TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
-            <TD>
-                <input type="checkbox" value="<?php p((int)$poll->getNumber().'_'.(int)$poll->getLanguageId()); ?>" name="f_article_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
-            </TD>
-          
-            <td>
-                <?php
-                if (!array_key_exists($poll->getNumber(), $used)) {
-                    p($poll->getNumber().'.');
-                    $used[$poll->getNumber()] = true;   
-                } else {
-                    p('&nbsp;&nbsp;');   
-                }
-                ?>
-                <a href="edit.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>">
-                    <?php p($poll->getProperty('title')); ?>
-                </a>
-                &nbsp; (<?php p($poll->getLanguageName()); ?>)
-            </td>
-          
-            <td align="center"><?php echo $poll->getProperty('date_begin'); ?></td><td align="center"><?php echo $poll->getProperty('date_end'); ?></td>
-          
-            <td align='center'>
-                <a href="translate.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()) ?>">X</a>
-            </td>
-          
-            <td align='center'>
-                <a href='result.php?poll[Number]=<?php p($row['Number']); ?>&poll[IdLanguage]=<?php p($source_lang); ?>&target_lang=<?php echo $lang; ?>'><b>X</b></a>
-            </td>
-          
-            <td align='center'>
-                <a href="javascript: if (confirm('Are you sure to delete poll &quot;<? echo htmlspecialchars($poll->getProperty('title')); ?>&quot;')) location.href='do_delete.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>'"><font color='red'><b>X</b></font></a>
-            </td>
-            
-        </tr>
+if (count($polls)) {
+    ?>
+    <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;">
+        <TR class="table_list_header">
+            <TD>&nbsp;</TD>
+            <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Title <SMALL>(click to edit)</SMALL>"); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("From"); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("To"); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Translate"); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Show Results"); ?></TD>
+            <TD align="center" valign="top"><?php putGS("Delete"); ?></TD>
+        </TR>
         <?php
-    }
-  ?>
-  <tr><td colspan="5">&nbsp;</td></tr>
-  <tr><td colspan='5'><input type="button" value="<?php putGS("New Poll"); ?>" onClick="location.href='edit.php'"></td></tr>
-
-</table>
-</form>
+    
+        $used = array();
+        
+        foreach ($polls as $poll) {
+            if ($color) {
+                $rowClass = "list_row_even";
+            } else {
+                $rowClass = "list_row_odd";
+            }
+            $color = !$color;
+            ?>
+            <script>default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";</script>
+            <TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
+                <TD>
+                    <input type="checkbox" value="<?php p((int)$poll->getNumber().'_'.(int)$poll->getLanguageId()); ?>" name="f_article_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
+                </TD>
+              
+                <td>
+                    <?php
+                    if (!array_key_exists($poll->getNumber(), $used)) {
+                        p($poll->getNumber().'.');
+                        $used[$poll->getNumber()] = true;   
+                    } else {
+                        p('&nbsp;&nbsp;');   
+                    }
+                    ?>
+                    <a href="edit.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>">
+                        <?php p($poll->getProperty('title')); ?>
+                    </a>
+                    &nbsp; (<?php p($poll->getLanguageName()); ?>)
+                </td>
+              
+                <td align="center"><?php p($poll->getProperty('date_begin')); ?></td>
+                <td align="center"><?php p($poll->getProperty('date_end')); ?></td>
+              
+                <td align='center'>
+                    <a href="translate.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()) ?>">
+                        <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" BORDER="0">
+                    </a>
+                </td>
+              
+                <td align='center'>
+                    <a href='result.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language=<?php p($poll->getLanguageId()); ?>'>
+                        <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
+                    </a>
+                </td>
+              
+                <td align='center'>
+                    <a href="javascript: if (confirm('Are you sure to delete poll &quot;<? echo htmlspecialchars($poll->getProperty('title')); ?>&quot;')) location.href='do_delete.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>'">
+                        <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">
+                    </a>
+                </td>
+                
+            </tr>
+            <?php
+        }
+      ?>
+    </table>
+<?php 
+} else {?>
+    <BLOCKQUOTE>
+    <LI><?php  putGS('No polls.'); ?></LI>
+    </BLOCKQUOTE>  
+    <?php 
+}
+?>
