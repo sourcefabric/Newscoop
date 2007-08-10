@@ -5,14 +5,17 @@
 <body>
 
 
-{{ list_issues length="4" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
+{{ list_issues length="4" columns="3" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
 <li>current issue: {{ $campsite->current_issues_list->getCurrent() }},
    list index: {{ $campsite->current_issues_list->getIndex() }},
    column: {{ $campsite->current_issues_list->getColumn() }}</li>
+<li>current issue: {{ $campsite->current_list->getCurrent() }},
+   list index: {{ $campsite->current_list->getIndex() }},
+   column: {{ $campsite->current_list->getColumn() }}</li>
 {{ /list_issues }}
 
 
-{{ list_articles length="4" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
+{{ list_articles length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
 <li>current article: {{ $campsite->current_articles_list->getCurrent() }},
    list index: {{ $campsite->current_articles_list->getIndex() }},
    column: {{ $campsite->current_articles_list->getColumn() }}</li>

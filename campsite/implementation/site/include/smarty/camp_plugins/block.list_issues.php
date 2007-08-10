@@ -31,9 +31,9 @@ function smarty_block_list_issues($p_params, $p_content, &$p_smarty, &$p_repeat)
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 4;
+    	$start = 3;
     	$issueList = new IssueList($start, $p_params);
-    	$campContext->setCurrentIssueList($issueList);
+    	$campContext->setCurrentList($issueList);
     	echo "<p>start: " . $campContext->current_issues_list->getStart()
     		. ", length: " . $campContext->current_issues_list->getLength()
     		. ", limit: " . $campContext->current_issues_list->getLimit()
@@ -47,7 +47,7 @@ function smarty_block_list_issues($p_params, $p_content, &$p_smarty, &$p_repeat)
     $currentIssue = $campContext->current_issues_list->defaultIterator()->current();
     if (is_null($currentIssue)) {
 	    $p_repeat = false;
-	    $campContext->resetCurrentIssueList();
+	    $campContext->resetCurrentList();
     	return $html;
     } else {
     	$p_repeat = true;

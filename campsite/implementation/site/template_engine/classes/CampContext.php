@@ -35,6 +35,27 @@ final class CampContext {
 								   'subscription'=>'Subscription'
 								   );
 
+	// Defineds the list objects
+	private $m_listObjects = array(
+	                         'issue'=>array('class'=>'Issue', 'list'=>'issues'),
+	                         'section'=>array('class'=>'Section', 'list'=>'sections'),
+	                         'article'=>array('class'=>'Article', 'list'=>'articles'),
+	                         'article_attachment'=>array('class'=>'ArticleAttachment',
+	                                                     'list'=>'article_attachments'),
+	                         'article_comment'=>array('class'=>'ArticleComments',
+	                                                  'list'=>'article_comments'),
+	                         'article_image'=>array('class'=>'ArticleImages',
+	                                                'list'=>'article_images'),
+	                         'article_topic'=>array('class'=>'ArticleTopics',
+	                                                'list'=>'article_topics'),
+	                         'article_audio_attachment'=>array('class'=>'ArticleAudioAttachments',
+	                                                           'list'=>'article_audio_attachments'),
+	                         'search_result'=>array('class'=>'SearchResults',
+	                                                'list'=>'search_results'),
+	                         'subtopic'=>array('class'=>'Subtopic', 'list'=>'subtopics'),
+	                         'subtitle'=>array('class'=>'Subtitle', 'list'=>'subtitles')
+	                         );
+
     // Stores the context objects.
 	private $m_objects = array();
 
@@ -60,10 +81,9 @@ final class CampContext {
         // complete list of misc properties
         // ...
 
-        $this->m_readonlyProperties['current_issues_list'] = new IssueList(-1);
-        $this->m_readonlyProperties['issues_list'] = array($this->m_readonlyProperties['current_issues_list']);
-        $this->m_readonlyProperties['current_articles_list'] = new ArticleList(-1);
-        $this->m_readonlyProperties['articles_list'] = array($this->m_readonlyProperties['current_articles_list']);
+        $this->m_readonlyProperties['lists'] = array();
+        $this->m_readonlyProperties['issues_lists'] = array();
+        $this->m_readonlyProperties['articles_lists'] = array();
     } // fn __construct
 
 
@@ -172,78 +192,76 @@ final class CampContext {
 
 
     /**
-     * Sets the current issue list.
+     * Returns the object name from the list class name.
+     *
+     * @param string $p_listClassName
+     * @return string
+     */
+    private function GetListObjectName($p_listClassName)
+    {
+        $nameLength = strlen($p_listClassName);
+        if ($nameLength <= 4) {
+            return '';
+        }
+        $tail = substr($p_listClassName, ($nameLength - 4));
+        if (strtolower($tail) != 'list') {
+            return '';
+        }
+        return strtolower(substr($p_listClassName, 0, ($nameLength - 4)));
+    }
+
+
+    /**
+     * Sets the current list.
      *
      * @param object $p_list
      * @return void
      */
-	public function setCurrentIssueList(&$p_list)
+	public function setCurrentList(&$p_list)
     {
     	if (!is_object($p_list)) {
     		throw new InvalidObjectException($p_list);
     	}
-    	if (!is_a($p_list, 'IssueList')) {
-    		throw new InvalidObjectException($p_list);
+
+        $objectName = $this->GetListObjectName(get_class($p_list));
+        if ($objectName == '' || !isset($this->m_listObjects[$objectName])) {
+            throw new InvalidObjectException(get_class($p_list));
+        }
+
+    	$listObjectName = $this->m_listObjects[$objectName]['class'].'List';
+    	if (!is_a($p_list, $listObjectName)) {
+    		throw new InvalidObjectException(get_class($p_list));
     	}
-    	$this->m_readonlyProperties['issues_list'][] =& $p_list;
-    	$this->m_readonlyProperties['current_issues_list'] =& $p_list;
+
+    	$listName = $this->m_listObjects[$objectName]['list'];
+    	$this->m_readonlyProperties['lists'][] =& $p_list;
+    	$this->m_readonlyProperties['current_list'] =& $p_list;
+    	$this->m_readonlyProperties[$listName.'_lists'][] =& $p_list;
+    	$this->m_readonlyProperties['current_'.$listName.'_list'] =& $p_list;
     }
 
 
     /**
-     * Sets the current article list.
-     *
-     * @param object $p_list
-     * @return void
-     */
-	public function setCurrentArticleList(&$p_list)
-    {
-    	if (!is_object($p_list)) {
-    		throw new InvalidObjectException($p_list);
-    	}
-    	if (!is_a($p_list, 'ArticleList')) {
-    		throw new InvalidObjectException($p_list);
-    	}
-    	$this->m_readonlyProperties['articles_list'][] =& $p_list;
-    	$this->m_readonlyProperties['current_articles_list'] =& $p_list;
-    }
-
-
-    /**
-     * Resets the current issue list.
+     * Resets the current list.
      *
      * @return void
      */
-    public function resetCurrentIssueList()
+    public function resetCurrentList()
     {
-    	if ($this->current_issues_list->isBlank()) {
-    		return;
-    	}
-   		array_pop($this->m_readonlyProperties['issues_list']);
-	    if (count($this->m_readonlyProperties['issues_list']) > 1) {
-	    	$this->m_readonlyProperties['current_issues_list'] = array_pop($this->m_readonlyProperties['issues_list']);
-	    } else {
-	   		$this->m_readonlyProperties['current_issues_list'] = new ArticleList(-1);
+        if (!isset($this->m_readonlyProperties['current_list'])
+                || count($this->m_readonlyProperties['lists']) == 0) {
+            return;
+        }
+
+   	    $this->m_readonlyProperties['current_list'] = array_pop($this->m_readonlyProperties['lists']);
+
+        $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
+    	$listName = $this->m_listObjects[$objectName]['list'];
+
+	    if (count($this->m_readonlyProperties[$listName.'_lists']) == 0) {
+	        return;
 	    }
-    }
-
-
-    /**
-     * Resets the current article list.
-     *
-     * @return void
-     */
-    public function resetCurrentArticleList()
-    {
-    	if ($this->current_articles_list->isBlank()) {
-    		return;
-    	}
-   		array_pop($this->m_readonlyProperties['articles_list']);
-	    if (count($this->m_readonlyProperties['articles_list']) > 1) {
-	    	$this->m_readonlyProperties['current_articles_list'] = array_pop($this->m_readonlyProperties['articles_list']);
-	    } else {
-	   		$this->m_readonlyProperties['current_articles_list'] = new ArticleList(-1);
-	    }
+       	$this->m_readonlyProperties['current_'.$listName.'_list'] = array_pop($this->m_readonlyProperties[$listName.'_lists']);
     }
 
 

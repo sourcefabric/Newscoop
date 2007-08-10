@@ -33,7 +33,7 @@ function smarty_block_list_articles($p_params, $p_content, &$p_smarty, &$p_repea
     if (!isset($p_content)) {
     	$start = 4;
     	$articleList = new ArticleList($start, $p_params);
-    	$campContext->setCurrentArticleList($articleList);
+    	$campContext->setCurrentList($articleList);
     	echo "<p>start: " . $campContext->current_articles_list->getStart()
     		. ", length: " . $campContext->current_articles_list->getLength()
     		. ", limit: " . $campContext->current_articles_list->getLimit()
@@ -47,7 +47,7 @@ function smarty_block_list_articles($p_params, $p_content, &$p_smarty, &$p_repea
     $currentArticle = $campContext->current_articles_list->defaultIterator()->current();
     if (is_null($currentArticle)) {
 	    $p_repeat = false;
-	    $campContext->resetCurrentArticleList();
+	    $campContext->resetCurrentList();
     	return $html;
     } else {
     	$p_repeat = true;
