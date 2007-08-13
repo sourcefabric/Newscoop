@@ -14,6 +14,7 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Log.php');
 
 /**
@@ -474,6 +475,77 @@ class Section extends DatabaseObject {
 		}
 		return $number;
 	} // fn GetUnusedSectionNumber
+
+
+    /**
+     *
+     */
+    public static function GetList($p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db;
+
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        $sqlClauseObj = new SQLSelectClause();
+
+        $tmpSection =& new Section();
+		$columnNames = $tmpSection->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $sqlClauseObj->addColumn($columnName);
+        }
+
+        $sqlClauseObj->setTable($tmpSection->getDbTableName());
+        unset($tmpSection);
+
+        foreach ($p_parameters as $condition) {
+            switch (strtolower($condition->getLeftOperand())) {
+            case 'name':
+                $leftOperand = 'Name';
+                $rightOperand = (string)$condition->getRightOperand();
+                break;
+            case 'number':
+                $leftOperand = 'Number';
+                $rightOperand = (int)$condition->getRightOperand();
+                break;
+            }
+
+            $operatorObj = $condition->getOperator();
+            $whereCondition = $leftOperand . ' '
+                . $operatorObj->getSymbol('sql') . " '"
+                . $rightOperand . "' ";
+            $sqlClauseObj->addWhere($whereCondition);
+        }
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        $sqlClauseObj->setLimit($p_start, $p_limit);
+
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        var_dump($sqlQuery); echo '<br /><br />';
+        $sections = $g_ado_db->Execute($sqlQuery);
+        if (!$sections) {
+            return null;
+        }
+
+        $sectionsList = array();
+        foreach ($sections as $section) {
+            $sectionsList[] = new Section($section['IdPublication'],
+                                          $section['NrIssue'],
+                                          $section['IdLanguage'],
+                                          $section['Number']);
+        }
+
+        return $sectionsList;
+    } // fn GetList
 
 } // class Section
 ?>

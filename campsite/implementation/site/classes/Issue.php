@@ -14,6 +14,7 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/Language.php');
 require_once($g_documentRoot.'/classes/Section.php');
@@ -653,6 +654,107 @@ class Issue extends DatabaseObject {
 		$issue =& new Issue($p_publicationId, $idLanguage, $maxIssueNumber);
 		return $issue;
 	} // fn GetLastCreatedIssue
+
+
+    /**
+     * Gets an issue list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparionOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $issueList
+     *    An array of Issue objects
+     */
+    public static function GetList($p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db;
+
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        $sqlClauseObj = new SQLSelectClause();
+
+        $tmpIssue =& new Issue();
+		$columnNames = $tmpIssue->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $sqlClauseObj->addColumn($columnName);
+        }
+
+        $sqlClauseObj->setTable($tmpIssue->getDbTableName());
+        unset($tmpIssue);
+
+        foreach ($p_parameters as $condition) {
+            switch ($condition->getleftOperand()) {
+            case 'year':
+            case 'publish_year':
+                $leftOperand = 'YEAR(PublicationDate)';
+                break;
+            case 'mon_nr':
+            case 'publish_month':
+                $leftOperand = 'MONTH(PublicationDate)';
+                break;
+            case 'mday':
+            case 'publish_mday':
+                $leftOperand = 'DAYOFMONTH(PublicationDate)';
+                break;
+            case 'yday':
+                $leftOperand = 'DAYOFYEAR(PublicationDate)';
+                break;
+            case 'hour':
+                $leftOperand = 'HOUR(PublicationDate)';
+                break;
+            case 'min':
+                $leftOperand = 'MINUTE(PublicationDate)';
+                break;
+            case 'sec':
+                $leftOperand = 'SECOND(PublicationDate)';
+                break;
+            default:
+                $leftOperand = $condition->getLeftOperand();
+                break;
+            }
+
+            $operatorObj = $condition->getOperator();
+            $whereCondition = $leftOperand . ' '
+                . $operatorObj->getSymbol('sql') . " '"
+                . $condition->getRightOperand() . "' ";
+            $sqlClauseObj->addWhere($whereCondition);
+        }
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        $sqlClauseObj->setLimit($p_start, $p_limit);
+
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        var_dump($sqlQuery); echo '<br /><br />';
+        $issues = $g_ado_db->Execute($sqlQuery);
+        if (!$issues) {
+            return null;
+        }
+
+        $issuesList = array();
+        foreach ($issues as $issue) {
+            $issuesList[] = new Issue($issue['IdPublication'],
+                                      $issue['IdLanguage'],
+                                      $issue['Number']);
+        }
+
+        return $issuesList;
+    } // fn GetList
 
 } // class Issue
 
