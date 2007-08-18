@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package Campsite
+ */
 
 /**
  * Holds metadata of an operator.
