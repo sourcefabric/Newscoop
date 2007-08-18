@@ -691,41 +691,12 @@ class Issue extends DatabaseObject {
         $sqlClauseObj->setTable($tmpIssue->getDbTableName());
         unset($tmpIssue);
 
-        foreach ($p_parameters as $condition) {
-            switch ($condition->getleftOperand()) {
-            case 'year':
-            case 'publish_year':
-                $leftOperand = 'YEAR(PublicationDate)';
-                break;
-            case 'mon_nr':
-            case 'publish_month':
-                $leftOperand = 'MONTH(PublicationDate)';
-                break;
-            case 'mday':
-            case 'publish_mday':
-                $leftOperand = 'DAYOFMONTH(PublicationDate)';
-                break;
-            case 'yday':
-                $leftOperand = 'DAYOFYEAR(PublicationDate)';
-                break;
-            case 'hour':
-                $leftOperand = 'HOUR(PublicationDate)';
-                break;
-            case 'min':
-                $leftOperand = 'MINUTE(PublicationDate)';
-                break;
-            case 'sec':
-                $leftOperand = 'SECOND(PublicationDate)';
-                break;
-            default:
-                $leftOperand = $condition->getLeftOperand();
-                break;
-            }
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param, $sqlClauseObj);
 
-            $operatorObj = $condition->getOperator();
-            $whereCondition = $leftOperand . ' '
-                . $operatorObj->getSymbol('sql') . " '"
-                . $condition->getRightOperand() . "' ";
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
             $sqlClauseObj->addWhere($whereCondition);
         }
 
@@ -740,7 +711,6 @@ class Issue extends DatabaseObject {
         $sqlClauseObj->setLimit($p_start, $p_limit);
 
         $sqlQuery = $sqlClauseObj->buildQuery();
-        var_dump($sqlQuery); echo '<br /><br />';
         $issues = $g_ado_db->Execute($sqlQuery);
         if (!$issues) {
             return null;
@@ -755,6 +725,51 @@ class Issue extends DatabaseObject {
 
         return $issuesList;
     } // fn GetList
+
+
+    /**
+     *
+     */
+    public static function ProcessListParameters($p_param, &$p_sqlClause)
+    {
+        $comparisonOperation = array();
+
+        switch ($p_param->getleftOperand()) {
+        case 'year':
+        case 'publish_year':
+            $comparisonOperation['left'] = 'YEAR(PublicationDate)';
+            break;
+        case 'mon_nr':
+        case 'publish_month':
+            $comparisonOperation['left'] = 'MONTH(PublicationDate)';
+            break;
+        case 'mday':
+        case 'publish_mday':
+            $comparisonOperation['left'] = 'DAYOFMONTH(PublicationDate)';
+            break;
+        case 'yday':
+            $comparisonOperation['left'] = 'DAYOFYEAR(PublicationDate)';
+            break;
+        case 'hour':
+            $comparisonOperation['left'] = 'HOUR(PublicationDate)';
+            break;
+        case 'min':
+            $comparisonOperation['left'] = 'MINUTE(PublicationDate)';
+            break;
+        case 'sec':
+            $comparisonOperation['left'] = 'SECOND(PublicationDate)';
+            break;
+        default:
+            $comparisonOperation['left'] = $p_param->getLeftOperand();
+            break;
+        }
+
+        $operatorObj = $p_param->getOperator();
+        $comparisonOperation['right'] = $p_param->getRightOperand();
+        $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+
+        return $comparisonOperation;
+    } // fn ProcessListParameters
 
 } // class Issue
 

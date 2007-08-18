@@ -500,22 +500,12 @@ class Section extends DatabaseObject {
         $sqlClauseObj->setTable($tmpSection->getDbTableName());
         unset($tmpSection);
 
-        foreach ($p_parameters as $condition) {
-            switch (strtolower($condition->getLeftOperand())) {
-            case 'name':
-                $leftOperand = 'Name';
-                $rightOperand = (string)$condition->getRightOperand();
-                break;
-            case 'number':
-                $leftOperand = 'Number';
-                $rightOperand = (int)$condition->getRightOperand();
-                break;
-            }
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param, $sqlClauseObj);
 
-            $operatorObj = $condition->getOperator();
-            $whereCondition = $leftOperand . ' '
-                . $operatorObj->getSymbol('sql') . " '"
-                . $rightOperand . "' ";
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
             $sqlClauseObj->addWhere($whereCondition);
         }
 
@@ -530,7 +520,6 @@ class Section extends DatabaseObject {
         $sqlClauseObj->setLimit($p_start, $p_limit);
 
         $sqlQuery = $sqlClauseObj->buildQuery();
-        var_dump($sqlQuery); echo '<br /><br />';
         $sections = $g_ado_db->Execute($sqlQuery);
         if (!$sections) {
             return null;
@@ -546,6 +535,31 @@ class Section extends DatabaseObject {
 
         return $sectionsList;
     } // fn GetList
+
+
+    /**
+     *
+     */
+    public static function ProcessListParameters($p_param, &$p_sqlClause)
+    {
+        $comparisonOperation = array();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'name':
+            $comparisonOperation['left'] = 'Name';
+            $comparisonOperation['right'] = (string)$p_param->getRightOperand();
+            break;
+        case 'number':
+            $comparisonOperation['left'] = 'Number';
+            $comparisonOperation['right'] = (int)$p_param->getRightOperand();
+            break;
+        }
+
+        $operatorObj = $p_param->getOperator();
+        $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+
+        return $comparisonOperation;
+    } // fn ProcessListParameters
 
 } // class Section
 ?>

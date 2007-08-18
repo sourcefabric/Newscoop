@@ -42,14 +42,22 @@ class Operator
 	}
 
 	/**
-	 * Returns the operator symbol.
-	 *
-	 * @return string
-	 */
-	public function getSymbol()
+     * Returns the operator symbol.
+     *
+     * @param string $p_type
+     *    The operators set to be used to get the symbol.
+     *
+     * @return string
+     */
+	public function getSymbol($p_type = null)
 	{
-		return $this->m_symbol;
-	}
+        if (!empty($p_type) && $p_type != 'php') {
+            $operators = self::LoadOperators();
+            return $operators[$p_type][$this->getName()];
+        }
+
+        return $this->m_symbol;
+    }
 
 	/**
 	 * Static method; returns an operator object that defines the
@@ -116,6 +124,38 @@ class Operator
 	{
 		return new Operator('not', '!=');
 	}
+
+    /**
+     * Loads the operators set.
+     * PHP comparison operators is the default set. It is implemented
+     * in every method that defines base operators in this class, that is
+     * why PHP operators are not listed in $operatorsSet.
+     *
+     * New operators sets have to be appended here.
+     *
+     * @return array $operatorsSet
+     *    The array containing the operators set, following this format:
+     *        array(
+     *            'set name' => array(
+     *                'operator name' => 'operator symbol'
+     *                ...
+     */
+    private static function LoadOperators()
+    {
+        $operatorsSet = array(
+            'sql' => array(
+                'is' => '=',
+                'equal_smaller' => '<=',
+                'equal_greater' => '>=',
+                'smaller' => '<',
+                'greater' => '>',
+                'not' => '<>'
+                )
+            );
+
+        return $operatorsSet;
+    }
+
 }
 
 ?>

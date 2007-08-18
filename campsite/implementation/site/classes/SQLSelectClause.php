@@ -11,7 +11,7 @@ define ('SQL_LIMIT', ' LIMIT %d, %d');
 /**
  * @package Campsite
  */
-class SQLSelectClause { // extends SQLQuery {
+class SQLSelectClause {
     /**
      * The name of the base table.
      *
@@ -24,42 +24,42 @@ class SQLSelectClause { // extends SQLQuery {
      *
      * @var array
      */
-    private $m_columns = array();
+    private $m_columns = null;
 
     /**
      * The tables the query will request from.
      *
      * @var array
      */
-    private $m_joins = array();
+    private $m_joins = null;
 
     /**
      * The query conditions.
      *
      * @var array
      */
-    private $m_where = array();
+    private $m_where = null;
 
     /**
      * The columns list and directions to order by.
      *
      * @var array
      */
-    private $m_orderBy = array();
+    private $m_orderBy = null;
 
     /**
      * The record number to start selecting.
      *
      * @var integer
      */
-    private $m_limitStart = 0;
+    private $m_limitStart = null;
 
     /**
      * The offset.
      *
      * @var integer
      */
-    private $m_limitOffset = 0;
+    private $m_limitOffset = null;
 
 
     /**
@@ -67,7 +67,12 @@ class SQLSelectClause { // extends SQLQuery {
      */
     public function __construct()
     {
-
+        $this->m_columns = array();
+        $this->m_joins = array();
+        $this->m_where = array();
+        $this->m_orderBy = array();
+        $this->m_limitStart = 0;
+        $this->m_limitOffset = 0;
     } // fn __construct
 
 
@@ -168,7 +173,26 @@ class SQLSelectClause { // extends SQLQuery {
      */
     private function buildColumns()
     {
-        return (implode(', ', $this->m_columns));
+        $columns = '';
+
+        if ($this->hasJoins()) {
+            if (sizeof($this->m_columns) == 0) {
+                $columns = $this->m_table.'*';
+            }
+            //foreach ($this->m_joins as $join) {
+            //$columns .= ', '.$join->getColumns();
+            //}
+        } else {
+            if (sizeof($this->m_columns) == 0) {
+                $columns = '*';
+            }
+        }
+
+        if (empty($columns)) {
+            $columns = implode(', ', $this->m_columns);
+        }
+
+        return $columns;
     } // fn buildColumns
 
 
@@ -184,8 +208,14 @@ class SQLSelectClause { // extends SQLQuery {
         $from = $this->m_table;
 
         if ($this->hasJoins()) {
-            foreach ($this->m_joins as $table) {
-                // TODO
+            foreach ($this->m_joins as $join) {
+                $from .= ' '.$join;
+
+                // TODO: SQLJoinClause class
+                //
+                //$from .= ' LEFT JOIN '.$join->getTable();
+                //$from .= ' ON '.$this->m_table.'.'.$join->getLeft()
+                //.' = '.$join->getTable().'.'.$join->getRight();
             }
         }
 
@@ -198,7 +228,6 @@ class SQLSelectClause { // extends SQLQuery {
      */
     private function buildWhere()
     {
-        // TODO support for multiple tables
         return implode(' AND ', $this->m_where);
     } // fn buildWhere
 
