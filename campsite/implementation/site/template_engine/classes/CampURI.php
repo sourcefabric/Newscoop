@@ -1,151 +1,128 @@
 <?php
 /**
  * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
  */
 
 
 /**
- * @package Campsite
+ * Class CampURI
  */
-final class CampURI {
-    /**
-     * Holds the CampURI object
-     *
-     * @var object
-     */
-    private static $m_instance = null;
-
+class CampURI {
     /**
      * The URI value
      *
      * @var string
      */
-    var $m_uri = null;
+    private $m_uri = null;
 
     /**
      * The URI parts
      *
      * @var array
      */
-    var $m_parts = array('scheme',
-                         'user',
-                         'password',
-                         'host',
-                         'port',
-                         'path',
-                         'query',
-                         'fragment');
+    private $m_parts = array(
+                            'scheme',
+                            'user',
+                            'password',
+                            'host',
+                            'port',
+                            'path',
+                            'query',
+                            'fragment'
+                            );
 
     /**
      * @var string
      */
-    var $m_scheme = null;
+    private $m_scheme = null;
 
     /**
      * @var string
      */
-    var $m_host = null;
+    private $m_host = null;
 
     /**
      * @var int
      */
-    var $m_port = null;
+    private $m_port = null;
 
     /**
      * @var string
      */
-    var $m_user = null;
+    private $m_user = null;
 
     /**
      * @var string
      */
-    var $m_password = null;
+    private $m_password = null;
 
     /**
      * @var string
      */
-    var $m_path = null;
+    private $m_path = null;
 
     /**
      * @var string
      */
-    var $m_query = null;
+    private $m_query = null;
 
     /**
      * @var string
      */
-    var $m_fragment = null;
+    private $m_fragment = null;
 
     /**
      * @var array
      */
-    var $m_queryArray = null;
+    private $m_queryArray = null;
 
 
     /**
      * Class constructor
      *
-     * @param string
-     *    p_uri The full URI string
+     * @param string $p_uri
+     *    The full URI string
      */
-    private function __construct($p_uri = null)
+    protected function __construct($p_uri = 'SELF')
     {
-        if (!empty($p_uri)) {
-            $this->parser($p_uri);
-        }
-    } // fn __construct
-
-
-    /**
-     * Builds an instance object of this class only if there is no one.
-     *
-     * @param string
-     *    p_uri The full URI string, default value 'SELF' indicates it
-     *          will be fetched from the server itself
-     *
-     * @return object
-     *    m_instance A CampURI object
-     */
-    public static function singleton($p_uri = 'SELF')
-    {
-        if (!isset(self::$m_instance)) {
-            // was an uri string passed?
-            if (isset($p_uri) && $p_uri != 'SELF') {
-                $uriString = $p_uri;
+        if (isset($p_uri) && $p_uri != 'SELF') {
+            $uriString = $p_uri;
+        } else {
+            // ... otherwise we build the uri from the server itself.
+            //
+            // checks whether the site is being queried through SSL
+            if (isset($_SERVER['HTTPS'])
+                    && !empty($_SERVER['HTTPS'])
+                    && (strtolower($_SERVER['HTTPS']) != 'off')) {
+                $ssl = 's://';
             } else {
-                // ... otherwise we build the uri from the server itself.
-                //
-                // checks whether the site is being queried through SSL
-                if (isset($_SERVER['HTTPS'])
-                        && !empty($_SERVER['HTTPS'])
-                        && (strtolower($_SERVER['HTTPS']) != 'off')) {
-                    $ssl = 's://';
-                } else {
-                    $ssl = '://';
-                }
-
-                // this works at least for apache, some research is needed
-                // in order to support other web servers.
-                if (!empty($_SERVER['PHP_SELF'])
-                        && !empty($_SERVER['REQUEST_URI'])) {
-                    $uriString = 'http' . $ssl . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                }
-
-                // some cleaning directives
-                $uriString = urldecode($uriString);
-                $uriString = str_replace('"', '&quot;', $uriString);
-                $uriString = str_replace('<', '&lt;', $uriString);
-                $uriString = str_replace('>', '&gt;', $uriString);
-                $uriString = preg_replace('/eval\((.*)\)/', '', $uriString);
-                $uriString = preg_replace('/[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']/', '""', $uriString);
+                $ssl = '://';
             }
 
-            // instanciates a new CampURI object
-            self::$m_instance = new CampURI($uriString);
+            // this works at least for apache, some research is needed
+            // in order to support other web servers.
+            if (!empty($_SERVER['PHP_SELF'])
+                    && !empty($_SERVER['REQUEST_URI'])) {
+                $uriString = 'http' . $ssl . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            }
+
+            // some cleaning directives
+            $uriString = urldecode($uriString);
+            $uriString = str_replace('"', '&quot;', $uriString);
+            $uriString = str_replace('<', '&lt;', $uriString);
+            $uriString = str_replace('>', '&gt;', $uriString);
+            $uriString = preg_replace('/eval\((.*)\)/', '', $uriString);
+            $uriString = preg_replace('/[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']/', '""', $uriString);
         }
 
-        return self::$m_instance;
-    } // fn singleton
+        $this->parse($uriString);
+    } // fn __construct
 
 
     /**
@@ -157,7 +134,7 @@ final class CampURI {
      * @return mixed
      *    true on success, false on failure
      */
-    private function parser($p_uri)
+    private function parse($p_uri)
     {
         $success = false;
         if (empty($p_uri)) {
@@ -183,7 +160,7 @@ final class CampURI {
         }
 
         return $success;
-    } // fn parser
+    } // fn parse
 
 
     /**
@@ -482,7 +459,7 @@ final class CampURI {
      * @return string
      *    queryString The generated query string
      */
-    static function QueryArrayToString($p_queryArray)
+    protected static function QueryArrayToString($p_queryArray)
     {
         if (!is_array($p_queryArray) || sizeof($p_queryArray) < 1) {
             return false;
