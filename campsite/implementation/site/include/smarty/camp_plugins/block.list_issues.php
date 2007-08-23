@@ -32,8 +32,8 @@ function smarty_block_list_issues($p_params, $p_content, &$p_smarty, &$p_repeat)
 
     if (!isset($p_content)) {
     	$start = 3;
-    	$issueList = new IssueList($start, $p_params);
-    	$campContext->setCurrentList($issueList);
+    	$issuesList = new IssuesList($start, $p_params);
+    	$campContext->setCurrentList($issuesList);
     	echo "<p>start: " . $campContext->current_issues_list->getStart()
     		. ", length: " . $campContext->current_issues_list->getLength()
     		. ", limit: " . $campContext->current_issues_list->getLimit()

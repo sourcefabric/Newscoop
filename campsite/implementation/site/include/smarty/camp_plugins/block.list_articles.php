@@ -32,8 +32,8 @@ function smarty_block_list_articles($p_params, $p_content, &$p_smarty, &$p_repea
 
     if (!isset($p_content)) {
     	$start = 4;
-    	$articleList = new ArticleList($start, $p_params);
-    	$campContext->setCurrentList($articleList);
+    	$articlesList = new ArticlesList($start, $p_params);
+    	$campContext->setCurrentList($articlesList);
     	echo "<p>start: " . $campContext->current_articles_list->getStart()
     		. ", length: " . $campContext->current_articles_list->getLength()
     		. ", limit: " . $campContext->current_articles_list->getLimit()

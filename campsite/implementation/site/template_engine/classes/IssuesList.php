@@ -4,10 +4,10 @@ require_once('ListObject.php');
 
 
 /**
- * IssueList class
+ * IssuesList class
  *
  */
-class IssueList extends ListObject
+class IssuesList extends ListObject
 {
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to

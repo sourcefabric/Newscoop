@@ -35,25 +35,25 @@ final class CampContext {
 								   'subscription'=>'Subscription'
 								   );
 
-	// Defineds the list objects
+	// Defines the list objects
 	private $m_listObjects = array(
-	                         'issue'=>array('class'=>'Issue', 'list'=>'issues'),
-	                         'section'=>array('class'=>'Section', 'list'=>'sections'),
-	                         'article'=>array('class'=>'Article', 'list'=>'articles'),
-	                         'article_attachment'=>array('class'=>'ArticleAttachment',
+	                         'issues'=>array('class'=>'Issues', 'list'=>'issues'),
+	                         'sections'=>array('class'=>'Sections', 'list'=>'sections'),
+	                         'articles'=>array('class'=>'Articles', 'list'=>'articles'),
+	                         'articleattachments'=>array('class'=>'ArticleAttachments',
 	                                                     'list'=>'article_attachments'),
-	                         'article_comment'=>array('class'=>'ArticleComments',
+	                         'articlecomments'=>array('class'=>'ArticleComments',
 	                                                  'list'=>'article_comments'),
-	                         'article_image'=>array('class'=>'ArticleImages',
+	                         'articleimages'=>array('class'=>'ArticleImages',
 	                                                'list'=>'article_images'),
-	                         'article_topic'=>array('class'=>'ArticleTopics',
+	                         'articletopics'=>array('class'=>'ArticleTopics',
 	                                                'list'=>'article_topics'),
-	                         'article_audio_attachment'=>array('class'=>'ArticleAudioAttachments',
-	                                                           'list'=>'article_audio_attachments'),
-	                         'search_result'=>array('class'=>'SearchResults',
+	                         'articleaudioattachments'=>array('class'=>'ArticleAudioAttachments',
+	                                                          'list'=>'article_audio_attachments'),
+	                         'searchresults'=>array('class'=>'SearchResults',
 	                                                'list'=>'search_results'),
-	                         'subtopic'=>array('class'=>'Subtopic', 'list'=>'subtopics'),
-	                         'subtitle'=>array('class'=>'Subtitle', 'list'=>'subtitles')
+	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics'),
+	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles')
 	                         );
 
     // Stores the context objects.
@@ -83,7 +83,9 @@ final class CampContext {
 
         $this->m_readonlyProperties['lists'] = array();
         $this->m_readonlyProperties['issues_lists'] = array();
+        $this->m_readonlyProperties['sections_lists'] = array();
         $this->m_readonlyProperties['articles_lists'] = array();
+        $this->m_readonlyProperties['article_attachments_lists'] = array();
     } // fn __construct
 
 
