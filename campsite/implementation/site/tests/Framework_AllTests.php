@@ -11,7 +11,7 @@ require_once('ArticleTypeTest.php');
 require_once('MetaLanguageTest.php');
 require_once('CampContextTest.php');
 require_once('ListObjectTest.php');
-require_once('ArticleListTest.php');
+require_once('ArticlesListTest.php');
 require_once('CampDatabaseTest.php');
 require_once('CampConfigTest.php');
 require_once('CampURITest.php');
@@ -35,7 +35,7 @@ class Framework_AllTests
         $suite->addTestSuite('CampContextTest');
 
         $suite->addTestSuite('ListObjectTest');
-        $suite->addTestSuite('ArticleListTest');
+        $suite->addTestSuite('ArticlesListTest');
 
         $suite->addTestSuite('CampDatabaseTest');
         $suite->addTestSuite('CampConfigTest');
