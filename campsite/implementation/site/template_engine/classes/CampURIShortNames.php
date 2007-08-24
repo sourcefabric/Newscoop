@@ -169,7 +169,10 @@ class CampURIShortNames extends CampURI {
         // gets the article number
         if (!empty($cArticleSName)) {
             $articleObj = new Article($cLangId, $cArticleSName);
-            $cArticleNr = $articleObj->getArticleNumber();
+            if (is_object($articleObj) && $articleObj->exists()) {
+                $cArticleNr = $articleObj->getArticleNumber();
+                $this->setQueryVar(UP_ARTICLE_NR, $cArticleNr);
+            }
 
             if (empty($cArticleNr)) {
                 // return error/throw exception "not valid article"
