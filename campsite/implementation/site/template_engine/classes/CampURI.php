@@ -100,16 +100,16 @@ class CampURI {
             if (isset($_SERVER['HTTPS'])
                     && !empty($_SERVER['HTTPS'])
                     && (strtolower($_SERVER['HTTPS']) != 'off')) {
-                $ssl = 's://';
+                $scheme = 'https://';
             } else {
-                $ssl = '://';
+                $scheme = 'http://';
             }
 
             // this works at least for apache, some research is needed
             // in order to support other web servers.
             if (!empty($_SERVER['PHP_SELF'])
                     && !empty($_SERVER['REQUEST_URI'])) {
-                $uriString = 'http' . $ssl . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                $uriString = $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
             }
 
             // some cleaning directives
@@ -128,10 +128,10 @@ class CampURI {
     /**
      * Parses the given URI.
      *
-     * @param string
-     *    p_uri The URI string
+     * @param string $p_uri
+     *      The URI string
      *
-     * @return mixed
+     * @return boolean
      *    true on success, false on failure
      */
     private function parse($p_uri)
@@ -150,8 +150,10 @@ class CampURI {
 
         // sets the value for every URI part
         foreach ($this->m_parts as $part) {
-            $member = 'm_'.$part;
-            $this->$member = (isset($parts[$part])) ? $parts[$part] : null;
+            $property = 'm_'.$part;
+            if (property_exists($this, $property)) {
+                $this->$property = (isset($parts[$part])) ? $parts[$part] : null;
+            }
         }
 
         // populates the query array
@@ -166,11 +168,11 @@ class CampURI {
     /**
      * Builds a URI string from the given parts.
      *
-     * @param array
-     *    p_parts The array of URI parts
+     * @param array $p_parts
+     *      The array of URI parts
      *
-     * @return string
-     *    uriString The rendered URI
+     * @return string $uriString
+     *      The rendered URI
      */
     protected function render($p_parts = array())
     {
@@ -197,10 +199,38 @@ class CampURI {
 
 
     /**
+     * Gets the full URI.
+     *
+     * @return string $m_uri
+     *      The URI string
+     */
+    public function getURI()
+    {
+        return $this->m_uri;
+    } // fn getURI
+
+
+    /**
+     * Gets the requested URI.
+     *
+	 * @return string
+     *      The requested URI string
+	 */
+	public function getRequestURI()
+	{
+		if (empty($this->m_query)) {
+			return $this->m_path;
+		}
+
+		return $this->render(array('path', 'query'));
+	} // fn getRequestURI
+
+
+    /**
      * Gets the URI base, it is the scheme, host and (if exists) port.
      *
-     * @return string
-     *    base The URI base
+     * @return string $base
+     *      The URI base
      */
     public function getBase()
     {
@@ -228,8 +258,8 @@ class CampURI {
     /**
      * Gets the query part from the current URI.
      *
-     * @return string
-     *    m_query The query part
+     * @return string $m_query
+     *      The query part
      */
     public function getQuery()
     {
@@ -238,13 +268,13 @@ class CampURI {
 
 
     /**
-     * Gets the given var from the URI query.
+     * Gets the given variable from the URI query.
      *
-     * @param string
-     *    p_varName The var name
+     * @param string $p_varName
+     *      The variable name
      *
-     * @return mixed
-     *    The var value
+     * @return string
+     *      null on failure, otherwise the variable value
      */
     public function getQueryVar($p_varName)
     {
@@ -259,8 +289,8 @@ class CampURI {
     /**
      * Gets the array containing the query variables.
      *
-     * @return array
-     *    m_queryArray The array of query vars
+     * @return array $m_queryArray
+     *      The array of query vars
      */
     public function getQueryArray()
     {
@@ -271,8 +301,8 @@ class CampURI {
     /**
      * Gets the scheme part from the current URI.
      *
-     * @return string
-     *    m_scheme The scheme value
+     * @return string $m_scheme
+     *      The scheme value
      */
     public function getScheme()
     {
@@ -283,8 +313,8 @@ class CampURI {
     /**
      * Gets the host part from the current URI.
      *
-     * @return string
-     *    m_host The host value
+     * @return string $m_host
+     *      The host value
      */
     public function getHost()
     {
@@ -295,8 +325,8 @@ class CampURI {
     /**
      * Gets the port part from the current URI.
      *
-     * @return int
-     *    m_port The port value
+     * @return int $m_port
+     *      The port value
      */
     public function getPort()
     {
@@ -307,8 +337,8 @@ class CampURI {
     /**
      * Gets the user part from the current URI.
      *
-     * @return string
-     *    m_username The username value
+     * @return string $m_username
+     *      The username value
      */
     public function getUser()
     {
@@ -319,8 +349,8 @@ class CampURI {
     /**
      * Gets the password part from the current URI.
      *
-     * @return string
-     *    m_password The password value
+     * @return string $m_password
+     *      The password value
      */
     public function getPassword()
     {
@@ -331,8 +361,8 @@ class CampURI {
     /**
      * Gets the path part from the current URI.
      *
-     * @return string
-     *    m_path The path value
+     * @return string $m_path
+     *      The path value
      */
     public function getPath()
     {
@@ -343,8 +373,8 @@ class CampURI {
     /**
      * Gets the fragment part from the current URI.
      *
-     * @return string
-     *    m_fragment The fragment value
+     * @return string $m_fragment
+     *      The fragment value
      */
     public function getFragment()
     {
@@ -355,8 +385,10 @@ class CampURI {
     /**
      * Gets the query part from the current URI.
      *
-     * @return string
-     *    m_query The query value
+     * @return string $m_query
+     *      The query value
+     *
+     * @return void
      */
     public function setQuery($p_query)
     {
@@ -366,7 +398,14 @@ class CampURI {
 
 
     /**
+     * Sets the given URI query variable.
      *
+     * @param string $p_varName
+     *      The name of the URI query variable
+     * @param string $p_value
+     *      The value for the variable
+     *
+     * @return void
      */
     public function setQueryVar($p_varName, $p_value)
     {
@@ -376,7 +415,12 @@ class CampURI {
 
 
     /**
+     * Sets the URI scheme.
      *
+     * @param string $p_scheme
+     *      The scheme value
+     *
+     * @return void
      */
     public function setScheme($p_scheme)
     {
@@ -385,7 +429,12 @@ class CampURI {
 
 
     /**
+     * Sets the URI host.
      *
+     * @param string $p_host
+     *      The host name
+     *
+     * @return void
      */
     public function setHost($p_host)
     {
@@ -394,7 +443,12 @@ class CampURI {
 
 
     /**
+     * Sets the URI port.
      *
+     * @param int $p_port
+     *      The port number
+     *
+     * @return void
      */
     public function setPort($p_port)
     {
@@ -403,7 +457,12 @@ class CampURI {
 
 
     /**
+     * Sets the URI user part.
      *
+     * @param string $p_user
+     *      The user name
+     *
+     * @return void
      */
     public function setUser($p_user)
     {
@@ -412,7 +471,12 @@ class CampURI {
 
 
     /**
+     * Sets the URI password part.
      *
+     * @param string @p_password
+     *      The user password
+     *
+     * @return void
      */
     public function setPassword($p_password)
     {
@@ -421,7 +485,12 @@ class CampURI {
 
 
     /**
+     * Sets the URI path.
      *
+     * @param string $p_path
+     *      The path
+     *
+     * @return void
      */
     public function setPath($p_path)
     {
@@ -430,7 +499,12 @@ class CampURI {
 
 
     /**
+     * Sets the URI fragment.
      *
+     * @param string $p_fragment
+     *      The fragment part
+     *
+     * @return void
      */
     public function setFragment($p_fragment)
     {
@@ -453,11 +527,11 @@ class CampURI {
     /**
      * Builds a URI query string from the given query array.
      *
-     * @param array
-     *    p_queryArray An array of query variables
+     * @param array $p_queryArray
+     *      An array of query variables
      *
-     * @return string
-     *    queryString The generated query string
+     * @return string $queryString
+     *      The generated query string
      */
     protected static function QueryArrayToString($p_queryArray)
     {

@@ -26,11 +26,11 @@ require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/Alias.php');
 require_once($g_documentRoot.'/template_engine/classes/CampURI.php');
 
-define('UP_LANGUAGE_ID', 'lng_id');
-define('UP_PUBLICATION_ID', 'pub_id');
-define('UP_ISSUE_NR', 'iss_nr');
-define('UP_SECTION_NR', 'sct_nr');
-define('UP_ARTICLE_NR', 'art_nr');
+define('UP_LANGUAGE_ID', 'IdLanguage');
+define('UP_PUBLICATION_ID', 'IdPublication');
+define('UP_ISSUE_NR', 'NrIssue');
+define('UP_SECTION_NR', 'NrSection');
+define('UP_ARTICLE_NR', 'NrArticle');
 
 /**
  * Class CampURIShortNames
@@ -53,6 +53,7 @@ class CampURIShortNames extends CampURI {
 	protected function __construct($p_uri = null)
 	{
         parent::__construct($p_uri);
+        $this->setURL();
 	} // fn __construct
 
 
@@ -76,29 +77,17 @@ class CampURIShortNames extends CampURI {
     } // fn singleton
 
 
-	/**
-	 * @return string
-	 */
-	public function getURI()
-	{
-		if (empty($this->m_query)) {
-			return $this->m_path;
-		}
-
-		return $this->render(array('path', 'query'));
-	} // fn getURI
-
-
     /**
-     * Parses the URI in shortnames fashion and sets the corresponding
-     * context values.
+     * Sets the URL values.
      *
-     * TODO: Error handling and context setting
+     * @return void
+     *
+     * TODO: Error handling
      */
-    public function parse()
+    private function setURL()
     {
         // gets the publication object based on site name (URI host)
-        $aliasArray = Alias::GetAliases(null, null, $this->m_host);
+        $aliasArray = Alias::GetAliases(null, null, $this->getHost());
         if (is_array($aliasArray) && sizeof($aliasArray) == 1) {
             $aliasObj = $aliasArray[0];
             $cPubId = $aliasObj->getPublicationId();
@@ -107,77 +96,86 @@ class CampURIShortNames extends CampURI {
                 $cPubId = 0;
                 $pubObj = null;
             }
+            $this->setQueryVar(UP_PUBLICATION_ID, $cPubId);
         }
-        
+
         if (empty($cPubId)) {
             // return error/throw exception "not valid site alias"
         }
-    
-        $trimmedPath = trim($this->m_path, '/');
+
+        $trimmedPath = trim($this->getPath(), '/');
         list($cLangCode, $cIssueSName,
              $cSectionSName, $cArticleSName) = explode('/', $trimmedPath);
-        
+
         // gets the language identifier
         if (!empty($cLangCode)) {
             $langArray = Language::GetLanguages(null, $cLangCode);
             if (is_array($langArray) && sizeof($langArray) == 1) {
                 $langObj = $langArray[0];
-                $langId = $langObj->getLanguageId();
+                $cLangId = $langObj->getLanguageId();
             }
         } else {
-            $langId = $pubObj->getLanguageId();
+            $cLangId = $pubObj->getLanguageId();
         }
-        
-        if (empty($langId)) {
+
+        if (empty($cLangId)) {
             // return error/throw exception "not valid language"
+        }
+
+        if ($this->getPath() == '' || $this->getPath() == '/') {
+            $this->setQueryVar(UP_LANGUAGE_ID, $cLangId);
         }
         
         // gets the issue number
         if (!empty($cIssueSName)) {
-            $issueArray = Issue::GetIssues($cPubId, $langId, $cIssueSName);
+            $issueArray = Issue::GetIssues($cPubId, $cLangId, $cIssueSName);
             if (is_array($issueArray) && sizeof($issueArray) == 1) {
                 $issueObj = $issueArray[0];
-                $issueNr = $issueObj->getIssueNumber();
+                $cIssueNr = $issueObj->getIssueNumber();
             }
-            if (empty($issueNr)) {
+            if (empty($cIssueNr)) {
                 // return error/throw exception "not valid issue"
             }
-        } else {
+            $this->setQueryVar(UP_ISSUE_NR, $cIssueNr);
+        } elseif ($this->getPath() == '' || $this->getPath() == '/') {
             $query = "SELECT MAX(Number) FROM Issues"
-                   . " WHERE IdPublication = ".$cPubId." AND IdLanguage = ".$cLangCode
+                   . " WHERE IdPublication = ".$cPubId." AND IdLanguage = ".$cLangId
                    . " AND ShortName = '".$cIssueSName."'";
             $data = $g_ado_db->GetRow($query);
-            $issueNr = $data['Number'];
+            if (empty($data)) {
+                // return error/throw exception "not issues at all"
+            }
+            $cIssueNr = $data['Number'];
         }
-        
-        if (empty($issueNr)) {
-            // return error/throw exception "not issues at all"
+
+        if (!empty($cIssueNr)) {
+            $this->setQueryVar(UP_ISSUE_NR, $cIssueNr);
         }
         
         // gets the section number
         if (!empty($cSectionSName)) {
-            $sectionArray = Section::GetSections($cPubId, $issueNr, $langId, $cSectionSName);
+            $sectionArray = Section::GetSections($cPubId, $issueNr, $cLangId, $cSectionSName);
             if (is_array($sectionArray) && sizeof($sectionArray) == 1) {
                 $sectionObj = $sectionArray[0];
-                $sectionNr = $sectionObj->getSectionNumber();
+                $cSectionNr = $sectionObj->getSectionNumber();
+                $this->setQueryVar(UP_SECTION_NR, $cSectionNr);
             }
-        }
-        
-        if (empty($sectionNr)) {
-            // return error/throw exception "not valid section"
+            
+            if (empty($cSectionNr)) {
+                // return error/throw exception "not valid section"
+            }
         }
         
         // gets the article number
         if (!empty($cArticleSName)) {
-            $articleObj = new Article($langId, $cArticleSName);
-            $articleNr = $articleObj->getArticleNumber();
+            $articleObj = new Article($cLangId, $cArticleSName);
+            $cArticleNr = $articleObj->getArticleNumber();
+
+            if (empty($cArticleNr)) {
+                // return error/throw exception "not valid article"
+            }
         }
-        
-        if (empty($articleNr)) {
-            // return error/throw exception "not valid article"
-        }
-        
-    } // fn parse
+    } // fn setURL
 
 
 	/**
@@ -186,44 +184,47 @@ class CampURIShortNames extends CampURI {
 	 * @return string $uriPath
 	 *      The shortnames version of the URI
 	 */
-	public static function BuildURI($p_uri = null)
+	public function buildURI()
 	{
-		// gets the parameters identifiers from the URI query variables
-		$uriObj = new CampURI($p_uri);
-		$cLangId = $uriObj->getQueryVar(UP_LANGUAGE_ID);
-		$cPubId = $uriObj->getQueryVar(UP_PUBLICATION_ID);
-		$cIssueNr = $uriObj->getQueryVar(UP_ISSUE_NR);
-		$cSectionNr = $uriObj->getQueryVar(UP_SECTION_NR);
-		$cArticleNr = $uriObj->getQueryVar(UP_ARTICLE_NR);
-		
-		// gets the language code
-		$langObj = new Language($cLangId);
+        $uriPath = '';
+        
+        // gets the language code
+		$langObj = new Language($this->getQueryVar(UP_LANGUAGE_ID);
 		if (is_object($langObj) && $langObj->exists()) {
 			$langCode = $langObj->getCode();
 		}
 		
 		// gets the issue short name
-		$issueObj = new Issue($cPubId, $cLangId, $cIssueNr);
+		$issueObj = new Issue($this->getQueryVar(UP_PUBLICATION_ID),
+                              $this->getQueryVar(UP_LANGUAGE_ID),
+                              $this->getQueryVar(UP_ISSUE_NR));
 		if (is_object($issueObj) && $issueObj->exists()) {
 			$issueSName = $issueObj->getUrlName();
 		}
 		
 		// gets the section short name
-		$sectionObj = new Section($cPubId, $cIssueNr, $cLangId, $cSectionNr);
+		$sectionObj = new Section($this->getQueryVar(UP_PUBLICATION_ID),
+                                  $this->getQueryVar(UP_ISSUE_NR),
+                                  $this->getQueryVar(UP_LANGUAGE_ID),
+                                  $this->getQueryVar(UP_SECTION_NR));
 		if (is_object($sectionObj) && $sectionObj->exists()) {
 			$sectionSName = $sectionObj->getUrlName();
 		}
 		
 		// gets the article short name
-		$articleObj = new Article($cLangId, $cArticleNr);
+		$articleObj = new Article($this->getQueryVar(UP_LANGUAGE_ID),
+                                  $this->getQueryVar(UP_ARTICLE_NR));
 		if (is_object($articleObj) && $articleObj->exists()) {
 			$articleSName = $articleObj->getUrlName();
 		}
         
-        $uriPath = '/'.$langCode.'/'.$issueSName.'/'.$sectionSName.'/'.$articleSName.'/';
-        
+        if (!empty($langCode) && !empty($issueSName)
+                && !empty($sectionSName) && !empty($articleSName)) {
+            $uriPath = '/'.$langCode.'/'.$issueSName.'/'.$sectionSName.'/'.$articleSName.'/';
+        }
+
         return $uriPath;
-	} // fn BuildURI
+	} // fn buildURI
 
 } // class CampURIShortNames
 
