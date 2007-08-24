@@ -43,6 +43,48 @@ class CampURIShortNames extends CampURI {
      */
     private static $m_instance = null;
 
+    /**
+     * Publication alias (a.k.a. site name)
+     *
+     * @var string
+     */
+    private $m_publication = null;
+
+    /**
+     * Language code
+     *
+     * @var string
+     */
+    private $m_language = null;
+
+    /**
+     * Issue short name
+     *
+     * @var string
+     */
+    private $m_issue = null;
+
+    /**
+     * Section short name
+     *
+     * @var string
+     */
+    private $m_section = null;
+
+    /**
+     * Article short name
+     *
+     * @var string
+     */
+    private $m_article = null;
+
+    /**
+     * Whether the URI is valid or not
+     *
+     * @var boolean
+     */
+    private $m_validURI = false;
+
 
 	/**
 	 * Class constructor
@@ -78,6 +120,66 @@ class CampURIShortNames extends CampURI {
 
 
     /**
+     * Gets the Publication alias from the URI.
+     *
+     * @return string
+     *      The publication alias (a.k.a. site name)
+     */
+    public function getPublicationAlias()
+    {
+        return $this->m_publication;
+    } // fn getPublicationAlias
+
+
+    /**
+     * Gets the Language code from the URI.
+     *
+     * @return string
+     *      The language code
+     */
+    public function getLanguageCode()
+    {
+        return $this->m_language;
+    } // fn getLanguageCode
+
+
+    /**
+     * Gets the Issue short name from the URI.
+     *
+     * @return string
+     *      The short name of the issue
+     */
+    public function getIssueShortName()
+    {
+        return $this->m_issue;
+    } // fn getIssueShortName
+
+
+    /**
+     * Gets the Section short name from the URI.
+     *
+     * @return string
+     *      The short name of the section
+     */
+    public getSectionShortName()
+    {
+        return $this->m_section;
+    } // fn getSectionShortName
+
+
+    /**
+     * Gets the Article short name from the URI.
+     *
+     * @return string
+     *      The short name of the Article
+     */
+    public getArticleShortName()
+    {
+        return $this->m_article;
+    } // fn getArticleShortName
+
+
+    /**
      * Sets the URL values.
      *
      * @return void
@@ -86,17 +188,20 @@ class CampURIShortNames extends CampURI {
      */
     private function setURL()
     {
+        $cPubId = 0;
         // gets the publication object based on site name (URI host)
         $aliasArray = Alias::GetAliases(null, null, $this->getHost());
         if (is_array($aliasArray) && sizeof($aliasArray) == 1) {
             $aliasObj = $aliasArray[0];
             $cPubId = $aliasObj->getPublicationId();
             $pubObj = new Publication($cPubId);
-            if (!is_object($pubObj) || !$pubObj->exists()) {
+            if (is_object($pubObj) && $pubObj->exists()) {
+                $this->setQueryVar(UP_PUBLICATION_ID, $cPubId);
+                $this->m_publication = $this->getHost();
+            } else {
                 $cPubId = 0;
                 $pubObj = null;
             }
-            $this->setQueryVar(UP_PUBLICATION_ID, $cPubId);
         }
 
         if (empty($cPubId)) {
@@ -107,6 +212,7 @@ class CampURIShortNames extends CampURI {
         list($cLangCode, $cIssueSName,
              $cSectionSName, $cArticleSName) = explode('/', $trimmedPath);
 
+        $cLangId = 0;
         // gets the language identifier
         if (!empty($cLangCode)) {
             $langArray = Language::GetLanguages(null, $cLangCode);
@@ -120,12 +226,15 @@ class CampURIShortNames extends CampURI {
 
         if (empty($cLangId)) {
             // return error/throw exception "not valid language"
+        } else {
+            $this->m_language = $cLangCode;
         }
 
         if ($this->getPath() == '' || $this->getPath() == '/') {
             $this->setQueryVar(UP_LANGUAGE_ID, $cLangId);
         }
-        
+
+        $cIssueNr = 0;
         // gets the issue number
         if (!empty($cIssueSName)) {
             $issueArray = Issue::GetIssues($cPubId, $cLangId, $cIssueSName);
@@ -136,22 +245,24 @@ class CampURIShortNames extends CampURI {
             if (empty($cIssueNr)) {
                 // return error/throw exception "not valid issue"
             }
-            $this->setQueryVar(UP_ISSUE_NR, $cIssueNr);
         } elseif ($this->getPath() == '' || $this->getPath() == '/') {
-            $query = "SELECT MAX(Number) FROM Issues"
+            $query = "SELECT MAX(Number), ShortName FROM Issues"
                    . " WHERE IdPublication = ".$cPubId." AND IdLanguage = ".$cLangId
-                   . " AND ShortName = '".$cIssueSName."'";
+                   . " AND Published = 'Y'";
             $data = $g_ado_db->GetRow($query);
             if (empty($data)) {
                 // return error/throw exception "not issues at all"
             }
             $cIssueNr = $data['Number'];
+            $cIssueSName = $data['ShortName'];
         }
 
         if (!empty($cIssueNr)) {
             $this->setQueryVar(UP_ISSUE_NR, $cIssueNr);
+            $this->m_issue = $cIssueSName;
         }
-        
+
+        $cSectionNr = 0;
         // gets the section number
         if (!empty($cSectionSName)) {
             $sectionArray = Section::GetSections($cPubId, $issueNr, $cLangId, $cSectionSName);
@@ -159,25 +270,30 @@ class CampURIShortNames extends CampURI {
                 $sectionObj = $sectionArray[0];
                 $cSectionNr = $sectionObj->getSectionNumber();
                 $this->setQueryVar(UP_SECTION_NR, $cSectionNr);
+                $this->m_section = $cSectionSName;
             }
-            
+
             if (empty($cSectionNr)) {
                 // return error/throw exception "not valid section"
             }
         }
-        
+
+        $cArticleNr = 0;
         // gets the article number
         if (!empty($cArticleSName)) {
             $articleObj = new Article($cLangId, $cArticleSName);
             if (is_object($articleObj) && $articleObj->exists()) {
                 $cArticleNr = $articleObj->getArticleNumber();
                 $this->setQueryVar(UP_ARTICLE_NR, $cArticleNr);
+                $this->m_article = $cArticleSName;
             }
 
             if (empty($cArticleNr)) {
                 // return error/throw exception "not valid article"
             }
         }
+
+        $this->m_validURI = true;
     } // fn setURL
 
 
@@ -191,39 +307,10 @@ class CampURIShortNames extends CampURI {
 	{
         $uriPath = '';
         
-        // gets the language code
-		$langObj = new Language($this->getQueryVar(UP_LANGUAGE_ID);
-		if (is_object($langObj) && $langObj->exists()) {
-			$langCode = $langObj->getCode();
-		}
-		
-		// gets the issue short name
-		$issueObj = new Issue($this->getQueryVar(UP_PUBLICATION_ID),
-                              $this->getQueryVar(UP_LANGUAGE_ID),
-                              $this->getQueryVar(UP_ISSUE_NR));
-		if (is_object($issueObj) && $issueObj->exists()) {
-			$issueSName = $issueObj->getUrlName();
-		}
-		
-		// gets the section short name
-		$sectionObj = new Section($this->getQueryVar(UP_PUBLICATION_ID),
-                                  $this->getQueryVar(UP_ISSUE_NR),
-                                  $this->getQueryVar(UP_LANGUAGE_ID),
-                                  $this->getQueryVar(UP_SECTION_NR));
-		if (is_object($sectionObj) && $sectionObj->exists()) {
-			$sectionSName = $sectionObj->getUrlName();
-		}
-		
-		// gets the article short name
-		$articleObj = new Article($this->getQueryVar(UP_LANGUAGE_ID),
-                                  $this->getQueryVar(UP_ARTICLE_NR));
-		if (is_object($articleObj) && $articleObj->exists()) {
-			$articleSName = $articleObj->getUrlName();
-		}
-        
-        if (!empty($langCode) && !empty($issueSName)
-                && !empty($sectionSName) && !empty($articleSName)) {
-            $uriPath = '/'.$langCode.'/'.$issueSName.'/'.$sectionSName.'/'.$articleSName.'/';
+        if ($this->m_validURI == true) {
+            $uriPath = '/'.$this->m_language.'/'.$this->m_issue.'/';
+            $uriPath.= (!empty($this->m_section)) ? $this->m_section.'/' : '';
+            $uriPath.= (!empty($this->m_article)) ? $this->m_article.'/' : '';
         }
 
         return $uriPath;

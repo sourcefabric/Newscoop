@@ -58,6 +58,13 @@ class CampURITemplatePath extends CampURI {
      */
     private $m_lookDir = null;
 
+    /**
+     * Whether the URI is valid or not
+     *
+     * @var boolean
+     */
+    private $m_validURI = false;
+
 
     /**
      * Class constructor
@@ -171,6 +178,8 @@ class CampURITemplatePath extends CampURI {
             $template = SomeClass::GetIssueTemplate($cLangId, $cPubId, $cIssueNr);
             $this->setTemplate($template);
         }
+        
+        $this->m_validURI = true;
     } // fn setURL
 
 
@@ -246,7 +255,7 @@ class CampURITemplatePath extends CampURI {
     public function buildURI()
     {
         $uri = '';
-        if (!empty($this->getTemplate())) {
+        if ($this->m_validURI == true && !empty($this->getTemplate())) {
             $uri = '/'.$this->m_lookDir.'/'.$this->getRequestURI();
         }
 
