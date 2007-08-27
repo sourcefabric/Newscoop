@@ -44,16 +44,8 @@ class CampURITest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
    	{
-        $this->m_uri = 'http://johndoe:bubagump@www.johndoeswebsite.org:8080/somepage.php?mv1=val1&mv2=val2&mv3=val3';
+        $this->m_uri = 'http://www.campware.org/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=100&NrSection=1000&NrArticle=704';
         $this->m_uriObj = CampURI::singleton($this->m_uri);
-
-        $this->m_uriParted['scheme'] = 'http';
-        $this->m_uriParted['user'] = 'johndoe';
-        $this->m_uriParted['password'] = 'bubagump';
-        $this->m_uriParted['host'] = 'www.johndoeswebsite.org';
-        $this->m_uriParted['port'] = '8080';
-        $this->m_uriParted['path'] = '/somepage.php';
-        $this->m_uriParted['query'] = 'mv1=val1&mv2=val2&mv3=val3';
     }
 
     /**
@@ -66,48 +58,65 @@ class CampURITest extends PHPUnit_Framework_TestCase
     {
     }
 
+    public function testGetBase()
+    {
+        $this->assertEquals('http://www.campware.org', $this->m_uriObj->getBase());
+    }
+
+    public function testGetBasePath()
+    {
+        $this->assertEquals('http://www.campware.org/look/article.tpl', $this->m_uriObj->getBasePath());
+    }
+
     public function testGetScheme()
     {
-    	$this->assertEquals($this->m_uriParted['scheme'], $this->m_uriObj->getScheme());
+    	$this->assertEquals('http', $this->m_uriObj->getScheme());
     }
 
     public function testGetHost()
     {
-        $this->assertEquals($this->m_uriParted['host'], $this->m_uriObj->getHost());
+        $this->assertEquals('www.campware.org', $this->m_uriObj->getHost());
     }
 
     public function testGetPort()
     {
-        $this->assertEquals($this->m_uriParted['port'], $this->m_uriObj->getPort());
+        $this->assertEquals('', $this->m_uriObj->getPort());
     }
 
     public function testGetUser()
     {
-        $this->assertEquals($this->m_uriParted['user'], $this->m_uriObj->getUser());
+        $this->assertEquals('', $this->m_uriObj->getUser());
     }
 
     public function testGetPassword()
     {
-        $this->assertEquals($this->m_uriParted['password'], $this->m_uriObj->getPassword());
+        $this->assertEquals('', $this->m_uriObj->getPassword());
     }
 
     public function testGetPath()
     {
-        $this->assertEquals($this->m_uriParted['path'], $this->m_uriObj->getPath());
+        $this->assertEquals('/look/article.tpl', $this->m_uriObj->getPath());
     }
 
     public function testGetQuery()
     {
-        $this->assertEquals($this->m_uriParted['query'], $this->m_uriObj->getQuery());
+        $this->assertEquals('IdPublication=1&IdLanguage=1&NrIssue=100&NrSection=1000&NrArticle=704', $this->m_uriObj->getQuery());
+    }
+
+    public function testIsSSL()
+    {
+        $this->assertEquals(false, $this->m_uriObj->isSSL());
     }
 
     public function testQueryArrayToString()
     {
-        $queryArray = array('mv1' => 'val1',
-                            'mv2' => 'val2',
-                            'mv3' => 'val3');
+        $queryArray = array('IdPublication' => 1,
+                            'IdLanguage' => 1,
+                            'NrIssue' => 100,
+                            'NrSection' => 1000,
+                            'NrArticle' => 704);
         $toString = CampURI::QueryArrayToString($queryArray);
-        $this->assertEquals($this->m_uriParted['query'], $toString);
+        $this->assertEquals('IdPublication=1&IdLanguage=1&NrIssue=100&NrSection=1000&NrArticle=704', $toString);
     }
 
 }

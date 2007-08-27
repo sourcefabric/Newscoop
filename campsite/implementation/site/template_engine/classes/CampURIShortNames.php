@@ -161,7 +161,7 @@ class CampURIShortNames extends CampURI {
      * @return string
      *      The short name of the section
      */
-    public getSectionShortName()
+    public function getSectionShortName()
     {
         return $this->m_section;
     } // fn getSectionShortName
@@ -173,7 +173,7 @@ class CampURIShortNames extends CampURI {
      * @return string
      *      The short name of the Article
      */
-    public getArticleShortName()
+    public function getArticleShortName()
     {
         return $this->m_article;
     } // fn getArticleShortName

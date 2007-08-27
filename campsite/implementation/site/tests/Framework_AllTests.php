@@ -15,6 +15,8 @@ require_once('ArticlesListTest.php');
 require_once('CampDatabaseTest.php');
 require_once('CampConfigTest.php');
 require_once('CampURITest.php');
+require_once('CampURIShortNamesTest.php');
+require_once('CampURITemplatePathTest.php');
 
 
 class Framework_AllTests
@@ -40,7 +42,9 @@ class Framework_AllTests
         $suite->addTestSuite('CampDatabaseTest');
         $suite->addTestSuite('CampConfigTest');
 
-        $suite->addTestSuite('CampURITest');
+        // $suite->addTestSuite('CampURITest');
+        // $suite->addTestSuite('CampURIShortNamesTest');
+        // $suite->addTestSuite('CampURITemplatePathTest');
 
         return $suite;
     }
