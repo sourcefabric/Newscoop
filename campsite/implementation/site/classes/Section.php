@@ -478,7 +478,19 @@ class Section extends DatabaseObject {
 
 
     /**
+     * Gets a section list based on the given parameters.
      *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $sectionsList
+     *    An array of Section objects
      */
     public static function GetList($p_parameters, $p_order = null,
                                    $p_start = 0, $p_limit = 0)
@@ -501,7 +513,7 @@ class Section extends DatabaseObject {
         unset($tmpSection);
 
         foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param, $sqlClauseObj);
+            $comparisonOperation = self::ProcessListParameters($param);
 
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
@@ -541,9 +553,15 @@ class Section extends DatabaseObject {
 
 
     /**
+     * Processes a paremeter (condition) coming from template tags.
      *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation
+     *      The array containing processed values of the condition
      */
-    public static function ProcessListParameters($p_param, &$p_sqlClause)
+    private static function ProcessListParameters($p_param)
     {
         $comparisonOperation = array();
 

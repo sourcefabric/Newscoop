@@ -668,7 +668,7 @@ class Issue extends DatabaseObject {
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
      *
-     * @return array $issueList
+     * @return array $issuesList
      *    An array of Issue objects
      */
     public static function GetList($p_parameters, $p_order = null,
@@ -692,7 +692,7 @@ class Issue extends DatabaseObject {
         unset($tmpIssue);
 
         foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param, $sqlClauseObj);
+            $comparisonOperation = self::ProcessListParameters($param);
 
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
@@ -731,9 +731,15 @@ class Issue extends DatabaseObject {
 
 
     /**
+     * Processes a paremeter (condition) coming from template tags.
      *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation
+     *      The array containing processed values of the condition
      */
-    public static function ProcessListParameters($p_param, &$p_sqlClause)
+    private static function ProcessListParameters($p_param)
     {
         $comparisonOperation = array();
 

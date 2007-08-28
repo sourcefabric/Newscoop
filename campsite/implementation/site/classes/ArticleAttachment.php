@@ -267,7 +267,7 @@ class ArticleAttachment extends DatabaseObject {
      * @param array $p_param
      *      The array of parameters
      *
-     * @return array $comparisonOperation;
+     * @return array $comparisonOperation
      *      The array containing processed values of the condition
      */
     private static function ProcessListParameters($p_param)

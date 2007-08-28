@@ -213,7 +213,7 @@ class ArticleTopic extends DatabaseObject {
 
 
     /**
-     * Gets an article audioclips list based on the given parameters.
+     * Gets an article topics list based on the given parameters.
      *
      * @param array $p_parameters
      *    An array of ComparisonOperation objects
@@ -224,8 +224,8 @@ class ArticleTopic extends DatabaseObject {
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
      *
-     * @return array $articleAudioclipsList
-     *    An array of Audioclip objects
+     * @return array $articleTopicsList
+     *    An array of Topic objects
      */
     public static function GetList($p_parameters, $p_order = null,
                                    $p_start = 0, $p_limit = 0)
