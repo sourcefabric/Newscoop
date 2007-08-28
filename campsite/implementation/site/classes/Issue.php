@@ -660,7 +660,7 @@ class Issue extends DatabaseObject {
      * Gets an issue list based on the given parameters.
      *
      * @param array $p_parameters
-     *    An array of ComparionOperation objects
+     *    An array of ComparisonOperation objects
      * @param string $p_order
      *    An array of columns and directions to order by
      * @param integer $p_start
@@ -711,16 +711,19 @@ class Issue extends DatabaseObject {
         $sqlClauseObj->setLimit($p_start, $p_limit);
 
         $sqlQuery = $sqlClauseObj->buildQuery();
-        $issues = $g_ado_db->Execute($sqlQuery);
-        if (!$issues) {
+        $issues = $g_ado_db->GetAll($sqlQuery);
+        if (!is_array($issues)) {
             return null;
         }
 
         $issuesList = array();
         foreach ($issues as $issue) {
-            $issuesList[] = new Issue($issue['IdPublication'],
-                                      $issue['IdLanguage'],
-                                      $issue['Number']);
+            $issObj = new Issue($issue['IdPublication'],
+                                $issue['IdLanguage'],
+                                $issue['Number']);
+            if ($issObj->exists()) {
+                $issuesList[] =& $issObj;
+            }
         }
 
         return $issuesList;

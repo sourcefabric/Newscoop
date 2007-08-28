@@ -1980,7 +1980,7 @@ class Article extends DatabaseObject {
     /**
      *
      */
-    public static function ProcessListParameters($p_param, &$p_sqlClause)
+    private static function ProcessListParameters($p_param, &$p_sqlClause)
     {
         $conditionOperation = array();
 

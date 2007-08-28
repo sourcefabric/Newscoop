@@ -818,5 +818,34 @@ class Image extends DatabaseObject {
 		return $template;
 	} // fn toTemplate
 
+
+    /**
+     * Gets an issue list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparionOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $issueList
+     *    An array of Issue objects
+     */
+    public static function GetList($p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db;
+
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        $sqlClauseObj = new SQLSelectClause();
+
+    } // fn GetList
+
 } // class Image
 ?>

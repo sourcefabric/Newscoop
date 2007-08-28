@@ -12,6 +12,7 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Audioclip.php');
 
 /**
@@ -202,6 +203,117 @@ class ArticleAudioclip extends DatabaseObject {
             $g_ado_db->Execute($queryStr);
         }
     } // fn OnArticleCopy
+
+
+    /**
+     * Gets an article audioclips list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $articleAudioclipsList
+     *    An array of Audioclip objects
+     */
+    public static function GetList($p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db;
+
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        $sqlClauseObj = new SQLSelectClause();
+
+        // sets the base table ArticleAudioclips and the column to be fetched
+        $tmpArticleAudioclip =& new ArticleAudioclip();
+        $sqlClauseObj->setTable($tmpArticleAudioclip->getDbTableName());
+        $sqlClauseObj->addColumn('fk_audioclip_gunid');
+        unset($tmpArticleAudioclip);
+
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param);
+            if (sizeof($comparisonOperation) < 1) {
+                break;
+            }
+
+            switch (key($comparisonOperation)) {
+            case 'fk_article_number':
+                $whereCondition = 'fk_language_article = '
+                    .$comparisonOperation['fk_article_number'];
+                break;
+            case 'fk_language_id':
+                $whereCondition = '(fk_language_id IS NULL OR '
+                    .'fk_language_id = '.$comparisonOperation['fk_language_id'].')';
+                break;
+            }
+
+            if (!isset($comparisonOperation['fk_language_id'])) {
+                $whereCondition = '(fk_language_id IS NULL OR FALSE)';
+            }
+
+            $sqlClauseObj->addWhere($whereCondition);
+        }
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        $sqlClauseObj->setLimit($p_start, $p_limit);
+
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        $audioclips = $g_ado_db->GetAll($sqlQuery);
+        if (!is_array($audioclips)) {
+            return null;
+        }
+
+        $articleAudioclipsList = array();
+        foreach ($audioclips as $audioclip) {
+            $aclipObj = new Audioclip($audioclip['fk_audioclip_gunid']);
+            if ($aclipObj->exists()) {
+                $articleAudioclipsList[] =& $aclipObj;
+            }
+        }
+
+        return $articleAudioclipsList;
+    } // fn GetList
+
+
+    /**
+     * Processes a paremeter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $parameter
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListParameters($p_param)
+    {
+        $parameter = array();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'article_nr':
+            $parameter['fk_article_number'] = (int) $p_param->getRightOperand();
+            break;
+        case 'language':
+            $parameter['fk_language_id'] = (int) $p_param->getRightOperand();
+            break;
+        }
+
+        return $parameter;
+    } // fn ProcessListParameters
 
 } // class ArticleAudioclip
 

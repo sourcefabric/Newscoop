@@ -1,6 +1,12 @@
 <?php
 /**
  * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
  */
 
 define ('SQL', 'SELECT %s FROM %s');
@@ -9,7 +15,7 @@ define ('SQL_ORDER_BY', ' ORDER BY %s');
 define ('SQL_LIMIT', ' LIMIT %d, %d');
 
 /**
- * @package Campsite
+ * Class SQLSelectClause
  */
 class SQLSelectClause {
     /**
@@ -25,6 +31,12 @@ class SQLSelectClause {
      * @var array
      */
     private $m_columns = null;
+
+    /**
+     *
+     * @var array
+     */
+    private $m_from = null;
 
     /**
      * The tables the query will request from.
@@ -63,11 +75,12 @@ class SQLSelectClause {
 
 
     /**
-     *
+     * Class constructor
      */
     public function __construct()
     {
         $this->m_columns = array();
+        $this->m_from = array();
         $this->m_joins = array();
         $this->m_where = array();
         $this->m_orderBy = array();
@@ -77,7 +90,12 @@ class SQLSelectClause {
 
 
     /**
+     * Adds a column to be fetched by the query.
      *
+     * @param string $p_column
+     *      The name of the column
+     *
+     * @return void
      */
     public function addColumn($p_column)
     {
@@ -86,7 +104,26 @@ class SQLSelectClause {
 
 
     /**
+     * Adds a table to the FROM part of the query.
      *
+     * @param string $p_table
+     *      The name of the table
+     *
+     * @return void
+     */
+    public function addTableFrom($p_table)
+    {
+        $this->m_from[] = $p_table;
+    }
+
+
+    /**
+     * Adds a table join to the query.
+     *
+     * @param string $p_join
+     *      The full join string including the ON condition
+     *
+     * @return void
      */
     public function addJoin($p_join)
     {
@@ -95,7 +132,12 @@ class SQLSelectClause {
 
 
     /**
+     * Adds a WHERE condition to the query.
      *
+     * @param string $p_condition
+     *      The comparison operation
+     *
+     * @return void
      */
     public function addWhere($p_condition)
     {
@@ -104,7 +146,12 @@ class SQLSelectClause {
 
 
     /**
+     * Adds an ORDER BY condition to the query.
      *
+     * @param string $p_order
+     *      The column and the direction of the order condition
+     *
+     * @return void
      */
     public function addOrderBy($p_order)
     {
@@ -113,7 +160,12 @@ class SQLSelectClause {
 
 
     /**
+     * Sets the name of the main table in the query.
      *
+     * @param string $p_table
+     *      The name of the table
+     *
+     * @return void
      */
     public function setTable($p_table)
     {
@@ -122,7 +174,14 @@ class SQLSelectClause {
 
 
     /**
+     * Sets the LIMIT of the query.
      *
+     * @param integer $p_start
+     *      The number where the query will start to fetch data
+     * @param integer $p_offset
+     *      The number of rows to be fetched
+     *
+     * @return void
      */
     public function setLimit($p_start = 0, $p_offset = 0)
     {
@@ -132,10 +191,14 @@ class SQLSelectClause {
 
 
     /**
-     * @return string
+     * Builds the SQL query from the object attributes.
+     *
+     * @return string $sql
+     *      The full SQL query
      */
     public function buildQuery()
     {
+        $sql = '';
         $columns = $this->buildColumns();
         $from = $this->buildFrom();
         $sql = sprintf(SQL, $columns, $from);
@@ -157,6 +220,18 @@ class SQLSelectClause {
 
 
     /**
+     * Returns whether there is FROM tables other than the main query table.
+     *
+     * @return boolean
+     *      true on success, false on failure
+     */
+    private function hasFrom()
+    {
+        return (count($this->m_from) > 0);
+    } // fn hasFrom
+
+
+    /**
      * Returns whether there is table joins.
      *
      * @return boolean
@@ -169,19 +244,19 @@ class SQLSelectClause {
 
 
     /**
-     * @return string
+     * Builds the list of columns to be retrieved by the query.
+     *
+     * @return string $columns
+     *      The list of columns
      */
     private function buildColumns()
     {
         $columns = '';
 
-        if ($this->hasJoins()) {
+        if ($this->hasFrom() || $this->hasJoins()) {
             if (sizeof($this->m_columns) == 0) {
                 $columns = $this->m_table.'*';
             }
-            //foreach ($this->m_joins as $join) {
-            //$columns .= ', '.$join->getColumns();
-            //}
         } else {
             if (sizeof($this->m_columns) == 0) {
                 $columns = '*';
@@ -207,15 +282,12 @@ class SQLSelectClause {
     {
         $from = $this->m_table;
 
-        if ($this->hasJoins()) {
+        if ($this->hasFrom()) {
+            $from .= ',';
+            $from .= implode (', ', $this->m_from);
+        } elseif ($this->hasJoins()) {
             foreach ($this->m_joins as $join) {
                 $from .= ' '.$join;
-
-                // TODO: SQLJoinClause class
-                //
-                //$from .= ' LEFT JOIN '.$join->getTable();
-                //$from .= ' ON '.$this->m_table.'.'.$join->getLeft()
-                //.' = '.$join->getTable().'.'.$join->getRight();
             }
         }
 
@@ -224,7 +296,10 @@ class SQLSelectClause {
 
 
     /**
+     * Builds the list of WHERE conditions.
+     *
      * @return string
+     *      The string of conditions
      */
     private function buildWhere()
     {
@@ -233,7 +308,10 @@ class SQLSelectClause {
 
 
     /**
+     * Builds the ORDER BY conditions.
+     *
      * @return string
+     *      The string of ORDER BY conditions
      */
     private function buildOrderBy()
     {

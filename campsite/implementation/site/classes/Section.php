@@ -520,17 +520,20 @@ class Section extends DatabaseObject {
         $sqlClauseObj->setLimit($p_start, $p_limit);
 
         $sqlQuery = $sqlClauseObj->buildQuery();
-        $sections = $g_ado_db->Execute($sqlQuery);
-        if (!$sections) {
+        $sections = $g_ado_db->GetAll($sqlQuery);
+        if (!is_array($sections)) {
             return null;
         }
 
         $sectionsList = array();
         foreach ($sections as $section) {
-            $sectionsList[] = new Section($section['IdPublication'],
-                                          $section['NrIssue'],
-                                          $section['IdLanguage'],
-                                          $section['Number']);
+            $secObj = new Section($section['IdPublication'],
+                                  $section['NrIssue'],
+                                  $section['IdLanguage'],
+                                  $section['Number']);
+            if ($secObj->exists()) {
+                $sectionsList[] =& $secObj;
+            }
         }
 
         return $sectionsList;

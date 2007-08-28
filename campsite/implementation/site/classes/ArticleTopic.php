@@ -12,6 +12,7 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/Topic.php');
 require_once($g_documentRoot.'/classes/Log.php');
@@ -210,6 +211,101 @@ class ArticleTopic extends DatabaseObject {
     	return DbObjectArray::Create('Article', $queryStr);
 	} // fn GetArticlesWithTopic
 
+
+    /**
+     * Gets an article audioclips list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $articleAudioclipsList
+     *    An array of Audioclip objects
+     */
+    public static function GetList($p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db;
+
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        $sqlClauseObj = new SQLSelectClause();
+
+        // sets the base table ArticleAudioclips and the column to be fetched
+        $tmpArticleTopic =& new ArticleTopic();
+        $sqlClauseObj->setTable($tmpArticleTopic->getDbTableName());
+        $sqlClauseObj->addColumn('TopicId');
+        unset($tmpArticleTopic);
+
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param);
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+            $sqlClauseObj->addWhere($whereCondition);
+        }
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        $sqlClauseObj->setLimit($p_start, $p_limit);
+
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        $topics = $g_ado_db->GetAll($sqlQuery);
+        if (!is_array($topics)) {
+            return null;
+        }
+
+        $articleTopicsList = array();
+        foreach ($topics as $topic) {
+            $topObj = new Topic($topic['TopicId']);
+            if ($topObj->exists()) {
+                $articleTopicsList[] =& $topObj;
+            }
+        }
+
+        return $articleTopicsList;
+    } // fn GetList
+
+
+    /**
+     * Processes a paremeter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation;
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListParameters($p_param)
+    {
+        $comparisonOperation = array();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'article_nr':
+            $comparisonOperation['left'] = 'NrArticle';
+            $comparisonOperation['right'] = (int) $p_param->getRightOperand();
+            break;
+        }
+
+        $operatorObj = $p_param->getOperator();
+        $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+
+        return $comparisonOperation;
+    } // fn ProcessListParameters
 
 } // class ArticleTopic
 

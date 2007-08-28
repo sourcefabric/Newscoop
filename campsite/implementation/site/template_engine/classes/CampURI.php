@@ -199,6 +199,29 @@ class CampURI {
 
 
     /**
+     * Gets the URL from the object attributes.
+     *
+     * @return string $url
+     *      The full URL
+     */
+    public function getURL()
+    {
+        $url = $this->render(array(
+                                    'scheme',
+                                    'user',
+                                    'password',
+                                    'host',
+                                    'port',
+                                    'path',
+                                    'query',
+                                    'fragment'
+                                   )
+                            );
+        return $url;
+    } // fn getURL
+
+
+    /**
      * Gets the full URI.
      *
      * @return string $m_uri
