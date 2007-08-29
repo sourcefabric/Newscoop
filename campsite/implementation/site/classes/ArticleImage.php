@@ -443,7 +443,7 @@ class ArticleImage extends DatabaseObject {
         foreach ($images as $image) {
             $imgObj = new Image($image['Id']);
             if ($imgObj->exists()) {
-                $articleImagesList[] =& $imgObj;
+                $articleImagesList[] = $imgObj;
             }
         }
 

@@ -544,7 +544,7 @@ class Section extends DatabaseObject {
                                   $section['IdLanguage'],
                                   $section['Number']);
             if ($secObj->exists()) {
-                $sectionsList[] =& $secObj;
+                $sectionsList[] = $secObj;
             }
         }
 

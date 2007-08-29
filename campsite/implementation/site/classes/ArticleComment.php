@@ -312,7 +312,7 @@ class ArticleComment
         foreach ($comments as $comment) {
             $pmObj = new Phorum_message($comment['message_id']);
             if ($pmObj->exists()) {
-                $articleCommentsList[] =& $pmObj;
+                $articleCommentsList[] = $pmObj;
             }
         }
 

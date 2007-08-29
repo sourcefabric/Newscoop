@@ -255,10 +255,6 @@ class ArticleAudioclip extends DatabaseObject {
                 break;
             }
 
-            if (!isset($comparisonOperation['fk_language_id'])) {
-                $whereCondition = '(fk_language_id IS NULL OR FALSE)';
-            }
-
             $sqlClauseObj->addWhere($whereCondition);
         }
 
@@ -282,7 +278,7 @@ class ArticleAudioclip extends DatabaseObject {
         foreach ($audioclips as $audioclip) {
             $aclipObj = new Audioclip($audioclip['fk_audioclip_gunid']);
             if ($aclipObj->exists()) {
-                $articleAudioclipsList[] =& $aclipObj;
+                $articleAudioclipsList[] = $aclipObj;
             }
         }
 

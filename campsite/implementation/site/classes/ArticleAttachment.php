@@ -227,9 +227,14 @@ class ArticleAttachment extends DatabaseObject {
                 break;
             }
 
-            $whereCondition = $comparisonOperation['left'] . ' '
-                . $comparisonOperation['symbol'] . " '"
-                . $comparisonOperation['right'] . "' ";
+            if (strpos($comparisonOperation['left'], 'fk_language_id')) {
+                $whereCondition = '(Attachments.fk_language_id IS NULL OR '
+                    .'Attachments.fk_language_id = '.$comparisonOperation['right'].')';
+            } else {
+                $whereCondition = $comparisonOperation['left'] . ' '
+                    . $comparisonOperation['symbol'] . " '"
+                    . $comparisonOperation['right'] . "' ";
+            }
             $sqlClauseObj->addWhere($whereCondition);
         }
 
@@ -253,7 +258,7 @@ class ArticleAttachment extends DatabaseObject {
         foreach ($attachments as $attachment) {
             $attchObj = new Attachment($attachment['id']);
             if ($attchObj->exists()) {
-                $articleAttachmentsList[] =& $attchObj;
+                $articleAttachmentsList[] = $attchObj;
             }
         }
 

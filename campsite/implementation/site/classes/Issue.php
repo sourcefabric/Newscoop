@@ -722,7 +722,7 @@ class Issue extends DatabaseObject {
                                 $issue['IdLanguage'],
                                 $issue['Number']);
             if ($issObj->exists()) {
-                $issuesList[] =& $issObj;
+                $issuesList[] = $issObj;
             }
         }
 
