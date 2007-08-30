@@ -395,8 +395,31 @@ class ArticleImage extends DatabaseObject {
             return null;
         }
 
+        $hasArticleNr = false;
         $sqlClauseObj = new SQLSelectClause();
 
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param);
+            if (sizeof($comparisonOperation) < 1) {
+                break;
+            }
+
+            if (strpos($comparisonOperation['left'], 'NrArticle')) {
+                $hasArticleNr = true;
+            }
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+            $sqlClauseObj->addWhere($whereCondition);
+        }
+
+        // validates whether article number was given
+        if ($hasArticleNr == false) {
+            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_images");
+        }
+
+        // sets the columns to be fetched
         $tmpImage =& new Image();
 		$columnNames = $tmpImage->getColumnNames(true);
         foreach ($columnNames as $columnName) {
@@ -407,38 +430,30 @@ class ArticleImage extends DatabaseObject {
         $sqlClauseObj->setTable($tmpImage->getDbTableName());
         unset($tmpImage);
 
+        // adds the ArticleImages join and condition to the query
         $sqlClauseObj->addTableFrom('ArticleImages');
         $sqlClauseObj->addWhere('ArticleImages.IdImage = Images.Id');
-
-        // sets the where conditions
-        foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param);
-            if (sizeof($comparisonOperation) < 1) {
-                break;
-            }
-
-            $whereCondition = $comparisonOperation['left'] . ' '
-                . $comparisonOperation['symbol'] . " '"
-                . $comparisonOperation['right'] . "' ";
-            $sqlClauseObj->addWhere($whereCondition);
-        }
 
         if (!is_array($p_order)) {
             $p_order = array();
         }
 
+        // sets the order condition if any
         foreach ($p_order as $orderColumn => $orderDirection) {
             $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
+        // sets the limit
         $sqlClauseObj->setLimit($p_start, $p_limit);
 
+        // builds the query executes it
         $sqlQuery = $sqlClauseObj->buildQuery();
         $images = $g_ado_db->GetAll($sqlQuery);
         if (!is_array($images)) {
             return null;
         }
 
+        // builds the array of image objects
         $articleImagesList = array();
         foreach ($images as $image) {
             $imgObj = new Image($image['Id']);
@@ -465,7 +480,7 @@ class ArticleImage extends DatabaseObject {
         $comparisonOperation = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'article_nr':
+        case 'articleimages.nrarticle':
             $comparisonOperation['left'] = 'ArticleImages.NrArticle';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
             break;

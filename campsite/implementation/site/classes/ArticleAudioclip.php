@@ -229,13 +229,8 @@ class ArticleAudioclip extends DatabaseObject {
             return null;
         }
 
+        $hasArticleNr = false;
         $sqlClauseObj = new SQLSelectClause();
-
-        // sets the base table ArticleAudioclips and the column to be fetched
-        $tmpArticleAudioclip =& new ArticleAudioclip();
-        $sqlClauseObj->setTable($tmpArticleAudioclip->getDbTableName());
-        $sqlClauseObj->addColumn('fk_audioclip_gunid');
-        unset($tmpArticleAudioclip);
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
@@ -246,8 +241,9 @@ class ArticleAudioclip extends DatabaseObject {
 
             switch (key($comparisonOperation)) {
             case 'fk_article_number':
-                $whereCondition = 'fk_language_article = '
+                $whereCondition = 'fk_article_number = '
                     .$comparisonOperation['fk_article_number'];
+                $hasArticleNr = true;
                 break;
             case 'fk_language_id':
                 $whereCondition = '(fk_language_id IS NULL OR '
@@ -258,22 +254,37 @@ class ArticleAudioclip extends DatabaseObject {
             $sqlClauseObj->addWhere($whereCondition);
         }
 
+        // validates whether article number was given
+        if ($hasArticleNr == false) {
+            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_audioclips");
+        }
+
+        // sets the base table ArticleAudioclips and the column to be fetched
+        $tmpArticleAudioclip =& new ArticleAudioclip();
+        $sqlClauseObj->setTable($tmpArticleAudioclip->getDbTableName());
+        $sqlClauseObj->addColumn('fk_audioclip_gunid');
+        unset($tmpArticleAudioclip);
+
         if (!is_array($p_order)) {
             $p_order = array();
         }
 
+        // sets the order condition if any
         foreach ($p_order as $orderColumn => $orderDirection) {
             $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
+        // sets the limit
         $sqlClauseObj->setLimit($p_start, $p_limit);
 
+        // builds the query and executes it
         $sqlQuery = $sqlClauseObj->buildQuery();
         $audioclips = $g_ado_db->GetAll($sqlQuery);
         if (!is_array($audioclips)) {
             return null;
         }
 
+        // builds the array of attachment objects
         $articleAudioclipsList = array();
         foreach ($audioclips as $audioclip) {
             $aclipObj = new Audioclip($audioclip['fk_audioclip_gunid']);
@@ -300,10 +311,10 @@ class ArticleAudioclip extends DatabaseObject {
         $parameter = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'article_nr':
+        case 'fk_article_number':
             $parameter['fk_article_number'] = (int) $p_param->getRightOperand();
             break;
-        case 'language':
+        case 'fk_language_id':
             $parameter['fk_language_id'] = (int) $p_param->getRightOperand();
             break;
         }

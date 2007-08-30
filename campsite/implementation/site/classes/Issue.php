@@ -680,19 +680,19 @@ class Issue extends DatabaseObject {
             return null;
         }
 
+        $hasPublicationId = false;
+        $hasLanguageId = false;
         $sqlClauseObj = new SQLSelectClause();
 
-        $tmpIssue =& new Issue();
-		$columnNames = $tmpIssue->getColumnNames(true);
-        foreach ($columnNames as $columnName) {
-            $sqlClauseObj->addColumn($columnName);
-        }
-
-        $sqlClauseObj->setTable($tmpIssue->getDbTableName());
-        unset($tmpIssue);
-
+        // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
+            if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
+                $hasPublicationId = true;
+            }
+            if (strpos($comparisonOperation['left'], 'IdLanguage') !== false) {
+                $hasLanguageId = true;
+            }
 
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
@@ -700,22 +700,46 @@ class Issue extends DatabaseObject {
             $sqlClauseObj->addWhere($whereCondition);
         }
 
+        // validates whether publication identifier was given
+        if ($hasPublicationId == false) {
+            CampTemplate::singleton()->trigger_error("missed parameter Publication Identifier in statement list_topics");
+        }
+        // validates whether language identifier was given
+        if ($hasLanguageId == false) {
+            CampTemplate::singleton()->trigger_error("missed parameter Language Identifier in statement list_topics");
+        }
+
+        // sets the columns to be fetched
+        $tmpIssue =& new Issue();
+		$columnNames = $tmpIssue->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $sqlClauseObj->addColumn($columnName);
+        }
+
+        // sets the main table for the query
+        $sqlClauseObj->setTable($tmpIssue->getDbTableName());
+        unset($tmpIssue);
+
         if (!is_array($p_order)) {
             $p_order = array();
         }
 
+        // sets the order condition if any
         foreach ($p_order as $orderColumn => $orderDirection) {
             $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
+        // sets the limit
         $sqlClauseObj->setLimit($p_start, $p_limit);
 
+        // builds the query and executes it
         $sqlQuery = $sqlClauseObj->buildQuery();
         $issues = $g_ado_db->GetAll($sqlQuery);
         if (!is_array($issues)) {
             return null;
         }
 
+        // builds the array of issue objects
         $issuesList = array();
         foreach ($issues as $issue) {
             $issObj = new Issue($issue['IdPublication'],
@@ -743,7 +767,7 @@ class Issue extends DatabaseObject {
     {
         $comparisonOperation = array();
 
-        switch ($p_param->getleftOperand()) {
+        switch (strtolower($p_param->getleftOperand())) {
         case 'year':
         case 'publish_year':
             $comparisonOperation['left'] = 'YEAR(PublicationDate)';

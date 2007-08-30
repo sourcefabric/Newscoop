@@ -282,12 +282,22 @@ class ArticleComment
             $parameter = self::ProcessListParameters($param);
         }
 
-        $threadId = ArticleComment::GetCommentThreadId($parameter['article_number'],
-                                                       $parameter['language_id']);
+        // validates whether both article number and language id were given
+        if (!array_key_exists('fk_article_number', $parameter) {
+            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_comments");
+        }
+        if (!array_key_exists('fk_language_id', $parameter)) {
+            CampTemplate::singleton()->trigger_error("missed parameter Language Id in statement list_article_comments");
+        }
+
+        // gets the thread id for the article
+        $threadId = ArticleComment::GetCommentThreadId($parameter['fk_article_number'],
+                                                       $parameter['fk_language_id']);
         if (!$threadId) {
             return null;
         }
 
+        // adds WHERE conditions
         $sqlClauseObj->addWhere('thread = '.$threadId);
         $sqlClauseObj->addWhere('message_id != thread');
         $sqlClauseObj->addWhere('status = '.PHORUM_STATUS_APPROVED);
@@ -296,18 +306,22 @@ class ArticleComment
             $p_order = array();
         }
 
+        // sets the order condition if any
         foreach ($p_order as $orderColumn => $orderDirection) {
             $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
+        // sets the limit
         $sqlClauseObj->setLimit($p_start, $p_limit);
 
+        // builds the query and executes it
         $sqlQuery = $sqlClauseObj->buildQuery();
         $comments = $g_ado_db->GetAll($sqlQuery);
         if (!is_array($comments)) {
             return null;
         }
 
+        // builds the array of comment objects
         $articleCommentsList = array();
         foreach ($comments as $comment) {
             $pmObj = new Phorum_message($comment['message_id']);
@@ -334,11 +348,11 @@ class ArticleComment
         $parameter = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'article_nr':
-            $parameter['article_number'] = (int) $p_param->getRightOperand();
+        case 'fk_article_number':
+            $parameter['fk_article_number'] = (int) $p_param->getRightOperand();
             break;
-        case 'language_id':
-            $parameter['language_id'] = (int) $p_param->getRightOperand();
+        case 'fk_language_id':
+            $parameter['fk_language_id'] = (int) $p_param->getRightOperand();
             break;
         }
 

@@ -238,37 +238,46 @@ class ArticleTopic extends DatabaseObject {
 
         $sqlClauseObj = new SQLSelectClause();
 
-        // sets the base table ArticleAudioclips and the column to be fetched
+        // processes the parameters
+        $comparisonOperation = self::ProcessListParameters($param);
+
+        // validates whether article number was given
+        if (strpos($comparisonOperation['left'], 'NrArticle') == false) {
+            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_topics");
+        }
+
+        // sets the where condition
+        $whereCondition = $comparisonOperation['left'] . ' '
+            . $comparisonOperation['symbol'] . " '"
+            . $comparisonOperation['right'] . "' ";
+        $sqlClauseObj->addWhere($whereCondition);
+
+        // sets the main table and columns to be fetched
         $tmpArticleTopic =& new ArticleTopic();
         $sqlClauseObj->setTable($tmpArticleTopic->getDbTableName());
         $sqlClauseObj->addColumn('TopicId');
         unset($tmpArticleTopic);
 
-        // sets the where conditions
-        foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param);
-            $whereCondition = $comparisonOperation['left'] . ' '
-                . $comparisonOperation['symbol'] . " '"
-                . $comparisonOperation['right'] . "' ";
-            $sqlClauseObj->addWhere($whereCondition);
-        }
-
         if (!is_array($p_order)) {
             $p_order = array();
         }
 
+        // sets the order condition if any
         foreach ($p_order as $orderColumn => $orderDirection) {
             $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
+        // sets the limit
         $sqlClauseObj->setLimit($p_start, $p_limit);
 
+        // builds the query and executes it
         $sqlQuery = $sqlClauseObj->buildQuery();
         $topics = $g_ado_db->GetAll($sqlQuery);
         if (!is_array($topics)) {
             return null;
         }
 
+        // builds the array of topic objects
         $articleTopicsList = array();
         foreach ($topics as $topic) {
             $topObj = new Topic($topic['TopicId']);
@@ -295,7 +304,7 @@ class ArticleTopic extends DatabaseObject {
         $comparisonOperation = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'article_nr':
+        case 'nrarticle':
             $comparisonOperation['left'] = 'NrArticle';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
             break;

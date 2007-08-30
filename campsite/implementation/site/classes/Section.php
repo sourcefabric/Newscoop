@@ -501,19 +501,23 @@ class Section extends DatabaseObject {
             return null;
         }
 
+        $hasPublicationId = false;
+        $hasLanguageId = false;
+        $hasIssueNr = false;
         $sqlClauseObj = new SQLSelectClause();
 
-        $tmpSection =& new Section();
-		$columnNames = $tmpSection->getColumnNames(true);
-        foreach ($columnNames as $columnName) {
-            $sqlClauseObj->addColumn($columnName);
-        }
-
-        $sqlClauseObj->setTable($tmpSection->getDbTableName());
-        unset($tmpSection);
-
+        // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
+            if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
+                $hasPublicationId = true;
+            }
+            if (strpos($comparisonOperation['left'], 'IdLanguage') !== false) {
+                $hasLanguageId = true;
+            }
+            if (strpos($comparisonOperation['left'], 'NrIssue') !== false) {
+                $hasIssueNr = true;
+            }
 
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
@@ -521,22 +525,50 @@ class Section extends DatabaseObject {
             $sqlClauseObj->addWhere($whereCondition);
         }
 
+        // validates whether publication identifier was given
+        if ($hasPublicationId == false) {
+            CampTemplate::singleton()->trigger_error("missed parameter Publication Identifier in statement list_sections");
+        }
+        // validates whether language identifier was given
+        if ($hasLanguageId == false) {
+            CampTemplate::singleton()->trigger_error("missed parameter Language Identifier in statement list_sections");
+        }
+        // validates whether issue number was given
+        if ($hasIssueNr == false) {
+            CampTemplate::singleton()->trigger_error("missed parameter Issue Number in statement list_sections");
+        }
+
+        // sets the columns to be fetched
+        $tmpSection =& new Section();
+		$columnNames = $tmpSection->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $sqlClauseObj->addColumn($columnName);
+        }
+
+        // sets the main table for the query
+        $sqlClauseObj->setTable($tmpSection->getDbTableName());
+        unset($tmpSection);
+
         if (!is_array($p_order)) {
             $p_order = array();
         }
 
+        // sets the order condition if any
         foreach ($p_order as $orderColumn => $orderDirection) {
             $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
+        // sets the limit
         $sqlClauseObj->setLimit($p_start, $p_limit);
 
+        // builds the query and executes it
         $sqlQuery = $sqlClauseObj->buildQuery();
         $sections = $g_ado_db->GetAll($sqlQuery);
         if (!is_array($sections)) {
             return null;
         }
 
+        // builds the array of section objects
         $sectionsList = array();
         foreach ($sections as $section) {
             $secObj = new Section($section['IdPublication'],
