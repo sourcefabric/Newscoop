@@ -186,11 +186,11 @@ class CampURI {
                 $uriString .= ($part == 'scheme') ? $this->$member.'://' : '';
                 $uriString .= ($part == 'user') ? $this->$member : '';
                 $uriString .= ($part == 'password') ? ':'.$this->$member.'@' : '';
-                $urlString .= ($part == 'host') ? $this->$member : '';
-                $urlString .= ($part == 'port') ? ':'.$this->$member : '';
-                $urlString .= ($part == 'path') ? $this->$member : '';
-                $urlString .= ($part == 'query') ? '?'.$this->$member : '';
-                $urlString .= ($part == 'fragment') ? '#'.$this->$member : '';
+                $uriString .= ($part == 'host') ? $this->$member : '';
+                $uriString .= ($part == 'port') ? ':'.$this->$member : '';
+                $uriString .= ($part == 'path') ? $this->$member : '';
+                $uriString .= ($part == 'query') ? '?'.$this->$member : '';
+                $uriString .= ($part == 'fragment') ? '#'.$this->$member : '';
             }
         }
 

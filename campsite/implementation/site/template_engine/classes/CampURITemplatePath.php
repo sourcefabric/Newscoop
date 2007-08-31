@@ -255,7 +255,8 @@ class CampURITemplatePath extends CampURI {
     public function buildURI()
     {
         $uri = '';
-        if ($this->m_validURI == true && !empty($this->getTemplate())) {
+        $template = $this->getTemplate();
+        if ($this->m_validURI == true && !empty($template)) {
             $uri = '/'.$this->m_lookDir.'/'.$this->getRequestURI();
         }
 
