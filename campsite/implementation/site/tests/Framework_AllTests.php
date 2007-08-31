@@ -6,14 +6,20 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once('PHPUnit/Framework.php');
 require_once('PHPUnit/TextUI/TestRunner.php');
 
+// Database access classes
 require_once('AliasTest.php');
 require_once('ArticleTypeTest.php');
+
+// Metaclasses (template engine)
 require_once('MetaLanguageTest.php');
+
+// Template engine classes
 require_once('CampContextTest.php');
-require_once('ListObjectTest.php');
-require_once('ArticlesListTest.php');
 require_once('CampDatabaseTest.php');
 require_once('CampConfigTest.php');
+require_once('OperatorTest.php');
+require_once('ListObjectTest.php');
+require_once('ArticlesListTest.php');
 require_once('CampURITest.php');
 require_once('CampURIShortNamesTest.php');
 require_once('CampURITemplatePathTest.php');
@@ -30,17 +36,22 @@ class Framework_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('DBClasses Framework');
 
+        // Database access classes
         $suite->addTestSuite('ArticleTypeTest');
         $suite->addTestSuite('AliasTest');
 
+        // Metaclasses (template engine)
         $suite->addTestSuite('MetaLanguageTest');
+
+        // Template engine classes
         $suite->addTestSuite('CampContextTest');
+        $suite->addTestSuite('CampDatabaseTest');
+        $suite->addTestSuite('CampConfigTest');
+
+        $suite->addTestSuite('OperatorTest');
 
         $suite->addTestSuite('ListObjectTest');
         $suite->addTestSuite('ArticlesListTest');
-
-        $suite->addTestSuite('CampDatabaseTest');
-        $suite->addTestSuite('CampConfigTest');
 
         // $suite->addTestSuite('CampURITest');
         // $suite->addTestSuite('CampURIShortNamesTest');

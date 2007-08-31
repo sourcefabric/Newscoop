@@ -43,14 +43,14 @@ class CampURITemplatePath extends CampURI {
      * @var object
      */
     private static $m_instance = null;
-    
+
     /**
      * Template file name
      *
      * @var string
      */
     private $m_template = null;
-    
+
     /**
      * Templates directory
      *
@@ -100,7 +100,7 @@ class CampURITemplatePath extends CampURI {
         return self::$m_instance;
     } // fn singleton
 
-    
+
     /**
      * Parses the URI.
      * As URI was already parsed by CampURI, this function only takes care of
@@ -148,7 +148,7 @@ class CampURITemplatePath extends CampURI {
             }
             $this->setQueryVar(UP_PUBLICATION_ID, $cPubId);
         }
-        
+
         if (empty($cPubId)) {
             //return error/throw exception "not valid site alias"
         }
@@ -169,16 +169,16 @@ class CampURITemplatePath extends CampURI {
                 if (is_array($data) && sizeof($data) == 1) {
                     $cIssueNr = $data['Number'];
                 }
-                
+
                 if (empty($cIssueNr)) {
                     //return error/throw exception "not published issues"
                 }
             }
-            // gets the template for the issue 
+            // gets the template for the issue
             $template = SomeClass::GetIssueTemplate($cLangId, $cPubId, $cIssueNr);
             $this->setTemplate($template);
         }
-        
+
         $this->m_validURI = true;
     } // fn setURL
 
@@ -197,7 +197,7 @@ class CampURITemplatePath extends CampURI {
             $this->m_template = $p_value;
         }
     } // fn setTemplateName
-    
+
 
     /**
      * Returns the template name from URI.
@@ -210,18 +210,18 @@ class CampURITemplatePath extends CampURI {
         if ($this->getPath() == '' || $this->getPath() == '/') {
             return null;
         }
-        
+
         $trimmedPath = trim($this->getPath(), '/');
         list($lookDir, $template) = explode('/', $trimmedPath);
         if ($lookDir != $this->m_lookDir) {
             return null;
         }
-        
+
         $validName = strpos($template, '.tpl');
         if (!$validName) {
             return null;
         }
-        
+
         return $template;
     } // fn readTemplate
 
@@ -245,7 +245,7 @@ class CampURITemplatePath extends CampURI {
         return false;
     } // fn isValidTemplate
 
-    
+
     /**
      * Builds the URI from object attributes.
      *

@@ -16,22 +16,114 @@ class Operator
 	private $m_name;
 
 	/**
-	 * The symbol of the operator
+	 * The type of the operands
 	 *
 	 * @var string
 	 */
-	private $m_symbol;
+	private $m_type;
+
+	/**
+	 * The symbols of the operator for different output formats (SQL, PHP etc.)
+	 *
+	 * @var array
+	 */
+	private static $s_symbols = array('sql' => array('is' => '=',
+                                                     'equal_smaller' => '<=',
+                                                     'equal_greater' => '>=',
+                                                     'smaller' => '<',
+                                                     'greater' => '>',
+                                                     'not' => '<>'
+                                               ),
+                                      'php' => array('is' => '==',
+                                                     'equal_smaller' => '<=',
+                                                     'equal_greater' => '>=',
+                                                     'smaller' => '<',
+                                                     'greater' => '>',
+                                                     'not' => '!='
+                                               )
+	                            );
+
+	/**
+	 * The list of operators corresponding to the operand types
+	 *
+	 * @var array
+	 */
+	private static $s_typeOperators = array('int'=>array('is',
+	                                                     'equal_smaller',
+	                                                     'equal_greater',
+	                                                     'smaller',
+	                                                     'greater',
+	                                                     'not'
+	                                               ),
+                                            'string'=>array('is',
+	                                                        'equal_smaller',
+	                                                        'equal_greater',
+	                                                        'smaller',
+	                                                        'greater',
+	                                                        'not'
+	                                                  ),
+                                            'bool'=>array('is',
+	                                                      'not'
+	                                                ),
+                                            'date'=>array('is',
+	                                                      'equal_smaller',
+	                                                      'equal_greater',
+	                                                      'smaller',
+	                                                      'greater',
+	                                                      'not'
+	                                                ),
+                                            'datetime'=>array('is',
+	                                                          'equal_smaller',
+	                                                          'equal_greater',
+	                                                          'smaller',
+	                                                          'greater',
+	                                                          'not'
+	                                                    ),
+                                            'time'=>array('is',
+	                                                      'equal_smaller',
+	                                                      'equal_greater',
+	                                                      'smaller',
+	                                                      'greater',
+	                                                      'not'
+	                                                ),
+                                            'timestamp'=>array('is',
+	                                                           'equal_smaller',
+	                                                           'equal_greater',
+	                                                           'smaller',
+	                                                           'greater',
+	                                                           'not'
+	                                                     ),
+                                            'switch'=>array('is',
+	                                                        'not'
+	                                                  ),
+                                            'topic'=>array('is',
+	                                                       'not'
+	                                                 )
+	                                  );
+
+	/**
+	 * The default symbol type
+	 *
+	 * @var string
+	 */
+	private static $s_defaultSymbolType = 'sql';
 
 	/**
 	 * constructor
 	 *
 	 * @param string $p_name
-	 * @param string $p_symbol
+	 * @param string $p_type
 	 */
-	public function __construct($p_name, $p_symbol)
+	public function __construct($p_name, $p_type = 'string')
 	{
+	    if (!isset($p_type) || !array_key_exists($p_type, Operator::$s_typeOperators)) {
+	        $p_type = 'string';
+	    }
+	    if (array_search($p_name, Operator::$s_typeOperators[$p_type]) === false) {
+	        throw new InvalidOperatorException($p_name, $p_type);
+	    }
 		$this->m_name = $p_name;
-		$this->m_symbol = $p_symbol;
+		$this->m_type = $p_type;
 	}
 
 	/**
@@ -45,120 +137,49 @@ class Operator
 	}
 
 	/**
+	 * Returns the operands type.
+	 *
+	 * @return string
+	 */
+	public function getType()
+	{
+	    return $this->m_type;
+	}
+
+	/**
      * Returns the operator symbol.
      *
-     * @param string $p_type
-     *    The operators set to be used to get the symbol.
+     * @param string $p_format
+     *    The format used to get the symbol.
      *
      * @return string
      */
-	public function getSymbol($p_type = null)
+	public function getSymbol($p_format = null)
 	{
-        if (!empty($p_type) && $p_type != 'php') {
-            $operators = self::LoadOperators();
-            return $operators[$p_type][$this->getName()];
+        if (is_null($p_format)) {
+            $p_format = Operator::$s_defaultSymbolType;
         }
 
-        return $this->m_symbol;
+        if (!array_key_exists($p_format, Operator::$s_symbols)) {
+            return null;
+        }
+
+        return Operator::$s_symbols[$p_format][$this->m_name];
     }
 
 	/**
-	 * Static method; returns an operator object that defines the
-	 * equality operation.
+	 * Returns an array of available operators for the given type
 	 *
-	 * @return object
+	 * @return array
 	 */
-	static function Equal()
+	static function GetOperators($p_type = 'string')
 	{
-		return new Operator('is', '==');
+	    if (!isset($p_type) || !array_key_exists($p_type, Operator::$s_typeOperators)) {
+	        $p_type = 'string';
+	    }
+
+	    return Operator::$s_typeOperators[$p_type];
 	}
-
-	/**
-	 * Static method; returns an operator object that defines the
-	 * operation 'equal or smaller'.
-	 *
-	 * @return object
-	 */
-	static function EqualSmaller()
-	{
-		return new Operator('equal_smaller', '<=');
-	}
-
-	/**
-	 * Static method; returns an operator object that defines the
-	 * operation 'equal or greater'.
-	 *
-	 * @return object
-	 */
-	static function EqualGreater()
-	{
-		return new Operator('equal_greater', '>=');
-	}
-
-	/**
-	 * Static method; returns an operator object that defines the
-	 * operation 'smaller'.
-	 *
-	 * @return object
-	 */
-	static function Smaller()
-	{
-		return new Operator('smaller', '<');
-	}
-
-	/**
-	 * Static method; returns an operator object that defines the
-	 * operation 'greater'.
-	 *
-	 * @return object
-	 */
-	static function Greater()
-	{
-		return new Operator('greater', '>');
-	}
-
-	/**
-	 * Static method; returns an operator object that defines the
-	 * operation 'not equal'.
-	 *
-	 * @return object
-	 */
-	static function NotEqual()
-	{
-		return new Operator('not', '!=');
-	}
-
-    /**
-     * Loads the operators set.
-     * PHP comparison operators is the default set. It is implemented
-     * in every method that defines base operators in this class, that is
-     * why PHP operators are not listed in $operatorsSet.
-     *
-     * New operators sets have to be appended here.
-     *
-     * @return array $operatorsSet
-     *    The array containing the operators set, following this format:
-     *        array(
-     *            'set name' => array(
-     *                'operator name' => 'operator symbol'
-     *                ...
-     */
-    private static function LoadOperators()
-    {
-        $operatorsSet = array(
-            'sql' => array(
-                'is' => '=',
-                'equal_smaller' => '<=',
-                'equal_greater' => '>=',
-                'smaller' => '<',
-                'greater' => '>',
-                'not' => '<>'
-                )
-            );
-
-        return $operatorsSet;
-    }
-
 }
 
 ?>

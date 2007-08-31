@@ -9,6 +9,18 @@ require_once('ListObject.php');
  */
 class IssuesList extends ListObject
 {
+    private static $s_parameters = array('number'=>array('field'=>'Number', 'type'=>'int'),
+                                         'name'=>array('field'=>'Name', 'type'=>'string'),
+                                         'publish_date'=>array('field'=>'PublicationDate',
+                                                               'type'=>'date'),
+                                         'publish_year'=>array('field'=>'YEAR(PublicationDate)',
+                                                               'type'=>'int'),
+                                         'publish_month'=>array('field'=>'MONTH(PublicationDate)',
+                                                                'type'=>'int'),
+                                         'publish_mday'=>array('field'=>'MDAY(PublicationDate)',
+                                                               'type'=>'int')
+                                   );
+
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
 	 * true if this list is limited and elements still exist in the original

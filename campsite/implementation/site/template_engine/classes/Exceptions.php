@@ -77,4 +77,30 @@ final class InvalidObjectException extends Exception {
 
 }// class InvalidObjectException
 
+final class InvalidOperatorException extends Exception {
+    private $m_operatorName = null;
+
+    private $m_typeName = null;
+
+
+    public function __construct($p_operatorName, $p_typeName)
+    {
+        parent::__construct("The name '$p_operatorName' is not a valid operator for the type $p_typeName.", 0);
+        $this->m_operatorName = $p_operatorName;
+    } // fn __construct
+
+
+    public function getOperatorName()
+    {
+        return $this->m_operatorName;
+    } // fn getOperatorName
+
+
+    public function getTypeName()
+    {
+        return $this->m_typeName;
+    } // fn getTypeName
+
+}// class InvalidOperatorException
+
 ?>
