@@ -25,6 +25,7 @@ require_once($g_documentRoot.'/classes/Section.php');
 require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/Alias.php');
 require_once($g_documentRoot.'/template_engine/classes/CampURI.php');
+require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 
 define('UP_LANGUAGE_ID', 'IdLanguage');
 define('UP_PUBLICATION_ID', 'IdPublication');
@@ -188,16 +189,19 @@ class CampURIShortNames extends CampURI {
      */
     private function setURL()
     {
+        global $g_ado_db;
+
         $cPubId = 0;
         // gets the publication object based on site name (URI host)
-        $aliasArray = Alias::GetAliases(null, null, $this->getHost());
+        $alias = ltrim($this->getBase(), $this->getScheme().'://');
+        $aliasArray = Alias::GetAliases(null, null, $alias);
         if (is_array($aliasArray) && sizeof($aliasArray) == 1) {
             $aliasObj = $aliasArray[0];
             $cPubId = $aliasObj->getPublicationId();
             $pubObj = new Publication($cPubId);
             if (is_object($pubObj) && $pubObj->exists()) {
-                $this->setQueryVar(UP_PUBLICATION_ID, $cPubId);
-                $this->m_publication = $this->getHost();
+                $this->setQueryVar(UP_PUBLICATION_ID, $cPubId, false);
+                $this->m_publication = $aliasObj->getName();
             } else {
                 $cPubId = 0;
                 $pubObj = null;
@@ -205,15 +209,17 @@ class CampURIShortNames extends CampURI {
         }
 
         if (empty($cPubId)) {
-            // return error/throw exception "not valid site alias"
+            CampTemplate::singleton()->trigger_error('not valid site alias');
+            return;
         }
 
+        // reads parameters values if any
         $trimmedPath = trim($this->getPath(), '/');
         list($cLangCode, $cIssueSName,
              $cSectionSName, $cArticleSName) = explode('/', $trimmedPath);
 
         $cLangId = 0;
-        // gets the language identifier
+        // gets the language identifier and sets the language code
         if (!empty($cLangCode)) {
             $langArray = Language::GetLanguages(null, $cLangCode);
             if (is_array($langArray) && sizeof($langArray) == 1) {
@@ -225,71 +231,80 @@ class CampURIShortNames extends CampURI {
         }
 
         if (empty($cLangId)) {
-            // return error/throw exception "not valid language"
+            CampTemplate::singleton()->trigger_error('not valid language');
+            return;
         } else {
+            $this->setQueryVar(UP_LANGUAGE_ID, $cLangId, false);
+            if (empty($cLangCode)) {
+                $langObj = new Language($cLangId);
+                if (is_object($langObj) && $langObj->exists()) {
+                    $cLangCode = $langObj->getCode();
+                }
+            }
             $this->m_language = $cLangCode;
         }
 
-        if ($this->getPath() == '' || $this->getPath() == '/') {
-            $this->setQueryVar(UP_LANGUAGE_ID, $cLangId);
-        }
-
         $cIssueNr = 0;
-        // gets the issue number
+        // gets the issue number and sets the issue short name
         if (!empty($cIssueSName)) {
-            $issueArray = Issue::GetIssues($cPubId, $cLangId, $cIssueSName);
+            $issueArray = Issue::GetIssues($cPubId, $cLangId, null, $cIssueSName);
             if (is_array($issueArray) && sizeof($issueArray) == 1) {
                 $issueObj = $issueArray[0];
                 $cIssueNr = $issueObj->getIssueNumber();
             }
             if (empty($cIssueNr)) {
-                // return error/throw exception "not valid issue"
+                CampTemplate::singleton()->trigger_error('not valid issue');
+                return;
             }
-        } elseif ($this->getPath() == '' || $this->getPath() == '/') {
-            $query = "SELECT MAX(Number), ShortName FROM Issues"
-                   . " WHERE IdPublication = ".$cPubId." AND IdLanguage = ".$cLangId
-                   . " AND Published = 'Y'";
+        } else {
+            $query = "SELECT Number, ShortName FROM Issues "
+                   . "WHERE IdPublication = ".$cPubId
+                         ." AND IdLanguage = ".$cLangId
+                         ." AND Published = 'Y' ORDER BY Number DESC LIMIT 1";
             $data = $g_ado_db->GetRow($query);
             if (empty($data)) {
-                // return error/throw exception "not issues at all"
+                CampTemplate::singleton()->trigger_error('not published issues');
+                return;
             }
             $cIssueNr = $data['Number'];
             $cIssueSName = $data['ShortName'];
         }
 
         if (!empty($cIssueNr)) {
-            $this->setQueryVar(UP_ISSUE_NR, $cIssueNr);
+            $this->setQueryVar(UP_ISSUE_NR, $cIssueNr, false);
             $this->m_issue = $cIssueSName;
         }
 
         $cSectionNr = 0;
-        // gets the section number
+        // gets the section number and sets the section short name
         if (!empty($cSectionSName)) {
-            $sectionArray = Section::GetSections($cPubId, $issueNr, $cLangId, $cSectionSName);
+            $sectionArray = Section::GetSections($cPubId, $cIssueNr, $cLangId, $cSectionSName);
             if (is_array($sectionArray) && sizeof($sectionArray) == 1) {
                 $sectionObj = $sectionArray[0];
                 $cSectionNr = $sectionObj->getSectionNumber();
-                $this->setQueryVar(UP_SECTION_NR, $cSectionNr);
+                $this->setQueryVar(UP_SECTION_NR, $cSectionNr, false);
                 $this->m_section = $cSectionSName;
             }
 
             if (empty($cSectionNr)) {
-                // return error/throw exception "not valid section"
+                CampTemplate::singleton()->trigger_error('not valid section');
+                return;
             }
         }
 
         $cArticleNr = 0;
-        // gets the article number
+        // gets the article number and sets the article short name
         if (!empty($cArticleSName)) {
             $articleObj = new Article($cLangId, $cArticleSName);
             if (is_object($articleObj) && $articleObj->exists()) {
                 $cArticleNr = $articleObj->getArticleNumber();
-                $this->setQueryVar(UP_ARTICLE_NR, $cArticleNr);
+                $this->setQueryVar(UP_ARTICLE_NR, $cArticleNr, false);
                 $this->m_article = $cArticleSName;
             }
 
             if (empty($cArticleNr)) {
-                // return error/throw exception "not valid article"
+                CampTemplate::singleton()->trigger_error('not valid article');
+                return;
             }
         }
 
@@ -308,7 +323,9 @@ class CampURIShortNames extends CampURI {
         $uriPath = '';
         
         if ($this->m_validURI == true) {
-            $uriPath = '/'.$this->m_language.'/'.$this->m_issue.'/';
+            $uriPath = '/';
+            $uriPath.= (!empty($this->m_language)) ? $this->m_language.'/' : '';
+            $uriPath.= (!empty($this->m_issue)) ? $this->m_issue.'/' : '';
             $uriPath.= (!empty($this->m_section)) ? $this->m_section.'/' : '';
             $uriPath.= (!empty($this->m_article)) ? $this->m_article.'/' : '';
         }

@@ -181,16 +181,16 @@ class CampURI {
         }
         $uriString = '';
         foreach ($p_parts as $part) {
-            $member = 'm_'.$part;
-            if (!empty($this->$member)) {
-                $uriString .= ($part == 'scheme') ? $this->$member.'://' : '';
-                $uriString .= ($part == 'user') ? $this->$member : '';
-                $uriString .= ($part == 'password') ? ':'.$this->$member.'@' : '';
-                $uriString .= ($part == 'host') ? $this->$member : '';
-                $uriString .= ($part == 'port') ? ':'.$this->$member : '';
-                $uriString .= ($part == 'path') ? $this->$member : '';
-                $uriString .= ($part == 'query') ? '?'.$this->$member : '';
-                $uriString .= ($part == 'fragment') ? '#'.$this->$member : '';
+            $property = 'm_'.$part;
+            if (!empty($this->$property)) {
+                $uriString .= ($part == 'scheme') ? $this->$property.'://' : '';
+                $uriString .= ($part == 'user') ? $this->$property : '';
+                $uriString .= ($part == 'password') ? ':'.$this->$property.'@' : '';
+                $uriString .= ($part == 'host') ? $this->$property : '';
+                $uriString .= ($part == 'port') ? ':'.$this->$property : '';
+                $uriString .= ($part == 'path') ? $this->$property : '';
+                $uriString .= ($part == 'query') ? '?'.$this->$property : '';
+                $uriString .= ($part == 'fragment') ? '#'.$this->$property : '';
             }
         }
 
@@ -430,10 +430,12 @@ class CampURI {
      *
      * @return void
      */
-    public function setQueryVar($p_varName, $p_value)
+    public function setQueryVar($p_varName, $p_value, $p_toString = true)
     {
         $this->m_queryArray[$p_varName] = $p_value;
-        $this->m_query = CampURI::QueryArrayToString($this->m_queryArray);
+        if ($p_toString == true) {
+            $this->m_query = CampURI::QueryArrayToString($this->m_queryArray);
+        }
     } // fn setQueryVar
 
 

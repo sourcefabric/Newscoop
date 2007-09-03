@@ -26,6 +26,7 @@ require_once($g_documentRoot.'/classes/Section.php');
 require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/Alias.php');
 require_once($g_documentRoot.'/template_engine/classes/CampURI.php');
+require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 
 define('UP_LANGUAGE_ID', 'IdLanguage');
 define('UP_PUBLICATION_ID', 'IdPublication');
@@ -137,7 +138,8 @@ class CampURITemplatePath extends CampURI {
     private function setURL()
     {
         // gets the publication object based on site name (URI host)
-        $aliasArray = Alias::GetAliases(null, null, $this->getHost());
+        $alias = ltrim($this->getBase(), $this->getScheme().'://');
+        $aliasArray = Alias::GetAliases(null, null, $alias);
         if (is_array($aliasArray) && sizeof($aliasArray) == 1) {
             $aliasObj = $aliasArray[0];
             $cPubId = $aliasObj->getPublicationId();
@@ -150,7 +152,8 @@ class CampURITemplatePath extends CampURI {
         }
 
         if (empty($cPubId)) {
-            //return error/throw exception "not valid site alias"
+            CampTemplate::singleton()->trigger_error('not valid site alias');
+            return;
         }
 
         // no path means we are at the home page
@@ -171,7 +174,8 @@ class CampURITemplatePath extends CampURI {
                 }
 
                 if (empty($cIssueNr)) {
-                    //return error/throw exception "not published issues"
+                    CampTemplate::singleton()->trigger_error('not published issues');
+                    return;
                 }
             }
             // gets the template for the issue

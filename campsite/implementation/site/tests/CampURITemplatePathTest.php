@@ -44,14 +44,8 @@ class CampURITemplatePathTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
    	{
-        $uri1 = 'http://www.campware.org/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=100&NrSection=1000&NrArticle=704';
-        $this->m_uri1 = CampURITemplatePath::singleton($uri1);
-        
-        $uri2 = 'http://www.campware.org/look/section.tpl?IdPublication=1&IdLanguage=1&NrIssue=100';
-        $this->m_uri2 = CampURITemplatePath::singleton($uri2);
-        
-        $uri3 = 'http://www.campware.org/';
-        $this->m_uri3 = CampURITemplatePath::singleton($uri3);
+        $uri = 'http://campsite.localhost.localdomain/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=1&NrSection=40&NrArticle=43';
+        $this->m_uri = CampURITemplatePath::singleton($uri);
     }
 
     /**
@@ -66,54 +60,52 @@ class CampURITemplatePathTest extends PHPUnit_Framework_TestCase
 
     public function testBuildURI()
     {
-    	$this->assertEquals('/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=100&NrSection=1000&NrArticle=704', $this->m_uri1->buildURI());
-        $this->assertEquals('/look/section.tpl?IdPublication=1&IdLanguage=1&NrIssue=100', $this->m_uri2->buildURI());
-        $this->assertEquals('/', $this->m_uri3->buildURI());
+    	$this->assertEquals('/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=1&NrSection=40&NrArticle=43', $this->m_uri->buildURI());
     }
     
     public function testGetHost()
     {
-        $this->assertEquals('www.campware.org', $this->m_uri->getHost());
+        $this->assertEquals('campsite.localhost.localdomain', $this->m_uri->getHost());
     }
     
     public function testGetRequestURI()
     {
-        $this->assertEquals('/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=100&NrSection=1000&NrArticle=704', $this->m_uri->getRequestURI());
+        $this->assertEquals('/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=1&NrSection=40&NrArticle=43', $this->m_uri->getRequestURI());
     }
     
     public function testGetTemplate()
     {
-        $this->assertEquals('article.tpl', $this->m_uri1->getTemplate());
+        $this->assertEquals('article.tpl', $this->m_uri->getTemplate());
     }
 
     public function testIsValidTemplate()
     {
-        $this->assertEquals(true, $this->m_uri1->isValidTemplate('article.tpl'));
+        $this->assertEquals(true, $this->m_uri->isValidTemplate('article.tpl'));
     }
 
     public function testGetLanguageId()
     {
-        $this->assertEquals(1, $this->m_uri1->getQueryVar('IdLanguage'));
+        $this->assertEquals(1, $this->m_uri->getQueryVar('IdLanguage'));
     }
 
     public function testGetPublicationId()
     {
-        $this->assertEquals(1, $this->m_uri1->getQueryVar('IdPublication'));
+        $this->assertEquals(1, $this->m_uri->getQueryVar('IdPublication'));
     }
 
     public function testGetIssueNumber()
     {
-        $this->assertEquals(100, $this->m_uri1->getQueryVar('NrIssue'));
+        $this->assertEquals(1, $this->m_uri->getQueryVar('NrIssue'));
     }
     
     public function testGetSectionNumber()
     {
-        $this->assertEquals(1000, $this->getQueryVar('NrSection'));
+        $this->assertEquals(40, $this->m_uri->getQueryVar('NrSection'));
     }
     
     public function testGetArticleNumber()
     {
-        $this->assertEquals(704, $this->getQueryVar('NrArticle'));
+        $this->assertEquals(43, $this->m_uri->getQueryVar('NrArticle'));
     }
 }
 

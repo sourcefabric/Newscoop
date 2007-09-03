@@ -44,14 +44,8 @@ class CampURIShortNamesTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
    	{
-        $uri1 = 'http://www.campware.org/en/camp/campsite_news/704/';
-        $this->m_uri1 = CampURIShortNames::singleton($uri1);
-        
-        $uri2 = 'http://www.campware.org/en/camp/campsite_news/';
-        $this->m_uri2 = CampURIShortNames::singleton($uri2);
-        
-        $uri3 = 'http://www.campware.org/';
-        $this->m_uri3 = CampURIShortNames::singleton($uri3);
+        $uri = 'http://campsite.localhost.localdomain/en/first/opensource/43/';
+        $this->m_uri = CampURIShortNames::singleton($uri);
     }
 
     /**
@@ -66,44 +60,42 @@ class CampURIShortNamesTest extends PHPUnit_Framework_TestCase
 
     public function testBuildURI()
     {
-    	$this->assertEquals('/en/camp/campsite_news/704/', $this->m_uri1->buildURI());
-        $this->assertEquals('/en/camp/campsite_news/', $this->m_uri2->buildURI());
-        $this->assertEquals('/', $this->m_uri3->buildURI());
+    	$this->assertEquals('/en/first/opensource/43/', $this->m_uri->buildURI());
     }
     
     public function testGetHost()
     {
-        $this->assertEquals('www.campware.org', $this->m_uri->getHost());
+        $this->assertEquals('campsite.localhost.localdomain', $this->m_uri->getHost());
     }
     
     public function testGetRequestURI()
     {
-        $this->assertEquals('/en/camp/campsite_news/704/', $this->m_uri->getRequestURI());
+        $this->assertEquals('/en/first/opensource/43/', $this->m_uri->getRequestURI());
     }
     
     public function testGetPublicationAlias()
     {
-        $this->assertEquals('www.campware.org', $this->m_uri1->getPublicationAlias());
+        $this->assertEquals('campsite.localhost.localdomain', $this->m_uri->getPublicationAlias());
     }
     
     public function testGetLanguageCode()
     {
-        $this->assertEquals('en', $this->m_uri1->getLanguageCode());
+        $this->assertEquals('en', $this->m_uri->getLanguageCode());
     }
     
     public function testGetIssueShortName()
     {
-        $this->assertEquals('camp', $this->m_uri1->getIssueShortName());
+        $this->assertEquals('first', $this->m_uri->getIssueShortName());
     }
     
     public function testGetSectionShortName()
     {
-        $this->assertEquals('campsite_news', $this->getSectionShortName());
+        $this->assertEquals('opensource', $this->m_uri->getSectionShortName());
     }
     
     public function testGetArticleShortName()
     {
-        $this->assertEquals('704', $this->getArticleShortName());
+        $this->assertEquals('43', $this->m_uri->getArticleShortName());
     }
 }
 
