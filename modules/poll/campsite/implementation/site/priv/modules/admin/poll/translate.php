@@ -21,6 +21,7 @@ if ($poll->exists()) {
     }
     $title = $poll->getProperty('title');
     $question = $poll->getProperty('question');
+    $is_used_as_default = false;
 }
 
 /*
@@ -82,6 +83,12 @@ camp_html_display_msgs();
                 }
                 ?>
 
+            </TD>
+        </TR>
+        <tr>
+            <TD ALIGN="RIGHT" ><?php  putGS("Used as default"); ?>:</TD>
+            <TD>
+            <INPUT TYPE="checkbox" NAME="f_is_used_as_default" class="input_checkbox" value="1" <?php $is_used_as_default ? p('checked') : null; ?> >
             </TD>
         </TR>
         <tr>

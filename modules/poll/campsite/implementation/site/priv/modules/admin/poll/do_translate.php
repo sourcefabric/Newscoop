@@ -16,9 +16,10 @@ $f_target_language_id = Input::Get('f_target_language_id', 'int');
 $f_title = Input::Get('f_title', 'string');
 $f_question = Input::Get('f_question', 'string');
 $f_answers = Input::Get('f_answer', 'array');
+$f_is_used_as_default = Input::Get('f_is_used_as_default', 'boolean');
 
 $source = new Poll($f_fk_language_id, $f_poll_nr);
-$translation = $source->createTranslation($f_target_language_id, $f_title, $f_question);
+$translation = $source->createTranslation($f_target_language_id, $f_title, $f_question, $f_is_used_as_default);
 
 foreach($translation->getAnswers() as $answer) {
     $answer->setProperty('answer', $f_answers[$answer->getNumber()]);   

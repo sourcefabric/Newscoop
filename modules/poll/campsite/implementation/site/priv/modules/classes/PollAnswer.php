@@ -45,6 +45,12 @@ class PollAnswer extends DatabaseObject {
         // int - number of votes for this answer
         'nr_of_votes',
         
+        // float - score of this answers in this language
+        'percentage',
+        
+        // float - score of this answers overall languages
+        'percentage_overall',
+        
         // timestamp - last_modified
         'last_modified'
         );
@@ -184,7 +190,7 @@ class PollAnswer extends DatabaseObject {
         global $g_ado_db;
         $answers = array();
                
-        if ($p_fk_poll_nr && $p_fk_language_id) {
+        if (!is_null($p_fk_poll_nr) && !is_null($p_fk_language_id)) {
             $fk_poll_nr = $p_fk_poll_nr;
             $fk_language_id = $p_fk_language_id;   
         } elseif (isset($this)) {
@@ -223,12 +229,29 @@ class PollAnswer extends DatabaseObject {
                             AND fk_language_id = $p_fk_language_id
                             AND nr_answer > $nr_of_answers";
         $g_ado_db->execute($query);  
+        
+        Poll::triggerStatistics($p_fk_poll_nr);
     }
     
     public function getNumber()
     {
         return $this->m_data['nr_answer'];   
     }
+       
+    public function getPoll()
+    {
+        $poll = new Poll($this->m_data['fk_language_id'], $this->m_data['fk_poll_id']); 
+        
+        return $poll;  
+    }
+    
+    public function vote()
+    {
+        $this->setProperty('nr_of_votes', $this->getProperty('nr_of_votes') + 1);
+        
+        Poll::triggerStatistics($this->m_data['fk_poll_nr']);   
+    }
+    
 
 } // class PollQuestion
 

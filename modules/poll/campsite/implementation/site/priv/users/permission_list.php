@@ -107,6 +107,12 @@ function camp_get_permission_list()
                 getGS('Editor Advanced Font Settings')=>$editor_group_2,
                 getGS('Editor Table Settings')=>$editor_group_3,
                 getGS('Editor Miscellaneous Settings')=>$editor_group_4);
+                
+    // modules: extent permission list
+    if (file_exists($_SERVER['DOCUMENT_ROOT']."/{$GLOBALS['ADMIN_DIR']}/modules/include/users/permission_list.php")) {
+        include ($_SERVER['DOCUMENT_ROOT']."/{$GLOBALS['ADMIN_DIR']}/modules/include/users/permission_list.php");
+    }
+	
     return $rights;
 }
 ?>

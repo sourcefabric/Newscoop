@@ -9,23 +9,26 @@ if (!$g_user->hasPermission('ManagePoll')) {
 }
 
 $f_language_selected = Input::Get('f_language_selected', 'int');
+$f_poll_limit = Input::Get('f_poll_limit', 'int', 20);
+$f_poll_offset = Input::Get('f_poll_offset', 'int', 0);
 
+$polls = Poll::getPolls($f_language_selected, $f_poll_offset, $f_poll_limit);
+$pager =& new SimplePager(Poll::countPolls(), $f_poll_limit, "f_poll_offset", "index.php?", false);
 $allLanguages = Language::GetLanguages();
+
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
-    <TD><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-    <TD><A HREF="index.php"><B><?php  putGS("Poll List"); ?></B></A></TD>
-    <TD style="padding-left: 20px;"><A HREF="edit.php" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+    <TD><A HREF="edit.php" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
     <TD><A HREF="edit.php" ><B><?php  putGS("Add new Poll"); ?></B></A></TD>
 </tr>
 </TABLE>
 <p>
 
-<FORM name="poll_list" action="index.php" method="POST">
+<FORM name="poll_list" action="action.php" method="POST">
 <TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
 <TR>
     <TD>
@@ -56,7 +59,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                 function action_selected(dropdownElement)
                 {
                     // Verify that at least one checkbox has been selected.
-                    checkboxes = document.forms.article_list["f_article_code[]"];
+                    checkboxes = document.forms.poll_list["f_poll_code[]"];
                     if (checkboxes) {
                         isValid = false;
                         numCheckboxesChecked = 0;
@@ -76,7 +79,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                             }
                         }
                         if (!isValid) {
-                            alert("<?php putGS("You must select at least one article to perform an action."); ?>");
+                            alert("<?php putGS("You must select at least one poll to perform an action."); ?>");
                             dropdownElement.options[0].selected = true;
                             return;
                         }
@@ -100,35 +103,28 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 
                     // if the user has selected the "delete" option
                     if (dropdownElement.selectedIndex == deleteOptionIndex) {
-                        ok = confirm("<?php putGS("Are you sure you want to delete the selected articles?"); ?>");
+                        ok = confirm("<?php putGS("Are you sure you want to delete the selected polls?"); ?>");
                         if (!ok) {
                             dropdownElement.options[0].selected = true;
                             return;
                         }
                     }
 
-                    // if the user selected the "translate" option
-//                    if ( (dropdownElement.selectedIndex == translateOptionIndex)
-//                         && (numCheckboxesChecked > 1) ) {
-//                        alert("<?php putGS("You may only translate one article at a time."); ?>");
-//                        dropdownElement.options[0].selected = true;
-//                        return;
-//                    }
-
                     // do the action if it isnt the first or second option
-                    if ( (dropdownElement.selectedIndex != 0) &&  (dropdownElement.selectedIndex != 1) ) {
+                    if ( (dropdownElement.selectedIndex != 0)) {
                         dropdownElement.form.submit();
                     }
                 }
                 </script>
                 <SELECT name="f_poll_list_action" class="input_select" onchange="action_selected(this);">
+                    <OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
                     <OPTION value="delete"><?php putGS("Delete"); ?></OPTION>
                 </SELECT>
             </TD>
 
             <TD style="padding-left: 5px; font-weight: bold;">
-                <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p($numArticlesThisPage); ?>);">
-                <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p($numArticlesThisPage); ?>);">
+                <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p(count($polls)); ?>);">
+                <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p(count($polls)); ?>);">
             </TD>
         </TR>
         </TABLE>
@@ -136,10 +132,19 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 
 </TR>
 </TABLE>
-</FORM>
+<p>
+
+<table class="indent">
+    <tr>
+        <td>
+            <?php echo $pager->render(); ?>
+        </td>
+    </tr>
+</table>
 
 <?php
-$polls = Poll::getPolls($f_language_selected);
+$counter = 0;
+$color= 0;
 
 if (count($polls)) {
     ?>
@@ -168,7 +173,7 @@ if (count($polls)) {
             <script>default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";</script>
             <TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
                 <TD>
-                    <input type="checkbox" value="<?php p((int)$poll->getNumber().'_'.(int)$poll->getLanguageId()); ?>" name="f_article_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
+                    <input type="checkbox" value="<?php p((int)$poll->getNumber().'_'.(int)$poll->getLanguageId()); ?>" name="f_poll_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
                 </TD>
               
                 <td>
@@ -196,7 +201,7 @@ if (count($polls)) {
                 </td>
               
                 <td align='center'>
-                    <a href='result.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language=<?php p($poll->getLanguageId()); ?>'>
+                    <a href='result.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()); ?>'>
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
                     </a>
                 </td>
@@ -209,9 +214,11 @@ if (count($polls)) {
                 
             </tr>
             <?php
+            $counter++;
         }
       ?>
     </table>
+</FORM>
 <?php 
 } else {?>
     <BLOCKQUOTE>

@@ -14,17 +14,18 @@ $f_poll_nr = Input::Get('f_poll_nr', 'int');
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 
 if ($f_poll_nr && $f_fk_language_id) {
-    $poll = new Poll($f_fk_language_id, $f_poll_nr);
+    $poll = new Poll($f_fk_language_id, $f_poll_nr, true);
     
     if ($poll->exists()) {  
         $poll_nr = $poll->getNumber(); 
+        $title = $poll->getProperty('title');
+        $question = $poll->getProperty('question');
         $date_begin = $poll->getProperty('date_begin');
         $date_end = $poll->getProperty('date_end');
         $nr_of_answers = $poll->getProperty('nr_of_answers');
         $fk_language_id = $poll->getProperty('fk_language_id');
         $is_show_after_expiration = $poll->getProperty('is_show_after_expiration');
-        $title = $poll->getProperty('title');
-        $question = $poll->getProperty('question');
+        $is_used_as_default = $poll->getProperty('is_used_as_default');
         
         $poll_answers = $poll->getAnswers();
         foreach ($poll_answers as $poll_answer) {
@@ -63,7 +64,7 @@ camp_html_display_msgs();
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
     <TD COLSPAN="2">
-        <B><?php  putGS("Edit poll"); ?></B>
+        <B><?php  if ($poll) putGS("Edit Poll"); else putGS('Add new Poll'); ?></B>
         <HR NOSHADE SIZE="1" COLOR="BLACK">
     </TD>
 </TR>
@@ -153,6 +154,12 @@ camp_html_display_msgs();
             <TD ALIGN="RIGHT" ><?php  putGS("Show after expiration"); ?>:</TD>
             <TD>
             <INPUT TYPE="checkbox" NAME="f_show_after_expiration" class="input_checkbox" value="1" <?php $is_show_after_expiration ? p('checked') : null; ?> >
+            </TD>
+        </TR>
+        <tr>
+            <TD ALIGN="RIGHT" ><?php  putGS("Used as default"); ?>:</TD>
+            <TD>
+            <INPUT TYPE="checkbox" NAME="f_is_used_as_default" class="input_checkbox" value="1" <?php $is_used_as_default ? p('checked') : null; ?> >
             </TD>
         </TR>
         <tr>

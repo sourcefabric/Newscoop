@@ -1,176 +1,89 @@
 <?php
-require_once $Campsite['HTML_DIR']."/$ADMIN_DIR/modules/start.ini.php";
-require_once $Campsite['HTML_DIR']."/classes/Input.php";
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/classes/Poll.php");
 
-$access = startModAdmin ("ManagePoll", "Poll", 'Poll result');
-if ($access) {
+// Check permissions
+if (!$g_user->hasPermission('ManagePoll')) {
+    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+    exit;
+}
 
-    if (file_exists(dirname(__FILE__)."/locals.{$_REQUEST['TOL_Language']}.php")) {
-        require_once "locals.{$_REQUEST['TOL_Language']}.php";
-    } elseif(file_exists(dirname(__FILE__)."/locals.{$_REQUEST['TOL_Language']}.php"))  {
-        require_once 'locals.en.php';
-    }
+$f_poll_nr = Input::Get('f_poll_nr', 'int');
+$f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 
-    $poll         = Input::Get('poll', 'array', array());
-    $target_lang  = Input::Get('target_lang');
-  ?>
-  <form name='language' action='result.php'>
-  <table border="0" width="100%">
-  <tr bgcolor="#C0D0FF">
-    <td><b><?php putGS ("results"); ?></b></td>
-    <td align="right">
-      <?php putGS("target lang"); ?>:
-      <?php
-      if (!$lang) {
-          $lang = $defaultIdLanguage;
-      }
-      langmenu ("target_lang");
-      ?>
-      <input type="hidden" name="poll[Number]" value="<?php print $poll['Number']; ?>">
-    </td>
-  </tr>
+$f_nr_answer = Input::Get('f_nr_answer', 'int');
 
-  <?php             
-  ##### query target_language
-  $query = "SELECT * 
-            FROM    mod_poll_questions
-            WHERE   NrPoll      =   {$poll['Number']} AND 
-                    IdLanguage  =   $target_lang 
-            LIMIT   0,1";
-  $quest = sqlROW($DB['modules'], $query);
+$poll = new Poll($f_fk_language_id, $f_poll_nr);
 
-  if (!is_array ($quest)) {
-      // if not user query default langauge
-      $query = "SELECT * 
-                FROM mod_poll_questions
-                WHERE   NrPoll      =   {$poll['Number']} AND 
-                        IdLanguage  =   $defaultIdLanguage 
-                LIMIT   0,1";
-      $quest = sqlROW($DB['modules'], $query);
-  }
-  ?>
-  <tr <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php } ?>>
-    <td><?php putGS("title"); ?></td><td><?php print $quest['Title']; ?></td>
-  </tr>
-  <tr <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php } ?>>
-    <td><?php putGS("question"); ?></td><td><?php print $quest['Question']; ?></td>
-  </tr>
-  <tr <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php } ?>>
-    <td colspan="2">&nbsp;</td>
-  </tr>
-  <?php
-  ##### overall languages #########################
+#$answer = $poll->getAnswer($f_nr_answer);
+#$answer->vote();
 
-  ##### get answer-terms in given/default langauge
-  $query = "SELECT * 
-            FROM    mod_poll_answers
-            WHERE   NrPoll      = {$poll['Number']} AND 
-                    IdLanguage  = {$quest['IdLanguage']} 
-            ORDER BY NrAnswer";
-  $answers = sqlQuery($DB['modules'], $query);
+$format = '%.2f';
 
-  while ($ans = mysql_fetch_array($answers)) {
-      print "<tr ";
-      if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php }
-      print "><td>".getGS("answer")." {$ans['NrAnswer']})</td><td>{$ans['Answer']}</td></tr>";
-  }
+$display[] = $poll;
 
-  ##### sum of votes
-  $query = "SELECT  SUM(NrOfVotes) AS allsum 
-            FROM    mod_poll_answers
-            WHERE   NrPoll = {$poll['Number']}";
-  $sum = sqlRow($DB['modules'], $query);
+foreach($poll->getTranslations() as $translation) {
+    if ($translation->getLanguageId() != $poll->getLanguageId()) {
+        $display[] = $translation;   
+    }    
+}
 
-  ##### sum of votes depending to nr_answer, independing from IdLanguage
-  $query = "SELECT  NrAnswer, 
-                    SUM(NrOfVotes) as rowsum 
-            FROM    mod_poll_answers
-            WHERE   NrPoll  = {$poll['Number']} 
-            GROUP   BY NrAnswer 
-            ORDER   BY NrAnswer";
-  $votes = sqlQuery($DB['modules'], $query);
-  ?>
-  <tr <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php } ?>><td colspan="2">&nbsp;</td></tr>
-  <tr <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php } ?>>
-    <td colspan="2">Votes Overall Languages (<?php echo $sum['allsum']; ?> Votes)</td>
-  </tr>
-  <?php
-  mysql_data_seek ($answers, 0);
-  
-  while ($polld = mysql_fetch_array($answers)) {
-      $vote = mysql_fetch_array($votes);
-      if ($vote['rowsum']) {
-          $prozent = round (100/$sum[allsum]*$vote[rowsum],1);
-      } else { 
-          $prozent = 0;
-      }
+?>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
+<TR>
+    <TD><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
+    <TD><A HREF="index.php"><B><?php  putGS("Poll List"); ?></B></A></TD>
+    <TD style="padding-left: 20px;"><A HREF="edit.php" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+    <TD><A HREF="edit.php" ><B><?php  putGS("Add new Poll"); ?></B></A></TD>
+</tr>
+</TABLE>
+<p>
+<?php
+foreach ($display as $translation) {
+    $color = 0;
     ?>
-    <tr <?php
-    if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php }
-    else { $color=1; ?>BGCOLOR="#D0D0D0"<?php }
-      ?>>
-      <td><?php echo "{$polld['NrAnswer']}) Votes:  {$vote['rowsum']} ($prozent %)"; ?></td>
-      <td>
-      <?php
-      for ($n=0; $n<=$prozent; $n++) echo "I";
-      ?></td>
-    </tr>
+    <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;">
+        <TR class="table_list_header">
+            <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Title"); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Votes"); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Percentage this language"); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Percentage all languages"); ?></TD>
+        </TR>
+        <tr>
+            <th><?php p($translation->getProperty('title')); ?> (<?php p($translation->getLanguageName()); ?>)</th>
+            <td align="CENTER"><?php p($translation->getProperty('nr_of_votes')); ?> / <?php p($translation->getProperty('nr_of_votes_overall')); ?></th>
+            <td align="LEFT">
+                <img src="/admin/modules/icon/mainbarlinks.png" width="1" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbar.png" width="<?php p($translation->getProperty('percentage_of_votes_overall')); ?>" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbarrechts.png" width="1" height="9" class="IMG_norm">
+                <?php printf($format, $translation->getProperty('percentage_of_votes_overall')); ?>%
+            </th>
+            <th> </th>
+        </tr>
+        <?php
+        foreach ($translation->getAnswers() as $answer) {
+            if ($color) {
+                $rowClass = "list_row_even";
+            } else {
+                $rowClass = "list_row_odd";
+            }
+            $color = !$color;
+            ?>
+            <tr class="<?php p($rowClass); ?>" >
+              <td width="400"><?php p($answer->getProperty('answer')); ?></td>
+              <td width="50" ALIGN="center"><?php p($answer->getProperty('nr_of_votes')); ?></td>
+              <td width="200">
+                <img src="/admin/modules/icon/mainbarlinks.png" width="1" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbar.png" width="<?php p($answer->getProperty('percentage')); ?>" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbarrechts.png" width="1" height="9" class="IMG_norm">
+                <?php printf($format, $answer->getProperty('percentage')); ?>%
+              </td>
+              <td width="200">
+                <img src="/admin/modules/icon/mainbarlinks.png" width="1" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbar.png" width="<?php p($answer->getProperty('percentage_overall')); ?>" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbarrechts.png" width="1" height="9" class="IMG_norm">
+                <?php printf($format, $answer->getProperty('percentage_overall')); ?>%
+              </td>
+            </tr>
+            <?php   
+        }
+    ?>
+    </table>
+    <p>
     <?php
-  }
-  ##### end overall languages #########################
-  /*
-  ##### Diff by languages #############################
-  $langq = "SELECT pq.IdLanguage, cl.Name
-  FROM mod_poll_questions AS pq, campsite.Languages AS cl
-  WHERE NrPoll=$poll[id] AND pq.IdLanguage=cl.Number
-  ORDER BY IdLanguage";
-
-  $langr = sqlQuery($DB[poll], $langq);
-  while ($lang = mysql_fetch_array ($langr))
-  {
-  ##### sum of votes dep. to language
-  $query = "SELECT SUM(votes) AS allsum FROM mod_poll_answers
-  WHERE NrPoll=$poll[id] AND IdLanguage=$lang[IdLanguage]";
-  $sumlang = sqlRow ($DB['poll'], $query);
-
-  ##### sum of votes dep. to nr_answer, depending from IdLanguage
-  $query = "SELECT nr_answer, SUM(votes) as rowsum FROM mod_poll_answers
-  WHERE NrPoll=$poll[id] AND IdLanguage=$lang[IdLanguage]
-  GROUP BY nr_answer ORDER BY nr_answer";
-  $votes = sqlQuery($DB['poll'], $query);
-
-  ?>
-  <tr <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php } ?>><td colspan="2">&nbsp;</td></tr>
-  <tr <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php } ?>>
-  <td colspan="2">Votes on <?php echo "$lang[Name]: $sumlang[allsum] (".(100/$sum[allsum]*$sumlang[allsum])."% of Overall)"; ?></td>
-  </tr>
-  <?php
-  mysql_data_seek ($answers, 0);
-  while ($polld = mysql_fetch_array ($answers))
-  {
-  $vote = mysql_fetch_array ($votes);
-  if ($vote[rowsum]) $prozent = round (100/$sumlang[allsum]*$vote[rowsum],1);
-  else $prozent = 0;
-  ?>
-  <tr <?php
-  if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php }
-  else { $color=1; ?>BGCOLOR="#D0D0D0"<?php }
-  ?>>
-  <td><?php echo "$polld[nr_answer]) Votes:  $vote[rowsum] ($prozent %)"; ?></td>
-  <td>
-  <?php
-  for ($n=0; $n<=$prozent; $n++) echo "I";
-  ?></td>
-  </tr>
-  <?php
-  }
-  ##### end diff by languages #########################
-  }
-  */
-  ?>
-
-  </table>
-  </form>
-  <?php
 }
 ?>
