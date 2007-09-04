@@ -73,7 +73,7 @@ class DatabaseObject {
      *
      * @var bool
      */
-    private static $m_useCache = true;
+    private static $m_useCache = false;
 
     /**
      * DatabaseObject represents a row in a database table.
