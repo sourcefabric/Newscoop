@@ -75,7 +75,7 @@ $tpl = CampTemplate::singleton();
 
 $context = $tpl->context();
 
-
+/*
 // Language object
 $context->language = new MetaLanguage(1);
 
@@ -91,61 +91,20 @@ $context->issue = new MetaIssue(1, 1, 1);
 // Section object
 $context->section = new MetaSection(1, 1, 1, 10);
 
+*/
 
 // Article object
 $context->article = new MetaArticle(1, 15);
 
-
-// Image object
-$context->image = new MetaImage(53);
-
-
-// Article attachment object
-$context->attachment = new MetaAttachment(3);
-
-
-// Topic object
-$context->topic = new MetaTopic(14);
-
-
-// User object
-$context->user = new MetaUser(1);
-
-
-// Audioclip object
-$context->audioclip = new MetaAudioclip('7160d04166d69f50');
-
-
-// Article comment
-$context->comment = new MetaComment(2);
-
-
-// Template object
-$context->template = new MetaTemplate(101);
-
-
-// Subscription object
-$context->subscription = new MetaSubscription(5);
-
+$context->poll = new MetaPoll(1, 1);
 
 $tpl->assign('campsite', $context);
-//$tpl->debugging = true;
-
-
-/**** Exception test ****/
-try {
-	$articleObj =& new MetaArticle(1, 143);
-    $articleObj->Name = 'test';
-    echo "<h3>Set property test: failed</h3>";
-} catch (Exception $e) {
-    echo "<h3>Set property test: success</h3>";
-}
-
+#$tpl->debugging = true;
 
 set_error_handler('templateErrorHandler');
 
 try {
-	$tpl->display('camp_index.tpl');
+	$tpl->display('poll_index.tpl');
 } catch (InvalidPropertyHandlerException $e) {
 	echo "<p>Internal error: handler was not specified for property " . $e->getPropertyName()
 		. " of object " . $e->getClassName() . "</p>\n";

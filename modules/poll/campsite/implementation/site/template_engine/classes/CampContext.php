@@ -32,7 +32,8 @@ final class CampContext {
 								   'topic'=>'Topic',
 								   'user'=>'User',
 								   'template'=>'Template',
-								   'subscription'=>'Subscription'
+								   'subscription'=>'Subscription',
+								   'poll'=>'Poll'
 								   );
 
     // Stores the context objects.

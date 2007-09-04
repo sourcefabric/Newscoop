@@ -104,7 +104,8 @@ function __autoload($p_className)
     $classDirectories = array('classes',
                               'template_engine',
                               'template_engine/classes',
-                              'template_engine/metaclasses');
+                              'template_engine/metaclasses',
+                              "$ADMIN_DIR/modules/classes");
     foreach ($classDirectories as $dirName) {
         $fileName = "$g_documentRoot/$dirName/$p_className.php";
         if (file_exists($fileName)) {
