@@ -87,6 +87,7 @@ final class InvalidOperatorException extends Exception {
     {
         parent::__construct("The name '$p_operatorName' is not a valid operator for the type $p_typeName.", 0);
         $this->m_operatorName = $p_operatorName;
+        $this->m_typeName = $p_typeName;
     } // fn __construct
 
 

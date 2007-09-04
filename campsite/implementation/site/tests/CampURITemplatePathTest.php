@@ -78,11 +78,6 @@ class CampURITemplatePathTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('article.tpl', $this->m_uri->getTemplate());
     }
 
-    public function testIsValidTemplate()
-    {
-        $this->assertEquals(true, $this->m_uri->isValidTemplate('article.tpl'));
-    }
-
     public function testGetLanguageId()
     {
         $this->assertEquals(1, $this->m_uri->getQueryVar('IdLanguage'));
