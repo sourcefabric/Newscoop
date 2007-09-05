@@ -93,28 +93,82 @@ define('CAMP_ERROR_UPLOAD_FILE', -900);
  * Try to autoload class definitions before failing. This makes the Campsite
  * class definition file inclusion optional.
  *
- * @param string $class_name
+ * @param string $p_className
  */
 function __autoload($p_className)
 {
     global $Campsite, $ADMIN_DIR, $ADMIN, $g_documentRoot;
+    
+    if (!is_string($p_className)) {
+        return;
+    }
+
+    if ($fileName = camp_find_class($p_className)) {
+        include_once($fileName);
+        return;   
+    }
+}
+
+/**
+ * Try to find class definations.
+ * Function lookup fpr standard campsite folders, 
+ * plus plugin folders which are found by reading the directory.
+ *
+ * @param string $p_className
+ * @param string $p_type optional name of subfolder to search for class defination
+ */
+function camp_find_class($p_className, $p_type = null)
+{
+    global $Campsite, $ADMIN_DIR, $ADMIN, $g_documentRoot, $PLUGIN_DIR;
+    static $pluginDirectories;
 
     if (!is_string($p_className)) {
         return;
     }
 
-    $classDirectories = array('classes',
-                              'template_engine',
-                              'template_engine/classes',
-                              'template_engine/metaclasses',
-                              "$ADMIN_DIR/modules/classes");
+    if (!is_array($pluginDirectories)) {
+        $pluginDirectories = array();
+        
+        if ($handle = @opendir("$g_documentRoot/$PLUGIN_DIR")) { 
+        
+            while ($dir = readdir($handle)) { 
+                if (is_dir("$g_documentRoot/$PLUGIN_DIR/$dir") && $dir != "." && $dir != ".." && $dir != ".svn") { 
+                    $pluginDirectories[] = $dir; 
+                } 
+            }
+            closedir($handle);
+        } 
+    }
+    
+    if (is_null($p_type)) {
+        $classDirectories = array('classes',
+                                  'template_engine',
+                                  'template_engine/classes',
+                                  'template_engine/metaclasses');
+                                  
+        foreach ($pluginDirectories as $dir) { 
+            $classDirectories[] = "$PLUGIN_DIR/$dir/classes"; 
+            $classDirectories[] = "$PLUGIN_DIR/$dir/template_engine";
+            $classDirectories[] = "$PLUGIN_DIR/$dir/template_engine/classes";
+            $classDirectories[] = "$PLUGIN_DIR/$dir/template_engine/metaclasses";
+        };
+
+    } else { 
+         $classDirectories = array();
+         $classDirectories[] = $p_type;
+              
+        foreach ($pluginDirectories as $dir) {
+            $classDirectories[] = "$PLUGIN_DIR/$dir/$p_type"; 
+        } 
+    }
+    
     foreach ($classDirectories as $dirName) {
         $fileName = "$g_documentRoot/$dirName/$p_className.php";
         if (file_exists($fileName)) {
-            require_once($fileName);
-            return;
+            return $fileName;
         }
-    }
+    }      
+    return false;
 }
 
 ?>
