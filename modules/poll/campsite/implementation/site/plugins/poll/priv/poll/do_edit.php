@@ -1,8 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/classes/Poll.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/classes/PollQuestion.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/classes/PollAnswer.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$PLUGIN_DIR/poll/classes/Poll.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$PLUGIN_DIR/poll/classes/PollAnswer.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePoll')) {

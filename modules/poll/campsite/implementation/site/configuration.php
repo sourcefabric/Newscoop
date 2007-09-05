@@ -26,6 +26,8 @@ set_include_path($Campsite['PEAR_LOCAL'].PATH_SEPARATOR.get_include_path());
 $ADMIN_DIR = "admin-files";
 $ADMIN = "admin";
 
+$PLUGIN_DIR = "plugins";
+
 if (!isset($_SERVER['SERVER_PORT']))
 {
     $_SERVER['SERVER_PORT'] = 80;

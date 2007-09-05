@@ -283,8 +283,8 @@ $menu_item =& DynMenuItem::Create(getGS("Feedback"), '/'. $ADMIN .'/feedback',
 $menu_help->addItem($menu_item);
 
 // modules: extend menu
-if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/include/menu.php")) {
-    include ($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/include/menu.php");
+if ($path = camp_get_plugin_path('poll', __FILE__)) {
+    include ($path);   
 }
 ?>
 <HEAD>

@@ -480,4 +480,19 @@ function camp_get_error_message($p_errorCode, $p_arg1 = null, $p_arg2 = null)
     return "";
 } // fn camp_get_error_message
 
+function camp_get_plugin_path($p_plugin_name, $p_source_fullpath)
+{
+    global $ADMIN_DIR, $PLUGIN_DIR;
+
+    $PLUGIN_PATH = dirname(__FILE__).'/../'.$PLUGIN_DIR;
+    
+    $target_subpath = str_replace(dirname(__FILE__), '', $p_source_fullpath);
+    $target_fullpath = realpath("$PLUGIN_PATH/$p_plugin_name/priv/include/$target_subpath");
+    
+    if (file_exists($target_fullpath)) {
+        return $target_fullpath;
+    }  
+    
+    else return false; 
+}
 ?>

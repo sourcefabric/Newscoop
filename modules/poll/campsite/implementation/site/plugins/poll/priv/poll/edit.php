@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/classes/Poll.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$PLUGIN_DIR/poll/classes/Poll.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePoll')) {

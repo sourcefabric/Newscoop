@@ -109,9 +109,7 @@ function camp_get_permission_list()
                 getGS('Editor Miscellaneous Settings')=>$editor_group_4);
                 
     // modules: extent permission list
-    if (file_exists($_SERVER['DOCUMENT_ROOT']."/{$GLOBALS['ADMIN_DIR']}/modules/include/users/permission_list.php")) {
-        include ($_SERVER['DOCUMENT_ROOT']."/{$GLOBALS['ADMIN_DIR']}/modules/include/users/permission_list.php");
-    }
+    camp_load_plugin_file('poll', __FILE__);
 	
     return $rights;
 }
