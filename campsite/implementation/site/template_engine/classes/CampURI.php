@@ -257,9 +257,9 @@ class CampURI {
      */
     public function getBase()
     {
-        $base = $this->getScheme().'://'.$this->getHost();
-        if (is_numeric($this->getPort())) {
-            $base .= ':'.$this->getPort();
+        $base = $this->m_scheme.'://'.$this->m_host;
+        if (is_numeric($this->m_port)) {
+            $base .= ':'.$this->m_port;
         }
 
         return $base;
@@ -545,7 +545,7 @@ class CampURI {
      */
     public function isSSL()
     {
-        return ($this->getScheme() == 'https') ? true : false;
+        return ($this->m_scheme == 'https') ? true : false;
     } // fn isSSL
 
 

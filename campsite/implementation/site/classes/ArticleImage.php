@@ -416,11 +416,13 @@ class ArticleImage extends DatabaseObject {
 
         // validates whether article number was given
         if ($hasArticleNr == false) {
-            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_images");
+            CampTemplate::singleton()->trigger_error('missed parameter Article '
+                .'Number in statement list_article_images');
+            return;
         }
 
         // sets the columns to be fetched
-        $tmpImage =& new Image();
+        $tmpImage = new Image();
 		$columnNames = $tmpImage->getColumnNames(true);
         foreach ($columnNames as $columnName) {
             $sqlClauseObj->addColumn($columnName);
@@ -486,8 +488,10 @@ class ArticleImage extends DatabaseObject {
             break;
         }
 
-        $operatorObj = $p_param->getOperator();
-        $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        if (isset($comparisonOperation)) {
+            $operatorObj = $p_param->getOperator();
+            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
 
         return $comparisonOperation;
     } // fn ProcessListParameters

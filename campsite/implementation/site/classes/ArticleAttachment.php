@@ -228,11 +228,13 @@ class ArticleAttachment extends DatabaseObject {
 
         // validates whether article number was given
         if ($hasArticleNr == false) {
-            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_attachments");
+            CampTemplate::singleton()->trigger_error('missed parameter Article '
+                .'Number in statement list_article_attachments');
+            return;
         }
 
         // sets the columns to be fetched
-        $tmpAttachment =& new Attachment();
+        $tmpAttachment = new Attachment();
 		$columnNames = $tmpAttachment->getColumnNames(true);
         foreach ($columnNames as $columnName) {
             $sqlClauseObj->addColumn($columnName);

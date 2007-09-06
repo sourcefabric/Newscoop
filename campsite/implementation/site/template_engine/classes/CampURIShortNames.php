@@ -295,6 +295,8 @@ class CampURIShortNames extends CampURI {
         $cArticleNr = 0;
         // gets the article number and sets the article short name
         if (!empty($cArticleSName)) {
+            // we pass article short name as article identifier as they are
+            // the same for Campsite, we will have to change this in the future
             $articleObj = new Article($cLangId, $cArticleSName);
             if (is_object($articleObj) && $articleObj->exists()) {
                 $cArticleNr = $articleObj->getArticleNumber();

@@ -16,6 +16,7 @@ require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
 require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Log.php');
+require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 
 /**
  * @package Campsite
@@ -509,6 +510,9 @@ class Section extends DatabaseObject {
         // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
+            if (empty($comparisonOperation)) {
+                break;
+            }
             if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
                 $hasPublicationId = true;
             }
@@ -527,19 +531,25 @@ class Section extends DatabaseObject {
 
         // validates whether publication identifier was given
         if ($hasPublicationId == false) {
-            CampTemplate::singleton()->trigger_error("missed parameter Publication Identifier in statement list_sections");
+            CampTemplate::singleton()->trigger_error('missed parameter Publication '
+                .'Identifier in statement list_sections');
+            return;
         }
         // validates whether language identifier was given
         if ($hasLanguageId == false) {
-            CampTemplate::singleton()->trigger_error("missed parameter Language Identifier in statement list_sections");
+            CampTemplate::singleton()->trigger_error('missed parameter Language '
+                .'Identifier in statement list_sections');
+            return;
         }
         // validates whether issue number was given
         if ($hasIssueNr == false) {
-            CampTemplate::singleton()->trigger_error("missed parameter Issue Number in statement list_sections");
+            CampTemplate::singleton()->trigger_error('missed parameter Issue Number '
+                .'in statement list_sections');
+            return;
         }
 
         // sets the columns to be fetched
-        $tmpSection =& new Section();
+        $tmpSection = new Section();
 		$columnNames = $tmpSection->getColumnNames(true);
         foreach ($columnNames as $columnName) {
             $sqlClauseObj->addColumn($columnName);
@@ -600,16 +610,26 @@ class Section extends DatabaseObject {
         switch (strtolower($p_param->getLeftOperand())) {
         case 'name':
             $comparisonOperation['left'] = 'Name';
-            $comparisonOperation['right'] = (string)$p_param->getRightOperand();
             break;
         case 'number':
             $comparisonOperation['left'] = 'Number';
-            $comparisonOperation['right'] = (int)$p_param->getRightOperand();
+            break;
+        case 'idpublication':
+            $comparisonOperation['left'] = 'IdPublication';
+            break;
+        case 'nrissue':
+            $comparisonOperation['left'] = 'NrIssue';
+            break;
+        case 'idlanguage':
+            $comparisonOperation['left'] = 'IdLanguage';
             break;
         }
 
-        $operatorObj = $p_param->getOperator();
-        $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        if (isset($comparisonOperation['left'])) {
+            $operatorObj = $p_param->getOperator();
+            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+            $comparisonOperation['right'] = $p_param->getRightOperand();
+        }
 
         return $comparisonOperation;
     } // fn ProcessListParameters
