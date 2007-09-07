@@ -6,8 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Country.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
-    camp_html_display_error(getGS("You do not have the right to manage publications."));
-    exit;
+	camp_html_display_error(getGS("You do not have the right to manage publications."));
+	exit;
 }
 
 $Pub = Input::Get('Pub', 'int', 0);
@@ -15,8 +15,8 @@ $Language = Input::Get('Language', 'int', 1, true);
 $CountryCode = Input::Get('CountryCode');
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-    exit;
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
 }
 
 $publicationObj =& new Publication($Pub);

@@ -13,8 +13,8 @@ if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
 }
 
 if (!$g_user->hasPermission('AddAudioclip')) {
-    camp_html_display_error(getGS('You do not have the right to add audioclips.' ), null, true);
-    exit;
+	camp_html_display_error(getGS('You do not have the right to add audioclips.' ), null, true);
+	exit;
 }
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
@@ -30,16 +30,16 @@ $f_action = Input::Get('f_action', 'string', null, true);
 $BackLink = Input::Get('BackLink', 'string', null, true);
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
-    exit;
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+	exit;
 }
 
 switch($f_action) {
     case 'add':
         if (empty($_FILES['f_media_file']) || !isset($_FILES['f_media_file']['name'])
-                || !isset($_FILES['f_media_file']['tmp_name'])
-                || $_FILES['f_media_file']['name'] == ''
-                || $_FILES['f_media_file']['tmp_name'] == '') {
+        		|| !isset($_FILES['f_media_file']['tmp_name'])
+        		|| $_FILES['f_media_file']['name'] == ''
+        		|| $_FILES['f_media_file']['tmp_name'] == '') {
             camp_html_display_error(getGS('Invalid file parameter'), null, true);
             exit;
         }
@@ -77,8 +77,8 @@ switch($f_action) {
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="Expires" content="now" />
-    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css" />
+	<meta http-equiv="Expires" content="now" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css" />
     <?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
     <script language="JavaScript">
     function spread(element, name)
@@ -88,7 +88,7 @@ switch($f_action) {
         if (document.forms['audioclip_metadata'].elements['f_Voice_'+name]) document.forms['audioclip_metadata'].elements['f_Voice_'+name].value = element.value;
     } // fn spread
     </script>
-    <title><?php putGS("Edit Audioclip Metadata"); ?></title>
+	<title><?php putGS("Edit Audioclip Metadata"); ?></title>
 </head>
 <body>
 <?php camp_html_display_msgs(); ?>
@@ -97,11 +97,11 @@ switch($f_action) {
 <form name="audioclip_metadata" id="audioclip_metadata" method="POST" action="/<?php echo $ADMIN; ?>/articles/audioclips/do_<?php echo $f_action; ?>.php" enctype="multipart/form-data" onsubmit="return validateForm(this, 0, 1, 0, 0, 8);">
 <table style="margin-top: 10px; margin-left: 5px; margin-right: 5px;" cellpadding="0" cellspacing="0">
 <tr>
-    <?php if ($g_user->hasPermission('AddAudioclip')) { ?>
-    <td id="link1" class="tab_current"><a href="#" onclick="javascript:selectTab('1', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Main"); ?></b></a></td>
-    <?php } ?>
+	<?php if ($g_user->hasPermission('AddAudioclip')) { ?>
+	<td id="link1" class="tab_current"><a href="#" onclick="javascript:selectTab('1', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Main"); ?></b></a></td>
+	<?php } ?>
 
-    <td id="link2" class="tab_normal"><a href="#" onclick="javascript:selectTab('2', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Music"); ?></b></a></td>
+	<td id="link2" class="tab_normal"><a href="#" onclick="javascript:selectTab('2', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Music"); ?></b></a></td>
 
     <td id="link3" class="tab_normal" style="border-right: 1px solid #8baed1;"><a href="#" onclick="javascript:selectTab('3', '3');"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Voice"); ?></b></a></td>
 </tr>

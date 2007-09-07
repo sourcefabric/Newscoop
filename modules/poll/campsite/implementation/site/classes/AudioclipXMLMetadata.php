@@ -55,7 +55,7 @@ class AudioclipXMLMetadata {
      */
     function exists()
     {
-        return $this->m_exists;
+    	return $this->m_exists;
     }
 
 
@@ -66,7 +66,7 @@ class AudioclipXMLMetadata {
      */
     function getGunId()
     {
-        return $this->m_gunId;
+    	return $this->m_gunId;
     }
 
 
@@ -137,7 +137,7 @@ class AudioclipXMLMetadata {
      *      The md5 check sum of the audioclip file
      *
      * @return string|PEAR_Error
-     *        Audioclip gunid on success, PEAR_Error on failure
+     *		Audioclip gunid on success, PEAR_Error on failure
      */
     function Upload($p_sessId, $p_filePath, $p_gunId, $p_metaData, $p_checkSum)
     {
@@ -147,7 +147,7 @@ class AudioclipXMLMetadata {
         $r = $xrcObj->xr_storeAudioClipOpen($p_sessId, $p_gunId, $p_metaData,
                                             basename($p_filePath), $p_checkSum);
         if (PEAR::isError($r)) {
-            return $r;
+        	return $r;
         } else {
             exec(trim('curl -T ' . escapeshellarg($p_filePath) . ' ' . $r['url']));
         }
@@ -155,7 +155,7 @@ class AudioclipXMLMetadata {
         if (PEAR::isError($aClipData)) {
             return $aClipData;
         }
-        return $aClipData['gunid'];
+    	return $aClipData['gunid'];
     } // fn Upload
 
 
@@ -188,7 +188,7 @@ class AudioclipXMLMetadata {
         $sessid = camp_session_get('cc_sessid', '');
         $res = $this->xrc->xr_updateAudioClipMetadata($sessid, $this->m_gunId, $xmlStr);
         if (PEAR::isError($res)) {
-            return $res;
+        	return $res;
         }
         return $res['status'];
     } // fn update

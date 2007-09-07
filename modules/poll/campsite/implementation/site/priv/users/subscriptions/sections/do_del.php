@@ -8,8 +8,8 @@ require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 
 if (!$g_user->hasPermission('ManageSubscriptions')) {
-    camp_html_display_error(getGS("You do not have the right to delete subscriptions."));
-    exit;
+	camp_html_display_error(getGS("You do not have the right to delete subscriptions."));
+	exit;
 }
 
 $f_user_id = Input::Get('f_user_id', 'int', 0);

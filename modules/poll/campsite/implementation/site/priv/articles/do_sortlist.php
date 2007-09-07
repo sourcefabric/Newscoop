@@ -9,13 +9,13 @@ $f_sortlist_name = Input::Get('f_sortlist_name', 'string', null, true);
 $f_sortlist_order = Input::Get('f_sortlist_order', 'string', null, true);
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-    exit;
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
-    camp_html_display_error(getGS('No such article.'));
+	camp_html_display_error(getGS('No such article.'));
     exit;
 }
 

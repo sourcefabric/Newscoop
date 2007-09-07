@@ -24,44 +24,44 @@ LoginAttempts::DeleteOldLoginAttempts();
 // use the language that they previously used.
 $defaultLanguage = null;
 if (!isset($_REQUEST['TOL_Language'])) {
-    // Get the browser languages
-    $browserLanguageStr = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '';
-    $browserLanguageArray = split("[,;]", $browserLanguageStr);
-    $browserLanguagePrefs = array();
-    foreach ($browserLanguageArray as $tmpLang) {
-        if (!(substr($tmpLang, 0, 2) == 'q=')) {
-            $browserLanguagePrefs[] = $tmpLang;
-        }
-    }
-    // Try to match preference exactly.
-    foreach ($browserLanguagePrefs as $pref) {
-        if (array_key_exists($pref, $languages)) {
-            $defaultLanguage = $pref;
-            break;
-        }
-    }
-    // Try to match two-letter language code.
-    if (is_null($defaultLanguage)) {
-        foreach ($browserLanguagePrefs as $pref) {
-            if (substr($pref, 0, 2) != "" && array_key_exists(substr($pref, 0, 2), $languages)) {
-                $defaultLanguage = $pref;
-                break;
-            }
-        }
-    }
+	// Get the browser languages
+	$browserLanguageStr = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '';
+	$browserLanguageArray = split("[,;]", $browserLanguageStr);
+	$browserLanguagePrefs = array();
+	foreach ($browserLanguageArray as $tmpLang) {
+		if (!(substr($tmpLang, 0, 2) == 'q=')) {
+			$browserLanguagePrefs[] = $tmpLang;
+		}
+	}
+	// Try to match preference exactly.
+	foreach ($browserLanguagePrefs as $pref) {
+		if (array_key_exists($pref, $languages)) {
+			$defaultLanguage = $pref;
+			break;
+		}
+	}
+	// Try to match two-letter language code.
+	if (is_null($defaultLanguage)) {
+		foreach ($browserLanguagePrefs as $pref) {
+			if (substr($pref, 0, 2) != "" && array_key_exists(substr($pref, 0, 2), $languages)) {
+				$defaultLanguage = $pref;
+				break;
+			}
+		}
+	}
 
-    // Default to english if we dont find anything that matches.
-    if (is_null($defaultLanguage)) {
-        $defaultLanguage = 'en';
-    }
-    // HACK: the function regGS() strips off the ":en" from
-    // english language strings, but only if it knows that
-    // the language being displayed is english...and it knows
-    // via the cookie.
-    $_REQUEST['TOL_Language'] = $defaultLanguage;
+	// Default to english if we dont find anything that matches.
+	if (is_null($defaultLanguage)) {
+		$defaultLanguage = 'en';
+	}
+	// HACK: the function regGS() strips off the ":en" from
+	// english language strings, but only if it knows that
+	// the language being displayed is english...and it knows
+	// via the cookie.
+	$_REQUEST['TOL_Language'] = $defaultLanguage;
 }
 else {
-    $defaultLanguage = $_REQUEST['TOL_Language'];
+	$defaultLanguage = $_REQUEST['TOL_Language'];
 }
 
 // Load the language files.
@@ -70,28 +70,28 @@ camp_load_translation_strings("home");
 
 ?>
 <head>
-    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-    <?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
-    <TITLE><?php  putGS("Login"); ?></title>
+	<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+	<?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
+	<TITLE><?php  putGS("Login"); ?></title>
 </head>
 <body >
 
 <table border="0" cellspacing="0" cellpadding="1" width="100%" >
 <tr>
-    <td align="center" style="padding-top: 50px;">
-        <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0">
-    </td>
+	<td align="center" style="padding-top: 50px;">
+		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0">
+	</td>
 </tr>
 </table>
 
 <?php
 if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/demo_login.php")) {
-    require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/demo_login.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/demo_login.php");
 }
 ?>
 
-<table width="400px" border="0" cellspacing="0" cellpadding="6" align="center" style="margin-top: 20px; background-color: #d5e2ee;    border: 1px solid #8baed1;">
+<table width="400px" border="0" cellspacing="0" cellpadding="6" align="center" style="margin-top: 20px; background-color: #d5e2ee;	border: 1px solid #8baed1;">
 <form name="login_form" method="post" action="do_login.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($error_code == "upgrade") { ?>
 <input type="hidden" name="f_is_encrypted" value="0">
@@ -99,98 +99,98 @@ if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/demo_login.php")) {
 <input type="hidden" name="f_is_encrypted" value="1">
 <?php } ?>
 
-    <tr>
-        <td colspan="2" align="center">
-            <span style="color:#FF0000;">
-                <?php
-                if ($error_code == "userpass") {
-                    putGS("Login failed");
-                    echo "<br><br>";
-                    putGS('Please make sure that you typed the correct user name and password.');
-                    //putGS('If your problem persists please contact the site administrator $1','');
-                } elseif ($error_code == "captcha") {
-                     putGS('CAPTCHA code is not valid.  Please try again.');
-                } elseif ($error_code == "upgrade") {
-                    putGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.");
-                } elseif ($error_code == 'xorkey') {
-                    putGS("An error occured in session management. Please reload the login page.");
-                }
-                ?>
-            </span>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <b><?php  putGS("Login"); ?></b>
-            [ <?php putGS("Instance"); p(': '.$Campsite['DATABASE_NAME']); ?> ]
-            <hr noshade size="1"  color="black" />
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2"><?php putGS('Please enter your user name and password'); ?></td>
-    </tr>
-    <tr>
-        <td align="right" ><?php putGS("Account name"); ?>:</td>
-        <td>
-        <?php if ($error_code != "upgrade") { ?>
-        <input type="text" name="f_user_name" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter your user name."); ?>">
-        <?php } else { ?>
-        <input type="hidden" name="f_user_name" value="<?php p($f_user_name); ?>">
-        <?php echo p(htmlspecialchars($f_user_name)); ?>
-        <?php } ?>
-        </td>
-    </tr>
-    <tr>
-        <td align="right" ><?php putGS("Password"); ?>:</td>
-        <td>
-        <input type="password" name="f_password" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter your password."); ?>">
-        </td>
-    </tr>
-    <tr>
-        <td align="right" ><?php putGS("Language"); ?>:</td>
-        <td>
-        <select name="f_login_language" class="input_select">
-            <?php
-            foreach ($languages as $languageCode => $languageAttrs) {
-                $languageName = isset($languageAttrs['orig_name'])?
-                    $languageAttrs['orig_name']:$languageAttrs['name'];
-                $languageName = htmlspecialchars($languageName);
-                print "<option value=\"$languageCode\"";
-                if ($languageCode == $defaultLanguage) {
-                    print " selected ";
-                }
-                print ">$languageName</option>";
-            }
-            unset($languageCode);
-            unset($languageAttrs);
-            unset($languageName);
-            ?>
-        </select>
-        </td>
-    </tr>
+	<tr>
+		<td colspan="2" align="center">
+			<span style="color:#FF0000;">
+				<?php
+				if ($error_code == "userpass") {
+					putGS("Login failed");
+					echo "<br><br>";
+					putGS('Please make sure that you typed the correct user name and password.');
+					//putGS('If your problem persists please contact the site administrator $1','');
+				} elseif ($error_code == "captcha") {
+					 putGS('CAPTCHA code is not valid.  Please try again.');
+				} elseif ($error_code == "upgrade") {
+					putGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.");
+				} elseif ($error_code == 'xorkey') {
+					putGS("An error occured in session management. Please reload the login page.");
+				}
+				?>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<b><?php  putGS("Login"); ?></b>
+			[ <?php putGS("Instance"); p(': '.$Campsite['DATABASE_NAME']); ?> ]
+			<hr noshade size="1"  color="black" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2"><?php putGS('Please enter your user name and password'); ?></td>
+	</tr>
+	<tr>
+		<td align="right" ><?php putGS("Account name"); ?>:</td>
+		<td>
+		<?php if ($error_code != "upgrade") { ?>
+		<input type="text" name="f_user_name" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter your user name."); ?>">
+		<?php } else { ?>
+		<input type="hidden" name="f_user_name" value="<?php p($f_user_name); ?>">
+		<?php echo p(htmlspecialchars($f_user_name)); ?>
+		<?php } ?>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" ><?php putGS("Password"); ?>:</td>
+		<td>
+		<input type="password" name="f_password" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter your password."); ?>">
+		</td>
+	</tr>
+	<tr>
+		<td align="right" ><?php putGS("Language"); ?>:</td>
+		<td>
+		<select name="f_login_language" class="input_select">
+		    <?php
+			foreach ($languages as $languageCode => $languageAttrs) {
+			    $languageName = isset($languageAttrs['orig_name'])?
+			    	$languageAttrs['orig_name']:$languageAttrs['name'];
+			    $languageName = htmlspecialchars($languageName);
+			    print "<option value=\"$languageCode\"";
+			    if ($languageCode == $defaultLanguage) {
+			    	print " selected ";
+			    }
+			    print ">$languageName</option>";
+			}
+			unset($languageCode);
+			unset($languageAttrs);
+			unset($languageName);
+		    ?>
+		</select>
+		</td>
+	</tr>
 
-    <!-- CAPTCHA-->
-    <?php if (LoginAttempts::MaxLoginAttemptsExceeded()) { ?>
-    <tr>
-        <td colspan="2" align="center">
-            <img src="<?php echo $Campsite['WEBSITE_URL']; ?>/include/captcha/image.php">
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2" align="center">
-            <?php  putGS('Type the code shown above:'); ?>
-            <input name="f_captcha_code" size="5" class="input_text" alt="blank" emsg="<?php putGS("Please enter the code shown in the image."); ?>">
-        </td>
-    </tr>
-    <?php } ?>
-    <!-- CAPTCHA-->
+	<!-- CAPTCHA-->
+	<?php if (LoginAttempts::MaxLoginAttemptsExceeded()) { ?>
+	<tr>
+		<td colspan="2" align="center">
+			<img src="<?php echo $Campsite['WEBSITE_URL']; ?>/include/captcha/image.php">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<?php  putGS('Type the code shown above:'); ?>
+			<input name="f_captcha_code" size="5" class="input_text" alt="blank" emsg="<?php putGS("Please enter the code shown in the image."); ?>">
+		</td>
+	</tr>
+	<?php } ?>
+	<!-- CAPTCHA-->
 
-    <tr>
-        <td colspan="2" align="center">
-        <input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != '' && (f_password.value.trim().length) != 0) f_password.value = rc4encrypt(f_xkoery.value,f_password.value);" <?php } ?> />
-        </td>
-    </tr>
-    <input type="hidden" name="f_xkoery" value="<?php p($key); ?>" />
+	<tr>
+		<td colspan="2" align="center">
+		<input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != '' && (f_password.value.trim().length) != 0) f_password.value = rc4encrypt(f_xkoery.value,f_password.value);" <?php } ?> />
+		</td>
+	</tr>
+	<input type="hidden" name="f_xkoery" value="<?php p($key); ?>" />
 </form>
 </table>
 <script>

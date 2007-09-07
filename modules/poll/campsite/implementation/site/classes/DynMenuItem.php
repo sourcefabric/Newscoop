@@ -50,7 +50,7 @@
  * // Create a "home" menu item.
  * $home = DynMenuItem::Create('Home', 'http://mysite.com/index.php', 
  *                           array('id' => 'home', 
- *                                    'icon' => "<img src='http://mysite.com/img/home.png' align='middle' style='padding-bottom: 3px;' width='16' height='16' />"));
+ * 								   'icon' => "<img src='http://mysite.com/img/home.png' align='middle' style='padding-bottom: 3px;' width='16' height='16' />"));
  * $root->addItem($home);
  *
  * $root->addSplit();
@@ -114,14 +114,14 @@ class DynMenuItem {
      * Create a menu item node of the type set with SetMenuType().
      *
      * @param string $p_title
-     *         Display string for the menu item.
+     * 		Display string for the menu item.
      * @param string $p_url
-     *         Destination URL.
+     * 		Destination URL.
      * @param array $p_attrs
-     *         Options:
-     *         'icon' => HTML IMG tag
-     *         'id' => unique id for the item
-     *         'target' => new window ID for the destination URL
+     * 		Options:
+     * 		'icon' => HTML IMG tag
+     * 		'id' => unique id for the item
+     * 		'target' => new window ID for the destination URL
      * @return DynMenuItem
      */
     function &Create($p_title, $p_url, $p_attrs = null) 
@@ -247,7 +247,7 @@ class DynMenuItem_JsCook extends DynMenuItem {
      */
     function createMenu($p_name, $p_extraArgs = null) 
     {
-        $str = "<SCRIPT LANGUAGE=\"JavaScript\"><!--\n";
+    	$str = "<SCRIPT LANGUAGE=\"JavaScript\"><!--\n";
         $str .= "var $p_name =\n";
         $str .= "[\n";
         $str .= $this->__recurseBuild(1);

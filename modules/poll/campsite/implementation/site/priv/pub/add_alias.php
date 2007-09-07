@@ -4,15 +4,15 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
-    camp_html_display_error(getGS("You do not have the right to manage publications."));
-    exit;
+	camp_html_display_error(getGS("You do not have the right to manage publications."));
+	exit;
 }
 
 $Pub = Input::Get('Pub', 'int');
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-    exit;
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
 }
 
 $publicationObj =& new Publication($Pub);
@@ -26,24 +26,24 @@ camp_html_display_msgs();
 <FORM NAME="add_alias" METHOD="POST" ACTION="do_add_alias.php">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
-    <TD COLSPAN="2">
-        <B><?php  putGS("Add new alias"); ?></B>
-        <HR NOSHADE SIZE="1" COLOR="BLACK">
-    </TD>
+	<TD COLSPAN="2">
+		<B><?php  putGS("Add new alias"); ?></B>
+		<HR NOSHADE SIZE="1" COLOR="BLACK">
+	</TD>
 </TR>
 <INPUT TYPE="HIDDEN" NAME="cPub" VALUE="<?php p($Pub); ?>">
 <TR>
-    <TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
-    <TD>
-    <INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="255">
-    </TD>
+	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="255">
+	</TD>
 </TR>
 <TR>
-    <TD COLSPAN="2" align="center">
-    <INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-<!--    <INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/pub/aliases.php?Pub=<?php  p($Pub); ?>'">
+	<TD COLSPAN="2" align="center">
+	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
+<!--	<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/pub/aliases.php?Pub=<?php  p($Pub); ?>'">
 -->
-    </TD>
+	</TD>
 </TR>
 </TABLE>
 </FORM>

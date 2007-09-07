@@ -45,18 +45,18 @@ if (isset($sendWasAttempted) && $sendWasAttempted){
     <hr noshade size="1" color="black"><br /></td>
 </tr>
 <?php if (isset($sendWasAttempted) && $sendWasAttempted) { ?>
-    <tr>
-        <td nowrap><?php putGS("Email:") ?></td>
-        <td><?php echo htmlspecialchars($reporter->getEmail()); ?></td>
-    </tr>
-    <tr>
-        <td nowrap><?php putGS("Description:") ?></td>
-        <td><?php echo htmlspecialchars($reporter->getDescription()); ?></td>
-    </tr>
-    <tr>
-        <td nowrap>&nbsp;</td>
-        <td>&nbsp;</td>
-    </tr>
+	<tr>
+	    <td nowrap><?php putGS("Email:") ?></td>
+	    <td><?php echo htmlspecialchars($reporter->getEmail()); ?></td>
+	</tr>
+	<tr>
+	    <td nowrap><?php putGS("Description:") ?></td>
+	    <td><?php echo htmlspecialchars($reporter->getDescription()); ?></td>
+	</tr>
+	<tr>
+	    <td nowrap>&nbsp;</td>
+	    <td>&nbsp;</td>
+	</tr>
 <?php } ?>
 <tr>
     <td nowrap><?php putGS("Error ID:") ?></td>

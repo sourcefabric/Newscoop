@@ -10,8 +10,8 @@ if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
 }
 
 if (!$g_user->hasPermission("AddAudioclip")) {
-    camp_html_display_error(getGS("You do not have the right to add audioclips" ), null, true);
-    exit;
+	camp_html_display_error(getGS("You do not have the right to add audioclips" ), null, true);
+	exit;
 }
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -22,8 +22,8 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
-    exit;
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	exit;
 }
 
 // we check for the Campcaster session and show
@@ -59,13 +59,13 @@ camp_html_display_msgs();
 ?>
 <script>
 function checkAddForm(form) {
-    retval = (form.f_media_file.value != '');
-    if (!retval) {
-        alert('<?php putGS("You must select an audio file to upload."); ?>');
-        return retval;
-    }
-    retval = retval && <?php camp_html_fvalidate(); ?>;
-    return retval;
+	retval = (form.f_media_file.value != '');
+	if (!retval) {
+	    alert('<?php putGS("You must select an audio file to upload."); ?>');
+	    return retval;
+	}
+	retval = retval && <?php camp_html_fvalidate(); ?>;
+	return retval;
 } // fn checkAddForm
 </script>
 
@@ -73,30 +73,30 @@ function checkAddForm(form) {
 <form name="audioclip_add" method="POST" action="/<?php echo $ADMIN; ?>/articles/audioclips/edit.php" enctype="multipart/form-data" onsubmit="return checkAddForm(this);">
 <table border="0" cellspacing="0" cellpadding="6" class="table_input">
 <tr>
-    <td colspan="2">
-        <B><?php  putGS("Add New Audioclip"); ?></B>
-        <HR noshade size="1" color="BLACK">
-    </td>
+	<td colspan="2">
+		<B><?php  putGS("Add New Audioclip"); ?></B>
+		<HR noshade size="1" color="BLACK">
+	</td>
 </tr>
 <tr>
-    <td align="right" ><?php putGS("Media file"); ?>:</td>
-    <td>
+	<td align="right" ><?php putGS("Media file"); ?>:</td>
+	<td>
         <input type="hidden" name="MAX_FILE_SIZE" value="<?php p(intval(camp_convert_bytes(SystemPref::Get('MaxUploadFileSize')))); ?>" />
-        <input type="file" name="f_media_file" size="32" class="input_file" alt="file|mp3,ogg,wav|bok" emsg="<?php putGS("You must select an audio file to upload."); ?>">
-    </td>
+		<input type="file" name="f_media_file" size="32" class="input_file" alt="file|mp3,ogg,wav|bok" emsg="<?php putGS("You must select an audio file to upload."); ?>">
+	</td>
 </tr>
 <tr>
-    <td align="left" colspan="2" style="padding-left: 15px;"><?php putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></td>
+	<td align="left" colspan="2" style="padding-left: 15px;"><?php putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></td>
 </tr>
 <tr>
-    <td colspan="2" class="indent"  style="padding-left: 30px;">
-    <input type="radio" name="f_language_specific" value="yes"><?php putGS("Only this translation"); ?><br>
-    <input type="radio" name="f_language_specific" value="no" checked><?php putGS("All translations"); ?>
-    </td>
+	<td colspan="2" class="indent"  style="padding-left: 30px;">
+	<input type="radio" name="f_language_specific" value="yes"><?php putGS("Only this translation"); ?><br>
+	<input type="radio" name="f_language_specific" value="no" checked><?php putGS("All translations"); ?>
+	</td>
 </tr>
 <tr>
-    <td colspan="2">
-    <div align="center">
+	<td colspan="2">
+	<div align="center">
     <input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
     <input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
     <input type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
@@ -108,13 +108,13 @@ function checkAddForm(form) {
     <?php
     if ($isCcOnline) {
     ?>
-    <input type="submit" name="Save" value="<?php putGS('Save'); ?>" class="button">
+	<input type="submit" name="Save" value="<?php putGS('Save'); ?>" class="button">
     <?php
     }
     ?>
-    <input type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="window.close();">
-    </div>
-    </td>
+	<input type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="window.close();">
+	</div>
+	</td>
 </tr>
 </table>
 </form>

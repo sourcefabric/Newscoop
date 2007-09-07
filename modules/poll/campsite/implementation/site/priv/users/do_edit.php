@@ -11,14 +11,14 @@ compute_user_rights($g_user, $canManage, $canDelete);
 $userId = Input::Get('User', 'int', 0);
 $editUser = new User($userId);
 if ($editUser->getUserName() == '') {
-    camp_html_display_error(getGS('No such user account.'), "/$ADMIN/users/?".get_user_urlparams());
-    exit;
+	camp_html_display_error(getGS('No such user account.'), "/$ADMIN/users/?".get_user_urlparams());
+	exit;
 }
 
 if (!$canManage && $editUser->getUserId() != $g_user->getUserId()) {
-    $errMsg = getGS('You do not have the right to change user account information.');
-    camp_html_display_error($errMsg);
-    exit;
+	$errMsg = getGS('You do not have the right to change user account information.');
+	camp_html_display_error($errMsg);
+	exit;
 }
 
 $typeParam = 'uType=' . urlencode($uType);
@@ -36,24 +36,24 @@ $setPassword = Input::Get('setPassword', 'string', 'false') == 'true';
 $customizeRights = Input::Get('customizeRights', 'string', 'false') == 'true';
 
 if ($setPassword) {
-    $password = Input::Get('password', 'string', 0);
-    $passwordConf = Input::Get('passwordConf', 'string', 0);
-    $backLink = "/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getUserId();
+	$password = Input::Get('password', 'string', 0);
+	$passwordConf = Input::Get('passwordConf', 'string', 0);
+	$backLink = "/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getUserId();
 
-    if ($userId == $g_user->getUserId()) {
-        $oldPassword = Input::Get('oldPassword');
-        if (!$editUser->isValidPassword($oldPassword)
-                && !$editUser->isValidOldPassword($oldPassword)) {
-            camp_html_add_msg(getGS('The password you typed is incorrect.'));
-            camp_html_goto_page($backLink);
-        }
-    }
-    if (strlen($password) < 6 || $password != $passwordConf) {
-        camp_html_add_msg(getGS('The password must be at least 6 characters long and both passwords should match.'));
-        camp_html_goto_page($backLink);
-    }
+	if ($userId == $g_user->getUserId()) {
+		$oldPassword = Input::Get('oldPassword');
+		if (!$editUser->isValidPassword($oldPassword)
+				&& !$editUser->isValidOldPassword($oldPassword)) {
+			camp_html_add_msg(getGS('The password you typed is incorrect.'));
+			camp_html_goto_page($backLink);
+		}
+	}
+	if (strlen($password) < 6 || $password != $passwordConf) {
+		camp_html_add_msg(getGS('The password must be at least 6 characters long and both passwords should match.'));
+		camp_html_goto_page($backLink);
+	}
 
-    $editUser->setPassword($password);
+	$editUser->setPassword($password);
     $liveUserValues['passwd'] = $password;
 }
 
@@ -88,33 +88,33 @@ if($isPhorumUser) {
 }
 
 if ($editUser->isAdmin() && $customizeRights && $canManage) {
-    // save user customized rights
-    $rightsFields = $editUser->GetDefaultConfig();
-    $permissions = array();
-    foreach ($rightsFields as $field=>$value) {
-        $val = Input::Get($field, 'string', 'off');
-        $permissionEnabled = ($val == 'on') ? true : false;
-        $permissions[$field] = $permissionEnabled;
-    }
+	// save user customized rights
+	$rightsFields = $editUser->GetDefaultConfig();
+	$permissions = array();
+	foreach ($rightsFields as $field=>$value) {
+		$val = Input::Get($field, 'string', 'off');
+		$permissionEnabled = ($val == 'on') ? true : false;
+		$permissions[$field] = $permissionEnabled;
+	}
 
-    $editUser->updatePermissions($permissions);
+	$editUser->updatePermissions($permissions);
 
-    $logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
-    Log::Message($logtext, $g_user->getUserName(), 55);
+	$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
+	Log::Message($logtext, $g_user->getUserName(), 55);
 }
 if ($editUser->isAdmin() && !$customizeRights && $canManage) {
-    // save user rights based on existing user type
-    $userTypeId = Input::Get('UserType', 'int', 0);
-    if ($userTypeId != 0) {
-        $editUser->setUserType($userTypeId);
-    }
+	// save user rights based on existing user type
+	$userTypeId = Input::Get('UserType', 'int', 0);
+	if ($userTypeId != 0) {
+		$editUser->setUserType($userTypeId);
+	}
 }
 
 camp_html_add_msg(getGS("User '$1' information was changed successfully.",
-    $editUser->getUserName()), "ok");
+	$editUser->getUserName()), "ok");
 $editUser->fetch();
 if ($editUser->getUserName() == $g_user->getUserName() && !$editUser->hasPermission('ManageUsers')) {
-    camp_html_goto_page("/$ADMIN/");
+	camp_html_goto_page("/$ADMIN/");
 }
 camp_html_goto_page("/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getUserId());
 

@@ -7,8 +7,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 
 if (!$g_user->hasPermission('CommentModerate')) {
-    camp_html_display_error(getGS("You do not have the right to moderate comments." ));
-    exit;
+	camp_html_display_error(getGS("You do not have the right to moderate comments." ));
+	exit;
 }
 
 if (SystemPref::Get("UseDBReplication") == 'Y') {
@@ -37,11 +37,11 @@ foreach ($_REQUEST as $name => $value) {
                 $comment->setStatus(PHORUM_STATUS_HIDDEN);
                 break;
             case "delete":
-                // Not allowed to delete first post.
-                if ($comment->getMessageId() != $comment->getThreadId()) {
-                    $comment->delete();
-                    ArticleComment::Unlink(null, null, $messageId);
-                }
+            	// Not allowed to delete first post.
+            	if ($comment->getMessageId() != $comment->getThreadId()) {
+	                $comment->delete();
+	                ArticleComment::Unlink(null, null, $messageId);
+            	}
                 break;
             case "approve":
                 $comment->setStatus(PHORUM_STATUS_APPROVED);

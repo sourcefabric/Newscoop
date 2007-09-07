@@ -407,13 +407,13 @@ class Audioclip {
                 $aclipXMLMdataObj =& new AudioclipXMLMetadata($p_gunId);
                 $this->m_metaData = $aclipXMLMdataObj->m_metaData;
                 if ($aclipXMLMdataObj->exists()) {
-                    $this->m_gunId = $p_gunId;
-                    $this->m_exists = true;
-                    $aclipDbaseMdataObj->create($this->m_metaData);
+		            $this->m_gunId = $p_gunId;
+    		        $this->m_exists = true;
+                	$aclipDbaseMdataObj->create($this->m_metaData);
                 }
             } else {
-                $this->m_gunId = $p_gunId;
-                $this->m_exists = true;
+	            $this->m_gunId = $p_gunId;
+    	        $this->m_exists = true;
             }
         }
     } // constructor
@@ -439,7 +439,7 @@ class Audioclip {
      */
     function getGunId()
     {
-        return $this->m_gunId;
+    	return $this->m_gunId;
     } // fn getGunId
 
 
@@ -454,30 +454,30 @@ class Audioclip {
      */
     function getMetatagValue($p_tagName)
     {
-        $namespaces = array('dc', 'ls', 'dcterms');
+    	$namespaces = array('dc', 'ls', 'dcterms');
 
-        $p_tagName = trim(strtolower($p_tagName));
-        if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
-            return null;
-        }
-        $splitPos = strpos($p_tagName, ':');
-        if ($splitPos !== false) {
-            $tagNs = substr($p_tagName, 0, $splitPos);
-            if (array_search($tagNs, $namespaces) === false) {
-                return PEAR_Error::PEAR_Error("Invalid metatag namespace.");
-            }
-            if (!array_key_exists($p_tagName, $this->m_metaData)) {
-                return null;
-            }
-            return $this->m_metaData[$p_tagName]->getValue();
-        }
-        foreach ($namespaces as $namespace) {
-            $tag = $namespace . ':' . $p_tagName;
-            if (array_key_exists($tag, $this->m_metaData)) {
-                return $this->m_metaData[$tag]->getValue();
-            }
-        }
-        return null;
+		$p_tagName = trim(strtolower($p_tagName));
+    	if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
+    		return null;
+    	}
+    	$splitPos = strpos($p_tagName, ':');
+    	if ($splitPos !== false) {
+    		$tagNs = substr($p_tagName, 0, $splitPos);
+    		if (array_search($tagNs, $namespaces) === false) {
+	    		return PEAR_Error::PEAR_Error("Invalid metatag namespace.");
+    		}
+    		if (!array_key_exists($p_tagName, $this->m_metaData)) {
+	    		return null;
+    		}
+    		return $this->m_metaData[$p_tagName]->getValue();
+    	}
+    	foreach ($namespaces as $namespace) {
+    		$tag = $namespace . ':' . $p_tagName;
+    		if (array_key_exists($tag, $this->m_metaData)) {
+    			return $this->m_metaData[$tag]->getValue();
+    		}
+    	}
+    	return null;
     } // fn getMetaTagValue
 
 
@@ -489,10 +489,10 @@ class Audioclip {
      */
     function getAvailableMetaTags()
     {
-        if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
-            return null;
-        }
-        return array_keys($this->m_metaData);
+    	if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
+    		return null;
+    	}
+    	return array_keys($this->m_metaData);
     } // fn getAvailableMetaTags
 
 
@@ -580,18 +580,18 @@ class Audioclip {
         global $Campsite;
 
         if (!is_array($p_fileVar)) {
-            return false;
-        }
+			return false;
+		}
 
-        $filesize = filesize($p_fileVar['tmp_name']);
-        if ($filesize === false) {
-            return new PEAR_Error("Audioclip::OnFileUpload(): invalid parameters received.");
-        }
-        if (get_magic_quotes_gpc()) {
-            $fileName = stripslashes($p_fileVar['name']);
-        } else {
-            $fileName = $p_fileVar['name'];
-        }
+		$filesize = filesize($p_fileVar['tmp_name']);
+		if ($filesize === false) {
+			return new PEAR_Error("Audioclip::OnFileUpload(): invalid parameters received.");
+		}
+		if (get_magic_quotes_gpc()) {
+			$fileName = stripslashes($p_fileVar['name']);
+		} else {
+			$fileName = $p_fileVar['name'];
+		}
         if ($this->isValidFileType($fileName) == FALSE) {
             return new PEAR_Error("Audioclip::OnFileUpload(): invalid file type.");
         }
@@ -657,36 +657,36 @@ class Audioclip {
      */
     function SearchAudioclips($offset = 0, $limit = 0, $conditions = array(),
                               $operator = 'and',
-                              $orderby = 'dc:creator, dc:source, dc:title',
+    						  $orderby = 'dc:creator, dc:source, dc:title',
                               $desc = false)
     {
         global $mdefs;
 
         $xrc =& XR_CcClient::Factory($mdefs);
-        if (PEAR::isError($xrc)) {
-            return $xrc;
-        }
+		if (PEAR::isError($xrc)) {
+			return $xrc;
+		}
         $sessid = camp_session_get('cc_sessid', '');
-        $criteria = array('filetype' => 'audioclip',
-                          'operator' => $operator,
-                          'limit' => $limit,
-                          'offset' => $offset,
-                          'orderby' => $orderby,
-                          'desc' => $desc,
-                          'conditions' => $conditions
-                          );
-        $result = $xrc->xr_searchMetadata($sessid, $criteria);
-        if (PEAR::isError($result)) {
-            return $result;
-        }
-        $clips = array();
-        foreach ($result['results'] as $clipMetaData) {
-            $clip =& new Audioclip($clipMetaData['gunid']);
-            if ($clip->exists()) {
-                $clips[] = $clip;
-            }
-        }
-        return array($result['cnt'], $clips);
+		$criteria = array('filetype' => 'audioclip',
+						  'operator' => $operator,
+						  'limit' => $limit,
+						  'offset' => $offset,
+						  'orderby' => $orderby,
+						  'desc' => $desc,
+						  'conditions' => $conditions
+						  );
+		$result = $xrc->xr_searchMetadata($sessid, $criteria);
+		if (PEAR::isError($result)) {
+			return $result;
+		}
+		$clips = array();
+		foreach ($result['results'] as $clipMetaData) {
+			$clip =& new Audioclip($clipMetaData['gunid']);
+			if ($clip->exists()) {
+				$clips[] = $clip;
+			}
+		}
+    	return array($result['cnt'], $clips);
     } // fn SearchAudioclips
 
 
@@ -725,27 +725,27 @@ class Audioclip {
      *      Array of Audioclip objects
      */
     function BrowseCategory($p_category, $offset = 0, $limit = 0,
-                            $conditions = array(),
+    						$conditions = array(),
                             $operator = 'and',
-                            $orderby = 'dc:creator, dc:source, dc:title',
+    						$orderby = 'dc:creator, dc:source, dc:title',
                             $desc = false)
     {
         global $mdefs;
 
         $xrc =& XR_CcClient::Factory($mdefs);
-        if (PEAR::isError($xrc)) {
-            return $xrc;
-        }
+		if (PEAR::isError($xrc)) {
+			return $xrc;
+		}
         $sessid = camp_session_get('cc_sessid', '');
-        $criteria = array('filetype' => 'audioclip',
-                          'operator' => $operator,
-                          'limit' => $limit,
-                          'offset' => $offset,
-                          'orderby' => $orderby,
-                          'desc' => $desc,
-                          'conditions' => $conditions
-                          );
-        return $xrc->xr_browseCategory($sessid, $p_category, $criteria);
+		$criteria = array('filetype' => 'audioclip',
+						  'operator' => $operator,
+						  'limit' => $limit,
+						  'offset' => $offset,
+						  'orderby' => $orderby,
+						  'desc' => $desc,
+						  'conditions' => $conditions
+						  );
+		return $xrc->xr_browseCategory($sessid, $p_category, $criteria);
     } // fn BrowseCategory
 
 
@@ -832,17 +832,17 @@ class Audioclip {
         global $mask;
 
         $xmlTextFile = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-                      ."<audioClip>\n"
-                      ."\t<metadata\n"
-                          ."\t\txmlns=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
-                          ."\t\txmlns:ls=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
-                          ."\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
-                          ."\t\txmlns:dcterms=\"http://purl.org/dc/terms/\"\n"
-                          ."\t\txmlns:xml=\"http://www.w3.org/XML/1998/namespace\"\n"
-                      ."\t>\n";
+        			  ."<audioClip>\n"
+        			  ."\t<metadata\n"
+            			  ."\t\txmlns=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+            			  ."\t\txmlns:ls=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+            			  ."\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
+            			  ."\t\txmlns:dcterms=\"http://purl.org/dc/terms/\"\n"
+            			  ."\t\txmlns:xml=\"http://www.w3.org/XML/1998/namespace\"\n"
+        			  ."\t>\n";
 
         foreach($p_metaData as $key => $val) {
-            $xmlTextFile .= "\t\t" . XML_Util::createTag($key, array(), $val) . "\n";
+        	$xmlTextFile .= "\t\t" . XML_Util::createTag($key, array(), $val) . "\n";
         }
         $xmlTextFile .= "\t</metadata>\n</audioClip>\n";
         return $xmlTextFile;

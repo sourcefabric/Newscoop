@@ -21,49 +21,49 @@ $allLanguageIds = array();
 // Go through all the files
 foreach ($list as $pathname) {
     if ($pathname) {
-        // Get the relative path name from server_root
+    	// Get the relative path name from server_root
         $pathname = str_replace($startdir, '', $pathname);
         $filenameParts = explode('.', basename($pathname));
         // prefix will be 'locals' or 'globals'
         $prefix = $filenameParts[0];
-        $directory = dirname($pathname);
-        
-        // Find the language that matches this file.
+		$directory = dirname($pathname);
+		
+		// Find the language that matches this file.
         foreach ($languages as $lang) {
             if ($lang['Code'] == $filenameParts[1]) {
-                $twoLetterCode = $lang['Code'];
+            	$twoLetterCode = $lang['Code'];
                 $sourceFile =& new LocalizerLanguage($prefix, $twoLetterCode);
                 $sourceFile->loadGsFile();
-                switch ($twoLetterCode) {
-                case 'en':
-                    $languageCode = 'en_US';
-                    break;
-                case 'cz':
-                    $languageCode = 'cs_CZ';
-                    break;
-                case 'at':
-                    $languageCode = 'de_AT';
-                    break;
-                case 'sh':
-                    // Serbian is for yugoslavia
-                    // See: http://www.niso.org/standards/resources/3166.html#serbia
-                    $languageCode = 'sh_YU';
-                    break;
-                case 'he':
-                    // Hebrew was completely wrong.
-                    $languageCode = 'iw_IL';
-                    break;
-                case 'zh':
-                    $languageCode = 'zh_CN';
-                    break;
-                default:
-                    // For de, pt, fr, es, it, ro, hr, ru.
-                    $languageCode = strtolower($twoLetterCode).'_'.strtoupper($twoLetterCode);                
-                }
-                // Keep a list of all the language codes.
-                $allLanguageIds[$languageCode] = $languageCode;
-                
-                // Save the name of the loaded file so we can delete it later.
+            	switch ($twoLetterCode) {
+            	case 'en':
+            		$languageCode = 'en_US';
+            		break;
+            	case 'cz':
+            		$languageCode = 'cs_CZ';
+            		break;
+            	case 'at':
+            		$languageCode = 'de_AT';
+            		break;
+            	case 'sh':
+            		// Serbian is for yugoslavia
+            		// See: http://www.niso.org/standards/resources/3166.html#serbia
+            		$languageCode = 'sh_YU';
+            		break;
+            	case 'he':
+            		// Hebrew was completely wrong.
+            		$languageCode = 'iw_IL';
+            		break;
+            	case 'zh':
+            		$languageCode = 'zh_CN';
+            		break;
+            	default:
+            		// For de, pt, fr, es, it, ro, hr, ru.
+            		$languageCode = strtolower($twoLetterCode).'_'.strtoupper($twoLetterCode);            	
+            	}
+            	// Keep a list of all the language codes.
+            	$allLanguageIds[$languageCode] = $languageCode;
+            	
+            	// Save the name of the loaded file so we can delete it later.
                 $origFile = $sourceFile->getSourceFile();
                 
                 // Change the language code to the new format.
@@ -78,11 +78,11 @@ foreach ($list as $pathname) {
 
                 echo $pathname."\n";
                 if (!$copyLanguage->equal($sourceFile) || ($copyLanguage->getNumStrings() <= 0) || !$loadSuccess) {
-                    echo "FAIL"; 
+                	echo "FAIL"; 
                 }
                 else {
-                    echo "SUCCESS";
-                    @unlink($origFile);
+                	echo "SUCCESS";
+                	@unlink($origFile);
                 }
             }
         }

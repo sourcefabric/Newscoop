@@ -6,8 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 
 // Check permissions
 if (!$g_user->hasPermission('ChangeSystemPreferences')) {
-    camp_html_display_error(getGS("You do not have the right to change system preferences."));
-    exit;
+	camp_html_display_error(getGS("You do not have the right to change system preferences."));
+	exit;
 }
 
 $f_keyword_separator = Input::Get('f_keyword_separator');
@@ -25,12 +25,12 @@ $f_cc_xrpcpath = Input::Get('f_cc_xrpcpath');
 $f_cc_xrpcfile = Input::Get('f_cc_xrpcfile');
 $f_external_subs_management = Input::Get('f_external_subs_management');
 if ($f_external_subs_management != 'Y' && $f_external_subs_management != 'N') {
-    $f_external_subs_management = SystemPref::Get('ExternalSubscriptionManagement');
+	$f_external_subs_management = SystemPref::Get('ExternalSubscriptionManagement');
 }
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-    exit;
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
 }
 
 $msg_ok = 1;
@@ -38,15 +38,15 @@ $max_upload_filesize_bytes = camp_convert_bytes($f_max_upload_filesize);
 // Keyword Separator
 SystemPref::Set("KeywordSeparator", $f_keyword_separator);
 if ($f_login_num >= 0) {
-    SystemPref::Set("LoginFailedAttemptsNum", $f_login_num);
+	SystemPref::Set("LoginFailedAttemptsNum", $f_login_num);
 }
 // Max Upload File Size
 if ($max_upload_filesize_bytes > 0 &&
-        $max_upload_filesize_bytes <= camp_convert_bytes(ini_get('upload_max_filesize'))) {
-    SystemPref::Set("MaxUploadFileSize", $f_max_upload_filesize);
+		$max_upload_filesize_bytes <= camp_convert_bytes(ini_get('upload_max_filesize'))) {
+	SystemPref::Set("MaxUploadFileSize", $f_max_upload_filesize);
 } else {
-    $msg_ok = 0;
-    camp_html_add_msg(getGS('Invalid Max Upload File Size value submitted'));
+	$msg_ok = 0;
+	camp_html_add_msg(getGS('Invalid Max Upload File Size value submitted'));
 }
 
 SystemPref::Set('ExternalSubscriptionManagement', $f_external_subs_management);
@@ -87,7 +87,7 @@ Log::Message($logtext, $g_user->getUserId(), 171);
 
 // Success message if everything was ok
 if ($msg_ok == 1) {
-    camp_html_add_msg(getGS("System preferences updated."), "ok");
+	camp_html_add_msg(getGS("System preferences updated."), "ok");
 }
 camp_html_goto_page("/$ADMIN/system_pref/");
 ?>

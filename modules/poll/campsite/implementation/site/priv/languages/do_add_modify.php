@@ -8,8 +8,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/TimeUnit.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/parser_utils.php");
 
 if (!$g_user->hasPermission('ManageLanguages')) {
-    camp_html_display_error(getGS("You do not have the right to add new languages."));
-    exit;
+	camp_html_display_error(getGS("You do not have the right to add new languages."));
+	exit;
 }
 
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
@@ -51,10 +51,10 @@ if ($f_language_name == "") {
     camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 if ($f_native_name == "") {
-       camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Native name').'</B>'));
+   	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Native name').'</B>'));
 }
 if ($f_language_code == "") {
-    camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Code').'</B>'));
+	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Code').'</B>'));
 }
 
 if ($editMode) {
@@ -62,48 +62,48 @@ if ($editMode) {
 }
 
 if ($correct) {
-    $columns = array('Name' => $f_language_name,
-                     'Code' => $f_language_code,
-                     'OrigName' => $f_native_name,
-                     'Month1' => $f_month_1,
-                     'Month2' => $f_month_2,
-                     'Month3' => $f_month_3,
-                     'Month4' => $f_month_4,
-                     'Month5' => $f_month_5,
-                     'Month6' => $f_month_6,
-                     'Month7' => $f_month_7,
-                     'Month8' => $f_month_8,
-                     'Month9' => $f_month_9,
-                     'Month10' => $f_month_10,
-                     'Month11' => $f_month_11,
-                     'Month12' => $f_month_12,
-                     'WDay1' => $f_sunday,
-                     'WDay2' => $f_monday,
-                     'WDay3' => $f_tuesday,
-                     'WDay4' => $f_wednesday,
-                     'WDay5' => $f_thursday,
-                     'WDay6' => $f_friday,
-                     'WDay7' => $f_saturday);
+	$columns = array('Name' => $f_language_name,
+					 'Code' => $f_language_code,
+					 'OrigName' => $f_native_name,
+					 'Month1' => $f_month_1,
+					 'Month2' => $f_month_2,
+					 'Month3' => $f_month_3,
+					 'Month4' => $f_month_4,
+					 'Month5' => $f_month_5,
+					 'Month6' => $f_month_6,
+					 'Month7' => $f_month_7,
+					 'Month8' => $f_month_8,
+					 'Month9' => $f_month_9,
+					 'Month10' => $f_month_10,
+					 'Month11' => $f_month_11,
+					 'Month12' => $f_month_12,
+					 'WDay1' => $f_sunday,
+					 'WDay2' => $f_monday,
+					 'WDay3' => $f_tuesday,
+					 'WDay4' => $f_wednesday,
+					 'WDay5' => $f_thursday,
+					 'WDay6' => $f_friday,
+					 'WDay7' => $f_saturday);
 
-    $success = true;
+	$success = true;
     if ($editMode) {
-        $languageObj->update($columns);
+		$languageObj->update($columns);
     } else {
-        $languageObj =& new Language();
-        $result = $languageObj->create($columns);
-        if (PEAR::isError($result)) {
-            camp_html_add_msg($result->getMessage());
-            $success = false;
-        } else {
-            $f_language_id = $languageObj->getLanguageId();
-        }
+    	$languageObj =& new Language();
+    	$result = $languageObj->create($columns);
+    	if (PEAR::isError($result)) {
+    		camp_html_add_msg($result->getMessage());
+    		$success = false;
+    	} else {
+    		$f_language_id = $languageObj->getLanguageId();
+    	}
     }
     if ($success) {
-        TimeUnit::SetTimeUnit('D', $f_language_id, $D);
-        TimeUnit::SetTimeUnit('W', $f_language_id, $W);
-        TimeUnit::SetTimeUnit('M', $f_language_id, $M);
-        TimeUnit::SetTimeUnit('Y', $f_language_id, $Y);
-        camp_html_goto_page("/$ADMIN/languages/index.php");
+		TimeUnit::SetTimeUnit('D', $f_language_id, $D);
+		TimeUnit::SetTimeUnit('W', $f_language_id, $W);
+		TimeUnit::SetTimeUnit('M', $f_language_id, $M);
+		TimeUnit::SetTimeUnit('Y', $f_language_id, $Y);
+	    camp_html_goto_page("/$ADMIN/languages/index.php");
     }
 }
 $link = "/$ADMIN/languages/add_modify.php". ($editMode ? "?f_language_id=".$f_language_id : "");

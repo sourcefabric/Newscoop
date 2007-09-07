@@ -48,7 +48,7 @@ global $ADMIN;
                 </tr>
                 <tr valign="top">
                     <td colspan="2">
-                        <?php putGS("What were you trying to do when this happened?") ?> <?php putGS("(optional)"); ?>
+                    	<?php putGS("What were you trying to do when this happened?") ?> <?php putGS("(optional)"); ?>
                     </td>
                 </tr>
                 <tr>
@@ -59,7 +59,7 @@ global $ADMIN;
                 </tr>
                 <tr>
                     <td align="left" nowrap>
-                        <?php putGS("Email:");  ?> <?php putGS("(optional)"); ?>
+                    	<?php putGS("Email:");  ?> <?php putGS("(optional)"); ?>
                     </td>
                     <td><input type="text" class="input_text" name="f_email" value="" size="32" maxlength="255">
                     </td>
@@ -93,47 +93,47 @@ global $ADMIN;
                 width="100%">
                 <tr>
                     <td align="left" nowrap>
-                        <?php putGS("Error ID:"); ?>
+                    	<?php putGS("Error ID:"); ?>
                     </td>
                     <td>
-                        <?php echo $reporter->getId(); ?>
+                    	<?php echo $reporter->getId(); ?>
                     </td>
                 </tr>
                 <tr>
                     <td align="left" nowrap>
-                        <?php putGS("Software:"); ?>
+                    	<?php putGS("Software:"); ?>
                     </td>
                     <td>
-                        <?php echo $reporter->getSoftware();  ?>
+                    	<?php echo $reporter->getSoftware();  ?>
                     </td>
                 </tr>
                 <tr>
                     <td align="left" nowrap>
-                        <?php putGS("Error Message:"); ?>
+                    	<?php putGS("Error Message:"); ?>
                     </td>
                     <td>
-                        <?php echo $reporter->getStr(); ?>
+                    	<?php echo $reporter->getStr(); ?>
                     </td>
                 </tr>
                 <tr>
                     <td align="left" nowrap>
-                        <?php putGS("Error Number:"); ?>
+                    	<?php putGS("Error Number:"); ?>
                     </td>
                     <td>
-                        <?php echo $reporter->getErrorNum(); ?>
+                    	<?php echo $reporter->getErrorNum(); ?>
                     </td>
                 </tr>
                 <tr>
                     <td align="left" nowrap>
-                        <?php putGS("Time:"); ?>
+                    	<?php putGS("Time:"); ?>
                     </td>
                     <td>
-                        <?php echo $reporter->getTime(); ?>
+                    	<?php echo $reporter->getTime(); ?>
                     </td>
                 </tr>
                 <tr valign="top">
                     <td align="left" nowrap>
-                        <?php putGS("Backtrace:"); ?>
+                    	<?php putGS("Backtrace:"); ?>
                     </td>
                     <td>
                         <div style="overflow: auto; height: 150px;

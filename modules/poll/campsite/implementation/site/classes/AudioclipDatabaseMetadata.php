@@ -18,7 +18,7 @@ require_once($g_documentRoot.'/classes/AudioclipMetadataEntry.php');
  * @package Campsite
  */
 class AudioclipDatabaseMetadata {
-    var $m_gunId = null;
+	var $m_gunId = null;
     var $m_metaData = array();
     var $m_exists = false;
 
@@ -41,7 +41,7 @@ class AudioclipDatabaseMetadata {
      */
     function exists()
     {
-        return $this->m_exists;
+    	return $this->m_exists;
     }
 
 
@@ -62,7 +62,7 @@ class AudioclipDatabaseMetadata {
             $this->m_gunId = $p_gunId;
         }
         if (is_null($this->m_gunId)) {
-            $this->m_exists = false;
+        	$this->m_exists = false;
             return false;
         }
 
@@ -70,7 +70,7 @@ class AudioclipDatabaseMetadata {
                      WHERE gunid = '".$this->m_gunId."' ORDER BY id";
         $rows = $g_ado_db->GetAll($queryStr);
         if (!$rows) {
-            $this->m_exists = false;
+        	$this->m_exists = false;
             return false;
         }
         $this->m_exists = true;
@@ -94,14 +94,14 @@ class AudioclipDatabaseMetadata {
     function create($p_metaData = null)
     {
         if (!is_array($p_metaData)) {
-            $this->m_exists = false;
+        	$this->m_exists = false;
             return false;
         }
 
         $isError = false;
         $gunId = null;
         foreach ($p_metaData as $metaDataEntry) {
-            $gunId = $metaDataEntry->getGunId();
+        	$gunId = $metaDataEntry->getGunId();
             if (!$metaDataEntry->create()) {
                 $isError = true;
                 break;
@@ -111,7 +111,7 @@ class AudioclipDatabaseMetadata {
             foreach ($p_metaData as $metaDataEntry) {
                 $metaDataEntry->delete();
             }
-            $this->m_exists = false;
+        	$this->m_exists = false;
             return false;
         }
         $this->m_gunId = $gunId;
@@ -158,7 +158,7 @@ class AudioclipDatabaseMetadata {
     function update($p_metaData)
     {
         if (!is_array($p_metaData)) {
-            $this->m_exists = false;
+        	$this->m_exists = false;
             return false;
         }
         $newDataKeys = array_keys($p_metaData);

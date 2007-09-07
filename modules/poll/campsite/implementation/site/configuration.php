@@ -30,7 +30,7 @@ $PLUGIN_DIR = "plugins";
 
 if (!isset($_SERVER['SERVER_PORT']))
 {
-    $_SERVER['SERVER_PORT'] = 80;
+	$_SERVER['SERVER_PORT'] = 80;
 }
 $scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
 $Campsite['HOSTNAME'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : "";
@@ -49,7 +49,7 @@ $Campsite['IMAGE_PREFIX'] = 'cms-image-';
 $Campsite['IMAGEMAGICK_INSTALLED'] = true;
 $Campsite['THUMBNAIL_MAX_SIZE'] = 64;
 $Campsite['THUMBNAIL_COMMAND'] = 'convert -sample '
-        .$Campsite['THUMBNAIL_MAX_SIZE'].'x'.$Campsite['THUMBNAIL_MAX_SIZE'];
+		.$Campsite['THUMBNAIL_MAX_SIZE'].'x'.$Campsite['THUMBNAIL_MAX_SIZE'];
 $Campsite['THUMBNAIL_DIRECTORY'] = $Campsite['IMAGE_DIRECTORY'].'/thumbnails/';
 $Campsite['THUMBNAIL_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/thumbnails/';
 $Campsite['THUMBNAIL_PREFIX'] = 'cms-thumb-';
@@ -88,6 +88,7 @@ define('CAMP_ERROR_READ_FILE',   -600);
 define('CAMP_ERROR_WRITE_FILE',  -700);
 define('CAMP_ERROR_DELETE_FILE', -800);
 define('CAMP_ERROR_UPLOAD_FILE', -900);
+
 
 /**
  * Try to autoload class definitions before failing. This makes the Campsite

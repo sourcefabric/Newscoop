@@ -6,8 +6,8 @@ require_once('Localizer.php');
 
 // Check permissions
 if (!$g_user->hasPermission('ManageLocalizer')) {
-    camp_html_display_error(getGS("You do not have the right to manage the localizer."));
-    exit;
+	camp_html_display_error(getGS("You do not have the right to manage the localizer."));
+	exit;
 }
 
 $prefix = Input::Get('prefix', 'string', '', true);
@@ -15,7 +15,7 @@ $missingStrings = Localizer::FindMissingStrings($prefix);
 if (count($missingStrings) > 0) {
     $result = Localizer::AddStringAtPosition($prefix, 0, $missingStrings);
     if (PEAR::isError($result)) {
-        camp_html_add_msg($result->getMessage());
+    	camp_html_add_msg($result->getMessage());
     }
 }
 

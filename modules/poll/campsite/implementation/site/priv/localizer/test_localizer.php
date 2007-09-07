@@ -17,21 +17,21 @@ $localizerLanguage->dumpToHtml();
 echo "Update the value of 'test'...<br>";
 $success = $localizerLanguage->updateString("test", "test", "***");
 if (!$success) {
-    echo "ERROR UPDATING VALUE<br>";
+	echo "ERROR UPDATING VALUE<br>";
 }
 $localizerLanguage->dumpToHtml();
 
 echo "Update the key for 'test'...<br>";
 $success = $localizerLanguage->updateString("test", "test_new");
 if (!$success) {
-    echo "ERROR UPDATING KEY<br>";
+	echo "ERROR UPDATING KEY<br>";
 }
 $localizerLanguage->dumpToHtml();
 
 echo "Update the key and value for 'test'...<br>";
 $success = $localizerLanguage->updateString("test_new", "boo", "ghost");
 if (!$success) {
-    echo "ERROR UPDATING STRING<br>";
+	echo "ERROR UPDATING STRING<br>";
 }
 $localizerLanguage->dumpToHtml();
 
@@ -63,32 +63,32 @@ echo "Load XML...<br>";
 $xmlLang =& new LocalizerLanguage('locals', 'xx');
 $result = $xmlLang->loadFile('xml');
 if (!$result) {
-    echo "Error!  Could not load XML file.<br>";
+	echo "Error!  Could not load XML file.<br>";
 }
 else {
-    echo "Success!<br>";
+	echo "Success!<br>";
 }
 
 echo "<br>Load GS...<br>";
 $gsLang =& new LocalizerLanguage('locals', 'xx');
 $result = $gsLang->loadFile('gs');
 if (!$result) {
-    echo "Error!  Could not load GS file.<br>";
+	echo "Error!  Could not load GS file.<br>";
 }
 else {
-    echo "Success!<br>";
+	echo "Success!<br>";
 }
 
 echo "<br>Testing for equality...<br>";
 if (!$gsLang->equal($xmlLang)) {
-    echo "Error! Not Equal<br>";
-    echo "GS: <br>";
-    $gsLang->dumpToHtml();
-    echo "XML: <br>";
-    $xmlLang->dumpToHtml();
+	echo "Error! Not Equal<br>";
+	echo "GS: <br>";
+	$gsLang->dumpToHtml();
+	echo "XML: <br>";
+	$xmlLang->dumpToHtml();
 }
 else {
-    echo "Success! They are equal<br>";    
+	echo "Success! They are equal<br>";	
 }
 
 echo "Testing ability to get languages in the base directory...<br>";

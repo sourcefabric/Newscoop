@@ -36,7 +36,7 @@ function onCommentAction(p_type, p_commentId)
         <?php
         }
         ?>
-       </td>
+   	</td>
 <tr>
 
 <?php
@@ -93,7 +93,7 @@ if (count($comments) <= 0) {
             <td>
                 <a href="javascript: void(0);" onclick="onCommentAction('delete', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Delete"); ?></b></a>
             </td>
-             <?php } ?>
+ 			<?php } ?>
 
             <td style="padding-left: 10px;">
                 <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="hide" class="input_radio" id="hidden_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HOLD) { ?>checked<?php } ?> onchange="onCommentAction('hidden', <?php p($comment->getMessageId()); ?>);">
@@ -115,7 +115,7 @@ if (count($comments) <= 0) {
                 <table cellspacing="0" cellpadding="3" border="0">
                 <tr>
                     <td align="right" valign="top" nowrap>
-                         <?php putGS("From:"); ?>
+ 						<?php putGS("From:"); ?>
                     </td>
                     <td><?php p(htmlspecialchars($comment->getAuthor())); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
                 </tr>
@@ -163,7 +163,7 @@ if (!$articleObj->commentsLocked() && ($f_edit_mode == "edit") ) {
 <tr>
     <td colspan="2" style="padding-left: 5px;">
         <b><?php putGS("Post a comment"); ?></b>
-           <HR NOSHADE SIZE="1" COLOR="BLACK">
+   		<HR NOSHADE SIZE="1" COLOR="BLACK">
     </td>
 </tr>
 

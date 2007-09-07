@@ -43,9 +43,9 @@ final class CampCache {
         global $Campsite;
 
         if (isset($Campsite['CAMP_SECRET'])) {
-            $this->m_secret = $Campsite['CAMP_SECRET'];
+			$this->m_secret = $Campsite['CAMP_SECRET'];
         } else {
-            $this->m_secret = $Campsite['DATABASE_USER']
+			$this->m_secret = $Campsite['DATABASE_USER']
                 .$Campsite['DATABASE_NAME']
                 .$Campsite['DATABASE_SERVER_ADDRESS']
                 .$Campsite['WWW_DIR'];

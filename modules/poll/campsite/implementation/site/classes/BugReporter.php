@@ -150,7 +150,7 @@ class BugReporter
         if (preg_match ("/pong/", $this->__responseBody) && ($code == 200)) {
             return true;
         } else {
-            return false;
+        	return false;
         }
     } // fn pingServer
 
@@ -164,9 +164,9 @@ class BugReporter
     function setPingStatus ($p_pingingStatus)
     {
         if (!is_bool($p_pingingStatus)) {
-            trigger_error ($this->invalidParam);
+        	trigger_error ($this->invalidParam);
         } else {
-            $this->m_disablePing = !($p_pingingStatus);
+        	$this->m_disablePing = !($p_pingingStatus);
         }
     } // fn setPingStatus
 
@@ -206,12 +206,12 @@ class BugReporter
         $this->__responseCode = $code;
 
         if ($code != 200) {
-            return false;
+        	return false;
         } elseif (preg_match ("/\baccepted\b/", $this->__responseBody)) {
-            // --- Did we get an "accepted"?
-            return true;
+        	// --- Did we get an "accepted"?
+        	return true;
         } else {
-            return false;
+        	return false;
         }
     } // fn sendToServer
 
@@ -342,7 +342,7 @@ class BugReporter
     function getEmail()
     {
         if (!isset($this->m_email)) {
-            $this->m_email = "";
+        	$this->m_email = "";
         }
         return $this->m_email;
     } // fn getEmail
@@ -356,7 +356,7 @@ class BugReporter
     function getDescription()
     {
         if (!isset($this->m_description)) {
-            $this->m_description = "";
+        	$this->m_description = "";
         }
         return $this->m_description;
     } // fn getDescription

@@ -8,33 +8,33 @@ var defaultCheckboxPrefix = "checkbox_";
 
 function checkAll(numItems, rowPrefix, checkboxPrefix)
 {
-    if (rowPrefix == null) {
-        rowPrefix = defaultRowPrefix;
-    }
-    if (checkboxPrefix == null) {
-        checkboxPrefix = defaultCheckboxPrefix;
-    }
-    for (i = 0; i < numItems; i++) {
-        document.getElementById(rowPrefix+i).className = 'list_row_click';
-        document.getElementById(checkboxPrefix+i).checked = true;
+	if (rowPrefix == null) {
+		rowPrefix = defaultRowPrefix;
+	}
+	if (checkboxPrefix == null) {
+		checkboxPrefix = defaultCheckboxPrefix;
+	}
+	for (i = 0; i < numItems; i++) {
+		document.getElementById(rowPrefix+i).className = 'list_row_click';
+		document.getElementById(checkboxPrefix+i).checked = true;
         marked_row[i] = true;
-    }
+	}
 } // fn checkAll
 
 
 function uncheckAll(numItems, rowPrefix, checkboxPrefix)
 {
-    if (rowPrefix == null) {
-        rowPrefix = defaultRowPrefix;
-    }
-    if (checkboxPrefix == null) {
-        checkboxPrefix = defaultCheckboxPrefix;
-    }
-    for (i = 0; i < numItems; i++) {
-        document.getElementById(rowPrefix+i).className = default_class[i];
-        document.getElementById(checkboxPrefix+i).checked = false;
+	if (rowPrefix == null) {
+		rowPrefix = defaultRowPrefix;
+	}
+	if (checkboxPrefix == null) {
+		checkboxPrefix = defaultCheckboxPrefix;
+	}
+	for (i = 0; i < numItems; i++) {
+		document.getElementById(rowPrefix+i).className = default_class[i];
+		document.getElementById(checkboxPrefix+i).checked = false;
         marked_row[i] = false;
-    }
+	}
 } // fn uncheckAll
 
 /**
@@ -49,7 +49,7 @@ function uncheckAll(numItems, rowPrefix, checkboxPrefix)
  */
 function setPointer(theRow, theRowNum, theAction)
 {
-    newClass = null;
+	newClass = null;
     // 4. Defines the new class
     // 4.1 Current class is the default one
     if (theRow.className == default_class[theRowNum]) {
@@ -66,7 +66,7 @@ function setPointer(theRow, theRowNum, theAction)
     }
 
     if (newClass != null) {
-        theRow.className = newClass;
+    	theRow.className = newClass;
     }
     return true;
 } // end of the 'setPointer()' function
@@ -79,20 +79,20 @@ function setPointer(theRow, theRowNum, theAction)
  */
 function checkboxClick(theCheckbox, theRowNum, rowPrefix)
 {
-    if (rowPrefix == null) {
-        rowPrefix = defaultRowPrefix;
-    }
-    if (theCheckbox.checked) {
+	if (rowPrefix == null) {
+		rowPrefix = defaultRowPrefix;
+	}
+	if (theCheckbox.checked) {
         newClass = 'list_row_click';
         marked_row[theRowNum] = (typeof(marked_row[theRowNum]) == 'undefined' || !marked_row[theRowNum])
                               ? true
                               : null;
-    } else {
+	} else {
         newClass = 'list_row_hover';
         marked_row[theRowNum] = false;
-    }
-       row = document.getElementById(rowPrefix+theRowNum);
-       row.className = newClass;
+	}
+   	row = document.getElementById(rowPrefix+theRowNum);
+   	row.className = newClass;
 } // fn checkboxClick
 
 /**
@@ -127,7 +127,7 @@ function validateCheckboxes(formName, fieldName, minChecked, maxChecked, errorMe
         }
         isValid = numCheckboxesChecked >= minChecked;
         if (maxChecked != "*") {
-            isValid = isValid && numCheckboxesChecked <= maxChecked;
+        	isValid = isValid && numCheckboxesChecked <= maxChecked;
         }
         if (!isValid) {
             alert(errorMessage);

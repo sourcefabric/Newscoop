@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <languages>
     <language>
-        <Id>en.English</Id>
+		<Id>en.English</Id>
         <Name>English(GB)</Name>
         <NativeName>English</NativeName>
     </language>
-    <language>
-        <Id>de.German</Id>
+	<language>
+		<Id>de.German</Id>
         <Name>Deutsch(DE)</Name>
         <NativeName>Deutsch</NativeName>
     </language>

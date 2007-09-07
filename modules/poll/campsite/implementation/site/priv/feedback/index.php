@@ -27,7 +27,7 @@ global $ADMIN;
             ?></td>
         </tr>
         <tr>
-            <td align="left" nowrap><?php putGS("Subject:"); ?></td>
+        	<td align="left" nowrap><?php putGS("Subject:"); ?></td>
             <td><input type="text" class="input_text" name="f_description" value="" size="32" maxlength="255"></td>
         </tr>
         <tr>
@@ -38,7 +38,7 @@ global $ADMIN;
         </tr>
         <tr>
             <td align="left" nowrap>
-                 <?php putGS("Email:"); ?> <?php putGS("(optional)"); ?>
+             	<?php putGS("Email:"); ?> <?php putGS("(optional)"); ?>
             </td>
             <td><input type="text" class="input_text" name="f_email" value="" size="32" maxlength="255">
             </td>

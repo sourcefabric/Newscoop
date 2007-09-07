@@ -217,12 +217,12 @@ class User extends DatabaseObject {
         global $g_ado_db, $LiveUserAdmin;
 
         if ($this->exists()) {
-            $res = $g_ado_db->Execute("SELECT Id FROM Subscriptions WHERE IdUser = ".$this->m_data['Id']);
-            while ($row = $res->FetchRow()) {
-                $g_ado_db->Execute("DELETE FROM SubsSections WHERE IdSubscription=".$row['Id']);
-            }
-            $g_ado_db->Execute("DELETE FROM Subscriptions WHERE IdUser=".$this->m_data['Id']);
-            $g_ado_db->Execute("DELETE FROM SubsByIP WHERE IdUser=".$this->m_data['Id']);
+        	$res = $g_ado_db->Execute("SELECT Id FROM Subscriptions WHERE IdUser = ".$this->m_data['Id']);
+        	while ($row = $res->FetchRow()) {
+        		$g_ado_db->Execute("DELETE FROM SubsSections WHERE IdSubscription=".$row['Id']);
+        	}
+        	$g_ado_db->Execute("DELETE FROM Subscriptions WHERE IdUser=".$this->m_data['Id']);
+        	$g_ado_db->Execute("DELETE FROM SubsByIP WHERE IdUser=".$this->m_data['Id']);
             $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
             $permData = $LiveUserAdmin->perm->getUsers($params);
             if (!is_array($permData) || sizeof($permData) < 1) {
@@ -510,7 +510,7 @@ class User extends DatabaseObject {
      */
     function setConfigValue($p_varName, $p_value)
     {
-        global $LiveUser, $LiveUserAdmin;
+		global $LiveUser, $LiveUserAdmin;
 
         if (!$this->exists() || empty($p_varName) || !is_string($p_varName)) {
             return;

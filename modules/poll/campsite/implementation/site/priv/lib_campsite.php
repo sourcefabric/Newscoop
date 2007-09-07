@@ -8,31 +8,31 @@ $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
  */
 function camp_check_admin_access($p_request)
 {
-    global $ADMIN, $g_ado_db, $LiveUser;
+	global $ADMIN, $g_ado_db, $LiveUser;
 
-    require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 
-    $access = false;
-    $XPerm = array();
-    $user = array();
+	$access = false;
+	$XPerm = array();
+	$user = array();
 
     if (!$LiveUser->isLoggedIn()) {
         return array($access, $user, $XPerm);
     }
 
-    // check for required info
-    if (!isset($p_request['LoginUserId']) || !isset($p_request['LoginUserKey'])
-         || !is_numeric($p_request['LoginUserId']) || !is_numeric($p_request['LoginUserKey'])) {
-        return array($access, $user, $XPerm);
-    }
+	// check for required info
+	if (!isset($p_request['LoginUserId']) || !isset($p_request['LoginUserKey'])
+	 	|| !is_numeric($p_request['LoginUserId']) || !is_numeric($p_request['LoginUserKey'])) {
+		return array($access, $user, $XPerm);
+	}
 
-    // we passed LiveUser->isLoggedIn() so we can be sure the user
+	// we passed LiveUser->isLoggedIn() so we can be sure the user
     // actually exists in database table
     if ($LiveUser->getProperty('keyid') == $p_request['LoginUserKey']) {
         $access = true;
         $user =& new User($LiveUser->getProperty('auth_user_id'));
     }
-    return array($access, $user);
+	return array($access, $user);
 } // fn check_basic_access
 
 
@@ -64,11 +64,11 @@ function camp_time_diff_str($p_time1, $p_time2 = null)
     $diffSeconds = abs($p_time1 - $p_time2);
     $days = floor($diffSeconds/86400);
     $diffSeconds -= ($days * 86400);
-    $hours = floor($diffSeconds/3600);
-    $diffSeconds -= $hours * 3600;
-    $minutes = floor($diffSeconds/60);
-    $diffSeconds -= $minutes * 60;
-    return array('days' => $days, 'hours' => $hours, 'minutes' => $minutes, 'seconds' => $diffSeconds);
+	$hours = floor($diffSeconds/3600);
+	$diffSeconds -= $hours * 3600;
+	$minutes = floor($diffSeconds/60);
+	$diffSeconds -= $minutes * 60;
+	return array('days' => $days, 'hours' => $hours, 'minutes' => $minutes, 'seconds' => $diffSeconds);
 } // fn camp_time_diff_str
 
 
@@ -119,12 +119,12 @@ function camp_time_format($p_time)
  */
 function camp_array_get_value($p_array, $p_index, $p_defaultValue = null)
 {
-    if (isset($p_array[$p_index])) {
-        return $p_array[$p_index];
-    }
-    else {
-        return $p_defaultValue;
-    }
+	if (isset($p_array[$p_index])) {
+		return $p_array[$p_index];
+	}
+	else {
+		return $p_defaultValue;
+	}
 } // fn camp_array_get_value
 
 
@@ -139,9 +139,9 @@ function camp_array_get_value($p_array, $p_index, $p_defaultValue = null)
  */
 function camp_javascriptspecialchars($p_string)
 {
-    $encodedString = htmlspecialchars($p_string);
-    $slashedString = addslashes($encodedString);
-    return $slashedString;
+	$encodedString = htmlspecialchars($p_string);
+	$slashedString = addslashes($encodedString);
+	return $slashedString;
 } // fn camp_javascriptspecialchars
 
 
@@ -204,15 +204,15 @@ function p($p_string = null)
  */
 function camp_format_bytes($p_bytes)
 {
-    if ( ($p_bytes / 1073741824) > 1) {
-        return round($p_bytes/1073741824, 1).' '.getGS('GB');
-    } else if ( ($p_bytes / 1048576) > 1) {
-        return round($p_bytes/1048576, 1).' '.getGS('MB');
-    } else if ( ($p_bytes / 1024) > 1) {
-        return round($p_bytes/1024, 1).' '.getGS('KB');
-    } else {
-        return round($p_bytes, 1).' '.getGS('bytes');
-    }
+	if ( ($p_bytes / 1073741824) > 1) {
+		return round($p_bytes/1073741824, 1).' '.getGS('GB');
+	} else if ( ($p_bytes / 1048576) > 1) {
+		return round($p_bytes/1048576, 1).' '.getGS('MB');
+	} else if ( ($p_bytes / 1024) > 1) {
+		return round($p_bytes/1024, 1).' '.getGS('KB');
+	} else {
+		return round($p_bytes, 1).' '.getGS('bytes');
+	}
 } // fn camp_format_bytes
 
 
@@ -224,24 +224,24 @@ function camp_format_bytes($p_bytes)
  */
 function camp_convert_bytes($p_val)
 {
-    $p_val = trim($p_val);
-    if ($p_val == '') {
-        return false;
-    }
-    $last = strtolower($p_val{strlen($p_val)-1});
-    switch($last) {
-        // The 'G' modifier is available since PHP 5.1.0
-        case 'g':
-            $p_val *= 1024;
-        case 'm':
-            $p_val *= 1024;
-        case 'k':
-            $p_val *= 1024;
-            break;
-        default:
-            $p_val = false;
-    }
-    return $p_val;
+	$p_val = trim($p_val);
+	if ($p_val == '') {
+		return false;
+	}
+	$last = strtolower($p_val{strlen($p_val)-1});
+	switch($last) {
+		// The 'G' modifier is available since PHP 5.1.0
+		case 'g':
+			$p_val *= 1024;
+		case 'm':
+			$p_val *= 1024;
+		case 'k':
+			$p_val *= 1024;
+			break;
+		default:
+			$p_val = false;
+	}
+	return $p_val;
 } // fn camp_convert_bytes
 
 
@@ -255,7 +255,7 @@ function camp_convert_bytes($p_val)
  */
 function camp_mime_content_type($p_file)
 {
-    return exec(trim('file -bi ' . escapeshellarg($p_file)));
+	return exec(trim('file -bi ' . escapeshellarg($p_file)));
 } // fn camp_mime_content_type
 
 
@@ -284,28 +284,28 @@ function camp_load_translation_strings($p_prefix)
  */
 function camp_is_valid_url_name($p_name)
 {
-    if (strlen($p_name) == 0) {
-        return false;
-    }
-    for ($i = 0; $i < strlen($p_name); $i++) {
-        $c = $p_name[$i];
-        $ok = ($c >= 'A' && $c <= 'Z') || ($c >= 'a' && $c <= 'z') || $c == '_' || ($c >= '0' && $c <= '9');
-        if (!$ok) {
-            return false;
-        }
-    }
-    return true;
+	if (strlen($p_name) == 0) {
+		return false;
+	}
+	for ($i = 0; $i < strlen($p_name); $i++) {
+		$c = $p_name[$i];
+		$ok = ($c >= 'A' && $c <= 'Z') || ($c >= 'a' && $c <= 'z') || $c == '_' || ($c >= '0' && $c <= '9');
+		if (!$ok) {
+			return false;
+		}
+	}
+	return true;
 } // fn camp_is_valid_url_name
 
 
 
 function camp_is_valid_url($p_url)
 {
-    if (preg_match('/^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\//i', $p_url, $m)) {
-        return true;
-    } else {
-        return false;
-    }
+	if (preg_match('/^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\//i', $p_url, $m)) {
+		return true;
+	} else {
+		return false;
+	}
 } // fn camp_is_valid_url
 
 
@@ -314,24 +314,24 @@ function camp_is_valid_url($p_url)
  * the array the way array_pop() does.
  * @param array $p_array
  * @param boolean $p_getKeyValuePair
- *         If TRUE, return both the key and the element,
- *         if FALSE, just return the element.
+ * 		If TRUE, return both the key and the element,
+ * 		if FALSE, just return the element.
  * @param int $p_offset
- *         Which element to peek at.  If -1, peek at the last element.
+ * 		Which element to peek at.  If -1, peek at the last element.
  * @return mixed
  */
 function camp_array_peek($p_array, $p_getKeyValuePair = false, $p_offset = 0)
 {
-    reset($p_array);
-    if ($p_offset == -1) {
-        end($p_array);
-    }
-    list($key, $element) = each($p_array);
-    if ($p_getKeyValuePair) {
-        return array($key, $element);
-    } else {
-        return $element;
-    }
+	reset($p_array);
+	if ($p_offset == -1) {
+		end($p_array);
+	}
+	list($key, $element) = each($p_array);
+	if ($p_getKeyValuePair) {
+		return array($key, $element);
+	} else {
+		return $element;
+	}
 } // fn camp_array_peek
 
 
@@ -347,14 +347,14 @@ function camp_array_peek($p_array, $p_getKeyValuePair = false, $p_offset = 0)
  */
 function camp_session_get($p_name, $p_defaultValue)
 {
-    // Use the REQUEST variable if it is set.
-    if (isset($_REQUEST[$p_name])) {
-        $_SESSION[$p_name] = $_REQUEST[$p_name];
-    }
-    elseif (!isset($_SESSION[$p_name])) {
-        $_SESSION[$p_name] = $p_defaultValue;
-    }
-    return $_SESSION[$p_name];
+	// Use the REQUEST variable if it is set.
+	if (isset($_REQUEST[$p_name])) {
+		$_SESSION[$p_name] = $_REQUEST[$p_name];
+	}
+	elseif (!isset($_SESSION[$p_name])) {
+		$_SESSION[$p_name] = $p_defaultValue;
+	}
+	return $_SESSION[$p_name];
 } // fn camp_session_get
 
 
@@ -380,9 +380,9 @@ function camp_session_set($p_name, $p_value)
  */
 function camp_session_unset($p_name)
 {
-    if (isset($_SESSION[$p_name])) {
-        unset($_SESSION[$p_name]);
-    }
+	if (isset($_SESSION[$p_name])) {
+	    unset($_SESSION[$p_name]);
+	}
 } // fn camp_session_set
 
 
@@ -399,7 +399,7 @@ function camp_campcaster_login($f_cc_username, $f_cc_password)
 
     $xrc =& XR_CcClient::Factory($mdefs);
     if (PEAR::isError($xrc)) {
-        return $xrc;
+    	return $xrc;
     }
     $r = $xrc->xr_login($f_cc_username, $f_cc_password);
     if (is_string($r) && $r == 'Connection refused') {
@@ -420,12 +420,12 @@ function camp_campcaster_login($f_cc_username, $f_cc_password)
  */
 function camp_dump($p_object)
 {
-    echo "<pre>";
-    ob_start();
-    print_r($p_object);
-    $buffer = ob_get_clean();
-    echo htmlspecialchars(wordwrap($buffer, 100));
-    echo "</pre>";
+	echo "<pre>";
+	ob_start();
+	print_r($p_object);
+	$buffer = ob_get_clean();
+	echo htmlspecialchars(wordwrap($buffer, 100));
+	echo "</pre>";
 }
 
 
@@ -437,47 +437,47 @@ function camp_dump($p_object)
  */
 function camp_get_error_message($p_errorCode, $p_arg1 = null, $p_arg2 = null)
 {
-    global $Campsite;
-    if (function_exists("camp_load_translation_strings")) {
-        camp_load_translation_strings("home");
-    }
+	global $Campsite;
+	if (function_exists("camp_load_translation_strings")) {
+		camp_load_translation_strings("home");
+	}
 
-    switch ($p_errorCode) {
-    case CAMP_ERROR_CREATE_FILE:
-        return getGS("The system was unable to create the file '$1'.", basename($p_arg1))
-            .(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
-            .' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
-        break;
-    case CAMP_ERROR_WRITE_FILE:
-        return getGS("The system was unable to write to the file '$1'.", basename($p_arg1))
-            .(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
-            .' '.getGS("Please check if the user '$1' has permission to write to this file.", $Campsite['APACHE_USER']);
-        break;
-    case CAMP_ERROR_READ_FILE:
-        return getGS("The system was unable to read the file '$1'.", basename($p_arg1))
-            .(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
-            .' '.getGS("Please check if the user '$1' has permission to read this file.", $Campsite['APACHE_USER']);
-        break;
-    case CAMP_ERROR_DELETE_FILE:
-        return getGS("The system was unable to delete the file '$1'.", basename($p_arg1))
-            .(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
-            .' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
-        break;
+	switch ($p_errorCode) {
+	case CAMP_ERROR_CREATE_FILE:
+		return getGS("The system was unable to create the file '$1'.", basename($p_arg1))
+			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
+			.' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		break;
+	case CAMP_ERROR_WRITE_FILE:
+		return getGS("The system was unable to write to the file '$1'.", basename($p_arg1))
+			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
+			.' '.getGS("Please check if the user '$1' has permission to write to this file.", $Campsite['APACHE_USER']);
+		break;
+	case CAMP_ERROR_READ_FILE:
+		return getGS("The system was unable to read the file '$1'.", basename($p_arg1))
+			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
+			.' '.getGS("Please check if the user '$1' has permission to read this file.", $Campsite['APACHE_USER']);
+		break;
+	case CAMP_ERROR_DELETE_FILE:
+		return getGS("The system was unable to delete the file '$1'.", basename($p_arg1))
+			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
+			.' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		break;
     case CAMP_ERROR_UPLOAD_FILE:
         return getGS("The system was unable to upload the file '$1'. ", basename($p_arg1))
             .getGS('Please check the file you are trying to upload, it might be corrupted.');
         break;
-    case CAMP_ERROR_MKDIR:
-        return getGS("The system was unable to create the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
-        break;
-    case CAMP_ERROR_RMDIR:
-        return getGS("The system was unable to delete the directory '$1'.", $p_arg1).' '.getGS("Please check if the directory is empty and the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
-        break;
-    case CAMP_ERROR_WRITE_DIR:
-        return getGS("The system is unable to write to the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], $p_arg1);
-        break;
-    }
-    return "";
+	case CAMP_ERROR_MKDIR:
+		return getGS("The system was unable to create the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		break;
+	case CAMP_ERROR_RMDIR:
+		return getGS("The system was unable to delete the directory '$1'.", $p_arg1).' '.getGS("Please check if the directory is empty and the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		break;
+	case CAMP_ERROR_WRITE_DIR:
+		return getGS("The system is unable to write to the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], $p_arg1);
+		break;
+	}
+	return "";
 } // fn camp_get_error_message
 
 function camp_get_plugin_path($p_plugin_name, $p_source_fullpath)

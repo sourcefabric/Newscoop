@@ -17,8 +17,8 @@ $f_comment_body = Input::Get('f_comment_body');
 $f_comment_parent_id = Input::Get('f_comment_id', 'int', 0, true);
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
-    exit;
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	exit;
 }
 
 // Check that the article exists.
@@ -43,7 +43,7 @@ if (SystemPref::Get("UseDBReplication") == 'Y') {
 $phorumUser =& new Phorum_user($g_user->getUserId());
 if (!$phorumUser->CampUserExists($g_user->getUserId())) {
     $success = $phorumUser->create($g_user->getUserName(),
-                   $g_user->getPassword(),
+				   $g_user->getPassword(),
                                    $g_user->getEmail(),
                                    $g_user->getUserId());
 }
@@ -54,7 +54,7 @@ $forumId = $publicationObj->getForumId();
 
 // Exit if the forum hasnt been created (this should never happen).
 if (!$forumId) {
-    camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
 }
 
 // Create/get first post.
@@ -63,7 +63,7 @@ $threadId = $firstPost->getThreadId();
 
 // If reply isnt specified, then its a reply to the base message.
 if ($f_comment_parent_id == 0) {
-    $f_comment_parent_id = $firstPost->getMessageId();
+	$f_comment_parent_id = $firstPost->getMessageId();
 }
 
 // Create the comment

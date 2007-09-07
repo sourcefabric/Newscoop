@@ -11,8 +11,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
 
 if (!$g_user->hasPermission('CommentModerate')) {
-    camp_html_display_error(getGS("You do not have the right to moderate comments." ));
-    exit;
+	camp_html_display_error(getGS("You do not have the right to moderate comments." ));
+	exit;
 }
 
 // This can be 'inbox' or 'archive'
@@ -29,11 +29,11 @@ if ($f_comment_per_page < 4) {
 
 // Build the links for ordering search results
 if ($f_comment_order_direction == 'DESC') {
-    $ReverseOrderDirection = "ASC";
-    $OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/descending.png\" border=\"0\">";
+	$ReverseOrderDirection = "ASC";
+	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/descending.png\" border=\"0\">";
 } else {
-    $ReverseOrderDirection = "DESC";
-    $OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
+	$ReverseOrderDirection = "DESC";
+	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
 }
 $orderDirectionUrl = "/$ADMIN/comments/index.php?f_comment_order_direction=$ReverseOrderDirection";
 
@@ -228,10 +228,10 @@ function onSummaryClick(p_messageId)
                 }
             }
             ?>
-            <script>
-            comment_ids.push("comment_<?php p($comment->getMessageId()); ?>");
-            arrow_ids.push("arrow_<?php p($comment->getMessageId()); ?>");
-            </script>
+    		<script>
+    		comment_ids.push("comment_<?php p($comment->getMessageId()); ?>");
+    		arrow_ids.push("arrow_<?php p($comment->getMessageId()); ?>");
+    		</script>
 
             <tr class="<?php echo $css; ?>" id="subject_<?php p($comment->getMessageId()); ?>">
             <td valign="top" align="left" width="1%" nowrap><?php echo $count++; ?></td>
@@ -282,7 +282,7 @@ function onSummaryClick(p_messageId)
             <td>
                 <a href="javascript: void(0);" onclick="onCommentAction('delete', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Delete"); ?></b></a>
             </td>
-            <?php } ?>
+			<?php } ?>
 
             <td style="padding-left: 10px;">
                 <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="hide" class="input_radio" id="hidden_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HIDDEN) { ?>checked<?php } ?> onchange="onCommentAction('hidden', <?php p($comment->getMessageId()); ?>);">
@@ -293,16 +293,16 @@ function onSummaryClick(p_messageId)
             </td>
 
             <td style="padding-left: 10px;">
-                <a href="javascript: void(0);" onclick="window.open('/<?php p($ADMIN); ?>/comments/ban.php?f_comment_id=<?php p($comment->getMessageId()); ?>', null, 'resizable=yes, menubar=no, toolbar=no, width=400, height=200, top=200, left=200'); return false;"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
-            </td>
+            	<a href="javascript: void(0);" onclick="window.open('/<?php p($ADMIN); ?>/comments/ban.php?f_comment_id=<?php p($comment->getMessageId()); ?>', null, 'resizable=yes, menubar=no, toolbar=no, width=400, height=200, top=200, left=200'); return false;"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
+	        </td>
 
-            <td>
-                <a href="javascript: void(0);" onclick="window.open('/<?php p($ADMIN); ?>/comments/ban.php?f_comment_id=<?php p($comment->getMessageId()); ?>', null, 'resizable=yes, menubar=no, toolbar=no, width=400, height=200, top=200, left=200'); return false;"><b><?php putGS("Ban user"); ?></b></a>
-            </td>
+	        <td>
+            	<a href="javascript: void(0);" onclick="window.open('/<?php p($ADMIN); ?>/comments/ban.php?f_comment_id=<?php p($comment->getMessageId()); ?>', null, 'resizable=yes, menubar=no, toolbar=no, width=400, height=200, top=200, left=200'); return false;"><b><?php putGS("Ban user"); ?></b></a>
+	        </td>
 
-            <td style="padding-left: 10px;">
-                <input type="submit" name="save" value="<?php putGS("Save"); ?>" class="button">
-            </td>
+	        <td style="padding-left: 10px;">
+	        	<input type="submit" name="save" value="<?php putGS("Save"); ?>" class="button">
+	        </td>
 
             </tr>
             </table>

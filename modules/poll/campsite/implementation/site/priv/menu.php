@@ -7,24 +7,24 @@ global $ADMIN;
 global $g_user;
 
 $showPublishingEnvironmentMenu = ($g_user->hasPermission("ManageTempl")
-    || $g_user->hasPermission("DeleteTempl")
-    || $g_user->hasPermission("ManageArticleTypes")
-    || $g_user->hasPermission("DeleteArticleTypes")
-    || $g_user->hasPermission("ManageTopics")
-    || $g_user->hasPermission("ManageLanguages")
-    || $g_user->hasPermission("DeleteLanguages")
-    || $g_user->hasPermission("ManageCountries")
-    || $g_user->hasPermission("DeleteCountries"));
+	|| $g_user->hasPermission("DeleteTempl")
+	|| $g_user->hasPermission("ManageArticleTypes")
+	|| $g_user->hasPermission("DeleteArticleTypes")
+	|| $g_user->hasPermission("ManageTopics")
+	|| $g_user->hasPermission("ManageLanguages")
+	|| $g_user->hasPermission("DeleteLanguages")
+	|| $g_user->hasPermission("ManageCountries")
+	|| $g_user->hasPermission("DeleteCountries"));
 
 $showConfigureMenu = ($showPublishingEnvironmentMenu
-    || $g_user->hasPermission("ManageLocalizer")
-    || $g_user->hasPermission("ViewLogs"));
+	|| $g_user->hasPermission("ManageLocalizer")
+	|| $g_user->hasPermission("ViewLogs"));
 
 $showUserMenu = ($g_user->hasPermission("ManageUsers")
-    || $g_user->hasPermission("DeleteUsers")
-    || $g_user->hasPermission("ManageSubscriptions")
-    || $g_user->hasPermission("ManageUserTypes")
-    || $g_user->hasPermission("ManageReaders")
+	|| $g_user->hasPermission("DeleteUsers")
+	|| $g_user->hasPermission("ManageSubscriptions")
+	|| $g_user->hasPermission("ManageUserTypes")
+	|| $g_user->hasPermission("ManageReaders")
     || $g_user->hasPermission("SyncPhorumUsers"));
 
 $iconTemplateStr = '<img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/%s" align="middle" style="padding-bottom: 3px;" width="22" height="22" />';
@@ -60,45 +60,45 @@ foreach ($Campsite["publications"] as $publication) {
                                           "/$ADMIN/issues/index.php?Pub=$pubId",
                                           array("icon" => $icon_bullet));
     $menu_content->addItem($menu_item_pub);
-    if (isset($Campsite["issues"][$pubId])) {
-        foreach ($Campsite["issues"][$pubId] as $issue) {
-            $issueId = $issue->getIssueNumber();
-            $languageId = $issue->getLanguageId();
-            $issueIndexLink = "/$ADMIN/sections/index.php?Pub=$pubId&Issue=$issueId&Language=$languageId";
-            $menu_item_issue =& DynMenuItem::Create($issue->getIssueNumber().". ".$issue->getName()." (".$issue->getLanguageName().")",
-                 $issueIndexLink,
-                 array("icon" => $icon_bullet));
-            $menu_item_pub->addItem($menu_item_issue);
-            if (isset($Campsite["sections"][$pubId][$issueId][$languageId])) {
-                foreach ($Campsite["sections"][$pubId][$issueId][$languageId] as $section) {
-                    $sectionId = $section->getSectionNumber();
-                    $menu_item_section =& DynMenuItem::Create(
-                        $section->getSectionNumber().". "
-                        .$section->getName(),
-                        "/$ADMIN/articles/index.php"
-                        ."?f_publication_id=$pubId"
-                        ."&f_issue_number=$issueId"
-                        ."&f_language_id=$languageId"
-                        ."&f_section_number=$sectionId",
-                        array("icon" => $icon_bullet));
-                    $menu_item_issue->addItem($menu_item_section);
-                }
-                if (count($Campsite["sections"][$pubId][$issueId][$languageId]) > 0) {
-                    $menu_item_issue->addSplit();
-                    $menu_item =& DynMenuItem::Create(getGS("More..."), $issueIndexLink,
-                        array("icon" => $icon_bullet));
-                    $menu_item_issue->addItem($menu_item);
-                }
-            }
-        }
-        if (count($Campsite["issues"][$pubId]) > 0) {
-            $menu_item_pub->addSplit();
-            $menu_item =& DynMenuItem::Create(getGS("More..."),
-                "/$ADMIN/issues/index.php?Pub=$pubId",
-                array("icon" => $icon_bullet));
-            $menu_item_pub->addItem($menu_item);
-        }
-    }
+	if (isset($Campsite["issues"][$pubId])) {
+		foreach ($Campsite["issues"][$pubId] as $issue) {
+			$issueId = $issue->getIssueNumber();
+			$languageId = $issue->getLanguageId();
+			$issueIndexLink = "/$ADMIN/sections/index.php?Pub=$pubId&Issue=$issueId&Language=$languageId";
+			$menu_item_issue =& DynMenuItem::Create($issue->getIssueNumber().". ".$issue->getName()." (".$issue->getLanguageName().")",
+			     $issueIndexLink,
+			     array("icon" => $icon_bullet));
+			$menu_item_pub->addItem($menu_item_issue);
+			if (isset($Campsite["sections"][$pubId][$issueId][$languageId])) {
+				foreach ($Campsite["sections"][$pubId][$issueId][$languageId] as $section) {
+				    $sectionId = $section->getSectionNumber();
+				    $menu_item_section =& DynMenuItem::Create(
+				        $section->getSectionNumber().". "
+				        .$section->getName(),
+				        "/$ADMIN/articles/index.php"
+				        ."?f_publication_id=$pubId"
+				        ."&f_issue_number=$issueId"
+				        ."&f_language_id=$languageId"
+				        ."&f_section_number=$sectionId",
+				        array("icon" => $icon_bullet));
+				    $menu_item_issue->addItem($menu_item_section);
+				}
+				if (count($Campsite["sections"][$pubId][$issueId][$languageId]) > 0) {
+					$menu_item_issue->addSplit();
+					$menu_item =& DynMenuItem::Create(getGS("More..."), $issueIndexLink,
+		                array("icon" => $icon_bullet));
+		            $menu_item_issue->addItem($menu_item);
+				}
+			}
+		}
+		if (count($Campsite["issues"][$pubId]) > 0) {
+			$menu_item_pub->addSplit();
+			$menu_item =& DynMenuItem::Create(getGS("More..."),
+	            "/$ADMIN/issues/index.php?Pub=$pubId",
+	            array("icon" => $icon_bullet));
+	        $menu_item_pub->addItem($menu_item);
+		}
+	}
 }
 $menu_root->addSplit();
 $menu_actions =& DynMenuItem::Create(getGS("Actions"), '',
@@ -223,18 +223,18 @@ if ($showConfigureMenu) {
     if ($showPublishingEnvironmentMenu) {
         $menu_config->addSplit();
     }
-    if ($g_user->hasPermission("ManageLocalizer")) {
+	if ($g_user->hasPermission("ManageLocalizer")) {
         $menu_item =& DynMenuItem::Create(getGS("Localizer"),
             "/$ADMIN/localizer/",
             array("icon" => sprintf($iconTemplateStr, "localizer.png")));
         $menu_config->addItem($menu_item);
-    }
-    if ($g_user->hasPermission("ViewLogs")) {
+	}
+	if ($g_user->hasPermission("ViewLogs")) {
         $menu_item =& DynMenuItem::Create(getGS("Logs"),
             "/$ADMIN/logs/",
             array("icon" => sprintf($iconTemplateStr, "logs.png")));
         $menu_config->addItem($menu_item);
-    }
+	}
 } // if ($showConfigureMenu)
 
 if ($showUserMenu) {
@@ -242,25 +242,25 @@ if ($showUserMenu) {
     $menu_users =& DynMenuItem::Create(getGS("Users"), "",
         array("icon" => sprintf($iconTemplateStr, "users.png"), "id" => "users"));
     $menu_root->addItem($menu_users);
-    if ($g_user->hasPermission("ManageUsers") || $g_user->hasPermission("DeleteUsers")) {
+	if ($g_user->hasPermission("ManageUsers") || $g_user->hasPermission("DeleteUsers")) {
         $menu_item =& DynMenuItem::Create(getGS("Staff"),
             "/$ADMIN/users/?uType=Staff",
             array("icon" => sprintf($iconTemplateStr, "users.png")));
         $menu_users->addItem($menu_item);
-    }
-    if (($g_user->hasPermission("ManageReaders") || $g_user->hasPermission("ManageSubscriptions"))
-            && SystemPref::Get("ExternalSubscriptionManagement") != 'Y') {
+	}
+	if (($g_user->hasPermission("ManageReaders") || $g_user->hasPermission("ManageSubscriptions"))
+			&& SystemPref::Get("ExternalSubscriptionManagement") != 'Y') {
         $menu_item =& DynMenuItem::Create(getGS("Subscribers"),
             "/$ADMIN/users/?uType=Subscribers",
             array("icon" => sprintf($iconTemplateStr, "users.png")));
         $menu_users->addItem($menu_item);
-    }
-    if ($g_user->hasPermission("ManageUserTypes")) {
+	}
+	if ($g_user->hasPermission("ManageUserTypes")) {
         $menu_item =& DynMenuItem::Create(getGS("Staff User Types"),
             "/$ADMIN/user_types/",
             array("icon" => sprintf($iconTemplateStr, "user_types.png")));
         $menu_users->addItem($menu_item);
-    }
+	}
     if ($g_user->hasPermission("SyncPhorumUsers")) {
         $menu_item =& DynMenuItem::Create(getGS('Synchronize Campsite and Phorum users'), "/$ADMIN/home.php?sync_users=yes",
         array("icon" => sprintf($iconTemplateStr, "sync_users.png")));
@@ -289,13 +289,13 @@ if ($path = camp_get_plugin_path('poll', __FILE__)) {
 ?>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <META HTTP-EQUIV="Expires" CONTENT="now">
-    <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
-    <LINK REL="stylesheet" HREF="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" TYPE="text/css">
-    <LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+	<META HTTP-EQUIV="Expires" CONTENT="now">
+	<script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
+	<LINK REL="stylesheet" HREF="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" TYPE="text/css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
     <?php echo $menu_root->createMenu("myMenu"); ?>
-    <TITLE><?php putGS("Campsite"); ?> <?php p($Campsite['VERSION']); ?></TITLE>
+	<TITLE><?php putGS("Campsite"); ?> <?php p($Campsite['VERSION']); ?></TITLE>
 </HEAD>
 <BODY leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table cellpadding="0" cellspacing="0" bgcolor="#8BAED1" width="100%">
@@ -307,32 +307,32 @@ if ($path = camp_get_plugin_path('poll', __FILE__)) {
 </table>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom: 2px solid #D5E2EE; padding-top: 4px;" bgcolor="#d5e2ee">
 <tr>
-    <td valign="top" align="left" width="70%">
-       <table border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td style="padding-left: 13px; padding-top: 0px; padding-bottom: 0px;" valign="top">
-            <DIV ID="myMenuID"></DIV>
-            <SCRIPT LANGUAGE="JavaScript"><!--
-                cmDraw ('myMenuID', myMenu, 'hbr', cmThemeOffice, 'ThemeOffice');
-            --></SCRIPT>
-            </td>
-        </tr>
-        </table>
-    </td>
-    <td align="right" valign="bottom" width="30%" style="padding-bottom: 3px;">
+	<td valign="top" align="left" width="70%">
+	   <table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td style="padding-left: 13px; padding-top: 0px; padding-bottom: 0px;" valign="top">
+			<DIV ID="myMenuID"></DIV>
+			<SCRIPT LANGUAGE="JavaScript"><!--
+				cmDraw ('myMenuID', myMenu, 'hbr', cmThemeOffice, 'ThemeOffice');
+			--></SCRIPT>
+			</td>
+		</tr>
+		</table>
+	</td>
+	<td align="right" valign="bottom" width="30%" style="padding-bottom: 3px;">
         <table cellpadding="0" cellspacing="0" width="100%" border="0">
-        <tr>
-            <td align="right" style="padding-top: 0px;">
+		<tr>
+			<td align="right" style="padding-top: 0px;">
                 <table cellpadding="0" cellspacing="0">
-                <TR>
-                    <td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 0px;" colspan="4"><?php putGS("Signed in: $1", "<b>".$g_user->getRealName()."</b>"); ?></td>
-                    <td style="padding-left: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a></td>
-                    <td style="font-weight: bold; padding-left: 2px; padding-right: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a></td>
-                </tr>
-                </table>
-            </td>
-        </tr>
-        </table>
-    </td>
+				<TR>
+            		<td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 0px;" colspan="4"><?php putGS("Signed in: $1", "<b>".$g_user->getRealName()."</b>"); ?></td>
+					<td style="padding-left: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a></td>
+					<td style="font-weight: bold; padding-left: 2px; padding-right: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a></td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+	</td>
 </tr>
 </table>

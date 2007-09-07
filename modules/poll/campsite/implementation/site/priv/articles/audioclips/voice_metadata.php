@@ -1,22 +1,22 @@
 <!-- START VOICE DATA //-->
 <TABLE border="0" cellspacing="0" cellpadding="6">
 <TR>
-    <TD colspan="2">
-        <B><?php  putGS("Edit Audioclip Metadata"); ?></B>
-        <HR noshade size="1" color="black">
-    </TD>
+	<TD colspan="2">
+		<B><?php  putGS("Edit Audioclip Metadata"); ?></B>
+		<HR noshade size="1" color="black">
+	</TD>
 </TR>
 <TR>
-    <TD align="right"><?php putGS("Title"); ?>:</TD>
-    <TD>
+	<TD align="right"><?php putGS("Title"); ?>:</TD>
+	<TD>
         <INPUT type="text" name="f_Voice_dc_title" value="<?php p($mData['title']); ?>" onchange="spread(this, 'dc_title')" size="50" maxlength="255" class="input_text" alt="blank" emsg="<?php putGS("Please enter a title for the audioclip."); ?>" />
-    </TD>
+	</TD>
 </TR>
 <TR>
-    <TD align="right"><?php putGS("Report date/time"); ?>:</TD>
-    <TD>
+	<TD align="right"><?php putGS("Report date/time"); ?>:</TD>
+	<TD>
         <INPUT type="text" name="f_Voice_dcterms_temporal" value="<?php p($mData['temporal']); ?>" size="50" maxlength="255" class="input_text" />
-    </TD>
+	</TD>
 </TR>
 <TR>
     <TD align="right" valign="top"><?php putGS("Report location"); ?>:</TD>

@@ -4,9 +4,9 @@
  */
 
 final class InvalidPropertyException extends Exception {
-    private $m_className = null;
+	private $m_className = null;
 
-    private $m_property = null;
+	private $m_property = null;
 
     public function __construct($p_className, $p_property)
     {
@@ -18,13 +18,13 @@ final class InvalidPropertyException extends Exception {
 
     public function getClassName()
     {
-        return $this->m_className;
+    	return $this->m_className;
     }
 
 
     public function getProperty()
     {
-        return $this->m_property;
+    	return $this->m_property;
     }
 
 } // class InvalidPropertyException

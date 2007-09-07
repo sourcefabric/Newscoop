@@ -5,9 +5,9 @@ global $g_permissions;
 
 // Data Source Name (DSN)
 $dsn = 'mysql://'.$Campsite['DATABASE_USER']
-        .':'.$Campsite['DATABASE_PASSWORD']
-        .'@'.$Campsite['DATABASE_SERVER_ADDRESS']
-        .'/'.$Campsite['DATABASE_NAME'];
+		.':'.$Campsite['DATABASE_PASSWORD']
+		.'@'.$Campsite['DATABASE_SERVER_ADDRESS']
+		.'/'.$Campsite['DATABASE_NAME'];
 
 // Define the LiveUser configuration
 $liveuserConfig = array (
@@ -199,10 +199,10 @@ if (!$LiveUserAdmin->init()) {
 
 if ($LiveUserAdmin->auth->_storage->dbc == false) {
 ?>
-    <font color="red" size="3">
-    <p>ERROR connecting to the MySQL server!</p>
-    <p>Please start the MySQL database server and verify if the connection configuration is valid.</p>
-    </font>
+	<font color="red" size="3">
+	<p>ERROR connecting to the MySQL server!</p>
+	<p>Please start the MySQL database server and verify if the connection configuration is valid.</p>
+	</font>
 <?php
     exit(0);
 }

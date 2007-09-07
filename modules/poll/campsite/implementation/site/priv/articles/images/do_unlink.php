@@ -14,15 +14,15 @@ $f_image_template_id = Input::Get('f_image_template_id', 'int', 0);
 
 // Check input
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
-    exit;
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+	exit;
 }
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
 if (!$g_user->hasPermission('AttachImageToArticle')) {
-    camp_html_display_error(getGS("You do not have the right to attach images to articles."), null, true);
-    exit;
+	camp_html_display_error(getGS("You do not have the right to attach images to articles."), null, true);
+	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);

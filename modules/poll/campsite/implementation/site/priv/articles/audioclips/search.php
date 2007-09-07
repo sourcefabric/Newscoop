@@ -17,12 +17,12 @@ $row_4 = Input::Get('row_4', 'array', array(), true);
 $row_5 = Input::Get('row_5', 'array', array(), true);
 
 if ($f_items_per_page < 4) {
-    $f_items_per_page = 4;
+	$f_items_per_page = 4;
 }
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
-    exit;
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	exit;
 }
 
 // we check for the Campcaster session and show
@@ -227,11 +227,11 @@ for ($c = 1; $c <= $maxCriteria; $c++) {
 </form>
 </table>
 <?php
-    if (count($clips) > 0) {
-        $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";
-        $pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
-        require('cliplist.php');
-    } else {
+	if (count($clips) > 0) {
+		$pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";
+		$pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
+		require('cliplist.php');
+	} else {
 ?>
 <table border="0" cellspacing="1" cellpadding="6" class="table_list">
 <tr>
@@ -241,7 +241,7 @@ for ($c = 1; $c <= $maxCriteria; $c++) {
 </tr>
 </table>
 <?php
-    }
+	}
 } else { // if ($isCcOnline)
 ?>
 <table border="0" width="100%" cellspacing="1" cellpadding="6" class="table_list">

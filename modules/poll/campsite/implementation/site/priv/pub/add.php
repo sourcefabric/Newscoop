@@ -11,8 +11,8 @@ camp_load_translation_strings("api");
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
-    camp_html_display_error(getGS("You do not have the right to add publications."));
-    exit;
+	camp_html_display_error(getGS("You do not have the right to add publications."));
+	exit;
 }
 
 $languages = Language::GetLanguages();
@@ -32,8 +32,8 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
-    <TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-    <TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><B><?php  putGS("Publication List"); ?></B></A></TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><B><?php  putGS("Publication List"); ?></B></A></TD>
 </TR>
 </TABLE>
 <?php camp_html_display_msgs(); ?>

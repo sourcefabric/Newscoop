@@ -103,7 +103,7 @@ class UserType extends DatabaseObject {
     } // fn exists
 
 
-    /**
+	/**
      * Create the new UserType with the config variables given.
      * If a config variable is not set, the default value will be used.
      *
@@ -154,7 +154,7 @@ class UserType extends DatabaseObject {
     } // fn create
 
 
-    /**
+	/**
      * Delete the user type.
      *
      * @return bool
@@ -189,7 +189,7 @@ class UserType extends DatabaseObject {
     } // gn getId
 
 
-    /**
+	/**
      * Get the name of this user type.
      * @return string
      */
@@ -199,7 +199,7 @@ class UserType extends DatabaseObject {
     } // fn getName
 
 
-    /**
+	/**
      * Return the value of the given variable name.
      * If the variable name does not exist, return null.
      *
@@ -216,7 +216,7 @@ class UserType extends DatabaseObject {
     } // fn getValue
 
 
-    /**
+	/**
      * Set the default config value for the given variable.
      * This creates the new config variable if it didn't exist.
      *
@@ -249,7 +249,7 @@ class UserType extends DatabaseObject {
     } // fn setValue
 
 
-    /**
+	/**
      * Return an array of config values in the form array("varname" => "value");
      *
      * @return array
@@ -273,7 +273,7 @@ class UserType extends DatabaseObject {
     } // fn hasPermission
 
 
-    /**
+	/**
      * Set the specified permission.
      *
      * @param string
@@ -282,7 +282,7 @@ class UserType extends DatabaseObject {
      *    $p_permissionValue
      *
      */
-    function setPermission($p_permissionString, $p_permissionValue)
+	function setPermission($p_permissionString, $p_permissionValue)
     {
         $this->setValue($p_permissionString, $p_permissionValue);
     } // fn setPermission

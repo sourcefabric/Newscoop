@@ -19,36 +19,36 @@ $f_captcha_code = Input::Get('f_captcha_code', 'string', '', true);
 
 $xorkey = camp_session_get('xorkey', '');
 if (trim($xorkey) == '') {
-    camp_html_goto_page("/$ADMIN/login.php?error_code=xorkey");
+	camp_html_goto_page("/$ADMIN/login.php?error_code=xorkey");
 }
 $t_password = camp_passwd_decrypt($xorkey, $f_password);
 $f_password = sha1($t_password);
 
 
 if (!Input::isValid()) {
-    camp_html_goto_page("/$ADMIN/login.php?error_code=userpass");
+	camp_html_goto_page("/$ADMIN/login.php?error_code=userpass");
 }
 
 function camp_successful_login($user, $f_login_language)
 {
-    global $ADMIN, $LiveUser, $LiveUserAdmin;
+	global $ADMIN, $LiveUser, $LiveUserAdmin;
 
-    $user->initLoginKey();
+	$user->initLoginKey();
     $data = array('KeyId' => $user->getKeyId());
     $permUserId = $LiveUser->_perm->getProperty('perm_user_id');
     $LiveUserAdmin->updateUser($data, $permUserId);
     $LiveUser->updateProperty(true, true);
-    LoginAttempts::ClearLoginAttemptsForIp();
-    setcookie("LoginUserId", $user->getUserId());
-    setcookie("LoginUserKey", $user->getKeyId());
-    setcookie("TOL_Language", $f_login_language);
-    Article::UnlockByUser($user->getUserId());
-    camp_html_goto_page("/$ADMIN/index.php");
+	LoginAttempts::ClearLoginAttemptsForIp();
+	setcookie("LoginUserId", $user->getUserId());
+	setcookie("LoginUserKey", $user->getKeyId());
+	setcookie("TOL_Language", $f_login_language);
+	Article::UnlockByUser($user->getUserId());
+	camp_html_goto_page("/$ADMIN/index.php");
 }
 
 function camp_passwd_decrypt($xorkey, $password)
 {
-    return rc4($xorkey, base64ToText($password));
+	return rc4($xorkey, base64ToText($password));
 }
 
 //
@@ -115,12 +115,12 @@ LoginAttempts::RecordLoginAttempt();
 
 // CAPTCHA invalid -> captcha login page
 if ($validateCaptcha && !PhpCaptcha::Validate($f_captcha_code, true)) {
-    camp_html_goto_page("/$ADMIN/login.php?error_code=captcha");
+	camp_html_goto_page("/$ADMIN/login.php?error_code=captcha");
 }
 
 // user valid, password invalid, encrypted, CAPTCHA valid -> upgrade
 if (!is_null($user) && $f_is_encrypted && (strlen($user->getPassword()) < 40)) {
-    camp_html_goto_page("/$ADMIN/login.php?error_code=upgrade&f_user_name=$f_user_name");
+	camp_html_goto_page("/$ADMIN/login.php?error_code=upgrade&f_user_name=$f_user_name");
 }
 
 // Everything else
