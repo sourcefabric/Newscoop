@@ -91,20 +91,23 @@ $context->issue = new MetaIssue(1, 1, 1);
 // Section object
 $context->section = new MetaSection(1, 1, 1, 10);
 
-*/
-
 // Article object
 $context->article = new MetaArticle(1, 15);
+*/
+
 
 $context->poll = new MetaPoll(1, 1);
 
 $tpl->assign('campsite', $context);
 #$tpl->debugging = true;
 
+require_once($_SERVER['DOCUMENT_ROOT'].'/plugins/poll/include/smarty/camp_plugins/block.list_polls.php');
+$tpl->register_block('list_polls', 'smarty_block_list_polls');
+
 set_error_handler('templateErrorHandler');
 
 try {
-	$tpl->display('poll_index.tpl');
+	$tpl->display($_SERVER['DOCUMENT_ROOT'] .'/plugins/poll/template_engine/templates/poll_index.tpl');
 } catch (InvalidPropertyHandlerException $e) {
 	echo "<p>Internal error: handler was not specified for property " . $e->getPropertyName()
 		. " of object " . $e->getClassName() . "</p>\n";

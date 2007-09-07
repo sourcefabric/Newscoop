@@ -122,9 +122,10 @@
 </tr>
 </table>
 
-
-
-
+     
+{{ list_polls  }}
+x
+{{ /list_polls }}
 
 </body>
 </html>
