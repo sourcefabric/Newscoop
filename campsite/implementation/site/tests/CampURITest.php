@@ -47,6 +47,12 @@ class CampURIWrapper extends CampURI
 class CampURITest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Holds the URI object
+     */
+     private $m_uriObj = null;
+
+
+    /**
      * Runs the test methods of this class.
      *
      * @access public
@@ -68,7 +74,7 @@ class CampURITest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
    	{
-        $this->m_uri = 'http://campsite.localhost.localdomain/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=1&NrSection=40&NrArticle=43';
+        $uri = 'http://campsite.localhost.localdomain/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=1&NrSection=40&NrArticle=43';
         $uriWrapperObj = new CampURIWrapper($uri);
         $this->m_uriObj = $uriWrapperObj->getURIObject();
     }

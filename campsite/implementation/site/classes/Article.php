@@ -1453,6 +1453,41 @@ class Article extends DatabaseObject {
     /*****************************************************************/
 
     /**
+     * Return an Article object having the given number
+     * in the given publication, issue, section, language.
+     *
+     * @param int $p_articleNr
+     *      The article number
+     * @param int $p_publicationId
+     *      The publication identifier
+     * @param int $p_issueNr
+     *      The issue number
+     * @param int $p_sectionNr
+     *      The section number
+     * @param int $p_languageId
+     *      The language identifier
+     *
+     * @return object|null
+     *      An article object on success, null on failure
+     */
+    function GetByNumber($p_articleNr, $p_publicationId, $p_issueNr,
+                         $p_sectionNr, $p_languageId)
+    {
+        global $g_ado_db;
+
+        $queryStr = 'SELECT * FROM Articles '
+            .'WHERE IdPublication='.$p_publicationId
+            .' AND NrIssue='.$p_issueNr
+            .' AND NrSection='.$p_sectionNr
+            .' AND IdLanguage='.$p_languageId
+            .' AND Number='.$p_articleNr;
+        $result = DbObjectArray::Create('Article', $queryStr);
+
+        return (is_array($result) && sizeof($result)) ? $result[0] : null;
+    } // fn GetByNumber
+
+
+    /**
      * Return an array of article having the given name
      * in the given publication / issue / section / language.
      *

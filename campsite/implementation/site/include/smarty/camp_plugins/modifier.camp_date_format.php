@@ -25,8 +25,9 @@ function smarty_modifier_camp_date_format($p_unixtime, $p_format = null)
     global $g_ado_db;
 
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('camp');
-    $html = '';
+    $smarty = CampTemplate::singleton();
+    $campsite = $smarty->get_template_vars('campsite');
+    unset($smarty);
 
     if (is_null($p_format) || empty($p_format)) {
         $dbQuery = "SELECT FROM_UNIXTIME('".$p_unixtime."') AS date";
@@ -50,7 +51,7 @@ function smarty_modifier_camp_date_format($p_unixtime, $p_format = null)
         $dbQuery =
             "SELECT Month".$row['month']." AS month, "
             ."WDay".$row['day']." AS day "
-            ." FROM Languages WHERE Id = 1 OR Id = ".$camp->language->id
+            ." FROM Languages WHERE Id = 1 OR Id = ".$campsite->language->number
             ." ORDER BY Id";
         $lang = $g_ado_db->GetAll($dbQuery);
         if (sizeof($lang) != 2) {
