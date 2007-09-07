@@ -12,8 +12,9 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Attachment.php');
-//require_once($g_documentRoot.'/classes/Article.php');
+require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 
 /**
  * @package Campsite
@@ -177,6 +178,139 @@ class ArticleAttachment extends DatabaseObject {
 					.' LIMIT 1';
 		$g_ado_db->Execute($queryStr);
 	} // fn RemoveAttachmentFromArticle
+
+
+    /**
+     * Gets an article attachments list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $articleAttachmentsList
+     *    An array of Attachment objects
+     */
+    public static function GetList($p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db;
+
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        $hasArticleNr = false;
+        $sqlClauseObj = new SQLSelectClause();
+
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessParameters($param);
+            if (sizeof($comparisonOperation) < 1) {
+                break;
+            }
+
+            if (strpos($comparisonOperation['left'], 'fk_article_number')) {
+                $whereCondition = $comparisonOperation['left'] . ' '
+                    . $comparisonOperation['symbol'] . " '"
+                    . $comparisonOperation['right'] . "' ";
+                $hasArticleNr = true;
+            } elseif (strpos($comparisonOperation['left'], 'fk_language_id')) {
+                $whereCondition = '('.$comparisonOperation['left'].' IS NULL OR '
+                    .$comparisonOperation['left'].' = '.$comparisonOperation['right'].')';
+            }
+            $sqlClauseObj->addWhere($whereCondition);
+        }
+
+        // validates whether article number was given
+        if ($hasArticleNr == false) {
+            CampTemplate::singleton()->trigger_error('missed parameter Article '
+                .'Number in statement list_article_attachments');
+            return;
+        }
+
+        // sets the columns to be fetched
+        $tmpAttachment = new Attachment();
+		$columnNames = $tmpAttachment->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $sqlClauseObj->addColumn($columnName);
+        }
+
+        // sets the main table for the query
+        $sqlClauseObj->setTable($tmpAttachment->getDbTableName());
+        unset($tmpAttachment);
+
+        // adds the ArticleAttachments join and condition to the query
+        $sqlClauseObj->addTableFrom('ArticleAttachments');
+        $sqlClauseObj->addWhere('ArticleAttachments.fk_attachment_id = Attachments.id');
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        // sets the order condition if any
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        // sets the limit
+        $sqlClauseObj->setLimit($p_start, $p_limit);
+
+        // builds the query and executes it
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        $attachments = $g_ado_db->GetAll($sqlQuery);
+        if (!is_array($attachments)) {
+            return null;
+        }
+
+        // builds the array of attachment objects
+        $articleAttachmentsList = array();
+        foreach ($attachments as $attachment) {
+            $attchObj = new Attachment($attachment['id']);
+            if ($attchObj->exists()) {
+                $articleAttachmentsList[] = $attchObj;
+            }
+        }
+
+        return $articleAttachmentsList;
+    } // fn GetList
+
+
+    /**
+     * Processes a paremeter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessParameters($p_param)
+    {
+        $comparisonOperation = array();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'articleattachments.fk_article_number':
+            $comparisonOperation['left'] = 'ArticleAttachments.fk_article_number';
+            $comparisonOperation['right'] = (int) $p_param->getRightOperand();
+            break;
+        case 'attachments.fk_language_id':
+            $comparisonOperation['left'] = 'Attachments.fk_language_id';
+            $comparisonOperation['right'] = (int) $p_param->getRightOperand();
+            break;
+        }
+
+        if (isset($comparisonOperation['left'])) {
+            $operatorObj = $p_param->getOperator();
+            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
+
+        return $comparisonOperation;
+    } // fn ProcessParameters
 
 } // class ArticleAttachment
 

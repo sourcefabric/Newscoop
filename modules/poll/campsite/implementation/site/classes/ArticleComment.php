@@ -13,6 +13,7 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/include/phorum_load.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Phorum_message.php');
 require_once($g_documentRoot.'/classes/Article.php');
 
@@ -246,6 +247,117 @@ class ArticleComment
         }
     } // fn GetComments
 
+
+    /**
+     * Gets an article comments list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $articleCommentsList
+     *    An array of Comment objects
+     */
+    public static function GetList($p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db, $PHORUM;
+
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        $sqlClauseObj = new SQLSelectClause();
+
+        $messageTable = $PHORUM['message_table'];
+        $sqlClauseObj->setTable($messageTable);
+
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $parameter = self::ProcessListParameters($param);
+        }
+
+        // validates whether both article number and language id were given
+        if (!array_key_exists('fk_article_number', $parameter) {
+            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_comments");
+        }
+        if (!array_key_exists('fk_language_id', $parameter)) {
+            CampTemplate::singleton()->trigger_error("missed parameter Language Id in statement list_article_comments");
+        }
+
+        // gets the thread id for the article
+        $threadId = ArticleComment::GetCommentThreadId($parameter['fk_article_number'],
+                                                       $parameter['fk_language_id']);
+        if (!$threadId) {
+            return null;
+        }
+
+        // adds WHERE conditions
+        $sqlClauseObj->addWhere('thread = '.$threadId);
+        $sqlClauseObj->addWhere('message_id != thread');
+        $sqlClauseObj->addWhere('status = '.PHORUM_STATUS_APPROVED);
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        // sets the order condition if any
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        // sets the limit
+        $sqlClauseObj->setLimit($p_start, $p_limit);
+
+        // builds the query and executes it
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        $comments = $g_ado_db->GetAll($sqlQuery);
+        if (!is_array($comments)) {
+            return null;
+        }
+
+        // builds the array of comment objects
+        $articleCommentsList = array();
+        foreach ($comments as $comment) {
+            $pmObj = new Phorum_message($comment['message_id']);
+            if ($pmObj->exists()) {
+                $articleCommentsList[] = $pmObj;
+            }
+        }
+
+        return $articleCommentsList;
+    } // fn GetList
+
+
+    /**
+     * Processes a paremeter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $parameter
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListParameters($p_param)
+    {
+        $parameter = array();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'fk_article_number':
+            $parameter['fk_article_number'] = (int) $p_param->getRightOperand();
+            break;
+        case 'fk_language_id':
+            $parameter['fk_language_id'] = (int) $p_param->getRightOperand();
+            break;
+        }
+
+        return $parameter;
+    } // fn ProcessListParameters
 
 } // class ArticleComment
 ?>

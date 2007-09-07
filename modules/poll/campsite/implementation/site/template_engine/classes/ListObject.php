@@ -108,11 +108,7 @@ abstract class ListObject
 	 * than 0.
 	 *
 	 * @param int $p_start
-	 * @param int $p_limit
-	 * @param string $p_constraints
-	 * @param string $p_orderStr
-	 * @param int $p_columns
-	 * @param string $p_name
+	 * @param string $p_parameters
 	 */
 	public function __construct($p_start = 0, $p_parameters = array())
 	{

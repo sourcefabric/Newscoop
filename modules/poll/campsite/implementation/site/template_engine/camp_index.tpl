@@ -5,11 +5,114 @@
 <body>
 
 
-{{ list_article length="4" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
-<li>current article: {{ $campsite->current_article_list->getCurrent() }},
-   article list index: {{ $campsite->current_article_list->getIndex() }},
-   article list column: {{ $campsite->current_article_list->getColumn() }}</li>
-{{ /list_article }}
+<h3>issues list</h3>
+{{ list_issues length="4" columns="3" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
+<li>issue: <b>{{ $campsite->current_issues_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+   list index: <b>{{ $campsite->current_issues_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_issues_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current issues list/current list)
+</li>
+{{ /list_issues }}
+
+
+<h3>sections list</h3>
+{{ list_sections length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+<li>section: <b>{{ $campsite->current_sections_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+   list index: <b>{{ $campsite->current_sections_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_sections_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current sections list/current list)
+</li>
+{{ /list_sections }}
+
+
+<h3>articles list</h3>
+{{ list_articles length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+<li>article: <b>{{ $campsite->current_articles_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+   list index: <b>{{ $campsite->current_articles_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_articles_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current articles list/current list)
+</li>
+{{ /list_articles }}
+
+
+<h3>article attachments list</h3>
+{{ list_article_attachments length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+<li>article attachment: <b>{{ $campsite->current_article_attachments_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+   list index: <b>{{ $campsite->current_article_attachments_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_article_attachments_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current article attachments list/current list)
+</li>
+{{ /list_article_attachments }}
+
+
+<h3>article comments list</h3>
+{{ list_article_comments length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+<li>article comment: <b>{{ $campsite->current_article_comments_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+   list index: <b>{{ $campsite->current_article_comments_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_article_comments_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current article comments list/current list)
+</li>
+{{ /list_article_comments }}
+
+
+<h3>article images list</h3>
+{{ list_article_images length="2" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+<li>article image: <b>{{ $campsite->current_article_images_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+   list index: <b>{{ $campsite->current_article_images_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_article_images_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current article images list/current list)
+</li>
+{{ /list_article_images }}
+
+
+<h3>article topics list</h3>
+{{ list_article_topics length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+<li>article topic: <b>{{ $campsite->current_article_topics_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+   list index: <b>{{ $campsite->current_article_topics_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_article_topics_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current article topics list/current list)
+</li>
+{{ /list_article_topics }}
+
+
+<h3>article audio attachments list</h3>
+{{ list_article_audio_attachments length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+<li>article audio attachment: <b>{{ $campsite->current_article_audio_attachments_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+   list index: <b>{{ $campsite->current_article_audio_attachments_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_article_audio_attachments_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current article audio attachments list/current list)
+</li>
+{{ /list_article_audio_attachments }}
+
+
+<h3>search results list</h3>
+{{ list_search_results length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+<li>search result: <b>{{ $campsite->current_search_results_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+   list index: <b>{{ $campsite->current_search_results_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_search_results_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current search results list/current list)
+</li>
+{{ /list_search_results }}
+
+
+<h3>subtopics list</h3>
+{{ list_subtopics length="4" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+<li>subtopic: <b>{{ $campsite->current_subtopics_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+   list index: <b>{{ $campsite->current_subtopics_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_subtopics_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current subtopics list/current list)
+</li>
+{{ /list_subtopics }}
+
+
+<h3>subtitles list</h3>
+{{ list_subtitles length="2" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+<li>subtitle: <b>{{ $campsite->current_subtitles_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+   list index: <b>{{ $campsite->current_subtitles_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_subtitles_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current subtitles list/current list)
+</li>
+{{ /list_subtitles }}
 
 
 {{ if $campsite->hasProperty('invalid_property') }}

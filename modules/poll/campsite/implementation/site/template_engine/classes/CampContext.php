@@ -36,6 +36,27 @@ final class CampContext {
 								   'poll'=>'Poll'
 								   );
 
+	// Defines the list objects
+	private $m_listObjects = array(
+	                         'issues'=>array('class'=>'Issues', 'list'=>'issues'),
+	                         'sections'=>array('class'=>'Sections', 'list'=>'sections'),
+	                         'articles'=>array('class'=>'Articles', 'list'=>'articles'),
+	                         'articleattachments'=>array('class'=>'ArticleAttachments',
+	                                                     'list'=>'article_attachments'),
+	                         'articlecomments'=>array('class'=>'ArticleComments',
+	                                                  'list'=>'article_comments'),
+	                         'articleimages'=>array('class'=>'ArticleImages',
+	                                                'list'=>'article_images'),
+	                         'articletopics'=>array('class'=>'ArticleTopics',
+	                                                'list'=>'article_topics'),
+	                         'articleaudioattachments'=>array('class'=>'ArticleAudioAttachments',
+	                                                          'list'=>'article_audio_attachments'),
+	                         'searchresults'=>array('class'=>'SearchResults',
+	                                                'list'=>'search_results'),
+	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics'),
+	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles')
+	                         );
+
     // Stores the context objects.
 	private $m_objects = array();
 
@@ -61,8 +82,11 @@ final class CampContext {
         // complete list of misc properties
         // ...
 
-        $this->m_readonlyProperties['current_article_list'] = new ArticleList(-1);
-        $this->m_readonlyProperties['article_list'] = array($this->m_readonlyProperties['current_article_list']);
+        $this->m_readonlyProperties['lists'] = array();
+        $this->m_readonlyProperties['issues_lists'] = array();
+        $this->m_readonlyProperties['sections_lists'] = array();
+        $this->m_readonlyProperties['articles_lists'] = array();
+        $this->m_readonlyProperties['article_attachments_lists'] = array();
     } // fn __construct
 
 
@@ -171,40 +195,76 @@ final class CampContext {
 
 
     /**
-     * Sets the current article list.
+     * Returns the object name from the list class name.
      *
-     * @param object $p_list
-     * @return void
+     * @param string $p_listClassName
+     * @return string
      */
-	public function setCurrentArticleList(&$p_list)
+    private function GetListObjectName($p_listClassName)
     {
-    	if (!is_object($p_list)) {
-    		throw new InvalidObjectException($p_list);
-    	}
-    	if (!is_a($p_list, 'ArticleList')) {
-    		throw new InvalidObjectException($p_list);
-    	}
-    	$this->m_readonlyProperties['article_list'][] =& $p_list;
-    	$this->m_readonlyProperties['current_article_list'] =& $p_list;
+        $nameLength = strlen($p_listClassName);
+        if ($nameLength <= 4) {
+            return '';
+        }
+        $tail = substr($p_listClassName, ($nameLength - 4));
+        if (strtolower($tail) != 'list') {
+            return '';
+        }
+        return strtolower(substr($p_listClassName, 0, ($nameLength - 4)));
     }
 
 
     /**
-     * Resets the current article list.
+     * Sets the current list.
+     *
+     * @param object $p_list
+     * @return void
+     */
+	public function setCurrentList(&$p_list)
+    {
+    	if (!is_object($p_list)) {
+    		throw new InvalidObjectException($p_list);
+    	}
+
+        $objectName = $this->GetListObjectName(get_class($p_list));
+        if ($objectName == '' || !isset($this->m_listObjects[$objectName])) {
+            throw new InvalidObjectException(get_class($p_list));
+        }
+
+    	$listObjectName = $this->m_listObjects[$objectName]['class'].'List';
+    	if (!is_a($p_list, $listObjectName)) {
+    		throw new InvalidObjectException(get_class($p_list));
+    	}
+
+    	$listName = $this->m_listObjects[$objectName]['list'];
+    	$this->m_readonlyProperties['lists'][] =& $p_list;
+    	$this->m_readonlyProperties['current_list'] =& $p_list;
+    	$this->m_readonlyProperties[$listName.'_lists'][] =& $p_list;
+    	$this->m_readonlyProperties['current_'.$listName.'_list'] =& $p_list;
+    }
+
+
+    /**
+     * Resets the current list.
      *
      * @return void
      */
-    public function resetCurrentArticleList()
+    public function resetCurrentList()
     {
-    	if ($this->current_article_list->isBlank()) {
-    		return;
-    	}
-   		array_pop($this->m_readonlyProperties['article_list']);
-	    if (count($this->m_readonlyProperties['article_list']) > 1) {
-	    	$this->m_readonlyProperties['current_article_list'] = array_pop($this->m_readonlyProperties['article_list']);
-	    } else {
-	   		$this->m_readonlyProperties['current_article_list'] = new ArticleList(-1);
+        if (!isset($this->m_readonlyProperties['current_list'])
+                || count($this->m_readonlyProperties['lists']) == 0) {
+            return;
+        }
+
+   	    $this->m_readonlyProperties['current_list'] = array_pop($this->m_readonlyProperties['lists']);
+
+        $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
+    	$listName = $this->m_listObjects[$objectName]['list'];
+
+	    if (count($this->m_readonlyProperties[$listName.'_lists']) == 0) {
+	        return;
 	    }
+       	$this->m_readonlyProperties['current_'.$listName.'_list'] = array_pop($this->m_readonlyProperties[$listName.'_lists']);
     }
 
 

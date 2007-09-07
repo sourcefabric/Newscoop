@@ -3,13 +3,11 @@
 require_once('ListObject.php');
 
 
-$iterator = new ArrayIterator();
-
 /**
- * ArticleList class
+ * ArticleAudioAttachmentsList class
  *
  */
-class ArticleList extends ListObject
+class ArticleAudioAttachmentsList extends ListObject
 {
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
@@ -27,13 +25,13 @@ class ArticleList extends ListObject
 		if ($p_start < 1) {
 			$p_start = 1;
 		}
-		$articlesList = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
+		$articleAudioAttachmentsList = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
 		$p_hasNextElements = $p_limit > 0
-							&& (($p_start + $p_limit - 1) < count($articlesList));
+							&& (($p_start + $p_limit - 1) < count($articleAudioAttachmentsList));
 		if ($p_limit > 0) {
-			return array_slice($articlesList, $p_start - 1, $p_limit);
+			return array_slice($articleAudioAttachmentsList, $p_start - 1, $p_limit);
 		}
-		return array_slice($articlesList, $p_start - 1);
+		return array_slice($articleAudioAttachmentsList, $p_start - 1);
 	}
 
 	/**
@@ -80,7 +78,7 @@ class ArticleList extends ListObject
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {
-    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article");
+    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article_audio_attachments");
     					}
 	    				$parameters[$parameter] = (int)$value;
     				} else {
@@ -88,7 +86,7 @@ class ArticleList extends ListObject
     				}
     				break;
     			default:
-    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article", $p_smarty);
+    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_audio_attachments", $p_smarty);
     		}
     	}
     	return $parameters;

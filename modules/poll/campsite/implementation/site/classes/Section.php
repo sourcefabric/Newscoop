@@ -14,7 +14,9 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Log.php');
+require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 
 /**
  * @package Campsite
@@ -474,6 +476,163 @@ class Section extends DatabaseObject {
 		}
 		return $number;
 	} // fn GetUnusedSectionNumber
+
+
+    /**
+     * Gets a section list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $sectionsList
+     *    An array of Section objects
+     */
+    public static function GetList($p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db;
+
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        $hasPublicationId = false;
+        $hasLanguageId = false;
+        $hasIssueNr = false;
+        $sqlClauseObj = new SQLSelectClause();
+
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param);
+            if (empty($comparisonOperation)) {
+                break;
+            }
+            if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
+                $hasPublicationId = true;
+            }
+            if (strpos($comparisonOperation['left'], 'IdLanguage') !== false) {
+                $hasLanguageId = true;
+            }
+            if (strpos($comparisonOperation['left'], 'NrIssue') !== false) {
+                $hasIssueNr = true;
+            }
+
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+            $sqlClauseObj->addWhere($whereCondition);
+        }
+
+        // validates whether publication identifier was given
+        if ($hasPublicationId == false) {
+            CampTemplate::singleton()->trigger_error('missed parameter Publication '
+                .'Identifier in statement list_sections');
+            return;
+        }
+        // validates whether language identifier was given
+        if ($hasLanguageId == false) {
+            CampTemplate::singleton()->trigger_error('missed parameter Language '
+                .'Identifier in statement list_sections');
+            return;
+        }
+        // validates whether issue number was given
+        if ($hasIssueNr == false) {
+            CampTemplate::singleton()->trigger_error('missed parameter Issue Number '
+                .'in statement list_sections');
+            return;
+        }
+
+        // sets the columns to be fetched
+        $tmpSection = new Section();
+		$columnNames = $tmpSection->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $sqlClauseObj->addColumn($columnName);
+        }
+
+        // sets the main table for the query
+        $sqlClauseObj->setTable($tmpSection->getDbTableName());
+        unset($tmpSection);
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        // sets the order condition if any
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        // sets the limit
+        $sqlClauseObj->setLimit($p_start, $p_limit);
+
+        // builds the query and executes it
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        $sections = $g_ado_db->GetAll($sqlQuery);
+        if (!is_array($sections)) {
+            return null;
+        }
+
+        // builds the array of section objects
+        $sectionsList = array();
+        foreach ($sections as $section) {
+            $secObj = new Section($section['IdPublication'],
+                                  $section['NrIssue'],
+                                  $section['IdLanguage'],
+                                  $section['Number']);
+            if ($secObj->exists()) {
+                $sectionsList[] = $secObj;
+            }
+        }
+
+        return $sectionsList;
+    } // fn GetList
+
+
+    /**
+     * Processes a paremeter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListParameters($p_param)
+    {
+        $comparisonOperation = array();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'name':
+            $comparisonOperation['left'] = 'Name';
+            break;
+        case 'number':
+            $comparisonOperation['left'] = 'Number';
+            break;
+        case 'idpublication':
+            $comparisonOperation['left'] = 'IdPublication';
+            break;
+        case 'nrissue':
+            $comparisonOperation['left'] = 'NrIssue';
+            break;
+        case 'idlanguage':
+            $comparisonOperation['left'] = 'IdLanguage';
+            break;
+        }
+
+        if (isset($comparisonOperation['left'])) {
+            $operatorObj = $p_param->getOperator();
+            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+            $comparisonOperation['right'] = $p_param->getRightOperand();
+        }
+
+        return $comparisonOperation;
+    } // fn ProcessListParameters
 
 } // class Section
 ?>

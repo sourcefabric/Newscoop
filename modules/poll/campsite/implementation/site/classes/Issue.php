@@ -14,10 +14,12 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/Language.php');
 require_once($g_documentRoot.'/classes/Section.php');
 require_once($g_documentRoot.'/classes/IssuePublish.php');
+require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 
 /**
  * @package Campsite
@@ -653,6 +655,176 @@ class Issue extends DatabaseObject {
 		$issue =& new Issue($p_publicationId, $idLanguage, $maxIssueNumber);
 		return $issue;
 	} // fn GetLastCreatedIssue
+
+
+    /**
+     * Gets an issue list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $issuesList
+     *    An array of Issue objects
+     */
+    public static function GetList($p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db;
+
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        $hasPublicationId = false;
+        $hasLanguageId = false;
+        $sqlClauseObj = new SQLSelectClause();
+
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param);
+            if (empty($comparisonOperation)) {
+                break;
+            }
+            if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
+                $hasPublicationId = true;
+            }
+            if (strpos($comparisonOperation['left'], 'IdLanguage') !== false) {
+                $hasLanguageId = true;
+            }
+
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+            $sqlClauseObj->addWhere($whereCondition);
+        }
+
+        // validates whether publication identifier was given
+        if ($hasPublicationId == false) {
+            CampTemplate::singleton()->trigger_error('missed parameter Publication '
+                .'Identifier in statement list_topics');
+            return;
+        }
+        // validates whether language identifier was given
+        if ($hasLanguageId == false) {
+            CampTemplate::singleton()->trigger_error('missed parameter Language '
+                .'Identifier in statement list_topics');
+            return;
+        }
+
+        // sets the columns to be fetched
+        $tmpIssue = new Issue();
+		$columnNames = $tmpIssue->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $sqlClauseObj->addColumn($columnName);
+        }
+
+        // sets the main table for the query
+        $sqlClauseObj->setTable($tmpIssue->getDbTableName());
+        unset($tmpIssue);
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        // sets the order condition if any
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        // sets the limit
+        $sqlClauseObj->setLimit($p_start, $p_limit);
+
+        // builds the query and executes it
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        $issues = $g_ado_db->GetAll($sqlQuery);
+        if (!is_array($issues)) {
+            return null;
+        }
+
+        // builds the array of issue objects
+        $issuesList = array();
+        foreach ($issues as $issue) {
+            $issObj = new Issue($issue['IdPublication'],
+                                $issue['IdLanguage'],
+                                $issue['Number']);
+            if ($issObj->exists()) {
+                $issuesList[] = $issObj;
+            }
+        }
+
+        return $issuesList;
+    } // fn GetList
+
+
+    /**
+     * Processes a paremeter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListParameters($p_param)
+    {
+        $comparisonOperation = array();
+
+        switch (strtolower($p_param->getleftOperand())) {
+        case 'year':
+        case 'publish_year':
+            $comparisonOperation['left'] = 'YEAR(PublicationDate)';
+            break;
+        case 'mon_nr':
+        case 'publish_month':
+            $comparisonOperation['left'] = 'MONTH(PublicationDate)';
+            break;
+        case 'mday':
+        case 'publish_mday':
+            $comparisonOperation['left'] = 'DAYOFMONTH(PublicationDate)';
+            break;
+        case 'yday':
+            $comparisonOperation['left'] = 'DAYOFYEAR(PublicationDate)';
+            break;
+        case 'hour':
+            $comparisonOperation['left'] = 'HOUR(PublicationDate)';
+            break;
+        case 'min':
+            $comparisonOperation['left'] = 'MINUTE(PublicationDate)';
+            break;
+        case 'sec':
+            $comparisonOperation['left'] = 'SECOND(PublicationDate)';
+            break;
+        case 'name':
+            $comparisonOperation['left'] = 'Name';
+            break;
+        case 'number':
+            $comparisonOperation['left'] = 'Number';
+            break;
+        case 'publicationdate':
+            $comparisonOperation['left'] = 'PublicationDate';
+            break;
+        case 'idpublication':
+            $comparisonOperation['left'] = 'IdPublication';
+            break;
+        case 'idlanguage':
+            $comparisonOperation['left'] = 'IdLanguage';
+            break;
+        }
+
+        if (isset($comparisonOperation['left'])) {
+            $operatorObj = $p_param->getOperator();
+            $comparisonOperation['right'] = $p_param->getRightOperand();
+            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
+
+        return $comparisonOperation;
+    } // fn ProcessListParameters
 
 } // class Issue
 

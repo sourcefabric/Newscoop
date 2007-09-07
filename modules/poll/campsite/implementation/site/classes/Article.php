@@ -1453,6 +1453,41 @@ class Article extends DatabaseObject {
     /*****************************************************************/
 
     /**
+     * Return an Article object having the given number
+     * in the given publication, issue, section, language.
+     *
+     * @param int $p_articleNr
+     *      The article number
+     * @param int $p_publicationId
+     *      The publication identifier
+     * @param int $p_issueNr
+     *      The issue number
+     * @param int $p_sectionNr
+     *      The section number
+     * @param int $p_languageId
+     *      The language identifier
+     *
+     * @return object|null
+     *      An article object on success, null on failure
+     */
+    function GetByNumber($p_articleNr, $p_publicationId, $p_issueNr,
+                         $p_sectionNr, $p_languageId)
+    {
+        global $g_ado_db;
+
+        $queryStr = 'SELECT * FROM Articles '
+            .'WHERE IdPublication='.$p_publicationId
+            .' AND NrIssue='.$p_issueNr
+            .' AND NrSection='.$p_sectionNr
+            .' AND IdLanguage='.$p_languageId
+            .' AND Number='.$p_articleNr;
+        $result = DbObjectArray::Create('Article', $queryStr);
+
+        return (is_array($result) && sizeof($result)) ? $result[0] : null;
+    } // fn GetByNumber
+
+
+    /**
      * Return an array of article having the given name
      * in the given publication / issue / section / language.
      *
@@ -1907,6 +1942,162 @@ class Article extends DatabaseObject {
 					." WHERE LockUser=$p_userId";
 		$g_ado_db->Execute($queryStr);
 	} // fn UnlockByUser
+
+
+    /**
+     *
+     */
+    public static function GetList($p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db;
+
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        $sqlClauseObj = new SQLSelectClause();
+
+        // gets the column list to be retrieved for the database table
+        $tmpArticle =& new Article();
+		$columnNames = $tmpArticle->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $sqlClauseObj->addColumn($columnName);
+        }
+
+        // sets the name of the table for the this database object
+        $sqlClauseObj->setTable($tmpArticle->getDbTableName());
+        unset($tmpArticle);
+
+        // parses the given parameters in order to build the WHERE part of
+        // the SQL SELECT sentence
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param, $sqlClauseObj);
+
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+            $sqlClauseObj->addWhere($whereCondition);
+        }
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        // sets the ORDER BY condition
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        // sets the LIMIT start and offset values
+        $sqlClauseObj->setLimit($p_start, $p_limit);
+
+        // builds the SQL query
+        $sqlQuery = $sqlClauseObj->buildQuery();
+
+        // runs the SQL query
+        $articles = $g_ado_db->Execute($sqlQuery);
+        if (!$articles) {
+            return null;
+        }
+
+        // builds the array of Article objects
+        $articlesList = array();
+        foreach ($articles as $article) {
+            $articlesList[] = new Article($article['IdLanguage'],
+                                          $article['Number']);
+        }
+
+        return $articlesList;
+    } // fn GetList
+
+
+    /**
+     *
+     */
+    private static function ProcessListParameters($p_param, &$p_sqlClause)
+    {
+        $conditionOperation = array();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'name':
+            $conditionOperation['left'] = 'Name';
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
+        case 'number':
+            $conditionOperation['left'] = 'Number';
+            $conditionOperation['right'] = (int)$p_param->getRightOperand();
+            break;
+        case 'keyword':
+            $conditionOperation['left'] = 'Keywords';
+            $conditionOperation['symbol'] = 'LIKE';
+            $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
+            break;
+        case 'onfrontpage':
+            $conditionOperation['left'] = 'OnFrontPage';
+            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            break;
+        case 'onsection':
+            $conditionOperation['left'] = 'OnSection';
+            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            break;
+        case 'upload_date':
+            $conditionOperation['left'] = 'UploadDate';
+            $conditionOperation['right'] = (int)$p_param->getRightOperand();
+            break;
+        case 'public':
+            $conditionOperation['left'] = 'Public';
+            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            break;
+        case 'type':
+            $conditionOperation['left'] = 'Type';
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
+        case 'matchalltopics':
+            $p_sqlClause->addColumn('COUNT(*) AS matches');
+            $join1 = ' LEFT JOIN ArticleTopics ON Articles.Number = ArticleTopics.NrArticle ';
+            $p_sqlClause->addJoin($join1);
+            $p_sqlClause->addJoin($join2);
+
+            // matchAllTopics
+            //
+            // SELECT Articles.*, COUNT(*) AS matches 
+            //        FROM Articles 
+            //        LEFT JOIN ArticleTopics
+            //            ON Articles.Number = ArticleTopics.NrArticle
+            //        WHERE ArticleTopics.TopicId IN (5, 9, 11)
+            //        GROUP BY ArticleTopics.NrArticle
+            //        HAVING matches = 3;
+
+
+            if (strtolower($p_param->getRightOperand()) == 'on') {
+                
+            } else {
+                
+            }
+
+            $leftOperand = '';
+            $rightOperand = '';
+            break;
+        case 'topic':
+            $join1 = ' LEFT JOIN ArticleTopics ON Articles.Number = ArticleTopics.NrArticle ';
+            $join2 = ' LEFT JOIN Topics ON ArticleTopics.TopicId = Topics.Id ';
+            $p_sqlClause->addJoin($join1);
+            $p_sqlClause->addJoin($join2);
+
+            $conditionOperation['left'] = 'Topics.Name';
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
+        }
+
+        if (!isset($conditionOperation['symbol'])) {
+            $operatorObj = $p_param->getOperator();
+            $conditionOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
+
+        return $conditionOperation;
+    } // fn ProcessListParameters
+
 } // class Article
 
 ?>

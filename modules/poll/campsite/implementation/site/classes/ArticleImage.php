@@ -12,6 +12,7 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/Image.php');
@@ -368,6 +369,132 @@ class ArticleImage extends DatabaseObject {
 		}
 		return $articles;
 	} // fn GetArticlesThatUseImage
+
+
+    /**
+     * Gets an article images list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $articleImagesList
+     *    An array of Image objects
+     */
+    public static function GetList($p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db;
+
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        $hasArticleNr = false;
+        $sqlClauseObj = new SQLSelectClause();
+
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param);
+            if (sizeof($comparisonOperation) < 1) {
+                break;
+            }
+
+            if (strpos($comparisonOperation['left'], 'NrArticle')) {
+                $hasArticleNr = true;
+            }
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+            $sqlClauseObj->addWhere($whereCondition);
+        }
+
+        // validates whether article number was given
+        if ($hasArticleNr == false) {
+            CampTemplate::singleton()->trigger_error('missed parameter Article '
+                .'Number in statement list_article_images');
+            return;
+        }
+
+        // sets the columns to be fetched
+        $tmpImage = new Image();
+		$columnNames = $tmpImage->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $sqlClauseObj->addColumn($columnName);
+        }
+
+        // sets the base table Attachment
+        $sqlClauseObj->setTable($tmpImage->getDbTableName());
+        unset($tmpImage);
+
+        // adds the ArticleImages join and condition to the query
+        $sqlClauseObj->addTableFrom('ArticleImages');
+        $sqlClauseObj->addWhere('ArticleImages.IdImage = Images.Id');
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        // sets the order condition if any
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        // sets the limit
+        $sqlClauseObj->setLimit($p_start, $p_limit);
+
+        // builds the query executes it
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        $images = $g_ado_db->GetAll($sqlQuery);
+        if (!is_array($images)) {
+            return null;
+        }
+
+        // builds the array of image objects
+        $articleImagesList = array();
+        foreach ($images as $image) {
+            $imgObj = new Image($image['Id']);
+            if ($imgObj->exists()) {
+                $articleImagesList[] = $imgObj;
+            }
+        }
+
+        return $articleImagesList;
+    } // fn GetList
+
+
+    /**
+     * Processes a paremeter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation;
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListParameters($p_param)
+    {
+        $comparisonOperation = array();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'articleimages.nrarticle':
+            $comparisonOperation['left'] = 'ArticleImages.NrArticle';
+            $comparisonOperation['right'] = (int) $p_param->getRightOperand();
+            break;
+        }
+
+        if (isset($comparisonOperation)) {
+            $operatorObj = $p_param->getOperator();
+            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
+
+        return $comparisonOperation;
+    } // fn ProcessListParameters
 
 } // class ArticleImages
 
