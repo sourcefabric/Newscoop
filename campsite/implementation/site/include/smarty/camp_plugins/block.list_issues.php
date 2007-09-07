@@ -44,7 +44,7 @@ function smarty_block_list_issues($p_params, $p_content, &$p_smarty, &$p_repeat)
     	echo "<p>order: " . $campContext->current_issues_list->getOrderString() . "</p>\n";
     }
 
-    $currentIssue = $campContext->current_issues_list->defaultIterator()->current();
+    $currentIssue = $campContext->current_issues_list->current;
     if (is_null($currentIssue)) {
 	    $p_repeat = false;
 	    $campContext->resetCurrentList();

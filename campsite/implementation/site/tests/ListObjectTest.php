@@ -56,23 +56,23 @@ class ListObjectSample extends ListObject
 	}
 
 	/**
-	 * Processes list constraints passed in a string.
+	 * Processes list constraints passed in an array.
 	 *
-	 * @param string $p_constraintsStr
+	 * @param array $p_constraints
 	 * @return array
 	 */
-	protected function ProcessConstraints($p_constraintsStr)
+	protected function ProcessConstraints($p_constraints)
 	{
 		return array();
 	}
 
 	/**
-	 * Processes order constraints passed in a string.
+	 * Processes order constraints passed in an array.
 	 *
-	 * @param string $p_orderStr
+	 * @param string $p_order
 	 * @return array
 	 */
-	protected function ProcessOrderString($p_orderStr)
+	protected function ProcessOrder($p_order)
 	{
 		return array();
 	}
@@ -131,27 +131,18 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     {
     }
 
-    /**
-     * @todo Implement testDefaultName().
-     */
     public function testDefaultName()
     {
     	$sampleListObject = new ListObjectSample();
     	$this->assertEquals(sha1(time()), $sampleListObject->defaultName());
     }
 
-    /**
-     * @todo Implement testGetIterator().
-     */
     public function testGetDefaultIterator()
     {
     	$sampleListObject = new ListObjectSample();
     	$this->assertTrue(is_a($sampleListObject->defaultIterator(), 'ArrayIterator'));
     }
 
-    /**
-     * @todo Implement testGetCurrent().
-     */
     public function testGetCurrent()
     {
     	$sampleListObject = new ListObjectSample();
@@ -166,9 +157,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals('element 3', $sampleListObject->getCurrent());
     }
 
-    /**
-     * @todo Implement testGetIndex().
-     */
     public function testGetIndex()
     {
     	$sampleListObject = new ListObjectSample();
@@ -183,27 +171,18 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals(3, $sampleListObject->getIndex());
     }
 
-    /**
-     * @todo Implement testGetIterator().
-     */
     public function testGetIterator()
     {
     	$sampleListObject = new ListObjectSample();
     	$this->assertTrue(is_a($sampleListObject->getIterator(), 'ArrayIterator'));
     }
 
-    /**
-     * @todo Implement testGetName().
-     */
     public function testGetName()
     {
     	$sampleListObject = new ListObjectSample(0, array('name'=>'test name'));
     	$this->assertEquals('test name', $sampleListObject->getName());
     }
 
-    /**
-     * @todo Implement testGetLength().
-     */
     public function testGetLength()
     {
     	$sampleListObject = new ListObjectSample(-1);
@@ -216,9 +195,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals(5, $sampleListObject->getLength());
     }
 
-    /**
-     * @todo Implement testIsBlank().
-     */
     public function testIsBlank()
     {
     	$sampleListObject = new ListObjectSample(-1);
@@ -228,9 +204,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertFalse($sampleListObject->isBlank());
     }
 
-    /**
-     * @todo Implement testIsEmpty().
-     */
     public function testIsEmpty()
     {
     	$sampleListObject = new ListObjectSample(-1);
@@ -243,9 +216,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertFalse($sampleListObject->isEmpty());
     }
 
-    /**
-     * @todo Implement testIsLimited().
-     */
     public function testIsLimited()
     {
     	$sampleListObject = new ListObjectSample();
@@ -258,9 +228,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertTrue($sampleListObject->isLimited());
     }
 
-    /**
-     * @todo Implement testGetLimit().
-     */
     public function testGetLimit()
     {
     	$sampleListObject = new ListObjectSample();
@@ -273,9 +240,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals(0, $sampleListObject->getLimit());
     }
 
-    /**
-     * @todo Implement testGetStart().
-     */
     public function testGetStart()
     {
     	$sampleListObject = new ListObjectSample();
@@ -288,9 +252,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals(0, $sampleListObject->getStart());
     }
 
-    /**
-     * @todo Implement testGetEnd().
-     */
     public function testGetEnd()
     {
     	$sampleListObject = new ListObjectSample();
@@ -306,9 +267,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals(6, $sampleListObject->getEnd());
     }
 
-    /**
-     * @todo Implement testHasNextElements().
-     */
     public function testHasNextElements()
     {
     	$sampleListObject = new ListObjectSample();
@@ -324,9 +282,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertTrue($sampleListObject->hasNextElements());
     }
 
-    /**
-     * @todo Implement testGetColumn().
-     */
     public function testGetColumn()
     {
     	$sampleListObject = new ListObjectSample(0, array('columns'=>3));
@@ -344,9 +299,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals(1, $sampleListObject->getColumn($iterator));
     }
 
-    /**
-     * @todo Implement testGetColumns().
-     */
     public function testGetColumns()
     {
     	$sampleListObject = new ListObjectSample();
@@ -356,9 +308,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals(3, $sampleListObject->getColumns());
     }
 
-    /**
-     * @todo Implement testGetConstraintsString().
-     */
     public function testGetConstraintsString()
     {
     	$sampleListObject = new ListObjectSample();
@@ -368,9 +317,6 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals('test string', $sampleListObject->getConstraintsString());
     }
 
-    /**
-     * @todo Implement testGetOrderString().
-     */
     public function testGetOrderString()
     {
     	$sampleListObject = new ListObjectSample();
@@ -378,6 +324,13 @@ class ListObjectTest extends PHPUnit_Framework_TestCase
 
     	$sampleListObject = new ListObjectSample(0, array('order'=>'test string'));
     	$this->assertEquals('test string', $sampleListObject->getOrderString());
+    }
+
+    public function testParseConstraintsString()
+    {
+        $constraintsString = "word1 word\ 2 word\"3 word\\\\4";
+        $expectedResult = array('word1', 'word 2', 'word"3', 'word\\4');
+        $this->assertEquals($expectedResult, ListObject::ParseConstraintsString($constraintsString));
     }
 }
 

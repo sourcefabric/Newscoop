@@ -711,12 +711,12 @@ class Issue extends DatabaseObject {
             return;
         }
         // validates whether language identifier was given
-        if ($hasLanguageId == false) {
+/*        if ($hasLanguageId == false) {
             CampTemplate::singleton()->trigger_error('missed parameter Language '
                 .'Identifier in statement list_topics');
             return;
         }
-
+*/
         // sets the columns to be fetched
         $tmpIssue = new Issue();
 		$columnNames = $tmpIssue->getColumnNames(true);
@@ -775,7 +775,7 @@ class Issue extends DatabaseObject {
     {
         $comparisonOperation = array();
 
-        switch (strtolower($p_param->getleftOperand())) {
+        switch (strtolower($p_param->getLeftOperand())) {
         case 'year':
         case 'publish_year':
             $comparisonOperation['left'] = 'YEAR(PublicationDate)';

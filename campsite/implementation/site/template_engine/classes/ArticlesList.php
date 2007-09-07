@@ -35,23 +35,23 @@ class ArticlesList extends ListObject
 	}
 
 	/**
-	 * Processes list constraints passed in a string.
+	 * Processes list constraints passed in an array.
 	 *
-	 * @param string $p_constraintsStr
+	 * @param array $p_constraints
 	 * @return array
 	 */
-	protected function ProcessConstraints($p_constraintsStr)
+	protected function ProcessConstraints($p_constraints)
 	{
 		return array();
 	}
 
 	/**
-	 * Processes order constraints passed in a string.
+	 * Processes order constraints passed in an array.
 	 *
-	 * @param string $p_orderStr
+	 * @param string $p_order
 	 * @return array
 	 */
-	protected function ProcessOrderString($p_orderStr)
+	protected function ProcessOrder($p_order)
 	{
 		return array();
 	}

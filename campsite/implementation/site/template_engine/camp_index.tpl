@@ -6,8 +6,8 @@
 
 
 <h3>issues list</h3>
-{{ list_issues length="4" columns="3" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
-<li>issue: <b>{{ $campsite->current_issues_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+{{ list_issues length="4" columns="3" name='sample_name' constraints="name greater a" order='invalid order' invalid_parameter="value" }}
+<li>issue: <b>{{ $campsite->current_issues_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
    list index: <b>{{ $campsite->current_issues_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
    column: <b>{{ $campsite->current_issues_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
    (current issues list/current list)
