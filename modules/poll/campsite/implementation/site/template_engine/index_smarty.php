@@ -141,7 +141,6 @@ try {
     echo "<h3>Set property test: success</h3>";
 }
 
-
 set_error_handler('templateErrorHandler');
 
 try {

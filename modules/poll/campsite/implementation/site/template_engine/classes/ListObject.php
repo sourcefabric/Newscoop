@@ -79,14 +79,14 @@ abstract class ListObject
 	 *
 	 * @var array
 	 */
-	private $m_constraints;
+	protected $m_constraints;
 
 	/**
 	 * The order constraints array
 	 *
 	 * @var array
 	 */
-	private $m_order;
+	protected $m_order;
 
 	/**
 	 * The list of objects.
@@ -151,15 +151,18 @@ abstract class ListObject
 		/**
 		 * Process the list constraints.
 		 */
-		$this->m_constraints = $this->ProcessConstraints($this->m_constraintsStr);
+		$this->m_constraints = $this->ProcessConstraints(ListObject::ParseConstraintsString($this->m_constraintsStr));
 
 		/**
 		 * Process order constraints.
 		 */
-		$this->m_order = $this->ProcessOrderString($this->m_orderStr);
+		$this->m_order = $this->ProcessOrder(ListObject::ParseConstraintsString($this->m_orderStr));
 
 		$objects = $this->CreateList($this->m_start, $this->m_limit, $this->m_hasNextElements);
-		$this->m_objects = new MyArrayObject($objects);
+		if (!is_array($objects)) {
+		    $objects = array();
+		}
+  		$this->m_objects = new MyArrayObject($objects);
 	}
 
 	/**
@@ -176,20 +179,20 @@ abstract class ListObject
 	abstract protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements);
 
 	/**
-	 * Processes list constraints passed in a string.
+	 * Processes list constraints passed in an array.
 	 *
-	 * @param string $p_constraintsStr
+	 * @param array $p_constraints
 	 * @return array
 	 */
-	abstract protected function ProcessConstraints($p_constraintsStr);
+	abstract protected function ProcessConstraints($p_constraints);
 
 	/**
-	 * Processes order constraints passed in a string.
+	 * Processes order constraints passed in an array.
 	 *
-	 * @param string $p_orderStr
+	 * @param string $p_order
 	 * @return array
 	 */
-	abstract protected function ProcessOrderString($p_orderStr);
+	abstract protected function ProcessOrder($p_order);
 
 	/**
 	 * Processes the input parameters passed in an array; drops the invalid
@@ -357,7 +360,7 @@ abstract class ListObject
 	/**
 	 * Returns the column number for the given iterator
 	 *
-	 * @param int
+	 * @param int $p_iterator
 	 */
 	public function getColumn($p_iterator = null)
 	{
@@ -398,6 +401,71 @@ abstract class ListObject
 	public function getOrderString()
 	{
 		return $this->m_orderStr;
+	}
+
+    /**
+     * Overloaded method call to give access to the list properties.
+     *
+     * @param string $p_element - the property name
+     * @return mix - the property value
+     */
+	public function __get($p_property)
+	{
+	    $p_property = strtolower($p_property);
+	    switch ($p_property) {
+	        case 'column':
+	            return $this->getColumn($this->defaultIterator());
+	        case 'columns':
+	            return $this->getColumns();
+	        case 'current':
+	            return $this->getCurrent();
+	        case 'end':
+	            return $this->getEnd();
+	        case 'index':
+	            return $this->getIndex();
+	        case 'length':
+	            return $this->getLength();
+	        case 'limit':
+	            return $this->getLimit();
+	        case 'name':
+	            return $this->getName();
+	        case 'start':
+	            return $this->getStart();
+	    }
+	}
+
+	/**
+	 * Parses the constraints string and returns an array of words
+	 *
+	 * @param string $p_constraintsString
+	 * @return array
+	 */
+	public static function ParseConstraintsString($p_constraintsString)
+	{
+	    if (empty($p_constraintsString)) {
+	        return array();
+	    }
+
+	    $words = array();
+	    $escaped = false;
+	    $lastWord = '';
+	    foreach (str_split($p_constraintsString) as $char) {
+	        if (preg_match('/[\s]/', $char) && !$escaped) {
+	            if (!empty($lastWord)) {
+	                $words[] = $lastWord;
+	                $lastWord = '';
+	            }
+	        } elseif ($char == "\\" && !$escaped) {
+	            $escaped = true;
+	        } else {
+	            $lastWord .= $char;
+    	        $escaped = false;
+	        }
+	    }
+	    if (!empty($lastWord)) {
+	        $words[] = $lastWord;
+	    }
+	    return $words;
 	}
 }
 

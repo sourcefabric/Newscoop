@@ -34,37 +34,89 @@ class IssuesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements)
 	{
-		if ($p_start < 1) {
-			$p_start = 1;
-		}
-		$issuesList = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
-		$p_hasNextElements = $p_limit > 0
-							&& (($p_start + $p_limit - 1) < count($issuesList));
-		if ($p_limit > 0) {
-			return array_slice($issuesList, $p_start - 1, $p_limit);
-		}
-		return array_slice($issuesList, $p_start - 1);
+	    $operator = new Operator('is');
+	    $context = CampTemplate::singleton()->context();
+	    $comparisonOperation = new ComparisonOperation('IdPublication', $operator,
+	                                                   $context->publication->identifier);
+	    $this->m_constraints[] = $comparisonOperation;
+	    $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
+	                                                   $context->language->number);
+	    $this->m_constraints[] = $comparisonOperation;
+
+	    $issuesList = Issue::GetList($this->m_constraints);
+	    $metaIssuesList = array();
+	    foreach ($issuesList as $issue) {
+	        $metaIssuesList[] = new MetaIssue($issue->getPublicationId(),
+	                                          $issue->getLanguageId(),
+	                                          $issue->getIssueNumber());
+	    }
+	    return $metaIssuesList;
 	}
 
 	/**
-	 * Processes list constraints passed in a string.
+	 * Processes list constraints passed in an array.
 	 *
-	 * @param string $p_constraintsStr
+	 * @param array $p_constraints
 	 * @return array
 	 */
-	protected function ProcessConstraints($p_constraintsStr)
+	protected function ProcessConstraints($p_constraints)
 	{
-		return array();
+	    if (!is_array($p_constraints)) {
+	        return null;
+	    }
+
+	    $parameters = array();
+	    $state = 1;
+	    $attribute = null;
+	    $operator = null;
+	    $value = null;
+	    foreach ($p_constraints as $word) {
+	        switch ($state) {
+	            case 1:
+	                if (!array_key_exists($word, IssuesList::$s_parameters)) {
+	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_issues, constraints parameter");
+	                }
+	                $attribute = $word;
+	                $state = 2;
+	                break;
+	            case 2:
+	                $type = IssuesList::$s_parameters[$attribute];
+	                try {
+	                    $operator = new Operator($word, $type);
+	                }
+	                catch (InvalidOperatorException $e) {
+	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_issues, constraints parameter");
+	                    $state = 1;
+	                    break;
+	                }
+	                $state = 3;
+	                break;
+	            case 3:
+	                $value = $word;
+	                $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
+	                $parameters[] = $comparisonOperation;
+	                $state = 1;
+	                break;
+	        }
+	    }
+	    if ($state != 1) {
+            CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_issues");
+	    }
+
+		return $parameters;
 	}
 
 	/**
-	 * Processes order constraints passed in a string.
+	 * Processes order constraints passed in an array.
 	 *
-	 * @param string $p_orderStr
+	 * @param string $p_order
 	 * @return array
 	 */
-	protected function ProcessOrderString($p_orderStr)
+	protected function ProcessOrder($p_order)
 	{
+	    if (!is_array($p_constraints)) {
+	        return null;
+	    }
 		return array();
 	}
 

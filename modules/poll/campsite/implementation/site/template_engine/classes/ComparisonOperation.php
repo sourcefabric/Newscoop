@@ -37,7 +37,7 @@ class ComparisonOperation
 	 * @param object of type Operator $p_operator
 	 * @param mix $p_rightOperand
 	 */
-	public function __construct(&$p_leftOperand, $p_operator, &$p_rightOperand)
+	public function __construct($p_leftOperand, $p_operator, $p_rightOperand)
 	{
 		$this->m_leftOperand = $p_leftOperand;
 		$this->m_operator = $p_operator;

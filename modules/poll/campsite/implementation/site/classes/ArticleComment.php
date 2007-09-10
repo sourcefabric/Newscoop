@@ -283,7 +283,7 @@ class ArticleComment
         }
 
         // validates whether both article number and language id were given
-        if (!array_key_exists('fk_article_number', $parameter) {
+        if (!array_key_exists('fk_article_number', $parameter)) {
             CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_comments");
         }
         if (!array_key_exists('fk_language_id', $parameter)) {
