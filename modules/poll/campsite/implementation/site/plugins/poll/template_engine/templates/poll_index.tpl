@@ -123,8 +123,8 @@
 </table>
 
      
-{{ list_polls  }}
-x
+{{ list_polls name="NAME" length="3" columns="2" language="default" order="DESC" }}
+
 {{ /list_polls }}
 
 </body>

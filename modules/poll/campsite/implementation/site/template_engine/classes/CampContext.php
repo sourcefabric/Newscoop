@@ -54,7 +54,8 @@ final class CampContext {
 	                         'searchresults'=>array('class'=>'SearchResults',
 	                                                'list'=>'search_results'),
 	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics'),
-	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles')
+	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles'),
+	                         'polls'=>array('class'=>'Polls', 'list'=>'polls')
 	                         );
 
     // Stores the context objects.
@@ -87,6 +88,7 @@ final class CampContext {
         $this->m_readonlyProperties['sections_lists'] = array();
         $this->m_readonlyProperties['articles_lists'] = array();
         $this->m_readonlyProperties['article_attachments_lists'] = array();
+        $this->m_readonlyProperties['polls'] = array();
     } // fn __construct
 
 

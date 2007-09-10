@@ -81,23 +81,23 @@ $context->language = new MetaLanguage(1);
 
 
 // Publication object
-$context->publication = new MetaPublication(1);
+$context->publication = new MetaPublication(6);
 
 
 // Issue object
-$context->issue = new MetaIssue(1, 1, 1);
+$context->issue = new MetaIssue(6, 1, 1);
 
 
 // Section object
-$context->section = new MetaSection(1, 1, 1, 10);
+$context->section = new MetaSection(6, 1, 1, 1);
 
 
 // Article object
-$context->article = new MetaArticle(1, 15);
+$context->article = new MetaArticle(1, 143);
 
 
 // Image object
-$context->image = new MetaImage(53);
+$context->image = new MetaImage(11);
 
 
 // Article attachment object
