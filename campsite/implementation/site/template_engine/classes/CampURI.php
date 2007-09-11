@@ -9,11 +9,23 @@
  * @link http://www.campware.org
  */
 
+define(URLTYPE_SHORT_NAMES, 1);
+define(URLTYPE_TEMPLATE_PATH, 2);
 
 /**
  * Class CampURI
  */
 class CampURI {
+    /**
+     * The URI type
+     * It can be either:
+     * Short Names = 1
+     * Template Path = 2
+     *
+     * @var integer
+     */
+     private $m_type = null;
+
     /**
      * The URI value
      *
@@ -196,6 +208,17 @@ class CampURI {
 
         return $uriString;
     } // fn render
+
+
+    /**
+     * Gets the URL type.
+     *
+     * @return integer
+     */
+    public function getURLType()
+    {
+        return $this->m_type;
+    } // fn getURLType
 
 
     /**
@@ -403,6 +426,20 @@ class CampURI {
     {
         return $this->m_fragment;
     } // fn getFragment
+
+
+    /**
+     * Sets the URL type.
+     *
+     * @param integer $p_type
+     *      The URL type number
+     *
+     * @return void
+     */
+    protected function setURLType($p_type)
+    {
+        $this->m_type = (int)$p_type;
+    } // fn setURLType
 
 
     /**

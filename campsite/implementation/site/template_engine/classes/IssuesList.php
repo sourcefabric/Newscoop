@@ -17,7 +17,7 @@ class IssuesList extends ListObject
                                                                'type'=>'int'),
                                          'publish_month'=>array('field'=>'MONTH(PublicationDate)',
                                                                 'type'=>'int'),
-                                         'publish_mday'=>array('field'=>'MDAY(PublicationDate)',
+                                         'publish_mday'=>array('field'=>'DAYOFMONTH(PublicationDate)',
                                                                'type'=>'int')
                                    );
 
