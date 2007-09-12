@@ -11,16 +11,25 @@
  * Name: uripath
  * Purpose:
  *
- * @param array
+ * @param array $p_params
+ * @param object $p_smarty
+ *      The Smarty object
  *
- * @return string $uriStr
+ * @return string $uriString
  *      The URI path
  */
-function smarty_function_uripath($p_params)
+function smarty_function_uripath($p_params, &$p_smarty)
 {
+    $uriString = '';
     $uriObj = CampSite::GetURI();
-    
-    return $uriObj->getPath();
+
+    $validParams = array('language','publication','issue','section','article');
+    if (empty($p_params) || in_array($p_params['options'], $validParams)) {
+        require_once $p_smarty->_get_plugin_filepath('function', 'uri');
+        $uriString = smarty_function_uri($p_params);
+    }
+
+    return $uriString;
 } // fn smarty_function_uripath
 
 ?>

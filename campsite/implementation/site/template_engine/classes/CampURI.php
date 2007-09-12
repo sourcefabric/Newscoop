@@ -24,7 +24,7 @@ class CampURI {
      *
      * @var integer
      */
-     private $m_type = null;
+    private $m_type = null;
 
     /**
      * The URI value
