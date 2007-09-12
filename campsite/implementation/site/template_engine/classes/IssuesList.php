@@ -18,7 +18,23 @@ class IssuesList extends ListObject
                                          'publish_month'=>array('field'=>'MONTH(PublicationDate)',
                                                                 'type'=>'int'),
                                          'publish_mday'=>array('field'=>'DAYOFMONTH(PublicationDate)',
-                                                               'type'=>'int')
+                                                               'type'=>'int'),
+                                         'year'=>array('field'=>'YEAR(PublicationDate)',
+                                                   'type'=>'int'),
+                                         'mon_nr'=>array('field'=>'MONTH(PublicationDate)',
+                                                   'type'=>'int'),
+                                         'mday'=>array('field'=>'DAYOFMONTH(PublicationDate)',
+                                                   'type'=>'int'),
+                                         'yday'=>array('field'=>'DAYOFYEAR(PublicationDate)',
+                                                   'type'=>'int'),
+                                         'wday'=>array('field'=>'DAYOFWEEK(PublicationDate)',
+                                                   'type'=>'int'),
+                                         'hour'=>array('field'=>'HOUR(PublicationDate)',
+                                                   'type'=>'int'),
+                                         'min'=>array('field'=>'MINUTE(PublicationDate)',
+                                                   'type'=>'int'),
+                                         'sec'=>array('field'=>'SECOND(PublicationDate)',
+                                                   'type'=>'int')
                                    );
 
 	/**
@@ -75,6 +91,7 @@ class IssuesList extends ListObject
 	            case 1:
 	                if (!array_key_exists($word, IssuesList::$s_parameters)) {
 	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_issues, constraints parameter");
+	                    break;
 	                }
 	                $attribute = $word;
 	                $state = 2;

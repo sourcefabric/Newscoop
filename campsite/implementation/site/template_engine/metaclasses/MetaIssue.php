@@ -31,9 +31,10 @@ final class MetaIssue extends MetaDbObject {
 	}
 
 
-	public function __construct($p_publicationId = null, $p_languageId = null, $p_issueNumber = null)
+	public function __construct($p_publicationId = null, $p_languageId = null,
+	                            $p_issueNumber = null)
     {
-		$this->m_dbObject =& new Issue($p_publicationId, $p_languageId, $p_issueNumber);
+		$this->m_dbObject = new Issue($p_publicationId, $p_languageId, $p_issueNumber);
 
 		$this->InitProperties();
         $this->m_customProperties['year'] = 'getPublishYear';

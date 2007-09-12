@@ -33,7 +33,7 @@ final class MetaLanguage extends MetaDbObject {
 
     public function __construct($p_languageId = null)
     {
-		$this->m_dbObject =& new Language($p_languageId);
+		$this->m_dbObject = new Language($p_languageId);
 
 		$this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';

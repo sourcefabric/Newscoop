@@ -228,14 +228,14 @@ abstract class ListObject
 	}
 
 	/**
-	 * Returns the index of the current element of the default iterator.
+	 * Returns the current element of the default iterator.
 	 *
-	 * @return int
+	 * @return object
 	 */
 	public function getCurrent()
 	{
 		if ($this->isEmpty()) {
-			return 0;
+			return null;
 		}
 		return $this->defaultIterator()->current();
 	}

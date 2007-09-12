@@ -30,9 +30,13 @@ final class MetaTopic extends MetaDbObject {
 	}
 
 
-    public function __construct($p_topicId = null)
+    public function __construct($p_topicIdOrName = null)
     {
-        $this->m_dbObject =& new Topic($p_topicId);
+        $this->m_dbObject = new Topic($p_topicIdOrName);
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = null;
+            throw new InvalidValueException($p_topicIdOrName, 'topic');
+        }
 
 		$this->InitProperties();
 		$this->m_customProperties['name'] = 'getName';
@@ -50,6 +54,31 @@ final class MetaTopic extends MetaDbObject {
     	return $this->m_dbObject->getName($p_languageId);
     }
 
+
+    public function getValue()
+    {
+        if (!isset($this->m_dbObject) || !$this->m_dbObject->exists()) {
+            return null;
+        }
+
+        $campContext = CampTemplate::singleton()->context();
+        $name = $this->m_dbObject->getName($campContext->language->number);
+        $languageCode = $campContext->language->code;
+        return "$name:$languageCode";
+    }
+
+
+    public function IsValid($p_value)
+    {
+        $topic = Topic::GetByFullName($p_value);
+        return !is_null($topic);
+    }
+
+
+    public static function GetTypeName()
+    {
+        return 'topic';
+    }
 } // class MetaTopic
 
 ?>

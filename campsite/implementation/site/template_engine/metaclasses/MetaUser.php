@@ -57,7 +57,7 @@ final class MetaUser extends MetaDbObject {
 
     public function __construct($p_userId = null)
     {
-        $this->m_dbObject =& new User($p_userId);
+        $this->m_dbObject = new User($p_userId);
 
 		$this->InitProperties();
 		$this->m_customProperties['country'] = 'getCountry';
@@ -70,7 +70,7 @@ final class MetaUser extends MetaDbObject {
 		$countryCode = $this->m_dbObject->getProperty('CountryCode');
 		$smartyObj = CampTemplate::singleton();
     	$contextObj = $smartyObj->get_template_vars('campsite');
-		$country =& new Country($countryCode, $contextObj->language->number);
+		$country = new Country($countryCode, $contextObj->language->number);
 		if (!$country->exists()) {
 			return null;
 		}

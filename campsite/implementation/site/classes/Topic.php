@@ -33,12 +33,18 @@ class Topic extends DatabaseObject {
 	 *
 	 * @param int $p_id
 	 */
-	function Topic($p_id = null)
+	public function Topic($p_idOrName = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data['Id'] = $p_id;
-		if (!empty($p_id)) {
-			 $this->fetch();
+
+		if (preg_match('/[\d]+/', $p_idOrName) > 0) {
+            $this->m_data['Id'] = $p_idOrName;
+            $this->fetch();
+		} elseif (is_string($p_idOrName) && !empty($p_idOrName)) {
+		    $topic = Topic::GetByFullName($p_idOrName);
+		    if (!is_null($topic)) {
+		        $this->fetch($topic->m_data);
+		    }
 		}
 	} // constructor
 
@@ -48,7 +54,7 @@ class Topic extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function fetch($p_columns = null)
+	public function fetch($p_columns = null)
 	{
 		global $g_ado_db;
 		if (!is_null($p_columns)) {
@@ -86,7 +92,7 @@ class Topic extends DatabaseObject {
 	 * @param array $p_values
 	 * @return boolean
 	 */
-	function create($p_values = null)
+	public function create($p_values = null)
 	{
 		global $g_ado_db;
 		$queryStr = "UPDATE AutoId SET TopicId = LAST_INSERT_ID(TopicId + 1)";
@@ -118,7 +124,7 @@ class Topic extends DatabaseObject {
 	 * Delete the topic.
 	 * @return boolean
 	 */
-	function delete($p_languageId = null)
+	public function delete($p_languageId = null)
 	{
 		global $g_ado_db;
 		$deleted = false;
@@ -165,7 +171,7 @@ class Topic extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getName($p_languageId)
+	public function getName($p_languageId)
 	{
 		if (is_numeric($p_languageId) && isset($this->m_names[$p_languageId])) {
 			return $this->m_names[$p_languageId];;
@@ -184,7 +190,7 @@ class Topic extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function setName($p_languageId, $p_value)
+	public function setName($p_languageId, $p_value)
 	{
 		global $g_ado_db;
 		if (!is_string($p_value) || !is_numeric($p_languageId)) {
@@ -223,7 +229,7 @@ class Topic extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getTopicId()
+	public function getTopicId()
 	{
 		return $this->m_data['Id'];
 	} // fn getTopicId
@@ -235,7 +241,7 @@ class Topic extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function getTranslations()
+	public function getTranslations()
 	{
 	    return $this->m_names;
 	} // fn getTranslations
@@ -246,7 +252,7 @@ class Topic extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getNumTranslations()
+	public function getNumTranslations()
 	{
 		return count($this->m_names);
 	} // fn getNumTranslations
@@ -255,7 +261,7 @@ class Topic extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getParentId()
+	public function getParentId()
 	{
 		return $this->m_data['ParentId'];
 	} // fn getParentId
@@ -267,7 +273,7 @@ class Topic extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function getPath()
+	public function getPath()
 	{
 		global $g_ado_db;
 		$done = false;
@@ -299,7 +305,7 @@ class Topic extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function hasSubtopics()
+	public function hasSubtopics()
 	{
 		global $g_ado_db;
 		// Returned the cached value if available.
@@ -313,6 +319,37 @@ class Topic extends DatabaseObject {
 
 
 	/**
+	 * Returns a topic object identified by the full name in the
+	 * format topic_name:language_code
+	 *
+	 * @param string $p_fullName
+	 * @return Topic object
+	 */
+	public static function GetByFullName($p_fullName)
+	{
+	    $components = preg_split('/:/', trim($p_fullName));
+	    if (count($components) < 2) {
+	        return null;
+	    }
+	    $name = $components[0];
+	    $languageCode = $components[1];
+
+	    $languages = Language::GetLanguages(null, $languageCode);
+	    if (count($languages) < 1) {
+	        return null;
+	    }
+        $languageObject = $languages[0];
+
+        $topics = Topic::GetTopics(null, $languageObject->getLanguageId(), $name);
+	    if (count($topics) < 1) {
+	        return null;
+	    }
+
+	    return $topics[0];
+	}
+
+
+	/**
 	 * Search the Topics table.
 	 *
 	 * @param int $p_id
@@ -322,8 +359,8 @@ class Topic extends DatabaseObject {
 	 * @param array $p_sqlOptions
 	 * @return array
 	 */
-	function GetTopics($p_id = null, $p_languageId = null, $p_name = null,
-					   $p_parentId = null, $p_sqlOptions = null)
+	public static function GetTopics($p_id = null, $p_languageId = null, $p_name = null,
+					                 $p_parentId = null, $p_sqlOptions = null)
 	{
 		$constraints = array();
 		if (!is_null($p_id)) {
@@ -338,7 +375,7 @@ class Topic extends DatabaseObject {
 		if (!is_null($p_parentId)) {
 			$constraints[] = array("ParentId", $p_parentId);
 		}
-		return DatabaseObject::Search('Topics', $constraints, $p_sqlOptions);
+		return DatabaseObject::Search('Topic', $constraints, $p_sqlOptions);
 	} // fn GetTopics
 
 
@@ -349,7 +386,7 @@ class Topic extends DatabaseObject {
 	 * @param array $p_path
 	 * @param int $p_topicId
 	 */
-	function __TraverseTree(&$p_tree, $p_path, $p_topicId = 0)
+	private static function __TraverseTree(&$p_tree, $p_path, $p_topicId = 0)
 	{
 		global $g_ado_db;
 		$sql = "SELECT * FROM Topics WHERE ParentId = ".$p_topicId
@@ -427,7 +464,7 @@ class Topic extends DatabaseObject {
 	 * @param int $p_startingTopicId
 	 * @return array
 	 */
-	function GetTree($p_startingTopicId = 0)
+	public static function GetTree($p_startingTopicId = 0)
 	{
 		$tree = array();
 		$path = array();

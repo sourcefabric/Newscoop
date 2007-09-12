@@ -791,6 +791,9 @@ class Issue extends DatabaseObject {
         case 'yday':
             $comparisonOperation['left'] = 'DAYOFYEAR(PublicationDate)';
             break;
+        case 'wday':
+            $comparisonOperation['left'] = 'DAYOFWEEK(PublicationDate)';
+            break;
         case 'hour':
             $comparisonOperation['left'] = 'HOUR(PublicationDate)';
             break;

@@ -46,13 +46,13 @@ final class MetaArticle extends MetaDbObject {
 
     public function __construct($p_languageId = null, $p_articleId = null)
     {
-        $articleObj =& new Article($p_languageId, $p_articleId);
-        $this->m_dbObject =& $articleObj;
+        $articleObj = new Article($p_languageId, $p_articleId);
+        $this->m_dbObject = $articleObj;
         $this->InitProperties();
 
-        $this->m_articleData =& new ArticleData($articleObj->getType(),
-                                                $articleObj->getArticleNumber(),
-                                                $articleObj->getLanguageId());
+        $this->m_articleData = new ArticleData($articleObj->getType(),
+                                               $articleObj->getArticleNumber(),
+                                               $articleObj->getLanguageId());
 
         foreach ($this->m_articleData->m_columnNames as $property) {
         	if ($property[0] != 'F') {
@@ -268,16 +268,16 @@ final class MetaArticle extends MetaDbObject {
 
     public function getTemplate()
     {
-    	$articleSection =& new Section($this->m_dbObject->getProperty('IdPublication'),
-    								   $this->m_dbObject->getProperty('NrIssue'),
-    								   $this->m_dbObject->getProperty('IdLanguage'),
-    								   $this->m_dbObject->getProperty('NrSection'));
+    	$articleSection = new Section($this->m_dbObject->getProperty('IdPublication'),
+    								  $this->m_dbObject->getProperty('NrIssue'),
+    								  $this->m_dbObject->getProperty('IdLanguage'),
+    								  $this->m_dbObject->getProperty('NrSection'));
     	if ($articleSection->getArticleTemplateId() > 0) {
     		return new MetaTemplate($articleSection->getArticleTemplateId());
     	}
-    	$articleIssue =& new Issue($this->m_dbObject->getProperty('IdPublication'),
-    							   $this->m_dbObject->getProperty('IdLanguage'),
-    							   $this->m_dbObject->getProperty('NrIssue'));
+    	$articleIssue = new Issue($this->m_dbObject->getProperty('IdPublication'),
+    							  $this->m_dbObject->getProperty('IdLanguage'),
+    							  $this->m_dbObject->getProperty('NrIssue'));
    		return new MetaTemplate($articleIssue->getArticleTemplateId());
     }
 
@@ -310,7 +310,8 @@ final class MetaArticle extends MetaDbObject {
     	} else {
     		$language = $p_language;
     	}
-    	$article =& new Article($language->getLanguageId(), $this->m_dbObject->getArticleNumber());
+    	$article = new Article($language->getLanguageId(),
+    	                       $this->m_dbObject->getArticleNumber());
     	return (int)$article->exists();
     }
 

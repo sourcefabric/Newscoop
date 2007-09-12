@@ -287,7 +287,7 @@ final class CampContext {
     	require_once($classFullPath);
 
     	$className = 'Meta'.$this->m_objectTypes[$p_objectType];
-    	$this->m_objects[$p_objectType] =& new $className;
+    	$this->m_objects[$p_objectType] = new $className;
 
     	return $this->m_objects[$p_objectType];
     } // fn createObject
