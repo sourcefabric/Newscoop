@@ -6,7 +6,7 @@
 
 
 <h3>issues list</h3>
-{{ list_issues length="4" columns="3" name='sample_name' constraints="name greater r number greater 1" order='invalid order' invalid_parameter="value" }}
+{{ list_issues length="4" columns="3" name='sample_name' constraints="name greater a" order='byName desc' }}
 <li>issue: <b>{{ $campsite->current_issues_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
    list index: <b>{{ $campsite->current_issues_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
    column: <b>{{ $campsite->current_issues_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
@@ -16,7 +16,7 @@
 
 
 <h3>sections list</h3>
-{{ list_sections length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+{{ list_sections length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
 <li>section: <b>{{ $campsite->current_sections_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
    list index: <b>{{ $campsite->current_sections_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
    column: <b>{{ $campsite->current_sections_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>

@@ -728,13 +728,12 @@ class Issue extends DatabaseObject {
         $sqlClauseObj->setTable($tmpIssue->getDbTableName());
         unset($tmpIssue);
 
-        if (!is_array($p_order)) {
-            $p_order = array();
-        }
-
-        // sets the order condition if any
-        foreach ($p_order as $orderColumn => $orderDirection) {
-            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        if (is_array($p_order)) {
+            $order = Issue::ProcessListOrder($p_order);
+            // sets the order condition if any
+            foreach ($order as $orderField=>$orderDirection) {
+                $sqlClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
+            }
         }
 
         // sets the limit
@@ -828,6 +827,42 @@ class Issue extends DatabaseObject {
 
         return $comparisonOperation;
     } // fn ProcessListParameters
+
+
+    /**
+     * Processes an order directive coming from template tags.
+     *
+     * @param array $p_order
+     *      The array of order directives
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $field=>$direction) {
+            $dbField = null;
+            switch (strtolower($field)) {
+                case 'bynumber':
+                    $dbField = 'Number';
+                    break;
+                case 'byname':
+                    $dbField = 'Name';
+                    break;
+                case 'bydate':
+                case 'bycreationdate':
+                case 'bypublishdate':
+                    $dbField = 'PublicationDate';
+                    break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+            }
+            $order[$dbField] = $direction;
+        }
+        return $order;
+    }
 
 } // class Issue
 

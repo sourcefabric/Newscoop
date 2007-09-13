@@ -37,7 +37,7 @@ final class MetaTemplate extends MetaDbObject {
         }
 
 		$this->InitProperties();
-        $this->m_customProperties['type'] = 'getType';
+        $this->m_customProperties['type'] = 'getTemplateType';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
