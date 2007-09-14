@@ -20,18 +20,31 @@ class ArticleAttachmentsList extends ListObject
 	 * @param bool $p_hasNextElements
 	 * @return array
 	 */
-	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements)
+	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters)
 	{
-		if ($p_start < 1) {
-			$p_start = 1;
-		}
-		$articleAttachmentsList = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
-		$p_hasNextElements = $p_limit > 0
-							&& (($p_start + $p_limit - 1) < count($articleAttachmentsList));
-		if ($p_limit > 0) {
-			return array_slice($articleAttachmentsList, $p_start - 1, $p_limit);
-		}
-		return array_slice($articleAttachmentsList, $p_start - 1);
+	    $operator = new Operator('is');
+	    $context = CampTemplate::singleton()->context();
+	    if (!$context->article->defined) {
+	        return array();
+	    }
+	    $comparisonOperation = new ComparisonOperation('article_number', $operator,
+	                                                   $context->article->number);
+	    $this->m_constraints[] = $comparisonOperation;
+
+        if (isset($p_parameters['all_languages'])
+                && strtolower($p_parameters['all_languages']) != 'true'
+                && $context->language->defined) {
+            $comparisonOperation = new ComparisonOperation('language_id', $operator,
+                                                           $context->language->number);
+            $this->m_constraints[] = $comparisonOperation;
+	    }
+
+	    $articleAttachmentsList = ArticleAttachment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit);
+	    $metaAttachmentsList = array();
+	    foreach ($articleAttachmentsList as $attachment) {
+	        $metaAttachmentsList[] = new MetaAttachment($attachment->getAttachmentId());
+	    }
+	    return $metaAttachmentsList;
 	}
 
 	/**
@@ -74,7 +87,7 @@ class ArticleAttachmentsList extends ListObject
     			case 'columns':
     			case 'name':
     			case 'constraints':
-    			case 'order':
+    			case 'all_languages':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {

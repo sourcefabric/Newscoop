@@ -56,7 +56,7 @@ class IssuesList extends ListObject
 	 * @param bool $p_hasNextElements
 	 * @return array
 	 */
-	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements)
+	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters)
 	{
 	    $operator = new Operator('is');
 	    $context = CampTemplate::singleton()->context();

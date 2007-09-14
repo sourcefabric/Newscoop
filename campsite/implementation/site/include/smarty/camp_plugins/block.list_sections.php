@@ -31,17 +31,9 @@ function smarty_block_list_sections($p_params, $p_content, &$p_smarty, &$p_repea
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 1;
+    	$start = 0;
     	$sectionsList = new SectionsList($start, $p_params);
     	$campContext->setCurrentList($sectionsList);
-    	echo "<p>start: " . $campContext->current_sections_list->getStart()
-    		. ", length: " . $campContext->current_sections_list->getLength()
-    		. ", limit: " . $campContext->current_sections_list->getLimit()
-    		. ", columns: " . $campContext->current_sections_list->getColumns()
-			. ", has next elements: " . (int)$campContext->current_sections_list->hasNextElements() . "</p>\n";
-    	echo "<p>name: " . $campContext->current_sections_list->getName() . "</p>\n";
-    	echo "<p>constraints: " . $campContext->current_sections_list->getConstraintsString() . "</p>\n";
-    	echo "<p>order: " . $campContext->current_sections_list->getOrderString() . "</p>\n";
     }
 
     $currentSection = $campContext->current_sections_list->defaultIterator()->current();

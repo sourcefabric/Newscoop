@@ -20,7 +20,7 @@ class ArticleTopicsList extends ListObject
 	 * @param bool $p_hasNextElements
 	 * @return array
 	 */
-	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements)
+	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters)
 	{
 		if ($p_start < 1) {
 			$p_start = 1;
