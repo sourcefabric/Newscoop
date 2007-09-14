@@ -24,16 +24,17 @@
  */
 function smarty_block_list_polls($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
-    #require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
+    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
     
     // gets the context variable
     $campContext = $p_smarty->get_template_vars('campsite');
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 3;
+        $start = 3;
     	$pollsList = new PollsList($start, $p_params);
     	$campContext->setCurrentList($pollsList);
+    
     	echo "<p>start: " . $campContext->current_polls_list->getStart()
     		. ", length: " . $campContext->current_polls_list->getLength()
     		. ", limit: " . $campContext->current_polls_list->getLimit()
@@ -42,9 +43,11 @@ function smarty_block_list_polls($p_params, $p_content, &$p_smarty, &$p_repeat)
     	echo "<p>name: " . $campContext->current_polls_list->getName() . "</p>\n";
     	echo "<p>constraints: " . $campContext->current_polls_list->getConstraintsString() . "</p>\n";
     	echo "<p>order: " . $campContext->current_polls_list->getOrderString() . "</p>\n";
+    
     }
 
-    $currentPoll = $campContext->current_polls_list->defaultIterator()->current();
+    $Poll = $campContext->current_polls_list;
+    $currentPoll = $Poll->current;
     if (is_null($currentPoll)) {
 	    $p_repeat = false;
 	    $campContext->resetCurrentList();

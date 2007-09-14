@@ -26,6 +26,7 @@ final class MetaPoll extends MetaDbObject {
 		$this->m_properties['number'] = 'poll_nr';
 		$this->m_properties['language_id'] = 'fk_language_id';
 		$this->m_properties['title'] = 'title';
+		$this->m_properties['name'] = 'title';
 		$this->m_properties['question'] = 'question';
 		$this->m_properties['date_begin'] = 'date_begin';
 		$this->m_properties['date_end'] = 'date_end';

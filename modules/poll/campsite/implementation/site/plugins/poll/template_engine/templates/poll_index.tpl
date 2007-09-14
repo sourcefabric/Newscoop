@@ -121,10 +121,12 @@
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
-
      
-{{ list_polls name="NAME" length="3" columns="2" language="default" order="DESC" }}
-
+{{ list_polls name="polls_list" length="5" item="issue" language="default" order="DESC" }}
+   <li>poll: <b>{{ $campsite->current_polls_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
+   list index: <b>{{ $campsite->current_polls_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
+   column: <b>{{ $campsite->current_polls_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   (current polls list/current list)
 {{ /list_polls }}
 
 </body>

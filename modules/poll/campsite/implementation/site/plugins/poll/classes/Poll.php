@@ -324,7 +324,7 @@ class Poll extends DatabaseObject {
         return $query;
     }
     
-    public function GetPolls($p_fk_language_id = null, $p_offset = 0, $p_limit = 20)
+    static public function GetPolls($p_fk_language_id = null, $p_offset = 0, $p_limit = 20)
     {
         global $g_ado_db;
         
@@ -371,6 +371,16 @@ class Poll extends DatabaseObject {
     public function getNumber()
     {
         return $this->getProperty('poll_nr');   
+    }
+    
+    public function getName()
+    {
+        return $this->getProperty('title');   
+    }
+    
+    public function getTitle()
+    {
+        return $this->getProperty('title');   
     }
     
     public function getLanguageId()
@@ -434,6 +444,249 @@ class Poll extends DatabaseObject {
             }
         }
     }
+    
+    
+    /////////////////// Special template engine methods below here /////////////////////////////
+    
+    /**
+     * Gets an issue list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $issuesList
+     *    An array of Issue objects
+     */
+    public static function GetList($p_parameters, $p_item=null, $p_order=null,
+                                   $p_start = 0, $p_limit = 0)
+    {
+        global $g_ado_db;
+        
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param);
+            if (empty($comparisonOperation)) {
+                continue;
+            }
+            if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
+                $publication_id = $comparisonOperation['right'];
+            }
+            if (strpos($comparisonOperation['left'], 'IdLanguage') !== false) {
+                $language_id = $comparisonOperation['right'];
+            }
+            if (strpos($comparisonOperation['left'], 'NrIssue') !== false) {
+                $issue_nr = $comparisonOperation['right'];
+            }
+            if (strpos($comparisonOperation['left'], 'NrSection') !== false) {
+                $section_nr = $comparisonOperation['right'];
+            }
+            if (strpos($comparisonOperation['left'], 'NrArticle') !== false) {
+                $article_nr = $comparisonOperation['right'];
+            }
+        }
+        
+        $sqlClauseObj = new SQLSelectClause();
+        
+        // sets the columns to be fetched
+        $tmpPoll = new Poll();
+		$columnNames = $tmpPoll->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $sqlClauseObj->addColumn($columnName);
+        }
+
+        // sets the main table for the query
+        $mainTblName = $tmpPoll->getDbTableName();
+        $sqlClauseObj->setTable($mainTblName);
+        unset($tmpPoll);
+        
+        switch ($p_item) {
+            case 'publication':
+                if (empty($publication_id) || empty($language_id)) {
+                    return;   
+                }
+                $sqlClauseObj->addJoin(
+                    "LEFT JOIN mod_poll_publication AS j 
+                    ON 
+                    j.fk_poll_nr = $mainTblName.poll_nr 
+                    AND j.fk_poll_language_id = $mainTblName.fk_language_id
+                    AND j.fk_poll_language_id = $language_id
+                    AND j.fk_publication_id = $publication_id"
+                );
+            break;
+            
+            case 'issue':
+                if (empty($language_id) || empty($publication_id) || empty($issue_nr)) {
+                    return;   
+                }
+                
+                $sqlClauseObj->addJoin(
+                    "LEFT JOIN mod_poll_issue AS j 
+                    ON 
+                    j.fk_poll_nr = $mainTblName.poll_nr 
+                    AND j.fk_poll_language_id = $mainTblName.fk_language_id
+                    AND j.fk_issue_nr = $issue_nr 
+                    AND j.fk_issue_language_id = $language_id
+                    AND j.fk_publication_id = $publication_id"
+                
+                );
+                $sqlClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
+            break;  
+            
+            case 'section':
+                if (empty($language_id) || empty($publication_id) || empty($issue_nr) || empty($section_nr)) {
+                    return;   
+                }
+                
+                $sqlClauseObj->addJoin(
+                    "LEFT JOIN mod_poll_issue AS j 
+                    ON 
+                    j.fk_poll_nr = $mainTblName.poll_nr 
+                    AND j.fk_poll_language_id = $mainTblName.fk_language_id
+
+                    AND j.fk_section_nr = $section_nr 
+                    AND j.fk_section_language_id = $language_id
+                    
+                    AND j.fk_issue_nr = $issue_nr 
+                    AND j.fk_publication_id = $publication_id"
+                
+                );
+                $sqlClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
+            break;
+            
+            case 'article':
+                if (empty($language_id) || empty($publication_id) || empty($issue_nr) || empty($section_nr) || empty($article_nr)) {
+                    return;   
+                }
+                
+                $sqlClauseObj->addJoin(
+                    "LEFT JOIN mod_poll_issue AS j 
+                    ON 
+                    j.fk_poll_nr = $mainTblName.poll_nr 
+                    AND j.fk_poll_language_id = $mainTblName.fk_language_id
+
+                    AND j.fk_article_nr = $article_nr 
+                    AND j.fk_article_language_id = $language_id"                
+                );
+                $sqlClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
+            break;        
+            
+            
+        }
+        
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        // sets the order condition if any
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        // sets the limit
+        $sqlClauseObj->setLimit($p_start, $p_limit);
+
+        // builds the query and executes it
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        $polls = $g_ado_db->GetAll($sqlQuery);
+        if (!is_array($polls)) {
+            return null;
+        }
+
+        // builds the array of poll objects
+        $pollsList = array();
+        foreach ($polls as $poll) {
+            $pollObj = new Poll($poll['fk_language_id'], $poll['poll_nr']);
+            if ($pollObj->exists()) {
+                $pollsList[] = $pollObj;
+            }
+        }
+
+        return $pollsList;
+    } // fn GetList
+    
+    /**
+     * Processes a paremeter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListParameters($p_param)
+    {
+        $comparisonOperation = array();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'year':
+        case 'publish_year':
+            $comparisonOperation['left'] = 'YEAR(PublicationDate)';
+            break;
+        case 'mon_nr':
+        case 'publish_month':
+            $comparisonOperation['left'] = 'MONTH(PublicationDate)';
+            break;
+        case 'mday':
+        case 'publish_mday':
+            $comparisonOperation['left'] = 'DAYOFMONTH(PublicationDate)';
+            break;
+        case 'yday':
+            $comparisonOperation['left'] = 'DAYOFYEAR(PublicationDate)';
+            break;
+        case 'hour':
+            $comparisonOperation['left'] = 'HOUR(PublicationDate)';
+            break;
+        case 'min':
+            $comparisonOperation['left'] = 'MINUTE(PublicationDate)';
+            break;
+        case 'sec':
+            $comparisonOperation['left'] = 'SECOND(PublicationDate)';
+            break;
+        case 'name':
+            $comparisonOperation['left'] = 'Name';
+            break;
+        case 'number':
+            $comparisonOperation['left'] = 'Number';
+            break;
+        case 'publicationdate':
+            $comparisonOperation['left'] = 'PublicationDate';
+            break;
+        case 'idpublication':
+            $comparisonOperation['left'] = 'IdPublication';
+            break;
+        case 'idlanguage':
+            $comparisonOperation['left'] = 'IdLanguage';
+            break;
+        case 'nrissue':
+            $comparisonOperation['left'] = 'NrIssue';
+            break;
+        case 'nrsection':
+            $comparisonOperation['left'] = 'NrSection';
+            break;
+        case 'nrarticle':
+            $comparisonOperation['left'] = 'NrArticle';
+            break;
+        }
+
+        if (isset($comparisonOperation['left'])) {
+            $operatorObj = $p_param->getOperator();
+            $comparisonOperation['right'] = $p_param->getRightOperand();
+            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
+
+        return $comparisonOperation;
+    } // fn ProcessListParameters
+    
 } // class Poll
 
 ?>

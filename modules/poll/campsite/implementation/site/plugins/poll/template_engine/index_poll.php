@@ -75,25 +75,16 @@ $tpl = CampTemplate::singleton();
 
 $context = $tpl->context();
 
-/*
 // Language object
 $context->language = new MetaLanguage(1);
 
 
 // Publication object
-$context->publication = new MetaPublication(1);
+$context->publication = new MetaPublication(6);
 
 
 // Issue object
-$context->issue = new MetaIssue(1, 1, 1);
-
-
-// Section object
-$context->section = new MetaSection(1, 1, 1, 10);
-
-// Article object
-$context->article = new MetaArticle(1, 15);
-*/
+$context->issue = new MetaIssue(6, 1, 1);
 
 
 $context->poll = new MetaPoll(1, 1);
