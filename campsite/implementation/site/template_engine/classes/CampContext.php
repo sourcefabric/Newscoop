@@ -32,7 +32,8 @@ final class CampContext {
 								   'topic'=>'Topic',
 								   'user'=>'User',
 								   'template'=>'Template',
-								   'subscription'=>'Subscription'
+								   'subscription'=>'Subscription',
+                                   'url'=>'URL'
 								   );
 
 	// Defines the list objects
@@ -211,6 +212,26 @@ final class CampContext {
         }
         return strtolower(substr($p_listClassName, 0, ($nameLength - 4)));
     }
+
+
+    /**
+     * Returns the list name of the current list.
+     *
+     * @return string
+     *      The name of the list
+     */
+    public function getCurrentListName()
+    {
+        if (!isset($this->m_readonlyProperties['current_list'])
+                || count($this->m_readonlyProperties['lists']) == 0) {
+            return null;
+        }
+
+        $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
+        $listName = $this->m_listObjects[$objectName]['list'];
+
+        return 'current_'.$listName.'_list';
+    } // fn getCurrentListName
 
 
     /**

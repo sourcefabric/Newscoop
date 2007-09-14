@@ -27,6 +27,7 @@ final class MetaSection extends MetaDbObject {
 		$this->m_properties['name'] = 'Name';
 		$this->m_properties['number'] = 'Number';
 		$this->m_properties['description'] = 'Description';
+        $this->m_properties['url_name'] = 'ShortName';
 	}
 
 

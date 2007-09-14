@@ -28,6 +28,7 @@ final class MetaIssue extends MetaDbObject {
 		$this->m_properties['number'] = 'Number';
 		$this->m_properties['date'] = 'PublicationDate';
 		$this->m_properties['publish_date'] = 'PublicationDate';
+        $this->m_properties['url_name'] = 'ShortName';
 	}
 
 
@@ -119,7 +120,6 @@ final class MetaIssue extends MetaDbObject {
     {
    		return new MetaTemplate($this->m_dbObject->getIssueTemplateId());
     }
-
 
 } // class MetaIssue
 
