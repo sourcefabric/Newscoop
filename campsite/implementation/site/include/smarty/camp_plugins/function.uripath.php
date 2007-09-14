@@ -21,10 +21,9 @@
 function smarty_function_uripath($p_params, &$p_smarty)
 {
     $uriString = '';
-    $uriObj = CampSite::GetURI();
-
     $validParams = array('language','publication','issue','section','article');
-    if (empty($p_params) || in_array($p_params['options'], $validParams)) {
+    if (empty($p_params)
+            || in_array(strtolower($p_params['options']), $validParams)) {
         require_once $p_smarty->_get_plugin_filepath('function', 'uri');
         $uriString = smarty_function_uri($p_params);
     }

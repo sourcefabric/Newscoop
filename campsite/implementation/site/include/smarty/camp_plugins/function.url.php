@@ -21,11 +21,12 @@
 function smarty_function_url($p_params, &$p_smarty)
 {
     $urlString = '';
-    $uriObj = CampSite::GetURI();
+    $campContext = $p_smarty->get_template_vars('campsite');
 
     $validParams = array('language','publication','issue','section','article');
-    if (empty($p_params) || in_array($p_params['options'], $validParams)) {
-        $urlString = $uriObj->getBase();
+    if (empty($p_params)
+            || in_array(strtolower($p_params['options']), $validParams)) {
+        $urlString = $campContext->url->base;
 
         // uses the smarty camp plugin uri
         require_once $p_smarty->_get_plugin_filepath('function', 'uri');

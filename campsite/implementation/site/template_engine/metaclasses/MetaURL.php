@@ -33,7 +33,9 @@ final class MetaURL
         $this->m_uri = CampSite::GetURI();
 
         $this->m_customProperties['url'] = 'getURL';
+        $this->m_customProperties['base'] = 'getBase';
         $this->m_customProperties['path'] = 'getPath';
+        $this->m_customProperties['query'] = 'getQuery';
         $this->m_customProperties['type'] = 'getURLType';
         $this->m_customProperties['request_uri'] = 'getRequestURI';
     } // fn __construct
@@ -100,10 +102,28 @@ final class MetaURL
     /**
      *
      */
+    public function getBase()
+    {
+        return $this->m_uri->getBase();
+    } // fn getBase
+
+
+    /**
+     *
+     */
     public function getPath()
     {
         return $this->m_uri->getPath();
     } // fn getPath
+
+
+    /**
+     *
+     */
+    public function getQuery()
+    {
+        return $this->m_uri->getQuery();
+    } // fn getQuery
 
 
     /**
