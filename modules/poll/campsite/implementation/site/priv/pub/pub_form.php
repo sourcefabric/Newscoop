@@ -264,6 +264,12 @@ function onCommentsActivated(p_checkbox)
         </tr>
         <?php } ?>
         </TABLE>
+        <?php
+        // include plugin script
+        if ($path = camp_get_plugin_path('poll', __FILE__)) {
+            include ($path);   
+        }
+        ?>
     </td>
     <!-- END right column -->
 </tr>

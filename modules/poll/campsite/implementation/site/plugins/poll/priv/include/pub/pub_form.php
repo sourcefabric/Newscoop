@@ -1,0 +1,30 @@
+<table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-top: 0.5em; padding-left: 10px; padding-right: 10px;" width="100%">
+    <tr><td colspan="2"><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
+    <tr width="100%">
+        <td>
+            <font size="+1"><b><?php putGS("Polls"); ?></b></font>
+        </td>
+
+    <?php if ($g_user->hasPermission('ManagePoll')) {  ?>
+
+    	<TD align="right">
+    		<IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/configure.png" border="0">
+    		<A href="javascript: void(0);" onclick="window.open('<?php p("/$ADMIN/poll/assign_popup.php?f_target=publication&amp;f_publication_id=$f_publication_id&"); ?>', 'assign_poll', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');"><?php putGS("Edit"); ?></A>
+    	</TD>
+    	<?php } ?>
+    </TR>
+    
+    <TR>
+    	<TD colspan="2" align="left" valign="top" width="100%">  
+    	<div style="overflow: auto; max-height: 50px">  
+        <?php
+        foreach (PollPublication::getAssignments(null, null, $f_publication_id) as $pollPublication) {
+            $poll = $pollPublication->getPoll();	
+            p($poll->getName());
+    		p("&nbsp;({$poll->getLanguageName()})<br>");
+    	} 
+    	?>
+    	</div>
+        </TD>
+    </TR>
+</TABLE>

@@ -173,6 +173,11 @@ class Section extends DatabaseObject {
 	 */
 	function delete($p_deleteArticles = false, $p_deleteArticleTranslations = false)
 	{
+	    // plugins: Remove poll assignments
+		if (class_exists('PollSection')) {
+    		PollSection::OnSectionDelete($this->getLanguageId(), $this->getSectionNumber(), $this->getIssueNumber(), $this->getPublicationId());
+		}	    
+	    
 		$numArticlesDeleted = 0;
 		if ($p_deleteArticles) {
 			$languageId = null;

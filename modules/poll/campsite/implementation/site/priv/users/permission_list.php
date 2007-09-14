@@ -108,8 +108,10 @@ function camp_get_permission_list()
 				getGS('Editor Table Settings')=>$editor_group_3,
 				getGS('Editor Miscellaneous Settings')=>$editor_group_4);
 	
-    // modules: extent permission list
-    camp_load_plugin_file('poll', __FILE__);
+    // modules: extend permission list
+    if ($path = camp_get_plugin_path('poll', __FILE__)) {
+        include ($path);   
+    }
     
 	return $rights;
 }

@@ -98,6 +98,11 @@ class Issue extends DatabaseObject {
 		// Delete all scheduled publishing events
 	    IssuePublish::OnIssueDelete($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
 
+	    // plugins: Remove poll assignments
+		if (class_exists('PollIssue')) {
+    		PollIssue::OnIssueDelete($this->getLanguageId(), $this->getIssueNumber(), $this->getPublicationId());
+		}
+		
 		$articlesDeleted = 0;
 		if ($p_deleteSections) {
     		$sections = Section::GetSections($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);

@@ -282,7 +282,7 @@ $menu_item =& DynMenuItem::Create(getGS("Feedback"), '/'. $ADMIN .'/feedback',
     array('icon' => sprintf($iconTemplateStr, "mail_generic.png")));
 $menu_help->addItem($menu_item);
 
-// modules: extend menu
+// plugins: extend menu
 if ($path = camp_get_plugin_path('poll', __FILE__)) {
     include ($path);   
 }

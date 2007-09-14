@@ -141,7 +141,7 @@ class User extends DatabaseObject {
         'DeleteFile'=>'N',
         'CommentModerate'=>'N',
         'CommentEnable'=>'N',
-        'SyncPhorumUsers'=>'N');
+        'ManagePoll'=>'N');
     var $m_liveUserData = array();
 
 

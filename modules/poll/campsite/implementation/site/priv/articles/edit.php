@@ -909,6 +909,13 @@ window.location.reload();
             <!-- END Audioclips table -->
         </td></tr>
         <?php } ?>
+        
+        <?php
+        // plugins: poll assignment popup
+        if ($path = camp_get_plugin_path('poll', __FILE__)) {
+            include ($path);   
+        }
+        ?>
 		</table>
 	</td>
 </tr>

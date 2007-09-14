@@ -33,7 +33,8 @@ $no_menu_scripts = array(
     '/articles/empty.php',
     '/comments/ban.php',
 	'/comments/do_ban.php',
-	'/imagearchive/do_add.php'
+	'/imagearchive/do_add.php',
+	'/poll/assign_popup.php'
 	);
 
 $request_uri = $_SERVER['REQUEST_URI'];

@@ -119,6 +119,11 @@ class Publication extends DatabaseObject {
 	 */
 	function delete()
 	{
+	    // plugins: Remove poll assignments
+		if (class_exists('PollPublication')) {
+    		PollPublication::OnPublicationDelete($this->getPublicationId());
+		}
+		
 		$aliases = Alias::GetAliases(null, $this->m_data['Id']);
 		if ($aliases && (count($aliases) > 0)) {
 			foreach ($aliases as $alias) {

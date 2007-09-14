@@ -159,4 +159,12 @@ editor_load_xinha('cDescription', $g_user, $editorLanguage);
 <SCRIPT>
 document.section_edit.cName.focus();
 </SCRIPT>
+
+<?php
+// include plugin script
+if ($path = camp_get_plugin_path('poll', __FILE__)) {
+    include ($path);   
+}
+?>
+        
 <?php camp_html_copyright_notice(); ?>
