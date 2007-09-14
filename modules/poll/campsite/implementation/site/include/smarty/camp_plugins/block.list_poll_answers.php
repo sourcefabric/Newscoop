@@ -1,0 +1,1 @@
+../../../plugins/poll/include/smarty/camp_plugins/block.list_poll_answers.php
