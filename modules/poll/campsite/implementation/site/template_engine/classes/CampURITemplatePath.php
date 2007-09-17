@@ -76,6 +76,7 @@ class CampURITemplatePath extends CampURI {
     protected function __construct($p_uri = null)
     {
         parent::__construct($p_uri);
+        $this->setURLType(URLTYPE_TEMPLATE_PATH);
         $this->m_lookDir = 'look';
         $this->parse();
         $this->setURL();

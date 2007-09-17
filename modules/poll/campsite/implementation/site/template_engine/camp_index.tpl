@@ -6,40 +6,40 @@
 
 
 <h3>issues list</h3>
-{{ list_issues length="4" columns="3" name='sample_name' constraints="name greater a" order='invalid order' invalid_parameter="value" }}
+{{ list_issues length="4" columns="3" name='sample_name' constraints="name greater a" order='byName desc' }}
 <li>issue: <b>{{ $campsite->current_issues_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
-   list index: <b>{{ $campsite->current_issues_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_issues_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   list index: <b>{{ $campsite->current_issues_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_issues_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current issues list/current list)
 </li>
 {{ /list_issues }}
 
 
 <h3>sections list</h3>
-{{ list_sections length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
-<li>section: <b>{{ $campsite->current_sections_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
-   list index: <b>{{ $campsite->current_sections_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_sections_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+{{ list_sections length="3" columns="2" name='sample_name' constraints="name greater a number greater 0" }}
+<li>section: <b>{{ $campsite->current_sections_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
+   list index: <b>{{ $campsite->current_sections_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_sections_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current sections list/current list)
 </li>
 {{ /list_sections }}
 
 
 <h3>articles list</h3>
-{{ list_articles length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+{{ list_articles length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
 <li>article: <b>{{ $campsite->current_articles_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
-   list index: <b>{{ $campsite->current_articles_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_articles_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+   list index: <b>{{ $campsite->current_articles_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_articles_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current articles list/current list)
 </li>
 {{ /list_articles }}
 
 
 <h3>article attachments list</h3>
-{{ list_article_attachments length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
-<li>article attachment: <b>{{ $campsite->current_article_attachments_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
-   list index: <b>{{ $campsite->current_article_attachments_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_article_attachments_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+{{ list_article_attachments length="3" columns="2" name='sample_name' constraints="invalid constraints" }}
+<li>article attachment: <b>{{ $campsite->current_article_attachments_list->current->file_name }}</b>/<b>{{ $campsite->current_list->current->file_name }}</b>,
+   list index: <b>{{ $campsite->current_article_attachments_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_article_attachments_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current article attachments list/current list)
 </li>
 {{ /list_article_attachments }}

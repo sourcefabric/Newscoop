@@ -32,7 +32,7 @@ final class MetaPublication extends MetaDbObject {
 
     public function __construct($p_publicationId = null)
     {
-		$this->m_dbObject =& new Publication($p_publicationId);
+		$this->m_dbObject = new Publication($p_publicationId);
 
 		$this->InitProperties();
 		$this->m_customProperties['site'] = 'getDefaultSiteName';
@@ -42,7 +42,7 @@ final class MetaPublication extends MetaDbObject {
 
 	protected function getDefaultSiteName()
 	{
-		$defaultAlias =& new Alias($this->m_dbObject->getDefaultAliasId());
+		$defaultAlias = new Alias($this->m_dbObject->getDefaultAliasId());
 		if (!$defaultAlias->exists()) {
 			return null;
 		}

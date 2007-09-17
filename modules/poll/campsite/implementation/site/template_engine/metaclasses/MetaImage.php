@@ -34,7 +34,7 @@ final class MetaImage extends MetaDbObject {
 
     public function __construct($p_imageId = null)
     {
-		$this->m_dbObject =& new Image($p_imageId);
+		$this->m_dbObject = new Image($p_imageId);
 
 		$this->InitProperties();
         $this->m_customProperties['year'] = 'getYear';

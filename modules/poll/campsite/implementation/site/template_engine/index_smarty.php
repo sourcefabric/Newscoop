@@ -14,7 +14,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/liveuser_configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/parser_utils.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 
-
 $g_errorList = array();
 
 function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
@@ -134,7 +133,7 @@ $tpl->assign('campsite', $context);
 
 /**** Exception test ****/
 try {
-	$articleObj =& new MetaArticle(1, 143);
+	$articleObj = new MetaArticle(1, 143);
     $articleObj->Name = 'test';
     echo "<h3>Set property test: failed</h3>";
 } catch (Exception $e) {

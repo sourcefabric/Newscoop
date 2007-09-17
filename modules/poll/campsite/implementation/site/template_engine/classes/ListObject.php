@@ -158,7 +158,7 @@ abstract class ListObject
 		 */
 		$this->m_order = $this->ProcessOrder(ListObject::ParseConstraintsString($this->m_orderStr));
 
-		$objects = $this->CreateList($this->m_start, $this->m_limit, $this->m_hasNextElements);
+		$objects = $this->CreateList($this->m_start, $this->m_limit, $this->m_hasNextElements, $parameters);
 		if (!is_array($objects)) {
 		    $objects = array();
 		}
@@ -174,9 +174,10 @@ abstract class ListObject
 	 * @param int $p_start
 	 * @param int $p_limit
 	 * @param bool $p_hasNextElements
+	 * @param array $p_parameters
 	 * @return array
 	 */
-	abstract protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements);
+	abstract protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters);
 
 	/**
 	 * Processes list constraints passed in an array.
@@ -346,6 +347,18 @@ abstract class ListObject
 	}
 
 	/**
+	 * Returns true if the index of the start element in the
+	 * original list - from which this was truncated - is greater
+	 * than 0.
+	 *
+	 * @return bool
+	 */
+	public function hasPreviousElements()
+	{
+		return $this->m_start > 0;
+	}
+
+	/**
 	 * Returns true if this list is limited and elements still exist
 	 * in the original list (from which this was truncated) after the
 	 * last element of this list.
@@ -462,7 +475,7 @@ abstract class ListObject
     	        $escaped = false;
 	        }
 	    }
-	    if (!empty($lastWord)) {
+	    if (strlen($lastWord) > 0) {
 	        $words[] = $lastWord;
 	    }
 	    return $words;

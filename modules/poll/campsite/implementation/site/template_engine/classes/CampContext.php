@@ -33,7 +33,8 @@ final class CampContext {
 								   'user'=>'User',
 								   'template'=>'Template',
 								   'subscription'=>'Subscription',
-								   'poll'=>'Poll'
+								   'poll'=>'Poll',
+                                   'url'=>'URL'
 								   );
 
 	// Defines the list objects
@@ -217,6 +218,26 @@ final class CampContext {
 
 
     /**
+     * Returns the list name of the current list.
+     *
+     * @return string
+     *      The name of the list
+     */
+    public function getCurrentListName()
+    {
+        if (!isset($this->m_readonlyProperties['current_list'])
+                || count($this->m_readonlyProperties['lists']) == 0) {
+            return null;
+        }
+
+        $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
+        $listName = $this->m_listObjects[$objectName]['list'];
+
+        return 'current_'.$listName.'_list';
+    } // fn getCurrentListName
+
+
+    /**
      * Sets the current list.
      *
      * @param object $p_list
@@ -290,7 +311,7 @@ final class CampContext {
     	require_once($classFullPath);
 
     	$className = 'Meta'.$this->m_objectTypes[$p_objectType];
-    	$this->m_objects[$p_objectType] =& new $className;
+    	$this->m_objects[$p_objectType] = new $className;
 
     	return $this->m_objects[$p_objectType];
     } // fn createObject

@@ -28,12 +28,14 @@ final class MetaIssue extends MetaDbObject {
 		$this->m_properties['number'] = 'Number';
 		$this->m_properties['date'] = 'PublicationDate';
 		$this->m_properties['publish_date'] = 'PublicationDate';
+        $this->m_properties['url_name'] = 'ShortName';
 	}
 
 
-	public function __construct($p_publicationId = null, $p_languageId = null, $p_issueNumber = null)
+	public function __construct($p_publicationId = null, $p_languageId = null,
+	                            $p_issueNumber = null)
     {
-		$this->m_dbObject =& new Issue($p_publicationId, $p_languageId, $p_issueNumber);
+		$this->m_dbObject = new Issue($p_publicationId, $p_languageId, $p_issueNumber);
 
 		$this->InitProperties();
         $this->m_customProperties['year'] = 'getPublishYear';
@@ -118,7 +120,6 @@ final class MetaIssue extends MetaDbObject {
     {
    		return new MetaTemplate($this->m_dbObject->getIssueTemplateId());
     }
-
 
 } // class MetaIssue
 

@@ -31,17 +31,9 @@ function smarty_block_list_article_attachments($p_params, $p_content, &$p_smarty
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 8;
+    	$start = 0;
     	$articleAttachmentsList = new ArticleAttachmentsList($start, $p_params);
     	$campContext->setCurrentList($articleAttachmentsList);
-    	echo "<p>start: " . $campContext->current_article_attachments_list->getStart()
-    		. ", length: " . $campContext->current_article_attachments_list->getLength()
-    		. ", limit: " . $campContext->current_article_attachments_list->getLimit()
-    		. ", columns: " . $campContext->current_article_attachments_list->getColumns()
-			. ", has next elements: " . (int)$campContext->current_article_attachments_list->hasNextElements() . "</p>\n";
-    	echo "<p>name: " . $campContext->current_article_attachments_list->getName() . "</p>\n";
-    	echo "<p>constraints: " . $campContext->current_article_attachments_list->getConstraintsString() . "</p>\n";
-    	echo "<p>order: " . $campContext->current_article_attachments_list->getOrderString() . "</p>\n";
     }
 
     $currentArticleAttachment = $campContext->current_article_attachments_list->defaultIterator()->current();

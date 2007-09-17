@@ -32,7 +32,7 @@ final class MetaSubscription extends MetaDbObject {
 
     public function __construct($p_subscriptionId = null)
     {
-        $this->m_dbObject =& new Subscription($p_subscriptionId);
+        $this->m_dbObject = new Subscription($p_subscriptionId);
 
 		$this->InitProperties();
 		$this->m_customProperties['type'] = 'getType';

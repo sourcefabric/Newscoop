@@ -28,24 +28,47 @@ final class MetaTemplate extends MetaDbObject {
 	}
 
 
-    public function __construct($p_templateId = null)
+    public function __construct($p_templateIdOrName = null)
     {
-        $this->m_dbObject =& new Template($p_templateId);
+        $this->m_dbObject = new Template($p_templateIdOrName);
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = null;
+            throw new InvalidValueException($p_templateIdOrName, 'template');
+        }
 
 		$this->InitProperties();
-        $this->m_customProperties['type'] = 'getType';
+        $this->m_customProperties['type'] = 'getTemplateType';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 
-    public function getType()
+    public function getTemplateType()
     {
     	global $g_ado_db;
 
     	$templateTypeId = $this->m_dbObject->getType();
-    	return $g_ado_db->GetOne("SELECT Name FROM TemplateTypes WHERE Id = $templateTypeId");
+    	$query = "SELECT Name FROM TemplateTypes WHERE Id = $templateTypeId";
+    	return $g_ado_db->GetOne($query);
     }
 
-} // class MetaTopic
+
+    public function getValue()
+    {
+        return $this->m_dbObject->getName();
+    }
+
+
+    public function IsValid($p_value)
+    {
+        $template = new Template($p_value);
+        return $template->exists();
+    }
+
+
+    public static function GetTypeName()
+    {
+        return 'template';
+    }
+} // class MetaTemplate
 
 ?>

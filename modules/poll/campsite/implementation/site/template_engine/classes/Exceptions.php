@@ -77,6 +77,7 @@ final class InvalidObjectException extends Exception {
 
 }// class InvalidObjectException
 
+
 final class InvalidOperatorException extends Exception {
     private $m_operatorName = null;
 
@@ -103,5 +104,32 @@ final class InvalidOperatorException extends Exception {
     } // fn getTypeName
 
 }// class InvalidOperatorException
+
+
+final class InvalidValueException extends Exception {
+    private $m_value = null;
+    private $m_type = null;
+
+
+    public function __construct($p_value, $p_type)
+    {
+        parent::__construct("the value $p_value is not a valid $p_type", 0);
+        $this->m_value = $p_value;
+        $this->m_type = $p_type;
+    } // fn __construct
+
+
+    public function getValue()
+    {
+        return $this->m_value;
+    } // fn getValue
+
+
+    public function getType()
+    {
+        return $this->m_type;
+    } // fn getType
+
+}// class InvalidValueException
 
 ?>

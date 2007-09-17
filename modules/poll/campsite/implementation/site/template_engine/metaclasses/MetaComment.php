@@ -35,7 +35,7 @@ final class MetaComment extends MetaDbObject {
 
     public function __construct($p_messageId = null)
     {
-        $this->m_dbObject =& new Phorum_message($p_messageId);
+        $this->m_dbObject = new Phorum_message($p_messageId);
 
 		$this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';

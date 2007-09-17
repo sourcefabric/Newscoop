@@ -294,11 +294,11 @@ class ArticleAttachment extends DatabaseObject {
         $comparisonOperation = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'articleattachments.fk_article_number':
+        case 'article_number':
             $comparisonOperation['left'] = 'ArticleAttachments.fk_article_number';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
             break;
-        case 'attachments.fk_language_id':
+        case 'language_id':
             $comparisonOperation['left'] = 'Attachments.fk_language_id';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
             break;
