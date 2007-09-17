@@ -48,13 +48,13 @@ class Operator
 	 *
 	 * @var array
 	 */
-	private static $s_typeOperators = array('int'=>array('is',
-	                                                     'equal_smaller',
-	                                                     'equal_greater',
-	                                                     'smaller',
-	                                                     'greater',
-	                                                     'not'
-	                                               ),
+	private static $s_typeOperators = array('integer'=>array('is',
+                                                             'equal_smaller',
+                                                             'equal_greater',
+                                                             'smaller',
+                                                             'greater',
+                                                             'not'
+                                                       ),
                                             'string'=>array('is',
 	                                                        'equal_smaller',
 	                                                        'equal_greater',

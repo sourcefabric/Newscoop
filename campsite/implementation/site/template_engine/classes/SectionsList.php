@@ -77,7 +77,7 @@ class SectionsList extends ListObject
 	                $state = 2;
 	                break;
 	            case 2: // reading the operator
-	                $type = SectionsList::$s_parameters[$attribute];
+	                $type = SectionsList::$s_parameters[$attribute]['type'];
 	                try {
 	                    $operator = new Operator($word, $type);
 	                }
