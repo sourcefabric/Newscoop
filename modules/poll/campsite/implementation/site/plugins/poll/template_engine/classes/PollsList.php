@@ -151,6 +151,31 @@ class PollsList extends ListObject
     	 
     	return $parameters;
 	}
+	
+
+	/**
+     * Overloaded method call to give access to the list properties.
+     *
+     * @param string $p_element - the property name
+     * @return mix - the property value
+     */
+	public function __get($p_property)
+	{
+	    if (strtolower($p_property) == 'item') {
+            return $this->getItem();
+	    }
+	    return parent::__get($p_property); 
+	}
+	
+	/**
+	 * Returns the assignment identifier.
+	 *
+	 * @return int
+	 */
+	public function getItem()
+	{
+		return $this->m_item;
+	}
 }
 
 ?>

@@ -453,6 +453,8 @@ class Poll extends DatabaseObject {
      *
      * @param array $p_parameters
      *    An array of ComparisonOperation objects
+     * @param string item
+     *    An indentifier which assignment should be used (publication/issue/section/article)
      * @param string $p_order
      *    An array of columns and directions to order by
      * @param integer $p_start
@@ -463,7 +465,7 @@ class Poll extends DatabaseObject {
      * @return array $issuesList
      *    An array of Issue objects
      */
-    public static function GetList($p_parameters, $p_item=null, $p_order=null,
+    public static function GetList($p_parameters, $p_item = null, $p_order = null,
                                    $p_start = 0, $p_limit = 0)
     {
         global $g_ado_db;
@@ -514,8 +516,11 @@ class Poll extends DatabaseObject {
                 if (empty($publication_id) || empty($language_id)) {
                     return;   
                 }
+                $tmpAssignObj =& new PollPublication();
+                $assignTblName = $tmpAssignObj->getDbTableName();
+                
                 $sqlClauseObj->addJoin(
-                    "LEFT JOIN mod_poll_publication AS j 
+                    "LEFT JOIN $assignTblName AS j 
                     ON 
                     j.fk_poll_nr = $mainTblName.poll_nr 
                     AND j.fk_poll_language_id = $mainTblName.fk_language_id
@@ -529,8 +534,11 @@ class Poll extends DatabaseObject {
                     return;   
                 }
                 
+                $tmpAssignObj =& new PollIssue();
+                $assignTblName = $tmpAssignObj->getDbTableName();
+                
                 $sqlClauseObj->addJoin(
-                    "LEFT JOIN mod_poll_issue AS j 
+                    "LEFT JOIN $assignTblName AS j 
                     ON 
                     j.fk_poll_nr = $mainTblName.poll_nr 
                     AND j.fk_poll_language_id = $mainTblName.fk_language_id
@@ -547,8 +555,11 @@ class Poll extends DatabaseObject {
                     return;   
                 }
                 
+                $tmpAssignObj =& new PollSection();
+                $assignTblName = $tmpAssignObj->getDbTableName();
+                
                 $sqlClauseObj->addJoin(
-                    "LEFT JOIN mod_poll_issue AS j 
+                    "LEFT JOIN $assignTblName AS j 
                     ON 
                     j.fk_poll_nr = $mainTblName.poll_nr 
                     AND j.fk_poll_language_id = $mainTblName.fk_language_id
@@ -568,8 +579,11 @@ class Poll extends DatabaseObject {
                     return;   
                 }
                 
+                $tmpAssignObj =& new PollArticle();
+                $assignTblName = $tmpAssignObj->getDbTableName();
+                
                 $sqlClauseObj->addJoin(
-                    "LEFT JOIN mod_poll_issue AS j 
+                    "LEFT JOIN $assignTblName AS j 
                     ON 
                     j.fk_poll_nr = $mainTblName.poll_nr 
                     AND j.fk_poll_language_id = $mainTblName.fk_language_id

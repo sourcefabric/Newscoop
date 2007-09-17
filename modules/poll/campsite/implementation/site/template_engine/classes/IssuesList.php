@@ -82,7 +82,7 @@ class IssuesList extends ListObject
 	            case 2:
 	                $type = IssuesList::$s_parameters[$attribute];
 	                try {
-	                    $operator = new PollOperator($word, $type);
+	                    $operator = new Operator($word, $type);
 	                }
 	                catch (InvalidOperatorException $e) {
 	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_issues, constraints parameter");
@@ -93,7 +93,7 @@ class IssuesList extends ListObject
 	                break;
 	            case 3:
 	                $value = $word;
-	                $comparisonOperation = new PollComparisonOperation($attribute, $operator, $value);
+	                $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
 	                $parameters[] = $comparisonOperation;
 	                $state = 1;
 	                break;
