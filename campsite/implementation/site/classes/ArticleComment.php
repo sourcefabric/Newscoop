@@ -277,24 +277,33 @@ class ArticleComment
         $messageTable = $PHORUM['message_table'];
         $sqlClauseObj->setTable($messageTable);
 
+        $articleNumber = null;
+        $languageId = null;
         // sets the where conditions
         foreach ($p_parameters as $param) {
-            $parameter = self::ProcessListParameters($param);
+            $comparisonOperation = self::ProcessListParameters($param);
+
+            if (strtolower($comparisonOperation->getLeftOperand()) == 'fk_article_number') {
+                $articleNumber = $comparisonOperation->getRightOperand();
+            }
+            if (strtolower($comparisonOperation->getLeftOperand()) == 'fk_language_id') {
+                $languageId = $comparisonOperation->getRightOperand();
+            }
+            $parameters[] = $comparisonOperation;
         }
 
         // validates whether both article number and language id were given
-        if (!array_key_exists('fk_article_number', $parameter)) {
+        if (is_null($articleNumber)) {
             CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_comments");
         }
-        if (!array_key_exists('fk_language_id', $parameter)) {
+        if (is_null($languageId)) {
             CampTemplate::singleton()->trigger_error("missed parameter Language Id in statement list_article_comments");
         }
 
         // gets the thread id for the article
-        $threadId = ArticleComment::GetCommentThreadId($parameter['fk_article_number'],
-                                                       $parameter['fk_language_id']);
+        $threadId = ArticleComment::GetCommentThreadId($articleNumber, $languageId);
         if (!$threadId) {
-            return null;
+            return array();
         }
 
         // adds WHERE conditions
@@ -307,8 +316,12 @@ class ArticleComment
         }
 
         // sets the order condition if any
-        foreach ($p_order as $orderColumn => $orderDirection) {
-            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        if (is_array($p_order)) {
+            $order = ArticleComment::ProcessListOrder($p_order);
+            // sets the order condition if any
+            foreach ($order as $orderField=>$orderDirection) {
+                $sqlClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
+            }
         }
 
         // sets the limit
@@ -318,7 +331,7 @@ class ArticleComment
         $sqlQuery = $sqlClauseObj->buildQuery();
         $comments = $g_ado_db->GetAll($sqlQuery);
         if (!is_array($comments)) {
-            return null;
+            return array();
         }
 
         // builds the array of comment objects
@@ -345,19 +358,44 @@ class ArticleComment
      */
     private static function ProcessListParameters($p_param)
     {
-        $parameter = array();
-
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'fk_article_number':
-            $parameter['fk_article_number'] = (int) $p_param->getRightOperand();
-            break;
-        case 'fk_language_id':
-            $parameter['fk_language_id'] = (int) $p_param->getRightOperand();
-            break;
+        case 'article_number':
+            return new ComparisonOperation('fk_article_number',
+                                           new Operator('is', 'integer'),
+                                           (int) $p_param->getRightOperand());
+        case 'language_id':
+            return new ComparisonOperation('fk_language_id',
+                                           new Operator('is', 'integer'),
+                                           (int) $p_param->getRightOperand());
         }
-
-        return $parameter;
     } // fn ProcessListParameters
+
+    /**
+     * Processes an order directive coming from template tags.
+     *
+     * @param array $p_order
+     *      The array of order directives
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $field=>$direction) {
+            $dbField = null;
+            switch (strtolower($field)) {
+                case 'bydate':
+                    $dbField = 'datestamp';
+                    break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+            }
+            $order[$dbField] = $direction;
+        }
+        return $order;
+    }
 
 } // class ArticleComment
 ?>

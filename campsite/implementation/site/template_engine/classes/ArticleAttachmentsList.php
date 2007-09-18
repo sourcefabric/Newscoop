@@ -22,7 +22,7 @@ class ArticleAttachmentsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters)
 	{
-	    $operator = new Operator('is');
+	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
 	    if (!$context->article->defined) {
 	        return array();
@@ -86,7 +86,6 @@ class ArticleAttachmentsList extends ListObject
     			case 'length':
     			case 'columns':
     			case 'name':
-    			case 'constraints':
     			case 'all_languages':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;

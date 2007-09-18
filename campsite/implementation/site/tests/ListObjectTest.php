@@ -24,7 +24,7 @@ class ListObjectSample extends ListObject
 	 * @param bool $p_hasNextElements
 	 * @return array
 	 */
-	protected function CreateList($p_start, $p_limit, &$p_hasNextElements)
+	protected function CreateList($p_start, $p_limit, &$p_hasNextElements, $p_parameters)
 	{
 		$objects = array('element 1', 'element 2', 'element 3', 'element 4',
 						 'element 5', 'element 6', 'element 7', 'element 8');

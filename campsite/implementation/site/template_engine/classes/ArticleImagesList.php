@@ -22,16 +22,21 @@ class ArticleImagesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters)
 	{
-		if ($p_start < 1) {
-			$p_start = 1;
-		}
-		$articleImagesList = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
-		$p_hasNextElements = $p_limit > 0
-							&& (($p_start + $p_limit - 1) < count($articleImagesList));
-		if ($p_limit > 0) {
-			return array_slice($articleImagesList, $p_start - 1, $p_limit);
-		}
-		return array_slice($articleImagesList, $p_start - 1);
+	    $operator = new Operator('is', 'integer');
+	    $context = CampTemplate::singleton()->context();
+	    if (!$context->article->defined || !$context->language->defined) {
+	        return array();
+	    }
+	    $comparisonOperation = new ComparisonOperation('nrarticle', $operator,
+	                                                   $context->article->number);
+	    $this->m_constraints[] = $comparisonOperation;
+
+	    $articleImagesList = ArticleImage::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit);
+	    $metaImagesList = array();
+	    foreach ($articleImagesList as $image) {
+	        $metaImagesList[] = new MetaImage($image->getImageId());
+	    }
+	    return $metaImagesList;
 	}
 
 	/**
@@ -73,12 +78,10 @@ class ArticleImagesList extends ListObject
     			case 'length':
     			case 'columns':
     			case 'name':
-    			case 'constraints':
-    			case 'order':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {
-    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article_comments");
+    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article_images");
     					}
 	    				$parameters[$parameter] = (int)$value;
     				} else {
@@ -86,7 +89,7 @@ class ArticleImagesList extends ListObject
     				}
     				break;
     			default:
-    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_comments", $p_smarty);
+    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_images", $p_smarty);
     		}
     	}
     	return $parameters;

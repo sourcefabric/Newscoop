@@ -31,17 +31,9 @@ function smarty_block_list_article_topics($p_params, $p_content, &$p_smarty, &$p
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 7;
+    	$start = 0;
     	$articleTopicsList = new ArticleTopicsList($start, $p_params);
     	$campContext->setCurrentList($articleTopicsList);
-    	echo "<p>start: " . $campContext->current_article_topics_list->getStart()
-    		. ", length: " . $campContext->current_article_topics_list->getLength()
-    		. ", limit: " . $campContext->current_article_topics_list->getLimit()
-    		. ", columns: " . $campContext->current_article_topics_list->getColumns()
-			. ", has next elements: " . (int)$campContext->current_article_topics_list->hasNextElements() . "</p>\n";
-    	echo "<p>name: " . $campContext->current_article_topics_list->getName() . "</p>\n";
-    	echo "<p>constraints: " . $campContext->current_article_topics_list->getConstraintsString() . "</p>\n";
-    	echo "<p>order: " . $campContext->current_article_topics_list->getOrderString() . "</p>\n";
     }
 
     $currentArticleTopic = $campContext->current_article_topics_list->defaultIterator()->current();

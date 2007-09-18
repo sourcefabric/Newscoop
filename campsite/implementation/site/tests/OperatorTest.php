@@ -98,8 +98,8 @@ class OperatorTest extends PHPUnit_Framework_TestCase {
      * @todo Implement testGetType().
      */
     public function testGetType() {
-        $operator = new Operator('is', 'int');
-        $this->assertEquals('int', $operator->getType());
+        $operator = new Operator('is', 'integer');
+        $this->assertEquals('integer', $operator->getType());
 
         $operator = new Operator('is');
         $this->assertEquals('string', $operator->getType());

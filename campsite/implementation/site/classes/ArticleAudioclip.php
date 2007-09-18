@@ -155,7 +155,7 @@ class ArticleAudioclip extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAudioclips 
+        $queryStr = "DELETE FROM ArticleAudioclips
                      WHERE fk_audioclip_gunid = '$p_gunId'";
         $g_ado_db->Execute($queryStr);
     } // fn OnAudioclipDelete
@@ -172,7 +172,7 @@ class ArticleAudioclip extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAudioclips 
+        $queryStr = "DELETE FROM ArticleAudioclips
                      WHERE fk_article_number = '$p_articleNumber'";
         $g_ado_db->Execute($queryStr);
     } // fn OnArticleDelete
@@ -190,13 +190,13 @@ class ArticleAudioclip extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = "SELECT fk_audioclip_gunid, order_no 
-                     FROM ArticleAudioclips 
+        $queryStr = "SELECT fk_audioclip_gunid, order_no
+                     FROM ArticleAudioclips
                      WHERE fk_article_number='$p_srcArticleNumber'";
         $rows = $g_ado_db->GetAll($queryStr);
         foreach ($rows as $row) {
-            $queryStr = "INSERT IGNORE INTO ArticleAudioclips 
-                         (fk_article_number, fk_audioclip_gunid, order_no) 
+            $queryStr = "INSERT IGNORE INTO ArticleAudioclips
+                         (fk_article_number, fk_audioclip_gunid, order_no)
                          VALUES ('$p_destArticleNumber', '"
                         .$row['fk_audioclip_gunid']."', '"
                         .$row['order_no']."')";
@@ -311,10 +311,10 @@ class ArticleAudioclip extends DatabaseObject {
         $parameter = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'fk_article_number':
+        case 'article_number':
             $parameter['fk_article_number'] = (int) $p_param->getRightOperand();
             break;
-        case 'fk_language_id':
+        case 'language_id':
             $parameter['fk_language_id'] = (int) $p_param->getRightOperand();
             break;
         }

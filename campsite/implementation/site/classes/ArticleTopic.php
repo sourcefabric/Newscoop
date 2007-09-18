@@ -239,21 +239,29 @@ class ArticleTopic extends DatabaseObject {
         $sqlClauseObj = new SQLSelectClause();
 
         // processes the parameters
-        $comparisonOperation = self::ProcessListParameters($param);
+        foreach ($p_parameters as $parameter) {
+            $comparisonOperation = self::ProcessListParameters($parameter);
+            if (sizeof($comparisonOperation) < 1) {
+                break;
+            }
 
-        // validates whether article number was given
-        if (strpos($comparisonOperation['left'], 'NrArticle') == false) {
-            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_topics");
+            if (strpos($comparisonOperation['left'], 'NrArticle') !== false) {
+                $hasArticleNr = true;
+            }
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+            $sqlClauseObj->addWhere($whereCondition);
         }
 
-        // sets the where condition
-        $whereCondition = $comparisonOperation['left'] . ' '
-            . $comparisonOperation['symbol'] . " '"
-            . $comparisonOperation['right'] . "' ";
-        $sqlClauseObj->addWhere($whereCondition);
+        // validates whether article number was given
+        if ($hasArticleNr == false) {
+            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_topics");
+            return array();
+        }
 
         // sets the main table and columns to be fetched
-        $tmpArticleTopic =& new ArticleTopic();
+        $tmpArticleTopic = new ArticleTopic();
         $sqlClauseObj->setTable($tmpArticleTopic->getDbTableName());
         $sqlClauseObj->addColumn('TopicId');
         unset($tmpArticleTopic);
@@ -274,7 +282,7 @@ class ArticleTopic extends DatabaseObject {
         $sqlQuery = $sqlClauseObj->buildQuery();
         $topics = $g_ado_db->GetAll($sqlQuery);
         if (!is_array($topics)) {
-            return null;
+            return array();
         }
 
         // builds the array of topic objects

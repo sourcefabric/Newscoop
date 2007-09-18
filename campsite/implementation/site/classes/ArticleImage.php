@@ -482,7 +482,7 @@ class ArticleImage extends DatabaseObject {
         $comparisonOperation = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'articleimages.nrarticle':
+        case 'nrarticle':
             $comparisonOperation['left'] = 'ArticleImages.NrArticle';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
             break;

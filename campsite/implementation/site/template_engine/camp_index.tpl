@@ -36,7 +36,7 @@
 
 
 <h3>article attachments list</h3>
-{{ list_article_attachments length="3" columns="2" name='sample_name' constraints="invalid constraints" }}
+{{ list_article_attachments length="3" columns="2" name='sample_name' }}
 <li>article attachment: <b>{{ $campsite->current_article_attachments_list->current->file_name }}</b>/<b>{{ $campsite->current_list->current->file_name }}</b>,
    list index: <b>{{ $campsite->current_article_attachments_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_article_attachments_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
@@ -46,40 +46,40 @@
 
 
 <h3>article comments list</h3>
-{{ list_article_comments length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
-<li>article comment: <b>{{ $campsite->current_article_comments_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
-   list index: <b>{{ $campsite->current_article_comments_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_article_comments_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+{{ list_article_comments length="3" columns="2" name='sample_name' order='byDate asc' }}
+<li>article comment: <b>{{ $campsite->current_article_comments_list->current->subject }}</b>/<b>{{ $campsite->current_list->current->subject }}</b>,
+   list index: <b>{{ $campsite->current_article_comments_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_article_comments_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current article comments list/current list)
 </li>
 {{ /list_article_comments }}
 
 
 <h3>article images list</h3>
-{{ list_article_images length="2" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
-<li>article image: <b>{{ $campsite->current_article_images_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
-   list index: <b>{{ $campsite->current_article_images_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_article_images_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+{{ list_article_images length="2" columns="2" name='sample_name' }}
+<li>article image: <b>{{ $campsite->current_article_images_list->current->description }}</b>/<b>{{ $campsite->current_list->current->description }}</b>,
+   list index: <b>{{ $campsite->current_article_images_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_article_images_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current article images list/current list)
 </li>
 {{ /list_article_images }}
 
 
 <h3>article topics list</h3>
-{{ list_article_topics length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
-<li>article topic: <b>{{ $campsite->current_article_topics_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
-   list index: <b>{{ $campsite->current_article_topics_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_article_topics_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+{{ list_article_topics length="3" columns="2" name='sample_name' }}
+<li>article topic: <b>{{ $campsite->current_article_topics_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
+   list index: <b>{{ $campsite->current_article_topics_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_article_topics_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current article topics list/current list)
 </li>
 {{ /list_article_topics }}
 
 
 <h3>article audio attachments list</h3>
-{{ list_article_audio_attachments length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
-<li>article audio attachment: <b>{{ $campsite->current_article_audio_attachments_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
-   list index: <b>{{ $campsite->current_article_audio_attachments_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_article_audio_attachments_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+{{ list_article_audio_attachments length="3" columns="2" name='sample_name' }}
+<li>article audio attachment: <b>{{ $campsite->current_article_audio_attachments_list->current->title }}</b>/<b>{{ $campsite->current_list->current->title }}</b>,
+   list index: <b>{{ $campsite->current_article_audio_attachments_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_article_audio_attachments_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current article audio attachments list/current list)
 </li>
 {{ /list_article_audio_attachments }}

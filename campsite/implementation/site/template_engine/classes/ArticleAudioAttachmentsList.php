@@ -22,16 +22,21 @@ class ArticleAudioAttachmentsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters)
 	{
-		if ($p_start < 1) {
-			$p_start = 1;
-		}
-		$articleAudioAttachmentsList = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
-		$p_hasNextElements = $p_limit > 0
-							&& (($p_start + $p_limit - 1) < count($articleAudioAttachmentsList));
-		if ($p_limit > 0) {
-			return array_slice($articleAudioAttachmentsList, $p_start - 1, $p_limit);
-		}
-		return array_slice($articleAudioAttachmentsList, $p_start - 1);
+	    $operator = new Operator('is', 'integer');
+	    $context = CampTemplate::singleton()->context();
+	    if (!$context->article->defined || !$context->language->defined) {
+	        return array();
+	    }
+	    $comparisonOperation = new ComparisonOperation('article_number', $operator,
+	                                                   $context->article->number);
+	    $this->m_constraints[] = $comparisonOperation;
+
+	    $articleAudioclipsList = ArticleAudioclip::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit);
+	    $metaAudioclipsList = array();
+	    foreach ($articleAudioclipsList as $audioclip) {
+	        $metaAudioclipsList[] = new MetaAudioclip($audioclip->getGUNId());
+	    }
+	    return $metaAudioclipsList;
 	}
 
 	/**
@@ -73,8 +78,6 @@ class ArticleAudioAttachmentsList extends ListObject
     			case 'length':
     			case 'columns':
     			case 'name':
-    			case 'constraints':
-    			case 'order':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {

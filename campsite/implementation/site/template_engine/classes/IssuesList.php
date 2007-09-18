@@ -58,7 +58,7 @@ class IssuesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters)
 	{
-	    $operator = new Operator('is');
+	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
 	    $comparisonOperation = new ComparisonOperation('IdPublication', $operator,
 	                                                   $context->publication->identifier);
@@ -105,7 +105,7 @@ class IssuesList extends ListObject
 	                $state = 2;
 	                break;
 	            case 2: // reading the operator
-	                $type = IssuesList::$s_parameters[$attribute];
+	                $type = IssuesList::$s_parameters[$attribute]['type'];
 	                try {
 	                    $operator = new Operator($word, $type);
 	                }

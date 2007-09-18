@@ -31,17 +31,9 @@ function smarty_block_list_article_comments($p_params, $p_content, &$p_smarty, &
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 5;
+    	$start = 0;
     	$articleCommentsList = new ArticleCommentsList($start, $p_params);
     	$campContext->setCurrentList($articleCommentsList);
-    	echo "<p>start: " . $campContext->current_article_comments_list->getStart()
-    		. ", length: " . $campContext->current_article_comments_list->getLength()
-    		. ", limit: " . $campContext->current_article_comments_list->getLimit()
-    		. ", columns: " . $campContext->current_article_comments_list->getColumns()
-			. ", has next elements: " . (int)$campContext->current_article_comments_list->hasNextElements() . "</p>\n";
-    	echo "<p>name: " . $campContext->current_article_comments_list->getName() . "</p>\n";
-    	echo "<p>constraints: " . $campContext->current_article_comments_list->getConstraintsString() . "</p>\n";
-    	echo "<p>order: " . $campContext->current_article_comments_list->getOrderString() . "</p>\n";
     }
 
     $currentArticleComment = $campContext->current_article_comments_list->defaultIterator()->current();
