@@ -66,6 +66,9 @@ final class CampContext {
     // Stores the readonly properties; the users can't modify them directly.
     private $m_readonlyProperties = null;
 
+    // Stores a given list of properties at the beginning of each list block
+    private $m_savedProperties = array();
+
 
     /**
      * constructor
@@ -182,7 +185,7 @@ final class CampContext {
 	/**
 	 * Returns true if the given property exists.
 	 *
-	 * @param bool $p_property
+	 * @param string $p_property
 	 */
     public function hasProperty($p_property)
     {
@@ -235,12 +238,46 @@ final class CampContext {
 
 
     /**
+     * Saves a given list of properties
+     *
+     * @param array $p_propertiesList
+     */
+    private function SaveProperties(array $p_propertiesList)
+    {
+        $savedProperties = array();
+        foreach ($p_propertiesList as $propertyName) {
+            if (!$this->hasProperty($propertyName)) {
+                continue;
+            }
+            $savedProperties[$propertyName] = $this->$propertyName;
+        }
+        array_push($this->m_savedProperties, $savedProperties);
+    }
+
+
+    /**
+     * Restores the last list of properties from the stack
+     *
+     */
+    private function RestoreProperties()
+    {
+        if (empty($this->m_savedProperties)) {
+            return;
+        }
+        $savedProperties = array_pop($this->m_savedProperties);
+        foreach ($savedProperties as $propertyName=>$propertyValue) {
+            $this->$propertyName = $propertyValue;
+        }
+    }
+
+
+    /**
      * Sets the current list.
      *
      * @param object $p_list
      * @return void
      */
-	public function setCurrentList(&$p_list)
+	public function setCurrentList(&$p_list, array $p_savePropertiesList = array())
     {
     	if (!is_object($p_list)) {
     		throw new InvalidObjectException($p_list);
@@ -255,6 +292,8 @@ final class CampContext {
     	if (!is_a($p_list, $listObjectName)) {
     		throw new InvalidObjectException(get_class($p_list));
     	}
+
+   	    $this->SaveProperties($p_savePropertiesList);
 
     	$listName = $this->m_listObjects[$objectName]['list'];
     	$this->m_readonlyProperties['lists'][] =& $p_list;
@@ -275,6 +314,8 @@ final class CampContext {
                 || count($this->m_readonlyProperties['lists']) == 0) {
             return;
         }
+
+        $this->RestoreProperties();
 
    	    $this->m_readonlyProperties['current_list'] = array_pop($this->m_readonlyProperties['lists']);
 

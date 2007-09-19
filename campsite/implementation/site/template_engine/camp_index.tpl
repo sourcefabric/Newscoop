@@ -4,25 +4,29 @@
 </head>
 <body>
 
-
 <h3>issues list</h3>
-{{ list_issues length="4" columns="3" name='sample_name' constraints="name greater a" order='byName desc' }}
-<li>issue: <b>{{ $campsite->current_issues_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
+{{ list_issues length="3" columns="3" name='sample_name' constraints="name greater a" order='byDate asc' }}
+<li>issue: <b>{{ $campsite->current_issues_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>/<b>{{ $campsite->issue->name }}</b>,
    list index: <b>{{ $campsite->current_issues_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_issues_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
-   (current issues list/current list)
+   (current issues list/current list/context)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+{{ /if }}
 {{ /list_issues }}
 
 
+<p>section: {{ $campsite->section->name }}</p>
 <h3>sections list</h3>
 {{ list_sections length="3" columns="2" name='sample_name' constraints="name greater a number greater 0" }}
-<li>section: <b>{{ $campsite->current_sections_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
+<li>section: <b>{{ $campsite->current_sections_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>/<b>{{ $campsite->section->name }}</b>,
    list index: <b>{{ $campsite->current_sections_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_sections_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
-   (current sections list/current list)
+   (current sections list/current list/context)
 </li>
 {{ /list_sections }}
+<p>section: {{ $campsite->section->name }}</p>
 
 
 <h3>articles list</h3>
@@ -95,11 +99,12 @@
 {{ /list_search_results }}
 
 
-<h3>subtopics list</h3>
-{{ list_subtopics length="4" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
-<li>subtopic: <b>{{ $campsite->current_subtopics_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
-   list index: <b>{{ $campsite->current_subtopics_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_subtopics_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+{{ set_topic name="Music:en" }}
+<h3>subtopics of topic {{ $campsite->topic->name }}</h3>
+{{ list_subtopics length="4" columns="2" name='sample_name' }}
+<li>subtopic: <b>{{ $campsite->current_subtopics_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
+   list index: <b>{{ $campsite->current_subtopics_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_subtopics_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current subtopics list/current list)
 </li>
 {{ /list_subtopics }}
@@ -1266,6 +1271,53 @@
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
+
+
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ unset_topic }}
+    Unset by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ unset_topic }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->topic->name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->topic->defined }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#dfdfdf" nowrap valign="top">
+    {{ set_topic name="Music:en" }}
+    Set by
+  </td>
+  <td bgcolor="#dfdfdf">
+    {{ literal }}{{ set_topic name="Music:en" }}{{ /literal }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Name:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->topic->name }}
+  </td>
+</tr>
+<tr>
+  <td bgcolor="#ffcc66" nowrap valign="top">Defined:</td>
+  <td bgcolor="#ffcc66" valign="top">
+    {{ $campsite->topic->defined }}
+  </td>
+</tr>
+</table>
+<br />
 
 
 {{**** User ****}}

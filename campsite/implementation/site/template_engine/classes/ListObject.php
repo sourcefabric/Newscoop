@@ -177,7 +177,7 @@ abstract class ListObject
 	 * @param array $p_parameters
 	 * @return array
 	 */
-	abstract protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters);
+	abstract protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, array $p_parameters);
 
 	/**
 	 * Processes list constraints passed in an array.
@@ -185,15 +185,15 @@ abstract class ListObject
 	 * @param array $p_constraints
 	 * @return array
 	 */
-	abstract protected function ProcessConstraints($p_constraints);
+	abstract protected function ProcessConstraints(array $p_constraints);
 
 	/**
 	 * Processes order constraints passed in an array.
 	 *
-	 * @param string $p_order
+	 * @param array $p_order
 	 * @return array
 	 */
-	abstract protected function ProcessOrder($p_order);
+	abstract protected function ProcessOrder(array $p_order);
 
 	/**
 	 * Processes the input parameters passed in an array; drops the invalid
@@ -203,7 +203,7 @@ abstract class ListObject
 	 * @param array $p_parameters
 	 * @return array
 	 */
-	abstract protected function ProcessParameters($p_parameters);
+	abstract protected function ProcessParameters(array $p_parameters);
 
 	/**
 	 * Generates a unique name for this list object.
@@ -444,6 +444,8 @@ abstract class ListObject
 	            return $this->getName();
 	        case 'start':
 	            return $this->getStart();
+	        case 'at_end';
+	            return $this->getIndex() == $this->getEnd();
 	    }
 	}
 

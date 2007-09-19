@@ -33,7 +33,7 @@ function smarty_block_list_sections($p_params, $p_content, &$p_smarty, &$p_repea
     if (!isset($p_content)) {
     	$start = 0;
     	$sectionsList = new SectionsList($start, $p_params);
-    	$campContext->setCurrentList($sectionsList);
+    	$campContext->setCurrentList($sectionsList, array('section'));
     }
 
     $currentSection = $campContext->current_sections_list->defaultIterator()->current();
@@ -42,6 +42,7 @@ function smarty_block_list_sections($p_params, $p_content, &$p_smarty, &$p_repea
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
+        $campContext->section = $currentSection;
     	$p_repeat = true;
     }
 
@@ -49,6 +50,7 @@ function smarty_block_list_sections($p_params, $p_content, &$p_smarty, &$p_repea
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_sections_list->defaultIterator()->next();
+    		$campContext->section = $campContext->current_sections_list->current;
     	}
     }
 

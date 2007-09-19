@@ -186,7 +186,7 @@ class CampURI {
      * @return string $uriString
      *      The rendered URI
      */
-    protected function render($p_parts = array())
+    protected function render(array $p_parts = array())
     {
         if (empty($p_parts)) {
             $p_parts = $this->m_parts;
@@ -595,7 +595,7 @@ class CampURI {
      * @return string $queryString
      *      The generated query string
      */
-    protected static function QueryArrayToString($p_queryArray)
+    protected static function QueryArrayToString(array $p_queryArray)
     {
         if (!is_array($p_queryArray) || sizeof($p_queryArray) < 1) {
             return false;

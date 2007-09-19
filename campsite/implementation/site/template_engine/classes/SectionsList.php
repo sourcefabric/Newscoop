@@ -21,9 +21,10 @@ class SectionsList extends ListObject
 	 * @param int $p_start
 	 * @param int $p_limit
 	 * @param bool $p_hasNextElements
+	 * @param array $p_parameters
 	 * @return array
 	 */
-	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters)
+	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, array $p_parameters)
 	{
 	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
@@ -55,7 +56,7 @@ class SectionsList extends ListObject
 	 * @param array $p_constraints
 	 * @return array
 	 */
-	protected function ProcessConstraints($p_constraints)
+	protected function ProcessConstraints(array $p_constraints)
 	{
 	    if (!is_array($p_constraints)) {
 	        return null;
@@ -111,10 +112,10 @@ class SectionsList extends ListObject
 	/**
 	 * Processes order constraints passed in an array.
 	 *
-	 * @param string $p_order
+	 * @param array $p_order
 	 * @return array
 	 */
-	protected function ProcessOrder($p_order)
+	protected function ProcessOrder(array $p_order)
 	{
 		return array();
 	}
@@ -127,7 +128,7 @@ class SectionsList extends ListObject
 	 * @param array $p_parameters
 	 * @return array
 	 */
-	protected function ProcessParameters($p_parameters)
+	protected function ProcessParameters(array $p_parameters)
 	{
 		$parameters = array();
     	foreach ($p_parameters as $parameter=>$value) {

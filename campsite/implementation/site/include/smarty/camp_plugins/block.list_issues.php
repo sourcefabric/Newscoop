@@ -33,7 +33,7 @@ function smarty_block_list_issues($p_params, $p_content, &$p_smarty, &$p_repeat)
     if (!isset($p_content)) {
     	$start = 0;
     	$issuesList = new IssuesList($start, $p_params);
-    	$campContext->setCurrentList($issuesList);
+    	$campContext->setCurrentList($issuesList, array('issue'));
     }
 
     $currentIssue = $campContext->current_issues_list->current;
@@ -42,6 +42,7 @@ function smarty_block_list_issues($p_params, $p_content, &$p_smarty, &$p_repeat)
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
+    	$campContext->issue = $currentIssue;
     	$p_repeat = true;
     }
 
@@ -49,6 +50,9 @@ function smarty_block_list_issues($p_params, $p_content, &$p_smarty, &$p_repeat)
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_issues_list->defaultIterator()->next();
+    		if (!is_null($campContext->current_issues_list->current)) {
+    		    $campContext->issue = $campContext->current_issues_list->current;
+    		}
     	}
     }
 
