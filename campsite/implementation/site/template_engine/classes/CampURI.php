@@ -9,8 +9,8 @@
  * @link http://www.campware.org
  */
 
-define(URLTYPE_SHORT_NAMES, 1);
-define(URLTYPE_TEMPLATE_PATH, 2);
+define('URLTYPE_SHORT_NAMES', 1);
+define('URLTYPE_TEMPLATE_PATH', 2);
 
 /**
  * Class CampURI

@@ -304,7 +304,7 @@ class CampURITemplatePath extends CampURI {
      */
     public function getURIPath($p_param = null)
     {
-        if (!this->m_validURI) {
+        if (!$this->m_validURI) {
             return null;
         }
 
@@ -323,7 +323,7 @@ class CampURITemplatePath extends CampURI {
      */
     public function getURLParameters($p_param = null)
     {
-        if (!this->m_validURI) {
+        if (!$this->m_validURI) {
             return null;
         }
 

@@ -105,7 +105,7 @@ class CampURIShortNames extends CampURI {
 	 * Class constructor
      *
      * @param string $p_uri
-     *      The full URI string 
+     *      The full URI string
 	 */
 	protected function __construct($p_uri = null)
 	{
@@ -201,7 +201,7 @@ class CampURIShortNames extends CampURI {
      * @return string
      *      The language URI path
      */
-    private getURILanguage()
+    private function getURILanguage()
     {
         $uriString = null;
         $context = CampTemplate::singleton()->context();
@@ -222,7 +222,7 @@ class CampURIShortNames extends CampURI {
      * @return string
      *      The issue URI path
      */
-    private getURIIssue()
+    private function getURIIssue()
     {
         $uriString = $this->getURILanguage();
         if (is_null($uriString)) {
@@ -249,7 +249,7 @@ class CampURIShortNames extends CampURI {
      * @return string
      *      The section URI path
      */
-    private getURISection()
+    private function getURISection()
     {
         $uriString = $this->getURIIssue();
         if (is_null($uriString)) {
@@ -276,7 +276,7 @@ class CampURIShortNames extends CampURI {
      * @return string
      *      The article URI path
      */
-    private getURIArticle()
+    private function getURIArticle()
     {
         $uriString = $this->getURISection();
         if (is_null($uriString)) {
