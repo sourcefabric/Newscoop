@@ -1,6 +1,12 @@
 <?php
 /**
  * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
  */
 
 
@@ -12,23 +18,26 @@
 // is not defined in these cases.
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
+require_once($g_documentRoot.'/classes/UrlType.php');
+
 require_once($g_documentRoot.'/template_engine/classes/CampConfig.php');
 require_once($g_documentRoot.'/template_engine/classes/CampDatabase.php');
 require_once($g_documentRoot.'/template_engine/classes/CampSession.php');
 require_once($g_documentRoot.'/template_engine/classes/CampContext.php');
+require_once($g_documentRoot.'/template_engine/classes/CampURIShortNames.php');
+require_once($g_documentRoot.'/template_engine/classes/CampURITemplatePath.php');
 //require_once($g_documentRoot.'/template_engine/classes/CampLocator.php');
 
 require_once($g_documentRoot.'/template_engine/metaclasses/MetaLanguage.php');
 
-
 /**
- * @package Campsite
+ * Class CampSite
  */
 final class CampSite {
     /**
      * Object to process the request
      */
-    private $m_locator = null;
+    //private $m_locator = null;
 
 
     /**
@@ -46,7 +55,7 @@ final class CampSite {
     public function init($p_context = array())
     {
         if (empty($p_context['language'])) {
-            $config = CampSite::GetConfig();
+            $config = self::GetConfig();
             $p_context['language'] = $config->getSetting('lang_id');
         }
 
@@ -54,7 +63,7 @@ final class CampSite {
         $this->setLanguage($p_context['language'], $context);
 
 
-        $this->createLocator();
+        //$this->createLocator();
     } // fn init
 
 
@@ -63,12 +72,8 @@ final class CampSite {
      *
      * @param string The path to the config file
      */
-    public function loadConfiguration($p_file)
+    public function loadConfiguration($p_file = null)
     {
-        if (!file_exists($p_file)) {
-            return null;
-        }
-
         CampConfig::singleton($p_file);
     } // fn loadConfiguration
 
@@ -84,7 +89,7 @@ final class CampSite {
 
     /**
      *
-     */
+     *
     public function locator()
     {
         $uri = CampURI::singleton();
@@ -93,7 +98,7 @@ final class CampSite {
         if (!$locator->parser($uri->render())) {
             return new PEAR_Error('Unable to locate the request');
         }
-    } // fn locator
+    } */
 
 
     /**
@@ -113,7 +118,7 @@ final class CampSite {
      */
     public function getLocator()
     {
-        return $this->m_locator;
+        //return $this->m_locator;
     } // fn getLocator
 
 
@@ -125,7 +130,7 @@ final class CampSite {
      */
     public function setPageTitle($title = null)
     {
-        $config = CampSite::GetConfig();
+        $config = self::GetConfig();
 
         $siteName = $config->getSetting('site.name');
         if(!$config->getSetting('site.online')) {
@@ -139,27 +144,24 @@ final class CampSite {
      */
     private function createLocator()
     {
-        $this->m_locator = CampLocator::singleton();
+        //$this->m_locator = CampLocator::singleton();
     } // fn createLocator
 
 
     /**
-     * Returns a CampConfig object.
-     *
-     * @param string
-     *    p_file The full path to the configuration file
+     * Returns a CampConfig instance.
      *
      * @return object
-     *    A CampConfig instance
+     *      A CampConfig instance
      */
-    public static function GetConfig($p_file = null)
+    public static function GetConfig()
     {
-        return CampConfig::singleton($p_file);
-    } // fn getConfig
+        return CampConfig::singleton();
+    } // fn GetConfig
 
 
     /**
-     * Returns a CampDatabase object.
+     * Returns a CampDatabase instance.
      *
      * @return object
      *    A CampDatabase instance.
@@ -167,14 +169,11 @@ final class CampSite {
     public static function GetDatabase()
     {
         return CampDatabase::singleton();
-    } // fn getDatabase
+    } // fn GetDatabase
 
 
     /**
-     * Returns a CampSession object.
-     *
-     * @param string
-     *    p_name The name for the session
+     * Returns a CampSession instance.
      *
      * @return object
      *    A CampSession instance
@@ -182,7 +181,43 @@ final class CampSite {
     public static function GetSession()
     {
         return CampSession::singleton();
-    } // fn getSession
+    } // fn GetSession
+
+
+    /**
+     * Returns the appropiate URI instance.
+     *
+     * @param string $p_uri
+     *      The URI to work with
+     */
+    public static function GetURI($p_uri = 'SELF')
+    {
+        $urlType = 0;
+
+        // tries to get the url from config file
+        $config = self::GetConfig();
+        $urlTypeObj = new UrlType($config->getSetting('campsite.url_type'));
+        if (is_object($urlTypeObj) && $urlTypeObj->exists()) {
+            $urlType = $urlTypeObj->getId();
+        }
+
+        // sets url type to default if necessary
+        if (!$urlType) {
+            $urlType = $config->getSetting('campsite.url_default_type');
+        }
+
+        // instanciates the corresponding URI object
+        switch ($urlType) {
+            case 1:
+                $uriInstance = CampURIShortNames($p_uri);
+                break;
+            case 2:
+                $uriInstance = CampURITemplatePath($p_uri);
+                break;
+        }
+
+        return $uriInstance;
+    } // fn GetURI
 
 } // class CampSite
 

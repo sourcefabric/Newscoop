@@ -50,7 +50,9 @@ function smarty_block_list_sections($p_params, $p_content, &$p_smarty, &$p_repea
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_sections_list->defaultIterator()->next();
-    		$campContext->section = $campContext->current_sections_list->current;
+            if (!is_null($campContext->current_sections_list->current)) {
+                $campContext->section = $campContext->current_sections_list->current;
+            }
     	}
     }
 

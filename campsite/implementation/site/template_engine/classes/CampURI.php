@@ -15,7 +15,7 @@ define(URLTYPE_TEMPLATE_PATH, 2);
 /**
  * Class CampURI
  */
-class CampURI {
+abstract class CampURI {
     /**
      * The URI type
      * It can be either:
@@ -24,21 +24,21 @@ class CampURI {
      *
      * @var integer
      */
-    private $m_type = null;
+    protected $m_type = null;
 
     /**
      * The URI value
      *
      * @var string
      */
-    private $m_uri = null;
+    protected $m_uri = null;
 
     /**
      * The URI parts
      *
      * @var array
      */
-    private $m_parts = array(
+    protected $m_parts = array(
                             'scheme',
                             'user',
                             'password',
@@ -52,42 +52,42 @@ class CampURI {
     /**
      * @var string
      */
-    private $m_scheme = null;
+    protected $m_scheme = null;
 
     /**
      * @var string
      */
-    private $m_host = null;
+    protected $m_host = null;
 
     /**
      * @var int
      */
-    private $m_port = null;
+    protected $m_port = null;
 
     /**
      * @var string
      */
-    private $m_user = null;
+    protected $m_user = null;
 
     /**
      * @var string
      */
-    private $m_password = null;
+    protected $m_password = null;
 
     /**
      * @var string
      */
-    private $m_path = null;
+    protected $m_path = null;
 
     /**
      * @var string
      */
-    private $m_query = null;
+    protected $m_query = null;
 
     /**
      * @var string
      */
-    private $m_fragment = null;
+    protected $m_fragment = null;
 
     /**
      * @var array
@@ -135,6 +135,39 @@ class CampURI {
 
         $this->parse($uriString);
     } // fn __construct
+
+
+    /**
+     * Returns the URI string based on given URL parameter.
+     *
+     * @param string $p_param
+     *      The URL parameter
+     *
+     * @return string
+     *      The URI string requested
+     */
+    abstract public function getURI($p_param = null);
+
+    /**
+     * Returns the URI path based on given URL parameter.
+     *
+     * @param string $p_param
+     *      The URL parameter
+     *
+     * @return string
+     *      The URI path string requested
+     */
+    abstract public function getURIPath($p_param = null);
+
+    /**
+     * Returns the URI query parameters based on given URL parameter.
+     *
+     * @param string $p_param
+     *
+     * @return string
+     *      The URI query string requested
+     */
+    abstract public function getURLParameters($p_param = null);
 
 
     /**
@@ -242,18 +275,6 @@ class CampURI {
                             );
         return $url;
     } // fn getURL
-
-
-    /**
-     * Gets the full URI.
-     *
-     * @return string $m_uri
-     *      The URI string
-     */
-    public function getURI()
-    {
-        return $this->m_uri;
-    } // fn getURI
 
 
     /**
