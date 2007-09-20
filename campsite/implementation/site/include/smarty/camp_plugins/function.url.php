@@ -25,7 +25,7 @@ function smarty_function_url($p_params, &$p_smarty)
     if (empty($p_params)
             || in_array(strtolower($p_params['options']), $validParams)) {
         $context = $p_smarty->get_template_vars('campsite');
-        if (!isset($context->url)) {
+        if (!is_object($context->url)) {
             return null;
         }
         // gets the URI base
@@ -34,7 +34,7 @@ function smarty_function_url($p_params, &$p_smarty)
         // includes the smarty camp uri plugin
         require_once $p_smarty->_get_plugin_filepath('function', 'uri');
         // appends the URI path and query values to the base
-        $urlString .= smarty_function_uri($p_params);
+        $urlString .= smarty_function_uri($p_params, $p_smarty);
     }
 
     return $urlString;

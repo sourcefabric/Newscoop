@@ -26,7 +26,7 @@ function smarty_function_uri($p_params, &$p_smarty)
 
     if (!isset($p_params['options']) || in_array($option, $validParams)) {
         $context = $p_smarty->get_template_vars('campsite');
-        if (!isset($context->url)) {
+        if (!is_object($context->url)) {
             return null;
         }
         // sets the URL parameter option
