@@ -9,8 +9,8 @@
  * @link http://www.campware.org
  */
 
-define('URLTYPE_SHORT_NAMES', 1);
-define('URLTYPE_TEMPLATE_PATH', 2);
+define('URLTYPE_TEMPLATE_PATH', 1);
+define('URLTYPE_SHORT_NAMES', 2);
 
 /**
  * Class CampURI
@@ -19,8 +19,8 @@ abstract class CampURI {
     /**
      * The URI type
      * It can be either:
-     * Short Names = 1
-     * Template Path = 2
+     * Template Path = 1
+     * Short Names = 2
      *
      * @var integer
      */
@@ -169,6 +169,16 @@ abstract class CampURI {
      */
     abstract public function getURLParameters($p_param = null);
 
+    /**
+     * Returns the URL parameter name.
+     *
+     * @param string $p_paramKey
+     *      The parameter key
+     *
+     * @return string
+     *      The actual parameter name
+     */
+    abstract public function getParameterName($p_paramKey);
 
     /**
      * Parses the given URI.

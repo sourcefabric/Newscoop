@@ -27,16 +27,35 @@ require_once($g_documentRoot.'/classes/Alias.php');
 require_once($g_documentRoot.'/template_engine/classes/CampURI.php');
 require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 
-define('UP_LANGUAGE_ID', 'IdLanguage');
-define('UP_PUBLICATION_ID', 'IdPublication');
-define('UP_ISSUE_NR', 'NrIssue');
-define('UP_SECTION_NR', 'NrSection');
-define('UP_ARTICLE_NR', 'NrArticle');
-
 /**
  * Class CampURIShortNames
  */
 class CampURIShortNames extends CampURI {
+    /**
+     * URL language identifier parameter name
+     */
+    const LANGUAGE_ID = 'IdLanguage';
+
+    /**
+     * URL publication identifier parameter name
+     */
+    const PUBLICATION_ID = 'IdPublication';
+
+    /**
+     * URL issue number parameter name
+     */
+    const ISSUE_NR = 'NrIssue';
+
+    /**
+     * URL section number parameter name
+     */
+    const SECTION_NR = 'NrSection';
+
+    /**
+     * URL article number parameter name
+     */
+    const ARTICLE_NR = 'NrArticle';
+
     /**
      * Holds the CampURIShortNames object
      *
@@ -205,7 +224,7 @@ class CampURIShortNames extends CampURI {
     {
         $uriString = null;
         $context = CampTemplate::singleton()->context();
-        if (isset($context->language) && $context->language->defined) {
+        if (is_object($context->language) && $context->language->defined) {
             $uriString = '/' . $context->language->code . '/';
         } elseif (!empty($this->m_language)) {
             $uriString = '/' . $this->m_language . '/';
@@ -230,7 +249,7 @@ class CampURIShortNames extends CampURI {
         }
 
         $context = CampTemplate::singleton()->context();
-        if (isset($context->issue) && $context->issue->defined) {
+        if (is_object($context->issue) && $context->issue->defined) {
             $uriString .= $context->issue->url_name . '/';
         } elseif (!empty($this->m_issue)) {
             $uriString .= $this->m_issue . '/';
@@ -257,7 +276,7 @@ class CampURIShortNames extends CampURI {
         }
 
         $context = CampTemplate::singleton()->context();
-        if (isset($context->section) && $context->section->defined) {
+        if (is_object($context->section) && $context->section->defined) {
             $uriString .= $context->section->url_name . '/';
         } elseif (!empty($this->m_section)) {
             $uriString .= $this->m_section . '/';
@@ -284,7 +303,7 @@ class CampURIShortNames extends CampURI {
         }
 
         $context = CampTemplate::singleton()->context();
-        if (isset($context->article) && $context->article->defined) {
+        if (is_object($context->article) && $context->article->defined) {
             $uriString .= $context->article->url_name . '/';
         } elseif (!empty($this->m_article)) {
             $uriString .= $this->m_article . '/';
@@ -360,6 +379,26 @@ class CampURIShortNames extends CampURI {
 
 
     /**
+     * Returns the URL parameter name.
+     *
+     * @param string $p_paramKey
+     *      The parameter key
+     *
+     * @return string
+     *      The actual parameter name
+     */
+    public function getParameterName($p_paramKey)
+    {
+        if (!defined("self::$p_paramKey")) {
+            // error
+            return;
+        }
+
+        return constant("self::$p_paramKey");
+    } // fn getParameterName
+
+
+    /**
      * Sets the URL values.
      *
      * @return void
@@ -379,7 +418,7 @@ class CampURIShortNames extends CampURI {
             $cPubId = $aliasObj->getPublicationId();
             $pubObj = new Publication($cPubId);
             if (is_object($pubObj) && $pubObj->exists()) {
-                $this->setQueryVar(UP_PUBLICATION_ID, $cPubId, false);
+                $this->setQueryVar(self::PUBLICATION_ID, $cPubId, false);
                 $this->m_publication = $aliasObj->getName();
             } else {
                 $cPubId = 0;
@@ -413,7 +452,7 @@ class CampURIShortNames extends CampURI {
             CampTemplate::singleton()->trigger_error('not valid language');
             return;
         } else {
-            $this->setQueryVar(UP_LANGUAGE_ID, $cLangId, false);
+            $this->setQueryVar(self::LANGUAGE_ID, $cLangId, false);
             if (empty($cLangCode)) {
                 $langObj = new Language($cLangId);
                 if (is_object($langObj) && $langObj->exists()) {
@@ -450,7 +489,7 @@ class CampURIShortNames extends CampURI {
         }
 
         if (!empty($cIssueNr)) {
-            $this->setQueryVar(UP_ISSUE_NR, $cIssueNr, false);
+            $this->setQueryVar(self::ISSUE_NR, $cIssueNr, false);
             $this->m_issue = $cIssueSName;
         }
 
@@ -461,7 +500,7 @@ class CampURIShortNames extends CampURI {
             if (is_array($sectionArray) && sizeof($sectionArray) == 1) {
                 $sectionObj = $sectionArray[0];
                 $cSectionNr = $sectionObj->getSectionNumber();
-                $this->setQueryVar(UP_SECTION_NR, $cSectionNr, false);
+                $this->setQueryVar(self::SECTION_NR, $cSectionNr, false);
                 $this->m_section = $cSectionSName;
             }
 
@@ -480,7 +519,7 @@ class CampURIShortNames extends CampURI {
                                                $cIssueNr, $cSectionNr, $cLangId);
             if (is_object($articleObj) && $articleObj->exists()) {
                 $cArticleNr = $articleObj->getArticleNumber();
-                $this->setQueryVar(UP_ARTICLE_NR, $cArticleNr, false);
+                $this->setQueryVar(self::ARTICLE_NR, $cArticleNr, false);
                 $this->m_article = $cArticleSName;
             }
 
