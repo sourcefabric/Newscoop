@@ -209,10 +209,10 @@ final class CampSite {
         // instanciates the corresponding URI object
         switch ($urlType) {
             case 1:
-                $uriInstance = CampURITemplatePath($p_uri);
+                $uriInstance = CampURITemplatePath::singleton($p_uri);
                 break;
             case 2:
-                $uriInstance = CampURIShortNames($p_uri);
+                $uriInstance = CampURIShortNames::singleton($p_uri);
                 break;
         }
 

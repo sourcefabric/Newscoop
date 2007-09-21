@@ -12,24 +12,22 @@ require_once('template_engine/classes/CampURI.php');
 require_once('set_path.php');
 
 /**
- * Class wrapper for CampURI as it cannot be used directly. 
+ * Class wrapper for CampURI as it is abstract class. 
  */
 class CampURIWrapper extends CampURI
 {
-    private $m_uri = null;
-
     public function __construct($p_uri = null)
     {
-        $this->m_uri = new CampURI($p_uri);
+        parent::__construct($p_uri);
     }
 
-    /**
-     * Returns the actual CampURI object
-     */
-    public function getURIObject()
-    {
-        return $this->m_uri;
-    }
+    public function getURI($p_param = null) {}
+
+    public function getURIPath($p_param = null) {}
+
+    public function getURLParameters($p_param = null) {}
+
+    public function getParameterName($p_paramKey) {}
 
     /**
      * Wrapper method for the actual protected CampURI::QueryArrayToString() method
@@ -75,8 +73,7 @@ class CampURITest extends PHPUnit_Framework_TestCase
     protected function setUp()
    	{
         $uri = 'http://campsite.localhost.localdomain/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=1&NrSection=40&NrArticle=43';
-        $uriWrapperObj = new CampURIWrapper($uri);
-        $this->m_uriObj = $uriWrapperObj->getURIObject();
+        $this->m_uriObj = new CampURIWrapper($uri);
     }
 
     /**

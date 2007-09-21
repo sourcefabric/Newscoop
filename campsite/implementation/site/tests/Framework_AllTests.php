@@ -25,8 +25,8 @@ require_once('OperatorTest.php');
 require_once('ListObjectTest.php');
 require_once('ArticlesListTest.php');
 require_once('CampURITest.php');
-// require_once('CampURIShortNamesTest.php');
-// require_once('CampURITemplatePathTest.php');
+require_once('CampURIShortNamesTest.php');
+require_once('CampURITemplatePathTest.php');
 
 
 class Framework_AllTests
@@ -62,8 +62,8 @@ class Framework_AllTests
         $suite->addTestSuite('ArticlesListTest');
 
         $suite->addTestSuite('CampURITest');
-        // $suite->addTestSuite('CampURIShortNamesTest');
-        // $suite->addTestSuite('CampURITemplatePathTest');
+        $suite->addTestSuite('CampURIShortNamesTest');
+        $suite->addTestSuite('CampURITemplatePathTest');
 
         return $suite;
     }
