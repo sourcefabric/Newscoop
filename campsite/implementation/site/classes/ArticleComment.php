@@ -259,14 +259,12 @@ class ArticleComment
      *    The record number to start the list
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
-     * @param integer $p_count
-     *    Returns the total number of elements
      *
      * @return array $articleCommentsList
      *    An array of Comment objects
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0, &$p_count = 0)
+                                   $p_start = 0, $p_limit = 0)
     {
         global $g_ado_db, $PHORUM;
 
@@ -336,15 +334,12 @@ class ArticleComment
             return array();
         }
 
-        // sets the counter to zero
-        $p_count = 0;
         // builds the array of comment objects
         $articleCommentsList = array();
         foreach ($comments as $comment) {
             $pmObj = new Phorum_message($comment['message_id']);
             if ($pmObj->exists()) {
                 $articleCommentsList[] = $pmObj;
-                $p_count++;
             }
         }
 

@@ -382,14 +382,12 @@ class ArticleImage extends DatabaseObject {
      *    The record number to start the list
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
-     * @param integer $p_count
-     *    Returns the total number of elements
      *
      * @return array $articleImagesList
      *    An array of Image objects
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0, &$p_count = 0)
+                                   $p_start = 0, $p_limit = 0)
     {
         global $g_ado_db;
 
@@ -457,15 +455,12 @@ class ArticleImage extends DatabaseObject {
             return null;
         }
 
-        // sets the counter to zero
-        $p_count = 0;
         // builds the array of image objects
         $articleImagesList = array();
         foreach ($images as $image) {
             $imgObj = new Image($image['Id']);
             if ($imgObj->exists()) {
                 $articleImagesList[] = $imgObj;
-                $p_count++;
             }
         }
 

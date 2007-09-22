@@ -33,7 +33,7 @@ function smarty_block_list_subtopics($p_params, $p_content, &$p_smarty, &$p_repe
     if (!isset($p_content)) {
     	$start = 0;
     	$subtopicsList = new SubtopicsList($start, $p_params);
-    	$campContext->setCurrentList($subtopicsList);
+    	$campContext->setCurrentList($subtopicsList, array('topic'));
     }
 
     $currentSubtopic = $campContext->current_subtopics_list->defaultIterator()->current();
@@ -43,12 +43,16 @@ function smarty_block_list_subtopics($p_params, $p_content, &$p_smarty, &$p_repe
     	return $html;
     } else {
     	$p_repeat = true;
+    	$campContext->topic = $currentSubtopic;
     }
 
     if (isset($p_content)) {
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_subtopics_list->defaultIterator()->next();
+    		if (!is_null($campContext->current_subtopics_list->current)) {
+    		    $campContext->topic = $campContext->current_subtopics_list->current;
+    		}
     	}
     }
 

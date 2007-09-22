@@ -33,7 +33,7 @@ function smarty_block_list_article_topics($p_params, $p_content, &$p_smarty, &$p
     if (!isset($p_content)) {
     	$start = 0;
     	$articleTopicsList = new ArticleTopicsList($start, $p_params);
-    	$campContext->setCurrentList($articleTopicsList);
+    	$campContext->setCurrentList($articleTopicsList, array('topic'));
     }
 
     $currentArticleTopic = $campContext->current_article_topics_list->defaultIterator()->current();
@@ -43,12 +43,16 @@ function smarty_block_list_article_topics($p_params, $p_content, &$p_smarty, &$p
     	return $html;
     } else {
     	$p_repeat = true;
+    	$campContext->topic = $currentArticleTopic;
     }
 
     if (isset($p_content)) {
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_article_topics_list->defaultIterator()->next();
+    		if (!is_null($campContext->current_article_topics_list->current)) {
+    		    $campContext->topic = $campContext->current_article_topics_list->current;
+    		}
     	}
     }
 

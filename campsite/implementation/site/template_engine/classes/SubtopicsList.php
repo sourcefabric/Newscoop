@@ -17,11 +17,11 @@ class SubtopicsList extends ListObject
 	 *
 	 * @param int $p_start
 	 * @param int $p_limit
-	 * @param bool $p_hasNextElements
 	 * @param array $p_parameters
+	 * @param int &$p_count
 	 * @return array
 	 */
-	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, array $p_parameters)
+	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
 	    $context = CampTemplate::singleton()->context();
 	    $rootTopicId = $context->topic->defined ? $context->topic->identifier : 0;

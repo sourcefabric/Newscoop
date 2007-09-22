@@ -669,13 +669,14 @@ class Issue extends DatabaseObject {
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
      * @param integer $p_count
-     *    Returns the total number of elements
+     *    The total count of the elements; this count is computed without
+     *    applying the start ($p_start) and limit parameters ($p_limit)
      *
      * @return array $issuesList
      *    An array of Issue objects
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0, &$p_count = 0)
+                                   $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
 
@@ -685,7 +686,8 @@ class Issue extends DatabaseObject {
 
         $hasPublicationId = false;
         $hasLanguageId = false;
-        $sqlClauseObj = new SQLSelectClause();
+        $selectClauseObj = new SQLSelectClause();
+        $countClauseObj = new SQLSelectClause();
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
@@ -703,7 +705,8 @@ class Issue extends DatabaseObject {
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
                 . $comparisonOperation['right'] . "' ";
-            $sqlClauseObj->addWhere($whereCondition);
+            $selectClauseObj->addWhere($whereCondition);
+            $countClauseObj->addWhere($whereCondition);
         }
 
         // validates whether publication identifier was given
@@ -723,33 +726,36 @@ class Issue extends DatabaseObject {
         $tmpIssue = new Issue();
 		$columnNames = $tmpIssue->getColumnNames(true);
         foreach ($columnNames as $columnName) {
-            $sqlClauseObj->addColumn($columnName);
+            $selectClauseObj->addColumn($columnName);
         }
+        $countClauseObj->addColumn('COUNT(*)');
 
         // sets the main table for the query
-        $sqlClauseObj->setTable($tmpIssue->getDbTableName());
+        $selectClauseObj->setTable($tmpIssue->getDbTableName());
+        $countClauseObj->setTable($tmpIssue->getDbTableName());
         unset($tmpIssue);
 
         if (is_array($p_order)) {
             $order = Issue::ProcessListOrder($p_order);
             // sets the order condition if any
             foreach ($order as $orderField=>$orderDirection) {
-                $sqlClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
+                $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
 
         // sets the limit
-        $sqlClauseObj->setLimit($p_start, $p_limit);
+        $selectClauseObj->setLimit($p_start, $p_limit);
 
         // builds the query and executes it
-        $sqlQuery = $sqlClauseObj->buildQuery();
-        $issues = $g_ado_db->GetAll($sqlQuery);
+        $selectQuery = $selectClauseObj->buildQuery();
+        $countQuery = $countClauseObj->buildQuery();
+        $issues = $g_ado_db->GetAll($selectQuery);
         if (!is_array($issues)) {
-            return null;
+            $p_count = 0;
+            return array();
         }
+        $p_count = $g_ado_db->GetOne($countQuery);
 
-        // sets the counter to zero
-        $p_count = 0;
         // builds the array of issue objects
         $issuesList = array();
         foreach ($issues as $issue) {
@@ -758,7 +764,6 @@ class Issue extends DatabaseObject {
                                 $issue['Number']);
             if ($issObj->exists()) {
                 $issuesList[] = $issObj;
-                $p_count++;
             }
         }
 

@@ -33,7 +33,7 @@ function smarty_block_list_article_audio_attachments($p_params, $p_content, &$p_
     if (!isset($p_content)) {
     	$start = 0;
     	$articleAudioAttachmentsList = new ArticleAudioAttachmentsList($start, $p_params);
-    	$campContext->setCurrentList($articleAudioAttachmentsList);
+    	$campContext->setCurrentList($articleAudioAttachmentsList, array('audioclip'));
     }
 
     $currentArticleAudioAttachment = $campContext->current_article_audio_attachments_list->defaultIterator()->current();
@@ -43,12 +43,16 @@ function smarty_block_list_article_audio_attachments($p_params, $p_content, &$p_
     	return $html;
     } else {
     	$p_repeat = true;
+    	$campContext->audioclip = $currentArticleAudioAttachment;
     }
 
     if (isset($p_content)) {
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_article_audio_attachments_list->defaultIterator()->next();
+    		if (!is_null($campContext->current_article_audio_attachments_list->current)) {
+    		    $campContext->audioclip = $campContext->current_article_audio_attachments_list->current;
+    		}
     	}
     }
 

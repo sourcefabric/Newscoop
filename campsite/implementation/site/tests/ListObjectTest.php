@@ -25,7 +25,7 @@ class ListObjectSample extends ListObject
 	 * @param array $p_parameters
 	 * @return array
 	 */
-	protected function CreateList($p_start, $p_limit, &$p_hasNextElements, array $p_parameters)
+	protected function CreateList($p_start, $p_limit, array $p_parameters, &$p_count)
 	{
 		$objects = array('element 1', 'element 2', 'element 3', 'element 4',
 						 'element 5', 'element 6', 'element 7', 'element 8');
@@ -49,7 +49,7 @@ class ListObjectSample extends ListObject
 		}
 
 		$lastElement = $p_start + $p_limit;
-		$p_hasNextElements = $lastElement < count($objects) && $lastElement != 0;
+		$p_count = count($objects);
 		if ($p_limit > 0) {
 			return array_slice($objects, $p_start, $p_limit);
 		}
