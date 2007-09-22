@@ -489,12 +489,14 @@ class Section extends DatabaseObject {
      *    The record number to start the list
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
+     * @param integer $p_count
+     *    Returns the total number of elements
      *
      * @return array $sectionsList
      *    An array of Section objects
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+                                   $p_start = 0, $p_limit = 0, &$p_count = 0)
     {
         global $g_ado_db;
 
@@ -578,6 +580,8 @@ class Section extends DatabaseObject {
             return null;
         }
 
+        // sets the counter to zero
+        $p_count = 0;
         // builds the array of section objects
         $sectionsList = array();
         foreach ($sections as $section) {
@@ -587,6 +591,7 @@ class Section extends DatabaseObject {
                                   $section['Number']);
             if ($secObj->exists()) {
                 $sectionsList[] = $secObj;
+                $p_count++;
             }
         }
 

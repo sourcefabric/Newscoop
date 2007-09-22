@@ -1948,7 +1948,7 @@ class Article extends DatabaseObject {
      *
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+                                   $p_start = 0, $p_limit = 0, &$p_count = 0)
     {
         global $g_ado_db;
 
@@ -2001,11 +2001,14 @@ class Article extends DatabaseObject {
             return null;
         }
 
+        // sets the counter to zero
+        $p_count = 0;
         // builds the array of Article objects
         $articlesList = array();
         foreach ($articles as $article) {
             $articlesList[] = new Article($article['IdLanguage'],
                                           $article['Number']);
+            $p_count++;
         }
 
         return $articlesList;

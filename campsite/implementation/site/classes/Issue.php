@@ -668,12 +668,14 @@ class Issue extends DatabaseObject {
      *    The record number to start the list
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
+     * @param integer $p_count
+     *    Returns the total number of elements
      *
      * @return array $issuesList
      *    An array of Issue objects
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+                                   $p_start = 0, $p_limit = 0, &$p_count = 0)
     {
         global $g_ado_db;
 
@@ -746,6 +748,8 @@ class Issue extends DatabaseObject {
             return null;
         }
 
+        // sets the counter to zero
+        $p_count = 0;
         // builds the array of issue objects
         $issuesList = array();
         foreach ($issues as $issue) {
@@ -754,6 +758,7 @@ class Issue extends DatabaseObject {
                                 $issue['Number']);
             if ($issObj->exists()) {
                 $issuesList[] = $issObj;
+                $p_count++;
             }
         }
 
