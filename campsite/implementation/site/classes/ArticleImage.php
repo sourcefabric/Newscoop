@@ -382,12 +382,15 @@ class ArticleImage extends DatabaseObject {
      *    The record number to start the list
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
+     * @param integer $p_count
+     *    The total count of the elements; this count is computed without
+     *    applying the start ($p_start) and limit parameters ($p_limit)
      *
      * @return array $articleImagesList
      *    An array of Image objects
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+                                   $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
 
@@ -396,7 +399,8 @@ class ArticleImage extends DatabaseObject {
         }
 
         $hasArticleNr = false;
-        $sqlClauseObj = new SQLSelectClause();
+        $selectClauseObj = new SQLSelectClause();
+        $countClauseObj = new SQLSelectClause();
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
@@ -411,7 +415,8 @@ class ArticleImage extends DatabaseObject {
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
                 . $comparisonOperation['right'] . "' ";
-            $sqlClauseObj->addWhere($whereCondition);
+            $selectClauseObj->addWhere($whereCondition);
+            $countClauseObj->addWhere($whereCondition);
         }
 
         // validates whether article number was given
@@ -425,16 +430,20 @@ class ArticleImage extends DatabaseObject {
         $tmpImage = new Image();
 		$columnNames = $tmpImage->getColumnNames(true);
         foreach ($columnNames as $columnName) {
-            $sqlClauseObj->addColumn($columnName);
+            $selectClauseObj->addColumn($columnName);
         }
+        $countClauseObj->addColumn('COUNT(*)');
 
         // sets the base table Attachment
-        $sqlClauseObj->setTable($tmpImage->getDbTableName());
+        $selectClauseObj->setTable($tmpImage->getDbTableName());
+        $countClauseObj->setTable($tmpImage->getDbTableName());
         unset($tmpImage);
 
         // adds the ArticleImages join and condition to the query
-        $sqlClauseObj->addTableFrom('ArticleImages');
-        $sqlClauseObj->addWhere('ArticleImages.IdImage = Images.Id');
+        $selectClauseObj->addTableFrom('ArticleImages');
+        $selectClauseObj->addWhere('ArticleImages.IdImage = Images.Id');
+        $countClauseObj->addTableFrom('ArticleImages');
+        $countClauseObj->addWhere('ArticleImages.IdImage = Images.Id');
 
         if (!is_array($p_order)) {
             $p_order = array();
@@ -442,18 +451,20 @@ class ArticleImage extends DatabaseObject {
 
         // sets the order condition if any
         foreach ($p_order as $orderColumn => $orderDirection) {
-            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
         // sets the limit
-        $sqlClauseObj->setLimit($p_start, $p_limit);
+        $selectClauseObj->setLimit($p_start, $p_limit);
 
         // builds the query executes it
-        $sqlQuery = $sqlClauseObj->buildQuery();
-        $images = $g_ado_db->GetAll($sqlQuery);
+        $selectQuery = $selectClauseObj->buildQuery();
+        $images = $g_ado_db->GetAll($selectQuery);
         if (!is_array($images)) {
             return null;
         }
+        $countQuery = $countClauseObj->buildQuery();
+        $p_count = $g_ado_db->GetOne($countQuery);
 
         // builds the array of image objects
         $articleImagesList = array();

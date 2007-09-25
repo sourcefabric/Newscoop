@@ -31,17 +31,9 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 3;
+    	$start = 0;
     	$searchResultsList = new SearchResultsList($start, $p_params);
-    	$campContext->setCurrentList($searchResultsList);
-    	echo "<p>start: " . $campContext->current_search_results_list->getStart()
-    		. ", length: " . $campContext->current_search_results_list->getLength()
-    		. ", limit: " . $campContext->current_search_results_list->getLimit()
-    		. ", columns: " . $campContext->current_search_results_list->getColumns()
-			. ", has next elements: " . (int)$campContext->current_search_results_list->hasNextElements() . "</p>\n";
-    	echo "<p>name: " . $campContext->current_search_results_list->getName() . "</p>\n";
-    	echo "<p>constraints: " . $campContext->current_search_results_list->getConstraintsString() . "</p>\n";
-    	echo "<p>order: " . $campContext->current_search_results_list->getOrderString() . "</p>\n";
+    	$campContext->setCurrentList($searchResultsList, array('article'));
     }
 
     $currentSearchResult = $campContext->current_search_results_list->defaultIterator()->current();
@@ -50,6 +42,7 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
+        $campContext->article = $currentSearchResult;
     	$p_repeat = true;
     }
 
@@ -57,6 +50,9 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_search_results_list->defaultIterator()->next();
+    		if (!is_null($campContext->current_search_results_list->current)) {
+    		    $campContext->article = $campContext->current_search_results_list->current;
+    		}
     	}
     }
 

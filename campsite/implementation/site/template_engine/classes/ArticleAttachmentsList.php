@@ -40,7 +40,7 @@ class ArticleAttachmentsList extends ListObject
             $this->m_constraints[] = $comparisonOperation;
 	    }
 
-	    $articleAttachmentsList = ArticleAttachment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit);
+	    $articleAttachmentsList = ArticleAttachment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaAttachmentsList = array();
 	    foreach ($articleAttachmentsList as $attachment) {
 	        $metaAttachmentsList[] = new MetaAttachment($attachment->getAttachmentId());

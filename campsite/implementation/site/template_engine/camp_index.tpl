@@ -48,69 +48,114 @@
 
 <h3>article attachments list</h3>
 {{ list_article_attachments length="3" columns="2" name='sample_name' }}
+{{ if $campsite->current_list->at_beginning }}
+<li>count: {{ $campsite->current_list->count }}</li>
+{{ /if }}
 <li>article attachment: <b>{{ $campsite->current_article_attachments_list->current->file_name }}</b>/<b>{{ $campsite->current_list->current->file_name }}</b>/<b>{{ $campsite->attachment->file_name }}</b>,
    list index: <b>{{ $campsite->current_article_attachments_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_article_attachments_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current article attachments list/current list/context)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+{{ /if }}
 {{ /list_article_attachments }}
+
 
 <h3>article comments list</h3>
 {{ list_article_comments length="3" columns="2" name='sample_name' order='byDate asc' }}
+{{ if $campsite->current_list->at_beginning }}
+<li>count: {{ $campsite->current_list->count }}</li>
+{{ /if }}
 <li>article comment: <b>{{ $campsite->current_article_comments_list->current->subject }}</b>/<b>{{ $campsite->current_list->current->subject }}</b>/<b>{{ $campsite->comment->subject }}</b>,
    list index: <b>{{ $campsite->current_article_comments_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_article_comments_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current article comments list/current list/context)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+{{ /if }}
 {{ /list_article_comments }}
 
+
 <h3>article images list</h3>
-{{ list_article_images length="2" columns="2" name='sample_name' }}
+{{ list_article_images length="3" columns="2" name='sample_name' }}
+{{ if $campsite->current_list->at_beginning }}
+<li>count: {{ $campsite->current_list->count }}</li>
+{{ /if }}
 <li>article image: <b>{{ $campsite->current_article_images_list->current->description }}</b>/<b>{{ $campsite->current_list->current->description }}</b>/<b>{{ $campsite->image->description }}</b>,
    list index: <b>{{ $campsite->current_article_images_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_article_images_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current article images list/current list/context)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+{{ /if }}
 {{ /list_article_images }}
+
 
 <h3>article topics list</h3>
 {{ list_article_topics length="3" columns="2" name='sample_name' }}
+{{ if $campsite->current_list->at_beginning }}
+<li>count: {{ $campsite->current_list->count }}</li>
+{{ /if }}
 <li>article topic: <b>{{ $campsite->current_article_topics_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>/<b>{{ $campsite->topic->name }}</b>,
    list index: <b>{{ $campsite->current_article_topics_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_article_topics_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current article topics list/current list/context)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+{{ /if }}
 {{ /list_article_topics }}
 
 
 <h3>article audio attachments list</h3>
 {{ list_article_audio_attachments length="3" columns="2" name='sample_name' }}
+{{ if $campsite->current_list->at_beginning }}
+<li>count: {{ $campsite->current_list->count }}</li>
+{{ /if }}
 <li>article audio attachment: <b>{{ $campsite->current_article_audio_attachments_list->current->title }}</b>/<b>{{ $campsite->current_list->current->title }}</b>/<b>{{ $campsite->audioclip->title }}</b>,
    list index: <b>{{ $campsite->current_article_audio_attachments_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_article_audio_attachments_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current article audio attachments list/current list/context)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+{{ /if }}
 {{ /list_article_audio_attachments }}
 
 
 <h3>search results list</h3>
-{{ list_search_results length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
-<li>search result: <b>{{ $campsite->current_search_results_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
-   list index: <b>{{ $campsite->current_search_results_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_search_results_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
-   (current search results list/current list)
+{{ list_search_results length="3" columns="2" name='sample_name' }}
+{{ if $campsite->current_list->at_beginning }}
+<li>count: {{ $campsite->current_list->count }}</li>
+{{ /if }}
+<li>search result: <b>{{ $campsite->current_search_results_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>/<b>{{ $campsite->article->name }}</b>,
+   list index: <b>{{ $campsite->current_search_results_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_search_results_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
+   (current search results list/current list/context)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+{{ /if }}
 {{ /list_search_results }}
 
 
 {{ set_topic name="Music:en" }}
 <h3>subtopics of topic {{ $campsite->topic->name }}</h3>
 {{ list_subtopics length="4" columns="2" name='sample_name' }}
+{{ if $campsite->current_list->at_beginning }}
+<li>count: {{ $campsite->current_list->count }}</li>
+{{ /if }}
 <li>subtopic: <b>{{ $campsite->current_subtopics_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>/<b>{{ $campsite->topic->name }}</b>,
    list index: <b>{{ $campsite->current_subtopics_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_subtopics_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current subtopics list/current list/context)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+{{ /if }}
 {{ /list_subtopics }}
 
 

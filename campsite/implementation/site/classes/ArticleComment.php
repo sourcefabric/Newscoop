@@ -259,12 +259,15 @@ class ArticleComment
      *    The record number to start the list
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
+     * @param integer $p_count
+     *    The total count of the elements; this count is computed without
+     *    applying the start ($p_start) and limit parameters ($p_limit)
      *
      * @return array $articleCommentsList
      *    An array of Comment objects
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+                                   $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db, $PHORUM;
 
@@ -272,10 +275,12 @@ class ArticleComment
             return null;
         }
 
-        $sqlClauseObj = new SQLSelectClause();
+        $selectClauseObj = new SQLSelectClause();
+        $countClauseObj = new SQLSelectClause();
 
         $messageTable = $PHORUM['message_table'];
-        $sqlClauseObj->setTable($messageTable);
+        $selectClauseObj->setTable($messageTable);
+        $countClauseObj->setTable($messageTable);
 
         $articleNumber = null;
         $languageId = null;
@@ -307,9 +312,12 @@ class ArticleComment
         }
 
         // adds WHERE conditions
-        $sqlClauseObj->addWhere('thread = '.$threadId);
-        $sqlClauseObj->addWhere('message_id != thread');
-        $sqlClauseObj->addWhere('status = '.PHORUM_STATUS_APPROVED);
+        $selectClauseObj->addWhere('thread = '.$threadId);
+        $selectClauseObj->addWhere('message_id != thread');
+        $selectClauseObj->addWhere('status = '.PHORUM_STATUS_APPROVED);
+        $countClauseObj->addWhere('thread = '.$threadId);
+        $countClauseObj->addWhere('message_id != thread');
+        $countClauseObj->addWhere('status = '.PHORUM_STATUS_APPROVED);
 
         if (!is_array($p_order)) {
             $p_order = array();
@@ -320,19 +328,22 @@ class ArticleComment
             $order = ArticleComment::ProcessListOrder($p_order);
             // sets the order condition if any
             foreach ($order as $orderField=>$orderDirection) {
-                $sqlClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
+                $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
 
         // sets the limit
-        $sqlClauseObj->setLimit($p_start, $p_limit);
+        $selectClauseObj->setLimit($p_start, $p_limit);
 
         // builds the query and executes it
-        $sqlQuery = $sqlClauseObj->buildQuery();
-        $comments = $g_ado_db->GetAll($sqlQuery);
+        $selectQuery = $selectClauseObj->buildQuery();
+        $comments = $g_ado_db->GetAll($selectQuery);
         if (!is_array($comments)) {
             return array();
         }
+        $countClauseObj->addColumn('COUNT(*)');
+        $countQuery = $countClauseObj->buildQuery();
+        $p_count = $g_ado_db->GetOne($countQuery);
 
         // builds the array of comment objects
         $articleCommentsList = array();

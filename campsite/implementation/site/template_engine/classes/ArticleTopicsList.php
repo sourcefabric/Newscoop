@@ -32,7 +32,7 @@ class ArticleTopicsList extends ListObject
 	                                                   $context->article->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
-	    $articleTopicsList = ArticleTopic::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit);
+	    $articleTopicsList = ArticleTopic::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaTopicsList = array();
 	    foreach ($articleTopicsList as $topic) {
 	        $metaTopicsList[] = new MetaTopic($topic->getTopicId());

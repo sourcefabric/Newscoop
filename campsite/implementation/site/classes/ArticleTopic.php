@@ -223,12 +223,15 @@ class ArticleTopic extends DatabaseObject {
      *    The record number to start the list
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
+     * @param integer $p_count
+     *    The total count of the elements; this count is computed without
+     *    applying the start ($p_start) and limit parameters ($p_limit)
      *
      * @return array $articleTopicsList
      *    An array of Topic objects
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+                                   $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
 
@@ -236,7 +239,8 @@ class ArticleTopic extends DatabaseObject {
             return null;
         }
 
-        $sqlClauseObj = new SQLSelectClause();
+        $selectClauseObj = new SQLSelectClause();
+        $countClauseObj = new SQLSelectClause();
 
         // processes the parameters
         foreach ($p_parameters as $parameter) {
@@ -251,7 +255,8 @@ class ArticleTopic extends DatabaseObject {
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
                 . $comparisonOperation['right'] . "' ";
-            $sqlClauseObj->addWhere($whereCondition);
+            $selectClauseObj->addWhere($whereCondition);
+            $countClauseObj->addWhere($whereCondition);
         }
 
         // validates whether article number was given
@@ -262,8 +267,10 @@ class ArticleTopic extends DatabaseObject {
 
         // sets the main table and columns to be fetched
         $tmpArticleTopic = new ArticleTopic();
-        $sqlClauseObj->setTable($tmpArticleTopic->getDbTableName());
-        $sqlClauseObj->addColumn('TopicId');
+        $selectClauseObj->setTable($tmpArticleTopic->getDbTableName());
+        $selectClauseObj->addColumn('TopicId');
+        $countClauseObj->setTable($tmpArticleTopic->getDbTableName());
+        $countClauseObj->addColumn('COUNT(*)');
         unset($tmpArticleTopic);
 
         if (!is_array($p_order)) {
@@ -272,18 +279,20 @@ class ArticleTopic extends DatabaseObject {
 
         // sets the order condition if any
         foreach ($p_order as $orderColumn => $orderDirection) {
-            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
         // sets the limit
-        $sqlClauseObj->setLimit($p_start, $p_limit);
+        $selectClauseObj->setLimit($p_start, $p_limit);
 
         // builds the query and executes it
-        $sqlQuery = $sqlClauseObj->buildQuery();
-        $topics = $g_ado_db->GetAll($sqlQuery);
+        $selectQuery = $selectClauseObj->buildQuery();
+        $topics = $g_ado_db->GetAll($selectQuery);
         if (!is_array($topics)) {
             return array();
         }
+        $countQuery = $countClauseObj->buildQuery();
+        $p_count = $g_ado_db->GetOne($countQuery);
 
         // builds the array of topic objects
         $articleTopicsList = array();

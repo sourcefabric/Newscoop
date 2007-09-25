@@ -38,7 +38,7 @@ class ArticleCommentsList extends ListObject
                                                        $context->language->number);
         $this->m_constraints[] = $comparisonOperation;
 
-	    $articleCommentsList = ArticleComment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit);
+	    $articleCommentsList = ArticleComment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaCommentsList = array();
 	    foreach ($articleCommentsList as $comment) {
 	        $metaCommentsList[] = new MetaComment($comment->getMessageId());

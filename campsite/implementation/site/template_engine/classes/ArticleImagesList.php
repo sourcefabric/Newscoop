@@ -32,7 +32,7 @@ class ArticleImagesList extends ListObject
 	                                                   $context->article->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
-	    $articleImagesList = ArticleImage::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit);
+	    $articleImagesList = ArticleImage::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaImagesList = array();
 	    foreach ($articleImagesList as $image) {
 	        $metaImagesList[] = new MetaImage($image->getImageId());

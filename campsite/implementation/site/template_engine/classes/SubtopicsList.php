@@ -33,6 +33,7 @@ class SubtopicsList extends ListObject
 	                  );
 
 	    $topicsList = Topic::GetTopics(null, null, null, $rootTopicId, $sqlOptions);
+	    $allTopicsList = Topic::GetTopics(null, null, null, $rootTopicId);
 	    $metaTopicsList = array();
 	    $index = 0;
 	    foreach ($topicsList as $topic) {
@@ -41,7 +42,7 @@ class SubtopicsList extends ListObject
     	        $metaTopicsList[] = new MetaTopic($topic->getTopicId());
 	        }
 	    }
-	    $p_hasNextElements = $index > $p_limit && $p_limit > 0;
+	    $p_count = count($allTopicsList);
 	    return $metaTopicsList;
 	}
 

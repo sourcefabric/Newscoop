@@ -191,12 +191,15 @@ class ArticleAttachment extends DatabaseObject {
      *    The record number to start the list
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
+     * @param integer $p_count
+     *    The total count of the elements; this count is computed without
+     *    applying the start ($p_start) and limit parameters ($p_limit)
      *
      * @return array $articleAttachmentsList
      *    An array of Attachment objects
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+                                   $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
 
@@ -205,7 +208,8 @@ class ArticleAttachment extends DatabaseObject {
         }
 
         $hasArticleNr = false;
-        $sqlClauseObj = new SQLSelectClause();
+        $selectClauseObj = new SQLSelectClause();
+        $countClauseObj = new SQLSelectClause();
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
@@ -223,7 +227,8 @@ class ArticleAttachment extends DatabaseObject {
                 $whereCondition = '('.$comparisonOperation['left'].' IS NULL OR '
                     .$comparisonOperation['left'].' = '.$comparisonOperation['right'].')';
             }
-            $sqlClauseObj->addWhere($whereCondition);
+            $selectClauseObj->addWhere($whereCondition);
+            $countClauseObj->addWhere($whereCondition);
         }
 
         // validates whether article number was given
@@ -237,16 +242,20 @@ class ArticleAttachment extends DatabaseObject {
         $tmpAttachment = new Attachment();
 		$columnNames = $tmpAttachment->getColumnNames(true);
         foreach ($columnNames as $columnName) {
-            $sqlClauseObj->addColumn($columnName);
+            $selectClauseObj->addColumn($columnName);
         }
+        $countClauseObj->addColumn('COUNT(*)');
 
         // sets the main table for the query
-        $sqlClauseObj->setTable($tmpAttachment->getDbTableName());
+        $selectClauseObj->setTable($tmpAttachment->getDbTableName());
+        $countClauseObj->setTable($tmpAttachment->getDbTableName());
         unset($tmpAttachment);
 
         // adds the ArticleAttachments join and condition to the query
-        $sqlClauseObj->addTableFrom('ArticleAttachments');
-        $sqlClauseObj->addWhere('ArticleAttachments.fk_attachment_id = Attachments.id');
+        $selectClauseObj->addTableFrom('ArticleAttachments');
+        $selectClauseObj->addWhere('ArticleAttachments.fk_attachment_id = Attachments.id');
+        $countClauseObj->addTableFrom('ArticleAttachments');
+        $countClauseObj->addWhere('ArticleAttachments.fk_attachment_id = Attachments.id');
 
         if (!is_array($p_order)) {
             $p_order = array();
@@ -254,18 +263,20 @@ class ArticleAttachment extends DatabaseObject {
 
         // sets the order condition if any
         foreach ($p_order as $orderColumn => $orderDirection) {
-            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
         // sets the limit
-        $sqlClauseObj->setLimit($p_start, $p_limit);
+        $selectClauseObj->setLimit($p_start, $p_limit);
 
         // builds the query and executes it
-        $sqlQuery = $sqlClauseObj->buildQuery();
-        $attachments = $g_ado_db->GetAll($sqlQuery);
+        $selectQuery = $selectClauseObj->buildQuery();
+        $attachments = $g_ado_db->GetAll($selectQuery);
         if (!is_array($attachments)) {
             return null;
         }
+        $countQuery = $countClauseObj->buildQuery();
+        $p_count = $g_ado_db->GetOne($countQuery);
 
         // builds the array of attachment objects
         $articleAttachmentsList = array();

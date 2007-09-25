@@ -9,6 +9,14 @@ require_once('ListObject.php');
  */
 class SearchResultsList extends ListObject
 {
+    private static $s_orderFields = array(
+                                          'bynumber',
+                                          'byname',
+                                          'bydate',
+                                          'bycreationdate',
+                                          'bypublishdate'
+                                    );
+
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
 	 * true if this list is limited and elements still exist in the original
@@ -23,16 +31,21 @@ class SearchResultsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-		if ($p_start < 1) {
-			$p_start = 1;
-		}
-		$searchResultsList = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
-		$p_hasNextElements = $p_limit > 0
-							&& (($p_start + $p_limit - 1) < count($searchResultsList));
-		if ($p_limit > 0) {
-			return array_slice($searchResultsList, $p_start - 1, $p_limit);
-		}
-		return array_slice($searchResultsList, $p_start - 1);
+	    $operator = new Operator('is', 'integer');
+	    $context = CampTemplate::singleton()->context();
+	    $comparisonOperation = new ComparisonOperation('Articles.IdPublication', $operator,
+	                                                   $context->publication->identifier);
+	    $this->m_constraints[] = $comparisonOperation;
+
+	    $keywords = array('the');
+
+	    $articlesList = Article::SearchByKeyword($keywords, $this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+	    $metaArticlesList = array();
+	    foreach ($articlesList as $article) {
+	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),
+	                                              $article->getArticleNumber());
+	    }
+	    return $metaArticlesList;
 	}
 
 	/**
@@ -54,7 +67,33 @@ class SearchResultsList extends ListObject
 	 */
 	protected function ProcessOrder(array $p_order)
 	{
-		return array();
+	    $order = array();
+	    $state = 1;
+	    foreach ($p_order as $word) {
+	        switch ($state) {
+                case 1: // reading the order field
+	                if (!array_search(strtolower($word), SearchResultsList::$s_orderFields)) {
+	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_searchresult, order parameter");
+	                } else {
+    	                $orderField = $word;
+	                }
+	                $state = 2;
+	                break;
+                case 2: // reading the order direction
+                    if (MetaOrder::IsValid($word)) {
+                        $order[$orderField] = $word;
+                    } else {
+                        CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_searchresult, order parameter");
+                    }
+                    $state = 1;
+	                break;
+	        }
+	    }
+	    if ($state != 1) {
+            CampTemplate::singleton()->trigger_error("unexpected end of order parameter in list_searchresult");
+	    }
+
+	    return $order;
 	}
 
 	/**
@@ -74,7 +113,6 @@ class SearchResultsList extends ListObject
     			case 'length':
     			case 'columns':
     			case 'name':
-    			case 'constraints':
     			case 'order':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;

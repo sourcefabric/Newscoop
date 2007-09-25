@@ -32,7 +32,7 @@ class ArticleAudioAttachmentsList extends ListObject
 	                                                   $context->article->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
-	    $articleAudioclipsList = ArticleAudioclip::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit);
+	    $articleAudioclipsList = ArticleAudioclip::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaAudioclipsList = array();
 	    foreach ($articleAudioclipsList as $audioclip) {
 	        $metaAudioclipsList[] = new MetaAudioclip($audioclip->getGUNId());
