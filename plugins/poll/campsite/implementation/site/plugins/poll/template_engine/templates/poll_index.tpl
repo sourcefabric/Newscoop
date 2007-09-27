@@ -41,13 +41,15 @@ Issue: {{ $campsite->issue->number }}<br>
 Section: {{ $campsite->section->number }}<br>
 Article: {{ $campsite->article->number }}<br>
      
-{{ list_polls name="polls_list" length="5" item=$smarty.get.poll_item language="default" order="DESC" }}
+{{ list_polls name="polls_list" length="5" item=$smarty.get.poll_item language="default" order="DESC" debug=1}}
    <li>poll: <b>{{ $campsite->current_polls_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
    list index: <b>{{ $campsite->current_polls_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
    column: <b>{{ $campsite->current_polls_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
    (current polls list/current list)
    <a href="?poll_nr={{ $campsite->current_polls_list->current->number }}&amp;poll_language_id={{ $campsite->current_polls_list->current->language_id }}">display</a>
 {{ /list_polls }}
+<br>
+total count: {{ $campsite->current_polls_list->count }}
 
 <p>
 
@@ -167,6 +169,13 @@ Article: {{ $campsite->article->number }}<br>
       <td nowrap valign="top">custom</td>
     </tr>
     </table>
+    
+    
+    <h2>Poll Answers</h2>
+    {{ list_poll_answers }}
+        {{ $campsite->current_pollanswers_list->current->answer }}
+    {{ /list_poll_answers }}
+    
 {{ /if }}
     
 </body>

@@ -232,11 +232,6 @@ class PollAnswer extends DatabaseObject {
         
         Poll::triggerStatistics($p_fk_poll_nr);
     }
-    
-    public function getNumber()
-    {
-        return $this->m_data['nr_answer'];   
-    }
        
     public function getPoll()
     {
@@ -251,8 +246,147 @@ class PollAnswer extends DatabaseObject {
         
         Poll::triggerStatistics($this->m_data['fk_poll_nr']);   
     }
+        
+    public function getNumber()
+    {
+        return $this->m_data['nr_answer'];   
+    }
     
+    public function getPollNumber()
+    {
+        return $this->m_data['fk_poll_nr'];   
+    }
+    
+    public function getAnswer()
+    {
+        return $this->getProperty('answer');   
+    }
+    
+    public function getLanguageId()
+    {
+        return $this->getProperty('fk_language_id');   
+    }
+    
+    /////////////////// Special template engine methods below here /////////////////////////////
+    
+    /**
+     * Gets an issue list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_count
+     *    The count of answers.
+     *
+     * @return array $issuesList
+     *    An array of Issue objects
+     */
+    public static function GetList($p_parameters, $p_order = null, &$p_count)
+    {
+        global $g_ado_db;
+        
+        if (!is_array($p_parameters)) {
+            return null;
+        }
 
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param);
+            if (empty($comparisonOperation)) {
+                continue;
+            }
+            if (strpos($comparisonOperation['left'], 'poll_nr') !== false) {
+                $poll_nr = $comparisonOperation['right'];
+            }
+            if (strpos($comparisonOperation['left'], 'language_id') !== false) {
+                $language_id = $comparisonOperation['right'];
+            }
+        }
+        
+        $sqlClauseObj = new SQLSelectClause();
+        
+        // sets the columns to be fetched
+        $tmpPollAnswer = new PollAnswer($language_id, $poll_nr);
+		$columnNames = $tmpPollAnswer->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $sqlClauseObj->addColumn($columnName);
+        }
+
+        // sets the main table for the query
+        $mainTblName = $tmpPollAnswer->getDbTableName();
+        $sqlClauseObj->setTable($mainTblName);
+        unset($tmpPollAnswer);
+        
+
+        if (empty($language_id) || empty($poll_nr)) {
+            return;   
+        }
+                
+        $sqlClauseObj->addWhere("fk_language_id = $language_id");       
+        $sqlClauseObj->addWhere("fk_poll_nr = $poll_nr");
+
+        
+        if (!is_array($p_order)) {
+            $p_order = array('nr_answer' => 'ASC');
+        }
+
+        // sets the order condition if any
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+        
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        
+        // count all available results
+        $countRes = $g_ado_db->Execute($sqlQuery);
+        $p_count = $countRes->recordCount();
+        
+        //get the wanted rows
+        $pollAnswerRes = $g_ado_db->Execute($sqlQuery);
+        
+        // builds the array of poll objects
+        $pollAnswersList = array();
+        while ($pollAnswer = $pollAnswerRes->FetchRow()) {
+            $pollAnswerObj = new PollAnswer($pollAnswer['fk_language_id'], $pollAnswer['fk_poll_nr'], $pollAnswer['nr_answer']);
+            if ($pollAnswerObj->exists()) {
+                $pollAnswersList[] = $pollAnswerObj;
+            }
+        }
+
+        return $pollAnswersList;
+    } // fn GetList
+    
+    /**
+     * Processes a paremeter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListParameters($p_param)
+    {
+        $comparisonOperation = array();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'poll_nr':
+            $comparisonOperation['left'] = 'poll_nr';
+            break;
+        case 'language_id':
+            $comparisonOperation['left'] = 'language_id';
+            break;
+        }
+
+        if (isset($comparisonOperation['left'])) {
+            $operatorObj = $p_param->getOperator();
+            $comparisonOperation['right'] = $p_param->getRightOperand();
+            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
+
+        return $comparisonOperation;
+    } // fn ProcessListParameters
 } // class PollQuestion
 
 ?>

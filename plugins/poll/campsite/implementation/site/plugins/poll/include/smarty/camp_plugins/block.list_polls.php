@@ -6,18 +6,20 @@
 
 
 /**
- * Campsite poll_form block plugin
+ * Campsite poll_list block plugin
  *
  * Type:     block
- * Name:     poll_form
- * Purpose:  Displayes the poll for voting
+ * Name:     poll_list
+ * Purpose:  Create a list of available polls
  *
  * @param string
  *     $p_params
  * @param string
+ *     $p_content
+ * @param string
  *     $p_smarty
  * @param string
- *     $p_content
+ *     $p_repeat
  *
  * @return
  *
@@ -35,16 +37,17 @@ function smarty_block_list_polls($p_params, $p_content, &$p_smarty, &$p_repeat)
     	$pollsList = new PollsList($start, $p_params);
     	$campContext->setCurrentList($pollsList);
     
-    	echo "<p>start: " . $campContext->current_polls_list->getStart()
-    	    . ", item: " . $campContext->current_polls_list->item
-    		. ", length: " . $campContext->current_polls_list->getLength()
-    		. ", limit: " . $campContext->current_polls_list->getLimit()
-    		. ", columns: " . $campContext->current_polls_list->getColumns()
-			. ", has next elements: " . (int)$campContext->current_polls_list->hasNextElements() . "</p>\n";
-    	echo "<p>name: " . $campContext->current_polls_list->getName() . "</p>\n";
-    	echo "<p>constraints: " . $campContext->current_polls_list->getConstraintsString() . "</p>\n";
-    	echo "<p>order: " . $campContext->current_polls_list->getOrderString() . "</p>\n";
-    
+    	if ($p_params['debug']) {
+        	echo "<p>start: " . $campContext->current_polls_list->getStart()
+        	    . ", item: " . $campContext->current_polls_list->item
+        		. ", length: " . $campContext->current_polls_list->getLength()
+        		. ", limit: " . $campContext->current_polls_list->getLimit()
+        		. ", columns: " . $campContext->current_polls_list->getColumns()
+    			. ", has next elements: " . (int)$campContext->current_polls_list->hasNextElements() . "</p>\n";
+        	echo "<p>name: " . $campContext->current_polls_list->getName() . "</p>\n";
+        	echo "<p>constraints: " . $campContext->current_polls_list->getConstraintsString() . "</p>\n";
+        	echo "<p>order: " . $campContext->current_polls_list->getOrderString() . "</p>\n";
+    	}
     }
 
     $Poll = $campContext->current_polls_list;

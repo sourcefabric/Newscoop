@@ -466,7 +466,7 @@ class Poll extends DatabaseObject {
      *    An array of Issue objects
      */
     public static function GetList($p_parameters, $p_item = null, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+                                   $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
         
@@ -594,7 +594,9 @@ class Poll extends DatabaseObject {
                 $sqlClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
             break;        
             
-            
+            default:
+                $sqlClauseObj->addWhere('1');
+            break;
         }
         
         if (!is_array($p_order)) {
@@ -606,19 +608,27 @@ class Poll extends DatabaseObject {
             $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
+        /*
         // sets the limit
         $sqlClauseObj->setLimit($p_start, $p_limit);
 
         // builds the query and executes it
         $sqlQuery = $sqlClauseObj->buildQuery();
         $polls = $g_ado_db->GetAll($sqlQuery);
-        if (!is_array($polls)) {
-            return null;
-        }
-
+        */
+        
+        $sqlQuery = $sqlClauseObj->buildQuery();
+        
+        // count all available results
+        $countRes = $g_ado_db->Execute($sqlQuery);
+        $p_count = $countRes->recordCount();
+        
+        //get the wanted rows
+        $pollRes = $g_ado_db->SelectLimit($sqlQuery, $p_limit, $p_start);
+        
         // builds the array of poll objects
         $pollsList = array();
-        foreach ($polls as $poll) {
+        while ($poll = $pollRes->FetchRow()) {
             $pollObj = new Poll($poll['fk_language_id'], $poll['poll_nr']);
             if ($pollObj->exists()) {
                 $pollsList[] = $pollObj;

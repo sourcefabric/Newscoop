@@ -34,6 +34,7 @@ final class CampContext {
 								   'template'=>'Template',
 								   'subscription'=>'Subscription',
 								   'poll'=>'Poll',
+								   'pollanswer'=>'PollAnswer',
                                    'url'=>'URL'
 								   );
 
@@ -56,7 +57,8 @@ final class CampContext {
 	                                                'list'=>'search_results'),
 	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics'),
 	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles'),
-	                         'polls'=>array('class'=>'Polls', 'list'=>'polls')
+	                         'polls'=>array('class'=>'Polls', 'list'=>'polls'),
+	                         'pollanswers'=>array('class'=>'PollAnswers', 'list'=>'pollanswers'),
 	                         );
 
     // Stores the context objects.
