@@ -41,6 +41,6 @@ final class MetaComment extends MetaDbObject {
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
-} // class MetaTopic
+} // class MetaComment
 
 ?>

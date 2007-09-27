@@ -57,11 +57,6 @@ class CampURIShortNamesTest extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
     }
-
-    public function testBuildURI()
-    {
-    	$this->assertEquals('/en/first/opensource/43/', $this->m_uri->buildURI());
-    }
     
     public function testGetHost()
     {

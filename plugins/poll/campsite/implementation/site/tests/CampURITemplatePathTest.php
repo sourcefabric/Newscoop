@@ -57,11 +57,6 @@ class CampURITemplatePathTest extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
     }
-
-    public function testBuildURI()
-    {
-    	$this->assertEquals('/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=1&NrSection=40&NrArticle=43', $this->m_uri->buildURI());
-    }
     
     public function testGetHost()
     {

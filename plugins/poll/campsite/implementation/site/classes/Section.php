@@ -499,7 +499,7 @@ class Section extends DatabaseObject {
      *    An array of Section objects
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+                                   $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
 
@@ -510,7 +510,8 @@ class Section extends DatabaseObject {
         $hasPublicationId = false;
         $hasLanguageId = false;
         $hasIssueNr = false;
-        $sqlClauseObj = new SQLSelectClause();
+        $selectClauseObj = new SQLSelectClause();
+        $countClauseObj = new SQLSelectClause();
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
@@ -531,7 +532,8 @@ class Section extends DatabaseObject {
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
                 . $comparisonOperation['right'] . "' ";
-            $sqlClauseObj->addWhere($whereCondition);
+            $selectClauseObj->addWhere($whereCondition);
+            $countClauseObj->addWhere($whereCondition);
         }
 
         // validates whether publication identifier was given
@@ -557,11 +559,13 @@ class Section extends DatabaseObject {
         $tmpSection = new Section();
 		$columnNames = $tmpSection->getColumnNames(true);
         foreach ($columnNames as $columnName) {
-            $sqlClauseObj->addColumn($columnName);
+            $selectClauseObj->addColumn($columnName);
         }
+        $countClauseObj->addColumn('COUNT(*)');
 
         // sets the main table for the query
-        $sqlClauseObj->setTable($tmpSection->getDbTableName());
+        $selectClauseObj->setTable($tmpSection->getDbTableName());
+        $countClauseObj->setTable($tmpSection->getDbTableName());
         unset($tmpSection);
 
         if (!is_array($p_order)) {
@@ -570,18 +574,20 @@ class Section extends DatabaseObject {
 
         // sets the order condition if any
         foreach ($p_order as $orderColumn => $orderDirection) {
-            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
         // sets the limit
-        $sqlClauseObj->setLimit($p_start, $p_limit);
+        $selectClauseObj->setLimit($p_start, $p_limit);
 
         // builds the query and executes it
-        $sqlQuery = $sqlClauseObj->buildQuery();
-        $sections = $g_ado_db->GetAll($sqlQuery);
+        $selectQuery = $selectClauseObj->buildQuery();
+        $countQuery = $countClauseObj->buildQuery();
+        $sections = $g_ado_db->GetAll($selectQuery);
         if (!is_array($sections)) {
-            return null;
+            return array();
         }
+        $p_count = $g_ado_db->GetOne($countQuery);
 
         // builds the array of section objects
         $sectionsList = array();

@@ -33,7 +33,7 @@ function smarty_block_list_article_attachments($p_params, $p_content, &$p_smarty
     if (!isset($p_content)) {
     	$start = 0;
     	$articleAttachmentsList = new ArticleAttachmentsList($start, $p_params);
-    	$campContext->setCurrentList($articleAttachmentsList);
+    	$campContext->setCurrentList($articleAttachmentsList, array('attachment'));
     }
 
     $currentArticleAttachment = $campContext->current_article_attachments_list->defaultIterator()->current();
@@ -42,6 +42,7 @@ function smarty_block_list_article_attachments($p_params, $p_content, &$p_smarty
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
+        $campContext->attachment = $currentArticleAttachment;
     	$p_repeat = true;
     }
 
@@ -49,6 +50,9 @@ function smarty_block_list_article_attachments($p_params, $p_content, &$p_smarty
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_article_attachments_list->defaultIterator()->next();
+    		if (!is_null($campContext->current_article_attachments_list->current)) {
+    		    $campContext->attachment = $campContext->current_article_attachments_list->current;
+    		}
     	}
     }
 

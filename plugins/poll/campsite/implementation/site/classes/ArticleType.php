@@ -199,14 +199,14 @@ class ArticleType {
 		// if the string is empty, nuke it
 		if (!is_string($p_value) || $p_value == '') {
 			if ($phrase_id = $this->translationExists($p_languageId)) {
-			    $trans =& new Translation($p_languageId, $phrase_id);
+			    $trans = new Translation($p_languageId, $phrase_id);
 			    $trans->delete();
 			    $this->m_metadata['fk_phrase_id'] = null;
 				$changed = true;
 			} else { $changed = false; }
 		} else if ($phrase_id = $this->translationExists($p_languageId)) {
 			// just update
-			$description =& new Translation($p_languageId, $phrase_id);
+			$description = new Translation($p_languageId, $phrase_id);
 			$description->setText($p_value);
 			$changed = true;
 		} else {
@@ -217,7 +217,7 @@ class ArticleType {
 
 			// if this is the first translation ...
 			if (!is_numeric($row)) {
-				$description =& new Translation($p_languageId);
+				$description = new Translation($p_languageId);
 				$description->create($p_value);
 				$phrase_id = $description->getPhraseId();
 				// if the phrase_id isn't there, insert it.
@@ -228,7 +228,7 @@ class ArticleType {
 				}
 			} else {
 				// if the phrase is already translated into atleast one language, just reuse that fk_phrase_id
-				$desc =& new Translation($p_languageId, $row);
+				$desc = new Translation($p_languageId, $row);
 				$desc->create($p_value);
 				$this->m_metadata['fk_phrase_id'] = $phrase_id;
 				$changed = true;
@@ -328,10 +328,10 @@ class ArticleType {
 			foreach ($queryArray as $row) {
 				$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE 'F". $row['field_name'] ."'";
 				$rowdata = $g_ado_db->GetAll($queryStr);
-				$columnMetadata =& new ArticleTypeField($this->m_name);
+				$columnMetadata = new ArticleTypeField($this->m_name);
 				$columnMetadata->fetch($rowdata[0]);
 				$columnMetadata->m_metadata = $columnMetadata->getMetadata();
-				$metadata[] =& $columnMetadata;
+				$metadata[] = $columnMetadata;
 			}
 		}
 		return $metadata;
@@ -482,7 +482,7 @@ class ArticleType {
 		} else {
 			$lang = $p_lang;
 		}
-		$languageObj =& new Language($lang);
+		$languageObj = new Language($lang);
 		$translations = $this->getTranslations();
 		if (!isset($translations[$lang])) return '';
 		return '('. $languageObj->getCode() .')';
@@ -520,7 +520,9 @@ class ArticleType {
 	function getNumArticles()
 	{
 		global $g_ado_db;
-		$sql = "SELECT COUNT(*) FROM ". $this->m_dbTableName;
+        $sql = "SELECT COUNT(*) FROM ". $this->m_dbTableName .", Articles WHERE "
+               . $this->m_dbTableName . ".NrArticle = Articles.Number AND "
+               . $this->m_dbTableName . ".IdLanguage = Articles.IdLanguage";
 		$res = $g_ado_db->GetOne($sql);
 		return $res;
 	} // fn getNumArticles
@@ -534,7 +536,9 @@ class ArticleType {
     function getArticlesArray()
     {
         global $g_ado_db;
-        $sql = "SELECT NrArticle FROM ". $this->m_dbTableName;
+        $sql = "SELECT NrArticle FROM ". $this->m_dbTableName .", Articles WHERE "
+               . $this->m_dbTableName . ".NrArticle = Articles.Number AND "
+               . $this->m_dbTableName . ".IdLanguage = Articles.IdLanguage";
         $rows = $g_ado_db->GetAll($sql);
         $returnArray = array();
         foreach ($rows as $row) {
@@ -584,18 +588,31 @@ class ArticleType {
         return 'Preview'. $dest;
     } // fn __getPreviewTableName
 
-    function getPreviewArticleData() {
+
+    /**
+     * Returns an ArticleData object of the first found article of this type.
+     * If no article was found create an empty one.
+     *
+     * @return object
+     */
+    function getPreviewArticleData()
+    {
         global $g_ado_db;
-        $sql = "SELECT * FROM ". $this->m_dbTableName ." LIMIT 1";
+        $sql = "SELECT " . $this->m_dbTableName . ".* FROM "
+               . $this->m_dbTableName .", Articles WHERE "
+               . $this->m_dbTableName . ".NrArticle = Articles.Number AND "
+               . $this->m_dbTableName . ".IdLanguage = Articles.IdLanguage LIMIT 1";
         $row = $g_ado_db->GetRow($sql);
         if (!$row) {
-            $destArticleData =& new ArticleData($this->m_name, Article::__generateArticleNumber(), 1);
+            $destArticleData = new ArticleData($this->m_name, Article::__generateArticleNumber(), 1);
         } else {
-            $destArticleData =& new ArticleData($this->m_name, $row['NrArticle'], $row['IdLanguage']);
+            $destArticleData = new ArticleData($this->m_name, $row['NrArticle'], $row['IdLanguage']);
         }
         return $destArticleData;
     }
-	/**
+
+
+    /**
      * Does the merge or a preview of the merge.
      * The p_rules array is an associative array with the key being the DESTINATION fieldname
      * and the values being the SOURCE fieldname (without Fs).

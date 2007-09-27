@@ -155,7 +155,7 @@ class ArticleAudioclip extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAudioclips 
+        $queryStr = "DELETE FROM ArticleAudioclips
                      WHERE fk_audioclip_gunid = '$p_gunId'";
         $g_ado_db->Execute($queryStr);
     } // fn OnAudioclipDelete
@@ -172,7 +172,7 @@ class ArticleAudioclip extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAudioclips 
+        $queryStr = "DELETE FROM ArticleAudioclips
                      WHERE fk_article_number = '$p_articleNumber'";
         $g_ado_db->Execute($queryStr);
     } // fn OnArticleDelete
@@ -190,13 +190,13 @@ class ArticleAudioclip extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = "SELECT fk_audioclip_gunid, order_no 
-                     FROM ArticleAudioclips 
+        $queryStr = "SELECT fk_audioclip_gunid, order_no
+                     FROM ArticleAudioclips
                      WHERE fk_article_number='$p_srcArticleNumber'";
         $rows = $g_ado_db->GetAll($queryStr);
         foreach ($rows as $row) {
-            $queryStr = "INSERT IGNORE INTO ArticleAudioclips 
-                         (fk_article_number, fk_audioclip_gunid, order_no) 
+            $queryStr = "INSERT IGNORE INTO ArticleAudioclips
+                         (fk_article_number, fk_audioclip_gunid, order_no)
                          VALUES ('$p_destArticleNumber', '"
                         .$row['fk_audioclip_gunid']."', '"
                         .$row['order_no']."')";
@@ -216,12 +216,15 @@ class ArticleAudioclip extends DatabaseObject {
      *    The record number to start the list
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
+     * @param integer $p_count
+     *    The total count of the elements; this count is computed without
+     *    applying the start ($p_start) and limit parameters ($p_limit)
      *
      * @return array $articleAudioclipsList
      *    An array of Audioclip objects
      */
     public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+                                   $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
 
@@ -230,7 +233,8 @@ class ArticleAudioclip extends DatabaseObject {
         }
 
         $hasArticleNr = false;
-        $sqlClauseObj = new SQLSelectClause();
+        $selectClauseObj = new SQLSelectClause();
+        $countClauseObj = new SQLSelectClause();
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
@@ -251,7 +255,8 @@ class ArticleAudioclip extends DatabaseObject {
                 break;
             }
 
-            $sqlClauseObj->addWhere($whereCondition);
+            $selectClauseObj->addWhere($whereCondition);
+            $countClauseObj->addWhere($whereCondition);
         }
 
         // validates whether article number was given
@@ -261,8 +266,10 @@ class ArticleAudioclip extends DatabaseObject {
 
         // sets the base table ArticleAudioclips and the column to be fetched
         $tmpArticleAudioclip =& new ArticleAudioclip();
-        $sqlClauseObj->setTable($tmpArticleAudioclip->getDbTableName());
-        $sqlClauseObj->addColumn('fk_audioclip_gunid');
+        $selectClauseObj->setTable($tmpArticleAudioclip->getDbTableName());
+        $selectClauseObj->addColumn('fk_audioclip_gunid');
+        $countClauseObj->setTable($tmpArticleAudioclip->getDbTableName());
+        $countClauseObj->addColumn('COUNT(*)');
         unset($tmpArticleAudioclip);
 
         if (!is_array($p_order)) {
@@ -271,18 +278,20 @@ class ArticleAudioclip extends DatabaseObject {
 
         // sets the order condition if any
         foreach ($p_order as $orderColumn => $orderDirection) {
-            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
         // sets the limit
-        $sqlClauseObj->setLimit($p_start, $p_limit);
+        $selectClauseObj->setLimit($p_start, $p_limit);
 
         // builds the query and executes it
-        $sqlQuery = $sqlClauseObj->buildQuery();
-        $audioclips = $g_ado_db->GetAll($sqlQuery);
+        $selectQuery = $selectClauseObj->buildQuery();
+        $audioclips = $g_ado_db->GetAll($selectQuery);
         if (!is_array($audioclips)) {
             return null;
         }
+        $countQuery = $countClauseObj->buildQuery();
+        $p_count = $g_ado_db->GetOne($countQuery);
 
         // builds the array of attachment objects
         $articleAudioclipsList = array();
@@ -311,10 +320,10 @@ class ArticleAudioclip extends DatabaseObject {
         $parameter = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'fk_article_number':
+        case 'article_number':
             $parameter['fk_article_number'] = (int) $p_param->getRightOperand();
             break;
-        case 'fk_language_id':
+        case 'language_id':
             $parameter['fk_language_id'] = (int) $p_param->getRightOperand();
             break;
         }

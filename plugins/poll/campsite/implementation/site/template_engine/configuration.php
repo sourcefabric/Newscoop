@@ -18,7 +18,8 @@ require_once($g_documentRoot.'/smtp_conf.php');
 
 
 /** System settings **/
-$CampCfg['campsite']['url_type'] = 'shortnames';
+$CampCfg['campsite']['url_type'] = 2;
+$CampCfg['campsite']['url_default_type'] = 2;
 $CampCfg['campsite']['secret_key'] = '4b506c2968184be185f6282f5dcac238';
 $CampCfg['campsite']['session_lifetime'] = 1200;
 

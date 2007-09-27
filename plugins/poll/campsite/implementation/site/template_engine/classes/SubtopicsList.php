@@ -17,21 +17,33 @@ class SubtopicsList extends ListObject
 	 *
 	 * @param int $p_start
 	 * @param int $p_limit
-	 * @param bool $p_hasNextElements
+	 * @param array $p_parameters
+	 * @param int &$p_count
 	 * @return array
 	 */
-	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters)
+	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-		if ($p_start < 1) {
-			$p_start = 1;
-		}
-		$subtopicsList = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
-		$p_hasNextElements = $p_limit > 0
-							&& (($p_start + $p_limit - 1) < count($subtopicsList));
-		if ($p_limit > 0) {
-			return array_slice($subtopicsList, $p_start - 1, $p_limit);
-		}
-		return array_slice($subtopicsList, $p_start - 1);
+	    $context = CampTemplate::singleton()->context();
+	    $rootTopicId = $context->topic->defined ? $context->topic->identifier : 0;
+
+	    $sqlOptions = array('LIMIT'=>array(
+	                                       'START'=>$p_start,
+	                                       'MAX_ROWS'=>($p_limit == 0 ? 0 : $p_limit + 1)
+	                                 )
+	                  );
+
+	    $topicsList = Topic::GetTopics(null, null, null, $rootTopicId, $sqlOptions);
+	    $allTopicsList = Topic::GetTopics(null, null, null, $rootTopicId);
+	    $metaTopicsList = array();
+	    $index = 0;
+	    foreach ($topicsList as $topic) {
+	        $index++;
+	        if ($p_limit == 0 || ($p_limit > 0 && $index <= $p_limit)) {
+    	        $metaTopicsList[] = new MetaTopic($topic->getTopicId());
+	        }
+	    }
+	    $p_count = count($allTopicsList);
+	    return $metaTopicsList;
 	}
 
 	/**
@@ -40,7 +52,7 @@ class SubtopicsList extends ListObject
 	 * @param array $p_constraints
 	 * @return array
 	 */
-	protected function ProcessConstraints($p_constraints)
+	protected function ProcessConstraints(array $p_constraints)
 	{
 		return array();
 	}
@@ -48,10 +60,10 @@ class SubtopicsList extends ListObject
 	/**
 	 * Processes order constraints passed in an array.
 	 *
-	 * @param string $p_order
+	 * @param array $p_order
 	 * @return array
 	 */
-	protected function ProcessOrder($p_order)
+	protected function ProcessOrder(array $p_order)
 	{
 		return array();
 	}
@@ -64,7 +76,7 @@ class SubtopicsList extends ListObject
 	 * @param array $p_parameters
 	 * @return array
 	 */
-	protected function ProcessParameters($p_parameters)
+	protected function ProcessParameters(array $p_parameters)
 	{
 		$parameters = array();
     	foreach ($p_parameters as $parameter=>$value) {
@@ -73,8 +85,6 @@ class SubtopicsList extends ListObject
     			case 'length':
     			case 'columns':
     			case 'name':
-    			case 'constraints':
-    			case 'order':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {

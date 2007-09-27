@@ -28,16 +28,35 @@ require_once($g_documentRoot.'/classes/Alias.php');
 require_once($g_documentRoot.'/template_engine/classes/CampURI.php');
 require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 
-define('UP_LANGUAGE_ID', 'IdLanguage');
-define('UP_PUBLICATION_ID', 'IdPublication');
-define('UP_ISSUE_NR', 'NrIssue');
-define('UP_SECTION_NR', 'NrSection');
-define('UP_ARTICLE_NR', 'NrArticle');
-
 /**
  * Class CampURITemplatePath
  */
 class CampURITemplatePath extends CampURI {
+    /**
+     * URL language identifier parameter name
+     */
+    const LANGUAGE_ID = 'IdLanguage';
+
+    /**
+     * URL publication identifier parameter name
+     */
+    const PUBLICATION_ID = 'IdPublication';
+
+    /**
+     * URL issue number parameter name
+     */
+    const ISSUE_NR = 'NrIssue';
+
+    /**
+     * URL section number parameter name
+     */
+    const SECTION_NR = 'NrSection';
+
+    /**
+     * URL article number parameter name
+     */
+    const ARTICLE_NR = 'NrArticle';
+
     /**
      * Holds the CampURITemplatePath object
      *
@@ -58,6 +77,20 @@ class CampURITemplatePath extends CampURI {
      * @var string
      */
     private $m_lookDir = null;
+
+    /**
+     * Holds the URI path from buildURI() method.
+     *
+     * @var string
+     */
+    private $m_uriPath = null;
+
+    /**
+     * Holds the URI query from buildURI() method.
+     *
+     * @var string
+     */
+    private $m_uriQuery = null;
 
     /**
      * Whether the URI is valid or not
@@ -104,6 +137,241 @@ class CampURITemplatePath extends CampURI {
 
 
     /**
+     * Gets the current template name.
+     *
+     * @return string
+     *      The name of the template
+     */
+    public function getTemplate()
+    {
+        return $this->m_template;
+    } // fn getTemplate
+
+
+    /**
+     * Gets the language URI query path.
+     *
+     * @return string
+     *      The language URI query path
+     */
+    private function getURILanguage()
+    {
+        $uriString = '';
+        $context = CampTemplate::singleton()->context();
+        if (is_object($context->language) && $context->language->defined) {
+            $uriString = self::LANGUAGE_ID.'='.$context->language->number;
+        } else {
+            $languageId = $this->getQueryVar(self::LANGUAGE_ID);
+            if (empty($languageId)) {
+                return null;
+            }
+            $uriString = self::LANGUAGE_ID.'='.$languageId;
+        }
+
+        return $uriString;
+    } // fn getURILanguage
+
+
+    /**
+     * Gets the publication URI query path.
+     * It fetches the publication URL name from URI context.
+     *
+     * @return string
+     *      The publication URI query path
+     */
+    private function getURIPublication()
+    {
+        $uriString = $this->getURILanguage();
+        if (empty($uriString)) {
+            return null;
+        }
+
+        $context = CampTemplate::singleton()->context();
+        if (is_object($context->publication) && $context->publication->defined) {
+            $uriString .= '&'.self::PUBLICATION_ID.'='.$context->publication->identifier;
+        } else {
+            $publicationId = $this->getQueryVar(self::PUBLICATION_ID);
+            if (empty($publicationId)) {
+                return null;
+            }
+            $uriString .= '&'.self::PUBLICATION_ID.'='.$publicationId;
+        }
+
+        return $uriString;
+    } // fn getURIPublication
+
+
+    /**
+     * Gets the issue URI query path.
+     * It fetches the issue URL name from URI or current issue list if any.
+     *
+     * @return string
+     *      The issue URI query path
+     */
+    private function getURIIssue()
+    {
+        $uriString = $this->getURIPublication();
+        if (empty($uriString)) {
+            return null;
+        }
+
+        $context = CampTemplate::singleton()->context();
+        if (is_object($context->issue) && $context->issue->defined) {
+            $uriString .= '&'.self::ISSUE_NR.'='.$context->issue->number;
+        } else {
+            $issueNr = $this->getQueryVar(self::ISSUE_NR);
+            if (empty($issueNr)) {
+                return null;
+            }
+            $uriString .= '&'.self::ISSUE_NR.'='.$issueNr;
+        }
+
+        return $uriString;
+    } // fn getURIIssue
+
+
+    /**
+     * Gets the section URI query path.
+     * It fetches the section URL name from URI or current section list if any.
+     *
+     * @return string
+     *      The section URI query path
+     */
+    private function getURISection()
+    {
+        $uriString = $this->getURIIssue();
+        if (empty($uriString)) {
+            return null;
+        }
+
+        $context = CampTemplate::singleton()->context();
+        if (is_object($context->section) && $context->section->defined) {
+            $uriString .= '&'.self::SECTION_NR.'='.$context->section->number;
+        } else {
+            $sectionNr = $this->getQueryVar(self::SECTION_NR);
+            if (empty($sectionNr)) {
+                return null;
+            }
+            $uriString .= '&'.self::SECTION_NR.'='.$sectionNr;
+        }
+
+        return $uriString;
+    } // fn getURISection
+
+
+    /**
+     * Gets the article URI query path.
+     * It fetches the article URL name from URI or current article list if any.
+     *
+     * @return string
+     *      The article URI query path
+     */
+    private function getURIArticle()
+    {
+        $uriString = $this->getURISection();
+        if (empty($uriString)) {
+            return null;
+        }
+
+        $context = CampTemplate::singleton()->context();
+        if (is_object($context->article) && $context->article->defined) {
+            $uriString .= '&'.self::ARTICLE_NR.'='.$context->article->number;
+        } else {
+            $articleNr = $this->getQueryVar(self::ARTICLE_NR);
+            if (empty($articleNr)) {
+                return null;
+            }
+            $uriString .= '&'.self::ARTICLE_NR.'='.$articleNr;
+        }
+
+        return $uriString;
+    } // fn getURISection
+
+
+    /**
+     * Returns the URI string based on given URL parameter.
+     *
+     * @param string $p_param
+     *      The URL parameter
+     *
+     * @return string
+     *      The URI string requested
+     */
+    public function getURI($p_param = null)
+    {
+        if (!$this->m_validURI) {
+            return null;
+        }
+
+        $this->buildURI($p_param);
+        if (!empty($this->m_uriQuery)) {
+            return $this->m_uriPath . '?' . $this->m_uriQuery;
+        }
+
+        return $this->m_uriPath;
+    } // fn getURI
+
+
+    /**
+     * Returns the URI path based on given URL parameter.
+     *
+     * @param string $p_param
+     *      The URL parameter
+     *
+     * @return string
+     *      The URI path string requested
+     */
+    public function getURIPath($p_param = null)
+    {
+        if (!$this->m_validURI) {
+            return null;
+        }
+
+        $this->buildURI($p_param);
+        return $this->m_uriPath;
+    } // fn getURIPath
+
+
+    /**
+     * Returns the URI query parameters based on given URL parameter.
+     *
+     * @param string $p_param
+     *
+     * @return string
+     *      The URI query string requested
+     */
+    public function getURLParameters($p_param = null)
+    {
+        if (!$this->m_validURI) {
+            return null;
+        }
+
+        $this->buildURI($p_param);
+        return $this->m_uriQuery;
+    } // fn getURLParameters
+
+
+    /**
+     * Returns the URL parameter name.
+     *
+     * @param string $p_paramKey
+     *      The parameter key
+     *
+     * @return string
+     *      The actual parameter name
+     */
+    public function getParameterName($p_paramKey)
+    {
+        if (!defined("self::$p_paramKey")) {
+            // error
+            return;
+        }
+
+        return constant("self::$p_paramKey");
+    } // fn getParameterName
+
+
+    /**
      * Parses the URI.
      * As URI was already parsed by CampURI, this function only takes care of
      * read and set the template name.
@@ -117,18 +385,6 @@ class CampURITemplatePath extends CampURI {
             $this->setTemplate($template);
         }
     } // fn parse
-
-
-    /**
-     * Gets the current template name.
-     *
-     * @return string
-     *      The name of the template
-     */
-    public function getTemplate()
-    {
-        return $this->m_template;
-    } // fn getTemplate
 
 
     /**
@@ -149,7 +405,7 @@ class CampURITemplatePath extends CampURI {
                 $cPubId = 0;
                 $pubObj = null;
             }
-            $this->setQueryVar(UP_PUBLICATION_ID, $cPubId);
+            $this->setQueryVar(self::PUBLICATION_ID, $cPubId);
         }
 
         if (empty($cPubId)) {
@@ -160,12 +416,12 @@ class CampURITemplatePath extends CampURI {
         // no path means we are at the home page
         if ($this->getPath() == '' || $this->getPath() == '/') {
             // sets the language identifier if necessary
-            if ($this->getQueryVar(UP_LANGUAGE_ID) == 0) {
+            if ($this->getQueryVar(self::LANGUAGE_ID) == 0) {
                 $cLangId = $pubObj->getLanguageId();
-                $this->setQueryVar(UP_LANGUAGE_ID, $cLangId);
+                $this->setQueryVar(self::LANGUAGE_ID, $cLangId);
             }
             // sets the issue number if necessary
-            if ($this->getQueryVar(UP_ISSUE_NR) == 0) {
+            if ($this->getQueryVar(self::ISSUE_NR) == 0) {
                 $query = "SELECT MAX(Number) FROM Issues"
                    . " WHERE IdPublication = ".$cPubId." AND IdLanguage = ".$cLangId
                    . " AND Published = 'Y'";
@@ -252,20 +508,47 @@ class CampURITemplatePath extends CampURI {
 
 
     /**
-     * Builds the URI from object attributes.
+     * Sets the URI path and query values based on given parameters.
      *
-     * @return string $uri
-     *      The URI
+     * @param string $p_param
+     *      A valid URL parameter
+     *
+	 * @return void
      */
-    public function buildURI()
+    private function buildURI($p_param = null)
     {
-        $uri = '';
-        $template = $this->m_template;
-        if ($this->m_validURI == true && !empty($template)) {
-            $uri = '/'.$this->m_lookDir.'/'.$this->getRequestURI();
+        $this->m_uriPath = null;
+        $this->m_uriQuery = null;
+
+        switch ($p_param) {
+        case 'language':
+            $this->m_uriQuery = $this->getURILanguage();
+            break;
+        case 'publication':
+            $this->m_uriQuery = $this->getURIPublication();
+            break;
+        case 'issue':
+            $this->m_uriQuery = $this->getURIIssue();
+            break;
+        case 'section':
+            $this->m_uriQuery = $this->getURISection();
+            break;
+        case 'article':
+            $this->m_uriQuery = $this->getURIArticle();
+            break;
+        default:
+            if (empty($p_param)) {
+                $this->m_uriQuery = $this->m_query;
+            }
+            break;
         }
 
-        return $uri;
+        if (empty($this->m_template)) {
+            CampTemplate::singleton()->trigger_error();
+            return;
+        }
+
+        $this->m_uriPath = '/' . $this->m_lookDir . '/' . $this->m_template;
     } // fn buildURI
 
 } // class CampURITemplatePath

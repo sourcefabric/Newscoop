@@ -20,12 +20,13 @@ class SectionsList extends ListObject
 	 *
 	 * @param int $p_start
 	 * @param int $p_limit
-	 * @param bool $p_hasNextElements
+	 * @param array $p_parameters
+	 * @param int &$p_count
 	 * @return array
 	 */
-	protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters)
+	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $operator = new Operator('is');
+	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
 	    $comparisonOperation = new ComparisonOperation('IdPublication', $operator,
 	                                                   $context->publication->identifier);
@@ -37,7 +38,7 @@ class SectionsList extends ListObject
 	                                                   $context->language->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
-	    $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit);
+	    $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaSectionsList = array();
 	    foreach ($sectionsList as $section) {
 	        $metaSectionsList[] = new MetaSection($section->getPublicationId(),
@@ -55,7 +56,7 @@ class SectionsList extends ListObject
 	 * @param array $p_constraints
 	 * @return array
 	 */
-	protected function ProcessConstraints($p_constraints)
+	protected function ProcessConstraints(array $p_constraints)
 	{
 	    if (!is_array($p_constraints)) {
 	        return null;
@@ -77,7 +78,7 @@ class SectionsList extends ListObject
 	                $state = 2;
 	                break;
 	            case 2: // reading the operator
-	                $type = SectionsList::$s_parameters[$attribute];
+	                $type = SectionsList::$s_parameters[$attribute]['type'];
 	                try {
 	                    $operator = new Operator($word, $type);
 	                }
@@ -111,10 +112,10 @@ class SectionsList extends ListObject
 	/**
 	 * Processes order constraints passed in an array.
 	 *
-	 * @param string $p_order
+	 * @param array $p_order
 	 * @return array
 	 */
-	protected function ProcessOrder($p_order)
+	protected function ProcessOrder(array $p_order)
 	{
 		return array();
 	}
@@ -127,7 +128,7 @@ class SectionsList extends ListObject
 	 * @param array $p_parameters
 	 * @return array
 	 */
-	protected function ProcessParameters($p_parameters)
+	protected function ProcessParameters(array $p_parameters)
 	{
 		$parameters = array();
     	foreach ($p_parameters as $parameter=>$value) {

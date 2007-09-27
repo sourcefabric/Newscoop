@@ -20,7 +20,12 @@ final class MetaURL
     /**
      * @var object
      */
-    private $m_uri = null;
+    private $m_uriObj = null;
+
+    /**
+     * @var string
+     */
+    private $m_uri_parameter = null;
 
     /**
      * @var array
@@ -30,9 +35,13 @@ final class MetaURL
 
     public function __construct()
     {
-        $this->m_uri = CampSite::GetURI();
+        $this->m_uriObj = CampSite::GetURI();
 
+        $this->m_customProperties['uri'] = 'getURI';
+        $this->m_customProperties['uri_path'] = 'getURIPath';
         $this->m_customProperties['url'] = 'getURL';
+        $this->m_customProperties['url_parameters'] = 'getURLParameters';
+
         $this->m_customProperties['base'] = 'getBase';
         $this->m_customProperties['path'] = 'getPath';
         $this->m_customProperties['query'] = 'getQuery';
@@ -68,8 +77,98 @@ final class MetaURL
      */
     final public function __set($p_property, $p_value)
     {
-        throw new InvalidFunctionException(get_class($this), '__set');
+        if (strtolower($p_property) == 'uri_parameter') {
+            $this->m_uri_parameter = $p_value;
+        } else {
+            throw new InvalidFunctionException(get_class($this), '__set');
+        }
     } // fn __set
+
+
+    /**
+     *
+     */
+    public function getURI()
+    {
+        return $this->m_uriObj->getURI($this->m_uri_parameter);
+    } // fn getURL
+
+
+    /**
+     *
+     */
+    public function getURIPath()
+    {
+        return $this->m_uriObj->getURIPath($this->m_uri_parameter);
+    } // fn getURL
+
+
+    /**
+     *
+     */
+    public function getURLParameters()
+    {
+        return $this->m_uriObj->getURLParameters($this->m_uri_parameter);
+    } // fn getURL
+
+
+    /**
+     *
+     */
+    public function getURL()
+    {
+        return $this->m_uriObj->getURL();
+    } // fn getURL
+
+
+    /**
+     *
+     */
+    public function getBase()
+    {
+        return $this->m_uriObj->getBase();
+    } // fn getBase
+
+
+    /**
+     *
+     */
+    public function getPath()
+    {
+        return $this->m_uriObj->getPath();
+    } // fn getPath
+
+
+    /**
+     *
+     */
+    public function getQuery()
+    {
+        return $this->m_uriObj->getQuery();
+    } // fn getQuery
+
+
+    /**
+     *
+     */
+    public function getURLType()
+    {
+        $urlTypeObj = new UrlType($this->m_uriObj->getURLType());
+        if (!is_object($urlTypeObj) || !$urlTypeObj->exists()) {
+            return null;
+        }
+
+        return $urlTypeObj->getId();
+    } // fn getURLType
+
+
+    /**
+     *
+     */
+    public function getRequestURI()
+    {
+        return $this->m_uriObj->getRequestURI();
+    } // fn getRequestURI
 
 
     /**
@@ -88,65 +187,6 @@ final class MetaURL
         
         return $this->$methodName();
     } // fn getCustomProperty
-
-
-    /**
-     *
-     */
-    public function getURL()
-    {
-        return $this->m_uri->getURL();
-    } // fn getURL
-
-
-    /**
-     *
-     */
-    public function getBase()
-    {
-        return $this->m_uri->getBase();
-    } // fn getBase
-
-
-    /**
-     *
-     */
-    public function getPath()
-    {
-        return $this->m_uri->getPath();
-    } // fn getPath
-
-
-    /**
-     *
-     */
-    public function getQuery()
-    {
-        return $this->m_uri->getQuery();
-    } // fn getQuery
-
-
-    /**
-     *
-     */
-    public function getURLType()
-    {
-        $urlTypeObj = new UrlType($this->m_uri->getURLType());
-        if (!is_object($urlTypeObj) || $urlTypeObj->exists()) {
-            return null;
-        }
-
-        return $urlTypeObj->getId();
-    } // fn getURLType
-
-
-    /**
-     *
-     */
-    public function getRequestURI()
-    {
-        return $this->m_uri->getRequestURI();
-    } // fn getRequestURI
 
 
     /**

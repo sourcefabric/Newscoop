@@ -96,6 +96,13 @@ abstract class ListObject
 	protected $m_objects;
 
 	/**
+	 * The total number of elements in the list without the limits.
+	 *
+	 * @var integer
+	 */
+	protected $m_totalCount;
+
+	/**
 	 * The default iterator for the current object.
 	 *
 	 * @var object
@@ -158,11 +165,12 @@ abstract class ListObject
 		 */
 		$this->m_order = $this->ProcessOrder(ListObject::ParseConstraintsString($this->m_orderStr));
 
-		$objects = $this->CreateList($this->m_start, $this->m_limit, $this->m_hasNextElements, $parameters);
+		$objects = $this->CreateList($this->m_start, $this->m_limit, $parameters, $this->m_totalCount);
 		if (!is_array($objects)) {
 		    $objects = array();
 		}
   		$this->m_objects = new MyArrayObject($objects);
+  		$this->m_hasNextElements = $this->m_totalCount > ($this->m_start + $this->getLength());
 	}
 
 	/**
@@ -173,11 +181,11 @@ abstract class ListObject
 	 *
 	 * @param int $p_start
 	 * @param int $p_limit
-	 * @param bool $p_hasNextElements
-	 * @param array $p_parameters
+	 * @param array &$p_parameters
+	 * @param int $p_count
 	 * @return array
 	 */
-	abstract protected function CreateList($p_start = 0, $p_limit = 0, &$p_hasNextElements, $p_parameters);
+	abstract protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count);
 
 	/**
 	 * Processes list constraints passed in an array.
@@ -185,15 +193,15 @@ abstract class ListObject
 	 * @param array $p_constraints
 	 * @return array
 	 */
-	abstract protected function ProcessConstraints($p_constraints);
+	abstract protected function ProcessConstraints(array $p_constraints);
 
 	/**
 	 * Processes order constraints passed in an array.
 	 *
-	 * @param string $p_order
+	 * @param array $p_order
 	 * @return array
 	 */
-	abstract protected function ProcessOrder($p_order);
+	abstract protected function ProcessOrder(array $p_order);
 
 	/**
 	 * Processes the input parameters passed in an array; drops the invalid
@@ -203,7 +211,7 @@ abstract class ListObject
 	 * @param array $p_parameters
 	 * @return array
 	 */
-	abstract protected function ProcessParameters($p_parameters);
+	abstract protected function ProcessParameters(array $p_parameters);
 
 	/**
 	 * Generates a unique name for this list object.
@@ -371,6 +379,16 @@ abstract class ListObject
 	}
 
 	/**
+	 * Returns the total number of elements in the list without the limits.
+	 *
+	 * @return unknown
+	 */
+	public function getTotalCount()
+	{
+	    return $this->m_totalCount;
+	}
+
+	/**
 	 * Returns the column number for the given iterator
 	 *
 	 * @param int $p_iterator
@@ -444,6 +462,12 @@ abstract class ListObject
 	            return $this->getName();
 	        case 'start':
 	            return $this->getStart();
+	        case 'count':
+	            return $this->getTotalCount();
+	        case 'at_beginning':
+	            return $this->getIndex() == 1;
+	        case 'at_end';
+	            return ($this->getStart() + $this->getIndex()) == $this->getEnd();
 	    }
 	}
 

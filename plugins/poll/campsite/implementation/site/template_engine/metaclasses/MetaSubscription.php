@@ -60,6 +60,6 @@ final class MetaSubscription extends MetaDbObject {
     	return $this->m_dbObject->isActive();
     }
 
-} // class MetaTopic
+} // class MetaSubscription
 
 ?>

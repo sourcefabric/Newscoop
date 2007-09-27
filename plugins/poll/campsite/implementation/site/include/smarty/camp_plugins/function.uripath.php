@@ -22,10 +22,19 @@ function smarty_function_uripath($p_params, &$p_smarty)
 {
     $uriString = '';
     $validParams = array('language','publication','issue','section','article');
-    if (empty($p_params)
-            || in_array(strtolower($p_params['options']), $validParams)) {
-        require_once $p_smarty->_get_plugin_filepath('function', 'uri');
-        $uriString = smarty_function_uri($p_params);
+    if (!empty($p_params['options'])) {
+        $option = strtolower($p_params['options']);
+    }
+
+    if (!isset($p_params['options']) || in_array($option, $validParams)) {
+        $context = $p_smarty->get_template_vars('campsite');
+        if (!is_object($context->url)) {
+            return null;
+        }
+        // sets the URL parameter option
+        $context->url->uri_parameter = $option;
+        // gets the URI path
+        $uriString = $context->url->uri_path;
     }
 
     return $uriString;

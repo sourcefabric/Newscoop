@@ -9,36 +9,36 @@
  * @link http://www.campware.org
  */
 
-define(URLTYPE_SHORT_NAMES, 1);
-define(URLTYPE_TEMPLATE_PATH, 2);
+define('URLTYPE_TEMPLATE_PATH', 1);
+define('URLTYPE_SHORT_NAMES', 2);
 
 /**
  * Class CampURI
  */
-class CampURI {
+abstract class CampURI {
     /**
      * The URI type
      * It can be either:
-     * Short Names = 1
-     * Template Path = 2
+     * Template Path = 1
+     * Short Names = 2
      *
      * @var integer
      */
-    private $m_type = null;
+    protected $m_type = null;
 
     /**
      * The URI value
      *
      * @var string
      */
-    private $m_uri = null;
+    protected $m_uri = null;
 
     /**
      * The URI parts
      *
      * @var array
      */
-    private $m_parts = array(
+    protected $m_parts = array(
                             'scheme',
                             'user',
                             'password',
@@ -52,42 +52,42 @@ class CampURI {
     /**
      * @var string
      */
-    private $m_scheme = null;
+    protected $m_scheme = null;
 
     /**
      * @var string
      */
-    private $m_host = null;
+    protected $m_host = null;
 
     /**
      * @var int
      */
-    private $m_port = null;
+    protected $m_port = null;
 
     /**
      * @var string
      */
-    private $m_user = null;
+    protected $m_user = null;
 
     /**
      * @var string
      */
-    private $m_password = null;
+    protected $m_password = null;
 
     /**
      * @var string
      */
-    private $m_path = null;
+    protected $m_path = null;
 
     /**
      * @var string
      */
-    private $m_query = null;
+    protected $m_query = null;
 
     /**
      * @var string
      */
-    private $m_fragment = null;
+    protected $m_fragment = null;
 
     /**
      * @var array
@@ -138,6 +138,49 @@ class CampURI {
 
 
     /**
+     * Returns the URI string based on given URL parameter.
+     *
+     * @param string $p_param
+     *      The URL parameter
+     *
+     * @return string
+     *      The URI string requested
+     */
+    abstract public function getURI($p_param = null);
+
+    /**
+     * Returns the URI path based on given URL parameter.
+     *
+     * @param string $p_param
+     *      The URL parameter
+     *
+     * @return string
+     *      The URI path string requested
+     */
+    abstract public function getURIPath($p_param = null);
+
+    /**
+     * Returns the URI query parameters based on given URL parameter.
+     *
+     * @param string $p_param
+     *
+     * @return string
+     *      The URI query string requested
+     */
+    abstract public function getURLParameters($p_param = null);
+
+    /**
+     * Returns the URL parameter name.
+     *
+     * @param string $p_paramKey
+     *      The parameter key
+     *
+     * @return string
+     *      The actual parameter name
+     */
+    abstract public function getParameterName($p_paramKey);
+
+    /**
      * Parses the given URI.
      *
      * @param string $p_uri
@@ -186,7 +229,7 @@ class CampURI {
      * @return string $uriString
      *      The rendered URI
      */
-    protected function render($p_parts = array())
+    protected function render(array $p_parts = array())
     {
         if (empty($p_parts)) {
             $p_parts = $this->m_parts;
@@ -242,18 +285,6 @@ class CampURI {
                             );
         return $url;
     } // fn getURL
-
-
-    /**
-     * Gets the full URI.
-     *
-     * @return string $m_uri
-     *      The URI string
-     */
-    public function getURI()
-    {
-        return $this->m_uri;
-    } // fn getURI
 
 
     /**
@@ -595,7 +626,7 @@ class CampURI {
      * @return string $queryString
      *      The generated query string
      */
-    protected static function QueryArrayToString($p_queryArray)
+    protected static function QueryArrayToString(array $p_queryArray)
     {
         if (!is_array($p_queryArray) || sizeof($p_queryArray) < 1) {
             return false;

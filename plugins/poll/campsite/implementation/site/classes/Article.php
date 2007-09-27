@@ -83,6 +83,11 @@ class Article extends DatabaseObject {
 
 	var $m_languageName = null;
 
+	private static $s_defaultOrder = array('byPublication'=>'asc',
+                                           'byIssue'=>'desc',
+                                           'bySection'=>'desc',
+                                           'bySectionOrder'=>'asc');
+
 	/**
 	 * Construct by passing in the primary key to access the article in
 	 * the database.
@@ -2066,8 +2071,8 @@ class Article extends DatabaseObject {
 
             // matchAllTopics
             //
-            // SELECT Articles.*, COUNT(*) AS matches 
-            //        FROM Articles 
+            // SELECT Articles.*, COUNT(*) AS matches
+            //        FROM Articles
             //        LEFT JOIN ArticleTopics
             //            ON Articles.Number = ArticleTopics.NrArticle
             //        WHERE ArticleTopics.TopicId IN (5, 9, 11)
@@ -2076,9 +2081,9 @@ class Article extends DatabaseObject {
 
 
             if (strtolower($p_param->getRightOperand()) == 'on') {
-                
+
             } else {
-                
+
             }
 
             $leftOperand = '';
@@ -2102,6 +2107,128 @@ class Article extends DatabaseObject {
 
         return $conditionOperation;
     } // fn ProcessListParameters
+
+
+    /**
+     * Returns a list of Article objects selected based on the given keywords
+     *
+     * @param array $p_keywords
+     * @param array $p_constraints
+     * @param array $p_order
+     * @return array
+     */
+    public static function SearchByKeyword(array $p_keywords,
+                                           array $p_constraints = array(),
+                                           array $p_order = array(),
+                                           $p_start = 0, $p_limit = 0, &$p_count)
+    {
+        global $g_ado_db;
+
+        $selectClauseObj = new SQLSelectClause();
+
+        // set tables and joins between tables
+        $selectClauseObj->setTable('KeywordIndex');
+        $selectClauseObj->addJoin('LEFT JOIN ArticleIndex ON KeywordIndex.Id = ArticleIndex.IdKeyword');
+        $selectClauseObj->addJoin('LEFT JOIN Articles ON ArticleIndex.NrArticle = Articles.Number'
+                                                   . ' AND ArticleIndex.IdPublication = Articles.IdPublication'
+                                                   . ' AND ArticleIndex.IdLanguage = Articles.IdLanguage'
+                                                   . ' AND ArticleIndex.NrIssue = Articles.NrIssue'
+                                                   . ' AND ArticleIndex.NrSection = Articles.NrSection');
+
+        // set search keywords
+        foreach ($p_keywords as $keyword) {
+            $selectClauseObj->addWhere("KeywordIndex.Keyword = '" . $g_ado_db->escape($keyword) . "'");
+        }
+
+        // set other constraints
+        foreach ($p_constraints as $constraint) {
+            $selectClauseObj->addWhere($constraint->getLeftOperand()
+                                       . $constraint->getOperator()->getSymbol('sql')
+                                       . $constraint->getRightOperand());
+        }
+
+        // create the count clause object
+        $countClauseObj = clone $selectClauseObj;
+
+        // set the columns for the select clause
+        $selectClauseObj->addColumn('Articles.Number');
+        $selectClauseObj->addColumn('Articles.IdLanguage');
+
+        // set the order for the select clause
+        $p_order = count($p_order) > 0 ? $p_order : Article::$s_defaultOrder;
+        $order = Article::ProcessListOrder($p_order);
+        foreach ($order as $orderField=>$orderDirection) {
+            $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
+        }
+
+        // sets the LIMIT start and offset values
+        $selectClauseObj->setLimit($p_start, $p_limit);
+
+        // set the column for the count clause
+        $countClauseObj->addColumn('COUNT(*)');
+
+        $selectQuery = $selectClauseObj->buildQuery();
+        $articles = $g_ado_db->GetAll($selectQuery);
+        foreach ($articles as $article) {
+            $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+        }
+        $countQuery = $countClauseObj->buildQuery();
+        $p_count = $g_ado_db->GetOne($countQuery);
+        return $articlesList;
+    }
+
+
+    /**
+     * Processes an order directive coming from template tags.
+     *
+     * @param array $p_order
+     *      The array of order directives
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $field=>$direction) {
+            $dbField = null;
+            switch (strtolower($field)) {
+                case 'bynumber':
+                    $dbField = 'Articles.Number';
+                    break;
+                case 'byname':
+                    $dbField = 'Articles.Name';
+                    break;
+                case 'bydate':
+                case 'bycreationdate':
+                    $dbField = 'Articles.UploadDate';
+                    break;
+                case 'bypublishdate':
+                    $dbField = 'Articles.PublicationDate';
+                    break;
+                case 'bypublication':
+                    $dbField = 'Articles.IdPublication';
+                    break;
+                case 'byissue':
+                    $dbField = 'Articles.NrIssue';
+                    break;
+                case 'bysection':
+                    $dbField = 'Articles.NrSection';
+                    break;
+                case 'bylanguage':
+                    $dbField = 'Articles.IdLanguage';
+                    break;
+                case 'bysectionorder':
+                    $dbField = 'Articles.ArticleOrder';
+                    break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+            }
+            $order[$dbField] = $direction;
+        }
+        return $order;
+    }
 
 } // class Article
 

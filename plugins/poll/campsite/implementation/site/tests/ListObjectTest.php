@@ -22,9 +22,10 @@ class ListObjectSample extends ListObject
 	 * @param int $p_start
 	 * @param int $p_limit
 	 * @param bool $p_hasNextElements
+	 * @param array $p_parameters
 	 * @return array
 	 */
-	protected function CreateList($p_start, $p_limit, &$p_hasNextElements)
+	protected function CreateList($p_start, $p_limit, array $p_parameters, &$p_count)
 	{
 		$objects = array('element 1', 'element 2', 'element 3', 'element 4',
 						 'element 5', 'element 6', 'element 7', 'element 8');
@@ -48,7 +49,7 @@ class ListObjectSample extends ListObject
 		}
 
 		$lastElement = $p_start + $p_limit;
-		$p_hasNextElements = $lastElement < count($objects) && $lastElement != 0;
+		$p_count = count($objects);
 		if ($p_limit > 0) {
 			return array_slice($objects, $p_start, $p_limit);
 		}
@@ -61,7 +62,7 @@ class ListObjectSample extends ListObject
 	 * @param array $p_constraints
 	 * @return array
 	 */
-	protected function ProcessConstraints($p_constraints)
+	protected function ProcessConstraints(array $p_constraints)
 	{
 		return array();
 	}
@@ -69,10 +70,10 @@ class ListObjectSample extends ListObject
 	/**
 	 * Processes order constraints passed in an array.
 	 *
-	 * @param string $p_order
+	 * @param array $p_order
 	 * @return array
 	 */
-	protected function ProcessOrder($p_order)
+	protected function ProcessOrder(array $p_order)
 	{
 		return array();
 	}
@@ -85,7 +86,7 @@ class ListObjectSample extends ListObject
 	 * @param array $p_parameters
 	 * @return array
 	 */
-	protected function ProcessParameters($p_parameters)
+	protected function ProcessParameters(array $p_parameters)
 	{
 		return $p_parameters;
 	}

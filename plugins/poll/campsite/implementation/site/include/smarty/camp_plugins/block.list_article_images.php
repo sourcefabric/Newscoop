@@ -31,17 +31,9 @@ function smarty_block_list_article_images($p_params, $p_content, &$p_smarty, &$p
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 2;
+    	$start = 0;
     	$articleImagesList = new ArticleImagesList($start, $p_params);
-    	$campContext->setCurrentList($articleImagesList);
-    	echo "<p>start: " . $campContext->current_article_images_list->getStart()
-    		. ", length: " . $campContext->current_article_images_list->getLength()
-    		. ", limit: " . $campContext->current_article_images_list->getLimit()
-    		. ", columns: " . $campContext->current_article_images_list->getColumns()
-			. ", has next elements: " . (int)$campContext->current_article_images_list->hasNextElements() . "</p>\n";
-    	echo "<p>name: " . $campContext->current_article_images_list->getName() . "</p>\n";
-    	echo "<p>constraints: " . $campContext->current_article_images_list->getConstraintsString() . "</p>\n";
-    	echo "<p>order: " . $campContext->current_article_images_list->getOrderString() . "</p>\n";
+    	$campContext->setCurrentList($articleImagesList, array('image'));
     }
 
     $currentArticleImage = $campContext->current_article_images_list->defaultIterator()->current();
@@ -51,12 +43,16 @@ function smarty_block_list_article_images($p_params, $p_content, &$p_smarty, &$p
     	return $html;
     } else {
     	$p_repeat = true;
+    	$campContext->image = $currentArticleImage;
     }
 
     if (isset($p_content)) {
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_article_images_list->defaultIterator()->next();
+    		if (!is_null($campContext->current_article_images_list->current)) {
+    		    $campContext->image = $campContext->current_article_images_list->current;
+    		}
     	}
     }
 

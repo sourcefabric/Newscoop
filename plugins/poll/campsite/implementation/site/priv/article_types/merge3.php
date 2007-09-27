@@ -22,8 +22,8 @@ if ($f_action == 'Step1') {
 	camp_html_goto_page("/$ADMIN/article_types/merge.php?f_src=$f_src&f_dest=$f_dest");
 }
 
-$src =& new ArticleType($f_src);
-$dest =& new ArticleType($f_dest);
+$src = new ArticleType($f_src);
+$dest = new ArticleType($f_dest);
 
 $getString = '';
 foreach ($dest->m_dbColumns as $destColumn) {
@@ -62,8 +62,8 @@ $ok = true;
 $errMsgs = array();
 
 foreach ($f_src_c as $destColumn => $srcColumn) {
-	$destATF =& new ArticleTypeField($f_dest, $destColumn);
-	$srcATF =& new ArticleTypeField($f_src, $srcColumn);
+	$destATF = new ArticleTypeField($f_dest, $destColumn);
+	$srcATF = new ArticleTypeField($f_src, $srcColumn);
     $tmp = $srcATF->getType();
     $tmp2 = $destATF->getType();
 
@@ -82,8 +82,7 @@ foreach ($f_src_c as $destColumn => $srcColumn) {
 							getGS('date'), $destATF->getDisplayName());
 		$ok = false;
 	}
-	if ((stristr($srcATF->getType(), 'topic')
-		|| stristr($srcATF->getType(), 'char')
+	if ((stristr($srcATF->getType(), 'char')
 		|| stristr($srcATF->getType(), 'blob')
 		|| stristr($srcATF->getType(), 'date'))
 		&& stristr($destATF->getType(), 'topic')) {
@@ -107,11 +106,12 @@ if ($ok && $f_action == 'Merge') {
     	$f_delete = Input::get('f_delete', 'int', 0);
         if ($f_delete) {
     	   // delete the source TODO
-            $at =& new ArticleType($f_src);
+            $at = new ArticleType($f_src);
             $at->delete();
         }
 
         camp_html_goto_page("/$ADMIN/article_types/");
+        exit(0);
     }
 }
 
@@ -147,8 +147,8 @@ if ($ok) {
     if ($ok) {
         $numberOfTranslations = count($rows);
         $firstLanguage = $rows[0]['IdLanguage'];
-        $curPreview =& new Article($firstLanguage, $f_cur_preview);
-        $articleCreator =& new User($curPreview->getCreatorId());
+        $curPreview = new Article($firstLanguage, $f_cur_preview);
+        $articleCreator = new User($curPreview->getCreatorId());
         $articleData = $dest->getPreviewArticleData();
         $dbColumns = $articleData->getUserDefinedColumns(1);
         $srcArticleData = $curPreview->getArticleData();
@@ -204,13 +204,13 @@ if ($ok) {
         			<LI><FONT COLOR="GREEN"><?php putGS("Merge $1 into $2", "<b>".$srcColumn."</b>", "<b>". $destColumn ."</b>"); ?></FONT></LI>
         			<?php
         		}
-        	} ?>
+        	}
 
-        	<?php
-        	// do the warning if they select NONE in red
+        	// display the warning in red if the user select NONE
         	foreach ($src->m_dbColumns as $srcColumn) {
-        		if (!in_array($srcColumn->getPrintName(), $f_src_c))
+        		if (array_search($srcColumn->getPrintName(), $f_src_c) === false) {
         			?><LI><FONT COLOR="RED"><?php putGS("(!) Do NOT merge $1", "<B>". $srcColumn->getPrintName() ."</B>"); ?> <?php putGS("(No merge warning.)"); ?></FONT></LI><?php
+        		}
         	} ?>
         	</UL>
         	</TD>
@@ -365,8 +365,8 @@ if ($ok) {
         					<span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;">
         					<?php
         					if ($f_prev_action == 'Orig')
-        					   echo htmlspecialchars($srcArticleData->getProperty($dbColumn->getName()));
-        					else if ($srcArticleData->getProperty($f_src_c[$dbColumn->getPrintName()]) != 'NULL')
+        					    echo htmlspecialchars($srcArticleData->getProperty($dbColumn->getName()));
+        					elseif ($srcArticleData->getProperty('F'.$f_src_c[$dbColumn->getPrintName()]) != 'NULL')
             					echo htmlspecialchars($srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]));
                             else
                                 echo '';
@@ -400,8 +400,8 @@ if ($ok) {
         				if (isset($imageMatches[1][0])) {
         					foreach ($imageMatches[1] as $templateId) {
         						// Get the image URL
-        						$articleImage =& new ArticleImage($srcArticleData->getProperty('NrArticle'), null, $templateId);
-        						$image =& new Image($articleImage->getImageId());
+        						$articleImage = new ArticleImage($srcArticleData->getProperty('NrArticle'), null, $templateId);
+        						$image = new Image($articleImage->getImageId());
         						$imageUrl = $image->getImageUrl();
         						$text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" id="'.$templateId.'" ', $text);
         					}

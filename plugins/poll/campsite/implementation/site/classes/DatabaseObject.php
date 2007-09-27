@@ -462,7 +462,7 @@ class DatabaseObject {
 	{
 		global $g_ado_db;
 
-        if (!in_array($p_dbColumnName, $this->m_columnNames)
+        if (in_array($p_dbColumnName, $this->m_columnNames) === false
                 && !array_key_exists($p_dbColumnName, $this->m_data)) {
             throw new InvalidPropertyException(get_class($this), $p_dbColumnName);
         }
