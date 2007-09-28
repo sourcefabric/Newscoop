@@ -23,7 +23,7 @@ final class MetaPollAnswer extends MetaDbObject {
 		if (!is_null($this->m_properties)) {
 			return;
 		}
-		$this->m_properties['poll_nr'] = 'poll_nr';
+		$this->m_properties['poll_nr'] = 'fk_poll_nr';
 		$this->m_properties['language_id'] = 'fk_language_id';
 		$this->m_properties['nr_answer'] = 'nr_answer';
 		$this->m_properties['answer'] = 'answer';
@@ -41,8 +41,21 @@ final class MetaPollAnswer extends MetaDbObject {
 		$this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['getpollanswers'] = 'getPollAnswers';
+        $this->m_customProperties['identifier'] = 'getIdentifier';
+        $this->m_customProperties['form_radio'] = 'formRadio';
     } // fn __construct
-
+    
+    public function getIdentifier()
+    {
+        $id = $this->language_id.'_'.$this->poll_nr.'_'.$this->nr_answer;
+        return $id;     
+    }
+    
+    public function formRadio()
+    {   
+        $id = $this->getIdentifier();
+        return "<INPUT TYPE=\"radio\" name=\"poll_answer[$id]\" />";   
+    }
 } // class MetaPoll
 
 ?>

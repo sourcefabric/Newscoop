@@ -4,44 +4,46 @@
 </head>
 <body>
 
-
+{{*
 <h3>issues list</h3>
 
 {{ list_issues }}
 <li>Issue: <b>{{ $campsite->current_issues_list->current->name }}</b>
 
 
-  {{*
-  <ul>Sections:
+  <ul>
   {{ list_sections }}
     <li>
       Section: <b>{{ $campsite->current_sections_list->current->name }}</b>
       
       {{ list_articles }}
-        {{ if !$campsite->current_articles_list->end }}
+ 
           <li>
-            Article: <b>{{ $campsite->current_articles_list->current->name}}</b>
+            Article: <b>{{ $campsite->current_articles_list->currenty}}</b>
           </li>
-        {{ /if }}
+   
       {{ /list_articles }}
     </li>
     {{ /list_sections }}
   </ul>
-  *}}
+
   
 </li>
 
 {{ /list_issues }}
+*}}
 
-
-
+<hr>
+<h4> Start-Parameters:</h4>
 Language: {{ $campsite->language->number }}<br>
 Publication: {{ $campsite->publication->identifier }}<br>
 Issue: {{ $campsite->issue->number }}<br>
 Section: {{ $campsite->section->number }}<br>
 Article: {{ $campsite->article->number }}<br>
-     
-{{ list_polls name="polls_list" length="5" item=$smarty.get.poll_item language="default" order="DESC" debug=1}}
+
+<hr>
+<h4>Poll-List</h4>     
+{{ list_polls name="polls_list" length="5" item=$smarty.get.poll_item language="default" order="DESC" debug=0 }}
    <li>poll: <b>{{ $campsite->current_polls_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
    list index: <b>{{ $campsite->current_polls_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
    column: <b>{{ $campsite->current_polls_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
@@ -49,14 +51,53 @@ Article: {{ $campsite->article->number }}<br>
    <a href="?poll_nr={{ $campsite->current_polls_list->current->number }}&amp;poll_language_id={{ $campsite->current_polls_list->current->language_id }}">display</a>
 {{ /list_polls }}
 <br>
-total count: {{ $campsite->current_polls_list->count }}
+total count: {{ $campsite->current_polls_list->countxxx }}
 
-<p>
+<hr>
 
-{{ if $campsite->poll->defined() }}
+{{ if $campsite->poll->in_time }}
+    {{$campsite->poll->register_voting }}
+
+    <h3>Poll Form</h3>
+    
+    <form name="poll_{{ $campsite->poll->identifier }}">
+        {{ $campsite->poll->form_hidden }}
+        
+        Title: {{ $campsite->poll->title }}<br>
+        Question: {{ $campsite->poll->question }}<br>
+        <br>
+        
+        {{ if $campsite->poll->votable }}
+        {{ list_poll_answers }}
+            {{ $campsite->current_pollanswers_list->current->form_radio }}
+            
+            {{* 
+            like:
+            <input type="radio" name="{{ $campsite->current_pollanswers_list->current->identifier }}" >
+            *}}
+            {{ $campsite->current_pollanswers_list->current->answer }}<br>
+        {{ /list_poll_answers }}
+    
+        <input type="submit">
+        <p>
+        {{ /if }}
+        
+        {{ list_poll_answers }}
+            {{ $campsite->current_pollanswers_list->current->nr_answer }}:
+            {{ strip }}
+            <img src="/css/mainbarlinks.png" width="1" height="10" />
+            <img src="/css/mainbar.png" width="{{ $campsite->current_pollanswers_list->current->percentage }}" height="10px"/>
+            <img src="/css/mainbarrechts.png" width="1" height="10" />
+            {{ /strip }}
+            ({{ $campsite->current_pollanswers_list->current->nr_of_votes }}/{{ $campsite->poll->nr_of_votes }} Votes, {{ $campsite->current_pollanswers_list->current->percentage }}%)
+            <br>
+        {{ /list_poll_answers }}
+    </form>
+    <hr>
+    
     <table cellspacing="1" cellpadding="4">
     <tr>
-      <td bgcolor="#6a6a6a"><font color="#ffffff">Poll</font></td>
+      <td bgcolor="#6a6a6a"><font color="#ffffff">Poll Data</font></td>
     </tr>
     </table>
     <table cellspacing="1" cellpadding="4">
@@ -99,7 +140,7 @@ total count: {{ $campsite->current_polls_list->count }}
     <tr>
       <td bgcolor="#9cf0ff" nowrap valign="top">Begin:</td>
       <td bgcolor="#9cf0ff" valign="top">
-        {{ $campsite->poll->date_begin }}
+        {{ $campsite->poll->date_begin|date_format }}
       </td>
       <td nowrap valign="top">{{ literal }}{{ $campsite->poll->date_begin }}{{ /literal }}</td>
       <td nowrap valign="top">base</td>
@@ -107,7 +148,7 @@ total count: {{ $campsite->current_polls_list->count }}
     <tr>
       <td bgcolor="#9cf0ff" nowrap valign="top">End:</td>
       <td bgcolor="#9cf0ff" valign="top">
-        {{ $campsite->poll->date_end }}
+        {{ $campsite->poll->date_end|date_format }}
       </td>
       <td nowrap valign="top">{{ literal }}{{ $campsite->poll->date_end }}{{ /literal }}</td>
       <td nowrap valign="top">base</td>
@@ -169,12 +210,6 @@ total count: {{ $campsite->current_polls_list->count }}
       <td nowrap valign="top">custom</td>
     </tr>
     </table>
-    
-    
-    <h2>Poll Answers</h2>
-    {{ list_poll_answers }}
-        {{ $campsite->current_pollanswers_list->current->answer }}
-    {{ /list_poll_answers }}
     
 {{ /if }}
     
