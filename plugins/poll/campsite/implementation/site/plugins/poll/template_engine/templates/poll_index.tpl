@@ -43,7 +43,7 @@ Article: {{ $campsite->article->number }}<br>
 
 <hr>
 <h4>Poll-List</h4>     
-{{ list_polls name="polls_list" length="5" item=$smarty.get.poll_item language="default" order="DESC" debug=0 }}
+{{ list_polls name="polls_list" length="5" item=$smarty.get.poll_item language="default" order="bybegin DESCS" constraints="number greater 1" }}
    <li>poll: <b>{{ $campsite->current_polls_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>,
    list index: <b>{{ $campsite->current_polls_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
    column: <b>{{ $campsite->current_polls_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
@@ -51,7 +51,7 @@ Article: {{ $campsite->article->number }}<br>
    <a href="?poll_nr={{ $campsite->current_polls_list->current->number }}&amp;poll_language_id={{ $campsite->current_polls_list->current->language_id }}">display</a>
 {{ /list_polls }}
 <br>
-total count: {{ $campsite->current_polls_list->countxxx }}
+total count: {{ $campsite->current_polls_list->count }}
 
 <hr>
 

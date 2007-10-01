@@ -473,6 +473,8 @@ class Poll extends DatabaseObject {
         if (!is_array($p_parameters)) {
             return null;
         }
+        
+        $selectClauseObj = new SQLSelectClause();
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
@@ -482,33 +484,32 @@ class Poll extends DatabaseObject {
             }
             if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
                 $publication_id = $comparisonOperation['right'];
-            }
-            if (strpos($comparisonOperation['left'], 'IdLanguage') !== false) {
+            } elseif (strpos($comparisonOperation['left'], 'IdLanguage') !== false) {
                 $language_id = $comparisonOperation['right'];
-            }
-            if (strpos($comparisonOperation['left'], 'NrIssue') !== false) {
+            } elseif (strpos($comparisonOperation['left'], 'NrIssue') !== false) {
                 $issue_nr = $comparisonOperation['right'];
-            }
-            if (strpos($comparisonOperation['left'], 'NrSection') !== false) {
+            } elseif (strpos($comparisonOperation['left'], 'NrSection') !== false) {
                 $section_nr = $comparisonOperation['right'];
-            }
-            if (strpos($comparisonOperation['left'], 'NrArticle') !== false) {
+            } elseif (strpos($comparisonOperation['left'], 'NrArticle') !== false) {
                 $article_nr = $comparisonOperation['right'];
+            } else {
+                $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+                $selectClauseObj->addWhere($whereCondition);
             }
         }
-        
-        $sqlClauseObj = new SQLSelectClause();
         
         // sets the columns to be fetched
         $tmpPoll = new Poll();
 		$columnNames = $tmpPoll->getColumnNames(true);
         foreach ($columnNames as $columnName) {
-            $sqlClauseObj->addColumn($columnName);
+            $selectClauseObj->addColumn($columnName);
         }
 
         // sets the main table for the query
         $mainTblName = $tmpPoll->getDbTableName();
-        $sqlClauseObj->setTable($mainTblName);
+        $selectClauseObj->setTable($mainTblName);
         unset($tmpPoll);
         
         switch ($p_item) {
@@ -519,7 +520,7 @@ class Poll extends DatabaseObject {
                 $tmpAssignObj =& new PollPublication();
                 $assignTblName = $tmpAssignObj->getDbTableName();
                 
-                $sqlClauseObj->addJoin(
+                $selectClauseObj->addJoin(
                     "LEFT JOIN $assignTblName AS j 
                     ON 
                     j.fk_poll_nr = $mainTblName.poll_nr 
@@ -537,7 +538,7 @@ class Poll extends DatabaseObject {
                 $tmpAssignObj =& new PollIssue();
                 $assignTblName = $tmpAssignObj->getDbTableName();
                 
-                $sqlClauseObj->addJoin(
+                $selectClauseObj->addJoin(
                     "LEFT JOIN $assignTblName AS j 
                     ON 
                     j.fk_poll_nr = $mainTblName.poll_nr 
@@ -547,7 +548,7 @@ class Poll extends DatabaseObject {
                     AND j.fk_publication_id = $publication_id"
                 
                 );
-                $sqlClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
+                $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
             break;  
             
             case 'section':
@@ -558,7 +559,7 @@ class Poll extends DatabaseObject {
                 $tmpAssignObj =& new PollSection();
                 $assignTblName = $tmpAssignObj->getDbTableName();
                 
-                $sqlClauseObj->addJoin(
+                $selectClauseObj->addJoin(
                     "LEFT JOIN $assignTblName AS j 
                     ON 
                     j.fk_poll_nr = $mainTblName.poll_nr 
@@ -571,7 +572,7 @@ class Poll extends DatabaseObject {
                     AND j.fk_publication_id = $publication_id"
                 
                 );
-                $sqlClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
+                $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
             break;
             
             case 'article':
@@ -582,7 +583,7 @@ class Poll extends DatabaseObject {
                 $tmpAssignObj =& new PollArticle();
                 $assignTblName = $tmpAssignObj->getDbTableName();
                 
-                $sqlClauseObj->addJoin(
+                $selectClauseObj->addJoin(
                     "LEFT JOIN $assignTblName AS j 
                     ON 
                     j.fk_poll_nr = $mainTblName.poll_nr 
@@ -591,33 +592,32 @@ class Poll extends DatabaseObject {
                     AND j.fk_article_nr = $article_nr 
                     AND j.fk_article_language_id = $language_id"                
                 );
-                $sqlClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
+                $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
             break;        
             
             default:
-                $sqlClauseObj->addWhere('1');
+                $selectClauseObj->addWhere('1');
             break;
         }
         
-        if (!is_array($p_order)) {
-            $p_order = array();
-        }
-
-        // sets the order condition if any
-        foreach ($p_order as $orderColumn => $orderDirection) {
-            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        if (is_array($p_order)) {
+            $order = Poll::ProcessListOrder($p_order);
+            // sets the order condition if any
+            foreach ($order as $orderField=>$orderDirection) {
+                $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
+            }
         }
 
         /*
         // sets the limit
-        $sqlClauseObj->setLimit($p_start, $p_limit);
+        $selectClauseObj->setLimit($p_start, $p_limit);
 
         // builds the query and executes it
-        $sqlQuery = $sqlClauseObj->buildQuery();
+        $sqlQuery = $selectClauseObj->buildQuery();
         $polls = $g_ado_db->GetAll($sqlQuery);
         */
         
-        $sqlQuery = $sqlClauseObj->buildQuery();
+        $sqlQuery = $selectClauseObj->buildQuery();
         
         // count all available results
         $countRes = $g_ado_db->Execute($sqlQuery);
@@ -651,56 +651,7 @@ class Poll extends DatabaseObject {
     {
         $comparisonOperation = array();
 
-        switch (strtolower($p_param->getLeftOperand())) {
-        case 'year':
-        case 'publish_year':
-            $comparisonOperation['left'] = 'YEAR(PublicationDate)';
-            break;
-        case 'mon_nr':
-        case 'publish_month':
-            $comparisonOperation['left'] = 'MONTH(PublicationDate)';
-            break;
-        case 'mday':
-        case 'publish_mday':
-            $comparisonOperation['left'] = 'DAYOFMONTH(PublicationDate)';
-            break;
-        case 'yday':
-            $comparisonOperation['left'] = 'DAYOFYEAR(PublicationDate)';
-            break;
-        case 'hour':
-            $comparisonOperation['left'] = 'HOUR(PublicationDate)';
-            break;
-        case 'min':
-            $comparisonOperation['left'] = 'MINUTE(PublicationDate)';
-            break;
-        case 'sec':
-            $comparisonOperation['left'] = 'SECOND(PublicationDate)';
-            break;
-        case 'name':
-            $comparisonOperation['left'] = 'Name';
-            break;
-        case 'number':
-            $comparisonOperation['left'] = 'Number';
-            break;
-        case 'publicationdate':
-            $comparisonOperation['left'] = 'PublicationDate';
-            break;
-        case 'idpublication':
-            $comparisonOperation['left'] = 'IdPublication';
-            break;
-        case 'idlanguage':
-            $comparisonOperation['left'] = 'IdLanguage';
-            break;
-        case 'nrissue':
-            $comparisonOperation['left'] = 'NrIssue';
-            break;
-        case 'nrsection':
-            $comparisonOperation['left'] = 'NrSection';
-            break;
-        case 'nrarticle':
-            $comparisonOperation['left'] = 'NrArticle';
-            break;
-        }
+        $comparisonOperation['left'] = PollsList::$s_parameters[strtolower($p_param->getLeftOperand())]['field'];
 
         if (isset($comparisonOperation['left'])) {
             $operatorObj = $p_param->getOperator();
@@ -710,7 +661,46 @@ class Poll extends DatabaseObject {
 
         return $comparisonOperation;
     } // fn ProcessListParameters
-    
+
+    /**
+     * Processes an order directive coming from template tags.
+     *
+     * @param array $p_order
+     *      The array of order directives
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $field=>$direction) {
+            $dbField = null;
+            switch (strtolower($field)) {
+                case 'bynumber':
+                    $dbField = 'poll_nr';
+                    break;
+                case 'byname':
+                    $dbField = 'title';
+                    break;
+                case 'bybegin':
+                    $dbField = 'date_begin';
+                    break;
+                case 'byend':
+                    $dbField = 'date_end';
+                    break;
+                case 'byvotes':
+                    $dbField = 'nr_of_votes';
+                    break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+            }
+            $order[$dbField] = $direction;
+        }
+        return $order;
+    }
+
 } // class Poll
 
 ?>

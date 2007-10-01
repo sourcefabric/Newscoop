@@ -7,6 +7,39 @@
 class PollsList extends ListObject 
 {                                 
     private $m_item;
+    
+    public static $s_parameters = array('number'=>array('field'=>'poll_nr', 'type'=>'integer'),
+                                         'name'=>array('field'=>'title', 'type'=>'string'),
+                                         'begin'=>array('field'=>'date_begin',
+                                                               'type'=>'date'),
+                                         'begin_year'=>array('field'=>'YEAR(date_begin)',
+                                                               'type'=>'integer'),
+                                         'begin_month'=>array('field'=>'MONTH(date_begin)',
+                                                                'type'=>'integer'),
+                                         'begin_mday'=>array('field'=>'DAYOFMONTH(date_begin)',
+                                                               'type'=>'integer'),
+                                         'end'=>array('field'=>'date_end',
+                                                               'type'=>'date'),
+                                         'end_year'=>array('field'=>'YEAR(date_end)',
+                                                               'type'=>'integer'),
+                                         'end_month'=>array('field'=>'MONTH(date_end)',
+                                                                'type'=>'integer'),
+                                         'end_mday'=>array('field'=>'DAYOFMONTH(date_end)',
+                                                               'type'=>'integer'),
+                                         'IdPublication'=>array('field'=>'IdPublication', 'type'=>'integer'),
+                                         'NrIssue'=>array('field'=>'NrIssue', 'type'=>'integer'),
+                                         'NrSection'=>array('field'=>'NrSection', 'type'=>'integer'),
+                                         'NrArticle'=>array('field'=>'NrArticle', 'type'=>'integer'),
+                                         'IdLanguage'=>array('field'=>'IdLanguage', 'type'=>'integer')
+                                   );
+                                   
+    private static $s_orderFields = array(
+                                      'bynumber',
+                                      'byname',
+                                      'bybegin',
+                                      'byend',
+                                      'byvotes'
+                                );
                                    
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
@@ -39,7 +72,7 @@ class PollsList extends ListObject
 	                                                   $context->article->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
-	    $pollsList = Poll::GetList($this->m_constraints, $this->m_item, $this->m_orderStr, $p_start, $p_limit, $p_count);
+	    $pollsList = Poll::GetList($this->m_constraints, $this->m_item, $this->m_order, $p_start, $p_limit, $p_count);
         $metaPollsList = array();
 	    foreach ($pollsList as $poll) {
 	        $metaPollsList[] = new MetaPoll($poll->getLanguageId(), $poll->getNumber());
@@ -65,31 +98,38 @@ class PollsList extends ListObject
 	    $operator = null;
 	    $value = null;
 	    foreach ($p_constraints as $word) {
-	        if ($state == 1) {
+	        switch ($state) {
+	            case 1: // reading the parameter name
 	                if (!array_key_exists($word, PollsList::$s_parameters)) {
 	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_polls, constraints parameter");
+	                    break;
 	                }
 	                $attribute = $word;
 	                $state = 2;
-	        }
-	        if ($state == 2) {
-	                $type = PollsList::$s_parameters[$attribute];
+	                break;
+	            case 2: // reading the operator
+	                $type = PollsList::$s_parameters[$attribute]['type'];
 	                try {
 	                    $operator = new Operator($word, $type);
 	                }
 	                catch (InvalidOperatorException $e) {
 	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_polls, constraints parameter");
-	                    $state = 1;
-	                    break;
 	                }
 	                $state = 3;
-	        }
-	        
-	        if ($state == 3) {
-	                $value = $word;
-	                $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
-	                $parameters[] = $comparisonOperation;
+	                break;
+	            case 3: // reading the value to compare against
+	                $type = PollsList::$s_parameters[$attribute]['type'];
+	                $metaClassName = 'Meta'.strtoupper($type[0]).strtolower(substr($type, 1));
+	                try {
+	                    $value = new $metaClassName($word);
+    	                $value = $word;
+       	                $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
+    	                $parameters[] = $comparisonOperation;
+	                } catch (InvalidValueException $e) {
+	                    CampTemplate::singleton()->trigger_error("invalid value $word of attribute $attribute in list_polls, constraints parameter");
+	                }
 	                $state = 1;
+	                break;
 	        }
 	    }
 	    if ($state != 1) {
@@ -102,15 +142,42 @@ class PollsList extends ListObject
 	/**
 	 * Processes order constraints passed in an array.
 	 *
-	 * @param string $p_order
+	 * @param array $p_order
 	 * @return array
 	 */
 	protected function ProcessOrder(array $p_order)
 	{
-	    if (!is_array($p_constraints)) {
+	    if (!is_array($p_order)) {
 	        return null;
 	    }
-		return array();
+
+	    $order = array();
+	    $state = 1;
+	    foreach ($p_order as $word) {
+	        switch ($state) {
+                case 1: // reading the order field
+	                if (!array_search(strtolower($word), PollsList::$s_orderFields)) {
+	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_polls, order parameter");
+	                } else {
+    	                $orderField = $word;
+	                }
+	                $state = 2;
+	                break;
+                case 2: // reading the order direction
+                    if (MetaOrder::IsValid($word)) {
+                        $order[$orderField] = $word;
+                    } else {
+                        CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_polls, order parameter");
+                    }
+                    $state = 1;
+	                break;
+	        }
+	    }
+	    if ($state != 1) {
+            CampTemplate::singleton()->trigger_error("unexpected end of order parameter in list_polls");
+	    }
+
+	    return $order;
 	}
 
 	/**
