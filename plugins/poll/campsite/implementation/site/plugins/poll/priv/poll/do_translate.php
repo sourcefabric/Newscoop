@@ -1,7 +1,4 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$PLUGIN_DIR/poll/classes/Poll.php");
-
 // Check permissions
 if (!$g_user->hasPermission('ManagePoll')) {
     camp_html_display_error(getGS('You do not have the right to manage polls.'));

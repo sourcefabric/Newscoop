@@ -1,8 +1,6 @@
 <?php
-
 /**
- * PollAnswersList class
- *
+ * @package Campsite
  */
 class PollAnswersList extends ListObject 
 {                                 

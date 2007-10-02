@@ -2,24 +2,6 @@
 /**
  * @package Campsite
  */
-
-/**
- * Includes
- */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot.'/classes/DatabaseObject.php');
-require_once($g_documentRoot.'/classes/DbObjectArray.php');
-require_once($g_documentRoot.'/classes/Log.php');
-require_once($g_documentRoot.'/classes/Language.php');
-
-/**
- * @package Campsite
- */
 class Poll extends DatabaseObject {
     /**
      * The column names used for the primary key.
@@ -230,9 +212,7 @@ class Poll extends DatabaseObject {
      * @return boolean
      */
     public function delete()
-    {
-        require_once ('PollAnswer.php');
-        
+    {       
         // Delete from mod_poll_answer table
         PollAnswer::OnPollDelete($this->m_data['poll_nr'], $this->m_data['fk_language_id']);
 
@@ -355,16 +335,12 @@ class Poll extends DatabaseObject {
         
     public function getAnswer($p_nr_answer)
     {
-        require_once ('PollAnswer.php');
-        
         $answer = new PollAnswer($this->m_data['fk_language_id'], $this->m_data['poll_nr'], $p_nr_answer);
         return $answer;   
     }
     
     public function getAnswers()
     {
-        require_once ('PollAnswer.php');
-        
         return PollAnswer::getAnswers($this->m_data['poll_nr'], $this->m_data['fk_language_id']);   
     }
     
@@ -390,8 +366,6 @@ class Poll extends DatabaseObject {
     
     public function getLanguageName()
     {
-        require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php'); 
-        
         $language = new Language($this->m_data['fk_language_id']);
         
         return $language->getName(); 
@@ -511,6 +485,10 @@ class Poll extends DatabaseObject {
         $mainTblName = $tmpPoll->getDbTableName();
         $selectClauseObj->setTable($mainTblName);
         unset($tmpPoll);
+        
+        // set constraints which ever have to care of
+        $selectClauseObj->addWhere('date_begin <= CURDATE()');
+        $selectClauseObj->addWhere("(date_end >= CURDATE() OR is_show_after_expiration = '1')");
         
         switch ($p_item) {
             case 'publication':

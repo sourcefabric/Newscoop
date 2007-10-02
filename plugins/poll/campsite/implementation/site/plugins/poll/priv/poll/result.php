@@ -1,7 +1,4 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$PLUGIN_DIR/poll/classes/Poll.php");
-
 // Check permissions
 if (!$g_user->hasPermission('ManagePoll')) {
     camp_html_display_error(getGS('You do not have the right to manage polls.'));
@@ -53,7 +50,7 @@ foreach ($display as $translation) {
             <th><?php p($translation->getProperty('title')); ?> (<?php p($translation->getLanguageName()); ?>)</th>
             <td align="CENTER"><?php p($translation->getProperty('nr_of_votes')); ?> / <?php p($translation->getProperty('nr_of_votes_overall')); ?></th>
             <td align="LEFT">
-                <img src="/admin/modules/icon/mainbarlinks.png" width="1" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbar.png" width="<?php p($translation->getProperty('percentage_of_votes_overall')); ?>" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbarrechts.png" width="1" height="9" class="IMG_norm">
+                <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbarlinks.png" width="1" height="9" class="IMG_norm"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbar.png" width="<?php p($translation->getProperty('percentage_of_votes_overall')); ?>" height="9" class="IMG_norm"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbarrechts.png" width="1" height="9" class="IMG_norm">
                 <?php printf($format, $translation->getProperty('percentage_of_votes_overall')); ?>%
             </th>
             <th> </th>
@@ -71,11 +68,11 @@ foreach ($display as $translation) {
               <td width="400"><?php p($answer->getProperty('answer')); ?></td>
               <td width="50" ALIGN="center"><?php p($answer->getProperty('nr_of_votes')); ?></td>
               <td width="200">
-                <img src="/admin/modules/icon/mainbarlinks.png" width="1" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbar.png" width="<?php p($answer->getProperty('percentage')); ?>" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbarrechts.png" width="1" height="9" class="IMG_norm">
+                <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbarlinks.png" width="1" height="9" class="IMG_norm"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbar.png" width="<?php p($answer->getProperty('percentage')); ?>" height="9" class="IMG_norm"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbarrechts.png" width="1" height="9" class="IMG_norm">
                 <?php printf($format, $answer->getProperty('percentage')); ?>%
               </td>
               <td width="200">
-                <img src="/admin/modules/icon/mainbarlinks.png" width="1" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbar.png" width="<?php p($answer->getProperty('percentage_overall')); ?>" height="9" class="IMG_norm"><img src="/admin/modules/icon/mainbarrechts.png" width="1" height="9" class="IMG_norm">
+                <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbarlinks.png" width="1" height="9" class="IMG_norm"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbar.png" width="<?php p($answer->getProperty('percentage_overall')); ?>" height="9" class="IMG_norm"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbarrechts.png" width="1" height="9" class="IMG_norm">
                 <?php printf($format, $answer->getProperty('percentage_overall')); ?>%
               </td>
             </tr>

@@ -1,8 +1,6 @@
 <?php
-
 /**
- * PollsList class
- *
+ *  @package Campsite
  */
 class PollsList extends ListObject 
 {                                 
@@ -24,6 +22,7 @@ class PollsList extends ListObject
                                         'assign_issue_nr' => array('field' => 'assign_issue_nr', 'type' => 'integer'),
                                         'assign_section_nr' => array('field' => 'assign_section_nr', 'type' => 'integer'),
                                         'assign_article_nr' => array('field' => 'assign_article_nr', 'type' => 'integer'),
+                                        'votable' => array('field' => 'is_votable', 'type' => 'boolean'),
                                );
                                    
     private static $s_orderFields = array(
