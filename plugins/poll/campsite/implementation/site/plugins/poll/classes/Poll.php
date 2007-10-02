@@ -482,15 +482,15 @@ class Poll extends DatabaseObject {
             if (empty($comparisonOperation)) {
                 continue;
             }
-            if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
+            if (strpos($comparisonOperation['left'], 'assign_publication_id') !== false) {
                 $publication_id = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'IdLanguage') !== false) {
+            } elseif (strpos($comparisonOperation['left'], 'assign_language_id') !== false) {
                 $language_id = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'NrIssue') !== false) {
+            } elseif (strpos($comparisonOperation['left'], 'assign_issue_nr') !== false) {
                 $issue_nr = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'NrSection') !== false) {
+            } elseif (strpos($comparisonOperation['left'], 'assign_section_nr') !== false) {
                 $section_nr = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'NrArticle') !== false) {
+            } elseif (strpos($comparisonOperation['left'], 'assign_article_nr') !== false) {
                 $article_nr = $comparisonOperation['right'];
             } else {
                 $whereCondition = $comparisonOperation['left'] . ' '

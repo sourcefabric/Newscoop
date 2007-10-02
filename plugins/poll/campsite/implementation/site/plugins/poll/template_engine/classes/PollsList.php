@@ -26,11 +26,11 @@ class PollsList extends ListObject
                                                                 'type'=>'integer'),
                                          'end_mday'=>array('field'=>'DAYOFMONTH(date_end)',
                                                                'type'=>'integer'),
-                                         'IdPublication'=>array('field'=>'IdPublication', 'type'=>'integer'),
-                                         'NrIssue'=>array('field'=>'NrIssue', 'type'=>'integer'),
-                                         'NrSection'=>array('field'=>'NrSection', 'type'=>'integer'),
-                                         'NrArticle'=>array('field'=>'NrArticle', 'type'=>'integer'),
-                                         'IdLanguage'=>array('field'=>'IdLanguage', 'type'=>'integer')
+                                         'assign_language_id'=>array('field'=>'assign_language_id', 'type'=>'integer'),
+                                         'assign_publication_id'=>array('field'=>'assign_publication_id', 'type'=>'integer'),
+                                         'assign_issue_nr'=>array('field'=>'assign_issue_nr', 'type'=>'integer'),
+                                         'assign_section_nr'=>array('field'=>'assign_section_nr', 'type'=>'integer'),
+                                         'assign_article_nr'=>array('field'=>'assign_article_nr', 'type'=>'integer'),
                                    );
                                    
     private static $s_orderFields = array(
@@ -56,19 +56,19 @@ class PollsList extends ListObject
 	{
 	    $operator = new Operator('is');
 	    $context = CampTemplate::singleton()->context();
-	    $comparisonOperation = new ComparisonOperation('IdPublication', $operator,
+	    $comparisonOperation = new ComparisonOperation('assign_publication_id', $operator,
 	                                                   $context->publication->identifier);
 	    $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
+	    $comparisonOperation = new ComparisonOperation('assign_language_id', $operator,
 	                                                   $context->language->number);
 	    $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('NrIssue', $operator,
+	    $comparisonOperation = new ComparisonOperation('assign_issue_nr', $operator,
 	                                                   $context->issue->number);
 	    $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('NrSection', $operator,
+	    $comparisonOperation = new ComparisonOperation('assign_section_nr', $operator,
 	                                                   $context->section->number);
 	    $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('NrArticle', $operator,
+	    $comparisonOperation = new ComparisonOperation('assign_article_nr', $operator,
 	                                                   $context->article->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
