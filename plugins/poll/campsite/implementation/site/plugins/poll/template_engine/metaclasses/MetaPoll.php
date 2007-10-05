@@ -72,52 +72,18 @@ final class MetaPoll extends MetaDbObject {
     
     public function formHidden()
     {
-        $id = $this->getIdentifier();
-        $html = "<INPUT TYPE=\"hidden\" NAME=\"poll_id\" VALUE=\"$id\" />\n";
+        $language_id = $this->m_dbObject->getProperty('fk_language_id');
+        $poll_nr = $this->m_dbObject->getProperty('poll_nr');
+        
+        $html .= "<INPUT TYPE=\"hidden\" NAME=\"IdLanguage\" VALUE=\"$language_id\" />\n";
+        $html .= "<INPUT TYPE=\"hidden\" NAME=\"poll_nr\" VALUE=\"$poll_nr\" />\n";
+        
         return $html;   
     }
     
     public function isVotable()
     {
-        if ($this->date_begin > strtotime(date('Y-m-d'))) {
-            return false;   
-        }
-        if ($this->date_end < strtotime(date('Y-m-d')) + 60*60*24) {
-            return false;   
-        }
-        if ($this->single && !empty($_SESSION['poll_'.$this->getIdentifier()])) {
-            return false;   
-        }
-        
-        return true;   
-    }
-    
-    public function setUserHasVoted()
-    {
-        $_SESSION['poll_'.$this->getIdentifier()] = true;       
-    }
-    
-    public function registerVoting()
-    {      
-        $answers = Input::Get('poll_answer', 'array');
-        
-        if (count($answers)) {
-            foreach ($answers as $id => $v) {
-                list ($language_id, $poll_nr, $nr_answer) = explode('_', $id);
-                
-                if ($language_id == $this->language_id && $poll_nr == $this->number) {
-                    
-                    if ($this->isVotable()) {
-                        $pollAnswer =& new PollAnswer($language_id, $poll_nr, $nr_answer);
-                        
-                        if ($pollAnswer->exists()) {
-                            $pollAnswer->vote();
-                            $this->setUserHasVoted();
-                        } 
-                    }
-                }
-            }
-        }
+        return $this->m_dbObject->isVotable();   
     }
 
 } // class MetaPoll

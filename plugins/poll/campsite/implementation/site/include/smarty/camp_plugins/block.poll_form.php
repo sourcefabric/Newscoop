@@ -1,0 +1,1 @@
+../../../plugins/poll/include/smarty/camp_plugins/block.poll_form.php

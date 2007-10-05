@@ -17,7 +17,6 @@ class PollsList extends ListObject
                                         'end_year' => array('field' => 'YEAR(date_end)', 'type' => 'integer'),
                                         'end_month' => array('field' => 'MONTH(date_end)', 'type' => 'integer'),
                                         'end_mday' => array('field' => 'DAYOFMONTH(date_end)', 'type' => 'integer'),
-                                        'assign_language_id' => array('field' => 'assign_language_id', 'type' => 'integer'),
                                         'assign_publication_id' => array('field' => 'assign_publication_id', 'type' => 'integer'),
                                         'assign_issue_nr' => array('field' => 'assign_issue_nr', 'type' => 'integer'),
                                         'assign_section_nr' => array('field' => 'assign_section_nr', 'type' => 'integer'),
@@ -48,11 +47,12 @@ class PollsList extends ListObject
 	{
 	    $operator = new Operator('is');
 	    $context = CampTemplate::singleton()->context();
+	    
+	    $comparisonOperation = new ComparisonOperation('language_id', $operator,
+	                                                   $context->language->number);
+	    $this->m_constraints[] = $comparisonOperation;                                                
 	    $comparisonOperation = new ComparisonOperation('assign_publication_id', $operator,
 	                                                   $context->publication->identifier);
-	    $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('assign_language_id', $operator,
-	                                                   $context->language->number);
 	    $this->m_constraints[] = $comparisonOperation;
 	    $comparisonOperation = new ComparisonOperation('assign_issue_nr', $operator,
 	                                                   $context->issue->number);

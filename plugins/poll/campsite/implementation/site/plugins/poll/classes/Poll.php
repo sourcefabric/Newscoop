@@ -456,16 +456,17 @@ class Poll extends DatabaseObject {
             if (empty($comparisonOperation)) {
                 continue;
             }
-            if (strpos($comparisonOperation['left'], 'assign_publication_id') !== false) {
-                $publication_id = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'assign_language_id') !== false) {
+            
+            if (strpos($comparisonOperation['left'], 'language_id') !== false) {
                 $language_id = $comparisonOperation['right'];
+            } elseif (strpos($comparisonOperation['left'], 'assign_publication_id') !== false) {
+                $assign_publication_id = $comparisonOperation['right'];
             } elseif (strpos($comparisonOperation['left'], 'assign_issue_nr') !== false) {
-                $issue_nr = $comparisonOperation['right'];
+                $assign_issue_nr = $comparisonOperation['right'];
             } elseif (strpos($comparisonOperation['left'], 'assign_section_nr') !== false) {
-                $section_nr = $comparisonOperation['right'];
+                $assign_section_nr = $comparisonOperation['right'];
             } elseif (strpos($comparisonOperation['left'], 'assign_article_nr') !== false) {
-                $article_nr = $comparisonOperation['right'];
+                $assign_article_nr = $comparisonOperation['right'];
             } else {
                 $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
@@ -487,12 +488,13 @@ class Poll extends DatabaseObject {
         unset($tmpPoll);
         
         // set constraints which ever have to care of
-        $selectClauseObj->addWhere('date_begin <= CURDATE()');
-        $selectClauseObj->addWhere("(date_end >= CURDATE() OR is_show_after_expiration = '1')");
+        $selectClauseObj->addWhere("$mainTblName.fk_language_id = $language_id");
+        $selectClauseObj->addWhere("$mainTblName.date_begin <= CURDATE()");
+        $selectClauseObj->addWhere("($mainTblName.date_end >= CURDATE() OR $mainTblName.is_show_after_expiration = '1')");
         
         switch ($p_item) {
             case 'publication':
-                if (empty($publication_id) || empty($language_id)) {
+                if (empty($assign_publication_id) || empty($language_id)) {
                     return;   
                 }
                 $tmpAssignObj =& new PollPublication();
@@ -504,12 +506,12 @@ class Poll extends DatabaseObject {
                     j.fk_poll_nr = $mainTblName.poll_nr 
                     AND j.fk_poll_language_id = $mainTblName.fk_language_id
                     AND j.fk_poll_language_id = $language_id
-                    AND j.fk_publication_id = $publication_id"
+                    AND j.fk_publication_id = $assign_publication_id"
                 );
             break;
             
             case 'issue':
-                if (empty($language_id) || empty($publication_id) || empty($issue_nr)) {
+                if (empty($language_id) || empty($assign_publication_id) || empty($assign_issue_nr)) {
                     return;   
                 }
                 
@@ -521,16 +523,16 @@ class Poll extends DatabaseObject {
                     ON 
                     j.fk_poll_nr = $mainTblName.poll_nr 
                     AND j.fk_poll_language_id = $mainTblName.fk_language_id
-                    AND j.fk_issue_nr = $issue_nr 
+                    AND j.fk_issue_nr = $assign_issue_nr 
                     AND j.fk_issue_language_id = $language_id
-                    AND j.fk_publication_id = $publication_id"
+                    AND j.fk_publication_id = $assign_publication_id"
                 
                 );
                 $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
             break;  
             
             case 'section':
-                if (empty($language_id) || empty($publication_id) || empty($issue_nr) || empty($section_nr)) {
+                if (empty($language_id) || empty($assign_publication_id) || empty($assign_issue_nr) || empty($assign_section_nr)) {
                     return;   
                 }
                 
@@ -543,18 +545,18 @@ class Poll extends DatabaseObject {
                     j.fk_poll_nr = $mainTblName.poll_nr 
                     AND j.fk_poll_language_id = $mainTblName.fk_language_id
 
-                    AND j.fk_section_nr = $section_nr 
+                    AND j.fk_section_nr = $assign_section_nr 
                     AND j.fk_section_language_id = $language_id
                     
-                    AND j.fk_issue_nr = $issue_nr 
-                    AND j.fk_publication_id = $publication_id"
+                    AND j.fk_issue_nr = $assign_issue_nr 
+                    AND j.fk_publication_id = $assign_publication_id"
                 
                 );
                 $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
             break;
             
             case 'article':
-                if (empty($language_id) || empty($publication_id) || empty($issue_nr) || empty($section_nr) || empty($article_nr)) {
+                if (empty($language_id) || empty($article_nr)) {
                     return;   
                 }
                 
@@ -567,14 +569,14 @@ class Poll extends DatabaseObject {
                     j.fk_poll_nr = $mainTblName.poll_nr 
                     AND j.fk_poll_language_id = $mainTblName.fk_language_id
 
-                    AND j.fk_article_nr = $article_nr 
+                    AND j.fk_article_nr = $assign_article_nr 
                     AND j.fk_article_language_id = $language_id"                
                 );
                 $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
             break;        
             
             default:
-                $selectClauseObj->addWhere('1');
+                //$selectClauseObj->addWhere('1');
             break;
         }
         
@@ -677,6 +679,55 @@ class Poll extends DatabaseObject {
             $order[$dbField] = $direction;
         }
         return $order;
+    }
+    
+    public static function setUserHasVoted($p_language_id, $p_poll_nr)
+    {
+        $_SESSION['poll_'.$p_language_id.'_'.$p_poll_nr] = true;       
+    }
+    
+    public static function hasUserVoted($p_language_id, $p_poll_nr)
+    {
+        if (array_key_exists('poll_'.$p_language_id.'_'.$p_poll_nr, $_SESSION)) {
+            return true;   
+        }
+        return false;
+    }
+    
+    public static function registerVoting()
+    {      
+        $answers = Input::Get('poll_answer', 'array');
+        
+        if (count($answers)) {
+            foreach ($answers as $id => $v) {
+                list ($language_id, $poll_nr, $nr_answer) = explode('_', $id);
+                $poll =& new Poll($language_id, $poll_nr);
+                                   
+                if ($poll->isVotable()) {
+                    $pollAnswer =& new PollAnswer($language_id, $poll_nr, $nr_answer);
+                    
+                    if ($pollAnswer->exists()) {
+                        $pollAnswer->vote();
+                        Poll::setUserHasVoted($language_id, $poll_nr);
+                    } 
+                }
+            }
+        }
+    }
+    
+    public function isVotable()
+    {
+        if (strtotime($this->m_data['date_begin']) > strtotime(date('Y-m-d'))) {
+            return false;   
+        }
+        if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d')) + 60*60*24) {
+            return false;   
+        }
+        if ($this->m_data['single'] && !Poll::hasUserVotes()) {
+            return false;   
+        }
+        
+        return true;   
     }
 
 } // class Poll

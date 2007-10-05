@@ -95,6 +95,8 @@ $context->section = new MetaSection(6, 1, 1, 1);
 $context->article = new MetaArticle(1, 143);
 
 // Poll object
+Poll::registerVoting();
+
 $poll_nr = Input::Get('poll_nr', 'int');
 $poll_language_id = Input::Get('poll_language_id' ,'int');
 $context->poll = new MetaPoll($poll_language_id, $poll_nr);
