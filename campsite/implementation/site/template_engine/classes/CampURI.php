@@ -169,16 +169,6 @@ abstract class CampURI {
      */
     abstract public function getURLParameters($p_param = null);
 
-    /**
-     * Returns the URL parameter name.
-     *
-     * @param string $p_paramKey
-     *      The parameter key
-     *
-     * @return string
-     *      The actual parameter name
-     */
-    abstract public function getParameterName($p_paramKey);
 
     /**
      * Parses the given URI.
@@ -501,6 +491,7 @@ abstract class CampURI {
     public function setQueryVar($p_varName, $p_value, $p_toString = true)
     {
         $this->m_queryArray[$p_varName] = $p_value;
+        CampRequest::SetVar($p_varName, $p_value);
         if ($p_toString == true) {
             $this->m_query = CampURI::QueryArrayToString($this->m_queryArray);
         }

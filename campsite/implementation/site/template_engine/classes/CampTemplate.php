@@ -1,25 +1,32 @@
 <?php
 /**
  * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @author Mugur Rus <mugur.rus@gmail.com>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
  */
 
 /**
  * Includes
+ *
+ * We indirectly reference the DOCUMENT_ROOT so we can enable
+ * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
+ * is not defined in these cases.
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/include/smarty/Smarty.class.php');
 
 
 /**
- * @package Campsite
+ * Class CampTemplate
  */
 final class CampTemplate extends Smarty
 {
-
     /**
      * Holds instance of the class.
      *
@@ -40,7 +47,7 @@ final class CampTemplate extends Smarty
     {
         parent::Smarty();
 
-        $config = CampSite::GetConfig();
+        $config = CampSite::GetConfigInstance();
 
         $this->caching = $config->getSetting('smarty.caching');
         $this->debugging = $config->getSetting('smarty.debugging');
@@ -55,7 +62,7 @@ final class CampTemplate extends Smarty
         $this->config_dir = CS_PATH_SMARTY.DIR_SEP.'configs';
         $this->plugins_dir = array(CS_PATH_SMARTY.DIR_SEP.'camp_plugins',
                                    CS_PATH_SMARTY.DIR_SEP.'plugins');
-        $this->template_dir = CS_PATH_SMARTY_TEMPLATES.DIR_SEP.$config->getSetting('site.theme');
+        $this->template_dir = CS_PATH_SMARTY_TEMPLATES;
         $this->compile_dir = CS_PATH_SMARTY.DIR_SEP.'templates_c';
     } // fn __constructor
 
@@ -64,7 +71,7 @@ final class CampTemplate extends Smarty
      * Singleton function that returns the global class object.
      *
      * @return object
-     *    CampCache
+     *    CampTemplate
      */
     public static function singleton()
     {
@@ -87,7 +94,7 @@ final class CampTemplate extends Smarty
     		$this->m_context = new CampContext();
     	}
     	return $this->m_context;
-    }
+    } // fn context
 
 
     /**
@@ -95,6 +102,7 @@ final class CampTemplate extends Smarty
      *
      * @param string $p_message
      * @param object $p_smarty
+     *
      * @return void
      */
     public function trigger_error($p_message, $p_smarty = null)
@@ -104,7 +112,7 @@ final class CampTemplate extends Smarty
     	} else {
     		trigger_error("Campsite error: $p_message");
     	}
-    }
+    } // fn trigger_error
 
 } // class CampTemplate
 
