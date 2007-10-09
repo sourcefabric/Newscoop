@@ -1,6 +1,12 @@
 <?php
 /**
  * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
  */
 
 define('ACTIVE', 1);
@@ -8,9 +14,10 @@ define('EXPIRED', 2);
 define('DESTROYED', 3);
 
 /**
- * @package Campsite
+ * Class CampSession
  */
-final class CampSession {
+final class CampSession
+{
     /**
      * Holds instance of the class
      *

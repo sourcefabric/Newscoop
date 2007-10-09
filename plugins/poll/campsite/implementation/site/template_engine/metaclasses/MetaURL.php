@@ -35,7 +35,7 @@ final class MetaURL
 
     public function __construct()
     {
-        $this->m_uriObj = CampSite::GetURI();
+        $this->m_uriObj = CampSite::GetURIInstance();
 
         $this->m_customProperties['uri'] = 'getURI';
         $this->m_customProperties['uri_path'] = 'getURIPath';

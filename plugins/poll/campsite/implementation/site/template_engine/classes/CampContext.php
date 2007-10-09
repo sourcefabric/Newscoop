@@ -1,24 +1,32 @@
 <?php
 /**
  * @package Campsite
+ *
+ * @author Mugur Rus <mugur.rus@gmail.com>
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
  */
-
 
 /**
  * Includes
+ *
+ * We indirectly reference the DOCUMENT_ROOT so we can enable
+ * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
+ * is not defined in these cases.
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/template_engine/include/constants.php');
 
 
 /**
- * definition of CampContext class
+ * Class CampContext
  */
-final class CampContext {
+final class CampContext
+{
 	// Defines the object types
     private $m_objectTypes = array('publication'=>'Publication',
 								   'issue'=>'Issue',
@@ -67,16 +75,18 @@ final class CampContext {
     // Stores the context properties.
     private $m_properties = null;
 
-    // Stores the readonly properties; the users can't modify them directly.
+    // Stores the readonly properties; the users can't modify them directly
     private $m_readonlyProperties = null;
 
     // Stores a given list of properties at the beginning of each list block
     private $m_savedProperties = array();
 
+    // Stores the current context at the beginning of each local block
+    private $m_savedContext = array();
+
 
     /**
-     * constructor
-     *
+     * Class constructor
      */
     final public function __construct()
     {
@@ -199,7 +209,18 @@ final class CampContext {
 					&& array_key_exists($p_property, $this->m_properties))
     			|| (is_array($this->m_readonlyProperties)
 					&& array_key_exists($p_property, $this->m_readonlyProperties));
-    }
+    } // fn hasProperty
+
+
+    /**
+     * Returns true if the given object exists.
+     *
+     * @param string $p_object
+     */
+    public function hasObject($p_object)
+    {
+    	return array_key_exists($p_object, $this->m_objectTypes);
+    } // fn hasObject
 
 
     /**
@@ -219,7 +240,7 @@ final class CampContext {
             return '';
         }
         return strtolower(substr($p_listClassName, 0, ($nameLength - 4)));
-    }
+    } // fn GetListObjectName
 
 
     /**
@@ -246,6 +267,8 @@ final class CampContext {
      * Saves a given list of properties
      *
      * @param array $p_propertiesList
+     *
+     * @return void
      */
     private function SaveProperties(array $p_propertiesList)
     {
@@ -257,12 +280,11 @@ final class CampContext {
             $savedProperties[$propertyName] = $this->$propertyName;
         }
         array_push($this->m_savedProperties, $savedProperties);
-    }
+    } // fn SaveProperties
 
 
     /**
      * Restores the last list of properties from the stack
-     *
      */
     private function RestoreProperties()
     {
@@ -273,7 +295,42 @@ final class CampContext {
         foreach ($savedProperties as $propertyName=>$propertyValue) {
             $this->$propertyName = $propertyValue;
         }
-    }
+    } // fn RestoreProperties
+
+
+    /**
+     * Saves the current context objects.
+     *
+     * @param array $p_objectsList
+     *
+     * @return void
+     */
+    public function saveCurrentContext($p_objectsList = array())
+    {
+        $savedContext = array();
+        foreach ($p_objectsList as $objectName) {
+            if (!$this->hasObject($objectName)) {
+                continue;
+            }
+            $savedContext[$objectName] = $this->$objectName;
+        }
+        array_push($this->m_savedContext, $savedContext);
+    } // fn saveCurrentContext
+
+
+    /**
+     * Restores the global context.
+     */
+    public function restoreContext()
+    {
+        if (empty($this->m_savedContext)) {
+            return;
+        }
+        $savedContext = array_pop($this->m_savedContext);
+        foreach ($savedContext as $objectName => $objectValue) {
+            $this->$objectName = $objectValue;
+        }
+    } // fn restoreContext
 
 
     /**
@@ -305,7 +362,7 @@ final class CampContext {
     	$this->m_readonlyProperties['current_list'] =& $p_list;
     	$this->m_readonlyProperties[$listName.'_lists'][] =& $p_list;
     	$this->m_readonlyProperties['current_'.$listName.'_list'] =& $p_list;
-    }
+    } // fn setCurrentList
 
 
     /**
@@ -331,7 +388,7 @@ final class CampContext {
 	        return;
 	    }
        	$this->m_readonlyProperties['current_'.$listName.'_list'] = array_pop($this->m_readonlyProperties[$listName.'_lists']);
-    }
+    } // fn resetCurrentList
 
 
     /**

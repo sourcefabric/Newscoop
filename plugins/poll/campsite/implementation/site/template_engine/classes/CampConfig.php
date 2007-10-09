@@ -1,11 +1,16 @@
 <?php
 /**
  * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
  */
 
-
 /**
- * @package Campsite
+ * Class CampConfig
  */
 final class CampConfig {
     /**
@@ -16,18 +21,18 @@ final class CampConfig {
     private static $m_instance = null;
 
     /**
-     * Loaded configuration settings
+     * Holds configuration settings
      *
      * @var m_config
      */
-    public $m_config = array();
+    private $m_config = array();
 
 
     /**
      * Class constructor
      *
-     * @param string
-     *    p_configFile The full path to the configuration file
+     * @param string $p_configFile
+     *      The full path to the configuration file
      */
     private function __construct($p_configFile = null)
     {
@@ -36,9 +41,8 @@ final class CampConfig {
         if (empty($p_configFile)) {
             $p_configFile = $g_documentRoot.'/template_engine/configuration.php';
         }
-
         if (!file_exists($p_configFile)) {
-            return new PEAR_Error('No such file: '.$p_configFile);
+            header('Location: install/index.php');
         }
 
         require_once($p_configFile);
@@ -49,11 +53,11 @@ final class CampConfig {
     /**
      * Builds an instance object of this class only if there is no one.
      *
-     * @param string
-     *    p_configFile The full path to the configuration file
+     * @param string $p_configFile
+     *      The full path to the configuration file
      *
-     * @return object
-     *    m_instance A CampConfig instance
+     * @return object $m_instance
+     *      The CampConfig instance
      */
     public static function singleton($p_configFile = null)
     {
