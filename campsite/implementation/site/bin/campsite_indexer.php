@@ -374,7 +374,7 @@ if (is_array($GLOBALS['argv']) && !empty($GLOBALS['argv'][1])) {
         exit(0);
     }
 } else {
-    $conf_dir = '/usr/local/campsite_a1335/etc/campsite';
+    $conf_dir = '/usr/local/campsite/etc/campsite';
 }
 
 
