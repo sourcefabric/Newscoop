@@ -2068,7 +2068,9 @@ class Article extends DatabaseObject {
         }
 
         // sets the ORDER BY condition
-        foreach ($p_order as $orderColumn => $orderDirection) {
+        $p_order = count($p_order) > 0 ? $p_order : Article::$s_defaultOrder;
+        $order = Article::ProcessListOrder($p_order);
+        foreach ($order as $orderColumn => $orderDirection) {
             $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
