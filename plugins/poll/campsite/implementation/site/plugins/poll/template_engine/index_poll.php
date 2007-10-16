@@ -108,7 +108,7 @@ $tpl->assign('campsite', $context);
 require_once($_SERVER['DOCUMENT_ROOT'].'/plugins/poll/include/smarty/camp_plugins/block.list_polls.php');
 $tpl->register_block('list_polls', 'smarty_block_list_polls');
 
-set_error_handler('templateErrorHandler');
+#set_error_handler('templateErrorHandler');
 
 try {
 	$tpl->display($_SERVER['DOCUMENT_ROOT'] .'/plugins/poll/template_engine/templates/poll_index.tpl');

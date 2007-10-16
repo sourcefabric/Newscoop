@@ -53,6 +53,13 @@ class Poll extends DatabaseObject {
         // timestamp - last_modified
         'last_modified'
         );
+        
+    /**
+     * This indicates if poll can just voted once
+     *
+     * @var unknown_type
+     */
+    var $m_mode = 'single';
 
     /**
      * Construct by passing in the primary key to access the poll in
@@ -92,6 +99,11 @@ class Poll extends DatabaseObject {
     private function __create($p_values = null) { return parent::create($p_values); }
 
 
+    /**
+     * Generate the next poll number
+     *
+     * @return int
+     */
     protected function generatePollNumber()
     {
         global $g_ado_db;
@@ -288,6 +300,12 @@ class Poll extends DatabaseObject {
     } // fn getTranslations
 
 
+    /**
+     * Construct query to recive polls from database
+     *
+     * @param int $p_fk_language
+     * @return string
+     */
     static private function GetQuery($p_fk_language = null)
     {   
         if (!empty($p_fk_language)) {
@@ -304,6 +322,15 @@ class Poll extends DatabaseObject {
         return $query;
     }
     
+    /**
+     * Get an array of poll objects 
+     * You need to specify the language
+     *
+     * @param unknown_type $p_fk_language_id
+     * @param unknown_type $p_offset
+     * @param unknown_type $p_limit
+     * @return array
+     */
     static public function GetPolls($p_fk_language_id = null, $p_offset = 0, $p_limit = 20)
     {
         global $g_ado_db;
@@ -322,6 +349,11 @@ class Poll extends DatabaseObject {
     }
 
     
+    /**
+     * Get the count for available polls
+     *
+     * @return int
+     */
     public function countPolls()
     {
         global $g_ado_db;;
@@ -333,37 +365,73 @@ class Poll extends DatabaseObject {
     }
     
         
+    /**
+     * Get answer object for this poll by given number
+     *
+     * @param unknown_type $p_nr_answer
+     * @return object
+     */
     public function getAnswer($p_nr_answer)
     {
         $answer = new PollAnswer($this->m_data['fk_language_id'], $this->m_data['poll_nr'], $p_nr_answer);
         return $answer;   
     }
     
+    /**
+     * Get array of answer objects for an poll
+     *
+     * @return array
+     */
     public function getAnswers()
     {
         return PollAnswer::getAnswers($this->m_data['poll_nr'], $this->m_data['fk_language_id']);   
     }
     
+    /**
+     * Get the poll number
+     *
+     * @return int
+     */
     public function getNumber()
     {
         return $this->getProperty('poll_nr');   
     }
     
+    /**
+     * Get the name/title
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->getProperty('title');   
     }
     
+    /**
+     * Get the name/title
+     *
+     * @return string
+     */
     public function getTitle()
     {
         return $this->getProperty('title');   
     }
     
+    /**
+     * Get the language id
+     *
+     * @return int
+     */
     public function getLanguageId()
     {
         return $this->getProperty('fk_language_id');   
     }
     
+    /**
+     * Get the english language name
+     *
+     * @return string
+     */
     public function getLanguageName()
     {
         $language = new Language($this->m_data['fk_language_id']);
@@ -371,6 +439,11 @@ class Poll extends DatabaseObject {
         return $language->getName(); 
     }
     
+    /**
+     * Mark poll as being default translation
+     *
+     * @param unknown_type $p_status
+     */
     public function setAsDefault($p_status)
     {
         if ($p_status == true) {
@@ -381,6 +454,12 @@ class Poll extends DatabaseObject {
         $this->setProperty('is_used_as_default', $p_status);    
     }
     
+    /**
+     * Update the statistic information in database
+     * for all translations and all their answers
+     *
+     * @param int $p_poll_nr
+     */
     public function triggerStatistics($p_poll_nr = null)
     {
         if (!is_null($p_poll_nr)) {
@@ -680,20 +759,63 @@ class Poll extends DatabaseObject {
         }
         return $order;
     }
-    
-    public static function setUserHasVoted($p_language_id, $p_poll_nr)
+       
+    /**
+     * Return if this poll can be voted
+     * (must be in start-end interval, 
+     * and not been voted before by same client)
+     *
+     * @return boolean
+     */
+    public function isVotable()
     {
-        $_SESSION['poll_'.$p_language_id.'_'.$p_poll_nr] = true;       
+        if (strtotime($this->m_data['date_begin']) > strtotime(date('Y-m-d'))) {
+            return false;   
+        }
+        if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d')) + 60*60*24) {
+            return false;   
+        }
+        if ($this->m_mode == 'single' && $this->hasUserVoted()) {
+            return false;   
+        }
+        
+        return true;   
     }
     
-    public static function hasUserVoted($p_language_id, $p_poll_nr)
+    /**
+     * Mark the poll as voted by client
+     *
+     */
+    protected function setUserHasVoted()
     {
-        if (array_key_exists('poll_'.$p_language_id.'_'.$p_poll_nr, $_SESSION)) {
+        $key = 'poll_'.$this->m_data['fk_language_id'].'_'.$this->m_data['poll_nr'];
+        $_SESSION[$key] = true;
+        
+        preg_match('/([0-9a-zA-Z]+\.[a-zA-Z]+)$/', $_SERVER['SERVER_NAME'], $hostname);
+        setcookie($key, 1, time()+60*60*24*365, '/', $hostname[0]);       
+    }
+    
+    /**
+     * Return if client vote this poll already
+     *
+     * @return boolean
+     */
+    protected function hasUserVoted()
+    {
+        $key = 'poll_'.$this->m_data['fk_language_id'].'_'.$this->m_data['poll_nr'];
+        if (array_key_exists($key, $_SESSION)) {
+            return true;   
+        }
+        if (array_key_exists($key, $_COOKIE)) {
             return true;   
         }
         return false;
     }
     
+    /**
+     * Register vote(s) submitted by client
+     *
+     */
     public static function registerVoting()
     {      
         $answers = Input::Get('poll_answer', 'array');
@@ -708,26 +830,11 @@ class Poll extends DatabaseObject {
                     
                     if ($pollAnswer->exists()) {
                         $pollAnswer->vote();
-                        Poll::setUserHasVoted($language_id, $poll_nr);
+                        $poll->setUserHasVoted();
                     } 
                 }
             }
         }
-    }
-    
-    public function isVotable()
-    {
-        if (strtotime($this->m_data['date_begin']) > strtotime(date('Y-m-d'))) {
-            return false;   
-        }
-        if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d')) + 60*60*24) {
-            return false;   
-        }
-        if ($this->m_data['single'] && !Poll::hasUserVotes()) {
-            return false;   
-        }
-        
-        return true;   
     }
 
 } // class Poll

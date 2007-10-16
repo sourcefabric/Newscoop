@@ -44,7 +44,7 @@ class PollAnswer extends DatabaseObject {
      * @param int $p_IdLanguage
      * @param int $p_id
      */
-    function PollAnswer($p_fk_language_id, $p_fk_poll_nr, $p_nr_answer)
+    function PollAnswer($p_fk_language_id = null, $p_fk_poll_nr = null, $p_nr_answer = null)
     {
         parent::DatabaseObject($this->m_columnNames);
         $this->m_data['fk_language_id'] = $p_fk_language_id;

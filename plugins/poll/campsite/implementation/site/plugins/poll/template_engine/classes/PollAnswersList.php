@@ -29,7 +29,7 @@ class PollAnswersList extends ListObject
                                                         $context->poll->language_id);
 	    $this->m_constraints[] = $comparisonOperation;
 
-	    $pollAnswersList = PollAnswer::GetList($this->m_constraints);
+	    $pollAnswersList = PollAnswer::GetList($this->m_constraints, null, $p_count);
         $metaPollAnswersList = array();
 	    foreach ($pollAnswersList as $pollAnswer) {
 	        $metaPollAnswersList[] = new MetaPollAnswer($pollAnswer->getLanguageId(), $pollAnswer->getPollNumber(), $pollAnswer->getNumber());
