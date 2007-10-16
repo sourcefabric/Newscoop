@@ -38,11 +38,17 @@
 
 <h3>articles list</h3>
 {{ list_articles length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
+{{ if $campsite->current_list->at_beginning }}
+<li>count: {{ $campsite->current_list->count }}</li>
+{{ /if }}
 <li>article: <b>{{ $campsite->current_articles_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>/<b>{{ $campsite->article->name }}</b>,
    list index: <b>{{ $campsite->current_articles_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_articles_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current articles list/current list/context)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+{{ /if }}
 {{ /list_articles }}
 
 

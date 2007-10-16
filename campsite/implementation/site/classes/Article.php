@@ -1963,34 +1963,48 @@ class Article extends DatabaseObject {
 
 
     /**
+     * Gets an articles list based on the given parameters.
      *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     * @param integer $p_count
+     *    The total count of the elements; this count is computed without
+     *    applying the start ($p_start) and limit parameters ($p_limit)
+     *
+     * @return array $articlesList
+     *    An array of Article objects
      */
-    public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+    public static function GetList(array $p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
 
-        if (!is_array($p_parameters)) {
-            return null;
-        }
-
         $matchAllTopics = false;
-        $sqlClauseObj = new SQLSelectClause();
         $hasTopics = array();
         $hasNotTopics = array();
+        $selectClauseObj = new SQLSelectClause();
+        $countClauseObj = new SQLSelectClause();
 
         // gets the column list to be retrieved for the database table
-        $sqlClauseObj->addColumn('Articles.*');
+        $selectClauseObj->addColumn('Articles.*');
+        $countClauseObj->addColumn('COUNT(*)');
 
         // sets the name of the table for the this database object
         $tmpArticle = new Article();
-        $sqlClauseObj->setTable($tmpArticle->getDbTableName());
+        $selectClauseObj->setTable($tmpArticle->getDbTableName());
+        $countClauseObj->setTable($tmpArticle->getDbTableName());
         unset($tmpArticle);
 
         // parses the given parameters in order to build the WHERE part of
         // the SQL SELECT sentence
         foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param, $sqlClauseObj);
+            $comparisonOperation = self::ProcessListParameters($param);
             $leftOperand = strtolower($comparisonOperation['left']);
 
             if (array_key_exists($leftOperand, Article::$s_regularParameters)) {
@@ -1999,7 +2013,8 @@ class Article extends DatabaseObject {
                 $whereCondition = $comparisonOperation['left'] . ' '
                     . $comparisonOperation['symbol'] . " '"
                     . $comparisonOperation['right'] . "' ";
-                $sqlClauseObj->addWhere($whereCondition);
+                $selectClauseObj->addWhere($whereCondition);
+                $countClauseObj->addWhere($whereCondition);
             } elseif ($leftOperand == 'matchalltopics') {
                 // set the matchAllTopics flag
                 $matchAllTopics = true;
@@ -2017,7 +2032,8 @@ class Article extends DatabaseObject {
                 $sqlQuery = self::ProcessCustomField($comparisonOperation);
                 if (!is_null($sqlQuery)) {
                     $whereCondition = "Articles.Number in (\n$sqlQuery        )";
-                    $sqlClauseObj->addWhere($whereCondition);
+                    $selectClauseObj->addWhere($whereCondition);
+                    $countClauseObj->addWhere($whereCondition);
                 }
             }
         }
@@ -2030,18 +2046,21 @@ class Article extends DatabaseObject {
                 foreach ($hasTopics as $topicId) {
                     $sqlQuery = Article::BuildTopicSelectClause(array($topicId), $typeAttributes);
                     $whereCondition = "Articles.Number in (\n$sqlQuery        )";
-                    $sqlClauseObj->addWhere($whereCondition);
+                    $selectClauseObj->addWhere($whereCondition);
+                    $countClauseObj->addWhere($whereCondition);
                 }
             } else {
                 $sqlQuery = Article::BuildTopicSelectClause($hasTopics, $typeAttributes);
                 $whereCondition = "Articles.Number in (\n$sqlQuery        )";
-                $sqlClauseObj->addWhere($whereCondition);
+                $selectClauseObj->addWhere($whereCondition);
+                $countClauseObj->addWhere($whereCondition);
             }
         }
         if (count($hasNotTopics) > 0) {
             $sqlQuery = Article::BuildTopicSelectClause($hasNotTopics, $typeAttributes, true);
             $whereCondition = "Articles.Number in (\n$sqlQuery        )";
-            $sqlClauseObj->addWhere($whereCondition);
+            $selectClauseObj->addWhere($whereCondition);
+            $countClauseObj->addWhere($whereCondition);
         }
 
         if (!is_array($p_order)) {
@@ -2050,20 +2069,23 @@ class Article extends DatabaseObject {
 
         // sets the ORDER BY condition
         foreach ($p_order as $orderColumn => $orderDirection) {
-            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
         // sets the LIMIT start and offset values
-        $sqlClauseObj->setLimit($p_start, $p_limit);
+        $selectClauseObj->setLimit($p_start, $p_limit);
 
         // builds the SQL query
-        $sqlQuery = $sqlClauseObj->buildQuery();
+        $selectQuery = $selectClauseObj->buildQuery();
+        $countQuery = $countClauseObj->buildQuery();
 
         // runs the SQL query
-        $articles = $g_ado_db->Execute($sqlQuery);
-        if (!$articles) {
-            return null;
+        $articles = $g_ado_db->GetAll($selectQuery);
+        if (!is_array($articles)) {
+            $p_count = 0;
+            return array();
         }
+        $p_count = $g_ado_db->GetOne($countQuery);
 
         // builds the array of Article objects
         $articlesList = array();
@@ -2109,7 +2131,7 @@ class Article extends DatabaseObject {
     /**
      *
      */
-    private static function ProcessListParameters($p_param, &$p_sqlClause)
+    private static function ProcessListParameters($p_param)
     {
         $conditionOperation = array();
 

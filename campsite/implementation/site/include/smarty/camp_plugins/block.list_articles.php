@@ -31,7 +31,7 @@ function smarty_block_list_articles($p_params, $p_content, &$p_smarty, &$p_repea
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 4;
+    	$start = 0;
     	$articlesList = new ArticlesList($start, $p_params);
     	$campContext->setCurrentList($articlesList, array('article'));
     }

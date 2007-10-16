@@ -493,14 +493,10 @@ class Section extends DatabaseObject {
      * @return array $sectionsList
      *    An array of Section objects
      */
-    public static function GetList($p_parameters, $p_order = null,
+    public static function GetList(array $p_parameters, $p_order = null,
                                    $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
-
-        if (!is_array($p_parameters)) {
-            return null;
-        }
 
         $hasPublicationId = false;
         $hasLanguageId = false;
