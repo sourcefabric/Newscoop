@@ -156,7 +156,7 @@ class ArticlesList extends ListObject
 	    foreach ($p_order as $word) {
 	        switch ($state) {
                 case 1: // reading the order field
-	                if (!array_search(strtolower($word), ArticlesList::$s_orderFields)) {
+	                if (array_search(strtolower($word), ArticlesList::$s_orderFields) === false) {
 	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_articles, order parameter");
 	                } else {
     	                $orderField = $word;
