@@ -86,10 +86,6 @@ class IssuesList extends ListObject
 	 */
 	protected function ProcessConstraints(array $p_constraints)
 	{
-	    if (!is_array($p_constraints)) {
-	        return null;
-	    }
-
 	    $parameters = array();
 	    $state = 1;
 	    $attribute = null;
@@ -145,10 +141,6 @@ class IssuesList extends ListObject
 	 */
 	protected function ProcessOrder(array $p_order)
 	{
-	    if (!is_array($p_order)) {
-	        return null;
-	    }
-
 	    $order = array();
 	    $state = 1;
 	    foreach ($p_order as $word) {

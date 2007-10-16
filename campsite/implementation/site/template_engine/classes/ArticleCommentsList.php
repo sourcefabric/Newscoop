@@ -65,10 +65,6 @@ class ArticleCommentsList extends ListObject
 	 */
 	protected function ProcessOrder(array $p_order)
 	{
-	    if (!is_array($p_order)) {
-	        return null;
-	    }
-
 	    $order = array();
 	    $state = 1;
 	    foreach ($p_order as $word) {

@@ -9,10 +9,10 @@
  * @link http://www.campware.org
  */
 
-define ('SQL', 'SELECT %s FROM %s');
-define ('SQL_WHERE', ' WHERE %s');
-define ('SQL_ORDER_BY', ' ORDER BY %s');
-define ('SQL_LIMIT', ' LIMIT %d, %d');
+define ('SQL', "SELECT %s\nFROM %s");
+define ('SQL_WHERE', "\nWHERE %s");
+define ('SQL_ORDER_BY', "\nORDER BY %s");
+define ('SQL_LIMIT', "\nLIMIT %d, %d");
 
 /**
  * Class SQLSelectClause
@@ -303,7 +303,7 @@ class SQLSelectClause {
      */
     private function buildWhere()
     {
-        return implode(' AND ', $this->m_where);
+        return implode("\n    AND ", $this->m_where);
     } // fn buildWhere
 
 

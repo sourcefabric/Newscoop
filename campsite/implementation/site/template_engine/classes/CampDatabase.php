@@ -48,7 +48,7 @@ final class CampDatabase
     final public function __construct()
     {
         // gets the config object from the main class
-        $config = CampSite::GetConfig();
+        $config = CampSite::GetConfigInstance();
 
         // sets the new connection resource
         $this->m_db = ADONewConnection($config->getSetting('db.type'));

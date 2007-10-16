@@ -38,10 +38,10 @@
 
 <h3>articles list</h3>
 {{ list_articles length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
-<li>article: <b>{{ $campsite->current_articles_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+<li>article: <b>{{ $campsite->current_articles_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>/<b>{{ $campsite->article->name }}</b>,
    list index: <b>{{ $campsite->current_articles_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_articles_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
-   (current articles list/current list)
+   (current articles list/current list/context)
 </li>
 {{ /list_articles }}
 

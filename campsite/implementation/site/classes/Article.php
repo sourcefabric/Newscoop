@@ -88,6 +88,19 @@ class Article extends DatabaseObject {
                                            'bySection'=>'desc',
                                            'bySectionOrder'=>'asc');
 
+    private static $s_regularParameters = array('idpublication'=>'IdPublication',
+                                                'nrissue'=>'NrIssue',
+                                                'nrsection'=>'NrSection',
+                                                'idlanguage'=>'IdLanguage',
+                                                'name'=>'Name',
+                                                'number'=>'Number',
+                                                'upload_date'=>'UploadDate',
+                                                'type'=>'Type',
+                                                'keyword'=>'Keywords',
+                                                'onfrontpage'=>'OnFrontPage',
+                                                'onsection'=>'OnSection',
+                                                'public'=>'Public');
+
 	/**
 	 * Construct by passing in the primary key to access the article in
 	 * the database.
@@ -1961,16 +1974,16 @@ class Article extends DatabaseObject {
             return null;
         }
 
+        $matchAllTopics = false;
         $sqlClauseObj = new SQLSelectClause();
+        $hasTopics = array();
+        $hasNotTopics = array();
 
         // gets the column list to be retrieved for the database table
-        $tmpArticle =& new Article();
-		$columnNames = $tmpArticle->getColumnNames(true);
-        foreach ($columnNames as $columnName) {
-            $sqlClauseObj->addColumn($columnName);
-        }
+        $sqlClauseObj->addColumn('Articles.*');
 
         // sets the name of the table for the this database object
+        $tmpArticle = new Article();
         $sqlClauseObj->setTable($tmpArticle->getDbTableName());
         unset($tmpArticle);
 
@@ -1978,10 +1991,56 @@ class Article extends DatabaseObject {
         // the SQL SELECT sentence
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param, $sqlClauseObj);
+            $leftOperand = strtolower($comparisonOperation['left']);
 
-            $whereCondition = $comparisonOperation['left'] . ' '
-                . $comparisonOperation['symbol'] . " '"
-                . $comparisonOperation['right'] . "' ";
+            if (array_key_exists($leftOperand, Article::$s_regularParameters)) {
+                // regular article field, having a direct correspondent in the
+                // Article table fields
+                $whereCondition = $comparisonOperation['left'] . ' '
+                    . $comparisonOperation['symbol'] . " '"
+                    . $comparisonOperation['right'] . "' ";
+                $sqlClauseObj->addWhere($whereCondition);
+            } elseif ($leftOperand == 'matchalltopics') {
+                // set the matchAllTopics flag
+                $matchAllTopics = true;
+            } elseif ($leftOperand == 'topic') {
+                // add the topic to the list of match/do not match topics depending
+                // on the operator
+                if ($comparisonOperation['symbol'] == '=') {
+                    $hasTopics[] = $comparisonOperation['right'];
+                } else {
+                    $hasNotTopics[] = $comparisonOperation['right'];
+                }
+            } else {
+                // custom article field; has a correspondence in the X[type]
+                // table fields
+                $sqlQuery = self::ProcessCustomField($comparisonOperation);
+                if (!is_null($sqlQuery)) {
+                    $whereCondition = "Articles.Number in (\n$sqlQuery        )";
+                    $sqlClauseObj->addWhere($whereCondition);
+                }
+            }
+        }
+
+        if (count($hasTopics) > 0 || count($hasNotTopics) > 0) {
+            $typeAttributes = ArticleTypeField::FetchFields(null, null, 'topic');
+        }
+        if (count($hasTopics) > 0) {
+            if ($matchAllTopics) {
+                foreach ($hasTopics as $topicId) {
+                    $sqlQuery = Article::BuildTopicSelectClause(array($topicId), $typeAttributes);
+                    $whereCondition = "Articles.Number in (\n$sqlQuery        )";
+                    $sqlClauseObj->addWhere($whereCondition);
+                }
+            } else {
+                $sqlQuery = Article::BuildTopicSelectClause($hasTopics, $typeAttributes);
+                $whereCondition = "Articles.Number in (\n$sqlQuery        )";
+                $sqlClauseObj->addWhere($whereCondition);
+            }
+        }
+        if (count($hasNotTopics) > 0) {
+            $sqlQuery = Article::BuildTopicSelectClause($hasNotTopics, $typeAttributes, true);
+            $whereCondition = "Articles.Number in (\n$sqlQuery        )";
             $sqlClauseObj->addWhere($whereCondition);
         }
 
@@ -2017,6 +2076,36 @@ class Article extends DatabaseObject {
     } // fn GetList
 
 
+    private static function ProcessCustomField(array $p_comparisonOperation)
+    {
+        global $g_ado_db;
+
+        $fieldName = $p_comparisonOperation['left'];
+        $fieldParts = preg_split('/\./', $fieldName);
+        if (count($fieldParts) > 1) {
+            $fieldName = $fieldParts[1];
+            $articleType = $fieldParts[0];
+        } else {
+            $articleType = null;
+        }
+        $fields = ArticleTypeField::FetchFields($fieldName, $articleType);
+        if (count($fields) == 0) {
+            return null;
+        }
+        $queries = array();
+        foreach ($fields as $fieldObj) {
+            $queries[] .= '        SELECT NrArticle FROM ' . $fieldObj->getDbTableName()
+                       . ' WHERE ' . $fieldObj->getName() . ' '
+                       . $p_comparisonOperation['symbol']
+                       . " '" . $g_ado_db->escape($p_comparisonOperation['right']) . "'\n";
+        }
+        if (count($queries) == 0) {
+            return null;
+        }
+        return implode("        union\n", $queries);
+    }
+
+
     /**
      *
      */
@@ -2024,15 +2113,8 @@ class Article extends DatabaseObject {
     {
         $conditionOperation = array();
 
-        switch (strtolower($p_param->getLeftOperand())) {
-        case 'name':
-            $conditionOperation['left'] = 'Name';
-            $conditionOperation['right'] = (string)$p_param->getRightOperand();
-            break;
-        case 'number':
-            $conditionOperation['left'] = 'Number';
-            $conditionOperation['right'] = (int)$p_param->getRightOperand();
-            break;
+        $leftOperand = strtolower($p_param->getLeftOperand());
+        switch ($leftOperand) {
         case 'keyword':
             $conditionOperation['left'] = 'Keywords';
             $conditionOperation['symbol'] = 'LIKE';
@@ -2046,51 +2128,21 @@ class Article extends DatabaseObject {
             $conditionOperation['left'] = 'OnSection';
             $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
             break;
-        case 'upload_date':
-            $conditionOperation['left'] = 'UploadDate';
-            $conditionOperation['right'] = (int)$p_param->getRightOperand();
-            break;
         case 'public':
             $conditionOperation['left'] = 'Public';
             $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
             break;
-        case 'type':
-            $conditionOperation['left'] = 'Type';
-            $conditionOperation['right'] = (string)$p_param->getRightOperand();
-            break;
         case 'matchalltopics':
-            $p_sqlClause->addColumn('COUNT(*) AS matches');
-            $join1 = ' LEFT JOIN ArticleTopics ON Articles.Number = ArticleTopics.NrArticle ';
-            $p_sqlClause->addJoin($join1);
-            $p_sqlClause->addJoin($join2);
-
-            // matchAllTopics
-            //
-            // SELECT Articles.*, COUNT(*) AS matches
-            //        FROM Articles
-            //        LEFT JOIN ArticleTopics
-            //            ON Articles.Number = ArticleTopics.NrArticle
-            //        WHERE ArticleTopics.TopicId IN (5, 9, 11)
-            //        GROUP BY ArticleTopics.NrArticle
-            //        HAVING matches = 3;
-
-
-            if (strtolower($p_param->getRightOperand()) == 'on') {
-
-            } else {
-
-            }
-
-            $leftOperand = '';
-            $rightOperand = '';
+            $conditionOperation['left'] = 'MatchAllTopics';
+            $conditionOperation['symbol'] = '=';
+            $conditionOperation['right'] = 'true';
             break;
         case 'topic':
-            $join1 = ' LEFT JOIN ArticleTopics ON Articles.Number = ArticleTopics.NrArticle ';
-            $join2 = ' LEFT JOIN Topics ON ArticleTopics.TopicId = Topics.Id ';
-            $p_sqlClause->addJoin($join1);
-            $p_sqlClause->addJoin($join2);
-
-            $conditionOperation['left'] = 'Topics.Name';
+            $conditionOperation['left'] = 'Topic';
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
+        default:
+            $conditionOperation['left'] = $leftOperand;
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
             break;
         }
@@ -2102,6 +2154,32 @@ class Article extends DatabaseObject {
 
         return $conditionOperation;
     } // fn ProcessListParameters
+
+
+    /**
+     * Returns a select query for obtaining the articles that have the given topics
+     *
+     * @param array $p_TopicIds
+     * @param array $p_typeAttributes
+     * @param bool $p_negate
+     * @return string
+     */
+    private static function BuildTopicSelectClause(array $p_TopicIds,
+                                                   array $p_typeAttributes,
+                                                   $p_negate = false)
+    {
+        $notCondition = $p_negate ? ' not' : '';
+        $selectClause = '        select NrArticle from ArticleTopics where TopicId'
+                      . "$notCondition in (" . implode(', ', $p_TopicIds) . ")\n";
+        foreach ($p_typeAttributes as $typeAttribute) {
+            $selectClause .= "        union\n"
+                          . "        select NrArticle from "
+                          . $typeAttribute->getDbTableName()
+                          . " where " . $typeAttribute->getName()
+                          . "$notCondition in (" . implode(', ', $p_TopicIds) . ")\n";
+        }
+        return $selectClause;
+    }
 
 
     /**

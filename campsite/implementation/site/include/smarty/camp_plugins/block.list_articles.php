@@ -33,23 +33,16 @@ function smarty_block_list_articles($p_params, $p_content, &$p_smarty, &$p_repea
     if (!isset($p_content)) {
     	$start = 4;
     	$articlesList = new ArticlesList($start, $p_params);
-    	$campContext->setCurrentList($articlesList);
-    	echo "<p>start: " . $campContext->current_articles_list->getStart()
-    		. ", length: " . $campContext->current_articles_list->getLength()
-    		. ", limit: " . $campContext->current_articles_list->getLimit()
-    		. ", columns: " . $campContext->current_articles_list->getColumns()
-			. ", has next elements: " . (int)$campContext->current_articles_list->hasNextElements() . "</p>\n";
-    	echo "<p>name: " . $campContext->current_articles_list->getName() . "</p>\n";
-    	echo "<p>constraints: " . $campContext->current_articles_list->getConstraintsString() . "</p>\n";
-    	echo "<p>order: " . $campContext->current_articles_list->getOrderString() . "</p>\n";
+    	$campContext->setCurrentList($articlesList, array('article'));
     }
 
-    $currentArticle = $campContext->current_articles_list->defaultIterator()->current();
+    $currentArticle = $campContext->current_articles_list->current;
     if (is_null($currentArticle)) {
 	    $p_repeat = false;
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
+        $campContext->article = $currentArticle;
     	$p_repeat = true;
     }
 
@@ -57,6 +50,9 @@ function smarty_block_list_articles($p_params, $p_content, &$p_smarty, &$p_repea
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_articles_list->defaultIterator()->next();
+    		if (!is_null($campContext->current_articles_list->current)) {
+    		    $campContext->article = $campContext->current_articles_list->current;
+    		}
     	}
     }
 

@@ -12,6 +12,7 @@ class SectionsList extends ListObject
     private static $s_parameters = array('number'=>array('field'=>'Number', 'type'=>'integer'),
                                          'name'=>array('field'=>'Name', 'type'=>'string')
                                    );
+
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
 	 * true if this list is limited and elements still exist in the original
@@ -58,10 +59,6 @@ class SectionsList extends ListObject
 	 */
 	protected function ProcessConstraints(array $p_constraints)
 	{
-	    if (!is_array($p_constraints)) {
-	        return null;
-	    }
-
 	    $parameters = array();
 	    $state = 1;
 	    $attribute = null;
