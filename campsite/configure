@@ -94,10 +94,6 @@ display_help()
     echo -e "        document root and cgi directories containing files common to all"
     echo -e "        instances will be installed here."
     echo -e "\nOther:"
-    echo -e "    --parser_start_port [start_port]: the template engine (parser) creates a"
-    echo -e "        network connection in order to listen for template requests. Each"
-    echo -e "        instance will be assigned one network port automatically. This specifies"
-    echo -e "        the first value from which to start assigning ports."
     echo -e "    --read_only: do not make any changes to configuration files"
     echo -e "    --help: print this help and exit"
     exit 0
@@ -132,7 +128,6 @@ while [ "$1" != "" ]; do
     --etc_dir) export ETC_DIR=$2; set_etc_dir=true; shift 1 ;;
     --www_dir) export WWW_DIR=$2; set_www_dir=true; shift 1 ;;
     --www_common_dir) export WWW_COMMON_DIR=$2; set_www_common_dir=true; shift 1 ;;
-    --parser_start_port) export PARSER_START_PORT=$2; shift 1 ;;
     --help) display_help; exit 0 ;;
     *) echo "ERROR: Invalid parameter $1"; echo -n "Usage:"; display_help; exit 1 ;;
     esac
@@ -235,7 +230,6 @@ export MYSQL_H_PATH=$MYSQL_H_PATH
 export LIBCRYPT_LINK=$LIBCRYPT_LINK
 export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
-export PARSER_START_PORT=$PARSER_START_PORT
 export XML_INCLUDE="$XML_INCLUDE"
 export XML_LINK="$XML_LINK"
 export CURL_CFLAGS="$CURL_CFLAGS"
@@ -299,32 +293,6 @@ else
 echo "The file campsite_version.php is up to date."
 fi
 
-campsite_configure_h=${INSTALL_CONF}/configure.h
-if [ ! -f "$campsite_configure_h" ] || [ "$campsite_configure_h" -ot "./make.env" ]; then
-echo -n -e "Writing configure.h header..."
-rm -f "$campsite_configure_h"
-cat > "$campsite_configure_h" << EOF
-/******************************************************************************
-
-    Defines the configuration directory
-
-    WARNING!!! This file is generated. Do not edit!
-
-******************************************************************************/
-
-#ifndef _CONFIGURE_H
-#define _CONFIGURE_H
-
-#define ETC_DIR "$ETC_DIR"
-
-#endif
-EOF
-[ $? -ne 0 ] && echo "ERROR" && exit 1
-echo "done"
-else
-echo "Header file configure.h is up to date."
-fi
-
 for dir in implementation; do
     if [ -x ${dir}/configure ]; then
         echo "Configuring $dir ..."
@@ -366,7 +334,6 @@ export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
 export OLD_CAMPSITE_REGISTER=$OLD_CAMPSITE_REGISTER
 export INSTALL_CONF=$INSTALL_CONF
 export KILLALL=$KILLALL
-export PARSER_START_PORT=$PARSER_START_PORT
 export PHP=$PHP
 export MAKE=$MAKE
 

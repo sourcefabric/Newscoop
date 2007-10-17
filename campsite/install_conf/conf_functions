@@ -351,26 +351,6 @@ return 0
 }
 # END OF prepare_DATABASE_env
 
-# FUNCTION: prepare_PARSER_env
-# Description: prepare the environment for PARSER module
-# Parameters: none
-# Variables set: none
-prepare_PARSER_env()
-{
-in_list PARSER $PREPARED_MOD_ENV && return 0
-echo -n "*** Preparing PARSER environment..."
-check4_gethostbyaddr_r
-[ $? -ne 0 ] && echo "ERROR" && return 1
-check4_gethostbyname_r
-[ $? -ne 0 ] && echo "ERROR" && return 1
-check4_getservbyname_r
-[ $? -ne 0 ] && echo "ERROR" && return 1
-echo "OK"
-add_to_list_var PARSER PREPARED_MOD_ENV
-return 0
-}
-# END OF prepare_PARSER_env
-
 # FUNCTION: prepare_EVENT_HANDLERS_env
 # Description: prepare the environment for EVENT_HANDLERS module
 # Parameters: none
@@ -580,30 +560,6 @@ echo "OK"
 return 0
 }
 # END OF check_DATABASE_config
-
-# FUNCTION: check_PARSER_config
-# Description: check if PARSER module configuration is valid
-# Parameters: none
-# Variables set: none
-check_PARSER_config()
-{
-in_list PARSER $CHECKED_MODULES && return 0
-echo -n "Testing PARSER configuration..."
-acp=""
-if [ "$APACHE_CONF_PATH" != "" ]; then
-    acp="--apache_conf_path $APACHE_CONF_PATH"
-fi
-abp=""
-if [ "$APACHE_BIN_PATH" != "" ]; then
-    abp="--apache_bin_path $APACHE_BIN_PATH"
-fi
-check4_apache $1 $acp $abp
-[ $? -ne 0 ] && return 1
-add_to_list_var PARSER CHECKED_MODULES
-echo "OK"
-return 0
-}
-# END OF check_PARSER_config
 
 # FUNCTION: check_EVENT_HANDLERS_config
 # Description: check if EVENT_HANDLERS configuration is valid
@@ -929,7 +885,6 @@ while true; do
 		    if [ $? -ne 0 ]; then
 			message=$output
 		    fi
-		    modules_conf --reset PARSER
 		fi
 		if [ "$default_option" = "1" ] || [ "$default_option" = "0" ]; then
 		    return 0

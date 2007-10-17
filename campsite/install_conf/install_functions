@@ -24,7 +24,7 @@ install_conf --set
 . "$INSTALL_CONF/../configure" --define_start_env &> /dev/null
 [ $? -ne 0 ] && echo "Error configuring install environment" && exit 1
 
-export MODULES_LIST="DATABASE PARSER EVENT_HANDLERS SEARCH_ENGINE ADMIN_INTERFACE"
+export MODULES_LIST="DATABASE EVENT_HANDLERS SEARCH_ENGINE ADMIN_INTERFACE"
 echo "Please wait while checking modules configuration..."
 for cc_mod in $MODULES_LIST; do
     check_module_deps $cc_mod $cc_interactive
