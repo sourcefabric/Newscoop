@@ -47,7 +47,7 @@ clean:
 	rm -f install_log uninstall_log
 
 distclean: clean
-	rm -f make.env "$(INSTALL_CONF)/campsite_config" "$(INSTALL_CONF)/configure.h" "$(INSTALL_CONF)/campsite_version.php"
+	rm -f make.env "$(INSTALL_CONF)/campsite_config" "$(INSTALL_CONF)/campsite_version.php"
 
 uninstall: dummy
 	"$(INSTALL_CONF)/remove_all_instances" -f

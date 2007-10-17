@@ -155,7 +155,7 @@ CGI_COMMON_DIR=$WWW_COMMON_DIR/cgi-bin
 
 if [ "$c_define_start_env" != "--define_start_env" ]; then
 
-for m in ls gpp curl; do
+for m in ls; do
     check4_$m
     [ $? -ne 0 ] && echo $output && exit 1
 done
@@ -222,24 +222,10 @@ export OLD_CAMPSITE_REGISTER=$OLD_CAMPSITE_REGISTER
 export PROCESSOR_TYPE=\`uname -m\`
 export MAKE=$MAKE
 export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
-export HAVE_GETHOSTBYADDR_R=$HAVE_GETHOSTBYADDR_R
-export HAVE_GETHOSTBYNAME_R=$HAVE_GETHOSTBYNAME_R
-export HAVE_GETSERVBYNAME_R=$HAVE_GETSERVBYNAME_R
-export PTHREAD_LINK=$PTHREAD_LINK
-export MYSQL_H_PATH=$MYSQL_H_PATH
-export LIBCRYPT_LINK=$LIBCRYPT_LINK
-export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
-export XML_INCLUDE="$XML_INCLUDE"
-export XML_LINK="$XML_LINK"
-export CURL_CFLAGS="$CURL_CFLAGS"
-export CURL_LINK="$CURL_LINK"
 export PHP=$PHP
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
-[ "$GPP" != "" ] && echo "export GPP=$GPP" >> $make_env
-[ "$LIBMYSQLCLIENT_PATH" != "" ] && echo "export LIBMYSQLCLIENT_PATH=$LIBMYSQLCLIENT_PATH" >> $make_env
-[ "$LIBPTHREAD_PATH" != "" ] && echo "export LIBPTHREAD_PATH=$LIBPTHREAD_PATH" >> $make_env
 written_modules=""
 for mod in $MODULES_LIST; do
     preconf_mod=`preconf_modules $mod`
@@ -336,4 +322,3 @@ export INSTALL_CONF=$INSTALL_CONF
 export KILLALL=$KILLALL
 export PHP=$PHP
 export MAKE=$MAKE
-

@@ -35,92 +35,10 @@ for cc_mod in $MODULES_LIST; do
 	exit 1
     fi
 done
-for cc_mod in $NEED_CONFIG_MODULES; do
-    prepare_${cc_mod}_env
-    if [ $? -ne 0 ]; then
-	echo "Error preparing environment for $cc_mod module."
-	echo "Please report bug to http://www.campware.org/bugs"
-	echo "Aborting..."
-	exit 1
-    fi
-    check_${cc_mod}_config $cc_interactive || exit 1
-done
-cc_err_msg=""
-while true; do
-    cc_mod_name=`list_item 2 $NEED_CONFIG_MODULES`
-    if [ "$cc_mod_name" = "" ]; then
-	cc_single=true
-    else
-	cc_single=false
-    fi
-    cc_index=1
-    if ! $cc_single; then
-	echo -e "\nThe following list shows modules that are configurable."
-	echo "Modules not shown in this list are not configurable at this stage."
-	echo "Modules checked with X have a valid configuration."
-	all_ok=true
-	for cc_mod in $NEED_CONFIG_MODULES; do
-	    echo -e -n "\t${cc_index}. ["
-	    if in_list $cc_mod $CHECKED_MODULES; then
-		echo -n "X"
-	    else
-		echo -n " "
-		all_ok=false
-	    fi
-	    echo "] $cc_mod"
-	    cc_index=`expr $cc_index + 1`
-	done
-	cc_index=`expr $cc_index - 1`
-	echo -e "\nSelect\n\t1 - Modify these options\n\t0 - Continue to the next step"
-	echo -e -n "$cc_err_msg\nSelect a choice: "
-	read -r choice
-    else
-	choice=1
-    fi
-    if [ "$choice" != "0" ] && [ "$choice" != "1" ]; then
-	cc_err_msg="Invalid choice $choice"
-    else
-	case $choice in
-	1)
-	    if $cc_single; then
-		module_number=1
-	    else
-		read_string module_number
-	    fi
-	    cc_m_nr=$module_number
-	    cc_err_msg=""
-	    if [ $cc_m_nr -gt $cc_index ] || [ 0 -ge $cc_m_nr ]; then
-		cc_err_msg="Invalid module number $module_number"
-	    else
-		cc_mod_name=`list_item $module_number $NEED_CONFIG_MODULES`
-		if [ "$cc_interactive" = "--interactive" ]; then
-		    modules_desc
-		fi
-		configure_module $cc_mod_name check_${cc_mod_name}_config
-		[ "$option" = "0" ] && break;
-	    fi ;;
-	0)
-	    cc_err_msg=""
-	    if $all_ok; then
-		break
-	    else
-		choice_yn "Not all modules are properly configured. Abort?" N
-		[ "$choice" = "Y" ] && echo "Aborting..." && exit 1
-	    fi ;;
-	esac
-    fi
-done
 choice_yn "\nCampsite configuration is completed. Do you want to review it?" Y
 if [ "$choice" = "Y" ]; then
     echo -e "\nInstall configuration"
     install_conf
-    echo ""
-    for cc_mod in $NEED_CONFIG_MODULES; do
-	echo "$cc_mod configuration:"
-	modules_conf $cc_mod
-	[ $? -ne 0 ] && return $?
-	echo -e "\nTo continue press ENTER"
-    done
     read
 fi
 
@@ -158,18 +76,15 @@ read_parameter smtp_server_address 127.0.0.1 "The IP address of the email server
 read_advanced_instance_parameters()
 {
 read_parameter database_server_port 0 "This is the database server listening port - 0 means\nuse default"
-read_parameter template_engine_port 0 "This is the template engine server listening port -\n0 means use default"
-read_parameter template_engine_max_threads 0 "This sets the maximum number of threads for the\ntemplate engine - 0 means use default"
 read_parameter smtp_server_port 25 "This is the email server listening port - default 25"
 read_parameter apache_user "$APACHE_USER" "The owner of instance files; the template engine will run\nwith this user id - default apache user should work ok"
 read_parameter apache_group "$APACHE_GROUP" "The group owner of instance files; the template engine will\nrun with this group id - default apache group should work ok"
 }
 
 args=(--db_server_address --db_user --db_password --smtp_server_address --db_server_port \
-      --parser_port --parser_max_threads --smtp_server_port --apache_user --apache_group)
+      --smtp_server_port --apache_user --apache_group)
 params=(database_server_address database_user database_password smtp_server_address \
-        database_server_port template_engine_port template_engine_max_threads smtp_server_port \
-	apache_user apache_group)
+        database_server_port smtp_server_port apache_user apache_group)
 
 install_default_instance()
 {

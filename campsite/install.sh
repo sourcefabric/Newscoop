@@ -31,25 +31,9 @@ do_configure()
     echo "done"
 }
 
-compile_sources()
-{
-    echo -e "\nSTEP 2"
-    echo -n "Compiling sources (this may take a while, please wait)..."
-    echo -e "###############################################\n\tCompiling sources\n" >> install_log
-    $MAKE all >> install_log 2>&1
-    err_code=$?
-    if [ $err_code -ne 0 ]; then
-	echo "ERROR."
-	echo "Read install_log for more information on compilation error."
-	echo "Please report bug to http://bugs.campware.org"
-	exit 1
-    fi
-    echo "done"
-}
-
 install_campsite()
 {
-    echo -e "\nSTEP 3"
+    echo -e "\nSTEP 2"
     echo -e "Installing Campsite...\n"
     echo -e "\n\n###############################################\n\tInstalling campsite\n" >> install_log
     $MAKE install >> install_log 2>&1
@@ -153,7 +137,6 @@ fi
 echo -e "\nInstalling CAMPSITE $CAMPSITE_VERSION $RELEASE_NAME"
 configure_campsite $do_interactive
 do_configure --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_bin_path"
-compile_sources
 $MAKE test_install &> /dev/null
 if [ $? -ne 0 ] && [ $my_id -ne 0 ] && ! $USER_INSTALL; then
     echo -e "\nYou need administrative rights in order to install Campsite."
