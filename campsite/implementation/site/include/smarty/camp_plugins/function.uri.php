@@ -19,7 +19,8 @@
 function smarty_function_uri($p_params, &$p_smarty)
 {
     $uriString = '';
-    $validParams = array('language','publication','issue','section','article');
+    $validParams = array('language','publication','issue','section',
+                         'article','articleattachment','image');
     if (!empty($p_params['options'])) {
         $option = strtolower($p_params['options']);
     }
