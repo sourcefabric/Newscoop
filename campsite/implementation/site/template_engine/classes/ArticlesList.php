@@ -11,30 +11,23 @@ class ArticlesList extends ListObject
 {
     private static $s_parameters = array('number'=>array('field'=>'Number', 'type'=>'integer'),
                                          'name'=>array('field'=>'Name', 'type'=>'string'),
-                                         'publish_date'=>array('field'=>'PublicationDate',
-                                                               'type'=>'date'),
-                                         'publish_year'=>array('field'=>'YEAR(PublicationDate)',
-                                                               'type'=>'integer'),
-                                         'publish_month'=>array('field'=>'MONTH(PublicationDate)',
-                                                                'type'=>'integer'),
-                                         'publish_mday'=>array('field'=>'DAYOFMONTH(PublicationDate)',
-                                                               'type'=>'integer'),
-                                         'year'=>array('field'=>'YEAR(PublicationDate)',
-                                                   'type'=>'integer'),
-                                         'mon_nr'=>array('field'=>'MONTH(PublicationDate)',
-                                                   'type'=>'integer'),
-                                         'mday'=>array('field'=>'DAYOFMONTH(PublicationDate)',
-                                                   'type'=>'integer'),
-                                         'yday'=>array('field'=>'DAYOFYEAR(PublicationDate)',
-                                                   'type'=>'integer'),
-                                         'wday'=>array('field'=>'DAYOFWEEK(PublicationDate)',
-                                                   'type'=>'integer'),
-                                         'hour'=>array('field'=>'HOUR(PublicationDate)',
-                                                   'type'=>'integer'),
-                                         'min'=>array('field'=>'MINUTE(PublicationDate)',
-                                                   'type'=>'integer'),
-                                         'sec'=>array('field'=>'SECOND(PublicationDate)',
-                                                   'type'=>'integer')
+                                         'keyword'=>array('field'=>null, 'type'=>'string'),
+                                         'onfrontpage'=>array('field'=>'OnFrontPage',
+                                                              'type'=>'switch'),
+                                         'onsection'=>array('field'=>'OnSection',
+                                                            'type'=>'switch'),
+                                         'upload_date'=>array('field'=>'UploadDate',
+                                                              'type'=>'dateTime'),
+                                         'public'=>array('field'=>'Public',
+                                                         'type'=>'switch'),
+                                         'type'=>array('field'=>'Type',
+                                                       'type'=>'string'),
+                                         'matchalltopics'=>array('field'=>null,
+                                                                 'type'=>'void'),
+                                         'matchanytopic'=>array('field'=>null,
+                                                                'type'=>'void'),
+                                         'topic'=>array('field'=>null,
+                                                        'type'=>'topic')
                                    );
 
     private static $s_orderFields = array(
@@ -101,15 +94,45 @@ class ArticlesList extends ListObject
 	    $attribute = null;
 	    $operator = null;
 	    $value = null;
-	    foreach ($p_constraints as $word) {
+	    foreach ($p_constraints as $index=>$word) {
 	        switch ($state) {
 	            case 1: // reading the parameter name
-	                if (!array_key_exists($word, ArticlesList::$s_parameters)) {
+	                $attribute = strtolower($word);
+	                if (!array_key_exists($attribute, ArticlesList::$s_parameters)) {
 	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_articles, constraints parameter");
 	                    break;
 	                }
-	                $attribute = $word;
-	                $state = 2;
+	                if ($attribute == 'keyword') {
+	                    $operator = new Operator('is', 'string');
+	                    $state = 3;
+	                } elseif ($attribute == 'matchalltopics' || $attribute == 'matchanytopic') {
+	                    if ($attribute == 'matchalltopics') {
+	                        $operator = new Operator('is', 'bool');
+	                        $comparisonOperation = new ComparisonOperation($attribute, $operator, 'true');
+	                        $parameters[] = $comparisonOperation;
+	                    }
+	                    $state = 1;
+	                } else {
+                        $state = 2;
+	                }
+	                if ($attribute == 'onfrontpage' || $attribute == 'onsection') {
+	                    if (($index + 1) < count($p_constraints)) {
+	                        try {
+	                            $operator = new Operator($p_constraints[$index+1], 'switch');
+	                        }
+	                        catch (InvalidOperatorException $e) {
+        	                    $operator = new Operator('is', 'switch');
+        	                    $comparisonOperation = new ComparisonOperation($attribute, $operator, 'on');
+                	            $parameters[] = $comparisonOperation;
+                	            $state = 1;
+	                        }
+	                    } else {
+    	                    $operator = new Operator('is', 'switch');
+                            $comparisonOperation = new ComparisonOperation($attribute, $operator, 'on');
+                            $parameters[] = $comparisonOperation;
+                            $state = 1;
+	                    }
+	                }
 	                break;
 	            case 2: // reading the operator
 	                $type = ArticlesList::$s_parameters[$attribute]['type'];
@@ -117,16 +140,32 @@ class ArticlesList extends ListObject
 	                    $operator = new Operator($word, $type);
 	                }
 	                catch (InvalidOperatorException $e) {
-	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_articles, constraints parameter");
+    	                CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_articles, constraints parameter");
+	                    $state = 1;
+	                    break;
 	                }
 	                $state = 3;
 	                break;
 	            case 3: // reading the value to compare against
 	                $type = ArticlesList::$s_parameters[$attribute]['type'];
-	                $metaClassName = 'Meta'.strtoupper($type[0]).strtolower(substr($type, 1));
+	                $metaClassName = 'Meta'.strtoupper($type[0]).substr($type, 1);
 	                try {
-	                    $value = new $metaClassName($word);
-    	                $value = $word;
+	                    $valueObj = new $metaClassName($word);
+       	                if ($attribute == 'type') {
+       	                    $articleType = new ArticleType($word);
+       	                    if (!$articleType->exists()) {
+       	                        throw new InvalidValueException($word, 'article type');
+       	                    }
+       	                    $value = $word;
+       	                } elseif ($attribute = 'topic') {
+       	                    $topicObj = new Topic($word);
+       	                    if (!$topicObj->exists()) {
+       	                        throw new InvalidValueException($word, 'topic');
+       	                    }
+       	                    $value = $topicObj->getTopicId();
+       	                } else {
+       	                    $value = $word;
+       	                }
        	                $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
     	                $parameters[] = $comparisonOperation;
 	                } catch (InvalidValueException $e) {

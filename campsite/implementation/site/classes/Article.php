@@ -2010,7 +2010,7 @@ class Article extends DatabaseObject {
             if (array_key_exists($leftOperand, Article::$s_regularParameters)) {
                 // regular article field, having a direct correspondent in the
                 // Article table fields
-                $whereCondition = $comparisonOperation['left'] . ' '
+                $whereCondition = Article::$s_regularParameters[$leftOperand] . ' '
                     . $comparisonOperation['symbol'] . " '"
                     . $comparisonOperation['right'] . "' ";
                 $selectClauseObj->addWhere($whereCondition);
@@ -2138,35 +2138,29 @@ class Article extends DatabaseObject {
         $conditionOperation = array();
 
         $leftOperand = strtolower($p_param->getLeftOperand());
+        $conditionOperation['left'] = $leftOperand;
         switch ($leftOperand) {
         case 'keyword':
-            $conditionOperation['left'] = 'Keywords';
             $conditionOperation['symbol'] = 'LIKE';
             $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
             break;
         case 'onfrontpage':
-            $conditionOperation['left'] = 'OnFrontPage';
             $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
             break;
         case 'onsection':
-            $conditionOperation['left'] = 'OnSection';
             $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
             break;
         case 'public':
-            $conditionOperation['left'] = 'Public';
             $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
             break;
         case 'matchalltopics':
-            $conditionOperation['left'] = 'MatchAllTopics';
             $conditionOperation['symbol'] = '=';
             $conditionOperation['right'] = 'true';
             break;
         case 'topic':
-            $conditionOperation['left'] = 'Topic';
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
             break;
         default:
-            $conditionOperation['left'] = $leftOperand;
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
             break;
         }
@@ -2301,7 +2295,7 @@ class Article extends DatabaseObject {
                     $dbField = 'Articles.UploadDate';
                     break;
                 case 'bypublishdate':
-                    $dbField = 'Articles.PublicationDate';
+                    $dbField = 'Articles.PublishDate';
                     break;
                 case 'bypublication':
                     $dbField = 'Articles.IdPublication';

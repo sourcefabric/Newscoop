@@ -37,7 +37,7 @@
 
 
 <h3>articles list</h3>
-{{ list_articles length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
+{{ list_articles length="3" columns="2" name='sample_name' }}
 {{ if $campsite->current_list->at_beginning }}
 <li>count: {{ $campsite->current_list->count }}</li>
 {{ /if }}
@@ -166,7 +166,7 @@
 
 
 <h3>subtitles list</h3>
-{{ list_subtitles length="2" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+{{ list_subtitles length="2" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="invalid" }}
 <li>subtitle: <b>{{ $campsite->current_subtitles_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
    list index: <b>{{ $campsite->current_subtitles_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
    column: <b>{{ $campsite->current_subtitles_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>

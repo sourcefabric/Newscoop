@@ -116,6 +116,8 @@ class Operator
 	 */
 	public function __construct($p_name, $p_type = 'string')
 	{
+	    $p_name = strtolower($p_name);
+	    $p_type = strtolower($p_type);
 	    if (!isset($p_type) || !array_key_exists($p_type, Operator::$s_typeOperators)) {
 	        $p_type = 'string';
 	    }
