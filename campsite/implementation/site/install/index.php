@@ -17,7 +17,7 @@
  * is not defined in these cases.
  */
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-require_once($g_documentRoot.'/template_engine/classes/CampSite.php');
+require_once($g_documentRoot.'/template_engine/include/constants.php');
 require_once($g_documentRoot.'/template_engine/classes/CampRequest.php');
 require_once($g_documentRoot.'/install/classes/CampInstallation.php');
 
@@ -25,7 +25,9 @@ define('CAMP_INSTALL_DIR', dirname(__FILE__));
 
 $install = new CampInstallation();
 
-$step = CampRequest::GetVar('step', null, 'post');
+$install->initSession();
+
+$step = $install->execute();
 
 $install->dispatch($step);
 

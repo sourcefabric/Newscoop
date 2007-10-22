@@ -18,24 +18,18 @@
  */
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
-require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
+require_once($g_documentRoot.'/template_engine/classes/CampSession.php');
+require_once($g_documentRoot.'/template_engine/classes/CampVersion.php');
+require_once($g_documentRoot.'/install/classes/CampTemplate.php');
+require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
+require_once($g_documentRoot.'/install/classes/CampInstallationView.php');
 
 
 /**
  * Class CampInstallation
  */
-final class CampInstallation
+final class CampInstallation extends CampInstallationBase
 {
-    /**
-     * @var integer
-     */
-    private $m_step = null;
-
-    /**
-     * @var string
-     */
-    private $m_defaultStep = 'precheck';
-
     /**
      * @var array
      */
@@ -58,9 +52,14 @@ final class CampInstallation
                              );
 
     /**
+     * @var array
+     */
+    private $m_lists = array();
+
+    /**
      * @var string
      */
-    private $m_title = 'Campsite Web Installer';
+    private $m_title = null;
 
 
     /**
@@ -73,6 +72,13 @@ final class CampInstallation
     } // fn __construct
 
 
+    public function execute()
+    {
+        parent::execute();
+        return $this->m_step;
+    } // fn execute
+
+
     /**
      *
      */
@@ -83,7 +89,22 @@ final class CampInstallation
         } else {
             $this->m_step = $this->m_defaultStep;
         }
+
+        $cVersion = new CampVersion();
+        $this->m_title = $cVersion->getPackage().' '.$cVersion->getRelease();
+        $this->m_title .= (!is_null($cVersion->getCodeName())) ?
+                              ' [ '.$cVersion->getCodeName().' ]' : '';
+        $this->m_title .= ' Installer';
     } // fn dispatch
+
+
+    /**
+     *
+     */
+    public function initSession()
+    {
+        $session = CampSession::singleton();
+    } // fn initSession
 
 
     /**
@@ -93,9 +114,26 @@ final class CampInstallation
     {
         $tpl = CampTemplate::singleton();
 
+        $tpl->assign('site_title', $this->m_title);
+        $tpl->assign('message', $this->m_message);
+
         $tpl->assign('current_step', $this->m_step);
         $tpl->assign('current_step_title', $this->m_steps[$this->m_step]['title']);
         $tpl->assign('step_titles', $this->m_steps);
+
+        $session = CampSession::singleton();
+        $config_db = $session->getData('config.db', 'installation');
+
+        if (!empty($config_db)) {
+            $tpl->assign('db', $config_db);
+        }
+
+        $config_site = $session->getData('config.site', 'installation');
+        if (!empty($config_site)) {
+            $tpl->assign('mc', $config_site);
+        }
+
+        $view = new CampInstallationView($this->m_step);
 
         $tpl->display($this->getTemplateName());
     } // fn render
@@ -105,24 +143,6 @@ final class CampInstallation
     {
         return $this->m_steps[$this->m_step]['tplfile'];
     } // fn getTemplateName
-
-
-    /**
-     *
-     */
-    public function getDefaultStep()
-    {
-        return $this->m_defaultStep;
-    } // fn getDefaultStep
-
-
-    /**
-     *
-     */
-    private function requirementsCheck()
-    {
-
-    } // fn requirementsCheck
 
 } // class CampInstallation
 

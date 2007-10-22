@@ -3,6 +3,7 @@
     "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
+<title>{{ $site_title }}</title>
 <script type="text/javascript" src="include/js/install.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>

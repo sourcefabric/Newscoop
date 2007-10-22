@@ -35,10 +35,11 @@
             </div>
           </td>
           <td width="60%" valign="top">
+            <div class="message">{{ $message }}</div>
             <div class="form_field">
               Site Title:<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
-              id="mc_sitename" name="mc_sitename" value="" />
+              id="mc_sitename" name="mc_sitename" value="{{ $mc.sitename }}" />
             </div>
           </td>
         </tr>
@@ -60,18 +61,18 @@
           <td width="60%" valign="top">
             <div class="form_field">
               Administrator Password:<br />
-              <input class="inputbox" type="text" size="42" maxlength="40"
-              id="mc_adminemail" name="mc_adminemail" value="" /><br />
+              <input class="inputbox" type="password" size="42" maxlength="40"
+              id="mc_adminpsswd" name="mc_adminpsswd" value="" /><br />
             </div>
             <div class="form_field">
               Confirm Password:<br />
-              <input class="inputbox" type="text" size="42" maxlength="40"
-              id="mc_adminemail" name="mc_adminemail" value="" /><br />
+              <input class="inputbox" type="password" size="42" maxlength="40"
+              id="mc_admincpsswd" name="mc_admincpsswd" value="" /><br />
             </div>
             <div class="form_field">
               Administrator E-Mail:<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
-              id="mc_adminemail" name="mc_adminemail" value="" /><br />
+              id="mc_adminemail" name="mc_adminemail" value="{{ $mc.adminemail }}" /><br />
             </div>
           </td>
         </tr>

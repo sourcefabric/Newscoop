@@ -27,9 +27,11 @@
             </div>
           </td>
           <td width="60%" align="center">
-            <div class="image_icon">
+            <div class="icon">
+              <a href="/admin/index.php">
               <img src="img/admin.png" /><br />
-              Administrator
+              <span>Administrator</span>
+              </a>
             </div>
           </td>
         </tr>

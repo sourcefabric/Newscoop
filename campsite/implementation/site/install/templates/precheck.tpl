@@ -12,9 +12,15 @@
         <div class="navigate"><input
         class="nav_button" type="button" value="Re-check"
 	onclick="submitForm( install_form, 'precheck' );" /> &nbsp;
+      {{ if $php_req_ok eq true }}
         <input
         class="nav_button" type="button" value="Next &#155;"
-        onclick="submitForm( install_form, 'license' );" /></div>
+        onclick="submitForm( install_form, 'license' );" />
+      {{ else }}
+        <input
+        class="nav_button_disabled" type="button" value="Next &#155;" />
+      {{ /if }}
+        </div>
       </td>
     </tr>
     </table>
@@ -24,40 +30,86 @@
       <td>
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="2">
+          <td colspan="3">
             <div class="subtitle">System Requirements:</div>
           </td>
         </tr>
         <tr>
-          <td width="40%">
+          <td width="35%" valign="top">
             <div class="help">
-              If any of these items are highlighted in red then please take
-              actions to correct them. Failure to do so could lead to your
-              Campsite installation not functioning correctly.
+              If any of these requirements is not fulfilled (marked red),
+              please correct them, otherwise you wont be able to continue
+              with the installation of Campsite.
             </div>
           </td>
-          <td width="60%">
-
+          <td width="5%">&nbsp;</td>
+          <td width="60%" valign="top">
+            <table class="view_list" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><strong>Requirement</strong></td>
+              <td>&nbsp;</td>
+              <td><strong>Status</strong></td>
+            </tr>
+            {{ foreach from=$php_functions item="phpfunc" }}
+            <tr>
+              <td>{{ $phpfunc.tag }}</td>
+              <td>&nbsp;</td>
+              <td align="center">
+              {{ if $phpfunc.exists eq 'Yes' }}
+                <span class="success">
+              {{ elseif $phpfunc.exists eq 'No' }}
+                <span class="error">
+              {{ /if }}
+                {{ $phpfunc.exists }}</span>
+              </td>
+            </tr>
+            {{ /foreach }}
+            </table>
           </td>
         </tr>
         </table>
         <div class="table_spacer"> </div>
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="2">
+          <td colspan="3">
             <div class="subtitle">Recommended PHP Settings:</div>
           </td>
         </tr>
         <tr>
-          <td width="40%">
+          <td width="35%" valign="top">
             <div class="help">
               These settings are recommended for PHP in order to ensure full
               compatibility with Campsite. However, Campsite will still operate
               if your settings do not quite match the recommended.
             </div>
           </td>
-          <td width="60%">
-
+          <td width="5%">&nbsp;</td>
+          <td width="60%" valign="top">
+            <table class="view_list" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><strong>Option</strong></td>
+              <td>&nbsp;</td>
+              <td><strong>Recommended</strong></td>
+              <td>&nbsp;</td>
+              <td><strong>Current Set</strong></td>
+            </tr>
+            {{ foreach from=$php_options item="phpopt" }}
+            <tr>
+              <td>{{ $phpopt.tag }}</td>
+              <td>&nbsp;</td>
+              <td align="center">{{ $phpopt.rec_state }}</td>
+              <td>&nbsp;</td>
+              <td align="center">
+              {{ if $phpopt.cur_state eq $phpopt.rec_state }}
+                <span class="success">
+              {{ else }}
+                <span class="error">
+              {{ /if }}
+                {{ $phpopt.cur_state }}</span>
+              </td>
+            </tr>
+            {{ /foreach }}
+            </table>
           </td>
         </tr>
         </table>

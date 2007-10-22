@@ -1,6 +1,6 @@
 {{ include file="html_header.tpl" }}
 
-<form action="index.php" method="post" name="install_form">
+<form action="index.php" method="post" name="install_form" autocomplete="off">
 <tr>
   <td valign="top">
     <table class="header" cellspacing="0" cellpadding="0">
@@ -31,36 +31,35 @@
         <tr>
           <td width="40%" valign="top">
             <div class="help">
-              If any of these items are highlighted in red then please take
-              actions to correct them. Failure to do so could lead to your
-              Campsite installation not functioning correctly.
+              Need to change this and talk about database settings.
             </div>
           </td>
           <td width="60%" valign="top">
+            <div class="message">{{ $message }}</div>
             <div class="form_field">
               Server Name/Address:<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_hostname" name="db_hostname" value="" /><br />
+              id="db_hostname" name="db_hostname" value="{{ $db.hostname }}" /><br />
             </div>
             <div class="form_field">
-              Server Port:<br />
+              Server Port: (<em>Optional</em>)<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_hostport" name="db_hostport" value="" /><br />
+              id="db_hostport" name="db_hostport" value="{{ $db.hostport }}" /><br />
             </div>
             <div class="form_field">
               User Name:<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_username" name="db_username" value="" /><br />
+              id="db_username" name="db_username" value="{{ $db.username }}" /><br />
             </div>
             <div class="form_field">
               User Password:<br />
-              <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_userpwd" name="db_userpwd" value="" /><br />
+              <input class="inputbox" type="password" size="42" maxlength="40"
+              id="db_userpass" name="db_userpass" value="{{ $db.userpass }}" /><br />
             </div>
             <div class="form_field">
               Database Name:<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_database" name="db_database" value="" /><br />
+              id="db_database" name="db_database" value="{{ $db.database }}" /><br />
             </div>
           </td>
         </tr>
