@@ -64,9 +64,11 @@ class Phorum_user extends DatabaseObject {
 	 * @param string $p_password
   	 * @param string $p_email
   	 * @param int $p_userId
+  	 * @param bool $p_encryptedPassword
   	 * @return boolean
   	 */
-  	function create($p_username, $p_password, $p_email, $p_userId = null)
+  	function create($p_username, $p_password, $p_email, $p_userId = null,
+  	                $p_encryptedPassword = false)
   	{
 		$userdata = array();
 
@@ -83,7 +85,7 @@ class Phorum_user extends DatabaseObject {
 		}
 
 		if (!is_null($p_userId) && is_numeric($p_userId)) {
-			$tmpUser =& new Phorum_user($p_userId);
+			$tmpUser = new Phorum_user($p_userId);
 			$userdata['user_id'] = $p_userId;
 			$userdata['fk_campsite_user_id'] = $p_userId;
 			if ($tmpUser->exists()) {
@@ -92,7 +94,7 @@ class Phorum_user extends DatabaseObject {
 		}
 
 		$userdata['username'] = $p_username;
-		$userdata['password'] = sha1($p_password);
+		$userdata['password'] = $p_encryptedPassword ? $p_password : sha1($p_password);
 		$userdata['email'] = $p_email;
 		$userdata['date_added'] = time();
 		$userdata['date_last_active'] = time();
@@ -280,7 +282,7 @@ class Phorum_user extends DatabaseObject {
 	 * Set the password for the phorum user.
 	 *
 	 * @param string $p_password
-	 * @return boolean 
+	 * @return boolean
 	 */
 	function setPassword($p_password)
 	{
