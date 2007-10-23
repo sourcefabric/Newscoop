@@ -12,51 +12,52 @@
 /**
  * Class CampVersion
  */
-final class CampVersion {
+final class CampVersion
+{
     /**
      * @var string
      */
-    var $m_organization = 'Campware - MDLF';
+    private $m_organization = 'Campware - MDLF';
 
     /**
      * @var string
      */
-    var $m_package = 'Campsite';
+    private $m_package = 'Campsite';
 
     /**
      * @var string
      */
-    var $m_release = '3.0';
+    private $m_release = '3.0';
 
     /**
      * @var string
      */
-    var $m_devStatus = 'beta 1';
+    private $m_devStatus = 'beta 1';
 
     /**
      * @var string
      */
-    var $m_codeName = 'undefined';
+    private $m_codeName = 'undefined';
 
     /**
      * @var string
      */
-    var $m_releaseDate = 'undefined';
+    private $m_releaseDate = 'undefined';
 
     /**
      * @var string
      */
-    var $m_copyright = 'Copyright &copy; 2007 Campware. All rights reserved.';
+    private $m_copyright = 'Copyright &copy; 2007 Campware. All rights reserved.';
 
     /**
      * @var string
      */
-    var $m_license = 'GPL v.2';
+    private $m_license = 'GPL v.2';
 
     /**
      * @var string
      */
-    var $m_website = 'http://www.campware.org/';
+    private $m_website = 'http://www.campware.org/';
 
 
     /**
@@ -87,6 +88,12 @@ final class CampVersion {
     {
         return $this->m_devStatus;
     } // fn getDevelopmentStatus
+
+
+    public function getCodeName()
+    {
+        return $this->m_codeName;
+    } // fn getCodeName
 
 
     public function getReleaseDate()

@@ -164,12 +164,12 @@ class CampInstallationBase
 
     private function generalConfiguration($p_input)
     {
-        $mc_sitename = Input::Get('mc_sitename', 'text');
-        $mc_adminpsswd = Input::Get('mc_adminpsswd', 'text');
-        $mc_admincpsswd = Input::Get('mc_admincpsswd', 'text');
-        $mc_adminemail = Input::Get('mc_adminemail', 'text');
+        $mc_sitetitle = Input::Get('Site_Title', 'text');
+        $mc_adminpsswd = Input::Get('Admin_Password', 'text');
+        $mc_admincpsswd = Input::Get('Confirm_Password', 'text');
+        $mc_adminemail = Input::Get('Admin_Email', 'text');
 
-        if (empty($mc_sitename) || empty($mc_adminpsswd)
+        if (empty($mc_sitetitle) || empty($mc_adminpsswd)
                 || empty($mc_admincpsswd) || empty($mc_adminemail)) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Please input the requested data';
@@ -184,7 +184,7 @@ class CampInstallationBase
         }
 
         $this->m_config['mainconfig'] = array(
-                                              'sitename' => $mc_sitename,
+                                              'sitetitle' => $mc_sitetitle,
                                               'adminemail' => $mc_adminemail,
                                               'adminpsswd' => $mc_adminpsswd
                                               );
@@ -279,12 +279,12 @@ class CampInstallationBaseHelper
         }
 
         $sqlQuery1 = 'UPDATE liveuser_users SET '
-            ."Password = MD5('".$g_db->Escape($p_password)."'), "
+            ."Password = SHA1('".$g_db->Escape($p_password)."'), "
             ."EMail = '".$g_db->Escape($p_email)."' "
             .'WHERE Id = 1';
 
         $sqlQuery2 = 'UPDATE phorum_users SET '
-            ."password = MD5('".$g_db->Escape($p_password)."'), "
+            ."password = SHA1('".$g_db->Escape($p_password)."'), "
             ."email = '".$g_db->Escape($p_email)."' "
             .'WHERE user_id = 1';
         if (!$g_db->Execute($sqlQuery1)

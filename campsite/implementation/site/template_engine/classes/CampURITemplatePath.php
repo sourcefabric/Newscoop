@@ -359,6 +359,8 @@ class CampURITemplatePath extends CampURI
      */
     private function setURL()
     {
+        global $g_ado_db;
+
         // gets the publication object based on site name (URI host)
         $alias = ltrim($this->getBase(), $this->getScheme().'://');
         $aliasArray = Alias::GetAliases(null, null, $alias);
@@ -387,7 +389,7 @@ class CampURITemplatePath extends CampURI
             }
             // sets the issue number if necessary
             if ($this->getQueryVar(CampRequest::ISSUE_NR) == 0) {
-                $query = 'SELECT MAX(Number) FROM Issues '
+                $query = 'SELECT MAX(Number) AS Number FROM Issues '
                     . 'WHERE IdPublication = '.$cPubId
                     . ' AND IdLanguage = '.$cLangId
                     . " AND Published = 'Y'";

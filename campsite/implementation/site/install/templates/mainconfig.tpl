@@ -1,6 +1,9 @@
 {{ include file="html_header.tpl" }}
-
-<form action="index.php" method="post" name="install_form">
+<script type="text/javascript" src="include/js/fValidate/fValidate.config.js"></script>
+<script type="text/javascript" src="include/js/fValidate/fValidate.core.js"></script>
+<script type="text/javascript" src="include/js/fValidate/fValidate.lang-enUS.js"></script>
+<script type="text/javascript" src="include/js/fValidate/fValidate.validators.js"></script>
+<form action="index.php" method="post" name="install_form" autocomplete="off">
 <tr>
   <td valign="top">
     <table class="header" cellspacing="0" cellpadding="0">
@@ -10,11 +13,13 @@
       </td>
       <td width="50%">
         <div class="navigate"><input
-        class="nav_button" type="button" value="&#139; Previous"
-        onclick="submitForm( install_form, 'database' );" /> &nbsp;
-        <input
-        class="nav_button" type="button" value="Next &#155;"
-        onclick="submitForm( install_form, 'finish' );" /></div>
+          class="nav_button" type="button" value="&#139; Previous"
+          onclick="submitForm( install_form, 'database' );" /> &nbsp;
+          <input
+          class="nav_button" type="button" value="Next &#155;"
+          onclick="if (validateForm(install_form, 0, 1, 0, 1, 8) == true) {
+                   submitForm(install_form, 'finish'); }"/>
+        </div>
       </td>
     </tr>
     </table>
@@ -24,22 +29,25 @@
       <td>
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="2">
+          <td colspan="3">
             <div class="subtitle">Site Title:</div>
           </td>
         </tr>
         <tr>
-          <td width="40%" valign="top">
+          <td width="35%" valign="top">
             <div class="help">
               If any of these items are highlighted in red.
             </div>
           </td>
+          <td width="5%">&nbsp;</td>
           <td width="60%" valign="top">
             <div class="message">{{ $message }}</div>
             <div class="form_field">
-              Site Title:<br />
+              <label for="Site_Title">Site Title</label>:<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
-              id="mc_sitename" name="mc_sitename" value="{{ $mc.sitename }}" />
+              id="Site_Title" name="Site_Title" value="{{ $mc.sitetitle }}"
+              alt="blank"
+              emsg="You must complete the 'Site Title' field" />
             </div>
           </td>
         </tr>
@@ -47,32 +55,38 @@
         <div class="table_spacer"> </div>
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="2">
+          <td colspan="3">
             <div class="subtitle">Administrator Data:</div>
           </td>
         </tr>
         <tr>
-          <td width="40%" valign="top">
+          <td width="35%" valign="top">
             <div class="help">
               These settings are recommended for PHP in order to ensure full
               compatibility with Campsite.
             </div>
           </td>
+          <td width="5%">&nbsp;</td>
           <td width="60%" valign="top">
             <div class="form_field">
-              Administrator Password:<br />
+              <label for="Admin_Password">Administrator Password</label>:<br />
               <input class="inputbox" type="password" size="42" maxlength="40"
-              id="mc_adminpsswd" name="mc_adminpsswd" value="" /><br />
+              id="Admin_Password" name="Admin_Password" value=""
+              alt="blank"
+              emsg="You must complete the 'Administrator Password' field" />
             </div>
             <div class="form_field">
-              Confirm Password:<br />
+              <label for="Confirm_Password">Confirm Password</label>:<br />
               <input class="inputbox" type="password" size="42" maxlength="40"
-              id="mc_admincpsswd" name="mc_admincpsswd" value="" /><br />
+              id="Confirm_Password" name="Confirm_Password" value=""
+              alt="equalto|Admin_Password" />
             </div>
             <div class="form_field">
-              Administrator E-Mail:<br />
+              <label for="Admin_Email">Administrator E-Mail</label>:<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
-              id="mc_adminemail" name="mc_adminemail" value="{{ $mc.adminemail }}" /><br />
+              id="Admin_Email" name="Admin_Email" value="{{ $mc.adminemail }}"
+              alt="blank"
+              emsg="You must complete the 'Administrator E-Mail' field" />
             </div>
           </td>
         </tr>

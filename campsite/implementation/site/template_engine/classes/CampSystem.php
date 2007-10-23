@@ -223,7 +223,8 @@ abstract class CampSystem
         }
         if ($p_sctNr > 0) {
             if ($p_issNr <= 0) {
-                $sql = 'SELECT MAX(i.Number) FROM Sections as s, Issues as i '
+                $sql = 'SELECT MAX(i.Number) AS Number '
+                    . 'FROM Sections as s, Issues as i '
                     . 'WHERE s.IdPublication = i.IdPublication'
                     . ' AND s.IdLanguage = i.IdLanguage'
                     . ' AND s.IdPublication = ' . $p_pubId
@@ -240,7 +241,7 @@ abstract class CampSystem
             return self::GetSectionTemplate($p_lngId, $p_pubId, $p_issNr, $p_sctNr);
         }
         if ($p_issNr <= 0) {
-            $sql = 'SELECT MAX(Number) FROM Issues '
+            $sql = 'SELECT MAX(Number) AS Number FROM Issues '
                 . 'WHERE IdPublication = ' . $p_pubId
                 . ' AND IdLanguage = ' . $p_lngId;
             if ($p_isPublished == true) {

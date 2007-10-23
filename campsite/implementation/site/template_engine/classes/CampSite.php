@@ -122,7 +122,7 @@ final class CampSite extends CampSystem
             $p_configFile = $g_documentRoot.'/template_engine/configuration.php';
         }
         if (!file_exists($p_configFile)) {
-            header('Location: install/index.php');
+            header('Location: /install/index.php');
         }
 
         CampConfig::singleton($p_configFile);

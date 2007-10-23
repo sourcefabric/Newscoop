@@ -37,9 +37,12 @@
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              If any of these requirements is not fulfilled (marked red),
+              <p><em>Campsite</em> demands some requirements in order to
+              be installed and run on top of your system.</p>
+
+              <p>If any of these requirements is not fulfilled (marked red),
               please correct them, otherwise you wont be able to continue
-              with the installation of Campsite.
+              with the installation.</p>
             </div>
           </td>
           <td width="5%">&nbsp;</td>
@@ -78,9 +81,10 @@
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              These settings are recommended for PHP in order to ensure full
-              compatibility with Campsite. However, Campsite will still operate
-              if your settings do not quite match the recommended.
+              These settings are recommended for PHP in order to ensure
+              <em>Campsite</em> will work quite well. However,
+              <em>Campsite</em> will still operate if your settings do not
+              quite match the recommended.
             </div>
           </td>
           <td width="5%">&nbsp;</td>

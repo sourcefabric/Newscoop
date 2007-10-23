@@ -1,5 +1,8 @@
 {{ include file="html_header.tpl" }}
-
+<script type="text/javascript" src="include/js/fValidate/fValidate.config.js"></script>
+<script type="text/javascript" src="include/js/fValidate/fValidate.core.js"></script>
+<script type="text/javascript" src="include/js/fValidate/fValidate.lang-enUS.js"></script>
+<script type="text/javascript" src="include/js/fValidate/fValidate.validators.js"></script>
 <form action="index.php" method="post" name="install_form" autocomplete="off">
 <tr>
   <td valign="top">
@@ -14,7 +17,9 @@
         onclick="submitForm( install_form, 'license' );" /> &nbsp;
         <input
         class="nav_button" type="button" value="Next &#155;"
-        onclick="submitForm( install_form, 'mainconfig' );" /></div>
+        onclick="if (validateForm(install_form, 0, 1, 0, 1, 8) == true) {
+                 submitForm(install_form, 'mainconfig'); }"/>
+        </div>
       </td>
     </tr>
     </table>
@@ -24,42 +29,51 @@
       <td>
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="2">
+          <td colspan="3">
             <div class="subtitle">Connection Parameters:</div>
           </td>
         </tr>
         <tr>
-          <td width="40%" valign="top">
+          <td width="35%" valign="top">
             <div class="help">
               Need to change this and talk about database settings.
             </div>
           </td>
+          <td width="5%">&nbsp;</td>
           <td width="60%" valign="top">
             <div class="message">{{ $message }}</div>
             <div class="form_field">
-              Server Name/Address:<br />
+              <label for="db_hostname">Server Name/Address</label>:<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_hostname" name="db_hostname" value="{{ $db.hostname }}" /><br />
+              id="db_hostname" name="db_hostname" value="{{ $db.hostname }}"
+              alt="blank"
+              emsg="You must complete the 'Server Name/Address' field" /><br />
             </div>
             <div class="form_field">
-              Server Port: (<em>Optional</em>)<br />
+              <label for="db_hostport">Server Port</label>: (<em>Optional</em>)<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
               id="db_hostport" name="db_hostport" value="{{ $db.hostport }}" /><br />
             </div>
             <div class="form_field">
-              User Name:<br />
+              <label for="db_username">User Name</label>:<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_username" name="db_username" value="{{ $db.username }}" /><br />
+              id="db_username" name="db_username" value="{{ $db.username }}"
+              alt="blank"
+              emsg="You must complete the 'Username' field" /><br />
             </div>
             <div class="form_field">
-              User Password:<br />
+              <label for="db_userpass">User Password</label>:<br />
               <input class="inputbox" type="password" size="42" maxlength="40"
-              id="db_userpass" name="db_userpass" value="{{ $db.userpass }}" /><br />
+              id="db_userpass" name="db_userpass" value="{{ $db.userpass }}"
+              alt="blank"
+              emsg="You must complete the 'Password' field" /><br />
             </div>
             <div class="form_field">
-              Database Name:<br />
+              <label for="db_database">Database Name</label>:<br />
               <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_database" name="db_database" value="{{ $db.database }}" /><br />
+              id="db_database" name="db_database" value="{{ $db.database }}"
+              alt="blank"
+              emsg="You must complete the 'Database' field" /><br />
             </div>
           </td>
         </tr>
