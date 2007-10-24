@@ -363,8 +363,8 @@ class Image extends DatabaseObject {
         }
         return $extension;
 	}
-	
-	
+
+
 	function __GetImageTypeCreateMethod($p_imageType)
 	{
 		$method = null;
@@ -515,6 +515,9 @@ class Image extends DatabaseObject {
             }
 			$thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'],
 												 $Campsite['THUMBNAIL_MAX_SIZE']);
+			if (PEAR::isError($thumbnailImage)) {
+				return $result;
+			}
 			$result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
 			if (PEAR::isError($result)) {
 				return $result;
@@ -540,8 +543,8 @@ class Image extends DatabaseObject {
 
         return $image;
 	} // fn OnImageUpload
-	
-	
+
+
 	/**
 	 * Saves the image refered by the resource handler to a file
 	 *
@@ -576,8 +579,8 @@ class Image extends DatabaseObject {
 		}
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Resizes the given image
 	 *
@@ -596,6 +599,12 @@ class Image extends DatabaseObject {
 	{
 		$origImageWidth = imagesx($p_image);
 		$origImageHeight = imagesy($p_image);
+		if ($origImageWidth <= 0 || $origImageHeight <= 0) {
+		    return new PEAR_Error(getGS("The file uploaded is not an image."));
+		}
+		if ($p_maxWidth <= 0 || $p_maxWidth <= 0) {
+		    return new PEAR_Error(getGS("Invalid resize width/height."));
+		}
 		if ($p_keepRatio) {
 			$ratioOrig = $origImageWidth / $origImageHeight;
 			$ratioNew = $p_maxWidth / $p_maxHeight;
