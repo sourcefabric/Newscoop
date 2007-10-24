@@ -3,11 +3,12 @@
 // Global permissions array
 global $g_permissions;
 
+
 // Data Source Name (DSN)
-$dsn = 'mysql://'.$Campsite['DATABASE_USER']
-		.':'.$Campsite['DATABASE_PASSWORD']
-		.'@'.$Campsite['DATABASE_SERVER_ADDRESS']
-		.'/'.$Campsite['DATABASE_NAME'];
+$dsn = 'mysql://'.$Campsite['db']['user']
+        .':'.$Campsite['db']['pass']
+		.'@'.$Campsite['db']['host']
+		.'/'.$Campsite['db']['name'];
 
 // Define the LiveUser configuration
 $liveuserConfig = array (
@@ -185,8 +186,8 @@ $liveuserConfig = array (
         )
     );
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/DB.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/LiveUser/Admin.php');
+
+require_once(CS_PATH_PEAR_LOCAL.DIR_SEP.'LiveUser'.DIR_SEP.'Admin.php');
 
 $LiveUser =& LiveUser::factory($liveuserConfig);
 if (!$LiveUser->init()) {

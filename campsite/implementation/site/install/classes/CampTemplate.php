@@ -35,14 +35,6 @@ final class CampTemplate extends Smarty
 	private static $m_instance = null;
 
 
-	/**
-	 * Holds the context object;
-	 *
-	 * @var object
-	 */
-	private $m_context = null;
-
-
     private function __construct()
     {
         parent::Smarty();
@@ -56,12 +48,12 @@ final class CampTemplate extends Smarty
         $this->left_delimiter = '{{';
         $this->right_delimiter = '}}';
 
-        $this->cache_dir = CS_PATH_SMARTY.DIR_SEP.'cache';
+        $this->cache_dir = CS_PATH_SMARTY_VAR.DIR_SEP.'cache';
         $this->config_dir = CS_PATH_SMARTY.DIR_SEP.'configs';
-        $this->plugins_dir = array(CS_PATH_SMARTY.DIR_SEP.'camp_plugins',
+        $this->plugins_dir = array(CS_PATH_SMARTY_VAR.DIR_SEP.'camp_plugins',
                                    CS_PATH_SMARTY.DIR_SEP.'plugins');
-        $this->template_dir = CAMP_INSTALL_DIR.DIR_SEP.'templates';
-        $this->compile_dir = CS_PATH_SMARTY.DIR_SEP.'templates_c';
+        $this->template_dir = CS_INSTALL_DIR.DIR_SEP.'templates';
+        $this->compile_dir = CS_PATH_SMARTY_VAR.DIR_SEP.'templates_c';
     } // fn __constructor
 
 
@@ -79,20 +71,6 @@ final class CampTemplate extends Smarty
 
         return self::$m_instance;
     } // fn singleton
-
-
-    /**
-     * Returns the template context object.
-     *
-     * @return object
-     */
-    public function &context()
-    {
-    	if (!isset($this->m_context)) {
-    		$this->m_context = new CampContext();
-    	}
-    	return $this->m_context;
-    } // fn context
 
 
     public function setTemplateDir($p_dir)

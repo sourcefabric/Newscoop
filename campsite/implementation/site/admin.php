@@ -4,8 +4,17 @@
  * Think of it as a wrapper for all admin interface scripts.
  * Here you can set up anything that should be applied globally to all scripts.
  */
-require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/liveuser_configuration.php');
+
+// goes to install process if configuration files does not exist yet
+if (!file_exists($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php')
+        || !file_exists($_SERVER['DOCUMENT_ROOT'].'/conf/database_conf.php')) {
+    header('Location: /install/index.php');
+}
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/conf/liveuser_configuration.php');
+
 global $ADMIN_DIR;
 global $ADMIN;
 global $g_user;

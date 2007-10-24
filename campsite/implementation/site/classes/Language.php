@@ -12,7 +12,7 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot.'/configuration.php');
+require_once($g_documentRoot.'/conf/configuration.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
 require_once($g_documentRoot.'/classes/Log.php');

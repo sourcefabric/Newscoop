@@ -8,7 +8,7 @@
  * @version $Revision$
  * @link http://www.campware.org
  */
-
+    
 /**
  * Includes
  *
@@ -17,11 +17,16 @@
  * is not defined in these cases.
  */
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-require_once($g_documentRoot.'/template_engine/include/constants.php');
-require_once($g_documentRoot.'/template_engine/classes/CampRequest.php');
+
+require_once($g_documentRoot.'/include/campsite_constants.php');
 require_once($g_documentRoot.'/install/classes/CampInstallation.php');
 
-define('CAMP_INSTALL_DIR', dirname(__FILE__));
+define('CS_INSTALL_DIR', dirname(__FILE__));
+
+if (file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
+        && file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
+    header('Location: /');
+}
 
 $install = new CampInstallation();
 

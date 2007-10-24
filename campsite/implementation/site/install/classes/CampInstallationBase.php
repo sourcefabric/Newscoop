@@ -22,6 +22,7 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/include/adodb/adodb.inc.php');
 require_once($g_documentRoot.'/classes/Input.php');
+require_once($g_documentRoot.'/template_engine/classes/CampRequest.php');
 require_once($g_documentRoot.'/install/classes/CampInstallationView.php');
 
 
@@ -142,7 +143,7 @@ class CampInstallationBase
             return false;
         }
 
-        $sqlFile = CAMP_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_core.sql';
+        $sqlFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_core.sql';
         $errors = CampInstallationBaseHelper::ImportDB($sqlFile);
         if ($errors > 0) {
             $this->m_step = 'database';
@@ -222,24 +223,30 @@ class CampInstallationBase
         $template->assign('DATABASE_USER', $dbData['username']);
         $template->assign('DATABASE_PASSWORD', $dbData['userpass']);
 
-        $buffer = $template->fetch('configuration.tpl');
-        $buffer = preg_replace('/#{#{/', '{{', $buffer);
-        $buffer = preg_replace('/#}#}/', '}}', $buffer);
+        $buffer1 = $template->fetch('_configuration.tpl');
+        $buffer1 = preg_replace('/#{#{/', '{{', $buffer1);
+        $buffer1 = preg_replace('/#}#}/', '}}', $buffer1);
 
-        $path = CS_PATH_SITE.DIR_SEP.'template_engine'.DIR_SEP.'configuration.php';
-        if (file_exists($path)) {
-            $isWritable = is_writable($path);
+        $buffer2 = $template->fetch('_database_conf.tpl');
+
+        $path1 = CS_PATH_CONFIG.DIR_SEP.'configuration.php';
+        $path2 = CS_PATH_CONFIG.DIR_SEP.'database_conf.php';
+        if (file_exists($path1) && file_exists($path2)) {
+            $isConfigWritable = is_writable($path1);
+            $isDBConfigWritable = is_writable($path2);
         } else {
-            $isWritable = is_writable(CS_PATH_SITE.DIR_SEP.'template_engine');
+            $isConfigWritable = is_writable(CS_PATH_SITE);
+            $isDBConfigWritable = $isConfigWritable;
         }
 
-        if (!$isWritable) {
+        if (!$isConfigWritable || !$isDBConfigWritable) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Could not write the configuration file.';
             return false;
         }
 
-        file_put_contents($path, $buffer);
+        file_put_contents($path1, $buffer1);
+        file_put_contents($path2, $buffer2);
 
         return true;
     } // fn saveConfiguration

@@ -68,7 +68,6 @@ final class CampInstallation extends CampInstallationBase
     public function __construct()
     {
         $template = CampTemplate::singleton();
-        $template->setTemplateDir(CAMP_INSTALL_DIR.DIR_SEP.'templates');
     } // fn __construct
 
 

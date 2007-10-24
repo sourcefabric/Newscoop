@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/configuration.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/conf/configuration.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 camp_load_translation_strings("localizer");
 require_once('Localizer.php');
