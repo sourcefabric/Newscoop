@@ -206,7 +206,7 @@ class ArticleAudioclip extends DatabaseObject {
 
 
     /**
-     * Gets an article audioclips list based on the given parameters.
+     * Returns an article audioclips list based on the given parameters.
      *
      * @param array $p_parameters
      *    An array of ComparisonOperation objects

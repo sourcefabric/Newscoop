@@ -363,8 +363,8 @@ class Image extends DatabaseObject {
         }
         return $extension;
 	}
-	
-	
+
+
 	function __GetImageTypeCreateMethod($p_imageType)
 	{
 		$method = null;
@@ -540,8 +540,8 @@ class Image extends DatabaseObject {
 
         return $image;
 	} // fn OnImageUpload
-	
-	
+
+
 	/**
 	 * Saves the image refered by the resource handler to a file
 	 *
@@ -576,8 +576,8 @@ class Image extends DatabaseObject {
 		}
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Resizes the given image
 	 *
@@ -820,7 +820,7 @@ class Image extends DatabaseObject {
 
 
     /**
-     * Gets an issue list based on the given parameters.
+     * Returns an images list based on the given parameters.
      *
      * @param array $p_parameters
      *    An array of ComparionOperation objects

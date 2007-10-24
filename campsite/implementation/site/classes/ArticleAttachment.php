@@ -181,7 +181,7 @@ class ArticleAttachment extends DatabaseObject {
 
 
     /**
-     * Gets an article attachments list based on the given parameters.
+     * Returns an article attachments list based on the given parameters.
      *
      * @param array $p_parameters
      *    An array of ComparisonOperation objects
