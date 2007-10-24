@@ -1,3 +1,21 @@
+3.0.0-beta1
+  For full details about these changes, see:
+  http://code.campware.org/projects/campsite/query?milestone=3.0.0
+  
+  Major Improvements
+  ------------------
+  - The template engine was rewritten in PHP for better performance,
+  more flexibility, easier development, plugin architecture, fewer
+  dependecies and easy install.
+  - The install procedure is much easier thanks to a web based
+  installer.
+  
+  Small Improvements
+  ------------------
+  - A caching mechanism for database objects was implemented. This
+  will result in fewer database queries and greater speed and
+  scalability.
+  
 2.7.0 "Tomas" (March 12, 2007)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.7.0

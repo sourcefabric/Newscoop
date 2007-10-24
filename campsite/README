@@ -1,11 +1,11 @@
 Campsite
-version     : 3.0-dev
-release date: March 12, 2007
+version     : 3.0.0-beta1
+release date: October 25, 2007
 contact     : contact@campware.org
 url         : http://www.campware.org
 copyright   : (c)1999-2007 Media Development Loan Fund
 support     : mailto: campsite-support@campware.org; subject: subscribe
-manual      : http://code.campware.org/manuals/campsite/2.7/
+manual      : http://code.campware.org/manuals/campsite/3.0/
 
 INTRODUCTION
 
@@ -67,11 +67,11 @@ See the INSTALL file
 
 
 MANUAL
-See http://code.campware.org/manuals/campsite/2.7/
+See http://code.campware.org/manuals/campsite/3.0/
 
 
 TECHNICAL REQUIREMENTS
-See http://code.campware.org/manuals/campsite/2.7/index.php?id=5
+See http://code.campware.org/manuals/campsite/3.0/index.php?id=5
 
 
 COPYRIGHT
