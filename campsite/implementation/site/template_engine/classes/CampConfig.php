@@ -39,14 +39,14 @@ final class CampConfig {
         global $g_documentRoot;
 
         if (empty($p_configFile)) {
-            $p_configFile = $g_documentRoot.'/template_engine/configuration.php';
+            $p_configFile = $g_documentRoot.'/conf/configuration.php';
         }
         if (!file_exists($p_configFile)) {
-            header('Location: install/index.php');
+            header('Location: /install/index.php');
         }
 
-        require_once($p_configFile);
-        $this->m_config = $CampCfg;
+        require($p_configFile);
+        $this->m_config = $Campsite;
     } // fn __construct
 
 

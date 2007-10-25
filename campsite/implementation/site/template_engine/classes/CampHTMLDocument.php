@@ -222,11 +222,11 @@ final class CampHTMLDocument
         $siteinfo = array();
         $context = $p_params['context'];
         $templates_dir = isset($p_params['templates_dir'])
-                            ? $p_params['templates_dir'] : 'look';
+                            ? $p_params['templates_dir'] : 'templates';
         $template = $p_params['template'];
 
         if (!file_exists($templates_dir.DIR_SEP.$template)) {
-            $template = 'campsite_error.tpl';
+            $template = '_campsite_error.tpl';
         }
 
         $siteinfo['templates_path'] = $templates_dir;
