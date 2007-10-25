@@ -17,7 +17,7 @@ $f_cc_password = Input::Get('f_cc_password');
 $BackLink = Input::Get('f_backlink', 'string', null, true);
 
 if (!Input::isValid()) {
-	camp_html_goto_page("/$ADMIN/priv/articles/audioclips/campcaster_login.php?error_code=userpass");
+	camp_html_goto_page("/$ADMIN/articles/audioclips/campcaster_login.php?error_code=userpass");
 }
 
 $ccLogin = camp_campcaster_login($f_cc_username, $f_cc_password);

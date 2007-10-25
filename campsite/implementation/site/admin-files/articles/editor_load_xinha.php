@@ -10,7 +10,7 @@
 function editor_load_xinha($p_dbColumns, $p_user, $p_editorLanguage) {
 	global $Campsite;
 	$stylesheetFile = $Campsite['HTML_COMMON_DIR']
-		."/priv/articles/article_stylesheet.css";
+		."/admin-files/articles/article_stylesheet.css";
 	?>
 <script type="text/javascript">
 	//<![CDATA[

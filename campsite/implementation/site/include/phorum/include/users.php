@@ -343,7 +343,7 @@ function phorum_user_save( $user )
     }
 
     // Sync the campsite user
-    require_once('../../priv/localizer/Localizer.php');
+    require_once('../../admin-files/localizer/Localizer.php');
     require_once('../../classes/User.php');
     $campsiteUser = new User($user["fk_campsite_user_id"]);
     if ($campsiteUser->exists()) {
