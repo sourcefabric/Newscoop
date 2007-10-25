@@ -59,14 +59,14 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
             $html = '<textarea name="f_user_'.$attribute.'" cols="40" rows="4" '
                 .$p_params['html_code'].'></textarea>';
         } elseif ($attribute != 'fk_user_type') {
-            $sqlQuery = 'DESC Users '.$g_ado_db->escape($attribute);
+            $sqlQuery = 'DESC liveuser_users '.$g_ado_db->escape($attribute);
             $row = $g_ado_db->GetRow($sqlQuery);
             if (!is_array($row) || sizeof($row) < 1) {
                 return false;
             }
             $length = substr($row['Type'], strpos($row['Type'], '(') + 1, -1);
             $html = '<input type="text" name="f_user_'.$attribute
-                .'" size="'.($length > 50 ? 50 : $length)
+                .'" size="'.($length > 32 ? 32 : $length)
                 .'" maxlength="'.$length.'" ';
             if (!empty($attrValue)) {
                 $html .= 'value="'.smarty_function_escape_special_chars($attrValue).'" ';
@@ -94,9 +94,11 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
     case 'search':
         if ($attribute == 'keywords') {
             $html = '<input type="text" name="f_search_'.$attribute.'" '
-                .'maxlength="255" size="'.$p_params['size'].'" value="'
-                .smarty_function_escape_special_chars($campsite->search->keywords)
-                .'" '.$p_params['html_code'].' />';
+                .'maxlength="255" size="'.$p_params['size'].'" value="';
+            if (isset($campsite->search)) {
+                $html.= smarty_function_escape_special_chars($campsite->search->keywords);
+            }
+            $html .= '" '.$p_params['html_code'].' />';
         }
         break;
 

@@ -8,7 +8,7 @@
  * @version $Revision$
  * @link http://www.campware.org
  */
-    
+
 /**
  * Includes
  *
@@ -25,7 +25,7 @@ define('CS_INSTALL_DIR', dirname(__FILE__));
 
 if (file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
         && file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
-    header('Location: /');
+    header("Location: ".CS_PATH_BASE_URL);
 }
 
 $install = new CampInstallation();

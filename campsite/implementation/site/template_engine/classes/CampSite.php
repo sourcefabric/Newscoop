@@ -119,7 +119,7 @@ final class CampSite extends CampSystem
         global $g_documentRoot;
 
         if (empty($p_configFile)) {
-            $p_configFile = $g_documentRoot.'/template_engine/configuration.php';
+            $p_configFile = $g_documentRoot.'/conf/configuration.php';
         }
         if (!file_exists($p_configFile)) {
             header('Location: /install/index.php');
@@ -162,7 +162,7 @@ final class CampSite extends CampSystem
         $template = $this->getTemplateName();
 
         if ($this->getSetting('site.online') == 'N') {
-            $template = 'campsite_offline.tpl';
+            $template = '_campsite_offline.tpl';
         }
 
         $params = array(

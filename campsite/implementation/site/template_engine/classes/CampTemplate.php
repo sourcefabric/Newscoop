@@ -58,12 +58,12 @@ final class CampTemplate extends Smarty
         $this->left_delimiter = $config->getSetting('smarty.left_delimeter');
         $this->right_delimiter = $config->getSetting('smarty.right_delimeter');
 
-        $this->cache_dir = CS_PATH_SMARTY.DIR_SEP.'cache';
+        $this->cache_dir = CS_PATH_SITE.DIR_SEP.'cache';
         $this->config_dir = CS_PATH_SMARTY.DIR_SEP.'configs';
-        $this->plugins_dir = array(CS_PATH_SMARTY.DIR_SEP.'camp_plugins',
+        $this->plugins_dir = array(CS_PATH_SITE.DIR_SEP.'smarty_camp_plugins',
                                    CS_PATH_SMARTY.DIR_SEP.'plugins');
         $this->template_dir = CS_PATH_SMARTY_TEMPLATES;
-        $this->compile_dir = CS_PATH_SMARTY.DIR_SEP.'templates_c';
+        $this->compile_dir = CS_PATH_SITE.DIR_SEP.'templates_c';
     } // fn __constructor
 
 
@@ -95,6 +95,12 @@ final class CampTemplate extends Smarty
     	}
     	return $this->m_context;
     } // fn context
+
+
+    public function setTemplateDir($p_dir)
+    {
+        $this->template_dir = $p_dir;
+    } // fn setTemplateDir
 
 
     /**

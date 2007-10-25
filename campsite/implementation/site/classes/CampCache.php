@@ -241,7 +241,6 @@ final class CampCache {
         return $this->m_key;
     } // fn genKey
 
-
 } // class CampCache
 
 ?>

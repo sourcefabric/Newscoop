@@ -5,6 +5,11 @@
  */
 
 /**
+ * Includes the {@link shared.make_timestamp.php} plugin
+ */
+require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
+
+/**
  * Campsite camp_date_format modifier plugin
  *
  * Type:     modifier
@@ -25,9 +30,10 @@ function smarty_modifier_camp_date_format($p_unixtime, $p_format = null)
     global $g_ado_db;
 
     // gets the context variable
-    $smarty = CampTemplate::singleton();
-    $campsite = $smarty->get_template_vars('campsite');
-    unset($smarty);
+    $campsite = CampTemplate::singleton()->get_template_vars('campsite');
+
+    // makes sure $p_unixtime is unixtime stamp
+    $p_unixtime = smarty_make_timestamp($p_unixtime);
 
     if (is_null($p_format) || empty($p_format)) {
         $dbQuery = "SELECT FROM_UNIXTIME('".$p_unixtime."') AS date";
