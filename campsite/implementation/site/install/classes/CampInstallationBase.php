@@ -106,8 +106,8 @@ class CampInstallationBase
             $db_hostport = 3306;
         }
 
-        if (empty($db_hostname) || empty($db_hostport) || empty($db_username)
-                || empty($db_userpass) || empty($db_database)) {
+        if (empty($db_hostname) || empty($db_hostport)
+                || empty($db_username) || empty($db_database)) {
             $this->m_step = 'database';
             $this->m_message = 'Error: Please input the requested data';
             return false;

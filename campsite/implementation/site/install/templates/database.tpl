@@ -64,9 +64,7 @@
             <div class="form_field">
               <label for="db_userpass">User Password</label>:<br />
               <input class="inputbox" type="password" size="42" maxlength="40"
-              id="db_userpass" name="db_userpass" value="{{ $db.userpass }}"
-              alt="blank"
-              emsg="You must complete the 'Password' field" /><br />
+              id="db_userpass" name="db_userpass" value="{{ $db.userpass }}" /><br />
             </div>
             <div class="form_field">
               <label for="db_database">Database Name</label>:<br />
