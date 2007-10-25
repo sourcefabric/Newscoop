@@ -14,7 +14,7 @@
 <body>
 <div id="offline">
   <div><img src="/{{ $siteinfo.templates_path }}/img/campsite_logo_gn.jpg" />
-  <div>Error Message.</div>
+  <div>Error: Not template found.</div>
 </div>
 </body>
 </html>
