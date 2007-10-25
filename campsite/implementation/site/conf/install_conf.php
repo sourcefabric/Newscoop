@@ -1,22 +1,30 @@
 <?php
+/**
+ * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @author Mugur Rus <mugur.rus@gmail.com>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
+ */
 
 $Campsite['APACHE_USER'] = 'www-data';
 $Campsite['APACHE_GROUP'] = 'www-data';
-$Campsite['CAMPSITE_DIR'] = '/usr/local/campsite_a1335';
-$Campsite['BIN_DIR'] = '/usr/local/campsite_1335/bin';
-$Campsite['SBIN_DIR'] = '/usr/local/campsite_1335/sbin';
-$Campsite['ETC_DIR'] = '/usr/local/campsite_1335/etc';
-$Campsite['WWW_DIR'] = '/usr/local/apache-1.3.35/htdocs/campsite/www';
-$Campsite['WWW_COMMON_DIR'] = '/usr/local/apache-1.3.35/htdocs/campsite/www-common';
+$Campsite['CAMPSITE_DIR'] = $_SERVER['DOCUMENT_ROOT'];
+$Campsite['BIN_DIR'] = $Campsite['CAMPSITE_DIR'].'/bin';
+$Campsite['SBIN_DIR'] = $Campsite['CAMPSITE_DIR'].'/sbin';
+$Campsite['ETC_DIR'] = $Campsite['CAMPSITE_DIR'].'/etc';
+$Campsite['WWW_DIR'] = $Campsite['CAMPSITE_DIR'];
+$Campsite['WWW_COMMON_DIR'] = $Campsite['CAMPSITE_DIR'];
 $Campsite['DEFAULT_SMTP_SERVER_ADDRESS'] = 'localhost';
 $Campsite['DEFAULT_SMTP_SERVER_PORT'] = '25';
 $Campsite['DEFAULT_DATABASE_SERVER_ADDRESS'] = 'localhost';
 
-$Campsite['HTML_COMMON_DIR'] = $Campsite['WWW_COMMON_DIR'] . "/html";
-$Campsite['CGI_COMMON_DIR'] = $Campsite['WWW_COMMON_DIR'] . "/cgi-bin";
-$Campsite['HTML_DIR'] = $Campsite['WWW_DIR'].'/'.$Campsite['DATABASE_NAME'].'/html';
-$Campsite['CGI_DIR'] = $Campsite['WWW_DIR'].'/'.$Campsite['DATABASE_NAME'].'/cgi-bin';
-$Campsite['PEAR_LOCAL'] = $Campsite['WWW_COMMON_DIR']."/html/include/pear";
+$Campsite['HTML_COMMON_DIR'] = $Campsite['CAMPSITE_DIR'];
+$Campsite['HTML_DIR'] = $Campsite['CAMPSITE_DIR'];
+$Campsite['PEAR_LOCAL'] = $Campsite['CAMPSITE_DIR'].'/include/pear';
 
 if (!isset($_SERVER['SERVER_PORT']))
 {
@@ -31,8 +39,8 @@ $Campsite['WEBSITE_URL'] = $scheme.$Campsite['HOSTNAME'];
 unset($scheme);
 
 
-$Campsite['TEMPLATE_DIRECTORY'] = $Campsite['HTML_DIR']."/look";
-$Campsite['TEMPLATE_BASE_URL'] = $Campsite['WEBSITE_URL']."/look/";
+$Campsite['TEMPLATE_DIRECTORY'] = $Campsite['HTML_DIR']."/templates";
+$Campsite['TEMPLATE_BASE_URL'] = $Campsite['WEBSITE_URL']."/templates/";
 $Campsite['IMAGE_DIRECTORY'] = $Campsite['HTML_DIR'].'/images/';
 $Campsite['IMAGE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/';
 $Campsite['ADMIN_IMAGE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/css';
