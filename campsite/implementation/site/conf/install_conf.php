@@ -14,17 +14,9 @@ $Campsite['APACHE_USER'] = 'www-data';
 $Campsite['APACHE_GROUP'] = 'www-data';
 $Campsite['CAMPSITE_DIR'] = $_SERVER['DOCUMENT_ROOT'];
 $Campsite['BIN_DIR'] = $Campsite['CAMPSITE_DIR'].'/bin';
-$Campsite['SBIN_DIR'] = $Campsite['CAMPSITE_DIR'].'/sbin';
-$Campsite['ETC_DIR'] = $Campsite['CAMPSITE_DIR'].'/etc';
 $Campsite['WWW_DIR'] = $Campsite['CAMPSITE_DIR'];
-$Campsite['WWW_COMMON_DIR'] = $Campsite['CAMPSITE_DIR'];
-$Campsite['DEFAULT_SMTP_SERVER_ADDRESS'] = 'localhost';
-$Campsite['DEFAULT_SMTP_SERVER_PORT'] = '25';
-$Campsite['DEFAULT_DATABASE_SERVER_ADDRESS'] = 'localhost';
 
-$Campsite['HTML_COMMON_DIR'] = $Campsite['CAMPSITE_DIR'];
 $Campsite['HTML_DIR'] = $Campsite['CAMPSITE_DIR'];
-$Campsite['PEAR_LOCAL'] = $Campsite['CAMPSITE_DIR'].'/include/pear';
 
 if (!isset($_SERVER['SERVER_PORT']))
 {
