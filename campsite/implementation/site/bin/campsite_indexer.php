@@ -374,7 +374,8 @@ if (is_array($GLOBALS['argv']) && !empty($GLOBALS['argv'][1])) {
         exit(0);
     }
 } else {
-    $conf_dir = '/usr/local/campsite/etc/campsite';
+    $bin_dir = dirname(__FILE__);
+    $conf_dir = preg_replace('/bin$/', 'conf', $bin_dir);
 }
 
 

@@ -122,7 +122,6 @@ if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/demo_login.php")) {
 	<tr>
 		<td colspan="2">
 			<b><?php  putGS("Login"); ?></b>
-			[ <?php putGS("Instance"); p(': '.$Campsite['DATABASE_NAME']); ?> ]
 			<hr noshade size="1"  color="black" />
 		</td>
 	</tr>
