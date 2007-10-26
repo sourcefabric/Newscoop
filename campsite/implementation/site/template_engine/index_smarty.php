@@ -116,7 +116,7 @@ $context->audioclip = new MetaAudioclip('7160d04166d69f50');
 
 
 // Article comment
-$context->comment = new MetaComment(2);
+$context->comment = new MetaComment(9);
 
 
 // Template object

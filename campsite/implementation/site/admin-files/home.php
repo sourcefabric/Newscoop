@@ -83,18 +83,6 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
     $res = 'OK';
 }
 
-$restartEngine = Input::Get('restart_engine', 'string', 'no', true);
-if (($restartEngine == 'yes') && $g_user->hasPermission("InitializeTemplateEngine")) {
-	require_once($_SERVER['DOCUMENT_ROOT']."/parser_utils.php");
-	if (camp_stop_parser()) {
-		$actionMsg = getGS("The template engine was (re)started.");
-		$res = "OK";
-	} else {
-		$actionMsg = getGS("The template engine could not be restarted! Please verify if the template engine was started by other user than $1.", $Campsite['APACHE_USER']);
-		$res = "ERROR";
-	}
-	camp_start_parser();
-}
 ?>
 <?php if (!empty($actionMsg)) { ?>
 <table border="0" cellpadding="0" cellspacing="0" align="center">
