@@ -125,6 +125,12 @@ final class CampInstallation extends CampInstallationBase
 
         if (!empty($config_db)) {
             $tpl->assign('db', $config_db);
+        } else {
+            $tpl->assign('db',
+                         array('hostname'=>'localhost',
+                               'username'=>'root',
+                               'database'=>'campsite')
+                        );
         }
 
         $config_site = $session->getData('config.site', 'installation');

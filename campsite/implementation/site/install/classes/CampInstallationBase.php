@@ -248,8 +248,42 @@ class CampInstallationBase
         file_put_contents($path1, $buffer1);
         file_put_contents($path2, $buffer2);
 
+        // create images and files directories
+        CampInstallationBase::CreateDirectory($_SERVER['DOCUMENT_ROOT'].DIR_SEP.'images');
+        CampInstallationBase::CreateDirectory($_SERVER['DOCUMENT_ROOT'].DIR_SEP.'images'.DIR_SEP.'thumbnails');
+        CampInstallationBase::CreateDirectory($_SERVER['DOCUMENT_ROOT'].DIR_SEP.'files');
+
+        // create the symlinks to the index.php file for each language
+        require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+        Language::CreateLanguageLinks();
+
+        // create the symlink tpl.php -> index.php, needed for template
+        // path URL processing
+        $indexFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'index.php';
+        $tplFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'tpl.php';
+        if (file_exists($tplFile)) {
+            @unlink($tplFile);
+        }
+        @symlink($indexFile, $tplFile);
+
         return true;
     } // fn saveConfiguration
+
+    /**
+     * Creates the given directory; verifies if it already exists of if
+     * another file with the same name exists.
+     *
+     * @param string $p_directoryPath
+     */
+    public static function CreateDirectory($p_directoryPath)
+    {
+        if (file_exists($p_directoryPath) && !is_dir($p_directoryPath)) {
+            unlink($p_directoryPath);
+        }
+        if (!is_dir($p_directoryPath)) {
+            mkdir($p_directoryPath);
+        }
+    }
 
 } // fn ClassInstallationBase
 

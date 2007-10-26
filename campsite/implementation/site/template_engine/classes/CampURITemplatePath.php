@@ -52,7 +52,7 @@ class CampURITemplatePath extends CampURI
      *
      * @var string
      */
-    private $m_lookDir = null;
+    private $m_templatesPrefix = null;
 
     /**
      * Holds the URI path from buildURI() method.
@@ -86,7 +86,7 @@ class CampURITemplatePath extends CampURI
     {
         parent::__construct($p_uri);
         $this->setURLType(URLTYPE_TEMPLATE_PATH);
-        $this->m_lookDir = 'look';
+        $this->m_templatesPrefix = 'tpl';
         $this->parse();
         $this->setURL();
     } // fn __construct
@@ -444,7 +444,7 @@ class CampURITemplatePath extends CampURI
 
         $trimmedPath = trim($this->getPath(), '/');
         list($lookDir, $template) = explode('/', $trimmedPath);
-        if ($lookDir != $this->m_lookDir) {
+        if ($lookDir != $this->m_templatesPrefix) {
             return null;
         }
 
@@ -522,7 +522,7 @@ class CampURITemplatePath extends CampURI
             return;
         }
 
-        $this->m_uriPath = '/' . $this->m_lookDir . '/' . $template;
+        $this->m_uriPath = '/' . $this->m_templatesPrefix . '/' . $template;
     } // fn buildURI
 
 } // class CampURITemplatePath
