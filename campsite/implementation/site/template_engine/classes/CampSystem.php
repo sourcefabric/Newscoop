@@ -36,15 +36,6 @@ abstract class CampSystem
 
 
     /**
-     *
-     */
-    protected function readParameters()
-    {
-        echo 'something';
-    } // fn readParameters
-
-
-    /**
      * Reads a configuration setting.
      *
      * @param string $p_varName
@@ -350,14 +341,11 @@ abstract class CampSystem
             . 'WHERE p.Id = a.IdPublication AND '
             . "a.Name = '" . $g_ado_db->Escape($p_siteAlias) . "'";
         $data = $g_ado_db->GetRow($sqlQuery);
-        if (empty($data)) {
-            CampTemplate::singleton()->trigger_error('not valid site alias');
-            return;
+        if (!empty($data)) {
+            CampRequest::SetVar('URLType', $data['IdURLType']);
+            CampRequest::SetVar(CampRequest::PUBLICATION_ID, $data['Id']);
+            CampRequest::SetVar(CampRequest::LANGUAGE_ID, $data['IdDefaultLanguage']);
         }
-
-        CampRequest::SetVar('URLType', $data['IdURLType']);
-        CampRequest::SetVar(CampRequest::PUBLICATION_ID, $data['Id']);
-        CampRequest::SetVar(CampRequest::LANGUAGE_ID, $data['IdDefaultLanguage']);
     } // fn BuildPublicationFromAlias
 
 } // class CampSystem

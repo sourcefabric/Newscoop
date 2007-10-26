@@ -108,6 +108,7 @@ class CampURIShortNames extends CampURI
 	protected function __construct($p_uri = null)
 	{
         parent::__construct($p_uri);
+
         $this->setURLType(URLTYPE_SHORT_NAMES);
         $this->setURL();
 	} // fn __construct

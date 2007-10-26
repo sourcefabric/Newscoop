@@ -5,11 +5,11 @@
 <head>
   <title>{{ $siteinfo.title }}</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <meta name="generator" content="Campsite - {{ $siteinfo.campsite_url }}" />
+  <meta name="generator" content="{{ $siteinfo.generator }}" />
   <meta name="description" content="{{ $siteinfo.description }}" />
   <meta name="keywords" content="{{ $siteinfo.keywords }}" />
 
-  <link rel="stylesheet" type="text/css" href="/{{ $siteinfo.templates_path }}/css/style_offline.css" />
+  <link rel="stylesheet" type="text/css" href="/{{ $siteinfo.templates_path }}/css/_style_offline.css" />
 </head>
 <body>
 <div id="offline">

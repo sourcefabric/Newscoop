@@ -12,7 +12,8 @@
 /**
  * Class CampConfig
  */
-final class CampConfig {
+final class CampConfig
+{
     /**
      * Holds instance of the class
      *

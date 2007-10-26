@@ -1,6 +1,12 @@
 <?php
 /**
  * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
  */
 
 /**

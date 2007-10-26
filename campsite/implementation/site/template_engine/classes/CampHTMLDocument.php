@@ -93,7 +93,11 @@ final class CampHTMLDocument
 
 
     /**
+     * Builds an instance object of this class only if there is no one.
      *
+     * @param array $p_attributes
+     *
+     * @return object
      */
     public function singleton($p_attributes = array())
     {
@@ -106,7 +110,9 @@ final class CampHTMLDocument
 
 
     /**
+     * Returns the type of document.
      *
+     * @return string
      */
     public function getType()
     {
@@ -115,7 +121,9 @@ final class CampHTMLDocument
 
 
     /**
+     * Returns the title of the document.
      *
+     * @return string
      */
     public function getTitle()
     {
@@ -124,7 +132,9 @@ final class CampHTMLDocument
 
 
     /**
+     * Returns the page generator.
      *
+     * @return string
      */
     public function getGenerator()
     {
@@ -133,7 +143,11 @@ final class CampHTMLDocument
 
 
     /**
+     * Sets the document title.
      *
+     * @param string $p_title
+     *
+     * @return void
      */
     public function setTitle($p_title = null)
     {
@@ -148,7 +162,9 @@ final class CampHTMLDocument
 
 
     /**
+     * Returns the MIME type.
      *
+     * @return string
      */
     public function getMimeType()
     {
@@ -157,7 +173,11 @@ final class CampHTMLDocument
 
 
     /**
+     * Sets the MIME type for the document.
      *
+     * @param string $p_mime
+     *
+     * @return void
      */
     public function setMimeType($p_mime = 'text/html')
     {
@@ -166,7 +186,9 @@ final class CampHTMLDocument
 
 
     /**
+     * Returns the charset.
      *
+     * @return string
      */
     public function getCharset()
     {
@@ -175,7 +197,11 @@ final class CampHTMLDocument
 
 
     /**
+     * Sets the charset.
      *
+     * @param string $p_charset
+     *
+     * @return void
      */
     public function setCharset($p_charset = 'utf-8')
     {
@@ -184,7 +210,14 @@ final class CampHTMLDocument
 
 
     /**
+     * Returns the requested META tag.
      *
+     * @param string $p_name
+     *      The name of the META tag to be retrieved
+     * @param boolean $p_httpEquiv
+     *      Whether it is a http-equiv META tag or not
+     *
+     * @return string $tag
      */
     function getMetaTag($p_name, $p_httpEquiv = false)
     {
@@ -202,7 +235,16 @@ final class CampHTMLDocument
 
 
     /**
+     * Sets the given META tag.
      *
+     * @param string $p_name
+     *      The name of the META tag to be retrieved
+     * @param mixed $p_value
+     *      The value for the META tag
+     * @param boolean $p_httpEquiv
+     *      Whether it is a http-equiv META tag or not
+     *
+     * @return void
      */
     public function setMetaTag($p_name, $p_value, $p_httpEquiv = false)
     {
@@ -215,7 +257,13 @@ final class CampHTMLDocument
 
 
     /**
+     * Renders the document.
      *
+     * Displays the document after parsing it.
+     *
+     * @param array $p_params
+     *
+     * @return void
      */
     public function render($p_params)
     {
@@ -225,7 +273,7 @@ final class CampHTMLDocument
                             ? $p_params['templates_dir'] : 'templates';
         $template = $p_params['template'];
 
-        if (!file_exists($templates_dir.DIR_SEP.$template)) {
+        if (!file_exists(CS_PATH_SITE.DIR_SEP.$templates_dir.DIR_SEP.$template)) {
             $template = '_campsite_error.tpl';
         }
 

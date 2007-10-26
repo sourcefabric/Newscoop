@@ -63,6 +63,11 @@ final class CampSite extends CampSystem
      */
     public function init()
     {
+        // returns when site is not in online mode
+        if ($this->getSetting('site.online') == 'N') {
+            return;
+        }
+
         // starts the URI instance
         self::GetURIInstance();
 
@@ -100,7 +105,7 @@ final class CampSite extends CampSystem
 
 
     /**
-     *
+     * Initialises the session.
      */
     public function initSession()
     {
@@ -156,13 +161,13 @@ final class CampSite extends CampSystem
     public function render()
     {
         $document =& self::GetHTMLDocumentInstance();
-        $uri =& self::GetURIInstance();
 
-        // gets the template file name
-        $template = $this->getTemplateName();
-
+        // sets the appropiate template if site is not in mode online
         if ($this->getSetting('site.online') == 'N') {
             $template = '_campsite_offline.tpl';
+        } else {
+            // gets the template file name
+            $template = $this->getTemplateName();
         }
 
         $params = array(
@@ -175,7 +180,9 @@ final class CampSite extends CampSystem
 
 
     /**
+     * Returns the template file name
      *
+     * @return string $template
      */
     public function getTemplateName()
     {

@@ -36,11 +36,69 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 	</td>
 </tr>
 <tr>
+    <td align="left" width="400px">
+        <?php putGS("Site On-Line:") ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="radio" name="f_campsite_online" value="Y" <?php if (SystemPref::Get("SiteOnline") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_campsite_online" value="N" <?php if (SystemPref::Get("SiteOnline") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+<tr>
+	<td align="left" width="400px">
+        <?php putGS("Site Title:"); ?>
+	</td>
+	<td align="left" valign="top">
+		<input type="text" name="f_site_title" value="<?php p(SystemPref::Get("SiteTitle")); ?>" maxlength="100" size="40" class="input_text" alt="blank" />
+	</td>
+</tr>
+<tr>
+	<td align="left" width="400px">
+        <?php putGS("Site Meta Keywords:"); ?>
+	</td>
+	<td align="left" valign="top">
+		<input type="text" name="f_site_metakeywords" value="<?php p(SystemPref::Get("SiteMetaKeywords")); ?>" maxlength="100" size="40" class="input_text" alt="blank" />
+	</td>
+</tr>
+<tr>
+	<td align="left" width="400px">
+        <?php putGS("Site Meta Description:"); ?>
+	</td>
+	<td align="left" valign="top">
+		<input type="text" name="f_site_metadescription" value="<?php p(SystemPref::Get("SiteMetaDescription")); ?>" maxlength="150" size="40" class="input_text" alt="blank" />
+	</td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Cache Enabled:") ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="radio" name="f_cache_enabled" value="Y" <?php if (SystemPref::Get("SiteCacheEnabled") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_cache_enabled" value="N" <?php if (SystemPref::Get("SiteCacheEnabled") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+<tr>
+	<td align="left" width="400px">
+		<?php putGS("Secret Key:"); ?>
+	</td>
+	<td align="left" valign="top">
+		<input type="text" name="f_secret_key" value="<?php p(SystemPref::Get("SiteSecretKey")); ?>" maxlength="32" size="40" class="input_text" alt="blank" />
+	</td>
+</tr>
+<tr>
+	<td align="left" width="400px">
+		<?php putGS("Session Lifetime:"); ?>
+	</td>
+	<td align="left" valign="top">
+        <input type="text" name="f_session_lifetime" value="<?php p(SystemPref::Get("SiteSessionLifeTime")); ?>" maxlength="4" size="5" class="input_text" alt="blank" />
+	</td>
+</tr>
+<tr>
 	<td align="left" width="400px">
 		<?php putGS("Keyword separator:"); ?>
 	</td>
 	<td align="left" valign="top">
-		<input type="text" name="f_keyword_separator" value="<?php p(SystemPref::Get("KeywordSeparator")); ?>" maxlength="2" size="4" class="input_text" alt="blank" emsg="<?php putGS("Keyword separator must be at least one character."); ?>">
+		<input type="text" name="f_keyword_separator" value="<?php p(SystemPref::Get("KeywordSeparator")); ?>" maxlength="2" size="4" class="input_text" alt="blank" emsg="<?php putGS("Keyword separator must be at least one character."); ?>" />
 	</td>
 </tr>
 <tr>
@@ -49,7 +107,7 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 	</td>
 	<td align="left" valign="top">
 		<input type="text" name="f_login_num" value="<?php p(SystemPref::Get("LoginFailedAttemptsNum")); ?>" maxlength="2" size="4" class="input_text" alt="number|0|0
-|10" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Login Attempts")); ?>">
+|10" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Login Attempts")); ?>" />
 	</td>
 </tr>
 <tr>
@@ -59,6 +117,23 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 	</td>
 	<td valign="top">
 		<input type="text" name="f_max_upload_filesize" value="<?php p(SystemPref::Get("MaxUploadFileSize")); ?>" maxlenght="12" size="14" class="input_text" alt="blank" emsg="<?php putGS("Please enter a positive number for the '$2' field.", getGS("Max Upload File Size")); ?>" />
+</tr>
+<tr>
+	<td align="left" width="400px">
+		<?php putGS("SMTP Host:"); ?>
+	</td>
+	<td align="left" valign="top">
+		<input type="text" name="f_smtp_host" value="<?php p(SystemPref::Get("SMTPHost")); ?>" maxlength="100" size="40" class="input_text" alt="blank" emsg="<?php putGS("SMTP Host must be at least four character."); ?>" />
+	</td>
+</tr>
+<tr>
+	<td align="left" width="400px">
+		<?php putGS("SMTP Port:"); ?>
+	</td>
+	<td align="left" valign="top">
+		<input type="text" name="f_smtp_port" value="<?php p(SystemPref::Get("SMTPPort")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0
+|10" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("SMTP Port")); ?>" />
+	</td>
 </tr>
 <tr>
 	<td colspan="2"><hr></td>
