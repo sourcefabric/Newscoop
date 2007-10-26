@@ -9,9 +9,9 @@ global $DEBUG;
 // initialize needed global variables
 $_SERVER['DOCUMENT_ROOT'] = getenv("DOCUMENT_ROOT");
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/liveuser_configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/parser_utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/conf/liveuser_configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 
 $g_errorList = array();
