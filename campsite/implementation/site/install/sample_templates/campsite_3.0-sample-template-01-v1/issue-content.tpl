@@ -1,7 +1,7 @@
 <table class="issue" cellspacing="0" cellpadding="0">
 <tr>
   <td>
-    {{ list_articles length="1" order="bynumber desc" name="mainarticle" }}
+    {{ list_articles length="1" order="bypublishdate desc" name="mainarticle" }}
     <table width="100%" cellspacing="0" cellpadding="4">
       {{ if $campsite->current_list->at_beginning }}
         <tr>

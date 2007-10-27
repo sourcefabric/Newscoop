@@ -21,7 +21,7 @@
     <a href="/"><img
       src="/{{ $siteinfo.templates_path }}/img/thenewspaper.png" /></a>
     <div class="datetime">
-      Today: {{ $smarty.now|camp_date_format:"%d %M %Y" }}, Bogot&aacute;
+      Today: {{ $smarty.now|camp_date_format:"%d %M %Y" }}
     </div>
   </td>
   <td>
@@ -33,4 +33,4 @@
   </td>
 </tr>
 </table>
-{{ include file="html_searchbar.tpl" }}
+{{ include file="html_mainmenu.tpl" }}
