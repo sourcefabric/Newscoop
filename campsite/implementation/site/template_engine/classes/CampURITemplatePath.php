@@ -403,6 +403,7 @@ class CampURITemplatePath extends CampURI
                     CampTemplate::singleton()->trigger_error('not published issues');
                     return;
                 }
+                $this->setQueryVar(CampRequest::ISSUE_NR, $cIssueNr);
             }
             // gets the template for the issue
             $template = CampSystem::GetIssueTemplate($cLangId, $cPubId, $cIssueNr);
