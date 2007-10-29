@@ -194,7 +194,7 @@ ul#topmenulist li a:hover {
 div#dotline {
     width: 100%;
     height: 1px;
-    background-image: url(/look/img/dotline.png);
+    background-image: url(/templates/img/dotline.png);
 }
 
 /*** Search Form ***/
