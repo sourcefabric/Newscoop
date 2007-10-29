@@ -255,13 +255,22 @@ class CampURITemplatePath extends CampURI
     private function getURIArticle()
     {
         $uriString = $this->getURISection();
-        if (empty($uriString)) {
-            return null;
-        }
 
         $context = CampTemplate::singleton()->context();
         if (is_object($context->article) && $context->article->defined) {
-            $uriString .= '&'.CampRequest::ARTICLE_NR.'='.$context->article->number;
+            if (is_null($uriString)) {
+                $language = $context->article->getLanguage();
+                $publication = $context->article->getPublication();
+                $issue = $context->article->getIssue();
+                $section = $context->article->getSection();
+                $uriString = CampRequest::LANGUAGE_ID.'='.$language->number
+                    .'&'.CampRequest::PUBLICATION_ID.'='.$publication->identifier
+                    .'&'.CampRequest::ISSUE_NR.'='.$issue->number
+                    .'&'.CampRequest::SECTION_NR.'='.$section->number
+                    .'&'.CampRequest::ARTICLE_NR.'='.$context->article->number;
+            } else {
+                $uriString .= '&'.CampRequest::ARTICLE_NR.'='.$context->article->number;
+            }
         } else {
             $articleNr = $this->getQueryVar(CampRequest::ARTICLE_NR);
             if (empty($articleNr)) {
@@ -508,6 +517,11 @@ class CampURITemplatePath extends CampURI
         case 'article':
             $this->m_uriQuery = $this->getURIArticle();
             break;
+        case 'articleattachment':
+            $context = CampTemplate::singleton()->context();
+            $attachment = new Attachment($context->attachment->identifier);
+            $this->m_uriPath = '/attachment/'.basename($attachment->getStorageLocation());
+            break;
         default:
             if (empty($p_param)) {
                 $this->m_uriQuery = $this->m_query;
@@ -515,16 +529,19 @@ class CampURITemplatePath extends CampURI
             break;
         }
 
-        // gets the template name from the context
-        $context = CampTemplate::singleton()->context();
-        $template = $context->$p_param->template->name;
+        if ($p_param == 'publication' || $p_param == 'issue'
+                || $p_param == 'section' || $p_param == 'article') {
+            // gets the template name from the context
+            $context = CampTemplate::singleton()->context();
+            $template = $context->$p_param->template->name;
 
-        if (empty($template)) {
-            CampTemplate::singleton()->trigger_error('Invalid template');
-            return;
+            if (empty($template)) {
+                CampTemplate::singleton()->trigger_error('Invalid template');
+                return;
+            }
+
+            $this->m_uriPath = '/' . $this->m_templatesPrefix . '/' . $template;
         }
-
-        $this->m_uriPath = '/' . $this->m_templatesPrefix . '/' . $template;
     } // fn buildURI
 
 } // class CampURITemplatePath

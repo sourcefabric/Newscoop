@@ -3,6 +3,17 @@
  * @package Campsite
  */
 
+/**
+ * Includes
+ *
+ * We indirectly reference the DOCUMENT_ROOT so we can enable
+ * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
+ * is not defined in these cases.
+ */
+$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+
+require_once($g_documentRoot.'/conf/install_conf.php');
+
 
 define('CACHE_SERIAL_HEADER', "<?php\n/*");
 define('CACHE_SERIAL_FOOTER', "*/\n?".">");
@@ -11,7 +22,8 @@ define('CACHE_SERIAL_FOOTER', "*/\n?".">");
  /**
  * @package Campsite
  */
-final class CampCache {
+final class CampCache
+{
     /**
      * The cache key for the current cache object.
      *
