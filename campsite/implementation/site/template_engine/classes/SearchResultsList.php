@@ -37,7 +37,7 @@ class SearchResultsList extends ListObject
 	                                                   $context->publication->identifier);
 	    $this->m_constraints[] = $comparisonOperation;
 
-	    $keywords = array('the');
+	    $keywords = array('lectus');
 
 	    $articlesList = Article::SearchByKeyword($keywords, $this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaArticlesList = array();

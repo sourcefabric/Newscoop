@@ -148,8 +148,13 @@
 {{ /list_search_results }}
 
 
-{{ set_topic name="Music:en" }}
-<h3>subtopics of topic {{ $campsite->topic->name }}</h3>
+{{ set_topic name="Open Source:en" }}
+{{ unset_topic }}
+{{ if $campsite->topic->defined }}
+    <h3>subtopics of topic {{ $campsite->topic->name }}</h3>
+{{ else }}
+    <h3>root topics</h3>
+{{ /if }}
 {{ list_subtopics length="4" columns="2" name='sample_name' }}
 {{ if $campsite->current_list->at_beginning }}
 <li>count: {{ $campsite->current_list->count }}</li>
@@ -446,11 +451,11 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_publication identifier="6" }}
+    {{ set_publication identifier="1" }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
-    {{ literal }}{{ set_publication identifier="6" }}{{ /literal }}
+    {{ literal }}{{ set_publication identifier="1" }}{{ /literal }}
   </td>
 </tr>
 <tr>
@@ -720,11 +725,11 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_section number="1" }}
+    {{ set_section number="10" }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
-    {{ literal }}{{ set_section number="1" }}{{ /literal }}
+    {{ literal }}{{ set_section number="10" }}{{ /literal }}
   </td>
 </tr>
 <tr>
@@ -1060,7 +1065,7 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_article number="143" }}
+    {{ set_article number="4" }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
@@ -1352,11 +1357,11 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_topic name="Music:en" }}
+    {{ set_topic name="Open Source:en" }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
-    {{ literal }}{{ set_topic name="Music:en" }}{{ /literal }}
+    {{ literal }}{{ set_topic name="Open Source:en" }}{{ /literal }}
   </td>
 </tr>
 <tr>

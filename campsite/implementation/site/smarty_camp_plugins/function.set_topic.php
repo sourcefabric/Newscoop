@@ -30,7 +30,7 @@ function smarty_function_set_topic($p_params, &$p_smarty)
     	$attrName = 'name';
     	$attrValue = $p_params['name'];
     	$topic = Topic::GetByFullName($p_params['name']);
-        if ($topic->exists()) {
+        if (!is_null($topic) && $topic->exists()) {
             $topicId = $topic->getTopicId();
         } else {
 	    	$campsite->topic->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
