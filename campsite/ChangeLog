@@ -1,4 +1,4 @@
-3.0.0-beta1
+3.0.0-beta1 (October 30, 2007)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=3.0.0
   
@@ -9,9 +9,6 @@
   dependecies and easy install.
   - The install procedure is much easier thanks to a web based
   installer.
-  
-  Small Improvements
-  ------------------
   - A caching mechanism for database objects was implemented. This
   will result in fewer database queries and greater speed and
   scalability.
