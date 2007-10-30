@@ -1,4 +1,0 @@
-DATABASE:implementation/database::make mysql mysqladmin:
-EVENT_HANDLERS:implementation/mailnotify::crond make:
-SEARCH_ENGINE:implementation/search::crond make:
-ADMIN_INTERFACE:implementation/site::make apache iconv convert php_cli php_mysql php_gd:
