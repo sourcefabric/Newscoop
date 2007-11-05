@@ -25,7 +25,7 @@ table.header, table.right_header {
 }
 
 table.right_header, table.right {
-    width: 100%;
+    width: 200px;
     margin: 0px 0px 0px 8px;
     padding: 8px;
     border: 1px solid #dfdfdf;
@@ -115,6 +115,12 @@ div.icon span {
     display: block;
     text-align: center;
 }
+div.demo_img {
+    margin-top: 15px;
+    width: 230px;
+    height: 135px;
+    border: 1px solid #f0f0f0;
+}
 
 input.inputbox {
     font-size: 90%;
@@ -143,6 +149,10 @@ ul#steps_list li.stepdone {
     color: #7b7b7b;
 }
 
+input.control_button {
+    font-size: 90%;
+    border: 1px solid #afafaf;
+}
 input.nav_button {
     font-size: 70%;
     border: 1px solid #afafaf;

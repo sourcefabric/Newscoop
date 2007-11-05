@@ -62,6 +62,8 @@ final class CampInstallationView
             break;
         case 'mainconfig':
             break;
+        case 'loaddemo':
+            break;
         case 'finish':
             break;
         }

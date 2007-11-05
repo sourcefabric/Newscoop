@@ -21,6 +21,7 @@ global $g_db;
  */
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
+require_once($g_documentRoot.'/conf/install_conf.php');
 require_once($g_documentRoot.'/include/adodb/adodb.inc.php');
 require_once($g_documentRoot.'/classes/Input.php');
 require_once($g_documentRoot.'/template_engine/classes/CampRequest.php');
@@ -59,6 +60,7 @@ class CampInstallationBase
         $session = CampSession::singleton();
 
         $this->m_step = (!empty($input['step'])) ? $input['step'] : $this->m_defaultStep;
+
         switch($this->m_step) {
         case 'precheck':
             $session->unsetData('config.db', 'installation');
@@ -71,14 +73,18 @@ class CampInstallationBase
             $this->license();
             break;
         case 'mainconfig':
-            if ($this->databaseConfiguration($input)) {
+            $prevStep = (isset($input['this_step'])) ? $input['this_step'] : '';
+            if ($prevStep != 'loaddemo'
+                    && $this->databaseConfiguration($input)) {
                 $session->setData('config.db', $this->m_config['database'], 'installation', true);
             }
             break;
-        case 'finish':
+        case 'loaddemo':
             if ($this->generalConfiguration($input)) {
                 $session->setData('config.site', $this->m_config['mainconfig'], 'installation', true);
             }
+            break;
+        case 'finish':
             if ($this->finish()) {
                 $this->saveConfiguration();
             }
@@ -193,6 +199,12 @@ class CampInstallationBase
 
         return true;
     } // fn generalConfiguration
+
+
+    private function loadDemoData($p_input)
+    {
+        //$dd_install = Input::Get('Site_Title', 'text');
+    } // fn loadDemoData
 
 
     private function finish()

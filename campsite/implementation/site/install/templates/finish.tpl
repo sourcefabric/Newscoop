@@ -54,7 +54,7 @@
       <td>
         <ul id="steps_list">
         {{ foreach from=$step_titles key="step" item="s" }}
-          {{ if $s.order < 5 }}
+          {{ if $s.order < 6 }}
             <li class="stepdone">{{ $s.title }}</span>
           {{ else }}
             <li>{{ $s.title }}

@@ -47,9 +47,12 @@ final class CampInstallation extends CampInstallationBase
                              'mainconfig' => array('tplfile' => 'mainconfig.tpl',
                                                    'title' => 'Main Configuration',
                                                    'order' => 4),
+                             'loaddemo' => array('tplfile' => 'loaddemo.tpl',
+                                                 'title' => 'Sample Site',
+                                                 'order' => 5),
                              'finish' => array('tplfile' => 'finish.tpl',
                                                'title' => 'Finish',
-                                               'order' => 5)
+                                               'order' => 6)
                              );
 
     /**
