@@ -51,9 +51,17 @@ class CampInstallationBase
     /**
      * @var string
      */
+    protected $m_sampleSiteName = 'campsite_3.0-sample-template-01-v1';
+
+    /**
+     * @var string
+     */
     protected $m_message = null;
 
 
+    /**
+     *
+     */
     protected function execute()
     {
         $input = CampRequest::GetInput('post');
@@ -85,6 +93,10 @@ class CampInstallationBase
             }
             break;
         case 'finish':
+            if (isset($input['install_demo']) && $input['install_demo'] == 1) {
+                $this->loadDemoSite();
+            }
+
             if ($this->finish()) {
                 $this->saveConfiguration();
             }
@@ -99,6 +111,9 @@ class CampInstallationBase
     private function license() {}
 
 
+    /**
+     *
+     */
     private function databaseConfiguration($p_input)
     {
         global $g_db;
@@ -170,6 +185,9 @@ class CampInstallationBase
     } // fn databaseConfiguration
 
 
+    /**
+     *
+     */
     private function generalConfiguration($p_input)
     {
         $mc_sitetitle = Input::Get('Site_Title', 'text');
@@ -201,12 +219,77 @@ class CampInstallationBase
     } // fn generalConfiguration
 
 
-    private function loadDemoData($p_input)
+    /**
+     *
+     */
+    private function loadDemoSite()
     {
-        //$dd_install = Input::Get('Site_Title', 'text');
-    } // fn loadDemoData
+        // TODO
+        // - prepare the sql file [X]
+        // - validate write permission to templates file
+        // - copy files (including images and css files) to respective places
+        // - load sql data [X]
+        // - that is it
+
+        global $g_db;
+
+        $isWritable = true;
+        $errorDirectories = array();
+        $templatesDir = CS_PATH_SMARTY_TEMPLATES;
+        $cssDir = $templatesDir.DIR_SEP.'css';
+        $imagesDir = $templatesDir.DIR_SEP.'img';
+        if (!is_dir($templatesDir) || !is_writable($templatesDir)) {
+            $directories[] = $templatesDir;
+            $isWritable = false;
+        }
+        if (!is_dir($cssDir) || !is_writable($cssDir)) {
+            $directories[] = $cssDir;
+            $isWritable = false;
+        }
+        if (!is_dir($imagesDir) && !is_writable($imagesDir)) {
+            $directories[] = $imagesDir;
+            $isWritable = false;
+        }
+
+        if (!$isWritable) {
+            $dirList = implode(', ', $directories);
+            $this->m_step = 'loaddemo';
+            $this->m_message = 'Error: Templates directory <em>'.$dirList
+                . '</em> is/are not writable, please set the appropiate '
+                . 'permissions in order to install the demo site files.';
+            return false;
+        }
+
+        $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$this->m_sampleSiteName;
+        $target = CS_PATH_SMARTY_TEMPLATES;
+        if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
+            $this->m_step = 'loaddemo';
+            $this->m_message = 'Error: Copying sample site files';
+            return false;
+        }
+
+        if (CampInstallationBaseHelper::ConnectDB() == false) {
+            $this->m_step = 'loaddemo';
+            $this->m_message = 'Error: Database parameters invalid. Could not '
+                . 'connect to database server.';
+            return false;
+        }
+
+        $sqlFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_3_0_demo_data.sql';
+        $errors = CampInstallationBaseHelper::ImportDB($sqlFile);
+        if ($errors > 0) {
+            $this->m_step = 'loaddemo';
+            $this->m_message = 'Error: Importing Database';
+            return false;
+        }
+
+        return true;
+    } // fn loadDemoSite
 
 
+    /**
+     *
+     */
     private function finish()
     {
         $session = CampSession::singleton();
@@ -224,6 +307,9 @@ class CampInstallationBase
     } // fn finish
 
 
+    /**
+     *
+     */
     private function saveConfiguration()
     {
         $session = CampSession::singleton();
@@ -306,6 +392,9 @@ class CampInstallationBase
  */
 class CampInstallationBaseHelper
 {
+    /**
+     *
+     */
     public static function ConnectDB()
     {
         global $g_db;
@@ -324,6 +413,9 @@ class CampInstallationBaseHelper
     } // fn ConnectDB
 
 
+    /**
+     *
+     */
     public static function CreateAdminUser($p_email, $p_password)
     {
         global $g_db;
@@ -350,6 +442,9 @@ class CampInstallationBaseHelper
     } // fn CreateAdminUser
 
 
+    /**
+     *
+     */
     public static function ImportDB($p_sqlFile)
     {
         global $g_db;
@@ -374,6 +469,9 @@ class CampInstallationBaseHelper
     } // fn ImportDB
 
 
+    /**
+     *
+     */
     public static function SplitSQL($p_sqlFile)
     {
         $p_sqlFile = trim($p_sqlFile);
@@ -412,11 +510,44 @@ class CampInstallationBaseHelper
     } // fn SplitSQL
 
 
+    /**
+     *
+     */
     public static function ValidatePassword($p_password1, $p_password2)
     {
         return ($p_password1 == $p_password2);
     } // fn ValidatePassword
 
+
+    /**
+     *
+     */
+    public static function CopyFiles($p_source, $p_target)
+    {
+        if (is_dir($p_source)) {
+            @mkdir($p_target);
+            $d = dir($p_source);
+
+            while(($entry = $d->read()) !== false) {
+                if ($entry == '.' || $entry == '..') {
+                    continue;
+                }
+
+                $Entry = $p_source . DIR_SEP . $entry;
+                if (is_dir($Entry)) {
+                    self::CopyFiles($Entry, $p_target . DIR_SEP . $entry);
+                    continue;
+                }
+                copy($Entry, $p_target . DIR_SEP . $entry);
+            }
+
+            $d->close();
+        } else {
+            copy($p_source, $p_target);
+        }
+
+        return true;
+    } // fn CopyFiles
 
 } // class CampInstallationBaseHelper
 

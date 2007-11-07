@@ -18,7 +18,7 @@
         <input
         class="nav_button" type="button" value="Next &#155;"
         onclick="if (validateForm(install_form, 0, 1, 0, 1, 8) == true) {
-                 submitForm(install_form, 'finish'); }"/>
+                 submitForm(install_form, 'finish'); }" />
         </div>
       </td>
     </tr>
@@ -40,10 +40,11 @@
               are not you familiar with the template engine system?
               do you want to see <em>Campsite</em> in action before start
               writing template files for your own Web site? Then, choose
-              install the sample site and you will can see a simple and
-              functional Web site to get familiar with the system.</p>
+              "Yes" to install the sample site and you will can see a
+              simple and functional Web site to get familiar with the
+              system.</p>
 
-              <p>Otherwise, simply say "No" or click on "Next" button to
+              <p>Otherwise, simply check "No" and click on "Next" button to
               finish the installation.</p>
             </div>
           </td>
@@ -52,10 +53,10 @@
             <div class="message">{{ $message }}</div>
             <div class="form_field">
               <label for="db_hostname">Install Sample Site?</label> &nbsp;
-              <input type="button" id="install_demo" name="install_demo"
-              class="control_button" value="Yes" /> &nbsp; <input
-              type="button" id="install_demo" name="install_demo"
-              class="control_button" value="No" />
+              <input type="radio" id="install_demo" name="install_demo"
+              value="1" /> &nbsp; Yes &nbsp; <input
+              type="radio" id="install_demo" name="install_demo"
+              class="control_button" value="0" checked /> &nbsp; No
             </div>
             <div class="demo_img">
               <img src="img/campsite_demo.png" />
