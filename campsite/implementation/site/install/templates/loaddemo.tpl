@@ -53,10 +53,12 @@
             <div class="message">{{ $message }}</div>
             <div class="form_field">
               <label for="db_hostname">Install Sample Site?</label> &nbsp;
-              <input type="radio" id="install_demo" name="install_demo"
-              value="1" /> &nbsp; Yes &nbsp; <input
-              type="radio" id="install_demo" name="install_demo"
-              class="control_button" value="0" checked /> &nbsp; No
+              <input
+                type="radio" id="install_demo" name="install_demo" value="1"
+                {{ if $dm.loaddemo eq true }} checked {{ /if }} /> &nbsp; Yes &nbsp;
+              <input
+                type="radio" id="install_demo" name="install_demo" value="0"
+                {{ if !$dm.loaddemo }} checked {{ /if }}/> &nbsp; No
             </div>
             <div class="demo_img">
               <img src="img/campsite_demo.png" />

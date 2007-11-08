@@ -142,6 +142,11 @@ final class CampInstallation extends CampInstallationBase
             $tpl->assign('mc', $config_site);
         }
 
+        $config_demo = $session->getData('config.demo', 'installation');
+        if (!empty($config_demo)) {
+            $tpl->assign('dm', $config_demo);
+        }
+
         $view = new CampInstallationView($this->m_step);
 
         $tpl->display($this->getTemplateName());

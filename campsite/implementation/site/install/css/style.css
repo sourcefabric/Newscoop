@@ -121,6 +121,10 @@ div.demo_img {
     height: 135px;
     border: 1px solid #f0f0f0;
 }
+div.nonwritable {
+    margin-left: 30px;
+    color: #404040;
+}
 
 input.inputbox {
     font-size: 90%;

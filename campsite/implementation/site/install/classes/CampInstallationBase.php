@@ -73,6 +73,7 @@ class CampInstallationBase
         case 'precheck':
             $session->unsetData('config.db', 'installation');
             $session->unsetData('config.site', 'installation');
+            $session->unsetData('config.demo', 'installation');
             break;
         case 'license':
             $this->preInstallationCheck();
@@ -94,7 +95,10 @@ class CampInstallationBase
             break;
         case 'finish':
             if (isset($input['install_demo']) && $input['install_demo'] == 1) {
-                $this->loadDemoSite();
+                $session->setData('config.demo', array('loaddemo' => true), 'installation', true);
+                if (!$this->loadDemoSite()) {
+                    break;
+                }
             }
 
             if ($this->finish()) {
@@ -224,17 +228,10 @@ class CampInstallationBase
      */
     private function loadDemoSite()
     {
-        // TODO
-        // - prepare the sql file [X]
-        // - validate write permission to templates file
-        // - copy files (including images and css files) to respective places
-        // - load sql data [X]
-        // - that is it
-
         global $g_db;
 
         $isWritable = true;
-        $errorDirectories = array();
+        $directories = array();
         $templatesDir = CS_PATH_SMARTY_TEMPLATES;
         $cssDir = $templatesDir.DIR_SEP.'css';
         $imagesDir = $templatesDir.DIR_SEP.'img';
@@ -246,16 +243,18 @@ class CampInstallationBase
             $directories[] = $cssDir;
             $isWritable = false;
         }
-        if (!is_dir($imagesDir) && !is_writable($imagesDir)) {
+        if (!is_dir($imagesDir) || !is_writable($imagesDir)) {
             $directories[] = $imagesDir;
             $isWritable = false;
         }
 
         if (!$isWritable) {
-            $dirList = implode(', ', $directories);
+            $dirList = implode('<br />', $directories);
             $this->m_step = 'loaddemo';
-            $this->m_message = 'Error: Templates directory <em>'.$dirList
-                . '</em> is/are not writable, please set the appropiate '
+            $this->m_message = 'Error: Templates directories'
+                . '<div class="nonwritable"><em>'.$dirList
+                . '</font></em></div>'
+                . 'are not writable, please set the appropiate '
                 . 'permissions in order to install the demo site files.';
             return false;
         }
