@@ -206,7 +206,7 @@ class ArticleAudioclip extends DatabaseObject {
 
 
     /**
-     * Gets an article audioclips list based on the given parameters.
+     * Returns an article audioclips list based on the given parameters.
      *
      * @param array $p_parameters
      *    An array of ComparisonOperation objects
@@ -223,14 +223,10 @@ class ArticleAudioclip extends DatabaseObject {
      * @return array $articleAudioclipsList
      *    An array of Audioclip objects
      */
-    public static function GetList($p_parameters, $p_order = null,
+    public static function GetList(array $p_parameters, $p_order = null,
                                    $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
-
-        if (!is_array($p_parameters)) {
-            return null;
-        }
 
         $hasArticleNr = false;
         $selectClauseObj = new SQLSelectClause();

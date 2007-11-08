@@ -108,6 +108,7 @@ class CampURIShortNames extends CampURI
 	protected function __construct($p_uri = null)
 	{
         parent::__construct($p_uri);
+
         $this->setURLType(URLTYPE_SHORT_NAMES);
         $this->setURL();
 	} // fn __construct
@@ -302,13 +303,18 @@ class CampURIShortNames extends CampURI
     private function getURIArticle()
     {
         $uriString = $this->getURISection();
-        if (is_null($uriString)) {
-            return null;
-        }
 
         $context = CampTemplate::singleton()->context();
         if (is_object($context->article) && $context->article->defined) {
-            $uriString .= $context->article->url_name . '/';
+            if (is_null($uriString)) {
+                $language = $context->article->getLanguage();
+                $issue = $context->article->getIssue();
+                $section = $context->article->getSection();
+                $uriString = '/'.$language->code.'/'.$issue->url_name.'/'
+                    .$section->url_name.'/'.$context->article->url_name.'/';
+            } else {
+                $uriString .= $context->article->url_name . '/';
+            }
         } elseif (!empty($this->m_article)) {
             $uriString .= $this->m_article . '/';
         } else {
@@ -555,6 +561,17 @@ class CampURIShortNames extends CampURI
             break;
         case 'article':
             $this->m_uriPath = $this->getURIArticle();
+            break;
+        case 'articleattachment':
+            $context = CampTemplate::singleton()->context();
+            $attachment = new Attachment($context->attachment->identifier);
+            $this->m_uriPath = '/attachment/'.basename($attachment->getStorageLocation());
+            break;
+        case 'image':
+            $context = CampTemplate::singleton()->context();
+            $image = '';
+            $this->m_uriPath = '/cgi-bin/get_img';
+            $this->m_uriQuery = 'NrImage=' . '&amp;NrArticle='.$context->article->number;
             break;
         default:
             if (empty($p_param)) {

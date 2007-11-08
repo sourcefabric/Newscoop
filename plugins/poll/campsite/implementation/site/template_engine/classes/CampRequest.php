@@ -166,6 +166,34 @@ final class CampRequest
         }
     } // fn SetVar
 
+
+    public static function GetInput($p_reqMethod = 'default')
+    {
+        $input = array();
+
+        $p_reqMethod = strtoupper($p_reqMethod);
+        switch($p_reqMethod) {
+        case 'GET':
+            $input = $_GET;
+            break;
+        case 'POST':
+            $input = $_POST;
+            break;
+        case 'COOKIE':
+            $input = $_COOKIE;
+            break;
+        case 'FILES':
+            $input = $_POST;
+            break;
+        default:
+            $input = $_REQUEST;
+            break;
+        }
+
+        return $input;
+    } // fn GetInput
+
+
 } // class CampRequest
 
 ?>

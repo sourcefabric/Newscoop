@@ -131,13 +131,15 @@ class UserType extends DatabaseObject {
 
             // user successfully created, then grant the checked rights
             $defaultConfig = User::GetDefaultConfig();
-            foreach ($p_configVars as $varname => $value) {
-                if (array_key_exists($varname, $defaultConfig)) {
-                    $filter = array('filters' => array('right_define_name' => $varname));
-                    $right = $LiveUserAdmin->perm->getRights($filter);
-                    $data = array('right_id' => $right[0]['right_id'],
-                                  'group_id' => $this->m_data['group_id']);
-                    $LiveUserAdmin->perm->grantGroupRight($data);
+            if (sizeof($p_configVars)) {
+                foreach ($p_configVars as $varname => $value) {
+                    if (array_key_exists($varname, $defaultConfig)) {
+                        $filter = array('filters' => array('right_define_name' => $varname));
+                        $right = $LiveUserAdmin->perm->getRights($filter);
+                        $data = array('right_id' => $right[0]['right_id'],
+                                      'group_id' => $this->m_data['group_id']);
+                        $LiveUserAdmin->perm->grantGroupRight($data);
+                    }
                 }
             }
         }

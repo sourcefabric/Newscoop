@@ -15,7 +15,7 @@ class TestOfBugReporter extends UnitTestCase
     }
 }
 
-class TestOfBugSetServer extends UnitTestCase 
+class TestOfBugSetServer extends UnitTestCase
 {
 
     function setUp () {
@@ -51,7 +51,7 @@ class TestOfPingServer extends UnitTestCase
     }
 
     function test_pingServer_redirect ()
-    {        
+    {
         $this->reporter->setServer("http://test.n-space.org/mocktrac/302");
         $this->reporter->__ping = "http://test.n-space.org/mocktrac/302";
         $wasResponse = $this->reporter->pingServer();
@@ -80,7 +80,7 @@ class TestOfPingServer extends UnitTestCase
         $this->assertNoUnwantedPattern ("/\bpong\b/", "$body");
     }
 
-    function test_pong () 
+    function test_pong ()
     {
         $this->reporter->setServer ("http://test.n-space.org/mocktrac/dummytracserver");
         $this->reporter->__ping = "http://test.n-space.org/mocktrac/dummytracserver";
@@ -141,7 +141,7 @@ class TestOfSendToServer extends UnitTestCase
         $this->reporter->sendToServer();
         $this->assertWantedPattern ("/\baccepted\b/", $this->reporter->__responseBody);
     }
- 
+
     function test_paramsAreSuccessfullySent ()
     {
         $this->reporter->m_newReport = "http://test.n-space.org/mocktrac/echo.php";
@@ -157,10 +157,10 @@ class TestOfSendToServer extends UnitTestCase
         $this->assertWantedPattern ("/\bsoftware\b.*\n?.*Campsite/", $this->reporter->__responseBody);
         */
     }
- 
+
 }
 
-class TestOfGetFileWithoutPath extends UnitTestCase 
+class TestOfGetFileWithoutPath extends UnitTestCase
 {
     function setUp(){
         $this->vars = new BugReporterVars();
@@ -174,7 +174,7 @@ class TestOfGetFileWithoutPath extends UnitTestCase
     }
 
     function test_getFileWithoutPath_noPath ()
-    
+
     {
         $reporter = new BugReporter (2, "bad bad error", "file.php", 3, "Campsite", "2.5.0");
         $errId = $reporter->getFileWithoutPath();
@@ -184,7 +184,7 @@ class TestOfGetFileWithoutPath extends UnitTestCase
     // --- Todo: The next few functions test with unusual values.
     // --- Disabled for the moment ---
 
-    function test_getFileWithoutPath_zeroValueVars () 
+    function test_getFileWithoutPath_zeroValueVars ()
     {
         $reporter = new BugReporter (2, "bad bad error", "/non-dir/file.php", 3, "Campsite", "2.5.0");
         $reporter = camp_change_error_object_vars ($reporter, 0);
@@ -192,7 +192,7 @@ class TestOfGetFileWithoutPath extends UnitTestCase
         $this->assertIdentical ("0", $errFile);
     }
 
-    function test_getFileWithoutPath_zeroValueVarsAndNoFilePath () 
+    function test_getFileWithoutPath_zeroValueVarsAndNoFilePath ()
     {
         $reporter = new BugReporter (2, "bad bad error", "/non-dir/file.php", 3, "Campsite", "2.5.0");
         $reporter = camp_change_error_object_vars ($reporter, 0);
@@ -200,7 +200,7 @@ class TestOfGetFileWithoutPath extends UnitTestCase
         $this->assertIdentical ("0", $errFile);
     }
 
-    function test_getFileWithoutPath_emptyStringVars () 
+    function test_getFileWithoutPath_emptyStringVars ()
     {
         $reporter = new BugReporter (2, "bad bad error", "/non-dir/file.php", 3, "Campsite", "2.5.0");
         $reporter = camp_change_error_object_vars ($reporter, $p_type = "");
@@ -217,13 +217,13 @@ class TestOfGetFileWithoutPath extends UnitTestCase
     }
 }
 
-class TestOfGetId extends UnitTestCase 
+class TestOfGetId extends UnitTestCase
 {
     function setUp(){
         $this->vars = new BugReporterVars();
     }
 
-    function test_getId () 
+    function test_getId ()
     {
         $reporter = new BugReporter (2, "bad bad error", "/non-dir/file.php", 3, "Campsite", "2.5.0");
         $errId = $reporter->getId();
@@ -231,14 +231,14 @@ class TestOfGetId extends UnitTestCase
 
     }
 
-    function test_getId_withSlashes () 
+    function test_getId_withSlashes ()
     {
         $reporter = new BugReporter (2, "bad bad error", "/non-dir/file.php", 3, "Campsite", "2.5.0");
         $errId = $reporter->getId();
         $this->assertEqual($errId, "2:Campsite:2.5.0:file.php:3");
     }
     /*
-    function test_getId_zeroValues () 
+    function test_getId_zeroValues ()
     {
         $reporter = new BugReporter (2, "bad bad error", "/non-dir/file.php", 3, "Campsite", "2.5.0");
         $reporter = camp_change_error_object_vars ($reporter, 0);
@@ -248,7 +248,7 @@ class TestOfGetId extends UnitTestCase
 
     // --- Todo: The next few functions test with unusual values.
     // --- Disabled for the moment ---
-    function test_getId_withEmptyStrings () 
+    function test_getId_withEmptyStrings ()
     {
         $reporter = new BugReporter (2, "bad bad error", "/non-dir/file.php", 3, "Campsite", "2.5.0");
         $reporter = camp_change_error_object_vars ($reporter, "");
@@ -262,7 +262,7 @@ class TestOfGetId extends UnitTestCase
     */
 }
 
-class TestOfGetBacktraceString extends UnitTestCase 
+class TestOfGetBacktraceString extends UnitTestCase
 {
     var $m_startFile = "admin.php";
     var $m_thisFile = "errorobject_test.php";
@@ -273,7 +273,7 @@ class TestOfGetBacktraceString extends UnitTestCase
 
     /*
     // --- This test doesn't apply since name of this file is weeded out by current bugreporter ---
-    function test_getBacktraceString_nameOfThisFile () 
+    function test_getBacktraceString_nameOfThisFile ()
     {
         $reporter = new BugReporter (2, "bad bad error", "/nondir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace, "Campsite", "2.5.0");
         //$reporter = new ErrorObject ("Campsite", 2.5.0, 2, "", "/nondir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
@@ -289,7 +289,7 @@ class TestOfGetBacktraceString extends UnitTestCase
         $this->assertWantedPattern ("/$this->m_startFile/", $backtrace);
     }
 
-    function test_getBacktraceString_FileNameInBraces () 
+    function test_getBacktraceString_FileNameInBraces ()
     {
         $reporter = new BugReporter (2, "bad bad error", "/nondir/nonfile.php", 3, "Campsite", "2.5.0");
         $backtrace = $reporter->getBacktraceString();
@@ -303,7 +303,7 @@ class TestOfGetBacktraceString extends UnitTestCase
         $this->assertWantedPattern ("/\[[^:]*$this->m_startFile\:[1-9][0-9]*\]/", $backtrace);
     }
 
-    function test_getBacktraceString_lineNumberAtLinesEnd () 
+    function test_getBacktraceString_lineNumberAtLinesEnd ()
     {
         $reporter = new BugReporter (2, "bad bad error", "/nondir/nonfile.php", 3, "Campsite", "2.5.0", $this->vars->time, $this->vars->backtrace);
         $backtrace = $reporter->getBacktraceString();
@@ -314,7 +314,7 @@ class TestOfGetBacktraceString extends UnitTestCase
     {
         $reporter = new BugReporter (2, "bad bad error", "/nondir/nonfile.php", 3, "Campsite", "2.5.0", $this->vars->time, $this->vars->backtrace);
         $backtrace = $reporter->getBacktraceString();
-        $this->assertWantedPattern 
+        $this->assertWantedPattern
             ("/[a-z_]+\:\:[a-z_]+\(\)\ called\ at\ \[[^][:]+\.php\:[1-9][0-9]*\]/", $backtrace);
     }
 
@@ -334,7 +334,7 @@ class BugReporterVars {
 report_bug() called at [:]
 errorobject() called at [/usr/local/campsite/www-common/html/classes/BugReporter.php:165]
 errorobject::errorobject() called at [/usr/local/campsite/www-common/html/classes/BugReporter.php:26]
-bugreporter::bugreporter() called at [/usr/local/campsite/www-common/html/priv/senderrorform.php:7]
+bugreporter::bugreporter() called at [/usr/local/campsite/www-common/html/admin-files/senderrorform.php:7]
 require_once() called at [/usr/local/campsite/www-common/html/admin.php:110]";    }
 }
 

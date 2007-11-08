@@ -249,7 +249,7 @@ class ArticleComment
 
 
     /**
-     * Gets an article comments list based on the given parameters.
+     * Returns an article comments list based on the given parameters.
      *
      * @param array $p_parameters
      *    An array of ComparisonOperation objects
@@ -266,14 +266,10 @@ class ArticleComment
      * @return array $articleCommentsList
      *    An array of Comment objects
      */
-    public static function GetList($p_parameters, $p_order = null,
+    public static function GetList(array $p_parameters, $p_order = null,
                                    $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db, $PHORUM;
-
-        if (!is_array($p_parameters)) {
-            return null;
-        }
 
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();

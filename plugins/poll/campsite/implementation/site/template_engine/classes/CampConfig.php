@@ -12,7 +12,8 @@
 /**
  * Class CampConfig
  */
-final class CampConfig {
+final class CampConfig
+{
     /**
      * Holds instance of the class
      *
@@ -36,17 +37,17 @@ final class CampConfig {
      */
     private function __construct($p_configFile = null)
     {
-        global $g_documentRoot;
+        global $g_documentRoot, $Campsite;
 
         if (empty($p_configFile)) {
-            $p_configFile = $g_documentRoot.'/template_engine/configuration.php';
+            $p_configFile = $g_documentRoot.'/conf/configuration.php';
         }
         if (!file_exists($p_configFile)) {
-            header('Location: install/index.php');
+            header('Location: /install/index.php');
         }
 
         require_once($p_configFile);
-        $this->m_config = $CampCfg;
+        $this->m_config = $Campsite;
     } // fn __construct
 
 

@@ -3,29 +3,29 @@ require_once ('simpletest/unit_tester.php');
 require_once ('simpletest/reporter.php');
 require_once ( CAMP_CLASSES . "BugReporter.php");
 
-class TestOfErrorObject extends UnitTestCase 
+class TestOfErrorObject extends UnitTestCase
 {
     function setUp(){
         $this->vars = new ErrorObjectVars();
     }
 
-    function test_ErrorObject_emptyStringForName() 
+    function test_ErrorObject_emptyStringForName()
     {
-        new ErrorObject("", "1.5", 2, "", "nonfile.php", 3, 
+        new ErrorObject("", "1.5", 2, "", "nonfile.php", 3,
                         "Fri, 17 Mar 2006 09:47:15 -0500", $this->vars->backtrace);
         $this->assertError();
     }
 
     function test_ErrorObject_NumberForName()
     {
-        $err = new ErrorObject("Campsite", "1.5", 2, "", 1, 3, 
+        $err = new ErrorObject("Campsite", "1.5", 2, "", 1, 3,
                                $this->vars->time, $this->vars->backtrace);
         $this->assertError();
         //$this->assertEqual ("1", $err->getFileWithoutPath());
     }
 
     function test_ErrorObject_trailingSlashInFileName()
-    
+
     {
         $err = new ErrorObject("Campsite", "1.5", 2, "", "nonfile.php/", 3, $this->vars->time, $this->vars->backtrace);
         $this->assertError();
@@ -41,35 +41,35 @@ class TestOfErrorObject extends UnitTestCase
 
     function test_ErrorObject_emptyStringForVersion()
     {
-        new ErrorObject("Campsite", "", 2, "", "nonfile.php", 3, 
+        new ErrorObject("Campsite", "", 2, "", "nonfile.php", 3,
                         $this->vars->time, $this->vars->backtrace);
         $this->assertError();
     }
 
     function test_ErrorObject_stringForErrorCode()
     {
-        $err = new ErrorObject("Campsite", "1.5", "error message", "", "file.php", 3, $this->vars->time, 
+        $err = new ErrorObject("Campsite", "1.5", "error message", "", "file.php", 3, $this->vars->time,
                                $this->vars->backtrace);
         $this->assertError();
     }
 
     function test_ErrorObject_floatForErrorCode()
     {
-        $err = new ErrorObject("Campsite", "1.5", 1.1, "", "file.php", 3, 
+        $err = new ErrorObject("Campsite", "1.5", 1.1, "", "file.php", 3,
                                $this->vars->time, $this->vars->backtrace);
         $this->assertError();
     }
 
     function test_ErrorObject_software ()
     {
-        $err = new ErrorObject("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3, 
+        $err = new ErrorObject("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3,
                                $this->vars->time, $this->vars->backtrace );
         $this->assertEqual ("Campsite", $err->m_software);
     }
 
     function test_backtraceParamIsAString()
     {
-        $err = new ErrorObject("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3, 
+        $err = new ErrorObject("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3,
                                $this->vars->time, $this->vars->backtraceString );
 
         $this->assertEqual ($err->m_backtrace, $this->vars->backtraceString);
@@ -77,14 +77,14 @@ class TestOfErrorObject extends UnitTestCase
 
     function test_numbersAreNumStrings()
     {
-        $err = new ErrorObject("Campware", "1.5", "2", "", "nonfile.php", "3", 
+        $err = new ErrorObject("Campware", "1.5", "2", "", "nonfile.php", "3",
                         "Fri, 17 Mar 2006 09:47:15 -0500", $this->vars->backtrace);
         $this->assertIdentical ($err->m_num, 2);
         $this->assertIdentical ($err->m_line, 3);
     }
 }
 
-class TestOfGetFileWithoutPathX extends UnitTestCase 
+class TestOfGetFileWithoutPathX extends UnitTestCase
 {
     function setUp(){
         $this->vars = new ErrorObjectVars();
@@ -92,23 +92,23 @@ class TestOfGetFileWithoutPathX extends UnitTestCase
 
     function test_getFileWithoutPath()
     {
-        $err = new ErrorObject("Campsite", "1.5", 2, "", "/non-dir/nonfile.php", 3, 
+        $err = new ErrorObject("Campsite", "1.5", 2, "", "/non-dir/nonfile.php", 3,
                                $this->vars->time, $this->vars->backtrace );
         $errId = $err->getFileWithoutPath();
         $this->assertEqual ($errId, "nonfile.php");
     }
 
     function test_getFileWithoutPath_noPath ()
-    
+
     {
-        $err = new ErrorObject("Campsite", "1.5", 2, "", "nonfile.php", 
+        $err = new ErrorObject("Campsite", "1.5", 2, "", "nonfile.php",
                                3, $this->vars->time, $this->vars->backtrace );
         $errId = $err->getFileWithoutPath();
         $this->assertEqual($errId, "nonfile.php");
     }
 
-    function test_getFileWithoutPath_zeroValueVars () 
-    
+    function test_getFileWithoutPath_zeroValueVars ()
+
     {
         $err = new ErrorObject("Campsite", "1.5", 2, "", "/non-dir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $err = camp_change_error_object_vars ($err, 0);
@@ -116,7 +116,7 @@ class TestOfGetFileWithoutPathX extends UnitTestCase
         $this->assertIdentical ("0", $errFile);
     }
 
-    function test_getFileWithoutPath_zeroValueVarsAndNoFilePath () 
+    function test_getFileWithoutPath_zeroValueVarsAndNoFilePath ()
     {
         $err = new ErrorObject("Campsite", "1.5", 2, "", "nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $err = camp_change_error_object_vars ($err, 0);
@@ -124,7 +124,7 @@ class TestOfGetFileWithoutPathX extends UnitTestCase
         $this->assertIdentical ("0", $errFile);
     }
 
-    function test_getFileWithoutPath_emptyStringVars () 
+    function test_getFileWithoutPath_emptyStringVars ()
     {
         $err = new ErrorObject("Campsite", "1.5", 2, "", "/non-dir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $err = camp_change_error_object_vars ($err, $p_type = "");
@@ -142,13 +142,13 @@ class TestOfGetFileWithoutPathX extends UnitTestCase
 
 }
 
-class TestOfGetIdX extends UnitTestCase 
+class TestOfGetIdX extends UnitTestCase
 {
     function setUp(){
         $this->vars = new ErrorObjectVars();
     }
 
-    function test_getId () 
+    function test_getId ()
     {
         $err = new ErrorObject("Campsite", "1.5", 2, "", "nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $errId = $err->getId();
@@ -156,14 +156,14 @@ class TestOfGetIdX extends UnitTestCase
 
     }
 
-    function test_getId_withSlashes () 
+    function test_getId_withSlashes ()
     {
         $err = new ErrorObject("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $errId = $err->getId();
         $this->assertEqual($errId, "2:Campsite:1.5:nonfile.php:3");
     }
-    
-    function test_getId_zeroValues () 
+
+    function test_getId_zeroValues ()
     {
         $err = new ErrorObject("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $err = camp_change_error_object_vars ($err, 0);
@@ -171,7 +171,7 @@ class TestOfGetIdX extends UnitTestCase
         $this->assertIdentical ($errId, "0:0:0:0:0");
     }
 
-    function test_getId_withEmptyStrings () 
+    function test_getId_withEmptyStrings ()
     {
         $err = new ErrorObject("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $err = camp_change_error_object_vars ($err, "");
@@ -184,7 +184,7 @@ class TestOfGetIdX extends UnitTestCase
     //}
 }
 /*
-class TestOfGetBacktraceArray extends UnitTestCase 
+class TestOfGetBacktraceArray extends UnitTestCase
 {
     var $m_startFile = "admin.php";
     var $m_thisFile = "errorobject_test.php";
@@ -193,23 +193,23 @@ class TestOfGetBacktraceArray extends UnitTestCase
         $this->vars = new ErrorObjectVars();
     }
 
-    function test_getBacktraceArray_nameOfFirstFile () 
+    function test_getBacktraceArray_nameOfFirstFile ()
     {
         $err = new ErrorObject ("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $backtrace = $err->getBacktraceArray();
         $firstFile = basename ($backtrace [0]["file"]);
         $this->assertEqual ($firstFile, $this->m_thisFile);
-    }    
+    }
 
-   function test_getBacktraceArray_nameOfLastFile () 
+   function test_getBacktraceArray_nameOfLastFile ()
     {
         $err = new ErrorObject ("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $backtrace = $err->getBacktraceArray();
         $lastFile = basename ($backtrace [count ($backtrace) - 1]["file"]);
         $this->assertEqual ($lastFile, $this->m_startFile);
-    }    
+    }
 
-    function test_getBacktraceArray_zeroValueVars () 
+    function test_getBacktraceArray_zeroValueVars ()
     {
         $err = new ErrorObject("Campsite", "1.5", 2, "", "nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $err = camp_change_error_object_vars ($err, $p_type = 0);
@@ -217,7 +217,7 @@ class TestOfGetBacktraceArray extends UnitTestCase
         $this->assertIdentical ($backtrace, 0);
     }
 
-    //function test_getFileWithoutPath_emptyStringVars () 
+    //function test_getFileWithoutPath_emptyStringVars ()
     //{
     //    $err = new ErrorObject("Campsite", "1.5", 2, "", "/non-dir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
     //    $err = camp_change_error_object_vars ($err, $p_type = "");
@@ -226,7 +226,7 @@ class TestOfGetBacktraceArray extends UnitTestCase
     //}
 }
 */
-class TestOfGetBacktraceStringX extends UnitTestCase 
+class TestOfGetBacktraceStringX extends UnitTestCase
 {
     var $m_startFile = "admin.php";
     var $m_thisFile = "errorobject_test.php";
@@ -235,7 +235,7 @@ class TestOfGetBacktraceStringX extends UnitTestCase
         $this->vars = new ErrorObjectVars();
     }
 
-    function test_getBacktraceString_nameOfThisFile () 
+    function test_getBacktraceString_nameOfThisFile ()
     {
         $err = new ErrorObject ("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $backtrace = $err->getBacktraceString();
@@ -249,7 +249,7 @@ class TestOfGetBacktraceStringX extends UnitTestCase
         $this->assertWantedPattern ("/$this->m_startFile/", $backtrace);
     }
 
-    function test_getBacktraceString_ThisFileInBraces () 
+    function test_getBacktraceString_ThisFileInBraces ()
     {
         $err = new ErrorObject ("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $backtrace = $err->getBacktraceString();
@@ -263,7 +263,7 @@ class TestOfGetBacktraceStringX extends UnitTestCase
         $this->assertWantedPattern ("/\[[^:]*$this->m_startFile\:[1-9][0-9]*\]/", $backtrace);
     }
 
-    function test_getBacktraceString_lineNumberAtLinesEnd () 
+    function test_getBacktraceString_lineNumberAtLinesEnd ()
     {
         $err = new ErrorObject ("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $backtrace = $err->getBacktraceString();
@@ -274,7 +274,7 @@ class TestOfGetBacktraceStringX extends UnitTestCase
     {
         $err = new ErrorObject ("Campsite", "1.5", 2, "", "/nondir/nonfile.php", 3, $this->vars->time, $this->vars->backtrace );
         $backtrace = $err->getBacktraceString();
-        $this->assertWantedPattern 
+        $this->assertWantedPattern
             ("/[a-z_]+\:\:[a-z_]+\(\)\ called\ at\ \[[^][:]+\.php\:[1-9][0-9]*\]/", $backtrace);
     }
 
@@ -288,7 +288,7 @@ class TestOfGetBacktraceStringX extends UnitTestCase
  *
  * @param error
  */
-function camp_change_error_object_vars ($p_errObj, $p_newValue = "") 
+function camp_change_error_object_vars ($p_errObj, $p_newValue = "")
 {
     //    $newValue = $p_var;
 
@@ -300,11 +300,11 @@ function camp_change_error_object_vars ($p_errObj, $p_newValue = "")
     $p_errObj->m_line = $p_newValue;
     $p_errObj->m_context = $p_newValue;
     $p_errObj->m_backtrace = $p_newValue;
-    
+
     return $p_errObj;
 }
 
-class ErrorObjectVars 
+class ErrorObjectVars
 {
     function ErrorObjectVars()
     {
@@ -314,7 +314,7 @@ class ErrorObjectVars
 report_bug() called at [:]
 errorobject() called at [/usr/local/campsite/www-common/html/classes/BugReporter.php:165]
 errorobject::errorobject() called at [/usr/local/campsite/www-common/html/classes/BugReporter.php:26]
-bugreporter::bugreporter() called at [/usr/local/campsite/www-common/html/priv/senderrorform.php:7]
+bugreporter::bugreporter() called at [/usr/local/campsite/www-common/html/admin-files/senderrorform.php:7]
 require_once() called at [/usr/local/campsite/www-common/html/admin.php:110]";
     }
 }

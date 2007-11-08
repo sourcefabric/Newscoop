@@ -3,7 +3,6 @@
 // This file will deliver the attachment. It is supposed to work like this:
 // http://site/attachment/xxxxxxxxx.ext
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Attachment.php');

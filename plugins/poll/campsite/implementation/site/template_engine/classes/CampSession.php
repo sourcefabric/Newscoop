@@ -213,10 +213,10 @@ final class CampSession
     /**
      *
      */
-    function setData($p_name, $p_value, $p_namespace = 'default')
+    function setData($p_name, $p_value, $p_namespace = 'default', $p_force = false)
     {
-        if (!$this->dataExists($p_name, $p_namespace)) {
-            if ($p_value !== null) {
+        if (!$this->dataExists($p_name, $p_namespace) || $p_force == true) {
+            if (!empty($p_value)) {
                 $_SESSION[$p_namespace][$p_name] = $p_value;
             } else {
                 unset($_SESSION[$p_namespace][$p_name]);

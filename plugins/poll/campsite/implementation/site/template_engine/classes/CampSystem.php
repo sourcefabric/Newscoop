@@ -36,15 +36,6 @@ abstract class CampSystem
 
 
     /**
-     *
-     */
-    protected function readParameters()
-    {
-        echo 'something';
-    } // fn readParameters
-
-
-    /**
      * Reads a configuration setting.
      *
      * @param string $p_varName
@@ -223,7 +214,8 @@ abstract class CampSystem
         }
         if ($p_sctNr > 0) {
             if ($p_issNr <= 0) {
-                $sql = 'SELECT MAX(i.Number) FROM Sections as s, Issues as i '
+                $sql = 'SELECT MAX(i.Number) AS Number '
+                    . 'FROM Sections as s, Issues as i '
                     . 'WHERE s.IdPublication = i.IdPublication'
                     . ' AND s.IdLanguage = i.IdLanguage'
                     . ' AND s.IdPublication = ' . $p_pubId
@@ -240,7 +232,7 @@ abstract class CampSystem
             return self::GetSectionTemplate($p_lngId, $p_pubId, $p_issNr, $p_sctNr);
         }
         if ($p_issNr <= 0) {
-            $sql = 'SELECT MAX(Number) FROM Issues '
+            $sql = 'SELECT MAX(Number) AS Number FROM Issues '
                 . 'WHERE IdPublication = ' . $p_pubId
                 . ' AND IdLanguage = ' . $p_lngId;
             if ($p_isPublished == true) {
@@ -349,14 +341,11 @@ abstract class CampSystem
             . 'WHERE p.Id = a.IdPublication AND '
             . "a.Name = '" . $g_ado_db->Escape($p_siteAlias) . "'";
         $data = $g_ado_db->GetRow($sqlQuery);
-        if (empty($data)) {
-            CampTemplate::singleton()->trigger_error('not valid site alias');
-            return;
+        if (!empty($data)) {
+            CampRequest::SetVar('URLType', $data['IdURLType']);
+            CampRequest::SetVar(CampRequest::PUBLICATION_ID, $data['Id']);
+            CampRequest::SetVar(CampRequest::LANGUAGE_ID, $data['IdDefaultLanguage']);
         }
-
-        CampRequest::SetVar('URLType', $data['IdURLType']);
-        CampRequest::SetVar(CampRequest::PUBLICATION_ID, $data['Id']);
-        CampRequest::SetVar(CampRequest::LANGUAGE_ID, $data['IdDefaultLanguage']);
     } // fn BuildPublicationFromAlias
 
 } // class CampSystem

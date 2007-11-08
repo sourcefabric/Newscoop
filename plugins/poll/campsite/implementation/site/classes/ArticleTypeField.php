@@ -702,6 +702,44 @@ class ArticleTypeField {
 		$this->setOrders($orders);
 	} // fn reorder
 
+
+	/**
+	 * Returns an array of fields from all article types that match
+	 * the given conditions.
+	 *
+	 * @param $p_name
+	 *         if specified returns fields with the given name
+	 * @param $p_articleType
+	 *         if specified returns fields of the given article type
+	 * @param $p_dataType
+	 *         if specified returns the fields having the given data type
+	 *
+	 * @return array
+	 */
+	public static function FetchFields($p_name = null, $p_articleType = null,
+	                                   $p_dataType = null)
+	{
+	    global $g_ado_db;
+
+	    if (isset($p_name)) {
+	        $whereClauses[] = "field_name = '" . $g_ado_db->escape($p_name) . "'";
+	    }
+	    if (isset($p_articleType)) {
+	        $whereClauses[] = "type_name = '" . $g_ado_db->escape($p_articleType) . "'";
+	    }
+	    if (isset($p_dataType)) {
+	        $whereClauses[] = "field_type = '" . $g_ado_db->escape($p_dataType) . "'";
+	    }
+	    $query = 'SELECT * FROM ArticleTypeMetadata WHERE '
+	             . implode(' and ', $whereClauses);
+	    $rows = $g_ado_db->GetAll($query);
+	    $fields = array();
+	    foreach ($rows as $row) {
+	        $fields[] = new ArticleTypeField($row['type_name'], $row['field_name']);
+	    }
+	    return $fields;
+	}
+
 } // class ArticleTypeField
 
 ?>

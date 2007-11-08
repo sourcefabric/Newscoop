@@ -1,33 +1,23 @@
 UPGRADE
 
-For upgrading from 1.x, 2.0 or 2.1.x versions of Campsite please read the
-chapters: "Upgrading from versions 2.1.x" and "Upgrading from versions 1.x
-or 2.0" - in the manual.
-Upgrading from Campsite 2.2.x and newer versions is automatic, the user
-doesn't have to take extra actions except the normal install.
+Upgrading from versions 1.x, 2.0.x, 2.1.x, 2.2.x and 2.3.x is not
+supported anymore. You will have to upgrade first to Campsite 2.6
+or 2.7 and then follow the regular procedure.
+
+Upgrading from Campsite 2.4.x and newer versions:
+Repeat the following steps for each instance:
+
+1. Backup the instance using campsite-backup-instance
+2. Perform a new Campsite 3.0 install
+3. Run the restore backup script from the admin interface
+
 
 Read INSTALL file and follow the steps; read on Compatibility issues.
 
 
 Compatibility issues
 
-If upgrading from Campsite 1.0.x or 2.0.x: some attributes of List Article
-statement are not supported since 2.1 anymore so all templates using them must
-be updated.
-
-Attributes no longer supported:
-
-    - IsOn|IsNotOn FrontPage
-    - IsOn|IsNotOn Section
-
-Replacing unsupported attributes:
-
-    - "IsOn FrontPage" replaced by: "OnFrontPage is on"
-    - "IsNotOn FrontPage" replaced by: "OnFrontPage is off"
-    - "IsOn Section" replaced by: "OnSection is on"
-    - "IsNotOn Section" replaced by: "OnSection is off"
-
-For details see "List of Articles" chapter in the Campsite manual.
-
-If upgrading from Campsite 2.1.x please read "Compatibility Issues Upgrading
-from 2.1" in the manual.
+In version 3.0 the template language as modified extensively. The
+backup restore script will provide an automated conversion of the old
+template files to the new format. For more details on language changes
+please read the manual.
