@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/configuration.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/conf/configuration.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 camp_load_translation_strings("localizer");
 require_once('Localizer.php');
@@ -11,10 +11,9 @@ if (!$g_user->hasPermission('ManageLocalizer')) {
 }
 
 $prefix = Input::Get('prefix', 'string', '', true);
-$unusedStrings = Localizer::FindUnusedStrings($prefix);
-if (count($unusedStrings) > 0) {
-   	Localizer::RemoveString($prefix, $unusedStrings);
-}
+$newPrefix = Input::Get('new_prefix');
+$moveStr = Input::Get('string');
+Localizer::ChangeStringPrefix($prefix, $newPrefix, $moveStr);
 
 header("Location: /$ADMIN/localizer/index.php");
 exit;

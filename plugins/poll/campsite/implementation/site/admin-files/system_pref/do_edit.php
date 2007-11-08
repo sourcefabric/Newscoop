@@ -10,9 +10,18 @@ if (!$g_user->hasPermission('ChangeSystemPreferences')) {
 	exit;
 }
 
+$f_campsite_online = Input::Get('f_campsite_online');
+$f_site_title = Input::Get('f_site_title');
+$f_site_metakeywords = Input::Get('f_site_metakeywords');
+$f_site_metadescription = Input::Get('f_site_metadescription');
+$f_cache_enabled = Input::Get('f_cache_enabled');
+$f_secret_key = Input::Get('f_secret_key');
+$f_session_lifetime = intval(Input::Get('f_session_lifetime'));
 $f_keyword_separator = Input::Get('f_keyword_separator');
 $f_login_num = Input::Get('f_login_num', 'int');
 $f_max_upload_filesize = Input::Get('f_max_upload_filesize');
+$f_smtp_host = Input::Get('f_smtp_host');
+$f_smtp_port = intval(Input::Get('f_smtp_port'));
 $f_use_replication = Input::Get('f_use_replication');
 $f_db_repl_host = Input::Get('f_db_repl_host');
 $f_db_repl_user = Input::Get('f_db_repl_user');
@@ -34,13 +43,38 @@ if (!Input::IsValid()) {
 }
 
 $msg_ok = 1;
-$max_upload_filesize_bytes = camp_convert_bytes($f_max_upload_filesize);
+
+// Site On-line
+SystemPref::Set('SiteOnline', $f_campsite_online);
+
+// Site title
+SystemPref::Set('SiteTitle', $f_site_title);
+
+// Site Meta Keywords
+SystemPref::Set('SiteMetaKeywords', $f_site_metakeywords);
+
+// Site Meta Description
+SystemPref::Set('SiteMetaDescription', $f_site_metadescription);
+
+// Caching
+SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
+
+// Secret key
+SystemPref::Set('SiteSecretKey', $f_secret_key);
+
+// Session life time
+SystemPref::Set('SiteSessionLifeTime', $f_session_lifetime);
+
 // Keyword Separator
 SystemPref::Set("KeywordSeparator", $f_keyword_separator);
+
+// Number of failed login attempts
 if ($f_login_num >= 0) {
 	SystemPref::Set("LoginFailedAttemptsNum", $f_login_num);
 }
+
 // Max Upload File Size
+$max_upload_filesize_bytes = camp_convert_bytes($f_max_upload_filesize);
 if ($max_upload_filesize_bytes > 0 &&
 		$max_upload_filesize_bytes <= camp_convert_bytes(ini_get('upload_max_filesize'))) {
 	SystemPref::Set("MaxUploadFileSize", $f_max_upload_filesize);
@@ -49,8 +83,20 @@ if ($max_upload_filesize_bytes > 0 &&
 	camp_html_add_msg(getGS('Invalid Max Upload File Size value submitted'));
 }
 
+// SMTP Host/Port
+if (empty($f_smtp_host)) {
+    $f_smtp_host = 'localhost';
+}
+SystemPref::Set('SMTPHost', $f_smtp_host);
+if ($f_smtp_port <= 0) {
+    $f_smtp_port = 25;
+}
+SystemPref::Set('SMTPPort', $f_smtp_port);
+
+// External subscription management
 SystemPref::Set('ExternalSubscriptionManagement', $f_external_subs_management);
 
+// Replication
 if ($f_use_replication == 'Y') {
     // Database Replication Host, User and Password
     if (!empty($f_db_repl_host) && !empty($f_db_repl_user)) {
@@ -71,6 +117,7 @@ if ($f_use_replication == 'Y') {
     SystemPref::Set("UseDBReplication", 'N');
 }
 
+// Campcaster integrity
 if ($f_use_campcaster == 'Y') {
     // Campcaster Server
     SystemPref::Set("CampcasterHostName", $f_cc_hostname);
