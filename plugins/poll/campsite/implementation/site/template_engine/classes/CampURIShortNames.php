@@ -395,7 +395,7 @@ class CampURIShortNames extends CampURI
 
         $cPubId = 0;
         // gets the publication object based on site name (URI host)
-        $alias = ltrim($this->getBase(), $this->getScheme().'://');
+        $alias = preg_replace('/^'.$this->getScheme().':\/\//', '', $this->getBase());
         $aliasArray = Alias::GetAliases(null, null, $alias);
         if (is_array($aliasArray) && sizeof($aliasArray) == 1) {
             $aliasObj = $aliasArray[0];
