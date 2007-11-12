@@ -487,7 +487,7 @@ function camp_get_plugin_path($p_plugin_name, $p_source_fullpath)
     $PLUGIN_PATH = dirname(__FILE__).'/../'.$PLUGIN_DIR;
     
     $target_subpath = str_replace(dirname(__FILE__), '', $p_source_fullpath);
-    $target_fullpath = realpath("$PLUGIN_PATH/$p_plugin_name/priv/include/$target_subpath");
+    $target_fullpath = realpath("$PLUGIN_PATH/$p_plugin_name/$ADMIN_DIR/include/$target_subpath");
     
     if (file_exists($target_fullpath)) {
         return $target_fullpath;

@@ -392,7 +392,7 @@ final class CampContext
 
     	$p_objectType = CampContext::TranslateProperty($p_objectType);
 
-    	$classFullPath = camp_find_class('Meta'.$this->m_objectTypes[$p_element], 'template_engine/metaclasses');
+    	$classFullPath = camp_find_class('Meta'.$this->m_objectTypes[$p_objectType], 'template_engine/metaclasses');
     	
     	if (!file_exists($classFullPath)) {
     		throw new InvalidObjectException($p_objectType);
