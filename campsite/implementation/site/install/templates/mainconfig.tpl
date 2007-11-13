@@ -5,7 +5,7 @@
 <script type="text/javascript" src="include/js/fValidate/fValidate.validators.js"></script>
 <form action="index.php" method="post" name="install_form" autocomplete="off">
 <tr>
-  <td valign="top">
+  <td width="100%" valign="top">
     <table class="header" cellspacing="0" cellpadding="0">
     <tr>
       <td width="50%">
@@ -18,7 +18,7 @@
           <input
           class="nav_button" type="button" value="Next &#155;"
           onclick="if (validateForm(install_form, 0, 1, 0, 1, 8) == true) {
-                   submitForm(install_form, 'finish'); }"/>
+                   submitForm(install_form, 'loaddemo'); }"/>
         </div>
       </td>
     </tr>
@@ -36,7 +36,7 @@
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              If any of these items are highlighted in red.
+              Give your site a title. Be short and descriptive.
             </div>
           </td>
           <td width="5%">&nbsp;</td>
@@ -62,8 +62,14 @@
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              These settings are recommended for PHP in order to ensure full
-              compatibility with Campsite.
+              <p><em>admin</em> is the system administrator user created
+              automatically by <em>Campsite</em>. Please, set a strong and
+              secure password for it at this step, confirm that password
+              and input a valid e-mail address.</p>
+
+              <p>REMEMBER: After installation, you will be able to log into
+              the administration interface by typing <em>admin</em> as
+              username and the password you set in this step.</p>
             </div>
           </td>
           <td width="5%">&nbsp;</td>
@@ -95,7 +101,7 @@
     </tr>
     </table>
   </td>
-  <td width="200" valign="top">
+  <td valign="top">
     <table class="right_header" cellspacing="0" cellpadding="0">
     <tr>
       <td>

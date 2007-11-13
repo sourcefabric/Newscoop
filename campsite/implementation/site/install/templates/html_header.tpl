@@ -15,7 +15,7 @@
 
 <table class="global" cellspacing="0" cellpadding="0">
 <tr>
-  <td>
+  <td colspan="2">
     <table cellspacing="0" cellpadding="0">
     <tr>
       <td>

@@ -121,7 +121,7 @@
     </tr>
     </table>
   </td>
-  <td width="200" valign="top">
+  <td valign="top">
     <table class="right_header" cellspacing="0" cellpadding="0">
     <tr>
       <td>

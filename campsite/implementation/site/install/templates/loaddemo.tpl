@@ -9,16 +9,16 @@
     <table class="header" cellspacing="0" cellpadding="0">
     <tr>
       <td width="70%">
-        <div class="title">Database Settings</div>
+        <div class="title">Sample Site</div>
       </td>
       <td width="30%" nowrap>
         <div class="navigate"><input
         class="nav_button" type="button" value="&#139; Previous"
-        onclick="submitForm( install_form, 'license' );" /> &nbsp;
+        onclick="submitForm( install_form, 'mainconfig' );" /> &nbsp;
         <input
         class="nav_button" type="button" value="Next &#155;"
         onclick="if (validateForm(install_form, 0, 1, 0, 1, 8) == true) {
-                 submitForm(install_form, 'mainconfig'); }"/>
+                 submitForm(install_form, 'finish'); }" />
         </div>
       </td>
     </tr>
@@ -30,58 +30,38 @@
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
           <td colspan="3">
-            <div class="subtitle">Connection Parameters:</div>
+            <div class="subtitle">Load Sample Data:</div>
           </td>
         </tr>
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              <p>To connect to your MySQL database you need to provide the
-              hostname of the server, the MySQL user name to connect with
-              and its corresponding password, and the <em>Campsite</em>
-              database name.</p>
+              <p>Is this the first time you install <em>Campsite</em>?
+              are not you familiar with the template engine system?
+              do you want to see <em>Campsite</em> in action before start
+              writing template files for your own Web site? Then, choose
+              "Yes" to install the sample site and you will can see a
+              simple and functional Web site to get familiar with the
+              system.</p>
 
-              <p><em>Server Port</em> is optional, if you leave it blank
-              <em>Campsite</em> will assume the default MySQL port (3306)
-              will be used.</p>
-
-              <p>We STRONGLY recommend to create a dedicated MySQL username
-              with password instead of use the default MySQL user (root).</p>
+              <p>Otherwise, simply check "No" and click on "Next" button to
+              finish the installation.</p>
             </div>
           </td>
           <td width="5%">&nbsp;</td>
           <td width="60%" valign="top">
             <div class="message">{{ $message }}</div>
             <div class="form_field">
-              <label for="db_hostname">Server Name/Address</label>:<br />
-              <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_hostname" name="db_hostname" value="{{ $db.hostname }}"
-              alt="blank"
-              emsg="You must complete the 'Server Name/Address' field" /><br />
+              <label for="db_hostname">Install Sample Site?</label> &nbsp;
+              <input
+                type="radio" id="install_demo" name="install_demo" value="1"
+                {{ if $dm.loaddemo eq true }} checked {{ /if }} /> &nbsp; Yes &nbsp;
+              <input
+                type="radio" id="install_demo" name="install_demo" value="0"
+                {{ if !$dm.loaddemo }} checked {{ /if }}/> &nbsp; No
             </div>
-            <div class="form_field">
-              <label for="db_hostport">Server Port</label>: (<em>Optional</em>)<br />
-              <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_hostport" name="db_hostport" value="{{ $db.hostport }}" /><br />
-            </div>
-            <div class="form_field">
-              <label for="db_username">User Name</label>:<br />
-              <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_username" name="db_username" value="{{ $db.username }}"
-              alt="blank"
-              emsg="You must complete the 'Username' field" /><br />
-            </div>
-            <div class="form_field">
-              <label for="db_userpass">User Password</label>:<br />
-              <input class="inputbox" type="password" size="42" maxlength="40"
-              id="db_userpass" name="db_userpass" value="{{ $db.userpass }}" /><br />
-            </div>
-            <div class="form_field">
-              <label for="db_database">Database Name</label>:<br />
-              <input class="inputbox" type="text" size="42" maxlength="40"
-              id="db_database" name="db_database" value="{{ $db.database }}"
-              alt="blank"
-              emsg="You must complete the 'Database' field" /><br />
+            <div class="demo_img">
+              <img src="img/campsite_demo.png" />
             </div>
           </td>
         </tr>
@@ -104,7 +84,7 @@
       <td>
         <ul id="steps_list">
         {{ foreach from=$step_titles key="step" item="s" }}
-          {{ if $s.order < 3 }}
+          {{ if $s.order < 5 }}
             <li class="stepdone">{{ $s.title }}</span>
           {{ else }}
             <li>{{ $s.title }}
@@ -124,6 +104,7 @@
     </div>
   </td>
 </tr>
+<input type="hidden" name="this_step" value="loaddemo" />
 <input type="hidden" name="step" value="" />
 </form>
 </table>
