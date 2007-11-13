@@ -1,0 +1,31 @@
+<?php 
+regGS("Show translated strings", "Паказаць перакладзеныя радкі");
+regGS("Hide translated strings", "Схаваць перакладзеныя радкі");
+regGS("Feedback", "Зваротная сувязь");
+regGS("You do not have the right to manage the localizer.", "Вы не маеце права доступу для кiравання лакалізацыяй.");
+regGS("API", "Праграмны інтэрфейс");
+regGS("User Subscriptions Sections", "Карыстальнiцкая секцыя падпiсанняў");
+regGS("User Subscriptions", "Карыстальнiцкiя падпiсаннi");
+regGS("Translate to:", "Перакласцi на:");
+regGS("Translate from:", "Перакласцi з:");
+regGS("The following strings are not used:", "Наступныя радкі не выкарыстаныя:");
+regGS("The following strings are missing from the translation files:", "Наступныя радкі прапушчаныя ў файлах перакладу:");
+regGS("Screen:", "Экран:");
+regGS("No source strings found.", "Не знойдзена зыходных радкоў.");
+regGS("No matches found.", "Не знойдзена супадзенняў.");
+regGS("Globals", "Агульныя");
+regGS("Are you sure you want to delete this entry?", "Ці Вы ўпэўнены, што хаціце выдалiць гэты запiс?");
+regGS("All strings have been translated.", "Усе радкi былi перакладзеныя.");
+regGS("Bug Reporting", "Паведамленне аб памылках");
+regGS("Article Topics", "Тэмы артыкулаў");
+regGS("native name", "арыгінальная назва");
+regGS("name", "назва");
+regGS("edit", "рэдагаваць");
+regGS("delete", "выдалiць");
+regGS("code", "код");
+regGS("Click Here to Convert", "Нацiснiце тут для канвертавання");
+regGS("success", "поспех");
+regGS("fail", "няўдача");
+regGS("cannot read $1", "немагчыма прачытаць $1");
+regGS("Converting...", "Канвертаванне...");
+?>
