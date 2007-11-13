@@ -53,7 +53,7 @@ final class CampContext
 	                         'searchresults'=>array('class'=>'SearchResults',
 	                                                'list'=>'search_results'),
 	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics'),
-	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles'),
+	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles'),	                         
 	                         'polls'=>array('class'=>'Polls', 'list'=>'polls'),
 	                         'pollanswers'=>array('class'=>'PollAnswers', 'list'=>'pollanswers'),
 	                         );
@@ -93,7 +93,6 @@ final class CampContext
         $this->m_readonlyProperties['sections_lists'] = array();
         $this->m_readonlyProperties['articles_lists'] = array();
         $this->m_readonlyProperties['article_attachments_lists'] = array();
-        $this->m_readonlyProperties['polls'] = array();
     } // fn __construct
 
 
@@ -156,8 +155,8 @@ final class CampContext
                     throw new InvalidObjectException($p_element);
                 }
 
-                $classFullPath = camp_find_class('Meta'.$this->m_objectTypes[$p_element], 'template_engine/metaclasses');
-                
+                $classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/Meta'
+                               . $this->m_objectTypes[$p_element].'.php';
                 if (!file_exists($classFullPath)) {
                     throw new InvalidObjectException($p_element);
                 }
@@ -392,8 +391,8 @@ final class CampContext
 
     	$p_objectType = CampContext::TranslateProperty($p_objectType);
 
-    	$classFullPath = camp_find_class('Meta'.$this->m_objectTypes[$p_objectType], 'template_engine/metaclasses');
-    	
+    	$classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/Meta'
+    					. $this->m_objectTypes[$p_objectType].'.php';
     	if (!file_exists($classFullPath)) {
     		throw new InvalidObjectException($p_objectType);
     	}

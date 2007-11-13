@@ -9,9 +9,9 @@ global $DEBUG;
 // initialize needed global variables
 $_SERVER['DOCUMENT_ROOT'] = getenv("DOCUMENT_ROOT");
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/liveuser_configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/parser_utils.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/conf/liveuser_configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 
 
@@ -105,13 +105,11 @@ $context->poll = new MetaPoll($poll_language_id, $poll_nr);
 $tpl->assign('campsite', $context);
 #$tpl->debugging = true;
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/plugins/poll/include/smarty/camp_plugins/block.list_polls.php');
-$tpl->register_block('list_polls', 'smarty_block_list_polls');
 
 #set_error_handler('templateErrorHandler');
 
 try {
-	$tpl->display($_SERVER['DOCUMENT_ROOT'] .'/plugins/poll/template_engine/templates/poll_index.tpl');
+	$tpl->display($_SERVER['DOCUMENT_ROOT'] .'/plugins/poll/template_engine/poll_index.tpl');
 } catch (InvalidPropertyHandlerException $e) {
 	echo "<p>Internal error: handler was not specified for property " . $e->getPropertyName()
 		. " of object " . $e->getClassName() . "</p>\n";

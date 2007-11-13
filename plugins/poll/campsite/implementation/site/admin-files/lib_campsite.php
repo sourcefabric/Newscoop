@@ -482,9 +482,9 @@ function camp_get_error_message($p_errorCode, $p_arg1 = null, $p_arg2 = null)
 
 function camp_get_plugin_path($p_plugin_name, $p_source_fullpath)
 {
-    global $ADMIN_DIR, $PLUGIN_DIR;
+    global $ADMIN_DIR;
 
-    $PLUGIN_PATH = dirname(__FILE__).'/../'.$PLUGIN_DIR;
+    $PLUGIN_PATH = dirname(__FILE__).'/../plugins';
     
     $target_subpath = str_replace(dirname(__FILE__), '', $p_source_fullpath);
     $target_fullpath = realpath("$PLUGIN_PATH/$p_plugin_name/$ADMIN_DIR/include/$target_subpath");
