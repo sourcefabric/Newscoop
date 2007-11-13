@@ -89,8 +89,8 @@ class AudioclipXMLMetadata {
         }
 
         $sessid = camp_session_get('cc_sessid', '');
-        if (PEAR::isError($this->xrc)) {
-            return $res;
+        if (empty($sessid)) {
+            return new PEAR_Error(getGS('Can not fetch audioclip metadata: the connection to Campcaster was not established.'));
         }
         $res = $this->xrc->xr_existsAudioClip($sessid, $this->m_gunId);
         if (PEAR::isError($res)) {

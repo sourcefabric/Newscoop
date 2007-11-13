@@ -213,7 +213,7 @@ class ArticleTopic extends DatabaseObject {
 
 
     /**
-     * Gets an article topics list based on the given parameters.
+     * Returns an article topics list based on the given parameters.
      *
      * @param array $p_parameters
      *    An array of ComparisonOperation objects
@@ -230,14 +230,10 @@ class ArticleTopic extends DatabaseObject {
      * @return array $articleTopicsList
      *    An array of Topic objects
      */
-    public static function GetList($p_parameters, $p_order = null,
+    public static function GetList(array $p_parameters, $p_order = null,
                                    $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
-
-        if (!is_array($p_parameters)) {
-            return null;
-        }
 
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();

@@ -86,10 +86,6 @@ class IssuesList extends ListObject
 	 */
 	protected function ProcessConstraints(array $p_constraints)
 	{
-	    if (!is_array($p_constraints)) {
-	        return null;
-	    }
-
 	    $parameters = array();
 	    $state = 1;
 	    $attribute = null;
@@ -145,16 +141,12 @@ class IssuesList extends ListObject
 	 */
 	protected function ProcessOrder(array $p_order)
 	{
-	    if (!is_array($p_order)) {
-	        return null;
-	    }
-
 	    $order = array();
 	    $state = 1;
 	    foreach ($p_order as $word) {
 	        switch ($state) {
                 case 1: // reading the order field
-	                if (!array_search(strtolower($word), IssuesList::$s_orderFields)) {
+	                if (array_search(strtolower($word), IssuesList::$s_orderFields) === false) {
 	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_issues, order parameter");
 	                } else {
     	                $orderField = $word;

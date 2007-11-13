@@ -1,6 +1,12 @@
 <?php
 /**
  * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
  */
 
 /**
@@ -9,7 +15,6 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/UrlType.php');
-require_once($g_documentRoot.'/template_engine/include/constants.php');
 require_once($g_documentRoot.'/template_engine/classes/Exceptions.php');
 
 /**

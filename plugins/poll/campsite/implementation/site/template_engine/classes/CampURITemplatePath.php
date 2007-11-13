@@ -3,6 +3,7 @@
  * @package Campsite
  *
  * @author Holman Romero <holman.romero@gmail.com>
+ * @author Mugur Rus <mugur.rus@gmail.com>
  * @copyright 2007 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
@@ -52,7 +53,7 @@ class CampURITemplatePath extends CampURI
      *
      * @var string
      */
-    private $m_lookDir = null;
+    private $m_templatesPrefix = null;
 
     /**
      * Holds the URI path from buildURI() method.
@@ -86,7 +87,7 @@ class CampURITemplatePath extends CampURI
     {
         parent::__construct($p_uri);
         $this->setURLType(URLTYPE_TEMPLATE_PATH);
-        $this->m_lookDir = 'look';
+        $this->m_templatesPrefix = 'tpl';
         $this->parse();
         $this->setURL();
     } // fn __construct
@@ -254,13 +255,22 @@ class CampURITemplatePath extends CampURI
     private function getURIArticle()
     {
         $uriString = $this->getURISection();
-        if (empty($uriString)) {
-            return null;
-        }
 
         $context = CampTemplate::singleton()->context();
         if (is_object($context->article) && $context->article->defined) {
-            $uriString .= '&'.CampRequest::ARTICLE_NR.'='.$context->article->number;
+            if (is_null($uriString)) {
+                $language = $context->article->getLanguage();
+                $publication = $context->article->getPublication();
+                $issue = $context->article->getIssue();
+                $section = $context->article->getSection();
+                $uriString = CampRequest::LANGUAGE_ID.'='.$language->number
+                    .'&'.CampRequest::PUBLICATION_ID.'='.$publication->identifier
+                    .'&'.CampRequest::ISSUE_NR.'='.$issue->number
+                    .'&'.CampRequest::SECTION_NR.'='.$section->number
+                    .'&'.CampRequest::ARTICLE_NR.'='.$context->article->number;
+            } else {
+                $uriString .= '&'.CampRequest::ARTICLE_NR.'='.$context->article->number;
+            }
         } else {
             $articleNr = $this->getQueryVar(CampRequest::ARTICLE_NR);
             if (empty($articleNr)) {
@@ -359,6 +369,8 @@ class CampURITemplatePath extends CampURI
      */
     private function setURL()
     {
+        global $g_ado_db;
+
         // gets the publication object based on site name (URI host)
         $alias = ltrim($this->getBase(), $this->getScheme().'://');
         $aliasArray = Alias::GetAliases(null, null, $alias);
@@ -387,7 +399,7 @@ class CampURITemplatePath extends CampURI
             }
             // sets the issue number if necessary
             if ($this->getQueryVar(CampRequest::ISSUE_NR) == 0) {
-                $query = 'SELECT MAX(Number) FROM Issues '
+                $query = 'SELECT MAX(Number) AS Number FROM Issues '
                     . 'WHERE IdPublication = '.$cPubId
                     . ' AND IdLanguage = '.$cLangId
                     . " AND Published = 'Y'";
@@ -400,6 +412,7 @@ class CampURITemplatePath extends CampURI
                     CampTemplate::singleton()->trigger_error('not published issues');
                     return;
                 }
+                $this->setQueryVar(CampRequest::ISSUE_NR, $cIssueNr);
             }
             // gets the template for the issue
             $template = CampSystem::GetIssueTemplate($cLangId, $cPubId, $cIssueNr);
@@ -442,7 +455,7 @@ class CampURITemplatePath extends CampURI
 
         $trimmedPath = trim($this->getPath(), '/');
         list($lookDir, $template) = explode('/', $trimmedPath);
-        if ($lookDir != $this->m_lookDir) {
+        if ($lookDir != $this->m_templatesPrefix) {
             return null;
         }
 
@@ -504,6 +517,11 @@ class CampURITemplatePath extends CampURI
         case 'article':
             $this->m_uriQuery = $this->getURIArticle();
             break;
+        case 'articleattachment':
+            $context = CampTemplate::singleton()->context();
+            $attachment = new Attachment($context->attachment->identifier);
+            $this->m_uriPath = '/attachment/'.basename($attachment->getStorageLocation());
+            break;
         default:
             if (empty($p_param)) {
                 $this->m_uriQuery = $this->m_query;
@@ -511,16 +529,19 @@ class CampURITemplatePath extends CampURI
             break;
         }
 
-        // gets the template name from the context
-        $context = CampTemplate::singleton()->context();
-        $template = $context->$p_param->template->name;
+        if ($p_param == 'publication' || $p_param == 'issue'
+                || $p_param == 'section' || $p_param == 'article') {
+            // gets the template name from the context
+            $context = CampTemplate::singleton()->context();
+            $template = $context->$p_param->template->name;
 
-        if (empty($template)) {
-            CampTemplate::singleton()->trigger_error('Invalid template');
-            return;
+            if (empty($template)) {
+                CampTemplate::singleton()->trigger_error('Invalid template');
+                return;
+            }
+
+            $this->m_uriPath = '/' . $this->m_templatesPrefix . '/' . $template;
         }
-
-        $this->m_uriPath = '/' . $this->m_lookDir . '/' . $template;
     } // fn buildURI
 
 } // class CampURITemplatePath

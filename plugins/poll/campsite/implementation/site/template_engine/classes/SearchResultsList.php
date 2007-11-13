@@ -37,7 +37,7 @@ class SearchResultsList extends ListObject
 	                                                   $context->publication->identifier);
 	    $this->m_constraints[] = $comparisonOperation;
 
-	    $keywords = array('the');
+	    $keywords = array('lectus');
 
 	    $articlesList = Article::SearchByKeyword($keywords, $this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaArticlesList = array();
@@ -72,7 +72,7 @@ class SearchResultsList extends ListObject
 	    foreach ($p_order as $word) {
 	        switch ($state) {
                 case 1: // reading the order field
-	                if (!array_search(strtolower($word), SearchResultsList::$s_orderFields)) {
+	                if (array_search(strtolower($word), SearchResultsList::$s_orderFields) === false) {
 	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_searchresult, order parameter");
 	                } else {
     	                $orderField = $word;

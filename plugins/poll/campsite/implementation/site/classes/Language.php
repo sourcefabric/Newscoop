@@ -12,12 +12,11 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot.'/configuration.php');
+require_once($g_documentRoot.'/conf/configuration.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
 require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot."/$ADMIN_DIR/localizer/Localizer.php");
-require_once($g_documentRoot.'/parser_utils.php');
 
 /**
  * @package Campsite
@@ -62,7 +61,7 @@ class Language extends DatabaseObject {
 	    		$this->delete(false);
 	    		return $result;
 	    	}
-	    	camp_create_language_links();
+	    	Language::CreateLanguageLinks();
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
@@ -181,7 +180,7 @@ class Language extends DatabaseObject {
 	 * @param string $p_name
 	 * @return array
 	 */
-	function GetLanguages($p_id = null, $p_languageCode = null, $p_name = null)
+	public static function GetLanguages($p_id = null, $p_languageCode = null, $p_name = null)
 	{
 	    $constraints = array();
 	    if (!is_null($p_id)) {
@@ -195,6 +194,30 @@ class Language extends DatabaseObject {
 	    }
 	    return DatabaseObject::Search('Language', $constraints);
 	} // fn GetLanguages
+
+	/**
+	 * This will create the symbolic links needed for short URLs to work
+	 *
+	 */
+	public static function CreateLanguageLinks()
+	{
+	    global $g_ado_db;
+
+	    $document_root = $_SERVER['DOCUMENT_ROOT'];
+
+	    $languages = $g_ado_db->GetAll('select Code from Languages');
+	    $index_file = "$document_root/index.php";
+	    foreach ($languages as $language) {
+	        $languageCode = $language["Code"];
+	        $link = "$document_root/$languageCode.php";
+	        if (file_exists($link) && !is_link($link)) {
+	            unlink($link);
+	        }
+	        if (!is_link($link)) {
+	            symlink($index_file, $link);
+	        }
+	    }
+	}
 
 } // class Language
 

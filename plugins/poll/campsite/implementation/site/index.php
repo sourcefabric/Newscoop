@@ -1,56 +1,47 @@
 <?php
+/**
+ * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
+ */
 
-header("Content-type: text/html; charset=UTF-8");
-
-global $_SERVER;
+global $g_documentRoot;
 global $Campsite;
-global $DEBUG;
 
-// initialize needed global variables
-$_SERVER['DOCUMENT_ROOT'] = getenv("DOCUMENT_ROOT");
+/**
+ * Includes
+ *
+ * We indirectly reference the DOCUMENT_ROOT so we can enable
+ * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
+ * is not defined in these cases.
+ */
+$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/parser_utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
+require_once($g_documentRoot.'/include/campsite_init.php');
 
-// read server parameters
-$env_vars["HTTP_HOST"] = getenv("HTTP_HOST");
-$env_vars["DOCUMENT_ROOT"] = getenv("DOCUMENT_ROOT");
-$env_vars["REMOTE_ADDR"] = getenv("REMOTE_ADDR");
-$env_vars["PATH_TRANSLATED"] = getenv("PATH_TRANSLATED");
-$env_vars["REQUEST_METHOD"] = getenv("REQUEST_METHOD");
-$env_vars["REQUEST_URI"] = getenv("REQUEST_URI");
-$env_vars["SERVER_PORT"] = trim(getenv("SERVER_PORT"));
-if ($env_vars["SERVER_PORT"] == "") {
-	$env_vars["SERVER_PORT"] = 80;
-}
+// initiates the campsite site
+$campsite = new CampSite();
 
-// read parameters
-// do we need to decode the parameter values?
-// if run as CGI yes, otherwise no
-$g_decodeURL = isset($argc) && $argc > 0;
-$parameters = camp_read_parameters($query_string, $g_decodeURL);
-if (isset($parameters["ArticleCommentSubmitResult"])) {
-	unset($parameters["ArticleCommentSubmitResult"]);
-}
-$cookies = camp_read_cookies($cookies_string);
+// loads site configuration settings
+$campsite->loadConfiguration(CS_PATH_CONFIG.DIR_SEP.'configuration.php');
 
-ob_start();
-if (isset($parameters["submitComment"])
-		&& trim($parameters["submitComment"]) != "") {
-	require_once($_SERVER['DOCUMENT_ROOT'].'/comment_lib.php');
-	unset($parameters["submitComment"]);
-	camp_submit_comment($env_vars, $parameters, $cookies);
-} else {
-	camp_send_request_to_parser($env_vars, $parameters, $cookies);
-}
-camp_debug_msg("query string: $query_string");
+// starts the session
+$campsite->initSession();
 
-$output = ob_get_clean();
-if ($g_evalPHPCode) {
-	eval('?>'.$output);
-} else {
-	echo $output;
-}
+// initiates the context
+$campsite->init();
+
+// TODO: authorization access
+
+
+// dispatches campsite
+$campsite->dispatch();
+
+// renders the site
+$campsite->render();
 
 ?>

@@ -2,22 +2,29 @@ Campsite Credits (by Version Number)
 
 
 ------------------------------------
+Campsite 3.0.0 Credits
+------------------------------------
+- Holman Romero (holman.romero@gmail.com)
+- Mugurel Rus (mugur.rus@gmail.com)
+
+
+------------------------------------
 Campsite 2.7.0 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur1973@yahoo.com)
+- Mugurel Rus (mugur.rus@gmail.com)
 
 
 ------------------------------------
 Campsite 2.6.3, 2.6.4, 2.6.5 Credits
 ------------------------------------
-- Mugurel Rus (mugur1973@yahoo.com)
+- Mugurel Rus (mugur.rus@gmail.com)
 - Holman Romero (holman.romero@gmail.com)
 
 -----------------------------
 Campsite 2.6.1, 2.6.2 Credits
 -----------------------------
-- Mugurel Rus (mugur1973@yahoo.com)
+- Mugurel Rus (mugur.rus@gmail.com)
 - Paul Baranowski (paul@paulbaranowski.org)
 - Holman Romero (holman.romero@gmail.com)
 - Sava Tatic (sava.tatic@mdlf.org)
@@ -33,7 +40,7 @@ Campsite 2.6 Credits
 --------------------
 Released July 10, 2006
 
-- Mugurel Rus (mugur1973@yahoo.com):
+- Mugurel Rus (mugur.rus@gmail.com):
   Campsite parser, article comments, install scripts, documentation
 
 - Paul Baranowski (paul@paulbaranowski.org):
@@ -59,7 +66,7 @@ Campsite 2.5 Credits
 --------------------
 Released March 6, 2006
 
-- Mugurel Rus (mugur1973@yahoo.com):
+- Mugurel Rus (mugur.rus@gmail.com):
   Subscribe by language, Campsite parser, database, admin interface,
   install scripts, documentation
 
@@ -76,7 +83,7 @@ Campsite 2.4 Credits
 --------------------
 Released January 10, 2006
 
-- Mugurel Rus (mugur1973@yahoo.com):
+- Mugurel Rus (mugur.rus@gmail.com):
   Campsite parser, database, admin interface, install scripts,
   documentation
 
@@ -104,7 +111,7 @@ Campsite 2.3 Credits
 --------------------
 Released August 1, 2005
 
-- Mugurel Rus (mugur1973@yahoo.com):
+- Mugurel Rus (mugur.rus@gmail.com):
   Campsite parser, database, admin interface, install scripts,
   documentation, Romanian localization
 
@@ -156,7 +163,7 @@ Campsite 2.2 Credits
 --------------------
 Released April 14, 2005
 
-- Mugurel Rus (mugur1973@yahoo.com):
+- Mugurel Rus (mugur.rus@gmail.com):
   Campsite parser, database, admin interface, install scripts,
   documentation
 
@@ -202,7 +209,7 @@ Campsite 2.1 Credits
 --------------------
 Released November 10, 2002
 
-- Mugurel Rus (mugur1973@yahoo.com):
+- Mugurel Rus (mugur.rus@gmail.com):
   Campsite server, database, admin interface, install scripts,
   documentation
 
@@ -256,7 +263,8 @@ Former contributors
 - Lucian Muresan: database, admin interface, localization, documentation
 - Nenad Pandzic: Campfire
 - Attila Egyedi: campfire, admin interface, localization
-- Richard Airlie: first port to FreeBSD and OpenBSD, documentation updates, bug fixes
+- Richard Airlie: first port to FreeBSD and OpenBSD, documentation
+  updates, bug fixes
 - Mirjana Zdjelar: testing
 - Recognos <www.recognos.com>
 - DNT Cluj <www.dntcj.ro>

@@ -1,4 +1,4 @@
-INSTALLATION PROCEDURE FOR CAMPSITE V.2.7.x
+INSTALLATION PROCEDURE FOR CAMPSITE V.3.0.x
 http://www.campware.org
 
 CONTENTS:
@@ -16,75 +16,59 @@ PREPARATION - applications you need to have installed
 
 INSTALLATION - the usual procedure
 
-1. Unzip and Untar the campsite file. This will generate a
+1. Create an apache virtual host.
+Example of virtual host configuration:
+<VirtualHost *>
+    DocumentRoot /var/www/campsite/html
+    ScriptAlias /cgi-bin/ /var/www/campsite/cgi-bin/
+    ServerName [site_name]
+    ServerAlias [site_alias]
+    DirectoryIndex index.php index.html
+    <Directory /var/www/campsite/html>
+            Options -Indexes FollowSymLinks MultiViews
+            AllowOverride All
+            <IfModule mod_access.c>
+                Order allow,deny
+                Allow from all
+            </IfModule>
+    </Directory>
+    <Directory /var/www/campsite/cgi-bin>
+        AllowOverride All
+        Options ExecCGI
+        <IfModule mod_access.c>
+            Order allow,deny
+            Allow from all
+        </IfModule>
+    </Directory>
+</VirtualHost>
+
+2. Unzip and Untar the campsite file. This will generate a
    folder named 'campsite'.
 
-2. Change into the 'campsite' directory.
+3. Change into the 'campsite' directory.
 
-   IMPORTANT: If you have an old version of campsite and want to drop
-   the old database type: "mysqladmin -u root drop campsite". The
-   installer will NOT install a new blank database over the old one.
-   If you want to upgrade campsite and keep the old database, continue
-   with the next step. The installation will not delete the old database.
+4. Copy the content of implementation/site directory into the document
+root directory of the apache virtual host.
 
-3. Type ./install.sh
+5. Start a browser, point it to the http://site_name URL and follow the
+steps.
 
-   If you are not already logged in as root the installer will prompt
-   you for the root password when necessary. Without root access it
-   can not install the CAMPSITE application.
+6. To install the default demo templates provided with the package take
+the following steps:
+    - copy the content of demo templates directory to "templates"
+    directory in the document root; the sample templates are located in:
+    [document_root]/install/sample_templates/campsite_3.0-sample-template-01-v1
 
-   IMPORTANT!!!
-   If your MySQL configuration is not the default one you'll have to run
-   the create instance script separately, after installation. Read
-   instructions from install script.
+    - drop the just installed database (e.g. campsite)
 
-   GENTOO
-   You will need to follow these special instructions at:
-   http://code.campware.org/manuals/campsite/2.7/index.php?id=152
+    - create an empty database (campsite)
 
-4. Configure the default instance
-
-   - Edit the file "campsite-vhost.conf" from the instance configuration
-   directory (/usr/local/campsite/etc/campsite) and replace $SERVER_NAME
-   with the appropriate value. Your system administrator should provide the
-   server address and server name. The server name must also be registered in
-   the DNS (Domain Name Service).
-
-   - Include the file "campsite-vhost.conf" in the main apache configuration
-   file.
-
-   - Restart the apache server:
-      killall httpd
-      {PATH}/httpd
-   or
-      /etc/rc.d/init.d/httpd restart
-
-Be aware that the Campsite installer does its best to pick reasonable
-defaults in the configuration of the various modules, but that these should
-always be checked by the user. (This applies when installing Campsite on
-any architecture). You can change all necessary variables interactively in
-the installer.
+    - load the demo data to campsite from
+    [document_root]/install/sql/campsite_3_0_demo_data.sql
 
 ####################################################################
 
 INSTALLATION of multiple instances
 
-You can create new instances without reinstalling Campsite. Just run:
-
-/usr/local/campsite/bin/campsite-create-instance --db_name [instance_name]
-
-- Edit the file "[instance_name]-vhost.conf" from the instance configuration
-directory (/usr/local/campsite/etc/[instance_name]) and replace $SERVER_NAME
-with the appropriate value. Your system administrator should provide the
-server address and server name. The server name must also be registered in
-the DNS (Domain Name Service).
-
-- Include the file "[instance_name]-vhost.conf" in the main apache
-configuration file.
-
-- Stop the apache server, kill campsite_server, start apache server.  One
-way to do this is as follows:
-    apache2ctl stop
-    killall campsite_server
-    apache2ctl start
-
+Since version 3.0 Campsite doesn't support multiple instances anymore.
+You will have to perform one install for each Campsite instance.

@@ -12,7 +12,6 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/template_engine/classes/Exceptions.php');
-require_once($g_documentRoot.'/template_engine/include/constants.php');
 
 
 /**

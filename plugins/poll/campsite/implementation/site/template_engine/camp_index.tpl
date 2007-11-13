@@ -37,12 +37,18 @@
 
 
 <h3>articles list</h3>
-{{ list_articles length="3" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="value" }}
-<li>article: <b>{{ $campsite->current_articles_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
+{{ list_articles length="3" columns="2" name='sample_name' }}
+{{ if $campsite->current_list->at_beginning }}
+<li>count: {{ $campsite->current_list->count }}</li>
+{{ /if }}
+<li>article: <b>{{ $campsite->current_articles_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>/<b>{{ $campsite->article->name }}</b>,
    list index: <b>{{ $campsite->current_articles_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
    column: <b>{{ $campsite->current_articles_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
-   (current articles list/current list)
+   (current articles list/current list/context)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+{{ /if }}
 {{ /list_articles }}
 
 
@@ -142,8 +148,13 @@
 {{ /list_search_results }}
 
 
-{{ set_topic name="Music:en" }}
-<h3>subtopics of topic {{ $campsite->topic->name }}</h3>
+{{ set_topic name="Open Source:en" }}
+{{ unset_topic }}
+{{ if $campsite->topic->defined }}
+    <h3>subtopics of topic {{ $campsite->topic->name }}</h3>
+{{ else }}
+    <h3>root topics</h3>
+{{ /if }}
 {{ list_subtopics length="4" columns="2" name='sample_name' }}
 {{ if $campsite->current_list->at_beginning }}
 <li>count: {{ $campsite->current_list->count }}</li>
@@ -160,7 +171,7 @@
 
 
 <h3>subtitles list</h3>
-{{ list_subtitles length="2" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' }}
+{{ list_subtitles length="2" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="invalid" }}
 <li>subtitle: <b>{{ $campsite->current_subtitles_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
    list index: <b>{{ $campsite->current_subtitles_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
    column: <b>{{ $campsite->current_subtitles_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
@@ -440,11 +451,11 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_publication identifier="6" }}
+    {{ set_publication identifier="1" }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
-    {{ literal }}{{ set_publication identifier="6" }}{{ /literal }}
+    {{ literal }}{{ set_publication identifier="1" }}{{ /literal }}
   </td>
 </tr>
 <tr>
@@ -714,11 +725,11 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_section number="1" }}
+    {{ set_section number="10" }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
-    {{ literal }}{{ set_section number="1" }}{{ /literal }}
+    {{ literal }}{{ set_section number="10" }}{{ /literal }}
   </td>
 </tr>
 <tr>
@@ -1054,7 +1065,7 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_article number="143" }}
+    {{ set_article number="4" }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
@@ -1346,11 +1357,11 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_topic name="Music:en" }}
+    {{ set_topic name="Open Source:en" }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
-    {{ literal }}{{ set_topic name="Music:en" }}{{ /literal }}
+    {{ literal }}{{ set_topic name="Open Source:en" }}{{ /literal }}
   </td>
 </tr>
 <tr>
