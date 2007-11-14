@@ -1,0 +1,25 @@
+Go to iCampsite's base install folder (e.g. /var/www/campsite) and run the following commands:
+
+cd smarty_camp_plugins/
+ln -s ../plugins/poll/smarty_camp_plugins/* .
+cd ..
+
+cd classes
+ln -s ../plugins/poll/classes/* .
+cd ..
+
+cd template_engine/classes/
+ln -s ../../plugins/poll/template_engine/classes/* .
+
+cd ../metaclasses/
+ln -s ../../plugins/poll/template_engine/metaclasses/ .
+cd ..
+cd ..
+
+cd admin-files
+ln -s ../plugins/poll/admin-files/poll/
+cd ..
+
+cd css
+ln -s ../plugins/poll/css/* .
+cd ..

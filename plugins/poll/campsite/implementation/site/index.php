@@ -35,6 +35,8 @@ $campsite->initSession();
 // initiates the context
 $campsite->init();
 
+CampPlugin::initPlugins();
+
 // TODO: authorization access
 
 

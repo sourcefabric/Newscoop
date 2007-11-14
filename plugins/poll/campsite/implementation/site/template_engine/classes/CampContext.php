@@ -30,8 +30,6 @@ final class CampContext
 								   'user'=>'User',
 								   'template'=>'Template',
 								   'subscription'=>'Subscription',
-								   'poll'=>'Poll',
-								   'pollanswer'=>'PollAnswer',
                                    'url'=>'URL'
 								   );
 
@@ -53,9 +51,7 @@ final class CampContext
 	                         'searchresults'=>array('class'=>'SearchResults',
 	                                                'list'=>'search_results'),
 	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics'),
-	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles'),	                         
-	                         'polls'=>array('class'=>'Polls', 'list'=>'polls'),
-	                         'pollanswers'=>array('class'=>'PollAnswers', 'list'=>'pollanswers'),
+	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles')
 	                         );
 
     // Stores the context objects.
@@ -440,6 +436,60 @@ final class CampContext
 		CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     } // fn trigger_invalid_property_error
 
+    
+    /**
+     * Register an new object type (for plugin)
+     *
+     * @param array $p_objectType
+     * structure: array(object name => object class name) 
+     */
+    final public function registerObjectType(array $p_objectType)
+    {        
+        try {
+            // check the structure
+            $keys = array_keys($p_objectType);
+            $values = array_values($p_objectType);
+            
+            if (count($keys) !== 1 || count($values) !== 1) {
+                throw new Exception('CampContext::registerObjectType called with malformed parameter: '.print_r($p_objectType));
+            }
+        } catch (Exception $e) {
+            $this->trigger_invalid_register_error($e->getMessage());
+        }
+    
+        $this->m_objectTypes += $p_objectType;   
+    }
+    
+    
+    /**
+     * Register an list object (for plugins)
+     *
+     * @param array $p_listObject
+     * structure: array(list object name => array('class' => class name, 'list' => list class name))
+     */
+    final public function registerListObject(array $p_listObject)
+    {       
+        try {
+            // check the structure
+            $keys = array_keys($p_listObject);
+            $values = array_values($p_listObject);
+            
+            if (count($keys) !== 1 || count($values) !== 1) {
+                throw new Exception('CampContext::registerListObject called with malformed parameter: '.print_r($p_listObject));
+            }
+        } catch (Exception $e) {
+            $this->trigger_invalid_register_error($e->getMessage());   
+        }
+        
+        $this->m_listObjects += $p_listObject;    
+    }
+    
+    
+    final protected function trigger_invalid_register_error($p_message)
+    {
+        CampTemplate::singleton()->trigger_error($p_message);   
+    }
+    
 } // class CampContext
 
 ?>
