@@ -9,7 +9,7 @@ class PollAnswer extends DatabaseObject {
      */
     var $m_keyColumnNames = array('fk_poll_nr', 'fk_language_id', 'nr_answer');
 
-    var $m_dbTableName = 'mod_poll_answer';
+    var $m_dbTableName = 'plugin_poll_answer';
 
     var $m_columnNames = array(
         // int - poll id
@@ -141,7 +141,7 @@ class PollAnswer extends DatabaseObject {
      */
     function delete()
     {        
-        // Delete from mod_poll_question table
+        // Delete from plugin_poll_question table
         $deleted = parent::delete();
 
         /*
@@ -185,7 +185,7 @@ class PollAnswer extends DatabaseObject {
         }
         
         $query = "SELECT    nr_answer
-                  FROM      mod_poll_answer
+                  FROM      plugin_poll_answer
                   WHERE     fk_poll_nr = $fk_poll_nr
                         AND fk_language_id = $fk_language_id
                   ORDER BY  nr_answer";
@@ -206,7 +206,7 @@ class PollAnswer extends DatabaseObject {
         $poll = new Poll($p_fk_language_id, $p_fk_poll_nr);
         $nr_of_answers = $poll->getProperty('nr_of_answers');
         
-        $query = "DELETE FROM   mod_poll_answer
+        $query = "DELETE FROM   plugin_poll_answer
                   WHERE         fk_poll_nr = $p_fk_poll_nr
                             AND fk_language_id = $p_fk_language_id
                             AND nr_answer > $nr_of_answers";

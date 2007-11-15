@@ -15,7 +15,7 @@ class PollSection extends DatabaseObject {
      *
      * @var string
      */
-    var $m_dbTableName = 'mod_poll_section';
+    var $m_dbTableName = 'plugin_poll_section';
 
     /**
      * All column names in the table

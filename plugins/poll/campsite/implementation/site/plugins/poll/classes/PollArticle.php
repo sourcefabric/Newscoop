@@ -15,7 +15,7 @@ class PollArticle extends DatabaseObject {
      *
      * @var string
      */
-    var $m_dbTableName = 'mod_poll_article';
+    var $m_dbTableName = 'plugin_poll_article';
 
     /**
      * All column names in the table

@@ -11,7 +11,7 @@ class Poll extends DatabaseObject {
     
     var $m_keyIsAutoIncrement = false;
 
-    var $m_dbTableName = 'mod_poll';
+    var $m_dbTableName = 'plugin_poll';
 
     var $m_columnNames = array(
         // int - poll poll_nr
@@ -109,7 +109,7 @@ class Poll extends DatabaseObject {
         global $g_ado_db;
         
         $query = "SELECT    MAX(poll_nr) + 1 AS number
-                  FROM      mod_poll";
+                  FROM      plugin_poll";
         $result = $g_ado_db->execute($query);
         $row = $result->fetchRow();
         
@@ -225,18 +225,18 @@ class Poll extends DatabaseObject {
      */
     public function delete()
     {       
-        // Delete from mod_poll_answer table
+        // Delete from plugin_poll_answer table
         PollAnswer::OnPollDelete($this->m_data['poll_nr'], $this->m_data['fk_language_id']);
 
-        // Delete from mod_poll_article table
+        // Delete from plugin_poll_article table
         
-        // Delete from mod_poll_section table
+        // Delete from plugin_poll_section table
         
-        // Delete from mod_poll_issue table
+        // Delete from plugin_poll_issue table
         
-        // Delete from mod_poll_publication table
+        // Delete from plugin_poll_publication table
         
-        // Delete from mod_poll_main table
+        // Delete from plugin_poll_main table
         // note: first set votes to null, to recalculate statistics
 
         $this->setProperty('nr_of_votes', 0);
@@ -287,7 +287,7 @@ class Poll extends DatabaseObject {
         }
          
         $query = "SELECT    poll_nr, fk_language_id 
-                  FROM      mod_poll 
+                  FROM      plugin_poll 
                   WHERE     poll_nr = $poll_nr
                   ORDER BY  fk_language_id";
         $result = $g_ado_db->execute($query);
@@ -310,12 +310,12 @@ class Poll extends DatabaseObject {
     {   
         if (!empty($p_fk_language)) {
             $query = "SELECT    poll_nr, fk_language_id  
-                      FROM      mod_poll
+                      FROM      plugin_poll
                       WHERE     fk_language_id = $p_fk_language
                       ORDER BY  poll_nr DESC, fk_language_id ASC";  
         } else {
             $query = "SELECT    poll_nr, fk_language_id
-                      FROM      mod_poll
+                      FROM      plugin_poll
                       ORDER BY  poll_nr DESC, fk_language_id";
         }
         

@@ -21,7 +21,7 @@ class PollIssue extends DatabaseObject {
      *
      * @var string
      */
-    var $m_dbTableName = 'mod_poll_issue';
+    var $m_dbTableName = 'plugin_poll_issue';
 
     /**
      * All column names in the table
