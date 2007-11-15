@@ -1,0 +1,31 @@
+Phorum 5 Coding Standards
+=========================
+
+For the most part, Phorum 5 uses the standards set forth in the PEAR Coding
+Standards located at http://pear.php.net/manual/en/standards.php. We do
+however differ slightly in a few of ways.
+
+1. Header Comment - please use the header comment found in the other Phorum
+   files.
+
+2. Function Naming - PEAR uses the "studly caps" naming. We like to name
+   functions in all lower case with _. So for example:  phorum_get_users().
+   Don't worry about long names. It is better to have a function named
+   well.
+
+3. Variable Names - PEAR really does not address this as the code you are
+   writing belongs to your package. However, in Phorum, the code you write
+   belongs to us all. Please make variable names useful and clear. Avoid
+   single character variables and things like $temp.
+
+Now, in looking at the code, you will see that this is not being followed to
+the letter. Sometimes, editors don't cooperate and you get tabs, other
+times you just forget and don't do it right. Just don't be upset if you see
+an SVN commit that just says "formatting" on your code. Some editors have
+auto-format features and will be used to clean up formatting.
+
+Even if you are not going to write a module, you may want to read the
+creating_mods.txt file. It covers some general concepts that exist in
+Phorum that may help you understand more of the Phorum code.
+
+Additionally, if you will be using SVN please read the SVN-RULES file.

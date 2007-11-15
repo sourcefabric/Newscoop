@@ -1,0 +1,23 @@
+UPGRADE
+
+Upgrading from versions 1.x, 2.0.x, 2.1.x, 2.2.x and 2.3.x is not
+supported anymore. You will have to upgrade first to Campsite 2.6
+or 2.7 and then follow the regular procedure.
+
+Upgrading from Campsite 2.4.x and newer versions:
+Repeat the following steps for each instance:
+
+1. Backup the instance using campsite-backup-instance
+2. Perform a new Campsite 3.0 install
+3. Run the restore backup script from the admin interface
+
+
+Read INSTALL file and follow the steps; read on Compatibility issues.
+
+
+Compatibility issues
+
+In version 3.0 the template language as modified extensively. The
+backup restore script will provide an automated conversion of the old
+template files to the new format. For more details on language changes
+please read the manual.

@@ -1,0 +1,219 @@
+#!/bin/bash
+
+LANG=""
+FILE=""
+to_do="print_usage"
+my_params=""
+pn=1
+while [ "${!pn}" != "" ]; do
+    case ${!pn} in
+    --make_package)
+	to_do=package
+	pn=`expr $pn + 1`
+	LANG=${!pn}
+	if [ "$LANG" = "" ]; then
+	    to_do=print_usage
+	fi
+	my_params="--make_package $LANG"
+	;;
+    --install_package)
+	to_do=install
+	pn=`expr $pn + 1`
+	FILE=${!pn}
+	if [ "$FILE" = "" ]; then
+	    to_do=print_usage
+	fi
+	my_params="--install_package $FILE"
+	;;
+    --user)
+	pn=`expr $pn + 1`
+	USER_NAME="${!pn}"
+	;;
+    --group)
+	pn=`expr $pn + 1`
+	GROUP_NAME="${!pn}"
+	;;
+    --add_trans_to_dist)
+	to_do=add_trans
+	pn=`expr $pn + 1`
+	LANG=${!pn}
+	if [ "$LANG" = "" ]; then
+	    to_do=print_usage
+	fi
+	my_params="--add_trans_to_dist $LANG"
+	;;
+#    --) ;;
+    esac
+    pn=`expr $pn + 1`
+done
+
+if [ "$to_do" = "print_usage" ]; then
+    echo -e "usage:\t./translation --make_package <language_code>"
+    echo -e "		Make translation package for specified language from"
+    echo -e "		application translation files in install directory."
+    echo -e "or\t./translation --install_package <package_file>"
+    echo -e "		Install translation files from a package to the application"
+    echo -e "		install directory."
+    echo -e "or\t./translation --add_trans_to_dist <language_code>"
+    echo -e "		Copy translation files for specified language from the"
+    echo -e "		application install directory to the distribution directory."
+    exit 2
+fi
+
+if [ ! -x ./configure ]; then
+    echo -e "Install script must be started from campsite directory!\nAborting..."
+    exit 2
+fi
+
+. ./configure --define_start_env > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Configure error. Make sure you configured campsite properly and try again."
+    exit 2
+fi
+my_id=`id -u`
+if [ $my_id -ne 0 ] && ! $USER_INSTALL; then
+    USER_NAME=`id -un`
+    GROUP_NAME=`id -gn`
+    echo -e "\nPlease supply root password."
+    while true; do
+	echo -n "Root password: "
+	archive_path=`pwd`
+	usr_grp="--user \"$USER_NAME\" --group \"$GROUP_NAME\""
+	su - --command="echo \"\"; cd $archive_path; ./translation $my_params $usr_grp" 2> /dev/null
+	err_code=$?
+	if [ $err_code -ne 0 ] && [ $err_code -ne 2 ]; then
+	    echo -n -e "\nThe password was not correct. Try again (Y/N) ? [Y]: "
+	    read yn
+	    if [ "$yn" = "" ]; then
+		yn="Y"
+	    fi
+	    if [ "${yn:0:1}" != "Y" ] && [ "${yn:0:1}" != "y" ]; then
+		echo "Aborting..."
+		exit 2
+	    fi
+	else
+	    exit 0
+	fi
+    done
+fi
+
+. ./configure --define_start_env
+if [ $? -ne 0 ]; then
+    echo "Configure error. Make sure you configured campsite properly and try again."
+    exit 2
+fi
+
+. ${INSTALL_CONF}/install_functions
+if [ $? -ne 0 ]; then
+    echo "Error reading install files."
+    echo "Please report bug to http://www.campware.org/bugs"
+    echo "Aborting..."
+    exit 2
+fi
+
+if [ "$to_do" = "package" ]; then
+    pushd `pwd` &> /dev/null
+    pushd "$PRIV_COMMON_DIR" &> /dev/null
+
+    if [ ! -d lang/$LANG ]; then
+	echo "no $LANG translation found"
+	popd &> /dev/null
+	exit 2
+    fi
+
+    DST_DIR=/tmp/$$_$LANG
+    mkdir -p "$DST_DIR"
+    if [ ! -d "$DST_DIR" ]; then
+	echo "error creating temporary directory"
+	popd &> /dev/null
+	exit 2
+    fi
+
+    cp -fr lang/$LANG $DST_DIR
+
+    popd &> /dev/null
+    pushd "$DST_DIR" &> /dev/null
+
+    tar czf translation-$LANG.tar.gz *
+
+    popd &> /dev/null
+
+    mv -f $DST_DIR/translation-$LANG.tar.gz .
+    rm -fr $DST_DIR
+    [ "$USER_NAME" != "" ] && chown "$USER_NAME":"$GROUP_NAME" translation-$LANG.tar.gz
+
+    popd &> /dev/null
+
+    echo "package file translation-$LANG.tar.gz made"
+
+    exit 0
+fi
+
+if [ "$to_do" = "install" ]; then
+    if [ ! -f "$FILE" ]; then
+	echo "invalid package file $FILE"
+	exit 2
+    fi
+    cp -f "$FILE" "$PRIV_COMMON_DIR/lang"
+
+    pushd `pwd` &> /dev/null
+    . make.env
+    pushd "$PRIV_COMMON_DIR/lang" &> /dev/null
+
+    tar xzf "$FILE"
+    if [ $? -ne 0 ]; then
+	popd &> /dev/null
+	popd &> /dev/null
+	echo "invalid package file"
+	exit 2
+    fi
+    chown -R "$APACHE_USER":"$APACHE_GROUP" *
+    chmod 775 *
+    find . -name \*.php -exec chmod 664 {} \;
+    rm -f $FILE
+
+    popd &> /dev/null
+    popd &> /dev/null
+
+    echo "package $FILE installed succesfully"
+
+    exit 0
+fi
+
+
+if [ "$to_do" = "add_trans" ]; then
+    pushd `pwd` &> /dev/null
+    pushd $PRIV_COMMON_DIR &> /dev/null
+
+    if [ ! -d lang/$LANG ]; then
+	echo "no $LANG translation found"
+	popd &> /dev/null
+	exit 2
+    fi
+
+    DST_DIR=`cut_last_dirs "$INSTALL_CONF"`/implementation/management/priv
+    if [ ! -d "$DST_DIR" ]; then
+	echo "distribution directory does not exist"
+	popd &> /dev/null
+	exit 2
+    fi
+
+    cp -fr lang/$LANG $DST_DIR/lang
+    find . -name locals.$LANG.php -exec $INSTALL_CONF/cp_path {} $DST_DIR \;
+
+    popd &> /dev/null
+    pushd $DST_DIR &> /dev/null
+
+    if [ "$USER_NAME" != "" ]; then
+	chown -R "$USER_NAME":"$GROUP_NAME" lang/$LANG
+	chmod 775 lang/$LANG
+	chmod 664 lang/$LANG/*.php
+    fi
+
+    popd &> /dev/null
+    popd &> /dev/null
+
+    echo "translation $LANG added to distribution"
+
+    exit 0
+fi

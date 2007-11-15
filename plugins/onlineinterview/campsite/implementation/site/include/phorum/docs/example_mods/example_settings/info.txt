@@ -1,0 +1,3 @@
+title: Settings example module
+desc: This is a module that demonstrates the support module settings in a multiple file module.
+hook: after_header|phorum_mod_example_settings_after_header

@@ -1,0 +1,13 @@
+The Localizer stores the translation files in the TRANSLATION_DIR (specified
+in the config file).  The TRANSLATION_DIR has a subdirectory for each language:
+  /en
+  /de
+  /fr
+  ...etc...
+
+Within each directory is a set of files, the format of these files may be
+different depending on which file format you are using.  You can load a
+file by specifying the file's prefix like so:
+
+Localizer::LoadLanguageFiles('articles', 'en');
+

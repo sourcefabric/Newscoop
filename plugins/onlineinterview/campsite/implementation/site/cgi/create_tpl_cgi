@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cat > tpl_cgi << EOF
+#!/bin/sh
+
+echo -e "Content-type: text/html; charset=UTF-8\n\n"
+
+$PHP $HTML_COMMON_DIR/index.php
+EOF
+
+chmod +x tpl_cgi

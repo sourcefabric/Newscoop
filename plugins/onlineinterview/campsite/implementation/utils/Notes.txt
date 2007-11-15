@@ -1,0 +1,35 @@
+Pre-2.6 backup file format
+--------------------------
+Backup files in these versions were named "<instance_name>-bak.tar"
+
+Inside the tarball:
+<instance_name>-conf.tar.gz
+<instance_name>-database.tar.gz
+<instance_name>-files.tar.gz
+<instance_name>-images.tar.gz
+<instance_name>-look.tar.gz
+
+
+2.6 backup file format
+----------------------
+Backup files are stored as "backup-<instance_name>-YYYY-MM-DD-HH-MM-SS.tar.gz".
+
+Inside the tarball:
+
+file: BACKUP-VERSION-<version_number>
+  This file name tell you want version of the software was used to create
+  the backup file.
+
+file: <instance_name>-database.sql
+
+dir: look
+  Template files.
+
+dir: images
+  Image files.
+
+dir: files
+  File attachments.
+
+dir: <instance_name>
+  Configuration files

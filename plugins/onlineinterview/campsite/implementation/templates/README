@@ -1,0 +1,20 @@
+HOWTO Install a Campsite Demo Site
+----------------------------------
+
+Install this demo site after Campsite is successfully installed.
+
+Three step install:
+1) Run "campsite-restore-instance" on the tarball:
+
+   # /usr/local/campsite/bin/campsite-restore-instance NAME_OF_TARBALL.tar.gz -e
+
+   To get help with this command, run it without any arguments.
+
+2) Login to the Campsite Administration (go to http://your_site_name/admin,
+   username is "admin", pasword is "admn00").  In the main menu click on
+   Content->Publications->Configure.  Change the default site alias to be
+   your web site name.
+
+3) Restart the template engine: go into the admin interface,
+Main menu -> Actions -> Restart the template engine.
+

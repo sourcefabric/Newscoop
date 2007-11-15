@@ -1,0 +1,6 @@
+Applied these patches from sourceforge:
+[ 1168321 ] Italian Translation 03/22/2005
+[ 1226999 ] Portuguese UTF-8 Language File
+[ 1203002 ] UTF-8 French Language (v1.0)
+[ 1337198 ] Fixed German (de) language file
+[ 1458201 ] update for RO language

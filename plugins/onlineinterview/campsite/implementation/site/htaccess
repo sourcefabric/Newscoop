@@ -1,0 +1,12 @@
+# Rewrite rules for Campsite ShortName URLs
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} (/|\.php|\.tpl|\.html|/[^.]*)$  [NC]
+RewriteCond %{REQUEST_URI} !^/admin/
+RewriteCond %{REQUEST_URI} !^/install/
+RewriteRule . /index.php [L]
+
+# For Rewrite debug purposes
+# RewriteLog /tmp/apache-rewrite.log
+# RewriteLogLevel 9
