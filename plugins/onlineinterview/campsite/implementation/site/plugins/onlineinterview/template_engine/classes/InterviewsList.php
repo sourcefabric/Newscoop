@@ -2,26 +2,33 @@
 /**
  *  @package Campsite
  */
-class PollsList extends ListObject 
+class InterviewsList extends ListObject 
 {                                 
     private $m_item;
     
-    public static $s_parameters = array('number' => array('field' => 'poll_nr', 'type' => 'integer'),
-                                        'language_id' => array('field' => 'fk_language_id', 'type' => 'integer'),
+    public static $s_parameters = array('interview_id' => array('field' => 'interview_id', 'type' => 'integer'),
                                         'name' => array('field' => 'title', 'type' => 'string'),
-                                        'begin' => array('field' => 'date_begin', 'type' => 'date'),
-                                        'begin_year' => array('field' => 'YEAR(date_begin)', 'type' => 'integer'),
-                                        'begin_month' => array('field' => 'MONTH(date_begin)', 'type' => 'integer'),
-                                        'begin_mday' => array('field' => 'DAYOFMONTH(date_begin)', 'type' => 'integer'),
-                                        'end' => array('field' => 'date_end', 'type' => 'date'),
-                                        'end_year' => array('field' => 'YEAR(date_end)', 'type' => 'integer'),
-                                        'end_month' => array('field' => 'MONTH(date_end)', 'type' => 'integer'),
-                                        'end_mday' => array('field' => 'DAYOFMONTH(date_end)', 'type' => 'integer'),
-                                        'assign_publication_id' => array('field' => 'assign_publication_id', 'type' => 'integer'),
-                                        'assign_issue_nr' => array('field' => 'assign_issue_nr', 'type' => 'integer'),
-                                        'assign_section_nr' => array('field' => 'assign_section_nr', 'type' => 'integer'),
-                                        'assign_article_nr' => array('field' => 'assign_article_nr', 'type' => 'integer'),
-                                        'votable' => array('field' => 'is_votable', 'type' => 'boolean'),
+                                        'language_id' => array('field' => 'fk_language_id', 'type' => 'int'),
+                                        'moderator_user_id' => array('field' => 'fk_moderator_user_id', 'type' => 'int'),
+                                        'invitee_user_id' => array('field' => 'fk_invitee_user_id', 'type' => 'int'),
+                                        
+                                        'interview_begin' => array('field' => 'interview_begin', 'type' => 'date'),
+                                        'interview_begin_year' => array('field' => 'YEAR(interview_begin)', 'type' => 'integer'),
+                                        'interview_begin_month' => array('field' => 'MONTH(interview_begin)', 'type' => 'integer'),
+                                        'interview_begin_mday' => array('field' => 'DAYOFMONTH(interview_begin)', 'type' => 'integer'),
+                                        'interview_end' => array('field' => 'interview_end', 'type' => 'date'),
+                                        'interview_end_year' => array('field' => 'YEAR(interview_end)', 'type' => 'integer'),
+                                        'interview_end_month' => array('field' => 'MONTH(interview_end)', 'type' => 'integer'),
+                                        'interview_end_mday' => array('field' => 'DAYOFMONTH(interview_end)', 'type' => 'integer'),
+                                        
+                                        'questions_begin' => array('field' => 'questions_begin', 'type' => 'date'),
+                                        'questions_begin_year' => array('field' => 'YEAR(questions_begin)', 'type' => 'integer'),
+                                        'questions_begin_month' => array('field' => 'MONTH(questions_begin)', 'type' => 'integer'),
+                                        'questions_begin_mday' => array('field' => 'DAYOFMONTH(questions_begin)', 'type' => 'integer'),
+                                        'questions_end' => array('field' => 'questions_end', 'type' => 'date'),
+                                        'questions_end_year' => array('field' => 'YEAR(questions_end)', 'type' => 'integer'),
+                                        'questions_end_month' => array('field' => 'MONTH(questions_end)', 'type' => 'integer'),
+                                        'questions_end_mday' => array('field' => 'DAYOFMONTH(questions_end)', 'type' => 'integer'),
                                );
                                    
     private static $s_orderFields = array(
@@ -50,7 +57,8 @@ class PollsList extends ListObject
 	    
 	    $comparisonOperation = new ComparisonOperation('language_id', $operator,
 	                                                   $context->language->number);
-	    $this->m_constraints[] = $comparisonOperation;                                                
+	    $this->m_constraints[] = $comparisonOperation; 
+	    /*                                               
 	    $comparisonOperation = new ComparisonOperation('assign_publication_id', $operator,
 	                                                   $context->publication->identifier);
 	    $this->m_constraints[] = $comparisonOperation;
@@ -63,13 +71,13 @@ class PollsList extends ListObject
 	    $comparisonOperation = new ComparisonOperation('assign_article_nr', $operator,
 	                                                   $context->article->number);
 	    $this->m_constraints[] = $comparisonOperation;
-
-	    $pollsList = Poll::GetList($this->m_constraints, $this->m_item, $this->m_order, $p_start, $p_limit, $p_count);
-        $metaPollsList = array();
-	    foreach ($pollsList as $poll) {
-	        $metaPollsList[] = new MetaPoll($poll->getLanguageId(), $poll->getNumber());
+        */
+	    $interviewsList = Interview::GetList($this->m_constraints, $this->m_item, $this->m_order, $p_start, $p_limit, $p_count);
+        $metaInterviewsList = array();
+	    foreach ($interviewsList as $interview) {
+	        $metaInterviewsList[] = new MetaInterview($interview->getId());
 	    }
-	    return $metaPollsList;
+	    return $metaInterviewsList;
 	}
 
 	/**
@@ -92,7 +100,7 @@ class PollsList extends ListObject
 	    foreach ($p_constraints as $word) {
 	        switch ($state) {
 	            case 1: // reading the parameter name
-	                if (!array_key_exists($word, PollsList::$s_parameters)) {
+	                if (!array_key_exists($word, InterviewsList::$s_parameters)) {
 	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_polls, constraints parameter");
 	                    break;
 	                }
@@ -100,7 +108,7 @@ class PollsList extends ListObject
 	                $state = 2;
 	                break;
 	            case 2: // reading the operator
-	                $type = PollsList::$s_parameters[$attribute]['type'];
+	                $type = InterviewsList::$s_parameters[$attribute]['type'];
 	                try {
 	                    $operator = new Operator($word, $type);
 	                }
@@ -110,7 +118,7 @@ class PollsList extends ListObject
 	                $state = 3;
 	                break;
 	            case 3: // reading the value to compare against
-	                $type = PollsList::$s_parameters[$attribute]['type'];
+	                $type = InterviewsList::$s_parameters[$attribute]['type'];
 	                $metaClassName = 'Meta'.strtoupper($type[0]).strtolower(substr($type, 1));
 	                try {
 	                    $value = new $metaClassName($word);
@@ -148,7 +156,7 @@ class PollsList extends ListObject
 	    foreach ($p_order as $word) {
 	        switch ($state) {
                 case 1: // reading the order field
-	                if (!array_search(strtolower($word), PollsList::$s_orderFields)) {
+	                if (!array_search(strtolower($word), InterviewsList::$s_orderFields)) {
 	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_polls, order parameter");
 	                } else {
     	                $orderField = $word;
