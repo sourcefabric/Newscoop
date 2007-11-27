@@ -49,9 +49,10 @@ $Campsite['FILE_DIRECTORY'] = $Campsite['HTML_DIR'].'/files';
 $Campsite['FILE_NUM_DIRS_LEVEL_1'] = "1000";
 $Campsite['FILE_NUM_DIRS_LEVEL_2'] = "1000";
 $Campsite['TMP_DIRECTORY'] = '/tmp/';
-$Campsite['HELP_URL'] = 'http://code.campware.org/manuals/campsite/2.6/';
+$Campsite['HELP_URL'] = 'http://code.campware.org/manuals/campsite/3.0/';
 $Campsite['ABOUT_URL'] = 'http://www.campware.org/en/camp/campsite_news/';
 $Campsite['SUPPORT_EMAIL'] = 'campsite-support@lists.campware.org';
 $Campsite['DEBUG'] = true;
+$Campsite['VERSION'] = '3.0-beta1';
 
 ?>
