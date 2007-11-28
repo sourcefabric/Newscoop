@@ -35,28 +35,17 @@ function smarty_block_list_polls($p_params, $p_content, &$p_smarty, &$p_repeat)
     if (!isset($p_content)) {
         $start = 0;
     	$pollsList = new PollsList($start, $p_params);
-    	$campContext->setCurrentList($pollsList);
-    
-    	if ($p_params['debug']) {
-        	echo "<p>start: " . $campContext->current_polls_list->getStart()
-        	    . ", item: " . $campContext->current_polls_list->item
-        		. ", length: " . $campContext->current_polls_list->getLength()
-        		. ", limit: " . $campContext->current_polls_list->getLimit()
-        		. ", columns: " . $campContext->current_polls_list->getColumns()
-    			. ", has next elements: " . (int)$campContext->current_polls_list->hasNextElements() . "</p>\n";
-        	echo "<p>name: " . $campContext->current_polls_list->getName() . "</p>\n";
-        	echo "<p>constraints: " . $campContext->current_polls_list->getConstraintsString() . "</p>\n";
-        	echo "<p>order: " . $campContext->current_polls_list->getOrderString() . "</p>\n";
-    	}
+    	$campContext->setCurrentList($pollsList, array('poll'));
     }
 
-    $Poll = $campContext->current_polls_list;
-    $currentPoll = $Poll->current;
+    $currentPoll = $campContext->current_polls_list->current;
+    
     if (is_null($currentPoll)) {
 	    $p_repeat = false;
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
+        $campContext->poll = $currentPoll;
     	$p_repeat = true;
     }
 
@@ -64,6 +53,9 @@ function smarty_block_list_polls($p_params, $p_content, &$p_smarty, &$p_repeat)
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_polls_list->defaultIterator()->next();
+    		if (!is_null($campContext->current_polls_list->current)) {
+                $campContext->poll = $campContext->current_polls_list->current;
+            }
     	}
     }
 

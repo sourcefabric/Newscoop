@@ -20,7 +20,7 @@ final class MetaPollAnswer extends MetaDbObject {
 	}
 
 
-    public function __construct($p_languageId = null, $p_poll_nr = null, $p_nr_answer)
+    public function __construct($p_languageId = null, $p_poll_nr = null, $p_nr_answer = null)
     {
 		$this->m_dbObject =& new PollAnswer($p_languageId, $p_poll_nr, $p_nr_answer);
 
