@@ -76,6 +76,20 @@ final class MetaUser extends MetaDbObject {
 		}
 		return $country->getName();
 	}
+	
+	/**
+	 * Request an user permission indicated by permission name
+	 *
+	 * @param string $p_permission permission name
+	 * @return boolean
+	 */
+	public function has_permission($p_permission)
+	{
+	   if ($this->m_dbObject->hasPermission($p_permission) == 'Y') {
+	       return true;
+	   }
+	   return false;      
+	}
 
 } // class MetaUser
 
