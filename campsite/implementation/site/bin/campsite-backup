@@ -117,7 +117,7 @@ camp_exec_command($cmd, "Couldn't write VERSION file.");
 if (!$silent) {
 	echo " * Backing up the database...";
 }
-$db_file_name = "$backupDirFullPath/campsite-database.sql";
+$db_file_name = "$backupDirFullPath/".$Campsite['DATABASE_NAME'].'-database.sql';
 
 if (is_file($db_file_name) && (camp_backup_file($db_file_name, $output) != 0)) {
 	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
