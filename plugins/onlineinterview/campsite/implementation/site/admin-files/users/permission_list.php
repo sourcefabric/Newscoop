@@ -109,7 +109,7 @@ function camp_get_permission_list()
 				getGS('Editor Miscellaneous Settings')=>$editor_group_4);
 	
     // modules: extend permission list
-    if ($path = camp_get_plugin_path('poll', __FILE__)) {
+    if ($path = camp_get_plugin_path('onlineinterview', __FILE__)) {
         include ($path);   
     }
     

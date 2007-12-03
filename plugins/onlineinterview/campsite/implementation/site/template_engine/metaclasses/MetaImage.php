@@ -46,6 +46,8 @@ final class MetaImage extends MetaDbObject {
         $this->m_customProperties['min'] = 'getMinute';
         $this->m_customProperties['sec'] = 'getSecond';
         $this->m_customProperties['defined'] = 'defined';
+        $this->m_customProperties['imageurl'] = 'getImageUrl';
+        $this->m_customProperties['thumbnailurl'] = 'getThumbnailUrl';
     } // fn __construct
 
 
@@ -111,7 +113,19 @@ final class MetaImage extends MetaDbObject {
     	$date_time = getdate($timestamp);
     	return $date_time['seconds'];
     }
+    
+    public function getImageUrl()
+    {
+        $url = $this->m_dbObject->getImageUrl(); 
+        return $url;   
+    }
 
-} // class MetaSection
+    public function getThumbnailUrl()
+    {
+        $url = $this->m_dbObject->getThumbnailUrl(); 
+        return $url;   
+    }
+    
+} // class MetaImage
 
 ?>

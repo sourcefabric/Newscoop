@@ -321,11 +321,11 @@ class InterviewItem extends DatabaseObject {
      *
      * @return int
      */
-    public static function countInterviews()
+    public static function countInterviewItemss()
     {
         global $g_ado_db;;
         
-        $query   = Interview::getQuery(); 
+        $query   = InterviewItem::getQuery(); 
         $res     = $g_ado_db->Execute($query);
         
         return $res->RecordCount();  
@@ -627,6 +627,161 @@ class InterviewItem extends DatabaseObject {
         }
     }
 
+    /////////////////// Special template engine methods below here /////////////////////////////
+    
+    /**
+     * Gets an issue list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string item
+     *    An indentifier which assignment should be used (publication/issue/section/article)
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array $issuesList
+     *    An array of Issue objects
+     */
+    public static function GetList($p_parameters, $p_item = null, $p_order = null,
+                                   $p_start = 0, $p_limit = 0, &$p_count)
+    {
+        global $g_ado_db;
+        
+        if (!is_array($p_parameters)) {
+            return null;
+        }
+        
+        $selectClauseObj = new SQLSelectClause();
+
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param);
+            if (empty($comparisonOperation)) {
+                continue;
+            }
+            
+            if (strpos($comparisonOperation['left'], 'interview_id') !== false) {
+                $interview_id = $comparisonOperation['right'];
+            } else {
+                $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+                $selectClauseObj->addWhere($whereCondition);
+            }
+        }
+        
+        // sets the columns to be fetched
+        $tmpInterviewItem = new InterviewItem();
+		$columnNames = $tmpInterviewItem->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $selectClauseObj->addColumn($columnName);
+        }
+
+        // sets the main table for the query
+        $mainTblName = $tmpInterviewItem->getDbTableName();
+        $selectClauseObj->setTable($mainTblName);
+        unset($tmpInterviewItem);
+        
+        // set constraints which ever have to care of
+        $selectClauseObj->addWhere("$mainTblName.fk_interview_id = $interview_id");
+        #$selectClauseObj->addWhere("$mainTblName.is_online = 1");
+
+       
+        if (is_array($p_order)) {
+            $order = InterviewItem::ProcessListOrder($p_order);
+            // sets the order condition if any
+            foreach ($order as $orderField=>$orderDirection) {
+                $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
+            }
+        }
+       
+        $sqlQuery = $selectClauseObj->buildQuery();
+        
+        // count all available results
+        $countRes = $g_ado_db->Execute($sqlQuery);
+        $p_count = $countRes->recordCount();
+        
+        //get tlimited rows
+        $interviewItemRes = $g_ado_db->SelectLimit($sqlQuery, $p_limit, $p_start);
+        
+        // builds the array of interview objects
+        $interviewItemsList = array();
+        while ($interviewItem = $interviewItemRes->FetchRow()) {
+            $interviewItemObj = new InterviewItem($interviewItem['interview_id'], $interviewItem['item_id']);
+            if ($interviewItemObj->exists()) {
+                $interviewItemsList[] = $interviewItemObj;
+            }
+        }
+
+        return $interviewItemsList;
+    } // fn GetList
+    
+    /**
+     * Processes a paremeter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListParameters($p_param)
+    {
+        $comparisonOperation = array();
+
+        $comparisonOperation['left'] = InterviewItemsList::$s_parameters[strtolower($p_param->getLeftOperand())]['field'];
+
+        if (isset($comparisonOperation['left'])) {
+            $operatorObj = $p_param->getOperator();
+            $comparisonOperation['right'] = $p_param->getRightOperand();
+            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
+
+        return $comparisonOperation;
+    } // fn ProcessListParameters
+
+    /**
+     * Processes an order directive coming from template tags.
+     *
+     * @param array $p_order
+     *      The array of order directives
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $field=>$direction) {
+            $dbField = null;
+            switch (strtolower($field)) {
+                case 'bynumber':
+                    $dbField = 'interview_nr';
+                    break;
+                case 'byname':
+                    $dbField = 'title';
+                    break;
+                case 'bybegin':
+                    $dbField = 'date_begin';
+                    break;
+                case 'byend':
+                    $dbField = 'date_end';
+                    break;
+                case 'byvotes':
+                    $dbField = 'nr_of_votes';
+                    break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+            }
+            $order[$dbField] = $direction;
+        }
+        return $order;
+    }
 } // class InterviewItem
 
 ?>

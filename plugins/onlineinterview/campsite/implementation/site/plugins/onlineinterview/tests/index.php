@@ -14,9 +14,9 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/conf/liveuser_configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 
-#$Interview = new Interview($_REQUEST['interview_id']);
-#$Interview->store();
-#echo $Interview->getForm('index.php', null, null, null, true);
+$Interview = new Interview($_REQUEST['interview_id']);
+$Interview->store();
+echo $Interview->getForm('index.php', null, null, null, true);
 
 #$Interview->create(2, 3, 'titel 1', true, 'kurzbeschreibung', 'beschreibung', '2007-01-02 11:11:11', '2008-03-04 14:00:00', '2005-01-01 00:00:00', '2006-01-01 00:00:00', 255);
 
@@ -27,7 +27,7 @@ foreach(Interview::GetInterviews(null, null, null, array('title' => 'asc')) as $
     echo $Interview->getTitle();
     echo '<hr>';   
 }
-*/
+
 
 $Item = new InterviewItem(1, $_REQUEST['item_id']);
 #$Item->storeQuestion();
@@ -38,7 +38,7 @@ echo $Item->getAnswerForm('index.php',null, null, null, true);
 
 #$Item->positionAbsolute(3);
 
-/*
+
 foreach(InterviewItem::GetInterviewItems(1) as $InterviewItem) {
     echo $InterviewItem->getQuestion().': '.$InterviewItem->getAnswer();
     echo '<hr>';   

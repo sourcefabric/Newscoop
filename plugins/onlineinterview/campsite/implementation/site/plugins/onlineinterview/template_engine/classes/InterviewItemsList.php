@@ -2,15 +2,15 @@
 /**
  *  @package Campsite
  */
-class InterviewsList extends ListObject 
+class InterviewItemsList extends ListObject 
 {                                 
     private $m_item;
     
-    public static $s_parameters = array('id' => array('field' => 'interview_id', 'type' => 'integer'),
+    public static $s_parameters = array('interview_id' => array('field' => 'fk_interview_id', 'type' => 'integer'),
                                         'name' => array('field' => 'title', 'type' => 'string'),
-                                        'language_id' => array('field' => 'fk_language_id', 'type' => 'integer'),
-                                        'moderator_user_id' => array('field' => 'fk_moderator_user_id', 'type' => 'integer'),
-                                        'invitee_user_id' => array('field' => 'fk_invitee_user_id', 'type' => 'integer'),
+                                        'language_id' => array('field' => 'fk_language_id', 'type' => 'int'),
+                                        'moderator_user_id' => array('field' => 'fk_moderator_user_id', 'type' => 'int'),
+                                        'invitee_user_id' => array('field' => 'fk_invitee_user_id', 'type' => 'int'),
                                         
                                         'interview_begin' => array('field' => 'interview_begin', 'type' => 'date'),
                                         'interview_begin_year' => array('field' => 'YEAR(interview_begin)', 'type' => 'integer'),
@@ -29,8 +29,6 @@ class InterviewsList extends ListObject
                                         'questions_end_year' => array('field' => 'YEAR(questions_end)', 'type' => 'integer'),
                                         'questions_end_month' => array('field' => 'MONTH(questions_end)', 'type' => 'integer'),
                                         'questions_end_mday' => array('field' => 'DAYOFMONTH(questions_end)', 'type' => 'integer'),
-                                        
-                                        'status' => array('field' => 'status', 'type' => 'string'),
                                );
                                    
     private static $s_orderFields = array(
@@ -56,17 +54,21 @@ class InterviewsList extends ListObject
 	{
 	    $operator = new Operator('is');
 	    $context = CampTemplate::singleton()->context();
-	    
-	    $comparisonOperation = new ComparisonOperation('language_id', $operator,
-	                                                   $context->language->number);
-	    $this->m_constraints[] = $comparisonOperation;
 
-	    $interviewsList = Interview::GetList($this->m_constraints, $this->m_item, $this->m_order, $p_start, $p_limit, $p_count);
-        $metaInterviewsList = array();
-	    foreach ($interviewsList as $interview) {
-	        $metaInterviewsList[] = new MetaInterview($interview->getId());
+	    if (!$context->interview->identifier) {
+	      return false;    
 	    }
-	    return $metaInterviewsList;
+	    
+	    $comparisonOperation = new ComparisonOperation('interview_id', $operator,
+	                                                   $context->interview->identifier);
+	    $this->m_constraints[] = $comparisonOperation; 
+        
+	    $interviewItemsList = InterviewItem::GetList($this->m_constraints, $this->m_item, $this->m_order, $p_start, $p_limit, $p_count);
+        $metaInterviewItemsList = array();
+	    foreach ($interviewItemsList as $interviewItem) {
+	        $metaInterviewItemsList[] = new MetaInterviewItem($interviewItem->getId());
+	    }
+	    return $metaInterviewItemsList;
 	}
 
 	/**
@@ -89,25 +91,25 @@ class InterviewsList extends ListObject
 	    foreach ($p_constraints as $word) {
 	        switch ($state) {
 	            case 1: // reading the parameter name
-	                if (!array_key_exists($word, InterviewsList::$s_parameters)) {
-	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_interviews, constraints parameter");
+	                if (!array_key_exists($word, InterviewItemsList::$s_parameters)) {
+	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_polls, constraints parameter");
 	                    break;
 	                }
 	                $attribute = $word;
 	                $state = 2;
 	                break;
 	            case 2: // reading the operator
-	                $type = InterviewsList::$s_parameters[$attribute]['type'];
+	                $type = InterviewItemsList::$s_parameters[$attribute]['type'];
 	                try {
 	                    $operator = new Operator($word, $type);
 	                }
 	                catch (InvalidOperatorException $e) {
-	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_interviews, constraints parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_polls, constraints parameter");
 	                }
 	                $state = 3;
 	                break;
 	            case 3: // reading the value to compare against
-	                $type = InterviewsList::$s_parameters[$attribute]['type'];
+	                $type = InterviewItemsList::$s_parameters[$attribute]['type'];
 	                $metaClassName = 'Meta'.strtoupper($type[0]).strtolower(substr($type, 1));
 	                try {
 	                    $value = new $metaClassName($word);
@@ -115,14 +117,14 @@ class InterviewsList extends ListObject
        	                $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
     	                $parameters[] = $comparisonOperation;
 	                } catch (InvalidValueException $e) {
-	                    CampTemplate::singleton()->trigger_error("invalid value $word of attribute $attribute in list_interviews, constraints parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid value $word of attribute $attribute in list_polls, constraints parameter");
 	                }
 	                $state = 1;
 	                break;
 	        }
 	    }
 	    if ($state != 1) {
-            CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_interviews");
+            CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_polls");
 	    }
 
 		return $parameters;
@@ -145,8 +147,8 @@ class InterviewsList extends ListObject
 	    foreach ($p_order as $word) {
 	        switch ($state) {
                 case 1: // reading the order field
-	                if (!array_search(strtolower($word), InterviewsList::$s_orderFields)) {
-	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_interviews, order parameter");
+	                if (!array_search(strtolower($word), InterviewItemsList::$s_orderFields)) {
+	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_polls, order parameter");
 	                } else {
     	                $orderField = $word;
 	                }
@@ -156,14 +158,14 @@ class InterviewsList extends ListObject
                     if (MetaOrder::IsValid($word)) {
                         $order[$orderField] = $word;
                     } else {
-                        CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_interviews, order parameter");
+                        CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_polls, order parameter");
                     }
                     $state = 1;
 	                break;
 	        }
 	    }
 	    if ($state != 1) {
-            CampTemplate::singleton()->trigger_error("unexpected end of order parameter in list_interviews");
+            CampTemplate::singleton()->trigger_error("unexpected end of order parameter in list_polls");
 	    }
 
 	    return $order;
@@ -192,7 +194,7 @@ class InterviewsList extends ListObject
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {
-    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_interviews");
+    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_polls");
     					}
 	    				$parameters[$parameter] = (int)$value;
     				} else {
@@ -200,7 +202,7 @@ class InterviewsList extends ListObject
     				}
     				break;
     			default:
-    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_interviews", $p_smarty);
+    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_polls", $p_smarty);
     		}
     	}
     	$this->m_item = is_string($p_parameters['item']) && trim($p_parameters['item']) != '' ? $p_parameters['item'] : null;

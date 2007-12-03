@@ -25,7 +25,9 @@ class CampPlugin{
         		   
         $context->registerObjectType(array('interview' => 'Interview'));
         $context->registerListObject(array('interviews' => array('class' => 'Interviews', 'list' => 'interviews')));
-
+        
+        $context->registerObjectType(array('interviewitem' => 'InterviewItem'));
+        $context->registerListObject(array('interviewitems' => array('class' => 'InterviewItems', 'list' => 'interviewitems')));
         
         $context->interview = new MetaInterview($interview_id);     
     }  

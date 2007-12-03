@@ -35,6 +35,7 @@ $campsite->initSession();
 // initiates the context
 $campsite->init();
 
+include_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
 CampPlugin::initPlugins();
 
 // TODO: authorization access

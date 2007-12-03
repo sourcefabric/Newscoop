@@ -10,7 +10,7 @@
  *
  * Type:     block
  * Name:     interview_list
- * Purpose:  Create a list of available interviews
+ * Purpose:  Create a list of available interview_items
  *
  * @param string
  *     $p_params
@@ -24,7 +24,7 @@
  * @return
  *
  */
-function smarty_block_list_interviews($p_params, $p_content, &$p_smarty, &$p_repeat)
+function smarty_block_list_interview_items($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
     
@@ -34,32 +34,31 @@ function smarty_block_list_interviews($p_params, $p_content, &$p_smarty, &$p_rep
 
     if (!isset($p_content)) {
         $start = 0;
-    	$interviewsList = new InterviewsList($start, $p_params);
-    	$campContext->setCurrentList($interviewsList, array('interview'));
+    	$interviewItemsList = new InterviewItemsList($start, $p_params);
+    	$campContext->setCurrentList($interviewItemsList, array('interviewitem'));
     }
 
-    $currentInterview = $campContext->current_interviews_list->current;
-    
-    if (is_null($currentInterview)) {
+    $currentIterviewItem = $campContext->current_interviewitems_list->current;
+    if (is_null($currentIterviewItem)) {
 	    $p_repeat = false;
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
-        $campContext->interview = $currentInterview;
+        $campContext->interviewitem = $currentIterviewItem;
     	$p_repeat = true;
     }
 
     if (isset($p_content)) {
 		$html = $p_content;
         if ($p_repeat) {
-            $campContext->current_interviews_list->defaultIterator()->next();
-            if (!is_null($campContext->current_interviews_list->current)) {
-                $campContext->interview = $campContext->current_interviews_list->current;
+            $campContext->current_interviewitems_list->defaultIterator()->next();
+            if (!is_null($campContext->current_interviewitems_list->current)) {
+                $campContext->interviewitem = $campContext->current_interviewitems_list->current;
             }
         }
     }
 
     return $html;
-} // fn smarty_block_list_interviews
+} // fn smarty_block_list_interview_items
 
 ?>

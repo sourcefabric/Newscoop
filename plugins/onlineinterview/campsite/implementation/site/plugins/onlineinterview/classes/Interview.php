@@ -29,8 +29,8 @@ class Interview extends DatabaseObject {
         // string - title in given language
         'title',
         
-        // boolean - something like logo
-        'image',
+        // boolean - the id of campsite image to access logo and thumbnail
+        'fk_image_id',
 
         // string - short description
         'description_short',
@@ -53,10 +53,22 @@ class Interview extends DatabaseObject {
         // int - question max quantity
         'questions_limit',
         
+        // string - draft, published
+        'status',
+        
         // timestamp - last_modified
         'last_modified'
         );
-        
+
+    /**
+     * This static variable stores an User object 
+     * currently looped in Interview::invite().
+     * In each loop it have to assigned here, but 
+     * retrived in MetaInterview class. Thatswhy it's static.
+     *
+     * @var object
+     */
+    static $current_questioneer = null;
 
     /**
      * Construct by passing in the primary key to access the interview in
@@ -95,10 +107,11 @@ class Interview extends DatabaseObject {
      * @return void
      */
     public function create($p_fk_language_id, $p_fk_moderator_user_id, $p_fk_invitee_user_id,
-                           $p_title, $p_image, 
+                           $p_title, $p_fk_image_id, 
                            $p_description_short, $p_description,
                            $p_interview_begin, $p_interview_end,
-                           $p_questions_begin, $p_questions_end, $p_questions_limit)
+                           $p_questions_begin, $p_questions_end, $p_questions_limit,
+                           $p_status = 'draft')
         {
         global $g_ado_db;
        
@@ -114,14 +127,15 @@ class Interview extends DatabaseObject {
             'fk_moderator_user_id' => $p_fk_moderator_user_id,
             'fk_invitee_user_id' => $p_fk_invitee_user_id,
             'title' => $p_title,
-            'image' => $p_image ? 1 : 0,
+            'fk_image_id' => $p_fk_image_id,
             'description_short' => $p_description_short,
             'description' => $p_description,
             'interview_begin' => $p_interview_begin,
             'interview_end' => $p_interview_end,
             'questions_begin' => $p_questions_begin,
             'questions_end' => $p_questions_end,
-            'questions_limit' => $p_questions_limit 
+            'questions_limit' => $p_questions_limit,
+            'status' => $p_status 
         );
 
 
@@ -325,7 +339,7 @@ class Interview extends DatabaseObject {
         return $language->getName(); 
     }
     
-   public function getForm($p_target='index.php', $p_add_hidden_vars=array(), $p_owner=false, $p_admin=false, $p_html=false)
+   public function getForm($p_target='index.php', $p_add_hidden_vars=array(), $p_html=false)
     {
         require_once 'HTML/QuickForm.php';
               
@@ -367,7 +381,7 @@ class Interview extends DatabaseObject {
                 'type'      => 'hidden',
                 'constant'  => $exists ? 'interview_edit' : 'interview_create'
             ),
-            'interview_id'  => exists ? array(
+            'interview_id'  => $exists ? array(
                     'element'   => 'interview_id',
                     'type'      => 'hidden',
                     'constant'  => $data['interview_id']
@@ -385,7 +399,7 @@ class Interview extends DatabaseObject {
                 'type'      => 'select',
                 'label'     => 'fk_moderator_user_id',
                 'default'   => $data['fk_moderator_user_id'],
-                'options'   => array(1 => 'admin', 2 => 'seb'),
+                'options'   => Interview::getUserByRole('ManagePub'),
                 'required'  => true,
             ),
             'fk_invitee_user_id' => array(
@@ -393,7 +407,7 @@ class Interview extends DatabaseObject {
                 'type'      => 'select',
                 'label'     => 'fk_invitee_user_id',
                 'default'   => $data['fk_invitee_user_id'],
-                'options'   => array(10 => 'bush', 20 => 'putin'),
+                'options'   => Interview::getUserByRole('ManagePub'),
                 'required'  => true,
             ),
             'title' => array(
@@ -405,11 +419,14 @@ class Interview extends DatabaseObject {
             ),
             'image' => array(
                 'element'   => 'interview[image]',
+                'type'      => 'file',
+                'label'     => 'image'
+            ),
+            'image_delete' => array(
+                'element'   => 'interview[image_delete]',
                 'type'      => 'checkbox',
-                'label'     => 'image',
-                'default'   => $data['image'],
-                'required'  => true,
-            ),            
+                'label'     => 'image_delete'
+            ),             
             'description_short' => array(
                 'element'   => 'interview[description_short]',
                 'type'      => 'text',
@@ -463,17 +480,23 @@ class Interview extends DatabaseObject {
                 'label'     => 'questions_limit',
                 'default'   => $data['questions_limit']
             ),
-
+            'status' => array(
+                'element'   => 'interview[status]',
+                'type'      => 'select',
+                'options'   => array('draft' => 'Draft', 'published' => 'Publised'),
+                'label'     => 'status',
+                'default'   => $data['status']
+            ),
             'reset'     => array(
                 'element'   => 'reset',
                 'type'      => 'reset',
                 'label'     => 'Zurücksetzen',
                 'groupit'   => true
             ),
-            'xsubmit'     => array(
-                'element'   => 'xsubmit',
+            'save'     => array(
+                'element'   => 'save',
                 'type'      => 'button',
-                'label'     => 'Abschicken',
+                'label'     => 'Save',
                 'attributes'=> array('onclick' => 'this.form.submit()'),
                 'groupit'   => true
             ),
@@ -485,14 +508,14 @@ class Interview extends DatabaseObject {
                 'groupit'   => true
             ), 
             'buttons'   => array(
-                'group'     => array('xsubmit', 'reset')
+                'group'     => array('save', 'reset')
             )       
         );
         
         return $mask;   
     }
     
-    public function store()
+    public function store($p_user_id = null)
     {
         require_once 'HTML/QuickForm.php';
               
@@ -502,7 +525,28 @@ class Interview extends DatabaseObject {
            
         if ($form->validate()) {
             $submit = $form->getSubmitValues();
-            $data = $submit['interview']; 
+            $data = $submit['interview'];
+             
+            $image_id = $this->getProperty('fk_image_id');
+            
+            if ($data['image_delete'] && $image_id) {
+                $Image = new Image($this->getProperty('fk_image_id'));
+                $Image->delete();
+                $image_id = null;    
+            } else {
+                $file = $form->getElementValue('interview[image]');
+                if ($file['name'] != '') {
+                    $attributes = array(
+                        'Description' => 'Interview Image (in use, do not delete!)',
+                    );
+                    $Image = Image::OnImageUpload($file, $attributes, $p_user_id, $image_id);
+                    if (is_a($Image, 'Image')) {
+                        $image_id = $Image->getProperty('Id');   
+                    } else {
+                        return false;    
+                    }
+                }
+            }
             
             $interview_begin = "{$data['interview_begin']['Y']}-{$data['interview_begin']['m']}-{$data['interview_begin']['d']} ".
                                "{$data['interview_begin']['H']}:{$data['interview_begin']['i']}:{$data['interview_begin']['s']}";
@@ -522,7 +566,7 @@ class Interview extends DatabaseObject {
                 $this->setProperty('fk_moderator_user_id', $data['fk_moderator_user_id']);
                 $this->setProperty('fk_invitee_user_id', $data['fk_invitee_user_id']);
                 $this->setProperty('title', $data['title']);
-                $this->setProperty('image', $data['image']);
+                $this->setProperty('fk_image_id', $image_id);
                 $this->setProperty('description_short', $data['description_short']);
                 $this->setProperty('description', $data['description']);
                 $this->setProperty('interview_begin', $interview_begin);
@@ -530,19 +574,60 @@ class Interview extends DatabaseObject {
                 $this->setProperty('questions_begin', $questions_begin);
                 $this->setProperty('questions_end', $questions_end);
                 $this->setProperty('questions_limit', $questions_limit);
+                #$this->setProperty('status', $data['status']);
                 
+                return true;
             } else {
                 // create new interview
-                $this->create($data['fk_language_id'], $data['fk_moderator_user_id'], $data['fk_invitee_user_id'],
-                              $data['title'], $data['image'], $data['description_short'], $data['description'],
+                return $this->create($data['fk_language_id'], $data['fk_moderator_user_id'], $data['fk_invitee_user_id'],
+                              $data['title'], $image_id, $data['description_short'], $data['description'],
                               $interview_begin, $interview_end, $questions_begin, $questions_end, $questions_limit);   
                 
-            }
-            
+            }            
         }
+        return false;
     }
     
-        /////////////////// Special template engine methods below here /////////////////////////////
+    public function addQuestionner()
+    {
+            
+        
+    }
+    
+    public function addGuest()
+    {
+        
+    }
+    
+    public function getQuestioneersWantInvitation()
+    {
+        $Questioneers = array();
+        
+        foreach (User::GetUsers() as $User) {
+            if ($User->hasPermission('NOTIFY_NEW_INTERVIEW')) {
+                $Questioneer[] = $User; 
+            }
+        }
+        return $Questioneer;  
+    }
+    
+    public function send_invitations()
+    {
+        $camp_template = CampTemplate::singleton();
+       
+        foreach (self::getQuestioneersWantInvitation() as $Questioneer) {
+            $this->current_questioneer = $Questioneer;
+            $content = $camp_template->fetch('interview-invitation.tpl');
+            $subject = $camp_template->get_template_vars('subject');
+            $sender = $camp_template->get_template_vars('sender');
+            
+            mail($Questioneer->getEmail(), $subject, $content, "From: $sender");
+        }                    
+    }
+    
+    
+    
+    /////////////////// Special template engine methods below here /////////////////////////////
     
     /**
      * Gets an issue list based on the given parameters.
@@ -579,22 +664,10 @@ class Interview extends DatabaseObject {
                 continue;
             }
             
-            if (strpos($comparisonOperation['left'], 'language_id') !== false) {
-                $language_id = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'assign_publication_id') !== false) {
-                $assign_publication_id = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'assign_issue_nr') !== false) {
-                $assign_issue_nr = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'assign_section_nr') !== false) {
-                $assign_section_nr = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'assign_article_nr') !== false) {
-                $assign_article_nr = $comparisonOperation['right'];
-            } else {
-                $whereCondition = $comparisonOperation['left'] . ' '
-                . $comparisonOperation['symbol'] . " '"
-                . $comparisonOperation['right'] . "' ";
-                $selectClauseObj->addWhere($whereCondition);
-            }
+            $whereCondition = $comparisonOperation['left'] . ' '
+            . $comparisonOperation['symbol'] . " '"
+            . $comparisonOperation['right'] . "' ";
+            $selectClauseObj->addWhere($whereCondition);
         }
         
         // sets the columns to be fetched
@@ -608,100 +681,7 @@ class Interview extends DatabaseObject {
         $mainTblName = $tmpInterview->getDbTableName();
         $selectClauseObj->setTable($mainTblName);
         unset($tmpInterview);
-        
-        // set constraints which ever have to care of
-        $selectClauseObj->addWhere("$mainTblName.fk_language_id = $language_id");
-        #$selectClauseObj->addWhere("$mainTblName.date_begin <= CURDATE()");
-        #$selectClauseObj->addWhere("($mainTblName.date_end >= CURDATE() OR $mainTblName.is_show_after_expiration = '1')");
-        
-        switch ($p_item) {
-            case 'publication':
-                if (empty($assign_publication_id) || empty($language_id)) {
-                    return;   
-                }
-                $tmpAssignObj =& new InterviewPublication();
-                $assignTblName = $tmpAssignObj->getDbTableName();
                 
-                $selectClauseObj->addJoin(
-                    "LEFT JOIN $assignTblName AS j 
-                    ON 
-                    j.fk_interview_nr = $mainTblName.interview_nr 
-                    AND j.fk_interview_language_id = $mainTblName.fk_language_id
-                    AND j.fk_interview_language_id = $language_id
-                    AND j.fk_publication_id = $assign_publication_id"
-                );
-            break;
-            
-            case 'issue':
-                if (empty($language_id) || empty($assign_publication_id) || empty($assign_issue_nr)) {
-                    return;   
-                }
-                
-                $tmpAssignObj =& new InterviewIssue();
-                $assignTblName = $tmpAssignObj->getDbTableName();
-                
-                $selectClauseObj->addJoin(
-                    "LEFT JOIN $assignTblName AS j 
-                    ON 
-                    j.fk_interview_nr = $mainTblName.interview_nr 
-                    AND j.fk_interview_language_id = $mainTblName.fk_language_id
-                    AND j.fk_issue_nr = $assign_issue_nr 
-                    AND j.fk_issue_language_id = $language_id
-                    AND j.fk_publication_id = $assign_publication_id"
-                
-                );
-                $selectClauseObj->addWhere('j.fk_interview_nr IS NOT NULL');
-            break;  
-            
-            case 'section':
-                if (empty($language_id) || empty($assign_publication_id) || empty($assign_issue_nr) || empty($assign_section_nr)) {
-                    return;   
-                }
-                
-                $tmpAssignObj =& new InterviewSection();
-                $assignTblName = $tmpAssignObj->getDbTableName();
-                
-                $selectClauseObj->addJoin(
-                    "LEFT JOIN $assignTblName AS j 
-                    ON 
-                    j.fk_interview_nr = $mainTblName.interview_nr 
-                    AND j.fk_interview_language_id = $mainTblName.fk_language_id
-
-                    AND j.fk_section_nr = $assign_section_nr 
-                    AND j.fk_section_language_id = $language_id
-                    
-                    AND j.fk_issue_nr = $assign_issue_nr 
-                    AND j.fk_publication_id = $assign_publication_id"
-                
-                );
-                $selectClauseObj->addWhere('j.fk_interview_nr IS NOT NULL');
-            break;
-            
-            case 'article':
-                if (empty($language_id) || empty($article_nr)) {
-                    return;   
-                }
-                
-                $tmpAssignObj =& new InterviewArticle();
-                $assignTblName = $tmpAssignObj->getDbTableName();
-                
-                $selectClauseObj->addJoin(
-                    "LEFT JOIN $assignTblName AS j 
-                    ON 
-                    j.fk_interview_nr = $mainTblName.interview_nr 
-                    AND j.fk_interview_language_id = $mainTblName.fk_language_id
-
-                    AND j.fk_article_nr = $assign_article_nr 
-                    AND j.fk_article_language_id = $language_id"                
-                );
-                $selectClauseObj->addWhere('j.fk_interview_nr IS NOT NULL');
-            break;        
-            
-            default:
-                //$selectClauseObj->addWhere('1');
-            break;
-        }
-        
         if (is_array($p_order)) {
             $order = Interview::ProcessListOrder($p_order);
             // sets the order condition if any
@@ -709,23 +689,14 @@ class Interview extends DatabaseObject {
                 $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
-
-        /*
-        // sets the limit
-        $selectClauseObj->setLimit($p_start, $p_limit);
-
-        // builds the query and executes it
-        $sqlQuery = $selectClauseObj->buildQuery();
-        $interviews = $g_ado_db->GetAll($sqlQuery);
-        */
-        
+       
         $sqlQuery = $selectClauseObj->buildQuery();
         
         // count all available results
         $countRes = $g_ado_db->Execute($sqlQuery);
         $p_count = $countRes->recordCount();
         
-        //get the wanted rows
+        //get tlimited rows
         $interviewRes = $g_ado_db->SelectLimit($sqlQuery, $p_limit, $p_start);
         
         // builds the array of interview objects
@@ -803,81 +774,17 @@ class Interview extends DatabaseObject {
         return $order;
     }
        
-    /**
-     * Return if this interview can be voted
-     * (must be in start-end interval, 
-     * and not been voted before by same client)
-     *
-     * @return boolean
-     */
-    public function isVotable()
+    public function getUserByRole($p_role)
     {
-        if (strtotime($this->m_data['date_begin']) > strtotime(date('Y-m-d'))) {
-            return false;   
-        }
-        if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d')) + 60*60*24) {
-            return false;   
-        }
-        if ($this->m_mode == 'single' && $this->hasUserVoted()) {
-            return false;   
-        }
+        $users = array();
         
-        return true;   
-    }
-    
-    /**
-     * Mark the interview as voted by client
-     *
-     */
-    protected function setUserHasVoted()
-    {
-        $key = 'interview_'.$this->m_data['fk_language_id'].'_'.$this->m_data['interview_nr'];
-        $_SESSION[$key] = true;
-        
-        preg_match('/([0-9a-zA-Z]+\.[a-zA-Z]+)$/', $_SERVER['SERVER_NAME'], $hostname);
-        setcookie($key, 1, time()+60*60*24*365, '/', $hostname[0]);       
-    }
-    
-    /**
-     * Return if client vote this interview already
-     *
-     * @return boolean
-     */
-    protected function hasUserVoted()
-    {
-        $key = 'interview_'.$this->m_data['fk_language_id'].'_'.$this->m_data['interview_nr'];
-        if (array_key_exists($key, $_SESSION)) {
-            return true;   
+        foreach (User::getUsers() as $User) {
+            if ($User->hasPermission($p_role)) {
+                $users[$User->m_data['Id']] = $User->m_data['Name'];   
+            }       
         }
-        if (array_key_exists($key, $_COOKIE)) {
-            return true;   
-        }
-        return false;
-    }
-    
-    /**
-     * Register vote(s) submitted by client
-     *
-     */
-    public static function registerVoting()
-    {      
-        $answers = Input::Get('interview_answer', 'array');
-        
-        if (count($answers)) {
-            foreach ($answers as $id => $v) {
-                list ($language_id, $interview_nr, $nr_answer) = explode('_', $id);
-                $interview =& new Interview($language_id, $interview_nr);
-                                   
-                if ($interview->isVotable()) {
-                    $interviewAnswer =& new InterviewAnswer($language_id, $interview_nr, $nr_answer);
-                    
-                    if ($interviewAnswer->exists()) {
-                        $interviewAnswer->vote();
-                        $interview->setUserHasVoted();
-                    } 
-                }
-            }
-        }
+        return $users;
+               
     }
 
 } // class Interview
