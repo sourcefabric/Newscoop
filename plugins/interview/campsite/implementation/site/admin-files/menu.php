@@ -277,7 +277,7 @@ $menu_item =& DynMenuItem::Create(getGS("Feedback"), '/'. $ADMIN .'/feedback',
 $menu_help->addItem($menu_item);
 
 // plugins: extend menu
-if ($path = camp_get_plugin_path('poll', __FILE__)) {
+if ($path = camp_get_plugin_path('interview', __FILE__)) {
     include ($path);   
 }
 ?>
