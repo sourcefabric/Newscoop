@@ -10,7 +10,7 @@ class InterviewsList extends ListObject
                                         'name' => array('field' => 'title', 'type' => 'string'),
                                         'language_id' => array('field' => 'fk_language_id', 'type' => 'integer'),
                                         'moderator_user_id' => array('field' => 'fk_moderator_user_id', 'type' => 'integer'),
-                                        'invitee_user_id' => array('field' => 'fk_invitee_user_id', 'type' => 'integer'),
+                                        'guest_user_id' => array('field' => 'fk_guest_user_id', 'type' => 'integer'),
                                         
                                         'interview_begin' => array('field' => 'interview_begin', 'type' => 'date'),
                                         'interview_begin_year' => array('field' => 'YEAR(interview_begin)', 'type' => 'integer'),

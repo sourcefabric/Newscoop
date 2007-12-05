@@ -11,7 +11,7 @@ class InterviewItem extends DatabaseObject {
     
     var $m_keyIsAutoIncrement = true;
 
-    var $m_dbTableName = 'plugin_onlineinterview_items';
+    var $m_dbTableName = 'plugin_interview_items';
 
     var $m_columnNames = array(
         // int - interview id
@@ -394,7 +394,7 @@ class InterviewItem extends DatabaseObject {
     }
     
     
-    public function getQuestionForm($p_target='index.php', $p_add_hidden_vars=array(), $p_owner=false, $p_admin=false, $p_html=false)
+    public function getQuestionForm($p_target='index.php', $p_add_hidden_vars=array(), $p_html=false)
     {
         require_once 'HTML/QuickForm.php';
               

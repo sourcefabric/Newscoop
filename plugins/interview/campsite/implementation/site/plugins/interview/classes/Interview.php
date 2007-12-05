@@ -11,7 +11,7 @@ class Interview extends DatabaseObject {
     
     var $m_keyIsAutoIncrement = true;
 
-    var $m_dbTableName = 'plugin_onlineinterview_interviews';
+    var $m_dbTableName = 'plugin_interview_interviews';
 
     var $m_columnNames = array(
         // int - interview id
@@ -23,8 +23,8 @@ class Interview extends DatabaseObject {
         // int - moderator user id
         'fk_moderator_user_id',
         
-        // int - invitee user id
-        'fk_invitee_user_id',
+        // int - guest user id
+        'fk_guest_user_id',
              
         // string - title in given language
         'title',
@@ -69,6 +69,8 @@ class Interview extends DatabaseObject {
      * @var object
      */
     static $current_questioneer = null;
+    
+    var $ok = null;
 
     /**
      * Construct by passing in the primary key to access the interview in
@@ -106,7 +108,7 @@ class Interview extends DatabaseObject {
      * @param bool $p_is_show_after_expiration
      * @return void
      */
-    public function create($p_fk_language_id, $p_fk_moderator_user_id, $p_fk_invitee_user_id,
+    public function create($p_fk_language_id, $p_fk_moderator_user_id, $p_fk_guest_user_id,
                            $p_title, $p_fk_image_id, 
                            $p_description_short, $p_description,
                            $p_interview_begin, $p_interview_end,
@@ -125,7 +127,7 @@ class Interview extends DatabaseObject {
         $values = array(
             'fk_language_id' => $p_fk_language_id,
             'fk_moderator_user_id' => $p_fk_moderator_user_id,
-            'fk_invitee_user_id' => $p_fk_invitee_user_id,
+            'fk_guest_user_id' => $p_fk_guest_user_id,
             'title' => $p_title,
             'fk_image_id' => $p_fk_image_id,
             'description_short' => $p_description_short,
@@ -355,7 +357,7 @@ class Interview extends DatabaseObject {
             } 
         }
         
-        $form =& new html_QuickForm('blog', 'post', $p_target, null, null, true);
+        $form =& new html_QuickForm('interview', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($p_html) {
@@ -373,77 +375,91 @@ class Interview extends DatabaseObject {
     private function getFormMask()
     {
         $data = $this->m_data;
-        $exists =  $this->exists();
-        
+        $exists = $this->exists();
+       
+        if (!empty($data['fk_image_id'])) {
+            $Image = new Image($data['fk_image_id']);
+            $image_description = $Image->getDescription();    
+        }
+         
         $mask = array(
-            'action'    => array(
+            'action' => array(
                 'element'   => 'action',
                 'type'      => 'hidden',
-                'constant'  => $exists ? 'interview_edit' : 'interview_create'
+                'constant'  => 'interview_edit'
             ),
             'interview_id'  => $exists ? array(
                     'element'   => 'interview_id',
                     'type'      => 'hidden',
                     'constant'  => $data['interview_id']
             ) : null,
-            'fk_language_id' => array(
-                'element'   => 'interview[fk_language_id]',
+            'language_id' => array(
+                'element'   => 'f_interview_language_id',
                 'type'      => 'select',
                 'label'     => 'fk_language_id',
                 'default'   => $data['fk_language_id'],
                 'options'   => array(1 => 'en', 5 => 'de'),
                 'required'  => true,
             ),
-            'fk_moderator_user_id' => array(
+            /*
+            'moderator_user_id' => array(
                 'element'   => 'interview[fk_moderator_user_id]',
                 'type'      => 'select',
                 'label'     => 'fk_moderator_user_id',
-                'default'   => $data['fk_moderator_user_id'],
+                'default'   => $data['f_interview_moderator_user_id'],
                 'options'   => Interview::getUserByRole('ManagePub'),
                 'required'  => true,
             ),
-            'fk_invitee_user_id' => array(
-                'element'   => 'interview[fk_invitee_user_id]',
+            */
+            'guest_user_id' => array(
+                'element'   => 'f_interview_guest_user_id',
                 'type'      => 'select',
-                'label'     => 'fk_invitee_user_id',
-                'default'   => $data['fk_invitee_user_id'],
+                'label'     => 'fk_guest_user_id',
+                'default'   => $data['fk_guest_user_id'],
                 'options'   => Interview::getUserByRole('ManagePub'),
                 'required'  => true,
             ),
             'title' => array(
-                'element'   => 'interview[title]',
+                'element'   => 'f_interview_title',
                 'type'      => 'text',
                 'label'     => 'title',
                 'default'   => $data['title'],
                 'required'  => true,
             ),
             'image' => array(
-                'element'   => 'interview[image]',
+                'element'   => 'f_interview_image',
                 'type'      => 'file',
                 'label'     => 'image'
             ),
+            'image_description' => array(
+                'element'   => 'f_interview_image_description',
+                'type'      => 'text',
+                'label'     => 'image_description',
+                'default'   => $image_description
+            ),
             'image_delete' => array(
-                'element'   => 'interview[image_delete]',
+                'element'   => 'f_interview_image_delete',
                 'type'      => 'checkbox',
                 'label'     => 'image_delete'
-            ),             
+            ),            
             'description_short' => array(
-                'element'   => 'interview[description_short]',
+                'element'   => 'f_interview_description_short',
                 'type'      => 'text',
                 'label'     => 'description_short',
                 'default'   => $data['description_short'],
                 'required'  => true,
             ),
             'description' => array(
-                'element'   => 'interview[description]',
+                'element'   => 'f_interview_description',
                 'type'      => 'textarea',
                 'label'     => 'description',
                 'default'   => $data['description'],
                 'required'  => true,
                 'attributes'=> array('cols' => 40, 'rows' => 5) 
             ),
+            /*
             'interview_begin' => array(
-                'element'   => 'interview[interview_begin]',
+                'element'   => 'f_interview_interview_begin',
                 'type'      => 'date',
                 'label'     => 'interview_begin',
                 'constant'  => $data['interview_begin'],
@@ -451,7 +467,7 @@ class Interview extends DatabaseObject {
                 'required'  => true            
             ),
             'interview_end' => array(
-                'element'   => 'interview[interview_end]',
+                'element'   => 'f_interview_interview_end',
                 'type'      => 'date',
                 'label'     => 'interview_end',
                 'constant'  => $data['interview_end'],
@@ -459,7 +475,7 @@ class Interview extends DatabaseObject {
                 'required'  => true            
             ),
              'questions_begin' => array(
-                'element'   => 'interview[questions_begin]',
+                'element'   => 'f_interview_questions_begin',
                 'type'      => 'date',
                 'label'     => 'questions_begin',
                 'constant'  => $data['questions_begin'],
@@ -467,48 +483,69 @@ class Interview extends DatabaseObject {
                 'required'  => true            
             ),
             'questions_end' => array(
-                'element'   => 'interview[questions_end]',
+                'element'   => 'f_interview_questions_end',
                 'type'      => 'date',
                 'label'     => 'questions_end',
                 'constant'  => $data['questions_end'],
                 'options'   => array('format' => 'Y-m-d H:i:s'),
                 'required'  => true            
             ),
+            */
+            'interview_begin' => array(
+                'element'   => 'f_interview_interview_begin',
+                'type'      => 'text',
+                'label'     => 'interview_begin',
+                'constant'  => $data['interview_begin'],
+                'required'  => true            
+            ),
+            'interview_end' => array(
+                'element'   => 'f_interview_interview_end',
+                'type'      => 'text',
+                'label'     => 'interview_end',
+                'constant'  => $data['interview_end'],
+                'required'  => true            
+            ),
+             'questions_begin' => array(
+                'element'   => 'f_interview_questions_begin',
+                'type'      => 'text',
+                'label'     => 'questions_begin',
+                'constant'  => $data['questions_begin'],
+                'required'  => true            
+            ),
+            'questions_end' => array(
+                'element'   => 'f_interview_questions_end',
+                'type'      => 'text',
+                'label'     => 'questions_end',
+                'constant'  => $data['questions_end'],
+                'required'  => true            
+            ),
             'questions_limit' => array(
-                'element'   => 'interview[questions_limit]',
+                'element'   => 'f_interview_questions_limit',
                 'type'      => 'text',
                 'label'     => 'questions_limit',
                 'default'   => $data['questions_limit']
             ),
             'status' => array(
-                'element'   => 'interview[status]',
+                'element'   => 'f_interview_status',
                 'type'      => 'select',
                 'options'   => array('draft' => 'Draft', 'published' => 'Publised'),
                 'label'     => 'status',
                 'default'   => $data['status']
             ),
             'reset'     => array(
-                'element'   => 'reset',
+                'element'   => 'f_interview_reset',
                 'type'      => 'reset',
-                'label'     => 'Zurücksetzen',
+                'label'     => 'Reset',
                 'groupit'   => true
             ),
             'save'     => array(
-                'element'   => 'save',
-                'type'      => 'button',
-                'label'     => 'Save',
-                'attributes'=> array('onclick' => 'this.form.submit()'),
+                'element'   => 'f_interview_submit',
+                'type'      => 'submit',
+                'label'     => 'Submit',
                 'groupit'   => true
             ),
-            'cancel'     => array(
-                'element'   => 'cancel',
-                'type'      => 'button',
-                'label'     => 'Cancel',
-                'attributes' => array('onClick' => 'history.back()'),
-                'groupit'   => true
-            ), 
             'buttons'   => array(
-                'group'     => array('save', 'reset')
+                'group'     => array('f_interview_submit', 'f_interview_reset')
             )       
         );
         
@@ -520,26 +557,25 @@ class Interview extends DatabaseObject {
         require_once 'HTML/QuickForm.php';
               
         $mask = Interview::getFormMask($p_owner, $p_admin);        
-        $form = new html_QuickForm('blog', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('interview', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask);   
            
         if ($form->validate()) {
-            $submit = $form->getSubmitValues();
-            $data = $submit['interview'];
+            $data = $form->getSubmitValues();
              
             $image_id = $this->getProperty('fk_image_id');
             
-            if ($data['image_delete'] && $image_id) {
+            if ($data['f_interview_image_delete'] && $image_id) {
                 $Image = new Image($this->getProperty('fk_image_id'));
                 $Image->delete();
                 $image_id = null;    
             } else {
-                $file = $form->getElementValue('interview[image]');
-                if ($file['name'] != '') {
+                $file = $form->getElementValue('f_interview_image');
+                if (strlen($file['name'])) {
                     $attributes = array(
-                        'Description' => 'Interview Image (in use, do not delete!)',
+                        'Description' => strlen($data['f_interview_image_description']) ? $data['f_interview_image_description'] : $file['name'],
                     );
-                    $Image = Image::OnImageUpload($file, $attributes, $p_user_id, $image_id);
+                    $Image = Image::OnImageUpload($file, $attributes, $p_user_id, !empty($image_id) ? $image_id : null);
                     if (is_a($Image, 'Image')) {
                         $image_id = $Image->getProperty('Id');   
                     } else {
@@ -548,40 +584,53 @@ class Interview extends DatabaseObject {
                 }
             }
             
-            $interview_begin = "{$data['interview_begin']['Y']}-{$data['interview_begin']['m']}-{$data['interview_begin']['d']} ".
-                               "{$data['interview_begin']['H']}:{$data['interview_begin']['i']}:{$data['interview_begin']['s']}";
+            /*
+            $interview_begin = "{$data['f_interview_interview_begin']['Y']}-{$data['f_interview_interview_begin']['m']}-{$data['f_interview_interview_begin']['d']} ".
+                               "{$data['f_interview_interview_begin']['H']}:{$data['f_interview_interview_begin']['i']}:{$data['f_interview_interview_begin']['s']}";
                                
-            $interview_end   = "{$data['interview_end']['Y']}-{$data['interview_end']['m']}-{$data['interview_end']['d']} ".
-                               "{$data['interview_end']['H']}:{$data['interview_end']['i']}:{$data['interview_end']['s']}";
+            $interview_end   = "{$data['f_interview_interview_end']['Y']}-{$data['f_interview_interview_end']['m']}-{$data['f_interview_interview_end']['d']} ".
+                               "{$data['f_interview_interview_end']['H']}:{$data['f_interview_interview_end']['i']}:{$data['f_interview_interview_end']['s']}";
                                
-            $questions_begin = "{$data['questions_begin']['Y']}-{$data['questions_begin']['m']}-{$data['questions_begin']['d']} ".
-                               "{$data['questions_begin']['H']}:{$data['questions_begin']['i']}:{$data['questions_begin']['s']}";
+            $questions_begin = "{$data['f_interview_questions_begin']['Y']}-{$data['f_interview_questions_begin']['m']}-{$data['f_interview_questions_begin']['d']} ".
+                               "{$data['f_interview_questions_begin']['H']}:{$data['f_interview_questions_begin']['i']}:{$data['f_interview_questions_begin']['s']}";
                                
-            $questions_end   = "{$data['questions_end']['Y']}-{$data['questions_end']['m']}-{$data['questions_end']['d']} ".
-                               "{$data['questions_end']['H']}:{$data['questions_end']['i']}:{$data['questions_end']['s']}";
+            $questions_end   = "{$data['f_interview_questions_end']['Y']}-{$data['f_interview_questions_end']['m']}-{$data['f_interview_questions_end']['d']} ".
+                               "{$data['f_interview_questions_end']['H']}:{$data['f_interview_questions_end']['i']}:{$data['f_interview_questions_end']['s']}";
+            */
             
             if ($this->exists()) {
                 // edit existing interview    
-                $this->setProperty('fk_language_id', $data['fk_language_id']);
-                $this->setProperty('fk_moderator_user_id', $data['fk_moderator_user_id']);
-                $this->setProperty('fk_invitee_user_id', $data['fk_invitee_user_id']);
-                $this->setProperty('title', $data['title']);
+                $this->setProperty('fk_language_id', $data['f_interview_language_id']);
+                $this->setProperty('fk_moderator_user_id', $data['f_interview_moderator_user_id']);
+                $this->setProperty('fk_guest_user_id', $data['f_interview_guest_user_id']);
+                $this->setProperty('title', $data['f_interview_title']);
                 $this->setProperty('fk_image_id', $image_id);
-                $this->setProperty('description_short', $data['description_short']);
-                $this->setProperty('description', $data['description']);
-                $this->setProperty('interview_begin', $interview_begin);
-                $this->setProperty('interview_end', $interview_end);
-                $this->setProperty('questions_begin', $questions_begin);
-                $this->setProperty('questions_end', $questions_end);
-                $this->setProperty('questions_limit', $questions_limit);
+                $this->setProperty('description_short', $data['f_interview_description_short']);
+                $this->setProperty('description', $data['f_interview_description']);
+                $this->setProperty('interview_begin', $data['f_interview_interview_begin']);
+                $this->setProperty('interview_end', $data['f_interview_interview_end']);
+                $this->setProperty('questions_begin', $data['f_questions_interview_begin']);
+                $this->setProperty('questions_end', $data['f_questions_interview_end']);
+                $this->setProperty('questions_limit', $data['f_interview_questions_limit']);
                 #$this->setProperty('status', $data['status']);
                 
                 return true;
             } else {
                 // create new interview
-                return $this->create($data['fk_language_id'], $data['fk_moderator_user_id'], $data['fk_invitee_user_id'],
-                              $data['title'], $image_id, $data['description_short'], $data['description'],
-                              $interview_begin, $interview_end, $questions_begin, $questions_end, $questions_limit);   
+                return $this->create(
+                    $data['f_interview_language_id'], 
+                    $data['f_interview_moderator_user_id'], 
+                    $data['f_interview_guest_user_id'],
+                    $data['f_interview_title'], 
+                    $image_id, 
+                    $data['f_interview_description_short'], 
+                    $data['f_interview_description'],
+                    $data['f_interview_interview_begin'], 
+                    $data['f_interview_interview_end'],
+                    $data['f_questions_interview_begin'],
+                    $data['f_questions_interview_end'],
+                    $data['f_interview_questions_limit']
+                );   
                 
             }            
         }

@@ -25,20 +25,41 @@
 function smarty_block_interview_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
-
+    
     // gets the context variable
-    $camp = $p_smarty->get_template_vars('campsite');
+    $campsite = $p_smarty->get_template_vars('campsite');
     $html = '';
+    
+    if (0) {
+        $Interview = new Interview($campsite->interview->identifier);
+        return $Interview->getForm('/en/first/interview/', '', true);
+    }
+    
+    if (isset($p_params['template'])) {
+        $template = new Template($p_params['template']);
+        $tpl_id = $template->getTemplateId();
+    }
+    if (!isset($p_params['submit_button'])) {
+        $p_params['submit_button'] = 'Submit';
+    }
+    if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
+        $p_params['html_code'] = '';
+    }
 
     if (isset($p_content)) {
-        require_once $p_smarty->_get_plugin_filepath('function', 'urlparameters');
-        require_once $p_smarty->_get_plugin_filepath('function', 'uripath');
+        $html = "<form name=\"interview\" action=\"\" method=\"post\" enctype=\"multipart/form-data\">\n";
+        $html .= "<input type=\"hidden\" name=\"_qf__interview\">\n";
         
-        parse_str(smarty_function_urlparameters($p_params, &$p_smarty), $urlparameters);
-        $uripath = smarty_function_uripath($p_params, &$p_smarty);
-        
-        $Interview = new Interview($camp->interview->identifier);
-        $html = $Interview->getForm($uripath, $urlparameters, true);
+        if ($tpl_id) {
+            $html .= "<input type=\"hidden\" name=\"f_tpl\" value=\"$tpl_id\" />\n";
+        }
+        if ($campsite->interview->identifier) {
+            $html .= "<input type=\"hidden\" name=\"f_interview_id\" value=\"{$campsite->interview->identifier}\" />\n";
+        }
+        $html .= $p_content;
+        $html .= "<input type=\"submit\" name=\"f_interview_submit\" value=\""
+              .smarty_function_escape_special_chars($p_params['submit_button'])
+              ."\" ".$p_params['html_code']." />\n</form>\n";
     }
 
     return $html;

@@ -30,19 +30,22 @@ final class MetaInterview extends MetaDbObject {
 		$this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['image'] = 'getImage';
+        $this->m_customProperties['image_description'] = 'getImageDescription';
+        $this->m_customProperties['image_delete'] = 'null';
         $this->m_customProperties['interview_begin'] = 'getInterviewBegin';
 		$this->m_customProperties['interview_end'] = 'getInterviewEnd';
         $this->m_customProperties['questions_begin'] = 'getInterviewBegin';
 		$this->m_customProperties['questions_end'] = 'getInterviewEnd';
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['moderator'] = 'getModerator';
-        $this->m_customProperties['invitee'] = 'getInvitee';
-        $this->m_customProperties['store'] = 'store';
+        $this->m_customProperties['guest'] = 'getGuest';
+        $this->m_customProperties['action'] = 'action';
+        $this->m_customProperties['ok'] = 'ok';
         $this->m_customProperties['set_draft'] = 'set_draft';
         $this->m_customProperties['set_pending'] = 'set_pending';
         $this->m_customProperties['set_published'] = 'set_published';
         $this->m_customProperties['set_offline'] = 'set_offline';
-        $this->m_customProperties['current_invitee'] = 'getCurrentInvitee';
+        $this->m_customProperties['current_guest'] = 'getCurrentGuest';
 
     } // fn __construct
     
@@ -90,18 +93,26 @@ final class MetaInterview extends MetaDbObject {
         return $Moderator;   
     }
     
-    public function getInvitee()
+    public function getGuest()
     {
-        $Invitee = new MetaUser($this->m_dbObject->getProperty('fk_invitee_user_id'));
-        return $Invitee;   
+        $Guest = new MetaUser($this->m_dbObject->getProperty('fk_guest_user_id'));
+        return $Guest;   
     }
     
-    
-
-    public function store()
+    public function action()
     {
-        $Interview = new Interview($this->m_dbObject->getProperty('interview_id'));
-        return $Interview->store($this->m_dbObject->getProperty('fk_moderator_user_id'));
+        if ($_REQUEST['f_interview_submit']) {
+            $Interview = new Interview($this->m_dbObject->getProperty('interview_id'));
+            $this->m_dbObject->ok = $Interview->store($this->m_dbObject->getProperty('fk_moderator_user_id'));
+            
+            return true;
+        }
+        return false;
+    }
+    
+    public function ok()
+    {
+        return $this->m_dbObject->ok;   
     }
     
     public function getImage()
@@ -112,7 +123,18 @@ final class MetaInterview extends MetaDbObject {
         return $MetaImage;   
     }
     
-            
+    public function getImageDescription()
+    {
+        $MetaImage = $this->getImage();
+        
+        return $MetaImage->description;   
+    }
+    
+    public function null()
+    {
+        return null;
+    }
+           
     public function set_draft()
     {
         $Interview = new Interview($this->m_dbObject->getProperty('interview_id'));
