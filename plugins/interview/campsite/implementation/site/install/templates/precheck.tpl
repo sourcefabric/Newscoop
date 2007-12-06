@@ -67,6 +67,21 @@
               </td>
             </tr>
             {{ /foreach }}
+
+            {{ foreach from=$sys_requirements item="sysreq" }}
+            <tr>
+              <td>{{ $sysreq.tag }}</td>
+              <td>&nbsp;</td>
+              <td align="center">
+              {{ if $sysreq.exists eq 'Yes' }}
+                <span class="success">
+              {{ elseif $sysreq.exists eq 'No' }}
+                <span class="error">
+              {{ /if }}
+                {{ $sysreq.exists }}</span>
+              </td>
+            </tr>
+            {{ /foreach }}
             </table>
           </td>
         </tr>

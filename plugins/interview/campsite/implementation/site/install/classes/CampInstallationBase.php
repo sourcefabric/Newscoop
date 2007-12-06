@@ -333,7 +333,7 @@ class CampInstallationBase
             $isConfigWritable = is_writable($path1);
             $isDBConfigWritable = is_writable($path2);
         } else {
-            $isConfigWritable = is_writable(CS_PATH_SITE);
+            $isConfigWritable = is_writable(CS_PATH_CONFIG);
             $isDBConfigWritable = $isConfigWritable;
         }
 

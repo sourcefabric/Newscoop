@@ -226,12 +226,6 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		</TABLE>
 		</FORM>
 		<P>
-		<?php
-		// include plugin script
-        if ($path = camp_get_plugin_path('poll', __FILE__)) {
-            include ($path);   
-        }
-        ?>
 	</td>
 
 	<td valign="top">

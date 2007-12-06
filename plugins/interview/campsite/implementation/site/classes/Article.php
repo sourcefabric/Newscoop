@@ -532,12 +532,7 @@ class Article extends DatabaseObject {
 			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
 				$this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
 		}
-		
-		// plugins: Remove poll assignments
-		if (class_exists('PollArticle')) {
-    		PollArticle::OnArticleDelete($this->getLanguageId(), $this->getArticleNumber());
-		}
-		
+
 		// Delete row from Articles table.
 		$deleted = parent::delete();
 
