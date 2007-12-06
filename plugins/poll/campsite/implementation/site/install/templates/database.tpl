@@ -8,10 +8,10 @@
   <td valign="top">
     <table class="header" cellspacing="0" cellpadding="0">
     <tr>
-      <td width="70%">
+      <td width="50%">
         <div class="title">Database Settings</div>
       </td>
-      <td width="30%" nowrap>
+      <td width="50%" nowrap>
         <div class="navigate"><input
         class="nav_button" type="button" value="&#139; Previous"
         onclick="submitForm( install_form, 'license' );" /> &nbsp;
@@ -90,7 +90,7 @@
     </tr>
     </table>
   </td>
-  <td valign="top" nowrap>
+  <td width="200" valign="top" nowrap>
     <table class="right_header" cellspacing="0" cellpadding="0">
     <tr>
       <td>
