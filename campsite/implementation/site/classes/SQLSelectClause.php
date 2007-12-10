@@ -204,7 +204,9 @@ class SQLSelectClause {
         $sql = sprintf(SQL, $columns, $from);
 
         $where = $this->buildWhere();
-        $sql .= sprintf(SQL_WHERE, $where);
+        if (strlen($where)) {
+            $sql .= sprintf(SQL_WHERE, $where);
+        }
 
         if (count($this->m_orderBy) > 0) {
             $orderBy = $this->buildOrderBy();
