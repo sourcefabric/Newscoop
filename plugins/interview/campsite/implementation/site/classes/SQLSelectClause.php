@@ -3,6 +3,7 @@
  * @package Campsite
  *
  * @author Holman Romero <holman.romero@gmail.com>
+ * @author Sebastian Goebel <devel@yellowsunshine.de>
  * @copyright 2007 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
@@ -13,6 +14,7 @@ define ('SQL', "SELECT %s\nFROM %s");
 define ('SQL_WHERE', "\nWHERE %s");
 define ('SQL_ORDER_BY', "\nORDER BY %s");
 define ('SQL_LIMIT', "\nLIMIT %d, %d");
+define ('SQL_DISTINCT', 'DISTINCT(%s)');
 
 /**
  * Class SQLSelectClause
@@ -73,7 +75,21 @@ class SQLSelectClause {
      */
     private $m_limitOffset = null;
 
-
+    /**
+     * The DISTINCT mode.
+     *
+     * @var string
+     */
+    private $m_distinctMode = false;
+    
+    /**
+     * The column which fetched DISTINCT.
+     *
+     * @var string
+     */
+    private $m_distinctColumn = null;
+    
+    
     /**
      * Class constructor
      */
@@ -191,6 +207,21 @@ class SQLSelectClause {
 
 
     /**
+     * Sets all or specific column(s) to be fetched DISTINCT.
+     *
+     * @param string $p_column
+     *      The column which have to fetched distinct
+     *
+     * @return void
+     */
+    public function setDistinct($p_column = null)
+    {
+        $this->m_distinctMode = true;
+        $this->m_distinctColumn = $p_column;
+    } // fn setDistinct
+    
+    
+    /**
      * Builds the SQL query from the object attributes.
      *
      * @return string $sql
@@ -264,9 +295,20 @@ class SQLSelectClause {
                 $columns = '*';
             }
         }
+        
+        if (!empty($columns) && $this->m_distinctMode) {
+            $columns = sprintf(SQL_DISTINCT, $columns);   
+        }
 
         if (empty($columns)) {
-            $columns = implode(', ', $this->m_columns);
+            foreach ($this->m_columns as $column) {
+                if ($this->m_distinctMode === true && $this->m_distinctColumn === $column) {
+                    $columns .= sprintf(SQL_DISTINCT, $column).', ';    
+                } else { 
+                    $columns .=  $column.', ';   
+                } 
+            }
+            $columns = substr($columns, 0, -2);
         }
 
         return $columns;
