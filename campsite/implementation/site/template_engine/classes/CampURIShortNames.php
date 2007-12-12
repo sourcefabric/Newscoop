@@ -48,11 +48,21 @@ class CampURIShortNames extends CampURI
     private $m_publication = null;
 
     /**
+     * @var integer
+     */
+    private $m_publicationId = null;
+
+    /**
      * Language code
      *
      * @var string
      */
     private $m_language = null;
+
+    /**
+     * @var integer
+     */
+    private $m_languageId = null;
 
     /**
      * Issue short name
@@ -62,11 +72,21 @@ class CampURIShortNames extends CampURI
     private $m_issue = null;
 
     /**
+     * @var integer
+     */
+    private $m_issueNr = null;
+
+    /**
      * Section short name
      *
      * @var string
      */
     private $m_section = null;
+
+    /**
+     * @var integer
+     */
+    private $m_sectionNr = null;
 
     /**
      * Article short name
@@ -75,6 +95,14 @@ class CampURIShortNames extends CampURI
      */
     private $m_article = null;
 
+    /**
+     * @var integer
+     */
+    private $m_articleNr = null;
+
+    /**
+     * @var string
+     */
     private $m_template = null;
 
     /**
@@ -194,6 +222,9 @@ class CampURIShortNames extends CampURI
     } // fn getArticleShortName
 
 
+    /**
+     *
+     */
     public function getTemplate()
     {
         if (!is_null($this->m_template)) {
@@ -228,10 +259,7 @@ class CampURIShortNames extends CampURI
     private function getURILanguage()
     {
         $uriString = null;
-        $context = CampTemplate::singleton()->context();
-        if (is_object($context->language) && $context->language->defined) {
-            $uriString = '/' . $context->language->code . '/';
-        } elseif (!empty($this->m_language)) {
+        if (!empty($this->m_language)) {
             $uriString = '/' . $this->m_language . '/';
         }
 
@@ -253,10 +281,7 @@ class CampURIShortNames extends CampURI
             return null;
         }
 
-        $context = CampTemplate::singleton()->context();
-        if (is_object($context->issue) && $context->issue->defined) {
-            $uriString .= $context->issue->url_name . '/';
-        } elseif (!empty($this->m_issue)) {
+        if (!empty($this->m_issue)) {
             $uriString .= $this->m_issue . '/';
         } else {
             $uriString = null;
@@ -280,10 +305,7 @@ class CampURIShortNames extends CampURI
             return null;
         }
 
-        $context = CampTemplate::singleton()->context();
-        if (is_object($context->section) && $context->section->defined) {
-            $uriString .= $context->section->url_name . '/';
-        } elseif (!empty($this->m_section)) {
+        if (!empty($this->m_section)) {
             $uriString .= $this->m_section . '/';
         } else {
             $uriString = null;
@@ -304,18 +326,7 @@ class CampURIShortNames extends CampURI
     {
         $uriString = $this->getURISection();
 
-        $context = CampTemplate::singleton()->context();
-        if (is_object($context->article) && $context->article->defined) {
-            if (is_null($uriString)) {
-                $language = $context->article->getLanguage();
-                $issue = $context->article->getIssue();
-                $section = $context->article->getSection();
-                $uriString = '/'.$language->code.'/'.$issue->url_name.'/'
-                    .$section->url_name.'/'.$context->article->url_name.'/';
-            } else {
-                $uriString .= $context->article->url_name . '/';
-            }
-        } elseif (!empty($this->m_article)) {
+        if (!empty($this->m_article)) {
             $uriString .= $this->m_article . '/';
         } else {
             $uriString = null;
@@ -401,7 +412,7 @@ class CampURIShortNames extends CampURI
 
         $cPubId = 0;
         // gets the publication object based on site name (URI host)
-        $alias = preg_replace('/^'.$this->getScheme().':\/\//', '', $this->getBase());
+        $alias = ltrim($this->getBase(), $this->getScheme().'://');
         $aliasArray = Alias::GetAliases(null, null, $alias);
         if (is_array($aliasArray) && sizeof($aliasArray) == 1) {
             $aliasObj = $aliasArray[0];
@@ -570,7 +581,7 @@ class CampURIShortNames extends CampURI
         case 'image':
             $context = CampTemplate::singleton()->context();
             $image = '';
-            $this->m_uriPath = '/cgi-bin/get_img';
+            $this->m_uriPath = '';
             $this->m_uriQuery = 'NrImage=' . '&amp;NrArticle='.$context->article->number;
             break;
         default:
@@ -580,6 +591,51 @@ class CampURIShortNames extends CampURI
             }
         }
 	} // fn buildURI
+
+
+    /**
+     *
+     */
+    public function setPublicationId($p_identifier)
+    {
+        $this->m_publicationId = $p_identifier;
+    } // fn setPublicationId
+
+
+    /**
+     *
+     */
+    public function setLanguageId($p_identifier)
+    {
+        $this->m_languageId = $p_identifier;
+    } // fn setLanguageId
+
+
+    /**
+     *
+     */
+    public function setIssueNr($p_number)
+    {
+        $this->m_issueNr = $p_number;
+    } // fn setIssueNr
+
+
+    /**
+     *
+     */
+    public function setSectionNr($p_number)
+    {
+        $this->m_sectionNr = $p_number;
+    } // fn setSectionNr
+
+
+    /**
+     *
+     */
+    public function setArticleNr($p_number)
+    {
+        $this->m_articleNr = $p_number;
+    } // fn setSectionNr
 
 } // class CampURIShortNames
 
