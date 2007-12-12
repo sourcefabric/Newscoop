@@ -6,13 +6,11 @@ if (!$g_user->hasPermission('ManagePoll')) {
 }
 
 $f_target = Input::Get('f_target', 'string');
+$f_language_id = Input::Get('f_language_id', 'int');
 $f_publication_id = Input::Get('f_publication_id', 'int');
 $f_issue_nr = Input::Get('f_issue_nr', 'int');
-$f_issue_language_id = Input::Get('f_issue_language_id', 'int');
 $f_section_nr = Input::Get('f_section_nr', 'int');
-$f_section_language_id = Input::Get('f_section_language_id', 'int');
 $f_article_nr = Input::Get('f_article_nr', 'int');
-$f_article_language_id = Input::Get('f_article_language_id', 'int');
 
 $f_poll_exists = Input::Get('f_poll_exists', 'array', array());
 $f_poll_checked = Input::Get('f_poll_checked', 'array', array());
@@ -22,14 +20,13 @@ $p_u = 0;
  
 switch ($f_target) {
     case 'publication':
-        foreach ($f_poll_exists as $code => $val) {
-            list($poll_nr, $poll_language_id) = explode('_', $code);
-            $PollPublication =& new PollPublication($poll_language_id, $poll_nr, $f_publication_id);
+        foreach ($f_poll_exists as $poll_nr => $lost) {
+            $PollPublication =& new PollPublication($poll_nr, $f_publication_id);
             
-            if (array_key_exists($code, $f_poll_checked) && !$PollPublication->exists()) {
+            if (array_key_exists($poll_nr, $f_poll_checked) && !$PollPublication->exists()) {
                 $PollPublication->create();
                 $p_a++;
-            } elseif (!array_key_exists($code, $f_poll_checked) && $PollPublication->exists()) {
+            } elseif (!array_key_exists($poll_nr, $f_poll_checked) && $PollPublication->exists()) {
                 $PollPublication->delete();
                 $p_u++;  
             }
@@ -44,14 +41,13 @@ switch ($f_target) {
     break;
     
     case 'issue':
-        foreach ($f_poll_exists as $code => $val) {
-            list($poll_nr, $poll_language_id) = explode('_', $code);
-            $PollIssue =& new PollIssue($poll_language_id, $poll_nr, $f_issue_language_id, $f_issue_nr, $f_publication_id);
-            
-            if (array_key_exists($code, $f_poll_checked) && !$PollIssue->exists()) {
+        foreach ($f_poll_exists as $poll_nr => $lost) {
+            $PollIssue =& new PollIssue($poll_nr, $f_language_id, $f_issue_nr, $f_publication_id);
+            $x = $PollIssue->exists();
+            if (array_key_exists($poll_nr, $f_poll_checked) && !$PollIssue->exists()) {
                 $PollIssue->create();
                 $p_a++;
-            } elseif (!array_key_exists($code, $f_poll_checked) && $PollIssue->exists()) {
+            } elseif (!array_key_exists($poll_nr, $f_poll_checked) && $PollIssue->exists()) {
                 $PollIssue->delete(); 
                 $p_u++;   
             }
@@ -66,14 +62,13 @@ switch ($f_target) {
     break;
     
     case 'section':
-        foreach ($f_poll_exists as $code => $val) {
-            list($poll_nr, $poll_language_id) = explode('_', $code);
-            $PollSection =& new PollSection($poll_language_id, $poll_nr, $f_section_language_id, $f_section_nr, $f_issue_nr, $f_publication_id);
+        foreach ($f_poll_exists as $poll_nr => $val) {
+            $PollSection =& new PollSection($poll_nr, $f_language_id, $f_section_nr, $f_issue_nr, $f_publication_id);
             
-            if (array_key_exists($code, $f_poll_checked) && !$PollSection->exists()) {
+            if (array_key_exists($poll_nr, $f_poll_checked) && !$PollSection->exists()) {
                 $PollSection->create();
                 $a++;
-            } elseif (!array_key_exists($code, $f_poll_checked) && $PollSection->exists()) {
+            } elseif (!array_key_exists($poll_nr, $f_poll_checked) && $PollSection->exists()) {
                 $PollSection->delete();
                 $u++;    
             }
@@ -88,14 +83,13 @@ switch ($f_target) {
     break;
     
     case 'article':
-        foreach ($f_poll_exists as $code => $val) {
-            list($poll_nr, $poll_language_id) = explode('_', $code);
-            $PollArticle =& new PollArticle($poll_language_id, $poll_nr, $f_article_language_id, $f_article_nr);
+        foreach ($f_poll_exists as $poll_nr => $val) {
+            $PollArticle =& new PollArticle($poll_nr, $f_language_id, $f_article_nr);
             
-            if (array_key_exists($code, $f_poll_checked) && !$PollArticle->exists()) {
+            if (array_key_exists($poll_nr, $f_poll_checked) && !$PollArticle->exists()) {
                 $PollArticle->create();
                 $p_a++;
-            } elseif (!array_key_exists($code, $f_poll_checked) && $PollArticle->exists()) {
+            } elseif (!array_key_exists($poll_nr, $f_poll_checked) && $PollArticle->exists()) {
                 $PollArticle->delete();
                 $p_u++;   
             }

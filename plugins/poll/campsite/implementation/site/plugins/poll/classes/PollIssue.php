@@ -9,8 +9,7 @@ class PollIssue extends DatabaseObject {
      * @var array
      */
     var $m_keyColumnNames = array(
-        'fk_poll_nr', 
-        'fk_poll_language_id', 
+        'fk_poll_nr',
         'fk_issue_nr', 
         'fk_issue_language_id',
         'fk_publication_id'
@@ -32,9 +31,6 @@ class PollIssue extends DatabaseObject {
         // int - poll id
         'fk_poll_nr',
 
-        // int - language id
-        'fk_poll_language_id',
-
         // int - issue number
         'fk_issue_nr',
         
@@ -49,20 +45,18 @@ class PollIssue extends DatabaseObject {
      * Construct by passing in the primary key to access the 
      * poll <-> publication relations
      *
-     * @param int $p_fk_poll_language_id
-     * @param int $p_fk_poll_nr
-     * @param int $p_fk_issue_language_id
-     * @param int $p_fk_issue_nr
-     * @param int $p_fk_publication_id
+     * @param int $p_poll_nr
+     * @param int $p_issue_language_id
+     * @param int $p_issue_nr
+     * @param int $p_publication_id
      */
-    function PollIssue($p_fk_poll_language_id = null, $p_fk_poll_nr = null, $p_fk_issue_language_id = null, $p_fk_issue_nr = null, $p_fk_publication_id = null)
+    function PollIssue($p_poll_nr = null, $p_issue_language_id = null, $p_issue_nr = null, $p_publication_id = null)
     {
         parent::DatabaseObject($this->m_columnNames);
-        $this->m_data['fk_poll_language_id'] = $p_fk_poll_language_id;
-        $this->m_data['fk_poll_nr'] = $p_fk_poll_nr;
-        $this->m_data['fk_issue_language_id'] = $p_fk_issue_language_id;
-        $this->m_data['fk_issue_nr'] = $p_fk_issue_nr;
-        $this->m_data['fk_publication_id'] = $p_fk_publication_id;
+        $this->m_data['fk_poll_nr'] = $p_poll_nr;
+        $this->m_data['fk_issue_language_id'] = $p_issue_language_id;
+        $this->m_data['fk_issue_nr'] = $p_issue_nr;
+        $this->m_data['fk_publication_id'] = $p_publication_id;
         
         if ($this->keyValuesExist()) {
             $this->fetch();
@@ -132,12 +126,15 @@ class PollIssue extends DatabaseObject {
     /**
      * Called when poll is deleted
      *
-     * @param int $p_fk_poll_nr
-     * @param int $p_fk_language_id
+     * @param int $p_poll_nr
      */
-    public static function OnPollDelete($p_fk_poll_nr, $p_fk_language_id)
-    {      
-        foreach (PollIssue::getAssignments($p_fk_poll_nr, $p_fk_poll_language_id) as $record) {
+    public static function OnPollDelete($p_poll_nr)
+    {    
+        if (count(Poll::getTranslations($p_poll_nr)) > 1) {
+            return;    
+        }
+          
+        foreach (PollIssue::getAssignments($p_poll_nr) as $record) {
             $record->delete();   
         }   
     }
@@ -145,49 +142,46 @@ class PollIssue extends DatabaseObject {
     /**
      * Call this if an publication is deleted
      *
-     * @param int $p_fk_issue_nr
+     * @param int $p_issue_nr
      */
-    public static function OnIssueDelete($p_fk_issue_language_id, $p_fk_issue_nr, $p_fk_publication_id)
+    public static function OnIssueDelete($p_issue_language_id, $p_issue_nr, $p_publication_id)
     {      
-        foreach (PollIssue::getAssignments(null, null, $p_fk_issue_language_id, $p_fk_issue_nr, $p_fk_publication_id) as $record) {
+        foreach (PollIssue::getAssignments(null, $p_issue_language_id, $p_issue_nr, $p_publication_id) as $record) {
             $record->delete();   
         }   
     }
     
     /**
      * Get array of relations between publication and poll
-     * You have to set param $p_fk_issue_nr,
-     * or booth $p_fk_poll_nr and $p_fk_poll_language_id
+     * You have to set param $p_issue_nr,
+     * or booth $p_poll_nr and $p_poll_language_id
      *
-     * @param int $p_fk_issue_nr
-     * @param int $p_fk_poll_nr
-     * @param int $p_fk_poll_language_id
+     * @param int $p_issue_nr
+     * @param int $p_poll_nr
+     * @param int $p_poll_language_id
      * @return array(object PollIssue, object PollIssue, ...)
      */
-    public static function getAssignments($p_fk_poll_language_id = null, $p_fk_poll_nr = null, 
-                                            $p_fk_issue_language_id = null, $p_fk_issue_nr = null, 
-                                            $p_fk_publication_id = null, 
+    public static function getAssignments($p_poll_nr = null, 
+                                            $p_issue_language_id = null, $p_issue_nr = null, 
+                                            $p_publication_id = null, 
                                             $p_offset = 0, $p_limit = 10, $p_orderStr = null)
     {
         global $g_ado_db;
         $records = array();
         
-        $PollIssue =& new PollIssue();
-         
-        if (!empty($p_fk_poll_language_id)) {
-            $where .= "AND fk_poll_language_id = $p_fk_poll_language_id ";   
-        }  
-        if (!empty($p_fk_poll_nr)) {
-            $where .= "AND fk_poll_nr = $p_fk_poll_nr ";   
+        $PollIssue = new PollIssue();
+        
+        if (!empty($p_poll_nr)) {
+            $where .= "AND fk_poll_nr = $p_poll_nr ";   
         }    
-        if (!empty($p_fk_issue_language_id)) {
-            $where .= "AND fk_issue_language_id = $p_fk_issue_language_id ";   
+        if (!empty($p_issue_language_id)) {
+            $where .= "AND fk_issue_language_id = $p_issue_language_id ";   
         }    
-        if (!empty($p_fk_issue_nr)) {
-            $where .= "AND fk_issue_nr = $p_fk_issue_nr ";   
+        if (!empty($p_issue_nr)) {
+            $where .= "AND fk_issue_nr = $p_issue_nr ";   
         }    
-        if (!empty($p_fk_publication_id)) {
-            $where .= "AND fk_publication_id = $p_fk_publication_id ";   
+        if (!empty($p_publication_id)) {
+            $where .= "AND fk_publication_id = $p_publication_id ";   
         }  
               
         if (empty($where)) {
@@ -202,7 +196,7 @@ class PollIssue extends DatabaseObject {
         $res = $g_ado_db->selectLimit($query, $p_limit, $p_offset);
         
         while ($row = $res->fetchRow()) {
-            $records[] =& new PollIssue($row['fk_poll_language_id'], $row['fk_poll_nr'], $row['fk_issue_language_id'], $row['fk_issue_nr'], $row['fk_publication_id']);      
+            $records[] = new PollIssue($row['fk_poll_nr'], $row['fk_issue_language_id'], $row['fk_issue_nr'], $row['fk_publication_id']);      
         } 
         
         return $records;    
@@ -215,9 +209,9 @@ class PollIssue extends DatabaseObject {
      */
     public function getIssue()
     {
-        $publication =& new Issue($this->m_data['fk_issue_nr']);
+        $Issue = new Issue($this->m_data['fk_issue_language_id'], $this->m_data['fk_issue_nr']);
         
-        return $publication;   
+        return $Issue;   
     }
     
     /**
@@ -235,9 +229,9 @@ class PollIssue extends DatabaseObject {
      *
      * @return object
      */
-    public function getPoll()
+    public function getPoll($p_language_id)
     {
-        $poll =& new Poll($this->m_data['fk_poll_language_id'], $this->m_data['fk_poll_nr']); 
+        $poll = new Poll($p_language_id, $this->m_data['fk_poll_nr']); 
         
         return $poll;  
     }
@@ -251,28 +245,7 @@ class PollIssue extends DatabaseObject {
     {
         return $this->m_data['fk_poll_nr'];   
     }
-    
-    /**
-     * Get the responding language object for an record
-     *
-     * @return object
-     */
-    public function getPollLanguage()
-    {
-        $language =& new Language($this->m_data['fk_poll_language_id']); 
-        
-        return $language;  
-    }
-    
-    /**
-     * Get the language id of an record
-     *
-     * @return int
-     */
-    public function getPollLanguageId()
-    {
-        return $this->m_data['fk_poll_language_id'];   
-    }    
+
 } // class PollQuestion
 
 ?>

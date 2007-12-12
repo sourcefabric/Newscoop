@@ -6,31 +6,36 @@ class PollsList extends ListObject
 {                                 
     private $m_item;
     
-    public static $s_parameters = array('number' => array('field' => 'poll_nr', 'type' => 'integer'),
-                                        'language_id' => array('field' => 'fk_language_id', 'type' => 'integer'),
-                                        'name' => array('field' => 'title', 'type' => 'string'),
-                                        'begin' => array('field' => 'date_begin', 'type' => 'date'),
-                                        'begin_year' => array('field' => 'YEAR(date_begin)', 'type' => 'integer'),
-                                        'begin_month' => array('field' => 'MONTH(date_begin)', 'type' => 'integer'),
-                                        'begin_mday' => array('field' => 'DAYOFMONTH(date_begin)', 'type' => 'integer'),
-                                        'end' => array('field' => 'date_end', 'type' => 'date'),
-                                        'end_year' => array('field' => 'YEAR(date_end)', 'type' => 'integer'),
-                                        'end_month' => array('field' => 'MONTH(date_end)', 'type' => 'integer'),
-                                        'end_mday' => array('field' => 'DAYOFMONTH(date_end)', 'type' => 'integer'),
-                                        'assign_publication_id' => array('field' => 'assign_publication_id', 'type' => 'integer'),
-                                        'assign_issue_nr' => array('field' => 'assign_issue_nr', 'type' => 'integer'),
-                                        'assign_section_nr' => array('field' => 'assign_section_nr', 'type' => 'integer'),
-                                        'assign_article_nr' => array('field' => 'assign_article_nr', 'type' => 'integer'),
-                                        'votable' => array('field' => 'is_votable', 'type' => 'boolean'),
-                               );
+    public static $s_parameters = array(
+        'number' => array('field' => 'poll_nr', 'type' => 'integer'),
+        'language_id' => array('field' => 'fk_language_id', 'type' => 'integer'),
+        'name' => array('field' => 'title', 'type' => 'string'),
+        'begin' => array('field' => 'date_begin', 'type' => 'date'),
+        'begin_year' => array('field' => 'YEAR(date_begin)', 'type' => 'integer'),
+        'begin_month' => array('field' => 'MONTH(date_begin)', 'type' => 'integer'),
+        'begin_mday' => array('field' => 'DAYOFMONTH(date_begin)', 'type' => 'integer'),
+        'end' => array('field' => 'date_end', 'type' => 'date'),
+        'end_year' => array('field' => 'YEAR(date_end)', 'type' => 'integer'),
+        'end_month' => array('field' => 'MONTH(date_end)', 'type' => 'integer'),
+        'end_mday' => array('field' => 'DAYOFMONTH(date_end)', 'type' => 'integer'),
+        'votes' => array('field' => 'nr_of_votes', 'type' => 'integer'),
+        'votes_overall' => array('field' => 'nr_of_votes_overall', 'type' => 'integer'),
+        
+        ## following fields are NOT real datebase fields, they are processed by Poll::GetList()
+        'current' => array('field' => '_current', 'type' => 'boolean'),
+        '_assign_publication_id' => array('field' => '_assign_publication_id', 'type' => 'integer'),
+        '_assign_issue_nr' => array('field' => '_assign_issue_nr', 'type' => 'integer'),
+        '_assign_section_nr' => array('field' => '_assign_section_nr', 'type' => 'integer'),
+        '_assign_article_nr' => array('field' => '_assign_article_nr', 'type' => 'integer'),
+    );
                                    
     private static $s_orderFields = array(
-                                      'bynumber',
-                                      'byname',
-                                      'bybegin',
-                                      'byend',
-                                      'byvotes'
-                                );
+      'bynumber',
+      'byname',
+      'bybegin',
+      'byend',
+      'byvotes'
+    );
                                    
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
@@ -47,20 +52,26 @@ class PollsList extends ListObject
 	{
 	    $operator = new Operator('is');
 	    $context = CampTemplate::singleton()->context();
-	    
-	    $comparisonOperation = new ComparisonOperation('language_id', $operator,
-	                                                   $context->language->number);
-	    $this->m_constraints[] = $comparisonOperation;                                                
-	    $comparisonOperation = new ComparisonOperation('assign_publication_id', $operator,
+
+	    if ($context->language->number) {
+    	    $comparisonOperation = new ComparisonOperation('language_id', $operator,
+    	                                                   $context->language->number);
+    	    $this->m_constraints[] = $comparisonOperation;
+	    }
+    	        
+	    $comparisonOperation = new ComparisonOperation('_assign_publication_id', $operator,
 	                                                   $context->publication->identifier);
 	    $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('assign_issue_nr', $operator,
+	    
+	    $comparisonOperation = new ComparisonOperation('_assign_issue_nr', $operator,
 	                                                   $context->issue->number);
 	    $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('assign_section_nr', $operator,
+	    
+	    $comparisonOperation = new ComparisonOperation('_assign_section_nr', $operator,
 	                                                   $context->section->number);
 	    $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('assign_article_nr', $operator,
+	    
+	    $comparisonOperation = new ComparisonOperation('_assign_article_nr', $operator,
 	                                                   $context->article->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
@@ -220,8 +231,17 @@ class PollsList extends ListObject
      */
 	public function __get($p_property)
 	{
-	    if (strtolower($p_property) == 'item') {
-            return $this->getItem();
+	    switch (strtolower($p_property)) {
+	        case 'item':
+                return $this->getItem();
+            case 'previous':
+	           return $this->start - $this->index;
+	        case 'next':
+	           return $this->start + $this->index;
+	    	case 'has_previous':
+	           return $this->hasPreviousElements();
+	        case 'has_next':
+	           return $this->hasNextElements();
 	    }
 	    return parent::__get($p_property); 
 	}

@@ -6,7 +6,7 @@ if (1) {
     $menu_root->addItem($menu_modules);
     
 	if ($g_user->hasPermission("ManagePoll")) { 
-        $menu_item =& DynMenuItem::Create(getGS("Manage Poll"), 
+        $menu_item =& DynMenuItem::Create(getGS('Polls'), 
             "/$ADMIN/poll/",
             array("icon" => sprintf($iconTemplateStr, "poll.png")));
         $menu_modules->addItem($menu_item);	    

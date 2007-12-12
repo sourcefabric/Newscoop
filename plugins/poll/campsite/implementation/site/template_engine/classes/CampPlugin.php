@@ -23,8 +23,8 @@ class CampPlugin{
         // Todo: below some hacked code to init Poll, have to be generic for all plugins
         Poll::registerVoting();
         
-        $poll_nr = Input::Get('poll_nr', 'int');
-        $poll_language_id = Input::Get('poll_language_id' ,'int');
+        $poll_nr = Input::Get('f_poll_nr', 'int');
+        $poll_language_id = Input::Get('f_poll_language_id' ,'int');
         
         		   
         $context->registerObjectType(array('poll' => 'Poll'));

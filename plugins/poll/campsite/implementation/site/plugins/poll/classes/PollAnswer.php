@@ -193,7 +193,7 @@ class PollAnswer extends DatabaseObject {
         $res = $g_ado_db->Execute($query);
         
         while ($row = $res->fetchRow()) {
-            $answers[] =& new PollAnswer($fk_language_id, $fk_poll_nr, $row['nr_answer']);      
+            $answers[] = new PollAnswer($fk_language_id, $fk_poll_nr, $row['nr_answer']);      
         } 
         
         return $answers;    

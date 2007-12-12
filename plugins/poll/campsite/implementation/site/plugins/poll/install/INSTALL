@@ -24,6 +24,10 @@ cd css
 ln -s ../plugins/poll/css/* .
 cd ..
 
+cd javascript
+ln -s ../plugins/poll/javascript/* .
+cd ..
+
 2. Install the plugins/poll/install/sql/plugin_poll.sql to campsite database.
 
 3. If you have the demo installation, you can add the poll templates in this package by copying to templates folder. Yue need to go to admin->templates afterwards to register it.

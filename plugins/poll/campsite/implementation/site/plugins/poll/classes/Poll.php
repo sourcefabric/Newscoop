@@ -35,8 +35,8 @@ class Poll extends DatabaseObject {
         // int - Number of Answers
         'nr_of_answers',
 
-        // bool - Display Result after Expiration,
-        'is_show_after_expiration',
+        // bool - Display Poll after Expiration,
+        'is_display_expired',
         
         // bool - Use this language if wanted translation is not available
         'is_used_as_default',
@@ -127,10 +127,10 @@ class Poll extends DatabaseObject {
      * @param date $p_date_begin
      * @param date $p_date_end
      * @param int $p_nr_of_answers
-     * @param bool $p_is_show_after_expiration
+     * @param bool $p_is_display_expired
      * @return void
      */
-    public function create($p_title, $p_question, $p_date_begin, $p_date_end, $p_nr_of_answers, $p_is_show_after_expiration=false, $p_is_used_as_default=true)
+    public function create($p_title, $p_question, $p_date_begin, $p_date_end, $p_nr_of_answers, $p_is_display_expired=false, $p_is_used_as_default=true)
     {
         global $g_ado_db;
         
@@ -147,7 +147,7 @@ class Poll extends DatabaseObject {
             'nr_of_answers' => $p_nr_of_answers,
             'title' => $p_title,
             'question' => $p_question,
-            'is_show_after_expiration' => $p_is_show_after_expiration ? 1 : 0        
+            'is_display_expired' => $p_is_display_expired ? 1 : 0        
         );
 
 
@@ -189,7 +189,7 @@ class Poll extends DatabaseObject {
             'date_begin' => $this->m_data['date_begin'],
             'date_end' => $this->m_data['date_end'],
             'nr_of_answers' => $this->m_data['nr_of_answers'],
-            'is_show_after_expiration' => $this->m_data['is_shown_after_expiration'],     
+            'is_display_expired' => $this->m_data['is_display_expired'],     
         );
 
         $success = $poll_copy->__create($values);
@@ -306,17 +306,35 @@ class Poll extends DatabaseObject {
      * @param int $p_fk_language
      * @return string
      */
-    static private function GetQuery($p_fk_language = null)
+    static private function GetQuery($p_fk_language = null, $p_orderBy = null)
     {   
+        switch ($p_orderBy) {
+            case 'title':
+                $orderBy = 'title ASC, poll_nr DESC, fk_language_id ASC'; 
+            break;
+            
+            case 'begin':
+                $orderBy = 'date_begin, poll_nr DESC, fk_language_id ASC';
+            break;   
+            
+            case 'end':
+                $orderBy = 'date_end, poll_nr DESC, fk_language_id ASC';
+            break;
+            
+            default:
+                $orderBy = 'poll_nr DESC, fk_language_id ASC';
+            break;   
+        }
+        
         if (!empty($p_fk_language)) {
             $query = "SELECT    poll_nr, fk_language_id  
                       FROM      plugin_poll
                       WHERE     fk_language_id = $p_fk_language
-                      ORDER BY  poll_nr DESC, fk_language_id ASC";  
+                      ORDER BY  $orderBy";  
         } else {
             $query = "SELECT    poll_nr, fk_language_id
                       FROM      plugin_poll
-                      ORDER BY  poll_nr DESC, fk_language_id";
+                      ORDER BY  $orderBy";
         }
         
         return $query;
@@ -331,11 +349,11 @@ class Poll extends DatabaseObject {
      * @param unknown_type $p_limit
      * @return array
      */
-    static public function GetPolls($p_fk_language_id = null, $p_offset = 0, $p_limit = 20)
+    static public function GetPolls($p_fk_language_id = null, $p_offset = 0, $p_limit = 20, $p_orderBy = null)
     {
         global $g_ado_db;
         
-        $query = Poll::GetQuery($p_fk_language_id);
+        $query = Poll::GetQuery($p_fk_language_id, $p_orderBy, $p_orderBy);
         
         $res = $g_ado_db->SelectLimit($query, $p_limit, $p_offset);		
 		$polls = array();
@@ -354,11 +372,11 @@ class Poll extends DatabaseObject {
      *
      * @return int
      */
-    public function countPolls()
+    public function countPolls($p_fk_language_id = null)
     {
         global $g_ado_db;;
         
-        $query   = Poll::getQuery(); 
+        $query   = Poll::getQuery($p_fk_language_id); 
         $res     = $g_ado_db->Execute($query);
         
         return $res->RecordCount();  
@@ -536,16 +554,27 @@ class Poll extends DatabaseObject {
                 continue;
             }
             
-            if (strpos($comparisonOperation['left'], 'language_id') !== false) {
-                $language_id = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'assign_publication_id') !== false) {
+            if (strpos($comparisonOperation['left'], '_assign_publication_id') !== false) {
                 $assign_publication_id = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'assign_issue_nr') !== false) {
+            } elseif (strpos($comparisonOperation['left'], '_assign_issue_nr') !== false) {
                 $assign_issue_nr = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'assign_section_nr') !== false) {
+            } elseif (strpos($comparisonOperation['left'], '_assign_section_nr') !== false) {
                 $assign_section_nr = $comparisonOperation['right'];
-            } elseif (strpos($comparisonOperation['left'], 'assign_article_nr') !== false) {
+            } elseif (strpos($comparisonOperation['left'], '_assign_article_nr') !== false) {
                 $assign_article_nr = $comparisonOperation['right'];
+            } elseif (strpos($comparisonOperation['left'], '_current') !== false) {
+                $whereCondition = "date_begin <= NOW()";
+                $selectClauseObj->addWhere($whereCondition);
+                $whereCondition = "date_end >= NOW()";
+                $selectClauseObj->addWhere($whereCondition);
+            } elseif (strpos($comparisonOperation['left'], 'language_id') !== false) {
+                $language_id = $comparisonOperation['right'];
+
+                    $whereCondition = $comparisonOperation['left'] . ' '
+                    . $comparisonOperation['symbol'] . " '"
+                    . $comparisonOperation['right'] . "' ";
+                    $selectClauseObj->addWhere($whereCondition);
+          
             } else {
                 $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
@@ -566,96 +595,89 @@ class Poll extends DatabaseObject {
         $selectClauseObj->setTable($mainTblName);
         unset($tmpPoll);
         
-        // set constraints which ever have to care of
-        $selectClauseObj->addWhere("$mainTblName.fk_language_id = $language_id");
-        $selectClauseObj->addWhere("$mainTblName.date_begin <= CURDATE()");
-        $selectClauseObj->addWhere("($mainTblName.date_end >= CURDATE() OR $mainTblName.is_show_after_expiration = '1')");
-        
         switch ($p_item) {
             case 'publication':
-                if (empty($assign_publication_id) || empty($language_id)) {
+                if (empty($assign_publication_id)) {
                     return;   
                 }
-                $tmpAssignObj =& new PollPublication();
+                $tmpAssignObj = new PollPublication();
                 $assignTblName = $tmpAssignObj->getDbTableName();
-                
-                $selectClauseObj->addJoin(
-                    "LEFT JOIN $assignTblName AS j 
-                    ON 
-                    j.fk_poll_nr = $mainTblName.poll_nr 
-                    AND j.fk_poll_language_id = $mainTblName.fk_language_id
-                    AND j.fk_poll_language_id = $language_id
-                    AND j.fk_publication_id = $assign_publication_id"
-                );
+                $join = "LEFT JOIN `$assignTblName` AS j 
+                            ON 
+                            j.fk_poll_nr = `$mainTblName`.poll_nr
+                            AND j.fk_publication_id = '$assign_publication_id'";
+                $selectClauseObj->addJoin($join);
+                $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
+                $selectClauseObj->setDistinct('plugin_poll.poll_nr');
             break;
             
             case 'issue':
-                if (empty($language_id) || empty($assign_publication_id) || empty($assign_issue_nr)) {
+                if (empty($assign_publication_id) || empty($assign_issue_nr)) {
                     return;   
                 }
                 
-                $tmpAssignObj =& new PollIssue();
+                $tmpAssignObj = new PollIssue();
                 $assignTblName = $tmpAssignObj->getDbTableName();
                 
-                $selectClauseObj->addJoin(
-                    "LEFT JOIN $assignTblName AS j 
-                    ON 
-                    j.fk_poll_nr = $mainTblName.poll_nr 
-                    AND j.fk_poll_language_id = $mainTblName.fk_language_id
-                    AND j.fk_issue_nr = $assign_issue_nr 
-                    AND j.fk_issue_language_id = $language_id
-                    AND j.fk_publication_id = $assign_publication_id"
+                $join = "LEFT JOIN $assignTblName AS j 
+                            ON 
+                            j.fk_poll_nr = `$mainTblName`.poll_nr 
+                            AND j.fk_issue_nr = '$assign_issue_nr' 
+                            AND j.fk_publication_id = '$assign_publication_id'";
                 
-                );
+                if (isset($language_id)) {
+                    $join .= " AND j.fk_issue_language_id = '$language_id'";    
+                }
+                
+                $selectClauseObj->addJoin($join);
                 $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
+                $selectClauseObj->setDistinct('plugin_poll.poll_nr');
             break;  
             
             case 'section':
-                if (empty($language_id) || empty($assign_publication_id) || empty($assign_issue_nr) || empty($assign_section_nr)) {
+                if (empty($assign_publication_id) || empty($assign_issue_nr) || empty($assign_section_nr)) {
                     return;   
                 }
                 
-                $tmpAssignObj =& new PollSection();
+                $tmpAssignObj = new PollSection();
                 $assignTblName = $tmpAssignObj->getDbTableName();
                 
-                $selectClauseObj->addJoin(
-                    "LEFT JOIN $assignTblName AS j 
-                    ON 
-                    j.fk_poll_nr = $mainTblName.poll_nr 
-                    AND j.fk_poll_language_id = $mainTblName.fk_language_id
-
-                    AND j.fk_section_nr = $assign_section_nr 
-                    AND j.fk_section_language_id = $language_id
-                    
-                    AND j.fk_issue_nr = $assign_issue_nr 
-                    AND j.fk_publication_id = $assign_publication_id"
+                $join = "LEFT JOIN `$assignTblName` AS j 
+                            ON 
+                            j.fk_poll_nr = `$mainTblName`.poll_nr 
+                            AND j.fk_section_nr = '$assign_section_nr'                     
+                            AND j.fk_issue_nr = '$assign_issue_nr' 
+                            AND j.fk_publication_id = '$assign_publication_id'";
+                                
+                if (isset($language_id)) {
+                    $join .= " AND j.fk_section_language_id = '$language_id'";    
+                }
                 
-                );
+                $selectClauseObj->addJoin($join);
                 $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
+                $selectClauseObj->setDistinct('plugin_poll.poll_nr');
             break;
             
             case 'article':
-                if (empty($language_id) || empty($article_nr)) {
+                if (empty($assign_article_nr)) {
                     return;   
                 }
                 
-                $tmpAssignObj =& new PollArticle();
+                $tmpAssignObj = new PollArticle();
                 $assignTblName = $tmpAssignObj->getDbTableName();
                 
-                $selectClauseObj->addJoin(
-                    "LEFT JOIN $assignTblName AS j 
-                    ON 
-                    j.fk_poll_nr = $mainTblName.poll_nr 
-                    AND j.fk_poll_language_id = $mainTblName.fk_language_id
-
-                    AND j.fk_article_nr = $assign_article_nr 
-                    AND j.fk_article_language_id = $language_id"                
-                );
+                $join = "LEFT JOIN `$assignTblName` AS j 
+                            ON 
+                            j.fk_poll_nr = `$mainTblName`.poll_nr 
+                            AND j.fk_article_nr = '$assign_article_nr'";
+                
+                if (isset($language_id)) {
+                    $join .= " AND j.fk_article_language_id = '$language_id'";    
+                }
+                
+                $selectClauseObj->addJoin($join);
                 $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
-            break;        
-            
-            default:
-                //$selectClauseObj->addWhere('1');
+                $selectClauseObj->setDistinct('plugin_poll.poll_nr');
             break;
         }
         
@@ -666,15 +688,6 @@ class Poll extends DatabaseObject {
                 $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
-
-        /*
-        // sets the limit
-        $selectClauseObj->setLimit($p_start, $p_limit);
-
-        // builds the query and executes it
-        $sqlQuery = $selectClauseObj->buildQuery();
-        $polls = $g_ado_db->GetAll($sqlQuery);
-        */
         
         $sqlQuery = $selectClauseObj->buildQuery();
         
@@ -800,7 +813,7 @@ class Poll extends DatabaseObject {
      *
      * @return boolean
      */
-    protected function hasUserVoted()
+    public function hasUserVoted()
     {
         $key = 'poll_'.$this->m_data['fk_language_id'].'_'.$this->m_data['poll_nr'];
         if (array_key_exists($key, $_SESSION)) {
@@ -817,22 +830,19 @@ class Poll extends DatabaseObject {
      *
      */
     public static function registerVoting()
-    {      
-        $answers = Input::Get('poll_answer', 'array');
+    {   
+        $poll_language_id = Input::Get('f_poll_language_id', 'int');
+        $poll_nr = Input::Get('f_poll_nr', 'int');   
+        $nr_answer = Input::Get('f_pollanswer_nr', 'int');
         
-        if (count($answers)) {
-            foreach ($answers as $id => $v) {
-                list ($language_id, $poll_nr, $nr_answer) = explode('_', $id);
-                $poll =& new Poll($language_id, $poll_nr);
+        $Poll = new Poll($poll_language_id, $poll_nr);
                                    
-                if ($poll->isVotable()) {
-                    $pollAnswer =& new PollAnswer($language_id, $poll_nr, $nr_answer);
-                    
-                    if ($pollAnswer->exists()) {
-                        $pollAnswer->vote();
-                        $poll->setUserHasVoted();
-                    } 
-                }
+        if ($Poll->isVotable()) {
+            $PollAnswer = $Poll->getAnswer($nr_answer);
+            
+            if ($PollAnswer->exists()) {
+                $PollAnswer->vote();
+                $Poll->setUserHasVoted();
             }
         }
     }

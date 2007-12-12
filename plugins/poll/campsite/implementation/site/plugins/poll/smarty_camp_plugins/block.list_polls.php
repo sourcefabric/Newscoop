@@ -33,7 +33,7 @@ function smarty_block_list_polls($p_params, $p_content, &$p_smarty, &$p_repeat)
     $html = '';
 
     if (!isset($p_content)) {
-        $start = 0;
+        $start = Input::Get('p_polls_list_start', 'int', 0);
     	$pollsList = new PollsList($start, $p_params);
     	$campContext->setCurrentList($pollsList, array('poll'));
     }

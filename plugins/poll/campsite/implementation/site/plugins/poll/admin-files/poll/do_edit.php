@@ -12,7 +12,7 @@ $f_title = Input::Get('f_title', 'string');
 $f_question = Input::Get('f_question', 'string');
 $f_date_begin = Input::Get('f_date_begin', 'string');
 $f_date_end = Input::Get('f_date_end', 'string');
-$f_is_show_after_expiration = Input::Get('f_is_show_after_expiration', 'boolean');
+$f_is_display_expired = Input::Get('f_is_display_expired', 'boolean');
 $f_is_used_as_default = Input::Get('f_is_used_as_default', 'boolean');
 $f_nr_of_answers = Input::Get('f_nr_of_answers', 'int');
 
@@ -25,7 +25,7 @@ if ($f_poll_nr) {
     $poll->setProperty('question', $f_question);
     $poll->setProperty('date_begin', $f_date_begin);
     $poll->setProperty('date_end', $f_date_end);
-    $poll->setProperty('is_show_after_expiration', $f_is_show_after_expiration);
+    $poll->setProperty('is_display_expired', $f_is_display_expired);
     $poll->setProperty('nr_of_answers', $f_nr_of_answers);
     
     $poll->setAsDefault($f_is_used_as_default);
@@ -46,7 +46,7 @@ if ($f_poll_nr) {
 } else {
     // create new poll
     $poll =& new Poll($f_fk_language_id);   
-    $success = $poll->create($f_title, $f_question, $f_date_begin, $f_date_end, $f_nr_of_answers, $f_is_show_after_expiration);
+    $success = $poll->create($f_title, $f_question, $f_date_begin, $f_date_end, $f_nr_of_answers, $f_is_display_expired);
     
     if ($success) {
         foreach ($f_answers as $nr_answer => $text) {

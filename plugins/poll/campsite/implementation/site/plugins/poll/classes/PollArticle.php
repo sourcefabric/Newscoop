@@ -8,7 +8,7 @@ class PollArticle extends DatabaseObject {
      *
      * @var array
      */
-    var $m_keyColumnNames = array('fk_poll_nr', 'fk_poll_language_id', 'fk_article_nr', 'fk_article_language_id');
+    var $m_keyColumnNames = array('fk_poll_nr', 'fk_article_nr', 'fk_article_language_id');
 
     /**
      * Table name
@@ -26,9 +26,6 @@ class PollArticle extends DatabaseObject {
         // int - poll id
         'fk_poll_nr',
 
-        // int - poll language id
-        'fk_poll_language_id',
-
         // int - article number
         'fk_article_nr',
         
@@ -40,18 +37,16 @@ class PollArticle extends DatabaseObject {
      * Construct by passing in the primary key to access the 
      * poll <-> publication relations
      *
-     * @param int $p_fk_poll_language_id
-     * @param int $p_fk_poll_nr
-     * @param int $p_fk_article_language_id
+     * @param int $p_poll_nr
+     * @param int $p_article_language_id
      * @param int $p_article_nr
      */
-    function PollArticle($p_fk_poll_language_id = null, $p_fk_poll_nr = null, $p_fk_article_language_id = null, $p_fk_article_nr = null)
+    function PollArticle($p_poll_nr = null, $p_article_language_id = null, $p_article_nr = null)
     {
         parent::DatabaseObject($this->m_columnNames);
-        $this->m_data['fk_poll_language_id'] = $p_fk_poll_language_id;
-        $this->m_data['fk_poll_nr'] = $p_fk_poll_nr;
-        $this->m_data['fk_article_language_id'] = $p_fk_article_language_id;
-        $this->m_data['fk_article_nr'] = $p_fk_article_nr;
+        $this->m_data['fk_poll_nr'] = $p_poll_nr;
+        $this->m_data['fk_article_language_id'] = $p_article_language_id;
+        $this->m_data['fk_article_nr'] = $p_article_nr;
         
         if ($this->keyValuesExist()) {
             $this->fetch();
@@ -121,12 +116,15 @@ class PollArticle extends DatabaseObject {
     /**
      * Called when poll is deleted
      *
-     * @param int $p_fk_poll_nr
-     * @param int $p_fk_language_id
+     * @param int $p_poll_nr
      */
-    public static function OnPollDelete($p_fk_poll_nr, $p_fk_language_id)
-    {      
-        foreach (PollArticle::getAssignments($p_fk_poll_nr, $p_fk_poll_language_id) as $record) {
+    public static function OnPollDelete($p_poll_nr)
+    {
+        if (count(Poll::getTranslations($p_poll_nr)) > 1) {
+            return;   
+        }
+              
+        foreach (PollArticle::getAssignments($p_poll_nr) as $record) {
             $record->delete();   
         }   
     }
@@ -134,45 +132,42 @@ class PollArticle extends DatabaseObject {
     /**
      * Call this if an publication is deleted
      *
-     * @param int $p_fk_publication_id
+     * @param int $p_publication_id
      */
-    public static function OnArticleDelete($p_fk_article_language_id, $p_fk_article_nr)
+    public static function OnArticleDelete($p_article_language_id, $p_article_nr)
     {      
-        foreach (PollArticle::getAssignments(null, null, $p_fk_article_language_id, $p_fk_article_nr) as $record) {
+        foreach (PollArticle::getAssignments(null, $p_article_language_id, $p_article_nr) as $record) {
             $record->delete();   
         }   
     }
     
     /**
      * Get array of relations between publication and poll
-     * You have to set param $p_fk_publication_id,
-     * or booth $p_fk_poll_nr and $p_fk_poll_language_id
+     * You have to set param $p_publication_id,
+     * or booth $p_poll_nr and $p_poll_language_id
      *
-     * @param int $p_fk_publication_id
-     * @param int $p_fk_poll_nr
-     * @param int $p_fk_poll_language_id
+     * @param int $p_publication_id
+     * @param int $p_poll_nr
+     * @param int $p_poll_language_id
      * @return array(object PollArticle, object PollArticle, ...)
      */
-    public static function getAssignments($p_fk_poll_language_id = null, $p_fk_poll_nr = null, 
-                                            $p_fk_article_language_id, $p_fk_article_nr,
+    public static function getAssignments(  $p_poll_nr = null, 
+                                            $p_article_language_id, $p_article_nr,
                                             $p_offset = 0, $p_limit = 10, $p_orderStr = null)
     {
         global $g_ado_db;
         $records = array();
         
-        $PollArticle =& new PollArticle();
-               
-        if (!empty($p_fk_poll_language_id)) {
-            $where .= "AND fk_poll_language_id = $p_fk_poll_language_id ";   
+        $PollArticle = new PollArticle();
+        
+        if (!empty($p_poll_nr)) {
+            $where .= "AND fk_poll_nr = $p_poll_nr ";   
         }
-        if (!empty($p_fk_poll_nr)) {
-            $where .= "AND fk_poll_nr = $p_fk_poll_nr ";   
+        if (!empty($p_article_language_id)) {
+            $where .= "AND fk_article_language_id = $p_article_language_id ";   
         }
-        if (!empty($p_fk_article_language_id)) {
-            $where .= "AND fk_article_language_id = $p_fk_article_language_id ";   
-        }
-        if (!empty($p_fk_article_nr)) {
-            $where .= "AND fk_article_nr = $p_fk_article_nr ";   
+        if (!empty($p_article_nr)) {
+            $where .= "AND fk_article_nr = $p_article_nr ";   
         }
         
         if (empty($where)) {
@@ -186,7 +181,7 @@ class PollArticle extends DatabaseObject {
         $res = $g_ado_db->selectLimit($query, $p_limit, $p_offset);
          
         while ($row = $res->fetchRow()) {
-            $records[] =& new PollArticle($row['fk_poll_language_id'], $row['fk_poll_nr'], $row['fk_article_language_id'], $row['fk_article_nr']);      
+            $records[] = new PollArticle($row['fk_poll_nr'], $row['fk_article_language_id'], $row['fk_article_nr']);      
         } 
         
         return $records;    
@@ -199,7 +194,7 @@ class PollArticle extends DatabaseObject {
      */
     public function getPublication()
     {
-        $publication =& new Publication($this->m_data['fk_publication_id']);
+        $publication = new Publication($this->m_data['fk_publication_id']);
         
         return $publication;   
     }
@@ -217,11 +212,12 @@ class PollArticle extends DatabaseObject {
     /**
      * Get the responding poll object for an record
      *
+     * @param $p_language_id wanted language
      * @return object
      */
-    public function getPoll()
+    public function getPoll($p_language_id)
     {
-        $poll =& new Poll($this->m_data['fk_poll_language_id'], $this->m_data['fk_poll_nr']); 
+        $poll = new Poll($p_language_id, $this->m_data['fk_poll_nr']); 
         
         return $poll;  
     }
@@ -235,28 +231,7 @@ class PollArticle extends DatabaseObject {
     {
         return $this->m_data['fk_poll_nr'];   
     }
-    
-    /**
-     * Get the responding language object for an record
-     *
-     * @return object
-     */
-    public function getPollLanguage()
-    {
-        $language =& new Language($this->m_data['fk_poll_language_id']); 
-        
-        return $language;  
-    }
-    
-    /**
-     * Get the language id of an record
-     *
-     * @return int
-     */
-    public function getPollLanguageId()
-    {
-        return $this->m_data['fk_poll_language_id'];   
-    }    
+      
 } // class PollQuestion
 
 ?>

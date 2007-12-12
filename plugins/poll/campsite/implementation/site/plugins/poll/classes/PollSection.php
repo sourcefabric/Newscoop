@@ -8,7 +8,7 @@ class PollSection extends DatabaseObject {
      *
      * @var array
      */
-    var $m_keyColumnNames = array('fk_poll_nr', 'fk_poll_language_id', 'fk_section_nr', 'fk_section_language_id', 'fk_issue_nr', 'fk_publication_id');
+    var $m_keyColumnNames = array('fk_poll_nr', 'fk_section_nr', 'fk_section_language_id', 'fk_issue_nr', 'fk_publication_id');
 
     /**
      * Table name
@@ -25,9 +25,6 @@ class PollSection extends DatabaseObject {
     var $m_columnNames = array(
         // int - poll id
         'fk_poll_nr',
-
-        // int - language id
-        'fk_poll_language_id',
 
         // int - section number
         'fk_section_nr',
@@ -50,10 +47,9 @@ class PollSection extends DatabaseObject {
      * @param int $p_fk_poll_nr
      * @param int $p_fk_publication_id
      */
-    function PollSection($p_fk_poll_language_id = null, $p_fk_poll_nr = null, $p_fk_section_language_id = null, $p_fk_section_nr = null, $p_fk_issue_nr = null, $p_fk_publication_id = null)
+    function PollSection($p_fk_poll_nr = null, $p_fk_section_language_id = null, $p_fk_section_nr = null, $p_fk_issue_nr = null, $p_fk_publication_id = null)
     {
         parent::DatabaseObject($this->m_columnNames);
-        $this->m_data['fk_poll_language_id'] = $p_fk_poll_language_id;
         $this->m_data['fk_poll_nr'] = $p_fk_poll_nr;
         $this->m_data['fk_section_language_id'] = $p_fk_section_language_id;
         $this->m_data['fk_section_nr'] = $p_fk_section_nr;
@@ -129,11 +125,14 @@ class PollSection extends DatabaseObject {
      * Called when poll is deleted
      *
      * @param int $p_fk_poll_nr
-     * @param int $p_fk_language_id
      */
-    public static function OnPollDelete($p_fk_poll_nr, $p_fk_language_id)
-    {      
-        foreach (PollSection::getAssignments($p_fk_poll_nr, $p_fk_poll_language_id) as $record) {
+    public static function OnPollDelete($p_fk_poll_nr)
+    {  
+        if (count(Poll::getTranslations($p_poll_nr)) > 1) {
+            return;   
+        }
+            
+        foreach (PollSection::getAssignments($p_fk_poll_nr) as $record) {
             $record->delete();   
         }   
     }
@@ -145,7 +144,7 @@ class PollSection extends DatabaseObject {
      */
     public static function OnSectionDelete($p_fk_section_language_id, $p_fk_section_nr, $p_fk_issue_nr, $p_fk_publication_id)
     {      
-        foreach (PollSection::getAssignments(null, null, $p_fk_section_language_id, $p_fk_section_nr, $p_fk_issue_nr, $p_fk_publication_id) as $record) {
+        foreach (PollSection::getAssignments(null, $p_fk_section_language_id, $p_fk_section_nr, $p_fk_issue_nr, $p_fk_publication_id) as $record) {
             $record->delete();   
         }   
     }
@@ -160,7 +159,7 @@ class PollSection extends DatabaseObject {
      * @param int $p_fk_poll_language_id
      * @return array(object PollSection, object PollSection, ...)
      */
-    public static function getAssignments($p_fk_poll_nr = null, $p_fk_poll_language_id = null,
+    public static function getAssignments($p_fk_poll_nr = null,
                                             $p_fk_section_language_id = null, $p_fk_section_nr = null,
                                             $p_fk_issue_nr = null, $p_fk_publication_id = null, 
                                             $p_offset = 0, $p_limit = 10, $p_orderStr = null)
@@ -168,11 +167,8 @@ class PollSection extends DatabaseObject {
         global $g_ado_db;
         $records = array();
         
-        $PollSection =& new PollSection();
-               
-        if (!empty($p_fk_poll_language_id)) {
-            $where .= "AND fk_poll_language_id = $p_fk_poll_language_id ";   
-        }
+        $PollSection = new PollSection();
+        
         if (!empty($p_fk_poll_nr)) {
             $where .= "AND fk_poll_nr = $p_fk_poll_nr ";   
         }
@@ -201,7 +197,7 @@ class PollSection extends DatabaseObject {
         $res = $g_ado_db->selectLimit($query, $p_limit, $p_offset);
         
         while ($row = $res->fetchRow()) {
-            $records[] =& new PollSection($row['fk_poll_language_id'], $row['fk_poll_nr'], $row['fk_section_language_id'], $row['fk_section_nr'], $row['fk_issue_nr'], $row['fk_publication_id']);      
+            $records[] = new PollSection($row['fk_poll_nr'], $row['fk_section_language_id'], $row['fk_section_nr'], $row['fk_issue_nr'], $row['fk_publication_id']);      
         } 
         
         return $records;    
@@ -214,7 +210,7 @@ class PollSection extends DatabaseObject {
      */
     public function getPublication()
     {
-        $publication =& new Publication($this->m_data['fk_publication_id']);
+        $publication = new Publication($this->m_data['fk_publication_id']);
         
         return $publication;   
     }
@@ -234,9 +230,9 @@ class PollSection extends DatabaseObject {
      *
      * @return object
      */
-    public function getPoll()
+    public function getPoll($p_language_id)
     {
-        $poll =& new Poll($this->m_data['fk_poll_language_id'], $this->m_data['fk_poll_nr']); 
+        $poll = new Poll($p_language_id, $this->m_data['fk_poll_nr']); 
         
         return $poll;  
     }
@@ -250,28 +246,7 @@ class PollSection extends DatabaseObject {
     {
         return $this->m_data['fk_poll_nr'];   
     }
-    
-    /**
-     * Get the responding language object for an record
-     *
-     * @return object
-     */
-    public function getPollLanguage()
-    {
-        $language =& new Language($this->m_data['fk_poll_language_id']); 
-        
-        return $language;  
-    }
-    
-    /**
-     * Get the language id of an record
-     *
-     * @return int
-     */
-    public function getPollLanguageId()
-    {
-        return $this->m_data['fk_poll_language_id'];   
-    }    
+      
 } // class PollQuestion
 
 ?>

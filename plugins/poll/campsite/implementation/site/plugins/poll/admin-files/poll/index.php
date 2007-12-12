@@ -8,9 +8,10 @@ if (!$g_user->hasPermission('ManagePoll')) {
 $f_language_selected = Input::Get('f_language_selected', 'int');
 $f_poll_limit = Input::Get('f_poll_limit', 'int', 20);
 $f_poll_offset = Input::Get('f_poll_offset', 'int', 0);
+$f_poll_orderBy = Input::Get('f_poll_orderBy', 'string');
 
-$polls = Poll::getPolls($f_language_selected, $f_poll_offset, $f_poll_limit);
-$pager =& new SimplePager(Poll::countPolls(), $f_poll_limit, "f_poll_offset", "index.php?", false);
+$polls = Poll::getPolls($f_language_selected, $f_poll_offset, $f_poll_limit, $f_poll_orderBy);
+$pager =& new SimplePager(Poll::countPolls(), $f_poll_limit, "f_poll_offset", "index.php?f_poll_orderBy=$f_poll_orderBy&amp;", false);
 $allLanguages = Language::GetLanguages();
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
@@ -145,15 +146,22 @@ $color= 0;
 
 if (count($polls)) {
     ?>
-    <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;">
+    <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;" width="95%">
         <TR class="table_list_header">
-            <TD>&nbsp;</TD>
-            <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Title <SMALL>(click to edit)</SMALL>"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("From"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("To"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Translate"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Show Results"); ?></TD>
-            <TD align="center" valign="top"><?php putGS("Delete"); ?></TD>
+            <TD width="10">&nbsp;</TD>
+            <TD ALIGN="LEFT" VALIGN="TOP" width="800">
+                <A href="index.php?f_poll_offset=<?php echo $f_poll_offset ?>&amp;f_poll_orderBy=title"><?php  putGS("Name"); ?></a>
+                &nbsp;<SMALL>(click to edit)</SMALL>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="30">
+                <A href="index.php?f_poll_offset=<?php echo $f_poll_offset ?>&amp;f_poll_orderBy=begin"><?php  putGS("Begin"); ?></a>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="30">
+                <A href="index.php?f_poll_offset=<?php echo $f_poll_offset ?>&amp;f_poll_orderBy=end"><?php  putGS("End"); ?></a>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="20">&nbsp;</TD>
+            <TD ALIGN="center" VALIGN="TOP" width="20">&nbsp;</TD>
+            <TD align="center" valign="top" width="20">&nbsp;</TD>
         </TR>
         <?php
     

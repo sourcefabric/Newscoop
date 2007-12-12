@@ -21,7 +21,7 @@ if ($f_poll_nr && $f_fk_language_id) {
         $date_end = $poll->getProperty('date_end');
         $nr_of_answers = $poll->getProperty('nr_of_answers');
         $fk_language_id = $poll->getProperty('fk_language_id');
-        $is_show_after_expiration = $poll->getProperty('is_show_after_expiration');
+        $is_display_expired = $poll->getProperty('is_display_expired');
         $is_used_as_default = $poll->getProperty('is_used_as_default');
         
         $poll_answers = $poll->getAnswers();
@@ -94,7 +94,7 @@ camp_html_display_msgs();
             </TD>
         </TR>
           <TR>
-            <TD ALIGN="RIGHT" ><?php  putGS("Date begin"); ?>:</TD>
+            <TD ALIGN="RIGHT" ><?php  putGS("Date begin voting"); ?>:</TD>
             <TD>
                 <?php $now = getdate(); ?>
                 <table cellpadding="0" cellspacing="2"><tr>
@@ -121,7 +121,7 @@ camp_html_display_msgs();
             </TD>
         </TR>
         <TR>
-            <TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
+            <TD ALIGN="RIGHT" ><?php  putGS("Date end voting"); ?>:</TD>
             <TD>
                 <?php $now = getdate(); ?>
                 <table cellpadding="0" cellspacing="2"><tr>
@@ -148,17 +148,19 @@ camp_html_display_msgs();
             </TD>
         </TR>
         <tr>
-            <TD ALIGN="RIGHT" ><?php  putGS("Show after expiration"); ?>:</TD>
+            <TD ALIGN="RIGHT" ><?php  putGS("Display expired"); ?>:</TD>
             <TD>
-            <INPUT TYPE="checkbox" NAME="f_show_after_expiration" class="input_checkbox" value="1" <?php $is_show_after_expiration ? p('checked') : null; ?> >
+            <INPUT TYPE="checkbox" NAME="f_is_display_expired" class="input_checkbox" value="1" <?php $is_display_expired ? p('checked') : null; ?> >
             </TD>
         </TR>
+        <!--
         <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Used as default"); ?>:</TD>
             <TD>
             <INPUT TYPE="checkbox" NAME="f_is_used_as_default" class="input_checkbox" value="1" <?php $is_used_as_default ? p('checked') : null; ?> >
             </TD>
         </TR>
+        -->
         <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Title"); ?>:</TD>
             <TD>
@@ -168,7 +170,7 @@ camp_html_display_msgs();
         <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Question"); ?>:</TD>
             <TD>
-            <INPUT TYPE="TEXT" NAME="f_question" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Question')); ?>" value="<?php echo htmlspecialchars($question); ?>">
+            <TEXTAREA NAME="f_question" class="input_textarea" cols="28" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Question')); ?>"><?php echo htmlspecialchars($question); ?></TEXTAREA>
             </TD>
         </TR>
         <TR>
