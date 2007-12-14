@@ -9,6 +9,7 @@ $allLanguages = Language::GetLanguages();
 
 $f_poll_nr = Input::Get('f_poll_nr', 'int');
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
+$f_from = Input::Get('f_from', 'string', false);
 
 if ($f_poll_nr && $f_fk_language_id) {
     $poll = new Poll($f_fk_language_id, $f_poll_nr, true);
@@ -29,22 +30,31 @@ if ($f_poll_nr && $f_fk_language_id) {
             $answers[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('answer');   
         }
     }
+} else {
+    // language_id may preset from from assign_popup.php
+    $fk_language_id = Input::Get('f_language_id', 'int');
 }
 
-/*
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
-                  'Section' => $sectionObj);
-camp_html_content_top(getGS('Add new article'), $topArray, true, false, array(getGS("Articles") => "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_fk_language_id=$f_fk_language_id"));
-*/
+if (!$f_include) { ?>
+    <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
+        <TR>
+            <TD><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
+            <TD><A HREF="index.php"><B><?php  putGS("Poll List"); ?></B></A></TD>
+        </TR>
+    </TABLE>
+<?php 
+} else {
 ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
-<TR>
-    <TD><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-    <TD><A HREF="index.php"><B><?php  putGS("Poll List"); ?></B></A></TD>
-</TR>
-</TABLE>
-
+    <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
+        <TR>
+            <TD><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
+            <TD><A HREF="<?php p(urldecode($f_from)) ?>"><B><?php  putGS("Attach Polls"); ?></B></A></TD>
+        </TR>
+    </TABLE>
 <?php
+}
+
+
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 camp_html_display_msgs();
 ?>
@@ -57,6 +67,9 @@ camp_html_display_msgs();
 <FORM NAME="edit_poll" METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($poll) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_poll_nr" VALUE="<?php p($poll->getNumber()); ?>">
+<?php } ?>
+<?php if ($f_from) { ?>
+<INPUT TYPE="HIDDEN" NAME="f_from" VALUE="<?php p(htmlspecialchars($f_from)); ?>">
 <?php } ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
@@ -249,5 +262,8 @@ function poll_set_nr_of_answers()
     }
 }
 </script>
-<?php } ?>
-<?php camp_html_copyright_notice(); ?>
+<?php }
+if (!$f_include) {
+    camp_html_copyright_notice(); 
+}    
+?>

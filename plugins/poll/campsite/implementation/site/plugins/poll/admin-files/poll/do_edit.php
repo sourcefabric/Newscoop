@@ -57,5 +57,6 @@ if ($f_poll_nr) {
         }            
     }
 }
-header('Location: index.php');
+$f_from = Input::Get('f_from', 'string', 'index.php');
+header('Location: '.$f_from);
 ?>

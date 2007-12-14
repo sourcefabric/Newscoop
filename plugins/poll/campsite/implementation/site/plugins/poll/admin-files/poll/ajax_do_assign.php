@@ -5,7 +5,7 @@ if (!$g_user->hasPermission('ManagePoll')) {
     exit;
 }
 
-$f_target = Input::Get('f_target', 'string');
+$f_poll_item = Input::Get('f_poll_item', 'string');
 $f_language_id = Input::Get('f_language_id', 'int');
 $f_publication_id = Input::Get('f_publication_id', 'int');
 $f_issue_nr = Input::Get('f_issue_nr', 'int');
@@ -20,33 +20,44 @@ if ($f_action == 'assign') {
     $action = 'delete';   
 }
 
-switch ($f_target) {
+switch ($f_poll_item) {
     case 'publication':
             $PollPublication =& new PollPublication($f_poll_nr, $f_publication_id);
-            $PollPublication->$action();
-            echo "setOnunload('publication');\n";
+            if ($PollPublication->$action()) {
+                echo "poll_nr = '$f_poll_nr'; action = '$f_action';";    
+            } else {
+                echo 'alert("'.getGS('Error changing attachment.').'");';   
+            }
     break;
     
     case 'issue':
             $PollIssue =& new PollIssue($f_poll_nr, $f_language_id, $f_issue_nr, $f_publication_id);
-            $PollIssue->$action();
-            echo "setOnunload('issue');\n";
+            if ($PollIssue->$action()) {
+                echo "poll_nr = '$f_poll_nr'; action = '$f_action';";    
+            } else {
+                echo 'alert("'.getGS('Error changing attachment.').'");';   
+            }
     break;
     
     case 'section':
             $PollSection =& new PollSection($f_poll_nr, $f_language_id, $f_section_nr, $f_issue_nr, $f_publication_id);
-            $PollSection->$action();
-            echo "setOnunload('section');\n";
+            if ($PollSection->$action()) {
+                echo "poll_nr = '$f_poll_nr'; action = '$f_action';";    
+            } else {
+                echo 'alert("'.getGS('Error changing attachment.').'");';   
+            }
     break;
     
     case 'article':
             $PollArticle =& new PollArticle($f_poll_nr, $f_language_id, $f_article_nr);
-            $PollArticle->$action();
-            echo "setOnunload('article');\n";
+            if ($PollArticle->$action()) {
+                echo "poll_nr = '$f_poll_nr'; action = '$f_action';";    
+            } else {
+                echo 'alert("'.getGS('Error changing attachment').'");';   
+            }
     break;
 }
 
-// this is the ajax response, do not change! Need to exit to avoid output of the menue.
-echo "poll_nr = '$f_poll_nr'; action = '$f_action';";
+// Need to exit to avoid output of the menue.
 exit;
 ?>

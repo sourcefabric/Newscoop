@@ -65,16 +65,16 @@ class Poll extends DatabaseObject {
      * Construct by passing in the primary key to access the poll in
      * the database.
      *
-     * @param int $p_fk_language_id
+     * @param int $p_language_id
      *        Not required if poll_nr is given.
      * @param int $p_poll_nr
      *        Not required when creating an poll.
      */
-    public function Poll($p_fk_language_id = null, $p_poll_nr = null, $p_get_default = false)
+    public function Poll($p_language_id = null, $p_poll_nr = null, $p_get_default = false)
     {
         parent::DatabaseObject($this->m_columnNames);
         
-        $this->m_data['fk_language_id'] = $p_fk_language_id;
+        $this->m_data['fk_language_id'] = $p_language_id;
         $this->m_data['poll_nr'] = $p_poll_nr;
         
         if ($this->keyValuesExist()) {
@@ -175,12 +175,12 @@ class Poll extends DatabaseObject {
      * @param string $p_name
      * @return Article
      */
-    public function createTranslation($p_fk_language_id, $p_title = '', $p_question = '', $p_is_used_as_default = false)
+    public function createTranslation($p_language_id, $p_title = '', $p_question = '', $p_is_used_as_default = false)
     {        
         // Construct the duplicate poll object.  
         $poll_copy = new Poll();      
         $poll_copy->m_data['poll_nr'] = $this->m_data['poll_nr'];
-        $poll_copy->m_data['fk_language_id'] = $p_fk_language_id;
+        $poll_copy->m_data['fk_language_id'] = $p_language_id;
 
         // Create the record
         $values = array(
@@ -201,7 +201,7 @@ class Poll extends DatabaseObject {
         $poll_copy->setAsDefault($p_is_used_as_default);
         
         // create an set of answers
-        PollAnswer::CreateTranslationSet($this->m_data['poll_nr'], $this->m_data['fk_language_id'], $p_fk_language_id);
+        PollAnswer::CreateTranslationSet($this->m_data['poll_nr'], $this->m_data['fk_language_id'], $p_language_id);
 
         /*
         if (function_exists("camp_load_translation_strings")) {
@@ -303,10 +303,10 @@ class Poll extends DatabaseObject {
     /**
      * Construct query to recive polls from database
      *
-     * @param int $p_fk_language
+     * @param int $p_language
      * @return string
      */
-    static private function GetQuery($p_fk_language = null, $p_orderBy = null)
+    static private function GetQuery($p_language = null, $p_orderBy = null)
     {   
         switch ($p_orderBy) {
             case 'title':
@@ -326,10 +326,10 @@ class Poll extends DatabaseObject {
             break;   
         }
         
-        if (!empty($p_fk_language)) {
+        if (!empty($p_language)) {
             $query = "SELECT    poll_nr, fk_language_id  
                       FROM      plugin_poll
-                      WHERE     fk_language_id = $p_fk_language
+                      WHERE     fk_language_id = $p_language
                       ORDER BY  $orderBy";  
         } else {
             $query = "SELECT    poll_nr, fk_language_id
@@ -344,16 +344,51 @@ class Poll extends DatabaseObject {
      * Get an array of poll objects 
      * You need to specify the language
      *
-     * @param unknown_type $p_fk_language_id
+     * @param unknown_type $p_language_id
      * @param unknown_type $p_offset
      * @param unknown_type $p_limit
      * @return array
      */
-    static public function GetPolls($p_fk_language_id = null, $p_offset = 0, $p_limit = 20, $p_orderBy = null)
+    static public function GetPolls($p_constraints = array(), $p_item = null, $p_offset = 0, $p_limit = 20, $p_orderBy = null, $p_filter = null)
     {
+        $constraints = array();
+        $operator = new Operator('is');
+        
+	    if (array_key_exists('language_id', $p_constraints) && !empty($p_constraints['language_id'])) {
+    	    $comparisonOperation = new ComparisonOperation('language_id', $operator, $p_constraints['language_id']);
+    	    $constraints[] = $comparisonOperation;
+	    }
+
+	    if (array_key_exists('publication_id', $p_constraints) && !empty($p_constraints['publication_id'])) {
+    	    $comparisonOperation = new ComparisonOperation('_assign_publication_id', $operator, $p_constraints['publication_id']);
+    	    $constraints[] = $comparisonOperation;
+	    }
+	    
+	    if (array_key_exists('issue_nr', $p_constraints) && !empty($p_constraints['issue_nr'])) {
+    	    $comparisonOperation = new ComparisonOperation('_assign_issue_nr', $operator, $p_constraints['issue_nr']);
+    	    $constraints[] = $comparisonOperation;
+	    }
+	    
+	    if (array_key_exists('section_nr', $p_constraints) && !empty($p_constraints['section_nr'])) {
+    	    $comparisonOperation = new ComparisonOperation('_assign_section_nr', $operator, $p_constraints['section_nr']);
+    	    $constraints[] = $comparisonOperation;
+	    }
+	    
+	    if (array_key_exists('article_nr', $p_constraints) && !empty($p_constraints['article_nr'])) {
+    	    $comparisonOperation = new ComparisonOperation('_assign_article_nr', $operator, $p_constraints['article_nr']);
+    	    $constraints[] = $comparisonOperation;
+	    }
+	    	    
+	    $order = array($p_orderBy => 'ASC');    
+
+	    
+        return Poll::GetList($constraints, $p_item, $order, $p_offset, $p_limit, &$p_count);
+        
+        
+        
         global $g_ado_db;
         
-        $query = Poll::GetQuery($p_fk_language_id, $p_orderBy, $p_orderBy);
+        $query = Poll::GetQuery($p_language_id, $p_orderBy, $p_orderBy);
         
         $res = $g_ado_db->SelectLimit($query, $p_limit, $p_offset);		
 		$polls = array();
@@ -372,11 +407,11 @@ class Poll extends DatabaseObject {
      *
      * @return int
      */
-    public function countPolls($p_fk_language_id = null)
+    public function countPolls($p_language_id = null)
     {
         global $g_ado_db;;
         
-        $query   = Poll::getQuery($p_fk_language_id); 
+        $query   = Poll::getQuery($p_language_id); 
         $res     = $g_ado_db->Execute($query);
         
         return $res->RecordCount();  
@@ -764,6 +799,8 @@ class Poll extends DatabaseObject {
                 case 'byvotes':
                     $dbField = 'nr_of_votes';
                     break;
+                default:
+                    $dbField = 'poll_nr';
             }
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';

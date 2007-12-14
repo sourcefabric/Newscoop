@@ -5,7 +5,7 @@ $issue_nr = $sectionObj->getIssueNumber();
 $publication_id = $sectionObj->getPublicationId();
 ?>
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" width="816">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" width="806">
 <TR>
 	<TD>
 		<B><?php  putGS("Polls"); ?></B>
@@ -13,7 +13,7 @@ $publication_id = $sectionObj->getPublicationId();
     <?php if ($g_user->hasPermission('ManagePoll')) {  ?>
     	<TD align="right">
     		<IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/configure.png" border="0">
-    		<A href="javascript: void(0);" onclick="window.open('<?php p("/$ADMIN/poll/assign_popup.php?f_target=section&amp;f_section_nr=$section_nr&amp;f_language_id=$section_language_id&amp;f_issue_nr=$issue_nr&amp;f_publication_id=$publication_id"); ?>', 'assign_poll', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=600, top=200, left=100');"><?php putGS("Edit"); ?></A>
+    		<A href="javascript: void(0);" onclick="window.open('<?php p("/$ADMIN/poll/assign_popup.php?f_poll_item=section&amp;f_section_nr=$section_nr&amp;f_language_id=$section_language_id&amp;f_issue_nr=$issue_nr&amp;f_publication_id=$publication_id"); ?>', 'assign_poll', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=600, top=200, left=100');"><?php putGS("Edit"); ?></A>
     	</TD>
     <?php } ?>
 </TR>
