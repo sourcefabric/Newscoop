@@ -20,7 +20,7 @@ function upload_article_handler(&$request, &$session, &$files) {
 		echo "Input Error: Missing input";
 		return;
 	}
-	
+
 	// Unzip the sxw file to get the content.
 	$zip = zip_open($files["filename"]["tmp_name"]);
 	if ($zip) {
@@ -34,7 +34,7 @@ function upload_article_handler(&$request, &$session, &$files) {
 			}
 		}
 		zip_close($zip);
-		
+
 		if (!is_null($xml)) {
 			// Write the XML to a file because the XSLT functions
 			// require it to be in a file in order to be processed.
@@ -42,28 +42,28 @@ function upload_article_handler(&$request, &$session, &$files) {
 			$tmpXmlFile = fopen($tmpXmlFilename, "w");
 			fwrite($tmpXmlFile, $xml);
 			fclose($tmpXmlFile);
-			
+
 			// Transform the OpenOffice document to DocBook format.
 			$xsltProcessor = xslt_create();
-			$docbookXml = xslt_process($xsltProcessor, 
-									   $tmpXmlFilename, 
+			$docbookXml = xslt_process($xsltProcessor,
+									   $tmpXmlFilename,
 									   "sxwToDocbook.xsl");
 			unlink($tmpXmlFilename);
-			
+
 			// Parse the docbook to get the data.
-			$docBookParser =& new DocBookParser();
+			$docBookParser = new DocBookParser();
 			$docBookParser->parseString($docbookXml, true);
-			
-			$article =& new Article($articleNumber, $language);
+
+			$article = new Article($articleNumber, $language);
 			$article->setTitle($docBookParser->getTitle());
 			$article->setIntro($docBookParser->getIntro());
 			$article->setBody($docBookParser->getBody());
-			
+
 			// Go back to the "Edit Article" page.
 			header("Location: /$ADMIN/articles/edit.php?Pub=$publication&Issue=$issue&Section=$section&Article=$articleNumber&Language=$language&sLanguage=$sLanguage");
 		} // if (!is_null($xml))
 	} // if ($zip)
-	
+
 	// Some sort of error occurred - show the upload page again.
 	include("index.php");
 } // fn upload_article_handler

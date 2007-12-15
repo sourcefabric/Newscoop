@@ -17,7 +17,7 @@ if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('Publish')
 	exit;
 }
 
-$issueObj =& new Issue($Pub, $Language, $Issue);
+$issueObj = new Issue($Pub, $Language, $Issue);
 $issueObj->setWorkflowStatus();
 
 camp_html_goto_page("/$ADMIN/issues/$f_target?Pub=$Pub&Issue=$Issue&Language=$Language");

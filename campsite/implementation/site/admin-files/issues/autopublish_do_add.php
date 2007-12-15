@@ -33,7 +33,7 @@ if ($publish_articles != "Y" && $publish_articles != "N") {
 $created = 0;
 if ($correct) {
 	$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
-    $issuePublishObj =& new IssuePublish($event_id);
+    $issuePublishObj = new IssuePublish($event_id);
 	if (!$issuePublishObj->exists()) {
 	    $issuePublishObj->create();
 	    $issuePublishObj->setPublicationId($Pub);
@@ -49,8 +49,8 @@ if ($created) {
 	camp_html_goto_page("/$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 }
 
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$publicationObj =& new Publication($Pub);
+$issueObj = new Issue($Pub, $Language, $Issue);
+$publicationObj = new Publication($Pub);
 $crumbs = array("Pub" => $publicationObj, "Issue" => $issueObj);
 camp_html_content_top(getGS("Scheduling a new publish action"), $crumbs);
 ?>

@@ -17,7 +17,7 @@ $f_type_language_id = Input::Get('f_type_language_id', 'int', 0);
 $f_type_translation_name = trim(Input::Get('f_type_translation_name'));
 $correct = true;
 $created = false;
-//$topicParent =& new Topic($f_topic_parent_id);
+//$topicParent = new Topic($f_topic_parent_id);
 //$Path = camp_topic_path($topicParent, $f_topic_language_id);
 
 $errorMsgs = array();
@@ -30,7 +30,7 @@ if ($f_type_language_id <= 0) {
 
 if ($correct) {
 	// Translate existing type
-	$type =& new ArticleType($f_type_id);
+	$type = new ArticleType($f_type_id);
 	$created = $type->setName($f_type_language_id, $f_type_translation_name);
 	if ($created) {
 		camp_html_goto_page("/$ADMIN/article_types/index.php");

@@ -20,7 +20,7 @@ class LoginAttempts {
 	 * Delete IP records older than 12 hours from the database.
 	 * @return void
 	 */
-	function DeleteOldLoginAttempts()
+	public static function DeleteOldLoginAttempts()
 	{
 		global $g_ado_db;
 		$now = mktime();
@@ -36,7 +36,7 @@ class LoginAttempts {
 	 *
 	 * @return void
 	 */
-	function RecordLoginAttempt()
+	public static function RecordLoginAttempt()
 	{
 		global $g_ado_db;
 		$now = mktime();
@@ -52,7 +52,7 @@ class LoginAttempts {
      *
 	 * @return boolean
 	 */
-	function MaxLoginAttemptsExceeded()
+	public static function MaxLoginAttemptsExceeded()
 	{
 		global $g_ado_db;
 		$userIp = getenv('REMOTE_ADDR');
@@ -77,7 +77,7 @@ class LoginAttempts {
      *
 	 * @return void
 	 */
-	function ClearLoginAttemptsForIp()
+	public static function ClearLoginAttemptsForIp()
 	{
 		global $g_ado_db;
 		$ip = getenv('REMOTE_ADDR');

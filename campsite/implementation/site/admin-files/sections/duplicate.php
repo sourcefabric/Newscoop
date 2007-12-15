@@ -24,19 +24,19 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$publicationObj =& new Publication($f_src_publication_id);
+$publicationObj = new Publication($f_src_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;
 }
 
-$issueObj =& new Issue($f_src_publication_id, $f_language_id, $f_src_issue_number);
+$issueObj = new Issue($f_src_publication_id, $f_language_id, $f_src_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;
 }
 
-$sectionObj =& new Section($f_src_publication_id, $f_src_issue_number, $f_language_id, $f_src_section_number);
+$sectionObj = new Section($f_src_publication_id, $f_src_issue_number, $f_language_id, $f_src_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'));
 	exit;
@@ -60,7 +60,7 @@ if ($f_dest_publication_id > 0) {
 $allSections = array();
 $destIssueObj = null;
 if ($f_dest_issue_number > 0) {
-    $destIssueObj =& new Issue($f_dest_publication_id, $sectionObj->getLanguageId(), $f_dest_issue_number);
+    $destIssueObj = new Issue($f_dest_publication_id, $sectionObj->getLanguageId(), $f_dest_issue_number);
 	$allSections = Section::GetSections($f_dest_publication_id, $f_dest_issue_number, $sectionObj->getLanguageId());
 }
 

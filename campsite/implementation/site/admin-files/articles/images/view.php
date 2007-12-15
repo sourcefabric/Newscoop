@@ -11,7 +11,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$imageObj =& new Image($f_image_id);
+$imageObj = new Image($f_image_id);
 
 // Add extra breadcrumb for image list.
 ?>

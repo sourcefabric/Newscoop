@@ -17,8 +17,8 @@ if (!Input::IsValid()) {
 }
 
 $numArticles = count(Article::GetArticles($f_publication_id, $f_issue_number, null, $f_language_id));
-$publicationObj =& new Publication($f_publication_id);
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$publicationObj = new Publication($f_publication_id);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 
 camp_html_content_top(getGS('Delete issue'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 

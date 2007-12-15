@@ -14,7 +14,6 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/ArticleTypeField.php');
-require_once($g_documentRoot.'/classes/ParserCom.php');
 require_once($g_documentRoot.'/classes/Translation.php');
 require_once($g_documentRoot.'/'.$ADMIN_DIR.'/localizer/Localizer.php');
 
@@ -35,7 +34,7 @@ class ArticleType {
 	 *
 	 * @param string $p_articleType
 	 */
-	function ArticleType($p_articleType)
+	public function ArticleType($p_articleType)
 	{
 		$this->m_name = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
@@ -52,7 +51,7 @@ class ArticleType {
 	 * Create a new Article Type.  Creates a new table in the database.
 	 * @return boolean
 	 */
-	function create()
+	public function create()
 	{
 		global $g_ado_db;
 		$queryStr = "CREATE TABLE `".$this->m_dbTableName."`"
@@ -89,7 +88,7 @@ class ArticleType {
 	 * Return TRUE if the Article Type exists.
 	 * @return boolean
 	 */
-	function exists()
+	public function exists()
 	{
 		global $g_ado_db;
 		$queryStr = "SHOW TABLES LIKE '".$this->m_dbTableName."'";
@@ -107,7 +106,7 @@ class ArticleType {
 	 * in the database.  Not recommended unless there is no article
 	 * data in the table.
 	 */
-	function delete()
+	public function delete()
 	{
 		global $g_ado_db;
 		$queryStr = "DROP TABLE ".$this->m_dbTableName;
@@ -134,7 +133,7 @@ class ArticleType {
 	 * Usually, one wants to just rename the Display Name, which is done via SetDisplayName
 	 *
 	 */
-	function rename($p_newName)
+	public function rename($p_newName)
 	{
 		global $g_ado_db;
 		if (!ArticleType::isValidFieldName($p_newName)) return 0;
@@ -169,7 +168,7 @@ class ArticleType {
 	*
 	* @return 0 or phrase_id
 	**/
-	function translationExists($p_languageId)
+	public function translationExists($p_languageId)
 	{
 		global $g_ado_db;
 		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_name ."' AND atm.field_name='NULL' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'";
@@ -189,7 +188,7 @@ class ArticleType {
 	 *
 	 * @return boolean
 	 */
-	function setName($p_languageId, $p_value)
+	public function setName($p_languageId, $p_value)
 	{
 		global $g_ado_db;
 		if (!is_numeric($p_languageId) || $p_languageId == 0) {
@@ -251,7 +250,7 @@ class ArticleType {
 	 *
 	 * @return -1 or integer
 	 */
-	function getPhraseId()
+	public function getPhraseId()
 	{
 		if (isset($this->m_metadata['fk_phrase_id'])) {
 			return $this->m_metadata['fk_phrase_id'];
@@ -266,7 +265,7 @@ class ArticleType {
 	 *
 	 * @return array
 	 */
-	function getTranslations()
+	public function getTranslations()
 	{
 		$return = array();
 		$tmp = Translation::getTranslations($this->getPhraseId());
@@ -279,7 +278,7 @@ class ArticleType {
 	/**
 	 * @return string
 	 */
-	function getTypeName()
+	public function getTypeName()
 	{
 		return $this->m_name;
 	} // fn getTypeName
@@ -288,7 +287,7 @@ class ArticleType {
 	/**
 	 * @return string
 	 */
-	function getTableName()
+	public function getTableName()
 	{
 		return $this->m_dbTableName;
 	} // fn getTableName
@@ -299,7 +298,7 @@ class ArticleType {
 	*
 	* @return array
 	**/
-	function getMetadata()
+	public function getMetadata()
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_name ."' and field_name='NULL'";
@@ -313,7 +312,7 @@ class ArticleType {
 	 *
 	 * @return array
 	 */
-	function getUserDefinedColumns()
+	public function getUserDefinedColumns()
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT * FROM ArticleTypeMetadata "
@@ -345,7 +344,7 @@ class ArticleType {
 	 * @param string $p_name
 	 * @return boolean
 	 */
-	function IsValidFieldName($p_name)
+	public static function IsValidFieldName($p_name)
 	{
 		if (empty($p_name)) {
 			return false;
@@ -372,7 +371,7 @@ class ArticleType {
 	 *
 	 * @return array
 	 */
-	function GetArticleTypes($p_includeHidden = false)
+	public static function GetArticleTypes($p_includeHidden = false)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT type_name FROM ArticleTypeMetadata WHERE field_name='NULL'";
@@ -395,7 +394,7 @@ class ArticleType {
 	 *
 	 * @param string p_status (hide|show)
 	 */
-	function setStatus($p_status)
+	public function setStatus($p_status)
 	{
 		global $g_ado_db;
 		if ($p_status == 'hide') {
@@ -423,7 +422,7 @@ class ArticleType {
 	 *
 	 * @return string (shown|hidden)
 	 */
-	function getStatus()
+	public function getStatus()
 	{
   		if ($this->m_metadata['is_hidden']) return 'hidden';
 		else return 'shown';
@@ -435,7 +434,7 @@ class ArticleType {
 	 *
 	 * @return boolean
 	 */
-	function commentsEnabled()
+	public function commentsEnabled()
 	{
 	    if (isset($this->m_metadata['comments_enabled'])
 	        && $this->m_metadata['comments_enabled']) {
@@ -451,7 +450,7 @@ class ArticleType {
 	 *
 	 * @param boolean $p_value
 	 */
-	function setCommentsEnabled($p_value)
+	public function setCommentsEnabled($p_value)
 	{
 		global $g_ado_db;
 		$p_value = $p_value ? '1' : '0';
@@ -475,7 +474,7 @@ class ArticleType {
 	 *
 	 * @return string
 	 */
-	function getDisplayNameLanguageCode($p_lang = 0)
+	public function getDisplayNameLanguageCode($p_lang = 0)
 	{
 		if (!$p_lang) {
 			$lang = camp_session_get('LoginLanguageId', 1);
@@ -498,7 +497,7 @@ class ArticleType {
 	 *
 	 * @return string
 	 */
-	function getDisplayName($p_lang = 0)
+	public function getDisplayName($p_lang = 0)
 	{
 		if (!$p_lang) {
 			$lang = camp_session_get('LoginLanguageId', 1);
@@ -517,7 +516,7 @@ class ArticleType {
 	 *
 	 * @return int
 	 **/
-	function getNumArticles()
+	public function getNumArticles()
 	{
 		global $g_ado_db;
         $sql = "SELECT COUNT(*) FROM ". $this->m_dbTableName .", Articles WHERE "
@@ -533,7 +532,7 @@ class ArticleType {
      *
      * @return array
      */
-    function getArticlesArray()
+    public function getArticlesArray()
     {
         global $g_ado_db;
         $sql = "SELECT NrArticle FROM ". $this->m_dbTableName .", Articles WHERE "
@@ -554,7 +553,7 @@ class ArticleType {
      * @param string p_table
      * @return string a tablename
      */
-    function __getPreviewTableName($p_table)
+    public function __getPreviewTableName($p_table)
     {
         $res = 1;
         $append = 0;
@@ -595,7 +594,7 @@ class ArticleType {
      *
      * @return object
      */
-    function getPreviewArticleData()
+    public function getPreviewArticleData()
     {
         global $g_ado_db;
         $sql = "SELECT " . $this->m_dbTableName . ".* FROM "
@@ -631,7 +630,7 @@ class ArticleType {
 	 *
 	 * @return boolean
 	 **/
-	function merge($p_src, $p_dest, $p_rules)
+	public function merge($p_src, $p_dest, $p_rules)
 	{
 		global $g_ado_db;
 	    // non-preview mode, the actual merge

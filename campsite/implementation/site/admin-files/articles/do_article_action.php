@@ -21,7 +21,7 @@ if (is_null($f_action) && is_null($f_action_workflow)) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	$BackLink = "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
 	camp_html_display_error(getGS('Article does not exist.'), $BackLink);

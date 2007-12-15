@@ -16,7 +16,7 @@ if (!Input::IsValid()) {
 }
 
 $backLink = "/$ADMIN/issues/add_prev.php?Pub=$f_publication_id";
-$publicationObj =& new Publication($f_publication_id);
+$publicationObj = new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS("Publication does not exist."));
 	exit;

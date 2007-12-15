@@ -19,8 +19,8 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$publicationObj =& new Publication($Pub);
-$defaultTime =& new SubscriptionDefaultTime($CountryCode, $Pub);
+$publicationObj = new Publication($Pub);
+$defaultTime = new SubscriptionDefaultTime($CountryCode, $Pub);
 $defaultTime->delete();
 // title: "Deleting subscription default time"
 

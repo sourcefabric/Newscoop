@@ -11,7 +11,7 @@ if ($f_subscription_offset < 0) {
 	$f_subscription_offset = 0;
 }
 $ItemsPerPage = 20;
-$manageUser =& new User($f_user_id);
+$manageUser = new User($f_user_id);
 
 $publications = Publication::GetPublications();
 $numSubscriptions = Subscription::GetNumSubscriptions(null, $f_user_id);
@@ -54,7 +54,7 @@ $color=0;
 foreach ($subscriptions as $subscription) { ?>
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 	<TD>
-		<?php $publication =& new Publication($subscription->getPublicationId()); ?>
+		<?php $publication = new Publication($subscription->getPublicationId()); ?>
 		<A HREF="/<?php p($ADMIN); ?>/users/subscriptions/sections/?f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>&f_publication_id=<?php p($subscription->getPublicationId()); ?>&f_user_id=<?php p($f_user_id); ?>"><?php p(htmlspecialchars($publication->getName())); ?></A>&nbsp;
 	</TD>
 

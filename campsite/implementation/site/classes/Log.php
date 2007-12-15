@@ -38,7 +38,7 @@ class Log extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function Message($p_text, $p_userId = null, $p_eventId = 0)
+	public static function Message($p_text, $p_userId = null, $p_eventId = 0)
 	{
 		global $g_ado_db;
 		if (is_null($p_userId)) {
@@ -62,7 +62,7 @@ class Log extends DatabaseObject {
 	 * Get the time the log message was created.
 	 * @return string
 	 */
-	function getTimeStamp()
+	public function getTimeStamp()
 	{
 		return $this->m_data['time_created'];
 	} // fn getTimeStamp
@@ -72,7 +72,7 @@ class Log extends DatabaseObject {
 	 * Return the log message.
 	 * @return string
 	 */
-	function getText()
+	public function getText()
 	{
 		return $this->m_data['text'];
 	} // fn getText
@@ -82,7 +82,7 @@ class Log extends DatabaseObject {
 	 * Get the event ID which cooresponds to an entry in the "Events" table.
 	 * @return int
 	 */
-	function getEventId()
+	public function getEventId()
 	{
 		return $this->m_data['fk_event_id'];
 	} // fn getEventId
@@ -93,7 +93,7 @@ class Log extends DatabaseObject {
 	 * @param int $p_eventId
 	 * @return int
 	 */
-	function GetNumLogs($p_eventId = null)
+	public static function GetNumLogs($p_eventId = null)
 	{
 		global $g_ado_db;
 		$queryStr = 'SELECT COUNT(*) FROM Log';
@@ -113,12 +113,12 @@ class Log extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetLogs($p_eventId = null, $p_sqlOptions = null)
+	public static function GetLogs($p_eventId = null, $p_sqlOptions = null)
 	{
 		if (is_null($p_sqlOptions) || !isset($p_sqlOptions['ORDER BY'])) {
 			$p_sqlOptions['ORDER BY'] = array('time_created' => 'DESC');
 		}
-		$tmpLog =& new Log();
+		$tmpLog = new Log();
 		$columns = $tmpLog->getColumnNames(true);
 		$queryStr = "SELECT ".implode(", ", $columns)
 					.", liveuser_users.Name as full_name"

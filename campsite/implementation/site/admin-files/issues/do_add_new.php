@@ -43,9 +43,9 @@ if ($errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f
 if (camp_html_has_msgs()) {
 	camp_html_goto_page($backLink);
 }
-$publicationObj =& new Publication($f_publication_id);
+$publicationObj = new Publication($f_publication_id);
 
-$newIssueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$newIssueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $created = $newIssueObj->create($f_url_name, array('Name' => $f_issue_name));
 if ($created) {
 	camp_html_add_msg(getGS("Issue created."), "ok");

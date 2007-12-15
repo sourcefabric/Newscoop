@@ -12,7 +12,7 @@ if (!$g_user->hasPermission('ManageArticleTypes')) {
 
 $articleTypeName = Input::Get('f_article_type');
 $lang = camp_session_get('LoginLanguageId', 1);
-$langObj =& new Language($lang);
+$langObj = new Language($lang);
 $currentLanguageId = $langObj->getLanguageId();
 
 

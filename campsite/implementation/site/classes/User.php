@@ -151,7 +151,7 @@ class User extends DatabaseObject {
      *
      * @param int $p_userId
      */
-    function User($p_userId = null)
+    public function User($p_userId = null)
     {
         parent::DatabaseObject($this->m_columnNames);
         if (is_numeric($p_userId) && ($p_userId > 0)) {
@@ -172,7 +172,7 @@ class User extends DatabaseObject {
      * @param bool
      *    TRUE on success, FALSE on failure
      */
-    function create($p_values = null)
+    public function create($p_values = null)
     {
         global $LiveUserAdmin;
 
@@ -212,7 +212,7 @@ class User extends DatabaseObject {
      *
      * @return boolean
      */
-    function delete()
+    public function delete()
     {
         global $g_ado_db, $LiveUserAdmin;
 
@@ -249,7 +249,7 @@ class User extends DatabaseObject {
      *
      * @return void
      */
-    function fetch($p_recordSet = null)
+    public function fetch($p_recordSet = null)
     {
         global $g_ado_db, $LiveUserAdmin;
 
@@ -307,7 +307,7 @@ class User extends DatabaseObject {
      *    null No one user found
      *    object User object
      */
-    function FetchUserByName($p_username, $p_adminOnly = false)
+    public static function FetchUserByName($p_username, $p_adminOnly = false)
     {
         global $g_ado_db;
 
@@ -317,7 +317,7 @@ class User extends DatabaseObject {
         }
         $row = $g_ado_db->GetRow($queryStr);
         if ($row) {
-            $user =& new User();
+            $user = new User();
             $user->fetch($row);
             return $user;
         }
@@ -330,7 +330,7 @@ class User extends DatabaseObject {
      *
      * @return string
      */
-    function getUserType()
+    public function getUserType()
     {
         return $this->m_data['fk_user_type'];
     } // fn getUserType
@@ -343,7 +343,7 @@ class User extends DatabaseObject {
      *
      * @return void
      */
-    function setUserType($p_userTypeId)
+    public function setUserType($p_userTypeId)
     {
         global $g_ado_db, $LiveUserAdmin;
 
@@ -357,7 +357,7 @@ class User extends DatabaseObject {
         }
 
         // fetch the given user type
-        $userType =& new UserType($p_userTypeId);
+        $userType = new UserType($p_userTypeId);
         if ($userType->exists()) {
             // delete permissions at user level if any
             $queryStr = 'DELETE FROM liveuser_userrights '
@@ -392,7 +392,7 @@ class User extends DatabaseObject {
     /**
      * @return int
      */
-    function getUserId()
+    public function getUserId()
     {
         return $this->m_data['Id'];
     } // fn getUserId
@@ -406,7 +406,7 @@ class User extends DatabaseObject {
      * TODO: This could be an alias of getUserId() since both of them
      *       refer to the same data.
      */
-    function getAuthUserId()
+    public function getAuthUserId()
     {
         return $this->m_liveUserData['auth_user_id'];
     } // fn getAuthUserId
@@ -417,7 +417,7 @@ class User extends DatabaseObject {
      *
      * @return int
      */
-    function getPermUserId()
+    public function getPermUserId()
     {
         return $this->m_liveUserData['perm_user_id'];
     } // fn getPermUserId
@@ -429,7 +429,7 @@ class User extends DatabaseObject {
      *
      * @return int
      */
-    function getKeyId()
+    public function getKeyId()
     {
         return $this->m_data['KeyId'];
     } // fn getKeyId
@@ -440,7 +440,7 @@ class User extends DatabaseObject {
      *
      * @return string
      */
-    function getRealName()
+    public function getRealName()
     {
         return $this->m_data['Name'];
     } // fn getRealName
@@ -451,7 +451,7 @@ class User extends DatabaseObject {
      *
      * @return string
      */
-    function getUserName()
+    public function getUserName()
     {
         return $this->m_data['UName'];
     } // fn getUserName
@@ -462,7 +462,7 @@ class User extends DatabaseObject {
      *
      * @return string
      */
-    function getPassword()
+    public function getPassword()
     {
         return $this->m_data['Password'];
     } // fn getPassword
@@ -473,7 +473,7 @@ class User extends DatabaseObject {
      *
      * @return string
      */
-    function getEmail()
+    public function getEmail()
     {
         return $this->m_data['EMail'];
     } // fn getEmail
@@ -487,7 +487,7 @@ class User extends DatabaseObject {
      *
      * @return mixed
      */
-    function getConfigValue($p_varName)
+    public function getConfigValue($p_varName)
     {
         if (isset($this->m_config[$p_varName])) {
             return $this->m_config[$p_varName];
@@ -508,7 +508,7 @@ class User extends DatabaseObject {
      *
      * TODO: Check it out. It is unused so far.
      */
-    function setConfigValue($p_varName, $p_value)
+    public function setConfigValue($p_varName, $p_value)
     {
 		global $LiveUser, $LiveUserAdmin;
 
@@ -556,7 +556,7 @@ class User extends DatabaseObject {
      *
      * @return array
      */
-    function getConfig()
+    public function getConfig()
     {
         return $this->m_config;
     } // fn getConfig
@@ -567,12 +567,12 @@ class User extends DatabaseObject {
      *
      * @return array
      */
-    function GetDefaultConfig()
+    public static function GetDefaultConfig()
     {
         if (isset($this) && isset($this->m_defaultConfig)) {
             return $this->m_defaultConfig;
         } else {
-            $tmpUser =& new User();
+            $tmpUser = new User();
             return $tmpUser->m_defaultConfig;
         }
     } // fn GetDefaultConfig
@@ -585,7 +585,7 @@ class User extends DatabaseObject {
      *
      * @return boolean
      */
-    function hasPermission($p_permissionString)
+    public function hasPermission($p_permissionString)
     {
         return array_key_exists($p_permissionString, $this->m_config);
     } // fn hasPermission
@@ -599,7 +599,7 @@ class User extends DatabaseObject {
      *
      * @return void
      */
-    function setPermission($p_permissionString, $p_value)
+    public function setPermission($p_permissionString, $p_value)
     {
         $this->setConfigValue($p_permissionString, $p_value);
     } // fn setPermission
@@ -613,7 +613,7 @@ class User extends DatabaseObject {
      *
      * @return void
      */
-    function updatePermissions($p_permissions)
+    public function updatePermissions($p_permissions)
     {
         global $LiveUserAdmin;
 
@@ -658,7 +658,7 @@ class User extends DatabaseObject {
      *
      * @return boolean
      */
-    function isAdmin()
+    public function isAdmin()
     {
         return ($this->m_data['Reader'] == 'N');
     } // fn isAdmin
@@ -669,7 +669,7 @@ class User extends DatabaseObject {
      *
      * @return boolean
      */
-    function isValidOldPassword($p_password)
+    public function isValidOldPassword($p_password)
     {
         global $g_ado_db;
 
@@ -700,7 +700,7 @@ class User extends DatabaseObject {
      *
      * @return boolean
      */
-    function isValidPassword($p_password, $p_isEncrypted = false)
+    public function isValidPassword($p_password, $p_isEncrypted = false)
     {
         global $g_ado_db;
 
@@ -720,7 +720,7 @@ class User extends DatabaseObject {
      *
      * @return void
      */
-    function setPassword($p_password)
+    public function setPassword($p_password)
     {
         global $g_ado_db;
 
@@ -741,7 +741,7 @@ class User extends DatabaseObject {
      *
      * @return void
      */
-    function initLoginKey()
+    public function initLoginKey()
     {
         // Generate the Key ID
         $this->setProperty('KeyId', 'RAND()*1000000000+RAND()*1000000+RAND()*1000', true, true);
@@ -755,7 +755,7 @@ class User extends DatabaseObject {
      *
      * @return boolean
      */
-    function UserNameExists($p_userName)
+    public static function UserNameExists($p_userName)
     {
         global $g_ado_db;
 
@@ -780,7 +780,7 @@ class User extends DatabaseObject {
      * @return boolean
      *    TRUE if the e-mail address already exists, otherwise FALSE
      */
-    function EmailExists($p_email, $p_userName = null)
+    public static function EmailExists($p_email, $p_userName = null)
     {
         global $g_ado_db;
 
@@ -808,7 +808,7 @@ class User extends DatabaseObject {
      *
      * @return array
      */
-    function GetUsers($p_onlyAdmin = true, $p_userType = null)
+    public static function GetUsers($p_onlyAdmin = true, $p_userType = null)
     {
         global $g_ado_db;
 
@@ -830,7 +830,7 @@ class User extends DatabaseObject {
     /**
      * Sync campsite and phorum users.
      */
-    function syncPhorumUser()
+    public function syncPhorumUser()
     {
         $phorumUser = Phorum_user::GetByUserName($this->m_data['UName']);
         if ($phorumUser->setPassword($this->m_data['Password'])

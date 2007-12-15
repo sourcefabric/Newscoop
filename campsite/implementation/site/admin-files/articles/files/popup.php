@@ -26,7 +26,7 @@ if (!is_writable($Campsite['FILE_DIRECTORY'])) {
 	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['FILE_DIRECTORY']));
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 
 camp_html_display_msgs();
 ?>

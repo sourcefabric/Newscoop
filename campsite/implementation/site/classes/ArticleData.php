@@ -23,7 +23,7 @@ class ArticleData extends DatabaseObject {
 	var $m_keyColumnNames = array('NrArticle', 'IdLanguage');
 	var $m_dbTableName;
 	var $m_articleTypeName;
-	
+
 	/**
 	 * An article type is a dynamic table that is created for an article
 	 * to allow different publications to display their content in different
@@ -33,7 +33,7 @@ class ArticleData extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 * @param int $p_languageId
 	 */
-	function ArticleData($p_articleType, $p_articleNumber, $p_languageId)
+	public function ArticleData($p_articleType, $p_articleNumber, $p_languageId)
 	{
 		$this->m_articleTypeName = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
@@ -60,14 +60,14 @@ class ArticleData extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getDisplayName($p_lang = 0) 
+	public function getDisplayName($p_lang = 0)
 	{
 		if (!$p_lang) {
 			$lang = camp_session_get('LoginLanguageId', 1);
 		} else {
 			$lang = $p_lang;
 		}
-		$aObj =& new ArticleType($this->m_articleTypeName);
+		$aObj = new ArticleType($this->m_articleTypeName);
 		$translations = $aObj->getTranslations();
 		if (!isset($translations[$lang])) return substr($aObj->getTableName(), 1);
 		return $translations[$lang];
@@ -80,7 +80,7 @@ class ArticleData extends DatabaseObject {
 	 * @param int $p_destArticleNumber
 	 * @return void
 	 */
-	function copy($p_destArticleNumber)
+	public function copy($p_destArticleNumber)
 	{
 		global $g_ado_db;
 		$tmpData = $this->m_data;
@@ -98,11 +98,11 @@ class ArticleData extends DatabaseObject {
     /**
     * Return an array of ArticleTypeField objects.
     *
-    * @param p_showAll boolean 
-    * 
+    * @param p_showAll boolean
+    *
     * @return array
     */
-    function getUserDefinedColumns($p_showAll = 0)
+    public function getUserDefinedColumns($p_showAll = 0)
        {
 			global $g_ado_db;
             if (!$p_showAll) {
@@ -110,7 +110,7 @@ class ArticleData extends DatabaseObject {
             } else {
                 $is_hidden = "";
             }
-            
+
 			$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_articleTypeName ."' AND field_name != 'NULL' AND field_type IS NOT NULL $is_hidden ORDER BY field_weight ASC";
 			$queryArray = $g_ado_db->GetAll($queryStr);
 			$metadata = array();
@@ -118,7 +118,7 @@ class ArticleData extends DatabaseObject {
 				foreach ($queryArray as $row) {
 					$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE 'F". $row['field_name'] ."'";
 					$rowdata = $g_ado_db->GetAll($queryStr);
-					$columnMetadata =& new ArticleTypeField(substr($this->m_dbTableName, 1));
+					$columnMetadata = new ArticleTypeField(substr($this->m_dbTableName, 1));
 					$columnMetadata->fetch($rowdata[0]);
 					$columnMetadata->m_metadata = $columnMetadata->getMetadata();
 					$metadata[] =& $columnMetadata;
@@ -134,7 +134,7 @@ class ArticleData extends DatabaseObject {
 	 * @param int $p_destLanguageId
 	 * @return void
 	 */
-	function copyToExistingRecord($p_destArticleNumber, $p_destLanguageId = null)
+	public function copyToExistingRecord($p_destArticleNumber, $p_destLanguageId = null)
 	{
 		global $g_ado_db;
 		$tmpData = $this->m_data;

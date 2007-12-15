@@ -22,7 +22,7 @@ if (!Input::IsValid()) {
 }
 
 // Check that the article exists.
-$articleObj =& new Article($f_language_id, $f_article_number);
+$articleObj = new Article($f_language_id, $f_article_number);
 if (!$articleObj->exists()) {
     exit;
 }
@@ -31,7 +31,7 @@ if (!$articleObj->commentsEnabled() || $articleObj->commentsLocked())  {
 }
 
 if (SystemPref::Get("UseDBReplication") == 'Y') {
-    $dbReplicationObj =& new DbReplication();
+    $dbReplicationObj = new DbReplication();
     $connectedToOnlineServer = $dbReplicationObj->connect();
     if ($connectedToOnlineServer == false) {
         camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
@@ -40,7 +40,7 @@ if (SystemPref::Get("UseDBReplication") == 'Y') {
 }
 
 // Add the user if it doesnt exist in the Phorum user table
-$phorumUser =& new Phorum_user($g_user->getUserId());
+$phorumUser = new Phorum_user($g_user->getUserId());
 if (!$phorumUser->CampUserExists($g_user->getUserId())) {
     $success = $phorumUser->create($g_user->getUserName(),
 				   $g_user->getPassword(),
@@ -49,7 +49,7 @@ if (!$phorumUser->CampUserExists($g_user->getUserId())) {
 }
 
 // Get the forum ID.
-$publicationObj =& new Publication($articleObj->getPublicationId());
+$publicationObj = new Publication($articleObj->getPublicationId());
 $forumId = $publicationObj->getForumId();
 
 // Exit if the forum hasnt been created (this should never happen).
@@ -67,7 +67,7 @@ if ($f_comment_parent_id == 0) {
 }
 
 // Create the comment
-$commentObj =& new Phorum_message();
+$commentObj = new Phorum_message();
 $commentObj->create($forumId,
                     $f_comment_subject,
                     $f_comment_body,

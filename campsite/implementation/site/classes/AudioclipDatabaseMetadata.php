@@ -25,7 +25,7 @@ class AudioclipDatabaseMetadata {
     /**
      * Constructor
      */
-    function AudioclipDatabaseMetadata($p_gunId = null)
+    public function AudioclipDatabaseMetadata($p_gunId = null)
     {
         if (!is_null($p_gunId)) {
             $this->m_gunId = $p_gunId;
@@ -39,7 +39,7 @@ class AudioclipDatabaseMetadata {
      *
      * @return boolean
      */
-    function exists()
+    public function exists()
     {
     	return $this->m_exists;
     }
@@ -54,7 +54,7 @@ class AudioclipDatabaseMetadata {
      * @return array $returnArray
      *      Array of AudioclipMetadataEntry objects
      */
-    function fetch($p_gunId = null)
+    public function fetch($p_gunId = null)
     {
         global $g_ado_db;
 
@@ -75,7 +75,7 @@ class AudioclipDatabaseMetadata {
         }
         $this->m_exists = true;
         foreach ($rows as $row) {
-            $tmpMetadataObj =& new AudioclipMetadataEntry($row['id']);
+            $tmpMetadataObj = new AudioclipMetadataEntry($row['id']);
             $this->m_metaData[$tmpMetadataObj->getMetaTag()] =& $tmpMetadataObj;
         }
         return $this->m_metaData;
@@ -91,7 +91,7 @@ class AudioclipDatabaseMetadata {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    function create($p_metaData = null)
+    public function create($p_metaData = null)
     {
         if (!is_array($p_metaData)) {
         	$this->m_exists = false;
@@ -127,7 +127,7 @@ class AudioclipDatabaseMetadata {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    function delete()
+    public function delete()
     {
         global $g_ado_db;
 
@@ -155,7 +155,7 @@ class AudioclipDatabaseMetadata {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    function update($p_metaData)
+    public function update($p_metaData)
     {
         if (!is_array($p_metaData)) {
         	$this->m_exists = false;
@@ -177,7 +177,7 @@ class AudioclipDatabaseMetadata {
                 $attributes['predicate_ns'] = $metadataEntry->getMetatagNS();
                 $attributes['predicate'] = $metadataEntry->getMetatagName();
                 $attributes['object'] = $metadataEntry->getValue();
-                $currMetadataEntry =& new AudioclipMetadataEntry($metadataEntry->getId());
+                $currMetadataEntry = new AudioclipMetadataEntry($metadataEntry->getId());
                 if (!$currMetadataEntry->update($attributes)) {
                     $isError = true;
                     break;
@@ -202,7 +202,7 @@ class AudioclipDatabaseMetadata {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    function inUse()
+    public function inUse()
     {
         global $g_ado_db;
 

@@ -21,7 +21,7 @@ if ($f_action == "move") {
 // The articles that were initially selected to perform the move or duplicate upon.
 $templates = array();
 for ($i = 0; $i < count($f_template_code); $i++) {
-	$tmpTemplate =& new Template($f_template_code[$i]);
+	$tmpTemplate = new Template($f_template_code[$i]);
 	$templates[] = $tmpTemplate;
 }
 

@@ -17,7 +17,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$publicationObj =& new Publication($f_publication_id);
+$publicationObj = new Publication($f_publication_id);
 
 $correct = true;
 $errorMsgs = array();
@@ -27,7 +27,7 @@ if (empty($f_name)) {
 	$errorMsgs[] = getGS('You must complete the $1 field.', '<B>Name</B>');
 }
 
-$alias =& new Alias($f_alias_id);
+$alias = new Alias($f_alias_id);
 $aliases = 0;
 if ($correct) {
 	if ($alias->getName() != $f_name) {

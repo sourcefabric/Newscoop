@@ -71,7 +71,7 @@ foreach ($f_article_codes as $code) {
 switch ($f_article_list_action) {
 case "workflow_new":
 	foreach ($articleCodes as $articleCode) {
-		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
+		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		// A publisher can change the status in any way he sees fit.
 		// Someone who can change an article can submit/unsubmit articles.
 		if ($g_user->hasPermission('Publish')
@@ -83,7 +83,7 @@ case "workflow_new":
 	break;
 case "workflow_submit":
 	foreach ($articleCodes as $articleCode) {
-		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
+		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		// A user who owns the article may submit it.
 		if ($g_user->hasPermission("Publish") || $articleObj->userCanModify($g_user)) {
 			$articleObj->setWorkflowStatus('S');
@@ -93,14 +93,14 @@ case "workflow_submit":
 	break;
 case "workflow_publish":
 	foreach ($articleCodes as $articleCode) {
-		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
+		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		$articleObj->setWorkflowStatus('Y');
 	}
 	camp_html_add_msg(getGS("Article status set to '$1'", getGS("Published")), "ok");
 	break;
 case "delete":
 	foreach ($articleCodes as $articleCode) {
-		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
+		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		$articleObj->delete();
 	}
 	if ($f_article_offset > 15
@@ -111,7 +111,7 @@ case "delete":
 	break;
 case "toggle_front_page":
 	foreach ($articleCodes as $articleCode) {
-		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
+		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		if ($articleObj->userCanModify($g_user)) {
 			$articleObj->setOnFrontPage(!$articleObj->onFrontPage());
 		}
@@ -120,7 +120,7 @@ case "toggle_front_page":
 	break;
 case "toggle_section_page":
 	foreach ($articleCodes as $articleCode) {
-		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
+		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		if ($articleObj->userCanModify($g_user)) {
 			$articleObj->setOnSectionPage(!$articleObj->onSectionPage());
 		}
@@ -129,7 +129,7 @@ case "toggle_section_page":
 	break;
 case "toggle_comments":
 	foreach ($articleCodes as $articleCode) {
-		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
+		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		if ($articleObj->userCanModify($g_user)) {
 			$articleObj->setCommentsEnabled(!$articleObj->commentsEnabled());
 		}
@@ -139,7 +139,7 @@ case "toggle_comments":
 case "copy":
 	foreach ($groupedArticleCodes as $articleNumber => $languageArray) {
 		$languageId = camp_array_peek($languageArray);
-		$articleObj =& new Article($languageId, $articleNumber);
+		$articleObj = new Article($languageId, $articleNumber);
 		$articleObj->copy($articleObj->getPublicationId(),
 						  $articleObj->getIssueNumber(),
 						  $articleObj->getSectionNumber(),
@@ -171,7 +171,7 @@ case "move":
 	camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr);
 case "unlock":
 	foreach ($articleCodes as $articleCode) {
-		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
+		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		if ($articleObj->userCanModify($g_user)) {
 			$articleObj->setIsLocked(false);
 		}

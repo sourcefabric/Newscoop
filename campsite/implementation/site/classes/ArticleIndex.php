@@ -33,7 +33,7 @@ class ArticleIndex extends DatabaseObject {
 		'NrSection',
 		'NrArticle');
 
-	function ArticleIndex()
+	public function ArticleIndex()
 	{
 		parent::DatabaseObject($this->m_columnNames);
 	} // constructor
@@ -42,7 +42,7 @@ class ArticleIndex extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getArticleNumber()
+	public function getArticleNumber()
 	{
 		return $this->m_data['NrArticle'];
 	} // fn getArticleNumber
@@ -57,7 +57,8 @@ class ArticleIndex extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function OnArticleDelete($p_publicationId, $p_issueId, $p_sectionId, $p_languageId, $p_articleNumber)
+	public static function OnArticleDelete($p_publicationId, $p_issueId,
+	                                       $p_sectionId, $p_languageId, $p_articleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = 'DELETE FROM ArticleIndex'

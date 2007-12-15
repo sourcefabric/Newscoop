@@ -18,13 +18,13 @@ if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
-$publicationObj =& new Publication($Pub);
+$publicationObj = new Publication($Pub);
 
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;
 }
-$issueObj =& new Issue($Pub, $Language, $Issue);
+$issueObj = new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;

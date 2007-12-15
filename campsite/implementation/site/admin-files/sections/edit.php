@@ -13,9 +13,9 @@ $Language = Input::Get('Language', 'int', 0);
 $Section = Input::Get('Section', 'int', 0);
 
 
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$publicationObj = new Publication($Pub);
+$issueObj = new Issue($Pub, $Language, $Issue);
+$sectionObj = new Section($Pub, $Issue, $Language, $Section);
 $templates = Template::GetAllTemplates(array('ORDER BY' => array('Level' => 'ASC', 'Name' => 'ASC')));
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
@@ -24,9 +24,9 @@ camp_html_content_top(getGS("Configure section"), $topArray);
 $url_args1 = "Pub=$Pub&Issue=$Issue&Language=$Language";
 $url_args2 = $url_args1."&Section=$Section";
 
-$languageObj =& new Language($Language);
+$languageObj = new Language($Language);
 if (!is_object($languageObj)) {
-  $languageObj =& new Language(1);
+  $languageObj = new Language(1);
 }
 $editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
 editor_load_xinha('cDescription', $g_user, $editorLanguage);

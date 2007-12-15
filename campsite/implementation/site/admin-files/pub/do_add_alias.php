@@ -17,7 +17,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$publicationObj =& new Publication($cPub);
+$publicationObj = new Publication($cPub);
 $backLink = "/$ADMIN/pub/add_alias.php?Pub=$cPub";
 
 $correct = true;
@@ -32,7 +32,7 @@ $aliases = 0;
 if ($correct) {
 	$aliasDups = count(Alias::GetAliases(null, null, $cName));
 	if ($aliasDups <= 0) {
-		$newAlias =& new Alias();
+		$newAlias = new Alias();
 		$created = $newAlias->create(array('Name' => "$cName", "IdPublication" => "$cPub"));
 		if ($created) {
 			$logtext = getGS('The site alias $1 has been added to publication $2.',

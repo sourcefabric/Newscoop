@@ -13,7 +13,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('No such article.'));
     exit;
@@ -29,7 +29,7 @@ for ($i = 0; $i < count($inputArray); $i++) {
 }
 
 foreach ($orderArray as $item) {
-    $articleAudioclip =& new ArticleAudioclip($f_article_number, $item['element']);
+    $articleAudioclip = new ArticleAudioclip($f_article_number, $item['element']);
     $articleAudioclip->setOrder($item['order']);
 }
 

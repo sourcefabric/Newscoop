@@ -36,11 +36,11 @@ class AudioclipXMLMetadata {
      * @param string $p_gunId
      *      The audioclip global unique identifier
      */
-    function AudioclipXMLMetadata($p_gunId = null)
+    public function AudioclipXMLMetadata($p_gunId = null)
     {
         global $mdefs;
 
-        $this->xrc =& XR_CcClient::Factory($mdefs);
+        $this->xrc = XR_CcClient::Factory($mdefs);
         if (!is_null($p_gunId)) {
             $this->m_gunId = $p_gunId;
             $this->fetch();
@@ -53,7 +53,7 @@ class AudioclipXMLMetadata {
      *
      * @return boolean
      */
-    function exists()
+    public function exists()
     {
     	return $this->m_exists;
     }
@@ -64,7 +64,7 @@ class AudioclipXMLMetadata {
      *
      * @return unknown
      */
-    function getGunId()
+    public function getGunId()
     {
     	return $this->m_gunId;
     }
@@ -79,7 +79,7 @@ class AudioclipXMLMetadata {
      * @return array $metaData
      *      An array of AudioclipMetadataEntry objects
      */
-    function fetch($p_gunId = null)
+    public function fetch($p_gunId = null)
     {
         if (!is_null($p_gunId)) {
             $this->m_gunId = $p_gunId;
@@ -112,7 +112,7 @@ class AudioclipXMLMetadata {
                 $recordSet['predicate_ns'] = AudioclipMetadataEntry::GetTagNS($value['tag']);
                 $recordSet['predicate'] = AudioclipMetadataEntry::GetTagName($value['tag']);
                 $recordSet['object'] = $value['value'];
-                $tmpMetadataObj =& new AudioclipMetadataEntry($recordSet);
+                $tmpMetadataObj = new AudioclipMetadataEntry($recordSet);
                 $this->m_metaData[strtolower($value['tag'])] = $tmpMetadataObj;
             }
             $this->m_exists = true;
@@ -139,11 +139,12 @@ class AudioclipXMLMetadata {
      * @return string|PEAR_Error
      *		Audioclip gunid on success, PEAR_Error on failure
      */
-    function Upload($p_sessId, $p_filePath, $p_gunId, $p_metaData, $p_checkSum)
+    public static function Upload($p_sessId, $p_filePath, $p_gunId, $p_metaData,
+                                  $p_checkSum)
     {
         global $mdefs;
 
-        $xrcObj =& XR_CcClient::Factory($mdefs);
+        $xrcObj = XR_CcClient::Factory($mdefs);
         $r = $xrcObj->xr_storeAudioClipOpen($p_sessId, $p_gunId, $p_metaData,
                                             basename($p_filePath), $p_checkSum);
         if (PEAR::isError($r)) {
@@ -168,7 +169,7 @@ class AudioclipXMLMetadata {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    function update($p_metaData)
+    public function update($p_metaData)
     {
         $xmlStr = '<?xml version="1.0" encoding="utf-8"?>
         <audioClip>

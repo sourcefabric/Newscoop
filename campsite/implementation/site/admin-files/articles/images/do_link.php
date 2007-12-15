@@ -15,13 +15,13 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), null, true);
 	exit;
 }
 
-$imageObj =& new Image($f_image_id);
+$imageObj = new Image($f_image_id);
 if (!$imageObj->exists()) {
 	camp_html_display_error(getGS('Image does not exist.'), null, true);
 	exit;

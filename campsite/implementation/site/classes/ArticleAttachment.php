@@ -31,7 +31,7 @@ class ArticleAttachment extends DatabaseObject {
 	 * @param int $p_attachmentId
 	 * @return ArticleAttachment
 	 */
-	function ArticleAttachment($p_articleNumber = null, $p_attachmentId = null)
+	public function ArticleAttachment($p_articleNumber = null, $p_attachmentId = null)
 	{
 		if (is_numeric($p_articleNumber)) {
 			$this->m_data['fk_article_number'] = $p_articleNumber;
@@ -45,7 +45,7 @@ class ArticleAttachment extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getAttachmentId()
+	public function getAttachmentId()
 	{
 		return $this->m_data['fk_attachment_id'];
 	} // fn getAttachmentId
@@ -54,7 +54,7 @@ class ArticleAttachment extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getArticleNumber()
+	public function getArticleNumber()
 	{
 		return $this->m_data['fk_article_number'];
 	} // fn getArticleNumber
@@ -68,7 +68,7 @@ class ArticleAttachment extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function AddFileToArticle($p_attachmentId, $p_articleNumber)
+	public static function AddFileToArticle($p_attachmentId, $p_articleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = 'INSERT IGNORE INTO ArticleAttachments(fk_article_number, fk_attachment_id)'
@@ -83,10 +83,10 @@ class ArticleAttachment extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @return array
 	 */
-	function GetAttachmentsByArticleNumber($p_articleNumber, $p_languageId = null)
+	public static function GetAttachmentsByArticleNumber($p_articleNumber, $p_languageId = null)
 	{
 		global $g_ado_db;
-		$tmpObj =& new Attachment();
+		$tmpObj = new Attachment();
 		$columnNames = implode(',', $tmpObj->getColumnNames());
 
 		if (is_null($p_languageId)) {
@@ -104,7 +104,7 @@ class ArticleAttachment extends DatabaseObject {
 		$returnArray = array();
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
-				$tmpAttachment =& new Attachment();
+				$tmpAttachment = new Attachment();
 				$tmpAttachment->fetch($row);
 				$returnArray[] =& $tmpAttachment;
 			}
@@ -120,7 +120,7 @@ class ArticleAttachment extends DatabaseObject {
 	 * @param int $p_attachmentId
 	 * @return void
 	 */
-	function OnAttachmentDelete($p_attachmentId)
+	public static function OnAttachmentDelete($p_attachmentId)
 	{
 		global $g_ado_db;
 		$queryStr = "DELETE FROM ArticleAttachments WHERE fk_attachment_id=$p_attachmentId";
@@ -133,7 +133,7 @@ class ArticleAttachment extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function OnArticleDelete($p_articleNumber)
+	public static function OnArticleDelete($p_articleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = 'DELETE FROM ArticleAttachments'
@@ -148,7 +148,7 @@ class ArticleAttachment extends DatabaseObject {
 	 * @param int $p_destArticleNumber
 	 * @return void
 	 */
-	function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
+	public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = 'SELECT fk_attachment_id FROM ArticleAttachments WHERE fk_article_number='.$p_srcArticleNumber;
@@ -169,7 +169,7 @@ class ArticleAttachment extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function RemoveAttachmentFromArticle($p_attachmentId, $p_articleNumber)
+	public static function RemoveAttachmentFromArticle($p_attachmentId, $p_articleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = 'DELETE FROM ArticleAttachments'

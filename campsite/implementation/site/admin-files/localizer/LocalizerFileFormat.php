@@ -138,7 +138,7 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
         }
         $metadata = array();
         foreach ($languages as $language) {
-            $tmpMetadata =& new LanguageMetadata();
+            $tmpMetadata = new LanguageMetadata();
             $tmpMetadata->m_englishName = $language['Name'];
             $tmpMetadata->m_nativeName = $language['NativeName'];
             $tmpMetadata->m_languageCode = $language['LanguageCode'];
@@ -190,7 +190,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
         if (file_exists($filePath)) {
             $xml = File::readAll($filePath);
             File::close($filePath, FILE_MODE_READ);
-	        $unserializer =& new XML_Unserializer($this->m_unserializeOptions);
+	        $unserializer = new XML_Unserializer($this->m_unserializeOptions);
 	        $unserializer->unserialize($xml);
 	        $translationArray = $unserializer->getUnserializedData();
 	        $p_localizerLanguage->clearValues();
@@ -224,7 +224,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 		}
     	$saveData = array_merge($saveData, $saveTranslationTable);
 
-        $serializer =& new XML_Serializer($this->m_serializeOptions);
+        $serializer = new XML_Serializer($this->m_serializeOptions);
         $serializer->serialize($saveData);
         $xml = $serializer->getSerializedData();
         if (PEAR::isError($xml)) {
@@ -281,12 +281,12 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
     	if (file_exists($fileName)) {
     		$xml = File::readAll($path);
     		File::rewind($path, FILE_MODE_READ);
-    		$handle =& new XML_Unserializer($this->m_unserializeOptions);
+    		$handle = new XML_Unserializer($this->m_unserializeOptions);
         	$handle->unserialize($xml);
         	$arr = $handle->getUnserializedData();
             $languages = $arr['language'];
             foreach ($languages as $language) {
-                $languageDef =& new LanguageMetadata();
+                $languageDef = new LanguageMetadata();
                 $languageDef->m_languageId = $language['Code'];
                 $languageDef->m_languageCode = '';
                 $languageDef->m_countryCode = '';

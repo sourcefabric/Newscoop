@@ -30,7 +30,7 @@ class Template extends DatabaseObject {
 	 * 		Give the template ID or the template name relative
 	 * 		to the template base directory.
 	 */
-	function Template($p_templateIdOrName = null)
+	public function Template($p_templateIdOrName = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (is_numeric($p_templateIdOrName)) {
@@ -50,7 +50,7 @@ class Template extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function fileExists()
+	public function fileExists()
 	{
 		global $Campsite;
 
@@ -67,7 +67,7 @@ class Template extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getTemplateId()
+	public function getTemplateId()
 	{
 		return $this->m_data['Id'];
 	} // fn getTemplateId
@@ -76,7 +76,7 @@ class Template extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->m_data['Name'];
 	} // fn getName
@@ -85,7 +85,7 @@ class Template extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getType()
+	public function getType()
 	{
 		return $this->m_data['Type'];
 	} // fn  getType
@@ -94,7 +94,7 @@ class Template extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getLevel()
+	public function getLevel()
 	{
 		return $this->m_data['Level'];
 	} // fn getLevel
@@ -103,7 +103,7 @@ class Template extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getAbsoluteUrl()
+	public function getAbsoluteUrl()
 	{
 		global $Campsite;
 		return $Campsite['TEMPLATE_BASE_URL'].$this->m_data['Name'];
@@ -114,7 +114,7 @@ class Template extends DatabaseObject {
 	 * @param string $p_path
 	 * @return string
 	 */
-	function GetContents($p_path)
+	public static function GetContents($p_path)
 	{
 		if (file_exists($p_path)) {
 			$contents = file_get_contents($p_path);
@@ -131,7 +131,7 @@ class Template extends DatabaseObject {
 	 * @param string $p_path
 	 * @return bool
 	 */
-	function IsValidPath($p_path)
+	public static function IsValidPath($p_path)
 	{
 		global $Campsite;
 
@@ -152,7 +152,7 @@ class Template extends DatabaseObject {
 	 * Returns TRUE if the template is being used in an Issue or Section.
 	 * @return boolean
 	 */
-	function InUse($p_templateName)
+	public static function InUse($p_templateName)
 	{
 		global $Campsite;
 		global $g_ado_db;
@@ -202,7 +202,7 @@ class Template extends DatabaseObject {
 	 * Get the relative path to the given file in the template directory.
 	 * @return string
 	 */
-	function GetPath($p_path, $p_filename)
+	public static function GetPath($p_path, $p_filename)
 	{
 		$lookDir = "/look";
 
@@ -248,7 +248,7 @@ class Template extends DatabaseObject {
 	 * @param string $p_filename
 	 * @return string
 	 */
-	function GetFullPath($p_path, $p_filename)
+	public static function GetFullPath($p_path, $p_filename)
 	{
 		global $Campsite;
 		$fileFullPath = $Campsite['TEMPLATE_DIRECTORY'].$p_path."/".$p_filename;
@@ -268,7 +268,7 @@ class Template extends DatabaseObject {
 	 *		The new template Name
 	 * @return mixed
 	 */
-	function UpdateOnChange($p_tplOrig, $p_tplNew)
+	public static function UpdateOnChange($p_tplOrig, $p_tplNew)
 	{
 		global $Campsite;
 		global $g_ado_db;
@@ -294,7 +294,7 @@ class Template extends DatabaseObject {
 	 * Sync the database with the filesystem.
 	 * @return void
 	 */
-	function UpdateStatus()
+	public static function UpdateStatus()
 	{
 		global $Campsite;
 		global $g_ado_db;
@@ -373,7 +373,8 @@ class Template extends DatabaseObject {
 	 * @return mixed
 	 * 		TRUE on success, PEAR_Error on failure.
 	 */
-	function OnUpload($f_fileVarName, $p_baseUpload, $p_desiredName = null, $p_charset = null)
+	public static function OnUpload($f_fileVarName, $p_baseUpload,
+	                                $p_desiredName = null, $p_charset = null)
 	{
 		global $Campsite;
 		$p_baseUpload = $Campsite['TEMPLATE_DIRECTORY'].$p_baseUpload;
@@ -436,7 +437,7 @@ class Template extends DatabaseObject {
 	 * @param array $p_sqlOptions
 	 * @param boolean $p_update
 	 */
-	function GetAllTemplates($p_sqlOptions = null, $p_update = true)
+	public static function GetAllTemplates($p_sqlOptions = null, $p_update = true)
 	{
 		if ($p_update) {
 			Template::UpdateStatus();
@@ -456,9 +457,9 @@ class Template extends DatabaseObject {
 	 * Returns an array containing the directories tree for the given path.
 	 *
 	 * @param array $p_folders
-	 * @return array $p_folders 
+	 * @return array $p_folders
 	 */
-	function GetAllFolders($p_folders)
+	public static function GetAllFolders($p_folders)
 	{
 		global $Campsite;
 
@@ -502,7 +503,7 @@ class Template extends DatabaseObject {
 	 *
 	 * @return mixed
 	 */
-	function delete() {
+	public function delete() {
 		global $g_user;
 
 		$deleted = false;
@@ -532,7 +533,7 @@ class Template extends DatabaseObject {
 	 * @param string $p_destination_folder
 	 * @return bool true on succes or false on failure
 	 */
-	function move($p_current_folder, $p_destination_folder) {
+	public function move($p_current_folder, $p_destination_folder) {
 		global $Campsite;
 		global $g_user;
 

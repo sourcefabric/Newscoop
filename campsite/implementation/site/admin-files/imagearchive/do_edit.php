@@ -17,7 +17,7 @@ if (!Input::IsValid() || ($f_image_id <= 0)) {
 	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 }
 
-$imageObj =& new Image($f_image_id);
+$imageObj = new Image($f_image_id);
 
 if (!$g_user->hasPermission('ChangeImage')) {
 	camp_html_goto_page("/$ADMIN/logout.php");

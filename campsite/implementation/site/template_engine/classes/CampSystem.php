@@ -45,7 +45,7 @@ abstract class CampSystem
      */
     protected function getSetting($p_varName)
     {
-        $config =& CampSite::GetConfigInstance();
+        $config = CampSite::GetConfigInstance();
         return $config->getSetting($p_varName);
     } // fn getSetting
 

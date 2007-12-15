@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticlePublish.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
@@ -10,11 +10,11 @@ echo "<h2>ARTICLE AUTOPUBLISH TESTS</h2>";
 
 // create an article
 echo "Creating article...<br>";
-$newArticle =& new Article(1, 1, 1, 1);
+$newArticle = new Article(1, 1, 1, 1);
 $newArticle->create('fastnews', 'autopublish test '.rand());
 if (!$newArticle->exists()) {
     echo "failed to create article.<br>";
-    die();   
+    die();
 }
 
 $newArticle->dumpToHtml();
@@ -22,7 +22,7 @@ $newArticle->dumpToHtml();
 // create an article event in the past
 echo "Creating event to publish the article...<br>";
 $datetime = strftime("%Y-%m-%d %H:%M:00");
-$articlePublishObj =& new ArticlePublish($newArticle->getArticleId(), 1, $datetime);
+$articlePublishObj = new ArticlePublish($newArticle->getArticleId(), 1, $datetime);
 $articlePublishObj->create();
 $articlePublishObj->setPublishAction('P');
 $articlePublishObj->dumpToHtml();
@@ -30,7 +30,7 @@ $articlePublishObj->dumpToHtml();
 echo "Getting events...<br>";
 $events = ArticlePublish::GetPendingActions();
 foreach ($events as $event) {
-    $event->dumpToHtml();   
+    $event->dumpToHtml();
     $event->doAction();
 }
 
@@ -41,7 +41,7 @@ $newArticle->dumpToHtml();
 // Schedule future event
 echo "Scheduling future event...<br>";
 $datetime = strftime("2100-%m-%d %H:%M:00");
-$articlePublishObj2 =& new ArticlePublish($newArticle->getArticleId(), 1, $datetime);
+$articlePublishObj2 = new ArticlePublish($newArticle->getArticleId(), 1, $datetime);
 $articlePublishObj2->create();
 $articlePublishObj2->setPublishAction('P');
 
@@ -51,7 +51,7 @@ echo "Number of pending actions (should be zero): ".count(ArticlePublish::GetPen
 // Schedule past event
 echo "Scheduling past event...<br>";
 $datetime = strftime("1900-%m-%d %H:%M:00");
-$articlePublishObj3 =& new ArticlePublish($newArticle->getArticleId(), 1, $datetime);
+$articlePublishObj3 = new ArticlePublish($newArticle->getArticleId(), 1, $datetime);
 $articlePublishObj3->create();
 $articlePublishObj3->setPublishAction('P');
 
@@ -70,19 +70,19 @@ $articlePublishObj3->delete();
 echo "<h2>ISSUE AUTOPUBLISH TESTS</h2>";
 echo "Creating an issue...<br>";
 $issueId = rand();
-$issue =& new Issue(1, 1, $issueId);
+$issue = new Issue(1, 1, $issueId);
 $issue->create($issueId);
 $issue->fetch();
 $issue->dumpToHtml();
-$article1 =& new Article(1, 1, $issueId, 1);
+$article1 = new Article(1, 1, $issueId, 1);
 $article1->create('fastnews', 'issue schueduled publish test '.rand());
-$article2 =& new Article(1, 1, $issueId, 1);
+$article2 = new Article(1, 1, $issueId, 1);
 $article2->create('fastnews', 'issue schueduled publish test '.rand());
 
 // Create issue publish event
 echo "Creating issue publish event...<br>";
 $datetime = strftime("%Y-%m-%d %H:%M:00");
-$issuePublishEvent =& new IssuePublish(1, $issueId, 1, $datetime);
+$issuePublishEvent = new IssuePublish(1, $issueId, 1, $datetime);
 $issuePublishEvent->create();
 $issuePublishEvent->setPublishAction('P');
 $issuePublishEvent->setPublishArticlesAction('Y');

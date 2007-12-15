@@ -25,7 +25,7 @@ if ($editMode) {
     $q_timeUnits = $g_ado_db->GetAll("SELECT * FROM TimeUnits WHERE IdLanguage=$f_language_id");
 }
 
-$languageObj =& new Language($f_language_id);
+$languageObj = new Language($f_language_id);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");

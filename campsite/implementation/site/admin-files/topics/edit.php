@@ -8,7 +8,7 @@ if (!$g_user->hasPermission('ManageTopics')) {
 
 $f_topic_edit_id = Input::Get('f_topic_edit_id', 'int', 0);
 $f_topic_language_id = Input::Get('f_topic_language_id', 'int', 0);
-$editTopic =& new Topic($f_topic_edit_id);
+$editTopic = new Topic($f_topic_edit_id);
 $path = camp_topic_path($editTopic, $f_topic_language_id);
 
 $crumbs = array();

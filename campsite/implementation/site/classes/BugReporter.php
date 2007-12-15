@@ -54,8 +54,8 @@ class BugReporter
      * @param string $p_time The date and time.  If left blank, it is the current date and time.
      * @param mixed $p_backtrace The stack trace.  This can be an array or string.
      */
-    function BugReporter($p_number, $p_string, $p_file, $p_line,
-                         $p_software, $p_version, $p_time = "", $p_backtrace = "")
+    public function BugReporter($p_number, $p_string, $p_file, $p_line,
+                                $p_software, $p_version, $p_time = "", $p_backtrace = "")
     {
         require_once "HTTP/Client.php";
 
@@ -82,7 +82,7 @@ class BugReporter
             $backtrace = $p_backtrace;
         }
 
-        $this->m_req =& new HTTP_Request("");
+        $this->m_req = new HTTP_Request("");
 
         $this->m_software = $p_software;
         $this->m_version =  $p_version;
@@ -105,7 +105,7 @@ class BugReporter
      * @param string $p_server  The URL of the new server.
      * @return void
      */
-    function setServer($p_server)
+    public function setServer($p_server)
     {
         $this->__server = $p_server;
         $this->__ping = "$p_server/ping";
@@ -119,7 +119,7 @@ class BugReporter
      * @return string
      *          The current server's URL.
      */
-    function getServer()
+    public function getServer()
     {
         return $this->__server;
     } // fn getServer
@@ -131,7 +131,7 @@ class BugReporter
      * @return boolean
      *          True if the server is up, else false.
      */
-    function pingServer()
+    public function pingServer()
     {
 
         // --- if ping status is false, return true without making the call ---
@@ -161,7 +161,7 @@ class BugReporter
      *
      * @return void
      */
-    function setPingStatus ($p_pingingStatus)
+    public function setPingStatus ($p_pingingStatus)
     {
         if (!is_bool($p_pingingStatus)) {
         	trigger_error ($this->invalidParam);
@@ -174,7 +174,7 @@ class BugReporter
     /**
      * @return The pinging status
      */
-    function getPingStatus()
+    public function getPingStatus()
     {
         return !$this->m_disablePing;
     } // fn getPingStatus
@@ -184,7 +184,7 @@ class BugReporter
      * Send the error details to the server via HTTP.
      * @return void
      */
-    function sendToServer()
+    public function sendToServer()
     {
         $client = new HTTP_Client();
         $code = $client->post
@@ -222,7 +222,7 @@ class BugReporter
      * @return string
      *          The name of the file, not including the path.
      */
-    function getFileWithoutPath()
+    public function getFileWithoutPath()
     {
         if (preg_match ("/\/$/", $this->m_file)) {
             trigger_error ($this->invalidParam);
@@ -236,7 +236,7 @@ class BugReporter
      *
      * @return string the file's ID-code.
      */
-    function getId()
+    public function getId()
     {
         $id = "$this->m_num:$this->m_software:$this->m_version:" .
             $this->getFileWithoutPath() . ":$this->m_line";
@@ -251,7 +251,7 @@ class BugReporter
      *
      * @return string The traceback
      */
-    function getBacktraceString()
+    public function getBacktraceString()
     {
         return $this->m_backtrace;
     } // fn getBacktraceString
@@ -262,7 +262,7 @@ class BugReporter
      *
      * @return string The name of the software the error occurred in.
      */
-    function getSoftware()
+    public function getSoftware()
     {
         return $this->m_software;
     } // fn getSoftware
@@ -273,7 +273,7 @@ class BugReporter
      *
      * @return string The version of the software the error occurred in
      */
-    function getVersion()
+    public function getVersion()
     {
         return $this->m_version;
     } // fn getVersion
@@ -284,7 +284,7 @@ class BugReporter
      *
      * @return int The error number
      */
-    function getErrorNum()
+    public function getErrorNum()
     {
         return $this->m_num;
     } // fn getErrorNum
@@ -295,7 +295,7 @@ class BugReporter
      *
      * @return The error-string
      */
-    function getStr()
+    public function getStr()
     {
         return $this->m_str;
     } // fn getStr
@@ -306,7 +306,7 @@ class BugReporter
      *
      * @return string The time at which the crash occurred
      */
-    function getTime()
+    public function getTime()
     {
         return $this->m_time;
     } // fn getTime
@@ -317,7 +317,7 @@ class BugReporter
      *
      * @return string The name of the file the crash occurred in.
      */
-    function getFile()
+    public function getFile()
     {
         return $this->m_file;
     } // fn getFile
@@ -328,7 +328,7 @@ class BugReporter
      *
      * @return int The line number the error occurred in.
      */
-    function getLine ()
+    public function getLine()
     {
         return $this->m_line;
     } // fn getLine
@@ -339,7 +339,7 @@ class BugReporter
      *
      * @return int Get the email address of the user.
      */
-    function getEmail()
+    public function getEmail()
     {
         if (!isset($this->m_email)) {
         	$this->m_email = "";
@@ -353,7 +353,7 @@ class BugReporter
      *
      * @return int Get the user's description of the error
      */
-    function getDescription()
+    public function getDescription()
     {
         if (!isset($this->m_description)) {
         	$this->m_description = "";
@@ -368,7 +368,7 @@ class BugReporter
      * @param string The traceback string
      * @return void
      */
-    function setBacktraceString ($p_backtrace)
+    public function setBacktraceString($p_backtrace)
     {
         $this->m_backtrace = $p_backtrace;
     } // fn setBacktraceString
@@ -380,7 +380,7 @@ class BugReporter
      * @param string Set the name of the software in which the error occurred.
      * @return void
      */
-    function setSoftware ($p_software)
+    public function setSoftware($p_software)
     {
         $this->m_software = $p_software;
     } // fn setSoftware
@@ -391,7 +391,7 @@ class BugReporter
      * @param string Set the version number of the software in which the error occurred.
      * @return void
      */
-    function setVersion ($p_version)
+    public function setVersion($p_version)
     {
         $this->m_version = $p_version;
     } // fn setVersion
@@ -403,7 +403,7 @@ class BugReporter
      * @param string Set the number of the error which just occurred.
      * @return void
      */
-    function setErrorNum ($p_errorNum)
+    public function setErrorNum($p_errorNum)
     {
         $this->m_num = $p_errorNum;
     } // fn setErrorNum
@@ -415,7 +415,7 @@ class BugReporter
      * @param string Set the message for the error which just occured
      * @return void
      */
-    function setStr ($p_str)
+    public function setStr($p_str)
     {
         $this->m_str = $p_str;
     } // fn setStr
@@ -427,7 +427,7 @@ class BugReporter
      * @param string Set the time when the error occurred
      * @return void
      */
-    function setTime ($p_time)
+    public function setTime($p_time)
     {
         $this->m_time = $p_time;
     } // fn setTime
@@ -439,7 +439,7 @@ class BugReporter
      * @param string Set the filename of the error which just occurred.
      * @return void
      */
-    function setFile ($p_file)
+    public function setFile($p_file)
     {
         $this->m_file = $p_file;
     } // fn setFile
@@ -451,7 +451,7 @@ class BugReporter
      * @param string Set the line number where the error occurred.
      * @return void
      */
-    function setLine ($p_line)
+    public function setLine($p_line)
     {
         $this->m_line = $p_line;
     } // fn setLine
@@ -463,7 +463,7 @@ class BugReporter
      * @param string Set the user's email.
      * @return void
      */
-    function setEmail ($p_email)
+    public function setEmail($p_email)
     {
         $this->m_email = $p_email;
     } // fn setEmail
@@ -475,7 +475,7 @@ class BugReporter
      * @param string Set the user's description of the error
      * @return void
      */
-    function setDescription ($p_description)
+    public function setDescription($p_description)
     {
         $this->m_description = $p_description;
     } // fn setDescription
@@ -487,7 +487,7 @@ class BugReporter
      * @param array $p_backtrace array The array to be converted.
      * @return string The array as a string.
      */
-    function __convertBacktraceArrayToString($p_backtrace)
+    public function __convertBacktraceArrayToString($p_backtrace)
     {
         if (is_string($p_backtrace)) {
             return $p_backtrace;

@@ -138,8 +138,8 @@ final class CampSite extends CampSystem
      */
     public function dispatch()
     {
-        $document =& self::GetHTMLDocumentInstance();
-        $config =& self::GetConfigInstance();
+        $document = self::GetHTMLDocumentInstance();
+        $config = self::GetConfigInstance();
 
         $document->setMetaTag('description', $config->getSetting('site.description'));
         $document->setMetaTag('keywords', $config->getSetting('site.keywords'));
@@ -154,7 +154,7 @@ final class CampSite extends CampSystem
      */
     public function render()
     {
-        $document =& self::GetHTMLDocumentInstance();
+        $document = self::GetHTMLDocumentInstance();
 
         // sets the appropiate template if site is not in mode online
         if ($this->getSetting('site.online') == 'N') {
@@ -224,7 +224,7 @@ final class CampSite extends CampSystem
      */
     public static function GetHTMLDocumentInstance()
     {
-        $config =& self::GetConfigInstance();
+        $config = self::GetConfigInstance();
         $attributes = array(
                             'type' => CampRequest::GetVar('format', 'html'),
                             'charset' => $config->getSetting('site.charset'),

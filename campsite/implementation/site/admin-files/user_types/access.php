@@ -12,7 +12,7 @@ if (!$canManage) {
 
 $uTypeId = Input::Get('UType', 'string', '');
 if (is_numeric($uTypeId) && $uTypeId > 0) {
-	$userType =& new UserType($uTypeId);
+	$userType = new UserType($uTypeId);
 	if ($userType->getName() == '') {
 		camp_html_display_error(getGS('No such user type.'));
 		exit;

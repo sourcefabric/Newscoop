@@ -526,8 +526,8 @@ class LocalizerLanguage {
     function fixPositions()
     {
         global $g_localizerConfig;
-        $defaultLanguage =& new LocalizerLanguage($this->m_prefix,
-                                                  $g_localizerConfig['DEFAULT_LANGUAGE']);
+        $defaultLanguage = new LocalizerLanguage($this->m_prefix,
+                                                 $g_localizerConfig['DEFAULT_LANGUAGE']);
         $defaultLanguage->loadFile(Localizer::GetMode());
         $defaultTranslationTable = $defaultLanguage->getTranslationTable();
     	$count = 0;
@@ -551,7 +551,7 @@ class LocalizerLanguage {
     function syncToDefault()
     {
         global $g_localizerConfig;
-        $defaultLanguage =& new LocalizerLanguage($this->m_prefix,
+        $defaultLanguage = new LocalizerLanguage($this->m_prefix,
                                                   $g_localizerConfig['DEFAULT_LANGUAGE']);
         $defaultLanguage->loadFile(Localizer::GetMode());
         $defaultTranslationTable = $defaultLanguage->getTranslationTable();
@@ -611,7 +611,7 @@ class LocalizerLanguage {
         }
         $className = 'LocalizerFileFormat_'.strtoupper($p_type);
         if (class_exists($className)) {
-            $object =& new $className();
+            $object = new $className();
             if (method_exists($object, 'load')) {
                 $result = $object->load($this);
                 return $result;
@@ -651,7 +651,7 @@ class LocalizerLanguage {
         // Save in the requested mode.
         $className = 'LocalizerFileFormat_'.strtoupper($p_type);
         if (class_exists($className)) {
-            $object =& new $className();
+            $object = new $className();
             if (method_exists($object, 'save')) {
                 return $object->save($this);
             } else {

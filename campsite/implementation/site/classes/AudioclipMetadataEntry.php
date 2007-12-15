@@ -34,7 +34,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
      *      The audioclip metadata entry id
      *      An array of metadata values
      */
-    function AudioclipMetadataEntry($p_data = null)
+    public function AudioclipMetadataEntry($p_data = null)
     {
         if (is_null($p_data)) {
             return;
@@ -57,7 +57,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
      * @return boolean
      *      TRUE if the record exists, FALSE otherwise
      */
-    function fetch($p_recordSet = null)
+    public function fetch($p_recordSet = null)
     {
         global $g_ado_db;
 
@@ -90,7 +90,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
      *
      * @return boolean
      */
-    function delete()
+    public function delete()
     {
         if (!$this->exists()) {
             return false;
@@ -102,7 +102,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
     /**
      * @return int
      */
-    function getId()
+    public function getId()
     {
         return $this->m_data['id'];
     } // fn getId
@@ -111,7 +111,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
     /**
      * @return int
      */
-    function getGunId()
+    public function getGunId()
     {
         return $this->m_data['gunid'];
     } // fn getGunId
@@ -120,7 +120,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
     /**
      * @return string
      */
-    function getMetatag()
+    public function getMetatag()
     {
         return $this->getMetatagNs().':'.$this->getMetatagName();
     } // fn getMetatag
@@ -129,7 +129,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
     /**
      * @return string
      */
-    function getMetatagName()
+    public function getMetatagName()
     {
         return strtolower($this->m_data['predicate']);
     } // fn getMetatagName
@@ -138,7 +138,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
     /**
      * @return string
      */
-    function getMetatagNs()
+    public function getMetatagNs()
     {
         return strtolower($this->m_data['predicate_ns']);
     } // fn getMetatagNs
@@ -147,7 +147,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
 	/**
      * @return string
      */
-    function getValue()
+    public function getValue()
     {
         return $this->m_data['object'];
     } // fn getValue
@@ -156,7 +156,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
     /**
      * @return boolean
      */
-    function IsValidNamespace($p_metatag)
+    public static function IsValidNamespace($p_metatag)
     {
         $metatag = strtolower($p_metatag);
         $namespace = strtok($metatag, ':');
@@ -167,7 +167,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
     /**
      * @return string
      */
-    function GetTagNS($p_tag)
+    public static function GetTagNS($p_tag)
     {
         if (!AudioclipMetadataEntry::IsValidNamespace($p_tag)) {
             return null;
@@ -179,7 +179,7 @@ class AudioclipMetadataEntry extends DatabaseObject {
     /**
      * @return string
      */
-    function GetTagName($p_tag)
+    public static function GetTagName($p_tag)
     {
         $tok = strtok(strtolower($p_tag), ':');
         if ($tok !== false) {
