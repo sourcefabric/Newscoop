@@ -121,7 +121,7 @@ class ArticleData extends DatabaseObject {
 					$columnMetadata = new ArticleTypeField(substr($this->m_dbTableName, 1));
 					$columnMetadata->fetch($rowdata[0]);
 					$columnMetadata->m_metadata = $columnMetadata->getMetadata();
-					$metadata[] =& $columnMetadata;
+					$metadata[] = $columnMetadata;
 				}
 			}
 			return $metadata;

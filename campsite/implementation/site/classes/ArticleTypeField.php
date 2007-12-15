@@ -41,8 +41,6 @@ class ArticleTypeField {
 			$this->fetch();
 			$this->m_metadata = $this->getMetadata();
 		}
-		$this->m_fieldName = $p_fieldName; // fetch, if empty, will reset m_fieldName to null.
-
 	} // constructor
 
 
@@ -240,6 +238,7 @@ class ArticleTypeField {
 			}
 		}
 		$this->m_fieldName = substr($this->Field, 1);
+		$this->m_dbColumnName = 'F'.$this->m_fieldName;
 	} // fn fetch
 
 
