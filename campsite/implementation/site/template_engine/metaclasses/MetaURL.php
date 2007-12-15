@@ -85,7 +85,8 @@ final class MetaURL
         if (strtolower($p_property) == 'uri_parameter') {
             $this->m_uri_parameter = $p_value;
         } else {
-            throw new InvalidFunctionException(get_class($this), '__set');
+            $this->m_uriObj->$p_property = $p_value;
+//            throw new InvalidFunctionException(get_class($this), '__set');
         }
     } // fn __set
 
@@ -189,7 +190,7 @@ final class MetaURL
             throw new InvalidPropertyHandlerException(get_class($this), $p_property);
         }
         $methodName = $this->m_customProperties[$p_property];
-        
+
         return $this->$methodName();
     } // fn getCustomProperty
 

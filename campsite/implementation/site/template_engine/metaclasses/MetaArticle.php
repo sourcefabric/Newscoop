@@ -137,7 +137,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationYear()
+    protected function getCreationYear()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -145,7 +145,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationMonth()
+    protected function getCreationMonth()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -153,7 +153,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationWeekDay()
+    protected function getCreationWeekDay()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -161,7 +161,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationMonthDay()
+    protected function getCreationMonthDay()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -169,7 +169,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationYearDay()
+    protected function getCreationYearDay()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -177,7 +177,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationHour()
+    protected function getCreationHour()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -185,7 +185,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationMinute()
+    protected function getCreationMinute()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -193,7 +193,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationSecond()
+    protected function getCreationSecond()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -201,43 +201,43 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getOnFrontPage()
+    protected function getOnFrontPage()
     {
     	return (int)($this->m_dbObject->getProperty('OnFrontPage') == 'Y');
     }
 
 
-    public function getOnSectionPage()
+    protected function getOnSectionPage()
     {
     	return (int)($this->m_dbObject->getProperty('OnSection') == 'Y');
     }
 
 
-    public function getIsPublished()
+    protected function getIsPublished()
     {
     	return (int)($this->m_dbObject->getProperty('Published') == 'Y');
     }
 
 
-    public function getIsPublic()
+    protected function getIsPublic()
     {
     	return (int)($this->m_dbObject->getProperty('Public') == 'Y');
     }
 
 
-    public function getIsIndexed()
+    protected function getIsIndexed()
     {
     	return (int)($this->m_dbObject->getProperty('IsIndexed') == 'Y');
     }
 
 
-    public function getPublication()
+    protected function getPublication()
     {
     	return new MetaPublication($this->m_dbObject->getProperty('IdPublication'));
     }
 
 
-    public function getIssue()
+    protected function getIssue()
     {
     	return new MetaIssue($this->m_dbObject->getProperty('IdPublication'),
     						 $this->m_dbObject->getProperty('IdLanguage'),
@@ -245,7 +245,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getSection()
+    protected function getSection()
     {
     	return new MetaSection($this->m_dbObject->getProperty('IdPublication'),
     						   $this->m_dbObject->getProperty('NrIssue'),
@@ -254,19 +254,19 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getLanguage()
+    protected function getLanguage()
     {
     	return new MetaLanguage($this->m_dbObject->getProperty('IdLanguage'));
     }
 
 
-    public function getOwner()
+    protected function getOwner()
     {
     	return new MetaUser($this->m_dbObject->getProperty('IdUser'));
     }
 
 
-    public function getTemplate()
+    protected function getTemplate()
     {
     	$articleSection = new Section($this->m_dbObject->getProperty('IdPublication'),
     								  $this->m_dbObject->getProperty('NrIssue'),
@@ -282,14 +282,14 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function hasAttachments()
+    protected function hasAttachments()
     {
     	$attachments = ArticleAttachment::GetAttachmentsByArticleNumber($this->m_dbObject->getProperty('Number'));
     	return (int)(sizeof($attachments) > 0);
     }
 
 
-    public function getCommentsEnabled()
+    protected function getCommentsEnabled()
     {
     	$publicationObj = new Publication($this->m_dbObject->getProperty('IdPublication'));
     	$articleTypeObj = new ArticleType($this->m_dbObject->getProperty('Type'));

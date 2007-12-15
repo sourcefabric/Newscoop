@@ -35,6 +35,7 @@ final class MetaPublication extends MetaDbObject {
 		$this->m_dbObject = new Publication($p_publicationId);
 
 		$this->InitProperties();
+		$this->m_customProperties['default_language'] = 'getDefaultLanguage';
 		$this->m_customProperties['site'] = 'getDefaultSiteName';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
@@ -47,6 +48,12 @@ final class MetaPublication extends MetaDbObject {
 			return null;
 		}
 		return $defaultAlias->getName();
+	}
+
+
+	protected function getDefaultLanguage()
+	{
+	    return new MetaLanguage($this->m_dbObject->getDefaultLanguageId());
 	}
 
 } // class MetaPublication

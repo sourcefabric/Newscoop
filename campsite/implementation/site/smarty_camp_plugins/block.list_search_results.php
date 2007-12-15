@@ -33,7 +33,10 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
     if (!isset($p_content)) {
     	$start = 0;
     	$searchResultsList = new SearchResultsList($start, $p_params);
-    	$campContext->setCurrentList($searchResultsList, array('article'));
+    	$campContext->setCurrentList($searchResultsList, array('publication', 'language',
+    	                                                       'issue', 'section', 'article',
+    	                                                       'image', 'attachment', 'comment',
+    	                                                       'audioclip', 'subtitle'));
     }
 
     $currentSearchResult = $campContext->current_search_results_list->defaultIterator()->current();

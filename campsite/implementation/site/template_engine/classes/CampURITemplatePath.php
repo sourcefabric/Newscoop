@@ -83,7 +83,7 @@ class CampURITemplatePath extends CampURI
      * @param string $p_uri
      *      The requested URI
      */
-    protected function __construct($p_uri = null)
+    public function __construct($p_uri = null)
     {
         parent::__construct($p_uri);
         $this->setURLType(URLTYPE_TEMPLATE_PATH);
@@ -91,26 +91,6 @@ class CampURITemplatePath extends CampURI
         $this->parse();
         $this->setURL();
     } // fn __construct
-
-
-    /**
-     * Builds an instance object of this class only if there is no one.
-     *
-     * @param string $p_uri
-     *      The full URI string, default value 'SELF' indicates it will be
-     *      fetched from the server itself.
-     *
-     * @return object $m_instance
-     *      A CampURITemplatePath object
-     */
-    public static function singleton($p_uri = null)
-    {
-        if (!isset(self::$m_instance)) {
-            self::$m_instance = new CampURITemplatePath($p_uri);
-        }
-
-        return self::$m_instance;
-    } // fn singleton
 
 
     /**
@@ -543,6 +523,17 @@ class CampURITemplatePath extends CampURI
             $this->m_uriPath = '/' . $this->m_templatesPrefix . '/' . $template;
         }
     } // fn buildURI
+
+
+    /**
+     * Sets the cache validation for URI rendering
+     *
+     * @param bool $p_valid
+     */
+    protected function validateCache($p_valid)
+    {
+        $this->m_validCache = $p_valid;
+    }
 
 } // class CampURITemplatePath
 

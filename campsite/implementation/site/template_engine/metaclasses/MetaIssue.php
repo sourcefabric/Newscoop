@@ -49,10 +49,12 @@ final class MetaIssue extends MetaDbObject {
 		$this->m_customProperties['template'] = 'getTemplate';
         $this->m_customProperties['is_current'] = 'isCurrent';
         $this->m_customProperties['defined'] = 'defined';
+        $this->m_customProperties['publication'] = 'getPublication';
+        $this->m_customProperties['language'] = 'getLanguage';
     } // fn __construct
 
 
-    public function getPublishYear()
+    protected function getPublishYear()
     {
     	$publish_timestamp = strtotime($this->m_dbObject->getProperty('PublicationDate'));
     	$publish_date_time = getdate($publish_timestamp);
@@ -60,7 +62,7 @@ final class MetaIssue extends MetaDbObject {
     }
 
 
-    public function getPublishMonth()
+    protected function getPublishMonth()
     {
     	$publish_timestamp = strtotime($this->m_dbObject->getProperty('PublicationDate'));
     	$publish_date_time = getdate($publish_timestamp);
@@ -68,7 +70,7 @@ final class MetaIssue extends MetaDbObject {
     }
 
 
-    public function getPublishWeekDay()
+    protected function getPublishWeekDay()
     {
     	$publish_timestamp = strtotime($this->m_dbObject->getProperty('PublicationDate'));
     	$publish_date_time = getdate($publish_timestamp);
@@ -76,7 +78,7 @@ final class MetaIssue extends MetaDbObject {
     }
 
 
-    public function getPublishMonthDay()
+    protected function getPublishMonthDay()
     {
     	$publish_timestamp = strtotime($this->m_dbObject->getProperty('PublicationDate'));
     	$publish_date_time = getdate($publish_timestamp);
@@ -84,7 +86,7 @@ final class MetaIssue extends MetaDbObject {
     }
 
 
-    public function getPublishYearDay()
+    protected function getPublishYearDay()
     {
     	$publish_timestamp = strtotime($this->m_dbObject->getProperty('PublicationDate'));
     	$publish_date_time = getdate($publish_timestamp);
@@ -92,7 +94,7 @@ final class MetaIssue extends MetaDbObject {
     }
 
 
-    public function getPublishHour()
+    protected function getPublishHour()
     {
     	$publish_timestamp = strtotime($this->m_dbObject->getProperty('PublicationDate'));
     	$publish_date_time = getdate($publish_timestamp);
@@ -100,7 +102,7 @@ final class MetaIssue extends MetaDbObject {
     }
 
 
-    public function getPublishMinute()
+    protected function getPublishMinute()
     {
     	$publish_timestamp = strtotime($this->m_dbObject->getProperty('PublicationDate'));
     	$publish_date_time = getdate($publish_timestamp);
@@ -108,7 +110,7 @@ final class MetaIssue extends MetaDbObject {
     }
 
 
-    public function getPublishSecond()
+    protected function getPublishSecond()
     {
     	$publish_timestamp = strtotime($this->m_dbObject->getProperty('PublicationDate'));
     	$publish_date_time = getdate($publish_timestamp);
@@ -116,9 +118,21 @@ final class MetaIssue extends MetaDbObject {
     }
 
 
-    public function getTemplate()
+    protected function getTemplate()
     {
    		return new MetaTemplate($this->m_dbObject->getIssueTemplateId());
+    }
+
+
+    protected function getPublication()
+    {
+        return new MetaPublication($this->m_dbObject->getPublicationId());
+    }
+
+
+    protected function getLanguage()
+    {
+        return new MetaLanguage($this->m_dbObject->getLanguageId());
     }
 
 } // class MetaIssue

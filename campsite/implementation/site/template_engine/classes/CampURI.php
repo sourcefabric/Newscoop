@@ -96,12 +96,52 @@ abstract class CampURI {
 
 
     /**
+     * Language object
+     *
+     * @var MetaLanguage
+     */
+    protected $m_language = null;
+
+
+    /**
+     * Publication object
+     *
+     * @var MetaPublication
+     */
+    protected $m_publication = null;
+
+
+    /**
+     * Issue object
+     *
+     * @var MetaIssue
+     */
+    protected $m_issue = null;
+
+
+    /**
+     * Section object
+     *
+     * @var MetaSection
+     */
+    protected $m_section = null;
+
+
+    /**
+     * Article object
+     *
+     * @var MetaArticle
+     */
+    protected $m_article = null;
+
+
+    /**
      * Class constructor
      *
      * @param string $p_uri
      *    The full URI string
      */
-    protected function __construct($p_uri = 'SELF')
+    public function __construct($p_uri = 'SELF')
     {
         if (isset($p_uri) && $p_uri != 'SELF') {
             $uriString = $p_uri;
@@ -594,6 +634,37 @@ abstract class CampURI {
     {
         $this->m_fragment = $p_fragment;
     } // fn setFragment
+
+
+    /**
+     * Sets an object property
+     *
+     * @param string $p_property
+     * @param mixed $p_value
+     * @return bool
+     */
+    public function __set($p_property, $p_value)
+    {
+        $p_property = strtolower($p_property);
+        if (!property_exists($this, "m_$p_property")) {
+            return false;
+        }
+        if (!is_a($p_value, 'Meta'.$p_property) && !is_null($p_value)) {
+            return false;
+        }
+        $memberName = "m_$p_property";
+        $this->$memberName = $p_value;
+        $this->validateCache(false);
+        return true;
+    }
+
+
+    /**
+     * Sets the cache validation for URI rendering
+     *
+     * @param bool $p_valid
+     */
+    abstract protected function validateCache($p_valid);
 
 
     /**

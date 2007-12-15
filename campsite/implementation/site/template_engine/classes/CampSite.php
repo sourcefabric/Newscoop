@@ -68,9 +68,6 @@ final class CampSite extends CampSystem
             return;
         }
 
-        // starts the URI instance
-        self::GetURIInstance();
-
         // gets the context
         $context = CampTemplate::singleton()->context();
 
@@ -98,9 +95,6 @@ final class CampSite extends CampSystem
         if (!empty($articleNr)) {
             $this->setArticle($languageId, $articleNr);
         }
-
-        // sets the current URL to the context
-        $context->url = new MetaURL();
     } // fn initContext
 
 
@@ -270,17 +264,17 @@ final class CampSite extends CampSystem
 
         // sets url type to default if necessary
         if (!$urlType) {
-            $config =& self::GetConfigInstance();
+            $config = self::GetConfigInstance();
             $urlType = $config->getSetting('campsite.url_default_type');
         }
 
         // instanciates the corresponding URI object
         switch ($urlType) {
         case 1:
-            $uriInstance = CampURITemplatePath::singleton($p_uri);
+            $uriInstance = new CampURITemplatePath($p_uri);
             break;
         case 2:
-            $uriInstance = CampURIShortNames::singleton($p_uri);
+            $uriInstance = new CampURIShortNames($p_uri);
             break;
         }
 
