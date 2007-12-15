@@ -144,9 +144,9 @@ class DynMenuItem {
     {
         $p_item->m_parent =& $this;
         if (isset($p_item->m_attrs['id'])) {
-            $this->m_subItems[$p_item->m_attrs['id']] =& $p_item;
+            $this->m_subItems[$p_item->m_attrs['id']] = $p_item;
         } else {
-            $this->m_subItems[] =& $p_item;
+            $this->m_subItems[] = $p_item;
         }
     } // fn addItem
 
@@ -221,9 +221,9 @@ class DynMenuItem {
         }
         $newItem = new $className('[[split]]', '', $p_attrs);
         if (isset($newItem->m_attrs['id'])) {
-            $this->m_subItems[$newItem->m_attrs['id']] =& $newItem;
+            $this->m_subItems[$newItem->m_attrs['id']] = $newItem;
         } else {
-            $this->m_subItems[] =& $newItem;
+            $this->m_subItems[] = $newItem;
         }
         return $newItem;
     } // fn addSplit

@@ -166,7 +166,7 @@ class ArticleImage extends DatabaseObject {
 					$tmpArticleImage->fetch($row);
 					$tmpArticleImage->m_image = new Image();
 					$tmpArticleImage->m_image->fetch($row);
-					$returnArray[] =& $tmpArticleImage;
+					$returnArray[] = $tmpArticleImage;
 				}
 			}
 			return $returnArray;
@@ -367,7 +367,7 @@ class ArticleImage extends DatabaseObject {
 			foreach ($rows as $row) {
 				$tmpArticle = new Article();
 				$tmpArticle->fetch($row);
-				$articles[] =& $tmpArticle;
+				$articles[] = $tmpArticle;
 			}
 		}
 		return $articles;

@@ -262,7 +262,7 @@ class DatabaseObject {
 			}
 
 		    // We were given a pre-fetched recordset.
-		    $this->m_data =& $p_recordSet;
+		    $this->m_data = $p_recordSet;
 		    // Make sure all columns have a value even if they arent in the dataset.
 			foreach ($this->getColumnNames() as $dbColumnName) {
 				if (!isset($p_recordSet[$dbColumnName])) {

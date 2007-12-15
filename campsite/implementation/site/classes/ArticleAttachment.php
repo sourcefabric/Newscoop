@@ -106,7 +106,7 @@ class ArticleAttachment extends DatabaseObject {
 			foreach ($rows as $row) {
 				$tmpAttachment = new Attachment();
 				$tmpAttachment->fetch($row);
-				$returnArray[] =& $tmpAttachment;
+				$returnArray[] = $tmpAttachment;
 			}
 		}
 		return $returnArray;

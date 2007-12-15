@@ -76,7 +76,7 @@ class AudioclipDatabaseMetadata {
         $this->m_exists = true;
         foreach ($rows as $row) {
             $tmpMetadataObj = new AudioclipMetadataEntry($row['id']);
-            $this->m_metaData[$tmpMetadataObj->getMetaTag()] =& $tmpMetadataObj;
+            $this->m_metaData[$tmpMetadataObj->getMetaTag()] = $tmpMetadataObj;
         }
         return $this->m_metaData;
     } // fn fetch
