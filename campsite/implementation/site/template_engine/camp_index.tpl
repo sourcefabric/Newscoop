@@ -1065,11 +1065,11 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_article number="4" }}
+    {{ set_article number="140" }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
-    {{ literal }}{{ set_article number="143" }}{{ /literal }}
+    {{ literal }}{{ set_article number="140" }}{{ /literal }}
   </td>
 </tr>
 <tr>

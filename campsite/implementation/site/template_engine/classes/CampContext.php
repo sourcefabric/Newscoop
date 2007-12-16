@@ -184,7 +184,8 @@ final class CampContext
                 }
                 require_once($classFullPath);
 
-                if (!is_a($p_value, 'Meta'.$this->m_objectTypes[$p_element]['class'])) {
+                $metaclass = 'Meta'.$this->m_objectTypes[$p_element]['class'];
+                if (!is_a($p_value, $metaclass)) {
                     throw new InvalidObjectException($p_element);
                 }
 
@@ -193,7 +194,7 @@ final class CampContext
                     $this->m_objects[$p_element] = $p_value;
                     if (isset($this->m_objectTypes[$p_element]['handler'])) {
                         $setHandler = $this->m_objectTypes[$p_element]['handler'];
-                        $this->$setHandler($oldValue);
+                        $this->$setHandler(is_null($oldValue) ? new $metaclass : $oldValue);
                     }
                     $this->m_readonlyProperties['url']->$p_element = $p_value;
                 }

@@ -14,6 +14,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/conf/liveuser_configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 
+
 $g_errorList = array();
 
 function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
@@ -93,7 +94,7 @@ $context->section = new MetaSection(1, 1, 1, 10);
 
 
 // Article object
-$context->article = new MetaArticle(1, 4);
+$context->article = new MetaArticle(1, 140);
 
 
 // Image object
