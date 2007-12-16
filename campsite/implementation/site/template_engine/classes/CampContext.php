@@ -17,26 +17,27 @@
 final class CampContext
 {
 	// Defines the object types
-    private $m_objectTypes = array('publication'=>array('class'=>'Publication',
-                                                        'handler'=>'setPublicationHandler'),
-								   'issue'=>array('class'=>'Issue',
-								                  'handler'=>'setIssueHandler'),
-								   'section'=>array('class'=>'Section',
-								                    'handler'=>'setSectionHandler'),
-								   'article'=>array('class'=>'Article',
-								                    'handler'=>'setArticleHandler'),
-								   'language'=>array('class'=>'Language',
-								                     'handler'=>'setLanguageHandler'),
-								   'image'=>array('class'=>'Image'),
-								   'attachment'=>array('class'=>'Attachment'),
-								   'audioclip'=>array('class'=>'Audioclip'),
-								   'comment'=>array('class'=>'Comment'),
-								   'subtitle'=>array('class'=>'Subtitle'),
-								   'topic'=>array('class'=>'Topic'),
-								   'user'=>array('class'=>'User'),
-								   'template'=>array('class'=>'Template'),
-								   'subscription'=>array('class'=>'Subscription')
-								   );
+    private static $m_objectTypes = array(
+                                    'publication'=>array('class'=>'Publication',
+                                                         'handler'=>'setPublicationHandler'),
+								    'issue'=>array('class'=>'Issue',
+								                   'handler'=>'setIssueHandler'),
+								    'section'=>array('class'=>'Section',
+								                     'handler'=>'setSectionHandler'),
+								    'article'=>array('class'=>'Article',
+								                     'handler'=>'setArticleHandler'),
+								    'language'=>array('class'=>'Language',
+								                      'handler'=>'setLanguageHandler'),
+								    'image'=>array('class'=>'Image'),
+								    'attachment'=>array('class'=>'Attachment'),
+								    'audioclip'=>array('class'=>'Audioclip'),
+								    'comment'=>array('class'=>'Comment'),
+								    'subtitle'=>array('class'=>'Subtitle'),
+								    'topic'=>array('class'=>'Topic'),
+								    'user'=>array('class'=>'User'),
+								    'template'=>array('class'=>'Template'),
+								    'subscription'=>array('class'=>'Subscription')
+								    );
 
 	// Defines the list objects
 	private $m_listObjects = array(
@@ -137,7 +138,7 @@ final class CampContext
 	    	$p_element = CampContext::TranslateProperty($p_element);
 
 	    	// Verify if an object of this type exists
-        	if (array_key_exists($p_element, $this->m_objectTypes)) {
+        	if (!is_null(CampContext::ObjectType($p_element))) {
                 if (!isset($this->m_objects[$p_element])
         			    || is_null($this->m_objects[$p_element])) {
                     $this->createObject($p_element);
@@ -178,20 +179,20 @@ final class CampContext
     	$p_element = CampContext::TranslateProperty($p_element);
 
     	// Verify if an object of this type exists
-    	if (array_key_exists($p_element, $this->m_objectTypes)) {
+    	if (!is_null(CampContext::ObjectType($p_element))) {
 	    	try {
                 if (!is_object($p_value)) {
                     throw new InvalidObjectException($p_element);
                 }
 
-                $classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/Meta'
-                               . $this->m_objectTypes[$p_element]['class'].'.php';
+                $classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/'
+                               . CampContext::ObjectType($p_element).'.php';
                 if (!file_exists($classFullPath)) {
                     throw new InvalidObjectException($p_element);
                 }
                 require_once($classFullPath);
 
-                $metaclass = 'Meta'.$this->m_objectTypes[$p_element]['class'];
+                $metaclass = CampContext::ObjectType($p_element);
                 if (!is_a($p_value, $metaclass)) {
                     throw new InvalidObjectException($p_element);
                 }
@@ -199,8 +200,8 @@ final class CampContext
                 if ($this->m_objects[$p_element] != $p_value) {
                     $oldValue = $this->m_objects[$p_element];
                     $this->m_objects[$p_element] = $p_value;
-                    if (isset($this->m_objectTypes[$p_element]['handler'])) {
-                        $setHandler = $this->m_objectTypes[$p_element]['handler'];
+                    if (isset(CampContext::$m_objectTypes[$p_element]['handler'])) {
+                        $setHandler = CampContext::$m_objectTypes[$p_element]['handler'];
                         $this->$setHandler(is_null($oldValue) ? new $metaclass : $oldValue);
                     }
                     $this->m_readonlyProperties['url']->$p_element = $p_value;
@@ -231,7 +232,7 @@ final class CampContext
 	 */
     public function hasProperty($p_property)
     {
-    	return array_key_exists($p_property, $this->m_objectTypes)
+    	return !is_null(CampContext::ObjectType($p_property))
     			|| (is_array($this->m_properties)
 					&& array_key_exists($p_property, $this->m_properties))
     			|| (is_array($this->m_readonlyProperties)
@@ -246,7 +247,7 @@ final class CampContext
      */
     public function hasObject($p_object)
     {
-    	return array_key_exists($p_object, $this->m_objectTypes);
+    	return !is_null(CampContext::ObjectType($p_object));
     } // fn hasObject
 
 
@@ -430,14 +431,14 @@ final class CampContext
 
     	$p_objectType = CampContext::TranslateProperty($p_objectType);
 
-    	$classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/Meta'
-    					. $this->m_objectTypes[$p_objectType]['class'].'.php';
+    	$classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/'
+    					. CampContext::ObjectType($p_objectType).'.php';
     	if (!file_exists($classFullPath)) {
     		throw new InvalidObjectException($p_objectType);
     	}
     	require_once($classFullPath);
 
-    	$className = 'Meta'.$this->m_objectTypes[$p_objectType]['class'];
+    	$className = CampContext::ObjectType($p_objectType);
     	$this->m_objects[$p_objectType] = new $className;
 
     	return $this->m_objects[$p_objectType];
@@ -580,6 +581,24 @@ final class CampContext
         if (!$this->section->defined) {
             $this->section = $this->article->section;
         }
+    }
+
+
+    /**
+     * Returns the name corresponding to the given property; null if
+     * the property is not an object.
+     *
+     * @param string $p_property
+     */
+    public static function ObjectType($p_property)
+    {
+        $p_property = CampContext::TranslateProperty($p_property);
+
+        // Verify if an object of this type exists
+        if (array_key_exists($p_property, CampContext::$m_objectTypes)) {
+            return 'Meta'.CampContext::$m_objectTypes[$p_property]['class'];
+        }
+        return null;
     }
 
 } // class CampContext

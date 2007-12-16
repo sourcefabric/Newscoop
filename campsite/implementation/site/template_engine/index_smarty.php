@@ -2,12 +2,8 @@
 
 header("Content-type: text/html; charset=UTF-8");
 
-global $_SERVER;
 global $Campsite;
 global $DEBUG;
-
-// initialize needed global variables
-$_SERVER['DOCUMENT_ROOT'] = getenv("DOCUMENT_ROOT");
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
@@ -69,13 +65,12 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 }
 
 
-// Smarty instance
+// Initialise the template and context
+$_SERVER['REQUEST_URI'] = '';
 $tpl = CampTemplate::singleton();
-
 
 $context = $tpl->context();
 $tpl->assign('campsite', $context);
-
 
 // Language object
 $context->language = new MetaLanguage(1);

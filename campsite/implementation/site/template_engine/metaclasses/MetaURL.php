@@ -69,7 +69,7 @@ final class MetaURL
             return $this->$property;
         } catch (InvalidPropertyException $e) {
             $property = $this->m_uriObj->$p_property;
-            $className = 'Meta'.$p_property;
+            $className = CampContext::ObjectType($p_property);
             return is_null($property) ? new $className : $property;
         }
     } // fn __get
