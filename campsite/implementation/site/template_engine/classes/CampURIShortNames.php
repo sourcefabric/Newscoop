@@ -67,13 +67,6 @@ class CampURIShortNames extends CampURI
     private $m_validURI = false;
 
 
-    /**
-     *
-     * @var bool
-     */
-    private $m_validCache = false;
-
-
 	/**
 	 * Class constructor
      *
@@ -170,11 +163,13 @@ class CampURIShortNames extends CampURI
             }
             $template = $tplObj->getName();
         } else {
-            $template = CampSystem::GetTemplate($this->getQueryVar(CampRequest::LANGUAGE_ID),
-                                                $this->getQueryVar(CampRequest::PUBLICATION_ID),
-                                                $this->getQueryVar(CampRequest::ISSUE_NR),
-                                                $this->getQueryVar(CampRequest::SECTION_NR),
-                                                $this->getQueryVar(CampRequest::ARTICLE_NR));
+            $languageId = !is_null($this->language) ? $this->language->number : null;
+            $publicationId = !is_null($this->publication) ? $this->publication->identifier : null;
+            $issueNo = !is_null($this->issue) ? $this->issue->number : null;
+            $sectionNo = !is_null($this->section) ? $this->section->number : null;
+            $articleNo = !is_null($this->article) ? $this->article->number : null;
+            $template = CampSystem::GetTemplate($languageId, $publicationId, $issueNo,
+                                                $sectionNo, $articleNo);
         }
 
         return $template;
@@ -352,7 +347,6 @@ class CampURIShortNames extends CampURI
             CampTemplate::singleton()->trigger_error('not valid site alias');
             return;
         }
-        $this->setQueryVar(CampRequest::PUBLICATION_ID, $this->m_publication->identifier, false);
 
         // reads parameters values if any
         $cParams = explode('/', trim($this->getPath(), '/'));
@@ -385,7 +379,6 @@ class CampURIShortNames extends CampURI
             CampTemplate::singleton()->trigger_error('not valid language');
             return;
         }
-        $this->setQueryVar(CampRequest::LANGUAGE_ID, $this->m_language->number, false);
 
         $this->m_issue = null;
         // gets the issue number and sets the issue short name
@@ -409,7 +402,6 @@ class CampURIShortNames extends CampURI
             CampTemplate::singleton()->trigger_error('not valid issue');
             return;
         }
-        $this->setQueryVar(CampRequest::ISSUE_NR, $this->m_issue->number, false);
 
         $this->m_section = null;
         // gets the section number and sets the section short name
@@ -428,7 +420,6 @@ class CampURIShortNames extends CampURI
                 CampTemplate::singleton()->trigger_error('not valid section');
                 return;
             }
-            $this->setQueryVar(CampRequest::SECTION_NR, $this->m_section->number, false);
         }
 
         $this->m_article = null;
@@ -447,11 +438,11 @@ class CampURIShortNames extends CampURI
                 CampTemplate::singleton()->trigger_error('not valid article');
                 return;
             }
-            $this->setQueryVar(CampRequest::ARTICLE_NR, $this->m_article->number, false);
         }
 
         $this->m_template = $this->getTemplate();
         $this->m_validURI = true;
+        $this->validateCache(false);
     } // fn setURL
 
 
@@ -511,18 +502,8 @@ class CampURIShortNames extends CampURI
                 $this->m_uriQuery = $this->m_query;
             }
         }
+        $this->validateCache(true);
 	} // fn buildURI
-
-
-    /**
-     * Sets the cache validation for URI rendering
-     *
-     * @param bool $p_valid
-     */
-    protected function validateCache($p_valid)
-    {
-        $this->m_validCache = $p_valid;
-    }
 
 } // class CampURIShortNames
 

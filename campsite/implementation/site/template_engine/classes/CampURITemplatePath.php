@@ -524,17 +524,6 @@ class CampURITemplatePath extends CampURI
         }
     } // fn buildURI
 
-
-    /**
-     * Sets the cache validation for URI rendering
-     *
-     * @param bool $p_valid
-     */
-    protected function validateCache($p_valid)
-    {
-        $this->m_validCache = $p_valid;
-    }
-
 } // class CampURITemplatePath
 
 ?>

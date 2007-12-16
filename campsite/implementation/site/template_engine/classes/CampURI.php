@@ -136,6 +136,13 @@ abstract class CampURI {
 
 
     /**
+     *
+     * @var bool
+     */
+    private $m_validCache = false;
+
+
+    /**
      * Class constructor
      *
      * @param string $p_uri
@@ -266,6 +273,10 @@ abstract class CampURI {
         if (empty($p_parts)) {
             $p_parts = $this->m_parts;
         }
+        if (!$this->isValidCache()) {
+            $this->m_path = $this->getURIPath();
+            $this->m_query = $this->getQuery();
+        }
         $uriString = '';
         foreach ($p_parts as $part) {
             $property = 'm_'.$part;
@@ -372,6 +383,9 @@ abstract class CampURI {
      */
     public function getQuery()
     {
+        if (!$this->isValidCache()) {
+            $this->m_query = CampURI::QueryArrayToString($this->m_queryArray);
+        }
         return $this->m_query;
     } // fn getQuery
 
@@ -444,9 +458,9 @@ abstract class CampURI {
 
 
     /**
-     * Gets the user part from the current URI.
+     * Returns the user part from the current URI.
      *
-     * @return string $m_username
+     * @return string
      *      The username value
      */
     public function getUser()
@@ -530,13 +544,10 @@ abstract class CampURI {
      *
      * @return void
      */
-    public function setQueryVar($p_varName, $p_value, $p_toString = true)
+    public function setQueryVar($p_varName, $p_value)
     {
         $this->m_queryArray[$p_varName] = $p_value;
-        //CampRequest::SetVar($p_varName, $p_value);
-        if ($p_toString == true) {
-            $this->m_query = CampURI::QueryArrayToString($this->m_queryArray);
-        }
+        $this->validateCache(false);
     } // fn setQueryVar
 
 
@@ -668,6 +679,10 @@ abstract class CampURI {
     public function __set($p_property, $p_value)
     {
         $p_property = strtolower($p_property);
+        $searchResult = array_search($p_property, $this->m_parts);
+        if ($searchResult !== false) {
+            return false;
+        }
         if (!property_exists($this, "m_$p_property")) {
             return false;
         }
@@ -686,7 +701,21 @@ abstract class CampURI {
      *
      * @param bool $p_valid
      */
-    abstract protected function validateCache($p_valid);
+    protected function validateCache($p_valid)
+    {
+        $this->m_validCache = $p_valid;
+    }
+
+
+    /**
+     * Returns the cache valid state
+     *
+     * @return bool
+     */
+    protected function isValidCache()
+    {
+        return $this->m_validCache;
+    }
 
 
     /**
