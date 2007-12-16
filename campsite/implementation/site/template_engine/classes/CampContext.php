@@ -333,14 +333,16 @@ final class CampContext
      *
      * @return void
      */
-    public function saveCurrentContext($p_objectsList = array())
+    public function saveCurrentContext(array $p_propertiesList = array())
     {
+        if (count($p_propertiesList) == 0) {
+            $p_propertiesList = $this->allPropertiesNames();
+        }
         $savedContext = array();
-        foreach ($p_objectsList as $objectName) {
-            if (!$this->hasObject($objectName)) {
-                continue;
+        foreach ($p_propertiesList as $propertyName) {
+            if ($this->hasProperty($propertyName)) {
+                $savedContext[$propertyName] = $this->$propertyName;
             }
-            $savedContext[$objectName] = $this->$objectName;
         }
         array_push($this->m_savedContext, $savedContext);
     } // fn saveCurrentContext
@@ -355,10 +357,22 @@ final class CampContext
             return;
         }
         $savedContext = array_pop($this->m_savedContext);
-        foreach ($savedContext as $objectName => $objectValue) {
-            $this->$objectName = $objectValue;
+        foreach ($savedContext as $propertyName => $propertyValue) {
+            $this->$propertyName = $propertyValue;
         }
     } // fn restoreContext
+
+
+    /**
+     * Returns the list of all properties
+     *
+     * @return array
+     */
+    public function allPropertiesNames()
+    {
+        return array_merge(array_keys($this->m_objects),
+                           array_keys($this->m_properties));
+    }
 
 
     /**

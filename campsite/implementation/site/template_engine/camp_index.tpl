@@ -148,7 +148,7 @@
 {{ /list_search_results }}
 
 
-{{ set_topic name="Open Source:en" }}
+{{ local }}
 {{ unset_topic }}
 {{ if $campsite->topic->defined }}
     <h3>subtopics of topic {{ $campsite->topic->name }}</h3>
@@ -168,6 +168,7 @@
     <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
 {{ /if }}
 {{ /list_subtopics }}
+{{ /local }}
 
 
 <h3>subtitles list</h3>
