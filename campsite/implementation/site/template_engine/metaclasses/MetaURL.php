@@ -61,18 +61,16 @@ final class MetaURL
     public function __get($p_property)
     {
         try {
+            $p_property = strtolower($p_property);
             $property = 'm_'.$p_property;
             if (!property_exists($this, $property)) {
-                throw new InvalidPropertyException(get_class($this), $p_property);
+                return $this->getCustomProperty($p_property);
             }
             return $this->$property;
         } catch (InvalidPropertyException $e) {
-            try {
-                return $this->getCustomProperty($p_property);
-            } catch (InvalidPropertyException $e) {
-                $this->trigger_invalid_property_error($p_property);
-                return null;
-            }
+            $property = $this->m_uriObj->$p_property;
+            $className = 'Meta'.$p_property;
+            return is_null($property) ? new $className : $property;
         }
     } // fn __get
 

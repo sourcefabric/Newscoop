@@ -9,25 +9,6 @@
  * @link http://www.campware.org
  */
 
-/**
- * Includes
- *
- * We indirectly reference the DOCUMENT_ROOT so we can enable
- * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
- * is not defined in these cases.
- */
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/classes/UrlType.php');
-require_once($g_documentRoot.'/template_engine/classes/CampSystem.php');
-require_once($g_documentRoot.'/template_engine/classes/CampConfig.php');
-require_once($g_documentRoot.'/template_engine/classes/CampDatabase.php');
-require_once($g_documentRoot.'/template_engine/classes/CampSession.php');
-require_once($g_documentRoot.'/template_engine/classes/CampContext.php');
-require_once($g_documentRoot.'/template_engine/classes/CampRequest.php');
-require_once($g_documentRoot.'/template_engine/classes/CampURIShortNames.php');
-require_once($g_documentRoot.'/template_engine/classes/CampURITemplatePath.php');
-require_once($g_documentRoot.'/template_engine/metaclasses/MetaLanguage.php');
 
 /**
  * Class CampSite
@@ -69,32 +50,7 @@ final class CampSite extends CampSystem
         }
 
         // gets the context
-        $context = CampTemplate::singleton()->context();
-
-        $languageId = CampRequest::GetVar(CampRequest::LANGUAGE_ID);
-        if (!empty($languageId)) {
-            $this->setLanguage($languageId);
-        } else {
-            // gets the Config instance
-            $config =& self::GetConfigInstance();
-            $this->setLanguage($config->getSetting('locale.lang_id'));
-        }
-        $publicationId = CampRequest::GetVar(CampRequest::PUBLICATION_ID);
-        if (!empty($publicationId)) {
-            $this->setPublication($publicationId);
-        }
-        $issueNr = CampRequest::GetVar(CampRequest::ISSUE_NR);
-        if (!empty($issueNr)) {
-            $this->setIssue($publicationId, $languageId, $issueNr);
-        }
-        $sectionNr = CampRequest::GetVar(CampRequest::SECTION_NR);
-        if (!empty($sectionNr)) {
-            $this->setSection($publicationId, $issueNr, $languageId, $sectionNr);
-        }
-        $articleNr = CampRequest::GetVar(CampRequest::ARTICLE_NR);
-        if (!empty($articleNr)) {
-            $this->setArticle($languageId, $articleNr);
-        }
+        CampTemplate::singleton()->context();
     } // fn initContext
 
 
@@ -251,6 +207,7 @@ final class CampSite extends CampSystem
      *
      * @param string $p_uri
      *      The URI to work with
+     * @return CampURI
      */
     public static function GetURIInstance($p_uri = 'SELF')
     {

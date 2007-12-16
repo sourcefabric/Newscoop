@@ -109,12 +109,19 @@ final class CampContext
         // complete list of misc properties
         // ...
 
-        $this->m_readonlyProperties['url'] = new MetaURL();
         $this->m_readonlyProperties['lists'] = array();
         $this->m_readonlyProperties['issues_lists'] = array();
         $this->m_readonlyProperties['sections_lists'] = array();
         $this->m_readonlyProperties['articles_lists'] = array();
         $this->m_readonlyProperties['article_attachments_lists'] = array();
+
+        $url = new MetaURL();
+        $this->m_readonlyProperties['url'] = new MetaURL();
+        $this->publication = $url->publication;
+        $this->language = $url->language;
+        $this->issue = $url->issue;
+        $this->section = $url->section;
+        $this->article = $url->article;
     } // fn __construct
 
 

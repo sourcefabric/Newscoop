@@ -531,7 +531,7 @@ abstract class CampURI {
     public function setQueryVar($p_varName, $p_value, $p_toString = true)
     {
         $this->m_queryArray[$p_varName] = $p_value;
-        CampRequest::SetVar($p_varName, $p_value);
+        //CampRequest::SetVar($p_varName, $p_value);
         if ($p_toString == true) {
             $this->m_query = CampURI::QueryArrayToString($this->m_queryArray);
         }
@@ -634,6 +634,26 @@ abstract class CampURI {
     {
         $this->m_fragment = $p_fragment;
     } // fn setFragment
+
+
+    /**
+     * Sets an object property
+     *
+     * @param string $p_property
+     * @return bool
+     */
+    public function __get($p_property)
+    {
+        $p_property = strtolower($p_property);
+        if (!property_exists($this, "m_$p_property")) {
+            return null;
+        }
+        if (!is_a($p_value, 'Meta'.$p_property) && !is_null($p_value)) {
+            return null;
+        }
+        $memberName = "m_$p_property";
+        return $this->$memberName;
+    }
 
 
     /**
