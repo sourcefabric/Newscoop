@@ -3,6 +3,7 @@
  * @package Campsite
  *
  * @author Holman Romero <holman.romero@gmail.com>
+ * @author Mugur Rus <mugur.rus@gmail.com>
  * @copyright 2007 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
@@ -33,13 +34,6 @@ require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
  */
 class CampURIShortNames extends CampURI
 {
-    /**
-     * Holds the CampURIShortNames object
-     *
-     * @var object
-     */
-    private static $m_instance = null;
-
     /**
      * @var string
      */
@@ -334,8 +328,6 @@ class CampURIShortNames extends CampURI
      */
     private function setURL()
     {
-        global $g_ado_db;
-
         $this->m_publication = null;
         // gets the publication object based on site name (URI host)
         $alias = ltrim($this->getBase(), $this->getScheme().'://');

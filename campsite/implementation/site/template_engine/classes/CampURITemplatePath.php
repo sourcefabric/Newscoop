@@ -35,13 +35,6 @@ require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 class CampURITemplatePath extends CampURI
 {
     /**
-     * Holds the CampURITemplatePath object
-     *
-     * @var object
-     */
-    private static $m_instance = null;
-
-    /**
      * Template file name
      *
      * @var string
@@ -86,6 +79,7 @@ class CampURITemplatePath extends CampURI
     public function __construct($p_uri = null)
     {
         parent::__construct($p_uri);
+
         $this->setURLType(URLTYPE_TEMPLATE_PATH);
         $this->m_templatesPrefix = 'tpl';
         $this->parse();
@@ -123,15 +117,9 @@ class CampURITemplatePath extends CampURI
     private function getURILanguage()
     {
         $uriString = '';
-        $context = CampTemplate::singleton()->context();
-        if (is_object($context->language) && $context->language->defined) {
-            $uriString = CampRequest::LANGUAGE_ID.'='.$context->language->number;
-        } else {
-            $languageId = $this->getQueryVar(CampRequest::LANGUAGE_ID);
-            if (empty($languageId)) {
-                return null;
-            }
-            $uriString = CampRequest::LANGUAGE_ID.'='.$languageId;
+
+        if (!is_null($this->m_language)) {
+            $uriString = CampRequest::LANGUAGE_ID.'='.$this->m_language->number;
         }
 
         return $uriString;
@@ -152,15 +140,10 @@ class CampURITemplatePath extends CampURI
             return null;
         }
 
-        $context = CampTemplate::singleton()->context();
-        if (is_object($context->publication) && $context->publication->defined) {
-            $uriString .= '&'.CampRequest::PUBLICATION_ID.'='.$context->publication->identifier;
+        if (!is_null($this->m_publication)) {
+            $uriString .= '&'.CampRequest::PUBLICATION_ID.'='.$this->m_publication->identifier;
         } else {
-            $publicationId = $this->getQueryVar(CampRequest::PUBLICATION_ID);
-            if (empty($publicationId)) {
-                return null;
-            }
-            $uriString .= '&'.CampRequest::PUBLICATION_ID.'='.$publicationId;
+            $uriString = null;
         }
 
         return $uriString;
@@ -181,15 +164,10 @@ class CampURITemplatePath extends CampURI
             return null;
         }
 
-        $context = CampTemplate::singleton()->context();
-        if (is_object($context->issue) && $context->issue->defined) {
-            $uriString .= '&'.CampRequest::ISSUE_NR.'='.$context->issue->number;
+        if (!is_null($this->m_issue)) {
+            $uriString .= '&'.CampRequest::ISSUE_NR.'='.$this->m_issue->number;
         } else {
-            $issueNr = $this->getQueryVar(CampRequest::ISSUE_NR);
-            if (empty($issueNr)) {
-                return null;
-            }
-            $uriString .= '&'.CampRequest::ISSUE_NR.'='.$issueNr;
+            $uriString = null;
         }
 
         return $uriString;
@@ -210,15 +188,10 @@ class CampURITemplatePath extends CampURI
             return null;
         }
 
-        $context = CampTemplate::singleton()->context();
-        if (is_object($context->section) && $context->section->defined) {
-            $uriString .= '&'.CampRequest::SECTION_NR.'='.$context->section->number;
+        if (!is_null($this->m_section)) {
+            $uriString .= '&'.CampRequest::SECTION_NR.'='.$this->m_section->number;
         } else {
-            $sectionNr = $this->getQueryVar(CampRequest::SECTION_NR);
-            if (empty($sectionNr)) {
-                return null;
-            }
-            $uriString .= '&'.CampRequest::SECTION_NR.'='.$sectionNr;
+            $uriString = null;
         }
 
         return $uriString;
@@ -236,27 +209,14 @@ class CampURITemplatePath extends CampURI
     {
         $uriString = $this->getURISection();
 
-        $context = CampTemplate::singleton()->context();
-        if (is_object($context->article) && $context->article->defined) {
-            if (is_null($uriString)) {
-                $language = $context->article->getLanguage();
-                $publication = $context->article->getPublication();
-                $issue = $context->article->getIssue();
-                $section = $context->article->getSection();
-                $uriString = CampRequest::LANGUAGE_ID.'='.$language->number
-                    .'&'.CampRequest::PUBLICATION_ID.'='.$publication->identifier
-                    .'&'.CampRequest::ISSUE_NR.'='.$issue->number
-                    .'&'.CampRequest::SECTION_NR.'='.$section->number
-                    .'&'.CampRequest::ARTICLE_NR.'='.$context->article->number;
-            } else {
-                $uriString .= '&'.CampRequest::ARTICLE_NR.'='.$context->article->number;
-            }
+        if (empty($uriString)) {
+            return null;
+        }
+
+        if (!is_null($this->m_article)) {
+            $uriString .= '&'.CampRequest::ARTICLE_NR.'='.$this->m_article->number;
         } else {
-            $articleNr = $this->getQueryVar(CampRequest::ARTICLE_NR);
-            if (empty($articleNr)) {
-                return null;
-            }
-            $uriString .= '&'.CampRequest::ARTICLE_NR.'='.$articleNr;
+            $uriString = null;
         }
 
         return $uriString;
@@ -349,57 +309,81 @@ class CampURITemplatePath extends CampURI
      */
     private function setURL()
     {
-        global $g_ado_db;
-
+        $this->m_publication = null;
         // gets the publication object based on site name (URI host)
         $alias = ltrim($this->getBase(), $this->getScheme().'://');
         $aliasArray = Alias::GetAliases(null, null, $alias);
         if (is_array($aliasArray) && sizeof($aliasArray) == 1) {
-            $aliasObj = $aliasArray[0];
-            $cPubId = $aliasObj->getPublicationId();
-            $pubObj = new Publication($cPubId);
-            if (!is_object($pubObj) || !$pubObj->exists()) {
-                $cPubId = 0;
-                $pubObj = null;
-            }
-            $this->setQueryVar(CampRequest::PUBLICATION_ID, $cPubId);
+            $this->m_publication = new MetaPublication($aliasArray[0]->getPublicationId());
         }
-
-        if (empty($cPubId)) {
+        if (is_null($this->m_publication) || !$this->m_publication->defined()) {
             CampTemplate::singleton()->trigger_error('not valid site alias');
             return;
         }
 
-        // no path means we are at the home page
-        if ($this->getPath() == '' || $this->getPath() == '/') {
-            // sets the language identifier if necessary
-            if ($this->getQueryVar(CampRequest::LANGUAGE_ID) == 0) {
-                $cLangId = $pubObj->getLanguageId();
-                $this->setQueryVar(CampRequest::LANGUAGE_ID, $cLangId);
-            }
-            // sets the issue number if necessary
-            if ($this->getQueryVar(CampRequest::ISSUE_NR) == 0) {
-                $query = 'SELECT MAX(Number) AS Number FROM Issues '
-                    . 'WHERE IdPublication = '.$cPubId
-                    . ' AND IdLanguage = '.$cLangId
-                    . " AND Published = 'Y'";
-                $data = $g_ado_db->GetRow($query);
-                if (is_array($data) && sizeof($data) == 1) {
-                    $cIssueNr = $data['Number'];
-                }
+        $this->m_language = null;
+        // sets the language identifier
+        if ($this->getQueryVar(CampRequest::LANGUAGE_ID) > 0) {
+            $this->m_language = new MetaLanguage($this->getQueryVar(CampRequest::LANGUAGE_ID));
+        }
+        if (is_null($this->m_language) || !$this->m_language->defined()) {
+            $this->m_language = new MetaLanguage($this->m_publication->default_language->number);
+        }
+        if (is_null($this->m_language) || !$this->m_language->defined()) {
+            CampTemplate::singleton()->trigger_error('not valid language');
+            return;
+        }
 
-                if (empty($cIssueNr)) {
-                    CampTemplate::singleton()->trigger_error('not published issues');
-                    return;
-                }
-                $this->setQueryVar(CampRequest::ISSUE_NR, $cIssueNr);
+        $this->m_issue = null;
+        // sets the issue number
+        if ($this->getQueryVar(CampRequest::ISSUE_NR) > 0) {
+            $this->m_issue = new MetaIssue($this->m_publication->identifier,
+                                           $this->m_language->number,
+                                           $this->getQueryVar(CampRequest::ISSUE_NR));
+        } else {
+            $issueObj = Issue::GetCurrentIssue($this->m_publication->identifier,
+                                               $this->m_language->number);
+            $this->m_issue = new MetaIssue($this->m_publication->identifier,
+                                           $this->m_language->number,
+                                           $issueObj->getIssueNumber());
+        }
+        if (is_null($this->m_issue) || !$this->m_issue->defined()) {
+            CampTemplate::singleton()->trigger_error('not valid issue');
+            return;
+        }
+
+        // gets the template for the issue
+        $template = CampSystem::GetIssueTemplate($this->m_language->number,
+                                                 $this->m_publication->identifier,
+                                                 $this->m_issue->number);
+        $this->setTemplate($template);
+
+        $this->m_section = null;
+        // sets the section if any
+        if ($this->getQueryVar(CampRequest::SECTION_NR) > 0) {
+            $this->m_section = new MetaSection($this->m_publication->identifier,
+                                               $this->m_issue->number,
+                                               $this->m_language->number,
+                                               $this->getQueryVar(CampRequest::SECTION_NR));
+            if (is_null($this->m_section) || !$this->m_section->defined()) {
+                CampTemplate::singleton()->trigger_error('not valid section');
+                return;
             }
-            // gets the template for the issue
-            $template = CampSystem::GetIssueTemplate($cLangId, $cPubId, $cIssueNr);
-            $this->setTemplate($template);
+        }
+
+        $this->m_article = null;
+        // sets the article if any
+        if ($this->getQueryVar(CampRequest::ARTICLE_NR) > 0) {
+            $this->m_article = new MetaArticle($this->m_language->number,
+                                               $this->getQueryVar(CampRequest::ARTICLE_NR));
+            if (is_null($this->m_article) || !$this->m_article->defined()) {
+                CampTemplate::singleton()->trigger_error('not valid article');
+                return;
+            }
         }
 
         $this->m_validURI = true;
+        $this->validateCache(false);
     } // fn setURL
 
 
@@ -522,6 +506,7 @@ class CampURITemplatePath extends CampURI
 
             $this->m_uriPath = '/' . $this->m_templatesPrefix . '/' . $template;
         }
+        $this->validateCache(true);
     } // fn buildURI
 
 } // class CampURITemplatePath
