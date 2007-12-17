@@ -9,6 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/conf/liveuser_configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/classes/SyntaxError.php');
 
 
 $g_errorList = array();

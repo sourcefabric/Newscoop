@@ -661,9 +661,6 @@ abstract class CampURI {
         if (!property_exists($this, "m_$p_property")) {
             return null;
         }
-        if (!is_a($p_value, 'Meta'.$p_property) && !is_null($p_value)) {
-            return null;
-        }
         $memberName = "m_$p_property";
         return $this->$memberName;
     }

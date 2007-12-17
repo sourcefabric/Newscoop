@@ -5,7 +5,6 @@ define('SYNTAX_ERROR_TEMPLATE', 'template_name');
 define('SYNTAX_ERROR_LINE', 'line');
 define('SYNTAX_ERROR_WHAT', 'what');
 
-define('SYNTAX_ERROR_WHAT', 'what');
 define('WHAT_STATEMENT', 'statement');
 define('WHAT_PARAMETER', 'parameter');
 define('WHAT_VALUE', 'value');

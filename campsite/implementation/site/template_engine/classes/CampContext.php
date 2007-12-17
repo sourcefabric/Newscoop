@@ -197,8 +197,13 @@ final class CampContext
                     throw new InvalidObjectException($p_element);
                 }
 
-                if ($this->m_objects[$p_element] != $p_value) {
-                    $oldValue = $this->m_objects[$p_element];
+                if (!isset($this->m_objects[$p_element])
+                        || $this->m_objects[$p_element] != $p_value) {
+                    if (isset($this->m_objects[$p_element])) {
+                        $oldValue = $this->m_objects[$p_element];
+                    } else {
+                        $oldValue = new $metaclass;
+                    }
                     $this->m_objects[$p_element] = $p_value;
                     if (isset(CampContext::$m_objectTypes[$p_element]['handler'])) {
                         $setHandler = CampContext::$m_objectTypes[$p_element]['handler'];
