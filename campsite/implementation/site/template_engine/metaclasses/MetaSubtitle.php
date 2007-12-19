@@ -6,20 +6,64 @@
 
 final class MetaSubtitle {
 
+    /**
+     * The pattern used to detect the subtitles.
+     *
+     * @var string
+     */
     static private $m_SubtitlePattern = '<!\*\*[\s]*Title[\s]*>([^<]*)<!\*\*[\s]*EndTitle[\s]*>';
 
+    /**
+     * The pattern used to detect the subtitle formatting start.
+     *
+     * @var string
+     */
     static private $m_HeaderStartPattern = '(<[\s]*[hH][\d][\s]*>[\s]*)*';
 
+    /**
+     * The pattern used to detect the subtitle formatting end.
+     *
+     * @var string
+     */
     static private $m_HeaderEndPattern = '([\s]*<[\s]*\/[\s]*[hH][\d][\s]*>)*';
 
+    /**
+     * The subtitle name
+     *
+     * @var string
+     */
     private $m_name;
 
+    /**
+     * The subtitle content
+     *
+     * @var string
+     */
     private $m_content;
 
+    /**
+     * Stores the subtitle name formatting start
+     *
+     * @var string
+     */
     private $m_nameFormattingStart;
 
+    /**
+     * Stores the subtitle name formatting end
+     *
+     * @var string
+     */
     private $m_nameFormattingEnd;
 
+
+    /**
+     * Constructor
+     *
+     * @param string $p_name
+     * @param string $p_content
+     * @param string $p_formattingStart
+     * @param string $p_formattingEnd
+     */
     public function MetaSubtitle($p_name = null, $p_content = null,
             $p_formattingStart = '', $p_formattingEnd = '') {
         $this->m_name = $p_name;
@@ -28,33 +72,72 @@ final class MetaSubtitle {
         $this->m_nameFormattingEnd = $p_formattingEnd;
     }
 
+
+    /**
+     * Returns the subtitle name
+     *
+     * @return string
+     */
     public function getName() {
         return $this->m_name;
     }
 
+
+    /**
+     * Returns the formatted subtitle name
+     *
+     * @param string $p_formattingStart
+     * @param string $p_formattingEnd
+     * @return string
+     */
     public function getFormattedName($p_formattingStart = '<p>', $p_formattingEnd = '</p>') {
         $formattingStart = empty($this->m_nameFormattingStart) ? $p_formattingStart : $this->m_nameFormattingStart;
         $formattingEnd = empty($this->m_nameFormattingEnd) ? $p_formattingEnd : $this->m_nameFormattingEnd;
         return $formattingStart.$this->m_name.$formattingEnd;
     }
 
+
+    /**
+     * Returns the subtitle content
+     *
+     * @return string
+     */
     public function getContent() {
         return $this->m_content;
     }
 
-    public static function ReadSubtitles($p_content, $p_firstSubtitle = '') {
+
+    /**
+     * Reads the subtitles from the given content
+     *
+     * @param string $p_content
+     * @param string $p_firstSubtitle
+     * @return array of MetaSubtitle
+     */
+    public static function ReadSubtitles($p_content, $p_firstSubtitle = '',
+                                         $p_headerFormatStart = null,
+                                         $p_headerFormatEnd = null) {
         $result = preg_match_all('/('.MetaSubtitle::GetFindPattern().')/i', $p_content, $subtitlesNames);
 
         $contentParts = preg_split('/'.MetaSubtitle::GetSplitPattern().'/i', $p_content);
         $subtitlesContents = array();
         foreach ($contentParts as $index=>$contentPart) {
             $name = $index > 0 ? $subtitlesNames[3][$index-1] : $p_firstSubtitle;
-            $formatStart = $index > 0 ? $subtitlesNames[2][$index-1] : '';
-            $formatEnd = $index > 0 ? $subtitlesNames[4][$index-1] : '';
+            if (empty($p_headerFormatStart)) {
+                $formatStart = $index > 0 ? $subtitlesNames[2][$index-1] : '';
+            } else {
+                $formatStart = $p_headerFormatStart;
+            }
+            if (empty($p_headerFormatEnd)) {
+                $formatEnd = $index > 0 ? $subtitlesNames[4][$index-1] : '';
+            } else {
+                $formatEnd = $p_headerFormatEnd;
+            }
             $subtitles[] = new MetaSubtitle($name, $contentPart, $formatStart, $formatEnd);
         }
         return $subtitles;
     }
+
 
     /**
      * Process the body field content (except subtitles):
@@ -78,6 +161,14 @@ final class MetaSubtitle {
                                      $content);
     }
 
+
+    /**
+     * Process the image statement given in Campsite internal formatting.
+     * Returns a standard image URL.
+     *
+     * @param array $p_matches
+     * @return string
+     */
     public static function ProcessImageLink(array $p_matches) {
         $uri = CampTemplate::singleton()->context()->url;
         if ($uri->article->number == 0) {
@@ -112,6 +203,14 @@ final class MetaSubtitle {
         return $imgString;
     }
 
+
+    /**
+     * Process the internal link statement given in Campsite internal formatting.
+     * Returns a standard URL.
+     *
+     * @param array $p_matches
+     * @return string
+     */
     public static function ProcessInternalLink(array $p_matches) {
         $parametersString = $p_matches[1];
         $targetName = $p_matches[4];
@@ -141,10 +240,22 @@ final class MetaSubtitle {
         return $urlString;
     }
 
+
+    /**
+     * Returns the pattern used to split the content in subtitles
+     *
+     * @return string
+     */
     private static function GetSplitPattern() {
         return MetaSubtitle::$m_HeaderStartPattern.MetaSubtitle::$m_SubtitlePattern.MetaSubtitle::$m_HeaderEndPattern;
     }
 
+
+    /**
+     * Returns the pattern used to find a subtitle in the article content field
+     *
+     * @return string
+     */
     private static function GetFindPattern() {
         return MetaSubtitle::$m_HeaderStartPattern.MetaSubtitle::$m_SubtitlePattern.MetaSubtitle::$m_HeaderEndPattern;
     }
