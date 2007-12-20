@@ -3,6 +3,7 @@
  * @package Campsite
  *
  * @author Holman Romero <holman.romero@gmail.com>
+ * @author Mugur Rus <mugur.rus@gmail.com>
  * @copyright 2007 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
@@ -94,14 +95,12 @@ abstract class CampURI {
      */
     private $m_queryArray = null;
 
-
     /**
      * Language object
      *
      * @var MetaLanguage
      */
     protected $m_language = null;
-
 
     /**
      * Publication object
@@ -110,14 +109,12 @@ abstract class CampURI {
      */
     protected $m_publication = null;
 
-
     /**
      * Issue object
      *
      * @var MetaIssue
      */
     protected $m_issue = null;
-
 
     /**
      * Section object
@@ -126,14 +123,12 @@ abstract class CampURI {
      */
     protected $m_section = null;
 
-
     /**
      * Article object
      *
      * @var MetaArticle
      */
     protected $m_article = null;
-
 
     /**
      *
@@ -663,7 +658,7 @@ abstract class CampURI {
         }
         $memberName = "m_$p_property";
         return $this->$memberName;
-    }
+    } // fn __get
 
 
     /**
@@ -690,7 +685,7 @@ abstract class CampURI {
         $this->$memberName = $p_value;
         $this->validateCache(false);
         return true;
-    }
+    } // fn __set
 
 
     /**
@@ -701,7 +696,7 @@ abstract class CampURI {
     protected function validateCache($p_valid)
     {
         $this->m_validCache = $p_valid;
-    }
+    } // fn validateCache
 
 
     /**
@@ -712,7 +707,7 @@ abstract class CampURI {
     protected function isValidCache()
     {
         return $this->m_validCache;
-    }
+    } // fn isValidCache
 
 
     /**

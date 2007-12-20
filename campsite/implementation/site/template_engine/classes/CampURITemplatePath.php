@@ -99,11 +99,14 @@ class CampURITemplatePath extends CampURI
             return $this->m_template;
         }
 
-        $template = CampSystem::GetTemplate($this->getQueryVar(CampRequest::LANGUAGE_ID),
-                                            $this->getQueryVar(CampRequest::PUBLICATION_ID),
-                                            $this->getQueryVar(CampRequest::ISSUE_NR),
-                                            $this->getQueryVar(CampRequest::SECTION_NR),
-                                            $this->getQueryVar(CampRequest::ARTICLE_NR));
+        $languageId = !is_null($this->language) ? $this->language->number : null;
+        $publicationId = !is_null($this->publication) ? $this->publication->identifier : null;
+        $issueNo = !is_null($this->issue) ? $this->issue->number : null;
+        $sectionNo = !is_null($this->section) ? $this->section->number : null;
+        $articleNo = !is_null($this->article) ? $this->article->number : null;
+        $template = CampSystem::GetTemplate($languageId, $publicationId,
+                                            $issueNo, $sectionNo, $articleNo);
+
         return $template;
     } // fn getTemplate
 
@@ -351,12 +354,6 @@ class CampURITemplatePath extends CampURI
             CampTemplate::singleton()->trigger_error('not valid issue');
             return;
         }
-
-        // gets the template for the issue
-        $template = CampSystem::GetIssueTemplate($this->m_language->number,
-                                                 $this->m_publication->identifier,
-                                                 $this->m_issue->number);
-        $this->setTemplate($template);
 
         $this->m_section = null;
         // sets the section if any
