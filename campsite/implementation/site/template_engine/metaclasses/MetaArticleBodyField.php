@@ -56,8 +56,12 @@ final class MetaArticleBodyField {
      */
     public function getContent(array $p_subtitles = array())
     {
+        $printAll = empty($p_subtitles);
         $content = '';
-        foreach ($this->m_subtitles as $subtitle) {
+        foreach ($this->m_subtitles as $index=>$subtitle) {
+            if (!$printAll && array_search($index, $p_subtitles) === false) {
+                continue;
+            }
             $content .= $subtitle->getFormattedName();
             $content .= $subtitle->getContent();
         }
