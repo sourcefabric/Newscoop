@@ -47,6 +47,9 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 	} elseif (preg_match('/invalid\s+value\s+(.+)\s+of\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
 		$errorCode = SYNTAX_ERROR_INVALID_PARAMETER_VALUE;
 		$what = array($matches[1], $matches[2], $matches[3]);
+	} elseif (preg_match('/missing\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
+		$errorCode = SYNTAX_ERROR_MISSING_PARAMETER;
+		$what = array($matches[1], $matches[2]);
 	} else {
 		$errorCode = SYNTAX_ERROR_UNKNOWN;
 		$what = array($errorString);

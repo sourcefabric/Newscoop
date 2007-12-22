@@ -171,14 +171,24 @@
 {{ /local }}
 
 
+{{ use_body_field article_type="Article" field_name="Full_text" }}
+<h4>use_body_field: article type: {{ $campsite->body_field_article_type }},
+    field name: {{ $campsite->body_field_name }}</h4>
 <h3>subtitles list</h3>
-{{ list_subtitles length="2" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="invalid" }}
-<li>subtitle: <b>{{ $campsite->current_subtitles_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
-   list index: <b>{{ $campsite->current_subtitles_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_subtitles_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+{{ list_subtitles length="2" columns="2" name='sample_name' }}
+{{ if $campsite->current_list->at_beginning }}
+<li>count: {{ $campsite->current_list->count }}</li>
+{{ /if }}
+<li>subtitle: <b>{{ $campsite->current_subtitles_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>/<b>{{ $campsite->subtitle->name }}</b>,
+   list index: <b>{{ $campsite->current_subtitles_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_subtitles_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current subtitles list/current list)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+{{ /if }}
 {{ /list_subtitles }}
+{{ /use_body_field }}
 
 
 {{ if $campsite->hasProperty('invalid_property') }}
@@ -979,7 +989,7 @@
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->article->publication->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->publication }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->publication->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
@@ -987,7 +997,7 @@
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->article->issue->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->issue }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->issue->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
@@ -995,7 +1005,7 @@
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->article->section->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->section }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->section->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>

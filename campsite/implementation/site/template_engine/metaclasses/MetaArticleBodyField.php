@@ -27,18 +27,18 @@ final class MetaArticleBodyField {
      *
      * @param string $p_content
      */
-    public function MetaArticleBodyField(MetaArticle $p_article, $p_bodyField,
+    public function MetaArticleBodyField($p_content, $p_articleName, $p_bodyField,
                                          $p_headerFormatStart = null,
                                          $p_headerFormatEnd = null) {
-        if (!$p_article->defined) {
-            return;
-        }
-        try {
-            $content = $p_article->$p_bodyField;
-        } catch (InvalidPropertyException $ex) {
-            return;
-        }
-        $this->m_subtitles = MetaSubtitle::ReadSubtitles($content, $p_article->name,
+//        if (!$p_article->defined) {
+//            return;
+//        }
+//        try {
+//            $content = $p_article->$p_bodyField;
+//        } catch (InvalidPropertyException $ex) {
+//            return;
+//        }
+        $this->m_subtitles = MetaSubtitle::ReadSubtitles($p_content, $p_articleName,
                                                          $p_headerFormatStart,
                                                          $p_headerFormatEnd);
         $this->m_sutitlesNames = array();
@@ -62,7 +62,7 @@ final class MetaArticleBodyField {
             if (!$printAll && array_search($index, $p_subtitles) === false) {
                 continue;
             }
-            $content .= $subtitle->getFormattedName();
+            $content .= $index > 0 ? $subtitle->getFormattedName() : '';
             $content .= $subtitle->getContent();
         }
         return $content;

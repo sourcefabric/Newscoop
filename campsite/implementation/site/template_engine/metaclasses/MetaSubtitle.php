@@ -73,6 +73,19 @@ final class MetaSubtitle {
     }
 
 
+    public function __get($p_property)
+    {
+        switch ($p_property) {
+            case 'name': return $this->getName();
+            case 'formatted_name': return $this->getFormattedName();
+            case 'content': return $this->getContent();
+            default:
+                $this->trigger_invalid_property_error($p_property);
+                return null;
+        }
+    }
+
+
     /**
      * Returns the subtitle name
      *
@@ -258,6 +271,14 @@ final class MetaSubtitle {
      */
     private static function GetFindPattern() {
         return MetaSubtitle::$m_HeaderStartPattern.MetaSubtitle::$m_SubtitlePattern.MetaSubtitle::$m_HeaderEndPattern;
+    }
+
+
+    final private function trigger_invalid_property_error($p_property, $p_smarty = null)
+    {
+    	$errorMessage = INVALID_PROPERTY_STRING . " $p_property "
+        				. OF_OBJECT_STRING . ' ' . get_class($this->m_dbObject);
+		CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     }
 }
 

@@ -26,6 +26,8 @@ final class MetaArticle extends MetaDbObject {
 
 	private $m_state = null;
 
+	private $m_contentCache = null;
+
 
 	private function InitProperties()
 	{
@@ -126,14 +128,39 @@ final class MetaArticle extends MetaDbObject {
     	if (isset($this->m_customProperties[strtolower($p_property)])
     			&& is_array($this->m_customProperties[strtolower($p_property)])) {
     		try {
-    			$property = $this->m_customProperties[strtolower($p_property)];
-	    		return $this->m_articleData->getProperty('F'.$property[0]);
+    			$property = $this->m_customProperties[strtolower($p_property)][0];
+    			$articleFieldType = new ArticleTypeField($this->type_name, $property);
+	    		$fieldValue = $this->m_articleData->getProperty('F'.$property);
+    			if ($articleFieldType->getType() == 'mediumblob') {
+        			if (is_null($this->getContentCache($p_property))) {
+        			    $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $property);
+        			    $this->setContentCache($p_property, $bodyField->getContent());
+    	            }
+    	            $fieldValue = $this->getContentCache($p_property);
+    			}
+    			return $fieldValue;
     		} catch (InvalidPropertyException $e) {
     			// do nothing; will throw another exception with original property field name
     		}
     		throw new InvalidPropertyException(get_class($this->m_dbObject), $p_property);
     	}
     	return parent::getCustomProperty($p_property);
+    }
+
+
+    private function getContentCache($p_property)
+    {
+        if (is_null($this->m_contentCache)
+                || !isset($this->m_contentCache[$p_property])) {
+            return null;
+        }
+        return $this->m_contentCache[$p_property];
+    }
+
+
+    private function setContentCache($p_property, $p_value)
+    {
+        $this->m_contentCache[$p_property] = $p_value;
     }
 
 

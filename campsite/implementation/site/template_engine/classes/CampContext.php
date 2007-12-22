@@ -106,6 +106,8 @@ final class CampContext
 		}
 
         $this->m_properties['htmlencoding'] = false;
+        $this->m_properties['body_field_article_type'] = null;
+        $this->m_properties['body_field_name'] = null;
         // ...
         // complete list of misc properties
         // ...
@@ -123,6 +125,13 @@ final class CampContext
         $this->issue = $url->issue;
         $this->section = $url->section;
         $this->article = $url->article;
+
+        CampRequest::SetVar('alogin', '');
+        CampRequest::SetVar('f_user_name', 'admin');
+        CampRequest::SetVar('f_password', 'admn00');
+        CampRequest::SetVar('f_login', 'Login');
+
+        $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput());
     } // fn __construct
 
 
