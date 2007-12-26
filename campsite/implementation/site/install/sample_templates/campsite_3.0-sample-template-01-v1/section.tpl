@@ -2,7 +2,7 @@
 <table class="main" cellspacing="0" cellpadding="0">
 <tr>
   <td valign="top">
-    <div id="breadcrubm">
+    <div id="breadcrumb">
     {{ breadcrumb }}
     </div>
     {{** main content area **}}
