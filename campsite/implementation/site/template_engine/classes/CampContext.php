@@ -125,13 +125,18 @@ final class CampContext
         $this->issue = $url->issue;
         $this->section = $url->section;
         $this->article = $url->article;
-
-        CampRequest::SetVar('alogin', '');
-        CampRequest::SetVar('f_user_name', 'admin');
-        CampRequest::SetVar('f_password', 'admn00');
-        CampRequest::SetVar('f_login', 'Login');
+        
+        $userId = CampRequest::GetVar('LoginUserId');
+        if (!is_null($userId)) {
+            $user = new User($userId);
+            if ($user->exists()
+                    && $user->getKeyId() == CampRequest::GetVar('LoginUserKey')) {
+                $this->user = new MetaUser($userId);
+            }
+        }
 
         $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput());
+        $this->m_readonlyProperties['request_action']->takeAction($this);
     } // fn __construct
 
 
