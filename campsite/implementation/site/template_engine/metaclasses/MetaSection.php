@@ -39,10 +39,10 @@ final class MetaSection extends MetaDbObject {
 
 		$this->InitProperties();
 		$this->m_customProperties['template'] = 'getTemplate';
-        $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['publication'] = 'getPublication';
-        $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['issue'] = 'getIssue';
+        $this->m_customProperties['language'] = 'getLanguage';
+        $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 

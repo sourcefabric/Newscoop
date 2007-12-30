@@ -47,10 +47,10 @@ final class MetaIssue extends MetaDbObject {
         $this->m_customProperties['min'] = 'getPublishMinute';
         $this->m_customProperties['sec'] = 'getPublishSecond';
 		$this->m_customProperties['template'] = 'getTemplate';
-        $this->m_customProperties['is_current'] = 'isCurrent';
-        $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['publication'] = 'getPublication';
         $this->m_customProperties['language'] = 'getLanguage';
+		$this->m_customProperties['is_current'] = 'isCurrent';
+        $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 

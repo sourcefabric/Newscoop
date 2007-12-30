@@ -34,12 +34,12 @@ final class MetaArticle extends MetaDbObject {
 		if (!is_null($this->m_properties)) {
 			return;
 		}
-		$this->m_properties['number'] = 'Number';
-		$this->m_properties['type_name'] = 'Type';
 		$this->m_properties['name'] = 'Name';
-		$this->m_properties['publish_date'] = 'PublishDate';
-		$this->m_properties['creation_date'] = 'UploadDate';
+		$this->m_properties['number'] = 'Number';
 		$this->m_properties['keywords'] = 'Keywords';
+		$this->m_properties['type_name'] = 'Type';
+		$this->m_properties['creation_date'] = 'UploadDate';
+		$this->m_properties['publish_date'] = 'PublishDate';
 		$this->m_properties['url_name'] = 'ShortName';
 		$this->m_properties['comments_locked'] = 'comments_locked';
 		$this->m_properties['last_update'] = 'time_updated';
@@ -71,6 +71,8 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['hour'] = 'getCreationHour';
         $this->m_customProperties['min'] = 'getCreationMinute';
         $this->m_customProperties['sec'] = 'getCreationSecond';
+        $this->m_customProperties['template'] = 'getTemplate';
+        $this->m_customProperties['comments_enabled'] = 'getCommentsEnabled';
         $this->m_customProperties['on_front_page'] = 'getOnFrontPage';
         $this->m_customProperties['on_section_page'] = 'getOnSectionPage';
         $this->m_customProperties['is_published'] = 'getIsPublished';
@@ -81,10 +83,8 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['section'] = 'getSection';
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['owner'] = 'getOwner';
-        $this->m_customProperties['template'] = 'getTemplate';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['has_attachments'] = 'hasAttachments';
-        $this->m_customProperties['comments_enabled'] = 'getCommentsEnabled';
     } // fn __construct
 
 

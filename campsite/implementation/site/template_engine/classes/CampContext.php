@@ -18,7 +18,9 @@ final class CampContext
 {
     // Defines the object types
     private static $m_objectTypes = array(
-                                    'publication'=>array('class'=>'Publication',
+								    'language'=>array('class'=>'Language',
+								                      'handler'=>'setLanguageHandler'),
+    								'publication'=>array('class'=>'Publication',
                                                          'handler'=>'setPublicationHandler'),
 								    'issue'=>array('class'=>'Issue',
 								                   'handler'=>'setIssueHandler'),
@@ -26,8 +28,6 @@ final class CampContext
 								                     'handler'=>'setSectionHandler'),
 								    'article'=>array('class'=>'Article',
 								                     'handler'=>'setArticleHandler'),
-								    'language'=>array('class'=>'Language',
-								                      'handler'=>'setLanguageHandler'),
 								    'image'=>array('class'=>'Image'),
 								    'attachment'=>array('class'=>'Attachment'),
 								    'audioclip'=>array('class'=>'Audioclip'),
@@ -44,20 +44,20 @@ final class CampContext
 	                         'issues'=>array('class'=>'Issues', 'list'=>'issues'),
 	                         'sections'=>array('class'=>'Sections', 'list'=>'sections'),
 	                         'articles'=>array('class'=>'Articles', 'list'=>'articles'),
-	                         'articleattachments'=>array('class'=>'ArticleAttachments',
-	                                                     'list'=>'article_attachments'),
-	                         'articlecomments'=>array('class'=>'ArticleComments',
-	                                                  'list'=>'article_comments'),
 	                         'articleimages'=>array('class'=>'ArticleImages',
 	                                                'list'=>'article_images'),
-	                         'articletopics'=>array('class'=>'ArticleTopics',
-	                                                'list'=>'article_topics'),
+    						 'articleattachments'=>array('class'=>'ArticleAttachments',
+	                                                     'list'=>'article_attachments'),
 	                         'articleaudioattachments'=>array('class'=>'ArticleAudioAttachments',
 	                                                          'list'=>'article_audio_attachments'),
+    						 'articlecomments'=>array('class'=>'ArticleComments',
+	                                                  'list'=>'article_comments'),
+	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles'),
+    						 'articletopics'=>array('class'=>'ArticleTopics',
+	                                                'list'=>'article_topics'),
 	                         'searchresults'=>array('class'=>'SearchResults',
 	                                                'list'=>'search_results'),
-	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics'),
-	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles')
+	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics')
     );
 
     /**
@@ -108,9 +108,6 @@ final class CampContext
         $this->m_properties['htmlencoding'] = false;
         $this->m_properties['body_field_article_type'] = null;
         $this->m_properties['body_field_name'] = null;
-        // ...
-        // complete list of misc properties
-        // ...
 
         $this->m_readonlyProperties['lists'] = array();
         $this->m_readonlyProperties['issues_lists'] = array();
