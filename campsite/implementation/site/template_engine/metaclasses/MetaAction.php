@@ -29,6 +29,20 @@ class MetaAction
      */
     protected $m_error = null;
 
+    
+    /**
+     * Base initializations
+     *
+     * @param array $p_input
+     */
+    public function __construct()
+    {
+        if (!is_array($this->m_properties)) {
+            $this->m_properties = array();
+        }
+        $this->m_properties['name'] = null;
+    }
+    
 
     /**
      * Performs the action; returns true on success, false on error.

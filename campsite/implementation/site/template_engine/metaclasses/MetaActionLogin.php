@@ -11,6 +11,11 @@ class MetaActionLogin extends MetaAction
     private $m_user;
 
 
+    /**
+     * Reads the input parameters and sets up the login action.
+     *
+     * @param array $p_input
+     */
     public function __construct(array $p_input)
     {
         if (!isset($p_input['f_user_name'])) {
@@ -32,6 +37,7 @@ class MetaActionLogin extends MetaAction
         $this->m_defined = true;
         $this->m_error = null;
         $this->m_properties['user_name'] = $p_input['f_user_name'];
+        $this->m_properties['name'] = 'login';
         $this->m_user = $user;
         $this->m_user->initLoginKey();
     }
