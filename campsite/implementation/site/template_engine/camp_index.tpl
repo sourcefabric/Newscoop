@@ -15,7 +15,7 @@
    (current issues list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_issues }}
 
@@ -31,7 +31,7 @@
    (current sections list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_sections }}
 
@@ -47,7 +47,7 @@
    (current articles list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_articles }}
 
@@ -63,7 +63,7 @@
    (current article attachments list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_attachments }}
 
@@ -79,7 +79,7 @@
    (current article comments list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_comments }}
 
@@ -95,7 +95,7 @@
    (current article images list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_images }}
 
@@ -111,7 +111,7 @@
    (current article topics list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_topics }}
 
@@ -127,7 +127,7 @@
    (current article audio attachments list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_audio_attachments }}
 
@@ -143,7 +143,7 @@
    (current search results list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_search_results }}
 
@@ -165,7 +165,7 @@
    (current subtopics list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_subtopics }}
 {{ /local }}
@@ -185,7 +185,7 @@
    (current subtitles list/current list)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_subtitles }}
 {{ /use_body_field }}

@@ -486,6 +486,10 @@ abstract class ListObject
 	            return $this->getIndex() == 1;
 	        case 'at_end';
 	            return ($this->getStart() + $this->getIndex()) == $this->getEnd();
+	        case 'has_next_elements':
+	            return $this->hasNextElements();
+	        case 'has_previous_elements':
+	            return $this->hasPreviousElements();
 	    }
 	}
 
