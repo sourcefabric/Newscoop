@@ -259,11 +259,22 @@ class CampInstallationBase
             return false;
         }
 
-        $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$this->m_sampleSiteName;
+        // copies template files to corresponding directory
+        $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$this->m_sampleSiteName.DIR_SEP.'templates';
         $target = CS_PATH_SMARTY_TEMPLATES;
         if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Copying sample site files';
+            return false;
+        }
+
+        // copies template data files to corresponding directories.
+        // data files are article images and article attachments
+        $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$this->m_sampleSiteName.DIR_SEP.'data';
+        $target = CS_PATH_SITE;
+        if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
+            $this->m_step = 'loaddemo';
+            $this->m_message = 'Error: Copying sample site data files';
             return false;
         }
 

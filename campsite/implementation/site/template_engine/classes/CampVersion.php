@@ -32,7 +32,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_devStatus = 'beta 1';
+    private $m_devStatus = 'beta 2';
 
     /**
      * @var string
