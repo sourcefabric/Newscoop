@@ -4,6 +4,14 @@
 </head>
 <body>
 
+<p>default language: {{ $campsite->default_language->name }}</p>
+<p>default publication: {{ $campsite->default_publication->name }}</p>
+<p>default issue: {{ $campsite->default_issue->name }}</p>
+<p>default section: {{ $campsite->default_section->name }}</p>
+<p>default article: {{ $campsite->default_article->name }}</p>
+<p>default topic: {{ $campsite->default_topic->name }}</p>
+<p>default url: {{ $campsite->default_url->url }}</p>
+
 <h3>issues list</h3>
 {{ list_issues length="2" columns="3" name='sample_name' constraints="name greater a" order='byDate asc' }}
 {{ if $campsite->current_list->at_beginning }}

@@ -70,7 +70,7 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 
 
 // Initialise the template and context
-$_SERVER['REQUEST_URI'] = '';
+$_SERVER['REQUEST_URI'] = '/en/first/opensource/140/?tpid=14';
 $tpl = CampTemplate::singleton();
 
 $context = $tpl->context();

@@ -123,6 +123,14 @@ final class CampContext
         $this->section = $url->section;
         $this->article = $url->article;
 
+        $this->m_readonlyProperties['default_language'] = $this->language;
+        $this->m_readonlyProperties['default_publication'] = $this->publication;
+        $this->m_readonlyProperties['default_issue'] = $this->issue;
+        $this->m_readonlyProperties['default_section'] = $this->section;
+        $this->m_readonlyProperties['default_article'] = $this->article;
+        $this->m_readonlyProperties['default_topic'] = $this->topic;
+        $this->m_readonlyProperties['default_url'] = new MetaURL();
+        
         $userId = CampRequest::GetVar('LoginUserId');
         if (!is_null($userId)) {
             $user = new User($userId);
