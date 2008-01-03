@@ -35,6 +35,18 @@ require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 class CampURITemplatePath extends CampURI
 {
     /**
+     * Parameters that are restricted to CampURITemplatePath object use.
+     *
+     * @var array
+     */
+    static private $m_restriectedParameters = array('NrImage', 'IdLanguage',
+    'IdPublication', 'NrIssue', 'NrSection', 'NrArticle', 'subtitle', 'ILStart',
+    'SLStart', 'ALStart', 'SrLStart', 'StLStart', 'class', 'cb_subs', 'tx_subs',
+    'subscribe', 'useradd', 'usermodify', 'login', 'SubsType', 'keyword', 'search',
+    'RememberUser', 'tpid', 'tpl', 'preview', 'debug'
+    );
+    
+    /**
      * Template file name
      *
      * @var string
@@ -288,7 +300,20 @@ class CampURITemplatePath extends CampURI
         return $this->m_uriQuery;
     } // fn getURLParameters
 
-
+    
+    /**
+     * Returns true if the given parameter is restricted and can not 
+     * be set from outside the URL object.
+     *
+     * @param string $p_parameterName
+     * @return bool
+     */
+    public function isRestrictedParameter($p_parameterName)
+    {
+        return in_array($p_parameterName, CampURITemplatePath::$m_restriectedParameters);
+    }
+    
+    
     /**
      * Parses the URI.
      * As URI was already parsed by CampURI, this function only takes care of

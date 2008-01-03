@@ -213,7 +213,16 @@ abstract class CampURI {
      */
     abstract public function getURLParameters($p_param = null);
 
-
+    /**
+     * Returns true if the given parameter is restricted and can not 
+     * be set from outside the URL object.
+     *
+     * @param string $p_parameterName
+     * @return bool
+     */
+    abstract public function isRestrictedParameter($p_parameterName);
+    
+    
     /**
      * Parses the given URI.
      *
@@ -541,7 +550,11 @@ abstract class CampURI {
      */
     public function setQueryVar($p_varName, $p_value)
     {
-        $this->m_queryArray[$p_varName] = $p_value;
+        if (is_null($p_value)) {
+            unset($this->m_queryArray[$p_varName]);
+        } else {
+            $this->m_queryArray[$p_varName] = $p_value;
+        }
         $this->validateCache(false);
     } // fn setQueryVar
 

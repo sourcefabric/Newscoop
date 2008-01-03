@@ -1,6 +1,12 @@
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD HTML 4.01//EN"
     "http://www.w3.org/TR/html4/strict.dtd">
+{{ if $campsite->url->get_parameter('logout') == 'true' }}
+<META HTTP-EQUIV="Set-Cookie" CONTENT="LoginUserId=; path=/">
+<META HTTP-EQUIV="Set-Cookie" CONTENT="LoginUserKey=; path=/">
+{{ $campsite->url->reset_parameter('logout') }}
+<META HTTP-EQUIV="Refresh" content="0;url={{ uri }}">
+{{ /if }}
 <html>
 <head>
   <title>{{ $siteinfo.title }}</title>

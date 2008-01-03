@@ -35,6 +35,18 @@ require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 class CampURIShortNames extends CampURI
 {
     /**
+     * Parameters that are restricted to CampURIShortNames object use.
+     *
+     * @var array
+     */
+    static private $m_restriectedParameters = array('NrImage', 'IdLanguage',
+    'IdPublication', 'NrIssue', 'NrSection', 'NrArticle', 'subtitle', 'ILStart',
+    'SLStart', 'ALStart', 'SrLStart', 'StLStart', 'class', 'cb_subs', 'tx_subs',
+    'subscribe', 'useradd', 'usermodify', 'login', 'SubsType', 'keyword', 'search',
+    'RememberUser', 'tpid', 'tpl', 'preview', 'debug'
+    );
+    
+    /**
      * @var string
      */
     private $m_template = null;
@@ -318,6 +330,19 @@ class CampURIShortNames extends CampURI
         return $this->m_uriQuery;
     } // fn getURLParameters
 
+    
+    /**
+     * Returns true if the given parameter is restricted and can not 
+     * be set from outside the URL object.
+     *
+     * @param string $p_parameterName
+     * @return bool
+     */
+    public function isRestrictedParameter($p_parameterName)
+    {
+        return in_array($p_parameterName, CampURIShortNames::$m_restriectedParameters);
+    }
+    
 
     /**
      * Sets the URL values.
@@ -448,6 +473,10 @@ class CampURIShortNames extends CampURI
 	 */
 	private function buildURI($p_param = null)
 	{
+	    if ($this->isValidCache()) {
+	        return;
+	    }
+	    
         $this->m_uriPath = null;
         $this->m_uriQuery = null;
 
@@ -478,19 +507,20 @@ class CampURIShortNames extends CampURI
             break;
         default:
             if (empty($p_param)) {
-                if (!is_null($this->m_language)) {
+                if (!is_null($this->m_language) && $this->m_language->defined) {
                     $this->m_path = '/' . $this->m_language->code . '/';
-                    if (!is_null($this->m_issue)) {
+                    if (!is_null($this->m_issue) && $this->m_issue->defined) {
                         $this->m_path .= $this->m_issue->url_name . '/';
-                        if (!is_null($this->m_section)) {
+                        if (!is_null($this->m_section) && $this->m_section->defined) {
                             $this->m_path .= $this->m_section->url_name . '/';
-                            if (!is_null($this->m_article)) {
+                            if (!is_null($this->m_article) && $this->m_article->defined) {
                                 $this->m_path .= $this->m_article->url_name . '/';
                             }
                         }
                     }
                 }
                 $this->m_uriPath = $this->m_path;
+                $this->m_query = CampURI::QueryArrayToString($this->m_queryArray);
                 $this->m_uriQuery = $this->m_query;
             }
         }

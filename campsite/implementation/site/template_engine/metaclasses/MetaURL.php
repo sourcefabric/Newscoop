@@ -23,7 +23,7 @@ require_once($g_documentRoot.'/template_engine/classes/Exceptions.php');
 final class MetaURL
 {
     /**
-     * @var object
+     * @var CampURI object
      */
     private $m_uriObj = null;
 
@@ -76,6 +76,49 @@ final class MetaURL
 
 
     /**
+     * Returns the value of the given parameter
+     *
+     * @param string $p_parameterName
+     * @return string
+     */
+    final public function get_parameter($p_parameterName)
+    {
+        return $this->m_uriObj->getQueryVar($p_parameterName);
+    }
+
+
+    /**
+     * Sets the given parameter to the given value. Returns true if the parameter
+     * can be set (is not a restricted parameter name), false otherwise.
+     *
+     * @param string $p_parameterName
+     * @param string $p_parameterValue
+     * @return bool
+     */
+    final public function set_parameter($p_parameterName, $p_parameterValue)
+    {
+        $isRestricted = $this->m_uriObj->isRestrictedParameter($p_parameterName);
+        if ($isRestricted) {
+            return false;
+        }
+        $this->m_uriObj->setQueryVar($p_parameterName, $p_parameterValue);
+    }
+
+
+    /**
+     * Resets the given parameter (sets it's value to null). Returns true if the
+     * parameter can be set (is not a restricted parameter name), false otherwise.
+     *
+     * @param string $p_parameterName
+     * @return bool
+     */
+    final public function reset_parameter($p_parameterName)
+    {
+        return $this->set_parameter($p_parameterName, null);
+    }
+
+
+    /**
      *
      */
     final public function __set($p_property, $p_value)
@@ -84,7 +127,7 @@ final class MetaURL
             $this->m_uri_parameter = $p_value;
         } else {
             $this->m_uriObj->$p_property = $p_value;
-//            throw new InvalidFunctionException(get_class($this), '__set');
+            //            throw new InvalidFunctionException(get_class($this), '__set');
         }
     } // fn __set
 
@@ -181,7 +224,7 @@ final class MetaURL
     private function getCustomProperty($p_property)
     {
         if (!is_array($this->m_customProperties)
-                || !array_key_exists($p_property, $this->m_customProperties)) {
+        || !array_key_exists($p_property, $this->m_customProperties)) {
             throw new InvalidPropertyException(get_class($this), $p_property);
         }
         if (!method_exists($this, $this->m_customProperties[$p_property])) {
@@ -199,7 +242,7 @@ final class MetaURL
     final public function trigger_invalid_property_error($p_property, $p_smarty = null)
     {
         $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
-            . OF_OBJECT_STRING . ' ' . get_class($this);
+        . OF_OBJECT_STRING . ' ' . get_class($this);
         CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     } // fn trigger_invalid_property_error
 
