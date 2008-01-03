@@ -27,6 +27,13 @@ class MetaAction
      */
     protected $m_error = null;
 
+    /**
+     * Stores the action type name
+     *
+     * @var string
+     */
+    protected $m_name = null;
+
 
     /**
      * Base initializations
@@ -38,7 +45,6 @@ class MetaAction
         if (!is_array($this->m_properties)) {
             $this->m_properties = array();
         }
-        $this->m_properties['name'] = null;
     }
 
 
@@ -77,6 +83,10 @@ class MetaAction
     {
         foreach ($p_input as $parameter=>$value) {
             $parameter = strtolower($parameter);
+            if (strncmp($parameter, 'f_', 2) != 0) {
+                continue;
+            }
+            $parameter = substr($parameter, 2);
             $parameter[0] = strtoupper($parameter[0]);
             $className = 'MetaAction'.$parameter;
             $includeFile = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/'
@@ -109,16 +119,19 @@ class MetaAction
         if ($p_property == 'ok') {
             return $this->getError() === ACTION_OK;
         }
+        if ($p_property == 'name') {
+            return $this->m_name;
+        }
 
         if (!is_array($this->m_properties)
         || !array_key_exists($p_property, $this->m_properties)) {
             $this->trigger_invalid_property_error($p_property);
         }
-        if (!method_exists($this, $this->m_properties[$p_property])) {
-            throw new InvalidPropertyHandlerException(get_class($this), $p_property);
+        if (method_exists($this, $this->m_properties[$p_property])) {
+            $methodName = $this->m_properties[$p_property];
+            return $this->$methodName();
         }
-        $methodName = $this->m_properties[$p_property];
-        return $this->$methodName();
+        return $this->m_properties[$p_property];
     } // fn __get
 
 

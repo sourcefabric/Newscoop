@@ -15,6 +15,7 @@ require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/UserType.php');
 require_once($g_documentRoot.'/classes/Log.php');
+require_once($g_documentRoot.'/conf/liveuser_configuration.php');
 
 
 /**

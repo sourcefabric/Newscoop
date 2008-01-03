@@ -70,8 +70,7 @@ final class CampTemplate extends Smarty
     /**
      * Singleton function that returns the global class object.
      *
-     * @return object
-     *    CampTemplate
+     * @return CampTemplate object
      */
     public static function singleton()
     {
@@ -86,7 +85,7 @@ final class CampTemplate extends Smarty
     /**
      * Returns the template context object.
      *
-     * @return object
+     * @return CampContext object
      */
     public function &context()
     {
