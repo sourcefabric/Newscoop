@@ -145,8 +145,13 @@ final class CampContext
 
         $availableActions = CampContext::ReadAvailableActions();
         foreach (CampContext::ReadAvailableActions() as $actionName) {
+            $actionName = strtolower($actionName);
             $propertyName = CampContext::TranslateProperty($actionName . '_action');
-            $this->m_readonlyProperties[$propertyName] =& $this->m_readonlyProperties['request_action'];
+            if ($this->m_readonlyProperties['request_action']->name == $actionName) {
+                $this->m_readonlyProperties[$propertyName] =& $this->m_readonlyProperties['request_action'];
+            } else {
+                $this->m_readonlyProperties[$propertyName] = MetaAction::CreateAction(array());
+            }
         }
     } // fn __construct
 
