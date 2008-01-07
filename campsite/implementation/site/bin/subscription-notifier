@@ -38,18 +38,24 @@ $message = array();
 // reads reply address
 $message['reply'] = get_reply_address();
 
+// sets the notifications counter
+$notified_index = 0;
+
 // reads ending subscriptions
-$sqlQuery = "SELECT p.Name AS PubName, p.IdDefaultLanguage AS PubDefLang, "
+$sql_query = "SELECT p.Name AS PubName, p.IdDefaultLanguage AS PubDefLang, "
 . "u.Title AS UserTitle, u.Name AS UserName, u.EMail AS UserEMail, "
 . "s.Id AS SubsId, s.Type AS SubsType, p.Id AS PubId, a.Name AS AliasName "
 . "FROM Subscriptions AS s, Publications AS p, "
 . "Aliases AS a, liveuser_users AS u "
 . "WHERE u.Id = s.IdUser AND p.Id = s.IdPublication AND s.Active = 'Y' "
 . "AND p.IdDefaultAlias = a.Id AND s.ToPay = \"0.00\"";
-if (!$result = mysql_query($sqlQuery)) {
+if (!$result = mysql_query($sql_query)) {
     msg_error('Reading ending subscriptions');
     exit;
 }
+
+// inits smarty template system
+$tpl = init_smarty();
 
 while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
     $sql_query = "SELECT MAX(Number) AS MaxNumber "
@@ -64,7 +70,6 @@ while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
     }
 
     $isn_row = mysql_fetch_array($isn_result, MYSQL_ASSOC);
-    $issue_nr = $isn_row['MaxNumber'];
     mysql_free_result($isn_result);
 
     $sql_query = "SELECT COUNT(*) AS NumberOfSections "
@@ -77,9 +82,9 @@ while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
     $pub_sections = $psc_row['NumberOfSections'];
     mysql_free_result($psc_result);
 
-    $sql_query = "SELECT StartDate, DATE_FORMAT(StartDate, '%%M %%D, %%Y'), "
+    $sql_query = "SELECT StartDate, DATE_FORMAT(StartDate, '%M %D, %Y'), "
         . "PaidDays, TO_DAYS(StartDate), TO_DAYS(now()), "
-        . "DATE_FORMAT(ADDDATE(StartDate, INTERVAL PaidDays DAY), '%%M %%D, %%Y') "
+        . "DATE_FORMAT(ADDDATE(StartDate, INTERVAL PaidDays DAY), '%M %D, %Y') "
         . "FROM SubsSections "
         . "WHERE IdSubscription = " . $row['SubsId'] . " and NoticeSent = 'N' "
         . "GROUP BY StartDate, PaidDays";
@@ -119,11 +124,12 @@ while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
             $subs_sections = $sec_nr_row[0];
             mysql_free_result($sec_nr_result);
         }
+
         if ($counter == 0) {
             $subs_type = ($row['SubsType'] == 'P') ? 'paid' : 'trial';
             $tpl->assign('user_title', $row['UserTitle']);
             $tpl->assign('user_name', $row['UserName']);
-            $tpl->assign('user_name', $subs_type);
+            $tpl->assign('subs_type', $subs_type);
             $tpl->assign('subs_date', $sdf);
             $tpl->assign('publication_name', $row['PubName']);
         }
@@ -157,11 +163,12 @@ while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
                     $is_first = false;
                 }
                 if (strlen($sections)) {
-                    $sections .= ' or ';
+                    $sections .= ' OR ';
                 }
-                $expire_plan = '"' . $row_date_sec[0] . '"';
+                $expire_plan .= '"' . $row_date_sec[0] . '"';
                 $sections .= 'SectionNumber = ' . $row_date_sec[1];
             }
+
             $tpl->assign('expire_plan', $expire_plan);
             mysql_free_result($res_date_sec);
 
@@ -178,11 +185,13 @@ while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
         continue;
     }
 
-    $message['recipients'] = $row['UserEMail'];
+    $message['recipients'] = array($row['UserEMail']);
     $message['text'] = $tpl->fetch(NOTIFIER_TEMPLATE);
     $message['subject'] = 'Subscription to ' . $row['PubName'];
 
-    send_email($message);
+    if (send_email($message) == false) {
+        continue;
+    }
 
     $sql_query = "UPDATE SubsSections "
         . "SET NoticeSent = 'Y' "
@@ -195,9 +204,33 @@ while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
 }
 
 if ($notified_index > 0) {
-    print();
+    print($notified_index . " user(s) notified\n");
 }
 
+
+/**
+ * Reads reply address
+ *
+ * @return string
+ */
+function get_reply_address()
+{
+    $sql_query = "SELECT EMail FROM liveuser_users WHERE UName = 'admin'";
+    if (!$result = mysql_query($sql_query)) {
+        msg_error('Getting reply address');
+        exit;
+    }
+
+    if (mysql_num_rows($result) <= 0) {
+        msg_error('There is no reply address');
+        exit;
+    }
+
+    $row = mysql_fetch_array($result, MYSQL_ASSOC);
+    mysql_free_result($result);
+
+    return $row['EMail'];
+} // fn get_reply_address
 
 
 /**
