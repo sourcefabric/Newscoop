@@ -18,7 +18,7 @@ if (!Input::IsValid()) {
 }
 
 // Check that the article exists.
-$articleObj =& new Article($f_language_id, $f_article_number);
+$articleObj = new Article($f_language_id, $f_article_number);
 if (!$articleObj->exists()) {
 	exit;
 }
@@ -26,25 +26,25 @@ if (!$articleObj->commentsEnabled() || $articleObj->commentsLocked())  {
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
 }
 
-$publicationObj =& new Publication($articleObj->getPublicationId());
-$issueObj =& new Issue($articleObj->getPublicationId(), $f_language_id, $articleObj->getIssueNumber());
-$sectionObj =& new Section($articleObj->getPublicationId(), $articleObj->getIssueNumber(), $f_language_id, $articleObj->getSectionNumber());
-$languageObj =& new Language($articleObj->getLanguageId());
+$publicationObj = new Publication($articleObj->getPublicationId());
+$issueObj = new Issue($articleObj->getPublicationId(), $f_language_id, $articleObj->getIssueNumber());
+$sectionObj = new Section($articleObj->getPublicationId(), $articleObj->getIssueNumber(), $f_language_id, $articleObj->getSectionNumber());
+$languageObj = new Language($articleObj->getLanguageId());
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 camp_html_content_top(getGS("Reply to comment"), $topArray);
 
 if (SystemPref::Get("UseDBReplication") == 'Y') {
-    $dbReplicationObj =& new DbReplication();
+    $dbReplicationObj = new DbReplication();
     $connectedToOnlineServer = $dbReplicationObj->connect();
     if ($connectedToOnlineServer == false) {
         camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
     } else {
-        $comment =& new Phorum_message($f_comment_id);
+        $comment = new Phorum_message($f_comment_id);
     }
 } else {
-    $comment =& new Phorum_message($f_comment_id);
+    $comment = new Phorum_message($f_comment_id);
 }
 
 ?>

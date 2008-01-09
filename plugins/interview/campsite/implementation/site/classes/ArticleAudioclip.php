@@ -34,7 +34,7 @@ class ArticleAudioclip extends DatabaseObject {
      *
      * @return object ArticleAudioclip
      */
-    function ArticleAudioclip($p_articleNumber = null, $p_audioclipGunId = null)
+    public function ArticleAudioclip($p_articleNumber = null, $p_audioclipGunId = null)
     {
         if (is_numeric($p_articleNumber)) {
             $this->m_data['fk_article_number'] = $p_articleNumber;
@@ -51,7 +51,7 @@ class ArticleAudioclip extends DatabaseObject {
     /**
      * @return int
      */
-    function getArticleNumber()
+    public function getArticleNumber()
     {
         return $this->m_data['fk_article_number'];
     } // fn getArticleNumber
@@ -60,7 +60,7 @@ class ArticleAudioclip extends DatabaseObject {
     /**
      * @return string
      */
-    function getAudioclipGunId()
+    public function getAudioclipGunId()
     {
         return $this->m_data['fk_audioclip_gunid'];
     } // fn getAudioclipGunId
@@ -69,7 +69,7 @@ class ArticleAudioclip extends DatabaseObject {
     /**
      * @return int
      */
-    function getLanguageId()
+    public function getLanguageId()
     {
         return $this->m_data['fk_language_id'];
     } // fn getLanguageId
@@ -78,7 +78,7 @@ class ArticleAudioclip extends DatabaseObject {
     /*
      * @return int
      */
-    function getAudioclipOrder()
+    public function getAudioclipOrder()
     {
         return $this->m_data['order_no'];
     } // fn getAudioclipOrder
@@ -90,7 +90,7 @@ class ArticleAudioclip extends DatabaseObject {
      * @param int $p_orderNo
      *      The order number to be set
      */
-    function setOrder($p_orderNo)
+    public function setOrder($p_orderNo)
     {
         global $g_ado_db;
 
@@ -114,7 +114,8 @@ class ArticleAudioclip extends DatabaseObject {
      * @return array $returnArray
      *      An array of AudioclipMetadataEntry objects
      */
-    function GetAudioclipsByArticleNumber($p_articleNumber, $p_languageId = null)
+    public static function GetAudioclipsByArticleNumber($p_articleNumber,
+                                                        $p_languageId = null)
     {
         global $g_ado_db;
 
@@ -132,9 +133,9 @@ class ArticleAudioclip extends DatabaseObject {
         $returnArray = array();
         if (is_array($rows)) {
             foreach ($rows as $row) {
-                $audioClip =& new Audioclip($row['fk_audioclip_gunid']);
+                $audioClip = new Audioclip($row['fk_audioclip_gunid']);
                 if ($audioClip->exists()) {
-                	$returnArray[] =& $audioClip;
+                	$returnArray[] = $audioClip;
                 }
             }
         }
@@ -151,7 +152,7 @@ class ArticleAudioclip extends DatabaseObject {
      *
      * @return void
      */
-    function OnAudioclipDelete($p_gunId)
+    public static function OnAudioclipDelete($p_gunId)
     {
         global $g_ado_db;
 
@@ -168,7 +169,7 @@ class ArticleAudioclip extends DatabaseObject {
      *
      * @return void
      */
-    function OnArticleDelete($p_articleNumber)
+    public static function OnArticleDelete($p_articleNumber)
     {
         global $g_ado_db;
 
@@ -186,7 +187,7 @@ class ArticleAudioclip extends DatabaseObject {
      *
      * @return void
      */
-    function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
+    public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
     {
         global $g_ado_db;
 
@@ -261,7 +262,7 @@ class ArticleAudioclip extends DatabaseObject {
         }
 
         // sets the base table ArticleAudioclips and the column to be fetched
-        $tmpArticleAudioclip =& new ArticleAudioclip();
+        $tmpArticleAudioclip = new ArticleAudioclip();
         $selectClauseObj->setTable($tmpArticleAudioclip->getDbTableName());
         $selectClauseObj->addColumn('fk_audioclip_gunid');
         $countClauseObj->setTable($tmpArticleAudioclip->getDbTableName());

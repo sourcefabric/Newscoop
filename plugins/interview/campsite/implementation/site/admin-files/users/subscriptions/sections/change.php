@@ -18,10 +18,10 @@ $f_language_id = Input::Get('f_language_id', 'int', null);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', null);
 
-$publicationObj =& new Publication($f_publication_id);
-$languageObj =& new Language($publicationObj->getDefaultLanguageId());
-$manageUser =& new User($f_user_id);
-$subscription =& new Subscription($f_subscription_id);
+$publicationObj = new Publication($f_publication_id);
+$languageObj = new Language($publicationObj->getDefaultLanguageId());
+$manageUser = new User($f_user_id);
+$subscription = new Subscription($f_subscription_id);
 $isPaid = false;
 if ($subscription->getType() == 'P') {
 	$isPaid = true;
@@ -32,7 +32,7 @@ $subscriptionSections = SubscriptionSection::GetSubscriptionSections($f_subscrip
 $subscriptionSection = array_pop($subscriptionSections);
 if ($f_section_number > 0) {
 	if ($f_language_id > 0) {
-		$subscriptionSectionLanguage =& new Language($f_language_id);
+		$subscriptionSectionLanguage = new Language($f_language_id);
 		$languageName = $subscriptionSectionLanguage->getName();
 	} else {
 		$languageName = '-- ' . getGS('All languages') . ' --';

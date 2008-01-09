@@ -39,7 +39,7 @@ function camp_is_alias_conflicting($p_alias)
 		$alias = array_pop($aliases);
 		if ($alias) {
 			$pubId = $alias->getPublicationId();
-			$pubObj =& new Publication($pubId);
+			$pubObj = new Publication($pubId);
 			$pubLink = "<A HREF=\"/$ADMIN/pub/edit.php?Pub=$pubId\">". $pubObj->getName() ."</A>";
 			$msg = getGS("The publication alias you specified conflicts with publication '$1'.", $pubLink);
 			camp_html_add_msg($msg);
@@ -70,7 +70,7 @@ function camp_is_alias_conflicting($p_alias)
 function camp_forum_create($p_publicationObj)
 {
 	// create the phorum
-    $forum =& new Phorum_forum();
+    $forum = new Phorum_forum();
     $forum->create();
     $p_publicationObj->setForumId($forum->getForumId());
 	return $forum;

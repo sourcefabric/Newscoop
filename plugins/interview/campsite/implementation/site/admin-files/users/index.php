@@ -192,7 +192,7 @@ $res = $g_ado_db->Execute($searchSql);
 $countSql = "SELECT COUNT(*) FROM liveuser_users as u ".$sql;
 $totalUsers = $g_ado_db->GetOne($countSql);
 
-$pager =& new SimplePager($totalUsers, $ItemsPerPage, "userOffs", "index.php?".get_user_urlparams(0)."&", false);
+$pager = new SimplePager($totalUsers, $ItemsPerPage, "userOffs", "index.php?".get_user_urlparams(0)."&", false);
 
 if (gettype($res) == 'object' && $res->NumRows() > 0) {
 	$nr = $res->NumRows();
@@ -246,7 +246,7 @@ for($loop = 0; $loop < $last; $loop++) {
 	$row = $res->FetchRow();
 	$userId = $row['Id'];
 	$rowClass = ($loop + 1) % 2 == 0 ? "list_row_even" : "list_row_odd";
-	$editUser =& new User($userId);
+	$editUser = new User($userId);
 ?>
 	<tr <?php echo "class=\"$rowClass\""; ?>>
 		<td>

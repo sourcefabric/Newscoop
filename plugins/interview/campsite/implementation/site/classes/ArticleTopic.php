@@ -25,7 +25,7 @@ class ArticleTopic extends DatabaseObject {
 	var $m_dbTableName = 'ArticleTopics';
 	var $m_columnNames = array('NrArticle', 'TopicId');
 
-	function ArticleTopic()
+	public function ArticleTopic()
 	{
 		parent::DatabaseObject($this->m_columnNames);
 	} // constructor
@@ -33,7 +33,7 @@ class ArticleTopic extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getTopicId()
+	public function getTopicId()
 	{
 		return $this->m_data['TopicId'];
 	} // fn getTopicId
@@ -42,7 +42,7 @@ class ArticleTopic extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getArticleNumber()
+	public function getArticleNumber()
 	{
 		return $this->m_data['NrArticle'];
 	} // fn getArticleNumber
@@ -54,7 +54,7 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function AddTopicToArticle($p_topicId, $p_articleNumber)
+	public static function AddTopicToArticle($p_topicId, $p_articleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = 'INSERT IGNORE INTO ArticleTopics(NrArticle, TopicId)'
@@ -74,7 +74,7 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function RemoveTopicFromArticle($p_topicId, $p_articleNumber)
+	public static function RemoveTopicFromArticle($p_topicId, $p_articleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = "DELETE FROM ArticleTopics WHERE NrArticle=$p_articleNumber AND TopicId=$p_topicId";
@@ -92,7 +92,7 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function OnArticleDelete($p_articleNumber)
+	public static function OnArticleDelete($p_articleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = 'DELETE FROM ArticleTopics'
@@ -107,7 +107,7 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int $p_destArticleNumber
 	 * @return void
 	 */
-	function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
+	public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = 'SELECT * FROM ArticleTopics WHERE NrArticle='.$p_srcArticleNumber;
@@ -131,7 +131,7 @@ class ArticleTopic extends DatabaseObject {
 	 * @return mixed
 	 * 		Return an array or an int.
 	 */
-	function GetArticleTopics($p_articleNumber, $p_countOnly = false)
+	public static function GetArticleTopics($p_articleNumber, $p_countOnly = false)
 	{
 		global $g_ado_db;
 		$selectStr = "*";
@@ -147,7 +147,7 @@ class ArticleTopic extends DatabaseObject {
 			$rows = $g_ado_db->GetAll($queryStr);
 			$topics = array();
 			foreach ($rows as $row) {
-				$topics[] =& new Topic($row['TopicId']);
+				$topics[] = new Topic($row['TopicId']);
 			}
 			return $topics;
 		}
@@ -159,7 +159,7 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int $p_topicId
 	 * @return array
 	 */
-	function GetArticlesWithTopic($p_topicId)
+	public static function GetArticlesWithTopic($p_topicId)
 	{
 		global $g_ado_db;
 
@@ -204,7 +204,7 @@ class ArticleTopic extends DatabaseObject {
 		}
 
 		$articleIds = array_unique($articleIds);
-		$tmpArticle =& new Article();
+		$tmpArticle = new Article();
 		$columnNames = implode(',', $tmpArticle->getColumnNames(true));
 		$queryStr = "SELECT $columnNames FROM Articles WHERE Number IN ("
 					. implode(', ', $articleIds) . ")";

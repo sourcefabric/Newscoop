@@ -30,7 +30,7 @@ if ($f_order_direction == 'DESC') {
 }
 
 $TotalImages = Image::GetTotalImages();
-$imageSearch =& new ImageSearch($f_search_string, $f_order_by, $f_order_direction, $f_image_offset, $f_items_per_page);
+$imageSearch = new ImageSearch($f_search_string, $f_order_by, $f_order_direction, $f_image_offset, $f_items_per_page);
 $imageSearch->run();
 $imageData = $imageSearch->getImages();
 $NumImagesFound = $imageSearch->getNumImagesFound();
@@ -80,7 +80,7 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 <?php
 if (count($imageData) > 0) {
     $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "images/popup.php")."&";
-    $pager =& new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);
+    $pager = new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);
 
 ?>
 <table class="action_buttons">

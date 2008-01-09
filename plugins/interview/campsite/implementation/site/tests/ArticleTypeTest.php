@@ -101,7 +101,7 @@ class ArticleTypeTest extends PHPUnit_Framework_TestCase
 		$g_ado_db->Execute($queryStr);
 
 		// initialize the test object
-		$this->articleType =& new ArticleType($this->testTypeName);
+		$this->articleType = new ArticleType($this->testTypeName);
 	}
 
     /**

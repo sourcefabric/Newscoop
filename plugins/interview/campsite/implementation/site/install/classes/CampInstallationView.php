@@ -128,12 +128,14 @@ final class CampInstallationView
                                 'exists' => $hasMySQL
                                 );
 
-        $hasAPC = CampInstallationViewHelper::CheckPHPAPC();
-        $success = ($hasAPC == 'Yes') ? $success : false;
-        $phpFunctions[] = array(
-                                'tag' => 'APC (PHP Cache) Support',
-                                'exists' => $hasAPC
-                                );
+        // APC checking will be disabled until we solve some cache issues
+        //
+        //$hasAPC = CampInstallationViewHelper::CheckPHPAPC();
+        //$success = ($hasAPC == 'Yes') ? $success : false;
+        //$phpFunctions[] = array(
+        //'tag' => 'APC (PHP Cache) Support',
+        //'exists' => $hasAPC
+        //);
 
         $hasGD = CampInstallationViewHelper::CheckPHPGD();
         $success = ($hasGD == 'Yes') ? $success : false;

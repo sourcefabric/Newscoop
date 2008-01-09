@@ -75,7 +75,7 @@ class Phorum_forum extends DatabaseObject {
 		"reverse_threading",
 		"inherit_id");
 
-	function Phorum_forum($p_forumId = null)
+	public function Phorum_forum($p_forumId = null)
 	{
 		global $PHORUM;
 		$this->m_dbTableName = $PHORUM['forums_table'];
@@ -92,7 +92,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function create()
+	public function create()
 	{
 		$columns = array(
 			'moderation'=>0,
@@ -159,7 +159,7 @@ class Phorum_forum extends DatabaseObject {
 	/**
 	 * Delete the forum and all of its messages and other data.
 	 */
-	function delete()
+	public function delete()
 	{
 		phorum_db_drop_forum($this->m_data['forum_id']);
 		return true;
@@ -171,7 +171,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getForumId()
+	public function getForumId()
 	{
 		return $this->m_data["forum_id"];
 	} // fn getForumId
@@ -184,7 +184,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->m_data["name"];
 	} // fn getName
@@ -196,7 +196,7 @@ class Phorum_forum extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setName($p_value)
+	public function setName($p_value)
 	{
 		return $this->setProperty("name", $p_value);
 	} // fn setName
@@ -209,7 +209,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function checkDuplicates()
+	public function checkDuplicates()
 	{
 		return $this->m_data["check_duplicate"];
 	} // fn checkDuplicates
@@ -223,7 +223,7 @@ class Phorum_forum extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setCheckDuplicates($p_value)
+	public function setCheckDuplicates($p_value)
 	{
 		$p_value = $p_value ? "1" : "0";
 		return $this->setProperty("check_duplicate", $p_value);
@@ -236,7 +236,7 @@ class Phorum_forum extends DatabaseObject {
 	 * @see setPublicPermissions()
 	 * @return int
 	 */
-	function getPublicPermissions()
+	public function getPublicPermissions()
 	{
 		return $this->m_data['pub_perms'];
 	} // fn getPublicPermissions
@@ -261,7 +261,7 @@ class Phorum_forum extends DatabaseObject {
 	 * @param int $p_permissions
 	 * @return boolean
 	 */
-	function setPublicPermissions($p_permissions)
+	public function setPublicPermissions($p_permissions)
 	{
 		if (is_int($p_permissions)) {
 			$this->setProperty('pub_perms', $p_permissions);
@@ -277,7 +277,7 @@ class Phorum_forum extends DatabaseObject {
 	 * @see setRegisteredUserPermissions()
 	 * @return int
 	 */
-	function getRegisteredUserPermissions()
+	public function getRegisteredUserPermissions()
 	{
 		return $this->m_data["reg_perms"];
 	} // fn getRegisteredUserPermissions
@@ -302,7 +302,7 @@ class Phorum_forum extends DatabaseObject {
 	 * @param int $p_permissions
 	 * @return boolean
 	 */
-	function setRegisteredUserPermissions($p_permissions)
+	public function setRegisteredUserPermissions($p_permissions)
 	{
 		if (is_int($p_permissions)) {
 			return $this->setProperty("reg_perms", $p_permissions);
@@ -320,7 +320,7 @@ class Phorum_forum extends DatabaseObject {
 	 *	 1 => "Yes, show views added to subject"
 	 *	 2 => "Yes, show views as extra column"
 	 */
-	function countViews()
+	public function countViews()
 	{
 		return $this->m_data["count_views"];
 	} // fn countViews
@@ -335,7 +335,7 @@ class Phorum_forum extends DatabaseObject {
 	 *	 2 => "Yes, show views as extra column"
 	 * @return boolean
 	 */
-	function setCountViews($p_value)
+	public function setCountViews($p_value)
 	{
 		if (is_numeric($p_value) && ($p_value >= 0) && ($p_value <= 2)) {
 			return $this->setProperty('count_views', $p_value);
@@ -350,7 +350,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function isVisible()
+	public function isVisible()
 	{
 		return $this->m_data["active"];
 	} // fn isVisible
@@ -362,7 +362,7 @@ class Phorum_forum extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setIsVisible($p_value)
+	public function setIsVisible($p_value)
 	{
 		$p_value = $p_value ? "1" : "0";
 		return $this->setProperty("active", $p_value);
@@ -374,7 +374,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function isModerated()
+	public function isModerated()
 	{
 		return $this->m_data['moderation'];
 	} // fn isModerated
@@ -388,7 +388,7 @@ class Phorum_forum extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setIsModerated($p_value)
+	public function setIsModerated($p_value)
 	{
 		$p_value = $p_value ? PHORUM_MODERATE_ON : PHORUM_MODERATE_OFF;
 		return $this->setProperty('moderation', $p_value);
@@ -401,7 +401,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function emailModeratorsEnabled()
+	public function emailModeratorsEnabled()
 	{
 		return $this->m_data['email_moderators'];
 	} // fn emailModeratorsEnabled
@@ -414,7 +414,7 @@ class Phorum_forum extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setEmailModeratorsEnabled($p_value)
+	public function setEmailModeratorsEnabled($p_value)
 	{
 		$p_value = $p_value ? PHORUM_EMAIL_MODERATOR_ON : PHORUM_EMAIL_MODERATOR_OFF;
 		return $this->setProperty('email_moderators', $p_value);
@@ -426,7 +426,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function reverseThreadingEnabled()
+	public function reverseThreadingEnabled()
 	{
 		return $this->m_data['reverse_threading'];
 	} // fn reverseThreadingEnabled
@@ -437,7 +437,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getNumMessages()
+	public function getNumMessages()
 	{
 		return $this->m_data['message_count'];
 	} // fn getNumMessages
@@ -448,7 +448,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getNumThreads()
+	public function getNumThreads()
 	{
 		return $this->m_data['thread_count'];
 	} // fn getNumThreads
@@ -459,7 +459,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getNumSticky()
+	public function getNumSticky()
 	{
 		return $this->m_data['sticky_count'];
 	} // fn getNumSticky
@@ -471,7 +471,7 @@ class Phorum_forum extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getLastPostTime()
+	public function getLastPostTime()
 	{
 		return $this->m_data['last_post_time'];
 	} // fn getLastPostTime

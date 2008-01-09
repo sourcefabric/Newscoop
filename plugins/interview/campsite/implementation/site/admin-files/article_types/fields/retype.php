@@ -12,7 +12,7 @@ if (!$g_user->hasPermission('ManageArticleTypes')) {
 
 $articleTypeName = Input::Get('f_article_type');
 $articleTypeFieldName = Input::Get('f_field_name');
-$articleField =& new ArticleTypeField($articleTypeName, $articleTypeFieldName);
+$articleField = new ArticleTypeField($articleTypeName, $articleTypeFieldName);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -42,13 +42,13 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 // Topic->Topic = NO* (TODO)
 $options = array();
 if ($articleField->getType() == 'mediumblob') {
-    $options = array();        
+    $options = array();
 }
 if ($articleField->getType() == 'date') {
-    $options = array('datey' => getGS('Date'), 'text' => getGS('Single-line Text'), 'body' => getGS('Multi-line Text with WYSIWYG'));    
+    $options = array('datey' => getGS('Date'), 'text' => getGS('Single-line Text'), 'body' => getGS('Multi-line Text with WYSIWYG'));
 }
 if ($articleField->getType() == 'varchar(255)') {
-    $options = array('text' => getGS('Single-line Text'), 'body' => getGS('Multi-line Text with WYSIWYG'));    
+    $options = array('text' => getGS('Single-line Text'), 'body' => getGS('Multi-line Text with WYSIWYG'));
 }
 if ($articleField->getType() == 'int(10) unsigned') {
 }
@@ -89,7 +89,7 @@ You cannot reassign this type.
         <?php } ?>
     </SELECT>
 
-    
+
 	</TD>
 </TR>
 <tr style="display: none;" id="topic_list">
@@ -98,7 +98,7 @@ You cannot reassign this type.
 		<select name="f_root_topic_id" class="input_select">
 <?php
 $TOL_Language = camp_session_get('LoginLanguageId', 1);
-$lang =& new Language($TOL_Language);
+$lang = new Language($TOL_Language);
 $currentLanguageId = $lang->getLanguageId();
 //$currentLanguages = Language::GetLanguages(null, $TOL_Language);
 //$currentLanguageId = $currentLanguages[0]->getLanguageId();

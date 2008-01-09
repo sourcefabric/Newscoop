@@ -43,7 +43,7 @@ switch($f_action) {
             camp_html_display_error(getGS('Invalid file parameter'), null, true);
             exit;
         }
-        $aClipObj =& new Audioclip();
+        $aClipObj = new Audioclip();
         $audioFile = $aClipObj->onFileUpload($_FILES['f_media_file']);
         if (PEAR::isError($audioFile)) {
             camp_html_display_error(getGS('Audio file could not be stored locally'), null, true);
@@ -64,7 +64,7 @@ switch($f_action) {
         $mData['sample_rate'] = $id3Data['audio']['sample_rate'];
         break;
     case 'edit':
-        $audioClip =& new Audioclip($f_audioclip_id);
+        $audioClip = new Audioclip($f_audioclip_id);
         $aClipMetaTags = $audioClip->getAvailableMetaTags();
         foreach ($aClipMetaTags as $metaTag) {
             list($nameSpace, $localPart) = explode(':', strtolower($metaTag));

@@ -50,7 +50,7 @@ if ($f_destination_publication_id > 0) {
 
 $allSections = array();
 if ($f_destination_issue_number > 0) {
-	$selectedIssue =& new Issue($f_destination_publication_id, $f_article_language, $f_destination_issue_number);
+	$selectedIssue = new Issue($f_destination_publication_id, $f_article_language, $f_destination_issue_number);
 	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $f_article_language, null, null, array("ORDER BY" => array("Name" => "ASC")));
 	if (count($allSections) == 1) {
 	    $singleSection = camp_array_peek($allSections);
@@ -112,14 +112,14 @@ if (sizeof($allArticleTypes) == 0) {
 			    <?php if (count($allArticleTypes) == 1) { ?>
 			        <INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php echo $allArticleTypes[0]; ?>">
                     <?php
-                        $tmpAT =& new ArticleType($allArticleTypes[0]);
+                        $tmpAT = new ArticleType($allArticleTypes[0]);
                         echo $tmpAT->getDisplayName();
 			    } else { ?>
     				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
 	   		      	<option></option>
 		  		    <?php
     				foreach ($allArticleTypes as $tmpType) {
-	       			    $tmpAT =& new ArticleType($tmpType);
+	       			    $tmpAT = new ArticleType($tmpType);
 			     	    camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
 				    }
 					?>

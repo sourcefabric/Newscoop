@@ -39,7 +39,9 @@ class ImageSearch {
 	 *		The number of results to return.
 	 *
 	 */
-	function ImageSearch($p_searchString, $p_orderBy, $p_orderDirection = 'ASC', $p_offset = 0, $p_itemsPerPage = 0)
+	public function ImageSearch($p_searchString, $p_orderBy,
+	                            $p_orderDirection = 'ASC', $p_offset = 0,
+	                            $p_itemsPerPage = 0)
 	{
 		$this->m_orderBy = $p_orderBy;
 		$this->m_orderDirection = $p_orderDirection;
@@ -122,10 +124,10 @@ class ImageSearch {
 	 * @return array
 	 *		An array of Image objects.
 	 */
-	function run()
+	public function run()
 	{
 		global $g_ado_db;
-		$tmpImage =& new Image();
+		$tmpImage = new Image();
 		$columnNames = $tmpImage->getColumnNames(true);
 		$columnNames = implode(',', $columnNames);
 		$queryStr = 'SELECT '.$columnNames.', COUNT(ArticleImages.IdImage) AS inUse'
@@ -163,7 +165,7 @@ class ImageSearch {
 			}
 			// Create image templates
 			foreach ($rows as $row) {
-				$tmpImage =& new Image();
+				$tmpImage = new Image();
 				$tmpImage->fetch($row);
 				$template = $tmpImage->toTemplate();
 				$template['in_use'] = 0;
@@ -184,7 +186,7 @@ class ImageSearch {
 	 * Return the images that were found.
 	 * @return array
 	 */
-	function getImages()
+	public function getImages()
 	{
 		return $this->m_imageData;
 	} // fn getImages
@@ -200,7 +202,7 @@ class ImageSearch {
 	 *
 	 * @return int
 	 */
-	function getNumImagesFound()
+	public function getNumImagesFound()
 	{
 		return $this->m_numImagesFound;
 	} // fn getNumImagesFound
@@ -210,7 +212,7 @@ class ImageSearch {
 	 * The current value for the number of images shown per page.
 	 * @return int
 	 */
-	function getImagesPerPage()
+	public function getImagesPerPage()
 	{
 		return $this->m_itemsPerPage;
 	} // fn getImagesPerPage
@@ -223,7 +225,7 @@ class ImageSearch {
 	 *
 	 * @return void
 	 */
-	function setImagesPerPage($p_value)
+	public function setImagesPerPage($p_value)
 	{
 		$this->m_itemsPerPage = $p_value;
 	} // fn setImagesPerPage

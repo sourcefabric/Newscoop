@@ -13,7 +13,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 
 // If the user does not have permission to change the article
 // or they didnt create the article, give them the boot.

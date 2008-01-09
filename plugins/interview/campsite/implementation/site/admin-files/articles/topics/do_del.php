@@ -20,12 +20,12 @@ if (!$g_user->hasPermission('AttachTopicToArticle')) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), null, true);
 	exit;
 }
-$topicObj =& new Topic($f_topic_id);
+$topicObj = new Topic($f_topic_id);
 if (!$topicObj->exists()) {
 	camp_html_display_error(getGS('Topic does not exist.'), null, true);
 	exit;

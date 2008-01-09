@@ -35,7 +35,7 @@ class SystemPref {
 	 * Load the system settings from the database.
 	 * @return void
 	 */
-	function __LoadConfig() {
+	private static function __LoadConfig() {
 		global $Campsite;
 		global $g_ado_db;
 		if (!isset($Campsite['system_preferences'])) {
@@ -60,7 +60,7 @@ class SystemPref {
 	 * @param string $p_varName
 	 * @return mixed
 	 */
-	function Get($p_varName)
+	public static function Get($p_varName)
 	{
 		global $Campsite;
 		if (!isset($Campsite['system_preferences'])) {
@@ -82,7 +82,7 @@ class SystemPref {
 	 *
 	 * @return void
 	 */
-	function Set($p_varName, $p_value)
+	public static function Set($p_varName, $p_value)
 	{
 		global $Campsite;
 		global $g_ado_db;

@@ -8,7 +8,7 @@ $articleTypes = ArticleType::GetArticleTypes(true);
 $allLanguages = Language::GetLanguages();
 
 $lang = camp_session_get('LoginLanguageId', 1);
-$languageObj =& new Language($lang);
+$languageObj = new Language($lang);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -99,7 +99,7 @@ if ($g_user->hasPermission("ManageArticleTypes")) { ?>
 $color = 0;
 $i = 0;
 foreach ($articleTypes as $articleType) {
-	$currentArticleType =& new ArticleType($articleType);
+	$currentArticleType = new ArticleType($articleType);
 	if ($currentArticleType->getStatus() == 'hidden') {
 		$hideShowText = getGS('show');
 		$hideShowStatus = 'show';
@@ -162,7 +162,7 @@ foreach ($articleTypes as $articleType) {
 		<TR <?php  if ($color2) { $color2 = 0; ?>class="list_row_even"<?php  } else { $color2 = 1; ?>class="list_row_odd"<?php  } ?>">
 			<TD <?php if ($isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="center">
 				<?php
-				$typeLanguage =& new Language($typeLanguageId);
+				$typeLanguage = new Language($typeLanguageId);
 				p($typeLanguage->getCode());
 				?>
 			</TD>

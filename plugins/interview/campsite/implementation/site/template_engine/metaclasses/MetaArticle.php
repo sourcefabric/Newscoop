@@ -26,18 +26,20 @@ final class MetaArticle extends MetaDbObject {
 
 	private $m_state = null;
 
+	private $m_contentCache = null;
+
 
 	private function InitProperties()
 	{
 		if (!is_null($this->m_properties)) {
 			return;
 		}
-		$this->m_properties['number'] = 'Number';
-		$this->m_properties['type_name'] = 'Type';
 		$this->m_properties['name'] = 'Name';
-		$this->m_properties['publish_date'] = 'PublishDate';
-		$this->m_properties['creation_date'] = 'UploadDate';
+		$this->m_properties['number'] = 'Number';
 		$this->m_properties['keywords'] = 'Keywords';
+		$this->m_properties['type_name'] = 'Type';
+		$this->m_properties['creation_date'] = 'UploadDate';
+		$this->m_properties['publish_date'] = 'PublishDate';
 		$this->m_properties['url_name'] = 'ShortName';
 		$this->m_properties['comments_locked'] = 'comments_locked';
 		$this->m_properties['last_update'] = 'time_updated';
@@ -69,6 +71,8 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['hour'] = 'getCreationHour';
         $this->m_customProperties['min'] = 'getCreationMinute';
         $this->m_customProperties['sec'] = 'getCreationSecond';
+        $this->m_customProperties['template'] = 'getTemplate';
+        $this->m_customProperties['comments_enabled'] = 'getCommentsEnabled';
         $this->m_customProperties['on_front_page'] = 'getOnFrontPage';
         $this->m_customProperties['on_section_page'] = 'getOnSectionPage';
         $this->m_customProperties['is_published'] = 'getIsPublished';
@@ -79,10 +83,8 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['section'] = 'getSection';
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['owner'] = 'getOwner';
-        $this->m_customProperties['template'] = 'getTemplate';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['has_attachments'] = 'hasAttachments';
-        $this->m_customProperties['comments_enabled'] = 'getCommentsEnabled';
     } // fn __construct
 
 
@@ -126,8 +128,17 @@ final class MetaArticle extends MetaDbObject {
     	if (isset($this->m_customProperties[strtolower($p_property)])
     			&& is_array($this->m_customProperties[strtolower($p_property)])) {
     		try {
-    			$property = $this->m_customProperties[strtolower($p_property)];
-	    		return $this->m_articleData->getProperty('F'.$property[0]);
+    			$property = $this->m_customProperties[strtolower($p_property)][0];
+    			$articleFieldType = new ArticleTypeField($this->type_name, $property);
+	    		$fieldValue = $this->m_articleData->getProperty('F'.$property);
+    			if ($articleFieldType->getType() == 'mediumblob') {
+        			if (is_null($this->getContentCache($p_property))) {
+        			    $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $property);
+        			    $this->setContentCache($p_property, $bodyField->getContent());
+    	            }
+    	            $fieldValue = $this->getContentCache($p_property);
+    			}
+    			return $fieldValue;
     		} catch (InvalidPropertyException $e) {
     			// do nothing; will throw another exception with original property field name
     		}
@@ -137,7 +148,23 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationYear()
+    private function getContentCache($p_property)
+    {
+        if (is_null($this->m_contentCache)
+                || !isset($this->m_contentCache[$p_property])) {
+            return null;
+        }
+        return $this->m_contentCache[$p_property];
+    }
+
+
+    private function setContentCache($p_property, $p_value)
+    {
+        $this->m_contentCache[$p_property] = $p_value;
+    }
+
+
+    protected function getCreationYear()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -145,7 +172,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationMonth()
+    protected function getCreationMonth()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -153,7 +180,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationWeekDay()
+    protected function getCreationWeekDay()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -161,7 +188,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationMonthDay()
+    protected function getCreationMonthDay()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -169,7 +196,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationYearDay()
+    protected function getCreationYearDay()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -177,7 +204,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationHour()
+    protected function getCreationHour()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -185,7 +212,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationMinute()
+    protected function getCreationMinute()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -193,7 +220,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getCreationSecond()
+    protected function getCreationSecond()
     {
     	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
     	$creation_date_time = getdate($creation_timestamp);
@@ -201,43 +228,43 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getOnFrontPage()
+    protected function getOnFrontPage()
     {
     	return (int)($this->m_dbObject->getProperty('OnFrontPage') == 'Y');
     }
 
 
-    public function getOnSectionPage()
+    protected function getOnSectionPage()
     {
     	return (int)($this->m_dbObject->getProperty('OnSection') == 'Y');
     }
 
 
-    public function getIsPublished()
+    protected function getIsPublished()
     {
     	return (int)($this->m_dbObject->getProperty('Published') == 'Y');
     }
 
 
-    public function getIsPublic()
+    protected function getIsPublic()
     {
     	return (int)($this->m_dbObject->getProperty('Public') == 'Y');
     }
 
 
-    public function getIsIndexed()
+    protected function getIsIndexed()
     {
     	return (int)($this->m_dbObject->getProperty('IsIndexed') == 'Y');
     }
 
 
-    public function getPublication()
+    protected function getPublication()
     {
     	return new MetaPublication($this->m_dbObject->getProperty('IdPublication'));
     }
 
 
-    public function getIssue()
+    protected function getIssue()
     {
     	return new MetaIssue($this->m_dbObject->getProperty('IdPublication'),
     						 $this->m_dbObject->getProperty('IdLanguage'),
@@ -245,7 +272,7 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getSection()
+    protected function getSection()
     {
     	return new MetaSection($this->m_dbObject->getProperty('IdPublication'),
     						   $this->m_dbObject->getProperty('NrIssue'),
@@ -254,19 +281,19 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function getLanguage()
+    protected function getLanguage()
     {
     	return new MetaLanguage($this->m_dbObject->getProperty('IdLanguage'));
     }
 
 
-    public function getOwner()
+    protected function getOwner()
     {
     	return new MetaUser($this->m_dbObject->getProperty('IdUser'));
     }
 
 
-    public function getTemplate()
+    protected function getTemplate()
     {
     	$articleSection = new Section($this->m_dbObject->getProperty('IdPublication'),
     								  $this->m_dbObject->getProperty('NrIssue'),
@@ -282,14 +309,14 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    public function hasAttachments()
+    protected function hasAttachments()
     {
     	$attachments = ArticleAttachment::GetAttachmentsByArticleNumber($this->m_dbObject->getProperty('Number'));
     	return (int)(sizeof($attachments) > 0);
     }
 
 
-    public function getCommentsEnabled()
+    protected function getCommentsEnabled()
     {
     	$publicationObj = new Publication($this->m_dbObject->getProperty('IdPublication'));
     	$articleTypeObj = new ArticleType($this->m_dbObject->getProperty('Type'));

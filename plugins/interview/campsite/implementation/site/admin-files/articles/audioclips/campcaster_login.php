@@ -17,12 +17,17 @@ if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
 $isCcOnline = true;
 // ... is something wrong with either the sessid
 // or the communication to Campcaster
-$xrc =& XR_CcClient::Factory($mdefs);
-$resp = $xrc->ping();
-if (PEAR::isError($resp) && $resp->getCode() != 805) {
-    camp_html_add_msg(getGS("Unable to reach the Campcaster server."));
-    camp_html_add_msg(getGS("Try again later."));
+$xrc = XR_CcClient::Factory($mdefs);
+if (PEAR::isError($xrc) && $xrc->getCode() != 805) {
+    camp_html_add_msg($xrc->getMessage());
     $isCcOnline = false;
+} else {
+    $resp = $xrc->ping();
+    if (PEAR::isError($resp) && $resp->getCode() != 805) {
+        camp_html_add_msg(getGS("Unable to reach the Campcaster server."));
+        camp_html_add_msg(getGS("Try again later."));
+        $isCcOnline = false;
+    }
 }
 ?>
 <html>

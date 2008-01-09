@@ -14,7 +14,7 @@ $countries = Country::GetCountries($f_country_language_selected, null, null,
 				array("LIMIT" => array("START" => $f_country_offset, "MAX_ROWS" => $ItemsPerPage)));
 $numCountries = Country::GetNumCountries($f_country_language_selected);
 
-$pager =& new SimplePager($numCountries, $ItemsPerPage, "f_country_offset", "index.php?");
+$pager = new SimplePager($numCountries, $ItemsPerPage, "f_country_offset", "index.php?");
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -104,7 +104,7 @@ foreach ($countries as $country) { ?>
 
 	<TD>
 	<?php
-	$language =& new Language($country->getLanguageId());
+	$language = new Language($country->getLanguageId());
 	p(htmlspecialchars($language->getNativeName()));
 	?>
 	</TD>

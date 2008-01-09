@@ -18,9 +18,9 @@ $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 
-$publicationObj =& new Publication($f_publication_id);
-$languageObj =& new Language($publicationObj->getDefaultLanguageId());
-$manageUser =& new User($f_user_id);
+$publicationObj = new Publication($f_publication_id);
+$languageObj = new Language($publicationObj->getDefaultLanguageId());
+$manageUser = new User($f_user_id);
 
 $sections = Section::GetUniqueSections($f_publication_id);
 $sectionsByLanguage = Section::GetUniqueSections($f_publication_id, true);

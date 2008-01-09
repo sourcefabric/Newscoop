@@ -286,7 +286,7 @@ if (!$useExistingConfig) {
 }
 
 //
-// Restore the database
+// Restore the database...
 //
 echo " * Restoring the database...";
 if (($res = camp_connect_to_database()) != 0) {
@@ -311,12 +311,13 @@ $cmd .= " $destDbName < $sqlFile";
 camp_exec_command($cmd, "Unable to import database. (Command: $cmd)");
 echo "done.\n";
 
-// Call campsite-create-instance to upgrade the database.
-//echo " * Upgrading (if necessary)...";
+// Upgrade the database
+echo " * Upgrading (if necessary)...";
+camp_upgrade_database($destDbName);
 //$bin_dir = $Campsite['BIN_DIR'];
 //camp_exec_command("$bin_dir/campsite-create-instance --db_name $destDbName",
 //			 	  "Upgrade failed.");
-//echo "done.\n";
+echo "done.\n";
 
 //
 // Remove the temp dir.

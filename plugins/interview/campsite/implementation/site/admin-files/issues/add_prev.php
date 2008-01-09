@@ -12,7 +12,7 @@ if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
-$publicationObj =& new Publication($Pub);
+$publicationObj = new Publication($Pub);
 $allLanguages = Language::GetLanguages();
 $newIssueId = Issue::GetUnusedIssueId($Pub);
 $lastCreatedIssue = Issue::GetLastCreatedIssue($Pub);

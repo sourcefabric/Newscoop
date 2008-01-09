@@ -3,31 +3,13 @@
  * @package Campsite
  *
  * @author Holman Romero <holman.romero@gmail.com>
+ * @author Mugur Rus <mugur.rus@gmail.com>
  * @copyright 2007 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
  * @link http://www.campware.org
  */
 
-/**
- * Includes
- *
- * We indirectly reference the DOCUMENT_ROOT so we can enable
- * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
- * is not defined in these cases.
- */
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/classes/UrlType.php');
-require_once($g_documentRoot.'/template_engine/classes/CampSystem.php');
-require_once($g_documentRoot.'/template_engine/classes/CampConfig.php');
-require_once($g_documentRoot.'/template_engine/classes/CampDatabase.php');
-require_once($g_documentRoot.'/template_engine/classes/CampSession.php');
-require_once($g_documentRoot.'/template_engine/classes/CampContext.php');
-require_once($g_documentRoot.'/template_engine/classes/CampRequest.php');
-require_once($g_documentRoot.'/template_engine/classes/CampURIShortNames.php');
-require_once($g_documentRoot.'/template_engine/classes/CampURITemplatePath.php');
-require_once($g_documentRoot.'/template_engine/metaclasses/MetaLanguage.php');
 
 /**
  * Class CampSite
@@ -68,39 +50,8 @@ final class CampSite extends CampSystem
             return;
         }
 
-        // starts the URI instance
-        self::GetURIInstance();
-
         // gets the context
-        $context = CampTemplate::singleton()->context();
-
-        $languageId = CampRequest::GetVar(CampRequest::LANGUAGE_ID);
-        if (!empty($languageId)) {
-            $this->setLanguage($languageId);
-        } else {
-            // gets the Config instance
-            $config =& self::GetConfigInstance();
-            $this->setLanguage($config->getSetting('locale.lang_id'));
-        }
-        $publicationId = CampRequest::GetVar(CampRequest::PUBLICATION_ID);
-        if (!empty($publicationId)) {
-            $this->setPublication($publicationId);
-        }
-        $issueNr = CampRequest::GetVar(CampRequest::ISSUE_NR);
-        if (!empty($issueNr)) {
-            $this->setIssue($publicationId, $languageId, $issueNr);
-        }
-        $sectionNr = CampRequest::GetVar(CampRequest::SECTION_NR);
-        if (!empty($sectionNr)) {
-            $this->setSection($publicationId, $issueNr, $languageId, $sectionNr);
-        }
-        $articleNr = CampRequest::GetVar(CampRequest::ARTICLE_NR);
-        if (!empty($articleNr)) {
-            $this->setArticle($languageId, $articleNr);
-        }
-
-        // sets the current URL to the context
-        $context->url = new MetaURL();
+        CampTemplate::singleton()->context();
     } // fn initContext
 
 
@@ -144,8 +95,8 @@ final class CampSite extends CampSystem
      */
     public function dispatch()
     {
-        $document =& self::GetHTMLDocumentInstance();
-        $config =& self::GetConfigInstance();
+        $document = self::GetHTMLDocumentInstance();
+        $config = self::GetConfigInstance();
 
         $document->setMetaTag('description', $config->getSetting('site.description'));
         $document->setMetaTag('keywords', $config->getSetting('site.keywords'));
@@ -160,7 +111,7 @@ final class CampSite extends CampSystem
      */
     public function render()
     {
-        $document =& self::GetHTMLDocumentInstance();
+        $document = self::GetHTMLDocumentInstance();
 
         // sets the appropiate template if site is not in mode online
         if ($this->getSetting('site.online') == 'N') {
@@ -230,7 +181,7 @@ final class CampSite extends CampSystem
      */
     public static function GetHTMLDocumentInstance()
     {
-        $config =& self::GetConfigInstance();
+        $config = self::GetConfigInstance();
         $attributes = array(
                             'type' => CampRequest::GetVar('format', 'html'),
                             'charset' => $config->getSetting('site.charset'),
@@ -257,6 +208,7 @@ final class CampSite extends CampSystem
      *
      * @param string $p_uri
      *      The URI to work with
+     * @return CampURI
      */
     public static function GetURIInstance($p_uri = 'SELF')
     {
@@ -270,17 +222,17 @@ final class CampSite extends CampSystem
 
         // sets url type to default if necessary
         if (!$urlType) {
-            $config =& self::GetConfigInstance();
+            $config = self::GetConfigInstance();
             $urlType = $config->getSetting('campsite.url_default_type');
         }
 
         // instanciates the corresponding URI object
         switch ($urlType) {
         case 1:
-            $uriInstance = CampURITemplatePath::singleton($p_uri);
+            $uriInstance = new CampURITemplatePath($p_uri);
             break;
         case 2:
-            $uriInstance = CampURIShortNames::singleton($p_uri);
+            $uriInstance = new CampURIShortNames($p_uri);
             break;
         }
 

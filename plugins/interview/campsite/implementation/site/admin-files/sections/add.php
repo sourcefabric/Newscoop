@@ -15,16 +15,16 @@ if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;
 }
-$publicationObj =& new Publication($f_publication_id);
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$publicationObj = new Publication($f_publication_id);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $newSectionNumber = Section::GetUnusedSectionNumber($f_publication_id, $f_issue_number, $f_language_id);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
 camp_html_content_top(getGS('Add new section'), $topArray, true, true, array(getGS("Sections") => "/$ADMIN/sections/?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id"));
 
-$languageObj =& new Language($f_language_id);
+$languageObj = new Language($f_language_id);
 if (!is_object($languageObj)) {
-  $languageObj =& new Language(1);
+  $languageObj = new Language(1);
 }
 $editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
 editor_load_xinha('f_description', $g_user, $editorLanguage);

@@ -11,10 +11,10 @@ $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
 
-$publicationObj =& new Publication($f_publication_id);
-$languageObj =& new Language($publicationObj->getDefaultLanguageId());
+$publicationObj = new Publication($f_publication_id);
+$languageObj = new Language($publicationObj->getDefaultLanguageId());
 
-$manageUser =& new User($f_user_id);
+$manageUser = new User($f_user_id);
 $sections = SubscriptionSection::GetSubscriptionSections($f_subscription_id);
 
 $crumbs = array();

@@ -44,7 +44,7 @@ class FileTextSearch {
 	 * Add a valid search extension.
 	 * @param string $p_extension
 	 */
-	function addExtension($p_extension)
+	public function addExtension($p_extension)
 	{
 		array_push($this->m_fileExtensions, $p_extension);
 		$this->m_findAllExtensions = 0;
@@ -55,7 +55,7 @@ class FileTextSearch {
 	 * Sets extensions to search for.
 	 * @param array $p_extensions
 	 */
-	function setExtensions($p_extensions = array())
+	public function setExtensions($p_extensions = array())
 	{
 		$this->m_fileExtensions = $p_extensions;
 		if (count($this->m_fileExtensions) > 0) {
@@ -69,7 +69,7 @@ class FileTextSearch {
 	 * @param string $p_searchKey
 	 * @param int $p_caseSensitive
 	 */
-	function setSearchKey($p_searchKey, $p_caseSensitive = 0)
+	public function setSearchKey($p_searchKey, $p_caseSensitive = 0)
 	{
 		$this->m_searchKey = $p_searchKey;
 		if ($p_caseSensitive == 1) {
@@ -82,7 +82,7 @@ class FileTextSearch {
 	 * Sets the replacement to replace pattern with.
 	 * @param string $p_replacementKey
 	 */
-	function setReplacementKey($p_replacementKey)
+	public function setReplacementKey($p_replacementKey)
 	{
 		$this->m_replacementKey = $p_replacementKey;
 		$this->m_isReplaceEnabled = 1;
@@ -93,7 +93,7 @@ class FileTextSearch {
 	 * searchDirFiles() wrapper function.
 	 * @param string $p_path
 	 */
-	function findReplace($p_path)
+	public function findReplace($p_path)
 	{
 		$this->searchDirFiles($p_path);
 	} // fn findReplace
@@ -103,7 +103,7 @@ class FileTextSearch {
 	 * Runs recursively all into the path.
 	 * @param string $p_path
 	 */
-	function searchDirFiles($p_path)
+	public function searchDirFiles($p_path)
 	{
 		$dirHandle = opendir($p_path);
 		while ($file = readdir($dirHandle)) {
@@ -129,7 +129,7 @@ class FileTextSearch {
 	 * @param string $p_file
 	 * @return mixed the extension on success or NULL on failure
 	 */
-	function findExtension($p_file)
+	public function findExtension($p_file)
 	{
 		return array_pop(explode('.', $p_file));
 	} // fn findExtension
@@ -141,7 +141,7 @@ class FileTextSearch {
 	 * @param string $p_file
 	 * @return bool true on success or false on failure
 	 */
-	function matchedExtension($p_file)
+	public function matchedExtension($p_file)
 	{
 		if ($this->m_findAllExtensions) {
 			return true;
@@ -156,7 +156,7 @@ class FileTextSearch {
 	 * Searches file data and replaces with given pattern.
 	 * @param string $p_file
 	 */
-	function searchFileData($p_file)
+	public function searchFileData($p_file)
 	{
 		$pattern = preg_quote($this->m_searchKey, '/');
 		if ($this->m_caseSensitive) {
@@ -181,7 +181,7 @@ class FileTextSearch {
 	 * @param mixed $p_data
 	 * @return mixed
 	 */
-	function filePutContents($p_file, $p_data)
+	public function filePutContents($p_file, $p_data)
 	{
 		$handle = @fopen($p_file, 'w');
 		if ($handle === false) {

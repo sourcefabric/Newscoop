@@ -2,13 +2,13 @@
 
 function camp_is_readable($p_fileName)
 {
-	if (!is_readable($p_fileName)) {
-		echo "\nThis script requires access to the file $p_fileName.\n";
-		echo "Please run this script as a user with appropriate privileges.\n";
-		echo "Most often this user is 'root'.\n\n";
-		return false;
-	}
-	return true;
+    if (!is_readable($p_fileName)) {
+        echo "\nThis script requires access to the file $p_fileName.\n";
+        echo "Please run this script as a user with appropriate privileges.\n";
+        echo "Most often this user is 'root'.\n\n";
+        return false;
+    }
+    return true;
 } // fn camp_is_readable
 
 
@@ -21,33 +21,33 @@ function camp_is_readable($p_fileName)
  */
 function camp_escape_shell_arg($p_arg)
 {
-	$arg = str_replace('\\', '\\\\', $p_arg);
-	$arg = str_replace(' ', '\ ', $arg);
-	$arg = str_replace('`', '\`', $arg);
-	$arg = str_replace('!', '\!', $arg);
-	$arg = str_replace('@', '\@', $arg);
-	$arg = str_replace('$', '\$', $arg);
-	$arg = str_replace('%', '%%', $arg);
-	$arg = str_replace('^', '\^', $arg);
-	$arg = str_replace('&', '\&', $arg);
-	$arg = str_replace('*', '\*', $arg);
-	$arg = str_replace('(', '\(', $arg);
-	$arg = str_replace(')', '\)', $arg);
-	$arg = str_replace('=', '\=', $arg);
-	$arg = str_replace('{', '\{', $arg);
-	$arg = str_replace('}', '\}', $arg);
-	$arg = str_replace('[', '\[', $arg);
-	$arg = str_replace(']', '\]', $arg);
-	$arg = str_replace(':', '\:', $arg);
-	$arg = str_replace(';', '\;', $arg);
-	$arg = str_replace('"', '\"', $arg);
-	$arg = str_replace('\'', '\\\'', $arg);
-	$arg = str_replace('<', '\<', $arg);
-	$arg = str_replace('>', '\>', $arg);
-	$arg = str_replace(',', '\,', $arg);
-	$arg = str_replace('?', '\?', $arg);
-	$arg = str_replace('|', '\|', $arg);
-	return $arg;
+    $arg = str_replace('\\', '\\\\', $p_arg);
+    $arg = str_replace(' ', '\ ', $arg);
+    $arg = str_replace('`', '\`', $arg);
+    $arg = str_replace('!', '\!', $arg);
+    $arg = str_replace('@', '\@', $arg);
+    $arg = str_replace('$', '\$', $arg);
+    $arg = str_replace('%', '%%', $arg);
+    $arg = str_replace('^', '\^', $arg);
+    $arg = str_replace('&', '\&', $arg);
+    $arg = str_replace('*', '\*', $arg);
+    $arg = str_replace('(', '\(', $arg);
+    $arg = str_replace(')', '\)', $arg);
+    $arg = str_replace('=', '\=', $arg);
+    $arg = str_replace('{', '\{', $arg);
+    $arg = str_replace('}', '\}', $arg);
+    $arg = str_replace('[', '\[', $arg);
+    $arg = str_replace(']', '\]', $arg);
+    $arg = str_replace(':', '\:', $arg);
+    $arg = str_replace(';', '\;', $arg);
+    $arg = str_replace('"', '\"', $arg);
+    $arg = str_replace('\'', '\\\'', $arg);
+    $arg = str_replace('<', '\<', $arg);
+    $arg = str_replace('>', '\>', $arg);
+    $arg = str_replace(',', '\,', $arg);
+    $arg = str_replace('?', '\?', $arg);
+    $arg = str_replace('|', '\|', $arg);
+    return $arg;
 } // fn camp_escape_shell_arg
 
 
@@ -60,18 +60,18 @@ function camp_escape_shell_arg($p_arg)
  */
 function camp_exec_command($p_cmd, $p_errMsg = "", $p_printOutput = true)
 {
-	$p_cmd .= " 2> /dev/null";
-	@exec($p_cmd, $output, $result);
-	if ($result != 0) {
-		if (!$p_printOutput) {
-			$output = array();
-		}
-		if ($p_errMsg != "") {
-			$my_output[] = $p_errMsg;
-			$output = array_merge($my_output, $output);
-		}
-		camp_exit_with_error($output);
-	}
+    $p_cmd .= " 2> /dev/null";
+    @exec($p_cmd, $output, $result);
+    if ($result != 0) {
+        if (!$p_printOutput) {
+            $output = array();
+        }
+        if ($p_errMsg != "") {
+            $my_output[] = $p_errMsg;
+            $output = array_merge($my_output, $output);
+        }
+        camp_exit_with_error($output);
+    }
 } // fn camp_exec_command
 
 
@@ -82,10 +82,10 @@ function camp_exec_command($p_cmd, $p_errMsg = "", $p_printOutput = true)
  */
 function camp_readline()
 {
-	$fp = fopen("php://stdin", "r");
-	$in = fgets($fp, 4094); // Maximum windows buffer size
-	fclose ($fp);
-	return $in;
+    $fp = fopen("php://stdin", "r");
+    $in = fgets($fp, 4094); // Maximum windows buffer size
+    fclose ($fp);
+    return $in;
 } // fn camp_readline
 
 
@@ -99,12 +99,12 @@ function camp_readline()
  */
 function camp_create_dir($p_dirName, $p_msg = "")
 {
-	if ($p_msg == "") {
-		$p_msg = "Unable to create directory $p_dirName.";
-	}
-	if (!is_dir($p_dirName) && !mkdir($p_dirName)) {
-		camp_exit_with_error($p_msg);
-	}
+    if ($p_msg == "") {
+        $p_msg = "Unable to create directory $p_dirName.";
+    }
+    if (!is_dir($p_dirName) && !mkdir($p_dirName)) {
+        camp_exit_with_error($p_msg);
+    }
 } // fn camp_create_dir
 
 
@@ -117,14 +117,14 @@ function camp_create_dir($p_dirName, $p_msg = "")
  */
 function camp_remove_dir($p_dirName, $p_msg = "")
 {
-	if ($p_dirName == "" || $p_dirName == "/") {
-		camp_exit_with_error("ERROR! camp_remove_dir: Bad directory name.");
-	}
-	if (empty($p_msg)) {
-		$p_msg = "Unable to remove directory $p_dirName";
-	}
-	$command = "rm -rf $p_dirName";
-	camp_exec_command($command, $p_msg);
+    if ($p_dirName == "" || $p_dirName == "/") {
+        camp_exit_with_error("ERROR! camp_remove_dir: Bad directory name.");
+    }
+    if (empty($p_msg)) {
+        $p_msg = "Unable to remove directory $p_dirName";
+    }
+    $command = "rm -rf $p_dirName";
+    camp_exec_command($command, $p_msg);
 } // fn camp_remove_dir
 
 
@@ -139,11 +139,11 @@ function camp_remove_dir($p_dirName, $p_msg = "")
  */
 function camp_copy_files($p_src, $p_dest, $p_msg = "")
 {
-	if ($p_msg == "") {
-		$p_msg = "Unable to copy file/dir $p_src to $p_dest.";
-	}
-	$command = "cp -R $p_src $p_dest";
-	camp_exec_command($command, $p_msg);
+    if ($p_msg == "") {
+        $p_msg = "Unable to copy file/dir $p_src to $p_dest.";
+    }
+    $command = "cp -R $p_src $p_dest";
+    camp_exec_command($command, $p_msg);
 } // fn camp_copy_files
 
 
@@ -158,29 +158,29 @@ function camp_copy_files($p_src, $p_dest, $p_msg = "")
  */
 function camp_backup_file($p_filePath, &$p_output)
 {
-	if (!is_file($p_filePath)) {
-		$p_output = "File $p_filePath does not exist.";
-		return 1;
-	}
-	$dir_name = dirname($p_filePath);
-	if (!($file_stat = @stat($p_filePath))) {
-		$p_output = "Unable to read file $p_filePath data.";
-		return 1;
-	}
-	$file_name = basename($p_filePath);
-	$extension = pathinfo($p_filePath, PATHINFO_EXTENSION);
-	$change_time = strftime("%Y-%m-%d-%H", $file_stat['ctime']);
-	$new_name = "$base_name-$change_time$extension";
+    if (!is_file($p_filePath)) {
+        $p_output = "File $p_filePath does not exist.";
+        return 1;
+    }
+    $dir_name = dirname($p_filePath);
+    if (!($file_stat = @stat($p_filePath))) {
+        $p_output = "Unable to read file $p_filePath data.";
+        return 1;
+    }
+    $file_name = basename($p_filePath);
+    $extension = pathinfo($p_filePath, PATHINFO_EXTENSION);
+    $change_time = strftime("%Y-%m-%d-%H", $file_stat['ctime']);
+    $new_name = "$base_name-$change_time$extension";
 
-	if (is_file("$dir_name/$new_name")) {
-		return 0;
-	}
+    if (is_file("$dir_name/$new_name")) {
+        return 0;
+    }
 
-	if (!rename($p_filePath, "$dir_name/$new_name")) {
-		$p_output = "Unable to rename file $p_filePath";
-		return 1;
-	}
-	return 0;
+    if (!rename($p_filePath, "$dir_name/$new_name")) {
+        $p_output = "Unable to rename file $p_filePath";
+        return 1;
+    }
+    return 0;
 } // fn camp_backup_file
 
 
@@ -197,15 +197,14 @@ function camp_backup_file($p_filePath, &$p_output)
  */
 function camp_archive_file($p_sourceFile, $p_destDir, $p_fileName, &$p_output)
 {
-	$fileStr = escapeshellarg(basename($p_sourceFile));
-	$source_dir = dirname($p_sourceFile);
-	$currentDir = getcwd();
-	chdir($source_dir);
-	$cmd = "tar czf " . escapeshellarg("$p_destDir/$p_fileName.tar.gz") . " $fileStr &> /dev/null";
-	//echo $cmd."\n\n";
-	@exec($cmd, $p_output, $result);
-	chdir($currentDir);
-	return $result;
+    $fileStr = escapeshellarg(basename($p_sourceFile));
+    $source_dir = dirname($p_sourceFile);
+    $currentDir = getcwd();
+    chdir($source_dir);
+    $cmd = "tar czf " . escapeshellarg("$p_destDir/$p_fileName.tar.gz") . " $fileStr &> /dev/null";
+    @exec($cmd, $p_output, $result);
+    chdir($currentDir);
+    return $result;
 } // fn camp_archive_file
 
 
@@ -228,11 +227,11 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output)
 		. $Campsite['DATABASE_SERVER_ADDRESS']
 		. " --port=" . $Campsite['DATABASE_SERVER_PORT'];
 	if ($password != "") {
-		$cmd .= " --password=$password";
-	}
-	$cmd .= " $p_dbName > $p_destFile";
-	@exec($cmd, $p_output, $result);
-	return $result;
+        $cmd .= " --password=$password";
+    }
+    $cmd .= " $p_dbName > $p_destFile";
+    @exec($cmd, $p_output, $result);
+    return $result;
 } // fn camp_backup_database
 
 
@@ -244,28 +243,12 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output)
  */
 function camp_exit_with_error($p_errorStr)
 {
-	if (is_array($p_errorStr)) {
-		$p_errorStr = implode("\n", $p_errorStr);
-	}
-	echo "\nERROR!\n$p_errorStr\n";
-	//camp_clean_files();
-	exit(1);
+    if (is_array($p_errorStr)) {
+        $p_errorStr = implode("\n", $p_errorStr);
+    }
+    echo "\nERROR!\n$p_errorStr\n";
+    exit(1);
 } // fn camp_exit_with_error
-
-
-/**
- * Delete all the backup files for the current instance.
- *
- */
-//function camp_clean_files()
-//{
-//	global $Campsite;
-//
-//	if (isset($Campsite['CAMPSITE_DIR']) && isset($Campsite['DATABASE_NAME'])) {
-//		$backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/" . $Campsite['DATABASE_NAME'];
-//		camp_exec_command("rm -f $backup_dir/*.tar.gz");
-//	}
-//} // fn camp_clean_files
 
 
 /**
@@ -276,19 +259,19 @@ function camp_exit_with_error($p_errorStr)
  */
 function camp_connect_to_database($p_dbName = "")
 {
-	global $Campsite;
+    global $Campsite;
 
-	$db_user = $Campsite['DATABASE_USER'];
-	$db_password = $Campsite['DATABASE_PASSWORD'];
-	$res = mysql_connect($Campsite['DATABASE_SERVER_ADDRESS'] . ":"
-		. $Campsite['DATABASE_SERVER_PORT'], $db_user, $db_password);
-	if (!$res) {
-		camp_exit_with_error("Unable to connect to database server");
-	}
+    $db_user = $Campsite['DATABASE_USER'];
+    $db_password = $Campsite['DATABASE_PASSWORD'];
+    $res = mysql_connect($Campsite['DATABASE_SERVER_ADDRESS'] . ":"
+        . $Campsite['DATABASE_SERVER_PORT'], $db_user, $db_password);
+    if (!$res) {
+        camp_exit_with_error("Unable to connect to database server");
+    }
 
-	if ($p_dbName != "" && !mysql_select_db($p_dbName)) {
-		camp_exit_with_error("Unable to select database $p_dbName");
-	}
+    if ($p_dbName != "" && !mysql_select_db($p_dbName)) {
+        camp_exit_with_error("Unable to select database $p_dbName");
+    }
 } // fn camp_connect_to_database
 
 
@@ -300,13 +283,13 @@ function camp_connect_to_database($p_dbName = "")
  */
 function camp_is_empty_database($p_dbName)
 {
-	if (!mysql_select_db($p_dbName)) {
-		camp_exit_with_error("camp_is_empty_database: can't select the database");
-	}
-	if (!($res = mysql_query("show tables"))) {
-		camp_exit_with_error("camp_is_empty_database: can't read tables");
-	}
-	return (mysql_num_rows($res) == 0);
+    if (!mysql_select_db($p_dbName)) {
+        camp_exit_with_error("camp_is_empty_database: can't select the database");
+    }
+    if (!($res = mysql_query("show tables"))) {
+        camp_exit_with_error("camp_is_empty_database: can't read tables");
+    }
+    return (mysql_num_rows($res) == 0);
 } // fn camp_is_empty_database
 
 
@@ -318,16 +301,16 @@ function camp_is_empty_database($p_dbName)
  */
 function camp_clean_database($p_dbName)
 {
-	if (!mysql_select_db($p_dbName)) {
-		camp_exit_with_error("camp_clean_database: can't select the database");
-	}
-	if (!($res = mysql_query("show tables"))) {
-		camp_exit_with_error("Can not clean the database: can't read tables");
-	}
-	while ($row = mysql_fetch_row($res)) {
-		$table_name = $row[0];
-		mysql_query("drop table `" . mysql_escape_string($table_name) . "`");
-	}
+    if (!mysql_select_db($p_dbName)) {
+        camp_exit_with_error("camp_clean_database: can't select the database");
+    }
+    if (!($res = mysql_query("show tables"))) {
+        camp_exit_with_error("Can not clean the database: can't read tables");
+    }
+    while ($row = mysql_fetch_row($res)) {
+        $table_name = $row[0];
+        mysql_query("drop table `" . mysql_escape_string($table_name) . "`");
+    }
 } // fn camp_clean_database
 
 
@@ -339,13 +322,181 @@ function camp_clean_database($p_dbName)
  */
 function camp_database_exists($p_dbName)
 {
-	$res = mysql_list_dbs();
-	while ($row = mysql_fetch_object($res)) {
-		if ($row->Database == $p_dbName) {
-			return true;
-		}
-	}
-	return false;
+    $res = mysql_list_dbs();
+    while ($row = mysql_fetch_object($res)) {
+        if ($row->Database == $p_dbName) {
+            return true;
+        }
+    }
+    return false;
 } // fn camp_database_exists
+
+
+/**
+ * @param string $p_dbName
+ */
+function camp_upgrade_database($p_dbName)
+{
+    global $Campsite;
+
+    $campsite_dir = $Campsite['CAMPSITE_DIR'];
+    $etc_dir = $Campsite['ETC_DIR'];
+
+    if (!camp_database_exists($p_dbName)) {
+        return "Can't upgrade database $p_dbName: it doesn't exist";
+    }
+
+    if (!($res = camp_detect_database_version($p_dbName, $old_version)) == 0) {
+        return $res;
+    }
+
+    $first = true;
+    $versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
+                      "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x");
+    foreach ($versions as $index=>$db_version) {
+        if ($old_version > $db_version) {
+            continue;
+        }
+        if ($first) {
+            echo " * Upgrading the database from version $db_version...";
+        }
+        $output = array();
+
+        $upgrade_dir = $campsite_dir . "/database/upgrade/$db_version/";
+        $db_conf_file = $etc_dir . '/database_conf.php';
+        $install_conf_file = $etc_dir . "/install_conf.php";
+
+        // run upgrade scripts
+        $cmd_prefix = "cd " . camp_escape_shell_arg($upgrade_dir)
+            . " && mysql --user=" . $Campsite['DATABASE_USER']
+            . " --host=" . $Campsite['DATABASE_SERVER_ADDRESS']
+            . " --port=" . $Campsite['DATABASE_SERVER_PORT'];
+        if ($Campsite['DATABASE_PASSWORD'] != "") {
+            $cmd_prefix .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
+        }
+        $cmd_prefix .= " " . camp_escape_shell_arg($p_dbName) . " < ";
+        $sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql");
+        foreach ($sql_scripts as $index=>$script) {
+            if (!is_file($upgrade_dir . $script)) {
+                continue;
+            }
+            $cmd = $cmd_prefix . $script . " 2>&1";
+            exec($cmd, $output, $res);
+            if ($res != 0 && $script != "data-optional.sql") {
+                return "$script ($db_version): " . implode("\n", $output);
+            }
+        }
+        if ($first) {
+            echo 'done.';
+            $first = false;
+        }
+    }
+
+    return 0;
+} // fn camp_upgrade_database
+
+
+/**
+ * Find out which version is the given database.
+ *
+ * @param string $p_dbName
+ * @param string $version
+ *
+ * @return mixed
+ */
+function camp_detect_database_version($p_dbName, &$version)
+{
+    if (!mysql_select_db($p_dbName)) {
+        return "Can't select the database $p_dbName";
+    }
+
+    if (!$res = mysql_query("SHOW TABLES")) {
+        return "Unable to query the database $p_dbName";
+    }
+
+    $version = "2.0.x";
+    while ($row = mysql_fetch_row($res)) {
+        if (in_array($row[0], array("ArticleTopics", "Topics"))) {
+            $version = $version < "2.1.x" ? "2.1.x" : $version;
+        }
+        if (in_array($row[0], array("URLTypes", "TemplateTypes", "Templates", "Aliases",
+                                    "ArticlePublish", "IssuePublish", "ArticleImages"))) {
+            $version = "2.2.x";
+            if (!$res2 = mysql_query("DESC UserTypes ManageReaders")) {
+                return "Unable to query the database $p_dbName";
+            }
+            if (mysql_num_rows($res2) > 0) {
+                $version = "2.3.x";
+            }
+            if (!$res2 = mysql_query("SHOW TABLES LIKE 'UserConfig'")) {
+                return "Unable to query the database $p_dbName";
+            }
+            if (mysql_num_rows($res2) > 0) {
+                $version = "2.4.x";
+            }
+            if (!$res2 = mysql_query("DESC SubsSections IdLanguage")) {
+                return "Unable to query the database $p_dbName";
+            }
+            if (mysql_num_rows($res2) > 0) {
+                $version = "2.5.x";
+            }
+            if (!$res2 = mysql_query("SHOW TABLES LIKE 'ArticleTypeMetadata'")) {
+                return "Unable to query the database $p_dbName";
+            }
+            if (mysql_num_rows($res2) > 0) {
+                $version = "2.6.0";
+                if (!$res2 = mysql_query("SHOW COLUMNS FROM ArticleTypeMetadata LIKE 'type_name'")) {
+                    return "Unable to query the database $p_dbName";
+                }
+                $row = mysql_fetch_array($res2, MYSQL_ASSOC);
+                if (!is_null($row) && strstr($row['Type'], '166') != '') {
+                    $version = "2.6.1";
+                } else {
+                    return 0;
+                }
+                if (!$res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'")) {
+                    return "Unable to query the database $p_dbName";
+                }
+                if (mysql_num_rows($res2) > 0) {
+                    $version = "2.6.2";
+                } else {
+                    return 0;
+                }
+                if (!$res2 = mysql_query("SELECT * FROM Events WHERE Id = 171")) {
+                    return "Unable to query the database $p_dbName";
+                }
+                if (mysql_num_rows($res2) > 0) {
+                    $version = "2.6.3";
+                } else {
+                    return 0;
+                }
+                if (!$res2 = mysql_query("SELECT * FROM UserConfig "
+                                         . "WHERE varname = 'ExternalSubscriptionManagement'")) {
+                    return "Unable to query the database $p_dbName";
+                }
+                if (mysql_num_rows($res2) > 0) {
+                    $version = "2.6.4";
+                } else {
+                    return 0;
+                }
+                if (!$res2 = mysql_query("SELECT * from phorum_users "
+                                         . "WHERE fk_campsite_user_id IS NULL")) {
+                    return "Unable to query the database $p_dbName";
+                }
+                if (mysql_num_rows($res2) == 0) {
+                    $version = "2.6.x";
+                }
+            }
+            if (!$res2 = mysql_query("SHOW TABLES LIKE '%Audioclip%'")) {
+                return "Unable to query the database $p_dbName";
+            }
+            if (mysql_num_rows($res2) > 0) {
+                $version = "2.7.x";
+            }
+        }
+    }
+
+    return 0;
+} // fn camp_detect_database_version
 
 ?>

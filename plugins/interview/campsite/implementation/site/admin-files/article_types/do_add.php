@@ -32,7 +32,7 @@ if ($correct) {
 
 if ($correct) {
 
-   	$articleType =& new ArticleType($f_name);
+   	$articleType = new ArticleType($f_name);
    	if ($articleType->exists()) {
 	    $correct = false;
 	    $errorMsgs[] = getGS('The article type $1 already exists.', '<B>'.htmlspecialchars($f_name).'</B>');

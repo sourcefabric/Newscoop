@@ -36,19 +36,19 @@ if ($f_article_offset < 0) {
 	$f_article_offset = 0;
 }
 
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'));
 	exit;
 }
 
-$publicationObj =& new Publication($f_publication_id);
+$publicationObj = new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;
 }
 
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;
@@ -108,7 +108,7 @@ $pagerUrl = "index.php?f_publication_id=".$f_publication_id
 	."&f_section_number=".$f_section_number
 	."&f_language_id=".$f_language_id
 	."&f_language_selected=".$f_language_selected."&";
-$pager =& new SimplePager($numUniqueArticles, $ArticlesPerPage, $offsetVarName, $pagerUrl);
+$pager = new SimplePager($numUniqueArticles, $ArticlesPerPage, $offsetVarName, $pagerUrl);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
@@ -352,7 +352,7 @@ foreach ($allArticles as $articleObj) {
 		}
 		// Is article locked?
 		if ($articleObj->isLocked() && ($timeDiff['days'] <= 0)) {
-            $lockUserObj =& new User($articleObj->getLockedByUser());
+            $lockUserObj = new User($articleObj->getLockedByUser());
 			if ($timeDiff['hours'] > 0) {
 				$lockInfo = getGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
 					  htmlspecialchars($lockUserObj->getRealName()),
@@ -426,7 +426,7 @@ foreach ($allArticles as $articleObj) {
 
 		<TD ALIGN="center">
 			<?php
-			$articleCreator =& new User($articleObj->getCreatorId());
+			$articleCreator = new User($articleObj->getCreatorId());
 			p(htmlspecialchars($articleCreator->getRealName()));  ?>
 		</TD>
 

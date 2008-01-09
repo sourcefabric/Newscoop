@@ -19,14 +19,14 @@ class DbObjectArray {
 	 *
 	 * @return array
 	 */
-	function Create($p_className, $p_queryStr)
+	public static function Create($p_className, $p_queryStr)
 	{
 		global $g_ado_db;
 		$retval = array();
 		$rows = $g_ado_db->GetAll($p_queryStr);
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
-				$tmpObj =& new $p_className();
+				$tmpObj = new $p_className();
 				$tmpObj->fetch($row);
 				$retval[] = $tmpObj;
 			}
@@ -43,7 +43,7 @@ class DbObjectArray {
 	 * @param string $p_columnName
 	 * @return array
 	 */
-	function GetColumn($p_array, $p_columnName)
+	public static function GetColumn($p_array, $p_columnName)
 	{
 		$column = array();
 		if (is_array($p_array)) {
@@ -62,7 +62,7 @@ class DbObjectArray {
 	 * @param array $p_array
 	 * @return array
 	 */
-	function GetTable($p_array)
+	public static function GetTable($p_array)
 	{
 		$table = array();
 		if (is_array($p_array)) {

@@ -29,19 +29,19 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($languageId, $articleNumber);
+$articleObj = new Article($languageId, $articleNumber);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'));
 	exit;
 }
 
-$translationLanguageObj =& new Language($f_translation_language);
+$translationLanguageObj = new Language($f_translation_language);
 if (!$translationLanguageObj->exists()) {
 	camp_html_display_error(getGS('Language does not exist.'));
 	exit;
 }
 
-$translationArticle =& new Article($f_translation_language, $articleNumber);
+$translationArticle = new Article($f_translation_language, $articleNumber);
 if ($translationArticle->exists()) {
 	camp_html_add_msg(getGS("The article has already been translated into $1.", $translationLanguageObj->getNativeName()));
 	camp_html_goto_page($backLink);
@@ -52,20 +52,20 @@ $f_publication_id = $articleObj->getPublicationId();
 // Only create the translated issue and section if the article has been
 // categorized.
 if ($f_publication_id > 0) {
-	$publicationObj =& new Publication($f_publication_id);
+	$publicationObj = new Publication($f_publication_id);
 	if (!$publicationObj->exists()) {
 		camp_html_display_error(getGS('Publication does not exist.'), $backLink);
 		exit;
 	}
 
 	$f_issue_number = $articleObj->getIssueNumber();
-	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+	$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 	if (!$issueObj->exists()) {
 		camp_html_display_error(getGS('No such issue.'), $backLink);
 		exit;
 	}
 
-	$translationIssueObj =& new Issue($f_publication_id, $f_translation_language, $f_issue_number);
+	$translationIssueObj = new Issue($f_publication_id, $f_translation_language, $f_issue_number);
 	if (!$translationIssueObj->exists()) {
 		if (!$g_user->hasPermission("ManageIssue")) {
 			camp_html_add_msg(getGS('An issue must be created for the selected language but you do not have the right to create an issue.'));
@@ -97,13 +97,13 @@ if ($f_publication_id > 0) {
 	}
 
 	$f_section_number = $articleObj->getSectionNumber();
-	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+	$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 	if (!$sectionObj->exists()) {
 		camp_html_display_error(getGS('No such section.'), $backLink);
 		exit;
 	}
 
-	$translationSectionObj =& new Section($f_publication_id, $f_issue_number, $f_translation_language,
+	$translationSectionObj = new Section($f_publication_id, $f_issue_number, $f_translation_language,
 										  $f_section_number);
 	if (!$translationSectionObj->exists()) {
 		if (!$g_user->hasPermission("ManageSection")) {

@@ -27,7 +27,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 *
 	 * @return Phorum_ban
 	 */
-	function Phorum_ban_item($p_banId = null)
+	public function Phorum_ban_item($p_banId = null)
 	{
 		global $PHORUM;
 		$this->m_dbTableName = $PHORUM['banlist_table'];
@@ -64,7 +64,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function create($p_type, $p_isRegex, $p_matchString, $p_forumId = 0) {
+	public function create($p_type, $p_isRegex, $p_matchString, $p_forumId = 0) {
 		global $PHORUM;
 	    if (!is_numeric($p_type) || !is_numeric($p_forumId)
 	    	|| !in_array($p_type, $this->m_allowedTypes)) {
@@ -111,7 +111,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 * @param string $p_matchString
 	 * @param int $p_forumId
 	 */
-	function update($p_type = null, $p_isRegex = null, $p_matchString = null, $p_forumId = null)
+	public function update($p_type = null, $p_isRegex = null, $p_matchString = null, $p_forumId = null)
 	{
 		if (!is_null($p_type)) {
 			$this->setProperty('type', $p_type, false);
@@ -139,7 +139,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function DeleteMatching($p_type, $p_isRegex, $p_matchString, $p_forumId = null)
+	public static function DeleteMatching($p_type, $p_isRegex, $p_matchString, $p_forumId = null)
 	{
 		global $g_ado_db;
 		global $PHORUM;
@@ -173,7 +173,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getType()
+	public function getType()
 	{
 		return $this->m_data['type'];
 	} // fn getType
@@ -192,7 +192,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function setType($p_value)
+	public function setType($p_value)
 	{
 		if (in_array($p_value, $this->m_allowedTypes)) {
 			return $this->setProperty('type', $p_value);
@@ -208,7 +208,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getForumId()
+	public function getForumId()
 	{
 		return $this->m_data['forum_id'];
 	} // fn getForumId
@@ -222,7 +222,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setForumId($p_value)
+	public function setForumId($p_value)
 	{
 		if (is_numeric($p_value)) {
 			return $this->setProperty('forum_id', $p_value);
@@ -237,7 +237,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getMatchString()
+	public function getMatchString()
 	{
 		return $this->m_data['string'];
 	} // fn getMatchString
@@ -249,7 +249,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setMatchString($p_value)
+	public function setMatchString($p_value)
 	{
 		return $this->setProperty('string', $p_value);
 	} // fn setMatchString
@@ -260,7 +260,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function isRegex()
+	public function isRegex()
 	{
 		return $this->m_data['pcre'];
 	} // fn isRegex
@@ -272,7 +272,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setIsRegex($p_value)
+	public function setIsRegex($p_value)
 	{
 		$p_value = $p_value ? '1' : '0';
 		return $this->setProperty('pcre', $p_value);
@@ -292,7 +292,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 * @return boolean
 	 * 		TRUE if given string matches the ban, FALSE if all is okay.
 	 */
-	function isBanned($p_matchString, $p_type = null)
+	public function isBanned($p_matchString, $p_type = null)
 	{
 	    $type = $this->m_data['type'];
 		if (!is_null($p_type) && ($type != $p_type)) {
@@ -323,7 +323,9 @@ class Phorum_ban_item extends DatabaseObject {
 	 * @param int $p_forumId
 	 * @return array
 	 */
-	function GetBanItems($p_type = null, $p_isRegex = null, $p_matchString = null, $p_forumId = null) {
+	public static function GetBanItems($p_type = null, $p_isRegex = null,
+	                                   $p_matchString = null, $p_forumId = null)
+	{
 		global $g_ado_db;
 		global $PHORUM;
 
@@ -354,7 +356,7 @@ class Phorum_ban_item extends DatabaseObject {
 	    $retval = array();
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
-				$tmpObj =& new Phorum_ban_item();
+				$tmpObj = new Phorum_ban_item();
 				$tmpObj->fetch($row);
 				$retval[] = $tmpObj;
 			}
@@ -382,7 +384,7 @@ class Phorum_ban_item extends DatabaseObject {
 	 * @param int $p_forumId
 	 * @return boolean
 	 */
-	function IsPostBanned($p_phorumMessage, $p_phorumUser = null, $p_forumId = null)
+	public static function IsPostBanned($p_phorumMessage, $p_phorumUser = null, $p_forumId = null)
 	{
 		global $PHORUM;
 		static $bans;
@@ -441,7 +443,6 @@ class Phorum_ban_item extends DatabaseObject {
 			return false;
 		}
 	} // fn IsPostBanned
-
 
 } // class Phorum_ban_item
 

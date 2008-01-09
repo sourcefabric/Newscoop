@@ -4,6 +4,14 @@
 </head>
 <body>
 
+<p>default language: {{ $campsite->default_language->name }}</p>
+<p>default publication: {{ $campsite->default_publication->name }}</p>
+<p>default issue: {{ $campsite->default_issue->name }}</p>
+<p>default section: {{ $campsite->default_section->name }}</p>
+<p>default article: {{ $campsite->default_article->name }}</p>
+<p>default topic: {{ $campsite->default_topic->name }}</p>
+<p>default url: {{ $campsite->default_url->url }}</p>
+
 <h3>issues list</h3>
 {{ list_issues length="2" columns="3" name='sample_name' constraints="name greater a" order='byDate asc' }}
 {{ if $campsite->current_list->at_beginning }}
@@ -15,7 +23,7 @@
    (current issues list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_issues }}
 
@@ -31,7 +39,7 @@
    (current sections list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_sections }}
 
@@ -47,7 +55,7 @@
    (current articles list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_articles }}
 
@@ -63,7 +71,7 @@
    (current article attachments list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_attachments }}
 
@@ -79,7 +87,7 @@
    (current article comments list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_comments }}
 
@@ -95,7 +103,7 @@
    (current article images list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_images }}
 
@@ -111,7 +119,7 @@
    (current article topics list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_topics }}
 
@@ -127,7 +135,7 @@
    (current article audio attachments list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_audio_attachments }}
 
@@ -143,12 +151,12 @@
    (current search results list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_search_results }}
 
 
-{{ set_topic name="Open Source:en" }}
+{{ local }}
 {{ unset_topic }}
 {{ if $campsite->topic->defined }}
     <h3>subtopics of topic {{ $campsite->topic->name }}</h3>
@@ -165,19 +173,30 @@
    (current subtopics list/current list/context)
 </li>
 {{ if $campsite->current_list->at_end }}
-    <li>has next elements: {{ $campsite->current_list->hasNextElements() }}</li>
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_subtopics }}
+{{ /local }}
 
 
+{{ use_body_field article_type="Article" field_name="Full_text" }}
+<h4>use_body_field: article type: {{ $campsite->body_field_article_type }},
+    field name: {{ $campsite->body_field_name }}</h4>
 <h3>subtitles list</h3>
-{{ list_subtitles length="2" columns="2" name='sample_name' constraints="invalid constraints" order='invalid order' invalid_parameter="invalid" }}
-<li>subtitle: <b>{{ $campsite->current_subtitles_list->getCurrent() }}</b>/<b>{{ $campsite->current_list->getCurrent() }}</b>,
-   list index: <b>{{ $campsite->current_subtitles_list->getIndex() }}</b>/<b>{{ $campsite->current_list->getIndex() }}</b>,
-   column: <b>{{ $campsite->current_subtitles_list->getColumn() }}</b>/<b>{{ $campsite->current_list->getColumn() }}</b>
+{{ list_subtitles length="2" columns="2" name='sample_name' }}
+{{ if $campsite->current_list->at_beginning }}
+<li>count: {{ $campsite->current_list->count }}</li>
+{{ /if }}
+<li>subtitle: <b>{{ $campsite->current_subtitles_list->current->name }}</b>/<b>{{ $campsite->current_list->current->name }}</b>/<b>{{ $campsite->subtitle->name }}</b>,
+   list index: <b>{{ $campsite->current_subtitles_list->index }}</b>/<b>{{ $campsite->current_list->index }}</b>,
+   column: <b>{{ $campsite->current_subtitles_list->column }}</b>/<b>{{ $campsite->current_list->column }}</b>
    (current subtitles list/current list)
 </li>
+{{ if $campsite->current_list->at_end }}
+    <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
+{{ /if }}
 {{ /list_subtitles }}
+{{ /use_body_field }}
 
 
 {{ if $campsite->hasProperty('invalid_property') }}
@@ -978,7 +997,7 @@
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->article->publication->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->publication }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->publication->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
@@ -986,7 +1005,7 @@
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->article->issue->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->issue }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->issue->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
@@ -994,7 +1013,7 @@
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->article->section->name }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->section }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->section->name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
@@ -1065,11 +1084,11 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_article number="4" }}
+    {{ set_article number="140" }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
-    {{ literal }}{{ set_article number="143" }}{{ /literal }}
+    {{ literal }}{{ set_article number="140" }}{{ /literal }}
   </td>
 </tr>
 <tr>

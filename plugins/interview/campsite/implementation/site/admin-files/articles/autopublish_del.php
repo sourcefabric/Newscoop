@@ -18,13 +18,13 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;
 }
 
-$articlePublishObj =& new ArticlePublish($f_event_id);
+$articlePublishObj = new ArticlePublish($f_event_id);
 if ($articlePublishObj->exists()) {
 	$articlePublishObj->delete();
 }

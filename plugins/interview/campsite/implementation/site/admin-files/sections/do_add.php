@@ -20,8 +20,8 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-$publicationObj =& new Publication($f_publication_id);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$publicationObj = new Publication($f_publication_id);
 
 if (!$publicationObj->exists()) {
     camp_html_display_error(getGS('Publication does not exist.'));
@@ -59,7 +59,7 @@ if (!$isValidShortName && trim($f_url_name) != "") {
 	$errors[] = getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('URL Name') . '"');
 }
 if ($correct) {
-    $newSection =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_number);
+    $newSection = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_number);
     $columns = array();
     $columns['Description'] = $f_description;
     $created = $newSection->create($f_name, $f_url_name, $columns);

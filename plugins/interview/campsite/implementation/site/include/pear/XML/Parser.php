@@ -221,7 +221,7 @@ class XML_Parser extends PEAR
      *
      * @access  public
      * @param   string          mode, either 'func' or 'event'
-     * @return  boolean|object  true on success, PEAR_Error otherwise   
+     * @return  boolean|object  true on success, PEAR_Error otherwise
      */
     function setMode($mode)
     {
@@ -381,7 +381,7 @@ class XML_Parser extends PEAR
             	return $this->raiseError('Remote files cannot be parsed, as safe mode is enabled.', XML_PARSER_ERROR_REMOTE);
             }
         }
-        
+
         $fp = @fopen($file, 'rb');
         if (is_resource($fp)) {
             $this->fp = $fp;
@@ -392,12 +392,12 @@ class XML_Parser extends PEAR
 
     // }}}
     // {{{ setInputString()
-    
+
     /**
      * XML_Parser::setInputString()
-     * 
+     *
      * Sets the xml input from a string
-     * 
+     *
      * @param string $data a string containing the XML document
      * @return null
      **/
@@ -406,7 +406,7 @@ class XML_Parser extends PEAR
         $this->fp = $data;
         return null;
     }
-    
+
     // }}}
     // {{{ setInput()
 
@@ -414,7 +414,7 @@ class XML_Parser extends PEAR
      * Sets the file handle to use with parse().
      *
      * You should use setInputFile() or setInputString() if you
-     * pass a string 
+     * pass a string
      *
      * @param    mixed  $fp  Can be either a resource returned from fopen(),
      *                       a URL, a local filename or a string.
@@ -465,7 +465,7 @@ class XML_Parser extends PEAR
         }
         // if $this->fp was fopened previously
         if (is_resource($this->fp)) {
-        
+
             while ($data = fread($this->fp, 4096)) {
                 if (!$this->_parseString($data, feof($this->fp))) {
                     $error = &$this->raiseError();
@@ -488,7 +488,7 @@ class XML_Parser extends PEAR
 
     /**
      * XML_Parser::_parseString()
-     * 
+     *
      * @param string $data
      * @param boolean $eof
      * @return bool
@@ -499,13 +499,13 @@ class XML_Parser extends PEAR
     {
         return xml_parse($this->parser, $data, $eof);
     }
-    
+
     // }}}
     // {{{ parseString()
 
     /**
      * XML_Parser::parseString()
-     * 
+     *
      * Parses a string.
      *
      * @param    string  $data XML data
@@ -519,7 +519,7 @@ class XML_Parser extends PEAR
         if (!isset($this->parser) || !is_resource($this->parser)) {
             $this->reset();
         }
-        
+
         if (!$this->_parseString($data, $eof)) {
            $error = &$this->raiseError();
            $this->free();
@@ -531,12 +531,12 @@ class XML_Parser extends PEAR
         }
         return true;
     }
-    
+
     /**
      * XML_Parser::free()
-     * 
+     *
      * Free the internal resources associated with the parser
-     * 
+     *
      * @return null
      **/
     function free()
@@ -551,23 +551,23 @@ class XML_Parser extends PEAR
         unset($this->fp);
         return null;
     }
-    
+
     /**
      * XML_Parser::raiseError()
-     * 
+     *
      * Throws a XML_Parser_Error
-     * 
+     *
      * @param string  $msg   the error message
      * @param integer $ecode the error message code
-     * @return XML_Parser_Error 
+     * @return XML_Parser_Error
      **/
     function raiseError($msg = null, $ecode = 0)
     {
         $msg = !is_null($msg) ? $msg : $this->parser;
-        $err = &new XML_Parser_Error($msg, $ecode);
+        $err = new XML_Parser_Error($msg, $ecode);
         return parent::raiseError($err);
     }
-    
+
     // }}}
     // {{{ funcStartHandler()
 
@@ -651,7 +651,7 @@ class XML_Parser_Error extends PEAR_Error
     * prefix for all messages
     *
     * @var      string
-    */    
+    */
     var $error_message_prefix = 'XML_Parser: ';
 
     // }}}
@@ -668,7 +668,7 @@ class XML_Parser_Error extends PEAR_Error
     * @param    integer             error code
     * @param    integer             error handling
     * @param    integer             error level
-    */    
+    */
     function XML_Parser_Error($msgorparser = 'unknown error', $code = 0, $mode = PEAR_ERROR_RETURN, $level = E_USER_NOTICE)
     {
         if (is_resource($msgorparser)) {

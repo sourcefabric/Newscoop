@@ -10,7 +10,8 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 
-class Subscription extends DatabaseObject {
+class Subscription extends DatabaseObject
+{
 	var $m_dbTableName = 'Subscriptions';
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
@@ -30,7 +31,7 @@ class Subscription extends DatabaseObject {
 	 * @param int $p_id
 	 * @return Subscription
 	 */
-	function Subscription($p_id = null)
+	public function Subscription($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_id;
@@ -45,7 +46,7 @@ class Subscription extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function delete()
+	public function delete()
 	{
 		global $g_ado_db;
 		$deleted = parent::delete();
@@ -60,7 +61,7 @@ class Subscription extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getSubscriptionId()
+	public function getSubscriptionId()
 	{
 		return $this->m_data['Id'];
 	} // fn getSubscriptionId
@@ -71,7 +72,7 @@ class Subscription extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getUserId()
+	public function getUserId()
 	{
 		return $this->m_data['IdUser'];
 	} // fn getUserId
@@ -82,7 +83,7 @@ class Subscription extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getPublicationId()
+	public function getPublicationId()
 	{
 		return $this->m_data['IdPublication'];
 	} // fn getPublicationId
@@ -91,7 +92,7 @@ class Subscription extends DatabaseObject {
 	/**
 	 * @return float
 	 */
-	function getToPay()
+	public function getToPay()
 	{
 		return $this->m_data['ToPay'];
 	} // fn getToPay
@@ -101,7 +102,7 @@ class Subscription extends DatabaseObject {
 	 * @param float $p_value
 	 * @return boolean
 	 */
-	function setToPay($p_value)
+	public function setToPay($p_value)
 	{
 		global $g_ado_db;
 		$success = $this->setProperty('ToPay', $p_value);
@@ -116,7 +117,7 @@ class Subscription extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getCurrency()
+	public function getCurrency()
 	{
 		return $this->m_data['Currency'];
 	} // fn getCurrency
@@ -127,7 +128,7 @@ class Subscription extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getType()
+	public function getType()
 	{
 		return $this->m_data['Type'];
 	} // fn getType
@@ -138,7 +139,7 @@ class Subscription extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function isActive()
+	public function isActive()
 	{
 		$active = $this->m_data['Active'];
 		if ($active == 'Y') {
@@ -155,7 +156,7 @@ class Subscription extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setIsActive($p_value)
+	public function setIsActive($p_value)
 	{
 		if ($p_value) {
 			return $this->setProperty('Active', 'Y');
@@ -172,7 +173,7 @@ class Subscription extends DatabaseObject {
 	 * @param int $p_userId
 	 * @return int
 	 */
-	function GetNumSubscriptions($p_publicationId = null, $p_userId = null)
+	public static function GetNumSubscriptions($p_publicationId = null, $p_userId = null)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT COUNT(*) FROM Subscriptions";
@@ -203,7 +204,8 @@ class Subscription extends DatabaseObject {
 	 * @param array $p_sqlOptions
 	 * @return array
 	 */
-	function GetSubscriptions($p_publicationId = null, $p_userId = null, $p_sqlOptions = null)
+	public static function GetSubscriptions($p_publicationId = null,
+	                                        $p_userId = null, $p_sqlOptions = null)
 	{
 		$constraints = array();
 		if (!is_null($p_publicationId)) {
@@ -224,7 +226,7 @@ class Subscription extends DatabaseObject {
 	 * @return int
 	 *     The number of subscriptions deleted.
 	 */
-    function DeleteSubscriptionsInSection($p_publicationId, $p_sectionId)
+    public static function DeleteSubscriptionsInSection($p_publicationId, $p_sectionId)
     {
         global $g_ado_db;
     	$query = "SELECT Id FROM Subscriptions WHERE IdPublication = " . $p_publicationId;
@@ -249,7 +251,7 @@ class Subscription extends DatabaseObject {
      * @param int $p_sectionId
      * @return int
      */
-    function AddSectionToAllSubscriptions($p_publicationId, $p_sectionId)
+    public static function AddSectionToAllSubscriptions($p_publicationId, $p_sectionId)
     {
         global $g_ado_db;
     	// Retrieve the default trial and paid time of the subscriptions

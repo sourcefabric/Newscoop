@@ -14,9 +14,9 @@ $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id');
 
-$manageUser =& new User($f_user_id);
-$subscription =& new Subscription($f_subscription_id);
-$publication =& new Publication($subscription->getPublicationId());
+$manageUser = new User($f_user_id);
+$subscription = new Subscription($f_subscription_id);
+$publication = new Publication($subscription->getPublicationId());
 
 if ($subscription->delete()) {
 	$uriPath = strtok($_SERVER['HTTP_REFERER'], "?");

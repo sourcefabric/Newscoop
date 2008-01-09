@@ -46,7 +46,7 @@ if ($f_subscription_active === "on") {
 }
 
 $errorMsgs = array();
-$manageUser =& new User($f_user_id);
+$manageUser = new User($f_user_id);
 
 $paidDays = 0;
 if ( ($f_subscription_type == "PN") || ($f_subscription_type == "T") ) {
@@ -63,7 +63,7 @@ if ($f_publication_id <= 0) {
 	exit;
 }
 
-$subscription =& new Subscription();
+$subscription = new Subscription();
 $created = $subscription->create(array(
 	'IdUser' => $f_user_id,
 	'IdPublication' => $f_publication_id,

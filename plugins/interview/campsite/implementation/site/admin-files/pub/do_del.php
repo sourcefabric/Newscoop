@@ -23,7 +23,7 @@ if (!Input::IsValid()) {
 
 $doDelete = true;
 
-$publicationObj =& new Publication($Pub);
+$publicationObj = new Publication($Pub);
 
 $issuesRemaining = Issue::GetNumIssues($Pub);
 $errorMsgs = array();
@@ -51,7 +51,7 @@ if ($subscriptionsRemaining > 0) {
 }
 
 if ($doDelete) {
-	$forum =& new Phorum_forum($publicationObj->getForumId());
+	$forum = new Phorum_forum($publicationObj->getForumId());
 	$forum->delete();
 	$publicationObj->delete();
 	camp_html_goto_page("/$ADMIN/pub");

@@ -2,14 +2,14 @@
 <table class="main" cellspacing="0" cellpadding="0">
 <tr>
   <td valign="top">
-    <div id="breadcrubm">
+    <div id="breadcrumb">
     {{ breadcrumb }}
     </div>
     {{** main content area **}}
     <table class="content" cellspacing="0" cellpadding="0">
     <tr>
       <td>
-        {{ include file="section-content.tpl" }}
+        {{ include file="service-content.tpl" }}
       </td>
     </tr>
     </table>

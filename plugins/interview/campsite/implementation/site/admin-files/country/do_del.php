@@ -9,8 +9,8 @@ if (!$g_user->hasPermission('DeleteCountries')) {
 $f_country_code = Input::Get('f_country_code');
 $f_country_language = Input::Get('f_country_language');
 
-$country =& new Country($f_country_code, $f_country_language);
-$language =& new Language($f_country_language);
+$country = new Country($f_country_code, $f_country_language);
+$language = new Language($f_country_language);
 $deleted = $country->delete();
 if ($deleted) {
 	camp_html_goto_page("/$ADMIN/country");

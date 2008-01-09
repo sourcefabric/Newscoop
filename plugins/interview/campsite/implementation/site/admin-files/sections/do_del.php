@@ -13,9 +13,9 @@ $f_language_id= Input::Get('f_language_id', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_deleteSubscriptions = Input::Get('f_delete_subscriptions', 'string', '', true);
 
-$publicationObj =& new Publication($f_publication_id);
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$publicationObj = new Publication($f_publication_id);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
 $articles = Article::GetArticles($f_publication_id, $f_issue_number, $f_section_number, $f_language_id);
 $numArticles = count($articles);

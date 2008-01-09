@@ -30,7 +30,7 @@ function smarty_function_urlparameters($p_params, &$p_smarty)
             return null;
         }
         // sets the URL parameter option
-        $context->url->uri_parameter = $option;
+//        $context->url->uri_parameter = $option;
         // gets the URI path
         $uriString = $context->url->url_parameters;
     }

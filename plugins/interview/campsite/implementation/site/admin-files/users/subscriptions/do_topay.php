@@ -14,8 +14,8 @@ $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
 $f_subscription_left_to_pay = Input::Get('f_subscription_left_to_pay', 'int', 0);
 
-$manageUser =& new User($f_user_id);
-$subscription =& new Subscription($f_subscription_id);
+$manageUser = new User($f_user_id);
+$subscription = new Subscription($f_subscription_id);
 
 $changed = $subscription->setToPay($f_subscription_left_to_pay);
 if ($changed) {

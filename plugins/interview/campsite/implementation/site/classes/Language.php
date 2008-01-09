@@ -34,7 +34,7 @@ class Language extends DatabaseObject {
 	 * Constructor.
 	 * @param int $p_languageId
 	 */
-	function Language($p_languageId = null)
+	public function Language($p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (!is_null($p_languageId)) {
@@ -52,7 +52,7 @@ class Language extends DatabaseObject {
 	 * @return mixed
 	 * 		Return TRUE on success and PEAR_Error on failure.
 	 */
-	function create($p_values = null)
+	public function create($p_values = null)
 	{
 		$success = parent::create($p_values);
 		if ($success) {
@@ -80,7 +80,7 @@ class Language extends DatabaseObject {
 	 * @param boolean $p_isSql
 	 * @return boolean
 	 */
-	function update($p_values = null, $p_commit = true, $p_isSql = false)
+	public function update($p_values = null, $p_commit = true, $p_isSql = false)
 	{
 		$success = parent::update($p_values, $p_commit, $p_isSql);
 		if (function_exists("camp_load_translation_strings")) {
@@ -98,7 +98,7 @@ class Language extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function delete($p_deleteLanguageFiles = true)
+	public function delete($p_deleteLanguageFiles = true)
 	{
 		global $g_documentRoot;
 		if (is_link($g_documentRoot . "/" . $this->getCode() . ".php")) {
@@ -126,7 +126,7 @@ class Language extends DatabaseObject {
 	 * The unique ID of the language in the database.
 	 * @return int
 	 */
-	function getLanguageId()
+	public function getLanguageId()
 	{
 		return $this->m_data['Id'];
 	} // fn getLanguageId
@@ -136,7 +136,7 @@ class Language extends DatabaseObject {
 	 * Return the english name of this language.
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->m_data['Name'];
 	} // fn getName
@@ -146,7 +146,7 @@ class Language extends DatabaseObject {
 	 * Return the name of the language as written in the language itself.
 	 * @return string
 	 */
-	function getNativeName()
+	public function getNativeName()
 	{
 		return $this->m_data['OrigName'];
 	} // fn get
@@ -156,7 +156,7 @@ class Language extends DatabaseObject {
 	 * Get the two-letter code for this language.
 	 * @return string
 	 */
-	function getCode()
+	public function getCode()
 	{
 		return $this->m_data['Code'];
 	} // fn getCode
@@ -166,7 +166,7 @@ class Language extends DatabaseObject {
 	 * Get the page encoding for this language.
 	 * @return string
 	 */
-	function getCodePage()
+	public function getCodePage()
 	{
 	    return $this->m_data['CodePage'];
 	} // fn getCodePage
@@ -180,7 +180,8 @@ class Language extends DatabaseObject {
 	 * @param string $p_name
 	 * @return array
 	 */
-	public static function GetLanguages($p_id = null, $p_languageCode = null, $p_name = null)
+	public static function GetLanguages($p_id = null, $p_languageCode = null,
+	                                    $p_name = null)
 	{
 	    $constraints = array();
 	    if (!is_null($p_id)) {

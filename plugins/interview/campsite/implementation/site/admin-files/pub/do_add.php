@@ -56,9 +56,9 @@ if (camp_html_has_msgs()) {
       camp_html_goto_page($backLink);
 }
 
-$alias =& new Alias();
+$alias = new Alias();
 $alias->create(array('Name' => $f_default_alias));
-$publicationObj =& new Publication();
+$publicationObj = new Publication();
 $columns = array('Name' => $f_name,
 				 'IdDefaultAlias'=> $alias->getId(),
 				 'IdDefaultLanguage' => $f_language,
@@ -81,7 +81,7 @@ if ($created) {
 
 	$forum = camp_forum_create($publicationObj, $f_comments_public_enabled);
 	camp_forum_update($forum, $f_name, $f_comments_enabled, $f_comments_public_enabled);
-	$setting =& new Phorum_setting('mod_emailcomments', 'S');
+	$setting = new Phorum_setting('mod_emailcomments', 'S');
 	if (!$setting->exists()) {
 		$setting->create();
 	}

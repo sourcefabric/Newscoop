@@ -9,7 +9,7 @@ class ArticleTest extends PHPUnit_TestCase {
 	}
 
 	function test_article() {
-		$article =& new Article(9000001,9000002,9000003,9000004);
+		$article = new Article(9000001,9000002,9000003,9000004);
 
 		// Test create
 		$article->create("Unit Test Long Name",
@@ -27,7 +27,7 @@ class ArticleTest extends PHPUnit_TestCase {
 		$article->setIsIndexed(true);
 
 		// Test GET functions
-		$articleCopy =& new Article(9000001, 9000002, 9000003, 9000004, $article->getArticleId());
+		$articleCopy = new Article(9000001, 9000002, 9000003, 9000004, $article->getArticleId());
 		$this->assertEquals(9000001, $articleCopy->getPublicationId());
 		$this->assertEquals(9000002, $articleCopy->getIssueNumber());
 		$this->assertEquals(9000003, $articleCopy->getSectionNumber());
@@ -46,7 +46,7 @@ class ArticleTest extends PHPUnit_TestCase {
 	}
 }
 
-$suite =& new PHPUnit_TestSuite("ArticleTest");
+$suite = new PHPUnit_TestSuite("ArticleTest");
 $result = PHPUnit::run($suite);
 echo $result->toHtml();
 

@@ -21,6 +21,7 @@
 </table>
 
 <table class="rightbar" cellspacing="0" cellpadding="0">
+{{ if ! $campsite->user->logged_in }}
 <th>{{* tr *}}Login{{* tr *}}</th>
 <tr>
   <td>
@@ -38,6 +39,10 @@
     </div>
   </td>
 </tr>
+{{ else }}
+<th>Welcome {{ $campsite->user->name }}</th>
+<td><a href="?logout=true">Logout</a></td>
+{{ /if }}
 </table>
 
 <table class="rightbar" cellspacing="0" cellpadding="0">

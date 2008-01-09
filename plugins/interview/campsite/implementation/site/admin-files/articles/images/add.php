@@ -26,10 +26,10 @@ if (!is_writable($Campsite['IMAGE_DIRECTORY'])) {
 	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['IMAGE_DIRECTORY']));
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
-$publicationObj =& new Publication($f_publication_id);
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
+$publicationObj = new Publication($f_publication_id);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
 $ImageTemplateId = ArticleImage::GetUnusedTemplateId($f_article_number);
 

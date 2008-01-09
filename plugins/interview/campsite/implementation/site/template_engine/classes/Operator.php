@@ -174,7 +174,7 @@ class Operator
 	 *
 	 * @return array
 	 */
-	static function GetOperators($p_type = 'string')
+	public static function GetOperators($p_type = 'string')
 	{
 	    if (!isset($p_type) || !array_key_exists($p_type, Operator::$s_typeOperators)) {
 	        $p_type = 'string';

@@ -28,14 +28,14 @@ if (!$g_user->hasPermission("DeleteFile")) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS("Article does not exist."), null, true);
 	exit;
 }
 
-$attachmentObj =& new Attachment($f_attachment_id);
+$attachmentObj = new Attachment($f_attachment_id);
 if (!$attachmentObj->exists()) {
 	camp_html_display_error(getGS('Attachment does not exist.'), null, true);
 	exit;

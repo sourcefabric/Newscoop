@@ -11,8 +11,8 @@ $f_country_orig_language = Input::Get('f_country_orig_language');
 $f_country_new_language = Input::Get('f_country_new_language');
 $f_country_name = trim(Input::Get('f_country_name'));
 
-$country =& new Country($f_country_code, $f_country_orig_language);
-$language =& new Language($f_country_new_language);
+$country = new Country($f_country_code, $f_country_orig_language);
+$language = new Language($f_country_new_language);
 $correct = true;
 $created = false;
 
@@ -27,7 +27,7 @@ if (!$language->exists()) {
 }
 
 if ($correct) {
-	$newCountry =& new Country($f_country_code, $f_country_new_language);
+	$newCountry = new Country($f_country_code, $f_country_new_language);
 	$created = $newCountry->create(array('Name' => $f_country_name));
 	if ($created) {
 	    camp_html_goto_page("/$ADMIN/country/");

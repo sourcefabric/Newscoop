@@ -18,7 +18,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($languageId, $articleNumber);
+$articleObj = new Article($languageId, $articleNumber);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;
@@ -29,19 +29,19 @@ $f_issue_number = ($f_issue_number > 0) ? $f_issue_number : $articleObj->getIssu
 $f_section_number = ($f_section_number > 0) ? $f_section_number : $articleObj->getSectionNumber();
 
 if ($f_publication_id > 0) {
-	$publicationObj =& new Publication($f_publication_id);
+	$publicationObj = new Publication($f_publication_id);
 	if (!$publicationObj->exists()) {
 		camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
 		exit;
 	}
 
-	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+	$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 	if (!$issueObj->exists()) {
 		camp_html_display_error(getGS('No such issue.'), $BackLink);
 		exit;
 	}
 
-	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+	$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 	if (!$sectionObj->exists()) {
 		camp_html_display_error(getGS('No such section.'), $BackLink);
 		exit;
@@ -73,8 +73,8 @@ $articleLanguages = $articleObj->getLanguages();
 $articleLanguages = DbObjectArray::GetColumn($articleLanguages, "Id");
 
 if ( ($f_language_selected > 0) && ($f_issue_number > 0) ) {
-	$translationIssueObj =& new Issue($f_publication_id, $f_language_selected, $f_issue_number);
-	$translationSectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_selected, $f_section_number);
+	$translationIssueObj = new Issue($f_publication_id, $f_language_selected, $f_issue_number);
+	$translationSectionObj = new Section($f_publication_id, $f_issue_number, $f_language_selected, $f_section_number);
 }
 
 if ($f_publication_id > 0) {

@@ -30,7 +30,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 
 // If the template ID is in use, dont add the image.
 if (ArticleImage::TemplateIdInUse($f_article_number, $f_image_template_id)) {

@@ -29,7 +29,7 @@ $logs = Log::GetLogs($f_event_search_id,
 	array('LIMIT' => array('MAX_ROWS' => $ItemsPerPage, 'START' => $f_log_page_offset)));
 $numLogLines = Log::GetNumLogs($f_event_search_id);
 
-$pager =& new SimplePager($numLogLines, $ItemsPerPage, "f_log_page_offset", "index.php?f_event_search_id=".urlencode($f_event_search_id)."&");
+$pager = new SimplePager($numLogLines, $ItemsPerPage, "f_log_page_offset", "index.php?f_event_search_id=".urlencode($f_event_search_id)."&");
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -97,7 +97,7 @@ echo camp_html_breadcrumbs($crumbs);
 		<?php if ($f_event_search_id == 0) { ?>
 		<TD>
 			<?php
-			$event =& new Event($entry->getEventId(), 1);
+			$event = new Event($entry->getEventId(), 1);
 			echo htmlspecialchars($event->getName());
 			?>&nbsp;
 		</TD>

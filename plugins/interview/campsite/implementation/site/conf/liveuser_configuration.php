@@ -1,7 +1,13 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
+
 // Global permissions array
 global $g_permissions;
+global $Campsite;
+global $LiveUser;
+global $LiveUserAdmin;
 
 
 // Data Source Name (DSN)
@@ -189,16 +195,16 @@ $liveuserConfig = array (
 
 require_once(CS_PATH_PEAR_LOCAL.DIR_SEP.'LiveUser'.DIR_SEP.'Admin.php');
 
-$LiveUser =& LiveUser::factory($liveuserConfig);
-if (!$LiveUser->init()) {
+$GLOBALS['LiveUser'] =& LiveUser::factory($liveuserConfig);
+if (!$GLOBALS['LiveUser']->init()) {
     exit(0);
 }
-$LiveUserAdmin =& LiveUser_Admin::factory($liveuserConfig);
-if (!$LiveUserAdmin->init()) {
+$GLOBALS['LiveUserAdmin'] =& LiveUser_Admin::factory($liveuserConfig);
+if (!$GLOBALS['LiveUserAdmin']->init()) {
     exit(0);
 }
 
-if ($LiveUserAdmin->auth->_storage->dbc == false) {
+if ($GLOBALS['LiveUserAdmin']->auth->_storage->dbc === false) {
 ?>
 	<font color="red" size="3">
 	<p>ERROR connecting to the MySQL server!</p>
@@ -208,6 +214,6 @@ if ($LiveUserAdmin->auth->_storage->dbc == false) {
     exit(0);
 }
 
-$g_permissions = $LiveUserAdmin->perm->outputRightsConstants('array');
+$g_permissions = $GLOBALS['LiveUserAdmin']->perm->outputRightsConstants('array');
 
 ?>

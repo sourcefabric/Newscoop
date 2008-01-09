@@ -11,7 +11,7 @@ $f_topic_language_id = Input::Get('f_topic_language_id', 'int', 0);
 $f_name = trim(Input::Get('f_name', 'string', '', true));
 
 $correct = true;
-$editTopic =& new Topic($f_topic_edit_id);
+$editTopic = new Topic($f_topic_edit_id);
 $path = camp_topic_path($editTopic, $f_topic_language_id);
 
 $errorMsgs = array();

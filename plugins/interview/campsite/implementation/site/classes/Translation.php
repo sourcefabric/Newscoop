@@ -9,7 +9,7 @@ class Translation extends DatabaseObject {
 	                           'fk_language_id',
 	                           'translation_text');
 
-	function Translation($p_languageId = null, $p_phraseId = null)
+	public function Translation($p_languageId = null, $p_phraseId = null)
 	{
 		if (is_numeric($p_phraseId)) {
 			$this->m_data['phrase_id'] = $p_phraseId;
@@ -32,7 +32,7 @@ class Translation extends DatabaseObject {
 	 * 		Optional. The translation text.
 	 * @return boolean
 	 */
-	function create($p_text = null)
+	public function create($p_text = null)
 	{
 		if (!isset($this->m_data['phrase_id'])) {
 			$this->m_data['phrase_id'] = Translation::__GeneratePhraseId();
@@ -46,7 +46,7 @@ class Translation extends DatabaseObject {
 	 * This can be called statically or as a member function.
 	 * If called statically, you must give it an argument.
 	 */
-	function deletePhrase($p_phraseId = null)
+	public function deletePhrase($p_phraseId = null)
 	{
 		global $g_ado_db;
 		if (is_null($p_phraseId)) {
@@ -62,7 +62,7 @@ class Translation extends DatabaseObject {
 	 * Create a unique identifier for a phrase.
 	 * @access private
 	 */
-	function __GeneratePhraseId()
+	private function __GeneratePhraseId()
 	{
 	    global $g_ado_db;
 		$queryStr = 'UPDATE AutoId SET translation_phrase_id=LAST_INSERT_ID(translation_phrase_id + 1)';
@@ -80,7 +80,7 @@ class Translation extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getPhraseId()
+	public function getPhraseId()
 	{
 		return $this->m_data['phrase_id'];
 	} // fn getPhraseId
@@ -91,7 +91,7 @@ class Translation extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getLanguageId()
+	public function getLanguageId()
 	{
 		return $this->m_data['fk_language_id'];
 	} // fn getLanguageId
@@ -102,7 +102,7 @@ class Translation extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getText()
+	public function getText()
 	{
 		return $this->m_data['translation_text'];
 	} // fn getText
@@ -114,7 +114,7 @@ class Translation extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setText($p_value)
+	public function setText($p_value)
 	{
 		return $this->setProperty('translation_text', $p_value);
 	} // fn setText
@@ -126,7 +126,7 @@ class Translation extends DatabaseObject {
 	 * @param int $p_phraseId
 	 * @param int $p_languageId
 	 */
-	function GetPhrase($p_languageId, $p_phraseId)
+	public static function GetPhrase($p_languageId, $p_phraseId)
 	{
 		global $g_ado_db;
 		$sql = "SELECT translation_text FROM Translations"
@@ -143,12 +143,12 @@ class Translation extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @param string $p_text
 	 */
-	function SetPhrase($p_languageId, $p_phraseId, $p_text)
+	public static function SetPhrase($p_languageId, $p_phraseId, $p_text)
 	{
 		if (!is_numeric($p_languageId) || !is_numeric($p_phraseId) || !is_string($p_text)) {
 			return false;
 		}
-		$translation =& new Translation($p_languageId, $p_phraseId);
+		$translation = new Translation($p_languageId, $p_phraseId);
 		if ($translation->exists()) {
 			return $translation->setText($p_text);
 		} else {
@@ -164,7 +164,7 @@ class Translation extends DatabaseObject {
 	 * @param array $p_sqlOptions
 	 * @return array
 	 */
-	function GetTranslations($p_phraseId, $p_sqlOptions = null)
+	public static function GetTranslations($p_phraseId, $p_sqlOptions = null)
 	{
 		global $g_ado_db;
 		$phrases = array();
