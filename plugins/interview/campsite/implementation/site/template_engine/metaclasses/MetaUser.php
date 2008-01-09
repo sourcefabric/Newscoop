@@ -92,7 +92,7 @@ final class MetaUser extends MetaDbObject {
      */
     public function has_permission($p_permission)
     {
-        if ($this->m_dbObject->hasPermission($p_permission) === 'Y') {
+        if ($this->m_dbObject->hasPermission($p_permission)) {
             return true;
         }
         return false;
