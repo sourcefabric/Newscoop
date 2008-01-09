@@ -25,7 +25,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS("Article does not exist."), null, true);
 	exit;
@@ -37,13 +37,13 @@ if (sizeof($f_audioclip_codes) == 0) {
 }
 
 foreach ($f_audioclip_codes as $audioclip) {
-    $audioclipObj =& new Audioclip($audioclip);
+    $audioclipObj = new Audioclip($audioclip);
     if (!$audioclipObj->exists()) {
         camp_html_display_error(getGS("Audioclip does not exist."), null, true);
         exit;
     }
     // link the audioclip to the current article
-    $articleAudioclip =& new ArticleAudioclip($articleObj->getArticleNumber(), $audioclipObj->getGunId());
+    $articleAudioclip = new ArticleAudioclip($articleObj->getArticleNumber(), $audioclipObj->getGunId());
     $articleAudioclip->create();
 }
 

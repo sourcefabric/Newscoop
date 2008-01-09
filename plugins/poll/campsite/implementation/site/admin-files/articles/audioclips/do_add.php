@@ -30,7 +30,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS("Article does not exist."), null, true);
 	exit;
@@ -63,7 +63,7 @@ if (PEAR::isError($aClipGunid)) {
 Audioclip::OnFileStore($f_audiofile);
 
 // link the audioclip to the current article
-$articleAudioclip =& new ArticleAudioclip($articleObj->getArticleNumber(), $aClipGunid);
+$articleAudioclip = new ArticleAudioclip($articleObj->getArticleNumber(), $aClipGunid);
 $attributes = null;
 if ($f_language_specific == 'yes') {
     $attributes['fk_language_id'] = $f_language_id;

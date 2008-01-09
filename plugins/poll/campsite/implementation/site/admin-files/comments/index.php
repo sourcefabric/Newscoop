@@ -39,7 +39,7 @@ $orderDirectionUrl = "/$ADMIN/comments/index.php?f_comment_order_direction=$Reve
 
 // We check if a Campsite Online server is being used
 if (SystemPref::Get("UseDBReplication") == 'Y') {
-    $dbReplicationObj =& new DbReplication();
+    $dbReplicationObj = new DbReplication();
     $connectedToOnlineServer = $dbReplicationObj->connect();
 }
 
@@ -51,9 +51,9 @@ if (!isset($connectedToOnlineServer)
     $numArchive = ArticleComment::GetComments('approved', true, $f_comment_search);
 
     if ($f_comment_screen == 'inbox') {
-        $pager =& new SimplePager($numInbox, $f_comment_per_page, 'f_comment_start_inbox', "/$ADMIN/comments/index.php?");
+        $pager = new SimplePager($numInbox, $f_comment_per_page, 'f_comment_start_inbox', "/$ADMIN/comments/index.php?");
     } elseif ($f_comment_screen == 'archive') {
-        $pager =& new SimplePager($numArchive, $f_comment_per_page, 'f_comment_start_archive', "/$ADMIN/comments/index.php?");
+        $pager = new SimplePager($numArchive, $f_comment_per_page, 'f_comment_start_archive', "/$ADMIN/comments/index.php?");
     }
 
     // This is here again on purpose because sometimes the pager

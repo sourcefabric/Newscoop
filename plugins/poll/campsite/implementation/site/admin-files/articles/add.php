@@ -31,11 +31,11 @@ $publicationObj = null;
 $issueObj = null;
 $sectionObj = null;
 if ($f_publication_id > 0) {
-	$publicationObj =& new Publication($f_publication_id);
+	$publicationObj = new Publication($f_publication_id);
 	if (($f_issue_number > 0) && ($f_article_language > 0)) {
-		$issueObj =& new Issue($f_publication_id, $f_article_language, $f_issue_number);
+		$issueObj = new Issue($f_publication_id, $f_article_language, $f_issue_number);
 		if ($f_section_number > 0) {
-			$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_article_language, $f_section_number);
+			$sectionObj = new Section($f_publication_id, $f_issue_number, $f_article_language, $f_section_number);
 		}
 	}
 }
@@ -46,7 +46,7 @@ $languageIds = DbObjectArray::GetColumn($sections, 'IdLanguage');
 $allLanguages = array();
 foreach ($languageIds as $languageId) {
 	if (!isset($allLanguages[$languageId])) {
-		$allLanguages[$languageId] =& new Language($languageId);
+		$allLanguages[$languageId] = new Language($languageId);
 	}
 }
 $allArticleTypes = ArticleType::GetArticleTypes();
@@ -117,14 +117,14 @@ if (sizeof($allArticleTypes) == 0) {
 			    <?php if (count($allArticleTypes) == 1) { ?>
 			        <INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php echo $allArticleTypes[0]; ?>">
                     <?php
-                        $tmpAT =& new ArticleType($allArticleTypes[0]);
+                        $tmpAT = new ArticleType($allArticleTypes[0]);
                         echo $tmpAT->getDisplayName();
 			    } else { ?>
     				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
 	   		      	<option></option>
 		  		    <?php
     				foreach ($allArticleTypes as $tmpType) {
-	       			    $tmpAT =& new ArticleType($tmpType);
+	       			    $tmpAT = new ArticleType($tmpType);
 			     	    camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
 				    }
 					?>

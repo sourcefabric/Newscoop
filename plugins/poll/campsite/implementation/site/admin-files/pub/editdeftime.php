@@ -19,14 +19,14 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$publicationObj =& new Publication($Pub);
-$pubTimeUnit =& new TimeUnit($publicationObj->getTimeUnit(), $publicationObj->getLanguageId());
+$publicationObj = new Publication($Pub);
+$pubTimeUnit = new TimeUnit($publicationObj->getTimeUnit(), $publicationObj->getLanguageId());
 if (!$pubTimeUnit->exists()) {
-	$pubTimeUnit =& new TimeUnit($publicationObj->getTimeUnit(), 1);
+	$pubTimeUnit = new TimeUnit($publicationObj->getTimeUnit(), 1);
 }
 
-$defaultTime =& new SubscriptionDefaultTime($CountryCode, $Pub);
-$country =& new Country($CountryCode, $Language);
+$defaultTime = new SubscriptionDefaultTime($CountryCode, $Pub);
+$country = new Country($CountryCode, $Language);
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 

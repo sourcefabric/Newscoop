@@ -124,10 +124,10 @@ class File_Find
 
         /* if called statically */
         if (!isset($this)  || !is_a($this, "File_Find")) {
-            $obj = &new File_Find();
+            $obj = new File_Find();
             return $obj->maptree($directory);
         }
-      
+
         /* clear the results just in case */
         $this->files       = array();
         $this->directories = array();
@@ -155,7 +155,7 @@ class File_Find
      *
      * @param string $directory contains the directory path that you
      * want to map.
-     * @param integer $maxrecursion maximun number of folders to recursive 
+     * @param integer $maxrecursion maximun number of folders to recursive
      * map
      *
      * @return array a multidimensional array containing all subdirectories
@@ -176,13 +176,13 @@ class File_Find
      * @static
      */
     function &mapTreeMultiple($directory, $maxrecursion = 0, $count = 0)
-    {   
+    {
         $retval = array();
 
         $count++;
 
         $directory .= DIRECTORY_SEPARATOR;
-        
+
         if (is_readable($directory)) {
             $dh = opendir($directory);
             while (false !== ($entry = @readdir($dh))) {
@@ -192,16 +192,16 @@ class File_Find
             }
             closedir($dh);
         }
-     
+
         while (list($key, $val) = each($retval)) {
             $path = $directory . $val;
             $path = str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR,
                                 DIRECTORY_SEPARATOR, $path);
-      
+
             if (!is_array($val) && is_dir($path)) {
                 unset($retval[$key]);
                 if ($maxrecursion == 0 || $count < $maxrecursion) {
-                    $retval[$val] = &File_Find::mapTreeMultiple($path, 
+                    $retval[$val] = &File_Find::mapTreeMultiple($path,
                                     $maxrecursion, $count);
                 }
             }
@@ -240,11 +240,11 @@ class File_Find
         $matches = array();
         list ($directories,$files)  = File_Find::maptree($directory);
         switch($match) {
-            case 'directories': 
-                $data = $directories; 
+            case 'directories':
+                $data = $directories;
                 break;
-            case 'both': 
-                $data = array_merge($directories, $files); 
+            case 'both':
+                $data = array_merge($directories, $files);
                 break;
             case 'files':
             default:
@@ -258,10 +258,10 @@ class File_Find
         // check if empty string given (ok for 'shell' method, but bad for others)
         if ($pattern || ($type != 'php' && $type != 'perl')) {
             while (list(,$entry) = each($data)) {
-                if ($match_function($pattern, 
+                if ($match_function($pattern,
                                     $fullpath ? $entry : basename($entry))) {
                     $matches[] = $entry;
-                } 
+                }
             }
         }
 
@@ -348,7 +348,7 @@ class File_Find
 *
 * @author techtonik <techtonik@php.net>
 * @return mixed bool on success and PEAR_Error on failure
-*/ 
+*/
 function File_Find_match_shell($pattern, $filename)
 {
     // {{{ convert pattern to positive and negative regexps
@@ -370,7 +370,7 @@ function File_Find_match_shell($pattern, $filename)
        if ($negation) {
            $negative = _File_Find_match_shell_get_pattern($negative);
        }
-    // }}} convert end 
+    // }}} convert end
 
 
     if (defined("FILE_FIND_DEBUG")) {
@@ -382,7 +382,7 @@ function File_Find_match_shell($pattern, $filename)
     if (!preg_match($positive, $filename)) {
         return FALSE;
     } else {
-        if (isset($negative) 
+        if (isset($negative)
               && preg_match($negative, $filename)) {
             return FALSE;
         } else {
@@ -393,8 +393,8 @@ function File_Find_match_shell($pattern, $filename)
 
 /**
 * function used by File_Find_match_shell to convert 'shell' mask
-* into pcre regexp. Some of the rules (see testcases for more): 
-*  escaping all special chars and replacing 
+* into pcre regexp. Some of the rules (see testcases for more):
+*  escaping all special chars and replacing
 *    . with \.
 *    * with .*
 *    ? with .{1}
@@ -402,7 +402,7 @@ function File_Find_match_shell($pattern, $filename)
 *
 * @author techtonik <techtonik@php.net>
 * @return string pcre regexp for preg_match
-*/ 
+*/
 function _File_Find_match_shell_get_pattern($mask) {
     // get array of several masks (if any) delimited by comma
     // do not touch commas in char class

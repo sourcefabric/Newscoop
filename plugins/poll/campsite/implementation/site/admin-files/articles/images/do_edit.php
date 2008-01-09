@@ -40,14 +40,14 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 
 if (!$g_user->hasPermission('ChangeImage') && !$g_user->hasPermission('AttachImageToArticle')) {
 	camp_html_add_msg(getGS("You do not have the right to change image information."));
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 }
 
-$imageObj =& new Image($f_image_id);
+$imageObj = new Image($f_image_id);
 
 if (!is_null($f_image_description) && $g_user->hasPermission('ChangeImage')) {
 	$attributes = array();

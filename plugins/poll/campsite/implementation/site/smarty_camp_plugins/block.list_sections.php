@@ -33,7 +33,10 @@ function smarty_block_list_sections($p_params, $p_content, &$p_smarty, &$p_repea
     if (!isset($p_content)) {
     	$start = 0;
     	$sectionsList = new SectionsList($start, $p_params);
-    	$campContext->setCurrentList($sectionsList, array('section'));
+    	$campContext->setCurrentList($sectionsList, array('publication', 'language',
+    	                                                  'issue', 'section', 'article',
+    	                                                  'image', 'attachment', 'comment',
+    	                                                  'audioclip', 'subtitle'));
     }
 
     $currentSection = $campContext->current_sections_list->defaultIterator()->current();

@@ -13,7 +13,7 @@ $f_topic_language_id = Input::Get('f_topic_language_id', 'int', 0);
 $f_topic_name = trim(Input::Get('f_topic_name'));
 $correct = true;
 $created = false;
-$topicParent =& new Topic($f_topic_parent_id);
+$topicParent = new Topic($f_topic_parent_id);
 $Path = camp_topic_path($topicParent, $f_topic_language_id);
 
 $errorMsgs = array();
@@ -29,13 +29,13 @@ if ($f_topic_language_id <= 0) {
 if (!empty($f_topic_name)) {
 	if ($f_topic_id == 0) {
 		// Create new topic
-		$topic =& new Topic();
+		$topic = new Topic();
 		$created = $topic->create(array('Name' => $f_topic_name,
 										'ParentId' => $f_topic_parent_id,
 										'LanguageId'=>$f_topic_language_id));
 	} else {
 		// Translate existing topic
-		$topic =& new Topic($f_topic_id);
+		$topic = new Topic($f_topic_id);
 		$created = $topic->setName($f_topic_language_id, $f_topic_name);
 	}
 	if ($created) {

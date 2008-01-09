@@ -2,29 +2,29 @@
 /**
  * PHP class to dynamically create a javascript menu.
  * Funded by MDLF/Campware (http://www.campware.org)
- * 
+ *
  * Copyright (C) 2005  Paul Baranowski (paul@paulbaranowski.org)
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * To see the full license, go here:
  * http://www.gnu.org/copyleft/gpl.html
- * 
- * 
- * Dynamic programmable web menu class.  
+ *
+ *
+ * Dynamic programmable web menu class.
  *
  * The design goals are:
- * 1) Make it easy to swap to a new menu type without having to 
+ * 1) Make it easy to swap to a new menu type without having to
  *    reprogram anything.
- * 2) Dynamically insert items in the list.  This is to support 
+ * 2) Dynamically insert items in the list.  This is to support
  *    application plugins that want to put themselves in the menu
  *    after it has been created.
  *
@@ -48,17 +48,17 @@
  * $root = DynMenuItem::Create('', '');
  *
  * // Create a "home" menu item.
- * $home = DynMenuItem::Create('Home', 'http://mysite.com/index.php', 
- *                           array('id' => 'home', 
+ * $home = DynMenuItem::Create('Home', 'http://mysite.com/index.php',
+ *                           array('id' => 'home',
  * 								   'icon' => "<img src='http://mysite.com/img/home.png' align='middle' style='padding-bottom: 3px;' width='16' height='16' />"));
  * $root->addItem($home);
  *
  * $root->addSplit();
  *
- * $content = DynMenuItem::Create('Content', 'http://mysite.com/content.php', 
+ * $content = DynMenuItem::Create('Content', 'http://mysite.com/content.php',
  *                              array('id' => 'content'));
- * $root->addItem($content);             
- * $articles = DynMenuItem::Create('Articles', 'http://mysite.com/articles.php', 
+ * $root->addItem($content);
+ * $articles = DynMenuItem::Create('Articles', 'http://mysite.com/articles.php',
  *                               array('id' => 'articles'));
  *
  * $content->addItem($articles);
@@ -66,7 +66,7 @@
  * // Generate the menu
  * echo $root->createMenu('myMenu');
  *
- * Note: the JSCook menu requires camp_javascriptspecialchars() which 
+ * Note: the JSCook menu requires camp_javascriptspecialchars() which
  * escapes javascript strings.
  */
 class DynMenuItem {
@@ -79,10 +79,10 @@ class DynMenuItem {
     /**
      * Set the type of menu you want to create.
      *
-     * @param string $p_type - 
+     * @param string $p_type -
      *      The name of the class.
      */
-    function SetMenuType($p_type = null)
+    public static function SetMenuType($p_type = null)
     {
         static $type = null;
         if (!is_null($p_type)) {
@@ -90,8 +90,8 @@ class DynMenuItem {
         }
         return $type;
     } // fn SetMenuType
-    
-    
+
+
     /**
      * Dont use this directly, use the Create method instead.
      * You will be able to swap out the type of menu then.
@@ -100,16 +100,16 @@ class DynMenuItem {
      * @param string $p_url
      * @param array $p_attrs
      */
-    function DynMenuItem($p_title, $p_url, $p_attrs = null) 
+    public function DynMenuItem($p_title, $p_url, $p_attrs = null)
     {
         $this->m_title = $p_title;
         $this->m_url = $p_url;
         if (!is_null($p_attrs)) {
-            $this->m_attrs = $p_attrs;    
+            $this->m_attrs = $p_attrs;
         }
     } // fn DynMenuItem
 
-    
+
     /**
      * Create a menu item node of the type set with SetMenuType().
      *
@@ -124,55 +124,55 @@ class DynMenuItem {
      * 		'target' => new window ID for the destination URL
      * @return DynMenuItem
      */
-    function &Create($p_title, $p_url, $p_attrs = null) 
+    public static function &Create($p_title, $p_url, $p_attrs = null)
     {
         $className = DynMenuItem::SetMenuType();
         if (class_exists($className)) {
-            $obj =& new $className($p_title, $p_url, $p_attrs);
+            $obj = new $className($p_title, $p_url, $p_attrs);
             return $obj;
         }
         return null;
     } // fn Create
-    
-    
+
+
     /**
-     * Add a menu item as a child to this item.  
+     * Add a menu item as a child to this item.
      * @param DynMenuItem $p_item
      * @return none
      */
-    function addItem(&$p_item) 
+    public function addItem(&$p_item)
     {
         $p_item->m_parent =& $this;
         if (isset($p_item->m_attrs['id'])) {
-            $this->m_subItems[$p_item->m_attrs['id']] =& $p_item;
+            $this->m_subItems[$p_item->m_attrs['id']] = $p_item;
         } else {
-            $this->m_subItems[] =& $p_item;
+            $this->m_subItems[] = $p_item;
         }
     } // fn addItem
-    
+
 
     /**
      * Get the child menu item matching the given ID.
      * @param string $p_id
      * @return DynMenuItem
      */
-    function &getChildById($p_id)
+    public function &getChildById($p_id)
     {
         if (isset($this->m_subItems[$p_id])) {
             return $this->m_subItems[$p_id];
         }
         return null;
     } // fn getItem
-    
-    
+
+
     /**
-     * Do a breadth-first recursive search and get the first menu item matching 
+     * Do a breadth-first recursive search and get the first menu item matching
      * the given ID.
      *
      * @param string $p_id
      * @return DynMenuItem
      */
-    function &getMatchingItem($p_id) 
+    public function &getMatchingItem($p_id)
     {
         if (count($this->m_subItems) <= 0) {
             return null;
@@ -189,13 +189,13 @@ class DynMenuItem {
         }
         return null;
     } // fn getMatchingItem
-        
-    
+
+
     /**
      * Add the item after the child with the given ID.
      * @param string $p_id
      */
-    function addItemAfter($p_item, $p_id)
+    public function addItemAfter($p_item, $p_id)
     {
         $newSubItems = array();
         reset($this->m_subItems);
@@ -207,45 +207,45 @@ class DynMenuItem {
         }
         $this->m_subItems =& $newSubItems;
     } // fn addItemAfter
-    
-    
+
+
     /**
      * Add a separator in the menu.
      *
      */
-    function &addSplit($p_attrs = null)
+    public function &addSplit($p_attrs = null)
     {
         $className = DynMenuItem::SetMenuType();
         if (!class_exists($className)) {
             return;
         }
-        $newItem =& new $className('[[split]]', '', $p_attrs);
+        $newItem = new $className('[[split]]', '', $p_attrs);
         if (isset($newItem->m_attrs['id'])) {
-            $this->m_subItems[$newItem->m_attrs['id']] =& $newItem;
+            $this->m_subItems[$newItem->m_attrs['id']] = $newItem;
         } else {
-            $this->m_subItems[] =& $newItem;
+            $this->m_subItems[] = $newItem;
         }
         return $newItem;
     } // fn addSplit
 
-    
+
     /**
      * Create the menu, return it as a string.
      * @return string
      */
-    function createMenu($p_name = null, $p_extraArgs = null) {  } 
-        
+    public function createMenu($p_name = null, $p_extraArgs = null) {  }
+
 } // class DynMenuItem
 
 
 class DynMenuItem_JsCook extends DynMenuItem {
-    
+
     /**
      * Create the javascript for the menu.
      * @param string $p_name
      * @return string
      */
-    function createMenu($p_name, $p_extraArgs = null) 
+    public function createMenu($p_name, $p_extraArgs = null)
     {
     	$str = "<SCRIPT LANGUAGE=\"JavaScript\"><!--\n";
         $str .= "var $p_name =\n";
@@ -255,9 +255,9 @@ class DynMenuItem_JsCook extends DynMenuItem {
         $str .= "--></SCRIPT>";
         return $str;
     } // fn createMenu
-    
 
-    function __recurseBuild($p_level) 
+
+    public function __recurseBuild($p_level)
     {
         $str = '';
         foreach ($this->m_subItems as $subItem) {
@@ -288,7 +288,7 @@ class DynMenuItem_JsCook extends DynMenuItem {
         }
         return $str;
     } // fn __recurseBuild
-        
+
 } // class DynMenuItem_JsCook
 
 ?>

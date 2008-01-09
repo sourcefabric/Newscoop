@@ -204,7 +204,7 @@ if(isset($files) && is_array($files)) {
 			foreach ($files as $filename) {
 				$templateName = (!empty($listbasedir) ? $listbasedir."/" : "").$filename;
 				$templateName = $templateName[0] == "/" ? substr($templateName, 1) : $templateName;
-				$templateObj =& new Template($templateName);
+				$templateObj = new Template($templateName);
 				if ($color) {
 					$tr_class = "list_row_even";
 				} else {

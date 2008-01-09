@@ -5,7 +5,6 @@ define('SYNTAX_ERROR_TEMPLATE', 'template_name');
 define('SYNTAX_ERROR_LINE', 'line');
 define('SYNTAX_ERROR_WHAT', 'what');
 
-define('SYNTAX_ERROR_WHAT', 'what');
 define('WHAT_STATEMENT', 'statement');
 define('WHAT_PARAMETER', 'parameter');
 define('WHAT_VALUE', 'value');
@@ -17,6 +16,7 @@ define('SYNTAX_ERROR_INVALID_PROPERTY', 'SYNTAX_ERROR_INVALID_PROPERTY $1 of obj
 define('SYNTAX_ERROR_INVALID_PROPERTY_VALUE', 'SYNTAX_ERROR_INVALID_PROPERTY_VALUE $1 of property $2 of object $3');
 define('SYNTAX_ERROR_INVALID_PARAMETER', 'SYNTAX_ERROR_INVALID_PARAMETER $1 in statement $2');
 define('SYNTAX_ERROR_INVALID_PARAMETER_VALUE', 'SYNTAX_ERROR_INVALID_PARAMETER_VALUE $1 of parameter $2 in statement $3');
+define('SYNTAX_ERROR_MISSING_PARAMETER', 'SYNTAX_ERROR_MISSING_PARAMETER $1 in statement $2');
 
 
 class SyntaxError {

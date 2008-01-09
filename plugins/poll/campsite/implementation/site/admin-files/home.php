@@ -30,9 +30,9 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 
 list($unplacedArticles, $numUnplacedArticles) = Article::GetUnplacedArticles($f_unplaced_articles_offset, $NumDisplayArticles);
 
-$yourArticlesPager =& new SimplePager($NumYourArticles, $NumDisplayArticles, "f_your_articles_offset", "home.php?f_screen=your_articles&");
-$submittedArticlesPager =& new SimplePager($NumSubmittedArticles, $NumDisplayArticles, 'f_submitted_articles_offset', 'home.php?f_screen=submitted_articles&');
-$unplacedArticlesPager =& new SimplePager($numUnplacedArticles, $NumDisplayArticles, 'f_unplaced_articles_offset', 'home.php?f_screen=unplaced_articles&');
+$yourArticlesPager = new SimplePager($NumYourArticles, $NumDisplayArticles, "f_your_articles_offset", "home.php?f_screen=your_articles&");
+$submittedArticlesPager = new SimplePager($NumSubmittedArticles, $NumDisplayArticles, 'f_submitted_articles_offset', 'home.php?f_screen=submitted_articles&');
+$unplacedArticlesPager = new SimplePager($numUnplacedArticles, $NumDisplayArticles, 'f_unplaced_articles_offset', 'home.php?f_screen=unplaced_articles&');
 
 $recentlyPublishedArticles = Article::GetRecentArticles($NumDisplayArticles);
 
@@ -145,12 +145,12 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		$color = 0;
 		foreach ($YourArticles as $tmpArticle) {
 			$section = $tmpArticle->getSection();
-			$language =& new Language($tmpArticle->getLanguageId());
-			$pub =& new Publication($tmpArticle->getPublicationId());
-			$issue =& new Issue($tmpArticle->getPublicationId(),
+			$language = new Language($tmpArticle->getLanguageId());
+			$pub = new Publication($tmpArticle->getPublicationId());
+			$issue = new Issue($tmpArticle->getPublicationId(),
 								$tmpArticle->getLanguageId(),
 								$tmpArticle->getIssueNumber());
-			$section =& new Section($tmpArticle->getPublicationId(),
+			$section = new Section($tmpArticle->getPublicationId(),
 									$tmpArticle->getIssueNumber(),
 									$tmpArticle->getLanguageId(),
 									$tmpArticle->getSectionNumber());
@@ -239,16 +239,16 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 		foreach ($SubmittedArticles as $tmpArticle) {
 			$section = $tmpArticle->getSection();
-			$language =& new Language($tmpArticle->getLanguageId());
-			$pub =& new Publication($tmpArticle->getPublicationId());
-			$issue =& new Issue($tmpArticle->getPublicationId(),
+			$language = new Language($tmpArticle->getLanguageId());
+			$pub = new Publication($tmpArticle->getPublicationId());
+			$issue = new Issue($tmpArticle->getPublicationId(),
 								$tmpArticle->getLanguageId(),
 								$tmpArticle->getIssueNumber());
-			$section =& new Section($tmpArticle->getPublicationId(),
+			$section = new Section($tmpArticle->getPublicationId(),
 									$tmpArticle->getIssueNumber(),
 									$tmpArticle->getLanguageId(),
 									$tmpArticle->getSectionNumber());
-			$creator =& new User($tmpArticle->getCreatorId());
+			$creator = new User($tmpArticle->getCreatorId());
 			?>
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
@@ -322,12 +322,12 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		}
 		$color = 0;
 		foreach ($recentlyPublishedArticles as $tmpArticle) {
-			$language =& new Language($tmpArticle->getLanguageId());
-			$pub =& new Publication($tmpArticle->getPublicationId());
-			$issue =& new Issue($tmpArticle->getPublicationId(),
+			$language = new Language($tmpArticle->getLanguageId());
+			$pub = new Publication($tmpArticle->getPublicationId());
+			$issue = new Issue($tmpArticle->getPublicationId(),
 								$tmpArticle->getLanguageId(),
 								$tmpArticle->getIssueNumber());
-			$section =& new Section($tmpArticle->getPublicationId(),
+			$section = new Section($tmpArticle->getPublicationId(),
 									$tmpArticle->getIssueNumber(),
 									$tmpArticle->getLanguageId(),
 									$tmpArticle->getSectionNumber());
@@ -397,12 +397,12 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<?PHP
 		if ($action["ObjectType"] == "article") {
-			$language =& new Language($action["IdLanguage"]);
-			$pub =& new Publication($action["IdPublication"]);
-			$issue =& new Issue($action["IdPublication"],
+			$language = new Language($action["IdLanguage"]);
+			$pub = new Publication($action["IdPublication"]);
+			$issue = new Issue($action["IdPublication"],
 								$action["IdLanguage"],
 								$action["NrIssue"]);
-			$section =& new Section($action["IdPublication"],
+			$section = new Section($action["IdPublication"],
 									$action["NrIssue"],
 									$action["IdLanguage"],
 									$action["NrSection"]);
@@ -463,8 +463,8 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		<?PHP
 		}
 		elseif ($action["ObjectType"] == "issue") {
-			//$language =& new Language($action["IdLanguage"]);
-			$pub =& new Publication($action["IdPublication"]);
+			//$language = new Language($action["IdLanguage"]);
+			$pub = new Publication($action["IdPublication"]);
 			?>
 			<TD valign="top"><?php putGS("Issue"); ?>:
     			<?PHP
@@ -539,9 +539,9 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		}
 		$color = 0;
 		foreach ($unplacedArticles as $tmpArticle) {
-			$creator =& new User($tmpArticle->getCreatorId());
+			$creator = new User($tmpArticle->getCreatorId());
 			$section = $tmpArticle->getSection();
-			$language =& new Language($tmpArticle->getLanguageId());
+			$language = new Language($tmpArticle->getLanguageId());
 			 ?>
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">

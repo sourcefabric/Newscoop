@@ -30,10 +30,10 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
-$publicationObj =& new Publication($f_publication_id);
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
+$publicationObj = new Publication($f_publication_id);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS("Article does not exist."), null, true);
@@ -47,7 +47,7 @@ if (!$articleObj->userCanModify($g_user)) {
 	exit;
 }
 
-$attachmentObj =& new Attachment($f_attachment_id);
+$attachmentObj = new Attachment($f_attachment_id);
 $attachmentObj->setDescription($f_language_selected, $f_description);
 if ($f_language_specific == "yes") {
 	$attachmentObj->setLanguageId($f_language_selected);

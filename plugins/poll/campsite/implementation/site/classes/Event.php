@@ -25,7 +25,7 @@ class Event extends DatabaseObject {
 
 	var $m_columnNames = array('Id', 'IdLanguage', 'Name', 'Notify');
 
-	function Event($p_id = null, $p_languageId = null)
+	public function Event($p_id = null, $p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_id;
@@ -39,7 +39,7 @@ class Event extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getEventId()
+	public function getEventId()
 	{
 		return $this->m_data['Id'];
 	} // fn getEventId
@@ -48,7 +48,7 @@ class Event extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->m_data['Name'];
 	} // fn getName
@@ -57,9 +57,9 @@ class Event extends DatabaseObject {
 	/**
 	 * @return array
 	 */
-	function GetEvents()
+	public static function GetEvents()
 	{
-		$tmpEvent =& new Event();
+		$tmpEvent = new Event();
 		$columns = implode(',', $tmpEvent->getColumnNames(true));
 		$queryStr = "SELECT $columns FROM Events ORDER BY Id";
 		$events = DbObjectArray::Create('Event', $queryStr);

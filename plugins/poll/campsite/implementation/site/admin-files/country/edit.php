@@ -9,8 +9,8 @@ if (!$g_user->hasPermission('ManageCountries')) {
 $f_country_code = Input::Get('f_country_code');
 $f_country_language = Input::Get('f_country_language');
 
-$country =& new Country($f_country_code, $f_country_language);
-$language =& new Language($f_country_language);
+$country = new Country($f_country_code, $f_country_language);
+$language = new Language($f_country_language);
 
 $countryTranslations = Country::GetCountries(null, $f_country_code);
 

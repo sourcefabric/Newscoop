@@ -32,13 +32,13 @@ if ($newExtension != $origExtension) {
 	$f_new_name .= $origExtension;
 }
 
-$newTemplName = $Campsite['HTML_DIR']."/look/".urldecode($f_path)."/$f_new_name";
+$newTemplName = $Campsite['HTML_DIR']."/templates/".urldecode($f_path)."/$f_new_name";
 $exists = file_exists($newTemplName);
 if (!$exists) {
 	$tpl1_name = urldecode($f_path)."/$f_orig_name";
-	$tpl1 = $Campsite['HTML_DIR']."/look/".$tpl1_name;
+	$tpl1 = $Campsite['HTML_DIR']."/templates/".$tpl1_name;
 	$tpl2_name = urldecode($f_path)."/$f_new_name";
-	$tpl2 = $Campsite['HTML_DIR']."/look/".$tpl2_name;
+	$tpl2 = $Campsite['HTML_DIR']."/templates/".$tpl2_name;
 	if (rename($tpl1, $tpl2)) {
 		Template::UpdateOnChange($tpl1_name, $tpl2_name);
 		$logtext = getGS('Template object $1 was renamed to $2', $tpl1_name, $tpl2_name);

@@ -16,7 +16,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$languageObj =& new Language($Language);
+$languageObj = new Language($Language);
 if (!$languageObj->exists()) {
 	camp_html_goto_page("/$ADMIN/logout.php");
 }

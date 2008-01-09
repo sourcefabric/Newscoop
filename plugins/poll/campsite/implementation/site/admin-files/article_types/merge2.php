@@ -17,8 +17,8 @@ if ($f_src == $f_dest) {
 	$errorMsgs[] = getGS("You cannot merge the same type into itself.");
 }
 
-$src =& new ArticleType($f_src);
-$dest =& new ArticleType($f_dest);
+$src = new ArticleType($f_src);
+$dest = new ArticleType($f_dest);
 
 $tmp = Input::get('f_src_Fe');
 foreach ($dest->m_dbColumns as $destColumn) {

@@ -34,7 +34,8 @@ class ArticleImage extends DatabaseObject {
 	 * @param int $p_templateId
 	 * @return ArticleImage
 	 */
-	function ArticleImage($p_articleNumber = null, $p_imageId = null, $p_templateId = null)
+	public function ArticleImage($p_articleNumber = null, $p_imageId = null,
+	                             $p_templateId = null)
 	{
 		if (!is_null($p_articleNumber) && !is_null($p_imageId)) {
 			$this->m_data['NrArticle'] = $p_articleNumber;
@@ -52,7 +53,7 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getImageId()
+	public function getImageId()
 	{
 		return $this->m_data['IdImage'];
 	} // fn getImageId
@@ -61,7 +62,7 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getArticleNumber()
+	public function getArticleNumber()
 	{
 		return $this->m_data['NrArticle'];
 	} // fn getArticleNumber
@@ -70,7 +71,7 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getTemplateId()
+	public function getTemplateId()
 	{
 		return $this->m_data['Number'];
 	} // fn getTemplateId
@@ -79,7 +80,7 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * Return an Image object.
 	 */
-	function getImage()
+	public function getImage()
 	{
 		if (is_object($this->m_image)) {
 			return $this->m_image;
@@ -93,7 +94,7 @@ class ArticleImage extends DatabaseObject {
 	 * Get a free Template ID.
 	 * @param int $p_articleNumber
 	 */
-	function GetUnusedTemplateId($p_articleNumber)
+	public static function GetUnusedTemplateId($p_articleNumber)
 	{
 		global $g_ado_db;
 		// Get the highest template ID and add one.
@@ -114,7 +115,7 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function TemplateIdInUse($p_articleNumber, $p_templateId)
+	public static function TemplateIdInUse($p_articleNumber, $p_templateId)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT Number FROM ArticleImages"
@@ -138,14 +139,14 @@ class ArticleImage extends DatabaseObject {
 	 * @return mixed
 	 * 		Return either an array or an int.
 	 */
-	function GetImagesByArticleNumber($p_articleNumber, $p_countOnly = false)
+	public static function GetImagesByArticleNumber($p_articleNumber, $p_countOnly = false)
 	{
 		global $g_ado_db;
 
 		if ($p_countOnly) {
 			$selectStr = "COUNT(*)";
 		} else {
-			$tmpImage =& new Image();
+			$tmpImage = new Image();
 			$selectStr = implode(',', $tmpImage->getColumnNames());
 			$selectStr .= ', ArticleImages.Number, ArticleImages.NrArticle, ArticleImages.IdImage';
 		}
@@ -161,11 +162,11 @@ class ArticleImage extends DatabaseObject {
 			$returnArray = array();
 			if (is_array($rows)) {
 				foreach ($rows as $row) {
-					$tmpArticleImage =& new ArticleImage();
+					$tmpArticleImage = new ArticleImage();
 					$tmpArticleImage->fetch($row);
-					$tmpArticleImage->m_image =& new Image();
+					$tmpArticleImage->m_image = new Image();
 					$tmpArticleImage->m_image->fetch($row);
-					$returnArray[] =& $tmpArticleImage;
+					$returnArray[] = $tmpArticleImage;
 				}
 			}
 			return $returnArray;
@@ -185,7 +186,8 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function AddImageToArticle($p_imageId, $p_articleNumber, $p_templateId = null)
+	public static function AddImageToArticle($p_imageId, $p_articleNumber,
+	                                         $p_templateId = null)
 	{
 		global $g_ado_db;
 		if (is_null($p_templateId)) {
@@ -211,7 +213,7 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function SetTemplateId($p_articleNumber, $p_imageId, $p_templateId)
+	public static function SetTemplateId($p_articleNumber, $p_imageId, $p_templateId)
 	{
 		global $g_ado_db;
 		$queryStr = "UPDATE ArticleImages SET Number=$p_templateId"
@@ -230,7 +232,8 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function RemoveImageFromArticle($p_imageId, $p_articleNumber, $p_templateId)
+	public static function RemoveImageFromArticle($p_imageId, $p_articleNumber,
+	                                              $p_templateId)
 	{
 		global $g_ado_db;
 		ArticleImage::RemoveImageTagsFromArticleText($p_articleNumber, $p_templateId);
@@ -256,7 +259,7 @@ class ArticleImage extends DatabaseObject {
 	 * @param int $p_templateId
 	 * @return void
 	 */
-	function RemoveImageTagsFromArticleText($p_articleNumber, $p_templateId)
+	public static function RemoveImageTagsFromArticleText($p_articleNumber, $p_templateId)
 	{
 		// Get all the articles
 		$articles = Article::getTranslations($p_articleNumber);
@@ -289,7 +292,7 @@ class ArticleImage extends DatabaseObject {
 	 * @param int $p_imageId
 	 * @return void
 	 */
-	function OnImageDelete($p_imageId)
+	public static function OnImageDelete($p_imageId)
 	{
 		global $g_ado_db;
 		// Get the articles that use this image.
@@ -310,7 +313,7 @@ class ArticleImage extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function OnArticleDelete($p_articleNumber)
+	public static function OnArticleDelete($p_articleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = 'DELETE FROM ArticleImages'
@@ -325,7 +328,7 @@ class ArticleImage extends DatabaseObject {
 	 * @param int $p_destArticleNumber
 	 * @return void
 	 */
-	function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
+	public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = 'SELECT * FROM ArticleImages WHERE NrArticle='.$p_srcArticleNumber;
@@ -344,10 +347,10 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetArticlesThatUseImage($p_imageId)
+	public static function GetArticlesThatUseImage($p_imageId)
 	{
 		global $g_ado_db;
-		$article =& new Article();
+		$article = new Article();
 		$columnNames = $article->getColumnNames();
 		$columnQuery = array();
 		foreach ($columnNames as $columnName) {
@@ -362,9 +365,9 @@ class ArticleImage extends DatabaseObject {
 		$articles = array();
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
-				$tmpArticle =& new Article();
+				$tmpArticle = new Article();
 				$tmpArticle->fetch($row);
-				$articles[] =& $tmpArticle;
+				$articles[] = $tmpArticle;
 			}
 		}
 		return $articles;

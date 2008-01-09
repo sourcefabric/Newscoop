@@ -14,7 +14,6 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
-require_once($g_documentRoot.'/classes/ParserCom.php');
 
 /**
  * @package Campsite
@@ -29,7 +28,7 @@ class Alias extends DatabaseObject {
 	 * Constructor.
 	 * @param int $p_id
 	 */
-	function Alias($p_id = null)
+	public function Alias($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (!is_null($p_id)) {
@@ -40,40 +39,9 @@ class Alias extends DatabaseObject {
 
 
 	/**
-	 * @param array $p_values
-	 * @return boolean
-	 */
-	function create($p_values = null)
-	{
-		$created = parent::create($p_values);
-		if ($created && ($this->m_data["IdPublication"] > 0)) {
-// no need to connect to the template engine anymore
-//			ParserCom::SendMessage('publications', 'modify',
-//								   array("IdPublication" => $this->m_data['IdPublication']));
-		}
-		return $created;
-	} // fn create
-
-
-	/**
-	 * @return boolean
-	 */
-	function delete()
-	{
-		$deleted = parent::delete();
-		if ($deleted) {
-// no need to connect to the template engine anymore
-//			ParserCom::SendMessage('publications', 'modify',
-//								   array("IdPublication" => $this->m_data['IdPublication']));
-		}
-		return $deleted;
-	} // fn delete
-
-
-	/**
 	 * @return int
 	 */
-	function getId()
+	public function getId()
 	{
 		return $this->m_data['Id'];
 	} // fn getId
@@ -82,7 +50,7 @@ class Alias extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->m_data['Name'];
 	} // fn getName
@@ -91,22 +59,16 @@ class Alias extends DatabaseObject {
 	/**
 	 *
 	 */
-	function setName($p_name)
+	public function setName($p_name)
 	{
-		$changed = $this->setProperty('Name', $p_name);
-		if ($changed) {
-// no need to connect to the template engine anymore
-//			ParserCom::SendMessage('publications', 'modify',
-//								   array("IdPublication"=>$this->m_data['IdPublication']));
-		}
-		return $changed;
+		return $this->setProperty('Name', $p_name);
 	} // fn setName
 
 
 	/**
 	 * @return int
 	 */
-	function getPublicationId()
+	public function getPublicationId()
 	{
 		return $this->m_data['IdPublication'];
 	} // fn getPublicationId
@@ -116,7 +78,7 @@ class Alias extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setPublicationId($p_value)
+	public function setPublicationId($p_value)
 	{
 		return $this->setProperty('IdPublication', $p_value);
 	} // fn setPublicationId
@@ -130,7 +92,7 @@ class Alias extends DatabaseObject {
 	 * @param string $p_name
 	 * @return array
 	 */
-	function GetAliases($p_id = null, $p_publicationId = null, $p_name = null)
+	public static function GetAliases($p_id = null, $p_publicationId = null, $p_name = null)
 	{
 		$contraints = array();
 		if (!is_null($p_publicationId)) {

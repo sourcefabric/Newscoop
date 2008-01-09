@@ -36,7 +36,7 @@ if (!Input::IsValid()) {
 }
 
 // Fetch article
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('No such article.'));
 	exit;
@@ -45,11 +45,11 @@ if (!$articleObj->exists()) {
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
 $dbColumns = $articleData->getUserDefinedColumns(0);
-$articleType =& new ArticleType($articleObj->getType());
+$articleType = new ArticleType($articleObj->getType());
 
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
-$lockUserObj =& new User($articleObj->getLockedByUser());
-$articleCreator =& new User($articleObj->getCreatorId());
+$lockUserObj = new User($articleObj->getLockedByUser());
+$articleCreator = new User($articleObj->getCreatorId());
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, true);
 $articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
 $articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
@@ -68,10 +68,10 @@ if ($today['year'] != $savedOn['year'] || $today['mon'] != $savedOn['mon'] || $t
 $showComments = false;
 $showCommentControls = false;
 if ($f_publication_id > 0) {
-	$publicationObj =& new Publication($f_publication_id);
-	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
-	$languageObj =& new Language($articleObj->getLanguageId());
+	$publicationObj = new Publication($f_publication_id);
+	$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+	$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+	$languageObj = new Language($articleObj->getLanguageId());
 
     $showCommentControls = ($publicationObj->commentsEnabled() && $articleType->commentsEnabled());
     $showComments = $showCommentControls && $articleObj->commentsEnabled();
@@ -80,7 +80,7 @@ if ($f_publication_id > 0) {
 if ($showComments) {
     require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
     if (SystemPref::Get("UseDBReplication") == 'Y') {
-        $dbReplicationObj =& new DbReplication();
+        $dbReplicationObj = new DbReplication();
         $connectedToOnlineServer = $dbReplicationObj->connect();
         if ($connectedToOnlineServer == true) {
             // Fetch the comments attached to this article
@@ -170,7 +170,7 @@ foreach ($dbColumns as $dbColumn) {
 	}
 }
 if (($f_edit_mode == "edit") && $hasArticleBodyField) {
-	$languageSelectedObj =& new Language($f_language_selected);
+	$languageSelectedObj = new Language($f_language_selected);
 	$editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
 	editor_load_xinha($dbColumns, $g_user, $editorLanguage);
 }
@@ -746,13 +746,13 @@ if ($f_edit_mode == "edit") { ?>
 					$formattingErrors = false;
 					foreach ($imageMatches[1] as $templateId) {
 						// Get the image URL
-						$articleImage =& new ArticleImage($f_article_number, null, $templateId);
+						$articleImage = new ArticleImage($f_article_number, null, $templateId);
 						if (!$articleImage->exists()) {
 							ArticleImage::RemoveImageTagsFromArticleText($f_article_number, $templateId);
 							$formattingErrors = true;
 							continue;
 						}
-						$image =& new Image($articleImage->getImageId());
+						$image = new Image($articleImage->getImageId());
 						$imageUrl = $image->getImageUrl();
 						$text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" id="'.$templateId.'" ', $text);
 					}
@@ -815,7 +815,7 @@ window.location.reload();
     				<option value="0"></option>
     				<?php
     				$TOL_Language = camp_session_get('TOL_Language', 'en');
-    				$currentLanguage =& new Language($TOL_Language);
+    				$currentLanguage = new Language($TOL_Language);
     				$currentLanguageId = $currentLanguage->getLanguageId();
     				foreach ($subtopics as $topicPath) {
     					$printTopic = array();

@@ -9,10 +9,10 @@ $articleTypeName = Input::Get('f_article_type');
 $allLanguages = Language::GetLanguages();
 
 $lang = camp_session_get('LoginLanguageId', 1);
-$languageObj =& new Language($lang);
+$languageObj = new Language($lang);
 
 
-$articleType =& new ArticleType($articleTypeName);
+$articleType = new ArticleType($articleTypeName);
 $fields = $articleType->getUserDefinedColumns();
 
 $crumbs = array();
@@ -175,7 +175,7 @@ foreach ($fields as $field) {
 		<TR <?php  if ($color2) { $color2 = 0; ?>class="list_row_even"<?php  } else { $color2 = 1; ?>class="list_row_odd"<?php  } ?>">
 			<TD <?php if ($isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="center">
 				<?php
-				$language =& new Language($languageId);
+				$language = new Language($languageId);
 				p($language->getCode());
 				?>
 			</TD>

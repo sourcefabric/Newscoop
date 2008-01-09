@@ -11,13 +11,13 @@ $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 
 // Check that the article exists.
-$articleObj =& new Article($f_language_id, $f_article_number);
+$articleObj = new Article($f_language_id, $f_article_number);
 if (!$articleObj->exists()) {
     exit;
 }
 
 if (SystemPref::Get("UseDBReplication") == 'Y') {
-    $dbReplicationObj =& new DbReplication();
+    $dbReplicationObj = new DbReplication();
     $connectedToOnlineServer = $dbReplicationObj->connect();
     if ($connectedToOnlineServer == false) {
         camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
@@ -33,7 +33,7 @@ foreach ($_REQUEST as $name => $value) {
     if (strstr($name, "comment_action_")) {
         $parts = split("_", $name);
         $messageId = $parts[2];
-        $comment =& new Phorum_message($messageId);
+        $comment = new Phorum_message($messageId);
         if (!$comment->exists()) {
             continue;
         }

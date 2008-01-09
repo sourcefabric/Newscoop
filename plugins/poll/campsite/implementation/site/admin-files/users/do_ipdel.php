@@ -18,7 +18,7 @@ if ($editUser->getUserName() == '') {
 	exit;
 }
 $startIP = Input::Get('StartIP', 'string', '');
-$ipAccess =& new IPAccess($userId, $startIP);
+$ipAccess = new IPAccess($userId, $startIP);
 $startIPstring = $ipAccess->getStartIPstring();
 $addresses = $ipAccess->getAddresses();
 

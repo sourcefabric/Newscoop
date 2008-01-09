@@ -75,7 +75,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $values = array('Corporate', 'NGO', 'Government Agency', 'Academic', 'Media', 'Other');
             $html = '<select name="f_user_'.$attribute.'">';
         } elseif (substr($attribute, 0, 4) == 'pref') {
-            $html = '<input type="checkbox" name="f_user_'$attribute.'" '
+            $html = '<input type="checkbox" name="f_user_'.$attribute.'" '
                 .(($attrValue == 'Y') ? ' value="on" checked />' : ' />')
                 .'<input type="hidden" name="f_has_pref'
                 .substr($attribute, 4, 1).'" value="1" />';

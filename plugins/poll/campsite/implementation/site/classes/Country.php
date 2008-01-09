@@ -30,7 +30,7 @@ class Country extends DatabaseObject {
 	 * @param string $p_code
 	 * @param int $p_languageId
 	 */
-	function Country($p_code = null, $p_languageId = null)
+	public function Country($p_code = null, $p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Code'] = $p_code;
@@ -41,7 +41,7 @@ class Country extends DatabaseObject {
 	} // constructor
 
 
-	function create($p_values = null)
+	public function create($p_values = null)
 	{
 		$success = parent::create($p_values);
 		if ($success) {
@@ -55,7 +55,7 @@ class Country extends DatabaseObject {
 	} // fn create
 
 
-	function delete()
+	public function delete()
 	{
 		$success = parent::delete();
 		if ($success) {
@@ -73,7 +73,7 @@ class Country extends DatabaseObject {
 	 * The unique ID of the language in the database.
 	 * @return int
 	 */
-	function getLanguageId()
+	public function getLanguageId()
 	{
 		return $this->m_data['IdLanguage'];
 	} // fn getLanguageId
@@ -83,7 +83,7 @@ class Country extends DatabaseObject {
 	 * Return the english name of this language.
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->m_data['Name'];
 	} // fn getName
@@ -94,7 +94,7 @@ class Country extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setName($p_value)
+	public function setName($p_value)
 	{
 		$oldValue = $this->m_data['Name'];
 		$success = $this->setProperty('Name', $p_value);
@@ -113,7 +113,7 @@ class Country extends DatabaseObject {
 	 * Get the two-letter code for this language.
 	 * @return string
 	 */
-	function getCode()
+	public function getCode()
 	{
 		return $this->m_data['Code'];
 	} // fn getCode
@@ -121,9 +121,9 @@ class Country extends DatabaseObject {
 
 	/**
 	 *
-	 *
 	 */
-	function GetNumCountries($p_languageId = null, $p_code = null, $p_name = null)
+	public static function GetNumCountries($p_languageId = null, $p_code = null,
+	                                       $p_name = null)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT COUNT(*) FROM Countries";
@@ -156,7 +156,8 @@ class Country extends DatabaseObject {
 	 * @param array $p_sqlOptions
 	 * @return array
 	 */
-	function GetCountries($p_languageId = null, $p_code = null, $p_name = null, $p_sqlOptions = null)
+	public static function GetCountries($p_languageId = null, $p_code = null,
+	                                    $p_name = null, $p_sqlOptions = null)
 	{
 		if (is_null($p_sqlOptions)) {
 			$p_sqlOptions = array();

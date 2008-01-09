@@ -52,7 +52,7 @@
           <td width="60%" valign="top">
             <div class="message">{{ $message }}</div>
             <div class="form_field">
-              <label for="db_hostname">Install Sample Site?</label> &nbsp;
+              <label for="install_demo">Install Sample Site?</label> &nbsp;
               <input
                 type="radio" id="install_demo" name="install_demo" value="1"
                 {{ if $dm.loaddemo eq true }} checked {{ /if }} /> &nbsp; Yes &nbsp;

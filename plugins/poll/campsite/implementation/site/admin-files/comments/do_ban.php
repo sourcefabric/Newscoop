@@ -12,7 +12,7 @@ if (!$g_user->hasPermission('CommentModerate')) {
 }
 
 if (SystemPref::Get("UseDBReplication") == 'Y') {
-    $dbReplicationObj =& new DbReplication();
+    $dbReplicationObj = new DbReplication();
     $connectedToOnlineServer = $dbReplicationObj->connect();
     if ($connectedToOnlineServer == false) {
         camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
@@ -24,11 +24,11 @@ if (!isset($connectedToOnlineServer)
 	$f_comment_id = Input::Get("f_comment_id", "int");
 
 	$banned = false;
-	$comment =& new Phorum_message($f_comment_id);
+	$comment = new Phorum_message($f_comment_id);
 	if ($comment->exists()) {
 		$banIp = Input::Get("f_ban_ip", 'checkbox');
 		if ($banIp) {
-			$banItem =& new Phorum_ban_item();
+			$banItem = new Phorum_ban_item();
 			$banItem->create(PHORUM_BAD_IPS, false, $comment->getIpAddress());
 			$banned = true;
 		} else {
@@ -36,7 +36,7 @@ if (!isset($connectedToOnlineServer)
 		}
 		$banEmail = Input::Get("f_ban_email", 'checkbox');
 		if ($banEmail) {
-			$banItem =& new Phorum_ban_item();
+			$banItem = new Phorum_ban_item();
 			$banItem->create(PHORUM_BAD_EMAILS, false, $comment->getEmail());
 			$banned = true;
 		} else {
@@ -44,7 +44,7 @@ if (!isset($connectedToOnlineServer)
 		}
 		$banName = Input::Get("f_ban_name", 'checkbox');
 		if ($banName) {
-			$banItem =& new Phorum_ban_item();
+			$banItem = new Phorum_ban_item();
 			$banItem->create(PHORUM_BAD_NAMES, false, $comment->getAuthor());
 			$banned = true;
 		} else {

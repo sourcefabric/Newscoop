@@ -27,7 +27,7 @@ if (($extensionStart = strrpos($attachment, '.')) !== false) {
 $attachmentId = (int)substr($attachment, 0, $extensionStart);
 
 $queryStr = "SELECT * FROM Attachments WHERE id = $attachmentId";
-$attachmentObj =& new Attachment($attachmentId);
+$attachmentObj = new Attachment($attachmentId);
 if (!$attachmentObj->exists()) {
 	header('HTTP/1.0 404 Not Found');
 	exit;

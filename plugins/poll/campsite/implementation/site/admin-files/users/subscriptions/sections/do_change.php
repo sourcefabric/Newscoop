@@ -21,10 +21,10 @@ $f_subscription_start_date = Input::Get('f_subscription_start_date');
 $f_subscription_days = Input::Get('f_subscription_days', 'int', 0);
 $f_subscription_paid_days = Input::Get('f_subscription_paid_days', 'int', 0);
 
-$publicationObj =& new Publication($f_publication_id);
-$languageObj =& new Language($publicationObj->getDefaultLanguageId());
-$manageUser =& new User($f_user_id);
-$subscription =& new Subscription($f_subscription_id);
+$publicationObj = new Publication($f_publication_id);
+$languageObj = new Language($publicationObj->getDefaultLanguageId());
+$manageUser = new User($f_user_id);
+$subscription = new Subscription($f_subscription_id);
 $isPaid = false;
 if ($subscription->getType() == 'P') {
 	$isPaid = true;

@@ -28,14 +28,14 @@ if (!Input::IsValid()) {
     exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 
 if (!$articleObj->exists()) {
     camp_html_display_error(getGS("Article does not exist."), null, true);
     exit;
 }
 
-$audioclipObj =& new Audioclip($f_audioclip_id);
+$audioclipObj = new Audioclip($f_audioclip_id);
 if (is_null($audioclipObj->getGunId())) {
     camp_html_display_error(getGS('Audioclip does not exist.'), null, true);
     exit;
@@ -45,7 +45,7 @@ if (is_null($audioclipObj->getGunId())) {
 // is not in use by other article(s)
 $audioclipObj->deleteMetadata();
 // Deletes the link to the article
-$articleAudioclipObj =& new ArticleAudioclip($articleObj->getArticleNumber(), $audioclipObj->getGunId());
+$articleAudioclipObj = new ArticleAudioclip($articleObj->getArticleNumber(), $audioclipObj->getGunId());
 $articleAudioclipObj->delete();
 
 // Go back to article.

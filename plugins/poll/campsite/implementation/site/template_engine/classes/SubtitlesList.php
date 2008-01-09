@@ -23,16 +23,20 @@ class SubtitlesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-		if ($p_start < 1) {
-			$p_start = 1;
-		}
-		$subtitlesList = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
-		$p_hasNextElements = $p_limit > 0
-							&& (($p_start + $p_limit - 1) < count($subtitlesList));
-		if ($p_limit > 0) {
-			return array_slice($subtitlesList, $p_start - 1, $p_limit);
-		}
-		return array_slice($subtitlesList, $p_start - 1);
+	    $context = CampTemplate::singleton()->context();
+	    if (!$context->article->defined) {
+	        return array();
+	    }
+	    if ($context->article->type_name != $context->body_field_article_type) {
+	        return array();
+	    }
+	    $articleData = new ArticleData($context->body_field_article_type,
+	                                   $context->article->number,
+	                                   $context->language->number);
+	    $fieldValue = $articleData->getProperty('F'.$context->body_field_name);
+	    $subtitles = MetaSubtitle::ReadSubtitles($fieldValue, $context->article->name);
+	    $p_count = count($subtitles);
+	    return array_slice($subtitles, $p_start, $p_limit);
 	}
 
 	/**
@@ -74,8 +78,7 @@ class SubtitlesList extends ListObject
     			case 'length':
     			case 'columns':
     			case 'name':
-    			case 'constraints':
-    			case 'order':
+    			case 'field_name':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {

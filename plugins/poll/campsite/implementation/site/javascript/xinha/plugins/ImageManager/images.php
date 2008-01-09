@@ -11,7 +11,7 @@ require_once('Classes/ImageManager.php');
 
 //default path is /
 $relative = '/';
-$manager =& new ImageManager($IMConfig);
+$manager = new ImageManager($IMConfig);
 
 $refreshDir = false;
 

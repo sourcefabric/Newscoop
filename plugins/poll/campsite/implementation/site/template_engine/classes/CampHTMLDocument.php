@@ -99,7 +99,7 @@ final class CampHTMLDocument
      *
      * @return object
      */
-    public function singleton($p_attributes = array())
+    public static function singleton($p_attributes = array())
     {
         if (!isset(self::$m_instance)) {
             self::$m_instance = new CampHTMLDocument($p_attributes);

@@ -55,13 +55,13 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS("Article does not exist."), null, true);
 	exit;
 }
 
-$description =& new Translation($f_language_selected);
+$description = new Translation($f_language_selected);
 $description->create($f_description);
 
 $attributes = array();

@@ -22,7 +22,7 @@ class PhorumUser_Test extends PHPUnit_TestCase
 				return;
 			}
 		}
-		$user =& new Phorum_user();
+		$user = new Phorum_user();
 		$user->create('bob', 'test@yahoo.com');
 		if (!$user->exists()) {
 			$this->fail("Could not create user.");
@@ -50,7 +50,7 @@ class PhorumMessage_Test extends PHPUnit_TestCase
 
     function setup()
     {
-		$this->m_forum =& new Phorum_forum(1);
+		$this->m_forum = new Phorum_forum(1);
 		if (!$this->m_forum->exists()) {
 			$this->m_forum->create();
 		}
@@ -61,7 +61,7 @@ class PhorumMessage_Test extends PHPUnit_TestCase
 
     function testCreateMessage()
     {
-		$message =& new Phorum_message();
+		$message = new Phorum_message();
 		$message->create(1, 'hello', 'world');
 		$messageId = $message->getMessageId();
 		if (!$message->exists()) {
@@ -74,7 +74,7 @@ class PhorumMessage_Test extends PHPUnit_TestCase
 			$this->fail("Error updating forum message count. (Was:".$this->m_forumNumMessages.", Now: ".$this->m_forum->getNumMessages().")");
 		}
 
-		$message2 =& new Phorum_message($messageId);
+		$message2 = new Phorum_message($messageId);
 		if ($message2->getSubject() != $message->getSubject()) {
 			$this->fail("Error fetching message");
 		}
@@ -83,11 +83,11 @@ class PhorumMessage_Test extends PHPUnit_TestCase
 
     function testDeleteStandaloneMessage()
     {
-    	$message =& new Phorum_message();
+    	$message = new Phorum_message();
     	$message->create(1, 'delete me');
     	$messageId = $message->getMessageId();
     	$message->delete();
-    	$message2 =& new Phorum_message($messageId);
+    	$message2 = new Phorum_message($messageId);
     	if ($message2->exists()) {
     		$this->fail("Could not delete message");
     	}
@@ -96,13 +96,13 @@ class PhorumMessage_Test extends PHPUnit_TestCase
 
     function testCreateThreadOfMessages()
     {
-		$message1 =& new Phorum_message();
+		$message1 = new Phorum_message();
 		$message1->create(1, 'Message 1', 'la la');
 
-		$message2 =& new Phorum_message();
+		$message2 = new Phorum_message();
 		$message2->create(1, 'Message 2', 'wow', $message1->getThreadId(), $message1->getMessageId());
 
-		$message3 =& new Phorum_message();
+		$message3 = new Phorum_message();
 		$message3->create(1, 'Message 3', 'cool', $message1->getThreadId(), $message1->getMessageId());
 
 		$messages = Phorum_message::GetMessages(array("thread" => $message1->getThreadId()));
@@ -123,12 +123,12 @@ class PhorumMessage_Test extends PHPUnit_TestCase
     function testUpdateThreadInfo()
     {
         // Create thread start.
-    	$message =& new Phorum_message();
+    	$message = new Phorum_message();
     	$message->create(1, 'delete me');
     	$messageId = $message->getMessageId();
 
     	// add message to the thread.
-    	$message2 =& new Phorum_message();
+    	$message2 = new Phorum_message();
     	$message2->create(1, "delete me", "wow", $messageId, $messageId);
 
     	$message->fetch();
@@ -157,7 +157,7 @@ $result = PHPUnit::run($suite);
 
 echo $result->toHtml();
 
-//$message =& new Phorum_message(1);
+//$message = new Phorum_message(1);
 //camp_dump($message);
 
 

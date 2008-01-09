@@ -51,7 +51,7 @@ if (empty($f_default_alias)) {
 	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'));
 }
 
-$publicationObj =& new Publication($f_publication_id);
+$publicationObj = new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_add_msg(getGS('Publication does not exist.'));
 }
@@ -67,13 +67,13 @@ if (camp_html_has_msgs()) {
       camp_html_goto_page($backLink);
 }
 
-$forum =& new Phorum_forum($publicationObj->getForumId());
+$forum = new Phorum_forum($publicationObj->getForumId());
 if (!$forum->exists()) {
 	$forum = camp_forum_create($publicationObj);
 }
 camp_forum_update($forum, $f_name, $f_comments_enabled, $f_comments_public_enabled);
 
-$setting =& new Phorum_setting('mod_emailcomments', 'S');
+$setting = new Phorum_setting('mod_emailcomments', 'S');
 if (!$setting->exists()) {
 	$setting->create();
 }

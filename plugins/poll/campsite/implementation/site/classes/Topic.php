@@ -11,7 +11,6 @@ require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
 require_once($g_documentRoot.'/classes/Log.php');
-require_once($g_documentRoot.'/classes/ParserCom.php');
 
 /**
  * @package Campsite
@@ -114,7 +113,6 @@ class Topic extends DatabaseObject {
 			}
 			$logtext = getGS('Topic $1 added', $this->m_data['Name']." (".$this->m_data['Id'].")");
 			Log::Message($logtext, null, 141);
-			ParserCom::SendMessage('topics', 'create', array("tpid" => $this->m_data['Id']));
 		}
 		return $success;
 	} // fn create
@@ -145,7 +143,7 @@ class Topic extends DatabaseObject {
 
             $row = $g_ado_db->GetRow($sql);
             if ($row) {
-                $delATF =& new ArticleTypeField($row['ArticleType'], $row['FieldName']);
+                $delATF = new ArticleTypeField($row['ArticleType'], $row['FieldName']);
                 $deleted = $delATF->delete();
             }
         }
@@ -162,7 +160,6 @@ class Topic extends DatabaseObject {
 			}
 			$logtext = getGS('Topic $1 deleted', $name." (".$this->m_data['Id'].")");
 			Log::Message($logtext, null, 142);
-			ParserCom::SendMessage('topics', 'delete', array("tpid" => $this->m_data['Id']));
 		}
 		return $deleted;
 	} // fn delete
@@ -220,7 +217,6 @@ class Topic extends DatabaseObject {
 			}
 			$logtext = getGS('Topic $1 updated', $this->m_data['Id'].": (".$oldValue." -> ".$this->m_names[$p_languageId].")");
 			Log::Message($logtext, null, 143);
-			ParserCom::SendMessage('topics', 'modify', array("tpid"=> $this->m_data['Id']));
 		}
 		return $changed;
 	} // fn setName
@@ -284,7 +280,7 @@ class Topic extends DatabaseObject {
 			$rows = $g_ado_db->GetAll($queryStr);
 			if (($rows !== false) && (count($rows) > 0)) {
 				$row = array_pop($rows);
-				$topic =& new Topic();
+				$topic = new Topic();
 				$topic->fetch($row);
 				// Get all the translations
 				foreach ($rows as $row) {
@@ -393,7 +389,7 @@ class Topic extends DatabaseObject {
 				." ORDER BY Id ASC, LanguageId ASC, Name ASC ";
 		$rows = $g_ado_db->GetAll($sql);
 		if ($rows) {
-			$previousTopic =& new Topic();
+			$previousTopic = new Topic();
 
 			$currentTopics = array();
 
@@ -405,7 +401,7 @@ class Topic extends DatabaseObject {
 					$previousTopic->m_names[$row['LanguageId']] = $row['Name'];
 				} else {
 					// This is a new topic, not a translation.
-					$currentTopics[$row['Id']] =& new Topic();
+					$currentTopics[$row['Id']] = new Topic();
 					$currentTopics[$row['Id']]->fetch($row);
 
 					// Remember this topic so we know if the next topic

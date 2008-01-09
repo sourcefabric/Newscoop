@@ -33,7 +33,10 @@ function smarty_block_list_issues($p_params, $p_content, &$p_smarty, &$p_repeat)
     if (!isset($p_content)) {
     	$start = 0;
     	$issuesList = new IssuesList($start, $p_params);
-    	$campContext->setCurrentList($issuesList, array('issue'));
+    	$campContext->setCurrentList($issuesList, array('publication', 'language',
+    	                                                'issue', 'section', 'article',
+    	                                                'image', 'attachment', 'comment',
+    	                                                'audioclip', 'subtitle'));
     }
 
     $currentIssue = $campContext->current_issues_list->current;

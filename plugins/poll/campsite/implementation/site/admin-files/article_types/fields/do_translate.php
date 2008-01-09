@@ -18,7 +18,7 @@ $f_field_translation_name = trim(Input::Get('f_field_translation_name'));
 $f_article_type = Input::Get('f_article_type');
 $correct = true;
 $created = false;
-//$topicParent =& new Topic($f_topic_parent_id);
+//$topicParent = new Topic($f_topic_parent_id);
 //$Path = camp_topic_path($topicParent, $f_topic_language_id);
 
 $errorMsgs = array();
@@ -34,7 +34,7 @@ if ($f_field_language_id <= 0) {
 
 if ($correct) {
 	// Translate existing type
-	$field =& new ArticleTypeField($f_article_type, $f_field_id);
+	$field = new ArticleTypeField($f_article_type, $f_field_id);
 	$created = $field->setName($f_field_language_id, $f_field_translation_name);
 	if ($created) {
 		camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=". $f_article_type);

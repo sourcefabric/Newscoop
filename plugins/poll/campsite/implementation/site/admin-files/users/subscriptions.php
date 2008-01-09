@@ -44,7 +44,7 @@ if (count($subscriptions) > 0) {
 	</TR>
 <?php
 	foreach ($subscriptions as $subscription) {
-		$publicationObj =& new Publication($subscription->getPublicationId());
+		$publicationObj = new Publication($subscription->getPublicationId());
 ?>	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD>
 		<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/sections/?f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>&f_publication_id=<?php p($subscription->getPublicationId()); ?>&f_user_id=<?php echo $editUser->getUserId(); ?>"><?php p(htmlspecialchars($publicationObj->getName())); ?></A>&nbsp;

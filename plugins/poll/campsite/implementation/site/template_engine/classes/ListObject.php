@@ -403,6 +403,22 @@ abstract class ListObject
 		}
 		return 1 + ($p_iterator->key() % $this->m_columns);
 	}
+	
+	/**
+	 * Returns the row number for the given iterator
+	 *
+	 * @param int $p_iterator
+	 */
+	public function getRow($p_iterator = null)
+	{
+		if (!isset($p_iterator)) {
+			$p_iterator = $this->defaultIterator();
+		}
+		if ($this->m_columns == 0 || $this->m_columns == 1) {
+			return (1 + $p_iterator->key());
+		}
+		return 1 + (int)($p_iterator->key() / $this->m_columns);
+	}
 
 	/**
 	 * Returns the number of columns.
@@ -460,6 +476,8 @@ abstract class ListObject
 	            return $this->getLimit();
 	        case 'name':
 	            return $this->getName();
+	        case 'row':
+	            return $this->getRow();
 	        case 'start':
 	            return $this->getStart();
 	        case 'count':
@@ -468,6 +486,10 @@ abstract class ListObject
 	            return $this->getIndex() == 1;
 	        case 'at_end';
 	            return ($this->getStart() + $this->getIndex()) == $this->getEnd();
+	        case 'has_next_elements':
+	            return $this->hasNextElements();
+	        case 'has_previous_elements':
+	            return $this->hasPreviousElements();
 	    }
 	}
 

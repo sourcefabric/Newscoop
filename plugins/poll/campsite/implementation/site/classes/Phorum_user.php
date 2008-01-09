@@ -41,7 +41,7 @@ class Phorum_user extends DatabaseObject {
 	 *
 	 * @param int $p_userId
 	 */
-	function Phorum_user($p_userId = null)
+	public function Phorum_user($p_userId = null)
 	{
 		global $PHORUM;
 		$this->m_dbTableName = $PHORUM['user_table'];
@@ -67,8 +67,8 @@ class Phorum_user extends DatabaseObject {
   	 * @param bool $p_encryptedPassword
   	 * @return boolean
   	 */
-  	function create($p_username, $p_password, $p_email, $p_userId = null,
-  	                $p_encryptedPassword = false)
+  	public function create($p_username, $p_password, $p_email, $p_userId = null,
+  	                       $p_encryptedPassword = false)
   	{
 		$userdata = array();
 
@@ -115,7 +115,7 @@ class Phorum_user extends DatabaseObject {
   	 * Delete the user.
   	 * @return boolean
   	 */
-  	function delete()
+  	public function delete()
   	{
   		global $PHORUM;
   		$PHORUM['DATA']['LANG']['AnonymousUser'] = 'Anonymous User';
@@ -134,9 +134,9 @@ class Phorum_user extends DatabaseObject {
   	 * @param string $p_username
   	 * @return Phorum_user
   	 */
-  	function GetByUserName($p_username)
+  	public static function GetByUserName($p_username)
   	{
-  		$user =& new Phorum_user();
+  		$user = new Phorum_user();
   		$user->setKey('username');
   		$user->m_data['username'] = $p_username;
   		$user->fetch();
@@ -154,7 +154,7 @@ class Phorum_user extends DatabaseObject {
 	 * @param int $p_userid
 	 * @return boolean
 	 */
-	function CampUserExists($p_userid)
+	public static function CampUserExists($p_userid)
 	{
 		return (phorum_db_user_check_field( "fk_campsite_user_id", $p_userid ));
 	} // fn CampUserExists
@@ -166,7 +166,7 @@ class Phorum_user extends DatabaseObject {
   	 * @param string $p_username
   	 * @return boolean
   	 */
-  	function UserNameExists($p_username)
+  	public static function UserNameExists($p_username)
   	{
 		// Check if the username and email address don't already exist.
 	    return (phorum_db_user_check_field( "username", $p_username ));
@@ -180,7 +180,7 @@ class Phorum_user extends DatabaseObject {
   	 * @param string $p_email
   	 * @return boolean
   	 */
-  	function EmailExists($p_email)
+  	public static function EmailExists($p_email)
   	{
 	    return (phorum_db_user_check_field( "email", $p_email ));
   	} // fn EmailExists
@@ -193,7 +193,7 @@ class Phorum_user extends DatabaseObject {
   	 * @param string $p_username
   	 * @param string $p_email
   	 */
-  	function IsBanned($p_username, $p_email)
+  	public static function IsBanned($p_username, $p_email)
   	{
   		global $PHORUM;
 
@@ -249,7 +249,7 @@ class Phorum_user extends DatabaseObject {
   	 *
   	 * @return int
   	 */
-  	function getUserId()
+  	public function getUserId()
   	{
   		return $this->m_data['user_id'];
   	} // fn getUserId
@@ -260,7 +260,7 @@ class Phorum_user extends DatabaseObject {
   	 *
   	 * @return string
   	 */
-  	function getUserName()
+  	public function getUserName()
   	{
   		return $this->m_data['username'];
   	} // fn getUserName
@@ -272,7 +272,7 @@ class Phorum_user extends DatabaseObject {
   	 *
   	 * @return string
   	 */
-  	function getPassword()
+  	public function getPassword()
   	{
   		return $this->m_data['password'];
   	} // fn getPassword
@@ -284,7 +284,7 @@ class Phorum_user extends DatabaseObject {
 	 * @param string $p_password
 	 * @return boolean
 	 */
-	function setPassword($p_password)
+	public function setPassword($p_password)
 	{
 		return $this->setProperty('password', $p_password);
 	}  // fn setPassword
@@ -295,7 +295,7 @@ class Phorum_user extends DatabaseObject {
   	 *
   	 * @return string
   	 */
-  	function getEmail()
+  	public function getEmail()
   	{
   		return $this->m_data['email'];
   	} // fn getEmail
@@ -307,7 +307,7 @@ class Phorum_user extends DatabaseObject {
 	 * @param string $p_email
 	 * @return boolean
 	 */
-	function setEmail($p_email)
+	public function setEmail($p_email)
 	{
 		return $this->setProperty('email', $p_email);
 	}
@@ -318,7 +318,7 @@ class Phorum_user extends DatabaseObject {
   	 *
   	 * @return int
   	 */
-  	function getActivationStatus()
+  	public function getActivationStatus()
   	{
   		return $this->m_data['active'];
   	} // fn getActivationStatus
@@ -329,7 +329,7 @@ class Phorum_user extends DatabaseObject {
   	 *
   	 * @return boolean
   	 */
-  	function isAdmin()
+  	public function isAdmin()
   	{
   		return $this->m_data['admin'];
   	} // fn isAdmin
@@ -340,11 +340,10 @@ class Phorum_user extends DatabaseObject {
   	 *
   	 * @return int
   	 */
-  	function getNumPosts()
+  	public function getNumPosts()
   	{
   		return $this->m_data['posts'];
   	} // fn getNumPosts
-
 
 } // class Phorum_user
 

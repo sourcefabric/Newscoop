@@ -47,8 +47,8 @@ class Section extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @param int $p_sectionNumber
 	 */
-	function Section($p_publicationId = null, $p_issueNumber = null,
-	                 $p_languageId = null, $p_sectionNumber = null)
+	public function Section($p_publicationId = null, $p_issueNumber = null,
+	                        $p_languageId = null, $p_sectionNumber = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
@@ -66,7 +66,7 @@ class Section extends DatabaseObject {
 	 * @param string $p_name
 	 * @param string $p_shortName
 	 */
-	function create($p_name, $p_shortName, $p_columns = null)
+	public function create($p_name, $p_shortName, $p_columns = null)
 	{
 		if (!is_array($p_columns)) {
 			$p_columns = array();
@@ -108,9 +108,9 @@ class Section extends DatabaseObject {
 	 * @return Section
 	 *     The new Section object.
 	 */
-	function copy($p_destPublicationId, $p_destIssueNumber,
-				  $p_destIssueLanguageId = null,$p_destSectionNumber = null,
-				  $p_copyArticles = true)
+	public function copy($p_destPublicationId, $p_destIssueNumber,
+				         $p_destIssueLanguageId = null,$p_destSectionNumber = null,
+				         $p_copyArticles = true)
 	{
 		if (is_null($p_destIssueLanguageId)) {
 			$p_destIssueLanguageId = $this->m_data['IdLanguage'];
@@ -118,7 +118,7 @@ class Section extends DatabaseObject {
 		if (is_null($p_destSectionNumber)) {
 			$p_destSectionNumber = $this->m_data['Number'];
 		}
-		$dstSectionObj =& new Section($p_destPublicationId,
+		$dstSectionObj = new Section($p_destPublicationId,
 					$p_destIssueNumber,
 					$p_destIssueLanguageId,
 					$p_destSectionNumber);
@@ -171,7 +171,7 @@ class Section extends DatabaseObject {
 	 * @return int
 	 * 		Return the number of articles deleted.
 	 */
-	function delete($p_deleteArticles = false, $p_deleteArticleTranslations = false)
+	public function delete($p_deleteArticles = false, $p_deleteArticleTranslations = false)
 	{
 	    // plugins: Remove poll assignments
 		if (class_exists('PollSection')) {
@@ -211,7 +211,7 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getPublicationId()
+	public function getPublicationId()
 	{
 		return $this->m_data['IdPublication'];
 	} // fn getPublicationId
@@ -220,7 +220,7 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getIssueNumber()
+	public function getIssueNumber()
 	{
 		return $this->m_data['NrIssue'];
 	} // fn getIssueNumber
@@ -229,7 +229,7 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getLanguageId()
+	public function getLanguageId()
 	{
 		return $this->m_data['IdLanguage'];
 	} // fn getLanguageId
@@ -242,10 +242,10 @@ class Section extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getLanguageName()
+	public function getLanguageName()
 	{
 		if (is_null($this->m_languageName)) {
-			$language =& new Language($this->m_data['IdLanguage']);
+			$language = new Language($this->m_data['IdLanguage']);
 			$this->m_languageName = $language->getNativeName();
 		}
 		return $this->m_languageName;
@@ -255,7 +255,7 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getSectionNumber()
+	public function getSectionNumber()
 	{
 		return $this->m_data['Number'];
 	} // fn getSectionNumber
@@ -264,7 +264,7 @@ class Section extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->m_data['Name'];
 	} // fn getName
@@ -274,7 +274,7 @@ class Section extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setName($p_value)
+	public function setName($p_value)
 	{
 		return $this->setProperty('Name', $p_value);
 	} // fn setName
@@ -283,7 +283,7 @@ class Section extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getDescription()
+	public function getDescription()
 	{
 		return $this->m_data['Description'];
 	} // fn getDescription
@@ -293,7 +293,7 @@ class Section extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setDescription($p_value)
+	public function setDescription($p_value)
 	{
 		return $this->setProperty('Description', $p_value);
 	} // fn setDescription
@@ -302,7 +302,7 @@ class Section extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getUrlName()
+	public function getUrlName()
 	{
 		return $this->m_data['ShortName'];
 	} // fn getUrlName
@@ -311,7 +311,7 @@ class Section extends DatabaseObject {
 	/**
 	 * @param string $p_name
 	 */
-	function setUrlName($p_name)
+	public function setUrlName($p_name)
 	{
 		return $this->setProperty('ShortName', $p_name);
 	} // fn setUrlName
@@ -320,7 +320,7 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getArticleTemplateId()
+	public function getArticleTemplateId()
 	{
 		return $this->m_data['ArticleTplId'];
 	} // fn getArticleTemplateId
@@ -330,7 +330,7 @@ class Section extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setArticleTemplateId($p_value)
+	public function setArticleTemplateId($p_value)
 	{
 		return $this->setProperty('ArticleTplId', $p_value);
 	} // fn setArticleTemplateId
@@ -339,7 +339,7 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getSectionTemplateId()
+	public function getSectionTemplateId()
 	{
 		return $this->m_data['SectionTplId'];
 	} // fn getSectionTemplateId
@@ -349,7 +349,7 @@ class Section extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setSectionTemplateId($p_value)
+	public function setSectionTemplateId($p_value)
 	{
 		return $this->setProperty('SectionTplId', $p_value);
 	} // fn setSectionTemplateId
@@ -377,9 +377,9 @@ class Section extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetSections($p_publicationId = null, $p_issueNumber = null,
-	                     $p_languageId = null, $p_urlName = null,
-	                     $p_sectionName = null, $p_sqlOptions = null)
+	public static function GetSections($p_publicationId = null, $p_issueNumber = null,
+	                                   $p_languageId = null, $p_urlName = null,
+	                                   $p_sectionName = null, $p_sqlOptions = null)
 	{
 		$constraints = array();
 		if (!is_null($p_publicationId)) {
@@ -406,7 +406,7 @@ class Section extends DatabaseObject {
 	 * Return an array of arrays indexed by "id" and "name".
 	 * @return array
 	 */
-	function GetUniqueSections($p_publicationId, $p_byLanguage = false)
+	public static function GetUniqueSections($p_publicationId, $p_byLanguage = false)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT Number as id, s.Name as name, s.IdLanguage, l.Name as LangName "
@@ -427,7 +427,9 @@ class Section extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @return int
 	 */
-	function GetTotalSections($p_publicationId = null, $p_issueNumber = null, $p_languageId = null)
+	public static function GetTotalSections($p_publicationId = null,
+	                                        $p_issueNumber = null,
+	                                        $p_languageId = null)
 	{
 		global $g_ado_db;
 		$queryStr = 'SELECT COUNT(*) FROM Sections';
@@ -449,7 +451,7 @@ class Section extends DatabaseObject {
 	} // fn GetTotalSections
 
 
-	function GetNumUniqueSections($p_publicationId, $p_byLanguage = true)
+	public static function GetNumUniqueSections($p_publicationId, $p_byLanguage = true)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT * FROM Sections WHERE IdPublication = $p_publicationId"
@@ -469,7 +471,8 @@ class Section extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @return int
 	 */
-	function GetUnusedSectionNumber($p_publicationId, $p_issueNumber, $p_languageId)
+	public static function GetUnusedSectionNumber($p_publicationId, $p_issueNumber,
+	                                              $p_languageId)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT MAX(Number) + 1 FROM Sections "

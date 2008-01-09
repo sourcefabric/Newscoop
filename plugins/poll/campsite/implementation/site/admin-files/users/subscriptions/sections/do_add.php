@@ -23,10 +23,10 @@ $f_subscription_start_date = Input::Get('f_subscription_start_date');
 $f_subscription_days = Input::Get('f_subscription_days');
 $success = true;
 
-$publicationObj =& new Publication($f_publication_id);
-$languageObj =& new Language($publicationObj->getDefaultLanguageId());
+$publicationObj = new Publication($f_publication_id);
+$languageObj = new Language($publicationObj->getDefaultLanguageId());
 $languages = $publicationObj->getLanguages();
-$manageUser =& new User($f_user_id);
+$manageUser = new User($f_user_id);
 $errorMsgs = array();
 
 $new_sections = array();
@@ -51,7 +51,7 @@ $columns = array('StartDate' => $f_subscription_start_date,
 foreach ($new_sections as $section_number=>$section_languages) {
 	foreach ($section_languages as $section_language) {
 		//echo "<p>try $section_number:$section_language</p>\n";
-		$subscriptionSection =& new SubscriptionSection($f_subscription_id, $section_number, $section_language);
+		$subscriptionSection = new SubscriptionSection($f_subscription_id, $section_number, $section_language);
 		if (!$subscriptionSection->exists()) {
 			//echo "<p>create $section_number:$section_language</p>\n";
 			$success &= $subscriptionSection->create($columns);

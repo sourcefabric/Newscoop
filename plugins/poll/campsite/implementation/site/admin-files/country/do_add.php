@@ -27,7 +27,7 @@ if (empty($f_country_language) || ($f_country_language == 0)) {
     $errorMsgs[] = getGS('You must select a language.');
 }
 if ($correct) {
-	$country =& new Country($f_country_code, $f_country_language);
+	$country = new Country($f_country_code, $f_country_language);
 	$created = $country->create(array("Name" => $f_country_name));
 	if ($created) {
 		camp_html_goto_page("/$ADMIN/country/");

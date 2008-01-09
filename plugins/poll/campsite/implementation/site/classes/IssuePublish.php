@@ -38,7 +38,7 @@ class IssuePublish extends DatabaseObject {
 	 *
 	 * @param int $p_id
 	 */
-	function IssuePublish($p_id = null)
+	public function IssuePublish($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['id'] = $p_id;
@@ -51,7 +51,7 @@ class IssuePublish extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getEventId()
+	public function getEventId()
 	{
 		return $this->m_data['id'];
 	} // fn getEventId
@@ -60,7 +60,7 @@ class IssuePublish extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getPublicationId()
+	public function getPublicationId()
 	{
 	    return $this->m_data['fk_publication_id'];
 	} // fn getPublicationId
@@ -72,7 +72,7 @@ class IssuePublish extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setPublicationId($p_value)
+	public function setPublicationId($p_value)
 	{
 		return $this->setProperty('fk_publication_id', $p_value);
 	} // fn setPublicationId
@@ -81,7 +81,7 @@ class IssuePublish extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getIssueNumber()
+	public function getIssueNumber()
 	{
 	    return $this->m_data['fk_issue_id'];
 	} // fn getIssueNumber
@@ -93,7 +93,7 @@ class IssuePublish extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setIssueNumber($p_value)
+	public function setIssueNumber($p_value)
 	{
 		return $this->setProperty('fk_issue_id', $p_value);
 	} // fn setIssueNumber
@@ -102,7 +102,7 @@ class IssuePublish extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getLanguageId()
+	public function getLanguageId()
 	{
 	    return $this->m_data['fk_language_id'];
 	} // fn getLanguageId
@@ -114,7 +114,7 @@ class IssuePublish extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setLanguageId($p_value)
+	public function setLanguageId($p_value)
 	{
 		return $this->setProperty('fk_language_id', $p_value);
 	} // fn setLanguageId
@@ -125,7 +125,7 @@ class IssuePublish extends DatabaseObject {
 	 * This can be NULL for no action, 'P' for Publish, or 'U' for Unpublish.
 	 * @return mixed
 	 */
-	function getPublishAction()
+	public function getPublishAction()
 	{
 		return $this->m_data['publish_action'];
 	} // fn getPublishAction
@@ -137,7 +137,7 @@ class IssuePublish extends DatabaseObject {
 	 * @param string $p_value
 	 * @return void
 	 */
-	function setPublishAction($p_value)
+	public function setPublishAction($p_value)
 	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'P') || ($p_value == 'U') ) {
@@ -151,7 +151,7 @@ class IssuePublish extends DatabaseObject {
 	 * This can be 'Y' for 'Yes', or 'N' for 'No'.
 	 * @return mixed
 	 */
-	function getPublishArticlesAction()
+	public function getPublishArticlesAction()
 	{
 		return $this->m_data['do_publish_articles'];
 	} // fn getPublishArticlesAction
@@ -163,7 +163,7 @@ class IssuePublish extends DatabaseObject {
 	 * @param string $p_value
 	 * @return mixed
 	 */
-	function setPublishArticlesAction($p_value)
+	public function setPublishArticlesAction($p_value)
 	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'Y') || ($p_value == 'N') ) {
@@ -178,7 +178,7 @@ class IssuePublish extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getActionTime()
+	public function getActionTime()
 	{
 		return $this->m_data['time_action'];
 	} // fn getActionTime
@@ -192,7 +192,7 @@ class IssuePublish extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function setActionTime($p_value)
+	public function setActionTime($p_value)
 	{
 		return $this->setProperty('time_action', $p_value);
 	} // fn setActionTime
@@ -203,7 +203,7 @@ class IssuePublish extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function isCompleted()
+	public function isCompleted()
 	{
 		return ($this->m_data['is_completed'] == 'Y');
 	} // fn isCompleted
@@ -213,7 +213,7 @@ class IssuePublish extends DatabaseObject {
 	 * Mark that this action has been completed.
 	 * @return void
 	 */
-	function setCompleted()
+	public function setCompleted()
 	{
 	    $this->setProperty('is_completed', 'Y');
 	} // fn setCompleted
@@ -223,7 +223,7 @@ class IssuePublish extends DatabaseObject {
 	 * Execute the action.
 	 * @return void
 	 */
-	function doAction()
+	public function doAction()
 	{
 		$publicationId = $this->m_data['fk_publication_id'];
 		$issueId = $this->m_data['fk_issue_id'];
@@ -239,7 +239,7 @@ class IssuePublish extends DatabaseObject {
             }
 		}
 		$issueState = ($publishAction == 'P') ? 'Y' : 'N';
-		$issue =& new Issue($publicationId, $languageId, $issueId);
+		$issue = new Issue($publicationId, $languageId, $issueId);
 		$issue->setWorkflowStatus($issueState);
 		$this->setCompleted();
 	} // fn doAction
@@ -255,7 +255,8 @@ class IssuePublish extends DatabaseObject {
 	 * @param boolean $p_includeCompleted
 	 * @return array
 	 */
-	function GetIssueEvents($p_publicationId, $p_issueNumber, $p_languageId = null, $p_includeCompleted = true)
+	public static function GetIssueEvents($p_publicationId, $p_issueNumber,
+	                                      $p_languageId = null, $p_includeCompleted = true)
 	{
 		$queryStr = "SELECT * FROM IssuePublish "
 					." WHERE fk_publication_id = $p_publicationId "
@@ -274,7 +275,7 @@ class IssuePublish extends DatabaseObject {
 	 * Get all the actions that currently need to be performed.
 	 * @return array
 	 */
-	function GetPendingActions()
+	public static function GetPendingActions()
 	{
 	    $datetime = strftime("%Y-%m-%d %H:%M:00");
     	$queryStr = "SELECT * FROM IssuePublish "
@@ -290,7 +291,7 @@ class IssuePublish extends DatabaseObject {
 	 * Execute all pending actions.
 	 * @return void
 	 */
-	function DoPendingActions()
+	public static function DoPendingActions()
 	{
         $actions = IssuePublish::GetPendingActions();
     	foreach ($actions as $issuePublishObj) {
@@ -306,11 +307,11 @@ class IssuePublish extends DatabaseObject {
 	 * @param int $p_limit
 	 * @return array
 	 */
-	function GetFutureActions($p_limit)
+	public static function GetFutureActions($p_limit)
 	{
 	    global $g_ado_db;
 	    $datetime = strftime("%Y-%m-%d %H:%M:00");
-	    $dummyIssue =& new Issue();
+	    $dummyIssue = new Issue();
 	    $columnNames = $dummyIssue->getColumnNames(true);
         $queryStr = "SELECT id, time_action, publish_action, do_publish_articles, "
                     . implode(",", $columnNames). " FROM Issues, IssuePublish "
@@ -339,7 +340,7 @@ class IssuePublish extends DatabaseObject {
 	 *
 	 * @param int $p_issueNumber
 	 */
-	function OnIssueDelete($p_publicationId, $p_issueNumber, $p_languageId)
+	public static function OnIssueDelete($p_publicationId, $p_issueNumber, $p_languageId)
 	{
 		global $g_ado_db;
 		$queryStr = "DELETE FROM IssuePublish "

@@ -20,8 +20,8 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$publicationObj =& new Publication($Pub);
-$defaultTime =& new SubscriptionDefaultTime($CountryCode, $Pub);
+$publicationObj = new Publication($Pub);
+$defaultTime = new SubscriptionDefaultTime($CountryCode, $Pub);
 
 $defaultTime->setTrialTime($cTrialTime);
 $defaultTime->setPaidTime($cPaidTime);

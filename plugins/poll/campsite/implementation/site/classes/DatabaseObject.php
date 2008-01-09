@@ -84,7 +84,7 @@ class DatabaseObject {
 	 *		The column names of this table.  These are optional.
 	 *
 	 */
-	function DatabaseObject($p_columnNames = null)
+	public function DatabaseObject($p_columnNames = null)
 	{
 		if (!is_null($p_columnNames)) {
 			$this->setColumnNames($p_columnNames);
@@ -96,7 +96,7 @@ class DatabaseObject {
 	 * Return the column names used for the primary key.
 	 * @return array
 	 */
-	function getKeyColumnNames() { return $this->m_keyColumnNames; }
+	public function getKeyColumnNames() { return $this->m_keyColumnNames; }
 
 
 	/**
@@ -108,7 +108,7 @@ class DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function getColumnNames($p_withTablePrefix = false)
+	public function getColumnNames($p_withTablePrefix = false)
 	{
 		if (!$p_withTablePrefix) {
 			return $this->m_columnNames;
@@ -131,7 +131,7 @@ class DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function setColumnNames($p_columnNames)
+	public function setColumnNames($p_columnNames)
 	{
 		foreach ($p_columnNames as $columnName) {
 			$this->m_data[$columnName] = null;
@@ -143,21 +143,21 @@ class DatabaseObject {
 	 * Return the row as an array indexed by the column names.
 	 * @return array
 	 */
-	function getData() { return $this->m_data; }
+	public function getData() { return $this->m_data; }
 
 
 	/**
 	 * Return the name of the database table.
 	 * @return string
 	 */
-	function getDbTableName() { return $this->m_dbTableName; }
+	public function getDbTableName() { return $this->m_dbTableName; }
 
 
 	/**
 	 * Return the key as an array indexed by column names.
 	 * @return array
 	 */
-	function getKey()
+	public function getKey()
 	{
 		$key = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
@@ -183,7 +183,7 @@ class DatabaseObject {
 	 *     </pre>
 	 * @return void
 	 */
-	function setKey($p_columnNames)
+	public function setKey($p_columnNames)
 	{
 		if (is_array($p_columnNames)) {
 			if (isset($p_columnNames[0])) {
@@ -206,7 +206,7 @@ class DatabaseObject {
 	 * @param string $p_value
 	 * @return void
 	 */
-	function modifyKeyValue($p_columnName, $p_value)
+	public function modifyKeyValue($p_columnName, $p_value)
 	{
 		if (!isset($this->m_oldKeyValues[$p_columnName])) {
 			$this->m_oldKeyValues[$p_columnName] = $this->m_data[$p_columnName];
@@ -225,7 +225,7 @@ class DatabaseObject {
 	 * @return boolean
 	 *		TRUE on success, FALSE on failure
 	 */
-	function fetch($p_recordSet = null)
+	public function fetch($p_recordSet = null)
 	{
 		global $g_ado_db;
 
@@ -262,7 +262,7 @@ class DatabaseObject {
 			}
 
 		    // We were given a pre-fetched recordset.
-		    $this->m_data =& $p_recordSet;
+		    $this->m_data = $p_recordSet;
 		    // Make sure all columns have a value even if they arent in the dataset.
 			foreach ($this->getColumnNames() as $dbColumnName) {
 				if (!isset($p_recordSet[$dbColumnName])) {
@@ -292,7 +292,7 @@ class DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function exists()
+	public function exists()
 	{
 		global $g_ado_db;
 
@@ -314,7 +314,7 @@ class DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getKeyWhereClause()
+	public function getKeyWhereClause()
 	{
 		$whereParts = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
@@ -335,7 +335,7 @@ class DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function keyValuesExist()
+	public function keyValuesExist()
 	{
 		foreach ($this->m_keyColumnNames as $columnName) {
 			if (!isset($this->m_data[$columnName]) /* || empty($this->m_data[$columnName]) */) {
@@ -359,7 +359,7 @@ class DatabaseObject {
 	 * @return boolean
 	 *		TRUE if the record was added, false if not.
 	 */
-	function create($p_values = null)
+	public function create($p_values = null)
 	{
 		global $g_ado_db;
 
@@ -426,7 +426,7 @@ class DatabaseObject {
 	 * @return boolean
 	 *		TRUE if the record was deleted, false if not.
 	 */
-	function delete()
+	public function delete()
 	{
 		global $g_ado_db;
 
@@ -458,7 +458,7 @@ class DatabaseObject {
 	 *      or a PEAR_Error if $p_forceFetchFromDatabase is TRUE
 	 *      and there was a problem fetching the data.
 	 */
-	function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false)
+	public function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false)
 	{
 		global $g_ado_db;
 
@@ -524,7 +524,7 @@ class DatabaseObject {
 	 * @return boolean
 	 *		TRUE on success, FALSE on error.
 	 */
-	function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
+	public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
 	{
 		global $g_ado_db;
 
@@ -623,7 +623,7 @@ class DatabaseObject {
 	 * @return boolean
 	 *		Return TRUE on success, FALSE on error.
 	 */
-	function update($p_columns = null, $p_commit = true, $p_isSql = false)
+	public function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
 		global $g_ado_db;
 
@@ -693,7 +693,7 @@ class DatabaseObject {
 	 * @return boolean
 	 *		Return TRUE if the database was updated, false otherwise.
 	 */
-	function commit($p_ignoreColumns = null)
+	public function commit($p_ignoreColumns = null)
 	{
 		global $g_ado_db;
 
@@ -732,13 +732,13 @@ class DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function Search($p_className, $p_columns = null, $p_sqlOptions = null)
+	public static function Search($p_className, $p_columns = null, $p_sqlOptions = null)
 	{
 		if (!class_exists($p_className)) {
 			return array();
 		}
 
-		$tmpObj =& new $p_className;
+		$tmpObj = new $p_className;
 		$queryStr = "SELECT * FROM ".$tmpObj->m_dbTableName;
 		if (is_array($p_columns) && (count($p_columns) > 0)) {
 			$contraints = array();
@@ -760,7 +760,7 @@ class DatabaseObject {
 	 * Output the raw values of this object so that it displays nice in HTML.
 	 * @return void
 	 */
-	function dumpToHtml()
+	public function dumpToHtml()
 	{
 	    echo "<pre>";
 	    print_r($this->m_data);
@@ -787,7 +787,7 @@ class DatabaseObject {
 	 * @return string
 	 *		Original SQL query with the options appended at the end.
 	 */
-	function ProcessOptions($p_queryStr, $p_sqlOptions)
+	public static function ProcessOptions($p_queryStr, $p_sqlOptions)
 	{
 		if (!is_null($p_sqlOptions)) {
 			if (isset($p_sqlOptions['ORDER BY'])) {
@@ -834,7 +834,7 @@ class DatabaseObject {
      *    object The cached object on success
      *    boolean FALSE if the object did not exist
 	 */
-	function readFromCache($p_recordSet = null)
+	public function readFromCache($p_recordSet = null)
 	{
 		if (!DatabaseObject::GetUseCache()) {
 			return false;
@@ -873,7 +873,7 @@ class DatabaseObject {
 	 * @param object $p_source
 	 * @return object
 	 */
-	function duplicateObject($p_source)
+	public function duplicateObject($p_source)
 	{
 		foreach ($p_source as $key=>$value) {
 			$this->$key = $value;
@@ -888,7 +888,7 @@ class DatabaseObject {
 	 *
 	 * @return bool
 	 */
-	function GetUseCache()
+	public function GetUseCache()
 	{
 		return DatabaseObject::$m_useCache;
 	}
@@ -901,7 +901,7 @@ class DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function SetUseCache($p_useCache)
+	public function SetUseCache($p_useCache)
 	{
 		DatabaseObject::$m_useCache = $p_useCache;
 	}
@@ -913,7 +913,7 @@ class DatabaseObject {
 	 * @return bool
      *    TRUE on success, FALSE on failure
 	 */
-	function writeCache()
+	public function writeCache()
 	{
 		if (!DatabaseObject::GetUseCache()) {
 			return false;
@@ -936,12 +936,12 @@ class DatabaseObject {
      * @param array optional
      *    $p_recordSet The object data
      */
-    function getCacheKey($p_recordSet = null)
+    public function getCacheKey($p_recordSet = null)
     {
 		if (is_array($p_recordSet)) {
-			$recordSet =& $p_recordSet;
+			$recordSet = $p_recordSet;
 		} else {
-			$recordSet =& $this->m_data;
+			$recordSet = $this->m_data;
 		}
 
 		$cacheKey = '';

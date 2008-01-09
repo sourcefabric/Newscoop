@@ -15,7 +15,7 @@ if (!Input::IsValid()) {
 }
 
 if (!is_null($f_topic_ids)) {
-	$articleObj =& new Article($f_language_selected, $f_article_number);
+	$articleObj = new Article($f_language_selected, $f_article_number);
 	if (!$articleObj->exists()) {
 		camp_html_display_error(getGS('Article does not exist.'), null, true);
 		exit;
@@ -28,7 +28,7 @@ if (!is_null($f_topic_ids)) {
 
 	foreach ($f_topic_ids as $topicIdString) {
 		// Verify topic exists
-		$tmpTopic =& new Topic($topicIdString);
+		$tmpTopic = new Topic($topicIdString);
 		if ($tmpTopic->exists()) {
 			ArticleTopic::AddTopicToArticle($topicIdString, $f_article_number);
 		}

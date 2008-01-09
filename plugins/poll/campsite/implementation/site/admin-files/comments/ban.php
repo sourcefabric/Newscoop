@@ -20,7 +20,7 @@ if (!Input::IsValid()) {
 }
 
 if (SystemPref::Get("UseDBReplication") == 'Y') {
-    $dbReplicationObj =& new DbReplication();
+    $dbReplicationObj = new DbReplication();
     $connectedToOnlineServer = $dbReplicationObj->connect();
     if ($connectedToOnlineServer == false) {
         camp_html_add_msg(getGS("No connected to Online server"));
@@ -30,7 +30,7 @@ if (SystemPref::Get("UseDBReplication") == 'Y') {
 if (!isset($connectedToOnlineServer)
         || $connectedToOnlineServer == true) {
 	// load the comment
-	$comment =& new Phorum_message($f_comment_id);
+	$comment = new Phorum_message($f_comment_id);
 	$bans = Phorum_ban_item::IsPostBanned($comment);
 }
 ?>

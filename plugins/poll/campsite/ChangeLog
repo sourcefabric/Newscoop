@@ -1,3 +1,16 @@
+3.0.0-beta2 (December 22, 2007)
+  For full details about these changes, see:
+  http://code.campware.org/projects/campsite/query?milestone=3.0.0
+  
+  - Many bug fixes
+  - Finished and fixed the URL classes
+  - Finished the request processing classes
+  - Implemented more features related to lists
+  - Rewrote the image display script
+  - Rewrote the indexing engine
+  - Implemented the backup/restore scripts
+  - Implemented the subtitle display and list
+  
 3.0.0-beta1 (October 30, 2007)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=3.0.0

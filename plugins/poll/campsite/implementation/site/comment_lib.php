@@ -24,7 +24,7 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 	$f_comment_body = $p_parameters['CommentContent'];
 
 	// Check that the article exists.
-	$articleObj =& new Article($f_language_id, $f_article_number);
+	$articleObj = new Article($f_language_id, $f_article_number);
 	if (!$articleObj->exists()) {
 		$p_parameters["ArticleCommentSubmitResult"] = 5003;
 		camp_send_request_to_parser($p_env_vars, $p_parameters, $p_cookies);
@@ -37,14 +37,14 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 	}
 
 	// Get the publication.
-	$publicationObj =& new Publication($articleObj->getPublicationId());
+	$publicationObj = new Publication($articleObj->getPublicationId());
 	$forumId = $publicationObj->getForumId();
 
 	// Create the forum if it doesnt exist.
 	if (!$forumId) {
-		$forum =& new Phorum_forum();
+		$forum = new Phorum_forum();
 	} else {
-		$forum =& new Phorum_forum($forumId);
+		$forum = new Phorum_forum($forumId);
 	}
 	if (!$forum->exists()) {
 		$forum->create();
@@ -73,7 +73,7 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 		$queryStr = "SELECT * FROM liveuser_users WHERE Id='".$userInfo['LoginUserId']."'";
 		$row = $g_ado_db->GetRow($queryStr);
 		if ($row && $row['KeyId'] == $userInfo['LoginUserKey']) {
-			$user =& new User($userInfo['LoginUserId']);
+			$user = new User($userInfo['LoginUserId']);
 			if ($user->exists()) {
 				$userId = $user->getUserId();
 				$userEmail = $user->getEmail();
@@ -82,7 +82,7 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 
 				$phorumUser =& Phorum_user::GetByUserName($user->getUserName());
 				if (is_null($phorumUser)) {
-					$phorumUser =& new Phorum_user();
+					$phorumUser = new Phorum_user();
 				}
 				// Check if the phorum user existed or was created successfuly.
 				// If not, set the error code to 'internal error' and exit.
@@ -147,7 +147,7 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 	}
 
 	// Create the first post message (if needed)
-	$articleObj =& new Article($f_language_id, $f_article_number);
+	$articleObj = new Article($f_language_id, $f_article_number);
 	$firstPost = camp_comment_first_post($articleObj, $forumId);
 	$threadId = $firstPost->getThreadId();
 
@@ -161,7 +161,7 @@ function camp_submit_comment($p_env_vars, $p_parameters, $p_cookies)
 
 	// Create the comment. If there was an error creating the comment set the
 	// error code to 'internal error' and exit.
-	$commentObj =& new Phorum_message();
+	$commentObj = new Phorum_message();
 	if (!$commentObj->create($forumId,
 							$f_comment_subject,
 							$f_comment_body,
@@ -217,7 +217,7 @@ function camp_comment_first_post($p_article, $p_forumId)
 	}
 
 	// Get article creator
-	$user =& new User($p_article->getCreatorId());
+	$user = new User($p_article->getCreatorId());
 	if ($user->exists()) {
 		$userId = $user->getUserId();
 		$userEmail = $user->getEmail();
@@ -228,7 +228,7 @@ function camp_comment_first_post($p_article, $p_forumId)
 		// Create phorum user if necessary
 		$phorumUser = Phorum_user::GetByUserName($userName);
 		if (!is_object($phorumUser)) {
-			$phorumUser =& new Phorum_user();
+			$phorumUser = new Phorum_user();
 		}
 		if (!$phorumUser->CampUserExists($userId)
 			&& !$phorumUser->create($userName, $userPasswd, $userEmail, $userId)) {
@@ -242,7 +242,7 @@ function camp_comment_first_post($p_article, $p_forumId)
 
 	// Create the comment.
 	$title = $p_article->getTitle();
-	$commentObj =& new Phorum_message();
+	$commentObj = new Phorum_message();
 	if ($commentObj->create($p_forumId,
 							   $title,
 							   '',

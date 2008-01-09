@@ -3,6 +3,7 @@
  * @package Campsite
  *
  * @author Holman Romero <holman.romero@gmail.com>
+ * @author Mugur Rus <mugur.rus@gmail.com>
  * @copyright 2007 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
@@ -94,6 +95,47 @@ abstract class CampURI {
      */
     private $m_queryArray = null;
 
+    /**
+     * Language object
+     *
+     * @var MetaLanguage
+     */
+    protected $m_language = null;
+
+    /**
+     * Publication object
+     *
+     * @var MetaPublication
+     */
+    protected $m_publication = null;
+
+    /**
+     * Issue object
+     *
+     * @var MetaIssue
+     */
+    protected $m_issue = null;
+
+    /**
+     * Section object
+     *
+     * @var MetaSection
+     */
+    protected $m_section = null;
+
+    /**
+     * Article object
+     *
+     * @var MetaArticle
+     */
+    protected $m_article = null;
+
+    /**
+     *
+     * @var bool
+     */
+    private $m_validCache = false;
+
 
     /**
      * Class constructor
@@ -101,7 +143,7 @@ abstract class CampURI {
      * @param string $p_uri
      *    The full URI string
      */
-    protected function __construct($p_uri = 'SELF')
+    public function __construct($p_uri = 'SELF')
     {
         if (isset($p_uri) && $p_uri != 'SELF') {
             $uriString = $p_uri;
@@ -119,9 +161,11 @@ abstract class CampURI {
 
             // this works at least for apache, some research is needed
             // in order to support other web servers.
-            if (!empty($_SERVER['PHP_SELF'])
-                    && !empty($_SERVER['REQUEST_URI'])) {
-                $uriString = $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            if (!empty($_SERVER['PHP_SELF'])) {
+                $uriString = $scheme . $_SERVER['HTTP_HOST'];
+            }
+            if (isset($_SERVER['REQUEST_URI'])) {
+                $uriString .= $_SERVER['REQUEST_URI'];
             }
 
             // some cleaning directives
@@ -169,7 +213,16 @@ abstract class CampURI {
      */
     abstract public function getURLParameters($p_param = null);
 
-
+    /**
+     * Returns true if the given parameter is restricted and can not 
+     * be set from outside the URL object.
+     *
+     * @param string $p_parameterName
+     * @return bool
+     */
+    abstract public function isRestrictedParameter($p_parameterName);
+    
+    
     /**
      * Parses the given URI.
      *
@@ -223,6 +276,10 @@ abstract class CampURI {
     {
         if (empty($p_parts)) {
             $p_parts = $this->m_parts;
+        }
+        if (!$this->isValidCache()) {
+            $this->m_path = $this->getURIPath();
+            $this->m_query = $this->getQuery();
         }
         $uriString = '';
         foreach ($p_parts as $part) {
@@ -330,6 +387,9 @@ abstract class CampURI {
      */
     public function getQuery()
     {
+        if (!$this->isValidCache()) {
+            $this->m_query = CampURI::QueryArrayToString($this->m_queryArray);
+        }
         return $this->m_query;
     } // fn getQuery
 
@@ -402,9 +462,9 @@ abstract class CampURI {
 
 
     /**
-     * Gets the user part from the current URI.
+     * Returns the user part from the current URI.
      *
-     * @return string $m_username
+     * @return string
      *      The username value
      */
     public function getUser()
@@ -488,13 +548,14 @@ abstract class CampURI {
      *
      * @return void
      */
-    public function setQueryVar($p_varName, $p_value, $p_toString = true)
+    public function setQueryVar($p_varName, $p_value)
     {
-        $this->m_queryArray[$p_varName] = $p_value;
-        CampRequest::SetVar($p_varName, $p_value);
-        if ($p_toString == true) {
-            $this->m_query = CampURI::QueryArrayToString($this->m_queryArray);
+        if (is_null($p_value)) {
+            unset($this->m_queryArray[$p_varName]);
+        } else {
+            $this->m_queryArray[$p_varName] = $p_value;
         }
+        $this->validateCache(false);
     } // fn setQueryVar
 
 
@@ -594,6 +655,72 @@ abstract class CampURI {
     {
         $this->m_fragment = $p_fragment;
     } // fn setFragment
+
+
+    /**
+     * Sets an object property
+     *
+     * @param string $p_property
+     * @return bool
+     */
+    public function __get($p_property)
+    {
+        $p_property = strtolower($p_property);
+        if (!property_exists($this, "m_$p_property")) {
+            return null;
+        }
+        $memberName = "m_$p_property";
+        return $this->$memberName;
+    } // fn __get
+
+
+    /**
+     * Sets an object property
+     *
+     * @param string $p_property
+     * @param mixed $p_value
+     * @return bool
+     */
+    public function __set($p_property, $p_value)
+    {
+        $p_property = strtolower($p_property);
+        $searchResult = array_search($p_property, $this->m_parts);
+        if ($searchResult !== false) {
+            return false;
+        }
+        if (!property_exists($this, "m_$p_property")) {
+            return false;
+        }
+        if (!is_a($p_value, 'Meta'.$p_property) && !is_null($p_value)) {
+            return false;
+        }
+        $memberName = "m_$p_property";
+        $this->$memberName = $p_value;
+        $this->validateCache(false);
+        return true;
+    } // fn __set
+
+
+    /**
+     * Sets the cache validation for URI rendering
+     *
+     * @param bool $p_valid
+     */
+    protected function validateCache($p_valid)
+    {
+        $this->m_validCache = $p_valid;
+    } // fn validateCache
+
+
+    /**
+     * Returns the cache valid state
+     *
+     * @return bool
+     */
+    protected function isValidCache()
+    {
+        return $this->m_validCache;
+    } // fn isValidCache
 
 
     /**

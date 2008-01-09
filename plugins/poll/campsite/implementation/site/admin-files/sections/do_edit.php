@@ -31,9 +31,9 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$publicationObj =& new Publication($Pub);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$issueObj = new Issue($Pub, $Language, $Issue);
+$publicationObj = new Publication($Pub);
+$sectionObj = new Section($Pub, $Issue, $Language, $Section);
 
 if (!$publicationObj->exists()) {
     camp_html_display_error(getGS('Publication does not exist.'));

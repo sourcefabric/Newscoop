@@ -31,17 +31,9 @@ function smarty_block_list_subtitles($p_params, $p_content, &$p_smarty, &$p_repe
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 4;
+    	$start = 0;
     	$subtitlesList = new SubtitlesList($start, $p_params);
-    	$campContext->setCurrentList($subtitlesList);
-    	echo "<p>start: " . $campContext->current_subtitles_list->getStart()
-    		. ", length: " . $campContext->current_subtitles_list->getLength()
-    		. ", limit: " . $campContext->current_subtitles_list->getLimit()
-    		. ", columns: " . $campContext->current_subtitles_list->getColumns()
-			. ", has next elements: " . (int)$campContext->current_subtitles_list->hasNextElements() . "</p>\n";
-    	echo "<p>name: " . $campContext->current_subtitles_list->getName() . "</p>\n";
-    	echo "<p>constraints: " . $campContext->current_subtitles_list->getConstraintsString() . "</p>\n";
-    	echo "<p>order: " . $campContext->current_subtitles_list->getOrderString() . "</p>\n";
+    	$campContext->setCurrentList($subtitlesList, array('subtitle'));
     }
 
     $currentSubtitle = $campContext->current_subtitles_list->defaultIterator()->current();
@@ -50,6 +42,7 @@ function smarty_block_list_subtitles($p_params, $p_content, &$p_smarty, &$p_repe
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
+        $campContext->subtitle = $currentSubtitle;
     	$p_repeat = true;
     }
 
@@ -57,6 +50,9 @@ function smarty_block_list_subtitles($p_params, $p_content, &$p_smarty, &$p_repe
 		$html = $p_content;
 	    if ($p_repeat) {
     		$campContext->current_subtitles_list->defaultIterator()->next();
+    		if (!is_null($campContext->current_subtitles_list->current)) {
+    		    $campContext->subtitle = $campContext->current_subtitles_list->current;
+    		}
     	}
     }
 

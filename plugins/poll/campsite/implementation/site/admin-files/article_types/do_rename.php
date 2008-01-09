@@ -33,7 +33,7 @@ if (empty($f_name)) {
     }
 
     if ($correct) {
-    	$old_articleType =& new ArticleType($f_oldName);
+    	$old_articleType = new ArticleType($f_oldName);
     	if (!$old_articleType->exists()) {
 		    $correct = false;
 		    $errorMsgs[] = getGS('The article type $1 does not exist.', '<B>'.htmlspecialchars($f_oldName).'</B>');
@@ -41,7 +41,7 @@ if (empty($f_name)) {
     }
 
 	if ($correct) {
-		$articleType =& new ArticleType($f_name);
+		$articleType = new ArticleType($f_name);
 		if ($articleType->exists()) {
 			$correct = false;
 			$errorMsgs[] = getGS('The article type $1 already exists.', '<B>'. htmlspecialchars($f_name). '</B>');

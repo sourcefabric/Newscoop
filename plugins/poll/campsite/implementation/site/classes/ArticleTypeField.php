@@ -12,7 +12,6 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/Log.php');
-require_once($g_documentRoot.'/classes/ParserCom.php');
 require_once($g_documentRoot.'/classes/Topic.php');
 
 /**
@@ -31,7 +30,7 @@ class ArticleTypeField {
 	var $Extra;
 	var $m_metadata;
 
-	function ArticleTypeField($p_articleTypeName = null, $p_fieldName = null)
+	public function ArticleTypeField($p_articleTypeName = null, $p_fieldName = null)
 	{
 		$this->m_articleTypeName = $p_articleTypeName;
 
@@ -42,15 +41,13 @@ class ArticleTypeField {
 			$this->fetch();
 			$this->m_metadata = $this->getMetadata();
 		}
-		$this->m_fieldName = $p_fieldName; // fetch, if empty, will reset m_fieldName to null.
-
 	} // constructor
 
 
 	/**
 	 * @return string
 	 */
-	function getDbTableName()
+	public function getDbTableName()
 	{
 		return $this->m_dbTableName;
 	} // fn getDbTableName
@@ -63,7 +60,7 @@ class ArticleTypeField {
 	 * @param string p_newName
 	 *
 	 */
-	function rename($p_newName)
+	public function rename($p_newName)
 	{
 		global $g_ado_db;
 		if (!ArticleType::isValidFieldName($p_newName)) return 0;
@@ -102,7 +99,6 @@ class ArticleTypeField {
     		$this->m_dbColumnName = 'F'. $p_newName;
 			$this->m_fieldName = $p_newName;
 			Log::Message($logText, null, 62);
-			ParserCom::SendMessage('article_type_fields', 'rename', array('article_field' => $this->m_dbColumnName));
 		}
 	} // fn rename
 
@@ -112,7 +108,7 @@ class ArticleTypeField {
 	 * @param string $p_type
 	 *		Can be one of: 'text', 'date', 'body'.
 	 */
-	function create($p_type, $p_rootTopicId = 0)
+	public function create($p_type, $p_rootTopicId = 0)
 	{
 		global $g_ado_db;
 		$p_type = strtolower($p_type);
@@ -154,7 +150,6 @@ class ArticleTypeField {
 			}
 			$logtext = getGS('Article type field $1 created', $this->m_fieldName);
 			Log::Message($logtext, null, 71);
-			ParserCom::SendMessage('article_types', 'modify', array("article_type"=> $this->m_fieldName));
 		}
 		return $success;
 	} // fn create
@@ -165,7 +160,7 @@ class ArticleTypeField {
      *
      * @param string p_type (text|date|body|topic)
      */
-	function setType($p_type, $p_rootTopicId)
+	public function setType($p_type, $p_rootTopicId)
 	{
 		global $g_ado_db;
 		$p_type = strtolower($p_type);
@@ -203,7 +198,6 @@ class ArticleTypeField {
 			}
 			$logtext = getGS('Article type field $1 changed', $this->m_fieldName);
 			Log::Message($logtext, null, 71);
-			ParserCom::SendMessage('article_types', 'modify', array("article_type"=> $this->m_articleTypeName));
 		}
 		return $success;
 	} // fn setType
@@ -212,7 +206,7 @@ class ArticleTypeField {
 	/**
 	 * @return boolean
 	 */
-	function exists()
+	public function exists()
 	{
 		global $g_ado_db;
 		$queryStr = "SHOW COLUMNS FROM ".$this->m_dbTableName." LIKE '".$this->m_dbColumnName."'";
@@ -228,7 +222,7 @@ class ArticleTypeField {
 	/**
 	 * @return void
 	 */
-	function fetch($p_recordSet = null)
+	public function fetch($p_recordSet = null)
 	{
 		global $g_ado_db;
 		if (!is_null($p_recordSet)) {
@@ -244,13 +238,14 @@ class ArticleTypeField {
 			}
 		}
 		$this->m_fieldName = substr($this->Field, 1);
+		$this->m_dbColumnName = 'F'.$this->m_fieldName;
 	} // fn fetch
 
 
 	/*
 	* Deletes an ATF
 	*/
-	function delete()
+	public function delete()
 	{
 		global $g_ado_db;
 
@@ -290,7 +285,6 @@ class ArticleTypeField {
 			}
 			$logtext = getGS('Article type field $1 deleted', $this->m_fieldName);
 			Log::Message($logtext, null, 72);
-			ParserCom::SendMessage("article_types", "modify", array("article_type"=>"$this->m_dbTableName"));
             return true;
 		}
 		return false;
@@ -300,7 +294,7 @@ class ArticleTypeField {
 	/**
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->Field;
 	} // fn getName
@@ -309,7 +303,7 @@ class ArticleTypeField {
 	/**
 	 * @return string
 	 */
-	function getPrintName()
+	public function getPrintName()
 	{
 		return substr($this->Field, 1);
 	} // fn getPrintName
@@ -318,7 +312,7 @@ class ArticleTypeField {
 	/**
 	 * @return string
 	 */
-	function getType()
+	public function getType()
 	{
 		global $g_ado_db;
 		$tmp = $this->Type;
@@ -337,7 +331,7 @@ class ArticleTypeField {
 	/**
 	 * @return string
 	 */
-	function getTopicTypeRootElement()
+	public function getTopicTypeRootElement()
 	{
 		global $g_ado_db;
 		$topicId = null;
@@ -355,7 +349,7 @@ class ArticleTypeField {
 	 * Get a human-readable representation of the column type.
 	 * @return string
 	 */
-	function getPrintType($p_languageId = 1)
+	public function getPrintType($p_languageId = 1)
 	{
 		global $g_ado_db;
 		switch ($this->getType()) {
@@ -396,14 +390,14 @@ class ArticleTypeField {
 	 *
 	 * @return string
 	 */
-	function getDisplayNameLanguageCode($p_lang = 0)
+	public function getDisplayNameLanguageCode($p_lang = 0)
 	{
 		if (!$p_lang) {
 			$lang = camp_session_get('LoginLanguageId', 1);
 		} else {
 			$lang = $p_lang;
 		}
-		$languageObj =& new Language($lang);
+		$languageObj = new Language($lang);
 		$translations = $this->getTranslations();
 		if (!isset($translations[$lang])) {
 		    return '';
@@ -421,7 +415,7 @@ class ArticleTypeField {
 	 *
 	 * @return string
 	 */
-	function getDisplayName($p_lang = 0)
+	public function getDisplayName($p_lang = 0)
 	{
 		if (!$p_lang) {
 			$lang = camp_session_get('LoginLanguageId', 1);
@@ -442,7 +436,7 @@ class ArticleTypeField {
 	 *
 	 * @return string (shown|hidden)
 	 */
-	function getStatus()
+	public function getStatus()
 	{
 		if ($this->m_metadata['is_hidden']) {
 		    return 'hidden';
@@ -455,7 +449,7 @@ class ArticleTypeField {
 	/**
 	 * @param string p_status (hide|show)
 	 */
-	function setStatus($p_status)
+	public function setStatus($p_status)
 	{
 		global $g_ado_db;
 		if ($p_status == 'show') {
@@ -477,7 +471,7 @@ class ArticleTypeField {
 	 *
 	 * @return array
 	 */
-	function getMetadata() {
+	public function getMetadata() {
 		global $g_ado_db;
 		$queryStr = "SELECT * FROM ArticleTypeMetadata "
 		            ." WHERE type_name='". $this->m_articleTypeName ."'"
@@ -490,7 +484,7 @@ class ArticleTypeField {
 	/**
 	 * @return -1 OR int
 	 */
-	function getPhraseId()
+	public function getPhraseId()
 	{
 		if (isset($this->m_metadata['fk_phrase_id'])) {
 		    return $this->m_metadata['fk_phrase_id'];
@@ -502,7 +496,7 @@ class ArticleTypeField {
 	/**
 	 * @return array
 	 */
-	function getTranslations()
+	public function getTranslations()
 	{
 		$return = array();
 		$tmp = Translation::getTranslations($this->getPhraseId());
@@ -521,7 +515,7 @@ class ArticleTypeField {
 	 *
 	 * @return 0 or phrase id (int)
 	 */
-	function translationExists($p_languageId) {
+	public function translationExists($p_languageId) {
 		global $g_ado_db;
 		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_articleTypeName ."' AND atm.field_name='". $this->m_fieldName ."' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'";
 		$row = $g_ado_db->getAll($sql);
@@ -542,7 +536,7 @@ class ArticleTypeField {
 	 *
 	 * @return boolean
 	 */
-	function setName($p_languageId, $p_value)
+	public function setName($p_languageId, $p_value)
 	{
 		global $g_ado_db;
 		if (!is_numeric($p_languageId)) {
@@ -551,7 +545,7 @@ class ArticleTypeField {
 		// if the string is empty, nuke it
 		if (!is_string($p_value) || $p_value == '') {
 			if ($phrase_id = $this->translationExists($p_languageId)) {
-			    $trans =& new Translation($p_languageId, $phrase_id);
+			    $trans = new Translation($p_languageId, $phrase_id);
 			    $trans->delete();
 				$changed = true;
 			} else {
@@ -559,7 +553,7 @@ class ArticleTypeField {
 			}
 		} else if ($phrase_id = $this->translationExists($p_languageId)) {
 			// just update
-			$description =& new Translation($p_languageId, $phrase_id);
+			$description = new Translation($p_languageId, $phrase_id);
 			$description->setText($p_value);
 			$changed = true;
 		} else {
@@ -571,7 +565,7 @@ class ArticleTypeField {
 			$row = $g_ado_db->GetRow($sql);
 			// if this is the first translation ...
 			if (!is_numeric($row['fk_phrase_id'])) {
-				$description =& new Translation($p_languageId);
+				$description = new Translation($p_languageId);
 				$description->create($p_value);
 				$phrase_id = $description->getPhraseId();
 				// if the phrase_id isn't there, insert it.
@@ -582,7 +576,7 @@ class ArticleTypeField {
 				$changed = $g_ado_db->Execute($sql);
 			} else {
 				// if the phrase is already translated into atleast one language, just reuse that fk_phrase_id
-				$desc =& new Translation($p_languageId, $row['fk_phrase_id']);
+				$desc = new Translation($p_languageId, $row['fk_phrase_id']);
 				$desc->create($p_value);
 				$changed = true;
 			}
@@ -594,7 +588,6 @@ class ArticleTypeField {
 			}
 			$logtext = getGS('Field $1 updated', $this->m_dbColumnName);
 			Log::Message($logtext, null, 143);
-			ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_dbTableName));
 		}
 
 		return $changed;
@@ -606,7 +599,7 @@ class ArticleTypeField {
 	 *
 	 * @return int
 	 */
-	function getNextOrder()
+	public function getNextOrder()
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT field_weight "
@@ -632,7 +625,7 @@ class ArticleTypeField {
 	 *
 	 * @return array
 	 */
-	function getOrders()
+	public function getOrders()
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT field_weight, field_name "
@@ -658,7 +651,7 @@ class ArticleTypeField {
 	 *
 	 * @param array orderArray
 	 */
-	function setOrders($orderArray)
+	public function setOrders($orderArray)
 	{
 		global $g_ado_db;
 		foreach ($orderArray as $order => $field) {
@@ -676,7 +669,7 @@ class ArticleTypeField {
      *
      * @param string move (up|down)
 	 */
-	function reorder($move)
+	public function reorder($move)
 	{
 		$orders = $this->getOrders();
 

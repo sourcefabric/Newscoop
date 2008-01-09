@@ -34,7 +34,7 @@ if ($f_image_offset >= $TotalImages) {
 	$f_image_offset = $f_image_offset < 0 ? 0 : $f_image_offset;
 	$_REQUEST["f_image_offset"] = $f_image_offset;
 }
-$imageSearch =& new ImageSearch($f_search_string, $f_order_by, $f_order_direction, $f_image_offset, $f_items_per_page);
+$imageSearch = new ImageSearch($f_search_string, $f_order_by, $f_order_direction, $f_image_offset, $f_items_per_page);
 $imageSearch->run();
 $imageData = $imageSearch->getImages();
 $NumImagesFound = $imageSearch->getNumImagesFound();
@@ -104,7 +104,7 @@ if ($g_user->hasPermission('AddImage')) { ?>
 <?php
 if (count($imageData) > 0) {
   	$pagerUrl = "/$ADMIN/imagearchive/index.php?";
-    $pager =& new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);
+    $pager = new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);
 ?>
 <table class="action_buttons">
 <TR>

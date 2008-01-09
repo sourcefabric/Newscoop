@@ -30,7 +30,7 @@ function camp_check_admin_access($p_request)
     // actually exists in database table
     if ($LiveUser->getProperty('keyid') == $p_request['LoginUserKey']) {
         $access = true;
-        $user =& new User($LiveUser->getProperty('auth_user_id'));
+        $user = new User($LiveUser->getProperty('auth_user_id'));
     }
 	return array($access, $user);
 } // fn check_basic_access

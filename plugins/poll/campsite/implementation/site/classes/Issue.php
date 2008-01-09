@@ -46,7 +46,8 @@ class Issue extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @param int $p_issueNumber
 	 */
-	function Issue($p_publicationId = null, $p_languageId = null, $p_issueNumber = null)
+	public function Issue($p_publicationId = null, $p_languageId = null,
+	                      $p_issueNumber = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
@@ -64,7 +65,7 @@ class Issue extends DatabaseObject {
 	 * @param array $p_values
 	 * @return boolean
 	 */
-	function create($p_shortName, $p_values = null)
+	public function create($p_shortName, $p_values = null)
 	{
 	    $tmpValues = array('ShortName' => $p_shortName);
 	    if (!is_null($p_values)) {
@@ -91,7 +92,7 @@ class Issue extends DatabaseObject {
 	 * @return int
 	 * 		Return the number of articles deleted.
 	 */
-	function delete($p_deleteSections = true, $p_deleteArticles = true)
+	public function delete($p_deleteSections = true, $p_deleteArticles = true)
 	{
 		global $g_ado_db;
 
@@ -131,10 +132,10 @@ class Issue extends DatabaseObject {
 	 * @param int $p_destLanguageId
 	 * @return Issue
 	 */
-	function __copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId)
+	private function __copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId)
 	{
         // Copy the issue
-        $newIssue =& new Issue($p_destPublicationId, $p_destLanguageId, $p_destIssueId);
+        $newIssue = new Issue($p_destPublicationId, $p_destLanguageId, $p_destIssueId);
         $columns = array();
         $columns['Name'] = mysql_real_escape_string($this->getName());
     	$columns['IssueTplId'] = $this->m_data['IssueTplId'];
@@ -178,7 +179,8 @@ class Issue extends DatabaseObject {
 	 * @return mixed
 	 *		An array of Issues, a single Issue, or null on error.
 	 */
-	function copy($p_destPublicationId = null, $p_destIssueId = null, $p_destLanguageId = null)
+	public function copy($p_destPublicationId = null, $p_destIssueId = null,
+	                     $p_destLanguageId = null)
 	{
 	    global $g_ado_db;
 	    if (is_null($p_destPublicationId)) {
@@ -210,7 +212,7 @@ class Issue extends DatabaseObject {
 	 * Return the publication ID of the publication that contains this issue.
 	 * @return int
 	 */
-	function getPublicationId()
+	public function getPublicationId()
 	{
 		return $this->m_data['IdPublication'];
 	} // fn getPublicationId
@@ -220,7 +222,7 @@ class Issue extends DatabaseObject {
 	 * Return the language ID of the issue.
 	 * @return int
 	 */
-	function getLanguageId()
+	public function getLanguageId()
 	{
 		return $this->m_data['IdLanguage'];
 	} // fn getLanguageId
@@ -231,7 +233,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @param int $p_value
 	 */
-	function setLanguageId($p_value)
+	public function setLanguageId($p_value)
 	{
 		global $g_ado_db;
 		$sql = "UPDATE Sections SET IdLanguage=$p_value"
@@ -252,10 +254,10 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getLanguageName()
+	public function getLanguageName()
 	{
 		if (is_null($this->m_languageName)) {
-			$language =& new Language($this->m_data['IdLanguage']);
+			$language = new Language($this->m_data['IdLanguage']);
 			$this->m_languageName = $language->getNativeName();
 		}
 		return $this->m_languageName;
@@ -265,7 +267,7 @@ class Issue extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getIssueNumber()
+	public function getIssueNumber()
 	{
 		return $this->m_data['Number'];
 	} // fn getIssueNumber
@@ -275,7 +277,7 @@ class Issue extends DatabaseObject {
 	 * Get the name of the issue.
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->m_data['Name'];
 	} // fn getName
@@ -286,7 +288,7 @@ class Issue extends DatabaseObject {
 	 * @param string
 	 * @return boolean
 	 */
-	function setName($p_value)
+	public function setName($p_value)
 	{
 	    return $this->setProperty('Name', $p_value);
 	} // fn setName
@@ -296,7 +298,7 @@ class Issue extends DatabaseObject {
 	 * Get the string used for the URL to this issue.
 	 * @return string
 	 */
-	function getUrlName()
+	public function getUrlName()
 	{
 		return $this->m_data['ShortName'];
 	} // fn getUrlName
@@ -307,7 +309,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function setUrlName($p_value)
+	public function setUrlName($p_value)
 	{
 	    return $this->setProperty('ShortName', $p_value);
 	} // fn setUrlName
@@ -317,7 +319,7 @@ class Issue extends DatabaseObject {
 	 * Get the default template ID used for articles in this issue.
 	 * @return int
 	 */
-	function getArticleTemplateId()
+	public function getArticleTemplateId()
 	{
 		return $this->m_data['ArticleTplId'];
 	} // fn getArticleTemplateId
@@ -328,7 +330,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @param int $p_value
 	 */
-	function setArticleTemplateId($p_value)
+	public function setArticleTemplateId($p_value)
 	{
 		if (is_numeric($p_value)) {
 			return $this->setProperty('ArticleTplId', $p_value);
@@ -340,7 +342,7 @@ class Issue extends DatabaseObject {
 	 * Get the default template ID used for sections in this issue.
 	 * @return int
 	 */
-	function getSectionTemplateId()
+	public function getSectionTemplateId()
 	{
 		return $this->m_data['SectionTplId'];
 	} // fn getSectionTemplateId
@@ -351,7 +353,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @param int $p_value
 	 */
-	function setSectionTemplateId($p_value)
+	public function setSectionTemplateId($p_value)
 	{
 		if (is_numeric($p_value)) {
 			return $this->setProperty('SectionTplId', $p_value);
@@ -363,7 +365,7 @@ class Issue extends DatabaseObject {
 	 * Get the template ID used for this issue.
 	 * @return int
 	 */
-	function getIssueTemplateId()
+	public function getIssueTemplateId()
 	{
 		return $this->m_data['IssueTplId'];
 	} // fn getIssueTemplateId
@@ -374,7 +376,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @param int $p_value
 	 */
-	function setIssueTemplateId($p_value)
+	public function setIssueTemplateId($p_value)
 	{
 		if (is_numeric($p_value)) {
 			return $this->setProperty('IssueTplId', $p_value);
@@ -388,7 +390,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getWorkflowStatus()
+	public function getWorkflowStatus()
 	{
 		return $this->m_data['Published'];
 	} // fn getWorkflowStatus
@@ -403,7 +405,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function setWorkflowStatus($p_value = null)
+	public function setWorkflowStatus($p_value = null)
 	{
 		$doPublish = null;
 		if (is_null($p_value)) {
@@ -452,7 +454,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getPublicationDate()
+	public function getPublicationDate()
 	{
 		return $this->m_data['PublicationDate'];
 	} // fn getPublicationDate
@@ -464,7 +466,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @param string $p_value
 	 */
-	function setPublicationDate($p_value)
+	public function setPublicationDate($p_value)
 	{
 		if (is_string($p_value)) {
 			return $this->setProperty('PublicationDate', $p_value);
@@ -481,9 +483,9 @@ class Issue extends DatabaseObject {
 	 * @return array
 	 * 		Return an array of Language objects.
 	 */
-	function getLanguages($p_getUnusedLanguagesOnly = false)
+	public function getLanguages($p_getUnusedLanguagesOnly = false)
 	{
-		$tmpLanguage =& new Language();
+		$tmpLanguage = new Language();
 		$columnNames = $tmpLanguage->getColumnNames(true);
 		if ($p_getUnusedLanguagesOnly) {
 			$queryStr = "SELECT ".implode(',', $columnNames)
@@ -528,14 +530,14 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetIssues($p_publicationId = null,
-	                   $p_languageId = null,
-	                   $p_issueNumber = null,
-	                   $p_urlName = null,
-	                   $p_preferredLanguage = null,
-	                   $p_sqlOptions = null)
+	public static function GetIssues($p_publicationId = null,
+	                                 $p_languageId = null,
+	                                 $p_issueNumber = null,
+	                                 $p_urlName = null,
+	                                 $p_preferredLanguage = null,
+	                                 $p_sqlOptions = null)
 	{
-		$tmpIssue =& new Issue();
+		$tmpIssue = new Issue();
 		$columnNames = $tmpIssue->getColumnNames(true);
 		$queryStr = 'SELECT '.implode(',', $columnNames);
 		if (!is_null($p_preferredLanguage)) {
@@ -569,7 +571,7 @@ class Issue extends DatabaseObject {
 		$rows = $g_ado_db->GetAll($queryStr);
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
-				$tmpObj =& new Issue();
+				$tmpObj = new Issue();
 				$tmpObj->fetch($row);
 				$tmpObj->m_languageName = $row['LanguageName'];
 				$issues[] = $tmpObj;
@@ -588,7 +590,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function GetNumIssues($p_publicationId = null)
+	public static function GetNumIssues($p_publicationId = null)
 	{
 		global $g_ado_db;
 		$queryStr = 'SELECT COUNT(*) FROM Issues ';
@@ -605,7 +607,7 @@ class Issue extends DatabaseObject {
 	 * @param int $p_publicationId
 	 * @return int
 	 */
-	function GetUnusedIssueId($p_publicationId)
+	public static function GetUnusedIssueId($p_publicationId)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT MAX(Number) + 1 FROM Issues "
@@ -623,7 +625,7 @@ class Issue extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @return mixed
 	 */
-	function GetCurrentIssue($p_publicationId, $p_languageId = null)
+	public static function GetCurrentIssue($p_publicationId, $p_languageId = null)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT Number, IdLanguage FROM Issues WHERE Published = 'Y' AND "
@@ -647,7 +649,7 @@ class Issue extends DatabaseObject {
 	 * @param int $p_publicationId
 	 * @return Issue
 	 */
-	function GetLastCreatedIssue($p_publicationId)
+	public static function GetLastCreatedIssue($p_publicationId)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT MAX(Number) FROM Issues WHERE IdPublication=$p_publicationId";
@@ -657,7 +659,7 @@ class Issue extends DatabaseObject {
 		}
 		$queryStr = "SELECT IdLanguage FROM Issues WHERE IdPublication=$p_publicationId AND Number=$maxIssueNumber";
 		$idLanguage = $g_ado_db->GetOne($queryStr);
-		$issue =& new Issue($p_publicationId, $idLanguage, $maxIssueNumber);
+		$issue = new Issue($p_publicationId, $idLanguage, $maxIssueNumber);
 		return $issue;
 	} // fn GetLastCreatedIssue
 
