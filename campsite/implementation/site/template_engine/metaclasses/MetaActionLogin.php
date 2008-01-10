@@ -20,6 +20,7 @@ class MetaActionLogin extends MetaAction
      */
     public function __construct(array $p_input)
     {
+        $this->m_defined = true;
         if (!isset($p_input['f_user_uname'])) {
             $this->m_error = new PEAR_Error('The user name was not filled in.',
             ACTION_LOGIN_ERR_NO_USER_NAME);
@@ -38,8 +39,7 @@ class MetaActionLogin extends MetaAction
             ACTION_LOGIN_ERR_INVALID_CREDENTIALS);
             return;
         }
-        $this->m_defined = true;
-        $this->m_error = null;
+        $this->m_error = ACTION_OK;
         $this->m_user = $user;
         $this->m_user->initLoginKey();
     }
