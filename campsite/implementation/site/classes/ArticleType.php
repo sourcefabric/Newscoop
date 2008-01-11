@@ -325,6 +325,14 @@ class ArticleType {
 		$metadata = array();
 		if (is_array($queryArray)) {
 			foreach ($queryArray as $row) {
+			    if (empty($row['field_name'])) {
+			        $deleteQuery = "ALTER TABLE " . $this->m_dbTableName . " DROP COLUMN F";
+			        $g_ado_db->Execute($deleteQuery);
+			        $deleteQuery = "DELETE FROM ArticleTypeMetadata WHERE type_name = '"
+			        . $this->m_name . "' AND field_name = ''";
+			        $g_ado_db->Execute($deleteQuery);
+			        continue;
+			    }
 				$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE 'F". $row['field_name'] ."'";
 				$rowdata = $g_ado_db->GetAll($queryStr);
 				$columnMetadata = new ArticleTypeField($this->m_name);
