@@ -158,7 +158,7 @@ class ArticlesList extends ListObject
        	                        throw new InvalidValueException($word, 'article type');
        	                    }
        	                    $value = $word;
-       	                } elseif ($attribute = 'topic') {
+       	                } elseif ($attribute == 'topic') {
        	                    $topicObj = new Topic($word);
        	                    if (!$topicObj->exists()) {
        	                        throw new InvalidValueException($word, 'topic');
