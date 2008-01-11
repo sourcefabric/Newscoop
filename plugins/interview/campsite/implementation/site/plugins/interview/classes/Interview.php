@@ -59,19 +59,23 @@ class Interview extends DatabaseObject {
         // timestamp - last_modified
         'last_modified'
         );
-
+        
     /**
-     * This static variable stores an User object 
+     * This static property stores an User object 
      * currently looped in Interview::invite().
      * In each loop it have to assigned here, but 
      * retrived in MetaInterview class. Thatswhy it's static.
      *
      * @var object
      */
-    static $current_questioneer = null;
+    protected static $current_questioneer = null;
     
-    var $ok = null;
-
+    /**
+     * This static property indicates that 
+     * an invitation have to send.
+     */
+    protected static $trigger_invitation = false; 
+    
     /**
      * Construct by passing in the primary key to access the interview in
      * the database.
@@ -562,6 +566,9 @@ class Interview extends DatabaseObject {
            
         if ($form->validate()) {
             $data = $form->getSubmitValues();
+            
+            $context = CampTemplate::singleton()->context();
+            $moderator = $context->user->identifier;
              
             $image_id = $this->getProperty('fk_image_id');
             
@@ -601,7 +608,7 @@ class Interview extends DatabaseObject {
             if ($this->exists()) {
                 // edit existing interview    
                 $this->setProperty('fk_language_id', $data['f_interview_language_id']);
-                $this->setProperty('fk_moderator_user_id', $data['f_interview_moderator_user_id']);
+                $this->setProperty('fk_moderator_user_id', $moderator);
                 $this->setProperty('fk_guest_user_id', $data['f_interview_guest_user_id']);
                 $this->setProperty('title', $data['f_interview_title']);
                 $this->setProperty('fk_image_id', $image_id);
@@ -619,7 +626,7 @@ class Interview extends DatabaseObject {
                 // create new interview
                 return $this->create(
                     $data['f_interview_language_id'], 
-                    $data['f_interview_moderator_user_id'], 
+                    $moderator, 
                     $data['f_interview_guest_user_id'],
                     $data['f_interview_title'], 
                     $image_id, 
@@ -627,8 +634,8 @@ class Interview extends DatabaseObject {
                     $data['f_interview_description'],
                     $data['f_interview_interview_begin'], 
                     $data['f_interview_interview_end'],
-                    $data['f_questions_interview_begin'],
-                    $data['f_questions_interview_end'],
+                    $data['f_interview_questions_begin'],
+                    $data['f_interview_questions_end'],
                     $data['f_interview_questions_limit']
                 );   
                 
@@ -637,15 +644,9 @@ class Interview extends DatabaseObject {
         return false;
     }
     
-    public function addQuestionner()
+    public static function GetCurrentQuestioneer()
     {
-            
-        
-    }
-    
-    public function addGuest()
-    {
-        
+        return self::$current_questioneer;   
     }
     
     public function getQuestioneersWantInvitation()
@@ -653,25 +654,40 @@ class Interview extends DatabaseObject {
         $Questioneers = array();
         
         foreach (User::GetUsers() as $User) {
-            if ($User->hasPermission('NOTIFY_NEW_INTERVIEW')) {
+            if ($User->hasPermission('plugin_interview_notify')) {
                 $Questioneer[] = $User; 
             }
         }
         return $Questioneer;  
     }
     
-    public function send_invitations()
+    public static function TriggerSendInvitation()
+    {
+        self::$trigger_invitation = true;   
+    }
+    
+    public static function IsInvitationTriggered()
+    {
+        return self::$trigger_invitation;   
+    }
+    
+    public static function SendInvitation()
     {
         $camp_template = CampTemplate::singleton();
+        $context = CampTemplate::singleton()->context();
+        $camp_template->assign('campsite', $context);
        
         foreach (self::getQuestioneersWantInvitation() as $Questioneer) {
-            $this->current_questioneer = $Questioneer;
+            self::$current_questioneer = $Questioneer;
             $content = $camp_template->fetch('interview-invitation.tpl');
             $subject = $camp_template->get_template_vars('subject');
             $sender = $camp_template->get_template_vars('sender');
             
             mail($Questioneer->getEmail(), $subject, $content, "From: $sender");
-        }                    
+        }
+        $camp_template->clear_assign('campsite');
+        self::$trigger_invitation = false;
+        self::$current_questioneer = null;                 
     }
     
     

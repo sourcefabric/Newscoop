@@ -39,13 +39,8 @@ final class MetaInterview extends MetaDbObject {
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['moderator'] = 'getModerator';
         $this->m_customProperties['guest'] = 'getGuest';
-        $this->m_customProperties['action'] = 'action';
-        $this->m_customProperties['ok'] = 'ok';
-        $this->m_customProperties['set_draft'] = 'set_draft';
-        $this->m_customProperties['set_pending'] = 'set_pending';
-        $this->m_customProperties['set_published'] = 'set_published';
-        $this->m_customProperties['set_offline'] = 'set_offline';
-        $this->m_customProperties['current_guest'] = 'getCurrentGuest';
+        $this->m_customProperties['questioneer'] = 'getCurrentQuestioneer';
+        
 
     } // fn __construct
     
@@ -99,22 +94,6 @@ final class MetaInterview extends MetaDbObject {
         return $Guest;   
     }
     
-    public function action()
-    {
-        if ($_REQUEST['f_interview_submit']) {
-            $Interview = new Interview($this->m_dbObject->getProperty('interview_id'));
-            $this->m_dbObject->ok = $Interview->store($this->m_dbObject->getProperty('fk_moderator_user_id'));
-            
-            return true;
-        }
-        return false;
-    }
-    
-    public function ok()
-    {
-        return $this->m_dbObject->ok;   
-    }
-    
     public function getImage()
     {
         $image_id = $this->m_dbObject->getProperty('fk_image_id');
@@ -134,40 +113,15 @@ final class MetaInterview extends MetaDbObject {
     {
         return null;
     }
-           
-    public function set_draft()
-    {
-        $Interview = new Interview($this->m_dbObject->getProperty('interview_id'));
-        $Interview->setProperty('status', 'draft');     
-    }
-    
-    public function set_pending()
-    {
-        $Interview = new Interview($this->m_dbObject->getProperty('interview_id'));
-        $Interview->send_invitations();
-        $Interview->setProperty('status', 'pending');     
-    }
     
     public function getCurrentQuestioneer()
     {
-        $User = $this->m_dbObject->current_questioneer;
+        $User = Interview::GetCurrentQuestioneer();
         $MetaUser = new MetaUser($User->getProperty('Id'));
         return $MetaUser;   
     }
-        
-    public function set_published()
-    {
-        $Interview = new Interview($this->m_dbObject->getProperty('interview_id'));
-        $Interview->send_invitations();
-        $Interview->setProperty('status', 'published');     
-    }    
-        
-    public function set_offline()
-    {
-        $Interview = new Interview($this->m_dbObject->getProperty('interview_id'));
-        $Interview->send_invitations();
-        $Interview->setProperty('status', 'offline');     
-    }
+
+    
 } // class MetaInterview
 
 ?>

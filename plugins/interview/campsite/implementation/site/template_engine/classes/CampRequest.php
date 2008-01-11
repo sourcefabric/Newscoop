@@ -183,7 +183,7 @@ final class CampRequest
             $input = $_COOKIE;
             break;
         case 'FILES':
-            $input = $_POST;
+            $input = $_FILES;
             break;
         default:
             $input = $_REQUEST;

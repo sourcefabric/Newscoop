@@ -1,6 +1,6 @@
-Dear {{ $campsite->interview->invitee->name }},<br>
+Dear {{ $campsite->interview->questioneer->name }},<br>
 
-we like to invite to following interview:
+we like to invite to interview {{ $campsite->interview->title }}:
 {{ include file='interview-details.tpl' }}
 
 <p>

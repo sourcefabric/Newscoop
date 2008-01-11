@@ -52,7 +52,7 @@ function smarty_function_interview_edit($p_params, &$p_smarty)
     $txtFields = array('title', 'questions_limit', 'image_description'); 
     $dateFields = array('interview_begin', 'interview_end', 'questions_begin', 'questions_end');
     $txtAreaFields = array('description_short', 'description');
-    $selectFields = array('language', 'guest', 'status');
+    $selectFields = array('language', 'guest', 'moderator', 'status');
     $fileFields = array('image');
     $checkBoxes = array('image_delete');
 
@@ -65,8 +65,8 @@ function smarty_function_interview_edit($p_params, &$p_smarty)
             
     } elseif (in_array($attribute, $txtFields)) {
         $html = '<input type="text" name="f_interview_'.$attribute.'" size="'.($length > 32 ? 32 : $length).'" maxlength="'.$length.'" ';
-        if (isset($_REQUEST["f_interview_$attribute."])) {
-            $html .= 'value="'.smarty_function_escape_special_chars($_REQUEST["f_interview_$attribute."]).'" ';
+        if (isset($_REQUEST["f_interview_$attribute"])) {
+            $html .= 'value="'.smarty_function_escape_special_chars($_REQUEST["f_interview_$attribute"]).'" ';
         } elseif (isset($attrValue)) {
             $html .= 'value="'.smarty_function_escape_special_chars($attrValue).'" ';
         }
@@ -75,8 +75,8 @@ function smarty_function_interview_edit($p_params, &$p_smarty)
     } elseif (in_array($attribute, $dateFields)) {
         if ($p_params['format']) 
         $html = '<input type="text" name="f_interview_'.$attribute.'" size="'.($length > 32 ? 32 : $length).'" maxlength="'.$length.'" ';
-        if (isset($_REQUEST["f_interview_$attribute."])) {
-            $html .= 'value="'.smarty_function_escape_special_chars($_REQUEST["f_interview_$attribute."]).'" ';
+        if (isset($_REQUEST["f_interview_$attribute"])) {
+            $html .= 'value="'.smarty_function_escape_special_chars($_REQUEST["f_interview_$attribute"]).'" ';
         } elseif (isset($attrValue)) {
             $html .= 'value="'.smarty_function_escape_special_chars(date('Y-m-d', $attrValue)).'" ';
         }
@@ -90,8 +90,8 @@ function smarty_function_interview_edit($p_params, &$p_smarty)
                 foreach (Language::getLanguages() as $Language) {
                     $options[$Language->getProperty('Id')] = $Language->getName();   
                 }
-                sort($options);
-                $html = '<select name="f_interview_language_id" id="interview_language">';
+                asort($options);
+                $html = '<select name="f_interview_language_id" id="interview_"'.$attribute.'>';
                 $html.= smarty_function_html_options(array(
                     'options' => $options,
                     'selected' => isset($_REQUEST['f_interview_language_id']) ? $_REQUEST['f_interview_language_id']: $attrValue->number,
@@ -102,16 +102,17 @@ function smarty_function_interview_edit($p_params, &$p_smarty)
             break;
             
             case 'guest':
+            case 'moderator':
                 foreach (User::getUsers() as $User) {
-                    if ($User->hasPermission('INTERVIEW_GUEST')) {
+                    if ($User->hasPermission('plugin_interview_'.$attribute)) {
                         $options[$User->getProperty('Id')] = $User->getProperty('Name');
                     }  
                 }
-                sort($options);
-                $html = '<select name="f_interview_guest_user_id" id="interview_language">';
+                asort($options);
+                $html = '<select name="f_interview_'.$attribute.'_user_id" id="interview_"'.attribute.'>';
                 $html.= smarty_function_html_options(array(
                     'options' => $options,
-                    'selected' => isset($_REQUEST['f_interview_guest_user_id']) ? $_REQUEST['f_interview_guest_user_id']: $attrValue->identifier,
+                    'selected' => isset($_REQUEST['f_interview_'.$attribute.'_user_id']) ? $_REQUEST['f_interview_'.$attribute.'_user_id']: $attrValue->identifier,
                    'print_result' => false),
                     $p_smarty
                 );

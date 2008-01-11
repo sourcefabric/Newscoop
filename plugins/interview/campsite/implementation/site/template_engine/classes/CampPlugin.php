@@ -19,17 +19,20 @@ class CampPlugin{
     {
         $context = CampTemplate::singleton()->context();
         
-        // Todo: below some hacked code to init Poll, have to be generic for all plugins
-        
-        $interview_id = Input::Get('interview_id', 'int');      
+        // Todo: below some hacked code to init Interview, have to be generic for all plugins   
         		   
-        $context->registerObjectType(array('interview' => 'Interview'));
+        $context->registerObjectType(array('interview' => array('class' => 'Interview')));
         $context->registerListObject(array('interviews' => array('class' => 'Interviews', 'list' => 'interviews')));
         
-        $context->registerObjectType(array('interviewitem' => 'InterviewItem'));
+        $context->registerObjectType(array('interviewitem' => array('class' => 'InterviewItem')));
         $context->registerListObject(array('interviewitems' => array('class' => 'InterviewItems', 'list' => 'interviewitems')));
         
-        $context->interview = new MetaInterview($interview_id);     
+        $interview_id = Input::Get('f_interview_id', 'int');
+        $context->interview = new MetaInterview($interview_id);
+        
+        if (Interview::IsInvitationTriggered()) {
+            Interview::SendInvitation();   
+        }
     }  
 }
 

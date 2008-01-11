@@ -446,14 +446,6 @@ class InterviewItem extends DatabaseObject {
                     'type'      => 'hidden',
                     'constant'  => $data['item_id']
             ),
-            'fk_questioneer_user_id' => array(
-                'element'   => 'interviewitem[fk_questioneer_user_id]',
-                'type'      => 'select',
-                'label'     => 'fk_questioneer_user_id',
-                'default'   => $data['fk_questioneer_user_id'],
-                'options'   => array(10 => 'user1', 20 => 'user2'),
-                'required'  => true,
-            ),
             'question' => array(
                 'element'   => 'interviewitem[question]',
                 'type'      => 'textarea',
