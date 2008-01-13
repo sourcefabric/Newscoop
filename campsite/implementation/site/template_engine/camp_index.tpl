@@ -184,10 +184,6 @@
 {{ /list_subtopics }}
 {{ /local }}
 
-<h4>issue: {{ $campsite->issue->name }}, url: {{ $campsite->url->issue->name }}</h4>
-<h4>section: {{ $campsite->section->name }}, url: {{ $campsite->url->section->name }}</h4>
-<h4>article: {{ $campsite->article->name }}, url: {{ $campsite->url->article->name }}</h4>
-
 
 {{ use_body_field article_type="Article" field_name="Full_text" }}
 <h4>use_body_field: article type: {{ $campsite->body_field_article_type }},
@@ -207,10 +203,6 @@
 {{ /if }}
 {{ /list_subtitles }}
 {{ /use_body_field }}
-
-<h4>issue: {{ $campsite->issue->name }}, url: {{ $campsite->url->issue->name }}</h4>
-<h4>section: {{ $campsite->section->name }}, url: {{ $campsite->url->section->name }}</h4>
-<h4>article: {{ $campsite->article->name }}, url: {{ $campsite->url->article->name }}</h4>
 
 
 {{ if $campsite->hasProperty('invalid_property') }}

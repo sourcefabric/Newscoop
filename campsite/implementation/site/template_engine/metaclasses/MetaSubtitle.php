@@ -231,7 +231,7 @@ final class MetaSubtitle {
         preg_match_all('/([\d\w]+)=([\d\w]+)&?/i', $parametersString, $parametersArray);
         $parametersArray = array_combine($parametersArray[1], $parametersArray[2]);
 
-        $uri = CampTemplate::singleton()->context()->url;
+        $uri = new MetaURL();
         $uri->language = new MetaLanguage($parametersArray['IdLanguage']);
         $uri->publication = new MetaPublication($parametersArray[CampRequest::PUBLICATION_ID]);
         $uri->issue = new MetaIssue($parametersArray[CampRequest::PUBLICATION_ID],
