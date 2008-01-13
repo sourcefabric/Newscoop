@@ -4,13 +4,19 @@
 </head>
 <body>
 
-<p>default language: {{ $campsite->default_language->name }}</p>
-<p>default publication: {{ $campsite->default_publication->name }}</p>
-<p>default issue: {{ $campsite->default_issue->name }}</p>
-<p>default section: {{ $campsite->default_section->name }}</p>
-<p>default article: {{ $campsite->default_article->name }}</p>
+<p>default language: {{ $campsite->default_language->name }}
+	(in url: {{ $campsite->default_url->language->name }})</p>
+<p>default publication: {{ $campsite->default_publication->name }}
+	(in url: {{ $campsite->default_url->publication->name }})</p>
+<p>default issue: {{ $campsite->default_issue->name }}
+	(in url: {{ $campsite->default_url->issue->name }})</p>
+<p>default section: {{ $campsite->default_section->name }}
+	(in url: {{ $campsite->default_url->section->name }})</p>
+<p>default article: {{ $campsite->default_article->name }}
+	(in url: {{ $campsite->default_url->article->name }})</p>
 <p>default topic: {{ $campsite->default_topic->name }}</p>
 <p>default url: {{ $campsite->default_url->url }}</p>
+
 
 <h3>issues list</h3>
 {{ list_issues length="2" columns="3" name='sample_name' constraints="name greater a" order='byDate asc' }}
@@ -178,6 +184,10 @@
 {{ /list_subtopics }}
 {{ /local }}
 
+<h4>issue: {{ $campsite->issue->name }}, url: {{ $campsite->url->issue->name }}</h4>
+<h4>section: {{ $campsite->section->name }}, url: {{ $campsite->url->section->name }}</h4>
+<h4>article: {{ $campsite->article->name }}, url: {{ $campsite->url->article->name }}</h4>
+
 
 {{ use_body_field article_type="Article" field_name="Full_text" }}
 <h4>use_body_field: article type: {{ $campsite->body_field_article_type }},
@@ -197,6 +207,10 @@
 {{ /if }}
 {{ /list_subtitles }}
 {{ /use_body_field }}
+
+<h4>issue: {{ $campsite->issue->name }}, url: {{ $campsite->url->issue->name }}</h4>
+<h4>section: {{ $campsite->section->name }}, url: {{ $campsite->url->section->name }}</h4>
+<h4>article: {{ $campsite->article->name }}, url: {{ $campsite->url->article->name }}</h4>
 
 
 {{ if $campsite->hasProperty('invalid_property') }}
@@ -446,6 +460,11 @@
 </table>
 
 
+{{ assign var="defaultIssueNumber" value=$campsite->issue->number }}
+{{ assign var="defaultSectionNumber" value=$campsite->section->number }}
+{{ assign var="defaultArticleNumber" value=$campsite->article->number }}
+
+
 <table cellspacing="1" cellpadding="4">
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
@@ -471,6 +490,7 @@
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
     {{ set_publication identifier="1" }}
+    {{ set_issue number=$defaultIssueNumber }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
@@ -644,6 +664,7 @@
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
     {{ set_issue number="1" }}
+    {{ set_section number=$defaultSectionNumber }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
@@ -745,6 +766,7 @@
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
     {{ set_section number="10" }}
+    {{ set_article number=$defaultArticleNumber }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
@@ -1113,6 +1135,7 @@
   <td bgcolor="#6a6a6a"><font color="#ffffff">Image</font></td>
 </tr>
 </table>
+{{ list_article_images length="1" }}
 <table cellspacing="1" cellpadding="4">
 <tr>
   <td bgcolor="Aqua" align="center" colspan="3">Fields</td>
@@ -1234,14 +1257,18 @@
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
+{{ /list_article_images }}
 
 
+{{ set_section number="10" }}
+{{ set_article number="1" }}
 {{**** Attachment ****}}
 <table cellspacing="1" cellpadding="4">
 <tr>
   <td bgcolor="#6a6a6a"><font color="#ffffff">Attachment</font></td>
 </tr>
 </table>
+{{ list_article_attachments length="1" }}
 <table cellspacing="1" cellpadding="4">
 <tr>
   <td bgcolor="Aqua" align="center" colspan="3">Fields</td>
@@ -1312,6 +1339,7 @@
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
+{{ /list_article_attachments }}
 
 
 {{**** Topic ****}}
@@ -1637,12 +1665,15 @@
 </table>
 
 
+{{ set_section number=$defaultSectionNumber }}
+{{ set_article number=$defaultArticleNumber }}
 {{**** Audioclip ****}}
 <table cellspacing="1" cellpadding="4">
 <tr>
   <td bgcolor="#6a6a6a"><font color="#ffffff">Audioclip</font></td>
 </tr>
 </table>
+{{ list_article_audio_attachments length="1" }}
 <table cellspacing="1" cellpadding="4">
 <tr>
   <td bgcolor="Aqua" align="center" colspan="3">Fields</td>
@@ -1801,6 +1832,7 @@
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
+{{ /list_article_audio_attachments }}
 
 
 {{**** Article Comment ****}}

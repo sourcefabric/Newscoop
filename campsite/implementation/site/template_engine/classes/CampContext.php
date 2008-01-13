@@ -130,7 +130,7 @@ final class CampContext
         $this->m_readonlyProperties['default_article'] = $this->article;
         $this->m_readonlyProperties['default_topic'] = $this->topic;
         $this->m_readonlyProperties['default_url'] = new MetaURL();
-        
+
         $userId = CampRequest::GetVar('LoginUserId');
         if (!is_null($userId)) {
             $user = new User($userId);
@@ -227,20 +227,19 @@ final class CampContext
                     throw new InvalidObjectException($p_element);
                 }
 
-                if (!isset($this->m_objects[$p_element])
-                || $this->m_objects[$p_element] != $p_value) {
-                    if (isset($this->m_objects[$p_element])) {
-                        $oldValue = $this->m_objects[$p_element];
-                    } else {
-                        $oldValue = new $metaclass;
-                    }
-                    $this->m_objects[$p_element] = $p_value;
-                    if (isset(CampContext::$m_objectTypes[$p_element]['handler'])) {
-                        $setHandler = CampContext::$m_objectTypes[$p_element]['handler'];
-                        $this->$setHandler(is_null($oldValue) ? new $metaclass : $oldValue);
-                    }
-                    $this->m_readonlyProperties['url']->$p_element = $p_value;
+                if (isset($this->m_objects[$p_element])
+                && !is_null($this->m_objects[$p_element])) {
+                    $oldValue = $this->m_objects[$p_element];
+                } else {
+                    $oldValue = new $metaclass;
                 }
+                $this->m_objects[$p_element] = $p_value;
+
+                if (isset(CampContext::$m_objectTypes[$p_element]['handler'])) {
+                    $setHandler = CampContext::$m_objectTypes[$p_element]['handler'];
+                    $this->$setHandler($oldValue, $p_value);
+                }
+
                 return $this->m_objects[$p_element];
             } catch (InvalidObjectException $e) {
                 $this->trigger_invalid_object_error($e->getClassName());
@@ -535,8 +534,12 @@ final class CampContext
      *
      * @param MetaLanguage $p_oldLanguage
      */
-    private function setLanguageHandler(MetaLanguage $p_oldLanguage)
+    private function setLanguageHandler(MetaLanguage $p_oldLanguage, MetaLanguage $p_newLanguage)
     {
+        if ($p_newLanguage == $p_oldLanguage) {
+            return;
+        }
+        $this->m_readonlyProperties['url']->language = $p_newLanguage;
     }
 
 
@@ -545,16 +548,14 @@ final class CampContext
      *
      * @param MetaPublication $p_oldPublication
      */
-    private function setPublicationHandler(MetaPublication $p_oldPublication)
+    private function setPublicationHandler(MetaPublication $p_oldPublication,
+    MetaPublication $p_newPublication)
     {
-        $this->m_readonlyProperties['url']->issue = null;
-        $this->m_readonlyProperties['url']->section = null;
-        $this->m_readonlyProperties['url']->article = null;
-        $this->m_readonlyProperties['url']->subtitle = null;
-        $this->m_readonlyProperties['url']->image = null;
-        $this->m_readonlyProperties['url']->attachment = null;
-        $this->m_readonlyProperties['url']->audioclip = null;
-        $this->m_readonlyProperties['url']->comment = null;
+        if ($p_newPublication == $p_oldPublication) {
+            return;
+        }
+        $this->issue = new MetaIssue();
+        $this->m_readonlyProperties['url']->publication = $p_newPublication;
     }
 
 
@@ -563,21 +564,13 @@ final class CampContext
      *
      * @param MetaIssue $p_oldIssue
      */
-    private function setIssueHandler(MetaIssue $p_oldIssue)
+    private function setIssueHandler(MetaIssue $p_oldIssue, MetaIssue $p_newIssue)
     {
-        $this->m_readonlyProperties['url']->section = null;
-        $this->m_readonlyProperties['url']->article = null;
-        $this->m_readonlyProperties['url']->subtitle = null;
-        $this->m_readonlyProperties['url']->image = null;
-        $this->m_readonlyProperties['url']->attachment = null;
-        $this->m_readonlyProperties['url']->audioclip = null;
-        $this->m_readonlyProperties['url']->comment = null;
-        if (!$this->publication->defined) {
-            $this->publication = $this->issue->publication;
+        if ($p_newIssue == $p_oldIssue) {
+            return;
         }
-        if (!$this->language->defined) {
-            $this->language = $this->issue->language;
-        }
+        $this->section = new MetaSection();
+        $this->m_readonlyProperties['url']->issue = $p_newIssue;
     }
 
 
@@ -586,23 +579,13 @@ final class CampContext
      *
      * @param MetaSection $p_oldSection
      */
-    private function setSectionHandler(MetaSection $p_oldSection)
+    private function setSectionHandler(MetaSection $p_oldSection, MetaSection $p_newSection)
     {
-        $this->m_readonlyProperties['url']->article = null;
-        $this->m_readonlyProperties['url']->subtitle = null;
-        $this->m_readonlyProperties['url']->image = null;
-        $this->m_readonlyProperties['url']->attachment = null;
-        $this->m_readonlyProperties['url']->audioclip = null;
-        $this->m_readonlyProperties['url']->comment = null;
-        if (!$this->publication->defined) {
-            $this->publication = $this->section->publication;
+        if ($p_newSection == $p_oldSection) {
+            return;
         }
-        if (!$this->language->defined) {
-            $this->language = $this->section->language;
-        }
-        if (!$this->issue->defined) {
-            $this->issue = $this->section->issue;
-        }
+        $this->article = new MetaArticle();
+        $this->m_readonlyProperties['url']->section = $p_newSection;
     }
 
 
@@ -611,25 +594,17 @@ final class CampContext
      *
      * @param MetaArticle $p_oldArticle
      */
-    private function setArticleHandler(MetaArticle $p_oldArticle)
+    private function setArticleHandler(MetaArticle $p_oldArticle, MetaArticle $p_newArticle)
     {
-        $this->m_readonlyProperties['url']->subtitle = null;
-        $this->m_readonlyProperties['url']->image = null;
-        $this->m_readonlyProperties['url']->attachment = null;
-        $this->m_readonlyProperties['url']->audioclip = null;
-        $this->m_readonlyProperties['url']->comment = null;
-        if (!$this->publication->defined) {
-            $this->publication = $this->article->publication;
+        if ($p_newArticle == $p_oldArticle) {
+            return;
         }
-        if (!$this->language->defined) {
-            $this->language = $this->article->language;
-        }
-        if (!$this->issue->defined) {
-            $this->issue = $this->article->issue;
-        }
-        if (!$this->section->defined) {
-            $this->section = $this->article->section;
-        }
+        $this->subtitle = new MetaSubtitle();
+        $this->image = new MetaImage();
+        $this->attachment = new MetaAttachment();
+        $this->audioclip = new MetaAudioclip();
+        $this->comment = new MetaComment();
+        $this->m_readonlyProperties['url']->article = $p_newArticle;
     }
 
 

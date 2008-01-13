@@ -168,7 +168,7 @@ final class MetaSubtitle {
                                          $p_content);
 
 //      image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF">
-        $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub)="?[^"\s]+"?)*)[\s]*>';
+        $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub)="?[^"]+"?)*)[\s]*>';
         return preg_replace_callback("/$imagePattern/i",
                                      'MetaSubtitle::ProcessImageLink',
                                      $content);
@@ -190,7 +190,7 @@ final class MetaSubtitle {
 
         $imageNumber = $p_matches[1];
         $detailsString = $p_matches[2];
-        preg_match_all('/[\s]+(align|alt|sub)="?([^"\s]+)"?/i', $detailsString, $detailsArray);
+        preg_match_all('/[\s]+(align|alt|sub)="?([^"]+)"?/i', $detailsString, $detailsArray);
         $detailsArray[1] = array_map('strtolower', $detailsArray[1]);
         $detailsArray = array_combine($detailsArray[1], $detailsArray[2]);
 
