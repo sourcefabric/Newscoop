@@ -30,6 +30,9 @@ class CampPlugin{
         $interview_id = Input::Get('f_interview_id', 'int');
         $context->interview = new MetaInterview($interview_id);
         
+        $interviewitem_id = Input::Get('f_interviewitem_id', 'int');
+        $context->interviewitem = new MetaInterviewItem($interviewitem_id, $interview_id);
+        
         if (Interview::IsInvitationTriggered()) {
             Interview::SendInvitation();   
         }

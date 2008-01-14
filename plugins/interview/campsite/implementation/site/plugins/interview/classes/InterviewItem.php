@@ -410,7 +410,7 @@ class InterviewItem extends DatabaseObject {
             } 
         }
         
-        $form =& new html_QuickForm('blog', 'post', $p_target, null, null, true);
+        $form =& new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($p_html) {
@@ -488,7 +488,7 @@ class InterviewItem extends DatabaseObject {
         require_once 'HTML/QuickForm.php';
               
         $mask = InterviewItem::getQuestionFormMask($p_owner, $p_admin);        
-        $form = new html_QuickForm('blog', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask);   
            
         if ($form->validate()) {
@@ -525,7 +525,7 @@ class InterviewItem extends DatabaseObject {
             } 
         }
         
-        $form =& new html_QuickForm('blog', 'post', $p_target, null, null, true);
+        $form =& new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($p_html) {
@@ -605,7 +605,7 @@ class InterviewItem extends DatabaseObject {
         require_once 'HTML/QuickForm.php';
               
         $mask = InterviewItem::getAnswerFormMask($p_owner, $p_admin);        
-        $form = new html_QuickForm('blog', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask);   
            
         if ($form->validate()) {
