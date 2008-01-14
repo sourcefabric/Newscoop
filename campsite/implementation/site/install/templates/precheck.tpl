@@ -1,5 +1,11 @@
 {{ include file="html_header.tpl" }}
-
+<SCRIPT type="text/javascript" src="/javascript/domTT/domLib.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="/javascript/domTT/domTT.js"></SCRIPT>
+<SCRIPT type="text/javascript">
+<!--
+var domTT_styleClass = 'domTTOverlib';
+//-->
+</SCRIPT>
 <form action="index.php" method="post" name="install_form">
 <tr>
   <td valign="top">
