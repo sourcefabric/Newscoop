@@ -4,7 +4,7 @@
   <td>
     <p class="footer_text">
       Media Development Loan Fund - Campware &copy; 2007<br />
-      Powered by Campsite 3.0-beta
+      Powered by Campsite {{ $campsite->version }}
     </p>
   </td>
 </tr>

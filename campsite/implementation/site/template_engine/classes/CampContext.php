@@ -101,6 +101,8 @@ final class CampContext
      */
     final public function __construct()
     {
+        global $Campsite;
+
         if (!is_null($this->m_properties)) {
             return;
         }
@@ -108,6 +110,8 @@ final class CampContext
         $this->m_properties['htmlencoding'] = false;
         $this->m_properties['body_field_article_type'] = null;
         $this->m_properties['body_field_name'] = null;
+
+        $this->m_readonlyProperties['version'] = $Campsite['VERSION'];
 
         $this->m_readonlyProperties['lists'] = array();
         $this->m_readonlyProperties['issues_lists'] = array();
