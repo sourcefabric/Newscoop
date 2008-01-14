@@ -205,7 +205,7 @@ div#searchform {
 }
 div#searchform form {
     margin: 0;
-    paddin: 0;
+    padding: 0;
 }
 div#searchform form input {
     width: 120px;
@@ -263,7 +263,7 @@ div#loginform {
 }
 div#loginform form {
     margin: 0;
-    paddin: 0;
+    padding: 0;
 }
 div#loginform form input{
     width: 120px;

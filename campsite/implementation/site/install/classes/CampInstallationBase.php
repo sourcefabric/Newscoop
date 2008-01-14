@@ -555,12 +555,12 @@ class CampInstallationBaseHelper
                     self::CopyFiles($Entry, $p_target . DIR_SEP . $entry);
                     continue;
                 }
-                copy($Entry, $p_target . DIR_SEP . $entry);
+                @copy($Entry, $p_target . DIR_SEP . $entry);
             }
 
             $d->close();
         } else {
-            copy($p_source, $p_target);
+            @copy($p_source, $p_target);
         }
 
         return true;
