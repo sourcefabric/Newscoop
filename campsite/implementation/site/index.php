@@ -102,4 +102,7 @@ $campsite->dispatch();
 // renders the site
 $campsite->render();
 
+// triggers an event after displaying
+$campsite->event('afterRender');
+
 ?>

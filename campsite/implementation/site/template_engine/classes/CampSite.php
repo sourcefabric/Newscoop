@@ -131,6 +131,33 @@ final class CampSite extends CampSystem
 
 
     /**
+     * @param string $p_eventName
+     */
+    public function event($p_eventName)
+    {
+        global $g_errorList;
+
+        switch ($p_eventName) {
+        case 'afterRender':
+            $doPreview = CampRequest::GetVar('preview', 'off');
+            if ($doPreview == 'on') {
+                print("\n<script LANGUAGE=\"JavaScript\">parent.e.document.open();\n"
+                    ."parent.e.document.write(\"<html><head><title>Errors</title>"
+                    ."</head><body bgcolor=white text=black>\\\n<pre>\\\n"
+                    ."\\\n<b>Parse errors:</b>\\\n");
+
+                foreach ($g_errorList as $error) {
+                    print("<p>".$error->getMessage()."</p>\\\n");
+                }
+
+                print("</pre></body></html>\\\n\");\nparent.e.document.close();\n</script>\n");
+            }
+            break;
+        }
+    } // fn event
+
+
+    /**
      * Returns the template file name
      *
      * @return string $template
