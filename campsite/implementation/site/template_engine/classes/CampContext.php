@@ -535,6 +535,86 @@ final class CampContext
 
 
     /**
+     * Returns the language defined in the current context; if it
+     * wasn't defined it initializes the language by an empty object.
+     * This method was defined because it's faster than using the
+     * magic method __get().
+     *
+     * @return MetaIssue
+     */
+    final protected function getLanguage() {
+        if (!isset($this->m_objects['language'])) {
+            $this->createObject('language');
+        }
+        return $this->m_objects['language'];
+    }
+
+
+    /**
+     * Returns the publication defined in the current context; if it
+     * wasn't defined it initializes the publication by an empty object.
+     * This method was defined because it's faster than using the
+     * magic method __get().
+     *
+     * @return MetaPublication
+     */
+    final protected function getPublication() {
+        if (!isset($this->m_objects['publication'])) {
+            $this->createObject('publication');
+        }
+        return $this->m_objects['publication'];
+    }
+
+
+    /**
+     * Returns the issue defined in the current context; if it
+     * wasn't defined it initializes the issue by an empty object.
+     * This method was defined because it's faster than using the
+     * magic method __get().
+     *
+     * @return MetaIssue
+     */
+    final protected function getIssue() {
+        if (!isset($this->m_objects['issue'])) {
+            $this->createObject('issue');
+        }
+        return $this->m_objects['issue'];
+    }
+
+
+    /**
+     * Returns the section defined in the current context; if it
+     * wasn't defined it initializes the section by an empty object.
+     * This method was defined because it's faster than using the
+     * magic method __get().
+     *
+     * @return MetaIssue
+     */
+    final protected function getSection() {
+        if (!isset($this->m_objects['section'])) {
+            $this->createObject('section');
+        }
+        return $this->m_objects['section'];
+    }
+
+
+    /**
+     * Returns the article defined in the current context; if it
+     * wasn't defined it initializes the article by an empty object.
+     * This method was defined because it's faster than using the
+     * magic method __get().
+     *      *
+     * @return MetaIssue
+     */
+    final protected function getArticle() {
+        if (!isset($this->m_objects['article'])) {
+            $this->createObject('article');
+        }
+        return $this->m_objects['article'];
+    }
+
+
+    /**
      * Handler for the language change event.
      *
      * @param MetaLanguage $p_oldLanguage
@@ -568,10 +648,10 @@ final class CampContext
         }
         $publicationHandlerRunning = true;
 
-        if (!$this->language->defined) {
-            $this->setLanguageHandler($this->language, $p_newPublication->default_language);
+        if ($p_newPublication->defined() && !$this->getLanguage()->defined()) {
+            $this->setLanguageHandler($this->getLanguage(), $p_newPublication->default_language);
         }
-        $this->setIssueHandler($this->issue, new MetaIssue());
+        $this->setIssueHandler($this->getIssue(), new MetaIssue());
         $this->m_readonlyProperties['url']->publication = $p_newPublication;
         $this->m_objects['publication'] = $p_newPublication;
 
@@ -592,10 +672,10 @@ final class CampContext
         }
         $issueHandlerRunning = true;
 
-        if ($this->publication != $p_newIssue->publication) {
-            $this->setPublicationHandler($this->publication, $p_newIssue->publication);
+        if ($p_newIssue->defined() && $this->getPublication() != $p_newIssue->publication) {
+            $this->setPublicationHandler($this->getPublication(), $p_newIssue->publication);
         }
-        $this->setSectionHandler($this->section, new MetaSection());
+        $this->setSectionHandler($this->getSection(), new MetaSection());
         $this->m_readonlyProperties['url']->issue = $p_newIssue;
         $this->m_objects['issue'] = $p_newIssue;
 
@@ -616,10 +696,10 @@ final class CampContext
         }
         $sectionHandlerRunning = true;
 
-        if ($this->issue != $p_newSection->issue) {
-            $this->setIssueHandler($this->issue, $p_newSection->issue);
+        if ($p_newSection->defined() && $this->getIssue() != $p_newSection->issue) {
+            $this->setIssueHandler($this->getIssue(), $p_newSection->issue);
         }
-        $this->setArticleHandler($this->article, new MetaArticle());
+        $this->setArticleHandler($this->getArticle(), new MetaArticle());
         $this->m_readonlyProperties['url']->section = $p_newSection;
         $this->m_objects['section'] = $p_newSection;
 
@@ -640,14 +720,14 @@ final class CampContext
         }
         $articleHandlerRunning = true;
 
-        if ($this->section != $p_newArticle->section) {
-            $this->setSectionHandler($this->section, $p_newArticle->section);
+        if ($p_newArticle->defined() && $this->getSection() != $p_newArticle->section) {
+            $this->setSectionHandler($this->getSection(), $p_newArticle->section);
         }
-        $this->subtitle = new MetaSubtitle();
-        $this->image = new MetaImage();
-        $this->attachment = new MetaAttachment();
-        $this->audioclip = new MetaAudioclip();
-        $this->comment = new MetaComment();
+        $this->m_objects['subtitle'] = new MetaSubtitle();
+        $this->m_objects['image'] = new MetaImage();
+        $this->m_objects['attachment'] = new MetaAttachment();
+        $this->m_objects['audioclip'] = new MetaAudioclip();
+        $this->m_objects['comment'] = new MetaComment();
         $this->m_readonlyProperties['url']->article = $p_newArticle;
         $this->m_objects['article'] = $p_newArticle;
 

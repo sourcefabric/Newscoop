@@ -33,7 +33,6 @@
 {{ /if }}
 {{ /list_issues }}
 
-
 <h3>sections list</h3>
 {{ list_sections length="3" columns="2" name='sample_name' constraints="name greater a number greater 0" }}
 {{ if $campsite->current_list->at_beginning }}
@@ -655,12 +654,11 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_issue number="1" }}
-    {{ set_section number=$defaultSectionNumber }}
+    {{ set_issue number=$defaultIssueNumber }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
-    {{ literal }}{{ set_issue number="1" }}{{ /literal }}
+    {{ literal }}{{ set_issue number="{{ /literal }}{{ $defaultIssueNumber }}{{ literal }}" }}{{ /literal }}
   </td>
 </tr>
 <tr>
@@ -679,6 +677,7 @@
 <br />
 
 
+{{ set_section number=$defaultSectionNumber }}
 {{**** Section ****}}
 <table>
 <tr>
@@ -757,12 +756,11 @@
 </tr>
 <tr>
   <td bgcolor="#dfdfdf" nowrap valign="top">
-    {{ set_section number="10" }}
-    {{ set_article number=$defaultArticleNumber }}
+    {{ set_section number=$defaultSectionNumber }}
     Set by
   </td>
   <td bgcolor="#dfdfdf">
-    {{ literal }}{{ set_section number="10" }}{{ /literal }}
+    {{ literal }}{{ set_section number="{{ /literal }}{{ $defaultSectionNumber }}{{ literal }}" }}{{ /literal }}
   </td>
 </tr>
 <tr>
@@ -781,6 +779,7 @@
 <br />
 
 
+{{ set_article number=$defaultArticleNumber }}
 {{**** Article ****}}
 <table cellspacing="1" cellpadding="4">
 <tr>
