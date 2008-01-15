@@ -237,11 +237,12 @@ final class CampContext
                 } else {
                     $oldValue = new $metaclass;
                 }
-                $this->m_objects[$p_element] = $p_value;
 
                 if (isset(CampContext::$m_objectTypes[$p_element]['handler'])) {
                     $setHandler = CampContext::$m_objectTypes[$p_element]['handler'];
                     $this->$setHandler($oldValue, $p_value);
+                } else {
+                    $this->m_objects[$p_element] = $p_value;
                 }
 
                 return $this->m_objects[$p_element];
@@ -540,10 +541,16 @@ final class CampContext
      */
     private function setLanguageHandler(MetaLanguage $p_oldLanguage, MetaLanguage $p_newLanguage)
     {
-        if ($p_newLanguage == $p_oldLanguage) {
+        static $languageHandlerRunning = false;
+        if ($languageHandlerRunning || $p_newLanguage == $p_oldLanguage) {
             return;
         }
+        $languageHandlerRunning = true;
+
         $this->m_readonlyProperties['url']->language = $p_newLanguage;
+        $this->m_objects['language'] = $p_newLanguage;
+
+        $languageHandlerRunning = false;
     }
 
 
@@ -555,11 +562,20 @@ final class CampContext
     private function setPublicationHandler(MetaPublication $p_oldPublication,
     MetaPublication $p_newPublication)
     {
-        if ($p_newPublication == $p_oldPublication) {
+        static $publicationHandlerRunning = false;
+        if ($publicationHandlerRunning || $p_newPublication == $p_oldPublication) {
             return;
         }
-        $this->issue = new MetaIssue();
+        $publicationHandlerRunning = true;
+
+        if (!$this->language->defined) {
+            $this->setLanguageHandler($this->language, $p_newPublication->default_language);
+        }
+        $this->setIssueHandler($this->issue, new MetaIssue());
         $this->m_readonlyProperties['url']->publication = $p_newPublication;
+        $this->m_objects['publication'] = $p_newPublication;
+
+        $publicationHandlerRunning = false;
     }
 
 
@@ -570,11 +586,20 @@ final class CampContext
      */
     private function setIssueHandler(MetaIssue $p_oldIssue, MetaIssue $p_newIssue)
     {
-        if ($p_newIssue == $p_oldIssue) {
+        static $issueHandlerRunning = false;
+        if ($issueHandlerRunning || $p_newIssue == $p_oldIssue) {
             return;
         }
-        $this->section = new MetaSection();
+        $issueHandlerRunning = true;
+
+        if ($this->publication != $p_newIssue->publication) {
+            $this->setPublicationHandler($this->publication, $p_newIssue->publication);
+        }
+        $this->setSectionHandler($this->section, new MetaSection());
         $this->m_readonlyProperties['url']->issue = $p_newIssue;
+        $this->m_objects['issue'] = $p_newIssue;
+
+        $issueHandlerRunning = false;
     }
 
 
@@ -585,11 +610,20 @@ final class CampContext
      */
     private function setSectionHandler(MetaSection $p_oldSection, MetaSection $p_newSection)
     {
-        if ($p_newSection == $p_oldSection) {
+        static $sectionHandlerRunning = false;
+        if ($sectionHandlerRunning || $p_newSection == $p_oldSection) {
             return;
         }
-        $this->article = new MetaArticle();
+        $sectionHandlerRunning = true;
+
+        if ($this->issue != $p_newSection->issue) {
+            $this->setIssueHandler($this->issue, $p_newSection->issue);
+        }
+        $this->setArticleHandler($this->article, new MetaArticle());
         $this->m_readonlyProperties['url']->section = $p_newSection;
+        $this->m_objects['section'] = $p_newSection;
+
+        $sectionHandlerRunning = false;
     }
 
 
@@ -600,8 +634,14 @@ final class CampContext
      */
     private function setArticleHandler(MetaArticle $p_oldArticle, MetaArticle $p_newArticle)
     {
-        if ($p_newArticle == $p_oldArticle) {
+        static $articleHandlerRunning = false;
+        if ($articleHandlerRunning || $p_newArticle == $p_oldArticle) {
             return;
+        }
+        $articleHandlerRunning = true;
+
+        if ($this->section != $p_newArticle->section) {
+            $this->setSectionHandler($this->section, $p_newArticle->section);
         }
         $this->subtitle = new MetaSubtitle();
         $this->image = new MetaImage();
@@ -609,6 +649,9 @@ final class CampContext
         $this->audioclip = new MetaAudioclip();
         $this->comment = new MetaComment();
         $this->m_readonlyProperties['url']->article = $p_newArticle;
+        $this->m_objects['article'] = $p_newArticle;
+
+        $articleHandlerRunning = false;
     }
 
 

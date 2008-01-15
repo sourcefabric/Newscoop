@@ -449,12 +449,12 @@ class CampURIShortNames extends CampURI
                                                $this->m_issue->number,
                                                $this->m_section->number,
                                                $this->m_language->number);
-            $this->m_article = new MetaArticle($this->m_language->number,
-                                               $articleObj->getArticleNumber());
-            if (is_null($this->m_article) || !$this->m_article->defined()) {
+            if (is_null($articleObj) || !$articleObj->exists()) {
                 CampTemplate::singleton()->trigger_error('not valid article');
                 return;
             }
+            $this->m_article = new MetaArticle($this->m_language->number,
+                                               $articleObj->getArticleNumber());
         }
 
         $this->m_template = $this->getTemplate();
