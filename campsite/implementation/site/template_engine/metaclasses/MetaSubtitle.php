@@ -190,25 +190,29 @@ final class MetaSubtitle {
 
         $imageNumber = $p_matches[1];
         $detailsString = $p_matches[2];
-        preg_match_all('/[\s]+(align|alt|sub)="?([^"]+)"?/i', $detailsString, $detailsArray);
-        $detailsArray[1] = array_map('strtolower', $detailsArray[1]);
-        $detailsArray = array_combine($detailsArray[1], $detailsArray[2]);
-
+        preg_match_all('/[\s]+(align|alt|sub)="([^"]+)"/i', $detailsString, $detailsArray1);
+        $detailsArray1[1] = array_map('strtolower', $detailsArray1[1]);
+        $detailsArray1 = array_combine($detailsArray1[1], $detailsArray1[2]);
+        preg_match_all('/[\s]+(align|alt|sub)=([^"\s]+)/i', $detailsString, $detailsArray2);
+        $detailsArray2[1] = array_map('strtolower', $detailsArray2[1]);
+        $detailsArray2 = array_combine($detailsArray2[1], $detailsArray2[2]);
+        $detailsArray = array_merge($detailsArray1, $detailsArray2);
+        
         $imgString = '<table border="0" cellspacing="0" cellpadding="0" class="cs_img"';
-        if (isset($detailsArray['align'])) {
+        if (isset($detailsArray['align']) && !empty($detailsArray['align'])) {
             $imgString .= ' align="' . $detailsArray['align'] . '"';
         }
         $imgString .= '>';
         $imgString .= '<tr><td align="center">';
         $imgString .= '<img src="/get_img?NrArticle=' . $uri->article->number
-                    . '&amp;NrImage=' . $imageNumber;
-        if (isset($detailsArray['alt'])) {
+                    . '&amp;NrImage=' . $imageNumber . '"';
+        if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
             $imgString .= ' alt="' . $detailsArray['alt'] . '" ';
         }
         $imgString .= 'border="0" hspace="5" vspace="5">';
         $imgString . '</td>';
         $imgString .= '</tr>';
-        if (isset($detailsArray['sub'])) {
+        if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
             $imgString .= '<tr><td align="center" class="caption">'
                        . $detailsArray['sub'] . '</td></tr>';
         }
