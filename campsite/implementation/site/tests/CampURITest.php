@@ -32,7 +32,7 @@ class CampURIWrapper extends CampURI
     /**
      * Wrapper method for the actual protected CampURI::QueryArrayToString() method
      */
-    public static function QueryArrayToString($p_queryArray)
+    public static function QueryArrayToString(array $p_queryArray)
     {
         return CampURI::QueryArrayToString($p_queryArray);
     }
