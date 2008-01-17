@@ -57,6 +57,15 @@ class ArticleImage extends DatabaseObject {
 	{
 		return $this->m_data['IdImage'];
 	} // fn getImageId
+	
+	
+	/**
+	 * @return int
+	 */
+	public function getImageArticleIndex()
+	{
+	    return $this->m_data['Number'];
+	}
 
 
 	/**
