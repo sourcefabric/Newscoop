@@ -39,7 +39,7 @@ class CampURIShortNames extends CampURI
      *
      * @var array
      */
-    static private $m_restriectedParameters = array('NrImage', 'IdLanguage',
+    static private $m_restrictedParameters = array('NrImage', 'IdLanguage',
     'IdPublication', 'NrIssue', 'NrSection', 'NrArticle', 'subtitle', 'ILStart',
     'SLStart', 'ALStart', 'SrLStart', 'StLStart', 'class', 'cb_subs', 'tx_subs',
     'subscribe', 'useradd', 'usermodify', 'login', 'SubsType', 'keyword', 'search',
@@ -340,7 +340,7 @@ class CampURIShortNames extends CampURI
      */
     public function isRestrictedParameter($p_parameterName)
     {
-        return in_array($p_parameterName, CampURIShortNames::$m_restriectedParameters);
+        return in_array($p_parameterName, CampURIShortNames::$m_restrictedParameters);
     }
     
 
@@ -449,12 +449,12 @@ class CampURIShortNames extends CampURI
                                                $this->m_issue->number,
                                                $this->m_section->number,
                                                $this->m_language->number);
-            $this->m_article = new MetaArticle($this->m_language->number,
-                                               $articleObj->getArticleNumber());
-            if (is_null($this->m_article) || !$this->m_article->defined()) {
+            if (is_null($articleObj) || !$articleObj->exists()) {
                 CampTemplate::singleton()->trigger_error('not valid article');
                 return;
             }
+            $this->m_article = new MetaArticle($this->m_language->number,
+                                               $articleObj->getArticleNumber());
         }
 
         $this->m_template = $this->getTemplate();
@@ -471,7 +471,7 @@ class CampURIShortNames extends CampURI
      *
 	 * @return void
 	 */
-	private function buildURI($p_param = null)
+	protected function buildURI($p_param = null)
 	{
 	    if ($this->isValidCache()) {
 	        return;

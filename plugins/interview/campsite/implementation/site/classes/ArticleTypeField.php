@@ -237,7 +237,9 @@ class ArticleTypeField {
 				$this->fetch($row[0]);
 			}
 		}
-		$this->m_fieldName = substr($this->Field, 1);
+		if (!empty($this->Field)) {
+    		$this->m_fieldName = substr($this->Field, 1);
+		}
 		$this->m_dbColumnName = 'F'.$this->m_fieldName;
 	} // fn fetch
 

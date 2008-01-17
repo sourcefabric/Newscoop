@@ -39,7 +39,7 @@ class CampURITemplatePath extends CampURI
      *
      * @var array
      */
-    static private $m_restriectedParameters = array('NrImage', 'IdLanguage',
+    static private $m_restrictedParameters = array('NrImage', 'IdLanguage',
     'IdPublication', 'NrIssue', 'NrSection', 'NrArticle', 'subtitle', 'ILStart',
     'SLStart', 'ALStart', 'SrLStart', 'StLStart', 'class', 'cb_subs', 'tx_subs',
     'subscribe', 'useradd', 'usermodify', 'login', 'SubsType', 'keyword', 'search',
@@ -310,7 +310,7 @@ class CampURITemplatePath extends CampURI
      */
     public function isRestrictedParameter($p_parameterName)
     {
-        return in_array($p_parameterName, CampURITemplatePath::$m_restriectedParameters);
+        return in_array($p_parameterName, CampURITemplatePath::$m_restrictedParameters);
     }
     
     
@@ -482,7 +482,7 @@ class CampURITemplatePath extends CampURI
      *
 	 * @return void
      */
-    private function buildURI($p_param = null)
+    protected function buildURI($p_param = null)
     {
         $this->m_uriPath = null;
         $this->m_uriQuery = null;

@@ -22,28 +22,28 @@ require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
  * @package Campsite
  */
 final class MetaArticle extends MetaDbObject {
-	private $m_articleData = null;
+    private $m_articleData = null;
 
-	private $m_state = null;
+    private $m_state = null;
 
-	private $m_contentCache = null;
+    private $m_contentCache = null;
 
 
-	private function InitProperties()
-	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
-		$this->m_properties['name'] = 'Name';
-		$this->m_properties['number'] = 'Number';
-		$this->m_properties['keywords'] = 'Keywords';
-		$this->m_properties['type_name'] = 'Type';
-		$this->m_properties['creation_date'] = 'UploadDate';
-		$this->m_properties['publish_date'] = 'PublishDate';
-		$this->m_properties['url_name'] = 'ShortName';
-		$this->m_properties['comments_locked'] = 'comments_locked';
-		$this->m_properties['last_update'] = 'time_updated';
-	}
+    private function InitProperties()
+    {
+        if (!is_null($this->m_properties)) {
+            return;
+        }
+        $this->m_properties['name'] = 'Name';
+        $this->m_properties['number'] = 'Number';
+        $this->m_properties['keywords'] = 'Keywords';
+        $this->m_properties['type_name'] = 'Type';
+        $this->m_properties['creation_date'] = 'UploadDate';
+        $this->m_properties['publish_date'] = 'PublishDate';
+        $this->m_properties['url_name'] = 'ShortName';
+        $this->m_properties['comments_locked'] = 'comments_locked';
+        $this->m_properties['last_update'] = 'time_updated';
+    }
 
 
     public function __construct($p_languageId = null, $p_articleId = null)
@@ -53,15 +53,15 @@ final class MetaArticle extends MetaDbObject {
         $this->InitProperties();
 
         $this->m_articleData = new ArticleData($articleObj->getType(),
-                                               $articleObj->getArticleNumber(),
-                                               $articleObj->getLanguageId());
+        $articleObj->getArticleNumber(),
+        $articleObj->getLanguageId());
 
         foreach ($this->m_articleData->m_columnNames as $property) {
-        	if ($property[0] != 'F') {
-        		continue;
-        	}
-        	$property = substr($property, 1);
-        	$this->m_customProperties[strtolower($property)] = array($property);
+            if ($property[0] != 'F') {
+                continue;
+            }
+            $property = substr($property, 1);
+            $this->m_customProperties[strtolower($property)] = array($property);
         }
         $this->m_customProperties['year'] = 'getCreationYear';
         $this->m_customProperties['mon'] = 'getCreationMonth';
@@ -85,73 +85,74 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['owner'] = 'getOwner';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['has_attachments'] = 'hasAttachments';
+        $this->m_customProperties['image_index'] = 'getImageIndex';
     } // fn __construct
 
 
     final public function __get($p_property)
     {
-    	if ($this->m_state == 'type_name_error') {
-    		$this->m_state = null;
-    		return null;
-    	}
+        if ($this->m_state == 'type_name_error') {
+            $this->m_state = null;
+            return null;
+        }
 
-    	if ($p_property == 'type' && $this->m_state == null) {
-    		$this->m_state = 'type';
-    		return $this;
-    	}
+        if ($p_property == 'type' && $this->m_state == null) {
+            $this->m_state = 'type';
+            return $this;
+        }
 
-    	if ($this->m_state == 'type') {
-    		if ($this->m_dbObject->getType() != $p_property) {
-    			$this->m_state = 'type_name_error';
-    		} else {
-	    		$this->m_state = null;
-    		}
-    		return $this;
-    	}
+        if ($this->m_state == 'type') {
+            if ($this->m_dbObject->getType() != $p_property) {
+                $this->m_state = 'type_name_error';
+            } else {
+                $this->m_state = null;
+            }
+            return $this;
+        }
 
-    	try {
-        	$methodName = $this->m_getPropertyMethod;
-	    	return $this->m_dbObject->$methodName($this->translateProperty($p_property));
-    	} catch (InvalidPropertyException $e) {
-    		try {
-    			return $this->getCustomProperty($p_property);
-    		} catch (InvalidPropertyException $e) {
-        		$this->trigger_invalid_property_error($p_property);
-    			return null;
-    		}
-    	}
+        try {
+            $methodName = $this->m_getPropertyMethod;
+            return $this->m_dbObject->$methodName($this->translateProperty($p_property));
+        } catch (InvalidPropertyException $e) {
+            try {
+                return $this->getCustomProperty($p_property);
+            } catch (InvalidPropertyException $e) {
+                $this->trigger_invalid_property_error($p_property);
+                return null;
+            }
+        }
     } // fn __get
 
 
     protected function getCustomProperty($p_property)
     {
-    	if (isset($this->m_customProperties[strtolower($p_property)])
-    			&& is_array($this->m_customProperties[strtolower($p_property)])) {
-    		try {
-    			$property = $this->m_customProperties[strtolower($p_property)][0];
-    			$articleFieldType = new ArticleTypeField($this->type_name, $property);
-	    		$fieldValue = $this->m_articleData->getProperty('F'.$property);
-    			if ($articleFieldType->getType() == 'mediumblob') {
-        			if (is_null($this->getContentCache($p_property))) {
-        			    $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $property);
-        			    $this->setContentCache($p_property, $bodyField->getContent());
-    	            }
-    	            $fieldValue = $this->getContentCache($p_property);
-    			}
-    			return $fieldValue;
-    		} catch (InvalidPropertyException $e) {
-    			// do nothing; will throw another exception with original property field name
-    		}
-    		throw new InvalidPropertyException(get_class($this->m_dbObject), $p_property);
-    	}
-    	return parent::getCustomProperty($p_property);
+        if (isset($this->m_customProperties[strtolower($p_property)])
+        && is_array($this->m_customProperties[strtolower($p_property)])) {
+            try {
+                $property = $this->m_customProperties[strtolower($p_property)][0];
+                $articleFieldType = new ArticleTypeField($this->type_name, $property);
+                $fieldValue = $this->m_articleData->getProperty('F'.$property);
+                if ($articleFieldType->getType() == 'mediumblob') {
+                    if (is_null($this->getContentCache($p_property))) {
+                        $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $property);
+                        $this->setContentCache($p_property, $bodyField->getContent());
+                    }
+                    $fieldValue = $this->getContentCache($p_property);
+                }
+                return $fieldValue;
+            } catch (InvalidPropertyException $e) {
+                // do nothing; will throw another exception with original property field name
+            }
+            throw new InvalidPropertyException(get_class($this->m_dbObject), $p_property);
+        }
+        return parent::getCustomProperty($p_property);
     }
 
 
     private function getContentCache($p_property)
     {
         if (is_null($this->m_contentCache)
-                || !isset($this->m_contentCache[$p_property])) {
+        || !isset($this->m_contentCache[$p_property])) {
             return null;
         }
         return $this->m_contentCache[$p_property];
@@ -166,180 +167,200 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getCreationYear()
     {
-    	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
-    	$creation_date_time = getdate($creation_timestamp);
-    	return $creation_date_time['year'];
+        $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
+        $creation_date_time = getdate($creation_timestamp);
+        return $creation_date_time['year'];
     }
 
 
     protected function getCreationMonth()
     {
-    	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
-    	$creation_date_time = getdate($creation_timestamp);
-    	return $creation_date_time['mon'];
+        $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
+        $creation_date_time = getdate($creation_timestamp);
+        return $creation_date_time['mon'];
     }
 
 
     protected function getCreationWeekDay()
     {
-    	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
-    	$creation_date_time = getdate($creation_timestamp);
-    	return $creation_date_time['wday'];
+        $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
+        $creation_date_time = getdate($creation_timestamp);
+        return $creation_date_time['wday'];
     }
 
 
     protected function getCreationMonthDay()
     {
-    	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
-    	$creation_date_time = getdate($creation_timestamp);
-    	return $creation_date_time['mday'];
+        $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
+        $creation_date_time = getdate($creation_timestamp);
+        return $creation_date_time['mday'];
     }
 
 
     protected function getCreationYearDay()
     {
-    	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
-    	$creation_date_time = getdate($creation_timestamp);
-    	return $creation_date_time['yday'];
+        $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
+        $creation_date_time = getdate($creation_timestamp);
+        return $creation_date_time['yday'];
     }
 
 
     protected function getCreationHour()
     {
-    	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
-    	$creation_date_time = getdate($creation_timestamp);
-    	return $creation_date_time['hours'];
+        $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
+        $creation_date_time = getdate($creation_timestamp);
+        return $creation_date_time['hours'];
     }
 
 
     protected function getCreationMinute()
     {
-    	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
-    	$creation_date_time = getdate($creation_timestamp);
-    	return $creation_date_time['minutes'];
+        $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
+        $creation_date_time = getdate($creation_timestamp);
+        return $creation_date_time['minutes'];
     }
 
 
     protected function getCreationSecond()
     {
-    	$creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
-    	$creation_date_time = getdate($creation_timestamp);
-    	return $creation_date_time['seconds'];
+        $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
+        $creation_date_time = getdate($creation_timestamp);
+        return $creation_date_time['seconds'];
     }
 
 
     protected function getOnFrontPage()
     {
-    	return (int)($this->m_dbObject->getProperty('OnFrontPage') == 'Y');
+        return (int)($this->m_dbObject->getProperty('OnFrontPage') == 'Y');
     }
 
 
     protected function getOnSectionPage()
     {
-    	return (int)($this->m_dbObject->getProperty('OnSection') == 'Y');
+        return (int)($this->m_dbObject->getProperty('OnSection') == 'Y');
     }
 
 
     protected function getIsPublished()
     {
-    	return (int)($this->m_dbObject->getProperty('Published') == 'Y');
+        return (int)($this->m_dbObject->getProperty('Published') == 'Y');
     }
 
 
     protected function getIsPublic()
     {
-    	return (int)($this->m_dbObject->getProperty('Public') == 'Y');
+        return (int)($this->m_dbObject->getProperty('Public') == 'Y');
     }
 
 
     protected function getIsIndexed()
     {
-    	return (int)($this->m_dbObject->getProperty('IsIndexed') == 'Y');
+        return (int)($this->m_dbObject->getProperty('IsIndexed') == 'Y');
     }
 
 
     protected function getPublication()
     {
-    	return new MetaPublication($this->m_dbObject->getProperty('IdPublication'));
+        return new MetaPublication($this->m_dbObject->getProperty('IdPublication'));
     }
 
 
     protected function getIssue()
     {
-    	return new MetaIssue($this->m_dbObject->getProperty('IdPublication'),
-    						 $this->m_dbObject->getProperty('IdLanguage'),
-    						 $this->m_dbObject->getProperty('NrIssue'));
+        return new MetaIssue($this->m_dbObject->getProperty('IdPublication'),
+        $this->m_dbObject->getProperty('IdLanguage'),
+        $this->m_dbObject->getProperty('NrIssue'));
     }
 
 
     protected function getSection()
     {
-    	return new MetaSection($this->m_dbObject->getProperty('IdPublication'),
-    						   $this->m_dbObject->getProperty('NrIssue'),
-    						   $this->m_dbObject->getProperty('IdLanguage'),
-    						   $this->m_dbObject->getProperty('NrSection'));
+        return new MetaSection($this->m_dbObject->getProperty('IdPublication'),
+        $this->m_dbObject->getProperty('NrIssue'),
+        $this->m_dbObject->getProperty('IdLanguage'),
+        $this->m_dbObject->getProperty('NrSection'));
     }
 
 
     protected function getLanguage()
     {
-    	return new MetaLanguage($this->m_dbObject->getProperty('IdLanguage'));
+        return new MetaLanguage($this->m_dbObject->getProperty('IdLanguage'));
     }
 
 
     protected function getOwner()
     {
-    	return new MetaUser($this->m_dbObject->getProperty('IdUser'));
+        return new MetaUser($this->m_dbObject->getProperty('IdUser'));
     }
 
 
     protected function getTemplate()
     {
-    	$articleSection = new Section($this->m_dbObject->getProperty('IdPublication'),
-    								  $this->m_dbObject->getProperty('NrIssue'),
-    								  $this->m_dbObject->getProperty('IdLanguage'),
-    								  $this->m_dbObject->getProperty('NrSection'));
-    	if ($articleSection->getArticleTemplateId() > 0) {
-    		return new MetaTemplate($articleSection->getArticleTemplateId());
-    	}
-    	$articleIssue = new Issue($this->m_dbObject->getProperty('IdPublication'),
-    							  $this->m_dbObject->getProperty('IdLanguage'),
-    							  $this->m_dbObject->getProperty('NrIssue'));
-   		return new MetaTemplate($articleIssue->getArticleTemplateId());
+        $articleSection = new Section($this->m_dbObject->getProperty('IdPublication'),
+        $this->m_dbObject->getProperty('NrIssue'),
+        $this->m_dbObject->getProperty('IdLanguage'),
+        $this->m_dbObject->getProperty('NrSection'));
+        if ($articleSection->getArticleTemplateId() > 0) {
+            return new MetaTemplate($articleSection->getArticleTemplateId());
+        }
+        $articleIssue = new Issue($this->m_dbObject->getProperty('IdPublication'),
+        $this->m_dbObject->getProperty('IdLanguage'),
+        $this->m_dbObject->getProperty('NrIssue'));
+        return new MetaTemplate($articleIssue->getArticleTemplateId());
     }
 
 
     protected function hasAttachments()
     {
-    	$attachments = ArticleAttachment::GetAttachmentsByArticleNumber($this->m_dbObject->getProperty('Number'));
-    	return (int)(sizeof($attachments) > 0);
+        $attachments = ArticleAttachment::GetAttachmentsByArticleNumber($this->m_dbObject->getProperty('Number'));
+        return (int)(sizeof($attachments) > 0);
     }
 
 
     protected function getCommentsEnabled()
     {
-    	$publicationObj = new Publication($this->m_dbObject->getProperty('IdPublication'));
-    	$articleTypeObj = new ArticleType($this->m_dbObject->getProperty('Type'));
-    	return $publicationObj->commentsEnabled()
-    			&& $articleTypeObj->commentsEnabled()
-    			&& $this->m_dbObject->getProperty('comments_enabled');
+        $publicationObj = new Publication($this->m_dbObject->getProperty('IdPublication'));
+        $articleTypeObj = new ArticleType($this->m_dbObject->getProperty('Type'));
+        return $publicationObj->commentsEnabled()
+        && $articleTypeObj->commentsEnabled()
+        && $this->m_dbObject->getProperty('comments_enabled');
+    }
+
+
+    /**
+     * Returns the index of the current image inside the article.
+     * If the image doesn't belong to the article returns null.
+     *
+     * @return int
+     */
+    protected function getImageIndex() {
+        $image = CampTemplate::singleton()->context()->image;
+        if (!$image->defined) {
+            return null;
+        }
+        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
+        $image->number);
+        if (!$articleImage->exists()) {
+            return null;
+        }
+        return $articleImage->getImageArticleIndex();
     }
 
 
     public function translated_to($p_language)
     {
-    	if (is_string($p_language)) {
-    		$languages = Language::GetLanguages(null, $p_language);
-    		if (sizeof($languages) == 0) {
-    			return (int)false;
-    		}
-    		$language = $languages[0];
-    	} else {
-    		$language = $p_language;
-    	}
-    	$article = new Article($language->getLanguageId(),
-    	                       $this->m_dbObject->getArticleNumber());
-    	return (int)$article->exists();
+        if (is_string($p_language)) {
+            $languages = Language::GetLanguages(null, $p_language);
+            if (sizeof($languages) == 0) {
+                return (int)false;
+            }
+            $language = $languages[0];
+        } else {
+            $language = $p_language;
+        }
+        $article = new Article($language->getLanguageId(),
+        $this->m_dbObject->getArticleNumber());
+        return (int)$article->exists();
     }
 
 } // class MetaArticle

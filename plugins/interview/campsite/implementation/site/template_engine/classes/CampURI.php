@@ -93,7 +93,7 @@ abstract class CampURI {
     /**
      * @var array
      */
-    private $m_queryArray = null;
+    private $m_queryArray = array();
 
     /**
      * Language object
@@ -719,7 +719,9 @@ abstract class CampURI {
      */
     protected function isValidCache()
     {
-        return $this->m_validCache;
+        return false;
+        // A proper cache scheme was not implemented yet.
+//        return $this->m_validCache;
     } // fn isValidCache
 
 
@@ -733,6 +735,17 @@ abstract class CampURI {
     {
         return ($this->m_scheme == 'https') ? true : false;
     } // fn isSSL
+    
+    
+	/**
+     * Sets the URI path and query values based on given parameters.
+     *
+     * @param string $p_param
+     *      A valid URL parameter
+     *
+	 * @return void
+	 */
+    abstract protected function buildURI($p_param = null);
 
 
     /**

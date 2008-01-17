@@ -42,7 +42,7 @@ $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_us
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
 	$templateObj = & new Template($templateId);
-	$uri = "$websiteURL/look/" . $templateObj->getName()
+	$uri = "$websiteURL/tpl/" . $templateObj->getName()
 		. "?IdLanguage=$Language&IdPublication=$Pub&NrIssue=$Issue&$accessParams";
 } else {
 	$uri = "$websiteURL/" . $languageObj->getCode()

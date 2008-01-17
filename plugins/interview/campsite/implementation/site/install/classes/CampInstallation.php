@@ -71,7 +71,7 @@ final class CampInstallation extends CampInstallationBase
      */
     public function __construct()
     {
-        $template = CampTemplate::singleton();
+        $this->m_os = self::GetHostOS();
     } // fn __construct
 
 
@@ -151,6 +151,25 @@ final class CampInstallation extends CampInstallationBase
 
         $tpl->display($this->getTemplateName());
     } // fn render
+
+
+    /**
+     *
+     */
+    public static function GetHostOS()
+    {
+        if (strtoupper(PHP_OS) === 'LINUX') {
+            $os = 'linux';
+        } elseif (strtoupper(PHP_OS) === 'FREEBSD') {
+            $os = 'freebsd';
+        } elseif (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $os = 'windows';
+        } else {
+            $os = 'unsupported';
+        }
+
+        return $os;
+    } // fn GetHostOS
 
 
     private function getTemplateName()

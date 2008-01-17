@@ -58,6 +58,11 @@ class CampInstallationBase
      */
     protected $m_message = null;
 
+    /**
+     * @var string
+     */
+    protected $m_os = null;
+
 
     /**
      *
@@ -362,18 +367,20 @@ class CampInstallationBase
         CampInstallationBase::CreateDirectory($_SERVER['DOCUMENT_ROOT'].DIR_SEP.'images'.DIR_SEP.'thumbnails');
         CampInstallationBase::CreateDirectory($_SERVER['DOCUMENT_ROOT'].DIR_SEP.'files');
 
-        // create the symlinks to the index.php file for each language
-        require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-        Language::CreateLanguageLinks();
+        if ($this->m_os !== 'windows') {
+            // create the symlinks to the index.php file for each language
+            require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+            Language::CreateLanguageLinks();
 
-        // create the symlink tpl.php -> index.php, needed for template
-        // path URL processing
-        $indexFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'index.php';
-        $tplFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'tpl.php';
-        if (file_exists($tplFile)) {
-            @unlink($tplFile);
+            // create the symlink tpl.php -> index.php, needed for template
+            // path URL processing
+            $indexFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'index.php';
+            $tplFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'tpl.php';
+            if (file_exists($tplFile)) {
+                @unlink($tplFile);
+            }
+            @symlink($indexFile, $tplFile);
         }
-        @symlink($indexFile, $tplFile);
 
         return true;
     } // fn saveConfiguration
@@ -548,12 +555,12 @@ class CampInstallationBaseHelper
                     self::CopyFiles($Entry, $p_target . DIR_SEP . $entry);
                     continue;
                 }
-                copy($Entry, $p_target . DIR_SEP . $entry);
+                @copy($Entry, $p_target . DIR_SEP . $entry);
             }
 
             $d->close();
         } else {
-            copy($p_source, $p_target);
+            @copy($p_source, $p_target);
         }
 
         return true;
