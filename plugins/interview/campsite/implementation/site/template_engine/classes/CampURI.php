@@ -744,7 +744,7 @@ abstract class CampURI {
      * @return string $queryString
      *      The generated query string
      */
-    protected static function QueryArrayToString(array $p_queryArray)
+    protected static function QueryArrayToString($p_queryArray)
     {
         if (!is_array($p_queryArray) || sizeof($p_queryArray) < 1) {
             return false;

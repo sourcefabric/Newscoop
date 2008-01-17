@@ -28,24 +28,24 @@ final class MetaInterviewItem extends MetaDbObject {
 		$this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';
 		$this->m_customProperties['questioneer'] = 'getQuestioneer';
-        $this->m_customProperties['form_hidden'] = 'formHidden';
+        $this->m_customProperties['interview'] = 'getInterview';
 
     } // fn __construct
     
    
-    public function getQuestioneer()
+    protected function getQuestioneer()
     {
         $questioneer = new MetaUser($this->m_dbObject->getProperty('fk_questioneer_user_id'));
         return $questioneer;   
     }
     
-    public function formHidden()
+    protected function getInterview()
     {
         $interview_id = $this->m_dbObject->getProperty('interview_id');
         
-        $html .= "<INPUT TYPE=\"hidden\" NAME=\"interview_id\" VALUE=\"$interview_id\" />\n";
+        $MetaInterview = new MetaInterview($interview_id);
         
-        return $html;   
+        return $MetaInterview;   
     }
 
 } // class MetaInterviewItem

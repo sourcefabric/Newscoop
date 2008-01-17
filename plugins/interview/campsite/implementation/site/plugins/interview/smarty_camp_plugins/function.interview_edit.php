@@ -118,6 +118,19 @@ function smarty_function_interview_edit($p_params, &$p_smarty)
                 );
                 $html .= '</select>';
             break;
+            
+            case 'status':
+                $options = array('draft' => 'draft', 'pending' => 'pending', 'public' => 'public', 'offline', 'offline');   
+
+                $html = '<select name="f_interview_status" id="interview_"'.$attribute.'>';
+                $html.= smarty_function_html_options(array(
+                    'options' => $options,
+                    'selected' => isset($_REQUEST['f_interview_status']) ? $_REQUEST['f_interview_status']: $attrValue,
+                    'print_result' => false),
+                    $p_smarty
+                );
+                $html .= '</select>';
+            break;
         }  
           
     } elseif (in_array($attribute, $fileFields)) {

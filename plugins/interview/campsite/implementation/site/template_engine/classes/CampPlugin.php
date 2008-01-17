@@ -26,12 +26,17 @@ class CampPlugin{
         
         $context->registerObjectType(array('interviewitem' => array('class' => 'InterviewItem')));
         $context->registerListObject(array('interviewitems' => array('class' => 'InterviewItems', 'list' => 'interviewitems')));
-        
-        $interview_id = Input::Get('f_interview_id', 'int');
-        $context->interview = new MetaInterview($interview_id);
-        
+           
+        $interview_id = Input::Get('f_interview_id', 'int');     
         $interviewitem_id = Input::Get('f_interviewitem_id', 'int');
+        
         $context->interviewitem = new MetaInterviewItem($interviewitem_id, $interview_id);
+        
+        if ($context->interviewitem->defined) {
+            $context->interview = new MetaInterview($context->interviewitem->interview_id);       
+        } else {
+            $context->interview = new MetaInterview($interview_id);  
+        }
         
         if (Interview::IsInvitationTriggered()) {
             Interview::SendInvitation();   

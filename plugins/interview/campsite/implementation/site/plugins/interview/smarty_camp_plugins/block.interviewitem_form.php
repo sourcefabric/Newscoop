@@ -6,11 +6,11 @@
 
 
 /**
- * Campsite interviewitem_question_form block plugin
+ * Campsite interviewitem_form block plugin
  *
  * Type:     block
- * Name:     interviewitem_question_form
- * Purpose:  Provides a form for an interview question
+ * Name:     interviewitem_form
+ * Purpose:  Provides a form for an interview question and/or answer
  *
  * @param string
  *     $p_params
@@ -22,7 +22,7 @@
  * @return
  *
  */
-function smarty_block_interviewitem_question_form($p_params, $p_content, &$p_smarty, &$p_repeat)
+function smarty_block_interviewitem_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
     

@@ -1,19 +1,23 @@
-<h4>{{ $smarty.template }}</h4>
+<h6>{{ $smarty.template }}</h6>
 
-{{ if $campsite->interview_action->defined || $smarty.request.action == 'interview_create' || $smarty.request.action == 'interview_edit'}}
+{{ if $smarty.request.interview_action == 'form' || $campsite->interview_action->defined }}
 
-    {{ include file=interview-edit.tpl }}
+    {{ include file='interview/admin/interview-edit.tpl' }}
 
-{{ elseif $campsite->interviewstatus_action->defined }}
+{{ elseif $smarty.request.interview_action == 'list_items' }}
 
-    {{ include file='interview-details.tpl' show_actions=true }}    
-        
-{{ elseif $action == 'add_question'}}
+    {{ list_interviewitems length=10 }}
+        {{ include file='interview/interviewitem-details.tpl' }}
+        {{ include file='interview/admin/interviewitem-actions.tpl' }}
+    {{ /list_interviewitems }}  
+     
+{{ elseif $smarty.request.action == 'interviewitem_edit' }}
+
+    {{ include file='interview/admin/interviewitem-edit.tpl' }}
     
-    {{ if $campsite->interviewitem->store }}
-            saved
-    {{ else }}
-        {{ interviewquestion_form }}{{ /interviewquestion_form }}
-    {{ /if }}
-       
+{{ else }}
+
+    {{ include file='interview/interview-details.tpl' }}
+    {{ include file='interview/admin/interview-actions.tpl' }}
+
 {{ /if }}

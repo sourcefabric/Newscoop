@@ -79,7 +79,7 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 }
 
 
-set_error_handler('templateErrorHandler');
+//set_error_handler('templateErrorHandler');
 
 // initiates the campsite site
 $campsite = new CampSite();

@@ -679,7 +679,7 @@ class Interview extends DatabaseObject {
        
         foreach (self::getQuestioneersWantInvitation() as $Questioneer) {
             self::$current_questioneer = $Questioneer;
-            $content = $camp_template->fetch('interview-invitation.tpl');
+            $content = $camp_template->fetch('interview/interview-invitation.tpl');
             $subject = $camp_template->get_template_vars('subject');
             $sender = $camp_template->get_template_vars('sender');
             

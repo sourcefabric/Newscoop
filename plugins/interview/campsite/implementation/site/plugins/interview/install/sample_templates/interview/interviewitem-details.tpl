@@ -1,3 +1,7 @@
+<h6>{{ $smarty.template }}</h6>
+
+<p>Interview: <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}">{{ $campsite->interview->title }}</a></p>
+
 <table border=1 width=100%>
     <tr><td width=150>Item Id</td><td>{{ $campsite->interviewitem->identifier }}</td></tr>
     <tr><td width=150>Interview Id</td><td>{{ $campsite->interviewitem->interview_id }}</td></tr>

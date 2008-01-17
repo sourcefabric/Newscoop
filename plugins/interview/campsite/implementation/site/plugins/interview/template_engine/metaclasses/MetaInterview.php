@@ -20,6 +20,8 @@ final class MetaInterview extends MetaDbObject {
 		$this->m_properties['questions_limit'] = 'questions_limit';
 		$this->m_properties['status'] = 'status';
 		$this->m_properties['last_modified'] = 'last_modified';
+		$this->m_properties['moderator_user_id'] = 'fk_moderator_user_id';
+		$this->m_properties['guest_user_id'] = 'fk_guest_user_id';
 	}
 
 
@@ -40,6 +42,9 @@ final class MetaInterview extends MetaDbObject {
         $this->m_customProperties['moderator'] = 'getModerator';
         $this->m_customProperties['guest'] = 'getGuest';
         $this->m_customProperties['questioneer'] = 'getCurrentQuestioneer';
+        $this->m_customProperties['is_user_admin'] = 'isUserAdmin';
+        $this->m_customProperties['is_user_moderator'] = 'isUserModerator';
+        $this->m_customProperties['is_user_guest'] = 'isUserGuest';
         
 
     } // fn __construct
@@ -120,8 +125,51 @@ final class MetaInterview extends MetaDbObject {
         $MetaUser = new MetaUser($User->getProperty('Id'));
         return $MetaUser;   
     }
-
     
+    public function isUserAdmin(&$p_context = null)
+    {
+        if (is_object($p_context)) {
+            $context = $p_context;   
+        } else {
+            $context = CampTemplate::singleton()->context();
+        }
+        
+        if ($context->user->has_permission('plugin_interview_admin')) {
+            return true;   
+        }
+        return false;
+    }
+    
+    public function isUserModerator(&$p_context = null)
+    {
+        if (is_object($p_context)) {
+            $context = $p_context;   
+        } else {
+            $context = CampTemplate::singleton()->context();
+        }
+        
+        if ($context->user->has_permission('plugin_interview_admin')) {
+            return true;   
+        }
+        return false;
+    }
+
+    public function isUserGuest(&$p_context = null)
+    {
+        if (is_object($p_context)) {
+            $context = $p_context;   
+        } else {
+            $context = CampTemplate::singleton()->context();
+        }
+        
+        if ($context->user->identifier == $this->guest_user_id) {
+            return true;   
+        }
+        if ($context->user->has_permission('plugin_interview_admin')) {
+            return true;   
+        }
+        return false;
+    }
 } // class MetaInterview
 
 ?>
