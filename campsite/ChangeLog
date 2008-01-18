@@ -1,3 +1,34 @@
+2.6.9 (January 18, 2008)
+  For full details about these changes, see:
+  http://code.campware.org/projects/campsite/query?milestone=2.6.8
+
+  Bugs Fixed (16 total)
+  --------------------
+  01) #702  - ImageArchive: Deleting last image on the page should go
+              to previous page
+  02) #2456 - Two users or more can have the same email address
+  03) #2460 - The calendar doesn't work for certain languages
+  04) #2461 - "If Language" template statement doesn't work when the
+              issue is not defined
+  05) #2462 - "If Article number" template statement does not work
+  06) #2463 - "If Article has_translation" template statement works
+              incorrectly
+  07) #2464 - Upgrading from 2.2.x returns an error
+  08) #2466 - Admin interface crash when the interface language id was
+              not selected in article screens
+  09) #2470 - Admin interface crashes when creating "New Publication"
+              in a blank database
+  10) #2471 - Crash on invalid image/thumbnail size when creating the
+              images
+  11) #2476 - Error on article action: Undefined variable: BackLink
+  12) #2477 - Admin interface crashes on uploading a corrupt image
+  13) #2481 - Adapt the install script to Ubuntu
+  14) #2495 - Invalid notice warnings in the merge preview screen
+  15) #2496 - Invalid article preview in the article type merge preview
+              screen
+  16) #2498 - Users synchronization between campsite/phorum tables doesn't
+              work
+
 2.6.8 (April 16, 2007)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.6.8
