@@ -45,13 +45,6 @@ class CampURITemplatePath extends CampURI
     'subscribe', 'useradd', 'usermodify', 'login', 'SubsType', 'keyword', 'search',
     'RememberUser', 'tpid', 'tpl', 'preview', 'debug'
     );
-    
-    /**
-     * Template file name
-     *
-     * @var string
-     */
-    private $m_template = null;
 
     /**
      * Templates directory
@@ -108,7 +101,7 @@ class CampURITemplatePath extends CampURI
     public function getTemplate()
     {
         if (!is_null($this->m_template)) {
-            return $this->m_template;
+            return $this->m_template->name;
         }
 
         $languageId = !is_null($this->language) ? $this->language->number : null;
@@ -420,9 +413,8 @@ class CampURITemplatePath extends CampURI
     private function setTemplate($p_value)
     {
         if ($this->isValidTemplate($p_value)) {
-            $this->m_template = $p_value;
-            $tplId = CampSystem::GetTemplateIdByName($p_value);
-            $this->setQueryVar(CampRequest::TEMPLATE_ID, $tplId);
+            $this->m_template = new MetaTemplate($p_value);
+            $this->setQueryVar(CampRequest::TEMPLATE_ID, $this->m_template->identifier);
         }
     } // fn setTemplateName
 

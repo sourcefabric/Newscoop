@@ -25,6 +25,7 @@ final class MetaTemplate extends MetaDbObject {
 			return;
 		}
 		$this->m_properties['name'] = 'Name';
+		$this->m_properties['identifier'] = 'Id';
 	}
 
 

@@ -126,6 +126,7 @@ final class CampContext
         $this->issue = $url->issue;
         $this->section = $url->section;
         $this->article = $url->article;
+        $this->template = $url->template;
 
         $this->m_readonlyProperties['default_language'] = $this->language;
         $this->m_readonlyProperties['default_publication'] = $this->publication;

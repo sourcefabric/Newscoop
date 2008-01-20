@@ -129,6 +129,13 @@ abstract class CampURI {
      * @var MetaArticle
      */
     protected $m_article = null;
+    
+    /**
+     * Template object
+     *
+     * @var MetaTemplate
+     */
+    protected $m_template = null;
 
     /**
      *
