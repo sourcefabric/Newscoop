@@ -36,8 +36,8 @@ final class MetaInterview extends MetaDbObject {
         $this->m_customProperties['image_delete'] = 'null';
         $this->m_customProperties['interview_begin'] = 'getInterviewBegin';
 		$this->m_customProperties['interview_end'] = 'getInterviewEnd';
-        $this->m_customProperties['questions_begin'] = 'getInterviewBegin';
-		$this->m_customProperties['questions_end'] = 'getInterviewEnd';
+        $this->m_customProperties['questions_begin'] = 'getQuestionsBegin';
+		$this->m_customProperties['questions_end'] = 'getQuestionsEnd';
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['moderator'] = 'getModerator';
         $this->m_customProperties['guest'] = 'getGuest';
@@ -45,6 +45,8 @@ final class MetaInterview extends MetaDbObject {
         $this->m_customProperties['is_user_admin'] = 'isUserAdmin';
         $this->m_customProperties['is_user_moderator'] = 'isUserModerator';
         $this->m_customProperties['is_user_guest'] = 'isUserGuest';
+        $this->m_customProperties['in_question_timeframe'] = 'inQuestionTimeframe';
+        $this->m_customProperties['in_interview_timeframe'] = 'inInterviewTimeframe';
         
 
     } // fn __construct
@@ -148,7 +150,7 @@ final class MetaInterview extends MetaDbObject {
             $context = CampTemplate::singleton()->context();
         }
         
-        if ($context->user->has_permission('plugin_interview_admin')) {
+        if ($context->user->has_permission('plugin_interview_moderator')) {
             return true;   
         }
         return false;
@@ -165,9 +167,25 @@ final class MetaInterview extends MetaDbObject {
         if ($context->user->identifier == $this->guest_user_id) {
             return true;   
         }
-        if ($context->user->has_permission('plugin_interview_admin')) {
+        if ($context->user->has_permission('plugin_interview_guest')) {
             return true;   
         }
+        return false;
+    }
+    
+    public function inQuestionTimeframe()
+    {
+        if ($this->getQuestionsBegin() <= time() && $this->getQuestionsEnd() >= time()) {
+            return true;   
+        } 
+        return false;
+    }
+    
+    public function inInterviewTimeframe()
+    {
+        if ($this->getInterviewBegin() <= time() && $this->getInterviewEnd() >= time()) {
+            return true;   
+        } 
         return false;
     }
 } // class MetaInterview

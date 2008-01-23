@@ -12,7 +12,7 @@
     <tr><td>Interview Begin</td><td>{{ $campsite->interview->interview_begin|date_format }}</td></tr>
     <tr><td>Interview End</td><td>{{ $campsite->interview->interview_end|date_format }}</td></tr>
     <tr><td>Questions Begin</td><td>{{ $campsite->interview->questions_begin|date_format }}</td></tr>
-    <tr><td>Questions Begin</td><td>{{ $campsite->interview->questions_begin|date_format }}</td></tr>
+    <tr><td>Questions End</td><td>{{ $campsite->interview->questions_end|date_format }}</td></tr>
     <tr><td>Questions Limit</td><td>{{ $campsite->interview->questions_limit }}</td></tr>
     <tr><td>Status</td><td>{{ $campsite->interview->status }}</td></tr>
 </table>

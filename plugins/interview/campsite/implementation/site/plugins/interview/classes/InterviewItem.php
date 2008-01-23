@@ -77,7 +77,7 @@ class InterviewItem extends DatabaseObject {
      * @param bool $p_is_show_after_expiration
      * @return void
      */
-    public function create($p_fk_questioneer_user_id = null, $p_question = null, $p_status = 'new')
+    public function create($p_fk_questioneer_user_id = null, $p_question = null, $p_status = 'draft')
     {
         global $g_ado_db;
        
@@ -321,7 +321,7 @@ class InterviewItem extends DatabaseObject {
      *
      * @return int
      */
-    public static function countInterviewItemss()
+    public static function countInterviewItems()
     {
         global $g_ado_db;;
         
@@ -617,6 +617,13 @@ class InterviewItem extends DatabaseObject {
 
             
         }
+    }
+    
+    static public function OnInterviewDelete($p_interview_id)
+    {
+        foreach (InterviewItem::GetInterviewItems($p_interview_id, 0, 65535) as $InterviewItem) {
+            $InterviewItem->delete();   
+        }      
     }
 
     /////////////////// Special template engine methods below here /////////////////////////////

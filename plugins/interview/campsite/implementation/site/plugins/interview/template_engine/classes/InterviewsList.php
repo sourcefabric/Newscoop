@@ -54,13 +54,14 @@ class InterviewsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
+	    /*
 	    $operator = new Operator('is');
 	    $context = CampTemplate::singleton()->context();
 	    
 	    $comparisonOperation = new ComparisonOperation('language_id', $operator,
 	                                                   $context->language->number);
 	    $this->m_constraints[] = $comparisonOperation;
-
+        */
 	    $interviewsList = Interview::GetList($this->m_constraints, $this->m_item, $this->m_order, $p_start, $p_limit, $p_count);
         $metaInterviewsList = array();
 	    foreach ($interviewsList as $interview) {

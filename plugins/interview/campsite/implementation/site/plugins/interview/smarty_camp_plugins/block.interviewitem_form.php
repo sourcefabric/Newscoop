@@ -43,7 +43,7 @@ function smarty_block_interviewitem_form($p_params, $p_content, &$p_smarty, &$p_
 
     if (isset($p_content)) {
         $html = "<form name=\"interviewitem_question\" action=\"{$campsite->url->uri_path}\" method=\"post\" >\n";
-        $html .= "<input type=\"hidden\" name=\"f_interviewitem\" value=\"question\">\n";
+        $html .= "<input type=\"hidden\" name=\"f_interviewitem\" value=\"edit\">\n";
         
         if ($tpl_id) {
             $html .= "<input type=\"hidden\" name=\"".TEMPLATE_ID."\" value=\"$tpl_id\" />\n";

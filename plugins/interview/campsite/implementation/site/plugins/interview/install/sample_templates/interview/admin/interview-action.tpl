@@ -9,11 +9,7 @@
     {{ list_interviewitems length=10 }}
         {{ include file='interview/interviewitem-details.tpl' }}
         {{ include file='interview/admin/interviewitem-actions.tpl' }}
-    {{ /list_interviewitems }}  
-     
-{{ elseif $smarty.request.action == 'interviewitem_edit' }}
-
-    {{ include file='interview/admin/interviewitem-edit.tpl' }}
+    {{ /list_interviewitems }}
     
 {{ else }}
 

@@ -14,7 +14,11 @@
     
 {{ /if }}
                 
-
+<br>
 <a href="{{ uripath }}?interview_action=form&amp;f_interview_id={{ $campsite->interview->identifier }}">Edit</a>
-    
+
+<br>
 <a href="{{ uripath }}?interviewitem_action=list&amp;f_interview_id={{ $campsite->interview->identifier }}">List items</a>
+
+<br>
+<a href="{{ uripath }}?f_interviewstatus=delete&amp;f_interview_id={{ $campsite->interview->identifier }}">Delete</a>

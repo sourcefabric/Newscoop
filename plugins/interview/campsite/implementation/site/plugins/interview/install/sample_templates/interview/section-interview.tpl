@@ -12,43 +12,53 @@
     <table class="content" cellspacing="0" cellpadding="0">
     <tr>
       <td>  
-        {{ if $smarty.request.action || $campsite->interview_action->defined }}
+        {{ if $smarty.request.interview_action || $campsite->interview_action->defined }}
         
             {{ include file='interview-action.tpl }} 
-                  
+
+        {{ elseif $smarty.request.interviewitem_action || $campsite->interviewitem_action->defined }}
+            
+                {{ include file='interview/interviewitem-action.tpl }} 
+                
         {{ elseif $campsite->interview->defined }}
         
             {{ include file='interview/interview-details.tpl' }}
+            <br>
             
-            {{ if $campsite->interview->can_add_question }}
-                <a href="{{ uripath }}?interview_id={{ $campsite->interview->identifier }}&amp;action=add_question">
-                    <input type="button" value="add question">
-                </a>
+            {{ if $campsite->interview->in_question_timeframe }}
+                <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=form">Add your question</a>
+            
+                {{ list_interviewitems length=1 constraints='status not offline' }}
+                    <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=list">List existing questions</a>
+                {{ /list_interviewitems }}
+                 
+             {{ elseif $campsite->interview->in_interview_timeframe }}
+
+                {{ list_interviewitems length=1 constraints='status not offline' }}
+                    <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=list">List existing questions</a>
+                {{ /list_interviewitems }}
+
+             {{ elseif $campsite->interview->status == 'published' }}
+
+                {{ list_interviewitems length=1 constraints='status not offline' }}
+                    <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=list">Show interview</a>
+                {{ /list_interviewitems }}
+
             {{ /if }}
-                
-            {{ list_interviewitems length=10 }}
-                {{ include file='interviewitem-details.tpl show_actions=true }}
-            {{ /list_interviewitems }}
-            
+
+             
         {{ else }}
-        <form name="status">
-          <select name="filter_interview_status" onchange="location.href='{{ uripath }}?filter_interview_status='+document.forms['status'].elements['filter_interview_status'].value">
-            <option value="">Status</option>
-            <option value="pending">pending</option>
-            <option value="published">published</option>
-          </select>
-        </form>
-            <table border="1" width="100%">
-            <tr><th>Title</th><th>Status</th><th>Moderator</th><th>Guest</th></tr>
-            {{ assign var='_status' value=$smarty.request.filter_interview_status|default:'published' }}
-            {{ list_interviews length=10 constraints="status is `$_status`" }}
-                <tr>
-                    <td><a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}">{{ $campsite->interview->title }}</a></td>
-                    <td>{{ $campsite->interview->status }}</td>
-                    <td>{{ $campsite->interview->moderator->name }}</td>
-                    <td>{{ $campsite->interview->guest->name }}</td>
-            {{ /list_interviews }}   
-            </table> 
+        
+            {{ assign var='_now' value=$smarty.now|camp_date_format:'%Y-%m-%d' }}
+        
+            <h6>Interviews awaiting questions</h6>
+            {{ include file='interview/interviews-list.tpl' _constraints="status is pending questions_begin smaller `$_now` questions_end greater `$_now` language_id is `$campsite->language->number`"}} 
+        
+            <h6>Interviews awaiting answers</h6>
+            {{ include file='interview/interviews-list.tpl' _constraints="status is pending interview_begin smaller `$_now` interview_end greater `$_now` language_id is `$campsite->language->number`"}}
+            
+            <h6>Interviews already answered</h6>
+            {{ include file='interview/interviews-list.tpl' _constraints="status is published language_id is `$campsite->language->number`"}}
         {{ /if }}  
         
       </td>

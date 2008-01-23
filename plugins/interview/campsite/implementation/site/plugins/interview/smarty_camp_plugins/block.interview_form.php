@@ -49,7 +49,7 @@ function smarty_block_interview_form($p_params, $p_content, &$p_smarty, &$p_repe
     if (isset($p_content)) {
         $html = "<form name=\"interview\" action=\"{$campsite->url->uri_path}\" method=\"post\" enctype=\"multipart/form-data\">\n";
         $html .= "<input type=\"hidden\" name=\"_qf__interview\">\n";
-        $html .= "<input type=\"hidden\" name=\"f_interview\" value=\"interview_edit\">\n";
+        $html .= "<input type=\"hidden\" name=\"f_interview\" value=\"edit\">\n";
         
         if ($tpl_id) {
             $html .= "<input type=\"hidden\" name=\"".TEMPLATE_ID."\" value=\"$tpl_id\" />\n";

@@ -169,11 +169,8 @@ class Interview extends DatabaseObject {
      */
     public function delete()
     {       
-        // Delete from answers table
-        #InterviewAnswer::OnInterviewDelete($this->m_data['interview_id']);
-        
-        // Delete from questions table
-        #InterviewQuestion::OnInterviewDelete($this->m_data['interview_id']);
+        // Delete from InterviewItems table
+        InterviewItem::OnInterviewDelete($this->m_data['interview_id']);
         
         // finally delete from main table
         $deleted = parent::delete();

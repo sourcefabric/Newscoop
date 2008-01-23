@@ -1,10 +1,11 @@
 Dear {{ $campsite->interview->questioneer->name }},<br>
 
 we like to invite to interview {{ $campsite->interview->title }}:
-{{ include file='interview-details.tpl' }}
+{{ include file='interview/interview-details.tpl' }}
 
 <p>
-You can add your question <a href="{{ url }}">here</a>. 
+You can add your question(s) 
+<a href="http://{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interview_action=">here</a>. 
 
 <p>
 Best regards,<br>
