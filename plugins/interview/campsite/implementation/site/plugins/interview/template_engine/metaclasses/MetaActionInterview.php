@@ -165,8 +165,8 @@ class MetaActionInterview extends MetaAction
             $this->m_interview->setProperty('description', $this->m_properties['description']);
             $this->m_interview->setProperty('interview_begin', $this->m_properties['interview_begin']);
             $this->m_interview->setProperty('interview_end', $this->m_properties['interview_end']);
-            $this->m_interview->setProperty('questions_begin', $this->m_properties['f_questions_interview_begin']);
-            $this->m_interview->setProperty('questions_end', $this->m_properties['f_questions_interview_end']);
+            $this->m_interview->setProperty('questions_begin', $this->m_properties['questions_begin']);
+            $this->m_interview->setProperty('questions_end', $this->m_properties['questions_end']);
             $this->m_interview->setProperty('questions_limit', $this->m_properties['questions_limit']);
             #$this->m_interview->setProperty('status', $this->m_properties['status']);
             
