@@ -53,6 +53,13 @@ class SQLSelectClause {
      * @var array
      */
     private $m_where = null;
+    
+    /**
+     * Conditional where clauses (separated by 'OR' operator)
+     *
+     * @var array
+     */
+    private $m_conditionalWhere = null;
 
     /**
      * The columns list and directions to order by.
@@ -159,6 +166,20 @@ class SQLSelectClause {
     {
         $this->m_where[] = $p_condition;
     } // fn addWhere
+
+
+    /**
+     * Adds a conditional WHERE condition to the query (using 'OR' operator)
+     *
+     * @param string $p_condition
+     *      The comparison operation
+     *
+     * @return void
+     */
+    public function addConditionalWhere($p_condition)
+    {
+        $this->m_conditionalWhere[] = $p_condition;
+    } // fn addConditionalWhere
 
 
     /**
@@ -347,7 +368,24 @@ class SQLSelectClause {
      */
     private function buildWhere()
     {
-        return implode("\n    AND ", $this->m_where);
+        $conditionalWhere = null;
+        if (is_array($this->m_conditionalWhere)) {
+            $conditionalWhere = implode("\n        OR ", $this->m_conditionalWhere);
+        }
+        $where = null;
+        if (is_array($this->m_where)) {
+            $where = implode("\n    AND ", $this->m_where);
+        }
+        if (empty($conditionalWhere) && empty($where)) {
+            return null;
+        }
+        if (empty($where)) {
+            return $conditionalWhere;
+        }
+        if (!empty($conditionalWhere)) {
+            $where .= "\n    AND (" . $conditionalWhere . ")";
+        }
+        return $where;
     } // fn buildWhere
 
 

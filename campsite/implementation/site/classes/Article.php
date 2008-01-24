@@ -2208,6 +2208,7 @@ class Article extends DatabaseObject {
      * @return array
      */
     public static function SearchByKeyword(array $p_keywords,
+                                           $p_matchAll = false,
                                            array $p_constraints = array(),
                                            array $p_order = array(),
                                            $p_start = 0, $p_limit = 0, &$p_count)
@@ -2227,7 +2228,12 @@ class Article extends DatabaseObject {
 
         // set search keywords
         foreach ($p_keywords as $keyword) {
-            $selectClauseObj->addWhere("KeywordIndex.Keyword = '" . $g_ado_db->escape($keyword) . "'");
+            $constraint = "KeywordIndex.Keyword = '" . $g_ado_db->escape($keyword) . "'";
+            if ($p_matchAll) {
+                $selectClauseObj->addWhere($constraint);
+            } else {
+                $selectClauseObj->addConditionalWhere($constraint);
+            }
         }
 
         // set other constraints
