@@ -148,11 +148,9 @@ final class CampContext
         $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput());
         $this->m_readonlyProperties['request_action']->takeAction($this);
 
-        $availableActions = CampContext::ReadAvailableActions();
-        foreach (CampContext::ReadAvailableActions() as $actionName) {
-            $actionName = strtolower($actionName);
-            $propertyName = CampContext::TranslateProperty($actionName . '_action');
-            if ($this->m_readonlyProperties['request_action']->name == $actionName) {
+        foreach (MetaAction::ReadAvailableActions() as $actionNameCase=>$actionAttributes) {
+            $propertyName = CampContext::TranslateProperty($actionNameCase . '_action');
+            if ($this->m_readonlyProperties['request_action']->name == $actionNameCase) {
                 $this->m_readonlyProperties[$propertyName] =& $this->m_readonlyProperties['request_action'];
             } else {
                 $this->m_readonlyProperties[$propertyName] = MetaAction::CreateAction(array());
@@ -751,34 +749,6 @@ final class CampContext
             return 'Meta'.CampContext::$m_objectTypes[$p_property]['class'];
         }
         return null;
-    }
-
-
-    /**
-     * Searches for classes that process actions. Returns an array of
-     * action names.
-     *
-     * @return array
-     */
-    private static function ReadAvailableActions()
-    {
-        require_once('File/Find.php');
-
-        $actions = array();
-        $directoryPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses';
-        $actionIncludeFiles = File_Find::search('MetaAction*.php', $directoryPath, 'shell', false);
-        foreach ($actionIncludeFiles as $includeFile) {
-            require_once($includeFile);
-            if (preg_match('/MetaAction([^.]+)\.php/', $includeFile, $matches) == 0
-            || strtolower($matches[1]) == 'request') {
-                continue;
-            }
-            $actionName = $matches[1];
-            if (class_exists('MetaAction'.$actionName)) {
-                $actions[] = $actionName;
-            }
-        }
-        return $actions;
     }
 
 } // class CampContext

@@ -34,6 +34,13 @@ class MetaAction
      */
     protected $m_name = null;
 
+    /**
+     * Stores the available actions
+     *
+     * @var array
+     */
+    private static $m_availableActions = null;
+
 
     /**
      * Base initializations
@@ -81,21 +88,64 @@ class MetaAction
      */
     public static function CreateAction(array $p_input)
     {
+        if (count($p_input) == 0) {
+            return new MetaAction();
+        }
+
+        $actions = MetaAction::ReadAvailableActions();
+
         foreach ($p_input as $parameter=>$value) {
             $parameter = strtolower($parameter);
             if (strncmp($parameter, 'f_', 2) != 0) {
                 continue;
             }
-            $parameter = substr($parameter, 2);
-            $parameter[0] = strtoupper($parameter[0]);
-            $className = 'MetaAction'.$parameter;
-            $includeFile = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/'
-            . $className . '.php';
-            if (file_exists($includeFile)) {
+
+            $actionLowerCase = strtolower(substr($parameter, 2));
+            if (isset($actions[$actionLowerCase])) {
+                require_once($actions[$actionLowerCase]['file']);
+                $className = 'MetaAction'.$actions[$actionLowerCase]['name'];
                 return new $className($p_input);
             }
         }
+
         return new MetaAction();
+    }
+
+
+    /**
+     * Searches for classes that process actions. Returns an array of
+     * action names.
+     *
+     * @return array
+     */
+    public static function ReadAvailableActions()
+    {
+        if (is_array(MetaAction::$m_availableActions)) {
+            return MetaAction::$m_availableActions;
+        }
+
+        require_once('File/Find.php');
+
+        $actions = array();
+        $directoryPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses';
+        $actionIncludeFiles = File_Find::search('/MetaAction[^.]*\.php/',
+        $directoryPath, 'perl', false);
+
+        foreach ($actionIncludeFiles as $includeFile) {
+            if (preg_match('/MetaAction([^.]+)\.php/', $includeFile, $matches) == 0
+            || strtolower($matches[1]) == 'request') {
+                continue;
+            }
+
+            require_once($includeFile);
+            $actionName = $matches[1];
+            if (class_exists('MetaAction'.$actionName)) {
+                $actions[strtolower($actionName)] = array('name'=>$actionName,
+                'file'=>"$directoryPath/MetaAction$actionName.php");
+            }
+        }
+        MetaAction::$m_availableActions = $actions;
+        return MetaAction::$m_availableActions;
     }
 
 
