@@ -33,13 +33,23 @@ class SearchResultsList extends ListObject
 	{
 	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
-	    $comparisonOperation = new ComparisonOperation('Articles.IdPublication', $operator,
-	                                                   $context->publication->identifier);
-	    $this->m_constraints[] = $comparisonOperation;
+	    if ($p_parameters['search_level'] >= SEARCH_LEVEL_PUBLICATION) {
+	        $this->m_constraints[] = new ComparisonOperation('Articles.IdPublication', $operator,
+	                                                         $context->publication->identifier);
+	    }
+	    if ($p_parameters['search_level'] >= SEARCH_LEVEL_ISSUE) {
+	        $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
+	                                                         $context->issue->number);
+	    }
+	    if ($p_parameters['search_level'] >= SEARCH_LEVEL_SECTION) {
+	        $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
+	                                                         $context->section->number);
+	    }
+	    $matchAll = strtolower($p_parameters['match_all']) == 'true';
 
-	    $keywords = array('lectus');
+	    $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
 
-	    $articlesList = Article::SearchByKeyword($keywords, $this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+	    $articlesList = Article::SearchByKeyword($keywords, $matchAll, $this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
 	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),
@@ -114,7 +124,11 @@ class SearchResultsList extends ListObject
     			case 'columns':
     			case 'name':
     			case 'order':
-    				if ($parameter == 'length' || $parameter == 'columns') {
+    			case 'template':
+    			case 'match_all':
+    			case 'search_level':
+    			case 'search_phrase':
+    			    if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {
     						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_search_results");
