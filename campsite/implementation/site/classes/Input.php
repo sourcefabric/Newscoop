@@ -156,6 +156,28 @@ class Input {
 
 
 	/**
+	 * Get an input value from the $_REQUEST array and check its type.
+	 * This is a wrapper for Input::Get().
+	 */
+	public static function GetVar($p_varName, $p_type = 'string',
+	                              $p_defaultValue = null, $p_errorsOk = false)
+	{
+        return Input::Get($p_varName, $p_type, $p_defaultValue, $p_errorsOk);	                               
+	}
+
+
+	/**
+	 * Returns the method used to read the input data: GET, POST etc.
+	 *
+	 * @return string
+	 */
+	public static function GetMethod()
+	{
+	    return $_SERVER['REQUEST_METHOD'];
+	}
+
+	
+	/**
 	 * Return FALSE if any calls to Input::Get() resulted in an error.
 	 * @return boolean
 	 */
