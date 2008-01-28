@@ -42,7 +42,9 @@ $no_menu_scripts = array(
     '/articles/empty.php',
     '/comments/ban.php',
 	'/comments/do_ban.php',
-	'/imagearchive/do_add.php'
+	'/imagearchive/do_add.php',
+	'/interview/admin/edit.php',
+	'/interview/admin/edit_item.php'
 	);
 
 $request_uri = $_SERVER['REQUEST_URI'];

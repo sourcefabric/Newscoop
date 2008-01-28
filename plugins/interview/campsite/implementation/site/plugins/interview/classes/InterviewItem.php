@@ -394,11 +394,11 @@ class InterviewItem extends DatabaseObject {
     }
     
     
-    public function getQuestionForm($p_target='index.php', $p_add_hidden_vars=array(), $p_html=false)
+    public function getForm($p_type='item', $p_target='index.php', $p_add_hidden_vars=array(), $p_html=false)
     {
         require_once 'HTML/QuickForm.php';
               
-        $mask = InterviewItem::getQuestionFormMask();
+        $mask = InterviewItem::getFormMask($p_type);
 
         if (is_array($p_add_hidden_vars)) {
             foreach ($p_add_hidden_vars as $k => $v) {       
@@ -425,199 +425,102 @@ class InterviewItem extends DatabaseObject {
         } 
     }
     
-    private function getQuestionFormMask()
+    private function getFormMask($p_type)
     {
         $data = $this->m_data;
-        $exists =  $this->exists();
-        
+                
         $mask = array(
-            'action'    => array(
+            array(
                 'element'   => 'action',
                 'type'      => 'hidden',
-                'constant'  => $exists ? 'question_edit' : 'question_create'
+                'constant'  => $this->exists() ? 'interviewitem_edit' : 'interviewitem_create'
             ),
-            'fk_interview_id'  => array(
-                    'element'   => 'fk_interview_id',
-                    'type'      => 'hidden',
-                    'constant'  => $data['fk_interview_id']
+            array(
+                'element'   => 'f_interview_id',
+                'type'      => 'hidden',
+                'constant'  => $data['fk_interview_id']
             ),
-            'item_id'  => array(
-                    'element'   => 'item_id',
-                    'type'      => 'hidden',
-                    'constant'  => $data['item_id']
+            array(
+                'element'   => 'f_item_id',
+                'type'      => 'hidden',
+                'constant'  => $data['item_id']
             ),
-            'question' => array(
-                'element'   => 'interviewitem[question]',
+            array(
+                'element'   => 'f_question',
                 'type'      => 'textarea',
-                'label'     => 'question',
+                'label'     => getGS('Question'),
                 'default'   => $data['question'],
                 'attributes'=> array('cols' => 40, 'rows' => 5),
                 'required'  => true,
             ),
-
-            'reset'     => array(
-                'element'   => 'reset',
-                'type'      => 'reset',
-                'label'     => 'Zurücksetzen',
-                'groupit'   => true
-            ),
-            'xsubmit'     => array(
-                'element'   => 'xsubmit',
-                'type'      => 'button',
-                'label'     => 'Abschicken',
-                'attributes'=> array('onclick' => 'this.form.submit()'),
-                'groupit'   => true
-            ),
-            'cancel'     => array(
-                'element'   => 'cancel',
-                'type'      => 'button',
-                'label'     => 'Cancel',
-                'attributes' => array('onClick' => 'history.back()'),
-                'groupit'   => true
-            ), 
-            'buttons'   => array(
-                'group'     => array('xsubmit', 'reset')
-            )       
-        );
-        
-        return $mask;   
-    }
-    
-    public function storeQuestion()
-    {
-        require_once 'HTML/QuickForm.php';
-              
-        $mask = InterviewItem::getQuestionFormMask($p_owner, $p_admin);        
-        $form = new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
-        FormProcessor::parseArr2Form(&$form, &$mask);   
-           
-        if ($form->validate()) {
-            $submit = $form->getSubmitValues();
-            $data = $submit['interviewitem']; 
-
-            if ($this->exists()) {
-                // edit existing interview    
-                $this->setProperty('fk_questioneer_user_id', $data['fk_questioneer_user_id']);
-                $this->setProperty('question', $data['question']);
-                
-            } else {
-                // create new interview
-                $this->create($date['fk_questioneer_user_id'], $data['question']);   
-                
-            }
-            
-        }
-    }
-    
-    public function getAnswerForm($p_target='index.php', $p_add_hidden_vars=array(), $p_owner=false, $p_admin=false, $p_html=false)
-    {
-        require_once 'HTML/QuickForm.php';
-              
-        $mask = InterviewItem::getAnswerFormMask();
-
-        if (is_array($p_add_hidden_vars)) {
-            foreach ($p_add_hidden_vars as $k => $v) {       
-                $mask[] = array(
-                    'element'   => $k,
-                    'type'      => 'hidden',
-                    'constant'  => $v
-                );   
-            } 
-        }
-        
-        $form =& new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
-        FormProcessor::parseArr2Form(&$form, &$mask); 
-        
-        if ($p_html) {
-            return $form->toHTML();    
-        } else {
-            require_once 'HTML/QuickForm/Renderer/Array.php';
-            
-            $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
-            $form->accept($renderer);
-            
-            return $renderer->toArray();
-        } 
-    }
-    
-    private function getAnswerFormMask()
-    {
-        $data = $this->m_data;
-        if ($this->getProperty('Status' != 'new')) {
-            $exists = true;       
-        }
-        
-        $mask = array(
-            'action'    => array(
-                'element'   => 'action',
-                'type'      => 'hidden',
-                'constant'  => $exists ? 'answer_edit' : 'answer_create'
-            ),
-            'fk_interview_id'  => array(
-                    'element'   => 'fk_interview_id',
-                    'type'      => 'hidden',
-                    'constant'  => $data['fk_interview_id']
-            ),
-            'item_id'  => array(
-                    'element'   => 'item_id',
-                    'type'      => 'hidden',
-                    'constant'  => $data['item_id']
-            ),
-            'answer' => array(
-                'element'   => 'interviewitem[answer]',
+            array(
+                'element'   => 'f_answer',
                 'type'      => 'textarea',
-                'label'     => 'answer',
+                'label'     => getGS('Answer'),
                 'default'   => $data['answer'],
                 'attributes'=> array('cols' => 40, 'rows' => 5),
-                'required'  => true,
+                'required'  => $p_type == 'answer' ? true : false,
             ),
-
-            'reset'     => array(
-                'element'   => 'reset',
+            $p_type == 'item' ? 
+                array(
+                    'element'   => 'f_status',
+                    'type'      => 'select',
+                    'label'     => getGS('Status'),
+                    'default'   => $data['status'],
+                    'options'=> array(
+                        'draft'     => getGS('draft'), 
+                        'pending'   => getGS('pending'), 
+                        'public'    => getGS('public'),
+                        'offline'   => getGS('offline')
+                    )
+                )
+            : null,            
+            array(
+                'element'   => 'f_reset',
                 'type'      => 'reset',
-                'label'     => 'Zurücksetzen',
+                'label'     => getGS('Reset'),
                 'groupit'   => true
             ),
-            'xsubmit'     => array(
-                'element'   => 'xsubmit',
+            array(
+                'element'   => 'f_submit',
                 'type'      => 'button',
-                'label'     => 'Abschicken',
+                'label'     => getGS('Save'),
                 'attributes'=> array('onclick' => 'this.form.submit()'),
                 'groupit'   => true
             ),
-            'cancel'     => array(
+            array(
                 'element'   => 'cancel',
                 'type'      => 'button',
-                'label'     => 'Cancel',
+                'label'     => getGS('Cancel'),
                 'attributes' => array('onClick' => 'history.back()'),
                 'groupit'   => true
             ), 
-            'buttons'   => array(
-                'group'     => array('xsubmit', 'reset')
+            array(
+                'group'     => array('f_submit', 'f_reset')
             )       
         );
         
         return $mask;   
     }
     
-    public function storeAnswer()
+    public function store($p_type='item')
     {
         require_once 'HTML/QuickForm.php';
               
-        $mask = InterviewItem::getAnswerFormMask($p_owner, $p_admin);        
+        $mask = InterviewItem::getFormMask($p_type, $p_owner, $p_admin);        
         $form = new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask);   
            
         if ($form->validate()) {
-            $submit = $form->getSubmitValues();
-            $data = $submit['interviewitem']; 
-    
-            $this->setProperty('answer', $data['answer']);
-            $this->setProperty('status', 'public');
-
-            
+            $data = $form->getSubmitValues();
+            $this->setProperty('question', $data['f_question']);
+            $this->setProperty('answer', $data['f_answer']);
+            $this->setProperty('status', $data['f_status']);
+            return true;
         }
+        return false;
     }
+    
     
     static public function OnInterviewDelete($p_interview_id)
     {
@@ -758,20 +661,23 @@ class InterviewItem extends DatabaseObject {
         foreach ($p_order as $field=>$direction) {
             $dbField = null;
             switch (strtolower($field)) {
-                case 'bynumber':
-                    $dbField = 'interview_nr';
+                case 'byidentifier':
+                    $dbField = 'item_id';
                     break;
-                case 'byname':
-                    $dbField = 'title';
+                case 'byquestioneer':
+                    $dbField = 'fk_questioneer_user_id';
                     break;
-                case 'bybegin':
-                    $dbField = 'date_begin';
+                case 'byquestion':
+                    $dbField = 'question';
                     break;
-                case 'byend':
-                    $dbField = 'date_end';
+                case 'byanswer':
+                    $dbField = 'answer';
                     break;
-                case 'byvotes':
-                    $dbField = 'nr_of_votes';
+                case 'byorder':
+                    $dbField = 'item_order';
+                    break;
+                case 'bystatus':
+                    $dbField = 'status';
                     break;
             }
             if (!is_null($dbField)) {

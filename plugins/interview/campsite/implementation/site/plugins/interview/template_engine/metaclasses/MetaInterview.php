@@ -45,7 +45,7 @@ final class MetaInterview extends MetaDbObject {
         $this->m_customProperties['is_user_admin'] = 'isUserAdmin';
         $this->m_customProperties['is_user_moderator'] = 'isUserModerator';
         $this->m_customProperties['is_user_guest'] = 'isUserGuest';
-        $this->m_customProperties['in_question_timeframe'] = 'inQuestionTimeframe';
+        $this->m_customProperties['in_questions_timeframe'] = 'inQuestionsTimeframe';
         $this->m_customProperties['in_interview_timeframe'] = 'inInterviewTimeframe';
         
 
@@ -173,7 +173,7 @@ final class MetaInterview extends MetaDbObject {
         return false;
     }
     
-    public function inQuestionTimeframe()
+    public function inQuestionsTimeframe()
     {
         if ($this->getQuestionsBegin() <= time() && $this->getQuestionsEnd() >= time()) {
             return true;   

@@ -1,4 +1,15 @@
 <?php
+
+define('UI_INPUT_STANDARD_SIZE', 50);
+define('UI_INPUT_STANDARD_MAXLENGTH', 256);
+define('UI_TEXTAREA_STANDART_ROWS', 5);
+define('UI_TEXTAREA_STANDART_COLS', 20);
+define('FORM_MISSINGNOTE', getGS('FORM_MISSINGNOTE'));
+define('FORM_REQUIREDNOTE', getGS('FORM_REQUIREDNOTE'));
+define('FORM_JS_PREWARNING', getGS('FORM_JS_PREWARNING'));
+define('FORM_JS_POSTWARNING', getGS('FORM_JS_POSTWARNING'));
+define('UI_BUTTON_STYLE', '');
+
 class FormProcessor
 {
      /**
@@ -55,7 +66,7 @@ class FormProcessor
             } elseif (isset($v['type'])) {
                 if (!is_array($v['attributes'])) $v['attributes'] = array();
                 $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], self::translate($v['label']),
-                                            ($v[type]=='text' || $v['type']=='file' || $v['type']=='password') ? array_merge(array('size'=>UI_INPUT_STANDARD_SIZE, 'maxlength'=>UI_INPUT_STANDARD_MAXLENGTH), $v['attributes']) :
+                                            ($v['type']=='text' || $v['type']=='file' || $v['type']=='password') ? array_merge(array('size'=>UI_INPUT_STANDARD_SIZE, 'maxlength'=>UI_INPUT_STANDARD_MAXLENGTH), $v['attributes']) :
                                             ($v['type']=='textarea' ? array_merge(array('rows'=>UI_TEXTAREA_STANDART_ROWS, 'cols'=>UI_TEXTAREA_STANDART_COLS), $v['attributes']) :
                                             ($v['type']=='button' || $v['type']=='submit' || $v['type']=='reset' ? array_merge(array('class'=>UI_BUTTON_STYLE), $v['attributes']) : $v['attributes']))
                                         );

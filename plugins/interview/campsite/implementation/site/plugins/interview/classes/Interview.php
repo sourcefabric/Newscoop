@@ -62,7 +62,7 @@ class Interview extends DatabaseObject {
         
     /**
      * This static property stores an User object 
-     * currently looped in Interview::invite().
+     * currently looped in self::invite().
      * In each loop it have to assigned here, but 
      * retrived in MetaInterview class. Thatswhy it's static.
      *
@@ -247,7 +247,7 @@ class Interview extends DatabaseObject {
             $p_limit = 20;   
         }
         
-        $query = Interview::GetQuery($p_fk_language_id, $p_order_by);
+        $query = self::GetQuery($p_fk_language_id, $p_order_by);
         
         $res = $g_ado_db->SelectLimit($query, $p_limit, $p_offset);		
 		$interviews = array();
@@ -270,7 +270,7 @@ class Interview extends DatabaseObject {
     {
         global $g_ado_db;;
         
-        $query   = Interview::getQuery(); 
+        $query   = self::getQuery(); 
         $res     = $g_ado_db->Execute($query);
         
         return $res->RecordCount();  
@@ -346,7 +346,7 @@ class Interview extends DatabaseObject {
     {
         require_once 'HTML/QuickForm.php';
               
-        $mask = Interview::getFormMask();
+        $mask = self::getFormMask();
 
         if (is_array($p_add_hidden_vars)) {
             foreach ($p_add_hidden_vars as $k => $v) {       
@@ -375,6 +375,8 @@ class Interview extends DatabaseObject {
     
     private function getFormMask()
     {
+        global $Campsite;
+        
         $data = $this->m_data;
         $exists = $this->exists();
        
@@ -384,169 +386,246 @@ class Interview extends DatabaseObject {
         }
          
         $mask = array(
-            'action' => array(
+            array(
                 'element'   => 'action',
                 'type'      => 'hidden',
                 'constant'  => 'interview_edit'
             ),
-            'interview_id'  => $exists ? array(
-                    'element'   => 'interview_id',
+            $exists ? array(
+                    'element'   => 'f_interview_id',
                     'type'      => 'hidden',
                     'constant'  => $data['interview_id']
             ) : null,
-            'language_id' => array(
-                'element'   => 'f_interview_language_id',
+            array(
+                'element'   => 'f_language_id',
                 'type'      => 'select',
-                'label'     => 'fk_language_id',
+                'label'     => getGS('Language'),
                 'default'   => $data['fk_language_id'],
-                'options'   => array(1 => 'en', 5 => 'de'),
+                'options'   => self::GetCampLanguagesList(),
                 'required'  => true,
             ),
-            /*
-            'moderator_user_id' => array(
-                'element'   => 'interview[fk_moderator_user_id]',
+            array(
+                'element'   => 'f_moderator_user_id',
                 'type'      => 'select',
-                'label'     => 'fk_moderator_user_id',
-                'default'   => $data['f_interview_moderator_user_id'],
-                'options'   => Interview::getUserByRole('ManagePub'),
+                'label'     => getGS('Moderator'),
+                'default'   => $data['fk_moderator_user_id'],
+                'options'   => self::getUsersHavePermission('plugin_interview_moderator'),
                 'required'  => true,
             ),
-            */
-            'guest_user_id' => array(
-                'element'   => 'f_interview_guest_user_id',
+            array(
+                'element'   => 'f_guest_user_id',
                 'type'      => 'select',
-                'label'     => 'fk_guest_user_id',
+                'label'     => getGS('Guest'),
                 'default'   => $data['fk_guest_user_id'],
-                'options'   => Interview::getUserByRole('ManagePub'),
+                'options'   => self::getUsersHavePermission('plugin_interview_guest'),
                 'required'  => true,
             ),
-            'title' => array(
-                'element'   => 'f_interview_title',
+            array(
+                'element'   => 'f_title',
                 'type'      => 'text',
-                'label'     => 'title',
+                'label'     => getGS('Title'),
                 'default'   => $data['title'],
                 'required'  => true,
             ),
-            'image' => array(
-                'element'   => 'f_interview_image',
+            array(
+                'element'   => 'f_image',
                 'type'      => 'file',
-                'label'     => 'image'
+                'label'     => getGS('Image')
             ),
-            'image_description' => array(
-                'element'   => 'f_interview_image_description',
+            array(
+                'element'   => 'f_image_description',
                 'type'      => 'text',
-                'label'     => 'image_description',
+                'label'     => getGS('Image Description'),
                 'default'   => $image_description
             ),
-            'image_delete' => array(
-                'element'   => 'f_interview_image_delete',
+            array(
+                'element'   => 'f_image_delete',
                 'type'      => 'checkbox',
-                'label'     => 'image_delete'
+                'label'     => getGS('Delete Image')
             ),            
-            'description_short' => array(
-                'element'   => 'f_interview_description_short',
+            array(
+                'element'   => 'f_description_short',
                 'type'      => 'text',
-                'label'     => 'description_short',
+                'label'     => getGS('Short Description'),
                 'default'   => $data['description_short'],
                 'required'  => true,
             ),
-            'description' => array(
-                'element'   => 'f_interview_description',
+            array(
+                'element'   => 'f_description',
                 'type'      => 'textarea',
-                'label'     => 'description',
+                'label'     => getGS('Description'),
                 'default'   => $data['description'],
                 'required'  => true,
                 'attributes'=> array('cols' => 40, 'rows' => 5) 
             ),
-            /*
-            'interview_begin' => array(
-                'element'   => 'f_interview_interview_begin',
-                'type'      => 'date',
-                'label'     => 'interview_begin',
-                'constant'  => $data['interview_begin'],
-                'options'   => array('format' => 'Y-m-d H:i:s'),
-                'required'  => true            
-            ),
-            'interview_end' => array(
-                'element'   => 'f_interview_interview_end',
-                'type'      => 'date',
-                'label'     => 'interview_end',
-                'constant'  => $data['interview_end'],
-                'options'   => array('format' => 'Y-m-d H:i:s'),
-                'required'  => true            
-            ),
-             'questions_begin' => array(
-                'element'   => 'f_interview_questions_begin',
-                'type'      => 'date',
-                'label'     => 'questions_begin',
-                'constant'  => $data['questions_begin'],
-                'options'   => array('format' => 'Y-m-d H:i:s'),
-                'required'  => true            
-            ),
-            'questions_end' => array(
-                'element'   => 'f_interview_questions_end',
-                'type'      => 'date',
-                'label'     => 'questions_end',
-                'constant'  => $data['questions_end'],
-                'options'   => array('format' => 'Y-m-d H:i:s'),
-                'required'  => true            
-            ),
-            */
-            'interview_begin' => array(
-                'element'   => 'f_interview_interview_begin',
+            array(
+                'element'   => 'f_interview_begin',
                 'type'      => 'text',
-                'label'     => 'interview_begin',
-                'constant'  => $data['interview_begin'],
-                'required'  => true            
+                'constant'  => substr($data['interview_begin'], 0, 10),
+                'required'  => true,
+                'attributes'    => array('id' => 'f_interview_begin', 'size' => 10, 'maxlength' => 10),
+                'groupit'   => true          
             ),
-            'interview_end' => array(
-                'element'   => 'f_interview_interview_end',
-                'type'      => 'text',
-                'label'     => 'interview_end',
-                'constant'  => $data['interview_end'],
-                'required'  => true            
+            array(
+                'element'   => 'f_calendar_interview_begin',
+                'type'      => 'static',
+                'text'      => '
+                     <img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/calendar.gif" id="f_trigger_interview_begin"
+                         style="cursor: pointer; border: 1px solid red;"
+                          title="Date selector"
+                          onmouseover="this.style.background=\'red\'"
+                          onmouseout="this.style.background=\'\'" />
+                     <script type="text/javascript">
+                        Calendar.setup({
+                            inputField:"f_interview_begin",
+                            ifFormat:"%Y-%m-%d",
+                            showsTime:false,
+                            showOthers:true,
+                            weekNumbers:false,
+                            range:new Array(2008, 2020),
+                            button:"f_trigger_interview_begin"
+                        });
+                    </script>',
+                'groupit'   => true
+            ), 
+            array(
+                'group'     => array('f_interview_begin' , 'f_calendar_interview_begin'),
+                'label'     => getGS('Interview Begin'),
             ),
-             'questions_begin' => array(
-                'element'   => 'f_interview_questions_begin',
+            array(
+                'element'   => 'f_interview_end',
                 'type'      => 'text',
-                'label'     => 'questions_begin',
-                'constant'  => $data['questions_begin'],
-                'required'  => true            
+                'constant'  => substr($data['interview_end'], 0, 10),
+                'required'  => true,
+                'attributes'    => array('id' => 'f_interview_end', 'size' => 10, 'maxlength' => 10),
+                'groupit'   => true          
             ),
-            'questions_end' => array(
-                'element'   => 'f_interview_questions_end',
-                'type'      => 'text',
-                'label'     => 'questions_end',
-                'constant'  => $data['questions_end'],
-                'required'  => true            
+            array(
+                'element'   => 'f_calendar_interview_end',
+                'type'      => 'static',
+                'text'      => '
+                    <img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/calendar.gif" id="f_trigger_interview_end"
+                         style="cursor: pointer; border: 1px solid red;"
+                          title="Date selector"
+                          onmouseover="this.style.background=\'red\'"
+                          onmouseout="this.style.background=\'\'" />
+                    <script type="text/javascript">
+                        Calendar.setup({
+                            inputField:"f_interview_end",
+                            ifFormat:"%Y-%m-%d",
+                            showsTime:false,
+                            showOthers:true,
+                            weekNumbers:false,
+                            range:new Array(2008, 2020),
+                            button:"f_trigger_interview_end"
+                        });
+                    </script>',
+                'groupit'   => true
+            ), 
+            array(
+                'group'     => array('f_interview_end' , 'f_calendar_interview_end'),
+                'label'     => getGS('Interview End'),
             ),
-            'questions_limit' => array(
-                'element'   => 'f_interview_questions_limit',
+            array(
+                'element'   => 'f_questions_begin',
                 'type'      => 'text',
-                'label'     => 'questions_limit',
+                'constant'  => substr($data['questions_begin'], 0, 10),
+                'required'  => true,
+                'attributes'    => array('id' => 'f_questions_begin', 'size' => 10, 'maxlength' => 10),
+                'groupit'   => true          
+            ),
+            array(
+                'element'   => 'f_calendar_questions_begin',
+                'type'      => 'static',
+                'text'      => '
+                    <img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/calendar.gif" id="f_trigger_questions_begin"
+                         style="cursor: pointer; border: 1px solid red;"
+                          title="Date selector"
+                          onmouseover="this.style.background=\'red\'"
+                          onmouseout="this.style.background=\'\'" />
+                    <script type="text/javascript">
+                        Calendar.setup({
+                            inputField:"f_questions_begin",
+                            ifFormat:"%Y-%m-%d",
+                            showsTime:false,
+                            showOthers:true,
+                            weekNumbers:false,
+                            range:new Array(2008, 2020),
+                            button:"f_trigger_questions_begin"
+                        });
+                    </script>',
+                'groupit'   => true
+            ), 
+            array(
+                'group'     => array('f_questions_begin' , 'f_calendar_questions_begin'),
+                'label'     => getGS('Questions Begin'),
+            ),
+            array(
+                'element'   => 'f_questions_end',
+                'type'      => 'text',
+                'constant'  => substr($data['questions_end'], 0, 10),
+                'required'  => true,
+                'attributes'    => array('id' => 'f_questions_end', 'size' => 10, 'maxlength' => 10),
+                'groupit'   => true          
+            ),
+            array(
+                'element'   => 'f_calendar_questions_end',
+                'type'      => 'static',
+                'text'      => '
+                    <img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/calendar.gif" id="f_trigger_questions_end"
+                         style="cursor: pointer; border: 1px solid red;"
+                          title="Date selector"
+                          onmouseover="this.style.background=\'red\'"
+                          onmouseout="this.style.background=\'\'" />
+                    <script type="text/javascript">
+                        Calendar.setup({
+                            inputField:"f_questions_end",
+                            ifFormat:"%Y-%m-%d",
+                            showsTime:false,
+                            showOthers:true,
+                            weekNumbers:false,
+                            range:new Array(2008, 2020),
+                            button:"f_trigger_questions_end"
+                        });
+                    </script>',
+                'groupit'   => true
+            ), 
+            array(
+                'group'     => array('f_questions_end' , 'f_calendar_questions_end'),
+                'label'     => getGS('Questions End'),
+            ),
+            array(
+                'element'   => 'f_questions_limit',
+                'type'      => 'text',
+                'label'     => getGS('Questions Limit'),
                 'default'   => $data['questions_limit']
             ),
-            'status' => array(
-                'element'   => 'f_interview_status',
+            array(
+                'element'   => 'f_status',
                 'type'      => 'select',
-                'options'   => array('draft' => 'Draft', 'published' => 'Publised'),
-                'label'     => 'status',
+                'options'   => array(
+                    'draft'     => getGS('draft'), 
+                    'pending'   => getGS('pending'), 
+                    'public'    => getGS('public'),
+                    'offline'   => getGS('offline')
+                ),
+                'label'     => getGS('Status'),
                 'default'   => $data['status']
             ),
-            'reset'     => array(
-                'element'   => 'f_interview_reset',
+            array(
+                'element'   => 'f_reset',
                 'type'      => 'reset',
-                'label'     => 'Reset',
+                'label'     => getGS('Reset'),
                 'groupit'   => true
             ),
-            'save'     => array(
-                'element'   => 'f_interview_submit',
+            array(
+                'element'   => 'f_submit',
                 'type'      => 'submit',
-                'label'     => 'Submit',
+                'label'     => getGS('Save'),
                 'groupit'   => true
             ),
-            'buttons'   => array(
-                'group'     => array('f_interview_submit', 'f_interview_reset')
+            array(
+                'group'     => array('f_submit', 'f_reset')
             )       
         );
         
@@ -557,27 +636,24 @@ class Interview extends DatabaseObject {
     {
         require_once 'HTML/QuickForm.php';
               
-        $mask = Interview::getFormMask($p_owner, $p_admin);        
+        $mask = self::getFormMask($p_owner, $p_admin);        
         $form = new html_QuickForm('interview', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask);   
            
         if ($form->validate()) {
             $data = $form->getSubmitValues();
-            
-            $context = CampTemplate::singleton()->context();
-            $moderator = $context->user->identifier;
-             
+                         
             $image_id = $this->getProperty('fk_image_id');
             
-            if ($data['f_interview_image_delete'] && $image_id) {
+            if ($data['f_image_delete'] && $image_id) {
                 $Image = new Image($this->getProperty('fk_image_id'));
                 $Image->delete();
                 $image_id = null;    
             } else {
-                $file = $form->getElementValue('f_interview_image');
+                $file = $form->getElementValue('f_image');
                 if (strlen($file['name'])) {
                     $attributes = array(
-                        'Description' => strlen($data['f_interview_image_description']) ? $data['f_interview_image_description'] : $file['name'],
+                        'Description' => strlen($data['f_image_description']) ? $data['f_image_description'] : $file['name'],
                     );
                     $Image = Image::OnImageUpload($file, $attributes, $p_user_id, !empty($image_id) ? $image_id : null);
                     if (is_a($Image, 'Image')) {
@@ -588,52 +664,39 @@ class Interview extends DatabaseObject {
                 }
             }
             
-            /*
-            $interview_begin = "{$data['f_interview_interview_begin']['Y']}-{$data['f_interview_interview_begin']['m']}-{$data['f_interview_interview_begin']['d']} ".
-                               "{$data['f_interview_interview_begin']['H']}:{$data['f_interview_interview_begin']['i']}:{$data['f_interview_interview_begin']['s']}";
-                               
-            $interview_end   = "{$data['f_interview_interview_end']['Y']}-{$data['f_interview_interview_end']['m']}-{$data['f_interview_interview_end']['d']} ".
-                               "{$data['f_interview_interview_end']['H']}:{$data['f_interview_interview_end']['i']}:{$data['f_interview_interview_end']['s']}";
-                               
-            $questions_begin = "{$data['f_interview_questions_begin']['Y']}-{$data['f_interview_questions_begin']['m']}-{$data['f_interview_questions_begin']['d']} ".
-                               "{$data['f_interview_questions_begin']['H']}:{$data['f_interview_questions_begin']['i']}:{$data['f_interview_questions_begin']['s']}";
-                               
-            $questions_end   = "{$data['f_interview_questions_end']['Y']}-{$data['f_interview_questions_end']['m']}-{$data['f_interview_questions_end']['d']} ".
-                               "{$data['f_interview_questions_end']['H']}:{$data['f_interview_questions_end']['i']}:{$data['f_interview_questions_end']['s']}";
-            */
-            
             if ($this->exists()) {
                 // edit existing interview    
-                $this->setProperty('fk_language_id', $data['f_interview_language_id']);
-                $this->setProperty('fk_moderator_user_id', $moderator);
-                $this->setProperty('fk_guest_user_id', $data['f_interview_guest_user_id']);
-                $this->setProperty('title', $data['f_interview_title']);
+                $this->setProperty('fk_language_id', $data['f_language_id']);
+                $this->setProperty('fk_moderator_user_id', $data['f_moderator_user_id']);
+                $this->setProperty('fk_guest_user_id', $data['f_guest_user_id']);
+                $this->setProperty('title', $data['f_title']);
                 $this->setProperty('fk_image_id', $image_id);
-                $this->setProperty('description_short', $data['f_interview_description_short']);
-                $this->setProperty('description', $data['f_interview_description']);
-                $this->setProperty('interview_begin', $data['f_interview_interview_begin']);
-                $this->setProperty('interview_end', $data['f_interview_interview_end']);
-                $this->setProperty('questions_begin', $data['f_questions_interview_begin']);
-                $this->setProperty('questions_end', $data['f_questions_interview_end']);
-                $this->setProperty('questions_limit', $data['f_interview_questions_limit']);
-                #$this->setProperty('status', $data['status']);
+                $this->setProperty('description_short', $data['f_description_short']);
+                $this->setProperty('description', $data['f_description']);
+                $this->setProperty('interview_begin', $data['f_interview_begin']);
+                $this->setProperty('interview_end', $data['f_interview_end'].' 23:59:59');
+                $this->setProperty('questions_begin', $data['f_questions_begin']);
+                $this->setProperty('questions_end', $data['f_questions_end'].' 23:59:59');
+                $this->setProperty('questions_limit', $data['f_questions_limit']);
+                $this->setProperty('status', $data['f_status']);
                 
                 return true;
             } else {
                 // create new interview
                 return $this->create(
-                    $data['f_interview_language_id'], 
+                    $data['f_language_id'], 
                     $moderator, 
-                    $data['f_interview_guest_user_id'],
-                    $data['f_interview_title'], 
+                    $data['f_guest_user_id'],
+                    $data['f_title'], 
                     $image_id, 
-                    $data['f_interview_description_short'], 
-                    $data['f_interview_description'],
-                    $data['f_interview_interview_begin'], 
-                    $data['f_interview_interview_end'],
-                    $data['f_interview_questions_begin'],
-                    $data['f_interview_questions_end'],
-                    $data['f_interview_questions_limit']
+                    $data['f_description_short'], 
+                    $data['f_description'],
+                    $data['f_interview_begin'], 
+                    $data['f_interview_end'].' 23:59:59',
+                    $data['f_questions_begin'],
+                    $data['f_questions_end'].' 23:59:59',
+                    $data['f_questions_limit'],
+                    $data['f_status']
                 );   
                 
             }            
@@ -745,7 +808,7 @@ class Interview extends DatabaseObject {
         unset($tmpInterview);
                 
         if (is_array($p_order)) {
-            $order = Interview::ProcessListOrder($p_order);
+            $order = self::ProcessListOrder($p_order);
             // sets the order condition if any
             foreach ($order as $orderField=>$orderDirection) {
                 $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
@@ -812,20 +875,35 @@ class Interview extends DatabaseObject {
         foreach ($p_order as $field=>$direction) {
             $dbField = null;
             switch (strtolower($field)) {
-                case 'bynumber':
-                    $dbField = 'interview_nr';
+                case 'byidentifier':
+                    $dbField = 'interview_id';
                     break;
                 case 'byname':
                     $dbField = 'title';
                     break;
-                case 'bybegin':
-                    $dbField = 'date_begin';
+                case 'bytitle':
+                    $dbField = 'title';
                     break;
-                case 'byend':
-                    $dbField = 'date_end';
+                case 'byquestions_begin':
+                    $dbField = 'questions_begin';
                     break;
-                case 'byvotes':
-                    $dbField = 'nr_of_votes';
+                case 'byquestions_end':
+                    $dbField = 'questions_end';
+                    break;
+                case 'byinterview_begin':
+                    $dbField = 'interview_begin';
+                    break;
+                case 'byinterview_end':
+                    $dbField = 'interview_end';
+                    break;
+                case 'bymoderator':
+                    $dbField = 'fk_moderator_user_id';
+                    break;
+                case 'byguest':
+                    $dbField = 'fk_guest_user_id';
+                    break;
+                case 'bystatus':
+                    $dbField = 'status';
                     break;
             }
             if (!is_null($dbField)) {
@@ -836,17 +914,26 @@ class Interview extends DatabaseObject {
         return $order;
     }
        
-    public function getUserByRole($p_role)
+    public function getUsersHavePermission($p_permission)
     {
         $users = array();
         
         foreach (User::getUsers() as $User) {
-            if ($User->hasPermission($p_role)) {
+            if ($User->hasPermission($p_permission)) {
                 $users[$User->m_data['Id']] = $User->m_data['Name'];   
             }       
         }
         return $users;
                
+    }
+    
+    public static function GetCampLanguagesList()
+    {
+        foreach (Language::GetLanguages() as $Language) {
+            $languageList[$Language->getLanguageId()] = $Language->getNativeName();   
+        }
+        asort($languageList);
+        return $languageList;   
     }
 
 } // class Interview

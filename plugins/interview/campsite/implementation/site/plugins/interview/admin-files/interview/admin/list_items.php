@@ -1,0 +1,270 @@
+<script language="javascript" src="/javascript/prototype/prototype.js"></script>
+<SCRIPT language="javascript">
+function ajax_action(action)
+{
+    $('f_action').value = action;
+    
+    var myAjax = new Ajax.Request(
+            "/admin/interview/admin/ajax_action.php",
+            { 
+                method: 'get',
+                parameters: Form.serialize($('items_list')),
+                onComplete: do_reload
+            }
+        );      
+    
+    
+}
+
+function do_reload(response)
+{
+    document.location.reload();   
+}
+</script>
+<?php
+// Check permissions
+if (!$g_user->hasPermission('plugin_interview_admin')) {
+    camp_html_display_error(getGS('You do not have the right to manage interviews.'));
+    exit;
+}
+
+$f_interview_id = Input::Get('f_interview_id', 'int');
+
+if (!$f_interview_id) {
+    invalid_input;   
+}
+
+$f_length = Input::Get('f_length', 'int', 20);
+$f_start = Input::Get('f_start', 'int', 0);
+$f_order = Input::Get('f_order', 'string', 'byidentifier');
+
+if ($f_status = Input::Get('f_status', 'string')) {
+    $constraints .= "status is $f_status ";    
+}
+
+$parameters = array(
+    'length' => $f_length,
+    'order' => "$f_order DESC",
+    'constraints' => $constraints
+);
+
+define('ADMIN_INTERVIEW_ID', $f_interview_id);  # we need this constant in InterviewItemsList::createList()
+$Interview = new Interview($f_interview_id);
+$InterviewItemsList = new InterviewItemsList($f_start, $parameters);
+$pager =& new SimplePager($InterviewItemsList->getTotalCount(), $f_length, "f_start", "index.php?f_order=$f_order&amp;f_interview_id=$f_interview_id&amp;", false);
+
+include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+?>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
+<TR>
+    <TD><B><?php  putGS('Interview: $1', $Interview->getTitle()); ?></B></A></TD>
+</tr>
+</TABLE>
+<p>
+
+<FORM name="selector" method="get">
+<input type="hidden" name="f_interview_id" id="f_interview_id" value="<?php p($f_interview_id) ?>" />
+
+<TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
+<TR>
+    <TD>
+        <TABLE cellpadding="0" cellspacing="0">
+        <TR>
+            <TD ALIGN="left">
+                <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" >
+                <TR>
+                    <TD><?php  putGS('Status'); ?>:</TD>
+                    <TD valign="middle">
+                        <SELECT NAME="f_status" class="input_select" onchange="this.form.submit()">
+                        <option value="0"><?php putGS("All"); ?></option>
+                        <?php
+                        foreach (array('draft', 'pending', 'public', 'offline') as $item) {
+                            echo '<OPTION value="'.$item.'"' ;
+                            if ($item == $f_status) {
+                                echo " selected";
+                            }
+                            echo '>'.getGS($item).'</option>';
+                        } ?>
+                        </SELECT>
+                    </TD>
+                </TR>
+                </TABLE>
+            </TD>
+            <TD style="padding-left: 20px;">
+                <script>
+                function action_selected(dropdownElement)
+                {
+                    // Verify that at least one checkbox has been selected.
+                    checkboxes = document.forms.items_list["f_items[]"];
+                    if (checkboxes) {
+                        isValid = false;
+                        numCheckboxesChecked = 0;
+                        // Special case for single checkbox
+                        // (when there is only one article in the section).
+                        if (!checkboxes.length) {
+                            isValid = checkboxes.checked;
+                            numCheckboxesChecked = isValid ? 1 : 0;
+                        }
+                        else {
+                            // Multiple checkboxes
+                            for (var index = 0; index < checkboxes.length; index++) {
+                                if (checkboxes[index].checked) {
+                                    isValid = true;
+                                    numCheckboxesChecked++;
+                                }
+                            }
+                        }
+                        if (!isValid) {
+                            alert("<?php putGS("You must select at least one item to perform an action."); ?>");
+                            dropdownElement.options[0].selected = true;
+                            return;
+                        }
+                    }
+                    else {
+                        dropdownElement.options[0].selected = true;
+                        return;
+                    }
+
+                    // Get the index of the "delete" option.
+                    deleteOptionIndex = -1;
+//                    translateOptionIndex = -1;
+                    for (var index = 0; index < dropdownElement.options.length; index++) {
+                        if (dropdownElement.options[index].value == "items_delete") {
+                            deleteOptionIndex = index;
+                        }
+//                        if (dropdownElement.options[index].value == "translate") {
+//                            translateOptionIndex = index;
+//                        }
+                    }
+
+                    // if the user has selected the "delete" option
+                    if (dropdownElement.selectedIndex == deleteOptionIndex) {
+                        ok = confirm("<?php putGS("Are you sure you want to delete the selected item(s)?"); ?>");
+                        if (!ok) {
+                            dropdownElement.options[0].selected = true;
+                            return;
+                        }
+                    }
+
+                    // do the action if it isnt the first or second option
+                    if ( (dropdownElement.selectedIndex != 0)) {
+                        ajax_action(document.forms.selector.f_action.value);
+                    }
+                }
+                </script>
+                <SELECT name="f_action" class="input_select" onchange="action_selected(this);">
+                    <OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
+                    <OPTION value="items_delete"><?php putGS("Delete"); ?></OPTION>
+                    <OPTION value="items_setdraft"><?php putGS("Status: Draft"); ?></OPTION>
+                    <OPTION value="items_setpending"><?php putGS("Status: Pending"); ?></OPTION>
+                    <OPTION value="items_setpublic"><?php putGS("Status: Public"); ?></OPTION>
+                    <OPTION value="items_setoffline"><?php putGS("Status: Offline"); ?></OPTION>
+                </SELECT>
+            </TD>
+
+            <TD style="padding-left: 5px; font-weight: bold;">
+                <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p($InterviewItemsList->count); ?>);">
+                <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p($InterviewItemsList->count); ?>);">
+            </TD>
+        </TR>
+        </TABLE>
+    </TD>
+
+</TR>
+</TABLE>
+</FORM>
+
+<?php
+$counter = 0;
+$color= 0;
+
+if ($InterviewItemsList->getLength()) {
+    ?>
+    <FORM name="items_list" id="items_list" action="items_action.php" method="POST">
+    <input type="hidden" name="f_interview_id" id="f_interview_id" value="<?php p($f_interview_id) ?>" />
+    <input type="hidden" name="f_action" id="f_action">
+    
+    <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;" width="95%">
+        <TR class="table_list_header">
+            <TD width="10">&nbsp;</TD>
+            <TD ALIGN="LEFT" VALIGN="TOP" width="500">
+                <A href="list_items.php?f_start=<?php echo $f_start ?>&amp;f_interview_id=<?php p($f_interview_id) ?>&amp;f_order=byquestion"><?php  putGS("Question"); ?></a>
+                &nbsp;<SMALL>(<?php putGS('click to edit') ?>)</SMALL>
+            </TD>
+            <TD VALIGN="TOP" width="500">
+                <A href="list_items.php?f_start=<?php echo $f_start ?>&amp;f_interview_id=<?php p($f_interview_id) ?>&amp;f_order=byanswer"><?php  putGS("Answer"); ?></a>
+                &nbsp;<SMALL>(<?php putGS('click to edit') ?>)</SMALL>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="30">
+                <A href="list_items.php?f_start=<?php echo $f_start ?>&amp;f_interview_id=<?php p($f_interview_id) ?>&amp;f_order=bystatus"><?php  putGS("Status"); ?></a>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="30">
+                <A href="list_items.php?f_start=<?php echo $f_start ?>&amp;f_interview_id=<?php p($f_interview_id) ?>&amp;f_order=byquestioneer"><?php  putGS("Questioneer"); ?></a>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="30">
+                <A href="list_items.php?f_start=<?php echo $f_start ?>&amp;f_interview_id=<?php p($f_interview_id) ?>&amp;f_order=byinterview_end"><?php  putGS("Delete"); ?></a>
+            </TD>
+        </TR>
+        <?php
+    
+        $used = array();
+     
+        while ($MetaInterviewItem = $InterviewItemsList->current) {
+            $InterviewItemsList->defaultIterator()->next();
+            
+            if ($color) {
+                $rowClass = "list_row_even";
+            } else {
+                $rowClass = "list_row_odd";
+            }
+            $color = !$color;
+            ?>
+            <script>default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";</script>
+            <TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
+                <TD>
+                    <input type="checkbox" value="<?php p((int)$MetaInterviewItem->identifier); ?>" name="f_items[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
+                </TD>
+              
+                <td>
+                    <a href="javascript: void(0);" onclick="window.open('edit_item.php?f_item_id=<?php p($MetaInterviewItem->identifier) ?>', 'edit_item', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');">
+                        <?php p($MetaInterviewItem->question); ?>
+                    </a>
+                </td>
+               
+                <td>
+                    <a href="javascript: void(0);" onclick="window.open('edit_item.php?f_item_id=<?php p($MetaInterviewItem->identifier) ?>', 'edit_item', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');">
+                        <?php p($MetaInterviewItem->answer); ?>
+                    </a>
+                </td>
+                
+                <td align="center"><?php p($MetaInterviewItem->status); ?></td>
+                
+                <td align="center"><?php p($MetaInterviewItem->questioneer->name); ?></td>
+                             
+                <td align='center'>
+                    <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {
+                        uncheckAll(<?php p($InterviewItemsList->count); ?>);
+                        document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
+                        ajax_action('items_delete') 
+                        }">
+                        <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">
+                    </a>
+                </td>
+                
+            </tr>
+            <?php
+            $counter++;
+        }
+      ?>
+    </table>
+</FORM>
+<?php 
+} else {?>
+    <BLOCKQUOTE>
+    <LI><?php  putGS('No interview items.'); ?></LI>
+    </BLOCKQUOTE>  
+    <?php 
+}
+?>

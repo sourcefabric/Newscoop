@@ -14,11 +14,12 @@ class InterviewItemsList extends ListObject
                                );
                                    
     private static $s_orderFields = array(
-                                      'byquestion',
-                                      'byanswer',
-                                      'bynumber',
+                                      'byidentifier',
                                       'byquestioneer',
-                                      'byinterview'
+                                      'byquestion',
+                                      'bystatus',
+                                      'byanswer',
+                                      'byorder'                                      
                                 );
                                    
 	/**
@@ -34,15 +35,19 @@ class InterviewItemsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $operator = new Operator('is');
-	    $context = CampTemplate::singleton()->context();
-
-	    if (!$context->interview->identifier) {
-	      return false;    
+	    if (defined('ADMIN_INTERVIEW_ID')) {
+            $interview_id = ADMIN_INTERVIEW_ID;
+	    } else {
+	       $interview_id = CampTemplate::singleton()->context()->interview->identifier;
+	        
 	    }
-	    
-	    $comparisonOperation = new ComparisonOperation('interview_id', $operator,
-	                                                   $context->interview->identifier);
+
+	    if (!$interview_id) {
+	      return false;    
+	    }	
+	        
+	    $operator = new Operator('is');
+	    $comparisonOperation = new ComparisonOperation('interview_id', $operator, $interview_id);
 	    $this->m_constraints[] = $comparisonOperation; 
         
 	    $interviewItemsList = InterviewItem::GetList($this->m_constraints, $this->m_item, $this->m_order, $p_start, $p_limit, $p_count);
@@ -129,7 +134,7 @@ class InterviewItemsList extends ListObject
 	    foreach ($p_order as $word) {
 	        switch ($state) {
                 case 1: // reading the order field
-	                if (!array_search(strtolower($word), InterviewItemsList::$s_orderFields)) {
+	                if (array_search(strtolower($word), InterviewItemsList::$s_orderFields) === false) {
 	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_interviewitems, order parameter");
 	                } else {
     	                $orderField = $word;
