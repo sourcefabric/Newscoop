@@ -31,10 +31,12 @@ if (strpos($call_script, '/interview/admin/') !== false && $g_user->hasPermissio
     $is_admin = true;   
 }
 if (strpos($call_script, '/interview/moderator/') !== false && $g_user->hasPermission('plugin_interview_moderator')) {
-    $is_moderator = true;   
+    $is_moderator = true;
+    $constraints .= "moderator_user_id is {$g_user->getUserId()} ";   
 }
 if (strpos($call_script, '/interview/guest/') !== false && $g_user->hasPermission('plugin_interview_guest')) {
-    $is_guest = true;   
+    $is_guest = true;
+    $constraints .= "guest_user_id is {$g_user->getUserId()} ";  
 }
 
 // Check permissions
@@ -46,10 +48,6 @@ if (!$is_admin && !$is_moderator && !$is_guest) {
 $f_length = Input::Get('f_length', 'int', 20);
 $f_start = Input::Get('f_start', 'int', 0);
 $f_order = Input::Get('f_order', 'string', 'byidentifier');
-
-if ($is_moderator) {
-    $constraints .= "moderator_user_id is {$g_user->getUserId()} ";    
-}
 
 if ($f_language_id = Input::Get('f_language_id', 'int')) {
     $constraints .= "language_id is $f_language_id ";   
