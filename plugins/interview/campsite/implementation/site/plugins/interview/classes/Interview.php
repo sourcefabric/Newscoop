@@ -625,7 +625,14 @@ class Interview extends DatabaseObject {
                 'groupit'   => true
             ),
             array(
-                'group'     => array('f_submit', 'f_reset')
+                'element'   => 'f_cancel',
+                'type'      => 'button',
+                'label'     => getGS('Cancel'),
+                'attributes' => array('onClick' => 'window.close()'),
+                'groupit'   => true
+            ), 
+            array(
+                'group'     => array('f_reset', 'f_cancel', 'f_submit')
             )       
         );
         

@@ -425,7 +425,7 @@ class InterviewItem extends DatabaseObject {
         } 
     }
     
-    private function getFormMask($p_type)
+    private function getFormMask($p_role)
     {
         $data = $this->m_data;
                 
@@ -450,18 +450,18 @@ class InterviewItem extends DatabaseObject {
                 'type'      => 'textarea',
                 'label'     => getGS('Question'),
                 'default'   => $data['question'],
-                'attributes'=> array('cols' => 40, 'rows' => 5),
-                'required'  => true,
-            ),
+                'required'  => $p_role == 'admin' || $p_role == 'moderator' ? true : false,
+                'attributes'=> $p_role == 'admin' || $p_role == 'moderator' ? false : array('readonly', 'disabled')
+            ), 
             array(
                 'element'   => 'f_answer',
                 'type'      => 'textarea',
                 'label'     => getGS('Answer'),
                 'default'   => $data['answer'],
-                'attributes'=> array('cols' => 40, 'rows' => 5),
-                'required'  => $p_type == 'answer' ? true : false,
-            ),
-            $p_type == 'item' ? 
+                'required'  => $p_role == 'guest' ? true : false,
+                'attributes'=> $p_role == 'admin' || $p_role == 'guest' ? false : array('readonly', 'disabled')
+            ), 
+            $p_role == 'admin' || $p_role == 'moderator' ? 
                 array(
                     'element'   => 'f_status',
                     'type'      => 'select',
@@ -474,7 +474,14 @@ class InterviewItem extends DatabaseObject {
                         'offline'   => getGS('offline')
                     )
                 )
-            : null,            
+                : $p_role == 'guest' && $data['status'] == 'pending' ?
+                    array(
+                        'element'   => 'f_status',
+                        'type'      => 'hidden',
+                        'constant'  => 'public',
+                    )
+                    :
+                    null,
             array(
                 'element'   => 'f_reset',
                 'type'      => 'reset',
@@ -483,20 +490,19 @@ class InterviewItem extends DatabaseObject {
             ),
             array(
                 'element'   => 'f_submit',
-                'type'      => 'button',
+                'type'      => 'submit',
                 'label'     => getGS('Save'),
-                'attributes'=> array('onclick' => 'this.form.submit()'),
                 'groupit'   => true
             ),
             array(
-                'element'   => 'cancel',
+                'element'   => 'f_cancel',
                 'type'      => 'button',
                 'label'     => getGS('Cancel'),
-                'attributes' => array('onClick' => 'history.back()'),
+                'attributes' => array('onClick' => 'window.close()'),
                 'groupit'   => true
             ), 
             array(
-                'group'     => array('f_submit', 'f_reset')
+                'group'     => array('f_reset', 'f_cancel', 'f_submit')
             )       
         );
         
@@ -513,9 +519,16 @@ class InterviewItem extends DatabaseObject {
            
         if ($form->validate()) {
             $data = $form->getSubmitValues();
-            $this->setProperty('question', $data['f_question']);
-            $this->setProperty('answer', $data['f_answer']);
-            $this->setProperty('status', $data['f_status']);
+            
+            if (strlen($data['f_question'])) {
+                $this->setProperty('question', $data['f_question']);
+            }
+            if (strlen($data['f_answer'])) {
+                $this->setProperty('answer', $data['f_answer']);
+            }
+            if (strlen($data['f_status'])) {
+                $this->setProperty('status', $data['f_status']);
+            }
             return true;
         }
         return false;

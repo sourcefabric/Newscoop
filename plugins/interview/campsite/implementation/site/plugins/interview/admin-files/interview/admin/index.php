@@ -5,7 +5,7 @@ function ajax_action(action)
     $('f_action').value = action;
 
     var myAjax = new Ajax.Request(
-            "/admin/interview/admin/ajax_action.php",
+            "/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php",
             { 
                 method: 'get',
                 parameters: Form.serialize($('interviews_list')),
@@ -18,12 +18,27 @@ function ajax_action(action)
 
 function do_reload(response)
 {
+    if (response.responseText) {
+        alert(response.responseText);   
+    }
     document.location.reload();   
 }
 </script>
 <?php
+
+// User role depend on path to this file. Tricky: moderator and guest folders are just symlink to admin files!
+if (strpos($call_script, '/interview/admin/') !== false && $g_user->hasPermission('plugin_interview_admin')) {
+    $is_admin = true;   
+}
+if (strpos($call_script, '/interview/moderator/') !== false && $g_user->hasPermission('plugin_interview_moderator')) {
+    $is_moderator = true;   
+}
+if (strpos($call_script, '/interview/guest/') !== false && $g_user->hasPermission('plugin_interview_guest')) {
+    $is_guest = true;   
+}
+
 // Check permissions
-if (!$g_user->hasPermission('plugin_interview_admin')) {
+if (!$is_admin && !$is_moderator && !$is_guest) {
     camp_html_display_error(getGS('You do not have the right to manage interviews.'));
     exit;
 }
@@ -31,6 +46,10 @@ if (!$g_user->hasPermission('plugin_interview_admin')) {
 $f_length = Input::Get('f_length', 'int', 20);
 $f_start = Input::Get('f_start', 'int', 0);
 $f_order = Input::Get('f_order', 'string', 'byidentifier');
+
+if ($is_moderator) {
+    $constraints .= "moderator_user_id is {$g_user->getUserId()} ";    
+}
 
 if ($f_language_id = Input::Get('f_language_id', 'int')) {
     $constraints .= "language_id is $f_language_id ";   
@@ -53,12 +72,15 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
-<TR>
-    <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=600, top=200, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-    <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=600, top=200, left=100');" ><B><?php  putGS("Add new Interview"); ?></B></A></TD>
-</tr>
-</TABLE>
+<?php if ($is_admin) { ?>
+    <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
+    <TR>
+        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=600, top=200, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=600, top=200, left=100');" ><B><?php  putGS("Add new Interview"); ?></B></A></TD>
+    </tr>
+    </TABLE>
+<?php } ?>
+
 <p>
 
 <FORM name="selector" method="get">
@@ -107,7 +129,9 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                 </TR>
                 </TABLE>
             </TD>
-            <TD style="padding-left: 20px;">
+            
+            <?php if ($is_admin) { ?>
+              <TD style="padding-left: 20px;">
                 <script>
                 function action_selected(dropdownElement)
                 {
@@ -144,14 +168,11 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 
                     // Get the index of the "delete" option.
                     deleteOptionIndex = -1;
-//                    translateOptionIndex = -1;
+
                     for (var index = 0; index < dropdownElement.options.length; index++) {
                         if (dropdownElement.options[index].value == "interviews_delete") {
                             deleteOptionIndex = index;
                         }
-//                        if (dropdownElement.options[index].value == "translate") {
-//                            translateOptionIndex = index;
-//                        }
                     }
 
                     // if the user has selected the "delete" option
@@ -169,6 +190,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                     }
                 }
                 </script>
+                
                 <SELECT name="f_action" class="input_select" onchange="action_selected(this);">
                     <OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
                     <OPTION value="interviews_delete"><?php putGS("Delete"); ?></OPTION>
@@ -177,12 +199,13 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                     <OPTION value="interviews_setpublic"><?php putGS("Status: Public"); ?></OPTION>
                     <OPTION value="interviews_setoffline"><?php putGS("Status: Offline"); ?></OPTION>
                 </SELECT>
-            </TD>
-
-            <TD style="padding-left: 5px; font-weight: bold;">
+              </TD>
+        
+              <TD style="padding-left: 5px; font-weight: bold;">
                 <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p($InterviewsList->count); ?>);">
                 <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p($InterviewsList->count); ?>);">
-            </TD>
+              </TD>
+            <?php } ?>
         </TR>
         </TABLE>
     </TD>
@@ -202,13 +225,25 @@ if ($InterviewsList->getLength()) {
     
     <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;" width="95%">
         <TR class="table_list_header">
-            <TD width="10">&nbsp;</TD>
-            <TD ALIGN="LEFT" VALIGN="TOP" width="800">
+        
+            <?php if($is_admin) { ?>
+                <TD width="10">&nbsp;</TD>
+            <?php } ?>
+            
+            <TD ALIGN="LEFT" VALIGN="TOP" width="500">
                 <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=byname"><?php  putGS("Name"); ?></a>
-                &nbsp;<SMALL>(click to edit)</SMALL>
+                &nbsp;<SMALL>
+                <?php if ($is_admin) putGS('Click to edit'); ?>
+                </SMALL>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="30">
                 <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=bystatus"><?php  putGS("Status"); ?></a>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="30">
+                <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=bymoderator"><?php  putGS("Moderator"); ?></a>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="30">
+                <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=byguest"><?php  putGS("Guest"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="30">
                 <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=byquestions_begin"><?php  putGS("Questions Begin"); ?></a>
@@ -223,11 +258,12 @@ if ($InterviewsList->getLength()) {
                 <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=byinterview_end"><?php  putGS("Interview End"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="20"><?php putGS('List Items') ?></TD>
-            <TD align="center" valign="top" width="20">&nbsp;</TD>
+            
+            <?php if($is_admin) { ?>
+                <TD align="center" valign="top" width="20">&nbsp;</TD>
+            <?php } ?>
         </TR>
         <?php
-    
-        $used = array();
      
         while ($MetaInterview = $InterviewsList->current) {
             $InterviewsList->defaultIterator()->next();
@@ -241,26 +277,29 @@ if ($InterviewsList->getLength()) {
             ?>
             <script>default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";</script>
             <TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
-                <TD>
-                    <input type="checkbox" value="<?php p((int)$MetaInterview->identifier); ?>" name="f_interviews[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
-                </TD>
-              
+                
+                <?php if($is_admin) { ?>
+                    <TD>
+                        <input type="checkbox" value="<?php p((int)$MetaInterview->identifier); ?>" name="f_interviews[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
+                    </TD>
+                <?php } ?>
+                
                 <td>
-                    <?php
-                    if (!array_key_exists($MetaInterview->identifier, $used)) {
-                        p($MetaInterview->identifier.'.');
-                        $used[$MetaInterview->identifier] = true;   
+                    <?php 
+                    p($MetaInterview->identifier.'.'); 
+                    
+                    if ($is_admin) {
+                        ?><a href="javascript: void(0);" onclick="window.open('edit.php?f_interview_id=<?php p($MetaInterview->identifier); ?>', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=600, top=200, left=100');"><?php p($MetaInterview->title); ?></a><?php
                     } else {
-                        p('&nbsp;&nbsp;');   
+                        p($MetaInterview->title);
                     }
                     ?>
-                    <a href="javascript: void(0);" onclick="window.open('edit.php?f_interview_id=<?php p($MetaInterview->identifier); ?>', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=600, top=200, left=100');">
-                        <?php p($MetaInterview->title); ?>
-                    </a>
-                    &nbsp; (<?php p($MetaInterview->language->name); ?>)
+                    (<?php p($MetaInterview->language->name); ?>)
                 </td>
               
                 <td align="center"><?php putGS($MetaInterview->status); ?></td>
+                <td align="center"><?php putGS($MetaInterview->moderator->name); ?></td>
+                <td align="center"><?php putGS($MetaInterview->guest->name); ?></td>
                 <td align="center"><?php p(strftime('%Y-%m-%d', $MetaInterview->questions_begin)); ?></td>
                 <td align="center"><?php p(strftime('%Y-%m-%d', $MetaInterview->questions_end)); ?></td>
                 <td align="center"><?php p(strftime('%Y-%m-%d', $MetaInterview->interview_begin)); ?></td>
@@ -272,16 +311,17 @@ if ($InterviewsList->getLength()) {
                     </a>
                 </td>
               
-                <td align='center'>
-                    <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {
-                        uncheckAll(<?php p($InterviewsList->count); ?>);
-                        document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
-                        ajax_action('interviews_delete') 
-                        }">
-                        <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">
-                    </a>
-                </td>
-                
+                <?php if($is_admin) { ?>
+                    <td align='center'>
+                        <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {
+                            uncheckAll(<?php p($InterviewsList->count); ?>);
+                            document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
+                            ajax_action('interviews_delete') 
+                            }">
+                            <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">
+                        </a>
+                    </td>
+                 <?php } ?>   
             </tr>
             <?php
             $counter++;

@@ -44,7 +44,11 @@ $no_menu_scripts = array(
 	'/comments/do_ban.php',
 	'/imagearchive/do_add.php',
 	'/interview/admin/edit.php',
-	'/interview/admin/edit_item.php'
+	'/interview/admin/edit_item.php',
+	'/interview/moderator/edit.php',
+	'/interview/moderator/edit_item.php',
+	'/interview/guest/edit.php',
+	'/interview/guest/edit_item.php'
 	);
 
 $request_uri = $_SERVER['REQUEST_URI'];

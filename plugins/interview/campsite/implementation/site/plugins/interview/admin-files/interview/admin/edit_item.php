@@ -13,8 +13,22 @@
 <body>
 <?php
 
+// User role depend on path to this file. Tricky: moderator and guest folders are just symlink to admin files!
+if (strpos($call_script, '/interview/admin/') !== false && $g_user->hasPermission('plugin_interview_admin')) {
+    $is_admin = true;
+    $form_role = 'admin';   
+}
+if (strpos($call_script, '/interview/moderator/') !== false && $g_user->hasPermission('plugin_interview_moderator')) {
+    $is_moderator = true;
+    $form_role = 'moderator';   
+}
+if (strpos($call_script, '/interview/guest/') !== false && $g_user->hasPermission('plugin_interview_guest')) {
+    $is_guest = true;
+    $form_role = 'guest';   
+}
+
 // Check permissions
-if (!$g_user->hasPermission('plugin_interview_admin')) {
+if (!$is_admin && !$is_moderator && !$is_guest) {
     camp_html_display_error(getGS('You do not have the right to manage interviews.'));
     exit;
 }
@@ -47,7 +61,7 @@ if ($InterviewItem->store()) {
     </TR>
     <tr>
         <td>
-            <?php p($InterviewItem->getForm('item', 'edit_item.php', array(), true)); ?>
+            <?php p($InterviewItem->getForm($form_role, 'edit_item.php', array(), true)); ?>
         </td>
     </tr>
 </table>
