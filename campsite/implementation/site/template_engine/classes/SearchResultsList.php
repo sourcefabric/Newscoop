@@ -33,15 +33,15 @@ class SearchResultsList extends ListObject
 	{
 	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
-	    if ($p_parameters['search_level'] >= SEARCH_LEVEL_PUBLICATION) {
+	    if ($p_parameters['search_level'] >= MetaActionSearchArticles::SEARCH_LEVEL_PUBLICATION) {
 	        $this->m_constraints[] = new ComparisonOperation('Articles.IdPublication', $operator,
 	                                                         $context->publication->identifier);
 	    }
-	    if ($p_parameters['search_level'] >= SEARCH_LEVEL_ISSUE) {
+	    if ($p_parameters['search_level'] >= MetaActionSearchArticles::SEARCH_LEVEL_ISSUE) {
 	        $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
 	                                                         $context->issue->number);
 	    }
-	    if ($p_parameters['search_level'] >= SEARCH_LEVEL_SECTION) {
+	    if ($p_parameters['search_level'] >= MetaActionSearchArticles::SEARCH_LEVEL_SECTION) {
 	        $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
 	                                                         $context->section->number);
 	    }

@@ -62,13 +62,13 @@ class MetaActionSearchArticles extends MetaAction
         && strtolower($p_input['f_match_all']) == true ? 'true' : 'false';
 
         if (isset($p_input['f_search_level'])) {
-            if ($p_input['f_search_level'] < SEARCH_LEVEL_MULTIPLE_PUBLICATION
-            || $p_input['f_search_level'] > SEARCH_LEVEL_SECTION) {
-                $p_input['f_search_level'] = DEFAULT_SEARCH_LEVEL;
+            if ($p_input['f_search_level'] < MetaActionSearchArticles::SEARCH_LEVEL_MULTIPLE_PUBLICATION
+            || $p_input['f_search_level'] > MetaActionSearchArticles::SEARCH_LEVEL_SECTION) {
+                $p_input['f_search_level'] = MetaActionSearchArticles::DEFAULT_SEARCH_LEVEL;
             }
             $this->m_properties['search_level'] = $p_input['f_search_level'];
         } else {
-            $this->m_properties['search_level'] = DEFAULT_SEARCH_LEVEL;
+            $this->m_properties['search_level'] = MetaActionSearchArticles::DEFAULT_SEARCH_LEVEL;
         }
 
         $this->m_error = ACTION_OK;
