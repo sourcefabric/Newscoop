@@ -156,7 +156,7 @@ class CampURIShortNames extends CampURI
             return $this->m_template->name;
         }
 
-        $templateId = $this->getQueryVar(CampRequest::TEMPLATE_ID);
+        $templateId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
         if (!empty($templateId)) {
             $tplObj = new Template($templateId);
             if (!is_object($tplObj) || !$tplObj->exists()) {
