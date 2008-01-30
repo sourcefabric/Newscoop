@@ -25,7 +25,7 @@
             {{ include file='interview/interview-details.tpl' }}
             <br>
             
-            {{ if $campsite->interview->in_question_timeframe }}
+            {{ if $campsite->interview->in_questions_timeframe }}
                 <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=form">Add your question</a>
             
                 {{ list_interviewitems length=1 constraints='status not rejected' }}
