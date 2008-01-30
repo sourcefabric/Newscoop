@@ -13,7 +13,7 @@ class MetaActionSearchArticles extends MetaAction
     
     const SEARCH_LEVEL_SECTION = 3;
     
-    const DEFAULT_SEARCH_LEVEL = SEARCH_LEVEL_PUBLICATION;
+    const DEFAULT_SEARCH_LEVEL = MetaActionSearchArticles::SEARCH_LEVEL_PUBLICATION;
     
     /**
      * Stores the array of articles that matched the search criteria.
