@@ -606,8 +606,8 @@ class Interview extends DatabaseObject {
                 'options'   => array(
                     'draft'     => getGS('draft'), 
                     'pending'   => getGS('pending'), 
-                    'public'    => getGS('public'),
-                    'offline'   => getGS('offline')
+                    'published' => getGS('published'),
+                    'rejected'   => getGS('rejected')
                 ),
                 'label'     => getGS('Status'),
                 'default'   => $data['status']

@@ -25,7 +25,7 @@ class MetaActionInterviewitemstatus extends MetaAction
             case 'draft':
             case 'pending':
             case 'public':
-            case 'offline':
+            case 'rejected':
             case 'delete':
                 $this->m_interviewitem = new InterviewItem($p_input['f_interviewitem_id']);
                 $this->m_properties['status'] = $p_input['f_interviewitemstatus'];    

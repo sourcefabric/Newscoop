@@ -394,11 +394,11 @@ class InterviewItem extends DatabaseObject {
     }
     
     
-    public function getForm($p_type='item', $p_target='index.php', $p_add_hidden_vars=array(), $p_html=false)
+    public function getForm($p_role, $p_target='index.php', $p_add_hidden_vars=array(), $p_html=false)
     {
         require_once 'HTML/QuickForm.php';
               
-        $mask = InterviewItem::getFormMask($p_type);
+        $mask = InterviewItem::getFormMask($p_role);
 
         if (is_array($p_add_hidden_vars)) {
             foreach ($p_add_hidden_vars as $k => $v) {       
@@ -470,18 +470,20 @@ class InterviewItem extends DatabaseObject {
                     'options'=> array(
                         'draft'     => getGS('draft'), 
                         'pending'   => getGS('pending'), 
-                        'public'    => getGS('public'),
-                        'offline'   => getGS('offline')
+                        'published' => getGS('published'),
+                        'rejected'   => getGS('rejected')
                     )
                 )
-                : $p_role == 'guest' && $data['status'] == 'pending' ?
-                    array(
-                        'element'   => 'f_status',
-                        'type'      => 'hidden',
-                        'constant'  => 'public',
-                    )
-                    :
-                    null,
+                : (
+                    $p_role == 'guest' && $data['status'] == 'pending' ?
+                        array(
+                            'element'   => 'f_status',
+                            'type'      => 'hidden',
+                            'constant'  => 'published',
+                        )
+                        :
+                        null
+                  ),
             array(
                 'element'   => 'f_reset',
                 'type'      => 'reset',

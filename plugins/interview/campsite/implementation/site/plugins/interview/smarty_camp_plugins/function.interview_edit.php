@@ -120,7 +120,7 @@ function smarty_function_interview_edit($p_params, &$p_smarty)
             break;
             
             case 'status':
-                $options = array('draft' => 'draft', 'pending' => 'pending', 'public' => 'public', 'offline', 'offline');   
+                $options = array('draft' => 'draft', 'pending' => 'pending', 'published' => 'published', 'rejected', 'rejected');   
 
                 $html = '<select name="f_interview_status" id="interview_"'.$attribute.'>';
                 $html.= smarty_function_html_options(array(

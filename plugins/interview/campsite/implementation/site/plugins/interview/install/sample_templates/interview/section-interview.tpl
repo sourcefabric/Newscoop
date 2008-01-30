@@ -28,19 +28,19 @@
             {{ if $campsite->interview->in_question_timeframe }}
                 <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=form">Add your question</a>
             
-                {{ list_interviewitems length=1 constraints='status not offline' }}
+                {{ list_interviewitems length=1 constraints='status not rejected' }}
                     <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=list">List existing questions</a>
                 {{ /list_interviewitems }}
                  
              {{ elseif $campsite->interview->in_interview_timeframe }}
 
-                {{ list_interviewitems length=1 constraints='status not offline' }}
+                {{ list_interviewitems length=1 constraints='status not rejected' }}
                     <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=list">List existing questions</a>
                 {{ /list_interviewitems }}
 
              {{ elseif $campsite->interview->status == 'published' }}
 
-                {{ list_interviewitems length=1 constraints='status not offline' }}
+                {{ list_interviewitems length=1 constraints='status not rejected' }}
                     <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=list">Show interview</a>
                 {{ /list_interviewitems }}
 

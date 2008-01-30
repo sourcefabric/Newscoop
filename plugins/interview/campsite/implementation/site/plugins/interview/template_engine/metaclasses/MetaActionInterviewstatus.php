@@ -25,7 +25,7 @@ class MetaActionInterviewstatus extends MetaAction
             case 'draft':
             case 'pending':
             case 'published':
-            case 'offline':
+            case 'rejected':
             case 'delete':
                 $this->m_interview = new Interview($p_input['f_interview_id']);
                 $this->m_properties['status'] = $p_input['f_interviewstatus'];    

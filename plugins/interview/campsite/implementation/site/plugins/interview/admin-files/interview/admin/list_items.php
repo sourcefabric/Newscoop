@@ -97,7 +97,12 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                         <SELECT NAME="f_status" class="input_select" onchange="this.form.submit()">
                         <option value="0"><?php putGS("All"); ?></option>
                         <?php
-                        foreach (array('draft', 'pending', 'public', 'offline') as $item) {
+                        if ($is_admin || $is_moderator) {
+                            $displ_status = array('draft', 'pending', 'published', 'rejected');   
+                        } else {
+                            $displ_status = array('pending', 'published', 'rejected');    
+                        }
+                        foreach ($displ_status as $item) {
                             echo '<OPTION value="'.$item.'"' ;
                             if ($item == $f_status) {
                                 echo " selected";
@@ -175,8 +180,8 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                     <OPTION value="items_delete"><?php putGS("Delete"); ?></OPTION>
                     <OPTION value="items_setdraft"><?php putGS("Status: Draft"); ?></OPTION>
                     <OPTION value="items_setpending"><?php putGS("Status: Pending"); ?></OPTION>
-                    <OPTION value="items_setpublic"><?php putGS("Status: Public"); ?></OPTION>
-                    <OPTION value="items_setoffline"><?php putGS("Status: Offline"); ?></OPTION>
+                    <OPTION value="items_setpublished"><?php putGS("Status: Published"); ?></OPTION>
+                    <OPTION value="items_setrejected"><?php putGS("Status: Offline"); ?></OPTION>
                 </SELECT>
               </TD>
         

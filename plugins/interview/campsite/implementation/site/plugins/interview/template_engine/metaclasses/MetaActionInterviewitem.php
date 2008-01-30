@@ -74,7 +74,7 @@ class MetaActionInterviewitem extends MetaAction
                     return false;
                 }
                 $this->m_interviewitem->setProperty('answer', $this->m_properties['answer']);
-                $this->m_interviewitem->setProperty('status', 'public');
+                $this->m_interviewitem->setProperty('status', 'published');
             }
             
             if ($is_moderator) {

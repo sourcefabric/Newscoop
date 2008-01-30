@@ -6,7 +6,7 @@
     <option value="draft" {{ if $smarty.request.filter_interview_status == 'draft' }}selected{{ /if }}>draft</option>
     <option value="pending" {{ if $smarty.request.filter_interview_status == 'pending' }}selected{{ /if }}>pending</option>
     <option value="published" {{ if $smarty.request.filter_interview_status == 'published' }}selected{{ /if }}>published</option>
-    <option value="offline" {{ if $smarty.request.filter_interview_status == 'offline' }}selected{{ /if }}>offline</option>
+    <option value="rejected" {{ if $smarty.request.filter_interview_status == 'rejected' }}selected{{ /if }}>rejected</option>
   </select>
 </form>
 

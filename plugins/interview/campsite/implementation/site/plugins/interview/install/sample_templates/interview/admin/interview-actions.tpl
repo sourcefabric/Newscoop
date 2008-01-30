@@ -7,9 +7,9 @@
     <a href="{{ uripath }}?f_interviewstatus=published&amp;f_interview_id={{ $campsite->interview->identifier }}">Set published</a>
     
 {{ elseif $campsite->interview->status == 'published' }}
-    <a href="{{ uripath }}?f_interviewstatus=offline&amp;f_interview_id={{ $campsite->interview->identifier }}">Set offline</a>
+    <a href="{{ uripath }}?f_interviewstatus=rejected&amp;f_interview_id={{ $campsite->interview->identifier }}">Set rejected</a>
     
-{{ elseif $campsite->interview->status == 'offline' }}
+{{ elseif $campsite->interview->status == 'rejected' }}
     <a href="{{ uripath }}?f_interviewstatus=draft&amp;f_interview_id={{ $campsite->interview->identifier }}">Set draft</a>
     
 {{ /if }}

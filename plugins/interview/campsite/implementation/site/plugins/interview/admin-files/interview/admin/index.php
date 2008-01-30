@@ -115,7 +115,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                         <SELECT NAME="f_status" class="input_select" onchange="this.form.submit()">
                         <option value="0"><?php putGS("All"); ?></option>
                         <?php
-                        foreach (array('draft', 'pending', 'public', 'offline') as $item) {
+                        foreach (array('draft', 'pending', 'published', 'rejected') as $item) {
                             echo '<OPTION value="'.$item.'"' ;
                             if ($item == $f_status) {
                                 echo " selected";
@@ -194,8 +194,8 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                     <OPTION value="interviews_delete"><?php putGS("Delete"); ?></OPTION>
                     <OPTION value="interviews_setdraft"><?php putGS("Status: Draft"); ?></OPTION>
                     <OPTION value="interviews_setpending"><?php putGS("Status: Pending"); ?></OPTION>
-                    <OPTION value="interviews_setpublic"><?php putGS("Status: Public"); ?></OPTION>
-                    <OPTION value="interviews_setoffline"><?php putGS("Status: Offline"); ?></OPTION>
+                    <OPTION value="interviews_setpublished"><?php putGS("Status: Published"); ?></OPTION>
+                    <OPTION value="interviews_setrejected"><?php putGS("Status: Offline"); ?></OPTION>
                 </SELECT>
               </TD>
         

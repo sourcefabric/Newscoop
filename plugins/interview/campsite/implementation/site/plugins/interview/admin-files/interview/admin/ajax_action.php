@@ -30,8 +30,8 @@ function camp_interview_permission_check($p_action)
         
         case 'interviews_setdraft':
         case 'interviews_setpending':
-        case 'interviews_setpublic':
-        case 'interviews_setoffline':
+        case 'interviews_setpublished':
+        case 'interviews_setrejected':
             if ($is_admin) {
                 return true;    
             }
@@ -39,8 +39,8 @@ function camp_interview_permission_check($p_action)
         
         case 'items_setdraft':
         case 'items_setpending':
-        case 'items_setpublic':
-        case 'items_setoffline':
+        case 'items_setpublished':
+        case 'items_setrejected':
             if ($is_admin || $is_moderator) {
                 return true;    
             }
@@ -78,8 +78,8 @@ switch ($f_action) {
     
     case 'interviews_setdraft':
     case 'interviews_setpending':
-    case 'interviews_setpublic':
-    case 'interviews_setoffline':
+    case 'interviews_setpublished':
+    case 'interviews_setrejected':
         $f_interviews = Input::Get('f_interviews', 'array');
         $status = substr($f_action, 14);
         
@@ -91,8 +91,8 @@ switch ($f_action) {
     
     case 'items_setdraft':
     case 'items_setpending':
-    case 'items_setpublic':
-    case 'items_setoffline':
+    case 'items_setpublished':
+    case 'items_setrejected':
         $f_items = Input::Get('f_items', 'array');
         $status = substr($f_action, 9);
         
