@@ -1,4 +1,4 @@
-<h6>{{ $smarty.template }}</h6>
+<!-- {{ $smarty.template }} -->
 
 <table border=1 width=100%>
     <tr><td width=150>InterviewId</td><td>{{ $campsite->interview->identifier }}</td></tr>
@@ -16,3 +16,6 @@
     <tr><td>Questions Limit</td><td>{{ $campsite->interview->questions_limit }}</td></tr>
     <tr><td>Status</td><td>{{ $campsite->interview->status }}</td></tr>
 </table>
+
+
+<!-- /{{ $smarty.template }} -->
