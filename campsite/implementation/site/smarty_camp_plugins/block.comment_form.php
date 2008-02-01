@@ -6,7 +6,7 @@
 
 
 /**
- * Campsite article_comment_form block plugin
+ * Campsite comment_form block plugin
  *
  * Type:     block
  * Name:     article_comment_form
@@ -22,7 +22,7 @@
  * @return
  *
  */
-function smarty_block_article_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat)
+function smarty_block_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
 
@@ -30,20 +30,23 @@ function smarty_block_article_comment_form($p_params, $p_content, &$p_smarty, &$
     $camp = $p_smarty->get_template_vars('campsite');
     $html = '';
 
-    if ($camp->articlecomment->enabled == true) {
+    if (!$camp->article->comments_enabled) {
         return $html;
     }
-    if (!isset($p_params['template'])) {
-        return false;
+    if (isset($p_params['template'])) {
+        $template = new MetaTemplate($p_params['template']);
+        if (!$template->defined()) {
+            $template = null;
+        }
     }
+    $templateId = is_null($template) ? $campsite->template->identifier : $template->identifier;
     if (!isset($p_params['submit_button'])) {
         $p_params['submit_button'] = 'Submit';
     }
 
     if (isset($p_content)) {
         $html = "<form name=\"article_comment\" action=\"\" method=\"post\">\n"
-               ."<input type=\"hidden\" name=\"tpl\" value=\""
-               .$camp->template->id."\" />\n";
+               ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n";
         if ($camp->url->type == 'short names') {
             $html .= "<input type=\"hidden\" name=\"f_language_id\" "
                 ."value=\"".$camp->language->id."\" />\n"
@@ -56,9 +59,9 @@ function smarty_block_article_comment_form($p_params, $p_content, &$p_smarty, &$
                 ."<input type=\"hidden\" name=\"f_article_nr\" "
                 ."value=\"".$camp->article->number."\" />\n";
         }
-    	if ($camp->articlecomment->id > 0) {
+    	if ($camp->comment->identifier > 0) {
             $html .= "<input type=\"hidden\" name=\"f_acid\" "
-                ."value=\"".$camp->articlecomment->id."\" />\n";
+                ."value=\"".$camp->comment->identifier."\" />\n";
         }
         $html .= $p_content;
         $html .= "<input type=\"submit\" name=\"f_submit_comment\" "
@@ -75,6 +78,6 @@ function smarty_block_article_comment_form($p_params, $p_content, &$p_smarty, &$
     }
 
     return $html;
-} // fn smarty_block_article_comment_form
+} // fn smarty_block_comment_form
 
 ?>
