@@ -8,9 +8,9 @@ define('CS_OBJECT', '$campsite');
 
 
 /**
- * Class TemplateConverter
+ * Class TemplateConvertor
  */
-class TemplateConverter
+class TemplateConvertor
 {
     /**
      * @var string
@@ -288,6 +288,6 @@ class TemplateConverter
         return $matches;
     } // fn getAllTagsFromTemplate
 
-} // class TemplateConverter
+} // class TemplateConvertor
 
 ?>
