@@ -22,7 +22,7 @@ class MetaActionLogin extends MetaAction
     {
         $this->m_defined = true;
         $this->m_name = 'login';
-        if (!isset($p_input['f_user_uname'])) {
+        if (!isset($p_input['f_user_uname']) || empty($p_input['f_user_uname'])) {
             $this->m_error = new PEAR_Error('The user name was not filled in.',
             ACTION_LOGIN_ERR_NO_USER_NAME);
             return;
@@ -53,6 +53,9 @@ class MetaActionLogin extends MetaAction
      */
     public function takeAction(CampContext &$p_context)
     {
+        if ($this->m_error != ACTION_OK) {
+            return false;
+        }
         setcookie("LoginUserId", $this->m_user->getUserId(), null, '/');
         setcookie("LoginUserKey", $this->m_user->getKeyId(), null, '/');
         $p_context->user = new MetaUser($this->m_user->getUserId());

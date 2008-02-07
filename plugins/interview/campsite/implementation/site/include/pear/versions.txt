@@ -12,3 +12,4 @@ XML_RPC          1.4.8
 XML_Serializer   0.18.0 (beta)
 XML_Util         1.1.1
 Mail             1.1.14
+Mail_Mime        1.5.2

@@ -2208,6 +2208,7 @@ class Article extends DatabaseObject {
      * @return array
      */
     public static function SearchByKeyword(array $p_keywords,
+                                           $p_matchAll = false,
                                            array $p_constraints = array(),
                                            array $p_order = array(),
                                            $p_start = 0, $p_limit = 0, &$p_count)
@@ -2217,17 +2218,39 @@ class Article extends DatabaseObject {
         $selectClauseObj = new SQLSelectClause();
 
         // set tables and joins between tables
-        $selectClauseObj->setTable('KeywordIndex');
-        $selectClauseObj->addJoin('LEFT JOIN ArticleIndex ON KeywordIndex.Id = ArticleIndex.IdKeyword');
-        $selectClauseObj->addJoin('LEFT JOIN Articles ON ArticleIndex.NrArticle = Articles.Number'
-                                                   . ' AND ArticleIndex.IdPublication = Articles.IdPublication'
-                                                   . ' AND ArticleIndex.IdLanguage = Articles.IdLanguage'
-                                                   . ' AND ArticleIndex.NrIssue = Articles.NrIssue'
-                                                   . ' AND ArticleIndex.NrSection = Articles.NrSection');
+        $selectClauseObj->setTable('Articles');
 
         // set search keywords
-        foreach ($p_keywords as $keyword) {
-            $selectClauseObj->addWhere("KeywordIndex.Keyword = '" . $g_ado_db->escape($keyword) . "'");
+        if ($p_matchAll) {
+            foreach ($p_keywords as $keyword) {
+                $selectKeywordClauseObj = new SQLSelectClause();
+                $selectKeywordClauseObj->setTable('KeywordIndex AS KI');
+                $selectKeywordClauseObj->addJoin('LEFT JOIN ArticleIndex AS AI2 ON KI.Id = AI2.IdKeyword');
+                $selectKeywordClauseObj->addColumn('AI2.NrArticle');
+                $selectKeywordClauseObj->addColumn('AI2.IdLanguage');
+
+                $keywordConstraint = "KI.Keyword = '" . $g_ado_db->escape($keyword) . "'";
+                $selectKeywordClauseObj->addWhere($keywordConstraint);
+
+                $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ("
+                . $selectKeywordClauseObj->buildQuery() . ")";
+                $selectClauseObj->addWhere($mainClauseConstraint);
+            }
+        } else {
+            $selectKeywordClauseObj = new SQLSelectClause();
+            $selectKeywordClauseObj->setTable('KeywordIndex AS KI');
+            $selectKeywordClauseObj->addJoin('LEFT JOIN ArticleIndex AS AI2 ON KI.Id = AI2.IdKeyword');
+            $selectKeywordClauseObj->addColumn('AI2.NrArticle');
+            $selectKeywordClauseObj->addColumn('AI2.IdLanguage');
+
+            foreach ($p_keywords as $keyword) {
+                $keywordConstraint = "KI.Keyword = '" . $g_ado_db->escape($keyword) . "'";
+                $selectKeywordClauseObj->addConditionalWhere($keywordConstraint);
+            }
+
+            $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ("
+            . $selectKeywordClauseObj->buildQuery() . ")";
+            $selectClauseObj->addWhere($mainClauseConstraint);
         }
 
         // set other constraints

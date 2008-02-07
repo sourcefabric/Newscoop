@@ -30,10 +30,20 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
     $campContext = $p_smarty->get_template_vars('campsite');
     $html = '';
 
+    if (!$campContext->searcharticles_action->defined
+    || $campContext->searcharticles_action->error != ACTION_OK) {
+        $p_repeat = false;
+        return '';
+    }
+
     if (!isset($p_content)) {
-    	$start = 0;
-    	$searchResultsList = new SearchResultsList($start, $p_params);
-    	$campContext->setCurrentList($searchResultsList, array('publication', 'language',
+        $start = 0;
+        $p_params['template'] = $campContext->searcharticles_action->template;
+        $p_params['match_all'] = $campContext->searcharticles_action->match_all;
+        $p_params['search_level'] = $campContext->searcharticles_action->search_level;
+        $p_params['search_phrase'] = $campContext->searcharticles_action->search_phrase;
+        $searchResultsList = new SearchResultsList($start, $p_params);
+        $campContext->setCurrentList($searchResultsList, array('publication', 'language',
     	                                                       'issue', 'section', 'article',
     	                                                       'image', 'attachment', 'comment',
     	                                                       'audioclip', 'subtitle'));
@@ -41,22 +51,22 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
 
     $currentSearchResult = $campContext->current_search_results_list->defaultIterator()->current();
     if (is_null($currentSearchResult)) {
-	    $p_repeat = false;
-	    $campContext->resetCurrentList();
-    	return $html;
+        $p_repeat = false;
+        $campContext->resetCurrentList();
+        return $html;
     } else {
         $campContext->article = $currentSearchResult;
-    	$p_repeat = true;
+        $p_repeat = true;
     }
 
     if (isset($p_content)) {
-		$html = $p_content;
-	    if ($p_repeat) {
-    		$campContext->current_search_results_list->defaultIterator()->next();
-    		if (!is_null($campContext->current_search_results_list->current)) {
-    		    $campContext->article = $campContext->current_search_results_list->current;
-    		}
-    	}
+        $html = $p_content;
+        if ($p_repeat) {
+            $campContext->current_search_results_list->defaultIterator()->next();
+            if (!is_null($campContext->current_search_results_list->current)) {
+                $campContext->article = $campContext->current_search_results_list->current;
+            }
+        }
     }
 
     return $html;

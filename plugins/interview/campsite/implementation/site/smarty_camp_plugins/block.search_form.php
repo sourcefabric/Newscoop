@@ -29,6 +29,7 @@ function smarty_block_search_form($p_params, $p_content, &$p_smarty)
     $html = '';
 
     if (!isset($p_params['template'])) {
+        CampTemplate::trigger_error('The template for the search form was not specified');
         return false;
     }
     if (!isset($p_params['submit_button'])) {
@@ -38,13 +39,20 @@ function smarty_block_search_form($p_params, $p_content, &$p_smarty)
         $p_params['html_code'] = '';
     }
 
+    $template = new MetaTemplate($p_params['template']);
+    if (!$template->defined) {
+        CampTemplate::trigger_error('The template "' . $template->name
+        . '", specified in the search form is invalid.');
+        return false;
+    }
+
     if (isset($p_content)) {
-        $html = "<form name=\"search\" action=\"\" method=\"post\">\n"
-            ."<input type=\"hidden\" name=\"f_tpl\" value=\"27\" />\n";
+        $html = "<form name=\"searcharticles\" action=\"\" method=\"post\">\n"
+        ."<input type=\"hidden\" name=\"tpl\" value=\"" . $template->identifier . "\" />\n";
         $html .= $p_content;
-        $html .= "<input type=\"submit\" name=\"f_search\" value=\""
-            .smarty_function_escape_special_chars($p_params['submit_button'])
-            ."\" ".$p_params['html_code']." />\n</form>\n";
+        $html .= "<input type=\"submit\" name=\"f_searcharticles\" value=\""
+        .smarty_function_escape_special_chars($p_params['submit_button'])
+        ."\" ".$p_params['html_code']." />\n</form>\n";
     }
 
     return $html;

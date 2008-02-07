@@ -17,6 +17,8 @@
 <p>default topic: {{ $campsite->default_topic->name }}</p>
 <p>default url: {{ $campsite->default_url->url }}</p>
 
+<p>url template "article.tpl": {{ uri options="template article.tpl" }}</p>
+
 
 <h3>issues list</h3>
 {{ list_issues length="2" columns="3" name='sample_name' constraints="name greater a" order='byDate asc' }}

@@ -20,24 +20,21 @@
  */
 function smarty_function_uripath($p_params, &$p_smarty)
 {
-    $uriString = '';
-    $validParams = array('language','publication','issue','section','article');
-    if (!empty($p_params['options'])) {
-        $option = strtolower($p_params['options']);
+    $validParams = array('language','publication','issue','section',
+                         'article','articleattachment','image', 'template');
+    if (isset($p_params['options']) && !empty($p_params['options'])) {
+        $optionsString = strtolower($p_params['options']);
+        $options = preg_split('/ /', $p_params['options']);
+        $option = $options[0];
     }
 
-    if (!isset($p_params['options']) || in_array($option, $validParams)) {
-        $context = $p_smarty->get_template_vars('campsite');
-        if (!is_object($context->url)) {
-            return null;
-        }
+    $context = $p_smarty->get_template_vars('campsite');
+    if (isset($option) && in_array($option, $validParams)) {
         // sets the URL parameter option
-        $context->url->uri_parameter = $option;
-        // gets the URI path
-        $uriString = $context->url->uri_path;
+        $context->url->uri_parameter = $optionsString;
     }
 
-    return $uriString;
+    return $context->url->uri_path;
 } // fn smarty_function_uripath
 
 ?>
