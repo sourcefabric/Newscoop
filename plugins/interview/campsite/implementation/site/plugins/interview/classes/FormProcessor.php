@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package Campsite
+ *
+ * @author Sebastian Goebel <devel@yellowsunshine.de>
+ * @copyright 2007 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
+ */
 
 define('UI_INPUT_STANDARD_SIZE', 50);
 define('UI_INPUT_STANDARD_MAXLENGTH', 256);
@@ -10,10 +19,14 @@ define('FORM_JS_PREWARNING', getGS('FORM_JS_PREWARNING'));
 define('FORM_JS_POSTWARNING', getGS('FORM_JS_POSTWARNING'));
 define('UI_BUTTON_STYLE', '');
 
+/**
+ * This class provides functionality to build an form using Pear Quickform
+ *
+ */
 class FormProcessor
 {
      /**
-     *  _parseArr2Form
+     *  ParseArr2Form
      *
      *  Add elements/rules/groups to an given HTML_QuickForm object
      *
@@ -21,7 +34,7 @@ class FormProcessor
      *  @param mask array, reference to array defining to form elements
      *  @param side string, side where the validation should beeing
      */
-    static public function parseArr2Form(&$form, &$mask, $side='client')
+    static public function ParseArr2Form(&$form, &$mask, $side='client')
     {
         foreach($mask as $k=>$v) {
             ## add elements ########################
@@ -29,7 +42,7 @@ class FormProcessor
                 foreach($v['options'] as $rk=>$rv) {
                     $radio[] =& $form->createElement($v['type'], NULL, NULL, $rv, $rk, $v['attributes']);
                 }
-                $form->addGroup($radio, $v['element'], self::translate($v['label']));
+                $form->addGroup($radio, $v['element'], $v['label']);
                 unset($radio);
     
             } elseif ($v['type']=='checkbox_multi') {
@@ -42,21 +55,21 @@ class FormProcessor
                         $checkbox[$rk]->setChecked(true);
                     }
                 }
-                $form->addGroup($checkbox, $v['element'], self::translate($v['label']));
+                $form->addGroup($checkbox, $v['element'], $v['label']);
                 unset($checkbox);
     
             } elseif ($v['type']=='select') {
-                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], self::translate($v['label']), $v['options'], $v['attributes']);
+                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], $v['label'], $v['options'], $v['attributes']);
                 $elem[$v['element']]->setMultiple($v['multiple']);
                 if (isset($v['selected'])) $elem[$v['element']]->setSelected($v['selected']);
                 if (!$v['groupit'])        $form->addElement($elem[$v['element']]);
     
             } elseif ($v['type']=='date') {
-                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], self::translate($v['label']), $v['options'], $v['attributes']);
+                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], $v['label'], $v['options'], $v['attributes']);
                 if (!$v['groupit'])     $form->addElement($elem[$v['element']]);
     
             } elseif ($v['type']=='checkbox' || $v['type']=='static') {
-                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], self::translate($v['label']), self::translate($v['text']), $v['attributes']);
+                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], $v['label'], $v['text'], $v['attributes']);
                 if (!$v['groupit'])     $form->addElement($elem[$v['element']]);
     
             } elseif ($v['type']=='image') {
@@ -65,7 +78,7 @@ class FormProcessor
                 
             } elseif (isset($v['type'])) {
                 if (!is_array($v['attributes'])) $v['attributes'] = array();
-                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], self::translate($v['label']),
+                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], $v['label'],
                                             ($v['type']=='text' || $v['type']=='file' || $v['type']=='password') ? array_merge(array('size'=>UI_INPUT_STANDARD_SIZE, 'maxlength'=>UI_INPUT_STANDARD_MAXLENGTH), $v['attributes']) :
                                             ($v['type']=='textarea' ? array_merge(array('rows'=>UI_TEXTAREA_STANDART_ROWS, 'cols'=>UI_TEXTAREA_STANDART_COLS), $v['attributes']) :
                                             ($v['type']=='button' || $v['type']=='submit' || $v['type']=='reset' ? array_merge(array('class'=>UI_BUTTON_STYLE), $v['attributes']) : $v['attributes']))
@@ -74,7 +87,7 @@ class FormProcessor
             }
             ## add required rule ###################
             if ($v['required']) {
-                $form->addRule($v['element'], isset($v['requiredmsg']) ? self::translate($v['requiredmsg']) : self::translate(FORM_MISSINGNOTE, self::translate($v['label'])), 'required', NULL, $side);
+                $form->addRule($v['element'], isset($v['requiredmsg']) ? $v['requiredmsg'] : getGS(FORM_MISSINGNOTE, $v['label']), 'required', NULL, $side);
             }
             ## add constant value ##################
             if (isset($v['constant'])) {
@@ -86,16 +99,16 @@ class FormProcessor
             }
             ## add other rules #####################
             if ($v['rule']) {
-                $form->addRule($v['element'], isset($v['rulemsg']) ? self::translate($v['rulemsg']) : self::translate('$1 must be $2', self::translate($v['element']), self::translate($v['rule'])), $v['rule'] ,$v['format'], $side);
+                $form->addRule($v['element'], isset($v['rulemsg']) ? $v['rulemsg'] : getGS('$1 must be $2', $v['element'], getGS($v['rule'])), $v['rule'] ,$v['format'], $side);
             }
             ## add group ###########################
             if (is_array($v['group'])) {
                 foreach($v['group'] as $val) {
                     $groupthose[] =& $elem[$val];
                 }
-                $form->addGroup($groupthose, $v['name'], self::translate($v['label']), $v['seperator'], $v['appendName']);
+                $form->addGroup($groupthose, $v['name'], $v['label'], $v['seperator'], $v['appendName']);
                 if ($v['rule']) {
-                    $form->addRule($v['name'], isset($v['rulemsg']) ? self::translate($v['rulemsg']) : self::translate('$1 must be $2', self::translate($v['name'])), $v['rule'], $v['format'], $side);
+                    $form->addRule($v['name'], isset($v['rulemsg']) ? $v['rulemsg'] : getGS('$1 must be $2', $v['name'], getGS($v['rule'])), $v['rule'], $v['format'], $side);
                 }
                 if ($v['grouprule']) {
                     $form->addGroupRule($v['name'], $v['arg1'], $v['grouprule'], $v['format'], $v['howmany'], $side, $v['reset']);
@@ -105,7 +118,7 @@ class FormProcessor
             ## check error on type file ##########
             if ($v['type']=='file') {
                 if ($_POST[$v['element']]['error']) {
-                    $form->setElementError($v['element'], isset($v['requiredmsg']) ? self::translate($v['requiredmsg']) : self::translate('Missing value for $1', self::translate($v['label'])));
+                    $form->setElementError($v['element'], isset($v['requiredmsg']) ? $v['requiredmsg'] : getGS('Missing value for $1', $v['label']));
                 }
             }
         }
@@ -114,11 +127,5 @@ class FormProcessor
         $form->validate();
         $form->setJsWarnings(FORM_JS_PREWARNING, FORM_JS_POSTWARNING);
         $form->setRequiredNote(FORM_REQUIREDNOTE);
-    }
-    
-    private static function translate($p_input)
-    {
-        return $p_input;
-    }
-        
+    }        
 }

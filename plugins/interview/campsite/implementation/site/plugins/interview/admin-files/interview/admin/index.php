@@ -3,7 +3,7 @@
 function ajax_action(action)
 {
     $('f_action').value = action;
-
+  
     var myAjax = new Ajax.Request(
             "/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php",
             { 
@@ -12,14 +12,16 @@ function ajax_action(action)
                 onComplete: do_reload
             }
         );      
-    
+   
     
 }
 
 function do_reload(response)
 {
     if (response.responseText) {
-        alert(response.responseText);   
+        document.open();
+        document.write(response.responseText);
+        document.close();   
     }
     document.location.reload();   
 }
@@ -257,7 +259,8 @@ if ($InterviewsList->getLength()) {
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="20"><?php putGS('List Items') ?></TD>
             
-            <?php if($is_admin) { ?>
+            <?php if ($is_admin) { ?>
+                <TD ALIGN="center" VALIGN="TOP" width="20"><?php putGS('Invite') ?></TD>
                 <TD align="center" valign="top" width="20">&nbsp;</TD>
             <?php } ?>
         </TR>
@@ -310,6 +313,9 @@ if ($InterviewsList->getLength()) {
                 </td>
               
                 <?php if($is_admin) { ?>
+                    <td align='center'>
+                        <a href="javascript: void(0);" onclick="window.open('invitation.php?f_interview_id=<?php p($MetaInterview->identifier); ?>', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=720, height=580, top=200, left=100');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"], '/', $MetaInterview->invitation_sent ? 'email_red.png' : 'email_green.png' ?>" BORDER="0"></a>
+                    </td>
                     <td align='center'>
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {
                             uncheckAll(<?php p($InterviewsList->count); ?>);

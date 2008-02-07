@@ -48,7 +48,8 @@ $no_menu_scripts = array(
 	'/interview/moderator/edit.php',
 	'/interview/moderator/edit_item.php',
 	'/interview/guest/edit.php',
-	'/interview/guest/edit_item.php'
+	'/interview/guest/edit_item.php',
+	'/interview/admin/invitation.php'
 	);
 
 $request_uri = $_SERVER['REQUEST_URI'];

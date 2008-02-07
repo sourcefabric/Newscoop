@@ -55,6 +55,21 @@ class Interview extends DatabaseObject {
         
         // string - draft, published
         'status',
+
+        // string - email sender address
+        'invitation_sender',
+
+        // text - email subject
+        'invitation_subject',
+        
+        // text - template to build message
+        'invitation_template',
+        
+        // string - text, html
+        'invitation_type',
+        
+        // datetime
+        'invitation_sent',
         
         // timestamp - last_modified
         'last_modified'
@@ -68,7 +83,7 @@ class Interview extends DatabaseObject {
      *
      * @var object
      */
-    protected static $current_questioneer = null;
+    public static $current_questioneer = null;
     
     /**
      * This static property indicates that 
@@ -711,6 +726,229 @@ class Interview extends DatabaseObject {
         return false;
     }
     
+    public function getInvitationForm($p_target='index.php', $p_add_hidden_vars=array(), $p_html=false, &$p_user = null)
+    {
+        require_once 'HTML/QuickForm.php';
+              
+        $mask = self::getInvitationFormMask($_REQUEST['f_preview'], $p_user);
+
+        if (is_array($p_add_hidden_vars)) {
+            foreach ($p_add_hidden_vars as $k => $v) {       
+                $mask[] = array(
+                    'element'   => $k,
+                    'type'      => 'hidden',
+                    'constant'  => $v
+                );   
+            } 
+        }
+        
+        $form =& new html_QuickForm('invitation', 'post', $p_target, null, null, true);
+        FormProcessor::parseArr2Form(&$form, &$mask); 
+        
+        if ($p_html) {
+            return $form->toHTML();    
+        } else {
+            require_once 'HTML/QuickForm/Renderer/Array.php';
+            
+            $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
+            $form->accept($renderer);
+            
+            return $renderer->toArray();
+        } 
+    }
+    
+    
+    function smarty_get_template($p_void, &$tpl_source, &$smarty_obj)
+    {
+        $tpl_source = $this->getProperty('invitation_template');
+        
+        return true;
+    }
+    
+    function smarty_get_timestamp($tpl_name, &$tpl_timestamp, &$smarty_obj)
+    {
+        $tpl_timestamp = time();
+        return true;
+    }
+    
+    function smarty_get_secure($tpl_name, &$smarty_obj)
+    {
+        return true;
+    }
+    
+    function smarty_get_trusted($tpl_name, &$smarty_obj)
+    {
+    
+    }
+    
+    private function smarty_parse_inviation_template(MetaInterview $p_metainterview)
+    {
+        $smarty = CampTemplate::singleton();
+        $smarty->assign_by_ref('interview', $p_metainterview);
+        
+        $smarty->register_resource("interview", 
+            array(
+                array(&$this, "smarty_get_template"),
+                array(&$this, "smarty_get_timestamp"),
+                array(&$this, "smarty_get_secure"),
+                array(&$this, "smarty_get_trusted")
+            )
+        );
+        return $smarty->fetch("interview:void");   
+    }
+    
+    private function getInvitationFormMask($p_preview = false, &$p_user = null)
+    {
+        global $Campsite, $g_documentRoot;
+        
+        $data = $this->m_data;
+        
+        if ($p_preview) {
+            
+            $MetaInterview = new MetaInterview($this->getId());
+            Interview::$current_questioneer = $p_user;
+            
+            $parsed_text = $this->smarty_parse_inviation_template($MetaInterview);
+            
+            if ($data['invitation_type'] == 'text') {
+                $parsed_text = htmlspecialchars($parsed_text);
+                $parsed_text = str_replace("\r\n", '<br>', $parsed_text); 
+                $parsed_text = str_replace("\n", '<br>', $parsed_text);  
+            }
+        }
+         
+        $mask = array(
+            array(
+                    'element'   => 'f_interview_id',
+                    'type'      => 'hidden',
+                    'constant'  => $data['interview_id']
+            ),
+            isset($p_preview) ?
+                array(
+                    'element'   => 'f_sender',
+                    'type'      => 'text',
+                    'label'     => getGS('Sender'),
+                    'default'   => $data['invitation_sender'],
+                    'attributes'=> array('disabled' => true, 'readonly' => true),
+                ) : null,
+            isset($p_preview) ?
+                array(
+                    'element'   => 'f_subject',
+                    'type'      => 'text',
+                    'label'     => getGS('Subject'),
+                    'default'   => $data['invitation_subject'],
+                    'attributes'=> array('disabled' => true, 'readonly' => true),
+                ) : null,
+            isset($p_preview) ?
+                array(
+                    'element'   => 'f_invitation_preview',
+                    'type'      => 'static',
+                    'label'     => getGS('Preview'),
+                    'default'   => $parsed_text,
+                    'attributes'=> array('cols' => 70, 'rows' => 20, 'disabled' => true, 'readonly' => true),
+                ) : null,
+            isset($p_preview) ? null :
+                array(
+                    'element'   => 'f_invitation_sender',
+                    'type'      => 'text',
+                    'label'     => getGS('Sender'),
+                    'default'   => $data['invitation_sender'],
+                    'required'  => true
+                ),
+            isset($p_preview) ? null :
+                array(
+                    'element'   => 'f_invitation_subject',
+                    'type'      => 'text',
+                    'label'     => getGS('Subject'),
+                    'default'   => $data['invitation_subject'],
+                    'required'  => true
+                ),
+            isset($p_preview) ? null :
+                array(
+                    'element'   => 'f_invitation_template',
+                    'type'      => 'textarea',
+                    'label'     => getGS('Invitation Template'),
+                    'default'   => $data['invitation_template'],
+                    'required'  => true,
+                    'attributes'=> array('cols' => 70, 'rows' => 20),
+                ),
+            isset($p_preview) ? null : array(
+                    'element'   => 'f_invitation_type',
+                    'type'      => 'checkbox',
+                    'label'     => getGS('HTML'),
+                    'attributes'=> array($data['invitation_type'] == 'html' ? 'checked' : null)
+                ),
+            $this->getProperty('invitation_sent') !== null ?
+                array(
+                    'element'   => 'f_warning',
+                    'type'      => 'static',
+                    'text'  => '<font color="red"><b>'.getGS('Invitation has already been sent on $1', $this->getProperty('invitation_sent')).'</b></font>'
+                ) : null,
+            array(
+                'element'   => 'f_reset',
+                'type'      => 'reset',
+                'label'     => getGS('Reset'),
+                'groupit'   => true
+            ),
+            array(
+                'element'   => 'f_edit',
+                'type'      => 'button',
+                'label'     => getGS('Edit'),
+                'attributes' => array('onClick' => 'location.href="?f_interview_id='.$this->getId().'"'),
+                'groupit'   => true
+            ),
+            array(
+                'element'   => 'f_preview',
+                'type'      => 'submit',
+                'label'     => getGS('Preview'),
+                'groupit'   => true
+            ),
+            array(
+                'element'   => 'f_invite_now',
+                'type'      => 'submit',
+                'label'     => getGS('Invite Now'),
+                'groupit'   => true
+            ),
+            array(
+                'element'   => 'f_cancel',
+                'type'      => 'button',
+                'label'     => getGS('Cancel'),
+                'attributes' => array('onClick' => 'window.close()'),
+                'groupit'   => true
+            ),
+            isset($p_preview) ? 
+                array(
+                    'group'     => array('f_cancel', 'f_edit', 'f_invite_now')
+                )    
+                :
+                array(
+                    'group'     => array('f_cancel', 'f_reset', 'f_preview')
+                )      
+        );
+        
+        return $mask;   
+    }
+    
+    public function storeInvitation()
+    {
+        require_once 'HTML/QuickForm.php';
+              
+        $mask = self::getInvitationFormMask($p_owner, $p_admin);        
+        $form = new html_QuickForm('invitation', 'post', $p_target, null, null, true);
+        FormProcessor::parseArr2Form(&$form, &$mask);   
+           
+        if ($form->validate()) {
+            $data = $form->getSubmitValues();
+
+            $this->setProperty('invitation_sender', $data['f_invitation_sender']);
+            $this->setProperty('invitation_subject', $data['f_invitation_subject']);            
+            $this->setProperty('invitation_template', $data['f_invitation_template']);
+            $this->setProperty('invitation_type', $data['f_invitation_type'] ? 'html' : 'text' );
+            
+            return true;
+        }
+    }
+    
     public static function GetCurrentQuestioneer()
     {
         return self::$current_questioneer;   
@@ -738,6 +976,7 @@ class Interview extends DatabaseObject {
         return self::$trigger_invitation;   
     }
     
+    /*
     public static function SendInvitation()
     {
         $camp_template = CampTemplate::singleton();
@@ -755,6 +994,34 @@ class Interview extends DatabaseObject {
         $camp_template->clear_assign('campsite');
         self::$trigger_invitation = false;
         self::$current_questioneer = null;                 
+    }
+    */
+    public function sendInvitation()
+    {   
+        $MetaInterview = new MetaInterview($this->getId());
+
+        foreach (self::getQuestioneersWantInvitation() as $Questioneer) {
+            self::$current_questioneer = $Questioneer;
+            
+            $parsed = $this->smarty_parse_inviation_template($MetaInterview);
+            $parsed = str_replace("\r\n",  "\n", $parsed);
+            #$parsed = str_replace("\n",  "\r\n", $parsed);
+            
+            if ($this->getProperty('invitation_type') == 'html') {
+                $html = $parsed;   
+            } else {
+                $text = $parsed;   
+            }
+            
+            $headers = array(
+                'From' => $this->getProperty('invitation_sender'),
+                'Subject' =>  $this->getProperty('invitation_subject') 
+            );
+            
+            CampMail::MailMime($Questioneer->getEmail(), $text, $html, $headers);
+        }
+        
+        $this->setProperty('invitation_sent', date('Y-m-d H:i:s'));
     }
     
     

@@ -28,7 +28,7 @@ cd javascript
 ln -s ../plugins/interview/javascript/* .
 cd ..
 
-2. Install the plugins/interview/install/sql/plugin_interview.sql to campsite database.
+2. Install the plugins/interview/install/sql/*.sql to campsite database.
 
 3. If you have the demo installation, you can add the interview templates in this package by copying to templates folder. Yue need to go to admin->templates afterwards to register it.
 cp -r plugins/interview/install/sample_templates/* templates
