@@ -71,6 +71,42 @@ class ComparisonOperation
 	 */
 	public function getRightOperand()
 	{
+	    // some values have to be computed
+	    switch (strtolower($this->m_rightOperand)) {
+	       case 'now()':   
+	       case 'curdate()':   
+	       case 'curtime()':
+	           // those special values are mapped to correspondending mysql functions
+	           global $g_ado_db;
+	           $queryStr = "SELECT $this->m_rightOperand AS value";
+	           $res = $g_ado_db->GetRow($queryStr);
+	           $this->m_rightOperand = $res['value'];
+	       break;
+	       
+	       case 'current()':
+	           // this value indicates that the left operand have to compared with the value from current context
+	           // e.g. language_number is current()
+	           
+	           $Context = CampTemplate::context();
+	           $object = strtolower($this->m_leftOperand);
+	           
+	           switch ($object) {
+	               
+	               case 'language':
+	               case 'publication':
+	               case 'issue':
+	               case 'section':
+	               case 'article': 
+	                   $this->m_rightOperand = $Context->$object->number;
+	               break; 
+	               
+	               case 'publication':   
+	                   $this->m_rightOperand = $Context->$object->identifier;
+	               break;                     
+	           }
+	       break; 
+	    }
+	    
 		return $this->m_rightOperand;
 	}
 }

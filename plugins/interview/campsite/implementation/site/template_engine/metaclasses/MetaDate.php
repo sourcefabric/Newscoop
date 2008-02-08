@@ -64,6 +64,12 @@ final class MetaDate
     public static function IsValid($p_value)
     {
         $p_value = trim($p_value);
+        
+        // curdate() is an value which have to be computed
+        if (strtolower($p_value) == 'curdate()') {
+            return true;   
+        }
+        
         if (preg_match('/^[\d]{4,4}-[\d]{1,2}-[\d]{1,2}$/', $p_value) == 0) {
             return false;
         }

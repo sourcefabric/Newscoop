@@ -42,7 +42,7 @@ final class MetaInteger
     public static function IsValid($p_value)
     {
         $p_value = preg_replace('[\s]', '', $p_value);
-        if (preg_match('/^[-+]?[\s]*[\d]+$/', $p_value) > 0) {
+        if (preg_match('/^([-+]?[\s]*[\d]+)|current\(\)$/', $p_value) > 0) {
             return true;
         }
         return false;
