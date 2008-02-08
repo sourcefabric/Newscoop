@@ -1022,6 +1022,9 @@ class Interview extends DatabaseObject {
         }
         
         $this->setProperty('invitation_sent', date('Y-m-d H:i:s'));
+        if ($this->getProperty('status') == 'draft') {
+            $this->setProperty('status', 'pending');   
+        }
     }
     
     

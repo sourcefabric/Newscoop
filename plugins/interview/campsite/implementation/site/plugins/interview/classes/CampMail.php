@@ -35,9 +35,8 @@ class CampMail
         
         if (strlen($text)) {
             $mime->setTXTBody($text);
-        } elseif (strlen($html)) {
-            $mime->setTXTBody(utf8_encode(html_entity_decode(strip_tags($html))));   
         }
+        
         if (strlen($html)) {
             $mime->setHTMLBody($html);
         }
