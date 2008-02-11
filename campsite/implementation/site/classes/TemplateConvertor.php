@@ -1,10 +1,19 @@
 <?php
+/**
+ * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @copyright 2008 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version $Revision$
+ * @link http://www.campware.org
+ */
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/PEAR.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConvertorHelper.php');
 
 define('CS_OPEN_TAG', '{{');
 define('CS_CLOSE_TAG', '}}');
-define('CS_OBJECT', '$campsite');
 
 
 /**
@@ -25,6 +34,11 @@ class TemplateConvertor
     /**
      * @var string
      */
+    private $m_templateOriginalContent = null;
+
+    /**
+     * @var string
+     */
     private $m_templateContent = null;
 
     /**
@@ -40,6 +54,8 @@ class TemplateConvertor
 
 
     /**
+     * Reads the original template file content.
+     * 
      * @param string $p_filePath
      *      Full path to the template file
      *
@@ -52,10 +68,12 @@ class TemplateConvertor
             return false;
         }
 
+        // sets template full path directory and file name
         $this->m_templateDirectory = dirname($p_filePath);
         $this->m_templateFileName = basename($p_filePath);
 
-        if (!($this->m_templateContent = @file_get_contents($p_filePath))) {
+        // reads the template file content
+        if (!($this->m_templateOriginalContent = @file_get_contents($p_filePath))) {
             return false;
         }
 
@@ -64,141 +82,52 @@ class TemplateConvertor
 
 
     /**
+     * Parses the original template file and replaces old syntax with new one.
+     * 
      * @return array $replaceArray
      */
     public function parse()
     {
+        // gets all the tags from the original template file
         $this->m_oldTags = $this->getAllTagsFromTemplate();
         if ($this->m_oldTags == false || sizeof($this->m_oldTags) == 0) {
             return false;
         }
 
-        $oldTags = $this->m_oldTags[1];
+        // sets the tags content (without delimeters) 
+        $oldTagsContent = $this->m_oldTags[1];
+        // inits patterns and replacements arrays
         $patternsArray = array();
         $replacementsArray = array();
-        foreach($oldTags as $oldTag) {
-            $optArray = $this->parseOptionsString($oldTag);
-            $newTag = self::GetNewTagContent($optArray);
-            if (empty($newTag)) {
+        foreach($oldTagsContent as $oldTagContent) {
+            // gets single words from tag content (options string)
+            $optArray = $this->parseOptionsString($oldTagContent);
+            // finds out new tag syntax based on given tag content
+            $newTagContent = TemplateConvertorHelper::GetNewTagContent($optArray);
+            if (empty($newTagContent)) {
                 continue;
             }
 
-            $pattern = '/<!\*\*\s*'.preg_quote($oldTag).'\s*>/';
-            $replacement = CS_OPEN_TAG.' '.$newTag.' '.CS_CLOSE_TAG;
+            // sets pattern and replacement strings
+            $pattern = '/<!\*\*\s*'.preg_quote($oldTagContent).'\s*>/';
+            $replacement = CS_OPEN_TAG.' '.$newTagContent.' '.CS_CLOSE_TAG;
             $patternsArray[] = $pattern;
             $replacementsArray[] = $replacement;
         }
 
-        $this->m_templateContent = preg_replace($patternsArray, $replacementsArray, $this->m_templateContent);
+        // replaces all patterns with corresponding replacements
+        $this->m_templateContent = preg_replace($patternsArray,
+                                                $replacementsArray,
+                                                $this->m_templateOriginalContent);
 
         return true;
     } // fn parse
 
 
     /**
-     * @param array $p_optArray
-     */
-    private static function GetNewTagContent($p_optArray)
-    {
-        if (!is_array($p_optArray) || sizeof($p_optArray) < 1) {
-            continue;
-        }
-
-        $newTag = '';
-        $p_optArray[0] = strtolower($p_optArray[0]);
-
-        // print sentences
-        if ($p_optArray[0] == 'print') {
-            $newTag = CS_OBJECT;
-            for($i = 1; $i < sizeof($p_optArray); $i++) {
-                $newTag .= '->' . strtolower($p_optArray[$i]);
-            }
-            return $newTag;
-        }
-
-        // environmental control
-        $envObjects = array('language','publication','issue',
-                            'section','article','topic');
-        if (in_array($p_optArray[0], $envObjects)) {
-            if (strtolower($p_optArray[1]) == 'off') {
-                $newTag = 'unset_' . $p_optArray[0];
-            } else {
-                $newTag = 'set_' . $p_optArray[0];
-                if ($p_optArray[0] == 'language') {
-                    $newTag.= ' name="' . strtolower($p_optArray[1]) . '"';
-                } else {
-                    $newTag.= (isset($p_optArray[1])) ? ' ' . strtolower($p_optArray[1]) : '';
-                    $newTag.= (isset($p_optArray[2])) ? '="' . strtolower($p_optArray[2]) . '"' : '';
-                }
-            }
-            return $newTag;
-        }
-
-        // uripath, urlparameters, uri, url
-        $urXFuncs = array('uri','uripath','url','urlparameters');
-        if (in_array($p_optArray[0], $urXFuncs)) {
-            $newTag = $p_optArray[0];
-            if (sizeof($p_optArray) > 1) {
-                $newTag.= ' options="';
-                for ($x = 1; $x < sizeof($p_optArray); $x++) {
-                    $newTag.= ($x > 1) ? ' ' : '';
-                    $newTag.= strtolower($p_optArray[$x]);
-                }
-                $newTag.= '"';
-            }
-            return $newTag;
-        }
-
-        // forms
-
-        // simple forms
-        $simpleForms = array('login','search','user');
-        if (in_array($p_optArray[0], $simpleForms)) {
-            $newTag = $p_optArray[0] . '_form';
-            $newTag.= (isset($p_optArray[1])) ? ' template="' . $p_optArray[1] . '"' : '';
-            $newTag.= (isset($p_optArray[2])) ? ' submit_button="' . $p_optArray[2] . '"' : '';
-            $newTag.= (isset($p_optArray[3])) ? ' html_code="' . $p_optArray[3] . '"' : '';
-            return $newTag;
-        }
-
-        $endForms = array('endarticlecomment','endlogin','endsearch','endsubscription','enduser');
-        if (in_array($p_optArray[0], $endForms)) {
-            $newTag = '/' . substr($p_optArray[0], 3) . '_form';
-            return $newTag;
-        }
-
-        //
-        // misc
-        //
-
-        switch ($p_optArray[0]) {
-        case 'date':
-            $newTag = '$smarty.now|camp_date_format:"' . $p_optArray[1] . '"';
-            break;
-
-        case 'include':
-            $newTag = 'include file="' . $p_optArray[1] . '"';
-            break;
-
-        case 'local':
-            $newTag = 'local';
-            break;
-
-        case 'endlocal':
-            $newTag = '/local';
-            break;
-
-        case 'endif':
-            $newTag = '/if';
-            break;
-        }
-
-        return $newTag;
-    } // fn GetNewTagContent
-
-
-
-    /**
+     * Writes the new template syntax to the output file.
+     * Output file might be either the given as parameter or the original file.
+     * 
      * @param string $p_templateFileName
      *      File name for the template after conversion,
      *      default is the original template file name
@@ -208,6 +137,7 @@ class TemplateConvertor
      */
     public function write($p_templateFileName = null)
     {
+        // sets the output file to write to
         if (!is_null($p_templateFileName)) {
             $output = $this->m_templateDirectory.'/'.$p_templateFileName;
         } else {
@@ -229,9 +159,22 @@ class TemplateConvertor
 
 
     /**
-     * Parses the options string and returns an array of words
+     * Gets all the tags from the source template.
+     *
+     * @return array $matches
+     */
+    private function getAllTagsFromTemplate()
+    {
+        preg_match_all('/<!\*\*\s*([^>]+)>/', $this->m_templateOriginalContent, $matches);
+        return $matches;
+    } // fn getAllTagsFromTemplate
+
+
+    /**
+     * Parses the options string and returns an array of words.
      *
      * @param string $p_optionsString
+     *
      * @return array
      */
     function parseOptionsString($p_optionsString)
@@ -275,18 +218,6 @@ class TemplateConvertor
 
         return $words;
     } // fn parseOptionsString
-
-
-    /**
-     * Gets all the tags from the source template.
-     *
-     * @return array $matches
-     */
-    private function getAllTagsFromTemplate()
-    {
-        preg_match_all('/<!\*\*\s*([^>]+)>/', $this->m_templateContent, $matches);
-        return $matches;
-    } // fn getAllTagsFromTemplate
 
 } // class TemplateConvertor
 
