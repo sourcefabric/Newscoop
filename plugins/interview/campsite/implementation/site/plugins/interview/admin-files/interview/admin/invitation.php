@@ -51,7 +51,7 @@ if (isset($_REQUEST['f_invite_now'])) {
     </TR>
     <tr>
         <td>
-            <?php p($Interview->getInvitationForm('invitation.php', array(), true, $g_user)); ?>
+            <?php p($Interview->getInvitationForm('invitation.php', array(), true, $g_user->getUserId())); ?>
         </td>
     </tr>
 </table>

@@ -1,3 +1,4 @@
+invitation
 <?php
 /**
  * @package Campsite
@@ -75,21 +76,6 @@ class Interview extends DatabaseObject {
         'last_modified'
         );
         
-    /**
-     * This static property stores an User object 
-     * currently looped in self::invite().
-     * In each loop it have to assigned here, but 
-     * retrived in MetaInterview class. Thatswhy it's static.
-     *
-     * @var object
-     */
-    public static $current_questioneer = null;
-    
-    /**
-     * This static property indicates that 
-     * an invitation have to send.
-     */
-    protected static $trigger_invitation = false; 
     
     /**
      * Construct by passing in the primary key to access the interview in
@@ -726,11 +712,11 @@ class Interview extends DatabaseObject {
         return false;
     }
     
-    public function getInvitationForm($p_target='index.php', $p_add_hidden_vars=array(), $p_html=false, &$p_user = null)
+    public function getInvitationForm($p_target='index.php', $p_add_hidden_vars=array(), $p_html=false, $p_userid)
     {
         require_once 'HTML/QuickForm.php';
               
-        $mask = self::getInvitationFormMask($_REQUEST['f_preview'], $p_user);
+        $mask = self::getInvitationFormMask($_REQUEST['f_preview'], $p_userid);
 
         if (is_array($p_add_hidden_vars)) {
             foreach ($p_add_hidden_vars as $k => $v) {       
@@ -781,10 +767,13 @@ class Interview extends DatabaseObject {
     
     }
     
-    private function smarty_parse_inviation_template(MetaInterview $p_metainterview)
+    private function smarty_parse_inviation_template(MetaInterview $p_metainterview, MetaUser $p_metauser)
     {
         $smarty = CampTemplate::singleton();
-        $smarty->assign_by_ref('interview', $p_metainterview);
+        $campsite = new stdClass();
+        $campsite->interview = $p_metainterview;
+        $campsite->user = $p_metauser;
+        $smarty->assign_by_ref('campsite', $campsite);
         
         $smarty->register_resource("interview", 
             array(
@@ -794,10 +783,22 @@ class Interview extends DatabaseObject {
                 array(&$this, "smarty_get_trusted")
             )
         );
-        return $smarty->fetch("interview:void");   
+       
+        // need to deactivate the error reporting for parsing the template which could have errors 
+        $old_error_handler = set_error_handler(array('Interview' , 'my_error_handler'));
+        $old_error_level = error_reporting();
+        $parsed = $smarty->fetch("interview:void");
+        set_error_handler($old_error_handler, $old_error_level);
+        
+        return $parsed;   
     }
     
-    private function getInvitationFormMask($p_preview = false, &$p_user = null)
+    public function my_error_handler()
+    {
+        // do nothing   
+    }
+    
+    private function getInvitationFormMask($p_preview = false, &$p_userid = null)
     {
         global $Campsite, $g_documentRoot;
         
@@ -805,10 +806,9 @@ class Interview extends DatabaseObject {
         
         if ($p_preview) {
             
-            $MetaInterview = new MetaInterview($this->getId());
-            Interview::$current_questioneer = $p_user;
-            
-            $parsed_text = $this->smarty_parse_inviation_template($MetaInterview);
+            $MetaInterview = new MetaInterview($this->getId()); 
+            $MetaUser = new MetaUser($p_userid);           
+            $parsed_text = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser);
             
             if ($data['invitation_type'] == 'text') {
                 $parsed_text = htmlspecialchars($parsed_text);
@@ -933,7 +933,7 @@ class Interview extends DatabaseObject {
     {
         require_once 'HTML/QuickForm.php';
               
-        $mask = self::getInvitationFormMask($p_owner, $p_admin);        
+        $mask = self::getInvitationFormMask();        
         $form = new html_QuickForm('invitation', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask);   
            
@@ -947,11 +947,6 @@ class Interview extends DatabaseObject {
             
             return true;
         }
-    }
-    
-    public static function GetCurrentQuestioneer()
-    {
-        return self::$current_questioneer;   
     }
     
     public function getQuestioneersWantInvitation()
@@ -976,34 +971,14 @@ class Interview extends DatabaseObject {
         return self::$trigger_invitation;   
     }
     
-    /*
-    public static function SendInvitation()
-    {
-        $camp_template = CampTemplate::singleton();
-        $context = CampTemplate::singleton()->context();
-        $camp_template->assign('campsite', $context);
-       
-        foreach (self::getQuestioneersWantInvitation() as $Questioneer) {
-            self::$current_questioneer = $Questioneer;
-            $content = $camp_template->fetch('interview/interview-invitation.tpl');
-            $subject = $camp_template->get_template_vars('subject');
-            $sender = $camp_template->get_template_vars('sender');
-            
-            mail($Questioneer->getEmail(), $subject, $content, "From: $sender");
-        }
-        $camp_template->clear_assign('campsite');
-        self::$trigger_invitation = false;
-        self::$current_questioneer = null;                 
-    }
-    */
     public function sendInvitation()
     {   
         $MetaInterview = new MetaInterview($this->getId());
 
         foreach (self::getQuestioneersWantInvitation() as $Questioneer) {
-            self::$current_questioneer = $Questioneer;
-            
-            $parsed = $this->smarty_parse_inviation_template($MetaInterview);
+            $MetaUser = new MetaUser($Questioneer->getUserId());
+             
+            $parsed = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser);
             $parsed = str_replace("\r\n",  "\n", $parsed);
             #$parsed = str_replace("\n",  "\r\n", $parsed);
             

@@ -42,7 +42,6 @@ final class MetaInterview extends MetaDbObject {
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['moderator'] = 'getModerator';
         $this->m_customProperties['guest'] = 'getGuest';
-        $this->m_customProperties['questioneer'] = 'getCurrentQuestioneer';
         $this->m_customProperties['is_user_admin'] = 'isUserAdmin';
         $this->m_customProperties['is_user_moderator'] = 'isUserModerator';
         $this->m_customProperties['is_user_guest'] = 'isUserGuest';
@@ -120,13 +119,6 @@ final class MetaInterview extends MetaDbObject {
     public function null()
     {
         return null;
-    }
-    
-    public function getCurrentQuestioneer()
-    {
-        $User = Interview::GetCurrentQuestioneer();
-        $MetaUser = new MetaUser($User->getProperty('Id'));
-        return $MetaUser;   
     }
     
     public function isUserAdmin(&$p_context = null)
