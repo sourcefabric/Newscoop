@@ -9,6 +9,8 @@
  * @link http://www.campware.org
  */
 
+require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConvertorListObject.php');
+
 define('CS_OBJECT', '$campsite');
 
 
@@ -45,6 +47,8 @@ class TemplateConvertorHelper
      */
     public static function GetNewTagContent($p_optArray)
     {
+        static $listObj;
+
         if (!is_array($p_optArray) || sizeof($p_optArray) < 1) {
             continue;
         }
@@ -129,6 +133,23 @@ class TemplateConvertorHelper
             return self::BuildHTMLEncodingStatement($p_optArray);
         }
 
+        // Lists
+        // <!** List length 5 article type is Article order bynumber desc>
+        // to
+        // {{ list_articles length="5" constraints="type is Article" order="bynumber desc" }}
+        if ($p_optArray[0] == 'list') {
+            return self::BuildListStatement($p_optArray, $listObj);
+        }
+
+        // Lists End
+        // <!** endList> to {{ /list_#statement#s }}
+        // <!** endList searchresult> to {{ /list_search_results }}
+        if (strpos($p_optArray[0], 'endlist') !== false) {
+            if (is_object($listObj)) {
+                return $listObj->getEndList();
+            }
+        }
+
         switch ($p_optArray[0]) {
         // <!** Date ... > to {{ $smarty.now|camp_date_format:" ... " }}
         case 'date':
@@ -150,8 +171,13 @@ class TemplateConvertorHelper
         case 'endif':
             $newTag = '/if';
             break;
+        // <!** else> to {{ /else }}
         case 'else':
             $newTag = '/else';
+            break;
+        // <!** ForEmptyList> to {{ if $current_list->empty }}
+        case 'foremptylist':
+            $newTag = 'if '.CS_OBJECT.'->current_list->empty';
             break;
         }
         
@@ -321,6 +347,20 @@ class TemplateConvertorHelper
 
         return $newTag;
     } // fn BuildSelectStatement
+
+
+    /**
+     * @param array $p_optArray
+     *
+     * @return string $newTag
+     */
+    public static function BuildListStatement($p_optArray, &$listObj)
+    {
+        $listObj = new TemplateConvertorListObject($p_optArray);
+        $newTag = $listObj->getListString();
+
+        return $newTag;
+    } // fn BuildListStatement
 
 
     /**
