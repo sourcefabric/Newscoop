@@ -104,15 +104,16 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
 
     case 'comment':
         if ($campsite->article->comments_enabled == 1) {
+            $fieldValue = CampRequest::GetVar('f_comment_'.$attribute);
             if ($attribute == 'content') {
                 $html = '<textarea name="f_comment_'.$attribute.'" cols="40" rows="4" '
                     .$p_params['html_code'].'>'
-                    .smarty_function_escape_special_chars(' ')
+                    .smarty_function_escape_special_chars($fieldValue)
                     .'</textarea>';
             } elseif ($attribute == 'subject' || $attribute == 'reader_email') {
                 $html = '<input type="text" name="f_comment_'.$attribute
-                    .'" maxlength="255" '.'" size="'.$p_params['size'].'" value="'
-                    .smarty_function_escape_special_chars(' ')
+                    .'" maxlength="255" size="'.$p_params['size'].'" value="'
+                    .smarty_function_escape_special_chars($fieldValue)
                     .'" '.$p_params['html_code'].' />';
             }
         }

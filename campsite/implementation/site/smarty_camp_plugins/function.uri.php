@@ -30,6 +30,8 @@ function smarty_function_uri($p_params, &$p_smarty)
     if (isset($option) && in_array($option, $validParams)) {
         // sets the URL parameter option
         $context->url->uri_parameter = $optionsString;
+    } else {
+        $context->url->uri_parameter = null;
     }
 
     return $context->url->uri;
