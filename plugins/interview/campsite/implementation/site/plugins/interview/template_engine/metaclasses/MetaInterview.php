@@ -22,7 +22,6 @@ final class MetaInterview extends MetaDbObject {
 		$this->m_properties['last_modified'] = 'last_modified';
 		$this->m_properties['moderator_user_id'] = 'fk_moderator_user_id';
 		$this->m_properties['guest_user_id'] = 'fk_guest_user_id';
-		$this->m_properties['invitation_sent'] = 'invitation_sent';
 	}
 
 
@@ -47,6 +46,7 @@ final class MetaInterview extends MetaDbObject {
         $this->m_customProperties['is_user_guest'] = 'isUserGuest';
         $this->m_customProperties['in_questions_timeframe'] = 'inQuestionsTimeframe';
         $this->m_customProperties['in_interview_timeframe'] = 'inInterviewTimeframe';
+        $this->m_customProperties['invitation_sent'] = 'getInvitationSent';
         
 
     } // fn __construct
@@ -180,6 +180,11 @@ final class MetaInterview extends MetaDbObject {
             return true;   
         } 
         return false;
+    }
+      
+    public function getInvitationSent()
+    {
+        return strtotime($this->m_dbObject->getProperty('invitation_sent'));   
     }
 } // class MetaInterview
 

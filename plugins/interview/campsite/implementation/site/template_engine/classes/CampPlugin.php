@@ -37,10 +37,6 @@ class CampPlugin{
         } else {
             $context->interview = new MetaInterview($interview_id);  
         }
-        
-        if (Interview::IsInvitationTriggered()) {
-            Interview::SendInvitation();   
-        }
     }  
 }
 

@@ -1,4 +1,3 @@
-invitation
 <?php
 /**
  * @package Campsite
@@ -959,16 +958,6 @@ class Interview extends DatabaseObject {
             }
         }
         return $Questioneer;  
-    }
-    
-    public static function TriggerSendInvitation()
-    {
-        self::$trigger_invitation = true;   
-    }
-    
-    public static function IsInvitationTriggered()
-    {
-        return self::$trigger_invitation;   
     }
     
     public function sendInvitation()

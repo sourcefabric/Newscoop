@@ -8,7 +8,7 @@ class InterviewItemsList extends ListObject
     
     public static $s_parameters = array('interview_id' => array('field' => 'fk_interview_id', 'type' => 'integer'),
                                         'status' => array('field' => 'status', 'type' => 'string'),
-                                        'questioneer_id' => array('field' => 'fk_questioneer_user_id', 'type' => 'int'),
+                                        'questioneer_user_id' => array('field' => 'fk_questioneer_user_id', 'type' => 'int'),
                                         'answer' => array('field' => 'answer', 'type' => 'string'),
                                         
                                );
