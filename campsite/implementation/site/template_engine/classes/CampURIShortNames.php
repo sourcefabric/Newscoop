@@ -480,7 +480,7 @@ class CampURIShortNames extends CampURI
         $this->m_uriPath = null;
         $this->m_uriQuery = null;
         
-        if (is_array($p_param)) {
+        if (!is_null($p_param)) {
             $params = preg_split('/ /', $p_param);
             $parameter = $params[0];
             $option = isset($params[1]) ? $params[1] : null;
