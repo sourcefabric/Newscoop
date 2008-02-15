@@ -25,37 +25,83 @@
   </td>
 </tr>
 
-{{ if $article->comments_enabled }}
+{{ if $campsite->article->comments_enabled }}
 <tr>
   <td>
-    {{** list_articlecomments **}}
-
-    {{** /list_articlecomments **}}
+  <a name="comments"></a>
+  <ul>
+  {{ list_article_comments }}
+    <li>{{ if $campsite->comment == $campsite->default_comment }}<b>{{ /if }}
+    <a href="{{ uri }}#comments">
+    Subject: {{ $campsite->comment->subject }}, Reader email: {{ $campsite->comment->reader_email }}
+    </a>
+    {{ if $campsite->comment == $campsite->default_comment }}</b>{{ /if }}<br/>
+    Content: {{ $campsite->comment->content }}
+    </li>
+  {{ /list_article_comments }}
+  </ul>
   </td>
 </tr>
+{{ if $campsite->submitcomment_action->error }}
 <tr>
   <td>
-    {{* comment_form submit_name="send" *}}
-    <table class="commentform" cellspacing="0" cellpadding="0">
-    <tr>
-      <td>{{* tr *}}User Name{{* /tr *}}:</td>
-      <td>{{ camp_edit object="user" attribute="uname" }}</td>
-    </tr>
-    <tr>
-      <td>{{* tr *}}E-mail{{* /tr *}}:</td>
-      <td>{{ camp_edit object="user" attribute="email" }}</td>
-    </tr>
-    <tr>
-      <td>{{* tr *}}Subject{{* /tr *}}:</td>
-      <td>{{ camp_edit object="comment" attribute="subject" }}</td>
-    </tr>
-    <tr>
-      <td>{{* tr *}}Comment{{* /tr *}}:</td>
-      <td>{{ camp_edit object="comment" attribute="comment" }}</td>
-    </tr>
-    </table>
-  {{* /comment_form *}}
+  There was an error submitting the comment: {{ $campsite->submitcomment_action->error->getMessage() }}
   </td>
 </tr>
 {{ /if }}
+{{ if $campsite->submitcomment_action->ok }}
+<tr>
+  {{ if $campsite->publication->moderated_comments }}
+  <td>Your comment was submitted for approval.</td>
+  {{ else }}
+  <td>Your comment was approved.</td>
+  {{ /if }}
+</tr>
+{{ /if }}
+{{ if $campsite->user->logged_in || $campsite->publication->public_comments }}
+<tr>
+  <td>
+    {{ comment_form submit_button="Submit" preview_button="Preview" anchor="comments" }}
+    <table class="commentform" cellspacing="0" cellpadding="0">
+    <tr>
+      <td>E-mail:</td>
+      <td>
+      {{ if $campsite->user->logged_in }}
+        {{ $campsite->user->email }}
+      {{ else }}
+        {{ camp_edit object="comment" attribute="reader_email" size="40" }}
+      {{ /if }}
+      </td>
+    </tr>
+    <tr>
+      <td>Subject:</td>
+      <td>{{ camp_edit object="comment" attribute="subject" size="40" }}</td>
+    </tr>
+    <tr>
+      <td valign="top">Comment:</td>
+      <td>{{ camp_edit object="comment" attribute="content" }}</td>
+    </tr>
+    {{ if $campsite->publication->captcha_enabled }}
+    <tr>
+      <td colspan="2">
+      Please fill in the code shown in the image below:
+      {{ camp_edit object="captcha" attribute="code" }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right">
+      <img src="/include/captcha/image.php">
+      </td>
+    </tr>
+    {{ /if }}
+    </table>
+    {{ /comment_form }}
+  </td>
+</tr>
+{{ else }}
+<tr>
+  <td>You must be a registered reader in order to submit comments.</td>
+</tr>
+{{ /if }}
+{{ /if }} {{* comments enabled *}}
 </table>

@@ -421,6 +421,51 @@ class Publication extends DatabaseObject {
     } // fn setSpamBlockingEnabled
 
 
+    /**
+     * Return true if comments can be posted by unknown readers.
+     *
+     * @return bool
+     */
+    public function publicComments() {
+        if (!$this->exists()) {
+            return null;
+        }
+	    $forum = new Phorum_forum($this->getForumId());
+	    if (!$forum->exists()) {
+	        $forum->create();
+	        $forum->setName($this->getName());
+	        $this->setForumId($forum->getForumId());
+	    }
+	    return $forum->getPublicPermissions()
+	    & (PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY);
+    }
+
+
+    /**
+     * Set a flag that controls whether an unknown user may post comments.
+     *
+     * @param boolean $isOn
+     * @return boolean
+     */
+    public function setPublicComments($isOn) {
+        if (!$this->exists()) {
+            return null;
+        }
+	    $forum = new Phorum_forum($this->getForumId());
+	    if (!$forum->exists()) {
+	        $forum->create();
+	        $forum->setName($this->getName());
+	        $this->setForumId($forum->getForumId());
+	    }
+	    $publicPermissions = $forum->getPublicPermissions();
+	    if ($isOn) {
+	        $publicPermissions |= PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY;
+	    } else {
+	        $publicPermissions &= !PHORUM_USER_ALLOW_NEW_TOPIC & !PHORUM_USER_ALLOW_REPLY;
+	    }
+	    return $forum->setPublicPermissions($publicPermissions);
+    }
+
 	/**
 	 * Return all languages used in the publication as an array of Language objects.
 	 * @return array

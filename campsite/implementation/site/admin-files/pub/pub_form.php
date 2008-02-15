@@ -139,7 +139,7 @@ function onCommentsActivated(p_checkbox)
                 <TR>
                 	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Public allowed to comment?"); ?>:</td>
                 	<td>
-                    <input type="checkbox" NAME="f_comments_public_enabled" id="public_enabled" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj)) { $forum = new Phorum_forum($publicationObj->getForumId()); if ($forum->getPublicPermissions() & (PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY)) { ?>checked<?php }} ?>>
+                    <input type="checkbox" NAME="f_comments_public_enabled" id="public_enabled" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->publicComments()) { ?>checked<?php } ?>>
                 	</TD>
                 </TR>
                 <TR>
