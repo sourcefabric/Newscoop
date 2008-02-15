@@ -42,14 +42,14 @@
   </ul>
   </td>
 </tr>
-{{ if $campsite->submitcomment_action->error }}
+{{ if $campsite->submit_comment_action->error }}
 <tr>
   <td>
-  There was an error submitting the comment: {{ $campsite->submitcomment_action->error->getMessage() }}
+  There was an error submitting the comment: {{ $campsite->submit_comment_action->error->getMessage() }}
   </td>
 </tr>
 {{ /if }}
-{{ if $campsite->submitcomment_action->ok }}
+{{ if $campsite->submit_comment_action->ok }}
 <tr>
   {{ if $campsite->publication->moderated_comments }}
   <td>Your comment was submitted for approval.</td>
