@@ -47,7 +47,7 @@ function smarty_block_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat
     $anchor = isset($p_params['anchor']) ? '#'.$p_params['anchor'] : null;
 
     if (isset($p_content)) {
-        $html = "<form name=\"submitcomment\" action=\"$anchor\" method=\"post\">\n"
+        $html = "<form name=\"submit_comment\" action=\"$anchor\" method=\"post\">\n"
                ."<input type=\"hidden\" name=\"tpl\" value=\"" . $template->identifier . "\" />\n";
         if ($camp->url->type == 'short names') {
             $html .= "<input type=\"hidden\" name=\"f_language_id\" "
@@ -66,7 +66,7 @@ function smarty_block_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat
                 ."value=\"".$camp->comment->identifier."\" />\n";
         }
         $html .= $p_content;
-        $html .= "<input type=\"submit\" name=\"f_submitcomment\" "
+        $html .= "<input type=\"submit\" name=\"f_submit_comment\" "
             ."id=\"article_comment_submit\" value=\""
             .smarty_function_escape_special_chars($p_params['submit_button'])
             ."\" />\n";

@@ -14,7 +14,7 @@ define('ACTION_SUBMIT_COMMENT_ERR_BANNED', 'action_comment_submit_err_banned');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 
 
-class MetaActionSubmitComment extends MetaAction
+class MetaActionSubmit_Comment extends MetaAction
 {
     /**
      * Reads the input parameters and sets up the login action.
@@ -24,7 +24,7 @@ class MetaActionSubmitComment extends MetaAction
     public function __construct(array $p_input)
     {
         $this->m_defined = true;
-        $this->m_name = 'submitcomment';
+        $this->m_name = 'submit_comment';
         $this->m_error = null;
 
         if (!isset($p_input['f_comment_subject']) || empty($p_input['f_comment_subject'])) {
