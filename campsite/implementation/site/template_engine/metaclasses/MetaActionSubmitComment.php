@@ -89,17 +89,18 @@ class MetaActionSubmitComment extends MetaAction
             if (is_null($phorumUser)) {
                 $phorumUser = new Phorum_user();
             }
+            $userId = $user->identifier;
+            $userEmail = $user->email;
+            $userRealName = $user->name;
+            $userPasswd = $user->password_encrypted;
             // Check if the phorum user existed or was created successfuly.
             // If not, set the error code to 'internal error' and exit.
             if (!Phorum_user::CampUserExists($userId)
-            && !$phorumUser->create($user->getUserName(), $userPasswd, $userEmail, $userId)) {
+            && !$phorumUser->create($user->uname, $userPasswd, $userEmail, $userId)) {
                 $this->m_error = new PEAR_Error('There was an internal error when submitting the comment (code 1).',
                 ACTION_SUBMIT_COMMENT_ERR_INTERNAL);
                 return false;
             }
-            $userId = $user->identifier;
-            $userEmail = $user->email;
-            $userRealName = $user->name;
         } else {
             if ($forum->getPublicPermissions() & (PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY)) {
                 if (!isset($this->m_properties['reader_email'])) {
