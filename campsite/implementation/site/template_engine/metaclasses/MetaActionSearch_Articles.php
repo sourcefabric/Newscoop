@@ -3,7 +3,7 @@
 define('ACTION_SEARCH_ARTICLES_ERR_NO_KEYWORD', 'action_search_articles_err_no_keyword');
 
 
-class MetaActionSearchArticles extends MetaAction
+class MetaActionSearch_Articles extends MetaAction
 {
     const SEARCH_LEVEL_MULTIPLE_PUBLICATION = 0;
     
@@ -13,7 +13,7 @@ class MetaActionSearchArticles extends MetaAction
     
     const SEARCH_LEVEL_SECTION = 3;
     
-    const DEFAULT_SEARCH_LEVEL = MetaActionSearchArticles::SEARCH_LEVEL_PUBLICATION;
+    const DEFAULT_SEARCH_LEVEL = MetaActionSearch_Articles::SEARCH_LEVEL_PUBLICATION;
     
     /**
      * Stores the array of articles that matched the search criteria.
@@ -38,7 +38,7 @@ class MetaActionSearchArticles extends MetaAction
     public function __construct(array $p_input)
     {
         $this->m_defined = true;
-        $this->m_name = 'searcharticles';
+        $this->m_name = 'search_articles';
         if (!isset($p_input['f_search_keywords'])) {
             $this->m_error = new PEAR_Error('No keyword was filled in.',
             ACTION_SEARCH_ARTICLES_ERR_NO_KEYWORD);
@@ -62,13 +62,13 @@ class MetaActionSearchArticles extends MetaAction
         && strtolower($p_input['f_match_all']) == true ? 'true' : 'false';
 
         if (isset($p_input['f_search_level'])) {
-            if ($p_input['f_search_level'] < MetaActionSearchArticles::SEARCH_LEVEL_MULTIPLE_PUBLICATION
-            || $p_input['f_search_level'] > MetaActionSearchArticles::SEARCH_LEVEL_SECTION) {
-                $p_input['f_search_level'] = MetaActionSearchArticles::DEFAULT_SEARCH_LEVEL;
+            if ($p_input['f_search_level'] < MetaActionSearch_Articles::SEARCH_LEVEL_MULTIPLE_PUBLICATION
+            || $p_input['f_search_level'] > MetaActionSearch_Articles::SEARCH_LEVEL_SECTION) {
+                $p_input['f_search_level'] = MetaActionSearch_Articles::DEFAULT_SEARCH_LEVEL;
             }
             $this->m_properties['search_level'] = $p_input['f_search_level'];
         } else {
-            $this->m_properties['search_level'] = MetaActionSearchArticles::DEFAULT_SEARCH_LEVEL;
+            $this->m_properties['search_level'] = MetaActionSearch_Articles::DEFAULT_SEARCH_LEVEL;
         }
 
         $this->m_error = ACTION_OK;

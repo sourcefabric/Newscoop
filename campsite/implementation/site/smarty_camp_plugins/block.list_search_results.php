@@ -30,18 +30,18 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
     $campContext = $p_smarty->get_template_vars('campsite');
     $html = '';
 
-    if (!$campContext->searcharticles_action->defined
-    || $campContext->searcharticles_action->error != ACTION_OK) {
+    if (!$campContext->search_articles_action->defined
+    || $campContext->search_articles_action->error != ACTION_OK) {
         $p_repeat = false;
         return '';
     }
 
     if (!isset($p_content)) {
         $start = 0;
-        $p_params['template'] = $campContext->searcharticles_action->template;
-        $p_params['match_all'] = $campContext->searcharticles_action->match_all;
-        $p_params['search_level'] = $campContext->searcharticles_action->search_level;
-        $p_params['search_phrase'] = $campContext->searcharticles_action->search_phrase;
+        $p_params['template'] = $campContext->search_articles_action->template;
+        $p_params['match_all'] = $campContext->search_articles_action->match_all;
+        $p_params['search_level'] = $campContext->search_articles_action->search_level;
+        $p_params['search_phrase'] = $campContext->search_articles_action->search_phrase;
         $searchResultsList = new SearchResultsList($start, $p_params);
         $campContext->setCurrentList($searchResultsList, array('publication', 'language',
     	                                                       'issue', 'section', 'article',
