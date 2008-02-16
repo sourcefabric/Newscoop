@@ -58,6 +58,22 @@
   {{ /if }}
 </tr>
 {{ /if }}
+{{ if $campsite->preview_comment_action->error }}
+<tr>
+  <td>
+  There was an error previewing the comment: {{ $campsite->preview_comment_action->error->getMessage() }}
+  </td>
+</tr>
+{{ /if }}
+{{ if $campsite->preview_comment_action->ok }}
+<tr>
+  <td>
+    <b>Comment preview</b><br/>
+    Subject: {{ $campsite->preview_comment_action->subject }}, Reader email: {{ $campsite->preview_comment_action->reader_email }}<br/>
+    Content: {{ $campsite->preview_comment_action->content }}
+  </td>
+</tr>
+{{ /if }}
 {{ if $campsite->user->logged_in || $campsite->publication->public_comments }}
 <tr>
   <td>
