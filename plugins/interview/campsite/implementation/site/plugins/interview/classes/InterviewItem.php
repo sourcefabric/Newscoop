@@ -32,8 +32,8 @@ class InterviewItem extends DatabaseObject {
         // string - answer
         'answer',
         
-        // int - order
-        'item_order',
+        // int - custom list position
+        'position',
         
         // timestamp - last_modified
         'last_modified'
@@ -100,14 +100,14 @@ class InterviewItem extends DatabaseObject {
             return false;
         }
         
-        $query = "  SELECT  MAX(item_order) + 1 AS next
+        $query = "  SELECT  MAX(position) + 1 AS next
                     FROM    {$this->m_dbTableName}
                     WHERE   fk_interview_id = {$this->m_data['fk_interview_id']}";
         $max = $g_ado_db->getRow($query);
         
-        // Set item_order
+        // Set position
         $query = "  UPDATE  {$this->m_dbTableName}
-                    SET     item_order = {$max['next']}
+                    SET     position = {$max['next']}
                     WHERE   item_id = {$this->m_data['item_id']}";
         $res = $g_ado_db->execute($query); 
 
@@ -143,28 +143,28 @@ class InterviewItem extends DatabaseObject {
         // article will be moved to.
         $compareOperator = ($p_direction == 'up') ? '<' : '>';
         $order = ($p_direction == 'up') ? 'desc' : 'asc';
-        $queryStr = "   SELECT  item_order
+        $queryStr = "   SELECT  position
                         FROM    {$this->m_dbTableName}
                         WHERE   fk_interview_id = {$this->m_data['fk_interview_id']}
-                                AND item_order $compareOperator {$this->m_data['item_order']}
-                        ORDER BY item_order $order
+                                AND position $compareOperator {$this->m_data['position']}
+                        ORDER BY position $order
                         LIMIT ".($p_spacesToMove-1).", 1";
         $destRow = $g_ado_db->GetRow($queryStr);
         
         // Shift all items one space between the source and destination item.
         $operator = ($p_direction == 'up') ? '+' : '-';
-        $minArticleOrder = min($destRow['item_order'], $this->m_data['item_order']);
-        $maxArticleOrder = max($destRow['item_order'], $this->m_data['item_order']);
+        $minItemOrder = min($destRow['position'], $this->m_data['position']);
+        $maxItemOrder = max($destRow['position'], $this->m_data['position']);
         $queryStr2 = "  UPDATE  {$this->m_dbTableName} 
-                        SET     item_order = item_order $operator 1
+                        SET     position = position $operator 1
                         WHERE   fk_interview_id = {$this->m_data['fk_interview_id']}
-                                AND item_order >= $minArticleOrder
-                                AND item_order <= $maxArticleOrder";
+                                AND position >= $minItemOrder
+                                AND position <= $maxItemOrder";
         $g_ado_db->Execute($queryStr2);
 
         // Change position of this item to the destination position.
         $queryStr3 = "  UPDATE  {$this->m_dbTableName}
-                        SET     item_order = {$destRow['item_order']}
+                        SET     position = {$destRow['position']}
                         WHERE   item_id = {$this->m_data['item_id']}";
         $g_ado_db->Execute($queryStr3);
 
@@ -184,39 +184,39 @@ class InterviewItem extends DatabaseObject {
         global $g_ado_db;
         // Get the item that is in the location we are moving
         // this one to.
-        $queryStr = "   SELECT  item_order, item_id
+        $queryStr = "   SELECT  position, item_id
                         FROM    {$this->m_dbTableName}
                         WHERE   fk_interview_id = {$this->m_data['fk_interview_id']}
-                        ORDER BY item_order ASC 
+                        ORDER BY position ASC 
                         LIMIT   ".($p_moveToPosition - 1).', 1';
         $destRow = $g_ado_db->GetRow($queryStr);
         if (!$destRow) {
             return false;
         }
-        if ($destRow['item_order'] == $this->m_data['item_order']) {
+        if ($destRow['position'] == $this->m_data['position']) {
             // Move the destination down one.
             $destItem =& new InterviewItem(null, $destRow['item_id']);
             $destItem->positionRelative("down", 1);
             return true;
         }
-        if ($destRow['item_order'] > $this->m_data['item_order']) {
+        if ($destRow['position'] > $this->m_data['position']) {
             $operator = '-';
         } else {
             $operator = '+';
         }
         // Reorder all the other items
-        $minItemOrder = min($destRow['item_order'], $this->m_data['item_order']);
-        $maxItemOrder = max($destRow['item_order'], $this->m_data['item_order']);
+        $minItemOrder = min($destRow['position'], $this->m_data['position']);
+        $maxItemOrder = max($destRow['position'], $this->m_data['position']);
         $queryStr = "   UPDATE  {$this->m_dbTableName}
-                        SET     item_order = item_order $operator 1
+                        SET     position = position $operator 1
                         WHERE   fk_interview_id = {$this->m_data['fk_interview_id']}
-                                AND item_order >= $minItemOrder
-                                AND item_order <= $maxItemOrder";
+                                AND position >= $minItemOrder
+                                AND position <= $maxItemOrder";
         $g_ado_db->Execute($queryStr);
 
         // Reposition this item.
         $queryStr = "   UPDATE  {$this->m_dbTableName}
-                        SET     item_order = {$destRow['item_order']}
+                        SET     position = {$destRow['position']}
                         WHERE   item_id = {$this->m_data['item_id']}";
         $g_ado_db->Execute($queryStr);
 
@@ -232,7 +232,17 @@ class InterviewItem extends DatabaseObject {
      * @return boolean
      */
     public function delete()
-    {      
+    {   
+        global $g_ado_db;
+        
+        // reduce order of all following items minus 1
+        $currItemOrder = $this->getProperty('position');
+        $queryStr = "   UPDATE  {$this->m_dbTableName}
+                        SET     position = position - 1
+                        WHERE   fk_interview_id = {$this->m_data['fk_interview_id']}
+                                AND position > $currItemOrder";
+        $g_ado_db->Execute($queryStr);
+        
         // finally delete from main table
         $deleted = parent::delete();
 
@@ -267,7 +277,7 @@ class InterviewItem extends DatabaseObject {
                   FROM      {$InterviewItem->m_dbTableName} ";
         
         if (!count($p_order_by)) {
-            $p_order_by = array('item_order' => 'ASC');   
+            $p_order_by = array('position' => 'ASC');   
         }
         
         foreach ($p_order_by as $col => $dir) {
@@ -689,7 +699,8 @@ class InterviewItem extends DatabaseObject {
                     $dbField = 'answer';
                     break;
                 case 'byorder':
-                    $dbField = 'item_order';
+                case 'byposition':
+                    $dbField = 'position';
                     break;
                 case 'bystatus':
                     $dbField = 'status';

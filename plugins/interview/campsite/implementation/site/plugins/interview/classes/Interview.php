@@ -71,6 +71,9 @@ class Interview extends DatabaseObject {
         // datetime
         'invitation_sent',
         
+        // int - custom list position
+        'position',
+        
         // timestamp - last_modified
         'last_modified'
         );
@@ -149,6 +152,16 @@ class Interview extends DatabaseObject {
         if (!$success) {
             return false;
         }
+        
+        $query = "  SELECT  MAX(position) + 1 AS next
+                    FROM    {$this->m_dbTableName}";
+        $max = $g_ado_db->getRow($query);
+        
+        // Set position
+        $query = "  UPDATE  {$this->m_dbTableName}
+                    SET     position = {$max['next']}
+                    WHERE   interview_id = {$this->m_data['interview_id']}";
+        $res = $g_ado_db->execute($query); 
 
         /*
         if (function_exists("camp_load_translation_strings")) {
@@ -161,16 +174,124 @@ class Interview extends DatabaseObject {
         return true;
     } // fn create
 
+    
+    /**
+     * Change the iterview position in the order sequence
+     * relative to its current position.
+     *
+     * @param string $p_direction -
+     *         Can be "up" or "down".  "Up" means towards the beginning of the list,
+     *         and "down" means towards the end of the list.
+     *
+     * @param int $p_spacesToMove -
+     *        The number of spaces to move the item.
+     *
+     * @return boolean
+     */
+    function positionRelative($p_direction, $p_spacesToMove = 1)
+    {
+        global $g_ado_db;
 
+        // Get the item that is in the final position where this
+        // article will be moved to.
+        $compareOperator = ($p_direction == 'up') ? '<' : '>';
+        $order = ($p_direction == 'up') ? 'desc' : 'asc';
+        $queryStr = "   SELECT  position
+                        FROM    {$this->m_dbTableName}
+                        WHERE   position $compareOperator {$this->m_data['position']}
+                        ORDER BY position $order
+                        LIMIT ".($p_spacesToMove-1).", 1";
+        $destRow = $g_ado_db->GetRow($queryStr);
+        
+        // Shift all items one space between the source and destination item.
+        $operator = ($p_direction == 'up') ? '+' : '-';
+        $minItemOrder = min($destRow['position'], $this->m_data['position']);
+        $maxItemOrder = max($destRow['position'], $this->m_data['position']);
+        $queryStr2 = "  UPDATE  {$this->m_dbTableName} 
+                        SET     position = position $operator 1
+                        WHERE   position >= $minItemOrder
+                                AND position <= $maxItemOrder";
+        $g_ado_db->Execute($queryStr2);
+
+        // Change position of this item to the destination position.
+        $queryStr3 = "  UPDATE  {$this->m_dbTableName}
+                        SET     position = {$destRow['position']}
+                        WHERE   interview_id = {$this->m_data['interview_id']}";
+        $g_ado_db->Execute($queryStr3);
+
+        // Re-fetch this item to get the updated order.
+        $this->fetch();
+        return true;
+    } // fn positionRelative
+
+
+    /**
+     * Move the article to the given position (i.e. reorder the article).
+     * @param int $p_moveToPosition
+     * @return boolean
+     */
+    function positionAbsolute($p_moveToPosition = 1)
+    {
+        global $g_ado_db;
+        // Get the item that is in the location we are moving
+        // this one to.
+        $queryStr = "   SELECT  position, interview_id
+                        FROM    {$this->m_dbTableName}
+                        ORDER BY position ASC 
+                        LIMIT   ".($p_moveToPosition - 1).', 1';
+        $destRow = $g_ado_db->GetRow($queryStr);
+        if (!$destRow) {
+            return false;
+        }
+        if ($destRow['position'] == $this->m_data['position']) {
+            // Move the destination down one.
+            $destItem =& new Interview($destRow['interview_id']);
+            $destItem->positionRelative("down", 1);
+            return true;
+        }
+        if ($destRow['position'] > $this->m_data['position']) {
+            $operator = '-';
+        } else {
+            $operator = '+';
+        }
+        // Reorder all the other items
+        $minItemOrder = min($destRow['position'], $this->m_data['position']);
+        $maxItemOrder = max($destRow['position'], $this->m_data['position']);
+        $queryStr = "   UPDATE  {$this->m_dbTableName}
+                        SET     position = position $operator 1
+                        WHERE   position >= $minItemOrder
+                                AND position <= $maxItemOrder";
+        $g_ado_db->Execute($queryStr);
+
+        // Reposition this item.
+        $queryStr = "   UPDATE  {$this->m_dbTableName}
+                        SET     position = {$destRow['position']}
+                        WHERE   interview_id = {$this->m_data['interview_id']}";
+        $g_ado_db->Execute($queryStr);
+
+        $this->fetch();
+        return true;
+    } // fn positionAbsolute
+    
+    
     /**
      * Delete interview from database.
      *
      * @return boolean
      */
     public function delete()
-    {       
+    {    
+        global $g_ado_db;
+           
         // Delete from InterviewItems table
         InterviewItem::OnInterviewDelete($this->m_data['interview_id']);
+        
+        // reduce order of all following items minus 1
+        $currItemOrder = $this->getProperty('position');
+        $queryStr = "   UPDATE  {$this->m_dbTableName}
+                        SET     position = position - 1
+                        WHERE   position > $currItemOrder";
+        $g_ado_db->Execute($queryStr);
         
         // finally delete from main table
         $deleted = parent::delete();
@@ -461,7 +582,7 @@ class Interview extends DatabaseObject {
             array(
                 'element'   => 'f_interview_begin',
                 'type'      => 'text',
-                'constant'  => substr($data['interview_begin'], 0, 10),
+                'default'   => substr($data['interview_begin'], 0, 10),
                 'required'  => true,
                 'attributes'    => array('id' => 'f_interview_begin', 'size' => 10, 'maxlength' => 10),
                 'groupit'   => true          
@@ -495,7 +616,7 @@ class Interview extends DatabaseObject {
             array(
                 'element'   => 'f_interview_end',
                 'type'      => 'text',
-                'constant'  => substr($data['interview_end'], 0, 10),
+                'default'   => substr($data['interview_end'], 0, 10),
                 'required'  => true,
                 'attributes'    => array('id' => 'f_interview_end', 'size' => 10, 'maxlength' => 10),
                 'groupit'   => true          
@@ -529,7 +650,7 @@ class Interview extends DatabaseObject {
             array(
                 'element'   => 'f_questions_begin',
                 'type'      => 'text',
-                'constant'  => substr($data['questions_begin'], 0, 10),
+                'default'   => substr($data['questions_begin'], 0, 10),
                 'required'  => true,
                 'attributes'    => array('id' => 'f_questions_begin', 'size' => 10, 'maxlength' => 10),
                 'groupit'   => true          
@@ -563,7 +684,7 @@ class Interview extends DatabaseObject {
             array(
                 'element'   => 'f_questions_end',
                 'type'      => 'text',
-                'constant'  => substr($data['questions_end'], 0, 10),
+                'default'   => substr($data['questions_end'], 0, 10),
                 'required'  => true,
                 'attributes'    => array('id' => 'f_questions_end', 'size' => 10, 'maxlength' => 10),
                 'groupit'   => true          
@@ -1145,6 +1266,10 @@ class Interview extends DatabaseObject {
                     break;
                 case 'bystatus':
                     $dbField = 'status';
+                    break;
+                case 'byorder':
+                case 'byposition':
+                    $dbField = 'position';
                     break;
             }
             if (!is_null($dbField)) {

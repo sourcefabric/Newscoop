@@ -16,7 +16,8 @@ final class MetaInterviewItem extends MetaDbObject {
 		$this->m_properties['question'] = 'question';
 		$this->m_properties['status'] = 'status';
 		$this->m_properties['answer'] = 'answer';
-		$this->m_properties['item_order'] = 'item_order';		
+		$this->m_properties['order'] = 'position';
+		$this->m_properties['position'] = 'position';		
 		$this->m_properties['last_modified'] = 'last_modified';
 	}
 

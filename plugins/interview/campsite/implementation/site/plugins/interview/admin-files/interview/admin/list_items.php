@@ -51,7 +51,7 @@ if (!$f_interview_id) {
 
 $f_length = Input::Get('f_length', 'int', 20);
 $f_start = Input::Get('f_start', 'int', 0);
-$f_order = Input::Get('f_order', 'string', 'byidentifier');
+$f_order = Input::Get('f_order', 'string', 'byorder');
 
 if ($f_status = Input::Get('f_status', 'string')) {
     $constraints .= "status is $f_status ";    
@@ -61,14 +61,20 @@ if ($f_status = Input::Get('f_status', 'string')) {
 
 $parameters = array(
     'length' => $f_length,
-    'order' => "$f_order DESC",
+    'order' => "$f_order ASC",
     'constraints' => $constraints
 );
 
 define('ADMIN_INTERVIEW_ID', $f_interview_id);  # we need this constant in InterviewItemsList::createList()
 $Interview = new Interview($f_interview_id);
 $InterviewItemsList = new InterviewItemsList($f_start, $parameters);
-$pager =& new SimplePager($InterviewItemsList->getTotalCount(), $f_length, "f_start", "index.php?f_order=$f_order&amp;f_interview_id=$f_interview_id&amp;", false);
+
+$count = $InterviewItemsList->count;
+
+$TotalItems = new InterviewItemsList();
+$total = $TotalItems->count;
+
+$pager =& new SimplePager($count, $f_length, "f_start", "index.php?f_order=$f_order&amp;f_interview_id=$f_interview_id&amp;", false);
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 ?>
@@ -186,8 +192,8 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
               </TD>
         
               <TD style="padding-left: 5px; font-weight: bold;">
-                <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p($InterviewItemsList->count); ?>);">
-                <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p($InterviewItemsList->count); ?>);">
+                <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p($count); ?>);">
+                <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p($count); ?>);">
               </TD>
             <?php } ?>
         </TR>
@@ -207,6 +213,7 @@ if ($InterviewItemsList->getLength()) {
     <FORM name="items_list" id="items_list" action="items_action.php" method="POST">
     <input type="hidden" name="f_interview_id" id="f_interview_id" value="<?php p($f_interview_id) ?>" />
     <input type="hidden" name="f_action" id="f_action">
+    <input type="hidden" name="f_new_pos" id="f_new_pos" />
     
     <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;" width="95%">
         <TR class="table_list_header">
@@ -221,13 +228,18 @@ if ($InterviewItemsList->getLength()) {
                 <?php if ($is_admin || $is_moderator) putGS('Click to edit'); ?>
                 <?php if ($is_guest) putGS('Click to answer'); ?>
                 </SMALL>
-            </TD>
+            </TD>            
             <TD VALIGN="TOP" width="500">
                 <A href="list_items.php?f_start=<?php echo $f_start ?>&amp;f_interview_id=<?php p($f_interview_id) ?>&amp;f_order=byanswer"><?php  putGS("Answer"); ?></a>
                 &nbsp;<SMALL>
                 <?php if ($is_admin || $is_guest) putGS('Click to edit'); ?>
                 </SMALL>
             </TD>
+            
+            <?php if ($is_admin || $is_moderator) { ?> 
+                <TD align="center" valign="top"><?php putGS("Order"); ?></TD>
+            <?php } ?> 
+              
             <TD ALIGN="center" VALIGN="TOP" width="30">
                 <A href="list_items.php?f_start=<?php echo $f_start ?>&amp;f_interview_id=<?php p($f_interview_id) ?>&amp;f_order=bystatus"><?php  putGS("Status"); ?></a>
             </TD>
@@ -276,6 +288,52 @@ if ($InterviewItemsList->getLength()) {
                     </a>
                 </td>
                 
+                <?php if ($is_admin || $is_moderator) { ?> 
+                  <TD ALIGN="right" valign="middle" NOWRAP style="padding: 1px;">
+					<table cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="18px">
+							<?php if ($count) { ?>
+							<a href="javascript: 
+                            uncheckAll(<?php p($count); ?>);
+                            document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
+                            ajax_action('item_move_up_rel') 
+                            "><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
+							<?php } ?>
+						</td>
+						<td width="20px">
+							<?php if ($count) { ?>
+							<a href="javascript: 
+                            uncheckAll(<?php p($count); ?>);
+                            document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
+                            ajax_action('item_move_down_rel') 
+                            "><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0"></A>
+							<?php } ?>
+						</td>
+
+						<td>
+							<select name="f_position_<?php p($counter);?>" 
+                                onChange="document.forms.items_list.f_new_pos.value = document.forms.items_list.f_position_<?php p($counter); ?>.value;
+                                          document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
+                                          ajax_action('item_move_abs')"
+                                class="input_select" style="font-size: smaller;">
+							<?php
+							for ($j = 1; $j <= $total; $j++) {
+								if (($MetaInterviewItem->position) == $j) {
+									echo "<option value=\"$j\" selected>$j</option>\n";
+								} else {
+									echo "<option value=\"$j\">$j</option>\n";
+								}
+							}
+							?>
+							</select>
+						</td>
+
+					</tr>
+					</table>
+				  </TD>
+				<?php } ?>
+                
                 <td align="center"><?php p($MetaInterviewItem->status); ?></td>
                 
                 <td align="center"><?php p($MetaInterviewItem->questioneer->name); ?></td>
@@ -283,7 +341,7 @@ if ($InterviewItemsList->getLength()) {
                 <?php if ($is_admin || $is_moderator) { ?>             
                     <td align='center'>
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {
-                            uncheckAll(<?php p($InterviewItemsList->count); ?>);
+                            uncheckAll(<?php p($count); ?>);
                             document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
                             ajax_action('items_delete') 
                             }">
@@ -298,7 +356,7 @@ if ($InterviewItemsList->getLength()) {
       ?>
     </table>
 </FORM>
-<?php 
+<?php
 } else {?>
     <BLOCKQUOTE>
     <LI><?php  putGS('No interview items.'); ?></LI>

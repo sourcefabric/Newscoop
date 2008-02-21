@@ -52,17 +52,15 @@
 
              
         {{ else }}
-        
-            {{ assign var='_now' value=$smarty.now|camp_date_format:'%Y-%m-%d' }}
-        
+                
             <h4>Interviews awaiting questions:</h4>
-            {{ include file='interview/interviews-list.tpl' _constraints="status is pending questions_begin equal_smaller `$_now` questions_end equal_greater `$_now` language_id is `$campsite->language->number`"}} 
+            {{ include file='interview/interviews-list.tpl' _constraints="status is pending questions_begin equal_smaller curdate() questions_end equal_greater curdate() language is current()"}} 
         
             <h4>Interviews awaiting answers:</h4>
-            {{ include file='interview/interviews-list.tpl' _constraints="status is pending interview_begin equal_smaller `$_now` interview_end equal_greater `$_now` language_id is `$campsite->language->number`"}}
+            {{ include file='interview/interviews-list.tpl' _constraints="status is pending interview_begin equal_smaller curdate() interview_end equal_greater curdate() language is current()"}}
             
             <h4>Interviews already answered:</h4>
-            {{ include file='interview/interviews-list.tpl' _constraints="status is published language_id is `$campsite->language->number`"}}
+            {{ include file='interview/interviews-list.tpl' _constraints="status is published language is current()"}}
         {{ /if }}  
         
       </td>

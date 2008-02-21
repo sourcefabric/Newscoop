@@ -46,6 +46,20 @@ function camp_interview_permission_check($p_action)
             }
         break;
         
+        case 'item_move_up_rel':
+        case 'item_move_down_rel':
+        case 'item_move_abs':
+            if ($is_admin || $is_moderator) {
+                return true;    
+            }
+        return false;
+        
+        case 'interview_move_up_rel':
+        case 'interview_move_down_rel':
+        case 'interview_move_abs':
+            if ($is_admin || $is_moderator) {
+                return true;    
+            }
         return false;
     }  
 }
@@ -100,6 +114,52 @@ switch ($f_action) {
             $InterviewItem = new InterviewItem(null, $item_id);
             $InterviewItem->setProperty('status', $status);   
         }
+    break;
+    
+    case 'item_move_up_rel':
+    case 'item_move_down_rel':
+        $f_items = Input::Get('f_items', 'array');
+        list(,,$dir,) = explode('_', $f_action);
+       
+        foreach ($f_items as $item_id) {
+            $InterviewItem = new InterviewItem(null, $item_id);
+            $InterviewItem->positionRelative($dir);   
+        }
+        
+    break;
+    
+    case 'item_move_abs':
+        $f_items = Input::Get('f_items', 'array');
+        $f_new_pos = Input::Get('f_new_pos', 'int');
+       
+        foreach ($f_items as $item_id) {
+            $InterviewItem = new InterviewItem(null, $item_id);
+            $InterviewItem->positionAbsolute($f_new_pos);   
+        }
+        
+    break;
+    
+    case 'interview_move_up_rel':
+    case 'interview_move_down_rel':
+        $f_interviews = Input::Get('f_interviews', 'array');
+        list(,,$dir,) = explode('_', $f_action);
+       
+        foreach ($f_interviews as $interview_id) {
+            $Interview = new Interview($interview_id);
+            $Interview->positionRelative($dir);   
+        }
+        
+    break;
+    
+    case 'interview_move_abs':
+        $f_interviews = Input::Get('f_interviews', 'array');
+        $f_new_pos = Input::Get('f_new_pos', 'int');
+       
+        foreach ($f_interviews as $interview_id) {
+            $Interview = new Interview($interview_id);
+            $Interview->positionAbsolute($f_new_pos);   
+        }
+        
     break;
 }
 

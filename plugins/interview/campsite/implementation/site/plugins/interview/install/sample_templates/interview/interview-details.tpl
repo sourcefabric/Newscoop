@@ -15,6 +15,7 @@
     <tr><td>Questions End</td><td>{{ $campsite->interview->questions_end|date_format }}</td></tr>
     <tr><td>Questions Limit</td><td>{{ $campsite->interview->questions_limit }}</td></tr>
     <tr><td>Status</td><td>{{ $campsite->interview->status }}</td></tr>
+    <tr><td>Order</td><td>{{ $campsite->interview->order }}</td></tr>
 </table>
 
 

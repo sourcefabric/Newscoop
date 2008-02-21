@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Erstellungszeit: 07. Februar 2008 um 15:33
+-- Erstellungszeit: 21. Februar 2008 um 17:12
 -- Server Version: 5.0.32
 -- PHP-Version: 5.2.0-8+etch7
 -- 
@@ -36,9 +36,10 @@ CREATE TABLE `plugin_interview_interviews` (
   `invitation_template` text NOT NULL,
   `invitation_type` enum('text','html') NOT NULL,
   `invitation_sent` datetime default NULL,
+  `position` int(10) unsigned NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`interview_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 -- --------------------------------------------------------
 
@@ -53,7 +54,7 @@ CREATE TABLE `plugin_interview_items` (
   `question` text NOT NULL,
   `status` enum('draft','pending','published','rejected') NOT NULL default 'draft',
   `answer` text NOT NULL,
-  `item_order` int(10) unsigned NOT NULL,
+  `position` int(10) unsigned NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`item_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;

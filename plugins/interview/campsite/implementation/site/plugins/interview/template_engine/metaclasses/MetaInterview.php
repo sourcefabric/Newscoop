@@ -22,6 +22,9 @@ final class MetaInterview extends MetaDbObject {
 		$this->m_properties['last_modified'] = 'last_modified';
 		$this->m_properties['moderator_user_id'] = 'fk_moderator_user_id';
 		$this->m_properties['guest_user_id'] = 'fk_guest_user_id';
+		$this->m_properties['order'] = 'position';
+		$this->m_properties['position'] = 'position';
+		$this->m_properties['last_modified'] = 'last_modified';
 	}
 
 

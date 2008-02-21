@@ -19,9 +19,7 @@ function ajax_action(action)
 function do_reload(response)
 {
     if (response.responseText) {
-        document.open();
-        document.write(response.responseText);
-        document.close();   
+        alert(response.responseText);   
     }
     document.location.reload();   
 }
@@ -49,7 +47,7 @@ if (!$is_admin && !$is_moderator && !$is_guest) {
 
 $f_length = Input::Get('f_length', 'int', 20);
 $f_start = Input::Get('f_start', 'int', 0);
-$f_order = Input::Get('f_order', 'string', 'byidentifier');
+$f_order = Input::Get('f_order', 'string', 'byorder');
 
 if ($f_language_id = Input::Get('f_language_id', 'int')) {
     $constraints .= "language_id is $f_language_id ";   
@@ -62,11 +60,15 @@ if ($f_status = mysql_escape_string(Input::Get('f_status', 'string'))) {
 $parameters = array(
     'constraints' => $constraints,
     'length' => $f_length,
-    'order' => "$f_order DESC"
+    'order' => "$f_order ASC"
 );
 
 $InterviewsList = new InterviewsList($f_start, $parameters);
-$pager =& new SimplePager($InterviewsList->getTotalCount(), $f_length, "f_start", "index.php?f_order=$f_order&amp;", false);
+$count = $InterviewsList->getTotalCount();
+$pager =& new SimplePager($count, $f_length, "f_start", "index.php?f_order=$f_order&amp;", false);
+
+$TotalList = new InterviewsList();
+$total = $TotalList->count;
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 ?>
@@ -202,8 +204,8 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
               </TD>
         
               <TD style="padding-left: 5px; font-weight: bold;">
-                <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p($InterviewsList->count); ?>);">
-                <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p($InterviewsList->count); ?>);">
+                <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p($count); ?>);">
+                <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p($count); ?>);">
               </TD>
             <?php } ?>
         </TR>
@@ -221,7 +223,8 @@ $color= 0;
 if ($InterviewsList->getLength()) {
     ?>
     <FORM name="interviews_list" id="interviews_list" action="action.php" method="POST">
-    <input type="hidden" name="f_action" id="f_action">
+    <input type="hidden" name="f_action" id="f_action" />
+    <input type="hidden" name="f_new_pos" id="f_new_pos" />
     
     <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;" width="95%">
         <TR class="table_list_header">
@@ -236,6 +239,11 @@ if ($InterviewsList->getLength()) {
                 <?php if ($is_admin) putGS('Click to edit'); ?>
                 </SMALL>
             </TD>
+            
+            <?php if ($is_admin) { ?> 
+                <TD align="center" valign="top"><?php putGS("Order"); ?></TD>
+            <?php } ?> 
+            
             <TD ALIGN="center" VALIGN="TOP" width="30">
                 <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=bystatus"><?php  putGS("Status"); ?></a>
             </TD>
@@ -297,6 +305,52 @@ if ($InterviewsList->getLength()) {
                     ?>
                     (<?php p($MetaInterview->language->name); ?>)
                 </td>
+                
+                <?php if ($is_admin) { ?> 
+                  <TD ALIGN="right" valign="middle" NOWRAP style="padding: 1px;">
+					<table cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="18px">
+							<?php if ($count) { ?>
+							<a href="javascript: 
+                            uncheckAll(<?php p($count); ?>);
+                            document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
+                            ajax_action('interview_move_up_rel') 
+                            "><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
+							<?php } ?>
+						</td>
+						<td width="20px">
+							<?php if ($count) { ?>
+							<a href="javascript: 
+                            uncheckAll(<?php p($count); ?>);
+                            document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
+                            ajax_action('interview_move_down_rel') 
+                            "><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0"></A>
+							<?php } ?>
+						</td>
+
+						<td>
+							<select name="f_position_<?php p($counter);?>" 
+                                onChange="document.forms.interviews_list.f_new_pos.value = document.forms.interviews_list.f_position_<?php p($counter); ?>.value;
+                                          document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
+                                          ajax_action('interview_move_abs')"
+                                class="input_select" style="font-size: smaller;">
+							<?php
+							for ($j = 1; $j <= $total; $j++) {
+								if (($MetaInterview->position) == $j) {
+									echo "<option value=\"$j\" selected>$j</option>\n";
+								} else {
+									echo "<option value=\"$j\">$j</option>\n";
+								}
+							}
+							?>
+							</select>
+						</td>
+
+					</tr>
+					</table>
+				  </TD>
+				<?php } ?>
               
                 <td align="center"><?php putGS($MetaInterview->status); ?></td>
                 <td align="center"><?php putGS($MetaInterview->moderator->name); ?></td>
@@ -318,7 +372,7 @@ if ($InterviewsList->getLength()) {
                     </td>
                     <td align='center'>
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {
-                            uncheckAll(<?php p($InterviewsList->count); ?>);
+                            uncheckAll(<?php p($count); ?>);
                             document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
                             ajax_action('interviews_delete') 
                             }">
