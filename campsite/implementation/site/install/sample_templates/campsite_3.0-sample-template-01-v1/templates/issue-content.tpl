@@ -40,6 +40,7 @@
         <p class="article_intro_small">{{ $campsite->article->intro|truncate:250 }}</p>
       </td>
     {{ /list_articles }}
+    {{ unset_section }}
     </tr>
     </table>
     <div id="dotline"> </div>

@@ -39,6 +39,9 @@
     </div>
   </td>
 </tr>
+<tr>
+  <td><a href="{{ uri options="template user_form.tpl" }}">Subscribe</a></td>
+</tr>
 {{ else }}
 <th>Welcome {{ $campsite->user->name }}</th>
 <td><a href="?logout=true">Logout</a></td>
