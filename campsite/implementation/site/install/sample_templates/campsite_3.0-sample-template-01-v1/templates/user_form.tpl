@@ -39,7 +39,7 @@
         </tr>
         <tr>
           <td><span class="formtext">Email:</span></td>
-          <td>{{ camp_edit object="user" attribute="name" }}</td>
+          <td>{{ camp_edit object="user" attribute="email" }}</td>
         </tr>
         <tr>
           <td><span class="formtext">Country:</span></td>

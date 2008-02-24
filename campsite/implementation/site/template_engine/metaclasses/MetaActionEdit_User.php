@@ -1,6 +1,7 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/phorum_load.php');
 
 
 define('ACTION_EDIT_USER_ERR_INTERNAL', 'action_edit_user_err_internal');
@@ -18,45 +19,45 @@ define('ACTION_EDIT_USER_ERR_INVALID_CREDENTIALS', 'action_edit_user_err_invalid
 class MetaActionEdit_User extends MetaAction
 {
     static private $m_fields = array(
-    	'name'=>array('mandatory', 'type'=>'text', 'max_size'=>255),
-        'uname'=>array('mandatory', 'type'=>'text', 'max_size'=>70),
-    	'password'=>array('mandatory', 'type'=>'password', 'max_size'=>64),
+    	'name'=>array('mandatory', 'type'=>'text', 'max_size'=>255, 'db_field'=>'Name'),
+        'uname'=>array('mandatory', 'type'=>'text', 'max_size'=>70, 'db_field'=>'UName'),
+    	'password'=>array('mandatory', 'type'=>'password', 'max_size'=>64, 'db_field'=>'passwd'),
         'passwordagain'=>array('mandatory', 'type'=>'password', 'max_size'=>64),
-    	'email'=>array('mandatory', 'type'=>'text', 'max_size'=>255),
-    	'city'=>array('type'=>'text', 'max_size'=>100),
-    	'straddress'=>array('type'=>'text', 'max_size'=>255),
-    	'state'=>array('type'=>'text', 'max_size'=>32),
-    	'phone'=>array('type'=>'text', 'max_size'=>20),
-    	'fax'=>array('type'=>'text', 'max_size'=>20),
-    	'contact'=>array('type'=>'text', 'max_size'=>64),
-    	'phone2'=>array('type'=>'text', 'max_size'=>20),
-    	'postalcode'=>array('type'=>'text', 'max_size'=>70),
-    	'employer'=>array('type'=>'text', 'max_size'=>140),
-    	'position'=>array('type'=>'text', 'max_size'=>70),
-    	'interests'=>array('type'=>'textarea', 'width'=>60, 'height'=>3),
-    	'how'=>array('type'=>'text', 'max_size'=>255),
-    	'languages'=>array('type'=>'text', 'max_size'=>100),
-    	'improvements'=>array('type'=>'textarea', 'width'=>60, 'height'=>3),
-    	'field1'=>array('type'=>'text', 'max_size'=>150),
-    	'field2'=>array('type'=>'text', 'max_size'=>150),
-    	'field3'=>array('type'=>'text', 'max_size'=>150),
-    	'field4'=>array('type'=>'text', 'max_size'=>150),
-    	'field5'=>array('type'=>'text', 'max_size'=>150),
-    	'text1'=>array('type'=>'textarea', 'width'=>60, 'height'=>3),
-    	'text2'=>array('type'=>'textarea', 'width'=>60, 'height'=>3),
-        'text3'=>array('type'=>'textarea', 'width'=>60, 'height'=>3),
-    	'country'=>array('type'=>'select'),
-    	'title'=>array('type'=>'select'),
-    	'gender'=>array('type'=>'select'),
-    	'age'=>array('type'=>'select'),
-    	'employertype'=>array('type'=>'select'),
-    	'pref1'=>array('type'=>'select'),
-    	'pref2'=>array('type'=>'select'),
-        'pref3'=>array('type'=>'select'),
-        'pref4'=>array('type'=>'select')
+    	'email'=>array('mandatory', 'type'=>'text', 'max_size'=>255, 'db_field'=>'EMail'),
+    	'city'=>array('type'=>'text', 'max_size'=>100, 'db_field'=>'City'),
+    	'straddress'=>array('type'=>'text', 'max_size'=>255, 'db_field'=>'StrAddress'),
+    	'state'=>array('type'=>'text', 'max_size'=>32, 'db_field'=>'State'),
+    	'phone'=>array('type'=>'text', 'max_size'=>20, 'db_field'=>'Phone'),
+    	'fax'=>array('type'=>'text', 'max_size'=>20, 'db_field'=>'Fax'),
+    	'contact'=>array('type'=>'text', 'max_size'=>64, 'db_field'=>'Contact'),
+    	'phone2'=>array('type'=>'text', 'max_size'=>20, 'db_field'=>'Phone2'),
+    	'postalcode'=>array('type'=>'text', 'max_size'=>70, 'db_field'=>'PostalCode'),
+    	'employer'=>array('type'=>'text', 'max_size'=>140, 'db_field'=>'Employer'),
+    	'position'=>array('type'=>'text', 'max_size'=>70, 'db_field'=>'Position'),
+    	'interests'=>array('type'=>'textarea', 'width'=>60, 'height'=>3, 'db_field'=>'Interests'),
+    	'how'=>array('type'=>'text', 'max_size'=>255, 'db_field'=>'How'),
+    	'languages'=>array('type'=>'text', 'max_size'=>100, 'db_field'=>'Languages'),
+    	'improvements'=>array('type'=>'textarea', 'width'=>60, 'height'=>3, 'db_field'=>'Improvements'),
+    	'field1'=>array('type'=>'text', 'max_size'=>150, 'db_field'=>'Field1'),
+    	'field2'=>array('type'=>'text', 'max_size'=>150, 'db_field'=>'Field2'),
+    	'field3'=>array('type'=>'text', 'max_size'=>150, 'db_field'=>'Field3'),
+    	'field4'=>array('type'=>'text', 'max_size'=>150, 'db_field'=>'Field4'),
+    	'field5'=>array('type'=>'text', 'max_size'=>150, 'db_field'=>'Field5'),
+    	'text1'=>array('type'=>'textarea', 'width'=>60, 'height'=>3, 'db_field'=>'Text1'),
+    	'text2'=>array('type'=>'textarea', 'width'=>60, 'height'=>3, 'db_field'=>'Text2'),
+        'text3'=>array('type'=>'textarea', 'width'=>60, 'height'=>3, 'db_field'=>'Text3'),
+    	'country'=>array('type'=>'select', 'db_field'=>'CountryCode'),
+    	'title'=>array('type'=>'select', 'db_field'=>'Title'),
+    	'gender'=>array('type'=>'select', 'db_field'=>'Gender'),
+    	'age'=>array('type'=>'select', 'db_field'=>'Age'),
+    	'employertype'=>array('type'=>'select', 'db_field'=>'EmployerType'),
+    	'pref1'=>array('type'=>'select', 'db_field'=>'Pref1'),
+    	'pref2'=>array('type'=>'select', 'db_field'=>'Pref2'),
+        'pref3'=>array('type'=>'select', 'db_field'=>'Pref3'),
+        'pref4'=>array('type'=>'select', 'db_field'=>'Pref4')
     );
 
-    private $m_input;
+    private $m_data;
 
     private $m_user;
 
@@ -70,7 +71,24 @@ class MetaActionEdit_User extends MetaAction
     {
         $this->m_defined = true;
         $this->m_name = 'edit_user';
-        $this->m_input = $p_input;
+        $this->m_properties = array();
+        $this->m_data = array();
+        foreach ($p_input as $fieldName=>$fieldValue) {
+            $fieldName = strtolower($fieldName);
+            if (strncmp('f_user_', $fieldName, strlen('f_user_')) != 0) {
+                continue;
+            }
+            $property = substr($fieldName, strlen('f_user_'));
+            if (array_key_exists($property, MetaActionEdit_User::$m_fields)) {
+                $this->m_properties[$property] = $fieldValue;
+                if (isset(MetaActionEdit_User::$m_fields[$property]['db_field'])) {
+                    $this->m_data[MetaActionEdit_User::$m_fields[$property]['db_field']] = $fieldValue;
+                }
+            }
+        }
+        if (isset($this->m_properties['password'])) {
+            $this->m_data['passwd'] = $this->m_properties['password'];
+        }
         $this->m_error = null;
     }
 
@@ -89,55 +107,50 @@ class MetaActionEdit_User extends MetaAction
 
         $metaUser = $p_context->user;
         if (!$metaUser->defined) {
-            if (!MetaAction::ValidateInput($this->m_input, 'f_user_name', 1,
+            if (!MetaAction::ValidateInput($this->m_properties, 'name', 1,
             $this->m_error, 'The user name was not filled in.', ACTION_EDIT_USER_ERR_NO_NAME)) {
                 return false;
             }
-            if (!MetaAction::ValidateInput($this->m_input, 'f_user_uname', 1,
+            if (!MetaAction::ValidateInput($this->m_properties, 'uname', 1,
             $this->m_error, 'The user login name was not filled in.',
             ACTION_EDIT_USER_ERR_NO_USER_NAME)) {
                 return false;
             }
-            if (!MetaAction::ValidateInput($this->m_input, 'f_user_password', 6,
+            if (!MetaAction::ValidateInput($this->m_properties, 'password', 6,
             $this->m_error, 'The user password was not filled in or was too short.',
             ACTION_EDIT_USER_ERR_NO_PASSWORD)) {
                 return false;
             }
-            if (!MetaAction::ValidateInput($this->m_input, 'f_user_password', 6,
+            if (!MetaAction::ValidateInput($this->m_properties, 'passwordagain', 6,
             $this->m_error, 'The password confirmation was not filled in or was too short.',
             ACTION_EDIT_USER_ERR_NO_PASSWORD_CONFIRMATION)) {
                 return false;
             }
-            if (!MetaAction::ValidateInput($this->m_input, 'f_user_email', 8,
+            if (!MetaAction::ValidateInput($this->m_properties, 'email', 8,
             $this->m_error, 'The user email was not filled in or was invalid.',
             ACTION_EDIT_USER_ERR_NO_EMAIL)) {
                 return false;
             }
         } else {
-            if (isset($this->m_input['f_user_password'])) {
-                if (!MetaAction::ValidateInput($this->m_input, 'f_user_password', 6,
+            if (isset($this->m_properties['password'])) {
+                if (!MetaAction::ValidateInput($this->m_properties, 'password', 6,
                 $this->m_error, 'The user password was not filled in or was too short.',
                 ACTION_EDIT_USER_ERR_NO_PASSWORD)) {
                     return false;
                 }
-                if (!MetaAction::ValidateInput($this->m_input, 'f_user_password', 6,
+                if (!MetaAction::ValidateInput($this->m_properties, 'passwordagain', 6,
                 $this->m_error, 'The password confirmation was not filled in or was too short.',
                 ACTION_EDIT_USER_ERR_NO_PASSWORD_CONFIRMATION)) {
                     return false;
                 }
             }
         }
+
         if (isset($this->m_properties['password'])
         && $this->m_properties['password'] != $this->m_properties['passwordagain']) {
             $this->m_error = new PEAR_Error("The password and password confirmation do not match.",
             ACTION_EDIT_USER_ERR_PASSWORD_MISMATCH);
             return false;
-        }
-
-        foreach (MetaActionEdit_User::$m_fields as $field=>$fieldConstraints) {
-            if (isset($this->m_input['f_user_'.$field])) {
-                $this->m_properties[$field] = $this->m_input['f_user_'.$field];
-            }
         }
 
         if (!$metaUser->defined) {
@@ -154,7 +167,7 @@ class MetaActionEdit_User extends MetaAction
             }
             $user = new User();
             $phorumUser = new Phorum_user();
-            if (!$user->create($this->m_properties)
+            if (!$user->create($this->m_data)
             || !$phorumUser->create($this->m_properties['uname'], $this->m_properties['password'], $this->m_properties['email'], $user->getUserId())) {
                 $user->delete();
                 $phorumUser->delete();
@@ -179,14 +192,18 @@ class MetaActionEdit_User extends MetaAction
                 }
             }
             foreach ($this->m_properties as $property=>$value) {
+                if (!isset(MetaActionEdit_User::$m_fields[$property]['db_field'])) {
+                    continue;
+                }
+                $dbProperty = MetaActionEdit_User::$m_fields[$property]['db_field'];
                 if ($property != 'password' && $property != 'passwordagain') {
-                    $user->setProperty($property, $value, false);
+                    $user->setProperty($dbProperty, $value, false);
                     if ($property == 'email') {
-                        $phorumUser->setProperty($property, $value, false);
+                        $phorumUser->setProperty('email', $value, false);
                     }
                 } elseif ($property == 'password') {
                     $user->setPassword($this->m_properties['password'], false);
-                    $phorumUser->setPassword($this->m_properties['password']);
+                    $phorumUser->setPassword($this->m_properties['password'], false);
                 }
             }
             if (!$user->commit() || !$phorumUser->commit()) {

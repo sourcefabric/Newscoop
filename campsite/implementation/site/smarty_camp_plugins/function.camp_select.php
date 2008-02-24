@@ -41,13 +41,16 @@ function smarty_function_camp_select($p_params, &$p_smarty)
 
     switch($object) {
     case 'user':
-        $attrValue = $campsite->$object->$attribute;
+        $fieldValue = CampRequest::GetVar('f_user_'.$attribute);
+        if (is_null($fieldValue)) {
+            $fieldValue = $campsite->user->$attribute;
+        }
         if ($attribute == 'gender') {
             $html = '<input type="radio" name="f_user_'.$attribute
-                .'" value="M" '.(($attrValue == 'M') ? 'checked' : '').' /> '
+                .'" value="M" '.(($fieldValue == 'M') ? 'checked' : '').' /> '
                 .smarty_function_escape_special_chars($p_params['male_name'])
                 .' <input type="radio" name="f_user_'.$attribute
-                .'" value="F" '.(($attrValue == 'F') ? 'checked' : '').' /> '
+                .'" value="F" '.(($fieldValue == 'F') ? 'checked' : '').' /> '
                 .smarty_function_escape_special_chars($p_params['female_name']);
         } elseif ($attribute == 'title') {
             $selectTag = true;
@@ -137,7 +140,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
     if ($selectTag == true) {
         $html.= smarty_function_html_options(array('output' => $output,
                                                    'values' => $values,
-                                                   'selected' => $attrValue,
+                                                   'selected' => $fieldValue,
                                                    'print_result' => false),
                                              $p_smarty);
         $html.= '</select>';

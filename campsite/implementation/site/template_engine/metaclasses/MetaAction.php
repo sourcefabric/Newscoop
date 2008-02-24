@@ -237,7 +237,7 @@ class MetaAction
     public static function ValidateInput(array $p_input, $p_fieldName, $p_minSize = null,
     &$p_error, $p_errorMessage, $p_errorCode) {
         if (isset($p_input[$p_fieldName])
-        && (is_null($p_minSize) || strlen($p_input[$p_fieldName]) > $p_minSize)) {
+        && (is_null($p_minSize) || strlen($p_input[$p_fieldName]) >= $p_minSize)) {
             $p_error = null;
             return true;
         }
