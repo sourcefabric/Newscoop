@@ -163,8 +163,14 @@ class MetaAction
         if ($p_property == 'defined') {
             return $this->defined();
         }
-        if ($p_property == 'error') {
-            return $this->getError();
+        if ($p_property == 'is_error') {
+            return PEAR::isError($this->m_error);
+        }
+        if ($p_property == 'error_code') {
+            return PEAR::isError($this->m_error) ? $this->m_error->getCode() : null;
+        }
+        if ($p_property == 'error_message') {
+            return PEAR::isError($this->m_error) ? $this->m_error->getMessage() : null;
         }
         if ($p_property == 'ok') {
             return $this->getError() === ACTION_OK;

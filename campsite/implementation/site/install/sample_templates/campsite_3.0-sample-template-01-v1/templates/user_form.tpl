@@ -9,9 +9,9 @@
     <table class="content" cellspacing="0" cellpadding="0">
     <tr>
       <td>
-        {{ if $campsite->edit_user_action->defined && $campsite->edit_user_action->error }}
+        {{ if $campsite->edit_user_action->defined && $campsite->edit_user_action->is_error }}
           <p>There was an error submitting the account creation form:
-          {{ $campsite->edit_user_action->error->getMessage() }}</p>
+          {{ $campsite->edit_user_action->error_message }}</p>
         {{ /if }}
         <div id="userform">
         {{ user_form }}

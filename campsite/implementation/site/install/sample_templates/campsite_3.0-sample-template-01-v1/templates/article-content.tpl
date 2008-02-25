@@ -42,10 +42,10 @@
   </ul>
   </td>
 </tr>
-{{ if $campsite->submit_comment_action->error }}
+{{ if $campsite->submit_comment_action->is_error }}
 <tr>
   <td>
-  There was an error submitting the comment: {{ $campsite->submit_comment_action->error->getMessage() }}
+  There was an error submitting the comment: {{ $campsite->submit_comment_action->error_message }}
   </td>
 </tr>
 {{ /if }}
@@ -58,10 +58,10 @@
   {{ /if }}
 </tr>
 {{ /if }}
-{{ if $campsite->preview_comment_action->error }}
+{{ if $campsite->preview_comment_action->is_error }}
 <tr>
   <td>
-  There was an error previewing the comment: {{ $campsite->preview_comment_action->error->getMessage() }}
+  There was an error previewing the comment: {{ $campsite->preview_comment_action->error_message }}
   </td>
 </tr>
 {{ /if }}

@@ -10,6 +10,7 @@ define('ACTION_SUBMIT_COMMENT_ERR_NO_PUBLIC', 'action_comment_submit_err_no_publ
 define('ACTION_SUBMIT_COMMENT_ERR_NO_CAPTCHA_CODE', 'action_comment_submit_err_no_captcha_code');
 define('ACTION_SUBMIT_COMMENT_ERR_INVALID_CAPTCHA_CODE', 'action_comment_submit_err_invalid_captcha_code');
 define('ACTION_SUBMIT_COMMENT_ERR_BANNED', 'action_comment_submit_err_banned');
+define('ACTION_SUBMIT_COMMENT_ERR_REJECTED', 'action_comment_submit_err_rejected');
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 
@@ -82,7 +83,7 @@ class MetaActionSubmit_Comment extends MetaAction
             $publicationObj->setForumId($forum->getForumId());
         }
         $forumId = $forum->getForumId();
-        
+
         $user = $p_context->user;
         if ($user->defined) {
             $phorumUser = Phorum_user::GetByUserName($user->uname);
@@ -183,13 +184,15 @@ class MetaActionSubmit_Comment extends MetaAction
         $isFirstMessage = ($firstPost->getThreadId() == 0);
         ArticleComment::Link($articleMetaObj->number, $articleMetaObj->language->number,
         $commentObj->getMessageId(), $isFirstMessage);
-        
+
         $p_context->comment = new MetaComment($commentObj->getMessageId());
-        
+
         CampRequest::SetVar('f_comment_reader_email');
         CampRequest::SetVar('f_comment_subject');
         CampRequest::SetVar('f_comment_content');
-        
+
+        $this->m_properties['rejected'] = false;
+
         $this->m_error = ACTION_OK;
         return true;
     }
