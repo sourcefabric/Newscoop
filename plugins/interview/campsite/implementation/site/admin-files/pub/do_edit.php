@@ -71,7 +71,9 @@ $forum = new Phorum_forum($publicationObj->getForumId());
 if (!$forum->exists()) {
 	$forum = camp_forum_create($publicationObj);
 }
-camp_forum_update($forum, $f_name, $f_comments_enabled, $f_comments_public_enabled);
+$forum->setName($f_name);
+$forum->setIsVisible($f_comments_enabled);
+$publicationObj->setPublicComments($f_comments_public_enabled);
 
 $setting = new Phorum_setting('mod_emailcomments', 'S');
 if (!$setting->exists()) {

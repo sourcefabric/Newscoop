@@ -476,13 +476,18 @@ class CampURIShortNames extends CampURI
 	    if ($this->isValidCache()) {
 	        return;
 	    }
-	    
+
         $this->m_uriPath = null;
         $this->m_uriQuery = null;
         
-        $params = preg_split('/ /', $p_param);
-        $parameter = $params[0];
-        $option = isset($params[1]) ? $params[1] : null;
+        if (!is_null($p_param)) {
+            $params = preg_split('/ /', $p_param);
+            $parameter = $params[0];
+            $option = isset($params[1]) ? $params[1] : null;
+        } else {
+            $parameter = null;
+            $option = null;
+        }
 
         switch($parameter) {
         case 'language':

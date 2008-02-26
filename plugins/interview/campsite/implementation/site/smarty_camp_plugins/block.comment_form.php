@@ -24,7 +24,7 @@
  */
 function smarty_block_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
-    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
+    require_once($p_smarty->_get_plugin_filepath('shared','escape_special_chars'));
 
     // gets the context variable
     $camp = $p_smarty->get_template_vars('campsite');
@@ -36,17 +36,19 @@ function smarty_block_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat
     if (isset($p_params['template'])) {
         $template = new MetaTemplate($p_params['template']);
         if (!$template->defined()) {
-            $template = null;
+            $template = $camp->template;
         }
+    } else {
+        $template = $camp->template;
     }
-    $templateId = is_null($template) ? $campsite->template->identifier : $template->identifier;
     if (!isset($p_params['submit_button'])) {
         $p_params['submit_button'] = 'Submit';
     }
+    $anchor = isset($p_params['anchor']) ? '#'.$p_params['anchor'] : null;
 
     if (isset($p_content)) {
-        $html = "<form name=\"article_comment\" action=\"\" method=\"post\">\n"
-               ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n";
+        $html = "<form name=\"submit_comment\" action=\"$anchor\" method=\"post\">\n"
+               ."<input type=\"hidden\" name=\"tpl\" value=\"" . $template->identifier . "\" />\n";
         if ($camp->url->type == 'short names') {
             $html .= "<input type=\"hidden\" name=\"f_language_id\" "
                 ."value=\"".$camp->language->id."\" />\n"
@@ -60,7 +62,7 @@ function smarty_block_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat
                 ."value=\"".$camp->article->number."\" />\n";
         }
     	if ($camp->comment->identifier > 0) {
-            $html .= "<input type=\"hidden\" name=\"f_acid\" "
+            $html .= "<input type=\"hidden\" name=\"acid\" "
                 ."value=\"".$camp->comment->identifier."\" />\n";
         }
         $html .= $p_content;

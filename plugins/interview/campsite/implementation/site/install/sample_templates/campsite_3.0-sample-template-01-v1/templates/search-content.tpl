@@ -4,7 +4,7 @@
     {{ list_search_results order="bypublishdate desc" }}
       {{ if $campsite->current_list->at_beginning }}
         <p>Found {{ $campsite->current_list->count }} articles matching the keyword(s)
-        '{{ $campsite->searcharticles_action->search_phrase }}'.</p>
+        '{{ $campsite->search_articles_action->search_phrase }}'.</p>
       {{ /if }}
     <table width="100%" cellspacing="0" cellpadding="4">
         <tr>

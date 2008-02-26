@@ -56,7 +56,7 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
 
 
         $html .= $p_content;
-        $html .= "<input type=\"submit\" name=\"submitComment\" "
+        $html .= "<input type=\"submit\" name=\"submit_comment\" "
             ."id=\"articleCommentSubmit\" value=\""
             .smarty_function_escape_special_chars($p_params['submit_button'])
             ."\" />\n";

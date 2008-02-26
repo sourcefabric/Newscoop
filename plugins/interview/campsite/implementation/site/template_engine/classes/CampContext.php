@@ -31,7 +31,8 @@ final class CampContext
 								    'image'=>array('class'=>'Image'),
 								    'attachment'=>array('class'=>'Attachment'),
 								    'audioclip'=>array('class'=>'Audioclip'),
-								    'comment'=>array('class'=>'Comment'),
+								    'comment'=>array('class'=>'Comment',
+								    				 'handler'=>'setCommentHandler'),
 								    'subtitle'=>array('class'=>'Subtitle'),
 								    'topic'=>array('class'=>'Topic'),
 								    'user'=>array('class'=>'User'),
@@ -128,6 +129,7 @@ final class CampContext
         $this->article = $url->article;
         $this->template = $url->template;
 
+        $this->m_readonlyProperties['default_template'] = $this->template;
         $this->m_readonlyProperties['default_language'] = $this->language;
         $this->m_readonlyProperties['default_publication'] = $this->publication;
         $this->m_readonlyProperties['default_issue'] = $this->issue;
@@ -136,12 +138,16 @@ final class CampContext
         $this->m_readonlyProperties['default_topic'] = $this->topic;
         $this->m_readonlyProperties['default_url'] = new MetaURL();
 
+        if (!is_null($commentId = CampRequest::GetVar('acid'))) {
+            $this->m_objects['comment'] = new MetaComment($commentId);
+        }
+
         $userId = CampRequest::GetVar('LoginUserId');
         if (!is_null($userId)) {
             $user = new User($userId);
             if ($user->exists()
             && $user->getKeyId() == CampRequest::GetVar('LoginUserKey')) {
-                $this->user = new MetaUser($userId);
+                $this->m_objects['user'] = new MetaUser($userId);
             }
         }
 
@@ -156,6 +162,10 @@ final class CampContext
                 $this->m_readonlyProperties[$propertyName] = MetaAction::CreateAction(array());
             }
         }
+
+        // Initialize the default comment attribute at the end, after the
+        // submit comment action had run.
+        $this->m_readonlyProperties['default_comment'] = $this->comment;
     } // fn __construct
 
 
@@ -671,6 +681,7 @@ final class CampContext
      * Handler for the language change event.
      *
      * @param MetaLanguage $p_oldLanguage
+     * @param MetaLanguage $p_newLanguage
      */
     private function setLanguageHandler(MetaLanguage $p_oldLanguage, MetaLanguage $p_newLanguage)
     {
@@ -691,6 +702,7 @@ final class CampContext
      * Handler for the publication change event.
      *
      * @param MetaPublication $p_oldPublication
+     * @param MetaPublication $p_newPublication
      */
     private function setPublicationHandler(MetaPublication $p_oldPublication,
     MetaPublication $p_newPublication)
@@ -716,6 +728,7 @@ final class CampContext
      * Handler for the issue change event.
      *
      * @param MetaIssue $p_oldIssue
+     * @param MetaIssue $p_newIssue
      */
     private function setIssueHandler(MetaIssue $p_oldIssue, MetaIssue $p_newIssue)
     {
@@ -740,6 +753,7 @@ final class CampContext
      * Handler for the section change event.
      *
      * @param MetaSection $p_oldSection
+     * @param MetaSection $p_newSection
      */
     private function setSectionHandler(MetaSection $p_oldSection, MetaSection $p_newSection)
     {
@@ -764,6 +778,7 @@ final class CampContext
      * Handler for the article change event.
      *
      * @param MetaArticle $p_oldArticle
+     * @param MetaArticle $p_newArticle
      */
     private function setArticleHandler(MetaArticle $p_oldArticle, MetaArticle $p_newArticle)
     {
@@ -787,6 +802,19 @@ final class CampContext
         $articleHandlerRunning = false;
     }
 
+
+    /**
+     * Handler for the comment change event.
+     *
+     * @param MetaComment $p_oldComment
+     * @param MetaComment $p_newComment
+     */
+    private function setCommentHandler(MetaComment $p_oldComment, MetaComment $p_newComment) {
+        if ($p_oldComment != $p_newComment) {
+            $this->m_objects['comment'] = $p_newComment;
+            $this->m_readonlyProperties['url']->set_parameter('acid', $p_newComment->identifier);
+        }
+    }
 
     /**
      * Returns the name corresponding to the given property; null if

@@ -47,10 +47,10 @@ function smarty_block_search_form($p_params, $p_content, &$p_smarty)
     }
 
     if (isset($p_content)) {
-        $html = "<form name=\"searcharticles\" action=\"\" method=\"post\">\n"
+        $html = "<form name=\"search_articles\" action=\"\" method=\"post\">\n"
         ."<input type=\"hidden\" name=\"tpl\" value=\"" . $template->identifier . "\" />\n";
         $html .= $p_content;
-        $html .= "<input type=\"submit\" name=\"f_searcharticles\" value=\""
+        $html .= "<input type=\"submit\" name=\"f_search_articles\" value=\""
         .smarty_function_escape_special_chars($p_params['submit_button'])
         ."\" ".$p_params['html_code']." />\n</form>\n";
     }

@@ -163,8 +163,14 @@ class MetaAction
         if ($p_property == 'defined') {
             return $this->defined();
         }
-        if ($p_property == 'error') {
-            return $this->getError();
+        if ($p_property == 'is_error') {
+            return PEAR::isError($this->m_error);
+        }
+        if ($p_property == 'error_code') {
+            return PEAR::isError($this->m_error) ? $this->m_error->getCode() : null;
+        }
+        if ($p_property == 'error_message') {
+            return PEAR::isError($this->m_error) ? $this->m_error->getMessage() : null;
         }
         if ($p_property == 'ok') {
             return $this->getError() === ACTION_OK;
@@ -217,6 +223,33 @@ class MetaAction
     {
         return $this->m_defined;
     } // fn defined
+
+
+    /**
+     * Returns true and sets the error to null if the input field was defined
+     * and it's size respected the minimum size constraint. Returns false and
+     * initializes the error to a pear error object with the given error message
+     * and code if the input field was not defined or did not respect the minimum
+     * size constraint. The minimum size constraint may be null.
+     *
+     * @param array $p_input
+     * @param string $p_fieldName
+     * @param int $p_minSize
+     * @param mixed $p_error
+     * @param string $p_errorMessage
+     * @param mixed $p_errorCode
+     * @return bool
+     */
+    public static function ValidateInput(array $p_input, $p_fieldName, $p_minSize = null,
+    &$p_error, $p_errorMessage, $p_errorCode) {
+        if (isset($p_input[$p_fieldName])
+        && (is_null($p_minSize) || strlen($p_input[$p_fieldName]) >= $p_minSize)) {
+            $p_error = null;
+            return true;
+        }
+        $p_error = new PEAR_Error($p_errorMessage, $p_errorCode);
+        return false;
+    }
 
 
     /**

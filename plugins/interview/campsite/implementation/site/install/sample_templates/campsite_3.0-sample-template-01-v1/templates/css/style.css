@@ -64,6 +64,15 @@ table.rightbox {
     border-left: 1px solid #dfdfdf;
     border-bottom: 1px solid #dfdfdf;
 }
+table.userform {
+    margin: 0 0 15px 0;
+    padding: 5px;
+    text-align: left;
+    border-top: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    border-left: 1px solid #dfdfdf;
+    border-right: 1px solid #dfdfdf;
+}
 
 table.rightbar {
     width: 184px;
@@ -217,6 +226,26 @@ div#searchform .submitbutton {
     border: 1px solid #a5a5a5;
 }
 div#searchform .submitbutton {
+    width: 60px;
+}
+
+/*** User Form ***/
+div#userform {
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+div#userform form {
+    margin: 0;
+    padding: 0;
+}
+div#userform form input,
+div#userform .submitbutton {
+    font-size: 75%;
+    font-size: 70%;
+    border: 1px solid #a5a5a5;
+}
+div#userform .submitbutton {
     width: 60px;
 }
 
