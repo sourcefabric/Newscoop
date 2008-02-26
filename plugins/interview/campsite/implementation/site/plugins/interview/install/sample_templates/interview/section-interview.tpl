@@ -52,6 +52,21 @@
 
              
         {{ else }}
+
+            {{ if $campsite->user->defined }}
+                {{ if $smarty.request.f_interviewnotify == 'on' }}   
+                    You will recive interview notifications
+                {{ elseif $smarty.request.f_interviewnotify == 'off' }}        
+                    You will not recive interview notifications
+                {{ elseif $campsite->user->has_permission('plugin_interview_notify') }}
+                    <a href="{{ uripath }}?{{ urlparameters }}&amp;f_interviewnotify=off">Do not notify me about new interviews</a>
+                {{ elseif  !$campsite->user->has_permission('plugin_interview_notify') }}
+                    <a href="{{ uripath }}?{{ urlparameters }}&amp;f_interviewnotify=on">Notify me about new interviews</a>
+                {{ /if }}
+                
+            {{ else }}
+                <a href="javascript: if (confirm('You need to subscribe to use this funtion. Do you want to go to subscription page?')) location.href='{{ uri options="template user_form.tpl" }}'">Notify me about new interviews</a>
+            {{ /if }}
                 
             <h4>Interviews awaiting questions:</h4>
             {{ include file='interview/interviews-list.tpl' _constraints="status is pending questions_begin equal_smaller curdate() questions_end equal_greater curdate() language is current()"}} 
