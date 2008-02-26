@@ -87,7 +87,7 @@ class ComparisonOperation
 	           // this value indicates that the left operand have to compared with the value from current context
 	           // e.g. language_number is current()
 	           
-	           $Context = CampTemplate::context();
+	           $Context = CampTemplate::singleton()->context();
 	           $object = strtolower($this->m_leftOperand);
 	           
 	           switch ($object) {
