@@ -34,7 +34,9 @@ final class MetaUser extends MetaDbObject {
         $this->m_properties['str_address'] = 'StrAddress';
         $this->m_properties['state'] = 'State';
         $this->m_properties['phone'] = 'Phone';
+        $this->m_properties['fax'] = 'Fax';
         $this->m_properties['contact'] = 'Contact';
+        $this->m_properties['second_phone'] = 'Phone2';
         $this->m_properties['postal_code'] = 'PostalCode';
         $this->m_properties['employer'] = 'Employer';
         $this->m_properties['position'] = 'Position';

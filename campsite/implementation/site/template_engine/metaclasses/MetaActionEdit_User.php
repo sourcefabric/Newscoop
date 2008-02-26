@@ -107,6 +107,7 @@ class MetaActionEdit_User extends MetaAction
 
         $metaUser = $p_context->user;
         if (!$metaUser->defined) {
+            $this->m_properties['type'] = 'add';
             if (!MetaAction::ValidateInput($this->m_properties, 'name', 1,
             $this->m_error, 'The user name was not filled in.', ACTION_EDIT_USER_ERR_NO_NAME)) {
                 return false;
@@ -132,6 +133,7 @@ class MetaActionEdit_User extends MetaAction
                 return false;
             }
         } else {
+            $this->m_properties['type'] = 'edit';
             if (isset($this->m_properties['password'])) {
                 if (!MetaAction::ValidateInput($this->m_properties, 'password', 6,
                 $this->m_error, 'The user password was not filled in or was too short.',
