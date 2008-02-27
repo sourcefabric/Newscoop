@@ -107,6 +107,8 @@ class TemplateConverterHelper
             ),
         'image' => array(
             'print' => array(
+                'number' => array(
+                    'attribute' => 'article_index'),
                 'mon_nr' => array(
                     'attribute' => 'mon'),
                 'wday_nr' => array(
@@ -132,7 +134,22 @@ class TemplateConverterHelper
         'subscription' => array(
             'print' => array(
                 'expdate' => array(
-                    'attribute' => 'expiration_date')
+                    'attribute' => 'expiration_date'),
+                'unit' => array(
+                    'new_object' => 'publication',
+                    'attribute' => 'subscription_time_unit'),
+                'unitcost' => array(
+                    'new_object' => 'publication',
+                    'attribute' => 'subscription_unit_cost'),
+                'currency' => array(
+                    'new_object' => 'publication',
+                    'attribute' => 'subscription_currency'),
+                'trialtime' => array(
+                    'new_object' => 'publication',
+                    'attribute' => 'subscription_trial_time'),
+                'paidtime' => array(
+                    'new_object' => 'publication',
+                    'attribute' => 'subscription_paid_time')
                 )
             ),
         'user' => array(
@@ -352,10 +369,9 @@ class TemplateConverterHelper
     {
         if (strtolower($p_optArray[1]) == 'off') {
             if ($p_optArray[0] == 'articlecomment') {
-                $newTag = 'unset_article_comment';
-            } else {
-                $newTag = 'unset_' . $p_optArray[0];
+                $p_optArray[0] = 'article_comment';
             }
+            $newTag = 'unset_' . $p_optArray[0];
         } else {
             $newTag = 'set_' . $p_optArray[0];
                 if ($p_optArray[0] == 'language') {
