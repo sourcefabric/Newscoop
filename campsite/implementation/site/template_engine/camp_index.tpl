@@ -1097,11 +1097,27 @@
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Comment Count:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->article->comment_count }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->comment_count }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Translated to:</td>
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->article->translated_to('ro') }}
   </td>
   <td nowrap valign="top">{{ literal }}{{ $campsite->article->translated_to('ro') }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Has Keyword:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->article->has_keyword('fsf') }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->has_keyword('fsf') }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>

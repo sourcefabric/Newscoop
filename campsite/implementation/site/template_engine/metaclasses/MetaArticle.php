@@ -89,6 +89,7 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['has_attachments'] = 'hasAttachments';
         $this->m_customProperties['image_index'] = 'getImageIndex';
+        $this->m_customProperties['comment_count'] =  'getCommentCount';
     } // fn __construct
 
 
@@ -340,8 +341,8 @@ final class MetaArticle extends MetaDbObject {
         && $articleTypeObj->commentsEnabled()
         && $this->m_dbObject->commentsEnabled();
     }
-    
-    
+
+
     protected function getCommentsLocked()
     {
         return $this->m_dbObject->commentsLocked();
@@ -368,6 +369,11 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
+    protected function getCommentCount() {
+        return ArticleComment::GetComments('approved', true);
+    }
+
+
     public function translated_to($p_language)
     {
         if (is_string($p_language)) {
@@ -384,6 +390,11 @@ final class MetaArticle extends MetaDbObject {
         return (int)$article->exists();
     }
 
+
+    public function has_keyword($p_keyword) {
+        $keywords = $this->m_dbObject->getKeywords();
+        return (int)(stristr($keywords, $p_keyword) !== false);
+    }
 } // class MetaArticle
 
 ?>
