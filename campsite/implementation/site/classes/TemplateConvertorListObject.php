@@ -57,6 +57,11 @@ class TemplateConvertorListObject
     /**
      * @var string
      */
+    private $m_language = '';
+
+    /**
+     * @var string
+     */
     private $m_endList = '';
 
 
@@ -98,6 +103,15 @@ class TemplateConvertorListObject
                 $listTypeFound = true;
                 continue;
             }
+            if ($listTypeFound && $this->m_list == 'list_article_attachments') {
+                if (strtolower($p_optArray[$i]) == 'forcurrentlanguage') {
+                    $this->m_language = 'language="current"';
+                    continue;
+                } elseif (strtolower($p_optArray[$i]) == 'foralllanguages') {
+                    $this->m_language = 'language="all"';
+                    continue;
+                }
+            }
             if (!$orderFound && strtolower($p_optArray[$i]) != 'order') {
                 $constraints.= $p_optArray[$i].' ';
             } else {
@@ -136,9 +150,57 @@ class TemplateConvertorListObject
         $list.= (strlen($this->m_columns)) ? ' '.$this->m_columns : '';
         $list.= (strlen($this->m_constraints)) ? ' '.$this->m_constraints : '';
         $list.= (strlen($this->m_order)) ? ' '.$this->m_order : '';
+        $list.= (strlen($this->m_language)) ? ' '.$this->m_language : '';
 
         return $list;
     } // fn getListString
+
+
+    /**
+     *
+     */
+    public function setEndList($p_endString)
+    {
+        if (strlen($this->m_endList) > 0) {
+            $this->m_endList = $p_endString.$this->m_endList;
+        } else {
+            $this->m_endList = $p_endString;
+        }
+    } // fn setEndList
+
+
+    /**
+     *
+     */
+    public function GetNewTagContent($p_optArray)
+    {
+        static $listObj;
+
+        if (empty($listObj)) {
+            $listObj = array();
+        }
+
+        $newTag = '';
+        $maxIndex = sizeof($listObj) ? sizeof($listObj) - 1 : 0;
+        if ($p_optArray[0] == 'list') {
+            $listObj[] = new TemplateConvertorListObject($p_optArray);
+            $maxIndex = sizeof($listObj) ? sizeof($listObj) - 1 : 0;
+            $newTag = $listObj[$maxIndex]->getListString();
+        } elseif ($p_optArray[0] == 'foremptylist') {
+            $newTag = 'if '.CS_OBJECT.'->current_list->empty';
+            if (isset($listObj[$maxIndex]) && is_object($listObj[$maxIndex])) {
+                $endEmptyString = "/if }}\n{{";
+                $listObj[$maxIndex]->setEndList($endEmptyString);
+            }
+        } elseif (strpos($p_optArray[0], 'endlist') !== false) {
+            if (isset($listObj[$maxIndex]) && is_object($listObj[$maxIndex])) {
+                $newTag = $listObj[$maxIndex]->getEndList();
+                array_pop($listObj);
+            }
+        }
+
+        return $newTag;
+    } // fn GetNewTagContent
 
 } // fn TemplateConvertorListObject
 

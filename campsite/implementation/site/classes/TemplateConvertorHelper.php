@@ -22,8 +22,148 @@ class TemplateConvertorHelper
     /**
      * @var array
      */
+    private static $m_exceptions = array(
+        'article' => array(
+            'print' => array(
+                'type' => array(
+                    'attribute' => 'type_name'),
+                'mon_nr' => array(
+                    'attribute' => 'mon'),
+                'wday_nr' => array(
+                    'attribute' => 'wday'),
+                'upload_date' => array(
+                    'attribute' => 'creation_date'),
+                'uploaddate' => array(
+                    'attribute' => 'creation_date'),
+                'publishdate' => array(
+                    'attribute' => 'publish_date'),
+                'onfrontpage' => array(
+                    'attribute' => 'on_front_page'),
+                'onsectionpage' => array(
+                    'attribute' => 'on_section_page'),
+                'public' => array(
+                    'attribute' => 'is_public')
+                )
+            ),
+        'articlecomment' => array(
+            'print' => array(
+                'readeremail' => array(
+                    'new_object' => 'comment',
+                    'attribute' => 'reader_email'),
+                'readeremailobfuscated' => array(
+                    'new_object' => 'comment',
+                    'attribute' => 'reader_email|obfuscate_email'),
+                'submitdate' => array(
+                    'new_object' => 'comment',
+                    'attribute' => 'submit_date'),
+                'readeremailpreview' => array(
+                    'new_object' => 'preview_comment_action',
+                    'attribute' => 'reader_email'),
+                'readeremailpreviewobfuscated' => array(
+                    'new_object' => 'preview_comment_action',
+                    'attribute' => 'reader_email|obfuscate_email'),
+                'subjectpreview' => array(
+                    'new_object' => 'preview_comment_action',
+                    'attribute' => 'subject'),
+                'contentpreview' => array(
+                    'new_object' => 'preview_comment_action',
+                    'attribute' => 'content'),
+                'submiterror' => array(
+                    'new_object' => 'submit_comment_action',
+                    'attribute' => 'error_message'),
+                'submiterrorno' => array(
+                    'new_object' => 'submit_comment_action',
+                    'attribute' => 'error_code')
+                )
+            ),
+        'attachment' => array(
+            'print' => array(
+                'filename' => array(
+                    'attribute' => 'file_name'),
+                'mimetype' => array(
+                    'attribute' => 'mime_type'),
+                'sizeb' => array(
+                    'attribute' => 'size_b'),
+                'sizekb' => array(
+                    'attribute' => 'size_kb'),
+                'sizemb' => array(
+                    'attribute' => 'size_mb')
+                )
+            ),
+        'audioattachment' => array(
+            'print' => array(
+                'tracknum' => array(
+                    'attribute' => 'track_no'),
+                'disknum' => array(
+                    'attribute' => 'disk_no')
+                )
+            ),
+        'image' => array(
+            'print' => array(
+                'mon_nr' => array(
+                    'attribute' => 'mon'),
+                'wday_nr' => array(
+                    'attribute' => 'wday')
+                )
+            ),
+        'issue' => array(
+            'print' => array(
+                'mon_nr' => array(
+                    'attribute' => 'mon'),
+                'wday_nr' => array(
+                    'attribute' => 'wday'),
+                'iscurrent' => array(
+                    'attribute' => 'is_current')
+                )
+            ),
+        'language' => array(
+            'print' => array(
+                'englname' => array (
+                    'attribute' => 'english_name')
+                )
+            ),
+        'subscription' => array(
+            'print' => array(
+                'expdate' => array(
+                    'attribute' => 'expiration_date')
+                )
+            ),
+        'user' => array(
+            'print' => array(
+                'straddress' => array (
+                    'attribute' => 'str_address'),
+                'postalcode' => array(
+                    'attribute' => 'postal_code'),
+                'addok' => array(
+                    'attribute' => 'add_ok'),
+                'modifyok' => array(
+                    'attribute' => 'modify_ok'),
+                'adderror' => array(
+                    'attribute' => 'add_error'),
+                'modifyerror' => array(
+                    'attribute' => 'modify_error'),
+                'addaction' => array(
+                    'attribute' => 'add_action'),
+                'loggedin' => array(
+                    'attribute' => 'logged_in'),
+                'blockedfromcomments' => array(
+                    'attribute' => 'blocked_from_comments')
+                )
+            )
+        );
+
+
+    /**
+     * @var array
+     */
     private static $m_envObjects = array('language','publication','issue',
-                                         'section','article','topic');
+                                         'section','article','topic', 'articlecomment');
+
+    /**
+     * @var array
+     */
+    private static $m_printEx = array('articleattachment' => 'attachment',
+                                      'articlecomment' => 'comment');
 
     /**
      * @var array
@@ -47,7 +187,7 @@ class TemplateConvertorHelper
      */
     public static function GetNewTagContent($p_optArray)
     {
-        static $listObj;
+        //static $listObj;
 
         if (!is_array($p_optArray) || sizeof($p_optArray) < 1) {
             continue;
@@ -133,23 +273,6 @@ class TemplateConvertorHelper
             return self::BuildHTMLEncodingStatement($p_optArray);
         }
 
-        // Lists
-        // <!** List length 5 article type is Article order bynumber desc>
-        // to
-        // {{ list_articles length="5" constraints="type is Article" order="bynumber desc" }}
-        if ($p_optArray[0] == 'list') {
-            return self::BuildListStatement($p_optArray, $listObj);
-        }
-
-        // Lists End
-        // <!** endList> to {{ /list_#statement#s }}
-        // <!** endList searchresult> to {{ /list_search_results }}
-        if (strpos($p_optArray[0], 'endlist') !== false) {
-            if (is_object($listObj)) {
-                return $listObj->getEndList();
-            }
-        }
-
         switch ($p_optArray[0]) {
         // <!** Date ... > to {{ $smarty.now|camp_date_format:" ... " }}
         case 'date':
@@ -175,10 +298,6 @@ class TemplateConvertorHelper
         case 'else':
             $newTag = '/else';
             break;
-        // <!** ForEmptyList> to {{ if $current_list->empty }}
-        case 'foremptylist':
-            $newTag = 'if '.CS_OBJECT.'->current_list->empty';
-            break;
         }
         
         return $newTag;
@@ -193,8 +312,19 @@ class TemplateConvertorHelper
     public static function BuildPrintStatement($p_optArray)
     {
         $newTag = CS_OBJECT;
-        for($i = 1; $i < sizeof($p_optArray); $i++) {
-            $newTag .= '->' . strtolower($p_optArray[$i]);
+        $exStatement = strtolower($p_optArray[1]);
+        if (array_key_exists($exStatement, self::$m_exceptions)
+                && array_key_exists(strtolower($p_optArray[2]), self::$m_exceptions[$exStatement]['print'])) {
+            $e = self::$m_exceptions[$exStatement]['print'][strtolower($p_optArray[2])];
+            $newTag .= (isset($e['new_object'])) ? '->'.$e['new_object'] : '->'.strtolower($p_optArray[1]);
+            $newTag .= (isset($e['attribute'])) ? '->'.$e['attribute'] : '';
+        } else {
+            for($i = 1; $i < sizeof($p_optArray); $i++) {
+                if (array_key_exists(strtolower($p_optArray[$i]), self::$m_printEx)) {
+                    $p_optArray[$i] = self::$m_printEx[strtolower($p_optArray[$i])];
+                }
+                $newTag .= '->' . strtolower($p_optArray[$i]);
+            }
         }
         
         return $newTag;    
@@ -209,7 +339,11 @@ class TemplateConvertorHelper
     public static function BuildEnvironmentalStatement($p_optArray)
     {
         if (strtolower($p_optArray[1]) == 'off') {
-            $newTag = 'unset_' . $p_optArray[0];
+            if ($p_optArray[0] == 'articlecomment') {
+                $newTag = 'unset_article_comment';
+            } else {
+                $newTag = 'unset_' . $p_optArray[0];
+            }
         } else {
             $newTag = 'set_' . $p_optArray[0];
                 if ($p_optArray[0] == 'language') {

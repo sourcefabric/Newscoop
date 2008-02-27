@@ -103,7 +103,7 @@ class TemplateConvertor
             // gets single words from tag content (options string)
             $optArray = $this->parseOptionsString($oldTagContent);
             // finds out new tag syntax based on given tag content
-            $newTagContent = TemplateConvertorHelper::GetNewTagContent($optArray);
+            $newTagContent = $this->getNewTagContent($optArray, $oldTagContent);
             if (empty($newTagContent)) {
                 continue;
             }
@@ -177,7 +177,7 @@ class TemplateConvertor
      *
      * @return array
      */
-    function parseOptionsString($p_optionsString)
+    private function parseOptionsString($p_optionsString)
     {
         if (empty($p_optionsString)) {
             return array();
@@ -218,6 +218,34 @@ class TemplateConvertor
 
         return $words;
     } // fn parseOptionsString
+
+
+    /**
+     * @param array $p_optArray
+     */
+    private function getNewTagContent($p_optArray, $p_oldTagContent = null)
+    {
+        if (!is_array($p_optArray) || sizeof($p_optArray) < 1) {
+            return;
+        }
+
+        $newTag = '';
+        $p_optArray[0] = strtolower($p_optArray[0]);
+
+        if ($p_optArray[0] == 'list'|| $p_optArray[0] == 'foremptylist'
+                || strpos($p_optArray[0], 'endlist') !== false) {
+            $newTag = TemplateConvertorListObject::GetNewTagContent($p_optArray);
+            $pattern = '/<!\*\*\s*'.preg_quote($p_oldTagContent).'\s*>/';
+            $replacement = CS_OPEN_TAG.' '.$newTag.' '.CS_CLOSE_TAG;
+            $this->m_templateOriginalContent = preg_replace($pattern,
+                                                            $replacement,
+                                                            $this->m_templateOriginalContent,
+                                                            1);
+            return null;
+        } else {
+            return TemplateConvertorHelper::GetNewTagContent($p_optArray);
+        }
+    } // fn getNewTagContent
 
 } // class TemplateConvertor
 
