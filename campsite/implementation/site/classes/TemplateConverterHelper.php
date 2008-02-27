@@ -76,25 +76,32 @@ class TemplateConverterHelper
                     'attribute' => 'error_code')
                 )
             ),
-        'attachment' => array(
+        'articleattachment' => array(
             'print' => array(
                 'filename' => array(
+                    'new_object' => 'attachment',
                     'attribute' => 'file_name'),
                 'mimetype' => array(
+                    'new_object' => 'attachment',
                     'attribute' => 'mime_type'),
                 'sizeb' => array(
+                    'new_object' => 'attachment',
                     'attribute' => 'size_b'),
                 'sizekb' => array(
+                    'new_object' => 'attachment',
                     'attribute' => 'size_kb'),
                 'sizemb' => array(
+                    'new_object' => 'attachment',
                     'attribute' => 'size_mb')
                 )
             ),
         'audioattachment' => array(
             'print' => array(
                 'tracknum' => array(
+                    'new_object' => 'audioclip',
                     'attribute' => 'track_no'),
                 'disknum' => array(
+                    'new_object' => 'audioclip',
                     'attribute' => 'disk_no')
                 )
             ),
@@ -156,14 +163,18 @@ class TemplateConverterHelper
     /**
      * @var array
      */
-    private static $m_envObjects = array('language','publication','issue',
-                                         'section','article','topic', 'articlecomment');
+    private static $m_envObjects = array(
+        'language','publication','issue',
+        'section','article','topic', 'articlecomment'
+        );
 
     /**
      * @var array
      */
-    private static $m_printEx = array('articleattachment' => 'attachment',
-                                      'articlecomment' => 'comment');
+    private static $m_printEx = array(
+        'articleattachment' => 'attachment', 'articlecomment' => 'comment',
+        'audioattachment' => 'audioclip'
+        );
 
     /**
      * @var array
@@ -178,8 +189,9 @@ class TemplateConverterHelper
     /**
      * @var array
      */
-    private static $m_endForms = array('endarticlecomment','endlogin','endsearch',
-                                       'endsubscription','enduser');
+    private static $m_endForms = array(
+        'endarticlecomment','endlogin','endsearch', 'endsubscription','enduser'
+        );
 
 
     /**
