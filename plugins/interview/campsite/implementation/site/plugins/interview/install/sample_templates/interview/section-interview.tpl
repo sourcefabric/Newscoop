@@ -55,10 +55,12 @@
 
             {{ if $campsite->user->defined }}
                 {{ if $smarty.request.f_interviewnotify == 'on' }}   
-                    You will recive interview notifications
+                    You will recive interview notifications<br>
                 {{ elseif $smarty.request.f_interviewnotify == 'off' }}        
-                    You will not recive interview notifications
-                {{ elseif $campsite->user->has_permission('plugin_interview_notify') }}
+                    You will not recive interview notifications<br>
+                {{ /if }}
+                    
+                {{ if $campsite->user->has_permission('plugin_interview_notify') }}
                     <a href="{{ uripath }}?{{ urlparameters }}&amp;f_interviewnotify=off">Do not notify me about new interviews</a>
                 {{ elseif  !$campsite->user->has_permission('plugin_interview_notify') }}
                     <a href="{{ uripath }}?{{ urlparameters }}&amp;f_interviewnotify=on">Notify me about new interviews</a>

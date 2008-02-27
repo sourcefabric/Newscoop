@@ -41,12 +41,14 @@ class MetaActionInterviewNotify extends MetaAction
         if ($this->m_properties['action'] == 'on') {  
             $User->setPermission('plugin_interview_notify', true);
             
+            $p_context->user = new MetaUser($p_context->user->identifier); // reload MetaUser object because it was modified
             $this->m_error = ACTION_OK;
             return true;
             
         } elseif ($this->m_properties['action'] == 'off') {
             $User->setPermission('plugin_interview_notify', false);
             
+            $p_context->user = new MetaUser($p_context->user->identifier); // reload MetaUser object because it was modified
             $this->m_error = ACTION_OK;
             return true;
                         
