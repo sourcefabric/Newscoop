@@ -27,6 +27,11 @@ final class MetaPublication extends MetaDbObject {
         }
         $this->m_properties['name'] = 'Name';
         $this->m_properties['identifier'] = 'Id';
+        $this->m_properties['subscription_currency'] = 'Currency';
+        $this->m_properties['subscription_trial_time'] = 'TrialTime';
+        $this->m_properties['subscription_paid_time'] = 'PaidTime';
+        $this->m_properties['subscription_unit_cost'] = 'UnitCost';
+        $this->m_properties['subscription_unit_cost_all_lang'] = 'UnitCostAllLang';
     }
 
 
@@ -41,6 +46,7 @@ final class MetaPublication extends MetaDbObject {
         $this->m_customProperties['public_comments'] = 'getPublicComments';
         $this->m_customProperties['moderated_comments'] = 'getModeratedComments';
         $this->m_customProperties['captcha_enabled'] = 'getCAPTCHAEnabled';
+        $this->m_customProperties['subscription_time_unit'] = 'getSubscriptionTimeUnit';
     } // fn __construct
 
 
@@ -76,6 +82,11 @@ final class MetaPublication extends MetaDbObject {
 
     protected function getCAPTCHAEnabled() {
         return $this->m_dbObject->isCaptchaEnabled();
+    }
+
+
+    protected function getSubscriptionTimeUnit() {
+        return $this->m_dbObject->getTimeUnitName(CampTemplate::singleton()->context()->language);
     }
 } // class MetaPublication
 

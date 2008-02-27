@@ -550,11 +550,27 @@
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Month Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->issue->mon_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->mon_name }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Week Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->issue->wday }}
   </td>
   <td nowrap valign="top">{{ literal }}{{ $campsite->issue->wday }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Week Day Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->issue->wday_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->wday_name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
@@ -627,6 +643,14 @@
     {{ $campsite->issue->defined }}
   </td>
   <td nowrap valign="top">{{ literal }}{{ $campsite->issue->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Is Current:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->issue->is_current }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->is_current }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -842,11 +866,27 @@
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Month Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->article->mon_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->mon_name }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Week Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->article->wday }}
   </td>
   <td nowrap valign="top">{{ literal }}{{ $campsite->article->wday }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Week Day Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->article->wday_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->wday_name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
@@ -1193,11 +1233,27 @@
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Month Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->image->mon_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->mon_name }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Week Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->image->wday }}
   </td>
   <td nowrap valign="top">{{ literal }}{{ $campsite->image->wday }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Week Day Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->image->wday_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->wday_name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>

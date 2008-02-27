@@ -71,6 +71,8 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['hour'] = 'getCreationHour';
         $this->m_customProperties['min'] = 'getCreationMinute';
         $this->m_customProperties['sec'] = 'getCreationSecond';
+        $this->m_customProperties['mon_name'] = 'getCreationMonthName';
+        $this->m_customProperties['wday_name'] = 'getCreationWeekDayName';
         $this->m_customProperties['template'] = 'getTemplate';
         $this->m_customProperties['comments_enabled'] = 'getCommentsEnabled';
         $this->m_customProperties['comments_locked'] = 'getCommentsLocked';
@@ -227,6 +229,18 @@ final class MetaArticle extends MetaDbObject {
         $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
         $creation_date_time = getdate($creation_timestamp);
         return $creation_date_time['seconds'];
+    }
+
+
+    protected function getCreationMonthName() {
+        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('UploadDate'));
+        return $dateTime->getMonthName();
+    }
+
+
+    protected function getCreationWeekDayName() {
+        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('UploadDate'));
+        return $dateTime->getWeekDayName();
     }
 
 

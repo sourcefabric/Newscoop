@@ -45,12 +45,14 @@ final class MetaImage extends MetaDbObject {
         $this->m_customProperties['hour'] = 'getHour';
         $this->m_customProperties['min'] = 'getMinute';
         $this->m_customProperties['sec'] = 'getSecond';
+        $this->m_customProperties['mon_name'] = 'getMonthName';
+        $this->m_customProperties['wday_name'] = 'getWeekDayName';
         $this->m_customProperties['article_index'] = 'getArticleIndex';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 
-    public function getYear()
+    protected function getYear()
     {
         $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
         $date_time = getdate($timestamp);
@@ -58,7 +60,7 @@ final class MetaImage extends MetaDbObject {
     }
 
 
-    public function getMonth()
+    protected function getMonth()
     {
         $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
         $date_time = getdate($timestamp);
@@ -66,7 +68,7 @@ final class MetaImage extends MetaDbObject {
     }
 
 
-    public function getWeekDay()
+    protected function getWeekDay()
     {
         $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
         $date_time = getdate($timestamp);
@@ -74,7 +76,7 @@ final class MetaImage extends MetaDbObject {
     }
 
 
-    public function getMonthDay()
+    protected function getMonthDay()
     {
         $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
         $date_time = getdate($timestamp);
@@ -82,7 +84,7 @@ final class MetaImage extends MetaDbObject {
     }
 
 
-    public function getYearDay()
+    protected function getYearDay()
     {
         $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
         $date_time = getdate($timestamp);
@@ -90,7 +92,7 @@ final class MetaImage extends MetaDbObject {
     }
 
 
-    public function getHour()
+    protected function getHour()
     {
         $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
         $date_time = getdate($timestamp);
@@ -98,7 +100,7 @@ final class MetaImage extends MetaDbObject {
     }
 
 
-    public function getMinute()
+    protected function getMinute()
     {
         $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
         $date_time = getdate($timestamp);
@@ -106,11 +108,23 @@ final class MetaImage extends MetaDbObject {
     }
 
 
-    public function getSecond()
+    protected function getSecond()
     {
         $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
         $date_time = getdate($timestamp);
         return $date_time['seconds'];
+    }
+
+
+    protected function getMonthName() {
+        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('Date'));
+        return $dateTime->getMonthName();
+    }
+
+
+    protected function getWeekDayName() {
+        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('Date'));
+        return $dateTime->getWeekDayName();
     }
 
 
@@ -120,7 +134,7 @@ final class MetaImage extends MetaDbObject {
      *
      * @return int
      */
-    public function getArticleIndex() {
+    protected function getArticleIndex() {
         return CampTemplate::singleton()->context()->article->image_index;
     }
 
