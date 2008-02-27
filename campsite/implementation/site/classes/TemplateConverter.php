@@ -10,16 +10,16 @@
  */
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/PEAR.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConvertorHelper.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConverterHelper.php');
 
 define('CS_OPEN_TAG', '{{');
 define('CS_CLOSE_TAG', '}}');
 
 
 /**
- * Class TemplateConvertor
+ * Class TemplateConverter
  */
-class TemplateConvertor
+class TemplateConverter
 {
     /**
      * @var string
@@ -234,7 +234,7 @@ class TemplateConvertor
 
         if ($p_optArray[0] == 'list'|| $p_optArray[0] == 'foremptylist'
                 || strpos($p_optArray[0], 'endlist') !== false) {
-            $newTag = TemplateConvertorListObject::GetNewTagContent($p_optArray);
+            $newTag = TemplateConverterListObject::GetNewTagContent($p_optArray);
             $pattern = '/<!\*\*\s*'.preg_quote($p_oldTagContent).'\s*>/';
             $replacement = CS_OPEN_TAG.' '.$newTag.' '.CS_CLOSE_TAG;
             $this->m_templateOriginalContent = preg_replace($pattern,
@@ -243,10 +243,10 @@ class TemplateConvertor
                                                             1);
             return null;
         } else {
-            return TemplateConvertorHelper::GetNewTagContent($p_optArray);
+            return TemplateConverterHelper::GetNewTagContent($p_optArray);
         }
     } // fn getNewTagContent
 
-} // class TemplateConvertor
+} // class TemplateConverter
 
 ?>

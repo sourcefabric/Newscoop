@@ -11,9 +11,9 @@
 
 
 /**
- * Class TemplateConvertorListObject
+ * Class TemplateConverterListObject
  */
-class TemplateConvertorListObject
+class TemplateConverterListObject
 {
     /**
      * @var array
@@ -183,7 +183,7 @@ class TemplateConvertorListObject
         $newTag = '';
         $maxIndex = sizeof($listObj) ? sizeof($listObj) - 1 : 0;
         if ($p_optArray[0] == 'list') {
-            $listObj[] = new TemplateConvertorListObject($p_optArray);
+            $listObj[] = new TemplateConverterListObject($p_optArray);
             $maxIndex = sizeof($listObj) ? sizeof($listObj) - 1 : 0;
             $newTag = $listObj[$maxIndex]->getListString();
         } elseif ($p_optArray[0] == 'foremptylist') {
@@ -202,6 +202,6 @@ class TemplateConvertorListObject
         return $newTag;
     } // fn GetNewTagContent
 
-} // fn TemplateConvertorListObject
+} // class TemplateConverterListObject
 
 ?>

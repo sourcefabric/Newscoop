@@ -9,15 +9,15 @@
  * @link http://www.campware.org
  */
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConvertorListObject.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConverterListObject.php');
 
 define('CS_OBJECT', '$campsite');
 
 
 /**
- * Class TemplateConvertorHelper
+ * Class TemplateConverterHelper
  */
-class TemplateConvertorHelper
+class TemplateConverterHelper
 {
     /**
      * @var array
@@ -490,7 +490,7 @@ class TemplateConvertorHelper
      */
     public static function BuildListStatement($p_optArray, &$listObj)
     {
-        $listObj = new TemplateConvertorListObject($p_optArray);
+        $listObj = new TemplateConverterListObject($p_optArray);
         $newTag = $listObj->getListString();
 
         return $newTag;
@@ -513,6 +513,6 @@ class TemplateConvertorHelper
         return $newTag;
     } // fn BuildHTMLEncodingStatement
 
-} // class TemplateConvertorHelper
+} // class TemplateConverterHelper
 
 ?>
