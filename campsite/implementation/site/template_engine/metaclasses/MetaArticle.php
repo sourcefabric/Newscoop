@@ -90,6 +90,7 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['has_attachments'] = 'hasAttachments';
         $this->m_customProperties['image_index'] = 'getImageIndex';
         $this->m_customProperties['comment_count'] =  'getCommentCount';
+        $this->m_customProperties['content_accessible'] = 'isContentAccessible';
     } // fn __construct
 
 
@@ -371,6 +372,16 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getCommentCount() {
         return ArticleComment::GetComments('approved', true);
+    }
+
+
+    protected function isContentAccessible() {
+        if ($this->m_dbObject->isPublic()) {
+            return (int)true;
+        }
+        $user = CampTemplate::singleton()->context()->user;
+        return (int)($user->defined && $user->subscription->is_valid
+        && $user->subscription->has_section(CampTemplate::singleton()->context()->section->number));
     }
 
 

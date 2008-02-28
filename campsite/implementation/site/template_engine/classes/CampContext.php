@@ -36,8 +36,7 @@ final class CampContext
 								    'subtitle'=>array('class'=>'Subtitle'),
 								    'topic'=>array('class'=>'Topic'),
 								    'user'=>array('class'=>'User'),
-								    'template'=>array('class'=>'Template'),
-								    'subscription'=>array('class'=>'Subscription')
+								    'template'=>array('class'=>'Template')
     );
 
     // Defines the list objects

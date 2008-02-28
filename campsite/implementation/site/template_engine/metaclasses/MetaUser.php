@@ -67,6 +67,7 @@ final class MetaUser extends MetaDbObject {
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['logged_in'] =  'isLoggedIn';
         $this->m_customProperties['blocked_from_comments'] = 'isBlockedFromComments';
+        $this->m_customProperties['subscription'] = 'getSubscription';
     } // fn __construct
 
 
@@ -124,6 +125,16 @@ final class MetaUser extends MetaDbObject {
 
     protected function isBlockedFromComments() {
         return (int)Phorum_user::IsBanned($this->m_dbObject->getRealName(), $this->m_dbObject->getEmail());
+    }
+
+
+    protected function getSubscription() {
+        $publicationId = CampTemplate::singleton()->context()->publication->identifier;
+        $subscriptions = Subscription::GetSubscriptions($publicationId, $this->m_dbObject->getUserId());
+        if (empty($subscriptions)) {
+            return new MetaSubscription();
+        }
+        return new MetaSubscription($subscriptions[0]->getSubscriptionId());
     }
 } // class MetaUser
 

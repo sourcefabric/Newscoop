@@ -82,7 +82,7 @@ $context->topic = new MetaTopic(14);
 
 
 // User object
-$context->user = new MetaUser(1);
+$context->user = new MetaUser(11);
 
 
 // Template object
