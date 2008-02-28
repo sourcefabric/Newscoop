@@ -140,7 +140,7 @@ final class MetaArticle extends MetaDbObject {
                 if ($articleFieldType->getType() == 'mediumblob') {
                     if (is_null($this->getContentCache($p_property))) {
                         $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $property);
-                        $this->setContentCache($p_property, $bodyField->getContent());
+                        $this->setContentCache($p_property, $bodyField);
                     }
                     $fieldValue = $this->getContentCache($p_property);
                 }
@@ -417,7 +417,7 @@ final class MetaArticle extends MetaDbObject {
                 $fieldValue = $this->m_articleData->getProperty('F'.$property);
                 if ($articleFieldType->getType() == 'mediumblob') {
                     $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $property);
-                    return $bodyField->getSubtitlesCount();
+                    return $bodyField->subtitles_count;
                 }
                 return null;
             } catch (InvalidPropertyException $e) {

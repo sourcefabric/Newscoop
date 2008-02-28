@@ -35,6 +35,13 @@ final class MetaSubtitle {
     private $m_number;
 
     /**
+     * The number of subtitles
+     *
+     * @var int
+     */
+    private $m_count;
+
+    /**
      * The subtitle name
      *
      * @var string
@@ -66,14 +73,17 @@ final class MetaSubtitle {
     /**
      * Constructor
      *
+     * @param string $p_number
+     * @param string $p_count
      * @param string $p_name
      * @param string $p_content
      * @param string $p_formattingStart
      * @param string $p_formattingEnd
      */
-    public function MetaSubtitle($p_number = null, $p_name = null, $p_content = null,
-    $p_formattingStart = '', $p_formattingEnd = '') {
+    public function MetaSubtitle($p_number = null, $p_count = null, $p_name = null,
+    $p_content = null, $p_formattingStart = '', $p_formattingEnd = '') {
         $this->m_number = $p_number;
+        $this->m_count = $p_count;
         $this->m_name = $p_name;
         $this->m_content = MetaSubtitle::ProcessContent($p_content);
         $this->m_nameFormattingStart = $p_formattingStart;
@@ -83,11 +93,14 @@ final class MetaSubtitle {
 
     public function __get($p_property)
     {
-        switch ($p_property) {
+        switch (strtolower($p_property)) {
             case 'number': return $this->m_number;
+            case 'count': return $this->m_count;
             case 'name': return $this->m_name;
             case 'formatted_name': return $this->getFormattedName();
             case 'content': return $this->m_content;
+            case 'has_previous_subtitles': return (int)($this->m_number > 0);
+            case 'has_next_subtitles': return (int)($this->m_number < ($this->m_count - 1));
             default:
                 $this->trigger_invalid_property_error($p_property);
                 return null;
@@ -137,8 +150,7 @@ final class MetaSubtitle {
      * @return array of MetaSubtitle
      */
     public static function ReadSubtitles($p_content, $p_firstSubtitle = '',
-    $p_headerFormatStart = null,
-    $p_headerFormatEnd = null) {
+    $p_headerFormatStart = null, $p_headerFormatEnd = null) {
         $result = preg_match_all('/('.MetaSubtitle::GetFindPattern().')/i', $p_content, $subtitlesNames);
 
         $contentParts = preg_split('/'.MetaSubtitle::GetSplitPattern().'/i', $p_content);
@@ -155,7 +167,7 @@ final class MetaSubtitle {
             } else {
                 $formatEnd = $p_headerFormatEnd;
             }
-            $subtitles[] = new MetaSubtitle($index, $name, $contentPart, $formatStart, $formatEnd);
+            $subtitles[] = new MetaSubtitle($index, count($contentParts), $name, $contentPart, $formatStart, $formatEnd);
         }
         return $subtitles;
     }

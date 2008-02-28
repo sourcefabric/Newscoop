@@ -89,9 +89,6 @@ $context->user = new MetaUser(11);
 $context->template = new MetaTemplate('index.tpl');
 
 
-// Subscription object
-$context->subscription = new MetaSubscription(5);
-
 //$tpl->debugging = true;
 
 
