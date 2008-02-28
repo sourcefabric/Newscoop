@@ -77,6 +77,11 @@ final class MetaArticleBodyField {
     public function getSubtitles() {
         return $this->m_subtitles;
     }
+    
+    
+    public function getSubtitlesCount() {
+        return count($this->m_subtitles) - 1;
+    }
 
 
     /**

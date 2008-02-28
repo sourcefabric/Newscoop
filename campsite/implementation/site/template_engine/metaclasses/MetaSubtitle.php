@@ -28,6 +28,13 @@ final class MetaSubtitle {
     static private $m_HeaderEndPattern = '([\s]*<[\s]*\/[\s]*[hH][\d][\s]*>)*';
 
     /**
+     * The subtitle order number
+     *
+     * @var int
+     */
+    private $m_number;
+
+    /**
      * The subtitle name
      *
      * @var string
@@ -64,8 +71,9 @@ final class MetaSubtitle {
      * @param string $p_formattingStart
      * @param string $p_formattingEnd
      */
-    public function MetaSubtitle($p_name = null, $p_content = null,
-            $p_formattingStart = '', $p_formattingEnd = '') {
+    public function MetaSubtitle($p_number = null, $p_name = null, $p_content = null,
+    $p_formattingStart = '', $p_formattingEnd = '') {
+        $this->m_number = $p_number;
         $this->m_name = $p_name;
         $this->m_content = MetaSubtitle::ProcessContent($p_content);
         $this->m_nameFormattingStart = $p_formattingStart;
@@ -76,9 +84,10 @@ final class MetaSubtitle {
     public function __get($p_property)
     {
         switch ($p_property) {
-            case 'name': return $this->getName();
+            case 'number': return $this->m_number;
+            case 'name': return $this->m_name;
             case 'formatted_name': return $this->getFormattedName();
-            case 'content': return $this->getContent();
+            case 'content': return $this->m_content;
             default:
                 $this->trigger_invalid_property_error($p_property);
                 return null;
@@ -128,8 +137,8 @@ final class MetaSubtitle {
      * @return array of MetaSubtitle
      */
     public static function ReadSubtitles($p_content, $p_firstSubtitle = '',
-                                         $p_headerFormatStart = null,
-                                         $p_headerFormatEnd = null) {
+    $p_headerFormatStart = null,
+    $p_headerFormatEnd = null) {
         $result = preg_match_all('/('.MetaSubtitle::GetFindPattern().')/i', $p_content, $subtitlesNames);
 
         $contentParts = preg_split('/'.MetaSubtitle::GetSplitPattern().'/i', $p_content);
@@ -146,7 +155,7 @@ final class MetaSubtitle {
             } else {
                 $formatEnd = $p_headerFormatEnd;
             }
-            $subtitles[] = new MetaSubtitle($name, $contentPart, $formatStart, $formatEnd);
+            $subtitles[] = new MetaSubtitle($index, $name, $contentPart, $formatStart, $formatEnd);
         }
         return $subtitles;
     }
@@ -165,13 +174,13 @@ final class MetaSubtitle {
         $linkPattern = '<!\*\*[\s]*Link[\s]+Internal[\s]+(([\d\w]+[=][\d\w]+&?)*)[\s]+(TARGET[\s]+([^>\s]*)[\s]*)*>([^<\s]*)<!\*\*[\s]*EndLink[\s]*>';
         $content = preg_replace_callback("|$linkPattern|i",
                                          'MetaSubtitle::ProcessInternalLink',
-                                         $p_content);
+        $p_content);
 
-//      image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF">
+        //      image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF">
         $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub)="?[^"]+"?)*)[\s]*>';
         return preg_replace_callback("/$imagePattern/i",
                                      'MetaSubtitle::ProcessImageLink',
-                                     $content);
+        $content);
     }
 
 
@@ -197,7 +206,7 @@ final class MetaSubtitle {
         $detailsArray2[1] = array_map('strtolower', $detailsArray2[1]);
         $detailsArray2 = array_combine($detailsArray2[1], $detailsArray2[2]);
         $detailsArray = array_merge($detailsArray1, $detailsArray2);
-        
+
         $imgString = '<table border="0" cellspacing="0" cellpadding="0" class="cs_img"';
         if (isset($detailsArray['align']) && !empty($detailsArray['align'])) {
             $imgString .= ' align="' . $detailsArray['align'] . '"';
@@ -205,7 +214,7 @@ final class MetaSubtitle {
         $imgString .= '>';
         $imgString .= '<tr><td align="center">';
         $imgString .= '<img src="/get_img?NrArticle=' . $uri->article->number
-                    . '&amp;NrImage=' . $imageNumber . '"';
+        . '&amp;NrImage=' . $imageNumber . '"';
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
             $imgString .= ' alt="' . $detailsArray['alt'] . '" ';
         }
@@ -214,7 +223,7 @@ final class MetaSubtitle {
         $imgString .= '</tr>';
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
             $imgString .= '<tr><td align="center" class="caption">'
-                       . $detailsArray['sub'] . '</td></tr>';
+            . $detailsArray['sub'] . '</td></tr>';
         }
         $imgString .= '</table>';
         return $imgString;
@@ -239,21 +248,21 @@ final class MetaSubtitle {
         $uri->language = new MetaLanguage($parametersArray['IdLanguage']);
         $uri->publication = new MetaPublication($parametersArray[CampRequest::PUBLICATION_ID]);
         $uri->issue = new MetaIssue($parametersArray[CampRequest::PUBLICATION_ID],
-                                    $parametersArray[CampRequest::LANGUAGE_ID],
-                                    $parametersArray[CampRequest::ISSUE_NR]);
+        $parametersArray[CampRequest::LANGUAGE_ID],
+        $parametersArray[CampRequest::ISSUE_NR]);
         $uri->section = new MetaSection($parametersArray[CampRequest::PUBLICATION_ID],
-                                        $parametersArray[CampRequest::ISSUE_NR],
-                                        $parametersArray[CampRequest::LANGUAGE_ID],
-                                        $parametersArray[CampRequest::SECTION_NR]);
+        $parametersArray[CampRequest::ISSUE_NR],
+        $parametersArray[CampRequest::LANGUAGE_ID],
+        $parametersArray[CampRequest::SECTION_NR]);
         $uri->article = new MetaArticle($parametersArray[CampRequest::LANGUAGE_ID],
-                                        $parametersArray[CampRequest::ARTICLE_NR]);
+        $parametersArray[CampRequest::ARTICLE_NR]);
         if ($uri->publication->identifier == CampRequest::GetVar(CampRequest::PUBLICATION_ID)) {
             $linkContent = $uri->getURI();
         } else {
             $linkContent = $uri->getURL();
         }
         $urlString = '<a href="' . $linkContent . '" target="' . $targetName
-                    . '">' . $linkText . '</a>';
+        . '">' . $linkText . '</a>';
         return $urlString;
     }
 
@@ -280,9 +289,9 @@ final class MetaSubtitle {
 
     final private function trigger_invalid_property_error($p_property, $p_smarty = null)
     {
-    	$errorMessage = INVALID_PROPERTY_STRING . " $p_property "
-        				. OF_OBJECT_STRING . ' ' . get_class($this->m_dbObject);
-		CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
+        $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
+        . OF_OBJECT_STRING . ' ' . get_class($this->m_dbObject);
+        CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     }
 }
 

@@ -66,6 +66,7 @@ final class MetaUser extends MetaDbObject {
         $this->m_customProperties['country'] = 'getCountry';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['logged_in'] =  'isLoggedIn';
+        $this->m_customProperties['blocked_from_comments'] = 'isBlockedFromComments';
     } // fn __construct
 
 
@@ -118,6 +119,11 @@ final class MetaUser extends MetaDbObject {
         && $this->m_dbObject->getKeyId() == CampRequest::GetVar('LoginUserKey')
         && $this->m_dbObject->getUserId() > 0
         && $this->m_dbObject->getKeyId() > 0));
+    }
+
+
+    protected function isBlockedFromComments() {
+        return (int)Phorum_user::IsBanned($this->m_dbObject->getRealName(), $this->m_dbObject->getEmail());
     }
 } // class MetaUser
 

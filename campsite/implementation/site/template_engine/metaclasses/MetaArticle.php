@@ -395,6 +395,27 @@ final class MetaArticle extends MetaDbObject {
         $keywords = $this->m_dbObject->getKeywords();
         return (int)(stristr($keywords, $p_keyword) !== false);
     }
+
+
+    public function subtitles_count($p_property) {
+        if (isset($this->m_customProperties[strtolower($p_property)])
+        && is_array($this->m_customProperties[strtolower($p_property)])) {
+            try {
+                $property = $this->m_customProperties[strtolower($p_property)][0];
+                $articleFieldType = new ArticleTypeField($this->type_name, $property);
+                $fieldValue = $this->m_articleData->getProperty('F'.$property);
+                if ($articleFieldType->getType() == 'mediumblob') {
+                    $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $property);
+                    return $bodyField->getSubtitlesCount();
+                }
+                return null;
+            } catch (InvalidPropertyException $e) {
+                // do nothing; will throw another exception with original property field name
+            }
+            throw new InvalidPropertyException(get_class($this->m_dbObject), $p_property);
+        }
+        return null;
+    }
 } // class MetaArticle
 
 ?>
