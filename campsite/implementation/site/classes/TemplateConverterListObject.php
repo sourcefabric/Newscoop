@@ -157,11 +157,14 @@ class TemplateConverterListObject
 
 
     /**
-     *
+     * @param string $p_endString
+     *      The end list string
+     * @param boolean $p_overwrite
+     *      True to overwrite the current end list value, default value false
      */
-    public function setEndList($p_endString)
+    public function setEndList($p_endString, $p_overwrite = false)
     {
-        if (strlen($this->m_endList) > 0) {
+        if (strlen($this->m_endList) > 0 && !$p_overwrite) {
             $this->m_endList = $p_endString.$this->m_endList;
         } else {
             $this->m_endList = $p_endString;
@@ -187,10 +190,11 @@ class TemplateConverterListObject
             $maxIndex = sizeof($listObj) ? sizeof($listObj) - 1 : 0;
             $newTag = $listObj[$maxIndex]->getListString();
         } elseif ($p_optArray[0] == 'foremptylist') {
-            $newTag = 'if '.CS_OBJECT.'->current_list->empty';
             if (isset($listObj[$maxIndex]) && is_object($listObj[$maxIndex])) {
-                $endEmptyString = "/if }}\n{{";
-                $listObj[$maxIndex]->setEndList($endEmptyString);
+                $newTag = $listObj[$maxIndex]->getEndList() . " }}\n";
+                $newTag.= '{{ if '.CS_OBJECT.'->prev_list_empty';
+                $endEmptyString = '/if';
+                $listObj[$maxIndex]->setEndList($endEmptyString, true);
             }
         } elseif (strpos($p_optArray[0], 'endlist') !== false) {
             if (isset($listObj[$maxIndex]) && is_object($listObj[$maxIndex])) {

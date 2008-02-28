@@ -42,7 +42,11 @@ class TemplateConverterHelper
                 'onsectionpage' => array(
                     'attribute' => 'on_section_page'),
                 'public' => array(
-                    'attribute' => 'is_public')
+                    'attribute' => 'is_public'),
+                'hasattachments' => array(
+                    'attribute' => 'has_attachments'),
+                'haskeyword' => array(
+                    'attribute' => 'has_keyword')
                 )
             ),
         'articlecomment' => array(
@@ -74,6 +78,38 @@ class TemplateConverterHelper
                 'submiterrorno' => array(
                     'new_object' => 'submit_comment_action',
                     'attribute' => 'error_code')
+                ),
+            'if' => array(
+                'defined' => array(
+                    'new_object' => 'comment',
+                    'attribute' => 'defined'),
+                'submitted' => array(
+                    'new_object' => 'submit_comment_action',
+                    'attribute' => 'defined'),
+                'submiterror' => array(
+                    'new_object' => 'submit_comment_action',
+                    'attribute' => 'is_error'),
+                'preview' => array(
+                    'new_object' => 'preview_comment_action',
+                    'attribute' => 'defined'),
+                'publicallowed' => array(
+                    'new_object' => 'publication',
+                    'attribute' => 'public_comments'),
+                'publicmoderated' => array(
+                    'new_object' => 'publication',
+                    'attribute' => 'moderated_comments'),
+                'subscribersmoderated' => array(
+                    'new_object' => 'publication',
+                    'attribute' => 'moderated_comments'),
+                'enabled' => array(
+                    'new_object' => 'article',
+                    'attribute' => 'comments_enabled'),
+                'rejected' => array(
+                    'new_object' => 'submit_comment_action',
+                    'attribute' => 'rejected'),
+                'captchaenabled' => array(
+                    'new_object' => 'publication',
+                    'attribute' => 'captcha_enabled')
                 )
             ),
         'articleattachment' => array(
@@ -156,6 +192,8 @@ class TemplateConverterHelper
             'print' => array(
                 'straddress' => array (
                     'attribute' => 'str_address'),
+                'phone2' => array(
+                    'attribute' => 'second_phone'),
                 'postalcode' => array(
                     'attribute' => 'postal_code'),
                 'addok' => array(
@@ -163,9 +201,11 @@ class TemplateConverterHelper
                 'modifyok' => array(
                     'attribute' => 'modify_ok'),
                 'adderror' => array(
-                    'attribute' => 'add_error'),
+                    'new_object' => 'edit_user',
+                    'attribute' => 'error_message'),
                 'modifyerror' => array(
-                    'attribute' => 'modify_error'),
+                    'new_object' => 'edit_user',
+                    'attribute' => 'error_message'),
                 'addaction' => array(
                     'attribute' => 'add_action'),
                 'loggedin' => array(
@@ -369,7 +409,7 @@ class TemplateConverterHelper
     {
         if (strtolower($p_optArray[1]) == 'off') {
             if ($p_optArray[0] == 'articlecomment') {
-                $p_optArray[0] = 'article_comment';
+                $p_optArray[0] = 'comment';
             }
             $newTag = 'unset_' . $p_optArray[0];
         } else {
