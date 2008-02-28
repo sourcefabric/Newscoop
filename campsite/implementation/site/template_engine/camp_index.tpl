@@ -34,6 +34,7 @@
     <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_issues }}
+<li>previous list empty: {{ $campsite->prev_list_empty }}</li>
 
 <h3>sections list</h3>
 {{ list_sections length="3" columns="2" name='sample_name' constraints="name greater a number greater 0" }}
@@ -81,6 +82,7 @@
     <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_attachments }}
+<li>previous list empty: {{ $campsite->prev_list_empty }}</li>
 
 
 <h3>article comments list</h3>

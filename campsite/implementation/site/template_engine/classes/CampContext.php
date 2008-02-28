@@ -119,6 +119,7 @@ final class CampContext
         $this->m_readonlyProperties['sections_lists'] = array();
         $this->m_readonlyProperties['articles_lists'] = array();
         $this->m_readonlyProperties['article_attachments_lists'] = array();
+        $this->m_readonlyProperties['prev_list_empty'] = null;
 
         $url = new MetaURL();
         $this->m_readonlyProperties['url'] = new MetaURL();
@@ -466,6 +467,8 @@ final class CampContext
         || count($this->m_readonlyProperties['lists']) == 0) {
             return;
         }
+
+        $this->m_readonlyProperties['prev_list_empty'] = (int)($this->m_readonlyProperties['current_list']->count == 0);
 
         $this->RestoreProperties();
 
