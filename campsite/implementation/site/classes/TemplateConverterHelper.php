@@ -170,6 +170,7 @@ class TemplateConverterHelper
         'subscription' => array(
             'print' => array(
                 'expdate' => array(
+                    'new_object' => 'user->subscription',
                     'attribute' => 'expiration_date'),
                 'unit' => array(
                     'new_object' => 'publication',
@@ -185,7 +186,10 @@ class TemplateConverterHelper
                     'attribute' => 'subscription_trial_time'),
                 'paidtime' => array(
                     'new_object' => 'publication',
-                    'attribute' => 'subscription_paid_time')
+                    'attribute' => 'subscription_paid_time'),
+                'error' => array(
+                    'new_object' => 'edit_subscription_action',
+                    'attribute' => 'error_message')
                 )
             ),
         'user' => array(
@@ -212,24 +216,48 @@ class TemplateConverterHelper
                     'attribute' => 'logged_in'),
                 'blockedfromcomments' => array(
                     'attribute' => 'blocked_from_comments')
+                ),
+            'if' => array(
+                'addok' => array(
+                    'new_object' => 'edit_user_action',
+                    'attribute' => 'ok'),
+                'modifyok' => array(
+                    'new_object' => 'edit_user_action',
+                    'attribute' => 'ok'),
+                'adderror' => array(
+                    'new_object' => 'edit_user_action',
+                    'attribute' => 'is_error'),
+                'modifyerror' => array(
+                    'new_object' => 'edit_user_action',
+                    'attribute' => 'is_error'),
+                'addaction' => array(
+                    'new_object' => 'edit_user_action',
+                    'attribute' => 'defined'),
+                'modifyaction' => array(
+                    'new_object' => 'edit_user_action',
+                    'attribute' => 'defined'),
+                'loggedin' => array(
+                    'attribute' => 'logged_in'),
+                'blockedfromcomments' => array(
+                    'attribute' => 'blocked_from_comments')
                 )
             )
         );
-
 
     /**
      * @var array
      */
     private static $m_envObjects = array(
-        'language','publication','issue',
-        'section','article','topic', 'articlecomment'
+        'language','publication','issue','section','article',
+        'topic','articlecomment'
         );
 
     /**
      * @var array
      */
     private static $m_printEx = array(
-        'articleattachment' => 'attachment', 'articlecomment' => 'comment',
+        'articleattachment' => 'attachment',
+        'articlecomment' => 'comment',
         'audioattachment' => 'audioclip'
         );
 
@@ -250,6 +278,18 @@ class TemplateConverterHelper
         'endarticlecomment','endlogin','endsearch', 'endsubscription','enduser'
         );
 
+    /**
+     * @var array
+     */
+    private static $m_operators = array(
+        'is' => '==',
+        'not' => '!=',
+        'greater' => '>',
+        'greater_equal' => '>=',
+        'smaller' => '<',
+        'smaller_equal' => '<='
+        );
+
 
     /**
      * @param array $p_optArray
@@ -268,6 +308,11 @@ class TemplateConverterHelper
         // <!** Print statement ... > to {{ $campsite->statement ... }}
         if ($p_optArray[0] == 'print') {
             return self::BuildPrintStatement($p_optArray);
+        }
+
+        // <!** If statement ... > to {{ if $campsite->statement ... }}
+        if ($p_optArray[0] == 'if') {
+            return self::BuildIfStatement($p_optArray);
         }
 
         // Environmental Objects
@@ -381,12 +426,14 @@ class TemplateConverterHelper
     public static function BuildPrintStatement($p_optArray)
     {
         $newTag = CS_OBJECT;
-        $exStatement = strtolower($p_optArray[1]);
-        if (array_key_exists($exStatement, self::$m_exceptions)
-                && array_key_exists(strtolower($p_optArray[2]), self::$m_exceptions[$exStatement]['print'])) {
-            $e = self::$m_exceptions[$exStatement]['print'][strtolower($p_optArray[2])];
+        $object = strtolower($p_optArray[1]);
+        if (array_key_exists($object, self::$m_exceptions)
+                && array_key_exists(strtolower($p_optArray[2]), self::$m_exceptions[$object]['print'])) {
+            $e = self::$m_exceptions[$object]['print'][strtolower($p_optArray[2])];
             $newTag .= (isset($e['new_object'])) ? '->'.$e['new_object'] : '->'.strtolower($p_optArray[1]);
             $newTag .= (isset($e['attribute'])) ? '->'.$e['attribute'] : '';
+        } elseif ($object == 'captcha') {
+            $newTag = 'captcha_image_link';
         } else {
             for($i = 1; $i < sizeof($p_optArray); $i++) {
                 if (array_key_exists(strtolower($p_optArray[$i]), self::$m_printEx)) {
@@ -398,6 +445,60 @@ class TemplateConverterHelper
         
         return $newTag;    
     } // fn BuildPrintStatement
+
+
+    /**
+     * @param array $p_optArray
+     *
+     * @return string $newTag
+     */
+    public static function BuildIfStatement($p_optArray)
+    {
+        if (isset($p_optArray[1]) && strtolower($p_optArray[1]) == 'not') {
+            $condType = true;
+            $idx = 2;
+        } else {
+            $condType = false;
+            $idx = 1;
+        }
+
+        $newTag = 'if ';
+        $newTag.= ($condType == true) ? '! ' : '';
+        $newTag.= CS_OBJECT;
+        $object = strtolower($p_optArray[$idx++]);
+        $attributeFound = false;
+        if (array_key_exists($object, self::$m_exceptions)) {
+            $key = (array_key_exists('if', self::$m_exceptions[$object])) ? 'if' : 'print';
+            if (array_key_exists(strtolower($p_optArray[$idx]), self::$m_exceptions[$object][$key])) {
+                $e = self::$m_exceptions[$object][$key][strtolower($p_optArray[$idx++])];
+                $newTag .= (isset($e['new_object'])) ? '->'.$e['new_object'] : '->'.strtolower($object);
+                $newTag .= (isset($e['attribute'])) ? '->'.$e['attribute'] : '';
+                $attributeFound = true;
+            }
+        }
+
+        if (!$attributeFound && array_key_exists($object, self::$m_printEx)) {
+            $newTag .= '->'.self::$m_printEx[$object].'->'.strtolower($p_optArray[$idx++]);
+            $attributeFound = true;
+        }
+
+        if ($attributeFound == false) {
+            $newTag .= '->'.$object.'->'.strtolower($p_optArray[$idx++]);
+        }
+
+        $operatorFound = false;
+        if (isset($p_optArray[$idx])
+                && array_key_exists(strtolower($p_optArray[$idx]), self::$m_operators)) {
+            $newTag .= ' '.self::$m_operators[strtolower($p_optArray[$idx++])];
+            $operatorFound = true;
+        }
+
+        if ($operatorFound == true) {
+            $newTag .= ' '.$p_optArray[$idx];
+        }
+
+        return $newTag;
+    } // fn BuildIfStatement
 
 
     /**
