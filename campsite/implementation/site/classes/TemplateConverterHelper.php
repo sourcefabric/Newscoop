@@ -10,6 +10,7 @@
  */
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConverterListObject.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConverterIfBlock.php');
 
 define('CS_OBJECT', '$campsite');
 
@@ -72,6 +73,9 @@ class TemplateConverterHelper
                 'contentpreview' => array(
                     'new_object' => 'preview_comment_action',
                     'attribute' => 'content'),
+                'count' => array(
+                    'new_object' => 'article',
+                    'attribute' => 'comment_count'),
                 'submiterror' => array(
                     'new_object' => 'submit_comment_action',
                     'attribute' => 'error_message'),
@@ -205,17 +209,11 @@ class TemplateConverterHelper
                 'modifyok' => array(
                     'attribute' => 'modify_ok'),
                 'adderror' => array(
-                    'new_object' => 'edit_user',
+                    'new_object' => 'edit_user_action',
                     'attribute' => 'error_message'),
                 'modifyerror' => array(
-                    'new_object' => 'edit_user',
-                    'attribute' => 'error_message'),
-                'addaction' => array(
-                    'attribute' => 'add_action'),
-                'loggedin' => array(
-                    'attribute' => 'logged_in'),
-                'blockedfromcomments' => array(
-                    'attribute' => 'blocked_from_comments')
+                    'new_object' => 'edit_user_action',
+                    'attribute' => 'error_message')
                 ),
             'if' => array(
                 'addok' => array(
@@ -467,6 +465,12 @@ class TemplateConverterHelper
         $newTag.= CS_OBJECT;
         $object = strtolower($p_optArray[$idx++]);
         $attributeFound = false;
+
+        if ($object == 'nextitems' || $object == 'previousitems') {
+            $newTag = TemplateConverterIfBlock::GetNewTagContent($p_optArray);
+            return $newTag;
+        }
+
         if (array_key_exists($object, self::$m_exceptions)) {
             $key = (array_key_exists('if', self::$m_exceptions[$object])) ? 'if' : 'print';
             if (array_key_exists(strtolower($p_optArray[$idx]), self::$m_exceptions[$object][$key])) {
@@ -483,7 +487,12 @@ class TemplateConverterHelper
         }
 
         if ($attributeFound == false) {
-            $newTag .= '->'.$object.'->'.strtolower($p_optArray[$idx++]);
+            if (isset($p_optArray[$idx])
+                    && strtolower($p_optArray[$idx]) == 'fromstart') {
+                $newTag .= '->default_'.$object.' == '.CS_OBJECT.'->'.$object;
+            } else {
+                $newTag .= '->'.$object.'->'.strtolower($p_optArray[$idx++]);
+            }
         }
 
         $operatorFound = false;
@@ -535,6 +544,18 @@ class TemplateConverterHelper
     public static function BuildUrxStatement($p_optArray)
     {
         $newTag = $p_optArray[0];
+        $ifBlockStack = TemplateConverterIfBlock::GetIfBlockStack();
+        $ifBlockStackSize = sizeof($ifBlockStack);
+        if ($ifBlockStackSize > 0) {
+            $idx = $ifBlockStackSize - 1;
+            $newTag.= ' options="';
+            $newTag.= ($ifBlockStack[$idx]->getIfBlock() == 'nextitems') ? 'next_items' : '';
+            $newTag.= ($ifBlockStack[$idx]->getIfBlock() == 'previousitems') ? 'previous_items' : '';
+            $newTag.= '"';
+
+            return $newTag;
+        }
+
         if (sizeof($p_optArray) > 1) {
             $newTag.= ' options="';
             for ($x = 1; $x < sizeof($p_optArray); $x++) {
@@ -650,20 +671,6 @@ class TemplateConverterHelper
 
         return $newTag;
     } // fn BuildSelectStatement
-
-
-    /**
-     * @param array $p_optArray
-     *
-     * @return string $newTag
-     */
-    public static function BuildListStatement($p_optArray, &$listObj)
-    {
-        $listObj = new TemplateConverterListObject($p_optArray);
-        $newTag = $listObj->getListString();
-
-        return $newTag;
-    } // fn BuildListStatement
 
 
     /**

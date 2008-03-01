@@ -175,7 +175,7 @@ class TemplateConverterListObject
     /**
      *
      */
-    public function GetNewTagContent($p_optArray)
+    public static function GetNewTagContent($p_optArray)
     {
         static $listObj;
 
