@@ -12,7 +12,7 @@ define('ACTION_PREVIEW_COMMENT_ERR_BANNED', 'action_comment_preview_err_banned')
 class MetaActionPreview_Comment extends MetaAction
 {
     /**
-     * Reads the input parameters and sets up the login action.
+     * Reads the input parameters and sets up the comment preview action.
      *
      * @param array $p_input
      */

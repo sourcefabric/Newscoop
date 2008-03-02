@@ -18,7 +18,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 class MetaActionSubmit_Comment extends MetaAction
 {
     /**
-     * Reads the input parameters and sets up the login action.
+     * Reads the input parameters and sets up the comment submit action.
      *
      * @param array $p_input
      */

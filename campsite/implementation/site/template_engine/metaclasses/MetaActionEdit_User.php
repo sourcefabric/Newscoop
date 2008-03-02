@@ -63,7 +63,7 @@ class MetaActionEdit_User extends MetaAction
 
 
     /**
-     * Reads the input parameters and sets up the login action.
+     * Reads the input parameters and sets up the user edit action.
      *
      * @param array $p_input
      */

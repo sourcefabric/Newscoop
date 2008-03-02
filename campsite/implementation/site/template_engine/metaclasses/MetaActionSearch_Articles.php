@@ -31,7 +31,7 @@ class MetaActionSearch_Articles extends MetaAction
 
 
     /**
-     * Reads the input parameters and sets up the login action.
+     * Reads the input parameters and sets up the articles search action.
      *
      * @param array $p_input
      */
