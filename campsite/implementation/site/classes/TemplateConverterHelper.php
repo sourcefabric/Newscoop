@@ -86,6 +86,12 @@ class TemplateConverterHelper
             ),
         'articleattachment' => array(
             'print' => array(
+                'extension' => array(
+                    'new_object' => 'attachment',
+                    'attribute' => 'extension'),
+                'description' => array(
+                    'new_object' => 'attachment',
+                    'attribute' => 'description'),
                 'filename' => array(
                     'new_object' => 'attachment',
                     'attribute' => 'file_name'),
@@ -232,6 +238,17 @@ class TemplateConverterHelper
         'smaller_equal' => '<='
         );
 
+    /**
+     * @var string
+     */
+    private static $m_withArticleType = '';
+
+
+    public static function GetWithArticletype()
+    {
+        return self::$m_withArticleType;
+    } // fn GetWithArticleType
+
 
     /**
      * @param array $p_optArray
@@ -324,6 +341,10 @@ class TemplateConverterHelper
             return self::BuildHTMLEncodingStatement($p_optArray);
         }
 
+        if ($p_optArray[0] == 'with' || $p_optArray[0] == 'endwith') {
+            return self::BuildWithStatement($p_optArray);
+        }
+
         switch ($p_optArray[0]) {
         // <!** Date ... > to {{ $smarty.now|camp_date_format:" ... " }}
         case 'date':
@@ -340,10 +361,6 @@ class TemplateConverterHelper
         // <!** endLocal> to {{ /local }}
         case 'endlocal':
             $newTag = '/local';
-            break;
-        // <!** endIf> to {{ /if }}
-        case 'endif':
-            $newTag = '/if';
             break;
         // <!** else> to {{ /else }}
         case 'else':
@@ -421,14 +438,19 @@ class TemplateConverterHelper
         $ifBlockStack = TemplateConverterIfBlock::GetIfBlockStack();
         $ifBlockStackSize = sizeof($ifBlockStack);
         if ($ifBlockStackSize > 0) {
+            $option = '';
             $idx = $ifBlockStackSize - 1;
-            if ($ifBlockStack[$idx]->getIfBlock() == 'nextitems'
-                    || $ifBlockStack[$idx]->getIfBlock() == 'previousitems') {
-                $newTag.= ' options="';
-                $newTag.= ($ifBlockStack[$idx]->getIfBlock() == 'nextitems') ? 'next_items' : '';
-                $newTag.= ($ifBlockStack[$idx]->getIfBlock() == 'previousitems') ? 'previous_items' : '';
-                $newTag.= '"';
+            switch($ifBlockStack[$idx]->getIfBlock()) {
+            case 'nextitems':
+                $option = 'next_items'; break;
+            case 'previous_items':
+                $option = 'previous_items'; break;
+            case 'nextsubtitles':
+                $option = 'next_subtitles'; break;
+            case 'prevsubtitles':
+                $option = 'previous_subtitles'; break;
             }
+            $newTag.= (strlen($option) > 0) ? ' options="'.$option.'"' : '';
         }
 
         if (sizeof($p_optArray) > 1) {
@@ -563,6 +585,26 @@ class TemplateConverterHelper
 
         return $newTag;
     } // fn BuildHTMLEncodingStatement
+
+
+    /**
+     * @param array $p_optArray
+     *
+     * @return string $newTag
+     */
+    public static function BuildWithStatement($p_optArray)
+    {
+        if ($p_optArray[0] == 'with') {
+            if (isset($p_optArray[1])) {
+                self::$m_withArticleType = strtolower($p_optArray[1]);
+            }
+        } elseif ($p_optArray[0] == 'endwith') {
+            self::$m_withArticleType = '';
+        }
+        $newTag = 'DISCARD_SENTENCE';
+
+        return $newTag;
+    } // fn BuildWithStatement
 
 } // class TemplateConverterHelper
 

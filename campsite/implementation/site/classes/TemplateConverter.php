@@ -104,13 +104,17 @@ class TemplateConverter
             $optArray = $this->parseOptionsString($oldTagContent);
             // finds out new tag syntax based on given tag content
             $newTagContent = $this->getNewTagContent($optArray, $oldTagContent);
-            if (empty($newTagContent)) {
+            if (is_null($newTagContent)) {
                 continue;
             }
 
             // sets pattern and replacement strings
             $pattern = '/<!\*\*\s*'.preg_quote($oldTagContent).'\s*>/';
-            $replacement = CS_OPEN_TAG.' '.$newTagContent.' '.CS_CLOSE_TAG;
+            if ($newTagContent == 'DISCARD_SENTENCE') {
+                $replacement = '';
+            } else {
+                $replacement = CS_OPEN_TAG.' '.$newTagContent.' '.CS_CLOSE_TAG;
+            }
             $patternsArray[] = $pattern;
             $replacementsArray[] = $replacement;
         }
@@ -235,6 +239,13 @@ class TemplateConverter
         if ($p_optArray[0] == 'list'|| $p_optArray[0] == 'foremptylist'
                 || strpos($p_optArray[0], 'endlist') !== false) {
             $newTag = TemplateConverterListObject::GetNewTagContent($p_optArray);
+        } elseif ($p_optArray[0] == 'if' || $p_optArray[0] == 'endif') {
+            $newTag = TemplateConverterIfBlock::GetNewTagContent($p_optArray);
+        } else {
+            return TemplateConverterHelper::GetNewTagContent($p_optArray);
+        }
+
+        if (strlen($newTag) > 0) {
             $pattern = '/<!\*\*\s*'.preg_quote($p_oldTagContent).'\s*>/';
             $replacement = CS_OPEN_TAG.' '.$newTag.' '.CS_CLOSE_TAG;
             $this->m_templateOriginalContent = preg_replace($pattern,
@@ -242,11 +253,9 @@ class TemplateConverter
                                                             $this->m_templateOriginalContent,
                                                             1);
             return null;
-        } elseif ($p_optArray[0] == 'if') {
-            return TemplateConverterIfBlock::GetNewTagContent($p_optArray);
-        } else {
-            return TemplateConverterHelper::GetNewTagContent($p_optArray);
         }
+
+        return false;
     } // fn getNewTagContent
 
 } // class TemplateConverter

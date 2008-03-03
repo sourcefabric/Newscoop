@@ -9,6 +9,8 @@
  * @link http://www.campware.org
  */
 
+require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConverterHelper.php');
+
 
 /**
  * Class TemplateConverterIfBlock
@@ -38,8 +40,10 @@ class TemplateConverterIfBlock
                 'attribute' => 'is_public'),
             ),
         'articleattachment' => array(
-            'description' => 'description',
-            'extension' => 'extension',
+            'extension' => array(
+                'new_object' => 'attachment'),
+            'description' => array(
+                'new_object' => 'attachment'),
             'filename' => array(
                 'new_object' => 'attachment',
                 'attribute' => 'file_name'),
@@ -89,12 +93,44 @@ class TemplateConverterIfBlock
                 'attribute' => 'moderated_comments')
             ),
         'audioattachment' => array(
+            'title' => array(
+                'new_object' => 'audioclip'),
+            'creator' => array(
+                'new_object' => 'audioclip'),
+            'genre' => array(
+                'new_object' => 'audioclip'),
+            'length' => array(
+                'new_object' => 'audioclip'),
+            'year' => array(
+                'new_object' => 'audioclip'),
+            'bitrate' => array(
+                'new_object' => 'audioclip'),
+            'samplerate' => array(
+                'new_object' => 'audioclip'),
+            'album' => array(
+                'new_object' => 'audioclip'),
+            'description' => array(
+                'new_object' => 'audioclip'),
+            'format' => array(
+                'new_object' => 'audioclip'),
+            'label' => array(
+                'new_object' => 'audioclip'),
+            'composer' => array(
+                'new_object' => 'audioclip'),
+            'channels' => array(
+                'new_object' => 'audioclip'),
+            'rating' => array(
+                'new_object' => 'audioclip'),
             'tracknum' => array(
                 'new_object' => 'audioclip',
                 'attribute' => 'track_no'),
             'disknum' => array(
                 'new_object' => 'audioclip',
-                'attribute' => 'disk_no')
+                'attribute' => 'disk_no'),
+            'lyrics' => array(
+                'new_object' => 'audioclip'),
+            'copyright' => array(
+                'new_object' => 'audioclip')
             ),
         'image' => array(
             'number' => 'number'),
@@ -115,12 +151,17 @@ class TemplateConverterIfBlock
                 'attribute' => 'english_name')
             ),
         'list' => array(
-            'column' => 'column',
-            'index' => 'index',
-            'row' => 'row',
+            'column' => array(
+                'new_object' => 'current_list'),
+            'index' => array(
+                'new_object' => 'current_list'),
+            'row' => array(
+                'new_object' => 'current_list'),
             'end' => array(
+                'new_object' => 'current_list',
                 'attribute' => 'at_end'),
             'start' => array(
+                'new_object' => 'current_list',
                 'attribute' => 'at_beginning')
             ),
         'login',
@@ -170,7 +211,7 @@ class TemplateConverterIfBlock
     /**
      * @var array
      */
-    private $m_ifSentences = array(
+    private $m_sentences = array(
         'allowed' => array(
             'new_object' => 'article',
             'attribute' => 'content_accesible'),
@@ -182,14 +223,14 @@ class TemplateConverterIfBlock
             'new_object' => 'current_list',
             'attribute' => 'has_next_elements'),
         'nextsubtitles' => array(
-            'new_object' => '',
-            'attribute' => 'has_next_subtitles'),
+            'new_object' => 'article',
+            'attribute' => 'type->#type_name#->field->has_next_subtitles'),
         'previousitems' => array(
             'new_object' => 'current_list',
             'attribute' => 'has_previous_elements'),
         'prevsubtitles' => array(
-            'new_object' => '',
-            'attribute' => 'has_previous_subtitles')
+            'new_object' => 'article',
+            'attribute' => 'type->#type_name#->field->has_previous_subtitles')
         );
 
     /**
@@ -255,7 +296,7 @@ class TemplateConverterIfBlock
             return;
         }
 
-        $sentence = array_key_exists(strtolower($p_optArray[$idx]), $this->m_ifSentences) ? strtolower($p_optArray[$idx]) : '';
+        $sentence = array_key_exists(strtolower($p_optArray[$idx]), $this->m_sentences) ? strtolower($p_optArray[$idx]) : '';
         $object = array_key_exists(strtolower($p_optArray[$idx]), $this->m_objects) ? strtolower($p_optArray[$idx]) : '';
 
         $this->m_ifBlockStr = ($condType == true) ? 'if ! ' : 'if ';
@@ -263,11 +304,18 @@ class TemplateConverterIfBlock
         $ifBlockStr = '';
         if (strlen($sentence) > 0) {
             $this->m_ifBlock = $sentence;
-            $ifBlockStr.= '->'.$this->m_ifSentences[$sentence]['new_object'];
-            $ifBlockStr.= '->'.$this->m_ifSentences[$sentence]['attribute'];
-            if (isset($this->m_ifSentences[$sentence]['condition'])) {
+            if ($sentence == 'nextsubtitles' || $sentence == 'prevsubtitles') {
+                if (TemplateConverterHelper::GetWithArticleType() != '') {
+                    $this->m_sentences[$sentence]['attribute'] = preg_replace('/#type_name#/', TemplateConverterHelper::GetWithArticleType(), $this->m_sentences[$sentence]['attribute']);
+                }
+            }
+
+            $ifBlockStr.= '->'.$this->m_sentences[$sentence]['new_object'];
+            $ifBlockStr.= '->'.$this->m_sentences[$sentence]['attribute'];
+            if (isset($this->m_sentences[$sentence]['condition'])) {
                 // process condition
             }
+            $idx++;
         }
 
         if (strlen($object) > 0) {
@@ -299,8 +347,13 @@ class TemplateConverterIfBlock
             //
             $value = (isset($p_optArray[$idx])) ? $p_optArray[$idx] : null;
             if (!is_null($value)) {
-                $ifBlockStr.= (strlen($operator) < 0) ? ' == '.$value : ' '.$value;
+                $ifBlockStr.= (strlen($operator) <= 0) ? ' == '.$value : ' '.$value;
+                $idx++;
             }
+        }
+
+        for ($x = $idx; $x < sizeof($p_optArray); $x++) {
+            $ifBlockStr.= ' '.$p_optArray[$x];
         }
 
         if (strlen($ifBlockStr) > 0) {
