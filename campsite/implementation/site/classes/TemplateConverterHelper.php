@@ -83,38 +83,6 @@ class TemplateConverterHelper
                     'new_object' => 'submit_comment_action',
                     'attribute' => 'error_code')
                 ),
-            'if' => array(
-                'defined' => array(
-                    'new_object' => 'comment',
-                    'attribute' => 'defined'),
-                'submitted' => array(
-                    'new_object' => 'submit_comment_action',
-                    'attribute' => 'defined'),
-                'submiterror' => array(
-                    'new_object' => 'submit_comment_action',
-                    'attribute' => 'is_error'),
-                'preview' => array(
-                    'new_object' => 'preview_comment_action',
-                    'attribute' => 'defined'),
-                'publicallowed' => array(
-                    'new_object' => 'publication',
-                    'attribute' => 'public_comments'),
-                'publicmoderated' => array(
-                    'new_object' => 'publication',
-                    'attribute' => 'moderated_comments'),
-                'subscribersmoderated' => array(
-                    'new_object' => 'publication',
-                    'attribute' => 'moderated_comments'),
-                'enabled' => array(
-                    'new_object' => 'article',
-                    'attribute' => 'comments_enabled'),
-                'rejected' => array(
-                    'new_object' => 'submit_comment_action',
-                    'attribute' => 'rejected'),
-                'captchaenabled' => array(
-                    'new_object' => 'publication',
-                    'attribute' => 'captcha_enabled')
-                )
             ),
         'articleattachment' => array(
             'print' => array(
@@ -215,30 +183,6 @@ class TemplateConverterHelper
                     'new_object' => 'edit_user_action',
                     'attribute' => 'error_message')
                 ),
-            'if' => array(
-                'addok' => array(
-                    'new_object' => 'edit_user_action',
-                    'attribute' => 'ok'),
-                'modifyok' => array(
-                    'new_object' => 'edit_user_action',
-                    'attribute' => 'ok'),
-                'adderror' => array(
-                    'new_object' => 'edit_user_action',
-                    'attribute' => 'is_error'),
-                'modifyerror' => array(
-                    'new_object' => 'edit_user_action',
-                    'attribute' => 'is_error'),
-                'addaction' => array(
-                    'new_object' => 'edit_user_action',
-                    'attribute' => 'defined'),
-                'modifyaction' => array(
-                    'new_object' => 'edit_user_action',
-                    'attribute' => 'defined'),
-                'loggedin' => array(
-                    'attribute' => 'logged_in'),
-                'blockedfromcomments' => array(
-                    'attribute' => 'blocked_from_comments')
-                )
             )
         );
 
@@ -306,11 +250,6 @@ class TemplateConverterHelper
         // <!** Print statement ... > to {{ $campsite->statement ... }}
         if ($p_optArray[0] == 'print') {
             return self::BuildPrintStatement($p_optArray);
-        }
-
-        // <!** If statement ... > to {{ if $campsite->statement ... }}
-        if ($p_optArray[0] == 'if') {
-            return self::BuildIfStatement($p_optArray);
         }
 
         // Environmental Objects
@@ -450,71 +389,6 @@ class TemplateConverterHelper
      *
      * @return string $newTag
      */
-    public static function BuildIfStatement($p_optArray)
-    {
-        if (isset($p_optArray[1]) && strtolower($p_optArray[1]) == 'not') {
-            $condType = true;
-            $idx = 2;
-        } else {
-            $condType = false;
-            $idx = 1;
-        }
-
-        $newTag = 'if ';
-        $newTag.= ($condType == true) ? '! ' : '';
-        $newTag.= CS_OBJECT;
-        $object = strtolower($p_optArray[$idx++]);
-        $attributeFound = false;
-
-        if ($object == 'nextitems' || $object == 'previousitems') {
-            $newTag = TemplateConverterIfBlock::GetNewTagContent($p_optArray);
-            return $newTag;
-        }
-
-        if (array_key_exists($object, self::$m_exceptions)) {
-            $key = (array_key_exists('if', self::$m_exceptions[$object])) ? 'if' : 'print';
-            if (array_key_exists(strtolower($p_optArray[$idx]), self::$m_exceptions[$object][$key])) {
-                $e = self::$m_exceptions[$object][$key][strtolower($p_optArray[$idx++])];
-                $newTag .= (isset($e['new_object'])) ? '->'.$e['new_object'] : '->'.strtolower($object);
-                $newTag .= (isset($e['attribute'])) ? '->'.$e['attribute'] : '';
-                $attributeFound = true;
-            }
-        }
-
-        if (!$attributeFound && array_key_exists($object, self::$m_printEx)) {
-            $newTag .= '->'.self::$m_printEx[$object].'->'.strtolower($p_optArray[$idx++]);
-            $attributeFound = true;
-        }
-
-        if ($attributeFound == false) {
-            if (isset($p_optArray[$idx])
-                    && strtolower($p_optArray[$idx]) == 'fromstart') {
-                $newTag .= '->default_'.$object.' == '.CS_OBJECT.'->'.$object;
-            } else {
-                $newTag .= '->'.$object.'->'.strtolower($p_optArray[$idx++]);
-            }
-        }
-
-        $operatorFound = false;
-        if (isset($p_optArray[$idx])
-                && array_key_exists(strtolower($p_optArray[$idx]), self::$m_operators)) {
-            $newTag .= ' '.self::$m_operators[strtolower($p_optArray[$idx++])];
-            $operatorFound = true;
-        }
-
-        if ($operatorFound == true) {
-            $newTag .= ' '.$p_optArray[$idx];
-        }
-
-        return $newTag;
-    } // fn BuildIfStatement
-
-
-    /**
-     * @param array $p_optArray
-     *
-     * @return string $newTag
-     */
     public static function BuildEnvironmentalStatement($p_optArray)
     {
         if (strtolower($p_optArray[1]) == 'off') {
@@ -548,12 +422,13 @@ class TemplateConverterHelper
         $ifBlockStackSize = sizeof($ifBlockStack);
         if ($ifBlockStackSize > 0) {
             $idx = $ifBlockStackSize - 1;
-            $newTag.= ' options="';
-            $newTag.= ($ifBlockStack[$idx]->getIfBlock() == 'nextitems') ? 'next_items' : '';
-            $newTag.= ($ifBlockStack[$idx]->getIfBlock() == 'previousitems') ? 'previous_items' : '';
-            $newTag.= '"';
-
-            return $newTag;
+            if ($ifBlockStack[$idx]->getIfBlock() == 'nextitems'
+                    || $ifBlockStack[$idx]->getIfBlock() == 'previousitems') {
+                $newTag.= ' options="';
+                $newTag.= ($ifBlockStack[$idx]->getIfBlock() == 'nextitems') ? 'next_items' : '';
+                $newTag.= ($ifBlockStack[$idx]->getIfBlock() == 'previousitems') ? 'previous_items' : '';
+                $newTag.= '"';
+            }
         }
 
         if (sizeof($p_optArray) > 1) {

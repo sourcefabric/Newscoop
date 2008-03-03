@@ -242,6 +242,8 @@ class TemplateConverter
                                                             $this->m_templateOriginalContent,
                                                             1);
             return null;
+        } elseif ($p_optArray[0] == 'if') {
+            return TemplateConverterIfBlock::GetNewTagContent($p_optArray);
         } else {
             return TemplateConverterHelper::GetNewTagContent($p_optArray);
         }
