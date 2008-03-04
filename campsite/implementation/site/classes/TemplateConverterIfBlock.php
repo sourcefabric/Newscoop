@@ -23,6 +23,7 @@ class TemplateConverterIfBlock
     private $m_objects = array(
         'article' => array(
             'defined' => 'defined',
+            'has_keyword' => 'has_keyword',
             'name' => 'name',
             'number' => 'number',
             'translated_to' => 'translated_to',
@@ -34,7 +35,7 @@ class TemplateConverterIfBlock
                 'attribute' => 'has_keyword'),
             'onfrontpage' => array(
                 'attribute' => 'on_front_page'),
-            'onsectionpage' => array(
+            'onsection' => array(
                 'attribute' => 'on_section_page'),
             'public' => array(
                 'attribute' => 'is_public'),
