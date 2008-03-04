@@ -9,7 +9,8 @@
  * @link http://www.campware.org
  */
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConverterHelper.php');
+$_docRoot = dirname(dirname(__FILE__));
+require_once($_docRoot.'/classes/TemplateConverterHelper.php');
 
 
 /**
@@ -219,7 +220,7 @@ class TemplateConverterIfBlock
         'currentsubtitle' => array(
             'new_object' => 'current_list->current',
             'attribute' => 'number',
-            'condition' => ''),
+            'condition' => ' == $campsite->article->#field_name#->number'),
         'nextitems' => array(
             'new_object' => 'current_list',
             'attribute' => 'has_next_elements'),
@@ -309,12 +310,16 @@ class TemplateConverterIfBlock
                 if (TemplateConverterHelper::GetWithArticleType() != '') {
                     $this->m_sentences[$sentence]['attribute'] = preg_replace('/#type_name#/', TemplateConverterHelper::GetWithArticleType(), $this->m_sentences[$sentence]['attribute']);
                 }
+            } elseif($sentence == 'currentsubtitle') {
+                if (TemplateConverterHelper::GetWithBodyField() != '') {
+                    $this->m_sentences[$sentence]['condition'] = preg_replace('/#field_name#/', TemplateConverterHelper::GetWithBodyField(), $this->m_sentences[$sentence]['condition']);
+                }
             }
 
             $ifBlockStr.= '->'.$this->m_sentences[$sentence]['new_object'];
             $ifBlockStr.= '->'.$this->m_sentences[$sentence]['attribute'];
             if (isset($this->m_sentences[$sentence]['condition'])) {
-                // process condition
+                $ifBlockStr.= $this->m_sentences[$sentence]['condition'];
             }
             $idx++;
         }

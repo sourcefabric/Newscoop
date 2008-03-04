@@ -9,8 +9,9 @@
  * @link http://www.campware.org
  */
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConverterListObject.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConverterIfBlock.php');
+$_docRoot = dirname(dirname(__FILE__));
+require_once($_docRoot.'/classes/TemplateConverterListObject.php');
+require_once($_docRoot.'/classes/TemplateConverterIfBlock.php');
 
 define('CS_OBJECT', '$campsite');
 
@@ -184,7 +185,8 @@ class TemplateConverterHelper
     /**
      * @var array
      */
-    private static $m_urXFuncs = array('uri','uripath','url','urlparameters');
+    private static $m_urXFuncs = array(
+        'uri','uripath','url','urlparameters','formparameters');
 
     /**
      * @var array
@@ -215,11 +217,28 @@ class TemplateConverterHelper
      */
     private static $m_withArticleType = '';
 
+    /**
+     * @var string
+     */
+    private static $m_withBodyField = '';
 
+
+    /**
+     *
+     */
     public static function GetWithArticletype()
     {
         return self::$m_withArticleType;
     } // fn GetWithArticleType
+
+
+    /**
+     *
+     */
+    public static function GetWithBodyField()
+    {
+        return self::$m_withBodyField;
+    } // fn GetWithBodyField
 
 
     /**
@@ -358,6 +377,10 @@ class TemplateConverterHelper
             $e = self::$m_exceptions[$object][strtolower($p_optArray[2])];
             $newTag .= (isset($e['new_object'])) ? '->'.$e['new_object'] : '->'.strtolower($p_optArray[1]);
             $newTag .= (isset($e['attribute'])) ? '->'.$e['attribute'] : '';
+            if ($e['attribute'] == 'creation_date'
+                    || $e['attribute'] == 'publish_date') {
+                $newTag.= (isset($p_optArray[3])) ? '|camp_date_format:"'.$p_optArray[3].'"' : '';
+            }
         } elseif ($object == 'captcha') {
             $newTag = 'captcha_image_link';
         } else {
@@ -570,8 +593,12 @@ class TemplateConverterHelper
             if (isset($p_optArray[1])) {
                 self::$m_withArticleType = strtolower($p_optArray[1]);
             }
+            if (isset($p_optArray[2])) {
+                self::$m_withBodyField = strtolower($p_optArray[2]);
+            }
         } elseif ($p_optArray[0] == 'endwith') {
             self::$m_withArticleType = '';
+            self::$m_withBodyField = '';
         }
         $newTag = 'DISCARD_SENTENCE';
 

@@ -109,6 +109,38 @@ function camp_create_dir($p_dirName, $p_msg = "")
 
 
 /**
+ *
+ */
+function camp_read_files($p_startDir = '.')
+{
+    $files = array();
+    if (is_dir($p_startDir)) {
+        $fh = opendir($p_startDir);
+        while(($file = readdir($fh)) !== false) {
+            // loop through the files, skipping . and .., and
+            // recursing if necessary
+            if (strcmp($file, '.') == 0 || strcmp($file, '..') == 0) {
+                continue;
+            }
+            $filePath = $p_startDir . '/' . $file;
+            if (is_dir($filePath)) {
+                $files = array_merge($files, listdir($filePath));
+            } else {
+                array_push($files, $filePath);
+            }
+        }
+        closedir($fh);
+    } else {
+        // false if the function was called with an invalid
+        // non-directory argument
+        $files = false;
+    }
+
+    return $files;
+} // fn camp_read_files
+
+
+/**
  * Remove the specified directory and everything underneath it.
  *
  * @param string $p_dirName

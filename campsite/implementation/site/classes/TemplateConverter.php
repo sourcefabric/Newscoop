@@ -9,8 +9,9 @@
  * @link http://www.campware.org
  */
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/PEAR.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/TemplateConverterHelper.php');
+$_docRoot = dirname(dirname(__FILE__));
+require_once($_docRoot.'/include/pear/PEAR.php');
+require_once($_docRoot.'/classes/TemplateConverterHelper.php');
 
 define('CS_OPEN_TAG', '{{');
 define('CS_CLOSE_TAG', '}}');
