@@ -122,6 +122,19 @@ class TemplateConverterHelper
             'englname' => array (
                 'attribute' => 'english_name')
             ),
+        'login' => array(
+            'error' => array(
+                'new_object' => 'login_action',
+                'attribute' => 'error_message')
+            ),
+        'search' => array(
+            'error' => array(
+                'new_object' => 'search_articles_action',
+                'attribute' => 'error_message'),
+            'keywords' => array(
+                'new_object' => 'search_articles_action',
+                'attribute' => 'search_keywords')
+            ),
         'subscription' => array(
             'expdate' => array(
                 'new_object' => 'user->subscription',

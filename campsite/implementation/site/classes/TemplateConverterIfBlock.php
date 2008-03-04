@@ -134,8 +134,7 @@ class TemplateConverterIfBlock
             'copyright' => array(
                 'new_object' => 'audioclip')
             ),
-        'image' => array(
-            'number' => 'number'),
+        'image' => array(),
         'issue' => array(
             'defined' => 'defined',
             'name' => 'name',
@@ -166,19 +165,52 @@ class TemplateConverterIfBlock
                 'new_object' => 'current_list',
                 'attribute' => 'at_beginning')
             ),
-        'login',
+        'login' => array(
+            'action' => array(
+                'new_object' => 'login_action',
+                'attribute' => 'defined'),
+            'error' => array(
+                'new_object' => 'login_action',
+                'attribute' => 'is_error'),
+            'ok' => array(
+                'new_object' => 'login_action')
+            ),
         'publication' => array(
             'defined' => 'defined',
             'identifier' => 'identifier',
             'name' => 'name'
             ),
-        'search',
+        'search' => array(
+            'action' => array(
+                'new_object' => 'search_articles_action',
+                'attribute' => 'defined'),
+            'error' => array(
+                'new_object' => 'search_articles_action',
+                'attribute' => 'is_error'),
+            'ok' => array(
+                'new_object' => 'search_articles_action')
+            ),
         'section' => array(
             'defined' => 'defined',
             'name' => 'name',
             'number' => 'number'
             ),
-        'subscription',
+        'subscription' => array(
+            'ok' => array(
+                'new_object' => 'edit_subscription_action'),
+            'error' => array(
+                'new_object' => 'edit_subscription_action',
+                'attribute' => 'is_error'),
+            'trial' => array(
+                'new_object' => 'edit_subscription_action',
+                'attribute' => 'is_trial'),
+            'paid' => array(
+                'new_object' => 'edit_subscription_action',
+                'attribute' => 'is_paid'),
+            'action' => array(
+                'new_object' => 'edit_subscription_action',
+                'attribute' => 'defined')
+            ),
         'subtitle' => array(
             'number' => 'number'),
         'topic' => array(
@@ -338,7 +370,11 @@ class TemplateConverterIfBlock
                         $ifBlockStr.= '->'.$object.'->'.$attribute;
                     }
                 } else {
-                    $ifBlockStr.= '->'.$object.'->'.$attribute;
+                    if ($object == 'image' && is_numeric($attribute)) {
+                        $ifBlockStr.= '->'.$object.'->has_image'.$attribute;
+                    } else {
+                        $ifBlockStr.= '->'.$object.'->'.$attribute;
+                    }
                 }
             }
 
