@@ -31,7 +31,7 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
     $html = '';
 
     if (!$campContext->search_articles_action->defined
-    || $campContext->search_articles_action->error != ACTION_OK) {
+    || $campContext->search_articles_action->is_error) {
         $p_repeat = false;
         return '';
     }

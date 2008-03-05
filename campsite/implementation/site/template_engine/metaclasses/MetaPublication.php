@@ -47,6 +47,7 @@ final class MetaPublication extends MetaDbObject {
         $this->m_customProperties['moderated_comments'] = 'getModeratedComments';
         $this->m_customProperties['captcha_enabled'] = 'getCAPTCHAEnabled';
         $this->m_customProperties['subscription_time_unit'] = 'getSubscriptionTimeUnit';
+        $this->m_customProperties['subscription_time'] = 'getSubscriptionTime';
     } // fn __construct
 
 
@@ -86,7 +87,17 @@ final class MetaPublication extends MetaDbObject {
 
 
     protected function getSubscriptionTimeUnit() {
-        return $this->m_dbObject->getTimeUnitName(CampTemplate::singleton()->context()->language);
+        return $this->m_dbObject->getTimeUnitName(CampTemplate::singleton()->context()->language->number);
+    }
+
+
+    protected function getSubscriptionTime() {
+        if (strtolower(CampRequest::GetVar('SubsType')) == 'trial') {
+            return $this->subscription_trial_time;
+        } elseif (strtolower(CampRequest::GetVar('SubsType')) == 'paid') {
+            return $this->subscription_paid_time;
+        }
+        return null;
     }
 } // class MetaPublication
 

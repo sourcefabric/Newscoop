@@ -110,6 +110,7 @@ final class CampContext
         $this->m_properties['htmlencoding'] = false;
         $this->m_properties['body_field_article_type'] = null;
         $this->m_properties['body_field_name'] = null;
+        $this->m_properties['subs_by_type'] = null;
 
         $this->m_readonlyProperties['version'] = $Campsite['VERSION'];
 

@@ -96,12 +96,12 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $sqlQuery = "SELECT l.Id, l.OrigName "
                 ."FROM Issues as i, Languages as l "
                 ."WHERE  i.IdLanguage = l.Id and i.IdPublication = "
-                .$campsite->publication->id
-                ."GROUP BY l.Id";
+                .$campsite->publication->identifier
+                ." GROUP BY l.Id";
             $data = $g_ado_db->GetAll($sqlQuery);
             foreach ($data as $language) {
-                $output[] = $language['Id'];
-                $values[] = $language['OrigName'];
+                $output[] = $language['OrigName'];
+                $values[] = $language['Id'];
             }
             $selectTag = true;
             $html = '<select name="subscription_language[]" '
@@ -114,13 +114,13 @@ function smarty_function_camp_select($p_params, &$p_smarty)
                 .'onchange="update_subscription_payment(); '
                 .'ToggleElementEnabled(\'select_language\');" />';
         } elseif ($attribute == 'section') {
-            if (1) {
+            if ($campsite->subs_by_type == 'publication') {
                 $html = '<input type="hidden" name="cb_subs[]" value="'
                     .$campsite->section->number.'" ';
-            } else {
+            } elseif ($campsite->subs_by_type == 'section') {
                 $html = '<input type="checkbox" name="cb_subs[]" value="'
                     .$campsite->section->number.'" '
-                    .'onchange="update_subscription_payment();" ';
+                    .'onchange="update_subscription_payment();">';
             }
         }
         break;

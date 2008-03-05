@@ -76,7 +76,7 @@ final class MetaUser extends MetaDbObject {
      *
      * @return string
      */
-    public function getCountry()
+    protected function getCountry()
     {
         $countryCode = $this->m_dbObject->getProperty('CountryCode');
         $smartyObj = CampTemplate::singleton();
@@ -109,11 +109,11 @@ final class MetaUser extends MetaDbObject {
      *
      * @return bool
      */
-    public function isLoggedIn()
+    protected function isLoggedIn()
     {
         $context = CampTemplate::singleton()->context();
         return (($context->login_action->defined
-        && !PEAR::isError($context->login_action->error)
+        && $context->login_action->ok
         && $context->login_action->user_name == $this->uname
         && $this->uname != '')
         || ($this->m_dbObject->getUserId() == CampRequest::GetVar('LoginUserId')

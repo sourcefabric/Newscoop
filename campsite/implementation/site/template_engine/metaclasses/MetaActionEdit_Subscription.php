@@ -1,12 +1,21 @@
 <?php
 
-define('ACTION_EDIT_SUBSCRIPTION_ERR_', 'action_edit_subscription_err_');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/Date.php');
+
 define('ACTION_EDIT_SUBSCRIPTION_ERR_INTERNAL', 'action_edit_subscription_err_internal');
+define('ACTION_EDIT_SUBSCRIPTION_ERR_NO_USER', 'action_edit_subscription_err_no_user');
+define('ACTION_EDIT_SUBSCRIPTION_ERR_NO_TYPE', 'action_edit_subscription_err_no_type');
+define('ACTION_EDIT_SUBSCRIPTION_ERR_NO_LANGUAGE', 'action_edit_subscription_err_no_language');
+define('ACTION_EDIT_SUBSCRIPTION_ERR_NO_SECTION', 'action_edit_subscription_err_no_section');
 
 
 class MetaActionEdit_Subscription extends MetaAction
 {
-    private $m_user;
+    private $m_sections = null;
+
+    private $m_languages = null;
+
+    private $m_subscriptionType = null;
 
 
     /**
@@ -20,19 +29,35 @@ class MetaActionEdit_Subscription extends MetaAction
         $this->m_name = 'edit_subscription';
         $this->m_properties = array();
 
-        foreach ($p_input as $fieldName=>$fieldValue) {
-            $fieldName = strtolower($fieldName);
-            if (strncmp('f_user_', $fieldName, strlen('f_user_')) != 0) {
-                continue;
-            }
-            $property = substr($fieldName, strlen('f_user_'));
-            if (array_key_exists($property, MetaActionEdit_User::$m_fields)) {
-                $this->m_properties[$property] = $fieldValue;
-                if (isset(MetaActionEdit_User::$m_fields[$property]['db_field'])) {
-                    $this->m_data[MetaActionEdit_User::$m_fields[$property]['db_field']] = $fieldValue;
-                }
-            }
+        if (!isset($p_input['SubsType'])
+        || (strtolower($p_input['SubsType']) != 'trial'
+        && strtolower($p_input['SubsType']) != 'paid')) {
+            $this->m_error = new PEAR_Error("Invalid subscription type.",
+            ACTION_EDIT_SUBSCRIPTION_ERR_NO_TYPE);
+            return;
         }
+        $this->m_subscriptionType = strtolower($p_input['SubsType']);
+        $this->m_properties['is_trial'] = $this->m_subscriptionType == 'trial';
+        $this->m_properties['is_paid'] = $this->m_subscriptionType == 'paid';
+
+        if (!isset($p_input['subs_all_languages'])) {
+            $this->m_languages = $p_input['subscription_language'];
+            if (is_null($this->m_languages) || count($this->m_languages) == 0) {
+                $this->m_error = new PEAR_Error("You must select a subscription language or check all languages.",
+                ACTION_EDIT_SUBSCRIPTION_ERR_NO_LANGUAGE);
+                return;
+            }
+        } else {
+            $this->m_languages = array(0);
+        }
+
+        $this->m_sections = $p_input['cb_subs'];
+
+        if (is_null($this->m_sections) || count($this->m_sections) == 0) {
+            $this->m_error = new PEAR_Error("You must select at least a section to subscribe to.");
+            return;
+        }
+
         $this->m_error = null;
     }
 
@@ -49,81 +74,80 @@ class MetaActionEdit_Subscription extends MetaAction
             return false;
         }
 
-        $metaUser = $p_context->user;
-        if (!$metaUser->logged_in) {
-            $this->m_error = new PEAR_Error('You must be logged in to create or edit your subscription.');
+        $user = new User($p_context->user->identifier);
+        if ($user->getUserId() != CampRequest::GetVar('LoginUserId')
+        || $user->getKeyId() != CampRequest::GetVar('LoginUserKey')
+        || $user->getUserId() == 0
+        || $user->getKeyId() == 0) {
+            $this->m_error = new PEAR_Error('You must be logged in to create or edit your subscription.',
+            ACTION_EDIT_SUBSCRIPTION_ERR_NO_USER);
             return false;
         }
 
-        if (isset($this->m_properties['password'])
-        && $this->m_properties['password'] != $this->m_properties['passwordagain']) {
-            $this->m_error = new PEAR_Error("The password and password confirmation do not match.",
-            ACTION_EDIT_USER_ERR_PASSWORD_MISMATCH);
-            return false;
-        }
-
-        if (!$metaUser->defined) {
-            if (User::UserNameExists($this->m_properties['uname'])
-            || Phorum_user::UserNameExists($this->m_properties['uname'])) {
-                $this->m_error = new PEAR_Error("The login name already exists, please choose a different one.",
-                ACTION_EDIT_USER_ERR_DUPLICATE_USER_NAME);
-                return false;
-            }
-            if (User::EmailExists($this->m_properties['email'])) {
-                $this->m_error = new PEAR_Error("Another user is registered with this e-mail address, please choose a different one.",
-                ACTION_EDIT_USER_ERR_DUPLICATE_EMAIL);
-                return false;
-            }
-            $user = new User();
-            $phorumUser = new Phorum_user();
-            if (!$user->create($this->m_data)
-            || !$phorumUser->create($this->m_properties['uname'], $this->m_properties['password'], $this->m_properties['email'], $user->getUserId())) {
-                $user->delete();
-                $phorumUser->delete();
-                $this->m_error = new PEAR_Error("There was an internal error creating the account (code 1).",
-                ACTION_EDIT_USER_ERR_INTERNAL);
-                return false;
+        $subscriptions = Subscription::GetSubscriptions($p_context->publication->identifier,
+        $user->getUserId());
+        if (count($subscriptions) == 0) {
+            $subscription = new Subscription();
+            $created = $subscription->create(array(
+			'IdUser' => $user->getUserId(),
+			'IdPublication' => $p_context->publication->identifier,
+			'Active' => 'Y',
+			'Type' => $this->m_subscriptionType == 'trial' ? 'T' : 'P'));
+            if (!$created) {
+                $this->m_error = new PEAR_Error('Internal error (code 1)',
+                ACTION_EDIT_SUBSCRIPTION_ERR_INTERNAL);
+                exit(1);
             }
         } else {
-            $user = new User($metaUser->identifier);
-            if (!$user->exists()) {
-                $this->m_error = new PEAR_Error("There was an internal error updating the account (code 2).",
-                ACTION_EDIT_USER_ERR_INTERNAL);
-                return false;
-            }
-            $phorumUser = Phorum_user::GetByUserName($user->getUserName());
-            if (is_null($phorumUser)) {
-                $phorumUser = new Phorum_user();
-                if (!$phorumUser->create($user->getUserName(), $user->getPassword(), $user->getEmail(), $user->getUserId(), true)) {
-                    $this->m_error = new PEAR_Error("There was an internal error updating the account (code 3).",
-                    ACTION_EDIT_USER_ERR_INTERNAL);
-                    return false;
-                }
-            }
-            foreach ($this->m_properties as $property=>$value) {
-                if (!isset(MetaActionEdit_User::$m_fields[$property]['db_field'])) {
-                    continue;
-                }
-                $dbProperty = MetaActionEdit_User::$m_fields[$property]['db_field'];
-                if ($property != 'password' && $property != 'passwordagain') {
-                    $user->setProperty($dbProperty, $value, false);
-                    if ($property == 'email') {
-                        $phorumUser->setProperty('email', $value, false);
-                    }
-                } elseif ($property == 'password') {
-                    $user->setPassword($this->m_properties['password'], false);
-                    $phorumUser->setPassword($this->m_properties['password'], false);
-                }
-            }
-            if (!$user->commit() || !$phorumUser->commit()) {
-                $this->m_error = new PEAR_Error("There was an internal error updating the account (code 4).",
-                ACTION_EDIT_USER_ERR_INTERNAL);
-                return false;
+            $subscription = $subscriptions[0];
+        }
+
+        $publication = new Publication($p_context->publication->identifier);
+        $subscriptionDays = $this->computeSubscriptionDays($publication,
+        $p_context->publication->subscription_time);
+
+        $startDate = new Date();
+        
+        $columns = array(
+        'StartDate'=>$startDate->getDate(),
+        'Days'=>$subscriptionDays,
+        'PaidDays'=>($this->m_subscriptionType == 'trial' ? $subscriptionDays : 0),
+        'NoticeSent'=>'N'
+        );
+
+        foreach ($this->m_languages as $languageId) {
+            foreach ($this->m_sections as $sectionNumber) {
+                $subsSection = new SubscriptionSection($subscription->getSubscriptionId(),
+                $sectionNumber, $languageId);
+                $subsSection->create($columns);
             }
         }
 
         $this->m_error = ACTION_OK;
         return true;
+    }
+
+
+    private function computeSubscriptionDays($p_publication, $p_subscriptionTime) {
+        $startDate = new Date();
+        if ($p_publication->getTimeUnit() == 'D') {
+            return $p_subscriptionTime;
+        } elseif ($p_publication->getTimeUnit() == 'W') {
+            return 7 * $p_subscriptionTime;
+        } elseif ($p_publication->getTimeUnit() == 'M') {
+            $endDate = new Date();
+            $months = $p_subscriptionTime + $endDate->getMonth();
+            $years = (int)($months / 12);
+            $months = $months % 12;
+            $endDate->setYear($endDate->getYear() + $years);
+            $endDate->setMonth($months);
+        } elseif ($p_publication->getTimeUnit() == 'Y') {
+            $endDate = new Date();
+            $endDate->setYear($endDate->getYear() + $p_subscriptionTime);
+        }
+        $dateCalc = new Date_Calc();
+        return $dateCalc->dateDiff($endDate->getDay(), $endDate->getMonth(),
+        $endDate->getYear(), $startDate->getDay(), $startDate->getMonth(), $startDate->getYear());
     }
 }
 

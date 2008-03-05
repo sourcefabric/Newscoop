@@ -177,6 +177,12 @@ class MetaActionEdit_User extends MetaAction
                 ACTION_EDIT_USER_ERR_INTERNAL);
                 return false;
             }
+            setcookie("LoginUserId", $user->getUserId(), null, '/');
+            $user->initLoginKey();
+            setcookie("LoginUserKey", $user->getKeyId(), null, '/');
+            CampRequest::SetVar('LoginUserId', $user->getUserId());
+            CampRequest::SetVar('LoginUserKey', $user->getKeyId());
+            $p_context->user = new MetaUser($user->getUserId());
         } else {
             $user = new User($metaUser->identifier);
             if (!$user->exists()) {

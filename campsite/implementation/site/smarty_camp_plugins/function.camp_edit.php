@@ -80,8 +80,8 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
 
     case 'subscription':
         $html = '<input type="hidden" name="f_subs_'.$campsite->section->number
-            .'" value="'. $campsite->subscription->subsTimeUnits.'" '
-            .$p_params['html_code'].' />'.$campsite->subscription->subsTimeUnits;
+            .'" value="'. $campsite->publication->subscription_time.'" '
+            .$p_params['html_code'].' />'.$campsite->publication->subscription_time;
         break;
 
     case 'login':
