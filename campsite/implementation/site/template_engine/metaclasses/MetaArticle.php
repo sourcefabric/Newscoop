@@ -91,6 +91,7 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['image_index'] = 'getImageIndex';
         $this->m_customProperties['comment_count'] =  'getCommentCount';
         $this->m_customProperties['content_accessible'] = 'isContentAccessible';
+        $this->m_customProperties['image'] = 'getImage';
     } // fn __construct
 
 
@@ -385,6 +386,19 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
+    protected function getImage() {
+        $context = CampTemplate::singleton()->context();
+        if ($context->image->defined) {
+            return $context->image;
+        }
+        $images = ArticleImage::GetImagesByArticleNumber($context->article->number);
+        if (count($images) == 0) {
+            return new MetaImage();
+        }
+        return new MetaImage($images[0]->getImageId());
+    }
+
+
     public function translated_to($p_language)
     {
         if (is_string($p_language)) {
@@ -426,6 +440,23 @@ final class MetaArticle extends MetaDbObject {
             throw new InvalidPropertyException(get_class($this->m_dbObject), $p_property);
         }
         return null;
+    }
+
+
+    public function has_image($p_imageIndex) {
+        $articleImage = new ArticleImage(CampTemplate::singleton()->context()->article->number,
+        $p_imageIndex);
+        return (int)$articleImage->exists();
+    }
+
+
+    public function image($p_imageIndex) {
+        $articleImage = new ArticleImage(CampTemplate::singleton()->context()->article->number,
+        $p_imageIndex);
+        if (!$articleImage->exists()) {
+            return new MetaImage();
+        }
+        return new MetaImage($articleImage->getImageId());
     }
 } // class MetaArticle
 
