@@ -56,6 +56,8 @@ final class MetaArticleBodyField {
         switch (strtolower($p_property)) {
             case 'subtitles_count': return $this->getSubtitlesCount();
             case 'subtitle_number': return $this->m_subtitleNumber;
+            case 'subtitle_is_current':
+                return $this->m_subtitleNumber == CampTemplate::singleton()->context()->subtitle->number;
             case 'has_previous_subtitles':
                 if (is_null($this->m_subtitleNumber)) {
                     return null;

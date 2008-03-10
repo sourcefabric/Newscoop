@@ -250,9 +250,9 @@ class TemplateConverterIfBlock
             'new_object' => 'article',
             'attribute' => 'content_accesible'),
         'currentsubtitle' => array(
-            'new_object' => 'current_list->current',
+            'new_object' => 'subtitle',
             'attribute' => 'number',
-            'condition' => ' == $campsite->article->#field_name#->number'),
+            'condition' => ' == $campsite->article->#field_name#->subtitle_number'),
         'nextitems' => array(
             'new_object' => 'current_list',
             'attribute' => 'has_next_elements'),

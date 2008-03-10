@@ -3,6 +3,14 @@
   <td>
     <p class="article_date">{{ $campsite->article->publish_date }}</p>
     <p class="article_name">{{ $campsite->article->name }}</p>
+    subtitles
+    {{ list_subtitles field_name="Full_text" }}
+      <p>
+      {{ if $campsite->article->Full_text->subtitle_is_current }}<b>{{ /if }}
+      {{ $campsite->subtitle->number }}. {{ $campsite->subtitle->name }}
+      {{ if $campsite->article->Full_text->subtitle_is_current }}</b>{{ /if }}
+      </p>
+    {{ /list_subtitles }}
     <p class="article_byline">Written by {{ $campsite->article->byline }}</p>
     <p class="article_intro">{{ $campsite->article->intro }}</p>
     <p class="article_fulltext">{{ $campsite->article->full_text }}</p>

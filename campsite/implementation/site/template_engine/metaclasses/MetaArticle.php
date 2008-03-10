@@ -140,7 +140,7 @@ final class MetaArticle extends MetaDbObject {
                 $fieldValue = $this->m_articleData->getProperty('F'.$property);
                 if ($articleFieldType->getType() == 'mediumblob') {
                     if (is_null($this->getContentCache($p_property))) {
-                        $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $property);
+                        $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $property, 0);
                         $this->setContentCache($p_property, $bodyField);
                     }
                     $fieldValue = $this->getContentCache($p_property);

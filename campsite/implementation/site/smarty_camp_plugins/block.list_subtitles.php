@@ -36,7 +36,7 @@ function smarty_block_list_subtitles($p_params, $p_content, &$p_smarty, &$p_repe
     	$campContext->setCurrentList($subtitlesList, array('subtitle'));
     }
 
-    $currentSubtitle = $campContext->current_subtitles_list->defaultIterator()->current();
+    $currentSubtitle = $campContext->current_subtitles_list->current;
     if (is_null($currentSubtitle)) {
 	    $p_repeat = false;
 	    $campContext->resetCurrentList();

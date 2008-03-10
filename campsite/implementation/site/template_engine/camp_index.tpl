@@ -188,11 +188,8 @@
 {{ /local }}
 
 
-{{ use_body_field article_type="Article" field_name="Full_text" }}
-<h4>use_body_field: article type: {{ $campsite->body_field_article_type }},
-    field name: {{ $campsite->body_field_name }}</h4>
 <h3>subtitles list</h3>
-{{ list_subtitles length="2" columns="2" name='sample_name' }}
+{{ list_subtitles length="2" columns="2" name='sample_name' field_name='Full_text' }}
 {{ if $campsite->current_list->at_beginning }}
 <li>count: {{ $campsite->current_list->count }}</li>
 {{ /if }}
@@ -205,7 +202,6 @@
     <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_subtitles }}
-{{ /use_body_field }}
 
 
 {{ if $campsite->hasProperty('invalid_property') }}

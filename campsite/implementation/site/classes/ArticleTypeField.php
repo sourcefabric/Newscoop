@@ -596,7 +596,7 @@ class ArticleTypeField {
 	} // fn setName
 
 
-	/*
+	/**
 	 * Returns the highest weight + 1 or 0 for the starter
 	 *
 	 * @return int
@@ -666,7 +666,7 @@ class ArticleTypeField {
 	} // fn setOrders
 
 
-	/*
+	/**
      * Reorders the current field; accepts either "up" or "down"
      *
      * @param string move (up|down)
