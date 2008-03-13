@@ -125,7 +125,6 @@ class CampURITemplatePath extends CampURI
     private function getURILanguage()
     {
         $uriString = '';
-
         if (!is_null($this->m_language)) {
             $uriString = CampRequest::LANGUAGE_ID.'='.$this->m_language->number;
         }
@@ -216,7 +215,6 @@ class CampURITemplatePath extends CampURI
     private function getURIArticle()
     {
         $uriString = $this->getURISection();
-
         if (empty($uriString)) {
             return null;
         }
@@ -503,7 +501,16 @@ class CampURITemplatePath extends CampURI
         $this->m_uriPath = null;
         $this->m_uriQuery = null;
 
-        switch ($p_param) {
+        if (!is_null($p_param)) {
+            $params = preg_split('/ /', $p_param);
+            $parameter = $params[0];
+            $option = isset($params[1]) ? $params[1] : null;
+        } else {
+            $parameter = null;
+            $option = null;
+        }
+
+        switch ($parameter) {
         case 'language':
             $this->m_uriQuery = $this->getURILanguage();
             break;
@@ -521,28 +528,54 @@ class CampURITemplatePath extends CampURI
             break;
         case 'articleattachment':
             $context = CampTemplate::singleton()->context();
-            $attachment = new Attachment($context->attachment->identifier);
-            $this->m_uriPath = '/attachment/'.basename($attachment->getStorageLocation());
+            if ($context->attachment->defined) {
+                $attachment = new Attachment($context->attachment->identifier);
+                $this->m_uriPath = '/attachment/'.basename($attachment->getStorageLocation());
+            }
+            break;
+        case 'image':
+            $context = CampTemplate::singleton()->context();
+            if (!is_null($option)) {
+                $oldImage = $context->image;
+                $context->image = new MetaImage($option);
+            }
+            if ($context->image->article_index !== null) {
+                $this->m_uriPath = '/get_img';
+                $this->m_uriQuery = 'NrImage=' . $context->image->article_index
+                . '&amp;NrArticle=' . $context->article->number;
+            }
+            if (!is_null($option)) {
+                $context->image = $oldImage;
+            }
+            break;
+        case 'template':
+            $template = new MetaTemplate($option);
+            if ($template->defined) {
+                $oldTplId = $this->getQueryVar(CampRequest::TEMPLATE_ID);
+                $this->setQueryVar(CampRequest::TEMPLATE_ID, $template->identifier);
+                $this->buildURI();
+                $this->setQueryVar(CampRequest::TEMPLATE_ID, $oldTplId);
+            }
             break;
         default:
-            if (empty($p_param)) {
+            if (empty($parameter)) {
+                $this->m_query = CampURI::QueryArrayToString($this->getQueryArray());
                 $this->m_uriQuery = $this->m_query;
             }
             break;
         }
 
-        if ($p_param == 'publication' || $p_param == 'issue'
-                || $p_param == 'section' || $p_param == 'article') {
+        if ($parameter == 'publication' || $parameter == 'issue'
+                || $parameter == 'section' || $parameter == 'article') {
             // gets the template name from the context
             $context = CampTemplate::singleton()->context();
-            $template = $context->$p_param->template->name;
+            $template = $context->$parameter->template->name;
 
             if (empty($template)) {
                 CampTemplate::singleton()->trigger_error('Invalid template');
                 return;
             }
-
-            $this->m_uriPath = '/' . $this->m_templatesPrefix . '/' . $template;
+            $this->m_uriPath = '/'.$this->m_templatesPrefix.'/'.$template;
         }
         $this->validateCache(true);
     } // fn buildURI

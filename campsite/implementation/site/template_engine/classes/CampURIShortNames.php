@@ -550,8 +550,10 @@ class CampURIShortNames extends CampURI
             break;
         case 'articleattachment':
             $context = CampTemplate::singleton()->context();
-            $attachment = new Attachment($context->attachment->identifier);
-            $this->m_uriPath = '/attachment/'.basename($attachment->getStorageLocation());
+            if ($context->attachment->defined) {
+                $attachment = new Attachment($context->attachment->identifier);
+                $this->m_uriPath = '/attachment/'.basename($attachment->getStorageLocation());
+            }
             break;
         case 'image':
             $context = CampTemplate::singleton()->context();
