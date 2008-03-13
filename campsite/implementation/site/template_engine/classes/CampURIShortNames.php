@@ -330,6 +330,51 @@ class CampURIShortNames extends CampURI
         return $this->m_uriQuery;
     } // fn getURLParameters
 
+
+    /**
+     * @return array
+     *      An array containing all the form parameters to print out
+     */
+    public function getFormParameters()
+    {
+        $baseParameters = array('IdLanguage','IdPublication',
+                                'NrIssue','NrSection','NrArticle');
+        $parameters = array();
+        $i = 0;
+        $context = CampTemplate::singleton()->context();
+        if ($context->language->defined == true) {
+            $parameters[$i++] = array('name' => 'IdLanguage',
+                                      'value' => $context->language->number);
+        }
+        if ($context->publication->defined == true) {
+            $parameters[$i++] = array('name' => 'IdPublication',
+                                      'value' => $context->publication->identifier);
+        }
+        if ($context->issue->defined == true) {
+            $parameters[$i++] = array('name' => 'NrIssue',
+                                      'value' => $context->issue->number);
+        }
+        if ($context->section->defined == true) {
+            $parameters[$i++] = array('name' => 'NrSection',
+                                      'value' => $context->section->number);
+        }
+        if ($context->article->defined == true) {
+            $parameters[$i++] = array('name' => 'Article',
+                                      'value' => $context->article->number);
+        }
+
+        $queryParameters = $this->getQueryArray();
+        foreach ($queryParameters as $paramName => $paramValue) {
+            if (in_array($paramName, $baseParameters)) {
+                continue;
+            }
+            $parameters[$i]['name'] = $paramName;
+            $parameters[$i++]['value'] = $paramValue;
+        }
+
+        return $parameters;
+    } // fn getFormParameters
+
     
     /**
      * Returns true if the given parameter is restricted and can not 

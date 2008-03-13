@@ -293,6 +293,26 @@ class CampURITemplatePath extends CampURI
         return $this->m_uriQuery;
     } // fn getURLParameters
 
+
+    /**
+     * @return array
+     *      An array containing all the form parameters to print out
+     */
+    public function getFormParameters()
+    {
+        $parameters = array();
+        $queryParameters = $this->getQueryArray();
+        foreach ($queryParameters as $paramName => $paramValue) {
+            if (in_array($paramName, $baseParameters)) {
+                continue;
+            }
+            $parameters[$i]['name'] = $paramName;
+            $parameters[$i++]['value'] = $paramValue;
+        }
+
+        return $parameters;
+    } // fn getFormParameters
+
     
     /**
      * Returns true if the given parameter is restricted and can not 
@@ -476,6 +496,10 @@ class CampURITemplatePath extends CampURI
      */
     protected function buildURI($p_param = null)
     {
+        if ($this->isValidCache()) {
+	        return;
+	    }
+
         $this->m_uriPath = null;
         $this->m_uriQuery = null;
 

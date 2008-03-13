@@ -47,6 +47,7 @@ final class MetaURL
         $this->m_customProperties['url'] = 'getURL';
         $this->m_customProperties['url_parameters'] = 'getURLParameters';
 
+        $this->m_customProperties['form_parameters'] = 'getFormParameters';
         $this->m_customProperties['base'] = 'getBase';
         $this->m_customProperties['path'] = 'getPath';
         $this->m_customProperties['query'] = 'getQuery';
@@ -130,6 +131,15 @@ final class MetaURL
             //            throw new InvalidFunctionException(get_class($this), '__set');
         }
     } // fn __set
+
+
+    /**
+     *
+     */
+    private function getFormParameters()
+    {
+        return $this->m_uriObj->getFormParameters();
+    } // fn getFormParameters
 
 
     /**

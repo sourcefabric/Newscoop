@@ -95,8 +95,10 @@ final class CampInstallation extends CampInstallationBase
 
         $cVersion = new CampVersion();
         $this->m_title = $cVersion->getPackage().' '.$cVersion->getRelease();
-        $this->m_title .= (!is_null($cVersion->getCodeName())) ?
-                              ' [ '.$cVersion->getCodeName().' ]' : '';
+        $this->m_title .= (strlen($cVersion->getDevelopmentStatus()) > 0) ? '-'.$cVersion->getDevelopmentStatus() : '';
+        $this->m_title .= (!is_null($cVersion->getCodeName())
+                               && $cVersion->getCodeName() != 'undefined') ?
+                          ' [ '.$cVersion->getCodeName().' ]' : '';
         $this->m_title .= ' Installer';
     } // fn dispatch
 

@@ -32,7 +32,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_devStatus = 'beta 2';
+    private $m_devStatus = 'rc1';
 
     /**
      * @var string
@@ -42,12 +42,12 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_releaseDate = 'undefined';
+    private $m_releaseDate = '2008-03-04';
 
     /**
      * @var string
      */
-    private $m_copyright = 'Copyright &copy; 2007 Campware. All rights reserved.';
+    private $m_copyright = 'Copyright &copy; 2008 Campware. All rights reserved.';
 
     /**
      * @var string
