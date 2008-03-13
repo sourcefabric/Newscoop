@@ -259,7 +259,7 @@ abstract class ListObject
 		if ($this->isEmpty()) {
 			return 0;
 		}
-		return 1 + $this->defaultIterator()->key();
+		return 1 + $this->m_start + $this->defaultIterator()->key();
 	}
 
 	/**
@@ -341,6 +341,34 @@ abstract class ListObject
 	public function getStart()
 	{
 		return $this->m_start;
+	}
+
+	/**
+	 * Returns the start element index of the previous group of items
+	 * from the list. Returns null if the list had no limit.
+	 *
+	 * @return int
+	 */
+	private function getPrevStart()
+	{
+	    if ($this->m_limit == 0) {
+	        return null;
+	    }
+	    return ($this->m_start >= $this->m_limit ? ($this->m_start - $this->m_limit) : 0);
+	}
+
+	/**
+	 * Returns the start element index of the next group of items
+	 * from the list. Returns null if the list had no limit.
+	 *
+	 * @return int
+	 */
+	private function getNextStart()
+	{
+	    if ($this->m_limit == 0) {
+	        return null;
+	    }
+	    return $this->m_start + $this->m_limit;
 	}
 
 	/**
@@ -483,9 +511,9 @@ abstract class ListObject
 	        case 'count':
 	            return $this->getTotalCount();
 	        case 'at_beginning':
-	            return $this->getIndex() == 1;
+	            return $this->getIndex() == ($this->getStart() + 1);
 	        case 'at_end';
-	            return ($this->getStart() + $this->getIndex()) == $this->getEnd();
+	            return $this->getIndex() == $this->getEnd();
 	        case 'has_next_elements':
 	            return $this->hasNextElements();
 	        case 'has_previous_elements':

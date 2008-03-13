@@ -185,6 +185,7 @@ abstract class CampURI {
         }
 
         $this->parse($uriString);
+        $this->m_queryArray = array_merge($this->m_queryArray, CampRequest::GetInput('POST'));
     } // fn __construct
 
 

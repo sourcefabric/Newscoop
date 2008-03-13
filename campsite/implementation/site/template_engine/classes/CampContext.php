@@ -41,23 +41,32 @@ final class CampContext
 
     // Defines the list objects
     private $m_listObjects = array(
-	                         'issues'=>array('class'=>'Issues', 'list'=>'issues'),
-	                         'sections'=>array('class'=>'Sections', 'list'=>'sections'),
-	                         'articles'=>array('class'=>'Articles', 'list'=>'articles'),
+	                         'issues'=>array('class'=>'Issues', 'list'=>'issues',
+	                         				 'url_id'=>'iss'),
+	                         'sections'=>array('class'=>'Sections', 'list'=>'sections',
+	                         				   'url_id'=>'sec'),
+	                         'articles'=>array('class'=>'Articles', 'list'=>'articles',
+	                         				   'url_id'=>'art'),
 	                         'articleimages'=>array('class'=>'ArticleImages',
-	                                                'list'=>'article_images'),
+	                                                'list'=>'article_images',
+	                                                'url_id'=>'aim'),
     						 'articleattachments'=>array('class'=>'ArticleAttachments',
-	                                                     'list'=>'article_attachments'),
+	                                                     'list'=>'article_attachments',
+	                                                     'url_id'=>'aat'),
 	                         'articleaudioattachments'=>array('class'=>'ArticleAudioAttachments',
-	                                                          'list'=>'article_audio_attachments'),
+	                                                          'list'=>'article_audio_attachments',
+	                                                          'url_id'=>'aau'),
     						 'articlecomments'=>array('class'=>'ArticleComments',
-	                                                  'list'=>'article_comments'),
-	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles'),
+	                                                  'list'=>'article_comments',
+	                                                  'url_id'=>'acm'),
+	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles',
+                                                'url_id'=>'st'),
     						 'articletopics'=>array('class'=>'ArticleTopics',
-	                                                'list'=>'article_topics'),
+	                                                'list'=>'article_topics', 'url_id'=>'atp'),
 	                         'searchresults'=>array('class'=>'SearchResults',
-	                                                'list'=>'search_results'),
-	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics')
+	                                                'list'=>'search_results', 'url_id'=>'src'),
+	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics',
+	                         					'url_id'=>'tp')
     );
 
     /**
@@ -483,6 +492,40 @@ final class CampContext
 
 
     /**
+     * Returns the corresponding id for a new list of the given type
+     *
+     * @param string $p_className
+     */
+    public function next_list_id($p_className) {
+        $objectName = $this->GetListObjectName($p_className);
+        if (is_null($objectName) || $objectName == '') {
+            return null;
+        }
+        $listName = $this->m_listObjects[$objectName]['list'];
+        if (!isset($this->m_readonlyProperties[$listName.'_lists'])) {
+            return 0;
+        }
+        return count($this->m_readonlyProperties[$listName.'_lists']);
+    }
+
+
+    /**
+     * Returns the corresponding list start index for a new list of the given type
+     *
+     * @param string $p_className
+     */
+    public function next_list_start($p_className) {
+        $nextListId = $this->next_list_id($p_className);
+        if (is_null($nextListId)) {
+            return null;
+        }
+        $objectName = $this->GetListObjectName($p_className);
+        $startParamName = 'ls-'.$this->m_listObjects[$objectName]['url_id'].$nextListId;
+        return $this->m_readonlyProperties['default_url']->get_parameter($startParamName);
+    }
+
+
+    /**
      * Creates an object of the given type. Returns the created object.
      *
      * @param string $p_objectType
@@ -762,6 +805,7 @@ final class CampContext
             $this->m_readonlyProperties['url']->set_parameter('acid', $p_newComment->identifier);
         }
     }
+
 
     /**
      * Returns the name corresponding to the given property; null if

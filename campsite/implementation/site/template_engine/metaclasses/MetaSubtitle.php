@@ -269,9 +269,9 @@ final class MetaSubtitle {
         $uri->article = new MetaArticle($parametersArray[CampRequest::LANGUAGE_ID],
         $parametersArray[CampRequest::ARTICLE_NR]);
         if ($uri->publication->identifier == CampRequest::GetVar(CampRequest::PUBLICATION_ID)) {
-            $linkContent = $uri->getURI();
+            $linkContent = $uri->uri;
         } else {
-            $linkContent = $uri->getURL();
+            $linkContent = $uri->url;
         }
         $urlString = '<a href="' . $linkContent . '" target="' . $targetName
         . '">' . $linkText . '</a>';
