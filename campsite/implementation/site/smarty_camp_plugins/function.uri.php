@@ -19,7 +19,8 @@
 function smarty_function_uri($p_params, &$p_smarty)
 {
     $validParams = array('language','publication','issue','section',
-                         'article','articleattachment','image', 'template');
+                         'article','articleattachment','image', 'template',
+                         'previous_items', 'next_items');
     if (!empty($p_params['options'])) {
         $optionsString = strtolower($p_params['options']);
         $options = preg_split('/ /', $p_params['options']);

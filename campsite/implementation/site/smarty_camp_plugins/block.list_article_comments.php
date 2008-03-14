@@ -31,8 +31,8 @@ function smarty_block_list_article_comments($p_params, $p_content, &$p_smarty, &
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 0;
-    	$articleCommentsList = new ArticleCommentsList($start, $p_params);
+        $start = $campContext->next_list_start('ArticleCommentsList');
+        $articleCommentsList = new ArticleCommentsList($start, $p_params);
     	$campContext->setCurrentList($articleCommentsList, array('comment'));
     }
 

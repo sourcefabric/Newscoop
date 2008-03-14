@@ -375,7 +375,7 @@ class CampURIShortNames extends CampURI
         return $parameters;
     } // fn getFormParameters
 
-    
+
     /**
      * Returns true if the given parameter is restricted and can not 
      * be set from outside the URL object.
@@ -550,10 +550,8 @@ class CampURIShortNames extends CampURI
             break;
         case 'articleattachment':
             $context = CampTemplate::singleton()->context();
-            if ($context->attachment->defined) {
-                $attachment = new Attachment($context->attachment->identifier);
-                $this->m_uriPath = '/attachment/'.basename($attachment->getStorageLocation());
-            }
+            $attachment = new Attachment($context->attachment->identifier);
+            $this->m_uriPath = '/attachment/'.basename($attachment->getStorageLocation());
             break;
         case 'image':
             $context = CampTemplate::singleton()->context();
@@ -578,6 +576,21 @@ class CampURIShortNames extends CampURI
                 $this->buildURI();
                 $this->setQueryVar(CampRequest::TEMPLATE_ID, $oldTplId);
             }
+            break;
+        case 'previous_items':
+        case 'next_items':
+            $context = CampTemplate::singleton()->context();
+            if ($context->current_list == null) {
+                $this->buildURI();
+                return;
+            }
+            $listId = $context->current_list->id;
+            $oldListId = $this->getQueryVar($listId);
+            $this->setQueryVar($listId, ($parameter == 'previous_items' ?
+                                         $context->current_list->previous_start :
+                                         $context->current_list->next_start));
+            $this->buildURI();
+            $this->setQueryVar($listId, $oldListId);
             break;
         default:
             if (empty($p_param)) {

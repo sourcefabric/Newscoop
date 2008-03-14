@@ -25,6 +25,13 @@ class MyArrayObject extends ArrayObject
  */
 abstract class ListObject
 {
+    /**
+     * The identifier of the list
+     *
+     * @var string
+     */
+    private $m_id;
+
 	/**
 	 * The name of the list
 	 *
@@ -130,6 +137,8 @@ abstract class ListObject
 			$this->m_objects = new MyArrayObject(array());
 			return;
 		}
+
+		$this->m_id = null;
 
 		/**
 		 * Processes the input parameters passed in an array; drops the invalid
@@ -518,7 +527,26 @@ abstract class ListObject
 	            return $this->hasNextElements();
 	        case 'has_previous_elements':
 	            return $this->hasPreviousElements();
+	        case 'previous_start':
+	            return $this->getPrevStart();
+	        case 'next_start':
+	            return $this->getNextStart();
+	        case 'id':
+	            return $this->m_id;
+	        default:
+    	        $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
+        				        . OF_OBJECT_STRING . ' list';
+	            CampTemplate::singleton()->trigger_error($errorMessage);
 	    }
+	}
+
+    /**
+     * Sets the list identifier
+     *
+     * @param string $p_id
+     */
+	public function setId($p_id) {
+	    $this->m_id = $p_id;
 	}
 
 	/**

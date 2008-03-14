@@ -453,6 +453,8 @@ final class CampContext
             throw new InvalidObjectException(get_class($p_list));
         }
 
+        $p_list->setId($this->next_list_id($listObjectName));
+
    	    $this->SaveProperties($p_savePropertiesList);
 
    	    $listName = $this->m_listObjects[$objectName]['list'];
@@ -492,6 +494,20 @@ final class CampContext
 
 
     /**
+     * Returns the corresponding id for the current list
+     *
+     * @return int - the current list identifier
+     */
+    public function current_list_id() {
+        $listName = $this->m_listObjects[$objectName]['list'];
+        if (!isset($this->m_readonlyProperties['current_list'])) {
+            return null;
+        }
+        return $this->m_readonlyProperties['current_list']->id;
+    }
+
+
+    /**
      * Returns the corresponding id for a new list of the given type
      *
      * @param string $p_className
@@ -502,10 +518,11 @@ final class CampContext
             return null;
         }
         $listName = $this->m_listObjects[$objectName]['list'];
+        $prefix = 'ls-'.$this->m_listObjects[$objectName]['url_id'];
         if (!isset($this->m_readonlyProperties[$listName.'_lists'])) {
-            return 0;
+            return $prefix . '0';
         }
-        return count($this->m_readonlyProperties[$listName.'_lists']);
+        return $prefix . count($this->m_readonlyProperties[$listName.'_lists']);
     }
 
 
@@ -519,9 +536,7 @@ final class CampContext
         if (is_null($nextListId)) {
             return null;
         }
-        $objectName = $this->GetListObjectName($p_className);
-        $startParamName = 'ls-'.$this->m_listObjects[$objectName]['url_id'].$nextListId;
-        return $this->m_readonlyProperties['default_url']->get_parameter($startParamName);
+        return $this->m_readonlyProperties['default_url']->get_parameter($nextListId);
     }
 
 

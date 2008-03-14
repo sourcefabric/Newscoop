@@ -31,7 +31,7 @@ function smarty_block_list_subtopics($p_params, $p_content, &$p_smarty, &$p_repe
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 0;
+        $start = $campContext->next_list_start('SubtopicsList');
     	$subtopicsList = new SubtopicsList($start, $p_params);
     	$campContext->setCurrentList($subtopicsList, array('topic'));
     }
