@@ -243,7 +243,11 @@ class TemplateConverter
         } elseif ($p_optArray[0] == 'if' || $p_optArray[0] == 'endif') {
             $newTag = TemplateConverterIfBlock::GetNewTagContent($p_optArray);
         } else {
-            return TemplateConverterHelper::GetNewTagContent($p_optArray);
+            if (in_array($p_optArray[0], array('uri','uripath','url','urlparameters'))) {
+                $newTag = TemplateConverterHelper::GetNewTagContent($p_optArray);
+            } else {
+                return TemplateConverterHelper::GetNewTagContent($p_optArray);
+            }
         }
 
         if (strlen($newTag) > 0) {

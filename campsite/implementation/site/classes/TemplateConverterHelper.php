@@ -454,9 +454,15 @@ class TemplateConverterHelper
             case 'previous_items':
                 $option = 'previous_items'; break;
             case 'nextsubtitles':
-                $option = 'next_subtitles'; break;
+                $withField = self::GetWithBodyField();
+                $option = 'next_subtitles';
+                $option.= (strlen($withField) > 0) ? ' '.$withField : '';
+                break;
             case 'prevsubtitles':
-                $option = 'previous_subtitles'; break;
+                $withField = self::GetWithBodyField();
+                $option = 'previous_subtitles';
+                $option.= (strlen($withField) > 0) ? ' '.$withField : '';
+                break;
             }
             $newTag.= (strlen($option) > 0) ? ' options="'.$option.'"' : '';
         }
