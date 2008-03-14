@@ -6,9 +6,9 @@
     subtitles
     {{ list_subtitles field_name="Full_text" }}
       <p>
-      {{ if $campsite->article->Full_text->subtitle_is_current }}<b>{{ /if }}
-      {{ $campsite->subtitle->number }}. {{ $campsite->subtitle->name }}
-      {{ if $campsite->article->Full_text->subtitle_is_current }}</b>{{ /if }}
+      {{ if $campsite->article->full_text->subtitle_is_current }}<b>{{ /if }}
+      {{ $campsite->current_list->index }}. {{ $campsite->subtitle->name }}
+      {{ if $campsite->article->full_text->subtitle_is_current }}</b>{{ /if }}
       </p>
     {{ /list_subtitles }}
     <p class="article_byline">Written by {{ $campsite->article->byline }}</p>
