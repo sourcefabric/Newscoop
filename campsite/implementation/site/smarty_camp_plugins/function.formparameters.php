@@ -46,7 +46,8 @@ function smarty_function_formparameters($p_params, &$p_smarty)
 
     $html = '';
     foreach ($formParameters as $param) {
-        $html .= '<input type="hidden" name="'.$param['name'].'" value="'.$param['value']."\" />\n";
+        $html .= '<input type="hidden" name="'.$param['name']
+            .'" value="'.htmlentities($param['value'])."\" />\n";
     }
 
     return $html;
