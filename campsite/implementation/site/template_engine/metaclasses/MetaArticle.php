@@ -97,18 +97,19 @@ final class MetaArticle extends MetaDbObject {
 
     final public function __get($p_property)
     {
+        $property = $this->translateProperty($p_property);
         if ($this->m_state == 'type_name_error') {
             $this->m_state = null;
             return null;
         }
 
-        if ($p_property == 'type' && $this->m_state == null) {
+        if ($property == 'type' && $this->m_state == null) {
             $this->m_state = 'type';
             return $this;
         }
 
         if ($this->m_state == 'type') {
-            if ($this->m_dbObject->getType() != $p_property) {
+            if (strcasecmp($this->m_dbObject->getType(), $property) != 0) {
                 $this->m_state = 'type_name_error';
             } else {
                 $this->m_state = null;
@@ -118,10 +119,10 @@ final class MetaArticle extends MetaDbObject {
 
         try {
             $methodName = $this->m_getPropertyMethod;
-            return $this->m_dbObject->$methodName($this->translateProperty($p_property));
+            return $this->m_dbObject->$methodName($property);
         } catch (InvalidPropertyException $e) {
             try {
-                return $this->getCustomProperty($p_property);
+                return $this->getCustomProperty($property);
             } catch (InvalidPropertyException $e) {
                 $this->trigger_invalid_property_error($p_property);
                 return null;
@@ -130,20 +131,49 @@ final class MetaArticle extends MetaDbObject {
     } // fn __get
 
 
+    public function subtitle_url_id($p_fieldName) {
+        $property = $this->translateProperty($p_fieldName);
+        return 'st-'.$property;
+    }
+
+
+    public function current_subtitle_no($p_fieldName) {
+        $property = $this->translateProperty($p_fieldName);
+        if (isset($this->m_customProperties[$property])
+        && is_array($this->m_customProperties[$property])) {
+            $dbProperty = $this->m_customProperties[$property][0];
+            $articleFieldType = new ArticleTypeField($this->type_name, $dbProperty);
+            if ($articleFieldType->getType() == 'mediumblob') {
+                $subtitleId = $this->subtitle_url_id($p_fieldName);
+                return CampTemplate::singleton()->context()->default_url->get_parameter($subtitleId);
+            }
+        }
+        return null;
+    }
+
+
     protected function getCustomProperty($p_property)
     {
-        if (isset($this->m_customProperties[strtolower($p_property)])
-        && is_array($this->m_customProperties[strtolower($p_property)])) {
+        $property = $this->translateProperty($p_property);
+        if (isset($this->m_customProperties[$property])
+        && is_array($this->m_customProperties[$property])) {
             try {
-                $property = $this->m_customProperties[strtolower($p_property)][0];
-                $articleFieldType = new ArticleTypeField($this->type_name, $property);
-                $fieldValue = $this->m_articleData->getProperty('F'.$property);
+                $dbProperty = $this->m_customProperties[$property][0];
+                $fieldValue = $this->m_articleData->getProperty('F'.$dbProperty);
+                $articleFieldType = new ArticleTypeField($this->type_name, $dbProperty);
                 if ($articleFieldType->getType() == 'mediumblob') {
-                    if (is_null($this->getContentCache($p_property))) {
-                        $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $property, 0);
-                        $this->setContentCache($p_property, $bodyField);
+                    if (is_null($this->getContentCache($property))) {
+                        $subtitleId = $this->subtitle_url_id($property);
+                        $subtitleNo = CampTemplate::singleton()->context()->default_url->get_parameter($subtitleId);
+                        if (is_null($subtitleNo)) {
+                            $subtitleNo = 0;
+                        } elseif ($subtitleNo == 'all') {
+                            $subtitleNo = null;
+                        }
+                        $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $subtitleNo);
+                        $this->setContentCache($property, $bodyField);
                     }
-                    $fieldValue = $this->getContentCache($p_property);
+                    $fieldValue = $this->getContentCache($property);
                 }
                 return $fieldValue;
             } catch (InvalidPropertyException $e) {
@@ -157,6 +187,7 @@ final class MetaArticle extends MetaDbObject {
 
     private function getContentCache($p_property)
     {
+        $p_property = $this->translateProperty($p_property);
         if (is_null($this->m_contentCache)
         || !isset($this->m_contentCache[$p_property])) {
             return null;
@@ -167,6 +198,7 @@ final class MetaArticle extends MetaDbObject {
 
     private function setContentCache($p_property, $p_value)
     {
+        $p_property = $this->translateProperty($p_property);
         $this->m_contentCache[$p_property] = $p_value;
     }
 
@@ -399,6 +431,13 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
+    /**
+     * Returns true if the article was translated in to the language
+     * identified by the given language code
+     *
+     * @param string $p_language - language code
+     * @return bool
+     */
     public function translated_to($p_language)
     {
         if (is_string($p_language)) {
@@ -416,33 +455,46 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
+    /**
+     * Returns true if the article keywords field had the given keyword.
+     *
+     * @param string $p_keyword
+     * @return bool
+     */
     public function has_keyword($p_keyword) {
         $keywords = $this->m_dbObject->getKeywords();
         return (int)(stristr($keywords, $p_keyword) !== false);
     }
 
 
+    /**
+     * Returns the number of the subtitles of the given article field.
+     * Returns null if the field name was invalid or it name a non body field.
+     *
+     * @param string $p_property - article field name
+     * @return int
+     */
     public function subtitles_count($p_property) {
-        if (isset($this->m_customProperties[strtolower($p_property)])
-        && is_array($this->m_customProperties[strtolower($p_property)])) {
-            try {
-                $property = $this->m_customProperties[strtolower($p_property)][0];
-                $articleFieldType = new ArticleTypeField($this->type_name, $property);
-                $fieldValue = $this->m_articleData->getProperty('F'.$property);
-                if ($articleFieldType->getType() == 'mediumblob') {
-                    $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $property);
-                    return $bodyField->subtitles_count;
-                }
+        try {
+            $propertyValue = $this->getCustomProperty($p_property);
+            if (!is_a($propertyValue, 'MetaArticleBodyField')) {
                 return null;
-            } catch (InvalidPropertyException $e) {
-                // do nothing; will throw another exception with original property field name
             }
-            throw new InvalidPropertyException(get_class($this->m_dbObject), $p_property);
+            return $propertyValue->subtitles_count;
+        } catch (InvalidPropertyException $e) {
+            // do nothing, return null
         }
         return null;
     }
 
 
+    /**
+     * Returns true if the article had an attached image identified
+     * by the given article internal index.
+     *
+     * @param int $p_imageIndex - the index of the image attachment in the article
+     * @return bool
+     */
     public function has_image($p_imageIndex) {
         $articleImage = new ArticleImage(CampTemplate::singleton()->context()->article->number,
         $p_imageIndex);
@@ -450,6 +502,14 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
+    /**
+     * Returns an image meta object corresponding to the given index
+     * of the image attachment inside the article. Returns an empty
+     * meta image object if the image did not exist.
+     *
+     * @param int $p_imageIndex - the index of the image attachment in the article
+     * @return MetaImage
+     */
     public function image($p_imageIndex) {
         $articleImage = new ArticleImage(CampTemplate::singleton()->context()->article->number,
         $p_imageIndex);

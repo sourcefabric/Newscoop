@@ -22,6 +22,7 @@ global $Campsite;
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/include/campsite_init.php');
+require_once($g_documentRoot.'/template_engine/classes/SyntaxError.php');
 
 
 function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,

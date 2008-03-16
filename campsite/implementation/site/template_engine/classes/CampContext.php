@@ -288,6 +288,7 @@ final class CampContext
      */
     public function hasProperty($p_property)
     {
+        $p_property = CampContext::TranslateProperty($p_property);
         return !is_null(CampContext::ObjectType($p_property))
         || (is_array($this->m_properties)
         && array_key_exists($p_property, $this->m_properties))

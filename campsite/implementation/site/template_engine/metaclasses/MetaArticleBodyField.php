@@ -35,7 +35,7 @@ final class MetaArticleBodyField {
      *
      * @param string $p_content
      */
-    public function MetaArticleBodyField($p_content, $p_articleName, $p_bodyField,
+    public function MetaArticleBodyField($p_content, $p_articleName,
     $p_subtitleNumber = null, $p_headerFormatStart = null, $p_headerFormatEnd = null) {
         $this->m_subtitleNumber = $p_subtitleNumber;
         $this->m_subtitles = MetaSubtitle::ReadSubtitles($p_content, $p_articleName,
@@ -48,7 +48,7 @@ final class MetaArticleBodyField {
 
 
     public function __toString() {
-        return $this->getContent(!is_null($this->m_subtitleNumber) ? array($this->m_subtitleNumber) : null);
+        return $this->getContent(!is_null($this->m_subtitleNumber) ? array($this->m_subtitleNumber) : array());
     }
 
 
@@ -57,7 +57,8 @@ final class MetaArticleBodyField {
             case 'subtitles_count': return $this->getSubtitlesCount();
             case 'subtitle_number': return $this->m_subtitleNumber;
             case 'subtitle_is_current':
-                return $this->m_subtitleNumber == CampTemplate::singleton()->context()->subtitle->number;
+                return $this->m_subtitleNumber === CampTemplate::singleton()->context()->subtitle->number
+                || is_null($this->m_subtitleNumber);
             case 'has_previous_subtitles':
                 if (is_null($this->m_subtitleNumber)) {
                     return null;
@@ -83,7 +84,7 @@ final class MetaArticleBodyField {
      */
     private function getContent(array $p_subtitles = array())
     {
-        $printAll = empty($p_subtitles);
+        $printAll = count($p_subtitles) == 0;
         $content = '';
         foreach ($this->m_subtitles as $index=>$subtitle) {
             if (!$printAll && array_search($index, $p_subtitles) === false) {

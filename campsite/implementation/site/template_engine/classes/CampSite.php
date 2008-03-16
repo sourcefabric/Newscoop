@@ -239,12 +239,21 @@ final class CampSite extends CampSystem
      */
     public static function GetURIInstance($p_uri = 'SELF')
     {
+        global $g_ado_db;
+
         $urlType = 0;
 
         // tries to get the url type from publication attributes
-        $urlTypeObj = new UrlType(CampRequest::GetVar('URLType'));
-        if (is_object($urlTypeObj) && $urlTypeObj->exists()) {
-            $urlType = $urlTypeObj->getId();
+        $sqlQuery = 'SELECT p.Id, p.IdDefaultLanguage, p.IdURLType '
+            . 'FROM Publications p, Aliases a '
+            . 'WHERE p.Id = a.IdPublication AND '
+            . "a.Name = '" . $g_ado_db->Escape($_SERVER['HTTP_HOST']) . "'";
+        $data = $g_ado_db->GetRow($sqlQuery);
+        if (!empty($data)) {
+            $urlTypeObj = new UrlType(CampRequest::GetVar('URLType'));
+            if (is_object($urlTypeObj) && $urlTypeObj->exists()) {
+                $urlType = $urlTypeObj->getId();
+            }
         }
 
         // sets url type to default if necessary

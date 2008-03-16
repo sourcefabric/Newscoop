@@ -20,7 +20,7 @@ abstract class CampSystem
      */
     protected function __construct()
     {
-        self::BuildPublicationFromAlias($_SERVER['HTTP_HOST']);
+//        self::BuildPublicationFromAlias($_SERVER['HTTP_HOST']);
     } // fn __construct
 
 
@@ -343,9 +343,7 @@ abstract class CampSystem
             . "a.Name = '" . $g_ado_db->Escape($p_siteAlias) . "'";
         $data = $g_ado_db->GetRow($sqlQuery);
         if (!empty($data)) {
-            CampRequest::SetVar('URLType', $data['IdURLType']);
-            CampRequest::SetVar(CampRequest::PUBLICATION_ID, $data['Id']);
-            CampRequest::SetVar(CampRequest::LANGUAGE_ID, $data['IdDefaultLanguage']);
+//            CampRequest::SetVar('URLType', $data['IdURLType']);
         }
     } // fn BuildPublicationFromAlias
 

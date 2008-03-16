@@ -592,6 +592,31 @@ class CampURIShortNames extends CampURI
             $this->buildURI();
             $this->setQueryVar($listId, $oldListId);
             break;
+        case 'previous_subtitle':
+        case 'next_subtitle':
+        case 'all_subtitles':
+            $article = CampTemplate::singleton()->context()->article;
+            $subtitleNo = $article->current_subtitle_no($option);
+            if (!$article->defined || (!is_null($subtitleNo) && !is_numeric($subtitleNo))) {
+                $this->buildURI();
+                return;
+            }
+            $fieldObj = $article->$option;
+            if (($parameter == 'previous_subtitle' && !$fieldObj->has_previous_subtitles)
+            || ($parameter == 'next_subtitle' && !$fieldObj->has_next_subtitles)) {
+                $this->buildURI();
+                return;
+            }
+            $subtitleURLId = $article->subtitle_url_id($option);
+            if ($parameter == 'all_subtitles') {
+                $newSubtitleNo = 'all';
+            } else {
+                $newSubtitleNo = $subtitleNo + ($parameter == 'previous_subtitle' ? -1 : 1);
+            }
+            $this->setQueryVar($subtitleURLId, $newSubtitleNo);
+            $this->buildURI();
+            $this->setQueryVar($subtitleURLId, $subtitleNo);
+            break;
         default:
             if (empty($p_param)) {
                 if (!is_null($this->m_language) && $this->m_language->defined) {
@@ -607,6 +632,11 @@ class CampURIShortNames extends CampURI
                     }
                 }
                 $this->m_uriPath = $this->m_path;
+
+//                $context = CampTemplate::singleton()->context();
+//                if ($context->subtitle->defined) {
+//                    $this->setQueryVar($context->article->subtitle_url_id($context->subtitle));
+//                }
                 $this->m_query = CampURI::QueryArrayToString($this->getQueryArray());
                 $this->m_uriQuery = $this->m_query;
             }
