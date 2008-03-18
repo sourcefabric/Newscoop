@@ -633,10 +633,6 @@ class CampURIShortNames extends CampURI
                 }
                 $this->m_uriPath = $this->m_path;
 
-//                $context = CampTemplate::singleton()->context();
-//                if ($context->subtitle->defined) {
-//                    $this->setQueryVar($context->article->subtitle_url_id($context->subtitle));
-//                }
                 $this->m_query = CampURI::QueryArrayToString($this->getQueryArray());
                 $this->m_uriQuery = $this->m_query;
             }

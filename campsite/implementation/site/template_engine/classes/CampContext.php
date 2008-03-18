@@ -136,6 +136,9 @@ final class CampContext
         $this->section = $url->section;
         $this->article = $url->article;
         $this->template = $url->template;
+        if (is_numeric($url->get_parameter('tpid'))) {
+            $this->topic = new MetaTopic($url->get_parameter('tpid'));
+        }
 
         $this->m_readonlyProperties['default_template'] = $this->template;
         $this->m_readonlyProperties['default_language'] = $this->language;
