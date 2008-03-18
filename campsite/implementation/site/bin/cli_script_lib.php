@@ -124,7 +124,7 @@ function camp_read_files($p_startDir = '.')
             }
             $filePath = $p_startDir . '/' . $file;
             if (is_dir($filePath)) {
-                $files = array_merge($files, listdir($filePath));
+                $files = array_merge($files, camp_read_files($filePath));
             } else {
                 array_push($files, $filePath);
             }
@@ -384,13 +384,14 @@ function camp_upgrade_database($p_dbName)
 
     $first = true;
     $versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
-                      "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x");
+                      "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x",
+                      "2.7.x");
     foreach ($versions as $index=>$db_version) {
         if ($old_version > $db_version) {
             continue;
         }
         if ($first) {
-            echo " * Upgrading the database from version $db_version...";
+            echo "\n\t* Upgrading the database from version $db_version...";
         }
         $output = array();
 
@@ -419,7 +420,7 @@ function camp_upgrade_database($p_dbName)
             }
         }
         if ($first) {
-            echo 'done.';
+            echo "done.\n";
             $first = false;
         }
     }
@@ -447,83 +448,94 @@ function camp_detect_database_version($p_dbName, &$version)
     }
 
     $version = "2.0.x";
-    while ($row = mysql_fetch_row($res)) {
-        if (in_array($row[0], array("ArticleTopics", "Topics"))) {
-            $version = $version < "2.1.x" ? "2.1.x" : $version;
+    $row = mysql_fetch_row($res);
+    if (in_array($row[0], array("ArticleTopics", "Topics"))) {
+        $version = $version < "2.1.x" ? "2.1.x" : $version;
+    }
+    if (in_array($row[0], array("URLTypes", "TemplateTypes", "Templates", "Aliases",
+                                "ArticlePublish", "IssuePublish", "ArticleImages"))) {
+        $version = "2.2.x";
+        if (!$res2 = mysql_query("DESC UserTypes ManageReaders")) {
+            return "Unable to query the database $p_dbName";
         }
-        if (in_array($row[0], array("URLTypes", "TemplateTypes", "Templates", "Aliases",
-                                    "ArticlePublish", "IssuePublish", "ArticleImages"))) {
-            $version = "2.2.x";
-            if (!$res2 = mysql_query("DESC UserTypes ManageReaders")) {
+        if (mysql_num_rows($res2) > 0) {
+            $version = "2.3.x";
+        }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'UserConfig'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            $version = "2.4.x";
+        }
+        if (!$res2 = mysql_query("DESC SubsSections IdLanguage")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            $version = "2.5.x";
+        }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'ArticleTypeMetadata'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            $version = "2.6.0";
+            if (!$res2 = mysql_query("SHOW COLUMNS FROM ArticleTypeMetadata LIKE 'type_name'")) {
+                return "Unable to query the database $p_dbName";
+            }
+            $row = mysql_fetch_array($res2, MYSQL_ASSOC);
+            if (!is_null($row) && strstr($row['Type'], '166') != '') {
+                $version = "2.6.1";
+            } else {
+                return 0;
+            }
+            if (!$res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'")) {
                 return "Unable to query the database $p_dbName";
             }
             if (mysql_num_rows($res2) > 0) {
-                $version = "2.3.x";
+                $version = "2.6.2";
+            } else {
+                return 0;
             }
-            if (!$res2 = mysql_query("SHOW TABLES LIKE 'UserConfig'")) {
+            if (!$res2 = mysql_query("SELECT * FROM Events WHERE Id = 171")) {
                 return "Unable to query the database $p_dbName";
             }
             if (mysql_num_rows($res2) > 0) {
-                $version = "2.4.x";
+                $version = "2.6.3";
+            } else {
+                return 0;
             }
-            if (!$res2 = mysql_query("DESC SubsSections IdLanguage")) {
+            if (!$res2 = mysql_query("SELECT * FROM UserConfig "
+                                     . "WHERE varname = 'ExternalSubscriptionManagement'")) {
                 return "Unable to query the database $p_dbName";
             }
             if (mysql_num_rows($res2) > 0) {
-                $version = "2.5.x";
+                $version = "2.6.4";
+            } else {
+                return 0;
             }
-            if (!$res2 = mysql_query("SHOW TABLES LIKE 'ArticleTypeMetadata'")) {
+            if (!$res2 = mysql_query("SELECT * from phorum_users "
+                                     . "WHERE fk_campsite_user_id IS NULL")) {
+                return "Unable to query the database $p_dbName";
+            }
+            if (mysql_num_rows($res2) == 0) {
+                $version = "2.6.x";
+            }
+        }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE '%Audioclip%'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            $version = "2.7.x";
+        }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'liveuser_users'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            if (!$res2 = mysql_query("SELECT * FROM liveuser_users "
+                                     . "WHERE fk_user_type = 1")) {
                 return "Unable to query the database $p_dbName";
             }
             if (mysql_num_rows($res2) > 0) {
-                $version = "2.6.0";
-                if (!$res2 = mysql_query("SHOW COLUMNS FROM ArticleTypeMetadata LIKE 'type_name'")) {
-                    return "Unable to query the database $p_dbName";
-                }
-                $row = mysql_fetch_array($res2, MYSQL_ASSOC);
-                if (!is_null($row) && strstr($row['Type'], '166') != '') {
-                    $version = "2.6.1";
-                } else {
-                    return 0;
-                }
-                if (!$res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'")) {
-                    return "Unable to query the database $p_dbName";
-                }
-                if (mysql_num_rows($res2) > 0) {
-                    $version = "2.6.2";
-                } else {
-                    return 0;
-                }
-                if (!$res2 = mysql_query("SELECT * FROM Events WHERE Id = 171")) {
-                    return "Unable to query the database $p_dbName";
-                }
-                if (mysql_num_rows($res2) > 0) {
-                    $version = "2.6.3";
-                } else {
-                    return 0;
-                }
-                if (!$res2 = mysql_query("SELECT * FROM UserConfig "
-                                         . "WHERE varname = 'ExternalSubscriptionManagement'")) {
-                    return "Unable to query the database $p_dbName";
-                }
-                if (mysql_num_rows($res2) > 0) {
-                    $version = "2.6.4";
-                } else {
-                    return 0;
-                }
-                if (!$res2 = mysql_query("SELECT * from phorum_users "
-                                         . "WHERE fk_campsite_user_id IS NULL")) {
-                    return "Unable to query the database $p_dbName";
-                }
-                if (mysql_num_rows($res2) == 0) {
-                    $version = "2.6.x";
-                }
-            }
-            if (!$res2 = mysql_query("SHOW TABLES LIKE '%Audioclip%'")) {
-                return "Unable to query the database $p_dbName";
-            }
-            if (mysql_num_rows($res2) > 0) {
-                $version = "2.7.x";
+                $version = "3.0";
             }
         }
     }
