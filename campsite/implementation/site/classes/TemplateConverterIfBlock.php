@@ -388,6 +388,13 @@ class TemplateConverterIfBlock
 
             //
             $value = (isset($p_optArray[$idx])) ? $p_optArray[$idx] : null;
+            if (isset($p_optArray[$idx])) {
+                if (!empty($p_optArray[$idx])) {
+                    $value = $p_optArray[$idx];
+                } else {
+                    $value = '""';
+                }
+            }
             if (!is_null($value)) {
                 $ifBlockStr.= (strlen($operator) <= 0) ? ' == '.$value : ' '.$value;
                 $idx++;

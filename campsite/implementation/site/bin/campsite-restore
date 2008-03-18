@@ -309,6 +309,7 @@ if (!$useExistingConfig) {
 // Converting template files if necessary
 //
 if ($backupVersion < 3) {
+    echo " * Converting templates...";
     require_once($CAMPSITE_DIR.'/classes/TemplateConverter.php');
     $template_files = camp_read_files($CAMPSITE_DIR.'/templates');
     $converter = new TemplateConverter();
@@ -317,6 +318,7 @@ if ($backupVersion < 3) {
         $converter->parse();
         $converter->write();
     }
+    echo "done.\n";
 }
 
 //
