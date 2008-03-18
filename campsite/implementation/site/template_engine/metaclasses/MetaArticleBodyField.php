@@ -35,10 +35,10 @@ final class MetaArticleBodyField {
      *
      * @param string $p_content
      */
-    public function MetaArticleBodyField($p_content, $p_articleName,
+    public function MetaArticleBodyField($p_content, $p_fieldName, $p_articleName,
     $p_subtitleNumber = null, $p_headerFormatStart = null, $p_headerFormatEnd = null) {
         $this->m_subtitleNumber = $p_subtitleNumber;
-        $this->m_subtitles = MetaSubtitle::ReadSubtitles($p_content, $p_articleName,
+        $this->m_subtitles = MetaSubtitle::ReadSubtitles($p_content, $p_fieldName, $p_articleName,
         $p_headerFormatStart, $p_headerFormatEnd);
         $this->m_sutitlesNames = array();
         foreach ($this->m_subtitles as $subtitle) {
@@ -57,8 +57,8 @@ final class MetaArticleBodyField {
             case 'subtitles_count': return $this->getSubtitlesCount();
             case 'subtitle_number': return $this->m_subtitleNumber;
             case 'subtitle_is_current':
-                return $this->m_subtitleNumber === CampTemplate::singleton()->context()->subtitle->number
-                || is_null($this->m_subtitleNumber);
+                return $this->m_subtitleNumber == CampTemplate::singleton()->context()->subtitle->number
+                && !is_null($this->m_subtitleNumber);
             case 'has_previous_subtitles':
                 if (is_null($this->m_subtitleNumber)) {
                     return null;

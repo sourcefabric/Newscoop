@@ -170,7 +170,8 @@ final class MetaArticle extends MetaDbObject {
                         } elseif ($subtitleNo == 'all') {
                             $subtitleNo = null;
                         }
-                        $bodyField = new MetaArticleBodyField($fieldValue, $this->name, $subtitleNo);
+                        $bodyField = new MetaArticleBodyField($fieldValue,
+                                         $articleFieldType->getPrintName(), $this->name, $subtitleNo);
                         $this->setContentCache($property, $bodyField);
                     }
                     $fieldValue = $this->getContentCache($property);

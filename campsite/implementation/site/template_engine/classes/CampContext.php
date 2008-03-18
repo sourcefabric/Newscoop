@@ -33,7 +33,8 @@ final class CampContext
 								    'audioclip'=>array('class'=>'Audioclip'),
 								    'comment'=>array('class'=>'Comment',
 								    				 'handler'=>'setCommentHandler'),
-								    'subtitle'=>array('class'=>'Subtitle'),
+								    'subtitle'=>array('class'=>'Subtitle',
+                                                      'handler'=>'setSubtitleHandler'),
 								    'topic'=>array('class'=>'Topic'),
 								    'user'=>array('class'=>'User'),
 								    'template'=>array('class'=>'Template')
@@ -822,6 +823,15 @@ final class CampContext
         if ($p_oldComment != $p_newComment) {
             $this->m_objects['comment'] = $p_newComment;
             $this->m_readonlyProperties['url']->set_parameter('acid', $p_newComment->identifier);
+        }
+    }
+
+
+    private function setSubtitleHandler(MetaSubtitle $p_oldSubtitle, MetaSubtible $p_newSubtitle) {
+        if ($p_oldSubtitle != $p_newSubtitle) {
+            $this->m_objects['subtitle'] = $p_newSubtitle;
+            $subtitleURLId = $this->article->subtitle_url_id($p_newSubtitle->field_name);
+            $this->m_readonlyProperties['url']->set_parameter($subtitleURLId, $p_newSubtitle->number);
         }
     }
 

@@ -35,6 +35,13 @@ final class MetaSubtitle {
     private $m_number;
 
     /**
+     * The field name to which this subtitle belongs
+     *
+     * @var string
+     */
+    private $m_fieldName;
+
+    /**
      * The number of subtitles
      *
      * @var int
@@ -80,9 +87,11 @@ final class MetaSubtitle {
      * @param string $p_formattingStart
      * @param string $p_formattingEnd
      */
-    public function MetaSubtitle($p_number = null, $p_count = null, $p_name = null,
-    $p_content = null, $p_formattingStart = '', $p_formattingEnd = '') {
+    public function MetaSubtitle($p_number = null, $p_fieldName = null,
+    $p_count = null, $p_name = null, $p_content = null, $p_formattingStart = '',
+    $p_formattingEnd = '') {
         $this->m_number = $p_number;
+        $this->m_fieldName = $p_fieldName;
         $this->m_count = $p_count;
         $this->m_name = $p_name;
         $this->m_content = MetaSubtitle::ProcessContent($p_content);
@@ -95,6 +104,7 @@ final class MetaSubtitle {
     {
         switch (strtolower($p_property)) {
             case 'number': return $this->m_number;
+            case 'field_name': return $this->m_fieldName;
             case 'count': return $this->m_count;
             case 'name': return $this->m_name;
             case 'formatted_name': return $this->getFormattedName();
@@ -149,7 +159,7 @@ final class MetaSubtitle {
      * @param string $p_firstSubtitle
      * @return array of MetaSubtitle
      */
-    public static function ReadSubtitles($p_content, $p_firstSubtitle = '',
+    public static function ReadSubtitles($p_content, $p_fieldName, $p_firstSubtitle = '',
     $p_headerFormatStart = null, $p_headerFormatEnd = null) {
         $result = preg_match_all('/('.MetaSubtitle::GetFindPattern().')/i', $p_content, $subtitlesNames);
 
@@ -167,7 +177,8 @@ final class MetaSubtitle {
             } else {
                 $formatEnd = $p_headerFormatEnd;
             }
-            $subtitles[] = new MetaSubtitle($index, count($contentParts), $name, $contentPart, $formatStart, $formatEnd);
+            $subtitles[] = new MetaSubtitle($index, $p_fieldName, count($contentParts),
+            $name, $contentPart, $formatStart, $formatEnd);
         }
         return $subtitles;
     }

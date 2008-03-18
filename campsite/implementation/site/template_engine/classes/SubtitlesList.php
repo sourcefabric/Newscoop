@@ -41,7 +41,7 @@ class SubtitlesList extends ListObject
         if (is_null($fieldValue)) {
             return array();
         }
-        $subtitles = MetaSubtitle::ReadSubtitles($fieldValue, $context->article->name);
+        $subtitles = MetaSubtitle::ReadSubtitles($fieldValue, $p_parameters['field_name'], $context->article->name);
         $p_count = count($subtitles);
         return ($p_limit !== 0 ? array_slice($subtitles, $p_start, $p_limit) : array_slice($subtitles, $p_start));
     }
