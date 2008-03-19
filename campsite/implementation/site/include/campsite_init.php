@@ -19,5 +19,6 @@ require_once($g_documentRoot.'/include/campsite_constants.php');
 require_once($g_documentRoot.'/conf/configuration.php');
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/template_engine/classes/CampSite.php');
+require_once($g_documentRoot.'/admin-files/lib_campsite.php');
 
 ?>

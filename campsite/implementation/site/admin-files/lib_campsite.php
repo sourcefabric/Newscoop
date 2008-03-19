@@ -265,11 +265,13 @@ function camp_mime_content_type($p_file)
  * @param string $p_prefix
  * @return void
  */
-function camp_load_translation_strings($p_prefix)
+function camp_load_translation_strings($p_prefix, $p_langCode = null)
 {
     require_once('localizer/Localizer.php');
     $langCode = null;
-     if (isset($_REQUEST['TOL_Language'])) {
+    if (!is_null($p_langCode)) {
+        $langCode = $p_langCode;
+    } elseif (isset($_REQUEST['TOL_Language'])) {
          $langCode = $_REQUEST['TOL_Language'];
     }
     Localizer::LoadLanguageFiles($p_prefix, $langCode);

@@ -55,6 +55,10 @@ if ($publicationObj->getUrlTypeId() == 1) {
 	$url .= '?' . $accessParams;
 }
 
+if (isset($_REQUEST['TOL_Language'])) {
+    $url .= '&previewLang='.$_REQUEST['TOL_Language'];
+}
+
 if ($errorStr != "") {
 	camp_html_display_error($errorStr, null, true);
 }

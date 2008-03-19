@@ -42,18 +42,22 @@ $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_us
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
 	$templateObj = & new Template($templateId);
-	$uri = "$websiteURL/tpl/" . $templateObj->getName()
+	$url = "$websiteURL/tpl/" . $templateObj->getName()
 		. "?IdLanguage=$Language&IdPublication=$Pub&NrIssue=$Issue&$accessParams";
 } else {
-	$uri = "$websiteURL/" . $languageObj->getCode()
+	$url = "$websiteURL/" . $languageObj->getCode()
 		. "/" . $issueObj->getUrlName() . "?$accessParams";
+}
+
+if (isset($_REQUEST['TOL_Language'])) {
+    $url .= '&previewLang='.$_REQUEST['TOL_Language'];
 }
 
 if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
 	// Show dual-pane view for those with template management priviledges
 ?>
 <FRAMESET ROWS="60%,*" BORDER="1">
-	<FRAME SRC="<?php echo "$uri&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
+	<FRAME SRC="<?php echo "$url&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
 	<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">
 </FRAMESET>
 <?php
@@ -61,7 +65,7 @@ if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl
 	// Show single pane for everyone else.
 ?>
 	<FRAMESET ROWS="100%">
-		<FRAME SRC="<?php print $uri; ?>" NAME="body" FRAMEBORDER="1">
+		<FRAME SRC="<?php print $url; ?>" NAME="body" FRAMEBORDER="1">
 	</FRAMESET>
 <?php
 }

@@ -94,11 +94,15 @@ $campsite->initSession();
 // initiates the context
 $campsite->init();
 
-// TODO: authorization access
-
-
 // dispatches campsite
 $campsite->dispatch();
+
+// triggers an event before render the page.
+// looks for preview language if any.
+$previewLang = $campsite->event('beforeRender');
+// loads translations strings in the proper language
+// for preview error messaging.
+camp_load_translation_strings('preview', $previewLang);
 
 // renders the site
 $campsite->render();

@@ -138,6 +138,8 @@ final class CampSite extends CampSystem
         global $g_errorList;
 
         switch ($p_eventName) {
+        case 'beforeRender':
+            return CampRequest::GetVar('previewLang', null);
         case 'afterRender':
             $doPreview = CampRequest::GetVar('preview', 'off');
             if ($doPreview == 'on') {
