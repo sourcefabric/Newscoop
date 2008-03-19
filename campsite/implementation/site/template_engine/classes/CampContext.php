@@ -827,7 +827,7 @@ final class CampContext
     }
 
 
-    private function setSubtitleHandler(MetaSubtitle $p_oldSubtitle, MetaSubtible $p_newSubtitle) {
+    private function setSubtitleHandler(MetaSubtitle $p_oldSubtitle, MetaSubtitle $p_newSubtitle) {
         if ($p_oldSubtitle != $p_newSubtitle) {
             $this->m_objects['subtitle'] = $p_newSubtitle;
             $subtitleURLId = $this->article->subtitle_url_id($p_newSubtitle->field_name);
