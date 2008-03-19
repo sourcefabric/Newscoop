@@ -180,6 +180,18 @@ if (!$isNewBackupFormat) {
 }
 echo "done.\n";
 
+// If database version is minor than 2.6.0 we do nothing but exit the
+// script as we only care about upgrading newer Campsites.
+camp_detect_database_version($origDbName, $dbVersion);
+if ($dbVersion < '2.6.0') {
+    echo "\n You must upgrade to Campsite 2.6 or 2.7 first, after that";
+    echo "\n run this script again to upgrade to 3.0.\n\n";
+    echo " * Cleaning up...";
+    camp_remove_dir($tempDirName);
+    echo "done.\n\n";
+    exit(1);
+}
+
 echo " * Backup database name is '$origDbName'.\n";
 echo " * Destination database name (to be replaced) is '$destDbName'.\n";
 
