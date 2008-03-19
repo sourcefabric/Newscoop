@@ -71,8 +71,14 @@ class ArticlesList extends ListObject
                                                            $context->section->number);
     	    $this->m_constraints[] = $comparisonOperation;
 	    }
+	    $user = CampTemplate::singleton()->context()->user;
+	    if (CampRequest::GetVar('preview') != 'on' || !$user->is_admin) {
+	        $comparisonOperation = new ComparisonOperation('published', $operator, 'true');
+    	    $this->m_constraints[] = $comparisonOperation;
+	    }
 
-	    $articlesList = Article::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+	    $articlesList = Article::GetList($this->m_constraints, $this->m_order,
+	    $p_start, $p_limit, $p_count);
 	    $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
 	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),

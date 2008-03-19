@@ -68,6 +68,7 @@ final class MetaUser extends MetaDbObject {
         $this->m_customProperties['logged_in'] =  'isLoggedIn';
         $this->m_customProperties['blocked_from_comments'] = 'isBlockedFromComments';
         $this->m_customProperties['subscription'] = 'getSubscription';
+        $this->m_customProperties['is_admin'] = 'isAdmin';
     } // fn __construct
 
 
@@ -101,6 +102,16 @@ final class MetaUser extends MetaDbObject {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * Returns true if the user had adminstration rights
+     *
+     * @return bool
+     */
+    protected function isAdmin() {
+        return $this->m_dbObject->isAdmin();
     }
 
 
