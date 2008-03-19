@@ -149,7 +149,7 @@ final class CampSite extends CampSystem
                     ."\\\n<b>Parse errors:</b>\\\n");
 
                 foreach ($g_errorList as $error) {
-                    print("<p>".$error->getMessage()."</p>\\\n");
+                    print("<p>".htmlspecialchars($error->getMessage())."</p>\\\n");
                 }
 
                 print("</pre></body></html>\\\n\");\nparent.e.document.close();\n</script>\n");
