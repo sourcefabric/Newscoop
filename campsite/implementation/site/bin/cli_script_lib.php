@@ -455,13 +455,13 @@ function camp_detect_database_version($p_dbName, &$version)
     if (in_array($row[0], array("URLTypes", "TemplateTypes", "Templates", "Aliases",
                                 "ArticlePublish", "IssuePublish", "ArticleImages"))) {
         $version = "2.2.x";
-        if (!$res2 = mysql_query("DESC UserTypes ManageReaders")) {
+        if (!$res2 = mysql_query("DESC Articles PublishDate")) {
             return "Unable to query the database $p_dbName";
         }
         if (mysql_num_rows($res2) > 0) {
             $version = "2.3.x";
         }
-        if (!$res2 = mysql_query("SHOW TABLES LIKE 'UserConfig'")) {
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'Attachments'")) {
             return "Unable to query the database $p_dbName";
         }
         if (mysql_num_rows($res2) > 0) {
@@ -503,14 +503,10 @@ function camp_detect_database_version($p_dbName, &$version)
             } else {
                 return 0;
             }
-            if (!$res2 = mysql_query("SELECT * FROM UserConfig "
-                                     . "WHERE varname = 'ExternalSubscriptionManagement'")) {
-                return "Unable to query the database $p_dbName";
-            }
-            if (mysql_num_rows($res2) > 0) {
+            $res2 = mysql_query("SELECT * FROM UserConfig "
+                                . "WHERE varname = 'ExternalSubscriptionManagement'");
+            if (is_resource($res2) && mysql_num_rows($res2) > 0) {
                 $version = "2.6.4";
-            } else {
-                return 0;
             }
             if (!$res2 = mysql_query("SELECT * from phorum_users "
                                      . "WHERE fk_campsite_user_id IS NULL")) {

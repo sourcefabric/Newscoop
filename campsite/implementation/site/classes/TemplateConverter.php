@@ -120,6 +120,13 @@ class TemplateConverter
             $replacementsArray[] = $replacement;
         }
 
+        // sets pattern and replacement for templates path
+        $patternsArray[] = "/\/look\//";
+        $replacementsArray[] = "/templates/";
+        // sets pattern and replacement for get_img script
+        $patternsArray[] = "/get_img/";
+        $replacementsArray[] = "get_img.php";
+
         // replaces all patterns with corresponding replacements
         $this->m_templateContent = preg_replace($patternsArray,
                                                 $replacementsArray,
