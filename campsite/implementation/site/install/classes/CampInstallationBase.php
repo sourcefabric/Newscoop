@@ -244,11 +244,11 @@ class CampInstallationBase
             $directories[] = $templatesDir;
             $isWritable = false;
         }
-        if (!is_dir($cssDir) || !is_writable($cssDir)) {
+        if ((!is_dir($cssDir) && !mkdir($cssDir)) || !is_writable($cssDir)) {
             $directories[] = $cssDir;
             $isWritable = false;
         }
-        if (!is_dir($imagesDir) || !is_writable($imagesDir)) {
+        if ((!is_dir($imagesDir) && !mkdir($imagesDir)) || !is_writable($imagesDir)) {
             $directories[] = $imagesDir;
             $isWritable = false;
         }
