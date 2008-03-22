@@ -111,22 +111,43 @@ final class CampSite extends CampSystem
      */
     public function render()
     {
+        $uri = self::GetURIInstance();
         $document = self::GetHTMLDocumentInstance();
 
         // sets the appropiate template if site is not in mode online
         if ($this->getSetting('site.online') == 'N') {
             $template = '_campsite_offline.tpl';
             $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
+        } elseif (!$uri->publication->defined) {
+            $template = '_campsite_error.tpl';
+            $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
+            $error_message = 'The site alias \'' . $_SERVER['HTTP_HOST']
+            . '\' was not assigned to a publication. Please create a publication and '
+            . ' assign it the current site alias.';
         } else {
             // gets the template file name
             $template = $this->getTemplateName();
+            if (empty($template)) {
+                $tplId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
+                if (is_null($tplId)) {
+                    $error_message = 'Unable to select a template! '
+                    .'Please make sure there is at least one issue published and '
+                    .'it had assigned a valid template.';
+                } else {
+                    $error_message = 'The template identified by the number ' . $tplId
+                    .' does not exist.';
+                }
+                $template = '_campsite_error.tpl';
+                $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
+            }
             $templates_dir = CS_PATH_SMARTY_TEMPLATES;
         }
 
         $params = array(
                         'context' => CampTemplate::singleton()->context(),
                         'template' => $template,
-                        'templates_dir' => $templates_dir
+                        'templates_dir' => $templates_dir,
+                        'error_message' => isset($error_message) ? $error_message : null
                         );
         $document->render($params);
     } // fn render
