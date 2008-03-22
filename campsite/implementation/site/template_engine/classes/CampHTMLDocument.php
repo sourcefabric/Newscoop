@@ -270,11 +270,13 @@ final class CampHTMLDocument
         $siteinfo = array();
         $context = $p_params['context'];
         $templates_dir = isset($p_params['templates_dir'])
-                            ? $p_params['templates_dir'] : 'templates';
+                            ? $p_params['templates_dir'] : CS_PATH_SMARTY_TEMPLATES;
         $template = $p_params['template'];
 
-        if (!file_exists(CS_PATH_SITE.DIR_SEP.$templates_dir.DIR_SEP.$template)) {
+        if (!file_exists($templates_dir.DIR_SEP.$template)
+        || $template === false) {
             $template = '_campsite_error.tpl';
+            $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
         }
 
         $siteinfo['templates_path'] = $templates_dir;
@@ -285,6 +287,7 @@ final class CampHTMLDocument
         $siteinfo['description'] = $this->getMetaTag('description');
 
         $tpl = CampTemplate::singleton();
+        $tpl->template_dir = $templates_dir;
         $tpl->assign('campsite', $context);
         $tpl->assign('siteinfo', $siteinfo);
 

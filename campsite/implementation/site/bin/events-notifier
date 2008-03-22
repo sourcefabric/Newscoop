@@ -59,6 +59,7 @@ $num_rows = mysql_num_rows($result);
 // if events log exists, inits smarty template system
 if ($num_rows > 0) {
     $tpl = init_smarty();
+    $tpl->template_dir = 'sys-templates';
 }
 
 while ($i < $num_rows && $row = mysql_fetch_array($result, MYSQL_ASSOC)) {

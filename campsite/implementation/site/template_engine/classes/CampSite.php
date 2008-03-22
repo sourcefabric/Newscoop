@@ -116,15 +116,17 @@ final class CampSite extends CampSystem
         // sets the appropiate template if site is not in mode online
         if ($this->getSetting('site.online') == 'N') {
             $template = '_campsite_offline.tpl';
+            $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
         } else {
             // gets the template file name
             $template = $this->getTemplateName();
+            $templates_dir = CS_PATH_SMARTY_TEMPLATES;
         }
 
         $params = array(
                         'context' => CampTemplate::singleton()->context(),
                         'template' => $template,
-                        'templates_dir', CS_PATH_SMARTY_TEMPLATES
+                        'templates_dir' => $templates_dir
                         );
         $document->render($params);
     } // fn render
