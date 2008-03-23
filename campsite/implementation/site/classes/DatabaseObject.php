@@ -11,7 +11,8 @@
 // is not defined in these cases.
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
-require_once('PEAR.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
+require_once(CS_PATH_PEAR_LOCAL.'/PEAR.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
 require_once($g_documentRoot.'/classes/CampCache.php');
 require_once($g_documentRoot.'/classes/Exceptions.php');
