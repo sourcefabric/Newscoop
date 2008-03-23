@@ -410,6 +410,9 @@ function camp_campcaster_login($f_cc_username, $f_cc_password)
     if (PEAR::isError($r)) {
         return $r;
     }
+    if (!is_array($r) && !isset($r['sessid'])) {
+        return new PEAR_Error(getGS('Unable to connect to the Campcaster server, please verify the Campcaster server settings.'));
+    }
     camp_session_set('cc_sessid', $r['sessid']);
     return true;
 } // fn camp_campcaster_login
