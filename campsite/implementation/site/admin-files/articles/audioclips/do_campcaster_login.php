@@ -26,7 +26,8 @@ if (PEAR::isError($ccLogin)) {
     if ($ccLogin->getCode() == '802') {
         camp_html_add_msg(getGS("Incorrect password or your user is not a valid Campcaster user"));
     } elseif (!empty($errorMessage)) {
-        camp_html_add_msg($errorMessage);
+        camp_html_add_msg(getGS("There was an error logging in to the Campcaster server")
+        .':<br>'.$errorMessage);
     } else {
         camp_html_add_msg(getGS("There was an error logging in to the Campcaster server"));
     }
