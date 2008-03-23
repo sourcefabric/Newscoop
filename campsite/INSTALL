@@ -16,7 +16,9 @@ PREPARATION - applications you need to have installed
 
 INSTALLATION - the usual procedure
 
-1. Create an apache virtual host.
+1. Create an apache virtual host or use the default apache 
+virtual host.
+
 Example of virtual host configuration:
 <VirtualHost *>
     DocumentRoot /var/www/campsite/html
