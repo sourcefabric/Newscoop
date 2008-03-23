@@ -225,9 +225,11 @@ final class MetaSubtitle {
         preg_match_all('/[\s]+(align|alt|sub)="([^"]+)"/i', $detailsString, $detailsArray1);
         $detailsArray1[1] = array_map('strtolower', $detailsArray1[1]);
         $detailsArray1 = array_combine($detailsArray1[1], $detailsArray1[2]);
+        $detailsArray1 = is_array($detailsArray1) ? $detailsArray1 : array();
         preg_match_all('/[\s]+(align|alt|sub)=([^"\s]+)/i', $detailsString, $detailsArray2);
         $detailsArray2[1] = array_map('strtolower', $detailsArray2[1]);
         $detailsArray2 = array_combine($detailsArray2[1], $detailsArray2[2]);
+        $detailsArray2 = is_array($detailsArray2) ? $detailsArray2 : array();
         $detailsArray = array_merge($detailsArray1, $detailsArray2);
 
         $imgString = '<table border="0" cellspacing="0" cellpadding="0" class="cs_img"';
