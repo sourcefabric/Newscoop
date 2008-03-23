@@ -1,11 +1,12 @@
 <?php 
+regGS("The system was unable to upload the file '$1'. ", "");
+regGS("Please check the file you are trying to upload, it might be corrupted.", "");
 regGS("Synchronize Campsite and Phorum users", "");
 regGS("Campsite and Phorum users were synchronized", "");
 regGS("Your user is not a valid Campcaster user", "");
 regGS("Connection refused", "");
 regGS("An error occured in session management. Please reload the login page.", "");
 regGS("This file is stored on disk as '$1'.", "");
-regGS("Instance", "");
 regGS("The system is unable to write to the directory '$1'.", "El sistema no pudo escribir en el directorio '$1'.");
 regGS("The system was unable to read the file '$1'.", "El sistema no pudo leer el archivo '$1'.");
 regGS("The system was unable to delete the directory '$1'.", "El sistema no pudo eliminar el directorio '$1'.");

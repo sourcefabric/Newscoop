@@ -1,6 +1,6 @@
 <?php 
-regGS("Unable to add new image.", "");
-regGS("Image number '$1' already exists", "");
+regGS("Unable to add new image.", "Nu pot sa ataşez imaginea.");
+regGS("Image number '$1' already exists", "Imaginea cu numărul '$1' există deja");
 regGS("You do not have the right to change image information.", "Nu ai dreptul să schimbi informaţiile despre imagine.");
 regGS("The image number specified is already in use.", "Numărul specificat al imaginii este deja folosit.");
 regGS("The image has been removed from the article.", "Imaginea a fost îndepărtată de la articol.");
