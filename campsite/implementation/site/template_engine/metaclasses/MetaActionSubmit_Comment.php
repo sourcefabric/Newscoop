@@ -187,10 +187,17 @@ class MetaActionSubmit_Comment extends MetaAction
 
         $p_context->comment = new MetaComment($commentObj->getMessageId());
 
+        $p_context->url->reset_parameter('f_comment_reader_email');
+        $p_context->url->reset_parameter('f_comment_subject');
+        $p_context->url->reset_parameter('f_comment_content');
+        $p_context->url->reset_parameter('f_submit_comment');
+        $p_context->url->reset_parameter('f_captcha_code');
         CampRequest::SetVar('f_comment_reader_email');
         CampRequest::SetVar('f_comment_subject');
         CampRequest::SetVar('f_comment_content');
-
+        CampRequest::SetVar('f_submit_comment');
+        CampRequest::SetVar('f_captcha_code');
+        
         $this->m_properties['rejected'] = false;
 
         $this->m_error = ACTION_OK;

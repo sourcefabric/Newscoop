@@ -75,7 +75,6 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['wday_name'] = 'getCreationWeekDayName';
         $this->m_customProperties['template'] = 'getTemplate';
         $this->m_customProperties['comments_enabled'] = 'getCommentsEnabled';
-        $this->m_customProperties['comments_locked'] = 'getCommentsLocked';
         $this->m_customProperties['on_front_page'] = 'getOnFrontPage';
         $this->m_customProperties['on_section_page'] = 'getOnSectionPage';
         $this->m_customProperties['is_published'] = 'getIsPublished';
@@ -375,12 +374,6 @@ final class MetaArticle extends MetaDbObject {
         return $publicationObj->commentsEnabled()
         && $articleTypeObj->commentsEnabled()
         && $this->m_dbObject->commentsEnabled();
-    }
-
-
-    protected function getCommentsLocked()
-    {
-        return $this->m_dbObject->commentsLocked();
     }
 
 

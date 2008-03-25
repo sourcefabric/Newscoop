@@ -119,36 +119,16 @@ final class MetaSubtitle {
 
 
     /**
-     * Returns the subtitle name
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->m_name;
-    }
-
-
-    /**
      * Returns the formatted subtitle name
      *
      * @param string $p_formattingStart
      * @param string $p_formattingEnd
      * @return string
      */
-    public function getFormattedName($p_formattingStart = '<p>', $p_formattingEnd = '</p>') {
+    protected function getFormattedName($p_formattingStart = '<p>', $p_formattingEnd = '</p>') {
         $formattingStart = empty($this->m_nameFormattingStart) ? $p_formattingStart : $this->m_nameFormattingStart;
         $formattingEnd = empty($this->m_nameFormattingEnd) ? $p_formattingEnd : $this->m_nameFormattingEnd;
         return $formattingStart.$this->m_name.$formattingEnd;
-    }
-
-
-    /**
-     * Returns the subtitle content
-     *
-     * @return string
-     */
-    public function getContent() {
-        return $this->m_content;
     }
 
 

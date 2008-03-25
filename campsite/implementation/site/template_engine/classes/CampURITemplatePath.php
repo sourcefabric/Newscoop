@@ -557,6 +557,46 @@ class CampURITemplatePath extends CampURI
                 $this->setQueryVar(CampRequest::TEMPLATE_ID, $oldTplId);
             }
             break;
+        case 'previous_items':
+        case 'next_items':
+            $context = CampTemplate::singleton()->context();
+            if ($context->current_list == null) {
+                $this->buildURI();
+                return;
+            }
+            $listId = $context->current_list->id;
+            $oldListId = $this->getQueryVar($listId);
+            $this->setQueryVar($listId, ($parameter == 'previous_items' ?
+                                         $context->current_list->previous_start :
+                                         $context->current_list->next_start));
+            $this->buildURI();
+            $this->setQueryVar($listId, $oldListId);
+            break;
+        case 'previous_subtitle':
+        case 'next_subtitle':
+        case 'all_subtitles':
+            $article = CampTemplate::singleton()->context()->article;
+            $subtitleNo = $article->current_subtitle_no($option);
+            if (!$article->defined || (!is_null($subtitleNo) && !is_numeric($subtitleNo))) {
+                $this->buildURI();
+                return;
+            }
+            $fieldObj = $article->$option;
+            if (($parameter == 'previous_subtitle' && !$fieldObj->has_previous_subtitles)
+            || ($parameter == 'next_subtitle' && !$fieldObj->has_next_subtitles)) {
+                $this->buildURI();
+                return;
+            }
+            $subtitleURLId = $article->subtitle_url_id($option);
+            if ($parameter == 'all_subtitles') {
+                $newSubtitleNo = 'all';
+            } else {
+                $newSubtitleNo = $subtitleNo + ($parameter == 'previous_subtitle' ? -1 : 1);
+            }
+            $this->setQueryVar($subtitleURLId, $newSubtitleNo);
+            $this->buildURI();
+            $this->setQueryVar($subtitleURLId, $subtitleNo);
+            break;
         default:
             if (empty($parameter)) {
                 $this->m_query = CampURI::QueryArrayToString($this->getQueryArray());
@@ -565,8 +605,7 @@ class CampURITemplatePath extends CampURI
             break;
         }
 
-        if ($parameter == 'publication' || $parameter == 'issue'
-                || $parameter == 'section' || $parameter == 'article') {
+        if (is_null($this->m_uriPath)) {
             // gets the template name from the context
             $context = CampTemplate::singleton()->context();
             $template = $context->$parameter->template->name;

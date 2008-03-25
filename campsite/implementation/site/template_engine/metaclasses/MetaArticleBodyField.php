@@ -42,7 +42,7 @@ final class MetaArticleBodyField {
         $p_headerFormatStart, $p_headerFormatEnd);
         $this->m_sutitlesNames = array();
         foreach ($this->m_subtitles as $subtitle) {
-            $this->m_sutitlesNames = $subtitle->getName();
+            $this->m_sutitlesNames = $subtitle->name;
         }
     }
 
@@ -90,8 +90,8 @@ final class MetaArticleBodyField {
             if (!$printAll && array_search($index, $p_subtitles) === false) {
                 continue;
             }
-            $content .= $index > 0 ? $subtitle->getFormattedName() : '';
-            $content .= $subtitle->getContent();
+            $content .= $index > 0 ? $subtitle->formatted_name : '';
+            $content .= $subtitle->content;
         }
         return $content;
     }
