@@ -235,7 +235,11 @@ $backupVersion = (int)substr($bversion_file_name, strlen('BACKUP-VERSION-'), 1);
 // Restore the backup files
 //
 if ($backupVersion < 3) {
-    $templatesSrcDir = "$tempDirName/look/*";
+    if (!camp_is_empty_dir("$tempDirName/look")) {
+        $templatesSrcDir = "$tempDirName/look/*";
+    } else {
+        $templatesSrcDir = null;
+    }
     $configSrcDir = "$tempDirName/$origDbName/database_conf.php";
 } else {
     $templatesSrcDir = "$tempDirName/templates";
@@ -300,7 +304,9 @@ foreach ($destDirs as $dir) {
 // Restore files from backup...
 //
 echo " * Restoring templates...";
-camp_copy_files($templatesSrcDir, $templatesDestDir);
+if (!is_null($templatesSrcDir)) {
+    camp_copy_files($templatesSrcDir, $templatesDestDir);
+}
 echo "done.\n";
 
 echo " * Restoring images...";

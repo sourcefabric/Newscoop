@@ -109,6 +109,27 @@ function camp_create_dir($p_dirName, $p_msg = "")
 
 
 /**
+ * @return boolean
+ */
+function camp_is_empty_dir($p_dirName)
+{
+    $cnt = 0;
+    if(is_dir($p_dirName) ){
+        $files = opendir($p_dirName);
+        while ($file = @readdir($files)) {
+            $cnt++;
+            if ($cnt > 2) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    return false;
+} // fn camp_is_empty_dir
+
+
+/**
  *
  */
 function camp_read_files($p_startDir = '.')
