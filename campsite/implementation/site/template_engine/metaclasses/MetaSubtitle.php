@@ -176,14 +176,14 @@ final class MetaSubtitle {
         // process internal links
         $linkPattern = '<!\*\*[\s]*Link[\s]+Internal[\s]+(([\d\w]+[=][\d\w]+&?)*)[\s]+(TARGET[\s]+([^>\s]*)[\s]*)*>([^<\s]*)<!\*\*[\s]*EndLink[\s]*>';
         $content = preg_replace_callback("|$linkPattern|i",
-                                         'MetaSubtitle::ProcessInternalLink',
-        $p_content);
+                                         array('MetaSubtitle', 'ProcessInternalLink'),
+                                         $p_content);
 
         //      image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF">
         $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub)="?[^"]+"?)*)[\s]*>';
         return preg_replace_callback("/$imagePattern/i",
-                                     'MetaSubtitle::ProcessImageLink',
-        $content);
+                                     array('MetaSubtitle', 'ProcessImageLink'),
+                                     $content);
     }
 
 

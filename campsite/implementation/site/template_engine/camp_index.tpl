@@ -957,17 +957,17 @@
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Intro:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $campsite->article->type->fastnews->intro }}
+    {{ $campsite->article->type->Article->intro }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->type->fastnews->intro }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->type->Article->intro }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Body:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $campsite->article->type->fastnews->body }}
+    {{ $campsite->article->type->Article->full_text }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->type->fastnews->body }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->type->Article->full_text }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 

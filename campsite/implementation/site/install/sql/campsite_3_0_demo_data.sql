@@ -126,6 +126,23 @@ INSERT INTO `Translations` VALUES (1,4,1,'Hurricanes Basics'),(2,5,1,'UK Tsunami
 UNLOCK TABLES;
 
 ##
+## Table structure for table `XArticle`
+##
+
+DROP TABLE IF EXISTS `XArticle`;
+CREATE TABLE `XArticle` (
+  `NrArticle` int(10) unsigned NOT NULL default '0',
+  `IdLanguage` int(10) unsigned NOT NULL default '0',
+  `FDeck` varchar(255) NOT NULL default '',
+  `FByline` varchar(255) NOT NULL default '',
+  `FTeaser_a` varchar(255) NOT NULL default '',
+  `FTeaser_b` varchar(255) NOT NULL default '',
+  `FIntro` mediumblob NOT NULL,
+  `FFull_text` mediumblob NOT NULL,
+  PRIMARY KEY  (`NrArticle`,`IdLanguage`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+##
 ## Dumping data for table `XArticle`
 ##
 
@@ -143,7 +160,7 @@ CREATE TABLE `XLink` (
   `IdLanguage` int(10) unsigned NOT NULL default '0',
   `Furl` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 ##
 ## Dumping data for table `XLink`
@@ -163,7 +180,7 @@ CREATE TABLE `XService` (
   `IdLanguage` int(10) unsigned NOT NULL default '0',
   `FFull_text` mediumblob NOT NULL,
   PRIMARY KEY  (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 ##
 ## Dumping data for table `XService`

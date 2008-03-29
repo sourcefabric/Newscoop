@@ -175,10 +175,13 @@ class CampInstallationBase
         }
 
         $sqlFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_core.sql';
-        $errors = CampInstallationBaseHelper::ImportDB($sqlFile);
+        $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
         if ($errors > 0) {
             $this->m_step = 'database';
             $this->m_message = 'Error: Importing Database';
+            foreach ($errorQueries as $query) {
+                $this->m_message .= "<br>$query";
+            }
             return false;
         }
 
@@ -291,10 +294,13 @@ class CampInstallationBase
         }
 
         $sqlFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_3_0_demo_data.sql';
-        $errors = CampInstallationBaseHelper::ImportDB($sqlFile);
+        $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
         if ($errors > 0) {
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Importing Database';
+            foreach ($errorQueries as $query) {
+                $this->m_message .= "<br>$query";
+            }
             return false;
         }
 
@@ -462,7 +468,7 @@ class CampInstallationBaseHelper
     /**
      *
      */
-    public static function ImportDB($p_sqlFile)
+    public static function ImportDB($p_sqlFile, &$errorQueries)
     {
         global $g_db;
 
@@ -473,11 +479,13 @@ class CampInstallationBaseHelper
         $queries = self::SplitSQL($sqlFile);
 
         $errors = 0;
+        $errorQueries = array();
         foreach($queries as $query) {
             $query = trim($query);
             if (!empty($query) && $query{0} != '#') {
                 if ($g_db->Execute($query) == false) {
                     $errors++;
+                    $errorQueries[] = $query;
                 }
             }
         }

@@ -55,6 +55,9 @@ $Campsite['HELP_URL'] = 'http://code.campware.org/manuals/campsite/3.0/';
 $Campsite['ABOUT_URL'] = 'http://www.campware.org/en/camp/campsite_news/';
 $Campsite['SUPPORT_EMAIL'] = 'campsite-support@lists.campware.org';
 $Campsite['DEBUG'] = true;
-$Campsite['VERSION'] = '3.0.0-rc2';
+require_once($_SERVER['DOCUMENT_ROOT'].'/install/classes/CampInstallationView.php');
+$version = new CampVersion();
+$Campsite['VERSION'] = $version->getRelease() . '-'
+                       . $version->getDevelopmentStatus();
 
 ?>
