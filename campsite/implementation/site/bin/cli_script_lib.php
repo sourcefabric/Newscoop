@@ -416,7 +416,7 @@ function camp_upgrade_database($p_dbName)
         }
         $output = array();
 
-        $upgrade_dir = $campsite_dir . "/database/upgrade/$db_version/";
+        $upgrade_dir = $campsite_dir . "/install/sql/upgrade/$db_version/";
         $db_conf_file = $etc_dir . '/database_conf.php';
         $install_conf_file = $etc_dir . "/install_conf.php";
 

@@ -1,7 +1,8 @@
 <?php
 
-require_once("database_conf.php");
-require_once("install_conf.php");
+$cs_dir = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+require_once("$cs_dir/conf/database_conf.php");
+require_once("$cs_dir/conf/install_conf.php");
 if (!is_array($Campsite)) {
         echo "Invalid configuration file(s)";
         exit(1);
@@ -21,7 +22,7 @@ if (!mysql_select_db($db_name)) {
 }
 
 // Get all the campsite users (subscribers)
-if (!($res = mysql_query("SELECT Id, UName, Password, EMail FROM Users ORDER BY Id"))) {
+if (!($res = mysql_query("SELECT Id, UName, Password, EMail FROM Users WHERE fk_user_type IS NULL ORDER BY Id"))) {
         die("Unable to read from the database.\n");
 }
 

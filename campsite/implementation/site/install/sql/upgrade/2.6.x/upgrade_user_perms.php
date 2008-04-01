@@ -1,6 +1,6 @@
 <?php
 
-$cs_dir = dirname(dirname(dirname(dirname(__FILE__))));
+$cs_dir = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once("$cs_dir/conf/database_conf.php");
 require_once("$cs_dir/conf/install_conf.php");
 if (!is_array($Campsite)) {
