@@ -136,7 +136,7 @@ function TransformImageTags($p_match) {
 			$attrValue = isset($attr[1]) ? $attr[1] : '';
 			// Strip out the quotes
 			$attrValue = str_replace('"', '', $attrValue);
-			$attrValue = str_replace("'", '', $attrValue);
+//			$attrValue = str_replace("'", '', $attrValue);
 			$attrs[$attrName] = $attrValue;
 		}
 	}
@@ -292,11 +292,11 @@ foreach ($articleFields as $dbColumnName => $text) {
 
 	// Replace <img src="A" align="B" alt="C" sub="D">
 	// with <!** Image [image_template_id] align=B alt="C" sub="D">
-	$srcAttr = "(src\s*=\s*[\"'][^'\"]*[\"'])";
-	$altAttr = "(alt\s*=\s*['\"][^'\"]*['\"])";
-	$alignAttr = "(align\s*=\s*['\"][^'\"]*['\"])";
-	$subAttr = "(sub\s*=\s*['\"][^'\"]*['\"])";
-	$idAttr = "(id\s*=\s*['\"][^'\"]*['\"])";
+	$srcAttr = "(src\s*=\s*[\"][^\"]*[\"])";
+	$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";
+	$alignAttr = "(align\s*=\s*[\"][^\"]*[\"])";
+	$subAttr = "(sub\s*=\s*[\"][^\"]*[\"])";
+	$idAttr = "(id\s*=\s*[\"][^\"]*[\"])";
 	$pattern = "/<\s*img\s*(($srcAttr|$altAttr|$alignAttr|$subAttr|$idAttr)\s*)*[\s\w\"']*\/>/i";
 	$text = preg_replace_callback($pattern, "TransformImageTags", $text);
 	$articleTypeObj->setProperty($dbColumnName, $text);
