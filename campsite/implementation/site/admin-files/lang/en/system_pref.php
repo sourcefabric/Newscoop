@@ -1,4 +1,15 @@
 <?php 
+regGS("Site Title:", "Site Title:");
+regGS("Site On-Line:", "Site On-Line:");
+regGS("Site Meta Keywords:", "Site Meta Keywords:");
+regGS("Site Meta Description:", "Site Meta Description:");
+regGS("Session Lifetime:", "Session Lifetime:");
+regGS("Secret Key:", "Secret Key:");
+regGS("SMTP Port:", "SMTP Port:");
+regGS("SMTP Port", "SMTP Port");
+regGS("SMTP Host:", "SMTP Host:");
+regGS("SMTP Host must be at least four character.", "SMTP Host must be at least four character.");
+regGS("Cache Enabled:", "Cache Enabled:");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.");
 regGS("Enable Campcaster audioclip attachments?", "Enable Campcaster audioclip attachments?");
 regGS("XML RPC Path:", "XML RPC Path:");
