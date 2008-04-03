@@ -224,7 +224,7 @@ final class MetaSubtitle {
             $imgString .= ' alt="' . $detailsArray['alt'] . '" ';
         }
         $imgString .= 'border="0" hspace="5" vspace="5">';
-        $imgString . '</td>';
+        $imgString .= '</td>';
         $imgString .= '</tr>';
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
             $imgString .= '<tr><td align="center" class="caption">'
