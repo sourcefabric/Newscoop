@@ -26,6 +26,7 @@ final class MetaAttachment extends MetaDbObject {
 		if (!is_null($this->m_properties)) {
 			return;
 		}
+		$this->m_properties['identifier'] = 'id';
 		$this->m_properties['file_name'] = 'file_name';
 		$this->m_properties['mime_type'] = 'mime_type';
 		$this->m_properties['extension'] = 'extension';

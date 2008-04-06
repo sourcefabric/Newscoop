@@ -39,16 +39,7 @@ abstract class CampURI {
      *
      * @var array
      */
-    protected $m_parts = array(
-                            'scheme',
-                            'user',
-                            'password',
-                            'host',
-                            'port',
-                            'path',
-                            'query',
-                            'fragment'
-                            );
+    protected $m_parts = array('scheme', 'user', 'password', 'host', 'port', 'path', 'query', 'fragment');
 
     /**
      * @var string
@@ -129,7 +120,7 @@ abstract class CampURI {
      * @var MetaArticle
      */
     protected $m_article = null;
-    
+
     /**
      * Template object
      *
@@ -159,8 +150,8 @@ abstract class CampURI {
             //
             // checks whether the site is being queried through SSL
             if (isset($_SERVER['HTTPS'])
-                    && !empty($_SERVER['HTTPS'])
-                    && (strtolower($_SERVER['HTTPS']) != 'off')) {
+            && !empty($_SERVER['HTTPS'])
+            && (strtolower($_SERVER['HTTPS']) != 'off')) {
                 $scheme = 'https://';
             } else {
                 $scheme = 'http://';
@@ -222,15 +213,15 @@ abstract class CampURI {
     abstract public function getURLParameters($p_param = null);
 
     /**
-     * Returns true if the given parameter is restricted and can not 
+     * Returns true if the given parameter is restricted and can not
      * be set from outside the URL object.
      *
      * @param string $p_parameterName
      * @return bool
      */
     abstract public function isRestrictedParameter($p_parameterName);
-    
-    
+
+
     /**
      * Parses the given URI.
      *
@@ -263,7 +254,7 @@ abstract class CampURI {
         }
 
         // populates the query array
-        if (isset($parts['query'])) {
+        if (isset($parts['query']) && CampRequest::GetMethod() != 'POST') {
             parse_str($parts['query'], $this->m_queryArray);
         }
 
@@ -336,26 +327,26 @@ abstract class CampURI {
                                     'path',
                                     'query',
                                     'fragment'
-                                   )
-                            );
-        return $url;
+                                    )
+                                    );
+                                    return $url;
     } // fn getURL
 
 
     /**
      * Gets the requested URI.
      *
-	 * @return string
+     * @return string
      *      The requested URI string
-	 */
-	public function getRequestURI()
-	{
-		if (empty($this->m_query)) {
-			return $this->m_path;
-		}
+     */
+    public function getRequestURI()
+    {
+        if (empty($this->m_query)) {
+            return $this->m_path;
+        }
 
-		return $this->render(array('path', 'query'));
-	} // fn getRequestURI
+        return $this->render(array('path', 'query'));
+    } // fn getRequestURI
 
 
     /**
@@ -729,7 +720,7 @@ abstract class CampURI {
     {
         return false;
         // A proper cache scheme was not implemented yet.
-//        return $this->m_validCache;
+        //        return $this->m_validCache;
     } // fn isValidCache
 
 
@@ -743,17 +734,96 @@ abstract class CampURI {
     {
         return ($this->m_scheme == 'https') ? true : false;
     } // fn isSSL
-    
-    
-	/**
+
+
+    /**
      * Sets the URI path and query values based on given parameters.
      *
-     * @param string $p_param
-     *      A valid URL parameter
+     * @param array $p_params
+     *      An array of valid URL parameters
      *
-	 * @return void
-	 */
-    abstract protected function buildURI($p_param = null);
+     * @return void
+     */
+    protected function buildURI(array &$p_params = array()) {
+        if ($this->isValidCache()) {
+            return;
+        }
+
+        if (count($p_params) == 0) {
+            return;
+        }
+        $parameter = array_shift($p_params);
+
+        switch ($parameter) {
+            case 'root_level':
+                $this->m_path = '/';
+                break;
+            case 'articleattachment':
+                $context = CampTemplate::singleton()->context();
+                $attachment = new Attachment($context->attachment->identifier);
+                $this->m_path = '/attachment/'.basename($attachment->getStorageLocation());
+                $p_params = array();
+                break;
+            case 'image':
+                $option = isset($p_params[0]) ? array_shift($p_params) : null;
+                $context = CampTemplate::singleton()->context();
+                if (!is_null($option)) {
+                    $oldImage = $context->image;
+                    $articleImage = new ArticleImage($context->article->number, null, $option);
+                    $context->image = new MetaImage($articleImage->getImageId());
+                }
+                if ($context->image->article_index !== null) {
+                    $this->m_path = '/get_img';
+                    $this->m_query = 'NrImage=' . $context->image->article_index
+                    . '&amp;NrArticle=' . $context->article->number;
+                }
+                if (!is_null($option)) {
+                    $context->image = $oldImage;
+                }
+                $p_params = array();
+                break;
+            case 'previous_subtitle':
+            case 'next_subtitle':
+            case 'all_subtitles':
+                $option = isset($p_params[0]) ? array_shift($p_params) : null;
+                $article = CampTemplate::singleton()->context()->article;
+                $subtitleNo = $article->current_subtitle_no($option);
+                if (!$article->defined || (!is_null($subtitleNo) && !is_numeric($subtitleNo))) {
+                    return;
+                }
+                $fieldObj = $article->$option;
+                if (($parameter == 'previous_subtitle' && !$fieldObj->has_previous_subtitles)
+                || ($parameter == 'next_subtitle' && !$fieldObj->has_next_subtitles)) {
+                    return;
+                }
+                $subtitleURLId = $article->subtitle_url_id($option);
+                if ($parameter == 'all_subtitles') {
+                    $newSubtitleNo = 'all';
+                } else {
+                    $newSubtitleNo = $subtitleNo + ($parameter == 'previous_subtitle' ? -1 : 1);
+                }
+                $this->setQueryVar($subtitleURLId, $newSubtitleNo);
+                $this->buildURI($p_params);
+                $this->setQueryVar($subtitleURLId, $subtitleNo);
+                break;
+            case 'previous_items':
+            case 'next_items':
+                $context = CampTemplate::singleton()->context();
+                if ($context->current_list == null) {
+                    return;
+                }
+                $listId = $context->current_list->id;
+                $oldListId = $this->getQueryVar($listId);
+                $this->setQueryVar($listId, ($parameter == 'previous_items' ?
+                $context->current_list->previous_start :
+                $context->current_list->next_start));
+                $this->buildURI($p_params);
+                $this->setQueryVar($listId, $oldListId);
+                break;
+            default:
+                ;
+        }
+    }
 
 
     /**

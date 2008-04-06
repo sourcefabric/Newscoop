@@ -53,9 +53,21 @@ class MetaActionLogin extends MetaAction
      */
     public function takeAction(CampContext &$p_context)
     {
+        $p_context->default_url->reset_parameter('f_'.$this->m_name);
+        $p_context->url->reset_parameter('f_'.$this->m_name);
+        CampRequest::SetVar('f_'.$this->m_name);
+
+        $p_context->default_url->reset_parameter('f_user_uname');
+        $p_context->url->reset_parameter('f_user_uname');
+        CampRequest::SetVar('f_user_uname');
+        $p_context->default_url->reset_parameter('f_user_password');
+        $p_context->url->reset_parameter('f_user_password');
+        CampRequest::SetVar('f_user_password');
+
         if ($this->m_error != ACTION_OK) {
             return false;
         }
+
         setcookie("LoginUserId", $this->m_user->getUserId(), null, '/');
         setcookie("LoginUserKey", $this->m_user->getKeyId(), null, '/');
         $p_context->user = new MetaUser($this->m_user->getUserId());

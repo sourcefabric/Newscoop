@@ -23,8 +23,9 @@ $attachment = str_replace('/../', '/', $attachment);
 $extension = '';
 if (($extensionStart = strrpos($attachment, '.')) !== false) {
 	$extension = strtolower(substr($attachment, $extensionStart + 1));
+	$attachment = substr($attachment, 0, $extensionStart);
 }
-$attachmentId = (int)substr($attachment, 0, $extensionStart);
+$attachmentId = (int)ltrim($attachment, " 0\t\n\r\0");
 
 $queryStr = "SELECT * FROM Attachments WHERE id = $attachmentId";
 $attachmentObj = new Attachment($attachmentId);

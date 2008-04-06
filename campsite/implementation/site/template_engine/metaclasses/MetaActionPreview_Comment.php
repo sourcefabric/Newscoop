@@ -51,6 +51,10 @@ class MetaActionPreview_Comment extends MetaAction
      */
     public function takeAction(CampContext &$p_context)
     {
+        $p_context->default_url->reset_parameter('f_'.$this->m_name);
+        $p_context->url->reset_parameter('f_'.$this->m_name);
+        CampRequest::SetVar('f_'.$this->m_name);
+
         if (!is_null($this->m_error)) {
             return false;
         }

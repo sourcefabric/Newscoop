@@ -101,6 +101,10 @@ class MetaActionEdit_User extends MetaAction
      */
     public function takeAction(CampContext &$p_context)
     {
+        $p_context->default_url->reset_parameter('f_'.$this->m_name);
+        $p_context->url->reset_parameter('f_'.$this->m_name);
+        CampRequest::SetVar('f_'.$this->m_name);
+
         if (PEAR::isError($this->m_error)) {
             return false;
         }
@@ -219,6 +223,12 @@ class MetaActionEdit_User extends MetaAction
                 ACTION_EDIT_USER_ERR_INTERNAL);
                 return false;
             }
+        }
+
+        foreach ($this->m_properties as $property=>$value) {
+            $p_context->default_url->reset_parameter('f_user_'.$property);
+            $p_context->url->reset_parameter('f_user_'.$property);
+            CampRequest::SetVar('f_user_'.$property);
         }
 
         $this->m_error = ACTION_OK;

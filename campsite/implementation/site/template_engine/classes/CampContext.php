@@ -163,7 +163,7 @@ final class CampContext
             }
         }
 
-        $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput());
+        $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput(CampRequest::GetMethod()));
         $this->m_readonlyProperties['request_action']->takeAction($this);
 
         foreach (MetaAction::ReadAvailableActions() as $actionNameCase=>$actionAttributes) {

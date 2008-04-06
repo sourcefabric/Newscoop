@@ -47,17 +47,6 @@ class MetaActionSearch_Articles extends MetaAction
         $this->m_properties['search_phrase'] = $p_input['f_search_keywords'];
         $this->m_properties['search_keywords'] = preg_split('/[\s,.-]/', $p_input['f_search_keywords']);
 
-        if (isset($p_input['tpl'])) {
-            $template = new MetaTemplate($p_input['tpl']);
-            if ($template->defined()) {
-                $this->m_properties['template'] = $template;
-            } else {
-                $this->m_properties['template'] = CampTemplate::singleton()->context()->template;
-            }
-        } else {
-            $this->m_properties['template'] = CampTemplate::singleton()->context()->template;
-        }
-
         $this->m_properties['match_all'] = isset($p_input['f_match_all'])
         && strtolower($p_input['f_match_all']) == true ? 'true' : 'false';
 
@@ -83,6 +72,17 @@ class MetaActionSearch_Articles extends MetaAction
      */
     public function takeAction(CampContext &$p_context)
     {
+        if (isset($p_input['tpl'])) {
+            $template = new MetaTemplate($p_input['tpl']);
+            if ($template->defined()) {
+                $this->m_properties['template'] = $template;
+            } else {
+                $this->m_properties['template'] = $p_context->template;
+            }
+        } else {
+            $this->m_properties['template'] = $p_context->template;
+        }
+
         return true;
     }
 }

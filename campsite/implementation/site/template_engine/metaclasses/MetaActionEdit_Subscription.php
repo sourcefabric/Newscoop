@@ -70,6 +70,10 @@ class MetaActionEdit_Subscription extends MetaAction
      */
     public function takeAction(CampContext &$p_context)
     {
+        $p_context->default_url->reset_parameter('f_'.$this->m_name);
+        $p_context->url->reset_parameter('f_'.$this->m_name);
+        CampRequest::SetVar('f_'.$this->m_name);
+
         if (PEAR::isError($this->m_error)) {
             return false;
         }
@@ -121,6 +125,19 @@ class MetaActionEdit_Subscription extends MetaAction
                 $sectionNumber, $languageId);
                 $subsSection->create($columns);
             }
+        }
+
+        $fields = array('SubsType', 'tx_subs', 'nos', 'unitcost', 'unitcostalllang',
+        'f_substype', 'cb_subs', 'subs_all_languages', 'suma', 'tpl');
+        foreach (CampRequest::GetInput() as $field=>$value) {
+            if (strncmp('tx_subs', $field, strlen('tx_subs')) == 0) {
+                $fields[] = $field;
+            }
+        }
+        foreach ($fields as $fieldName) {
+            $p_context->default_url->reset_parameter($fieldName);
+            $p_context->url->reset_parameter($fieldName);
+            CampRequest::SetVar($fieldName);
         }
 
         $this->m_error = ACTION_OK;

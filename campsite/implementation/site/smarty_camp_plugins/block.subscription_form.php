@@ -68,7 +68,9 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     $timeUnits = $subsType == 'trial' ? $publication->subscription_trial_time : $publication->subscription_paid_time;
     $sectionsNumber = Section::GetNumUniqueSections($publication->identifier, false);
 
-    $html .= "<form name=\"subscription_form\" action=\"\" method=\"post\">\n"
+    $url = $campsite->url;
+    $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
+    $html .= "<form name=\"subscription_form\" action=\"" . $url->uri_path . "\" method=\"post\">\n"
     ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n"
     ."<input type=\"hidden\" name=\"SubsType\" value=\"$subsType\" />\n"
     ."<input type=\"hidden\" name=\"tx_subs\" value=\"$timeUnits\" />\n"
@@ -77,7 +79,11 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     .$publication->subscription_unit_cost."\" />\n"
     ."<input type=\"hidden\" name=\"unitcostalllang\" value=\""
     .$publication->subscription_unit_cost_all_lang."\" />\n";
-
+    foreach ($campsite->url->form_parameters as $param) {
+        $html .= '<input type="hidden" name="'.$param['name']
+            .'" value="'.htmlentities($param['value'])."\" />\n";
+    }
+    
     $html .= $p_content;
 
     if ($subsType == 'paid' && isset($p_params['total']) != '') {

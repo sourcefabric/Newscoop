@@ -47,8 +47,14 @@ function smarty_block_search_form($p_params, $p_content, &$p_smarty)
     }
 
     if (isset($p_content)) {
-        $html = "<form name=\"search_articles\" action=\"\" method=\"post\">\n"
+        $url = $campsite->url;
+        $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
+        $html = "<form name=\"search_articles\" action=\"" . $url->uri_path . "\" method=\"post\">\n"
         ."<input type=\"hidden\" name=\"tpl\" value=\"" . $template->identifier . "\" />\n";
+        foreach ($campsite->url->form_parameters as $param) {
+            $html .= '<input type="hidden" name="'.$param['name']
+                .'" value="'.htmlentities($param['value'])."\" />\n";
+        }
         $html .= $p_content;
         $html .= "<input type=\"submit\" name=\"f_search_articles\" value=\""
         .smarty_function_escape_special_chars($p_params['submit_button'])

@@ -275,7 +275,7 @@ final class CampSite extends CampSystem
             . "a.Name = '" . $g_ado_db->Escape($_SERVER['HTTP_HOST']) . "'";
         $data = $g_ado_db->GetRow($sqlQuery);
         if (!empty($data)) {
-            $urlTypeObj = new UrlType(CampRequest::GetVar('URLType'));
+            $urlTypeObj = new UrlType($data['IdURLType']);
             if (is_object($urlTypeObj) && $urlTypeObj->exists()) {
                 $urlType = $urlTypeObj->getId();
             }
