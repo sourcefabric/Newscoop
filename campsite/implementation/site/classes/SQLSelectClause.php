@@ -4,7 +4,7 @@
  *
  * @author Holman Romero <holman.romero@gmail.com>
  * @author Sebastian Goebel <devel@yellowsunshine.de>
- * @copyright 2007 MDLF, Inc.
+ * @copyright 2008 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
  * @link http://www.campware.org
