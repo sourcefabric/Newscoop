@@ -53,6 +53,14 @@
   </td>
 </tr>
 
+<tr>
+  <td>
+  {{ list_article_images length="3" columns="2" name='sample_name' }}
+  <img src="{{ uri options="image" }}"><br/>
+  {{ /list_article_images }}
+  </td>
+</tr>
+
 {{ if $campsite->article->comments_enabled }}
 <tr>
   <td>
@@ -148,4 +156,5 @@
 </tr>
 {{ /if }}
 {{ /if }} {{* comments enabled *}}
+
 </table>

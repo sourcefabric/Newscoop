@@ -1,4 +1,4 @@
-<div id="userform">{{ user_form }}
+<div id="userform">{{ user_form template="subscription.tpl" }}
 <table class="userform">
 	<tr>
 		<th colspan="2">Please fill in the following form in order to create

@@ -1,4 +1,4 @@
-<div id="userform">{{ subscription_form type="by_section" total="Total" }}
+<div id="userform">{{ subscription_form type="by_section" total="Total" template="subscription.tpl" }}
 <table class="userform">
 	<tr>
 		<th colspan="2">Please fill in the following form in order to create
