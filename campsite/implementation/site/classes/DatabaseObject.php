@@ -958,10 +958,11 @@ class DatabaseObject {
 			if (!isset($recordSet[$key])) {
 				return false;
 			}
-			$cacheKey .= $recordSet[$key];
+			$cacheKey .= (strlen($cacheKey) < 1) ? '' : '_';
+            $cacheKey .= $recordSet[$key];
 		}
 
-        return $cacheKey.get_class($this);
+        return $cacheKey.'_'.get_class($this);
     } // fn getCacheKey
 
 } // class DatabaseObject

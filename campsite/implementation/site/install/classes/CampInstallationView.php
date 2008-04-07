@@ -19,8 +19,6 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 
-
-
 /**
  * Class CampInstallationView
  */
@@ -133,14 +131,11 @@ final class CampInstallationView
                                 'exists' => $hasMySQL
                                 );
 
-        // APC checking will be disabled until we solve some cache issues
-        //
-        //$hasAPC = CampInstallationViewHelper::CheckPHPAPC();
-        //$success = ($hasAPC == 'Yes') ? $success : false;
-        //$phpFunctions[] = array(
-        //'tag' => 'APC (PHP Cache) Support',
-        //'exists' => $hasAPC
-        //);
+        $hasAPC = CampInstallationViewHelper::CheckPHPAPC();
+        $phpFunctions[] = array(
+                                'tag' => 'APC (PHP Cache) Support',
+                                'exists' => $hasAPC
+                                );
 
         $hasGD = CampInstallationViewHelper::CheckPHPGD();
         $success = ($hasGD == 'Yes') ? $success : false;
@@ -208,7 +203,7 @@ final class CampInstallationViewHelper
 
     public static function CheckPHPAPC()
     {
-        return (function_exists('apc_store')) ? 'Yes' : 'No';
+        return (ini_get('apc.enabled') && function_exists('apc_store')) ? 'Yes' : 'No';
     } // fn CheckPHPAPC
 
 

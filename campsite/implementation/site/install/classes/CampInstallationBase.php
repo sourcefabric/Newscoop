@@ -185,6 +185,8 @@ class CampInstallationBase
             return false;
         }
 
+        CampInstallationBaseHelper::SetCacheStatus();
+
         $this->m_config['database'] = array(
                                             'hostname' => $db_hostname,
                                             'hostport' => $db_hostport,
@@ -492,6 +494,27 @@ class CampInstallationBaseHelper
 
         return $errors;
     } // fn ImportDB
+
+
+    /**
+     *
+     */
+    public static function SetCacheStatus()
+    {
+        global $g_db;
+
+        if (!ini_get('apc.enabled') || !function_exists('apc_store')) {
+            return false;
+        }
+
+        $sqlQuery = "UPDATE SystemPreferences SET value = 'Y' "
+            ."WHERE varname = 'SiteCacheEnabled'";
+        if (!$g_db->Execute($sqlQuery)) {
+            return false;
+        }
+
+        return true;
+    } // fn SetCacheStatus
 
 
     /**
