@@ -103,7 +103,6 @@ class MetaActionEdit_User extends MetaAction
     {
         $p_context->default_url->reset_parameter('f_'.$this->m_name);
         $p_context->url->reset_parameter('f_'.$this->m_name);
-        CampRequest::SetVar('f_'.$this->m_name);
 
         if (PEAR::isError($this->m_error)) {
             return false;
@@ -184,8 +183,6 @@ class MetaActionEdit_User extends MetaAction
             setcookie("LoginUserId", $user->getUserId(), null, '/');
             $user->initLoginKey();
             setcookie("LoginUserKey", $user->getKeyId(), null, '/');
-            CampRequest::SetVar('LoginUserId', $user->getUserId());
-            CampRequest::SetVar('LoginUserKey', $user->getKeyId());
             $p_context->user = new MetaUser($user->getUserId());
         } else {
             $user = new User($metaUser->identifier);
@@ -228,7 +225,6 @@ class MetaActionEdit_User extends MetaAction
         foreach ($this->m_properties as $property=>$value) {
             $p_context->default_url->reset_parameter('f_user_'.$property);
             $p_context->url->reset_parameter('f_user_'.$property);
-            CampRequest::SetVar('f_user_'.$property);
         }
 
         $this->m_error = ACTION_OK;

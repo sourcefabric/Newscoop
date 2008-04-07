@@ -39,8 +39,12 @@ class CampURITemplatePath extends CampURI
      *
      * @var array
      */
-    static private $m_restrictedParameters = array('NrImage', 'IdLanguage',
-    'IdPublication', 'NrIssue', 'NrSection', 'NrArticle'
+    static private $m_restrictedParameters = array(
+    CampRequest::LANGUAGE_ID,
+    CampRequest::PUBLICATION_ID,
+    CampRequest::ISSUE_NR,
+    CampRequest::SECTION_NR,
+    CampRequest::ARTICLE_NR
     );
 
     /**
@@ -49,14 +53,6 @@ class CampURITemplatePath extends CampURI
      * @var string
      */
     private $m_templatesPrefix = null;
-
-    /**
-     * Whether the URI is valid or not
-     *
-     * @var boolean
-     */
-    private $m_validURI = false;
-
 
     /**
      * Class constructor
@@ -72,7 +68,28 @@ class CampURITemplatePath extends CampURI
         $this->m_templatesPrefix = 'tpl';
         $this->setURL();
         $this->parse();
+        foreach (CampURITemplatePath::$m_restrictedParameters as $parameter) {
+            $this->setQueryVar($parameter);
+        }
     } // fn __construct
+
+
+    public function getQueryArray() {
+        $queryArray = parent::getQueryArray();
+        if ($this->m_language->defined()) {
+            $queryArray[CampRequest::LANGUAGE_ID] = $this->m_language->number;
+        }
+        if ($this->m_issue->defined()) {
+            $queryArray[CampRequest::ISSUE_NR] = $this->m_issue->number;
+        }
+        if ($this->m_section->defined()) {
+            $queryArray[CampRequest::SECTION_NR] = $this->m_section->number;
+        }
+        if ($this->m_article->defined()) {
+            $queryArray[CampRequest::ARTICLE_NR] = $this->m_article->number;
+        }
+        return $queryArray;
+    }
 
 
     /**
@@ -128,12 +145,6 @@ class CampURITemplatePath extends CampURI
         $uriString = $this->getURILanguage();
         if (empty($uriString)) {
             return null;
-        }
-
-        if ($this->m_publication->defined()) {
-            $uriString .= '&'.CampRequest::PUBLICATION_ID.'='.$this->m_publication->identifier;
-        } else {
-            $uriString = null;
         }
 
         return $uriString;
@@ -213,81 +224,6 @@ class CampURITemplatePath extends CampURI
 
 
     /**
-     * Returns the URI string based on given URL parameter.
-     *
-     * @param string $p_param
-     *      The URL parameter
-     *
-     * @return string
-     *      The URI string requested
-     */
-    public function getURI($p_param = null)
-    {
-        if (!$this->m_validURI) {
-            return null;
-        }
-
-        $this->m_path = null;
-        $this->m_query = null;
-
-        $params = preg_split("/[\s]+/", $p_param);
-        $this->buildURI($params);
-        if (!empty($this->m_query)) {
-            return $this->m_path . '?' . $this->m_query;
-        }
-
-        return $this->m_path;
-    } // fn getURI
-
-
-    /**
-     * Returns the URI path based on given URL parameter.
-     *
-     * @param string $p_param
-     *      The URL parameter
-     *
-     * @return string
-     *      The URI path string requested
-     */
-    public function getURIPath($p_param = null)
-    {
-        if (!$this->m_validURI) {
-            return null;
-        }
-
-        $this->m_path = null;
-        $this->m_query = null;
-
-        $params = preg_split("/[\s]+/", $p_param);
-        $this->buildURI($params);
-        return $this->m_path;
-    } // fn getURIPath
-
-
-    /**
-     * Returns the URI query parameters based on given URL parameter.
-     *
-     * @param string $p_param
-     *
-     * @return string
-     *      The URI query string requested
-     */
-    public function getURLParameters($p_param = null)
-    {
-        if (!$this->m_validURI) {
-            return null;
-        }
-
-        $this->m_path = null;
-        $this->m_query = null;
-
-        $params = preg_split("/[\s]+/", $p_param);
-        $this->buildURI($params);
-        return $this->m_query;
-    } // fn getURLParameters
-
-
-    /**
      * @return array
      *      An array containing all the form parameters to print out
      */
@@ -296,9 +232,6 @@ class CampURITemplatePath extends CampURI
         $parameters = array();
         $queryParameters = $this->getQueryArray();
         foreach ($queryParameters as $paramName => $paramValue) {
-            if (in_array($paramName, $baseParameters)) {
-                continue;
-            }
             $parameters[$i++] = array('name' => $paramName, 'value' => $paramValue);
         }
 
@@ -340,9 +273,14 @@ class CampURITemplatePath extends CampURI
     private function setURL()
     {
         $this->setQueryVar('tpl', null);
-        CampRequest::SetVar('tpl');
+        $this->setQueryVar('acid', null);
 
         $this->m_publication = new MetaPublication();
+        $this->m_language = new MetaLanguage();
+        $this->m_issue = new MetaIssue();
+        $this->m_section = new MetaSection();
+        $this->m_article = new MetaArticle();
+
         // gets the publication object based on site name (URI host)
         $alias = ltrim($this->getBase(), $this->getScheme().'://');
         $aliasArray = Alias::GetAliases(null, null, $alias);
@@ -354,10 +292,9 @@ class CampURITemplatePath extends CampURI
             return;
         }
 
-        $this->m_language = new MetaLanguage();
         // sets the language identifier
-        if ($this->getQueryVar(CampRequest::LANGUAGE_ID) > 0) {
-            $this->m_language = new MetaLanguage($this->getQueryVar(CampRequest::LANGUAGE_ID));
+        if (CampRequest::GetVar(CampRequest::LANGUAGE_ID) > 0) {
+            $this->m_language = new MetaLanguage(CampRequest::GetVar(CampRequest::LANGUAGE_ID));
         }
         if (!$this->m_language->defined()) {
             $this->m_language = new MetaLanguage($this->m_publication->default_language->number);
@@ -367,11 +304,10 @@ class CampURITemplatePath extends CampURI
             return;
         }
 
-        $this->m_issue = new MetaIssue();
         // sets the issue number
-        if ($this->getQueryVar(CampRequest::ISSUE_NR) > 0) {
+        if (CampRequest::GetVar(CampRequest::ISSUE_NR) > 0) {
             $this->m_issue = new MetaIssue($this->m_publication->identifier,
-            $this->m_language->number, $this->getQueryVar(CampRequest::ISSUE_NR));
+            $this->m_language->number, CampRequest::GetVar(CampRequest::ISSUE_NR));
         } else {
             $issueObj = Issue::GetCurrentIssue($this->m_publication->identifier,
             $this->m_language->number);
@@ -383,24 +319,21 @@ class CampURITemplatePath extends CampURI
             return;
         }
 
-        $this->m_section = new MetaSection();
         // sets the section if any
-        if ($this->getQueryVar(CampRequest::SECTION_NR) > 0) {
+        if (CampRequest::GetVar(CampRequest::SECTION_NR) > 0) {
             $this->m_section = new MetaSection($this->m_publication->identifier,
-            $this->m_issue->number,
-            $this->m_language->number,
-            $this->getQueryVar(CampRequest::SECTION_NR));
+            $this->m_issue->number, $this->m_language->number,
+            CampRequest::GetVar(CampRequest::SECTION_NR));
             if (!$this->m_section->defined()) {
                 CampTemplate::singleton()->trigger_error('not valid section');
                 return;
             }
         }
 
-        $this->m_article = new MetaArticle();
         // sets the article if any
-        if ($this->getQueryVar(CampRequest::ARTICLE_NR) > 0) {
+        if (CampRequest::GetVar(CampRequest::ARTICLE_NR) > 0) {
             $this->m_article = new MetaArticle($this->m_language->number,
-            $this->getQueryVar(CampRequest::ARTICLE_NR));
+            CampRequest::GetVar(CampRequest::ARTICLE_NR));
             if (!$this->m_article->defined()) {
                 CampTemplate::singleton()->trigger_error('not valid article');
                 return;
@@ -489,47 +422,47 @@ class CampURITemplatePath extends CampURI
             return;
         }
 
-        $parameter = count($p_params) > 0 ? array_shift($p_params) : null;
+        $parameter = count($p_params) > 0 ? strtolower(array_shift($p_params)) : null;
 
         switch ($parameter) {
             case 'language':
-                $this->m_query = $this->getURILanguage();
-                $this->m_path = $this->buildPath(CampSystem::GetTemplate($this->m_language->number,
+                $this->m_buildQuery = $this->getURILanguage();
+                $this->m_buildPath = $this->buildPath(CampSystem::GetTemplate($this->m_language->number,
                 $this->m_publication->identifier));
+                $p_params = array();
                 break;
             case 'publication':
-                $this->m_query = $this->getURIPublication();
-                $this->m_path = $this->buildPath(CampSystem::GetTemplate($this->m_language->number,
+                $this->m_buildQuery = $this->getURIPublication();
+                $this->m_buildPath = $this->buildPath(CampSystem::GetTemplate($this->m_language->number,
                 $this->m_publication->identifier));
+                $p_params = array();
                 break;
             case 'issue':
-                $this->m_query = $this->getURIIssue();
-                $this->m_path = $this->buildPath(CampSystem::GetIssueTemplate($this->m_language->number,
-                $this->m_publication->identifier));
+                $this->m_buildQuery = $this->getURIIssue();
+                $this->m_buildPath = $this->buildPath(CampSystem::GetIssueTemplate($this->m_language->number,
+                $this->m_publication->identifier, $this->m_issue->number));
+                $p_params = array();
                 break;
             case 'section':
-                $this->m_query = $this->getURISection();
-                $this->m_path = $this->buildPath(CampSystem::GetSectionTemplate($this->m_language->number,
+                $this->m_buildQuery = $this->getURISection();
+                $this->m_buildPath = $this->buildPath(CampSystem::GetSectionTemplate($this->m_language->number,
                 $this->m_publication->identifier, $this->m_issue->number, $this->m_section->number));
+                $p_params = array();
                 break;
             case 'article':
-                $this->m_query = $this->getURIArticle();
-                $this->m_path = $this->buildPath(CampSystem::GetArticleTemplate($this->m_language->number,
+                $this->m_buildQuery = $this->getURIArticle();
+                $this->m_buildPath = $this->buildPath(CampSystem::GetArticleTemplate($this->m_language->number,
                 $this->m_publication->identifier, $this->m_issue->number, $this->m_section->number));
+                $p_params = array();
                 break;
             case 'template':
                 $option = isset($p_params[0]) ? array_shift($p_params) : null;
                 if (!is_null($option) && $this->isValidTemplate($option)) {
-                    $this->m_path = $this->buildPath($option);
+                    $this->m_buildPath = $this->buildPath($option);
                 }
-                $this->m_query = CampURI::QueryArrayToString($this->getQueryArray());
                 break;
             default:
-                if (empty($parameter)) {
-                    if (is_null($this->m_query)) {
-                        $this->m_query = CampURI::QueryArrayToString($this->getQueryArray());
-                    }
-                } else {
+                if (!empty($parameter)) {
                     array_unshift($p_params, $parameter);
                     $count = count($p_params);
                     parent::buildURI($p_params);
@@ -539,7 +472,11 @@ class CampURITemplatePath extends CampURI
                 }
         }
 
-        if (is_null($this->m_path)) {
+        if (count($p_params) > 0) {
+            $this->buildURI($p_params);
+        }
+
+        if (is_null($this->m_buildPath)) {
             $template = CampSystem::GetTemplate($this->m_language->number,
             $this->m_publication->identifier, $this->m_issue->number,
             $this->m_section->number, $this->m_article->number);
@@ -548,11 +485,11 @@ class CampURITemplatePath extends CampURI
                 CampTemplate::singleton()->trigger_error('Invalid template in context');
                 return;
             }
-            $this->m_path = $this->buildPath($template);
+            $this->m_buildPath = $this->buildPath($template);
         }
 
-        if (count($p_params) > 0) {
-            $this->buildURI($p_params);
+        if (is_null($this->m_buildQuery)) {
+            $this->m_buildQuery = CampURI::QueryArrayToString($this->m_buildQueryArray);
         }
 
         $this->validateCache(true);

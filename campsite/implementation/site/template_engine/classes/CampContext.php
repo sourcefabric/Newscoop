@@ -122,11 +122,8 @@ final class CampContext
 
         $this->m_readonlyProperties['version'] = $Campsite['VERSION'];
 
+        $this->m_readonlyProperties['current_list'] = null;
         $this->m_readonlyProperties['lists'] = array();
-        $this->m_readonlyProperties['issues_lists'] = array();
-        $this->m_readonlyProperties['sections_lists'] = array();
-        $this->m_readonlyProperties['articles_lists'] = array();
-        $this->m_readonlyProperties['article_attachments_lists'] = array();
         $this->m_readonlyProperties['prev_list_empty'] = null;
 
         $url = new MetaURL();
@@ -486,14 +483,16 @@ final class CampContext
 
         $this->RestoreProperties();
 
-   	    $this->m_readonlyProperties['current_list'] = array_pop($this->m_readonlyProperties['lists']);
-
         $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
         $listName = $this->m_listObjects[$objectName]['list'];
+
+        array_pop($this->m_readonlyProperties['lists']);
+   	    $this->m_readonlyProperties['current_list'] = array_pop($this->m_readonlyProperties['lists']);
 
         if (count($this->m_readonlyProperties[$listName.'_lists']) == 0) {
             return;
         }
+        array_pop($this->m_readonlyProperties[$listName.'_lists']);
        	$this->m_readonlyProperties['current_'.$listName.'_list'] = array_pop($this->m_readonlyProperties[$listName.'_lists']);
     } // fn resetCurrentList
 
@@ -528,6 +527,15 @@ final class CampContext
             return $prefix . '0';
         }
         return $prefix . count($this->m_readonlyProperties[$listName.'_lists']);
+    }
+
+
+    public function list_id_prefix($p_className) {
+        $objectName = $this->GetListObjectName($p_className);
+        if (is_null($objectName) || $objectName == '') {
+            return null;
+        }
+        return 'ls-'.$this->m_listObjects[$objectName]['url_id'];
     }
 
 
@@ -822,7 +830,6 @@ final class CampContext
     private function setCommentHandler(MetaComment $p_oldComment, MetaComment $p_newComment) {
         if ($p_oldComment != $p_newComment) {
             $this->m_objects['comment'] = $p_newComment;
-            $this->m_readonlyProperties['url']->set_parameter('acid', $p_newComment->identifier);
         }
     }
 

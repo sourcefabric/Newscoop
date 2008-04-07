@@ -59,7 +59,6 @@ class MetaActionSubmit_Comment extends MetaAction
     {
         $p_context->default_url->reset_parameter('f_'.$this->m_name);
         $p_context->url->reset_parameter('f_'.$this->m_name);
-        CampRequest::SetVar('f_'.$this->m_name);
 
         if (!is_null($this->m_error)) {
             return false;
@@ -196,11 +195,6 @@ class MetaActionSubmit_Comment extends MetaAction
         $p_context->url->reset_parameter('f_comment_content');
         $p_context->url->reset_parameter('f_submit_comment');
         $p_context->url->reset_parameter('f_captcha_code');
-        CampRequest::SetVar('f_comment_reader_email');
-        CampRequest::SetVar('f_comment_subject');
-        CampRequest::SetVar('f_comment_content');
-        CampRequest::SetVar('f_submit_comment');
-        CampRequest::SetVar('f_captcha_code');
         
         $this->m_properties['rejected'] = false;
 

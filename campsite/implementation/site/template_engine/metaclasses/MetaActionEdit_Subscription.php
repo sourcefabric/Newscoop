@@ -72,7 +72,6 @@ class MetaActionEdit_Subscription extends MetaAction
     {
         $p_context->default_url->reset_parameter('f_'.$this->m_name);
         $p_context->url->reset_parameter('f_'.$this->m_name);
-        CampRequest::SetVar('f_'.$this->m_name);
 
         if (PEAR::isError($this->m_error)) {
             return false;
@@ -137,7 +136,6 @@ class MetaActionEdit_Subscription extends MetaAction
         foreach ($fields as $fieldName) {
             $p_context->default_url->reset_parameter($fieldName);
             $p_context->url->reset_parameter($fieldName);
-            CampRequest::SetVar($fieldName);
         }
 
         $this->m_error = ACTION_OK;

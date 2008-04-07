@@ -87,6 +87,21 @@ abstract class CampURI {
     private $m_queryArray = array();
 
     /**
+     * @var string
+     */
+    protected $m_buildPath = null;
+
+    /**
+     * @var string
+     */
+    protected $m_buildQuery = null;
+
+    /**
+     * @var array
+     */
+    protected $m_buildQueryArray = array();
+
+    /**
      * Language object
      *
      * @var MetaLanguage
@@ -134,6 +149,13 @@ abstract class CampURI {
      */
     private $m_validCache = false;
 
+    /**
+     * Whether the URI is valid or not
+     *
+     * @var boolean
+     */
+    protected $m_validURI = false;
+
 
     /**
      * Class constructor
@@ -160,7 +182,7 @@ abstract class CampURI {
             // this works at least for apache, some research is needed
             // in order to support other web servers.
             if (!empty($_SERVER['PHP_SELF'])) {
-                $uriString = $scheme . $_SERVER['HTTP_HOST'];
+            $uriString = $scheme . $_SERVER['HTTP_HOST'];
             }
             if (isset($_SERVER['REQUEST_URI'])) {
                 $uriString .= $_SERVER['REQUEST_URI'];
@@ -179,38 +201,6 @@ abstract class CampURI {
         $this->m_queryArray = array_merge($this->m_queryArray, CampRequest::GetInput('POST'));
     } // fn __construct
 
-
-    /**
-     * Returns the URI string based on given URL parameter.
-     *
-     * @param string $p_param
-     *      The URL parameter
-     *
-     * @return string
-     *      The URI string requested
-     */
-    abstract public function getURI($p_param = null);
-
-    /**
-     * Returns the URI path based on given URL parameter.
-     *
-     * @param string $p_param
-     *      The URL parameter
-     *
-     * @return string
-     *      The URI path string requested
-     */
-    abstract public function getURIPath($p_param = null);
-
-    /**
-     * Returns the URI query parameters based on given URL parameter.
-     *
-     * @param string $p_param
-     *
-     * @return string
-     *      The URI query string requested
-     */
-    abstract public function getURLParameters($p_param = null);
 
     /**
      * Returns true if the given parameter is restricted and can not
@@ -387,7 +377,7 @@ abstract class CampURI {
     public function getQuery()
     {
         if (!$this->isValidCache()) {
-            $this->m_query = CampURI::QueryArrayToString($this->m_queryArray);
+            $this->m_query = CampURI::QueryArrayToString($this->getQueryArray());
         }
         return $this->m_query;
     } // fn getQuery
@@ -404,11 +394,12 @@ abstract class CampURI {
      */
     public function getQueryVar($p_varName)
     {
-        if (!isset($this->m_queryArray[$p_varName])) {
+        $queryArray = $this->getQueryArray();
+        if (!isset($queryArray[$p_varName])) {
             return null;
         }
 
-        return $this->m_queryArray[$p_varName];
+        return $queryArray[$p_varName];
     } // fn getQueryVar
 
 
@@ -509,6 +500,84 @@ abstract class CampURI {
 
 
     /**
+     * Returns the URI string based on given URL parameter.
+     *
+     * @param string $p_param
+     *      The URL parameter
+     *
+     * @return string
+     *      The URI string requested
+     */
+    public function getURI($p_param = null)
+    {
+        if (!$this->m_validURI) {
+            return null;
+        }
+
+        $this->m_buildPath = null;
+        $this->m_buildQuery = null;
+        $this->m_buildQueryArray = $this->getQueryArray();
+
+        $params = preg_split("/[\s]+/", $p_param);
+        $this->buildURI($params);
+        if (!empty($this->m_buildQuery)) {
+            return $this->m_buildPath . '?' . $this->m_buildQuery;
+        }
+
+        return $this->m_buildPath;
+    } // fn getURI
+
+
+    /**
+     * Returns the URI path based on given URL parameter.
+     *
+     * @param string $p_param
+     *      The URL parameter
+     *
+     * @return string
+     *      The URI path string requested
+     */
+    public function getURIPath($p_param = null)
+    {
+        if (!$this->m_validURI) {
+            return null;
+        }
+
+        $this->m_buildPath = null;
+        $this->m_buildQuery = null;
+        $this->m_buildQueryArray = $this->getQueryArray();
+
+        $params = preg_split("/[\s]+/", $p_param);
+        $this->buildURI($params);
+        return $this->m_buildPath;
+    } // fn getURIPath
+
+
+    /**
+     * Returns the URI query parameters based on given URL parameter.
+     *
+     * @param string $p_param
+     *
+     * @return string
+     *      The URI query string requested
+     */
+    public function getURLParameters($p_param = null)
+    {
+        if (!$this->m_validURI) {
+            return null;
+        }
+
+        $this->m_buildPath = null;
+        $this->m_buildQuery = null;
+        $this->m_buildQueryArray = $this->getQueryArray();
+
+        $params = preg_split("/[\s]+/", $p_param);
+        $this->buildURI($params);
+        return $this->m_buildQuery;
+    } // fn getURLParameters
+
+
+    /**
      * Sets the URL type.
      *
      * @param integer $p_type
@@ -520,6 +589,20 @@ abstract class CampURI {
     {
         $this->m_type = (int)$p_type;
     } // fn setURLType
+
+
+    /**
+     * Adds the given parameters to the query array
+     */
+    protected function addToQuery(&$p_query, array $p_parameters) {
+        if (count($p_parameters) == 0) {
+            return;
+        }
+        if (!empty($p_query)) {
+            $this->m_query .= '&';
+        }
+        $p_query .= CampURI::QueryArrayToString($p_parameters);
+    }
 
 
     /**
@@ -547,7 +630,7 @@ abstract class CampURI {
      *
      * @return void
      */
-    public function setQueryVar($p_varName, $p_value)
+    public function setQueryVar($p_varName, $p_value = null)
     {
         if (is_null($p_value)) {
             unset($this->m_queryArray[$p_varName]);
@@ -752,17 +835,32 @@ abstract class CampURI {
         if (count($p_params) == 0) {
             return;
         }
-        $parameter = array_shift($p_params);
+        $parameter = strtolower(array_shift($p_params));
 
         switch ($parameter) {
             case 'root_level':
-                $this->m_path = '/';
+                $this->m_buildPath = '/';
+                $this->m_buildQueryArray = array();
+                $p_params = array();
                 break;
             case 'articleattachment':
                 $context = CampTemplate::singleton()->context();
                 $attachment = new Attachment($context->attachment->identifier);
-                $this->m_path = '/attachment/'.basename($attachment->getStorageLocation());
+                $this->m_buildPath = '/attachment/'.basename($attachment->getStorageLocation());
+                $this->m_buildQueryArray = array();
                 $p_params = array();
+                break;
+            case 'audioattachment':
+                $context = CampTemplate::singleton()->context();
+                $this->m_buildPath = '/audioclip/';
+                $this->m_buildQueryArray = array();
+                $p_params = array();
+                break;
+            case 'articlecomment':
+                $context = CampTemplate::singleton()->context();
+                if ($context->comment->defined) {
+                    $this->m_buildQueryArray['acid'] = $context->comment->identifier;
+                }
                 break;
             case 'image':
                 $option = isset($p_params[0]) ? array_shift($p_params) : null;
@@ -773,9 +871,10 @@ abstract class CampURI {
                     $context->image = new MetaImage($articleImage->getImageId());
                 }
                 if ($context->image->article_index !== null) {
-                    $this->m_path = '/get_img';
-                    $this->m_query = 'NrImage=' . $context->image->article_index
-                    . '&amp;NrArticle=' . $context->article->number;
+                    $this->m_buildPath = '/get_img';
+                    $this->m_buildQueryArray = array();
+                    $this->m_buildQueryArray['NrImage'] = $context->image->article_index;
+                    $this->m_buildQueryArray['NrArticle'] = $context->article->number;
                 }
                 if (!is_null($option)) {
                     $context->image = $oldImage;
@@ -802,9 +901,7 @@ abstract class CampURI {
                 } else {
                     $newSubtitleNo = $subtitleNo + ($parameter == 'previous_subtitle' ? -1 : 1);
                 }
-                $this->setQueryVar($subtitleURLId, $newSubtitleNo);
-                $this->buildURI($p_params);
-                $this->setQueryVar($subtitleURLId, $subtitleNo);
+                $this->m_buildQueryArray[$subtitleURLId] = $newSubtitleNo;
                 break;
             case 'previous_items':
             case 'next_items':
@@ -813,15 +910,54 @@ abstract class CampURI {
                     return;
                 }
                 $listId = $context->current_list->id;
-                $oldListId = $this->getQueryVar($listId);
-                $this->setQueryVar($listId, ($parameter == 'previous_items' ?
-                $context->current_list->previous_start :
-                $context->current_list->next_start));
-                $this->buildURI($p_params);
-                $this->setQueryVar($listId, $oldListId);
+                $this->m_buildQueryArray[$listId] = ($parameter == 'previous_items' ?
+                $context->current_list->previous_start : $context->current_list->next_start);
+                break;
+            case 'reset_issue_list':
+                $context = CampTemplate::singleton()->context();
+                $listIdPrefix = $context->list_id_prefix('IssuesList');
+                $this->resetList($listIdPrefix);
+                break;
+            case 'reset_section_list':
+                $context = CampTemplate::singleton()->context();
+                $listIdPrefix = $context->list_id_prefix('SectionsList');
+                $this->resetList($listIdPrefix);
+                break;
+            case 'reset_article_list':
+                $context = CampTemplate::singleton()->context();
+                $listIdPrefix = $context->list_id_prefix('ArticlesList');
+                $this->resetList($listIdPrefix);
+                break;
+            case 'reset_searchresult_list':
+                $context = CampTemplate::singleton()->context();
+                $listIdPrefix = $context->list_id_prefix('SearchResultsList');
+                $this->resetList($listIdPrefix);
+                break;
+            case 'reset_subtitle_list':
+                $context = CampTemplate::singleton()->context();
+                $listIdPrefix = $context->list_id_prefix('SubtitlesList');
+                $this->resetList($listIdPrefix);
                 break;
             default:
                 ;
+        }
+    }
+
+
+    protected function resetList($listIdPrefix) {
+        foreach ($this->getQueryArray() as $parameter=>$value) {
+            if (strncasecmp($parameter, $listIdPrefix, strlen($listIdPrefix)) == 0) {
+                $this->setQueryVar($parameter);
+                unset($this->m_buildQueryArray[$parameter]);
+            }
+        }
+    }
+
+
+    protected function clearParams(array $parameters) {
+        foreach ($parameters as $parameter) {
+            $this->setQueryVar($parameter);
+            unset($this->m_buildQueryArray[$parameter]);
         }
     }
 

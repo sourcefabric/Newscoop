@@ -55,14 +55,11 @@ class MetaActionLogin extends MetaAction
     {
         $p_context->default_url->reset_parameter('f_'.$this->m_name);
         $p_context->url->reset_parameter('f_'.$this->m_name);
-        CampRequest::SetVar('f_'.$this->m_name);
 
         $p_context->default_url->reset_parameter('f_user_uname');
         $p_context->url->reset_parameter('f_user_uname');
-        CampRequest::SetVar('f_user_uname');
         $p_context->default_url->reset_parameter('f_user_password');
         $p_context->url->reset_parameter('f_user_password');
-        CampRequest::SetVar('f_user_password');
 
         if ($this->m_error != ACTION_OK) {
             return false;

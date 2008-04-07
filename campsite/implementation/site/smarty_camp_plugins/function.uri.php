@@ -19,10 +19,22 @@
 function smarty_function_uri($p_params, &$p_smarty)
 {
     $context = $p_smarty->get_template_vars('campsite');
-    // sets the URL parameter option
-    $context->url->uri_parameter = strtolower($p_params['options']);
 
-    return $context->url->uri;
+    $url = 'url';
+    $params = preg_split("/[\s]+/", $p_params['options']);
+    foreach ($params as $index=>$param) {
+        if (strcasecmp('fromstart', $param) == 0) {
+            $url = 'default_url';
+            unset($params[$index]);
+            $p_params['options'] = implode(', ', $params);
+            break;
+        }
+    }
+
+    // sets the URL parameter option
+    $context->$url->uri_parameter = $p_params['options'];
+
+    return $context->$url->uri;
 } // fn smarty_function_uri
 
 ?>

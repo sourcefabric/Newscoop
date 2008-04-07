@@ -60,6 +60,8 @@ class MetaActionSearch_Articles extends MetaAction
             $this->m_properties['search_level'] = MetaActionSearch_Articles::DEFAULT_SEARCH_LEVEL;
         }
 
+        $this->m_properties['submit_button'] = $p_input['f_search_articles'];
+
         $this->m_error = ACTION_OK;
     }
 
@@ -81,6 +83,12 @@ class MetaActionSearch_Articles extends MetaAction
             }
         } else {
             $this->m_properties['template'] = $p_context->template;
+        }
+        
+        $fields = array('f_search_keywords', 'f_search_level', 'f_search_articles', 'f_match_all');
+        foreach ($fields as $field) {
+            $p_context->default_url->reset_parameter($field);
+            $p_context->url->reset_parameter($field);
         }
 
         return true;

@@ -33,27 +33,30 @@ function smarty_block_list_article_comments($p_params, $p_content, &$p_smarty, &
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('ArticleCommentsList');
         $articleCommentsList = new ArticleCommentsList($start, $p_params);
-    	$campContext->setCurrentList($articleCommentsList, array('comment'));
+        $campContext->setCurrentList($articleCommentsList, array('comment'));
     }
 
     $currentArticleComment = $campContext->current_article_comments_list->defaultIterator()->current();
     if (is_null($currentArticleComment)) {
-	    $p_repeat = false;
-	    $campContext->resetCurrentList();
-    	return $html;
+        $campContext->url->reset_parameter('acid');
+        $p_repeat = false;
+        $campContext->resetCurrentList();
+        return $html;
     } else {
-    	$p_repeat = true;
-    	$campContext->comment = $currentArticleComment;
+        $p_repeat = true;
+        $campContext->comment = $currentArticleComment;
+        $campContext->url->set_parameter('acid', $campContext->comment->identifier);
     }
 
     if (isset($p_content)) {
-		$html = $p_content;
-	    if ($p_repeat) {
-    		$campContext->current_article_comments_list->defaultIterator()->next();
-    		if (!is_null($campContext->current_article_comments_list->current)) {
-    		    $campContext->comment = $campContext->current_article_comments_list->current;
-    		}
-    	}
+        $html = $p_content;
+        if ($p_repeat) {
+            $campContext->current_article_comments_list->defaultIterator()->next();
+            if (!is_null($campContext->current_article_comments_list->current)) {
+                $campContext->comment = $campContext->current_article_comments_list->current;
+                $campContext->url->set_parameter('acid', $campContext->comment->identifier);
+            }
+        }
     }
 
     return $html;
