@@ -815,6 +815,12 @@ final class CampContext
         $this->m_objects['audioclip'] = new MetaAudioclip();
         $this->m_objects['comment'] = new MetaComment();
         $this->m_readonlyProperties['url']->article = $p_newArticle;
+        $formParameters = $this->m_readonlyProperties['url']->form_parameters;
+        foreach ($formParameters as $parameter) {
+            if (strncmp($parameter['name'], 'st-', strlen('st-')) == 0) {
+                $this->m_readonlyProperties['url']->reset_parameter($parameter['name']);
+            }
+        }
         $this->m_objects['article'] = $p_newArticle;
 
         $articleHandlerRunning = false;
@@ -837,8 +843,6 @@ final class CampContext
     private function setSubtitleHandler(MetaSubtitle $p_oldSubtitle, MetaSubtitle $p_newSubtitle) {
         if ($p_oldSubtitle != $p_newSubtitle) {
             $this->m_objects['subtitle'] = $p_newSubtitle;
-            $subtitleURLId = $this->article->subtitle_url_id($p_newSubtitle->field_name);
-            $this->m_readonlyProperties['url']->set_parameter($subtitleURLId, $p_newSubtitle->number);
         }
     }
 

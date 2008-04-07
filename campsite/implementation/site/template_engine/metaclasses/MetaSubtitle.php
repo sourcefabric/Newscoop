@@ -250,6 +250,11 @@ final class MetaSubtitle {
         $parametersArray = array_combine($parametersArray[1], $parametersArray[2]);
 
         $uri = new MetaURL();
+        foreach ($uri->form_parameters as $parameter) {
+            if (strncmp($parameter['name'], 'st-', strlen('st-')) == 0) {
+                $uri->reset_parameter($parameter['name']);
+            }
+        }
         $uri->language = new MetaLanguage($parametersArray['IdLanguage']);
         $uri->publication = new MetaPublication($parametersArray[CampRequest::PUBLICATION_ID]);
         $uri->issue = new MetaIssue($parametersArray[CampRequest::PUBLICATION_ID],
@@ -261,13 +266,7 @@ final class MetaSubtitle {
         $parametersArray[CampRequest::SECTION_NR]);
         $uri->article = new MetaArticle($parametersArray[CampRequest::LANGUAGE_ID],
         $parametersArray[CampRequest::ARTICLE_NR]);
-        if ($uri->publication->identifier == CampRequest::GetVar(CampRequest::PUBLICATION_ID)) {
-            $linkContent = $uri->uri;
-        } else {
-            $linkContent = $uri->url;
-        }
-        $urlString = '<a href="' . $linkContent . '" target="' . $targetName
-        . '">' . $linkText . '</a>';
+        $urlString = '<a href="'.$uri->url.'" target="'.$targetName.'">'.$linkText.'</a>';
         return $urlString;
     }
 
