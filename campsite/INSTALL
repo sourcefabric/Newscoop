@@ -22,7 +22,6 @@ virtual host.
 Example of virtual host configuration:
 <VirtualHost *>
     DocumentRoot /var/www/campsite/html
-    ScriptAlias /cgi-bin/ /var/www/campsite/cgi-bin/
     ServerName [site_name]
     ServerAlias [site_alias]
     DirectoryIndex index.php index.html
@@ -33,14 +32,6 @@ Example of virtual host configuration:
                 Order allow,deny
                 Allow from all
             </IfModule>
-    </Directory>
-    <Directory /var/www/campsite/cgi-bin>
-        AllowOverride All
-        Options ExecCGI
-        <IfModule mod_access.c>
-            Order allow,deny
-            Allow from all
-        </IfModule>
     </Directory>
 </VirtualHost>
 
