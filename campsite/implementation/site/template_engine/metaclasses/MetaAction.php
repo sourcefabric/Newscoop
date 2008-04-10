@@ -128,7 +128,7 @@ class MetaAction
 
         $actions = array();
         $directoryPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses';
-        $actionIncludeFiles = File_Find::search('/MetaAction[^.]*\.php/',
+        $actionIncludeFiles = File_Find::search('/^MetaAction[^.]*\.php$/',
         $directoryPath, 'perl', false);
 
         foreach ($actionIncludeFiles as $includeFile) {
