@@ -47,7 +47,7 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
     switch ($object) {
     case 'user':
         // gets the attribute value from the context
-        $fieldValue = CampRequest::GetVar('f_user_'.$attribute);
+        $fieldValue = $campsite->default_url->get_parameter('f_user_'.$attribute);
         if (is_null($fieldValue)) {
             $fieldValue = $campsite->user->$attribute;
         }
@@ -107,7 +107,7 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
 
     case 'comment':
         if ($campsite->article->comments_enabled == 1) {
-            $fieldValue = CampRequest::GetVar('f_comment_'.$attribute);
+            $fieldValue = $campsite->default_url->get_parameter('f_comment_'.$attribute);
             if ($attribute == 'content') {
                 $html = '<textarea name="f_comment_'.$attribute.'" cols="40" rows="4" '
                     .$p_params['html_code'].'>'
