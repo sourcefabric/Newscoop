@@ -753,7 +753,7 @@ class Poll extends DatabaseObject {
      * @return array $comparisonOperation
      *      The array containing processed values of the condition
      */
-    private static function ProcessListParameters(array $p_param)
+    private static function ProcessListParameters(ComparisonOperation $p_param)
     {
         $comparisonOperation = array();
 
