@@ -30,11 +30,18 @@ class PollsList extends ListObject
     );
                                    
     private static $s_orderFields = array(
-      'bynumber',
-      'byname',
-      'bybegin',
-      'byend',
-      'byvotes'
+        'bynumber',
+        'bylanguage',
+        'bytitle',
+        'byname',
+        'byquestion',
+        'bybegin',
+        'byend',
+        'byanswers',
+        'byvotes',
+        'byvotes_overall',
+        'bypercentage_overall',
+        'bylastmodified'
     );
                                    
 	/**
@@ -159,7 +166,7 @@ class PollsList extends ListObject
 	    foreach ($p_order as $word) {
 	        switch ($state) {
                 case 1: // reading the order field
-	                if (!array_search(strtolower($word), PollsList::$s_orderFields)) {
+	                if (array_search(strtolower($word), PollsList::$s_orderFields) === false) {
 	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_polls, order parameter");
 	                } else {
     	                $orderField = $word;

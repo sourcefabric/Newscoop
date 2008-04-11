@@ -1,4 +1,7 @@
 {{ include file="html_header.tpl" }}
+
+<script language="javascript" src="/javascript/prototype/prototype.js"></script>
+
 <table class="main" cellspacing="0" cellpadding="0">
 <tr>
   <td valign="top">
@@ -14,36 +17,7 @@
     
         <h3>Poll Details</h3>
         
-        {{ poll_form template='sctionn-polls'}} 
-           
-            Title: {{ $campsite->poll->title }}<br>
-            Question: {{ $campsite->poll->question }}<br>
-            Voting Begin: {{ $campsite->poll->date_begin|date_format }}<br>
-            Voting End: {{ $campsite->poll->date_end|date_format }}<br>
-            Votes: {{ $campsite->poll->votes }}<br>
-            <br>
-            
-            {{ if $campsite->poll->is_votable }}
-                {{ list_poll_answers }}
-                    {{ pollanswer_edit }} {{ $campsite->pollanswer->answer }}<br>
-                {{ /list_poll_answers }}
-        
-                <input type="submit">
-                <p>
-            {{ /if }}
-            
-            {{ list_poll_answers }}
-                {{ $campsite->pollanswer->number }}:
-                {{ strip }}
-                <img src="/css/mainbarlinks.png" width="1" height="10" />
-                <img src="/css/mainbar.png" width="{{ $campsite->pollanswer->percentage }}" height="10px"/>
-                <img src="/css/mainbarrechts.png" width="1" height="10" />
-                {{ /strip }}
-                ({{ $campsite->pollanswer->votes }}/{{ $campsite->poll->votes }} Votes, {{ $campsite->pollanswer->percentage }}%)
-                <br>
-            {{ /list_poll_answers }}
-                   
-        {{ /poll_form }}
+        {{ include file='poll-form.tpl' included=true}}
         
         <br>
         <a href="{{ uripath }}">All Polls</a>
@@ -63,7 +37,7 @@
         <tr><td colspan="6"><hr></td></tr>
         {{ local }}
   
-        {{ list_polls name="polls_list" length="10" item='publication' order='byend DESC' constraints='' }}
+        {{ list_polls name="polls_list" length="10" order='bylastmodified ASC' constraints='' }}
            <tr align="center">
             <td align="left">
                 <a href="?f_poll_nr={{ $campsite->poll->number }}&amp;f_poll_language_id={{ $campsite->poll->language_id }}">

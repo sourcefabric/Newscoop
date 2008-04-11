@@ -55,7 +55,7 @@ class Poll extends DatabaseObject {
         );
         
     /**
-     * This indicates if poll can just voted once
+     * This indicates each poll can just voted once by a user, identicated by cookie + session var
      *
      * @var unknown_type
      */
@@ -571,8 +571,7 @@ class Poll extends DatabaseObject {
      * @return array $issuesList
      *    An array of Issue objects
      */
-    public static function GetList($p_parameters, $p_item = null, $p_order = null,
-                                   $p_start = 0, $p_limit = 0, &$p_count)
+    public static function GetList(array $p_parameters, $p_item = null, $p_order = null, $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
         
@@ -754,7 +753,7 @@ class Poll extends DatabaseObject {
      * @return array $comparisonOperation
      *      The array containing processed values of the condition
      */
-    private static function ProcessListParameters($p_param)
+    private static function ProcessListParameters(array $p_param)
     {
         $comparisonOperation = array();
 
@@ -787,8 +786,15 @@ class Poll extends DatabaseObject {
                 case 'bynumber':
                     $dbField = 'poll_nr';
                     break;
+                case 'bylanguage':
+                    $dbField = 'fk_language_id';
+                    break;
                 case 'byname':
+                case 'bytitle':
                     $dbField = 'title';
+                    break;
+                case 'byquestion':
+                    $dbField = 'question';
                     break;
                 case 'bybegin':
                     $dbField = 'date_begin';
@@ -796,9 +802,21 @@ class Poll extends DatabaseObject {
                 case 'byend':
                     $dbField = 'date_end';
                     break;
+                case 'byanswers':
+                    $dbField = 'nr_of_answers';
+                    break;
                 case 'byvotes':
                     $dbField = 'nr_of_votes';
                     break;
+                case 'byvotes_overall':
+                    $dbField = 'nr_of_votes_overall';
+                    break;
+                case 'bypercentage_overall':
+                    $dbField = 'percentage_of_votes_overall';
+                    break;
+                case 'bylastmodified':
+                    $dbField = 'last_modified';
+                    break;  
                 default:
                     $dbField = 'poll_nr';
             }
@@ -819,6 +837,9 @@ class Poll extends DatabaseObject {
      */
     public function isVotable()
     {
+    	### !!debug!! ###
+    	return true;
+    	
         if (strtotime($this->m_data['date_begin']) > strtotime(date('Y-m-d'))) {
             return false;   
         }
@@ -882,6 +903,11 @@ class Poll extends DatabaseObject {
                 $Poll->setUserHasVoted();
             }
         }
+        
+        // reset the context:
+		$p_context =& CampTemplate::singleton()->context();
+        $p_context->default_url->reset_parameter('f_pollanswer_nr');
+        $p_context->url->reset_parameter('f_pollanswer_nr');
     }
 
 } // class Poll

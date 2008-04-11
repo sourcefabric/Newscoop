@@ -37,6 +37,8 @@ class PollAnswer extends DatabaseObject {
         'last_modified'
         );
 
+    private static $s_defaultOrder = array('bynumber'=>'asc');
+                                       
     /**
      * Construct by passing in the primary key to access the poll answer in
      * the database.
@@ -264,7 +266,7 @@ class PollAnswer extends DatabaseObject {
      * @return array $issuesList
      *    An array of Issue objects
      */
-    public static function GetList($p_parameters, $p_order = null, &$p_count)
+    public static function GetList(array $p_parameters, $p_order = null, $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
         
@@ -310,11 +312,13 @@ class PollAnswer extends DatabaseObject {
 
         
         if (!is_array($p_order)) {
-            $p_order = array('nr_answer' => 'ASC');
+            $p_order = array();
         }
 
-        // sets the order condition if any
-        foreach ($p_order as $orderColumn => $orderDirection) {
+        // sets the ORDER BY condition
+        $p_order = count($p_order) > 0 ? $p_order : PollAnswer::$s_defaultOrder;
+        $order = PollAnswer::ProcessListOrder($p_order);
+        foreach ($order as $orderColumn => $orderDirection) {
             $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
         
@@ -369,6 +373,48 @@ class PollAnswer extends DatabaseObject {
 
         return $comparisonOperation;
     } // fn ProcessListParameters
-} // class PollQuestion
+    
+   /**
+     * Processes an order directive coming from template tags.
+     *
+     * @param array $p_order
+     *      The array of order directives
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $field=>$direction) {
+            $dbField = null;
+            switch (strtolower($field)) {
+                case 'bynumber':
+                    $dbField = 'nr_answer';
+                    break;
+                case 'byanswer':
+                    $dbField = 'answer';
+                    break;
+                case 'byvotes':
+                    $dbField = 'nr_of_votes';
+                    break;
+                case 'bypercentage':
+                    $dbField = 'percentage';
+                    break;
+                case 'bypercentage_overall':
+                    $dbField = 'percentage_overall';
+                    break;
+                case 'bylastmodified':
+                    $dbField = 'last_modified';
+                    break;                    
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+            }
+            $order[$dbField] = $direction;
+        }
+        return $order;
+    }
+} // class PollAnswer
 
 ?>

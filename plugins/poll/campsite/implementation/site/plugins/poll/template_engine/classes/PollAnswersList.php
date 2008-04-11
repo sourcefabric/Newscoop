@@ -5,7 +5,16 @@
 class PollAnswersList extends ListObject 
 {                                 
     private $m_item;
-                                   
+    
+	private static $s_orderFields = array(
+		                              'bynumber',
+		                              'byanswer',
+		                              'byvotes',
+		                              'bypercentage',
+		                              'bypercentage_overall',
+		                              'bylastmodified'
+	                        );
+	                                                        
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
 	 * true if this list is limited and elements still exist in the original
@@ -29,7 +38,7 @@ class PollAnswersList extends ListObject
                                                         $context->poll->language_id);
 	    $this->m_constraints[] = $comparisonOperation;
 
-	    $pollAnswersList = PollAnswer::GetList($this->m_constraints, null, $p_count);
+	    $pollAnswersList = PollAnswer::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
         $metaPollAnswersList = array();
 	    foreach ($pollAnswersList as $pollAnswer) {
 	        $metaPollAnswersList[] = new MetaPollAnswer($pollAnswer->getLanguageId(), $pollAnswer->getPollNumber(), $pollAnswer->getNumber());
@@ -56,7 +65,7 @@ class PollAnswersList extends ListObject
 	    $value = null;
 	    foreach ($p_constraints as $word) {
 	        if ($state == 1) {
-	                if (!array_key_exists($word, PollAnswersList::$s_parameters)) {
+	                if (array_key_exists($word, PollAnswersList::$s_parameters) === false) {
 	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_poll_answers, constraints parameter");
 	                }
 	                $attribute = $word;
@@ -97,10 +106,37 @@ class PollAnswersList extends ListObject
 	 */
 	protected function ProcessOrder(array $p_order)
 	{
-	    if (!is_array($p_constraints)) {
+	    if (!is_array($p_order)) {
 	        return null;
 	    }
-		return array();
+
+	    $order = array();
+	    $state = 1;
+	    foreach ($p_order as $word) {
+	        switch ($state) {
+                case 1: // reading the order field
+	                if (array_search(strtolower($word), PollAnswersList::$s_orderFields) === false) {
+	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_pollanswers, order parameter");
+	                } else {
+    	                $orderField = $word;
+	                }
+	                $state = 2;
+	                break;
+                case 2: // reading the order direction
+                    if (MetaOrder::IsValid($word)) {
+                        $order[$orderField] = $word;
+                    } else {
+                        CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_pollanswers, order parameter");
+                    }
+                    $state = 1;
+	                break;
+	        }
+	    }
+	    if ($state != 1) {
+            CampTemplate::singleton()->trigger_error("unexpected end of order parameter in list_pollanswers");
+	    }
+
+	    return $order;
 	}
 
 	/**
