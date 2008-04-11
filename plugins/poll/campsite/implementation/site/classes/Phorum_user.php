@@ -284,9 +284,9 @@ class Phorum_user extends DatabaseObject {
 	 * @param string $p_password
 	 * @return boolean
 	 */
-	public function setPassword($p_password)
+	public function setPassword($p_password, $p_commit = true)
 	{
-		return $this->setProperty('password', $p_password);
+		return $this->setProperty('password', $p_password, $p_commit);
 	}  // fn setPassword
 
 

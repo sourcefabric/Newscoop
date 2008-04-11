@@ -142,7 +142,9 @@ class User extends DatabaseObject {
         'DeleteFile'=>'N',
         'CommentModerate'=>'N',
         'CommentEnable'=>'N',
-        'ManagePoll'=>'N');
+        'ManagePoll'=>'N',
+        'SyncPhorumUsers'=>'N',
+        'ClearCache'=>'N');
     var $m_liveUserData = array();
 
 
@@ -721,13 +723,13 @@ class User extends DatabaseObject {
      *
      * @return void
      */
-    public function setPassword($p_password)
+    public function setPassword($p_password, $p_commit = true)
     {
         global $g_ado_db;
 
         $queryStr = "SELECT SHA1('".$g_ado_db->escape($p_password)."') AS PWD";
         $row = $g_ado_db->GetRow($queryStr);
-        $this->setProperty('Password', $row['PWD']);
+        $this->setProperty('Password', $row['PWD'], $p_commit);
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
         }

@@ -47,17 +47,22 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
     switch ($object) {
     case 'user':
         // gets the attribute value from the context
-        $attrValue = $campsite->$object->$attribute;
-
+        $fieldValue = CampRequest::GetVar('f_user_'.$attribute);
+        if (is_null($fieldValue)) {
+            $fieldValue = $campsite->user->$attribute;
+        }
+        
         $passwdFields = array('password','passwordagain');
         $txtAreaFields = array('interests','improvements','text1','text2','text3');
 
         if (in_array($attribute, $passwdFields)) {
             $html = '<input type="password" name="f_user_'.$attribute.'" size="32" '
-                .'maxlength="32" '.$p_params['html_code'].' />';
+                .'maxlength="32" '.$p_params['html_code'].' value="'
+                .smarty_function_escape_special_chars($fieldValue).'" />';
         } elseif (in_array($attribute, $txtAreaFields)) {
             $html = '<textarea name="f_user_'.$attribute.'" cols="40" rows="4" '
-                .$p_params['html_code'].'></textarea>';
+                .$p_params['html_code'].'>'
+                .smarty_function_escape_special_chars($fieldValue).'</textarea>';
         } elseif ($attribute != 'fk_user_type') {
             $sqlQuery = 'DESC liveuser_users '.$g_ado_db->escape($attribute);
             $row = $g_ado_db->GetRow($sqlQuery);
@@ -67,18 +72,16 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
             $length = substr($row['Type'], strpos($row['Type'], '(') + 1, -1);
             $html = '<input type="text" name="f_user_'.$attribute
                 .'" size="'.($length > 32 ? 32 : $length)
-                .'" maxlength="'.$length.'" ';
-            if (!empty($attrValue)) {
-                $html .= 'value="'.smarty_function_escape_special_chars($attrValue).'" ';
-            }
+                .'" maxlength="'.$length.'" '
+                .'value="'.smarty_function_escape_special_chars($fieldValue).'" ';
             $html .= $p_params['html_code'].' />';
         }
         break;
 
     case 'subscription':
         $html = '<input type="hidden" name="f_subs_'.$campsite->section->number
-            .'" value="'. $campsite->subscription->subsTimeUnits.'" '
-            .$p_params['html_code'].' />'.$campsite->subscription->subsTimeUnits;
+            .'" value="'. $campsite->publication->subscription_time.'" '
+            .$p_params['html_code'].' />'.$campsite->publication->subscription_time;
         break;
 
     case 'login':
@@ -102,17 +105,18 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
         }
         break;
 
-    case 'articlecomment':
+    case 'comment':
         if ($campsite->article->comments_enabled == 1) {
+            $fieldValue = CampRequest::GetVar('f_comment_'.$attribute);
             if ($attribute == 'content') {
                 $html = '<textarea name="f_comment_'.$attribute.'" cols="40" rows="4" '
                     .$p_params['html_code'].'>'
-                    .smarty_function_escape_special_chars(' ')
+                    .smarty_function_escape_special_chars($fieldValue)
                     .'</textarea>';
-            } elseif ($attribute == 'subject' || $attribute == 'readeremail') {
+            } elseif ($attribute == 'subject' || $attribute == 'reader_email') {
                 $html = '<input type="text" name="f_comment_'.$attribute
-                    .'" maxlength="255" '.'" size="'.$p_params['size'].'" value="'
-                    .smarty_function_escape_special_chars(' ')
+                    .'" maxlength="255" size="'.$p_params['size'].'" value="'
+                    .smarty_function_escape_special_chars($fieldValue)
                     .'" '.$p_params['html_code'].' />';
             }
         }

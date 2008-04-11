@@ -830,6 +830,14 @@ class Issue extends DatabaseObject {
         case 'idlanguage':
             $comparisonOperation['left'] = 'IdLanguage';
             break;
+        case 'published':
+            if (strtolower($p_param->getRightOperand()) == 'true') {
+                $comparisonOperation['left'] = 'Published';
+                $comparisonOperation['symbol'] = '=';
+                $comparisonOperation['right'] =  'Y';
+                return $comparisonOperation;
+            }
+            break;
         }
 
         if (isset($comparisonOperation['left'])) {

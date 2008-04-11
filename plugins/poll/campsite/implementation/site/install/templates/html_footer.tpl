@@ -4,8 +4,8 @@
 <tr>
   <td>
     <p class="footer_text">
-      Media Development Loan Fund - Campware &copy; 2007<br />
-      Campsite 3.0-beta Installer
+      {{ $copyright }}<br />
+      {{ $package }} {{ $version }} ({{ $code_name }}) Installer
     </p>
   </td>
 </tr>

@@ -19,8 +19,6 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 
-
-
 /**
  * Class CampInstallationView
  */
@@ -100,7 +98,12 @@ final class CampInstallationView
                                    'tag' => 'Configuration Files Writable',
                                    'exists' => $isConfigDirWritable
                                    );
-
+        if (CampInstallation::GetHostOS() == 'windows') {
+            $sysRequirements[] = array(
+                                       'tag' => 'Apache mod_rewrite enabled',
+                                       'exists' => '<a href="#" onmouseover="domTT_activate(this, event, \'caption\', \'What is this?\', \'content\', \''.wordwrap('As you are installing Campsite on a Windows server you will need to have the Apache mod_rewrite module enabled in order to be able to use friendly short names URLs.<br /><br />This, however, is not mandatory, as you still will can run Campsite by using template path URLs.', 60, '<br />', true).'\', \'trail\', true, \'delay\', 0);">?</a>'
+                                       );
+        }
         $this->m_lists['sysRequirements'] = $sysRequirements;
 
         return $success;
@@ -128,14 +131,11 @@ final class CampInstallationView
                                 'exists' => $hasMySQL
                                 );
 
-        // APC checking will be disabled until we solve some cache issues
-        //
-        //$hasAPC = CampInstallationViewHelper::CheckPHPAPC();
-        //$success = ($hasAPC == 'Yes') ? $success : false;
-        //$phpFunctions[] = array(
-        //'tag' => 'APC (PHP Cache) Support',
-        //'exists' => $hasAPC
-        //);
+        $hasAPC = CampInstallationViewHelper::CheckPHPAPC();
+        $phpFunctions[] = array(
+                                'tag' => 'APC (PHP Cache) Support',
+                                'exists' => $hasAPC
+                                );
 
         $hasGD = CampInstallationViewHelper::CheckPHPGD();
         $success = ($hasGD == 'Yes') ? $success : false;
@@ -203,7 +203,7 @@ final class CampInstallationViewHelper
 
     public static function CheckPHPAPC()
     {
-        return (function_exists('apc_store')) ? 'Yes' : 'No';
+        return (ini_get('apc.enabled') && function_exists('apc_store')) ? 'Yes' : 'No';
     } // fn CheckPHPAPC
 
 

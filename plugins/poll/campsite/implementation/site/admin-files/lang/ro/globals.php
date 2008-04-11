@@ -264,6 +264,8 @@ regGS("Thank you.", "Mulţumim.");
 regGS("Please take a minute to send us an email.", "Vă rugăm să vă rezervaţi câteva minute pentru a ne trimite un e-mail.");
 regGS("(optional)", "(opţional)");
 regGS("The URL you entered is invalid: '$1'", "Adresa de Internet introdusă nu este validă: '$1'");
+regGS("There was an error logging in to the Campcaster server", "Eroare la autentificarea cu server-ul aplicaţiei Campcaster");
+regGS("Article Audioclips", "");
 regGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.", "");
 regGS("Unable to add new image.", "");
 regGS("User name", "Nume utilizator");
@@ -280,5 +282,4 @@ regGS("There are $1 issue(s) left.", "Mai sunt $1 ediţii");
 regGS("There are $1 keyword(s) left.", "Mai sunt $1 cuvinte cheie");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nume");
 regGS("New field", "Câmp nou");
-regGS("There was an error logging in to the Campcaster server", "");
 ?>

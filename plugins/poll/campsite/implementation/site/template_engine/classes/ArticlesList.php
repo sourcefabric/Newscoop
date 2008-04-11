@@ -55,12 +55,17 @@ class ArticlesList extends ListObject
 	{
 	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
-	    $comparisonOperation = new ComparisonOperation('IdPublication', $operator,
-	                                                   $context->publication->identifier);
-        $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
-	                                                   $context->language->number);
-	    $this->m_constraints[] = $comparisonOperation;
+
+	    if ($context->publication->defined) {
+    	    $comparisonOperation = new ComparisonOperation('IdPublication', $operator,
+	                                                       $context->publication->identifier);
+            $this->m_constraints[] = $comparisonOperation;
+	    }
+	    if ($context->language->defined) {
+	        $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
+	                                                       $context->language->number);
+	        $this->m_constraints[] = $comparisonOperation;
+	    }
 	    if ($context->issue->defined) {
             $comparisonOperation = new ComparisonOperation('NrIssue', $operator,
                                                            $context->issue->number);
@@ -71,8 +76,19 @@ class ArticlesList extends ListObject
                                                            $context->section->number);
     	    $this->m_constraints[] = $comparisonOperation;
 	    }
+	    if ($context->topic->defined) {
+	        $comparisonOperation = new ComparisonOperation('topic', $operator,
+	                                                       $context->topic->identifier);
+	        $this->m_constraints[] = $comparisonOperation;
+	    }
+	    $user = CampTemplate::singleton()->context()->user;
+	    if (CampRequest::GetVar('preview') != 'on' || !$user->is_admin) {
+	        $comparisonOperation = new ComparisonOperation('published', $operator, 'true');
+    	    $this->m_constraints[] = $comparisonOperation;
+	    }
 
-	    $articlesList = Article::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+	    $articlesList = Article::GetList($this->m_constraints, $this->m_order,
+	    $p_start, $p_limit, $p_count);
 	    $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
 	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),
@@ -99,7 +115,7 @@ class ArticlesList extends ListObject
 	            case 1: // reading the parameter name
 	                $attribute = strtolower($word);
 	                if (!array_key_exists($attribute, ArticlesList::$s_parameters)) {
-	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_articles, constraints parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid parameter $word in list_articles.constraints");
 	                    break;
 	                }
 	                if ($attribute == 'keyword') {
@@ -140,7 +156,7 @@ class ArticlesList extends ListObject
 	                    $operator = new Operator($word, $type);
 	                }
 	                catch (InvalidOperatorException $e) {
-    	                CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_articles, constraints parameter");
+    	                CampTemplate::singleton()->trigger_error("invalid operator $word of parameter $attribute in statement list_articles.constraints");
 	                    $state = 1;
 	                    break;
 	                }
@@ -149,29 +165,27 @@ class ArticlesList extends ListObject
 	            case 3: // reading the value to compare against
 	                $type = ArticlesList::$s_parameters[$attribute]['type'];
 	                $metaClassName = 'Meta'.ucfirst(strtolower($type));
-	                try {
-	                    $valueObj = new $metaClassName($word);
-       	                if ($attribute == 'type') {
-                            $word = ucfirst(strtolower($word));
-       	                    $articleType = new ArticleType($word);
-       	                    if (!$articleType->exists()) {
-       	                        throw new InvalidValueException($word, 'article type');
-       	                    }
-       	                    $value = $word;
-       	                } elseif ($attribute = 'topic') {
-       	                    $topicObj = new Topic($word);
-       	                    if (!$topicObj->exists()) {
-       	                        throw new InvalidValueException($word, 'topic');
-       	                    }
-       	                    $value = $topicObj->getTopicId();
-       	                } else {
-       	                    $value = $word;
+	                $valueObj = new $metaClassName($word);
+       	            if ($attribute == 'type') {
+                        $word = ucfirst(strtolower($word));
+       	                $articleType = new ArticleType($word);
+       	                if (!$articleType->exists()) {
+	                        CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_articles");
        	                }
-       	                $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
-    	                $parameters[] = $comparisonOperation;
-	                } catch (InvalidValueException $e) {
-	                    CampTemplate::singleton()->trigger_error("invalid value $word of attribute $attribute in list_articles, constraints parameter");
-	                }
+       	                $value = $word;
+       	            } elseif ($attribute == 'topic') {
+       	                $topicObj = new Topic($word);
+       	                if (!$topicObj->exists()) {
+	                        CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_articles");
+	                        $value = 0;
+       	                } else {
+       	                    $value = $topicObj->getTopicId();
+       	                }
+       	            } else {
+       	                $value = $word;
+       	            }
+       	            $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
+    	            $parameters[] = $comparisonOperation;
 	                $state = 1;
 	                break;
 	        }

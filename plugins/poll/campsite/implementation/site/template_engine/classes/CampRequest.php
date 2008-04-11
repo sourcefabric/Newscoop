@@ -43,6 +43,13 @@ final class CampRequest
      * Template identifier parameter name
      */
     const TEMPLATE_ID = 'tpl';
+    
+    /**
+     * Stores the input parameters 
+     *
+     * @var array
+     */
+    private static $m_input = array();
 
 
     /**
@@ -78,31 +85,12 @@ final class CampRequest
     public static function GetVar($p_varName, $p_defaultValue = null,
                                   $p_reqMethod = 'default', $p_dataType = null)
     {
-        $p_reqMethod = strtoupper($p_reqMethod);
-        if ($p_reqMethod == 'SERVER') {
-            $p_reqMethod = strtoupper($_SERVER['REQUEST_METHOD']);
-        }
-        $p_dataType = strtoupper($p_dataType);
-        switch ($p_reqMethod) {
-        case 'GET':
-            $method = &$_GET;
-            break;
-        case 'POST':
-            $method = &$_POST;
-            break;
-        case 'FILES':
-            $method = &$_FILES;
-            break;
-        case 'COOKIE':
-            $method = &$_COOKIE;
-            break;
-        default:
-            $method = &$_REQUEST;
-            break;
-        }
+        CampRequest::TranslateMethod($p_reqMethod);
+        CampRequest::InitInput($p_reqMethod);
 
-        if (isset($method[$p_varName]) && !is_null($method[$p_varName])) {
-            $var = $method[$p_varName];
+        if (isset(CampRequest::$m_input[$p_reqMethod][$p_varName])
+        && !is_null(CampRequest::$m_input[$p_reqMethod][$p_varName])) {
+            $var = CampRequest::$m_input[$p_reqMethod][$p_varName];
         } else {
             $var = $p_defaultValue;
         }
@@ -128,71 +116,107 @@ final class CampRequest
     public static function SetVar($p_varName, $p_varValue = null,
                                   $p_reqMethod = 'default', $p_overwrite = true)
     {
-        if (!$p_overwrite && isset($_REQUEST[$p_varName])) {
-            return $_REQUEST[$p_varName];
+        CampRequest::TranslateMethod($p_reqMethod);
+        CampRequest::InitInput($p_reqMethod);
+        if (!$p_overwrite && isset(CampRequest::$m_input[$p_reqMethod][$p_varName])) {
+            return CampRequest::$m_input[$p_reqMethod][$p_varName];
         }
 
-        $p_reqMethod = strtoupper($p_reqMethod);
-        if ($p_reqMethod == 'SERVER') {
-            $p_reqMethod = strtoupper($_SERVER['REQUEST_METHOD']);
-        }
-
-        switch ($p_reqMethod) {
-        case 'GET':
-            $_GET[$p_varName] = $p_varValue;
-            $_REQUEST[$p_varName] = $p_varValue;
-            break;
-        case 'POST':
-            $_POST[$p_varName] = $p_varValue;
-            $_REQUEST[$p_varName] = $p_varValue;
-            break;
-        case 'FILES':
-            $_FILES[$p_varName] = $p_varValue;
-            $_REQUEST[$p_varName] = $p_varValue;
-            break;
-        case 'COOKIE':
-            $_COOKIE[$p_varName] = $p_varValue;
-            $_REQUEST[$p_varName] = $p_varValue;
-            break;
-        case 'FILES':
-            $_FILES[$p_varName] = $p_varValue;
-            $_REQUEST[$p_varName] = $p_varValue;
-            break;
-        default:
-            $_GET[$p_varName] = $p_varValue;
-            $_POST[$p_varName] = $p_varValue;
-            $_REQUEST[$p_varName] = $p_varValue;
-            break;
+        CampRequest::$m_input[$p_reqMethod][$p_varName] = $p_varValue;
+        if ($p_reqMethod == 'DEFAULT') {
+            CampRequest::InitInput('get');
+            CampRequest::InitInput('post');
+            if (!is_null($p_varValue)) {
+                CampRequest::$m_input['GET'][$p_varName] = $p_varValue;
+                CampRequest::$m_input['POST'][$p_varName] = $p_varValue;
+            } else {
+                unset(CampRequest::$m_input['GET'][$p_varName]);
+                unset(CampRequest::$m_input['POST'][$p_varName]);
+            }
+        } else {
+            CampRequest::InitInput('DEFAULT');
+            if (!is_null($p_varValue)) {
+                CampRequest::$m_input['DEFAULT'][$p_varName] = $p_varValue;
+            } else {
+                unset(CampRequest::$m_input['DEFAULT'][$p_varName]);
+            }
         }
     } // fn SetVar
 
 
+    /**
+     * Returns the whole parameters array for the given input method.
+     *
+     * @param string $p_reqMethod
+     * @return array
+     */
     public static function GetInput($p_reqMethod = 'default')
     {
-        $input = array();
-
-        $p_reqMethod = strtoupper($p_reqMethod);
-        switch($p_reqMethod) {
-        case 'GET':
-            $input = $_GET;
-            break;
-        case 'POST':
-            $input = $_POST;
-            break;
-        case 'COOKIE':
-            $input = $_COOKIE;
-            break;
-        case 'FILES':
-            $input = $_POST;
-            break;
-        default:
-            $input = $_REQUEST;
-            break;
-        }
-
-        return $input;
+        CampRequest::TranslateMethod($p_reqMethod);
+        CampRequest::InitInput($p_reqMethod);
+        return CampRequest::$m_input[$p_reqMethod];
     } // fn GetInput
 
+    
+    /**
+     * Returns the method used to read the input data: GET, POST etc.
+     *
+     * @return string
+     */
+    public static function GetMethod() {
+        return $_SERVER['REQUEST_METHOD'];
+    }
+    
+    /**
+     * Initializes the input parameters array
+     *
+     * @param string $p_reqMethod
+     */
+    private static function InitInput($p_reqMethod) {
+        CampRequest::TranslateMethod($p_reqMethod);
+        switch($p_reqMethod) {
+        case 'GET':
+            $input = &$_GET;
+            break;
+        case 'POST':
+            $input = &$_POST;
+            break;
+        case 'COOKIE':
+            $input = &$_COOKIE;
+            break;
+        case 'FILES':
+            $input = &$_FILES;
+            break;
+        case 'DEFAULT':
+            $input = &$_REQUEST;
+            break;
+        default:
+            return;
+        }
+        if (!isset(CampRequest::$m_input[$p_reqMethod])) {
+            require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+            CampRequest::$m_input[$p_reqMethod] = Input::CleanMagicQuotes($input);
+        }
+    }
+
+
+    /**
+     * Returns a valid input method name
+     *
+     * @param string &$p_reqMethod
+     * @return string
+     */
+    private static function TranslateMethod(&$p_reqMethod) {
+        $p_reqMethod = strtoupper($p_reqMethod);
+        if ($p_reqMethod == 'SERVER') {
+            $p_reqMethod = strtoupper($_SERVER['REQUEST_METHOD']);
+        }
+        if ($p_reqMethod != 'GET' && $p_reqMethod != 'POST'
+        && $p_reqMethod != 'FILES' && $p_reqMethod != 'COOKIE') {
+            $p_reqMethod = 'DEFAULT';
+        }
+        return $p_reqMethod;
+    }
 
 } // class CampRequest
 

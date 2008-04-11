@@ -1,11 +1,12 @@
 <?php 
-regGS("Synchronize Campsite and Phorum users", "");
-regGS("Campsite and Phorum users were synchronized", "");
-regGS("Your user is not a valid Campcaster user", "");
-regGS("Connection refused", "");
-regGS("An error occured in session management. Please reload the login page.", "");
-regGS("This file is stored on disk as '$1'.", "");
-regGS("Instance", "");
+regGS("The system was unable to upload the file '$1'. ", "Eroare la transferul fişierului '$1'.");
+regGS("Please check the file you are trying to upload, it might be corrupted.", "Verificaţi validiteatea fişierului; ar putea fi corupt.");
+regGS("Synchronize Campsite and Phorum users", "Sincronizare utilizatori Campsite-Phorum");
+regGS("Campsite and Phorum users were synchronized", "Utilizatorii Campsite-Phorum au fost sincronizaţi");
+regGS("Your user is not a valid Campcaster user", "Numele de utilizator nu e valid în aplicaţia Campcaster");
+regGS("Connection refused", "Conexiune refuzată");
+regGS("An error occured in session management. Please reload the login page.", "A apărut o eroare la evidenţa sesiunilor. Reîncărcaţi pagina.");
+regGS("This file is stored on disk as '$1'.", "Fişierul e stocat pe disc sub numele '$1'.");
 regGS("The system is unable to write to the directory '$1'.", "Sistemul nu a putut scrie datele în directorul '$1'.");
 regGS("The system was unable to read the file '$1'.", "Sistemul nu a putut citi datele din fişierul '$1'.");
 regGS("The system was unable to delete the directory '$1'.", "Sistemul nu a putut şteargă datele din directorul '$1'.");

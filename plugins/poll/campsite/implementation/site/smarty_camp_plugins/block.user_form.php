@@ -30,22 +30,33 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     $camp = $p_smarty->get_template_vars('campsite');
     $html = '';
 
-    if (!isset($p_params['template'])) {
-        return false;
+    $template = null;
+    if (isset($p_params['template'])) {
+        $template = new MetaTemplate($p_params['template']);
+        if (!$template->defined()) {
+            $template = null;
+        }
     }
+    $templateId = is_null($template) ? $camp->template->identifier : $template->identifier;
     if (!isset($p_params['submit_button'])) {
         $p_params['submit_button'] = 'Submit';
     }
 
     if (isset($p_content)) {
+        $url = $camp->url;
+        $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
         $subsType = $camp->subscription->type == 'T' ? 'trial' : 'paid';
-        $html = "<form name=\"user\" action=\"\" method=\"post\">\n"
-            ."<input type=\"hidden\" name=\"f_tpl\" value=\"\" />\n"
-            ."<input type=\"hidden\" name=\"f_substype\" value=\"".$subsType."\" />\n";
+        $html = "<form name=\"edit_user\" action=\"" . $url->uri_path . "\" method=\"post\">\n"
+        ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n"
+        ."<input type=\"hidden\" name=\"f_substype\" value=\"".$subsType."\" />\n";
+        foreach ($camp->url->form_parameters as $param) {
+            $html .= '<input type="hidden" name="'.$param['name']
+                .'" value="'.htmlentities($param['value'])."\" />\n";
+        }
         $html.= $p_content;
-        $html.= "<input type=\"submit\" name=\"f_useradd\" value=\""
-            .smarty_function_escape_special_chars($p_params['submit_button'])
-            ."\" />\n</form>\n";
+        $html.= "<input type=\"submit\" name=\"f_edit_user\" value=\""
+        .smarty_function_escape_special_chars($p_params['submit_button'])
+        ."\" />\n</form>\n";
     }
 
     return $html;

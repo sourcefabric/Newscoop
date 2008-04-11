@@ -30,9 +30,13 @@ function smarty_block_login_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     $campsite = $p_smarty->get_template_vars('campsite');
     $html = '';
 
-    //if (!isset($p_params['template'])) {
-    //return false;
-    //}
+    if (isset($p_params['template'])) {
+        $template = new MetaTemplate($p_params['template']);
+        if (!$template->defined()) {
+            $template = null;
+        }
+    }
+    $templateId = is_null($template) ? $campsite->template->identifier : $template->identifier;
     if (!isset($p_params['submit_button'])) {
         $p_params['submit_button'] = 'Submit';
     }
@@ -41,8 +45,14 @@ function smarty_block_login_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     }
 
     if (isset($p_content)) {
-        $html = "<form name=\"login\" action=\"\" method=\"post\">\n"
-            ."<input type=\"hidden\" name=\"f_tpl\" value=\"27\" />\n";
+        $url = $campsite->url;
+        $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
+        $html = "<form name=\"login\" action=\"" . $url->uri_path . "\" method=\"post\">\n"
+            ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n";
+        foreach ($campsite->url->form_parameters as $param) {
+            $html .= '<input type="hidden" name="'.$param['name']
+                .'" value="'.htmlentities($param['value'])."\" />\n";
+        }
         $html .= $p_content;
         $html .= "<div align=\"center\">";
         $html .= "<input type=\"submit\" name=\"f_login\" value=\""

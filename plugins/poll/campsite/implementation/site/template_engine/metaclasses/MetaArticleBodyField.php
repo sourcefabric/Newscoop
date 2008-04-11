@@ -7,6 +7,14 @@
 
 final class MetaArticleBodyField {
     /**
+     * Stores the number of the subtitle that has to be displayed
+     *
+     * @var int
+     */
+    private $m_subtitleNumber;
+
+
+    /**
      * Stores the subtitle objects
      *
      * @var array of MetaSubtitle
@@ -27,23 +35,43 @@ final class MetaArticleBodyField {
      *
      * @param string $p_content
      */
-    public function MetaArticleBodyField($p_content, $p_articleName, $p_bodyField,
-                                         $p_headerFormatStart = null,
-                                         $p_headerFormatEnd = null) {
-//        if (!$p_article->defined) {
-//            return;
-//        }
-//        try {
-//            $content = $p_article->$p_bodyField;
-//        } catch (InvalidPropertyException $ex) {
-//            return;
-//        }
-        $this->m_subtitles = MetaSubtitle::ReadSubtitles($p_content, $p_articleName,
-                                                         $p_headerFormatStart,
-                                                         $p_headerFormatEnd);
+    public function MetaArticleBodyField($p_content, $p_fieldName, $p_articleName,
+    $p_subtitleNumber = null, $p_headerFormatStart = null, $p_headerFormatEnd = null) {
+        $this->m_subtitleNumber = $p_subtitleNumber;
+        $this->m_subtitles = MetaSubtitle::ReadSubtitles($p_content, $p_fieldName, $p_articleName,
+        $p_headerFormatStart, $p_headerFormatEnd);
         $this->m_sutitlesNames = array();
         foreach ($this->m_subtitles as $subtitle) {
-            $this->m_sutitlesNames = $subtitle->getName();
+            $this->m_sutitlesNames = $subtitle->name;
+        }
+    }
+
+
+    public function __toString() {
+        return $this->getContent(!is_null($this->m_subtitleNumber) ? array($this->m_subtitleNumber) : array());
+    }
+
+
+    public function __get($p_property) {
+        switch (strtolower($p_property)) {
+            case 'subtitles_count': return $this->getSubtitlesCount();
+            case 'subtitle_number': return $this->m_subtitleNumber;
+            case 'subtitle_is_current':
+                return $this->m_subtitleNumber == CampTemplate::singleton()->context()->subtitle->number
+                && !is_null($this->m_subtitleNumber);
+            case 'has_previous_subtitles':
+                if (is_null($this->m_subtitleNumber)) {
+                    return null;
+                }
+                return (int)($this->m_subtitleNumber > 0);
+            case 'has_next_subtitles':
+                if (is_null($this->m_subtitleNumber)) {
+                    return null;
+                }
+                return (int)($this->m_subtitleNumber < ($this->getSubtitlesCount() - 1));
+            default:
+                $this->trigger_invalid_property_error($p_property);
+                return null;
         }
     }
 
@@ -54,16 +82,16 @@ final class MetaArticleBodyField {
      * @param array $p_subtitles
      * @return string
      */
-    public function getContent(array $p_subtitles = array())
+    private function getContent(array $p_subtitles = array())
     {
-        $printAll = empty($p_subtitles);
+        $printAll = count($p_subtitles) == 0;
         $content = '';
         foreach ($this->m_subtitles as $index=>$subtitle) {
             if (!$printAll && array_search($index, $p_subtitles) === false) {
                 continue;
             }
-            $content .= $index > 0 ? $subtitle->getFormattedName() : '';
-            $content .= $subtitle->getContent();
+            $content .= $index > 0 ? $subtitle->formatted_name : '';
+            $content .= $subtitle->content;
         }
         return $content;
     }
@@ -74,8 +102,18 @@ final class MetaArticleBodyField {
      *
      * @return array of MetaSubtitle
      */
-    public function getSubtitles() {
+    private function getSubtitles() {
         return $this->m_subtitles;
+    }
+
+
+    /**
+     * Returns the total number of subtitles
+     *
+     * @return int
+     */
+    private function getSubtitlesCount() {
+        return count($this->m_subtitles);
     }
 
 
@@ -84,7 +122,7 @@ final class MetaArticleBodyField {
      *
      * @return array of string
      */
-    public function getSubtitlesNames() {
+    private function getSubtitlesNames() {
         return $this->m_sutitlesNames;
     }
 }

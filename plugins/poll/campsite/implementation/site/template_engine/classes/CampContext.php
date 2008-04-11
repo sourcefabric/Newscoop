@@ -31,33 +31,43 @@ final class CampContext
 								    'image'=>array('class'=>'Image'),
 								    'attachment'=>array('class'=>'Attachment'),
 								    'audioclip'=>array('class'=>'Audioclip'),
-								    'comment'=>array('class'=>'Comment'),
-								    'subtitle'=>array('class'=>'Subtitle'),
+								    'comment'=>array('class'=>'Comment',
+								    				 'handler'=>'setCommentHandler'),
+								    'subtitle'=>array('class'=>'Subtitle',
+                                                      'handler'=>'setSubtitleHandler'),
 								    'topic'=>array('class'=>'Topic'),
 								    'user'=>array('class'=>'User'),
-								    'template'=>array('class'=>'Template'),
-								    'subscription'=>array('class'=>'Subscription')
+								    'template'=>array('class'=>'Template')
     );
 
     // Defines the list objects
     private $m_listObjects = array(
-	                         'issues'=>array('class'=>'Issues', 'list'=>'issues'),
-	                         'sections'=>array('class'=>'Sections', 'list'=>'sections'),
-	                         'articles'=>array('class'=>'Articles', 'list'=>'articles'),
+	                         'issues'=>array('class'=>'Issues', 'list'=>'issues',
+	                         				 'url_id'=>'iss'),
+	                         'sections'=>array('class'=>'Sections', 'list'=>'sections',
+	                         				   'url_id'=>'sec'),
+	                         'articles'=>array('class'=>'Articles', 'list'=>'articles',
+	                         				   'url_id'=>'art'),
 	                         'articleimages'=>array('class'=>'ArticleImages',
-	                                                'list'=>'article_images'),
+	                                                'list'=>'article_images',
+	                                                'url_id'=>'aim'),
     						 'articleattachments'=>array('class'=>'ArticleAttachments',
-	                                                     'list'=>'article_attachments'),
+	                                                     'list'=>'article_attachments',
+	                                                     'url_id'=>'aat'),
 	                         'articleaudioattachments'=>array('class'=>'ArticleAudioAttachments',
-	                                                          'list'=>'article_audio_attachments'),
+	                                                          'list'=>'article_audio_attachments',
+	                                                          'url_id'=>'aau'),
     						 'articlecomments'=>array('class'=>'ArticleComments',
-	                                                  'list'=>'article_comments'),
-	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles'),
+	                                                  'list'=>'article_comments',
+	                                                  'url_id'=>'acm'),
+	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles',
+                                                'url_id'=>'st'),
     						 'articletopics'=>array('class'=>'ArticleTopics',
-	                                                'list'=>'article_topics'),
+	                                                'list'=>'article_topics', 'url_id'=>'atp'),
 	                         'searchresults'=>array('class'=>'SearchResults',
-	                                                'list'=>'search_results'),
-	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics')
+	                                                'list'=>'search_results', 'url_id'=>'src'),
+	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics',
+	                         					'url_id'=>'tp')
     );
 
     /**
@@ -101,19 +111,20 @@ final class CampContext
      */
     final public function __construct()
     {
+        global $Campsite;
+
         if (!is_null($this->m_properties)) {
             return;
         }
 
         $this->m_properties['htmlencoding'] = false;
-        $this->m_properties['body_field_article_type'] = null;
-        $this->m_properties['body_field_name'] = null;
+        $this->m_properties['subs_by_type'] = null;
 
+        $this->m_readonlyProperties['version'] = $Campsite['VERSION'];
+
+        $this->m_readonlyProperties['current_list'] = null;
         $this->m_readonlyProperties['lists'] = array();
-        $this->m_readonlyProperties['issues_lists'] = array();
-        $this->m_readonlyProperties['sections_lists'] = array();
-        $this->m_readonlyProperties['articles_lists'] = array();
-        $this->m_readonlyProperties['article_attachments_lists'] = array();
+        $this->m_readonlyProperties['prev_list_empty'] = null;
 
         $url = new MetaURL();
         $this->m_readonlyProperties['url'] = new MetaURL();
@@ -122,7 +133,12 @@ final class CampContext
         $this->issue = $url->issue;
         $this->section = $url->section;
         $this->article = $url->article;
+        $this->template = $url->template;
+        if (is_numeric($url->get_parameter('tpid'))) {
+            $this->topic = new MetaTopic($url->get_parameter('tpid'));
+        }
 
+        $this->m_readonlyProperties['default_template'] = $this->template;
         $this->m_readonlyProperties['default_language'] = $this->language;
         $this->m_readonlyProperties['default_publication'] = $this->publication;
         $this->m_readonlyProperties['default_issue'] = $this->issue;
@@ -130,29 +146,35 @@ final class CampContext
         $this->m_readonlyProperties['default_article'] = $this->article;
         $this->m_readonlyProperties['default_topic'] = $this->topic;
         $this->m_readonlyProperties['default_url'] = new MetaURL();
-        
+
+        if (!is_null($commentId = CampRequest::GetVar('acid'))) {
+            $this->m_objects['comment'] = new MetaComment($commentId);
+        }
+
         $userId = CampRequest::GetVar('LoginUserId');
         if (!is_null($userId)) {
             $user = new User($userId);
             if ($user->exists()
             && $user->getKeyId() == CampRequest::GetVar('LoginUserKey')) {
-                $this->user = new MetaUser($userId);
+                $this->m_objects['user'] = new MetaUser($userId);
             }
         }
 
-        $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput());
+        $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput(CampRequest::GetMethod()));
         $this->m_readonlyProperties['request_action']->takeAction($this);
 
-        $availableActions = CampContext::ReadAvailableActions();
-        foreach (CampContext::ReadAvailableActions() as $actionName) {
-            $actionName = strtolower($actionName);
-            $propertyName = CampContext::TranslateProperty($actionName . '_action');
-            if ($this->m_readonlyProperties['request_action']->name == $actionName) {
+        foreach (MetaAction::ReadAvailableActions() as $actionNameCase=>$actionAttributes) {
+            $propertyName = CampContext::TranslateProperty($actionNameCase . '_action');
+            if ($this->m_readonlyProperties['request_action']->name == $actionNameCase) {
                 $this->m_readonlyProperties[$propertyName] =& $this->m_readonlyProperties['request_action'];
             } else {
                 $this->m_readonlyProperties[$propertyName] = MetaAction::CreateAction(array());
             }
         }
+
+        // Initialize the default comment attribute at the end, after the
+        // submit comment action had run.
+        $this->m_readonlyProperties['default_comment'] = $this->comment;
     } // fn __construct
 
 
@@ -227,20 +249,20 @@ final class CampContext
                     throw new InvalidObjectException($p_element);
                 }
 
-                if (!isset($this->m_objects[$p_element])
-                || $this->m_objects[$p_element] != $p_value) {
-                    if (isset($this->m_objects[$p_element])) {
-                        $oldValue = $this->m_objects[$p_element];
-                    } else {
-                        $oldValue = new $metaclass;
-                    }
-                    $this->m_objects[$p_element] = $p_value;
-                    if (isset(CampContext::$m_objectTypes[$p_element]['handler'])) {
-                        $setHandler = CampContext::$m_objectTypes[$p_element]['handler'];
-                        $this->$setHandler(is_null($oldValue) ? new $metaclass : $oldValue);
-                    }
-                    $this->m_readonlyProperties['url']->$p_element = $p_value;
+                if (isset($this->m_objects[$p_element])
+                && !is_null($this->m_objects[$p_element])) {
+                    $oldValue = $this->m_objects[$p_element];
+                } else {
+                    $oldValue = new $metaclass;
                 }
+
+                if (isset(CampContext::$m_objectTypes[$p_element]['handler'])) {
+                    $setHandler = CampContext::$m_objectTypes[$p_element]['handler'];
+                    $this->$setHandler($oldValue, $p_value);
+                } else {
+                    $this->m_objects[$p_element] = $p_value;
+                }
+
                 return $this->m_objects[$p_element];
             } catch (InvalidObjectException $e) {
                 $this->trigger_invalid_object_error($e->getClassName());
@@ -267,6 +289,7 @@ final class CampContext
      */
     public function hasProperty($p_property)
     {
+        $p_property = CampContext::TranslateProperty($p_property);
         return !is_null(CampContext::ObjectType($p_property))
         || (is_array($this->m_properties)
         && array_key_exists($p_property, $this->m_properties))
@@ -432,6 +455,8 @@ final class CampContext
             throw new InvalidObjectException(get_class($p_list));
         }
 
+        $p_list->setId($this->next_list_id($listObjectName));
+
    	    $this->SaveProperties($p_savePropertiesList);
 
    	    $listName = $this->m_listObjects[$objectName]['list'];
@@ -454,18 +479,78 @@ final class CampContext
             return;
         }
 
-        $this->RestoreProperties();
+        $this->m_readonlyProperties['prev_list_empty'] = (int)($this->m_readonlyProperties['current_list']->count == 0);
 
-   	    $this->m_readonlyProperties['current_list'] = array_pop($this->m_readonlyProperties['lists']);
+        $this->RestoreProperties();
 
         $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
         $listName = $this->m_listObjects[$objectName]['list'];
 
+        array_pop($this->m_readonlyProperties['lists']);
+   	    $this->m_readonlyProperties['current_list'] = array_pop($this->m_readonlyProperties['lists']);
+
         if (count($this->m_readonlyProperties[$listName.'_lists']) == 0) {
             return;
         }
+        array_pop($this->m_readonlyProperties[$listName.'_lists']);
        	$this->m_readonlyProperties['current_'.$listName.'_list'] = array_pop($this->m_readonlyProperties[$listName.'_lists']);
     } // fn resetCurrentList
+
+
+    /**
+     * Returns the corresponding id for the current list
+     *
+     * @return int - the current list identifier
+     */
+    public function current_list_id() {
+        $listName = $this->m_listObjects[$objectName]['list'];
+        if (!isset($this->m_readonlyProperties['current_list'])) {
+            return null;
+        }
+        return $this->m_readonlyProperties['current_list']->id;
+    }
+
+
+    /**
+     * Returns the corresponding id for a new list of the given type
+     *
+     * @param string $p_className
+     */
+    public function next_list_id($p_className) {
+        $objectName = $this->GetListObjectName($p_className);
+        if (is_null($objectName) || $objectName == '') {
+            return null;
+        }
+        $listName = $this->m_listObjects[$objectName]['list'];
+        $prefix = 'ls-'.$this->m_listObjects[$objectName]['url_id'];
+        if (!isset($this->m_readonlyProperties[$listName.'_lists'])) {
+            return $prefix . '0';
+        }
+        return $prefix . count($this->m_readonlyProperties[$listName.'_lists']);
+    }
+
+
+    public function list_id_prefix($p_className) {
+        $objectName = $this->GetListObjectName($p_className);
+        if (is_null($objectName) || $objectName == '') {
+            return null;
+        }
+        return 'ls-'.$this->m_listObjects[$objectName]['url_id'];
+    }
+
+
+    /**
+     * Returns the corresponding list start index for a new list of the given type
+     *
+     * @param string $p_className
+     */
+    public function next_list_start($p_className) {
+        $nextListId = $this->next_list_id($p_className);
+        if (is_null($nextListId)) {
+            return null;
+        }
+        return $this->m_readonlyProperties['default_url']->get_parameter($nextListId);
+    }
 
 
     /**
@@ -585,12 +670,103 @@ final class CampContext
     
 
     /**
+     * Returns the language defined in the current context; if it
+     * wasn't defined it initializes the language by an empty object.
+     * This method was defined because it's faster than using the
+     * magic method __get().
+     *
+     * @return MetaIssue
+     */
+    final protected function getLanguage() {
+        if (!isset($this->m_objects['language'])) {
+            $this->createObject('language');
+        }
+        return $this->m_objects['language'];
+    }
+
+
+    /**
+     * Returns the publication defined in the current context; if it
+     * wasn't defined it initializes the publication by an empty object.
+     * This method was defined because it's faster than using the
+     * magic method __get().
+     *
+     * @return MetaPublication
+     */
+    final protected function getPublication() {
+        if (!isset($this->m_objects['publication'])) {
+            $this->createObject('publication');
+        }
+        return $this->m_objects['publication'];
+    }
+
+
+    /**
+     * Returns the issue defined in the current context; if it
+     * wasn't defined it initializes the issue by an empty object.
+     * This method was defined because it's faster than using the
+     * magic method __get().
+     *
+     * @return MetaIssue
+     */
+    final protected function getIssue() {
+        if (!isset($this->m_objects['issue'])) {
+            $this->createObject('issue');
+        }
+        return $this->m_objects['issue'];
+    }
+
+
+    /**
+     * Returns the section defined in the current context; if it
+     * wasn't defined it initializes the section by an empty object.
+     * This method was defined because it's faster than using the
+     * magic method __get().
+     *
+     * @return MetaIssue
+     */
+    final protected function getSection() {
+        if (!isset($this->m_objects['section'])) {
+            $this->createObject('section');
+        }
+        return $this->m_objects['section'];
+    }
+
+
+    /**
+     * Returns the article defined in the current context; if it
+     * wasn't defined it initializes the article by an empty object.
+     * This method was defined because it's faster than using the
+     * magic method __get().
+     *      *
+     * @return MetaIssue
+     */
+    final protected function getArticle() {
+        if (!isset($this->m_objects['article'])) {
+            $this->createObject('article');
+        }
+        return $this->m_objects['article'];
+    }
+
+
+    /**
      * Handler for the language change event.
      *
      * @param MetaLanguage $p_oldLanguage
+     * @param MetaLanguage $p_newLanguage
      */
-    private function setLanguageHandler(MetaLanguage $p_oldLanguage)
+    private function setLanguageHandler(MetaLanguage $p_oldLanguage, MetaLanguage $p_newLanguage)
     {
+        static $languageHandlerRunning = false;
+        if ($languageHandlerRunning || $p_newLanguage == $p_oldLanguage) {
+            return;
+        }
+        $languageHandlerRunning = true;
+
+        $this->m_readonlyProperties['url']->language = $p_newLanguage;
+        $this->m_objects['language'] = $p_newLanguage;
+
+        $languageHandlerRunning = false;
     }
 
 
@@ -598,17 +774,25 @@ final class CampContext
      * Handler for the publication change event.
      *
      * @param MetaPublication $p_oldPublication
+     * @param MetaPublication $p_newPublication
      */
-    private function setPublicationHandler(MetaPublication $p_oldPublication)
+    private function setPublicationHandler(MetaPublication $p_oldPublication,
+    MetaPublication $p_newPublication)
     {
-        $this->m_readonlyProperties['url']->issue = null;
-        $this->m_readonlyProperties['url']->section = null;
-        $this->m_readonlyProperties['url']->article = null;
-        $this->m_readonlyProperties['url']->subtitle = null;
-        $this->m_readonlyProperties['url']->image = null;
-        $this->m_readonlyProperties['url']->attachment = null;
-        $this->m_readonlyProperties['url']->audioclip = null;
-        $this->m_readonlyProperties['url']->comment = null;
+        static $publicationHandlerRunning = false;
+        if ($publicationHandlerRunning || $p_newPublication == $p_oldPublication) {
+            return;
+        }
+        $publicationHandlerRunning = true;
+
+        if ($p_newPublication->defined() && !$this->getLanguage()->defined()) {
+            $this->setLanguageHandler($this->getLanguage(), $p_newPublication->default_language);
+        }
+        $this->setIssueHandler($this->getIssue(), new MetaIssue());
+        $this->m_readonlyProperties['url']->publication = $p_newPublication;
+        $this->m_objects['publication'] = $p_newPublication;
+
+        $publicationHandlerRunning = false;
     }
 
 
@@ -616,22 +800,24 @@ final class CampContext
      * Handler for the issue change event.
      *
      * @param MetaIssue $p_oldIssue
+     * @param MetaIssue $p_newIssue
      */
-    private function setIssueHandler(MetaIssue $p_oldIssue)
+    private function setIssueHandler(MetaIssue $p_oldIssue, MetaIssue $p_newIssue)
     {
-        $this->m_readonlyProperties['url']->section = null;
-        $this->m_readonlyProperties['url']->article = null;
-        $this->m_readonlyProperties['url']->subtitle = null;
-        $this->m_readonlyProperties['url']->image = null;
-        $this->m_readonlyProperties['url']->attachment = null;
-        $this->m_readonlyProperties['url']->audioclip = null;
-        $this->m_readonlyProperties['url']->comment = null;
-        if (!$this->publication->defined) {
-            $this->publication = $this->issue->publication;
+        static $issueHandlerRunning = false;
+        if ($issueHandlerRunning || $p_newIssue == $p_oldIssue) {
+            return;
         }
-        if (!$this->language->defined) {
-            $this->language = $this->issue->language;
+        $issueHandlerRunning = true;
+
+        if ($p_newIssue->defined() && $this->getPublication() != $p_newIssue->publication) {
+            $this->setPublicationHandler($this->getPublication(), $p_newIssue->publication);
         }
+        $this->setSectionHandler($this->getSection(), new MetaSection());
+        $this->m_readonlyProperties['url']->issue = $p_newIssue;
+        $this->m_objects['issue'] = $p_newIssue;
+
+        $issueHandlerRunning = false;
     }
 
 
@@ -639,24 +825,24 @@ final class CampContext
      * Handler for the section change event.
      *
      * @param MetaSection $p_oldSection
+     * @param MetaSection $p_newSection
      */
-    private function setSectionHandler(MetaSection $p_oldSection)
+    private function setSectionHandler(MetaSection $p_oldSection, MetaSection $p_newSection)
     {
-        $this->m_readonlyProperties['url']->article = null;
-        $this->m_readonlyProperties['url']->subtitle = null;
-        $this->m_readonlyProperties['url']->image = null;
-        $this->m_readonlyProperties['url']->attachment = null;
-        $this->m_readonlyProperties['url']->audioclip = null;
-        $this->m_readonlyProperties['url']->comment = null;
-        if (!$this->publication->defined) {
-            $this->publication = $this->section->publication;
+        static $sectionHandlerRunning = false;
+        if ($sectionHandlerRunning || $p_newSection == $p_oldSection) {
+            return;
         }
-        if (!$this->language->defined) {
-            $this->language = $this->section->language;
+        $sectionHandlerRunning = true;
+
+        if ($p_newSection->defined() && $this->getIssue() != $p_newSection->issue) {
+            $this->setIssueHandler($this->getIssue(), $p_newSection->issue);
         }
-        if (!$this->issue->defined) {
-            $this->issue = $this->section->issue;
-        }
+        $this->setArticleHandler($this->getArticle(), new MetaArticle());
+        $this->m_readonlyProperties['url']->section = $p_newSection;
+        $this->m_objects['section'] = $p_newSection;
+
+        $sectionHandlerRunning = false;
     }
 
 
@@ -664,25 +850,53 @@ final class CampContext
      * Handler for the article change event.
      *
      * @param MetaArticle $p_oldArticle
+     * @param MetaArticle $p_newArticle
      */
-    private function setArticleHandler(MetaArticle $p_oldArticle)
+    private function setArticleHandler(MetaArticle $p_oldArticle, MetaArticle $p_newArticle)
     {
-        $this->m_readonlyProperties['url']->subtitle = null;
-        $this->m_readonlyProperties['url']->image = null;
-        $this->m_readonlyProperties['url']->attachment = null;
-        $this->m_readonlyProperties['url']->audioclip = null;
-        $this->m_readonlyProperties['url']->comment = null;
-        if (!$this->publication->defined) {
-            $this->publication = $this->article->publication;
+        static $articleHandlerRunning = false;
+        if ($articleHandlerRunning || $p_newArticle == $p_oldArticle) {
+            return;
         }
-        if (!$this->language->defined) {
-            $this->language = $this->article->language;
+        $articleHandlerRunning = true;
+
+        if ($p_newArticle->defined() && $this->getSection() != $p_newArticle->section) {
+            $this->setSectionHandler($this->getSection(), $p_newArticle->section);
         }
-        if (!$this->issue->defined) {
-            $this->issue = $this->article->issue;
+        $this->m_objects['subtitle'] = new MetaSubtitle();
+        $this->m_objects['image'] = new MetaImage();
+        $this->m_objects['attachment'] = new MetaAttachment();
+        $this->m_objects['audioclip'] = new MetaAudioclip();
+        $this->m_objects['comment'] = new MetaComment();
+        $this->m_readonlyProperties['url']->article = $p_newArticle;
+        $formParameters = $this->m_readonlyProperties['url']->form_parameters;
+        foreach ($formParameters as $parameter) {
+            if (strncmp($parameter['name'], 'st-', strlen('st-')) == 0) {
+                $this->m_readonlyProperties['url']->reset_parameter($parameter['name']);
+            }
         }
-        if (!$this->section->defined) {
-            $this->section = $this->article->section;
+        $this->m_objects['article'] = $p_newArticle;
+
+        $articleHandlerRunning = false;
+    }
+
+
+    /**
+     * Handler for the comment change event.
+     *
+     * @param MetaComment $p_oldComment
+     * @param MetaComment $p_newComment
+     */
+    private function setCommentHandler(MetaComment $p_oldComment, MetaComment $p_newComment) {
+        if ($p_oldComment != $p_newComment) {
+            $this->m_objects['comment'] = $p_newComment;
+        }
+    }
+
+
+    private function setSubtitleHandler(MetaSubtitle $p_oldSubtitle, MetaSubtitle $p_newSubtitle) {
+        if ($p_oldSubtitle != $p_newSubtitle) {
+            $this->m_objects['subtitle'] = $p_newSubtitle;
         }
     }
 
@@ -702,34 +916,6 @@ final class CampContext
             return 'Meta'.CampContext::$m_objectTypes[$p_property]['class'];
         }
         return null;
-    }
-
-
-    /**
-     * Searches for classes that process actions. Returns an array of
-     * action names.
-     *
-     * @return array
-     */
-    private static function ReadAvailableActions()
-    {
-        require_once('File/Find.php');
-
-        $actions = array();
-        $directoryPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses';
-        $actionIncludeFiles = File_Find::search('MetaAction*.php', $directoryPath, 'shell', false);
-        foreach ($actionIncludeFiles as $includeFile) {
-            require_once($includeFile);
-            if (preg_match('/MetaAction([^.]+)\.php/', $includeFile, $matches) == 0
-            || strtolower($matches[1]) == 'request') {
-                continue;
-            }
-            $actionName = $matches[1];
-            if (class_exists('MetaAction'.$actionName)) {
-                $actions[] = $actionName;
-            }
-        }
-        return $actions;
     }
 
 } // class CampContext

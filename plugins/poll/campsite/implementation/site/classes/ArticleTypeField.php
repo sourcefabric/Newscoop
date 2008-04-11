@@ -237,7 +237,9 @@ class ArticleTypeField {
 				$this->fetch($row[0]);
 			}
 		}
-		$this->m_fieldName = substr($this->Field, 1);
+		if (!empty($this->Field)) {
+    		$this->m_fieldName = substr($this->Field, 1);
+		}
 		$this->m_dbColumnName = 'F'.$this->m_fieldName;
 	} // fn fetch
 
@@ -594,7 +596,7 @@ class ArticleTypeField {
 	} // fn setName
 
 
-	/*
+	/**
 	 * Returns the highest weight + 1 or 0 for the starter
 	 *
 	 * @return int
@@ -664,7 +666,7 @@ class ArticleTypeField {
 	} // fn setOrders
 
 
-	/*
+	/**
      * Reorders the current field; accepts either "up" or "down"
      *
      * @param string move (up|down)

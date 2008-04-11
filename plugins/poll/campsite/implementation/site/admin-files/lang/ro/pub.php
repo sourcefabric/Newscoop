@@ -1,6 +1,6 @@
 <?php 
-regGS("Moderator Address", "");
-regGS("From Address", "");
+regGS("Moderator Address", "Adresa moderatorului");
+regGS("From Address", "Adresa de la care se trimite");
 regGS("Use CAPTCHA to prevent spam?", "Vrei să foloseşti CAPTCHA pentru a opri mesajele nesolicitate?");
 regGS("Public allowed to comment?", "Comentariile publice sunt permise?");
 regGS("Enable spam blocking?", "Activezi blocarea mesajelor nesolicitate?");

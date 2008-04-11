@@ -31,7 +31,7 @@ function smarty_block_list_article_attachments($p_params, $p_content, &$p_smarty
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 0;
+        $start = $campContext->next_list_start('ArticleAttachmentsList');
     	$articleAttachmentsList = new ArticleAttachmentsList($start, $p_params);
     	$campContext->setCurrentList($articleAttachmentsList, array('attachment'));
     }

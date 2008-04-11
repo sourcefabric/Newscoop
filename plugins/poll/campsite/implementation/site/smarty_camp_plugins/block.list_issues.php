@@ -31,7 +31,7 @@ function smarty_block_list_issues($p_params, $p_content, &$p_smarty, &$p_repeat)
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 0;
+        $start = $campContext->next_list_start('IssuesList');
     	$issuesList = new IssuesList($start, $p_params);
     	$campContext->setCurrentList($issuesList, array('publication', 'language',
     	                                                'issue', 'section', 'article',

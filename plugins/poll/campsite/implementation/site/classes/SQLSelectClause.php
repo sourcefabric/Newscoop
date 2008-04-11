@@ -4,7 +4,7 @@
  *
  * @author Holman Romero <holman.romero@gmail.com>
  * @author Sebastian Goebel <devel@yellowsunshine.de>
- * @copyright 2007 MDLF, Inc.
+ * @copyright 2008 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
  * @link http://www.campware.org
@@ -12,6 +12,7 @@
 
 define ('SQL', "SELECT %s\nFROM %s");
 define ('SQL_WHERE', "\nWHERE %s");
+define ('SQL_GROUP_BY', "\nGROUP BY %s");
 define ('SQL_ORDER_BY', "\nORDER BY %s");
 define ('SQL_LIMIT', "\nLIMIT %d, %d");
 define ('SQL_DISTINCT', 'DISTINCT(%s)');
@@ -53,6 +54,20 @@ class SQLSelectClause {
      * @var array
      */
     private $m_where = null;
+    
+    /**
+     * Conditional where clauses (separated by 'OR' operator)
+     *
+     * @var array
+     */
+    private $m_conditionalWhere = null;
+    
+    /**
+     * Fields we want to group the result by.
+     *
+     * @var array
+     */
+    private $m_group = null;
 
     /**
      * The columns list and directions to order by.
@@ -162,6 +177,26 @@ class SQLSelectClause {
 
 
     /**
+     * Adds a conditional WHERE condition to the query (using 'OR' operator)
+     *
+     * @param string $p_condition
+     *      The comparison operation
+     *
+     * @return void
+     */
+    public function addConditionalWhere($p_condition)
+    {
+        $this->m_conditionalWhere[] = $p_condition;
+    } // fn addConditionalWhere
+    
+    
+    public function addGroupField($p_field)
+    {
+        $this->m_group[] = $p_field;
+    }
+
+
+    /**
      * Adds an ORDER BY condition to the query.
      *
      * @param string $p_order
@@ -237,6 +272,11 @@ class SQLSelectClause {
         $where = $this->buildWhere();
         if (strlen($where)) {
             $sql .= sprintf(SQL_WHERE, $where);
+        }
+        
+        $groupBy = $this->buildGroupBy();
+        if (!empty($groupBy)) {
+            $sql .= sprintf(SQL_GROUP_BY, $groupBy);
         }
 
         if (count($this->m_orderBy) > 0) {
@@ -347,8 +387,39 @@ class SQLSelectClause {
      */
     private function buildWhere()
     {
-        return implode("\n    AND ", $this->m_where);
+        $conditionalWhere = null;
+        if (is_array($this->m_conditionalWhere)) {
+            $conditionalWhere = implode("\n        OR ", $this->m_conditionalWhere);
+        }
+        $where = null;
+        if (is_array($this->m_where)) {
+            $where = implode("\n    AND ", $this->m_where);
+        }
+        if (empty($conditionalWhere) && empty($where)) {
+            return null;
+        }
+        if (empty($where)) {
+            return $conditionalWhere;
+        }
+        if (!empty($conditionalWhere)) {
+            $where .= "\n    AND (" . $conditionalWhere . ")";
+        }
+        return $where;
     } // fn buildWhere
+    
+    
+    /**
+     * Builds the GROUP BY clause.
+     *
+     * @return string
+     */
+    private function buildGroupBy()
+    {
+        if (!is_array($this->m_group) || count($this->m_group) == 0) {
+            return null;
+        }
+        return implode(', ', $this->m_group);
+    }
 
 
     /**

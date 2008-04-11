@@ -41,13 +41,16 @@ function smarty_function_camp_select($p_params, &$p_smarty)
 
     switch($object) {
     case 'user':
-        $attrValue = $campsite->$object->$attribute;
+        $fieldValue = CampRequest::GetVar('f_user_'.$attribute);
+        if (is_null($fieldValue)) {
+            $fieldValue = $campsite->user->$attribute;
+        }
         if ($attribute == 'gender') {
             $html = '<input type="radio" name="f_user_'.$attribute
-                .'" value="M" '.(($attrValue == 'M') ? 'checked' : '').' /> '
+                .'" value="M" '.(($fieldValue == 'M') ? 'checked' : '').' /> '
                 .smarty_function_escape_special_chars($p_params['male_name'])
                 .' <input type="radio" name="f_user_'.$attribute
-                .'" value="F" '.(($attrValue == 'F') ? 'checked' : '').' /> '
+                .'" value="F" '.(($fieldValue == 'F') ? 'checked' : '').' /> '
                 .smarty_function_escape_special_chars($p_params['female_name']);
         } elseif ($attribute == 'title') {
             $selectTag = true;
@@ -93,12 +96,12 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $sqlQuery = "SELECT l.Id, l.OrigName "
                 ."FROM Issues as i, Languages as l "
                 ."WHERE  i.IdLanguage = l.Id and i.IdPublication = "
-                .$campsite->publication->id
-                ."GROUP BY l.Id";
+                .$campsite->publication->identifier
+                ." GROUP BY l.Id";
             $data = $g_ado_db->GetAll($sqlQuery);
             foreach ($data as $language) {
-                $output[] = $language['Id'];
-                $values[] = $language['OrigName'];
+                $output[] = $language['OrigName'];
+                $values[] = $language['Id'];
             }
             $selectTag = true;
             $html = '<select name="subscription_language[]" '
@@ -111,13 +114,13 @@ function smarty_function_camp_select($p_params, &$p_smarty)
                 .'onchange="update_subscription_payment(); '
                 .'ToggleElementEnabled(\'select_language\');" />';
         } elseif ($attribute == 'section') {
-            if (1) {
+            if ($campsite->subs_by_type == 'publication') {
                 $html = '<input type="hidden" name="cb_subs[]" value="'
                     .$campsite->section->number.'" ';
-            } else {
+            } elseif ($campsite->subs_by_type == 'section') {
                 $html = '<input type="checkbox" name="cb_subs[]" value="'
                     .$campsite->section->number.'" '
-                    .'onchange="update_subscription_payment();" ';
+                    .'onchange="update_subscription_payment();">';
             }
         }
         break;
@@ -137,7 +140,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
     if ($selectTag == true) {
         $html.= smarty_function_html_options(array('output' => $output,
                                                    'values' => $values,
-                                                   'selected' => $attrValue,
+                                                   'selected' => $fieldValue,
                                                    'print_result' => false),
                                              $p_smarty);
         $html.= '</select>';

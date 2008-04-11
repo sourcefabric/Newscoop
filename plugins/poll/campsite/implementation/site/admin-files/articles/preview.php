@@ -44,7 +44,7 @@ $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_us
 				. "&AdminAccess=all";
 if ($publicationObj->getUrlTypeId() == 1) {
 	$templateObj = & new Template($templateId);
-	$url = "$websiteURL/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
+	$url = "$websiteURL/tpl/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
 		. "&IdPublication=$f_publication_id&NrIssue=$f_issue_number&NrSection=$f_section_number"
 		. "&NrArticle=$f_article_number&$accessParams";
 } else {
@@ -53,6 +53,10 @@ if ($publicationObj->getUrlTypeId() == 1) {
 		$errorStr = $url->getMessage();
 	}
 	$url .= '?' . $accessParams;
+}
+
+if (isset($_REQUEST['TOL_Language'])) {
+    $url .= '&previewLang='.$_REQUEST['TOL_Language'];
 }
 
 if ($errorStr != "") {

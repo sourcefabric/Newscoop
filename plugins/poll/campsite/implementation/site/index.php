@@ -22,6 +22,7 @@ global $Campsite;
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/include/campsite_init.php');
+require_once($g_documentRoot.'/template_engine/classes/SyntaxError.php');
 
 
 function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
@@ -60,6 +61,9 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 	} elseif (preg_match('/missing\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
 		$errorCode = SYNTAX_ERROR_MISSING_PARAMETER;
 		$what = array($matches[1], $matches[2]);
+	} elseif (preg_match('/invalid\s+operator\s+(.+)\s+of\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
+		$errorCode = SYNTAX_ERROR_INVALID_OPERATOR;
+		$what = array($matches[1], $matches[2], $matches[3]);
 	} else {
 		$errorCode = SYNTAX_ERROR_UNKNOWN;
 		$what = array($errorString);
@@ -95,13 +99,20 @@ $campsite->init();
 
 CampPlugin::initPlugins();
 
-// TODO: authorization access
-
-
 // dispatches campsite
 $campsite->dispatch();
 
+// triggers an event before render the page.
+// looks for preview language if any.
+$previewLang = $campsite->event('beforeRender');
+// loads translations strings in the proper language
+// for preview error messaging.
+camp_load_translation_strings('preview', $previewLang);
+
 // renders the site
 $campsite->render();
+
+// triggers an event after displaying
+$campsite->event('afterRender');
 
 ?>

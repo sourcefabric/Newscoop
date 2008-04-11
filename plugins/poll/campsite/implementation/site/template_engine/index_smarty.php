@@ -76,56 +76,18 @@ $tpl = CampTemplate::singleton();
 $context = $tpl->context();
 $tpl->assign('campsite', $context);
 
-// Language object
-$context->language = new MetaLanguage(1);
-
-
-// Publication object
-$context->publication = new MetaPublication(1);
-
-
-// Issue object
-$context->issue = new MetaIssue(1, 1, 1);
-
-
-// Section object
-$context->section = new MetaSection(1, 1, 1, 10);
-
-
-// Article object
-$context->article = new MetaArticle(1, 140);
-
-
-// Image object
-$context->image = new MetaImage(1);
-
-
-// Article attachment object
-$context->attachment = new MetaAttachment(4);
-
 
 // Topic object
 $context->topic = new MetaTopic(14);
 
 
 // User object
-$context->user = new MetaUser(1);
-
-
-// Audioclip object
-$context->audioclip = new MetaAudioclip('7160d04166d69f50');
-
-
-// Article comment
-$context->comment = new MetaComment(9);
+$context->user = new MetaUser(11);
 
 
 // Template object
 $context->template = new MetaTemplate('index.tpl');
 
-
-// Subscription object
-$context->subscription = new MetaSubscription(5);
 
 //$tpl->debugging = true;
 

@@ -1,4 +1,5 @@
 <?php 
+regGS("Preview Window", "");
 regGS("Article Audioclips", "");
 regGS("Show translated strings", "");
 regGS("Hide translated strings", "번역 숨기기");

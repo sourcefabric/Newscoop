@@ -11,8 +11,10 @@
 // is not defined in these cases.
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
-require_once('PEAR.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
+require_once(CS_PATH_PEAR_LOCAL.'/PEAR.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/SystemPref.php');
 require_once($g_documentRoot.'/classes/CampCache.php');
 require_once($g_documentRoot.'/classes/Exceptions.php');
 
@@ -86,6 +88,7 @@ class DatabaseObject {
 	 */
 	public function DatabaseObject($p_columnNames = null)
 	{
+        self::$m_useCache = (SystemPref::Get('SiteCacheEnabled') == 'Y') ? true : false;
 		if (!is_null($p_columnNames)) {
 			$this->setColumnNames($p_columnNames);
 		}
@@ -435,6 +438,12 @@ class DatabaseObject {
 					.' LIMIT 1';
 		$g_ado_db->Execute($queryStr);
 		$wasDeleted = ($g_ado_db->Affected_Rows() > 0);
+
+        // removes object from cache
+        $cacheKey = $this->getCacheKey();
+        $cacheObj = CampCache::singleton();
+        $cacheObj->delete($cacheKey);
+
 		// Always set "exists" to false because if a row wasnt
 		// deleted it means it probably didnt exist in the first place.
 		$this->m_exists = false;
@@ -840,20 +849,20 @@ class DatabaseObject {
 			return false;
 		}
 
+        $cacheKey = '';
 		if (is_array($p_recordSet) && sizeof($p_recordSet) > 0) {
 			foreach ($this->m_keyColumnNames as $columnName) {
 				if (!isset($p_recordSet[$columnName])) {
 					return false;
 				}
 			}
-            $cacheKey = $this->getCacheKey($p_recordSet);
 		} else {
 			if (!$this->keyValuesExist()) {
 				return false;
 			}
-            $cacheKey = $this->getCacheKey();
 		}
 
+        $cacheKey = $this->getCacheKey($p_recordSet);
         $cacheObj = CampCache::singleton();
         $object = $cacheObj->fetch($cacheKey);
 
@@ -949,10 +958,11 @@ class DatabaseObject {
 			if (!isset($recordSet[$key])) {
 				return false;
 			}
-			$cacheKey .= $recordSet[$key];
+			$cacheKey .= (strlen($cacheKey) < 1) ? '' : '_';
+            $cacheKey .= $recordSet[$key];
 		}
 
-        return $cacheKey.get_class($this);
+        return $cacheKey.'_'.get_class($this);
     } // fn getCacheKey
 
 } // class DatabaseObject

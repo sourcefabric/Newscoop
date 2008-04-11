@@ -3,6 +3,7 @@
  * @package Campsite
  *
  * @author Holman Romero <holman.romero@gmail.com>
+ * @author Mugur Rus <mugur.rus@gmail.com>
  * @copyright 2007 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
@@ -19,7 +20,6 @@ abstract class CampSystem
      */
     protected function __construct()
     {
-        self::BuildPublicationFromAlias($_SERVER['HTTP_HOST']);
     } // fn __construct
 
 
@@ -326,27 +326,6 @@ abstract class CampSystem
 
         return $data;
     } // fn GetArticleTemplate
-
-
-    /**
-     * @param string $p_siteAlias
-     *      The http server name from the current request
-     */
-    private static function BuildPublicationFromAlias($p_siteAlias)
-    {
-        global $g_ado_db;
-
-        $sqlQuery = 'SELECT p.Id, p.IdDefaultLanguage, p.IdURLType '
-            . 'FROM Publications p, Aliases a '
-            . 'WHERE p.Id = a.IdPublication AND '
-            . "a.Name = '" . $g_ado_db->Escape($p_siteAlias) . "'";
-        $data = $g_ado_db->GetRow($sqlQuery);
-        if (!empty($data)) {
-            CampRequest::SetVar('URLType', $data['IdURLType']);
-            CampRequest::SetVar(CampRequest::PUBLICATION_ID, $data['Id']);
-            CampRequest::SetVar(CampRequest::LANGUAGE_ID, $data['IdDefaultLanguage']);
-        }
-    } // fn BuildPublicationFromAlias
 
 } // class CampSystem
 
