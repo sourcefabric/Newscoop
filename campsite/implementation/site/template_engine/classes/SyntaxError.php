@@ -19,14 +19,16 @@ define('SYNTAX_ERROR_INVALID_PARAMETER_VALUE', 'Invalid value <em>$1</em> of par
 define('SYNTAX_ERROR_MISSING_PARAMETER', 'Missing parameter <em>$1</em> in statement <em>$2</em>');
 define('SYNTAX_ERROR_INVALID_OPERATOR', 'Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>');
 
-//getGS("Unknown error: <em>$1</em>");
+// Needed for localizer
+//getGS("Unknown error: $1");
 //getGS("Unrecognized tag <em>$1</em>");
 //getGS("Unknown reference <em>$1</em>");
 //getGS("Invalid property <em>$1</em> of object <em>$2</em>");
 //getGS("Invalid value <em>$1</em> of property <em>$2</em> of object <em>$3</em>");
 //getGS("Invalid parameter <em>$1</em> in statement <em>$2</em>");
-//getGS("Invalid parameter value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>");
+//getGS("Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>");
 //getGS("Missing parameter <em>$1</em> in statement <em>$2</em>");
+//getGS("Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>");
 
 
 class SyntaxError {
@@ -85,7 +87,7 @@ class SyntaxError {
 		if (isset($this->m_templateName)) {
 			$message .= getGS('template') . ' ' . $this->m_templateName;
 			if (isset($this->m_line)) {
-				$message .= ', ' . getGS(' line') . ' ' . $this->m_line;
+				$message .= ', ' . getGS('line') . ' ' . $this->m_line;
 			}
 			$message .= ': ';
 		}
