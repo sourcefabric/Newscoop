@@ -366,7 +366,7 @@ class TemplateConverterHelper
             break;
         // <!** else> to {{ /else }}
         case 'else':
-            $newTag = '/else';
+            $newTag = 'else';
             break;
         }
         
@@ -491,6 +491,16 @@ class TemplateConverterHelper
     public static function BuildSimpleFormStatement($p_optArray)
     {
         $newTag = $p_optArray[0] . '_form';
+        if ($p_optArray[0] == 'user') {
+            $tmpArr = array();
+            $tmpArr[0] = $p_optArray[0];
+            for ($i = 1; $i < sizeof($p_optArray); $i++) {
+                if (isset($p_optArray[$i+1])) {
+                    $tmpArr[$i] = $p_optArray[$i+1];
+                }
+            }
+            $p_optArray = $tmpArr;
+        }
         $newTag.= (isset($p_optArray[1])) ? ' template="' . $p_optArray[1] . '"' : '';
         $newTag.= (isset($p_optArray[2])) ? ' submit_button="' . $p_optArray[2] . '"' : '';
         $newTag.= (isset($p_optArray[3])) ? ' html_code="' . $p_optArray[3] . '"' : '';

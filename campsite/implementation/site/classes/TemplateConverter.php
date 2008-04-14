@@ -122,9 +122,9 @@ class TemplateConverter
 
         // sets pattern and replacement for templates path
         $patternsArray[] = "/\/look\//";
-        $replacementsArray[] = "/templates/";
+        $replacementsArray[] = "/tpl/";
         // sets pattern and replacement for get_img script
-        $patternsArray[] = "/get_img/";
+        $patternsArray[] = "/cgi-bin\/get_img/";
         $replacementsArray[] = "get_img.php";
 
         // replaces all patterns with corresponding replacements
@@ -209,6 +209,7 @@ class TemplateConverter
                 if ($char == '"') {
                     $words[] = trim(trim($quotedString, '"'));
                     $quotedString = '';
+                    $isOpenQuote = false;
                 }
             } else {
                 if (preg_match('/[\s]/', $char) && !$escaped) {
