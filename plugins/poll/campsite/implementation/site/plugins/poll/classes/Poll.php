@@ -910,6 +910,22 @@ class Poll extends DatabaseObject {
         $p_context->default_url->reset_parameter('f_pollanswer_nr');
         $p_context->url->reset_parameter('f_pollanswer_nr');
     }
+    
+    /**
+     * Reset all counters
+     *
+     */
+    public function reset()
+    {   
+        foreach ($this->getAnswers() as $PollAnswer) {
+            $PollAnswer->setProperty('nr_of_votes', 0);
+            $PollAnswer->setProperty('percentage', 0);
+            $PollAnswer->setProperty('percentage_overall', 0);
+            $PollAnswer->setProperty('value', 0);
+            $PollAnswer->setProperty('average_value', 0);
+        }
+        $this->triggerStatistics();
+    }
 
 } // class Poll
 

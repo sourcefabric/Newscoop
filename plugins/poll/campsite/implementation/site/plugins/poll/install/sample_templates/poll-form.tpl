@@ -46,7 +46,7 @@
             {{ pollanswer_ajax value=$smarty.section.foo.index }}{{ $smarty.section.foo.index }}{{ /pollanswer_ajax }}
         {{ /section }}
         
-        ({{ $campsite->pollanswer->average_value|string_format:"%.1f" }})
+        ({{ $campsite->pollanswer->votes }} votes; &#216;{{ $campsite->pollanswer->average_value|string_format:"%.1f" }})
         
         <div style="clear: both; height: 10px"></div>
 

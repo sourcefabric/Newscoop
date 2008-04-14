@@ -87,16 +87,17 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                         return;
                     }
 
-                    // Get the index of the "delete" option.
+                    // Get the index of the "delete" and "reset" option.
                     deleteOptionIndex = -1;
-//                    translateOptionIndex = -1;
+                    translateOptionIndex = -1;
+                    
                     for (var index = 0; index < dropdownElement.options.length; index++) {
                         if (dropdownElement.options[index].value == "delete") {
                             deleteOptionIndex = index;
                         }
-//                        if (dropdownElement.options[index].value == "translate") {
-//                            translateOptionIndex = index;
-//                        }
+                        if (dropdownElement.options[index].value == "reset") {
+                            resetOptionIndex = index;
+                        }
                     }
 
                     // if the user has selected the "delete" option
@@ -107,7 +108,16 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                             return;
                         }
                     }
-
+                    
+                    // if the user has selected the "reset" option
+                    if (dropdownElement.selectedIndex == resetOptionIndex) {
+                        ok = confirm("<?php putGS("Are you sure you want to reset counters on the selected polls?"); ?>");
+                        if (!ok) {
+                            dropdownElement.options[0].selected = true;
+                            return;
+                        }
+                    }
+                    
                     // do the action if it isnt the first or second option
                     if ( (dropdownElement.selectedIndex != 0)) {
                         dropdownElement.form.submit();
@@ -117,6 +127,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                 <SELECT name="f_poll_list_action" class="input_select" onchange="action_selected(this);">
                     <OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
                     <OPTION value="delete"><?php putGS("Delete"); ?></OPTION>
+                    <OPTION value="reset"><?php putGS("Reset"); ?></OPTION>
                 </SELECT>
             </TD>
 
