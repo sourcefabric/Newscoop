@@ -12,6 +12,8 @@ class PollAnswersList extends ListObject
 		                              'byvotes',
 		                              'bypercentage',
 		                              'bypercentage_overall',
+		                              'byvalue',
+		                              'byaverage_value',
 		                              'bylastmodified'
 	                        );
 	                                                        

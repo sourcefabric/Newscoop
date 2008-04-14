@@ -890,17 +890,18 @@ class Poll extends DatabaseObject {
     public static function registerVoting()
     {   
         $poll_language_id = Input::Get('f_poll_language_id', 'int');
-        $poll_nr = Input::Get('f_poll_nr', 'int');   
-        $nr_answer = Input::Get('f_pollanswer_nr', 'int');
+        $poll_nr = Input::Get('f_poll_nr', 'int');
         
         $Poll = new Poll($poll_language_id, $poll_nr);
                                    
         if ($Poll->isVotable()) {
-            $PollAnswer = $Poll->getAnswer($nr_answer);
-            
-            if ($PollAnswer->exists()) {
-                $PollAnswer->vote();
-                $Poll->setUserHasVoted();
+            foreach ($Poll->getAnswers() as $PollAnswer) {
+                $answer_nr = $PollAnswer->getNumber();
+                
+                if ($value = Input::Get('f_pollanswer_'.$answer_nr, 'int')) {
+                    $PollAnswer->vote($value);
+                    $Poll->setUserHasVoted();
+                }
             }
         }
         

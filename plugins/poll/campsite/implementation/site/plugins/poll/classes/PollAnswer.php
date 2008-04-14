@@ -33,6 +33,12 @@ class PollAnswer extends DatabaseObject {
         // float - score of this answers overall languages
         'percentage_overall',
         
+        // int - the commulative value of all votes
+        'value',
+        
+        // float - value / number of votes
+        'average_value', 
+        
         // timestamp - last_modified
         'last_modified'
         );
@@ -224,9 +230,15 @@ class PollAnswer extends DatabaseObject {
         return $poll;  
     }
     
-    public function vote()
+    public function vote($p_value = 1)
     {
+        if (!settype($p_value, 'float')) {
+            return false;   
+        }
+        
         $this->setProperty('nr_of_votes', $this->getProperty('nr_of_votes') + 1);
+        $this->setProperty('value', $this->getProperty('value') + $p_value);
+        $this->setProperty('average_value', $this->getProperty('value') / $this->getProperty('nr_of_votes'));
         
         Poll::triggerStatistics($this->m_data['fk_poll_nr']);   
     }
@@ -403,6 +415,12 @@ class PollAnswer extends DatabaseObject {
                     break;
                 case 'bypercentage_overall':
                     $dbField = 'percentage_overall';
+                    break;
+                case 'byvalue':
+                    $dbField = 'value';
+                    break;
+                case 'byaverage_value':
+                    $dbField = 'average_value';
                     break;
                 case 'bylastmodified':
                     $dbField = 'last_modified';

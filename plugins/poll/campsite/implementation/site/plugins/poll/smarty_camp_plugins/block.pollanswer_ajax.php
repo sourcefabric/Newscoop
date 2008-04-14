@@ -30,13 +30,20 @@ function smarty_block_pollanswer_ajax($p_params, $p_content, &$p_smarty, &$p_rep
     $campsite = $p_smarty->get_template_vars('campsite');
     $html = '';
     
+    // the value for this rating
+    if (settype($p_params['value'], 'integer')) {
+        $value = $p_params['value'];    
+    } else {
+        $value = 1;   
+    }
+    
     $poll_nr = $campsite->poll->number;
     $answer_nr = $campsite->pollanswer->number;
-    $id = "f_pollanswer_{$poll_nr}_{$answer_nr}";
+    $id = "f_pollanswer_{$poll_nr}_{$answer_nr}_{$value}";
     
     if (isset($p_content)) {
     	$html .= "<span onClick=\"$('{$id}').checked=true; poll_{$campsite->poll->identifier}_vote()\" style=\"cursor: pointer\" >\n";
-        $html .= "<input type=\"radio\" id=\"{$id}\" name=\"f_pollanswer_nr\" value=\"{$answer_nr}\" style=\"display: none\" />\n"; 
+        $html .= "<input type=\"radio\" id=\"{$id}\" name=\"f_pollanswer_{$answer_nr}\" value=\"{$value}\" style=\"display: none\" />\n"; 
         $html .= $p_content;        
         $html .= "</span>\n";
     }
