@@ -39,7 +39,7 @@ final class MetaTemplate extends MetaDbObject {
     } // fn __construct
 
 
-    public function getTemplateType()
+    protected function getTemplateType()
     {
     	global $g_ado_db;
 
@@ -49,7 +49,7 @@ final class MetaTemplate extends MetaDbObject {
     }
 
 
-    public function getValue()
+    protected function getValue()
     {
         return $this->m_dbObject->getName();
     }

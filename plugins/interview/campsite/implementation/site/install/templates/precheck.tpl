@@ -49,6 +49,11 @@ var domTT_styleClass = 'domTTOverlib';
               <p>If any of these requirements is not fulfilled (marked red),
               please correct them, otherwise you wont be able to continue
               with the installation.</p>
+
+              <p>Exception is APC. We highly recommend to enable PHP APC
+              caching system so that your site will perform much better.
+              However, this is not mandatory and you still will be able
+              to continue with the installation process.</p>
             </div>
           </td>
           <td width="5%">&nbsp;</td>

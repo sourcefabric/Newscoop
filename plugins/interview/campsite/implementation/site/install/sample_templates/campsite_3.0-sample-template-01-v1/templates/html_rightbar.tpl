@@ -40,7 +40,7 @@
   </td>
 </tr>
 <tr>
-  <td><a href="{{ uri options="template user_form.tpl" }}">Subscribe</a></td>
+  <td><a href="{{ uri options="template subscription.tpl" }}">Subscribe</a></td>
 </tr>
 {{ else }}
 <th>Welcome {{ $campsite->user->name }}</th>

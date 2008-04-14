@@ -31,8 +31,8 @@ function smarty_block_list_article_topics($p_params, $p_content, &$p_smarty, &$p
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 0;
-    	$articleTopicsList = new ArticleTopicsList($start, $p_params);
+        $start = $campContext->next_list_start('ArticleTopicsList');
+        $articleTopicsList = new ArticleTopicsList($start, $p_params);
     	$campContext->setCurrentList($articleTopicsList, array('topic'));
     }
 

@@ -31,7 +31,7 @@ class MetaActionSearch_Articles extends MetaAction
 
 
     /**
-     * Reads the input parameters and sets up the login action.
+     * Reads the input parameters and sets up the articles search action.
      *
      * @param array $p_input
      */
@@ -47,17 +47,6 @@ class MetaActionSearch_Articles extends MetaAction
         $this->m_properties['search_phrase'] = $p_input['f_search_keywords'];
         $this->m_properties['search_keywords'] = preg_split('/[\s,.-]/', $p_input['f_search_keywords']);
 
-        if (isset($p_input['tpl'])) {
-            $template = new MetaTemplate($p_input['tpl']);
-            if ($template->defined()) {
-                $this->m_properties['template'] = $template;
-            } else {
-                $this->m_properties['template'] = CampTemplate::singleton()->context()->template;
-            }
-        } else {
-            $this->m_properties['template'] = CampTemplate::singleton()->context()->template;
-        }
-
         $this->m_properties['match_all'] = isset($p_input['f_match_all'])
         && strtolower($p_input['f_match_all']) == true ? 'true' : 'false';
 
@@ -71,6 +60,8 @@ class MetaActionSearch_Articles extends MetaAction
             $this->m_properties['search_level'] = MetaActionSearch_Articles::DEFAULT_SEARCH_LEVEL;
         }
 
+        $this->m_properties['submit_button'] = $p_input['f_search_articles'];
+
         $this->m_error = ACTION_OK;
     }
 
@@ -83,6 +74,23 @@ class MetaActionSearch_Articles extends MetaAction
      */
     public function takeAction(CampContext &$p_context)
     {
+        if (isset($p_input['tpl'])) {
+            $template = new MetaTemplate($p_input['tpl']);
+            if ($template->defined()) {
+                $this->m_properties['template'] = $template;
+            } else {
+                $this->m_properties['template'] = $p_context->template;
+            }
+        } else {
+            $this->m_properties['template'] = $p_context->template;
+        }
+        
+        $fields = array('f_search_keywords', 'f_search_level', 'f_search_articles', 'f_match_all');
+        foreach ($fields as $field) {
+            $p_context->default_url->reset_parameter($field);
+            $p_context->url->reset_parameter($field);
+        }
+
         return true;
     }
 }

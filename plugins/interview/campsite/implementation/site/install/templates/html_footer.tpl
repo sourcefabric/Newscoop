@@ -1,16 +1,16 @@
-{{** footer table **}}
-<table class="footer" cellspacing="0" cellpadding="0">
+<div class="table_spacer"> </div>
+
+<table cellspacing="0" cellpadding="0">
 <tr>
   <td>
     <p class="footer_text">
-      Media Development Loan Fund - Campware &copy; 2007<br />
-      Powered by Campsite {{ $campsite->version }}
+      {{ $copyright }}<br />
+      {{ $package }} {{ $version }} ({{ $code_name }}) Installer
     </p>
   </td>
 </tr>
 </table>
-{{** end footer table **}}
-</div>
+
 </div>
 </body>
 </html>

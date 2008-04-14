@@ -9,6 +9,7 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/include/pear/Date.php');
 
 class SubscriptionSection extends DatabaseObject
 {
@@ -82,6 +83,15 @@ class SubscriptionSection extends DatabaseObject
 	{
 		return $this->m_data['StartDate'];
 	} // fn getStartDate
+	
+	
+	public function getExpirationDate() {
+	    $startDate = new Date(isset($this->m_data['StartDate']) ? $this->m_data['StartDate'] : 0);
+	    $timeSpan = new Date_Span();
+	    $timeSpan->setFromDays($this->m_data['Days']);
+	    $startDate->addSpan($timeSpan);
+	    return $startDate->getDate();
+	}
 
 
 	/**

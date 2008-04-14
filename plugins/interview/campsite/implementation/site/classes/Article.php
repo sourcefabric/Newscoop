@@ -99,7 +99,8 @@ class Article extends DatabaseObject {
                                                 'keyword'=>'Keywords',
                                                 'onfrontpage'=>'OnFrontPage',
                                                 'onsection'=>'OnSection',
-                                                'public'=>'Public');
+                                                'public'=>'Public',
+                                                'published'=>'Published');
 
 	/**
 	 * Construct by passing in the primary key to access the article in
@@ -2158,6 +2159,12 @@ class Article extends DatabaseObject {
             break;
         case 'topic':
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
+        case 'published':
+            if (strtolower($p_param->getRightOperand()) == 'true') {
+                $conditionOperation['symbol'] = '=';
+                $conditionOperation['right'] =  'Y';
+            }
             break;
         default:
             $conditionOperation['right'] = (string)$p_param->getRightOperand();

@@ -18,7 +18,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
 class MetaActionSubmit_Comment extends MetaAction
 {
     /**
-     * Reads the input parameters and sets up the login action.
+     * Reads the input parameters and sets up the comment submit action.
      *
      * @param array $p_input
      */
@@ -57,6 +57,9 @@ class MetaActionSubmit_Comment extends MetaAction
      */
     public function takeAction(CampContext &$p_context)
     {
+        $p_context->default_url->reset_parameter('f_'.$this->m_name);
+        $p_context->url->reset_parameter('f_'.$this->m_name);
+
         if (!is_null($this->m_error)) {
             return false;
         }
@@ -187,10 +190,12 @@ class MetaActionSubmit_Comment extends MetaAction
 
         $p_context->comment = new MetaComment($commentObj->getMessageId());
 
-        CampRequest::SetVar('f_comment_reader_email');
-        CampRequest::SetVar('f_comment_subject');
-        CampRequest::SetVar('f_comment_content');
-
+        $p_context->url->reset_parameter('f_comment_reader_email');
+        $p_context->url->reset_parameter('f_comment_subject');
+        $p_context->url->reset_parameter('f_comment_content');
+        $p_context->url->reset_parameter('f_submit_comment');
+        $p_context->url->reset_parameter('f_captcha_code');
+        
         $this->m_properties['rejected'] = false;
 
         $this->m_error = ACTION_OK;

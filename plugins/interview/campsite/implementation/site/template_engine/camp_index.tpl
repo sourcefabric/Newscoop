@@ -34,6 +34,7 @@
     <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_issues }}
+<li>previous list empty: {{ $campsite->prev_list_empty }}</li>
 
 <h3>sections list</h3>
 {{ list_sections length="3" columns="2" name='sample_name' constraints="name greater a number greater 0" }}
@@ -81,6 +82,7 @@
     <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_article_attachments }}
+<li>previous list empty: {{ $campsite->prev_list_empty }}</li>
 
 
 <h3>article comments list</h3>
@@ -186,11 +188,8 @@
 {{ /local }}
 
 
-{{ use_body_field article_type="Article" field_name="Full_text" }}
-<h4>use_body_field: article type: {{ $campsite->body_field_article_type }},
-    field name: {{ $campsite->body_field_name }}</h4>
 <h3>subtitles list</h3>
-{{ list_subtitles length="2" columns="2" name='sample_name' }}
+{{ list_subtitles length="2" columns="2" name='sample_name' field_name='Full_text' }}
 {{ if $campsite->current_list->at_beginning }}
 <li>count: {{ $campsite->current_list->count }}</li>
 {{ /if }}
@@ -203,7 +202,6 @@
     <li>has next elements: {{ $campsite->current_list->has_next_elements }}</li>
 {{ /if }}
 {{ /list_subtitles }}
-{{ /use_body_field }}
 
 
 {{ if $campsite->hasProperty('invalid_property') }}
@@ -550,11 +548,27 @@
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Month Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->issue->mon_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->mon_name }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Week Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->issue->wday }}
   </td>
   <td nowrap valign="top">{{ literal }}{{ $campsite->issue->wday }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Week Day Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->issue->wday_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->wday_name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
@@ -627,6 +641,14 @@
     {{ $campsite->issue->defined }}
   </td>
   <td nowrap valign="top">{{ literal }}{{ $campsite->issue->defined }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Is Current:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->issue->is_current }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->issue->is_current }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -842,11 +864,27 @@
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Month Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->article->mon_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->mon_name }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Week Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->article->wday }}
   </td>
   <td nowrap valign="top">{{ literal }}{{ $campsite->article->wday }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Week Day Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->article->wday_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->wday_name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
@@ -919,17 +957,17 @@
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Intro:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $campsite->article->type->fastnews->intro }}
+    {{ $campsite->article->type->Article->intro }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->type->fastnews->intro }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->type->Article->intro }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Body:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $campsite->article->type->fastnews->body }}
+    {{ $campsite->article->type->Article->full_text }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->type->fastnews->body }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->type->Article->full_text }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 
@@ -1057,6 +1095,22 @@
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Comment Count:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->article->comment_count }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->comment_count }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Subtitles Count:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->article->subtitles_count('Full_text') }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->subtitles_count('Full_text') }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Translated to:</td>
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->article->translated_to('ro') }}
@@ -1065,11 +1119,27 @@
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Has Keyword:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->article->has_keyword('fsf') }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->has_keyword('fsf') }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Has Attachments:</td>
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->article->has_attachments }}
   </td>
   <td nowrap valign="top">{{ literal }}{{ $campsite->article->has_attachments }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Content accessible:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->article->content_accessible }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->content_accessible }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
@@ -1193,11 +1263,27 @@
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Month Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->image->mon_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->mon_name }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Week Day:</td>
   <td bgcolor="#d4ffa2" valign="top">
     {{ $campsite->image->wday }}
   </td>
   <td nowrap valign="top">{{ literal }}{{ $campsite->image->wday }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Week Day Name:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->image->wday_name }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->image->wday_name }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
@@ -1655,6 +1741,100 @@
   <td nowrap valign="top">{{ literal }}{{ $campsite->user->defined }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Blocked From Comments:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->user->blocked_from_comments }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->blocked_from_comments }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+</table>
+
+
+{{**** Subscription ****}}
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="#6a6a6a"><font color="#ffffff">Subscription</font></td>
+</tr>
+</table>
+<table cellspacing="1" cellpadding="4">
+<tr>
+  <td bgcolor="Aqua" align="center" colspan="3">Fields</td>
+  <td bgcolor="Aqua" align="center">Type</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Identifier:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $campsite->user->subscription->identifier }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->subscription->identifier }}{{ /literal }}</td>
+  <td nowrap valign="top">base</td>
+</tr>
+<tr>
+  <td bgcolor="#9cf0ff" nowrap valign="top">Currency:</td>
+  <td bgcolor="#9cf0ff" valign="top">
+    {{ $campsite->user->subscription->currency }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->subscription->currency }}{{ /literal }}</td>
+  <td nowrap valign="top">base</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Type:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->user->subscription->type }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->subscription->type }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Start Date:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->user->subscription->start_date }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->subscription->start_date }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Expiration Date:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->user->subscription->expiration_date }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->subscription->expiration_date }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Active:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->user->subscription->is_active }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->subscription->is_active }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Valid:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->user->subscription->is_valid }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->subscription->is_valid }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Publication Identifier:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->user->subscription->publication->identifier }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->subscription->publication->identifier }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
+<tr>
+  <td bgcolor="#d4ffa2" nowrap valign="top">Has Section:</td>
+  <td bgcolor="#d4ffa2" valign="top">
+    {{ $campsite->user->subscription->has_section(40) }}
+  </td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->user->subscription->has_section(40) }}{{ /literal }}</td>
+  <td nowrap valign="top">custom</td>
+</tr>
 </table>
 
 
@@ -1828,6 +2008,7 @@
 {{ /list_article_audio_attachments }}
 
 
+{{ list_article_comments length="1" columns="2" name='sample_name' order='byDate asc' }}
 {{**** Article Comment ****}}
 <table cellspacing="1" cellpadding="4">
 <tr>
@@ -1896,6 +2077,7 @@
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
+{{ /list_article_comments }}
 
 
 {{**** Template ****}}
@@ -1934,53 +2116,6 @@
   <td nowrap valign="top">custom</td>
 </tr>
 </table>
-
-
-{{**** Subscription ****}}
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="#6a6a6a"><font color="#ffffff">Subscription</font></td>
-</tr>
-</table>
-<table cellspacing="1" cellpadding="4">
-<tr>
-  <td bgcolor="Aqua" align="center" colspan="3">Fields</td>
-  <td bgcolor="Aqua" align="center">Type</td>
-</tr>
-<tr>
-  <td bgcolor="#9cf0ff" nowrap valign="top">Currency:</td>
-  <td bgcolor="#9cf0ff" valign="top">
-    {{ $campsite->subscription->currency }}
-  </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->subscription->currency }}{{ /literal }}</td>
-  <td nowrap valign="top">base</td>
-</tr>
-<tr>
-  <td bgcolor="#d4ffa2" nowrap valign="top">Type:</td>
-  <td bgcolor="#d4ffa2" valign="top">
-    {{ $campsite->subscription->type }}
-  </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->subscription->type }}{{ /literal }}</td>
-  <td nowrap valign="top">custom</td>
-</tr>
-<tr>
-  <td bgcolor="#d4ffa2" nowrap valign="top">Active:</td>
-  <td bgcolor="#d4ffa2" valign="top">
-    {{ $campsite->subscription->active }}
-  </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->subscription->active }}{{ /literal }}</td>
-  <td nowrap valign="top">custom</td>
-</tr>
-<tr>
-  <td bgcolor="#d4ffa2" nowrap valign="top">Defined:</td>
-  <td bgcolor="#d4ffa2" valign="top">
-    {{ $campsite->subscription->defined }}
-  </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->subscription->defined }}{{ /literal }}</td>
-  <td nowrap valign="top">custom</td>
-</tr>
-</table>
-
 
 </body>
 </html>

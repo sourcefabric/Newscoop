@@ -174,6 +174,25 @@ class Publication extends DatabaseObject {
 	{
 		return $this->m_data['TimeUnit'];
 	} // fn getTimeUnit
+	
+	
+	/**
+	 * Returns the publication subscription time unit name.
+	 *
+	 * @param int $p_languageId
+	 * @return string
+	 */
+	public function getTimeUnitName($p_languageId = null)
+	{
+	    $languageId = is_null($p_languageId) ? $this->m_data['IdDefaultLanguage'] : $p_languageId;
+	    $timeUnit = new TimeUnit($this->m_data['TimeUnit'], $languageId);
+	    if (!$timeUnit->exists()) {
+	        $timeUnit = new TimeUnit($this->m_data['TimeUnit'], 1);
+	    }
+	    return $timeUnit->getName();
+	}
+	
+	
 
 
 	/**

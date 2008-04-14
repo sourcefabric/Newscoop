@@ -270,13 +270,21 @@ final class CampHTMLDocument
         $siteinfo = array();
         $context = $p_params['context'];
         $templates_dir = isset($p_params['templates_dir'])
-                            ? $p_params['templates_dir'] : 'templates';
+                            ? $p_params['templates_dir'] : CS_PATH_SMARTY_TEMPLATES;
         $template = $p_params['template'];
 
-        if (!file_exists(CS_PATH_SITE.DIR_SEP.$templates_dir.DIR_SEP.$template)) {
+        if (!file_exists(CS_PATH_SITE.DIR_SEP.$templates_dir.DIR_SEP.$template)
+        || $template === false) {
+            if (empty($template)) {
+                $siteinfo['error_message'] = "No template set for display.";
+            } else {
+                $siteinfo['error_message'] = "Invalid template $templates_dir/$template.";
+            }
             $template = '_campsite_error.tpl';
+            $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
         }
 
+        $siteinfo['error_message'] = isset($p_params['error_message']) ? $p_params['error_message'] : null;
         $siteinfo['templates_path'] = $templates_dir;
         $siteinfo['title'] = $this->getTitle();
         $siteinfo['content_type'] = $this->getMetaTag('Content-Type', true);
@@ -285,6 +293,7 @@ final class CampHTMLDocument
         $siteinfo['description'] = $this->getMetaTag('description');
 
         $tpl = CampTemplate::singleton();
+        $tpl->template_dir = $templates_dir;
         $tpl->assign('campsite', $context);
         $tpl->assign('siteinfo', $siteinfo);
 

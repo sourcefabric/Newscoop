@@ -126,11 +126,20 @@ final class CampRequest
         if ($p_reqMethod == 'DEFAULT') {
             CampRequest::InitInput('get');
             CampRequest::InitInput('post');
-            CampRequest::$m_input['GET'][$p_varName] = $p_varValue;
-            CampRequest::$m_input['POST'][$p_varName] = $p_varValue;
+            if (!is_null($p_varValue)) {
+                CampRequest::$m_input['GET'][$p_varName] = $p_varValue;
+                CampRequest::$m_input['POST'][$p_varName] = $p_varValue;
+            } else {
+                unset(CampRequest::$m_input['GET'][$p_varName]);
+                unset(CampRequest::$m_input['POST'][$p_varName]);
+            }
         } else {
             CampRequest::InitInput('DEFAULT');
-            CampRequest::$m_input['DEFAULT'][$p_varName] = $p_varValue;
+            if (!is_null($p_varValue)) {
+                CampRequest::$m_input['DEFAULT'][$p_varName] = $p_varValue;
+            } else {
+                unset(CampRequest::$m_input['DEFAULT'][$p_varName]);
+            }
         }
     } // fn SetVar
 

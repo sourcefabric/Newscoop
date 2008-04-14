@@ -64,6 +64,8 @@ final class CampInstallation extends CampInstallationBase
      * @var string
      */
     private $m_title = null;
+    
+    private $m_version = null;
 
 
     /**
@@ -72,6 +74,7 @@ final class CampInstallation extends CampInstallationBase
     public function __construct()
     {
         $this->m_os = self::GetHostOS();
+        $this->m_version = new CampVersion();
     } // fn __construct
 
 
@@ -95,8 +98,10 @@ final class CampInstallation extends CampInstallationBase
 
         $cVersion = new CampVersion();
         $this->m_title = $cVersion->getPackage().' '.$cVersion->getRelease();
-        $this->m_title .= (!is_null($cVersion->getCodeName())) ?
-                              ' [ '.$cVersion->getCodeName().' ]' : '';
+        $this->m_title .= (strlen($cVersion->getDevelopmentStatus()) > 0) ? '-'.$cVersion->getDevelopmentStatus() : '';
+        $this->m_title .= (!is_null($cVersion->getCodeName())
+                               && $cVersion->getCodeName() != 'undefined') ?
+                          ' [ '.$cVersion->getCodeName().' ]' : '';
         $this->m_title .= ' Installer';
     } // fn dispatch
 
@@ -119,7 +124,14 @@ final class CampInstallation extends CampInstallationBase
 
         $tpl->assign('site_title', $this->m_title);
         $tpl->assign('message', $this->m_message);
-
+        $tpl->assign('package', $this->m_version->getPackage());
+        $tpl->assign('version', $this->m_version->getRelease() . '-'
+                                . $this->m_version->getDevelopmentStatus());
+        $tpl->assign('code_name', $this->m_version->getCodeName());
+        $tpl->assign('release_date', $this->m_version->getReleaseDate());
+        $tpl->assign('organization', $this->m_version->getOrganization());
+        $tpl->assign('copyright', $this->m_version->getCopyright());
+        
         $tpl->assign('current_step', $this->m_step);
         $tpl->assign('current_step_title', $this->m_steps[$this->m_step]['title']);
         $tpl->assign('step_titles', $this->m_steps);

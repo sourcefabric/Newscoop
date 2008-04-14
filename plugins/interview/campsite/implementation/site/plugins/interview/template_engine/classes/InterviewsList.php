@@ -153,8 +153,6 @@ class InterviewsList extends ListObject
 	    foreach ($p_order as $word) {
 	        switch ($state) {
                 case 1: // reading the order field
-                $x = strtolower($word);
-                $y = InterviewsList::$s_orderFields;
 	                if (array_search(strtolower($word), InterviewsList::$s_orderFields) === false) {
 	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_interviews, order parameter");
 	                } else {

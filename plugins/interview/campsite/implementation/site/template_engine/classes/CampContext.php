@@ -33,32 +33,41 @@ final class CampContext
 								    'audioclip'=>array('class'=>'Audioclip'),
 								    'comment'=>array('class'=>'Comment',
 								    				 'handler'=>'setCommentHandler'),
-								    'subtitle'=>array('class'=>'Subtitle'),
+								    'subtitle'=>array('class'=>'Subtitle',
+                                                      'handler'=>'setSubtitleHandler'),
 								    'topic'=>array('class'=>'Topic'),
 								    'user'=>array('class'=>'User'),
-								    'template'=>array('class'=>'Template'),
-								    'subscription'=>array('class'=>'Subscription')
+								    'template'=>array('class'=>'Template')
     );
 
     // Defines the list objects
     private $m_listObjects = array(
-	                         'issues'=>array('class'=>'Issues', 'list'=>'issues'),
-	                         'sections'=>array('class'=>'Sections', 'list'=>'sections'),
-	                         'articles'=>array('class'=>'Articles', 'list'=>'articles'),
+	                         'issues'=>array('class'=>'Issues', 'list'=>'issues',
+	                         				 'url_id'=>'iss'),
+	                         'sections'=>array('class'=>'Sections', 'list'=>'sections',
+	                         				   'url_id'=>'sec'),
+	                         'articles'=>array('class'=>'Articles', 'list'=>'articles',
+	                         				   'url_id'=>'art'),
 	                         'articleimages'=>array('class'=>'ArticleImages',
-	                                                'list'=>'article_images'),
+	                                                'list'=>'article_images',
+	                                                'url_id'=>'aim'),
     						 'articleattachments'=>array('class'=>'ArticleAttachments',
-	                                                     'list'=>'article_attachments'),
+	                                                     'list'=>'article_attachments',
+	                                                     'url_id'=>'aat'),
 	                         'articleaudioattachments'=>array('class'=>'ArticleAudioAttachments',
-	                                                          'list'=>'article_audio_attachments'),
+	                                                          'list'=>'article_audio_attachments',
+	                                                          'url_id'=>'aau'),
     						 'articlecomments'=>array('class'=>'ArticleComments',
-	                                                  'list'=>'article_comments'),
-	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles'),
+	                                                  'list'=>'article_comments',
+	                                                  'url_id'=>'acm'),
+	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles',
+                                                'url_id'=>'st'),
     						 'articletopics'=>array('class'=>'ArticleTopics',
-	                                                'list'=>'article_topics'),
+	                                                'list'=>'article_topics', 'url_id'=>'atp'),
 	                         'searchresults'=>array('class'=>'SearchResults',
-	                                                'list'=>'search_results'),
-	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics')
+	                                                'list'=>'search_results', 'url_id'=>'src'),
+	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics',
+	                         					'url_id'=>'tp')
     );
 
     /**
@@ -109,16 +118,13 @@ final class CampContext
         }
 
         $this->m_properties['htmlencoding'] = false;
-        $this->m_properties['body_field_article_type'] = null;
-        $this->m_properties['body_field_name'] = null;
+        $this->m_properties['subs_by_type'] = null;
 
         $this->m_readonlyProperties['version'] = $Campsite['VERSION'];
 
+        $this->m_readonlyProperties['current_list'] = null;
         $this->m_readonlyProperties['lists'] = array();
-        $this->m_readonlyProperties['issues_lists'] = array();
-        $this->m_readonlyProperties['sections_lists'] = array();
-        $this->m_readonlyProperties['articles_lists'] = array();
-        $this->m_readonlyProperties['article_attachments_lists'] = array();
+        $this->m_readonlyProperties['prev_list_empty'] = null;
 
         $url = new MetaURL();
         $this->m_readonlyProperties['url'] = new MetaURL();
@@ -128,6 +134,9 @@ final class CampContext
         $this->section = $url->section;
         $this->article = $url->article;
         $this->template = $url->template;
+        if (is_numeric($url->get_parameter('tpid'))) {
+            $this->topic = new MetaTopic($url->get_parameter('tpid'));
+        }
 
         $this->m_readonlyProperties['default_template'] = $this->template;
         $this->m_readonlyProperties['default_language'] = $this->language;
@@ -151,7 +160,7 @@ final class CampContext
             }
         }
 
-        $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput());
+        $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput(CampRequest::GetMethod()));
         $this->m_readonlyProperties['request_action']->takeAction($this);
 
         foreach (MetaAction::ReadAvailableActions() as $actionNameCase=>$actionAttributes) {
@@ -280,6 +289,7 @@ final class CampContext
      */
     public function hasProperty($p_property)
     {
+        $p_property = CampContext::TranslateProperty($p_property);
         return !is_null(CampContext::ObjectType($p_property))
         || (is_array($this->m_properties)
         && array_key_exists($p_property, $this->m_properties))
@@ -445,6 +455,8 @@ final class CampContext
             throw new InvalidObjectException(get_class($p_list));
         }
 
+        $p_list->setId($this->next_list_id($listObjectName));
+
    	    $this->SaveProperties($p_savePropertiesList);
 
    	    $listName = $this->m_listObjects[$objectName]['list'];
@@ -467,18 +479,78 @@ final class CampContext
             return;
         }
 
-        $this->RestoreProperties();
+        $this->m_readonlyProperties['prev_list_empty'] = (int)($this->m_readonlyProperties['current_list']->count == 0);
 
-   	    $this->m_readonlyProperties['current_list'] = array_pop($this->m_readonlyProperties['lists']);
+        $this->RestoreProperties();
 
         $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
         $listName = $this->m_listObjects[$objectName]['list'];
 
+        array_pop($this->m_readonlyProperties['lists']);
+   	    $this->m_readonlyProperties['current_list'] = array_pop($this->m_readonlyProperties['lists']);
+
         if (count($this->m_readonlyProperties[$listName.'_lists']) == 0) {
             return;
         }
+        array_pop($this->m_readonlyProperties[$listName.'_lists']);
        	$this->m_readonlyProperties['current_'.$listName.'_list'] = array_pop($this->m_readonlyProperties[$listName.'_lists']);
     } // fn resetCurrentList
+
+
+    /**
+     * Returns the corresponding id for the current list
+     *
+     * @return int - the current list identifier
+     */
+    public function current_list_id() {
+        $listName = $this->m_listObjects[$objectName]['list'];
+        if (!isset($this->m_readonlyProperties['current_list'])) {
+            return null;
+        }
+        return $this->m_readonlyProperties['current_list']->id;
+    }
+
+
+    /**
+     * Returns the corresponding id for a new list of the given type
+     *
+     * @param string $p_className
+     */
+    public function next_list_id($p_className) {
+        $objectName = $this->GetListObjectName($p_className);
+        if (is_null($objectName) || $objectName == '') {
+            return null;
+        }
+        $listName = $this->m_listObjects[$objectName]['list'];
+        $prefix = 'ls-'.$this->m_listObjects[$objectName]['url_id'];
+        if (!isset($this->m_readonlyProperties[$listName.'_lists'])) {
+            return $prefix . '0';
+        }
+        return $prefix . count($this->m_readonlyProperties[$listName.'_lists']);
+    }
+
+
+    public function list_id_prefix($p_className) {
+        $objectName = $this->GetListObjectName($p_className);
+        if (is_null($objectName) || $objectName == '') {
+            return null;
+        }
+        return 'ls-'.$this->m_listObjects[$objectName]['url_id'];
+    }
+
+
+    /**
+     * Returns the corresponding list start index for a new list of the given type
+     *
+     * @param string $p_className
+     */
+    public function next_list_start($p_className) {
+        $nextListId = $this->next_list_id($p_className);
+        if (is_null($nextListId)) {
+            return null;
+        }
+        return $this->m_readonlyProperties['default_url']->get_parameter($nextListId);
+    }
 
 
     /**
@@ -797,6 +869,12 @@ final class CampContext
         $this->m_objects['audioclip'] = new MetaAudioclip();
         $this->m_objects['comment'] = new MetaComment();
         $this->m_readonlyProperties['url']->article = $p_newArticle;
+        $formParameters = $this->m_readonlyProperties['url']->form_parameters;
+        foreach ($formParameters as $parameter) {
+            if (strncmp($parameter['name'], 'st-', strlen('st-')) == 0) {
+                $this->m_readonlyProperties['url']->reset_parameter($parameter['name']);
+            }
+        }
         $this->m_objects['article'] = $p_newArticle;
 
         $articleHandlerRunning = false;
@@ -812,9 +890,16 @@ final class CampContext
     private function setCommentHandler(MetaComment $p_oldComment, MetaComment $p_newComment) {
         if ($p_oldComment != $p_newComment) {
             $this->m_objects['comment'] = $p_newComment;
-            $this->m_readonlyProperties['url']->set_parameter('acid', $p_newComment->identifier);
         }
     }
+
+
+    private function setSubtitleHandler(MetaSubtitle $p_oldSubtitle, MetaSubtitle $p_newSubtitle) {
+        if ($p_oldSubtitle != $p_newSubtitle) {
+            $this->m_objects['subtitle'] = $p_newSubtitle;
+        }
+    }
+
 
     /**
      * Returns the name corresponding to the given property; null if

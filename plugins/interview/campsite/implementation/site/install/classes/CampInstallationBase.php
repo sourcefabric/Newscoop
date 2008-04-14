@@ -175,12 +175,17 @@ class CampInstallationBase
         }
 
         $sqlFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_core.sql';
-        $errors = CampInstallationBaseHelper::ImportDB($sqlFile);
+        $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
         if ($errors > 0) {
             $this->m_step = 'database';
             $this->m_message = 'Error: Importing Database';
+            foreach ($errorQueries as $query) {
+                $this->m_message .= "<br>$query";
+            }
             return false;
         }
+
+        CampInstallationBaseHelper::SetCacheStatus();
 
         $this->m_config['database'] = array(
                                             'hostname' => $db_hostname,
@@ -237,18 +242,18 @@ class CampInstallationBase
 
         $isWritable = true;
         $directories = array();
-        $templatesDir = CS_PATH_SMARTY_TEMPLATES;
+        $templatesDir = CS_PATH_SITE.DIR_SEP.CS_PATH_SMARTY_TEMPLATES;
         $cssDir = $templatesDir.DIR_SEP.'css';
         $imagesDir = $templatesDir.DIR_SEP.'img';
         if (!is_dir($templatesDir) || !is_writable($templatesDir)) {
             $directories[] = $templatesDir;
             $isWritable = false;
         }
-        if (!is_dir($cssDir) || !is_writable($cssDir)) {
+        if ((!is_dir($cssDir) && !mkdir($cssDir)) || !is_writable($cssDir)) {
             $directories[] = $cssDir;
             $isWritable = false;
         }
-        if (!is_dir($imagesDir) || !is_writable($imagesDir)) {
+        if ((!is_dir($imagesDir) && !mkdir($imagesDir)) || !is_writable($imagesDir)) {
             $directories[] = $imagesDir;
             $isWritable = false;
         }
@@ -266,7 +271,7 @@ class CampInstallationBase
 
         // copies template files to corresponding directory
         $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$this->m_sampleSiteName.DIR_SEP.'templates';
-        $target = CS_PATH_SMARTY_TEMPLATES;
+        $target = CS_PATH_SITE.DIR_SEP.CS_PATH_SMARTY_TEMPLATES;
         if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Copying sample site files';
@@ -291,10 +296,13 @@ class CampInstallationBase
         }
 
         $sqlFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_3_0_demo_data.sql';
-        $errors = CampInstallationBaseHelper::ImportDB($sqlFile);
+        $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
         if ($errors > 0) {
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Importing Database';
+            foreach ($errorQueries as $query) {
+                $this->m_message .= "<br>$query";
+            }
             return false;
         }
 
@@ -462,7 +470,7 @@ class CampInstallationBaseHelper
     /**
      *
      */
-    public static function ImportDB($p_sqlFile)
+    public static function ImportDB($p_sqlFile, &$errorQueries)
     {
         global $g_db;
 
@@ -473,17 +481,40 @@ class CampInstallationBaseHelper
         $queries = self::SplitSQL($sqlFile);
 
         $errors = 0;
+        $errorQueries = array();
         foreach($queries as $query) {
             $query = trim($query);
             if (!empty($query) && $query{0} != '#') {
                 if ($g_db->Execute($query) == false) {
                     $errors++;
+                    $errorQueries[] = $query;
                 }
             }
         }
 
         return $errors;
     } // fn ImportDB
+
+
+    /**
+     *
+     */
+    public static function SetCacheStatus()
+    {
+        global $g_db;
+
+        if (!ini_get('apc.enabled') || !function_exists('apc_store')) {
+            return false;
+        }
+
+        $sqlQuery = "UPDATE SystemPreferences SET value = 'Y' "
+            ."WHERE varname = 'SiteCacheEnabled'";
+        if (!$g_db->Execute($sqlQuery)) {
+            return false;
+        }
+
+        return true;
+    } // fn SetCacheStatus
 
 
     /**

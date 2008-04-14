@@ -146,8 +146,8 @@ class User extends DatabaseObject {
         'plugin_interview_notify'=>'N',
         'plugin_interview_admin'=>'N',
         'plugin_interview_moderator'=>'N',
-        'plugin_interview_guest'=>'N'        
-        );
+        'plugin_interview_guest'=>'N',        
+        'ClearCache'=>'N');
     var $m_liveUserData = array();
 
 

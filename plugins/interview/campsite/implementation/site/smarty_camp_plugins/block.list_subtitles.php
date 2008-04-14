@@ -31,29 +31,35 @@ function smarty_block_list_subtitles($p_params, $p_content, &$p_smarty, &$p_repe
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 0;
-    	$subtitlesList = new SubtitlesList($start, $p_params);
-    	$campContext->setCurrentList($subtitlesList, array('subtitle'));
+        $start = $campContext->next_list_start('SubtitlesList');
+        $subtitlesList = new SubtitlesList($start, $p_params);
+        $campContext->setCurrentList($subtitlesList, array('subtitle'));
     }
+    static $subtitleURLId = null;
 
-    $currentSubtitle = $campContext->current_subtitles_list->defaultIterator()->current();
+    $currentSubtitle = $campContext->current_subtitles_list->current;
     if (is_null($currentSubtitle)) {
-	    $p_repeat = false;
-	    $campContext->resetCurrentList();
-    	return $html;
+        $campContext->url->reset_parameter($subtitleURLId);
+        $p_repeat = false;
+        $campContext->resetCurrentList();
+        return $html;
     } else {
         $campContext->subtitle = $currentSubtitle;
-    	$p_repeat = true;
+        $subtitleURLId = $campContext->article->subtitle_url_id($currentSubtitle->field_name);
+        $campContext->url->set_parameter($subtitleURLId, $currentSubtitle->number);
+        $p_repeat = true;
     }
 
     if (isset($p_content)) {
-		$html = $p_content;
-	    if ($p_repeat) {
-    		$campContext->current_subtitles_list->defaultIterator()->next();
-    		if (!is_null($campContext->current_subtitles_list->current)) {
-    		    $campContext->subtitle = $campContext->current_subtitles_list->current;
-    		}
-    	}
+        $html = $p_content;
+        if ($p_repeat) {
+            $campContext->current_subtitles_list->defaultIterator()->next();
+            if (!is_null($campContext->current_subtitles_list->current)) {
+                $campContext->subtitle = $campContext->current_subtitles_list->current;
+                $subtitleURLId = $campContext->article->subtitle_url_id($campContext->subtitle->field_name);
+                $campContext->url->set_parameter($subtitleURLId, $campContext->subtitle->number);
+            }
+        }
     }
 
     return $html;

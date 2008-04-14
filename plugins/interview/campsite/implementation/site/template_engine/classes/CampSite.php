@@ -111,20 +111,43 @@ final class CampSite extends CampSystem
      */
     public function render()
     {
+        $uri = self::GetURIInstance();
         $document = self::GetHTMLDocumentInstance();
 
         // sets the appropiate template if site is not in mode online
         if ($this->getSetting('site.online') == 'N') {
             $template = '_campsite_offline.tpl';
+            $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
+        } elseif (!$uri->publication->defined) {
+            $template = '_campsite_error.tpl';
+            $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
+            $error_message = 'The site alias \'' . $_SERVER['HTTP_HOST']
+            . '\' was not assigned to a publication. Please create a publication and '
+            . ' assign it the current site alias.';
         } else {
             // gets the template file name
             $template = $this->getTemplateName();
+            if (empty($template)) {
+                $tplId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
+                if (is_null($tplId)) {
+                    $error_message = 'Unable to select a template! '
+                    .'Please make sure there is at least one issue published and '
+                    .'it had assigned a valid template.';
+                } else {
+                    $error_message = 'The template identified by the number ' . $tplId
+                    .' does not exist.';
+                }
+                $template = '_campsite_error.tpl';
+                $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
+            }
+            $templates_dir = CS_PATH_SMARTY_TEMPLATES;
         }
 
         $params = array(
                         'context' => CampTemplate::singleton()->context(),
                         'template' => $template,
-                        'templates_dir', CS_PATH_SMARTY_TEMPLATES
+                        'templates_dir' => $templates_dir,
+                        'error_message' => isset($error_message) ? $error_message : null
                         );
         $document->render($params);
     } // fn render
@@ -138,6 +161,8 @@ final class CampSite extends CampSystem
         global $g_errorList;
 
         switch ($p_eventName) {
+        case 'beforeRender':
+            return CampRequest::GetVar('previewLang', null);
         case 'afterRender':
             $doPreview = CampRequest::GetVar('preview', 'off');
             if ($doPreview == 'on') {
@@ -147,7 +172,7 @@ final class CampSite extends CampSystem
                     ."\\\n<b>Parse errors:</b>\\\n");
 
                 foreach ($g_errorList as $error) {
-                    print("<p>".$error->getMessage()."</p>\\\n");
+                    print("<p>".addslashes($error->getMessage())."</p>\\\n");
                 }
 
                 print("</pre></body></html>\\\n\");\nparent.e.document.close();\n</script>\n");
@@ -239,12 +264,21 @@ final class CampSite extends CampSystem
      */
     public static function GetURIInstance($p_uri = 'SELF')
     {
+        global $g_ado_db;
+
         $urlType = 0;
 
         // tries to get the url type from publication attributes
-        $urlTypeObj = new UrlType(CampRequest::GetVar('URLType'));
-        if (is_object($urlTypeObj) && $urlTypeObj->exists()) {
-            $urlType = $urlTypeObj->getId();
+        $sqlQuery = 'SELECT p.Id, p.IdDefaultLanguage, p.IdURLType '
+            . 'FROM Publications p, Aliases a '
+            . 'WHERE p.Id = a.IdPublication AND '
+            . "a.Name = '" . $g_ado_db->Escape($_SERVER['HTTP_HOST']) . "'";
+        $data = $g_ado_db->GetRow($sqlQuery);
+        if (!empty($data)) {
+            $urlTypeObj = new UrlType($data['IdURLType']);
+            if (is_object($urlTypeObj) && $urlTypeObj->exists()) {
+                $urlType = $urlTypeObj->getId();
+            }
         }
 
         // sets url type to default if necessary

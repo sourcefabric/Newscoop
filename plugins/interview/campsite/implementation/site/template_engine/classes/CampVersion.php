@@ -27,27 +27,27 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '3.0';
+    private $m_release = '3.0.0';
 
     /**
      * @var string
      */
-    private $m_devStatus = 'beta 2';
+    private $m_devStatus = 'rc3';
 
     /**
      * @var string
      */
-    private $m_codeName = 'undefined';
+    private $m_codeName = 'Filip';
 
     /**
      * @var string
      */
-    private $m_releaseDate = 'undefined';
+    private $m_releaseDate = '2008-04-08';
 
     /**
      * @var string
      */
-    private $m_copyright = 'Copyright &copy; 2007 Campware. All rights reserved.';
+    private $m_copyrightYear = 2008;
 
     /**
      * @var string
@@ -104,7 +104,8 @@ final class CampVersion
 
     public function getCopyright()
     {
-        return $this->m_copyright;
+        return 'Copyright &copy; ' . $this->m_organization . ' '
+        . $this->m_copyrightYear . '. All rights reserved.';
     } // fn getCopyright
 
 

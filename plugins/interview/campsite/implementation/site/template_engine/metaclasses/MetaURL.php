@@ -47,6 +47,7 @@ final class MetaURL
         $this->m_customProperties['url'] = 'getURL';
         $this->m_customProperties['url_parameters'] = 'getURLParameters';
 
+        $this->m_customProperties['form_parameters'] = 'getFormParameters';
         $this->m_customProperties['base'] = 'getBase';
         $this->m_customProperties['path'] = 'getPath';
         $this->m_customProperties['query'] = 'getQuery';
@@ -135,7 +136,16 @@ final class MetaURL
     /**
      *
      */
-    public function getURI()
+    private function getFormParameters()
+    {
+        return $this->m_uriObj->getFormParameters();
+    } // fn getFormParameters
+
+
+    /**
+     *
+     */
+    private function getURI()
     {
         return $this->m_uriObj->getURI($this->m_uri_parameter);
     } // fn getURL
@@ -144,7 +154,7 @@ final class MetaURL
     /**
      *
      */
-    public function getURIPath()
+    private function getURIPath()
     {
         return $this->m_uriObj->getURIPath($this->m_uri_parameter);
     } // fn getURL
@@ -153,7 +163,7 @@ final class MetaURL
     /**
      *
      */
-    public function getURLParameters()
+    private function getURLParameters()
     {
         return $this->m_uriObj->getURLParameters($this->m_uri_parameter);
     } // fn getURL
@@ -162,7 +172,7 @@ final class MetaURL
     /**
      *
      */
-    public function getURL()
+    private function getURL()
     {
         return $this->m_uriObj->getURL();
     } // fn getURL
@@ -171,7 +181,7 @@ final class MetaURL
     /**
      *
      */
-    public function getBase()
+    private function getBase()
     {
         return $this->m_uriObj->getBase();
     } // fn getBase
@@ -180,7 +190,7 @@ final class MetaURL
     /**
      *
      */
-    public function getPath()
+    private function getPath()
     {
         return $this->m_uriObj->getPath();
     } // fn getPath
@@ -189,7 +199,7 @@ final class MetaURL
     /**
      *
      */
-    public function getQuery()
+    private function getQuery()
     {
         return $this->m_uriObj->getQuery();
     } // fn getQuery
@@ -198,7 +208,7 @@ final class MetaURL
     /**
      *
      */
-    public function getURLType()
+    private function getURLType()
     {
         $urlTypeObj = new UrlType($this->m_uriObj->getURLType());
         if (!is_object($urlTypeObj) || !$urlTypeObj->exists()) {
@@ -212,7 +222,7 @@ final class MetaURL
     /**
      *
      */
-    public function getRequestURI()
+    private function getRequestURI()
     {
         return $this->m_uriObj->getRequestURI();
     } // fn getRequestURI

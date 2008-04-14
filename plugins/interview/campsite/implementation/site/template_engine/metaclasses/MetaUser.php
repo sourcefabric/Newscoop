@@ -34,7 +34,9 @@ final class MetaUser extends MetaDbObject {
         $this->m_properties['str_address'] = 'StrAddress';
         $this->m_properties['state'] = 'State';
         $this->m_properties['phone'] = 'Phone';
+        $this->m_properties['fax'] = 'Fax';
         $this->m_properties['contact'] = 'Contact';
+        $this->m_properties['second_phone'] = 'Phone2';
         $this->m_properties['postal_code'] = 'PostalCode';
         $this->m_properties['employer'] = 'Employer';
         $this->m_properties['position'] = 'Position';
@@ -64,6 +66,9 @@ final class MetaUser extends MetaDbObject {
         $this->m_customProperties['country'] = 'getCountry';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['logged_in'] =  'isLoggedIn';
+        $this->m_customProperties['blocked_from_comments'] = 'isBlockedFromComments';
+        $this->m_customProperties['subscription'] = 'getSubscription';
+        $this->m_customProperties['is_admin'] = 'isAdmin';
     } // fn __construct
 
 
@@ -72,7 +77,7 @@ final class MetaUser extends MetaDbObject {
      *
      * @return string
      */
-    public function getCountry()
+    protected function getCountry()
     {
         $countryCode = $this->m_dbObject->getProperty('CountryCode');
         $smartyObj = CampTemplate::singleton();
@@ -101,21 +106,46 @@ final class MetaUser extends MetaDbObject {
 
 
     /**
+     * Returns true if the user had adminstration rights
+     *
+     * @return bool
+     */
+    protected function isAdmin() {
+        return $this->m_dbObject->isAdmin();
+    }
+
+
+    /**
      * Returns true of the user was authenticated, false if not
      *
      * @return bool
      */
-    public function isLoggedIn()
+    protected function isLoggedIn()
     {
         $context = CampTemplate::singleton()->context();
         return (($context->login_action->defined
-        && !PEAR::isError($context->login_action->error)
+        && $context->login_action->ok
         && $context->login_action->user_name == $this->uname
         && $this->uname != '')
         || ($this->m_dbObject->getUserId() == CampRequest::GetVar('LoginUserId')
         && $this->m_dbObject->getKeyId() == CampRequest::GetVar('LoginUserKey')
         && $this->m_dbObject->getUserId() > 0
         && $this->m_dbObject->getKeyId() > 0));
+    }
+
+
+    protected function isBlockedFromComments() {
+        return (int)Phorum_user::IsBanned($this->m_dbObject->getRealName(), $this->m_dbObject->getEmail());
+    }
+
+
+    protected function getSubscription() {
+        $publicationId = CampTemplate::singleton()->context()->publication->identifier;
+        $subscriptions = Subscription::GetSubscriptions($publicationId, $this->m_dbObject->getUserId());
+        if (empty($subscriptions)) {
+            return new MetaSubscription();
+        }
+        return new MetaSubscription($subscriptions[0]->getSubscriptionId());
     }
 } // class MetaUser
 

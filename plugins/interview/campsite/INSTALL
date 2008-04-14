@@ -16,7 +16,9 @@ PREPARATION - applications you need to have installed
 
 INSTALLATION - the usual procedure
 
-1. Create an apache virtual host.
+1. Create an apache virtual host or use the default apache 
+virtual host.
+
 Example of virtual host configuration:
 <VirtualHost *>
     DocumentRoot /var/www/campsite/html
@@ -53,18 +55,13 @@ root directory of the apache virtual host.
 5. Start a browser, point it to the http://site_name URL and follow the
 steps.
 
-6. To install the default demo templates provided with the package take
-the following steps:
-    - copy the content of demo templates directory to "templates"
-    directory in the document root; the sample templates are located in:
-    [document_root]/install/sample_templates/campsite_3.0-sample-template-01-v1
+6. For Windows: Please rename htaccess file to .htaccess and be sure
+your apache installation is able to read it in order for Campsite to
+work well on this platform.
 
-    - drop the just installed database (e.g. campsite)
+For Linux, FBSD: You can delete htaccess file if you want it, as it
+is useless on these platforms.
 
-    - create an empty database (campsite)
-
-    - load the demo data to campsite from
-    [document_root]/install/sql/campsite_3_0_demo_data.sql
 
 ####################################################################
 

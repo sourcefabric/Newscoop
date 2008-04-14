@@ -67,31 +67,6 @@ class CampURIShortNamesTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals('/en/first/opensource/43/', $this->m_uri->getRequestURI());
     }
-    
-    public function testGetPublicationAlias()
-    {
-        $this->assertEquals('campsite.localhost.localdomain', $this->m_uri->getPublicationAlias());
-    }
-    
-    public function testGetLanguageCode()
-    {
-        $this->assertEquals('en', $this->m_uri->getLanguageCode());
-    }
-    
-    public function testGetIssueShortName()
-    {
-        $this->assertEquals('first', $this->m_uri->getIssueShortName());
-    }
-    
-    public function testGetSectionShortName()
-    {
-        $this->assertEquals('opensource', $this->m_uri->getSectionShortName());
-    }
-    
-    public function testGetArticleShortName()
-    {
-        $this->assertEquals('43', $this->m_uri->getArticleShortName());
-    }
 }
 
 // Call CampURIShortNamesTest::main() if this source file is executed directly.

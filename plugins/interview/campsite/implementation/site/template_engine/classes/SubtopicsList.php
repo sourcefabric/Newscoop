@@ -26,11 +26,14 @@ class SubtopicsList extends ListObject
 	    $context = CampTemplate::singleton()->context();
 	    $rootTopicId = $context->topic->defined ? $context->topic->identifier : 0;
 
-	    $sqlOptions = array('LIMIT'=>array(
-	                                       'START'=>$p_start,
-	                                       'MAX_ROWS'=>($p_limit == 0 ? 0 : $p_limit + 1)
-	                                 )
-	                  );
+	    if ($p_start > 0 || $p_limit > 0) {
+	        $sqlOptions = array('LIMIT'=>array('START'=>$p_start,
+											   'MAX_ROWS'=>($p_limit == 0 ? 0 : $p_limit + 1)
+                                         )
+                          );
+	    } else {
+	        $sqlOptions = null;
+	    }
 
 	    $topicsList = Topic::GetTopics(null, null, null, $rootTopicId, $sqlOptions);
 	    $allTopicsList = Topic::GetTopics(null, null, null, $rootTopicId);

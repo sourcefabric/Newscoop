@@ -73,7 +73,7 @@ class MetaAction
      *
      * @return mixed
      */
-    public function getError()
+    protected function getError()
     {
         return $this->m_error;
     }

@@ -45,8 +45,14 @@ function smarty_block_login_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     }
 
     if (isset($p_content)) {
-        $html = "<form name=\"login\" action=\"\" method=\"post\">\n"
-            ."<input type=\"hidden\" name=\"f_tpl\" value=\"$templateId\" />\n";
+        $url = $campsite->url;
+        $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
+        $html = "<form name=\"login\" action=\"" . $url->uri_path . "\" method=\"post\">\n"
+            ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n";
+        foreach ($campsite->url->form_parameters as $param) {
+            $html .= '<input type="hidden" name="'.$param['name']
+                .'" value="'.htmlentities($param['value'])."\" />\n";
+        }
         $html .= $p_content;
         $html .= "<div align=\"center\">";
         $html .= "<input type=\"submit\" name=\"f_login\" value=\""

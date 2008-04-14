@@ -63,7 +63,7 @@ class MetaActionEdit_User extends MetaAction
 
 
     /**
-     * Reads the input parameters and sets up the login action.
+     * Reads the input parameters and sets up the user edit action.
      *
      * @param array $p_input
      */
@@ -101,12 +101,16 @@ class MetaActionEdit_User extends MetaAction
      */
     public function takeAction(CampContext &$p_context)
     {
+        $p_context->default_url->reset_parameter('f_'.$this->m_name);
+        $p_context->url->reset_parameter('f_'.$this->m_name);
+
         if (PEAR::isError($this->m_error)) {
             return false;
         }
 
         $metaUser = $p_context->user;
         if (!$metaUser->defined) {
+            $this->m_properties['type'] = 'add';
             if (!MetaAction::ValidateInput($this->m_properties, 'name', 1,
             $this->m_error, 'The user name was not filled in.', ACTION_EDIT_USER_ERR_NO_NAME)) {
                 return false;
@@ -132,6 +136,7 @@ class MetaActionEdit_User extends MetaAction
                 return false;
             }
         } else {
+            $this->m_properties['type'] = 'edit';
             if (isset($this->m_properties['password'])) {
                 if (!MetaAction::ValidateInput($this->m_properties, 'password', 6,
                 $this->m_error, 'The user password was not filled in or was too short.',
@@ -175,6 +180,10 @@ class MetaActionEdit_User extends MetaAction
                 ACTION_EDIT_USER_ERR_INTERNAL);
                 return false;
             }
+            setcookie("LoginUserId", $user->getUserId(), null, '/');
+            $user->initLoginKey();
+            setcookie("LoginUserKey", $user->getKeyId(), null, '/');
+            $p_context->user = new MetaUser($user->getUserId());
         } else {
             $user = new User($metaUser->identifier);
             if (!$user->exists()) {
@@ -211,6 +220,11 @@ class MetaActionEdit_User extends MetaAction
                 ACTION_EDIT_USER_ERR_INTERNAL);
                 return false;
             }
+        }
+
+        foreach ($this->m_properties as $property=>$value) {
+            $p_context->default_url->reset_parameter('f_user_'.$property);
+            $p_context->url->reset_parameter('f_user_'.$property);
         }
 
         $this->m_error = ACTION_OK;

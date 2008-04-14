@@ -47,21 +47,15 @@ function smarty_block_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat
     $anchor = isset($p_params['anchor']) ? '#'.$p_params['anchor'] : null;
 
     if (isset($p_content)) {
-        $html = "<form name=\"submit_comment\" action=\"$anchor\" method=\"post\">\n"
+        $url = $camp->url;
+        $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
+        $html = "<form name=\"submit_comment\" action=\"" . $url->uri_path . "$anchor\" method=\"post\">\n"
                ."<input type=\"hidden\" name=\"tpl\" value=\"" . $template->identifier . "\" />\n";
-        if ($camp->url->type == 'short names') {
-            $html .= "<input type=\"hidden\" name=\"f_language_id\" "
-                ."value=\"".$camp->language->id."\" />\n"
-                ."<input type=\"hidden\" name=\"f_publication_id\" "
-                ."value=\"".$camp->publication->id."\" />\n"
-                ."<input type=\"hidden\" name=\"f_issue_nr\" "
-                ."value=\"".$camp->issue->number."\" />\n"
-                ."<input type=\"hidden\" name=\"f_section_nr\" "
-                ."value=\"".$camp->section->number."\" />\n"
-                ."<input type=\"hidden\" name=\"f_article_nr\" "
-                ."value=\"".$camp->article->number."\" />\n";
+        foreach ($camp->url->form_parameters as $param) {
+            $html .= '<input type="hidden" name="'.$param['name']
+                .'" value="'.htmlentities($param['value'])."\" />\n";
         }
-    	if ($camp->comment->identifier > 0) {
+        if ($camp->comment->identifier > 0) {
             $html .= "<input type=\"hidden\" name=\"acid\" "
                 ."value=\"".$camp->comment->identifier."\" />\n";
         }

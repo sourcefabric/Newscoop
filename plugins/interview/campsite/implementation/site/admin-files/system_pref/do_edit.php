@@ -57,7 +57,16 @@ SystemPref::Set('SiteMetaKeywords', $f_site_metakeywords);
 SystemPref::Set('SiteMetaDescription', $f_site_metadescription);
 
 // Caching
-SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
+if ($f_cache_enabled == 'Y') {
+    if (CampCache::IsAPCEnabled()) {
+        SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
+    } else {
+        $msg_ok = 0;
+        camp_html_add_msg(getGS('Invalid: You need PHP APC enabled in order to use the caching system.'));
+    }
+} else {
+    SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
+}
 
 // Secret key
 SystemPref::Set('SiteSecretKey', $f_secret_key);

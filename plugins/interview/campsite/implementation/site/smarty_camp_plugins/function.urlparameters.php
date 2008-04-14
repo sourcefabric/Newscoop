@@ -19,7 +19,9 @@
 function smarty_function_urlparameters($p_params, &$p_smarty)
 {
     $validParams = array('language','publication','issue','section',
-                         'article','articleattachment','image', 'template');
+                         'article','articleattachment','image', 'template',
+                         'previous_items', 'next_items', 'previous_subtitle',
+                         'next_subtitle', 'all_subtitles');
     $option = null;
     if (isset($p_params['options']) && !empty($p_params['options'])) {
         $optionsString = strtolower($p_params['options']);

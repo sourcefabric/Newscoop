@@ -12,7 +12,7 @@ define('ACTION_PREVIEW_COMMENT_ERR_BANNED', 'action_comment_preview_err_banned')
 class MetaActionPreview_Comment extends MetaAction
 {
     /**
-     * Reads the input parameters and sets up the login action.
+     * Reads the input parameters and sets up the comment preview action.
      *
      * @param array $p_input
      */
@@ -51,6 +51,9 @@ class MetaActionPreview_Comment extends MetaAction
      */
     public function takeAction(CampContext &$p_context)
     {
+        $p_context->default_url->reset_parameter('f_'.$this->m_name);
+        $p_context->url->reset_parameter('f_'.$this->m_name);
+
         if (!is_null($this->m_error)) {
             return false;
         }

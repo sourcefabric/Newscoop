@@ -82,15 +82,12 @@ $context->topic = new MetaTopic(14);
 
 
 // User object
-$context->user = new MetaUser(1);
+$context->user = new MetaUser(11);
 
 
 // Template object
 $context->template = new MetaTemplate('index.tpl');
 
-
-// Subscription object
-$context->subscription = new MetaSubscription(5);
 
 //$tpl->debugging = true;
 

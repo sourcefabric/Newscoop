@@ -73,7 +73,7 @@ final class CampCache
      */
     public static function singleton()
     {
-        if (!isset(self::$m_instance)) {
+        if (!isset(self::$m_instance) && self::IsAPCEnabled()) {
             self::$m_instance = new CampCache();
         }
 
@@ -252,6 +252,18 @@ final class CampCache
 
         return $this->m_key;
     } // fn genKey
+
+
+    /**
+     * Returns whether APC is enabled or not in the system.
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+    public static function IsAPCEnabled()
+    {
+        return (ini_get('apc.enabled') && function_exists('apc_store'));
+    } // fn IsAPCEnabled
 
 } // class CampCache
 

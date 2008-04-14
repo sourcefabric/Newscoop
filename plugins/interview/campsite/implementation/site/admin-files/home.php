@@ -76,6 +76,14 @@ function on_link_click(id, home_page_links)
 <?php
 echo $breadcrumbs;
 
+$clearCache = Input::Get('clear_cache', 'string', 'no', true);
+if (($clearCache == 'yes') && $g_user->hasPermission('ClearCache')) {
+    apc_clear_cache();
+    apc_clear_cache('user');
+    $actionMsg = getGS('Campsite cache was cleaned up');
+    $res = 'OK';
+}
+
 $syncUsers = Input::Get('sync_users', 'string', 'no', true);
 if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
     require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/users/sync_phorum_users.php");

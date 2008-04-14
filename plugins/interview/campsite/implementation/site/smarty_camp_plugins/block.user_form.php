@@ -43,10 +43,16 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     }
 
     if (isset($p_content)) {
+        $url = $camp->url;
+        $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
         $subsType = $camp->subscription->type == 'T' ? 'trial' : 'paid';
-        $html = "<form name=\"edit_user\" action=\"\" method=\"post\">\n"
-        ."<input type=\"hidden\" name=\"f_tpl\" value=\"$templateId\" />\n"
+        $html = "<form name=\"edit_user\" action=\"" . $url->uri_path . "\" method=\"post\">\n"
+        ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n"
         ."<input type=\"hidden\" name=\"f_substype\" value=\"".$subsType."\" />\n";
+        foreach ($camp->url->form_parameters as $param) {
+            $html .= '<input type="hidden" name="'.$param['name']
+                .'" value="'.htmlentities($param['value'])."\" />\n";
+        }
         $html.= $p_content;
         $html.= "<input type=\"submit\" name=\"f_edit_user\" value=\""
         .smarty_function_escape_special_chars($p_params['submit_button'])

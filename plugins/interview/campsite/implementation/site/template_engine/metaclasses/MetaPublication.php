@@ -20,63 +20,85 @@ require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
  */
 final class MetaPublication extends MetaDbObject {
 
-	private function InitProperties()
-	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
-		$this->m_properties['name'] = 'Name';
-		$this->m_properties['identifier'] = 'Id';
-	}
+    private function InitProperties()
+    {
+        if (!is_null($this->m_properties)) {
+            return;
+        }
+        $this->m_properties['name'] = 'Name';
+        $this->m_properties['identifier'] = 'Id';
+        $this->m_properties['subscription_currency'] = 'Currency';
+        $this->m_properties['subscription_trial_time'] = 'TrialTime';
+        $this->m_properties['subscription_paid_time'] = 'PaidTime';
+        $this->m_properties['subscription_unit_cost'] = 'UnitCost';
+        $this->m_properties['subscription_unit_cost_all_lang'] = 'UnitCostAllLang';
+    }
 
 
     public function __construct($p_publicationId = null)
     {
-		$this->m_dbObject = new Publication($p_publicationId);
+        $this->m_dbObject = new Publication($p_publicationId);
 
-		$this->InitProperties();
-		$this->m_customProperties['default_language'] = 'getDefaultLanguage';
-		$this->m_customProperties['site'] = 'getDefaultSiteName';
+        $this->InitProperties();
+        $this->m_customProperties['site'] = 'getDefaultSiteName';
         $this->m_customProperties['defined'] = 'defined';
+        $this->m_customProperties['default_language'] = 'getDefaultLanguage';
         $this->m_customProperties['public_comments'] = 'getPublicComments';
         $this->m_customProperties['moderated_comments'] = 'getModeratedComments';
         $this->m_customProperties['captcha_enabled'] = 'getCAPTCHAEnabled';
+        $this->m_customProperties['subscription_time_unit'] = 'getSubscriptionTimeUnit';
+        $this->m_customProperties['subscription_time'] = 'getSubscriptionTime';
     } // fn __construct
 
 
-	protected function getDefaultSiteName()
-	{
-		$defaultAlias = new Alias($this->m_dbObject->getDefaultAliasId());
-		if (!$defaultAlias->exists()) {
-			return null;
-		}
-		return $defaultAlias->getName();
-	}
+    protected function getDefaultSiteName()
+    {
+        $defaultAlias = new Alias($this->m_dbObject->getDefaultAliasId());
+        if (!$defaultAlias->exists()) {
+            return null;
+        }
+        return $defaultAlias->getName();
+    }
 
 
-	protected function getDefaultLanguage()
-	{
-	    return new MetaLanguage($this->m_dbObject->getDefaultLanguageId());
-	}
-
-	
-	protected function getPublicComments() {
-	    return $this->m_dbObject->publicComments();
-	}
+    protected function getDefaultLanguage()
+    {
+        return new MetaLanguage($this->m_dbObject->getDefaultLanguageId());
+    }
 
 
-	protected function getModeratedComments() {
-	    if (CampTemplate::singleton()->context()->user->logged_in) {
-	        return $this->m_dbObject->commentsSubscribersModerated();
-	    } else {
-	        return $this->m_dbObject->commentsPublicModerated();
-	    }
-	}
+    protected function getPublicComments() {
+        return $this->m_dbObject->publicComments();
+    }
 
 
-	protected function getCAPTCHAEnabled() {
-	    return $this->m_dbObject->isCaptchaEnabled();
-	}
+    protected function getModeratedComments() {
+        if (CampTemplate::singleton()->context()->user->logged_in) {
+            return $this->m_dbObject->commentsSubscribersModerated();
+        } else {
+            return $this->m_dbObject->commentsPublicModerated();
+        }
+    }
+
+
+    protected function getCAPTCHAEnabled() {
+        return $this->m_dbObject->isCaptchaEnabled();
+    }
+
+
+    protected function getSubscriptionTimeUnit() {
+        return $this->m_dbObject->getTimeUnitName(CampTemplate::singleton()->context()->language->number);
+    }
+
+
+    protected function getSubscriptionTime() {
+        if (strtolower(CampRequest::GetVar('SubsType')) == 'trial') {
+            return $this->subscription_trial_time;
+        } elseif (strtolower(CampRequest::GetVar('SubsType')) == 'paid') {
+            return $this->subscription_paid_time;
+        }
+        return null;
+    }
 } // class MetaPublication
 
 ?>
