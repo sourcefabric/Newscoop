@@ -888,27 +888,28 @@ class Poll extends DatabaseObject {
      *
      */
     public static function registerVoting()
-    {   
+    {
+        $p_context =& CampTemplate::singleton()->context();
+    
         $poll_language_id = Input::Get('f_poll_language_id', 'int');
         $poll_nr = Input::Get('f_poll_nr', 'int');
-        
         $Poll = new Poll($poll_language_id, $poll_nr);
                                    
         if ($Poll->isVotable()) {
             foreach ($Poll->getAnswers() as $PollAnswer) {
-                $answer_nr = $PollAnswer->getNumber();
+                $nr_answer = $PollAnswer->getNumber();
                 
-                if ($value = Input::Get('f_pollanswer_'.$answer_nr, 'int')) {
+                if ($value = Input::Get('f_pollanswer_'.$nr_answer, 'int')) {
                     $PollAnswer->vote($value);
                     $Poll->setUserHasVoted();
                 }
+                
+                // reset the context:
+                $p_context->default_url->reset_parameter('f_pollanswer_'.$nr_answer);
+                $p_context->url->reset_parameter('f_pollanswer_'.$nr_answer);
             }
         }
         
-        // reset the context:
-		$p_context =& CampTemplate::singleton()->context();
-        $p_context->default_url->reset_parameter('f_pollanswer_nr');
-        $p_context->url->reset_parameter('f_pollanswer_nr');
     }
     
     /**

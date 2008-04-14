@@ -27,7 +27,7 @@
     
     <div style="height: 10px;" /></div>
     
-    {{ list_poll_answers order="byaverage_value desc"}}
+    {{ list_poll_answers order="byvalue desc"}}
        
          {{ pollanswer_ajax }}
          
@@ -40,16 +40,18 @@
         {{ /pollanswer_ajax }}
         
 		<div style="clear: both"></div>
-        
-		Stars: 
+		Give a note: 
         {{ section name=foo start=1 loop=6 }}
             {{ pollanswer_ajax value=$smarty.section.foo.index }}{{ $smarty.section.foo.index }}{{ /pollanswer_ajax }}
         {{ /section }}
+
+        <br>
         
-        ({{ $campsite->pollanswer->votes }} votes; &#216;{{ $campsite->pollanswer->average_value|string_format:"%.1f" }})
+        {{ $campsite->pollanswer->votes }} votes |
+        &#216;{{ $campsite->pollanswer->average_value|string_format:"%.1f" }} |
+        sum: {{ $campsite->pollanswer->value }}
         
         <div style="clear: both; height: 10px"></div>
-
 
     {{ /list_poll_answers }}
            
