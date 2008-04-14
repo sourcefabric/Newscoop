@@ -26,6 +26,8 @@ class TemplateConverterHelper
      */
     private static $m_exceptions = array(
         'article' => array(
+            'date' => array(
+                'attribute' => 'date'),
             'type' => array(
                 'attribute' => 'type_name'),
             'mon_nr' => array(
@@ -388,7 +390,7 @@ class TemplateConverterHelper
             $e = self::$m_exceptions[$object][strtolower($p_optArray[2])];
             $newTag .= (isset($e['new_object'])) ? '->'.$e['new_object'] : '->'.strtolower($p_optArray[1]);
             $newTag .= (isset($e['attribute'])) ? '->'.$e['attribute'] : '';
-            if ($e['attribute'] == 'creation_date'
+            if ($e['attribute'] == 'date' || $e['attribute'] == 'creation_date'
                     || $e['attribute'] == 'publish_date') {
                 $newTag.= (isset($p_optArray[3])) ? '|camp_date_format:"'.$p_optArray[3].'"' : '';
             }
