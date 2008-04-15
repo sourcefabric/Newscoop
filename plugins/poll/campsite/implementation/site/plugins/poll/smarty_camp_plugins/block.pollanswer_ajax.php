@@ -31,7 +31,7 @@ function smarty_block_pollanswer_ajax($p_params, $p_content, &$p_smarty, &$p_rep
     $html = '';
     
     // the value for this rating
-    if (settype($p_params['value'], 'integer')) {
+    if (settype($p_params['value'], 'integer') && $p_params['value'] != 0) {
         $value = $p_params['value'];    
     } else {
         $value = 1;   
