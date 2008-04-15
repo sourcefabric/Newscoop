@@ -259,7 +259,7 @@ class TemplateConverterHelper
     /**
      * @param array $p_optArray
      */
-    public static function GetNewTagContent($p_optArray)
+    public static function GetNewTagContent($p_optArray, $p_tplPath = null)
     {
         if (!is_array($p_optArray) || sizeof($p_optArray) < 1) {
             continue;
@@ -355,8 +355,11 @@ class TemplateConverterHelper
             $newTag = '$smarty.now|camp_date_format:"' . $p_optArray[1] . '"';
             break;
         // <!** include header.tpl> to {{ include file="header.tpl" }}
+        // <!** include article.tpl> to {{ include file="news/article.tpl" }}
         case 'include':
-            $newTag = 'include file="' . $p_optArray[1] . '"';
+            $filePath = (!is_null($p_tplPath)) ? $p_tplPath.'/'.$p_optArray[1]
+                : $p_optArray[1];
+            $newTag = 'include file="' . $filePath . '"';
             break;
         // <!** local> to {{ local }}
         case 'local':

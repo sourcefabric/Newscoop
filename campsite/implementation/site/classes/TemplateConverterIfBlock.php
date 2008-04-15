@@ -396,6 +396,7 @@ class TemplateConverterIfBlock
                 }
             }
             if (!is_null($value)) {
+                $value = (is_numeric($value)) ? $value : '"'.$value.'"';
                 $ifBlockStr.= (strlen($operator) <= 0) ? ' == '.$value : ' '.$value;
                 $idx++;
             }
