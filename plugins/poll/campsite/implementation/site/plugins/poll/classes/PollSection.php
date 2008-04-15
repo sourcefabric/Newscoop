@@ -247,6 +247,6 @@ class PollSection extends DatabaseObject {
         return $this->m_data['fk_poll_nr'];   
     }
       
-} // class PollQuestion
+} // class PollSection
 
 ?>

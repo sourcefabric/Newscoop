@@ -43,7 +43,10 @@ $no_menu_scripts = array(
     '/comments/ban.php',
 	'/comments/do_ban.php',
 	'/imagearchive/do_add.php',
-	'/poll/assign_popup.php'
+	'/poll/assign_popup.php',
+	'/poll/files/popup.php',
+	'poll/files/do_add.php',
+	'poll/files/do_delete.php'
 	);
 
 $request_uri = $_SERVER['REQUEST_URI'];

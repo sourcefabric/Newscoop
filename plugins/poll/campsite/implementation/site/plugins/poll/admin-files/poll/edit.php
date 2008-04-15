@@ -1,4 +1,5 @@
 <?php
+
 // Check permissions
 if (!$g_user->hasPermission('ManagePoll')) {
     camp_html_display_error(getGS('You do not have the right to manage polls.'));
@@ -211,6 +212,13 @@ camp_html_display_msgs();
                 <TD>
                 <INPUT TYPE="TEXT" NAME="f_answer[<?php p($n); ?>]" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" id="poll_answer_input_<?php p($n); ?>" emsg="<?php putGS('You must complete the $1 field.', getGS('Answer $1', $n)); ?>" value="<?php isset($answers[$n]) ? p(htmlspecialchars($answers[$n])) : p('__undefined__'); ?>">
                 </TD>
+                
+                <td align='center'>
+                    <a href="javascript: void(0);" onclick="window.open('files/popup.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_pollanswer_nr=<?php p($n) ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=600, top=200, left=100');">
+                        <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" BORDER="0">
+                    </a>
+                </td>
+                
             </TR>
             <?php
         }

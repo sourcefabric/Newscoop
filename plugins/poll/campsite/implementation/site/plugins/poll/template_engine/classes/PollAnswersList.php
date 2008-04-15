@@ -68,7 +68,7 @@ class PollAnswersList extends ListObject
 	    foreach ($p_constraints as $word) {
 	        if ($state == 1) {
 	                if (array_key_exists($word, PollAnswersList::$s_parameters) === false) {
-	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_poll_answers, constraints parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_pollanswers, constraints parameter");
 	                }
 	                $attribute = $word;
 	                $state = 2;
@@ -79,7 +79,7 @@ class PollAnswersList extends ListObject
 	                    $operator = new Operator($word, $type);
 	                }
 	                catch (InvalidOperatorException $e) {
-	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_poll_answers, constraints parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_pollanswers, constraints parameter");
 	                    $state = 1;
 	                    break;
 	                }
@@ -94,7 +94,7 @@ class PollAnswersList extends ListObject
 	        }
 	    }
 	    if ($state != 1) {
-            CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_polls");
+            CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_pollanswers");
 	    }
 
 		return $parameters;

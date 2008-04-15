@@ -28,9 +28,14 @@ class CampPlugin{
         
         		   
         $context->registerObjectType(array('poll' => array('class' => 'Poll')));
-        $context->registerObjectType(array('pollanswer' => array('class' => 'PollAnswer')));
         $context->registerListObject(array('polls' => array('class' => 'Polls', 'list' => 'polls')));
-        $context->registerListObject(array('pollanswers' => array('class' => 'PollAnswers', 'list' => 'pollanswers')));
+    
+        $context->registerObjectType(array('pollanswer' => array('class' => 'PollAnswer')));
+        $context->registerListObject(array('pollanswers' => array('class' => 'PollAnswers', 'list' => 'pollanswers'))); 
+        
+        $context->registerObjectType(array('pollanswerattachment' => array('class' => 'PollAnswerAttachment')));
+        $context->registerListObject(array('pollanswerattachments' => array('class' => 'PollAnswerAttachments', 'list' => 'attachments')));
+
         
         $context->poll = new MetaPoll($poll_language_id, $poll_nr);
            

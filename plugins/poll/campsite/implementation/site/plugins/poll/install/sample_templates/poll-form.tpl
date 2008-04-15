@@ -10,8 +10,26 @@
 }
 </style>
 
+<script>
+function play(url)
+{
+    var tag;
+    
+    if (navigator.appName=="Microsoft Internet Explorer") {
+        tag = '<bgsound src="'+url+'" loop="false">';
+    } else {
+        tag = '<embed src="'+url+'" hidden="true" border="0" width="0" height="0" autostart="true" loop="false">';
+    }
+    $('player_div').innerHTML = tag;    
+}
 
-<div style="width: 250px; border:1px solid #000; padding: 6px">
+function stop()
+{
+    $('player_div').innerHTML = '';   
+}    
+</script>
+
+<div style="width: 250px; border: 1px solid #000; padding: 6px">
 {{ /if }}
 
 
@@ -39,6 +57,18 @@
 	          
         {{ /pollanswer_ajax }}
         
+        <div style="clear: both"></div>
+        {{ list_pollanswer_attachments }}
+            {{ if $campsite->attachment->mime_type|substr:0:5 == 'audio' }}
+                <a href="javascript: void(0);" onClick="play('{{ uri options="articleattachment" }}')">
+                    <img src="/css/is_shown.png" border="0">
+                </a>
+                <a href="javascript: void(0);" onClick="stop()">
+                    <img src="/css/unlink.png" border="0">
+                </a>
+            {{ /if }}
+        {{ /list_pollanswer_attachments }}
+        
 		<div style="clear: both"></div>
 		Give a note: 
         {{ section name=foo start=1 loop=6 }}
@@ -60,4 +90,5 @@
 
 {{ if $included }}
 	</div>
+	<div id="player_div"></div>
 {{ /if }}
