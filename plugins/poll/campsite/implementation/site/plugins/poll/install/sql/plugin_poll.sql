@@ -1,25 +1,21 @@
--- MySQL dump 10.11
---
--- Host: localhost    Database: campsite_3_0_plugins
--- ------------------------------------------------------
--- Server version	5.0.32-Debian_7etch1-log
+-- phpMyAdmin SQL Dump
+-- version 2.9.1.1-Debian-3
+-- http://www.phpmyadmin.net
+-- 
+-- Host: localhost
+-- Erstellungszeit: 15. April 2008 um 16:56
+-- Server Version: 5.0.32
+-- PHP-Version: 5.2.0-8+etch7
+-- 
+-- Datenbank: `campsite_30_poll`
+-- 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+-- --------------------------------------------------------
 
---
--- Table structure for table `plugin_poll`
---
+-- 
+-- Tabellenstruktur für Tabelle `plugin_poll`
+-- 
 
-DROP TABLE IF EXISTS `plugin_poll`;
 CREATE TABLE `plugin_poll` (
   `poll_nr` int(10) unsigned NOT NULL,
   `fk_language_id` int(10) unsigned NOT NULL default '0',
@@ -28,7 +24,7 @@ CREATE TABLE `plugin_poll` (
   `date_begin` date NOT NULL default '0000-00-00',
   `date_end` date NOT NULL default '0000-00-00',
   `nr_of_answers` tinyint(3) unsigned NOT NULL default '0',
-  `is_show_after_expiration` tinyint(3) unsigned NOT NULL default '0',
+  `is_display_expired` tinyint(3) unsigned NOT NULL default '0',
   `is_used_as_default` tinyint(3) unsigned NOT NULL,
   `nr_of_votes` int(10) unsigned NOT NULL,
   `nr_of_votes_overall` int(10) unsigned NOT NULL,
@@ -37,11 +33,12 @@ CREATE TABLE `plugin_poll` (
   PRIMARY KEY  (`poll_nr`,`fk_language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Table structure for table `plugin_poll_answer`
---
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `plugin_poll_answer`;
+-- 
+-- Tabellenstruktur für Tabelle `plugin_poll_answer`
+-- 
+
 CREATE TABLE `plugin_poll_answer` (
   `fk_poll_nr` int(10) unsigned NOT NULL default '0',
   `fk_language_id` int(10) unsigned NOT NULL default '0',
@@ -50,74 +47,79 @@ CREATE TABLE `plugin_poll_answer` (
   `nr_of_votes` int(10) unsigned NOT NULL default '0',
   `percentage` float unsigned NOT NULL,
   `percentage_overall` float unsigned NOT NULL,
+  `value` int(11) NOT NULL,
+  `average_value` float NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP,
   UNIQUE KEY `NrPoll` (`fk_poll_nr`,`fk_language_id`,`nr_answer`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Table structure for table `plugin_poll_article`
---
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `plugin_poll_article`;
+-- 
+-- Tabellenstruktur für Tabelle `plugin_poll_article`
+-- 
+
 CREATE TABLE `plugin_poll_article` (
   `fk_poll_nr` int(10) unsigned NOT NULL default '0',
-  `fk_poll_language_id` int(10) unsigned NOT NULL default '0',
   `fk_article_nr` int(10) unsigned NOT NULL default '0',
   `fk_article_language_id` int(10) unsigned NOT NULL,
-  UNIQUE KEY `NrPoll` (`fk_poll_nr`,`fk_poll_language_id`,`fk_article_nr`)
+  PRIMARY KEY  (`fk_poll_nr`,`fk_article_nr`,`fk_article_language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Table structure for table `plugin_poll_issue`
---
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `plugin_poll_issue`;
+-- 
+-- Tabellenstruktur für Tabelle `plugin_poll_issue`
+-- 
+
 CREATE TABLE `plugin_poll_issue` (
   `fk_poll_nr` int(10) unsigned NOT NULL default '0',
-  `fk_poll_language_id` int(10) unsigned NOT NULL default '0',
   `fk_issue_nr` int(10) unsigned NOT NULL default '0',
   `fk_issue_language_id` int(10) unsigned NOT NULL,
   `fk_publication_id` int(10) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`fk_poll_nr`,`fk_poll_language_id`,`fk_issue_nr`,`fk_issue_language_id`,`fk_publication_id`)
+  PRIMARY KEY  (`fk_poll_nr`,`fk_issue_nr`,`fk_issue_language_id`,`fk_publication_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Table structure for table `plugin_poll_publication`
---
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `plugin_poll_publication`;
+-- 
+-- Tabellenstruktur für Tabelle `plugin_poll_publication`
+-- 
+
 CREATE TABLE `plugin_poll_publication` (
   `fk_poll_nr` int(10) unsigned NOT NULL default '0',
-  `fk_poll_language_id` int(10) unsigned NOT NULL default '0',
   `fk_publication_id` int(10) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`fk_poll_nr`,`fk_poll_language_id`,`fk_publication_id`)
+  PRIMARY KEY  (`fk_poll_nr`,`fk_publication_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Table structure for table `plugin_poll_section`
---
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `plugin_poll_section`;
+-- 
+-- Tabellenstruktur für Tabelle `plugin_poll_section`
+-- 
+
 CREATE TABLE `plugin_poll_section` (
   `fk_poll_nr` int(10) unsigned NOT NULL default '0',
-  `fk_poll_language_id` int(10) unsigned NOT NULL default '0',
   `fk_section_nr` int(10) unsigned NOT NULL default '0',
   `fk_section_language_id` int(10) unsigned NOT NULL,
   `fk_issue_nr` int(10) unsigned NOT NULL default '0',
   `fk_publication_id` int(10) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`fk_poll_nr`,`fk_poll_language_id`,`fk_section_nr`,`fk_section_language_id`,`fk_issue_nr`,`fk_publication_id`)
+  PRIMARY KEY  (`fk_poll_nr`,`fk_section_nr`,`fk_section_language_id`,`fk_issue_nr`,`fk_publication_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+-- --------------------------------------------------------
 
--- Dump completed on 2007-11-14 19:23:55
+-- 
+-- Tabellenstruktur für Tabelle `plugin_pollanswer_attachment`
+-- 
+
+CREATE TABLE `plugin_pollanswer_attachment` (
+  `fk_poll_nr` int(11) NOT NULL,
+  `fk_pollanswer_nr` int(11) NOT NULL,
+  `fk_attachment_id` int(11) NOT NULL,
+  PRIMARY KEY  (`fk_poll_nr`,`fk_pollanswer_nr`,`fk_attachment_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 
 
 -- INSERT ROW FOR liveuser tables
