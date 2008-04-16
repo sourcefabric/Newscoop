@@ -38,8 +38,12 @@ function smarty_block_pollanswer_ajax($p_params, $p_content, &$p_smarty, &$p_rep
     }
     
     $poll_nr = $campsite->poll->number;
+    $language_id = $campsite->poll->language_id;
     $answer_nr = $campsite->pollanswer->number;
-    $id = "f_pollanswer_{$poll_nr}_{$answer_nr}_{$value}";
+    $id = "f_pollanswer_{$poll_nr}_{$language_id}_{$answer_nr}_{$value}";
+    
+    // store the allowed values to session for verifying the voting action
+    $_SESSION['camp_poll_maxvote'][$poll_nr][$language_id][$answer_nr][$value] = true; 
     
     if (isset($p_content)) {
     	$html .= "<span onClick=\"$('{$id}').checked=true; poll_{$campsite->poll->identifier}_vote()\" style=\"cursor: pointer\" >\n";
