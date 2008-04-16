@@ -357,6 +357,7 @@ class TemplateConverterIfBlock
         }
 
         if (strlen($object) > 0) {
+            $objectIdx = $idx;
             $idx++;
             $attribute = (isset($p_optArray[$idx])) ? strtolower($p_optArray[$idx]) : '';
             if ($attribute == 'fromstart') {
@@ -373,7 +374,22 @@ class TemplateConverterIfBlock
                     if ($object == 'image' && is_numeric($attribute)) {
                         $ifBlockStr.= '->'.$object.'->has_image'.$attribute;
                     } else {
-                        $ifBlockStr.= '->'.$object.'->'.$attribute;
+                        $numElements = sizeof($p_optArray);
+                        if (isset($p_optArray[$numElements - 2]) && array_key_exists($p_optArray[$numElements - 2], $this->m_operators)) {
+                            $operatorIdx = $numElements - 2;
+                            if ($operatorIdx > $objectIdx) {
+                                $numIdentifiers = $operatorIdx - $objectIdx;
+                                if ($numIdentifiers == 3) {
+                                    $type = $attribute;
+                                    $attribute = $p_optArray[$idx+1];
+                                    $ifBlockStr.= '->'.$object.'->type->'.$type.'->'.$attribute;
+                                    $idx++;
+                                }
+                            }
+
+                        } else {
+                            $ifBlockStr.= '->'.$object.'->'.$attribute;
+                        }
                     }
                 }
             }
@@ -396,6 +412,7 @@ class TemplateConverterIfBlock
                 }
             }
             if (!is_null($value)) {
+                if ($value == '""') $value = '';
                 $value = (is_numeric($value)) ? $value : '"'.$value.'"';
                 $ifBlockStr.= (strlen($operator) <= 0) ? ' == '.$value : ' '.$value;
                 $idx++;
