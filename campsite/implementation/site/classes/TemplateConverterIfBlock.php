@@ -28,7 +28,8 @@ class TemplateConverterIfBlock
             'name' => 'name',
             'number' => 'number',
             'translated_to' => 'translated_to',
-            'type' => 'type',
+            'type' => array(
+                'attribute' => 'type_name'),
             'upload_date' => 'upload_date',
             'hasattachments' => array(
                 'attribute' => 'has_attachments'),
