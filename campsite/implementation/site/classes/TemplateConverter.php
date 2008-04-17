@@ -105,7 +105,8 @@ class TemplateConverter
     public function parse()
     {
         // gets all the tags from the original template file
-        $this->m_oldTags = $this->getAllTagsFromTemplate();
+        $pattern = '/<!\*\*\s*([^>]+)>/';
+        $this->m_oldTags = $this->getAllTagsFromTemplate($pattern);
         if ($this->m_oldTags == false || sizeof($this->m_oldTags) == 0) {
             return false;
         }
@@ -135,17 +136,38 @@ class TemplateConverter
             $replacementsArray[] = $replacement;
         }
 
-        // sets pattern and replacement for templates path
-        $patternsArray[] = "/\/look\//";
-        $replacementsArray[] = "/tpl/";
         // sets pattern and replacement for get_img script
         $patternsArray[] = "/cgi-bin\/get_img/";
         $replacementsArray[] = "get_img.php";
 
         // replaces all patterns with corresponding replacements
         $this->m_templateContent = @preg_replace($patternsArray,
-                                                $replacementsArray,
-                                                $this->m_templateOriginalContent);
+                                                 $replacementsArray,
+                                                 $this->m_templateOriginalContent);
+
+        // replaces templates path properly
+        $pattern = '/\/look\/(.*?)[^"\']+/';
+        $oldTplTags = $this->getAllTagsFromTemplate($pattern);
+        if ($oldTplTags == false || sizeof($oldTplTags) == 0) {
+            return false;
+        }
+        foreach($oldTplTags[0] as $oldTplTag) {
+            if (!empty($oldTplTag)) {
+                //$pattern = '/(.*?)[^\.tpl]$/';
+                $pattern = '/\.tpl/';
+                preg_match($pattern, $oldTplTag, $m);
+                if (is_array($m) && !empty($m[0])) {
+                    $replacement = '/tpl/';
+                } else {
+                    $replacement = '/templates/';
+                }
+                $pattern = '/\/look\//';
+                $this->m_templateContent = @preg_replace($pattern,
+                                                         $replacement,
+                                                         $this->m_templateContent,
+                                                         1);
+            }
+        }
 
         return true;
     } // fn parse
@@ -190,9 +212,9 @@ class TemplateConverter
      *
      * @return array $matches
      */
-    private function getAllTagsFromTemplate()
+    private function getAllTagsFromTemplate($p_pattern)
     {
-        preg_match_all('/<!\*\*\s*([^>]+)>/', $this->m_templateOriginalContent, $matches);
+        preg_match_all($p_pattern, $this->m_templateOriginalContent, $matches);
         return $matches;
     } // fn getAllTagsFromTemplate
 
@@ -277,9 +299,9 @@ class TemplateConverter
             $pattern = '/<!\*\*\s*'.@preg_quote($p_oldTagContent).'\s*>/';
             $replacement = CS_OPEN_TAG.' '.$newTag.' '.CS_CLOSE_TAG;
             $this->m_templateOriginalContent = @preg_replace($pattern,
-                                                            $replacement,
-                                                            $this->m_templateOriginalContent,
-                                                            1);
+                                                             $replacement,
+                                                             $this->m_templateOriginalContent,
+                                                             1);
             return null;
         }
 
