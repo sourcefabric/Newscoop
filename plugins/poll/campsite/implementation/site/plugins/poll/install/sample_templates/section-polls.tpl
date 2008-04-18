@@ -23,9 +23,21 @@
         <a href="{{ uripath }}">All Polls</a>
         
     {{ else }}
-    
-        <h3>List of Polls</h3>  
-         
+
+        <select id="ishitlist" onChange="location.href='{{ uripath }}?ishitlist='+getElementById('ishitlist').value">
+          <option value="">All</option>
+          <option value="n" {{ if $smarty.request.ishitlist == 'n'}}selected{{ /if }}>Polls</option>
+          <option value="y" {{ if $smarty.request.ishitlist == 'y' }}selected{{ /if }}>Hitlists</option>
+        </select>
+        
+        {{ if $smarty.request.ishitlist == 'y'}}
+            {{ assign var='constraints' value='ishitlist is 1' }}
+        {{ /if }}
+        {{ if $smarty.request.ishitlist == 'n'}}
+            {{ assign var='contraints' value='ishitlist is 0' }}
+        {{ /if }}
+        <p>
+        
         <tr>
             <th align="left">Name</th>
             <th>Voting Begin</th>
@@ -37,10 +49,10 @@
         <tr><td colspan="6"><hr></td></tr>
         {{ local }}
   
-        {{ list_polls name="polls_list" length="10" order='bylastmodified ASC' constraints='ishitlist is 1' }}
+        {{ list_polls name="polls_list" length="10" order='bylastmodified ASC' constraints="`$constraints`" }}
            <tr align="center">
             <td align="left">
-                <a href="?f_poll_nr={{ $campsite->poll->number }}&amp;f_poll_language_id={{ $campsite->poll->language_id }}">
+                <a href="?f_poll_nr={{ $campsite->poll->number }}&amp;f_poll_language_id={{ $campsite->poll->language_id }}&amp;onhitlist={{ $smarty.request.ishitlist }}">
                     {{ $campsite->poll->name }}
                 </a>
             </td>

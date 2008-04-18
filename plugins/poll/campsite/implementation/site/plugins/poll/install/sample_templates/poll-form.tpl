@@ -34,7 +34,15 @@ function stop()
 
 
 {{ poll_form template='poll-form.tpl' submit_button=false ajax=true }} 
-   
+       
+    {{ if $smarty.request.onhitlist == 'y'}}
+        {{ assign var='constraints' value='onhitlist is 1' }}
+    {{ /if }}
+    {{ if $smarty.request.onhitlist == 'n'}}
+        {{ assign var='contraints' value='onhitlist is 0' }}
+    {{ /if }}
+
+       
     {{ $campsite->poll->title }}<br>
     {{*
     Question: {{ $campsite->poll->question }}<br>
@@ -44,8 +52,9 @@ function stop()
     Votes: {{ $campsite->poll->votes }}<br>
     
     <div style="height: 10px;" /></div>
+
     
-    {{ list_poll_answers order="byvalue desc" constraints="ishitlist is 1" }}
+    {{ list_poll_answers order="byvalue desc" constraints=$constraints }}
        
          {{ pollanswer_ajax }}
          

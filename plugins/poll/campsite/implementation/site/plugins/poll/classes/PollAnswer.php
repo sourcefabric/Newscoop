@@ -386,7 +386,7 @@ class PollAnswer extends DatabaseObject {
             case 'fk_language_id':
                 $comparisonOperation['left'] = 'fk_language_id';
             break;
-            case 'ishitlist':
+            case 'onhitlist':
                 $comparisonOperation['left'] = 'on_hitlist';
             break;
         }
