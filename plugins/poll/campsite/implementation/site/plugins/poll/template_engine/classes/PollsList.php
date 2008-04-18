@@ -20,6 +20,7 @@ class PollsList extends ListObject
         'end_mday' => array('field' => 'DAYOFMONTH(date_end)', 'type' => 'integer'),
         'votes' => array('field' => 'nr_of_votes', 'type' => 'integer'),
         'votes_overall' => array('field' => 'nr_of_votes_overall', 'type' => 'integer'),
+        'ishitlist' => array('field' => 'is_hitlist', 'type' => 'integer'),
         
         ## following fields are NOT real datebase fields, they are processed by Poll::GetList()
         'current' => array('field' => '_current', 'type' => 'boolean'),

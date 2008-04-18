@@ -13,10 +13,11 @@ $f_question = Input::Get('f_question', 'string');
 $f_date_begin = Input::Get('f_date_begin', 'string');
 $f_date_end = Input::Get('f_date_end', 'string');
 $f_is_display_expired = Input::Get('f_is_display_expired', 'boolean');
-$f_is_used_as_default = Input::Get('f_is_used_as_default', 'boolean');
+$f_is_hitlist = Input::Get('f_is_hitlist', 'boolean');
 $f_nr_of_answers = Input::Get('f_nr_of_answers', 'int');
 
 $f_answers = Input::Get('f_answer', 'array');
+$f_onhitlist = Input::Get('f_onhitlist', 'array');
 
 if ($f_poll_nr) {
     // update existing poll   
@@ -27,8 +28,7 @@ if ($f_poll_nr) {
     $poll->setProperty('date_end', $f_date_end);
     $poll->setProperty('is_display_expired', $f_is_display_expired);
     $poll->setProperty('nr_of_answers', $f_nr_of_answers);
-    
-    $poll->setAsDefault($f_is_used_as_default);
+    $poll->setProperty('is_hitlist', $f_is_hitlist);
 
     foreach ($f_answers as $nr_answer => $text) {
         if ($text !== '__undefined__') {
@@ -38,6 +38,11 @@ if ($f_poll_nr) {
             } else {
                 $answer->create($text);
             }
+            if (array_key_exists($nr_answer, $f_onhitlist)) {
+                $answer->setProperty('on_hitlist', 1);
+            } else {
+                $answer->setProperty('on_hitlist', 0);   
+            }    
         }
     }
     

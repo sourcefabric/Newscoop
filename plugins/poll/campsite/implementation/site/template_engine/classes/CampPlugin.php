@@ -20,12 +20,7 @@ class CampPlugin{
         $context = CampTemplate::singleton()->context();
         
         
-        // Todo: below some hacked code to init Poll, have to be generic for all plugins
-        Poll::registerVoting();
-        
-        $poll_nr = Input::Get('f_poll_nr', 'int');
-        $poll_language_id = Input::Get('f_poll_language_id' ,'int');
-        
+        // Todo: below some hacked code to init Poll, have to be generic for all plugins      
         		   
         $context->registerObjectType(array('poll' => array('class' => 'Poll')));
         $context->registerListObject(array('polls' => array('class' => 'Polls', 'list' => 'polls')));
@@ -36,7 +31,8 @@ class CampPlugin{
         $context->registerObjectType(array('pollanswerattachment' => array('class' => 'PollAnswerAttachment')));
         $context->registerListObject(array('pollanswerattachments' => array('class' => 'PollAnswerAttachments', 'list' => 'attachments')));
 
-        
+        $poll_nr = Input::Get('f_poll_nr', 'int');
+        $poll_language_id = Input::Get('f_poll_language_id' ,'int');
         $context->poll = new MetaPoll($poll_language_id, $poll_nr);
            
         // reset the context urlparameters

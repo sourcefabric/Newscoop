@@ -37,7 +37,10 @@ class PollAnswer extends DatabaseObject {
         'value',
         
         // float - value / number of votes
-        'average_value', 
+        'average_value',
+        
+        // bool - is on the hitlist
+        'on_hitlist', 
         
         // timestamp - last_modified
         'last_modified'
@@ -49,8 +52,9 @@ class PollAnswer extends DatabaseObject {
      * Construct by passing in the primary key to access the poll answer in
      * the database.
      *
-     * @param int $p_IdLanguage
-     * @param int $p_id
+     * @param int $p_fk_language_id
+     * @param int $p_fk_poll_nr
+     * @param int $p_nr_answer
      */
     function PollAnswer($p_fk_language_id = null, $p_fk_poll_nr = null, $p_nr_answer = null)
     {
@@ -281,6 +285,9 @@ class PollAnswer extends DatabaseObject {
     public static function GetList(array $p_parameters, $p_order = null, $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
+        $hasPollNr = false;
+        $hasLanguageId = fase;
+        $selectClauseObj = new SQLSelectClause();
         
         if (!is_array($p_parameters)) {
             return null;
@@ -293,35 +300,39 @@ class PollAnswer extends DatabaseObject {
                 continue;
             }
             if (strpos($comparisonOperation['left'], 'poll_nr') !== false) {
-                $poll_nr = $comparisonOperation['right'];
+                $hasPollNr = true;
             }
             if (strpos($comparisonOperation['left'], 'language_id') !== false) {
-                $language_id = $comparisonOperation['right'];
+                $hasLanguageId = true;
             }
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+            $selectClauseObj->addWhere($whereCondition);
         }
         
-        $sqlClauseObj = new SQLSelectClause();
+        // validates whether publication identifier was given
+        if ($hasPollNr == false) {
+            CampTemplate::singleton()->trigger_error('missed parameter Poll Number in statement list_pollanswers');
+            return;
+        }
+        // validates whether language identifier was given
+        if ($hasLanguageId == false) {
+            CampTemplate::singleton()->trigger_error('missed parameter Language Identifier in statement list_pollanswers');
+            return;
+        }
         
         // sets the columns to be fetched
-        $tmpPollAnswer = new PollAnswer($language_id, $poll_nr);
+        $tmpPollAnswer = new PollAnswer();
 		$columnNames = $tmpPollAnswer->getColumnNames(true);
         foreach ($columnNames as $columnName) {
-            $sqlClauseObj->addColumn($columnName);
+            $selectClauseObj->addColumn($columnName);
         }
 
         // sets the main table for the query
         $mainTblName = $tmpPollAnswer->getDbTableName();
-        $sqlClauseObj->setTable($mainTblName);
+        $selectClauseObj->setTable($mainTblName);
         unset($tmpPollAnswer);
-        
-
-        if (empty($language_id) || empty($poll_nr)) {
-            return;   
-        }
-                
-        $sqlClauseObj->addWhere("fk_language_id = $language_id");       
-        $sqlClauseObj->addWhere("fk_poll_nr = $poll_nr");
-
         
         if (!is_array($p_order)) {
             $p_order = array();
@@ -331,10 +342,10 @@ class PollAnswer extends DatabaseObject {
         $p_order = count($p_order) > 0 ? $p_order : PollAnswer::$s_defaultOrder;
         $order = PollAnswer::ProcessListOrder($p_order);
         foreach ($order as $orderColumn => $orderDirection) {
-            $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
         
-        $sqlQuery = $sqlClauseObj->buildQuery();
+        $sqlQuery = $selectClauseObj->buildQuery();
         
         // count all available results
         $countRes = $g_ado_db->Execute($sqlQuery);
@@ -369,11 +380,14 @@ class PollAnswer extends DatabaseObject {
         $comparisonOperation = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'poll_nr':
-            $comparisonOperation['left'] = 'poll_nr';
+            case 'fk_poll_nr':
+                $comparisonOperation['left'] = 'fk_poll_nr';
             break;
-        case 'language_id':
-            $comparisonOperation['left'] = 'language_id';
+            case 'fk_language_id':
+                $comparisonOperation['left'] = 'fk_language_id';
+            break;
+            case 'ishitlist':
+                $comparisonOperation['left'] = 'on_hitlist';
             break;
         }
 

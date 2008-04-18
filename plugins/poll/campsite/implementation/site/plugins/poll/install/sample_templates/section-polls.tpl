@@ -37,7 +37,7 @@
         <tr><td colspan="6"><hr></td></tr>
         {{ local }}
   
-        {{ list_polls name="polls_list" length="10" order='bylastmodified ASC' constraints='' }}
+        {{ list_polls name="polls_list" length="10" order='bylastmodified ASC' constraints='ishitlist is 1' }}
            <tr align="center">
             <td align="left">
                 <a href="?f_poll_nr={{ $campsite->poll->number }}&amp;f_poll_language_id={{ $campsite->poll->language_id }}">

@@ -13,7 +13,7 @@ $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 $f_from = Input::Get('f_from', 'string', false);
 
 if ($f_poll_nr && $f_fk_language_id) {
-    $poll = new Poll($f_fk_language_id, $f_poll_nr, true);
+    $poll = new Poll($f_fk_language_id, $f_poll_nr);
     
     if ($poll->exists()) {  
         $poll_nr = $poll->getNumber(); 
@@ -24,11 +24,12 @@ if ($f_poll_nr && $f_fk_language_id) {
         $nr_of_answers = $poll->getProperty('nr_of_answers');
         $fk_language_id = $poll->getProperty('fk_language_id');
         $is_display_expired = $poll->getProperty('is_display_expired');
-        $is_used_as_default = $poll->getProperty('is_used_as_default');
+        $is_hitlist = $poll->getProperty('is_hitlist');
         
         $poll_answers = $poll->getAnswers();
         foreach ($poll_answers as $poll_answer) {
-            $answers[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('answer');   
+            $answers[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('answer');
+            $onhitlist[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('on_hitlist');   
         }
     }
 } else {
@@ -167,14 +168,12 @@ camp_html_display_msgs();
             <INPUT TYPE="checkbox" NAME="f_is_display_expired" class="input_checkbox" value="1" <?php $is_display_expired ? p('checked') : null; ?> >
             </TD>
         </TR>
-        <!--
         <tr>
-            <TD ALIGN="RIGHT" ><?php  putGS("Used as default"); ?>:</TD>
+            <TD ALIGN="RIGHT" ><?php  putGS("Used as hitlist"); ?>:</TD>
             <TD>
-            <INPUT TYPE="checkbox" NAME="f_is_used_as_default" class="input_checkbox" value="1" <?php $is_used_as_default ? p('checked') : null; ?> >
+            <INPUT TYPE="checkbox" NAME="f_is_hitlist" class="input_checkbox" value="1" <?php $is_hitlist ? p('checked') : null; ?> >
             </TD>
         </TR>
-        -->
         <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Title"); ?>:</TD>
             <TD>
@@ -219,6 +218,10 @@ camp_html_display_msgs();
                     </a>
                 </td>
                 
+                <td align='center'>
+                    <INPUT type="checkbox" name="f_onhitlist[<?php p($n); ?>]" value="1" <?php if (array_key_exists($n, $onhitlist) && $onhitlist[$n] == 1) p('checked') ?>>
+                    </a>
+                </td>                
             </TR>
             <?php
         }

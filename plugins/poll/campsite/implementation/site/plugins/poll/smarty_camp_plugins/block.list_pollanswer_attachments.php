@@ -54,7 +54,7 @@ function smarty_block_list_pollanswer_attachments($p_params, $p_content, &$p_sma
 	    if ($p_repeat) {
     		$campContext->current_attachments_list->defaultIterator()->next();
     		if (!is_null($campContext->current_attachments_list->current)) {
-                $campContext->pollanswer = $campContext->current_attachments_list->current;
+                $campContext->attachment = $campContext->current_attachments_list->current;
             }
     	}
     }

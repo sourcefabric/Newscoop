@@ -45,11 +45,11 @@ function stop()
     
     <div style="height: 10px;" /></div>
     
-    {{ list_poll_answers order="byvalue desc"}}
+    {{ list_poll_answers order="byvalue desc" constraints="ishitlist is 1" }}
        
          {{ pollanswer_ajax }}
          
-	          <div class="poll_bar" style="width:{{ $campsite->pollanswer->percentage }}%; position:absulute" /></div>
+	          <div class="poll_bar" style="width:{{ $campsite->pollanswer->percentage }}%;" /></div>
 	          <div style="position: absolute">
 	          	{{ $campsite->pollanswer->answer }}
 	          	({{ $campsite->pollanswer->percentage|string_format:"%d" }})%

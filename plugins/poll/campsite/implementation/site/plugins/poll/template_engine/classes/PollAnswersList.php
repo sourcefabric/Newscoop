@@ -5,8 +5,12 @@
 class PollAnswersList extends ListObject 
 {                                 
     private $m_item;
-    
-	private static $s_orderFields = array(
+
+    public static $s_parameters = array(
+        'ishitlist' => array('field' => 'on_hitlist', 'type' => 'integer'),
+    );
+
+    private static $s_orderFields = array(
 		                              'bynumber',
 		                              'byanswer',
 		                              'byvotes',
@@ -32,11 +36,11 @@ class PollAnswersList extends ListObject
 	{
 	    $operator = new Operator('is');
 	    $context = CampTemplate::singleton()->context();
-	    $comparisonOperation = new ComparisonOperation('poll_nr', $operator,
+	    $comparisonOperation = new ComparisonOperation('fk_poll_nr', $operator,
 	                                                   $context->poll->number);
 	    $this->m_constraints[] = $comparisonOperation;
 	    
-        $comparisonOperation = new ComparisonOperation('language_id', $operator,
+        $comparisonOperation = new ComparisonOperation('fk_language_id', $operator,
                                                         $context->poll->language_id);
 	    $this->m_constraints[] = $comparisonOperation;
 
@@ -66,35 +70,42 @@ class PollAnswersList extends ListObject
 	    $operator = null;
 	    $value = null;
 	    foreach ($p_constraints as $word) {
-	        if ($state == 1) {
-	                if (array_key_exists($word, PollAnswersList::$s_parameters) === false) {
+	        switch ($state) {
+	            case 1: // reading the parameter name
+	                if (!array_key_exists($word, PollAnswersList::$s_parameters)) {
 	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_pollanswers, constraints parameter");
+	                    break;
 	                }
 	                $attribute = $word;
 	                $state = 2;
-	        }
-	        if ($state == 2) {
-	                $type = PollAnswersList::$s_parameters[$attribute];
+	                break;
+	            case 2: // reading the operator
+	                $type = PollAnswersList::$s_parameters[$attribute]['type'];
 	                try {
 	                    $operator = new Operator($word, $type);
 	                }
 	                catch (InvalidOperatorException $e) {
 	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_pollanswers, constraints parameter");
-	                    $state = 1;
-	                    break;
 	                }
 	                $state = 3;
-	        }
-	        
-	        if ($state == 3) {
-	                $value = $word;
-	                $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
-	                $parameters[] = $comparisonOperation;
+	                break;
+	            case 3: // reading the value to compare against
+	                $type = PollAnswersList::$s_parameters[$attribute]['type'];
+	                $metaClassName = 'Meta'.strtoupper($type[0]).strtolower(substr($type, 1));
+	                try {
+	                    $value = new $metaClassName($word);
+    	                $value = $word;
+       	                $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
+    	                $parameters[] = $comparisonOperation;
+	                } catch (InvalidValueException $e) {
+	                    CampTemplate::singleton()->trigger_error("invalid value $word of attribute $attribute in list_pollanswers, constraints parameter");
+	                }
 	                $state = 1;
+	                break;
 	        }
 	    }
 	    if ($state != 1) {
-            CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_pollanswers");
+            CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_polls");
 	    }
 
 		return $parameters;

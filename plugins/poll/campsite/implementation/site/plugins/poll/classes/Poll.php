@@ -38,8 +38,8 @@ class Poll extends DatabaseObject {
         // bool - Display Poll after Expiration,
         'is_display_expired',
         
-        // bool - Use this language if wanted translation is not available
-        'is_used_as_default',
+        // bool - Use as a hitlist
+        'is_hitlist',
         
         // int - number of votes in this language
         'nr_of_votes',
@@ -70,7 +70,7 @@ class Poll extends DatabaseObject {
      * @param int $p_poll_nr
      *        Not required when creating an poll.
      */
-    public function Poll($p_language_id = null, $p_poll_nr = null, $p_get_default = false)
+    public function Poll($p_language_id = null, $p_poll_nr = null)
     {
         parent::DatabaseObject($this->m_columnNames);
         
@@ -79,15 +79,6 @@ class Poll extends DatabaseObject {
         
         if ($this->keyValuesExist()) {
             $this->fetch();
-            
-            if (!$this->exists() && $p_get_default) {
-                // try to fetch the default one  
-                
-                $this->m_keyColumnNames = array('poll_nr', 'is_used_as_default');
-                $this->m_data['is_used_as_default'] = true;
-                
-                $this->fetch();   
-            }
         }
     } // constructor
 
@@ -130,7 +121,7 @@ class Poll extends DatabaseObject {
      * @param bool $p_is_display_expired
      * @return void
      */
-    public function create($p_title, $p_question, $p_date_begin, $p_date_end, $p_nr_of_answers, $p_is_display_expired=false, $p_is_used_as_default=true)
+    public function create($p_title, $p_question, $p_date_begin, $p_date_end, $p_nr_of_answers, $p_is_display_expired=false)
     {
         global $g_ado_db;
         
@@ -175,7 +166,7 @@ class Poll extends DatabaseObject {
      * @param string $p_name
      * @return Article
      */
-    public function createTranslation($p_language_id, $p_title = '', $p_question = '', $p_is_used_as_default = false)
+    public function createTranslation($p_language_id, $p_title = '', $p_question = '')
     {        
         // Construct the duplicate poll object.  
         $poll_copy = new Poll();      
@@ -197,9 +188,7 @@ class Poll extends DatabaseObject {
         if (!$success) {
             return false;
         }
-        
-        $poll_copy->setAsDefault($p_is_used_as_default);
-        
+               
         // create an set of answers
         PollAnswer::CreateTranslationSet($this->m_data['poll_nr'], $this->m_data['fk_language_id'], $p_language_id);
 
@@ -490,21 +479,6 @@ class Poll extends DatabaseObject {
         $language = new Language($this->m_data['fk_language_id']);
         
         return $language->getName(); 
-    }
-    
-    /**
-     * Mark poll as being default translation
-     *
-     * @param unknown_type $p_status
-     */
-    public function setAsDefault($p_status)
-    {
-        if ($p_status == true) {
-            foreach ($this->getTranslations() as $translation) {
-                $translation->setProperty('is_used_as_default', false);   
-            }
-        } 
-        $this->setProperty('is_used_as_default', $p_status);    
     }
     
     /**
@@ -881,35 +855,6 @@ class Poll extends DatabaseObject {
             return true;   
         }
         return false;
-    }
-    
-    /**
-     * Register vote(s) submitted by client
-     *
-     */
-    public static function registerVoting()
-    {
-        $p_context =& CampTemplate::singleton()->context();
-    
-        $poll_language_id = Input::Get('f_poll_language_id', 'int');
-        $poll_nr = Input::Get('f_poll_nr', 'int');
-        $Poll = new Poll($poll_language_id, $poll_nr);
-                                   
-        if ($Poll->isVotable()) {
-            foreach ($Poll->getAnswers() as $PollAnswer) {
-                $nr_answer = $PollAnswer->getNumber();
-                
-                if ($value = Input::Get('f_pollanswer_'.$nr_answer, 'int')) {
-                    $PollAnswer->vote($value);
-                    $Poll->setUserHasVoted();
-                }
-                
-                // reset the context:
-                $p_context->default_url->reset_parameter('f_pollanswer_'.$nr_answer);
-                $p_context->url->reset_parameter('f_pollanswer_'.$nr_answer);
-            }
-        }
-        
     }
     
     /**
