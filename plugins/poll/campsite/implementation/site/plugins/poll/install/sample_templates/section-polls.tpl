@@ -34,7 +34,7 @@
             {{ assign var='constraints' value='ishitlist is 1' }}
         {{ /if }}
         {{ if $smarty.request.ishitlist == 'n'}}
-            {{ assign var='contraints' value='ishitlist is 0' }}
+            {{ assign var='constraints' value='ishitlist is 0' }}
         {{ /if }}
         <p>
         

@@ -39,7 +39,7 @@ function stop()
         {{ assign var='constraints' value='onhitlist is 1' }}
     {{ /if }}
     {{ if $smarty.request.onhitlist == 'n'}}
-        {{ assign var='contraints' value='onhitlist is 0' }}
+        {{ assign var='constraints' value='onhitlist is 0' }}
     {{ /if }}
 
        
