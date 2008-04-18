@@ -560,4 +560,31 @@ function camp_detect_database_version($p_dbName, &$version)
     return 0;
 } // fn camp_detect_database_version
 
+function camp_migrate_config_file($p_configFile)
+{
+    global $Campsite;
+
+    $config_options = array('DATABASE_NAME',
+                            'DATABASE_SERVER_ADDRESS',
+                            'DATABASE_SERVER_PORT',
+                            'DATABASE_USER',
+                            'DATABASE_PASSWORD');
+
+    foreach ($config_options as $config) {
+        $pattern = "/".$config.".+=\s*['|\"].*[^;]/";
+        preg_match($pattern, $p_configFile, $matches);
+        if (is_array($matches) && $matches[0]) {
+            list($var, $value) = explode('=', $matches[0]);
+            $value = trim($value);
+            $qSign = (strpos('"', $value) !== false) ? '"' : "'";
+            if (empty($value)) continue;
+            $patternArray[] = '/'.$value.'/';
+            $replacementArray[] = $qSign.$Campsite[$config].$qSign.';';
+        }
+    }
+
+    $p_configFile = preg_replace($patternArray, $replacementArray, $p_configFile);
+    return $p_configFile;
+} // camp_migrate_config_file
+
 ?>

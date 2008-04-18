@@ -243,9 +243,16 @@ $imagesDestDir = $CAMPSITE_DIR.'/images';
 $templatesDestDir = $CAMPSITE_DIR.'/templates';
 
 $destDirs = array($templatesDestDir, $imagesDestDir, $filesDestDir);
-//if (!$useExistingConfig) {
-//    array_push($destDirs, $configDestDir);
-//}
+if (!$useExistingConfig) {
+    if (!file_exists($ETC_DIR.'/database_conf.php')) {
+        echo "ERROR! File $dir does not exist.  Is Campsite installed?\n\n";
+        exit(1);
+    }
+    if (!is_writable($ETC_DIR.'/database_conf.php')) {
+        echo "ERROR! File $dir is not writable by this script.\n\n";
+        exit(1);
+    }
+}
 
 foreach ($destDirs as $dir) {
     if (!file_exists($dir)) {
@@ -308,7 +315,9 @@ echo "done.\n";
 
 if (!$useExistingConfig) {
     echo " * Restoring configuration...";
-    camp_copy_files($configSrcDir, $configDestDir);
+    $configFile = @file_get_contents("$ETC_DIR/database_conf.php");
+    $newConfigFile = camp_migrate_config_file($configFile);
+    @file_put_contents("$ETC_DIR/database_conf.php", $newConfigFile);
     echo "done.\n";
 }
 
