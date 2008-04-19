@@ -116,7 +116,7 @@ class ArticlesList extends ListObject
 	                $attribute = strtolower($word);
 	                if (!array_key_exists($attribute, ArticlesList::$s_parameters)) {
 	                    CampTemplate::singleton()->trigger_error("invalid parameter $word in list_articles.constraints");
-	                    break;
+	                    return false;
 	                }
 	                if ($attribute == 'keyword') {
 	                    $operator = new Operator('is', 'string');
@@ -158,7 +158,7 @@ class ArticlesList extends ListObject
 	                catch (InvalidOperatorException $e) {
     	                CampTemplate::singleton()->trigger_error("invalid operator $word of parameter $attribute in statement list_articles.constraints");
 	                    $state = 1;
-	                    break;
+	                    return false;
 	                }
 	                $state = 3;
 	                break;
@@ -167,10 +167,11 @@ class ArticlesList extends ListObject
 	                $metaClassName = 'Meta'.ucfirst(strtolower($type));
 	                $valueObj = new $metaClassName($word);
        	            if ($attribute == 'type') {
-                        $word = ucfirst(strtolower($word));
+                        $word = trim($word);
        	                $articleType = new ArticleType($word);
        	                if (!$articleType->exists()) {
 	                        CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_articles");
+	                        return false;
        	                }
        	                $value = $word;
        	            } elseif ($attribute == 'topic') {
@@ -178,6 +179,7 @@ class ArticlesList extends ListObject
        	                if (!$topicObj->exists()) {
 	                        CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_articles");
 	                        $value = 0;
+	                        return false;
        	                } else {
        	                    $value = $topicObj->getTopicId();
        	                }
@@ -192,6 +194,7 @@ class ArticlesList extends ListObject
 	    }
 	    if ($state != 1) {
             CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_articles");
+            return false;
 	    }
 
 		return $parameters;

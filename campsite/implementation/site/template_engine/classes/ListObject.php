@@ -174,6 +174,13 @@ abstract class ListObject
 		 */
 		$this->m_order = $this->ProcessOrder(ListObject::ParseConstraintsString($this->m_orderStr));
 
+        if ($this->m_constraints === false) {
+            $this->m_totalCount = 0;
+            $this->m_objects = new MyArrayObject(array());
+            $this->m_hasNextElements = false;
+            return;
+        }
+
 		$objects = $this->CreateList($this->m_start, $this->m_limit, $parameters, $this->m_totalCount);
 		if (!is_array($objects)) {
 		    $objects = array();
