@@ -385,6 +385,8 @@ class TemplateConverterIfBlock
                                     $attribute = $p_optArray[$idx+1];
                                     $ifBlockStr.= '->'.$object.'->type->'.$type.'->'.$attribute;
                                     $idx++;
+                                } elseif ($numIdentifiers == 2) {
+                                    $ifBlockStr.= '->'.$object.'->'.$attribute;
                                 }
                             }
 

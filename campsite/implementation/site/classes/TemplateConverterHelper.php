@@ -113,6 +113,8 @@ class TemplateConverterHelper
                 'attribute' => 'wday')
             ),
         'issue' => array(
+            'date' => array(
+                'attribute' => 'date'),
             'mon_nr' => array(
                 'attribute' => 'mon'),
             'wday_nr' => array(
