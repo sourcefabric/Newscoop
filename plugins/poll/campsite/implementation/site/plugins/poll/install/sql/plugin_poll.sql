@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Erstellungszeit: 15. April 2008 um 16:56
+-- Erstellungszeit: 22. April 2008 um 17:09
 -- Server Version: 5.0.32
 -- PHP-Version: 5.2.0-8+etch7
 -- 
@@ -19,13 +19,15 @@
 CREATE TABLE `plugin_poll` (
   `poll_nr` int(10) unsigned NOT NULL,
   `fk_language_id` int(10) unsigned NOT NULL default '0',
+  `parent_poll_nr` int(11) NOT NULL,
+  `is_extended` tinyint(4) NOT NULL,
   `title` varchar(255) NOT NULL,
   `question` varchar(255) NOT NULL,
   `date_begin` date NOT NULL default '0000-00-00',
   `date_end` date NOT NULL default '0000-00-00',
   `nr_of_answers` tinyint(3) unsigned NOT NULL default '0',
   `is_display_expired` tinyint(3) unsigned NOT NULL default '0',
-  `is_used_as_default` tinyint(3) unsigned NOT NULL,
+  `is_hitlist` tinyint(3) unsigned NOT NULL,
   `nr_of_votes` int(10) unsigned NOT NULL,
   `nr_of_votes_overall` int(10) unsigned NOT NULL,
   `percentage_of_votes_overall` float unsigned NOT NULL,
@@ -49,6 +51,7 @@ CREATE TABLE `plugin_poll_answer` (
   `percentage_overall` float unsigned NOT NULL,
   `value` int(11) NOT NULL,
   `average_value` float NOT NULL,
+  `on_hitlist` tinyint(4) NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP,
   UNIQUE KEY `NrPoll` (`fk_poll_nr`,`fk_language_id`,`nr_answer`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
