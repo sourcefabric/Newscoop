@@ -231,7 +231,7 @@ if ($backupVersion < 3) {
     }
     $configSrcDir = "$tempDirName/$origDbName/database_conf.php";
 } else {
-    $templatesSrcDir = "$tempDirName/templates";
+    $templatesSrcDir = "$tempDirName/templates/*";
     $configSrcDir = "$tempDirName/conf";
 }
 
