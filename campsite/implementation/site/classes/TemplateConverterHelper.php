@@ -432,12 +432,19 @@ class TemplateConverterHelper
             }
             $newTag = 'unset_' . $p_optArray[0];
         } else {
-            $newTag = 'set_' . $p_optArray[0];
-                if ($p_optArray[0] == 'language') {
-                $newTag.= ' name="' . strtolower($p_optArray[1]) . '"';
+            if (strtolower($p_optArray[1]) == 'current') {
+                $newTag = 'set_current_'.$p_optArray[0];
             } else {
-                $newTag.= (isset($p_optArray[1])) ? ' ' . strtolower($p_optArray[1]) : '';
-                $newTag.= (isset($p_optArray[2])) ? '="' . strtolower($p_optArray[2]) . '"' : '';
+                $newTag = 'set_' . $p_optArray[0];
+                if ($p_optArray[0] == 'language') {
+                    $newTag.= ' name="' . strtolower($p_optArray[1]) . '"';
+                } else {
+                    if (preg_match('/ /', $p_optArray[1])) {
+                        $p_optArray[1] = '"'.$p_optArray[1].'"';
+                    }
+                    $newTag.= (isset($p_optArray[1])) ? ' ' . $p_optArray[1] : '';
+                    $newTag.= (isset($p_optArray[2])) ? '="' . $p_optArray[2] . '"' : '';
+                }
             }
         }
 
