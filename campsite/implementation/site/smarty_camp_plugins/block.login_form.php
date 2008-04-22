@@ -43,21 +43,24 @@ function smarty_block_login_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
         $p_params['html_code'] = '';
     }
+    if (!isset($p_params['button_html_code']) || empty($p_params['button_html_code'])) {
+        $p_params['button_html_code'] = '';
+    }
 
     if (isset($p_content)) {
         $url = $campsite->url;
         $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
-        $html = "<form name=\"login\" action=\"" . $url->uri_path . "\" method=\"post\">\n"
+        $html = "<form name=\"login\" action=\"" . $url->uri_path . "\" method=\"post\" "
+            . $p_params['html_code'] . ">\n"
             ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n";
         foreach ($campsite->url->form_parameters as $param) {
             $html .= '<input type="hidden" name="'.$param['name']
                 .'" value="'.htmlentities($param['value'])."\" />\n";
         }
         $html .= $p_content;
-        $html .= "<div align=\"center\">";
         $html .= "<input type=\"submit\" name=\"f_login\" value=\""
             .smarty_function_escape_special_chars($p_params['submit_button'])
-            ."\" ".$p_params['html_code']." />\n</div>\n</form>\n";
+            ."\" ".$p_params['button_html_code']." />\n</form>\n";
     }
 
     return $html;
