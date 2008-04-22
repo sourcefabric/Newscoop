@@ -20,22 +20,10 @@
         {{ include file='poll-form.tpl' included=true}}
         
         <br>
-        <a href="{{ uripath }}">All Polls</a>
+        <a href="{{ uri options="template section-polls.tpl" }}">All Polls</a>
         
     {{ else }}
-
-        <select id="ishitlist" onChange="location.href='{{ uripath }}?ishitlist='+getElementById('ishitlist').value">
-          <option value="">All</option>
-          <option value="n" {{ if $smarty.request.ishitlist == 'n'}}selected{{ /if }}>Polls</option>
-          <option value="y" {{ if $smarty.request.ishitlist == 'y' }}selected{{ /if }}>Hitlists</option>
-        </select>
-        
-        {{ if $smarty.request.ishitlist == 'y'}}
-            {{ assign var='constraints' value='ishitlist is 1' }}
-        {{ /if }}
-        {{ if $smarty.request.ishitlist == 'n'}}
-            {{ assign var='constraints' value='ishitlist is 0' }}
-        {{ /if }}
+       
         <p>
         
         <tr>
@@ -49,10 +37,10 @@
         <tr><td colspan="6"><hr></td></tr>
         {{ local }}
   
-        {{ list_polls name="polls_list" length="10" order='bylastmodified ASC' constraints="`$constraints`" }}
+        {{ list_polls name="polls_list" length="10" order='bylastmodified ASC' }}
            <tr align="center">
             <td align="left">
-                <a href="?f_poll_nr={{ $campsite->poll->number }}&amp;f_poll_language_id={{ $campsite->poll->language_id }}&amp;onhitlist={{ $smarty.request.ishitlist }}">
+                <a href="{{ uri options="template section-polls.tpl" }}&amp;f_poll_nr={{ $campsite->poll->number }}&amp;f_poll_language_id={{ $campsite->poll->language_id }}">
                     {{ $campsite->poll->name }}
                 </a>
             </td>

@@ -37,8 +37,9 @@ class CampPlugin{
            
         // reset the context urlparameters
         $context->default_url->reset_parameter('f_poll_nr');
-        $context->url->reset_parameter('f_poll_language_id');
-       
+        $context->default_url->reset_parameter('f_poll_language_id');
+        $context->url->reset_parameter('f_poll_nr');
+        $context->url->reset_parameter('f_poll_language_id'); 
     }  
 }
 

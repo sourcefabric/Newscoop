@@ -49,6 +49,8 @@ if ($f_poll_nr) {
     $success = $poll->create($f_title, $f_question, $f_date_begin, $f_date_end, $f_nr_of_answers, $f_is_display_expired);
     
     if ($success) {
+        $poll->setProperty('is_extended', $f_is_extended);
+        
         foreach ($f_answers as $nr_answer => $text) {
             if ($text !== '__undefined__') {
                 $answer =& new PollAnswer($f_fk_language_id, $poll->getNumber(), $nr_answer);

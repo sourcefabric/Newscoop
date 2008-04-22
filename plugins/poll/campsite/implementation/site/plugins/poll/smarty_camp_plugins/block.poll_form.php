@@ -83,7 +83,7 @@ function smarty_block_poll_form($p_params, $p_content, &$p_smarty, &$p_repeat)
         $url = $campsite->url;
         $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
         $html .= "<form name=\"poll\" id=\"poll_{$campsite->poll->identifier}_form\" action=\"" . $url->uri_path . "\" method=\"post\">\n";
-        $html .= "<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n";
+        
         $html .= "<input type=\"hidden\" name=\"f_poll\" value=\"1\" />\n";
         $html .= "<input type=\"hidden\" name=\"f_poll_nr\" value=\"{$campsite->poll->number}\" />\n";
         $html .= "<input type=\"hidden\" name=\"f_poll_language_id\" value=\"{$campsite->poll->language_id}\" />\n";
@@ -92,6 +92,8 @@ function smarty_block_poll_form($p_params, $p_content, &$p_smarty, &$p_repeat)
             $html .= '<input type="hidden" name="'.$param['name']
                 .'" value="'.htmlentities($param['value'])."\" />\n";
         }
+        $html .= "<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n";
+        
         $html .= $p_content;
         
         if (strlen($p_params['submit_button']) && $campsite->poll->is_votable) { 
