@@ -9,6 +9,8 @@ class PollsList extends ListObject
     public static $s_parameters = array(
         'number' => array('field' => 'poll_nr', 'type' => 'integer'),
         'language_id' => array('field' => 'fk_language_id', 'type' => 'integer'),
+        'parent_poll_nr' => array('field' => 'parent_poll_nr', 'type' => 'integer'),
+        'is_extended' => array('field' => 'is_extended', 'type' => 'integer'),
         'name' => array('field' => 'title', 'type' => 'string'),
         'begin' => array('field' => 'date_begin', 'type' => 'date'),
         'begin_year' => array('field' => 'YEAR(date_begin)', 'type' => 'integer'),
@@ -20,7 +22,6 @@ class PollsList extends ListObject
         'end_mday' => array('field' => 'DAYOFMONTH(date_end)', 'type' => 'integer'),
         'votes' => array('field' => 'nr_of_votes', 'type' => 'integer'),
         'votes_overall' => array('field' => 'nr_of_votes_overall', 'type' => 'integer'),
-        'ishitlist' => array('field' => 'is_hitlist', 'type' => 'integer'),
         
         ## following fields are NOT real datebase fields, they are processed by Poll::GetList()
         'current' => array('field' => '_current', 'type' => 'boolean'),

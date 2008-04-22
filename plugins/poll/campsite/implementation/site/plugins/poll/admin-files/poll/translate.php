@@ -75,21 +75,13 @@ camp_html_display_msgs();
                     $tmpLanguage = array_pop($allLanguages);
                     echo '<b>'.htmlspecialchars($tmpLanguage->getNativeName()).'</b>';
                     ?>
-                    <input type="hidden" name="f_article_language" value="<?php p($tmpLanguage->getLanguageId()); ?>">
+                    <input type="hidden" name="f_target_language_id" value="<?php p($tmpLanguage->getLanguageId()); ?>">
                     <?php
                 }
                 ?>
 
             </TD>
         </TR>
-        <!--
-        <tr>
-            <TD ALIGN="RIGHT" ><?php  putGS("Used as default"); ?>:</TD>
-            <TD>
-            <INPUT TYPE="checkbox" NAME="f_is_used_as_default" class="input_checkbox" value="1" <?php $is_used_as_default ? p('checked') : null; ?> >
-            </TD>
-        </TR>
-        -->
         <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Title"); ?>:</TD>
             <TD>

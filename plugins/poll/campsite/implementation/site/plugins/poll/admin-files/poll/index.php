@@ -10,7 +10,18 @@ $f_poll_limit = Input::Get('f_poll_limit', 'int', 20);
 $f_poll_offset = Input::Get('f_poll_offset', 'int', 0);
 $f_poll_order = Input::Get('f_poll_order', 'string', 'bynumber');
 
-$polls = Poll::getPolls(array('id_language' => $f_language_selected), null, $f_poll_offset, $f_poll_limit, $f_poll_order);
+$parents = Poll::getPolls(array('language_id' => $f_language_selected, 'parent_poll_nr' => 0), null, $f_poll_offset, $f_poll_limit, $f_poll_order);
+
+// add the copys
+foreach ($parents as $poll) {
+    $polls[] = $poll;
+    $copys = Poll::getPolls(array('language_id' => $poll->getLanguageId(), 'parent_poll_nr' => $poll->getNumber()));
+    foreach ($copys as $poll) {
+        $polls[] = $poll;
+    }
+}
+
+
 $pager =& new SimplePager(Poll::countPolls(), $f_poll_limit, "f_poll_offset", "index.php?f_poll_order=$f_poll_order&amp;", false);
 $allLanguages = Language::GetLanguages();
 
@@ -173,6 +184,7 @@ if (count($polls)) {
             <TD ALIGN="center" VALIGN="TOP" width="20">&nbsp;</TD>
             <TD ALIGN="center" VALIGN="TOP" width="20">&nbsp;</TD>
             <TD align="center" valign="top" width="20">&nbsp;</TD>
+            <TD align="center" valign="top" width="20">&nbsp;</TD>
         </TR>
         <?php
     
@@ -194,9 +206,11 @@ if (count($polls)) {
               
                 <td>
                     <?php
-                    if (!array_key_exists($poll->getNumber(), $used)) {
+                    if (!array_key_exists($poll->getNumber(), $used) && $poll->getProperty('parent_poll_nr') == 0) {
                         p($poll->getNumber().'.');
                         $used[$poll->getNumber()] = true;   
+                    } elseif ($poll->getProperty('parent_poll_nr')) {
+                        p('\'-> '.$poll->getNumber().'.'); 
                     } else {
                         p('&nbsp;&nbsp;');   
                     }
@@ -211,13 +225,23 @@ if (count($polls)) {
                 <td align="center"><?php p($poll->getProperty('date_end')); ?></td>
               
                 <td align='center'>
-                    <a href="translate.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()) ?>">
+                <?php if (!$poll->getProperty('parent_poll_nr')) { ?>
+                    <a href="translate.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()) ?>" title="<?php putGS('Translate') ?>">
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" BORDER="0">
                     </a>
+                <?php } ?>
                 </td>
               
                 <td align='center'>
-                    <a href='result.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()); ?>'>
+                <?php if ($poll->getProperty('is_extended')) { ?>
+                    <a href="copy.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()) ?>" title="<?php putGS('Copy') ?>">
+                        <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" BORDER="0">
+                    </a>
+                <?php } ?>
+                </td>
+                
+                <td align='center'>
+                    <a href="result.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()); ?>" title="<?php putGS('Result') ?>">
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
                     </a>
                 </td>

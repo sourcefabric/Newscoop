@@ -1,5 +1,5 @@
 <?php
-$Attachments = PollAnswerAttachment::getAttachments($f_poll_nr, $f_pollanswer_nr);
+$PollAnswerAttachments = PollAnswerAttachment::getPollAnswerAttachments($f_poll_nr, $f_pollanswer_nr);
 ?>
 <center>
 <TABLE width="95%" style="border: 1px solid #EEEEEE;">
@@ -21,7 +21,9 @@ $Attachments = PollAnswerAttachment::getAttachments($f_poll_nr, $f_pollanswer_nr
 	</TD>
 </TR>
 <?php
-foreach ($Attachments as $file) {
+foreach ($PollAnswerAttachments as $PollAnswerAttachment) {
+    $file = $PollAnswerAttachment->getAttachment();
+    
 	$fileEditUrl = "edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_attachment_id=".$file->getAttachmentId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
 	$deleteUrl = "do_del.php?f_poll_nr=$f_poll_nr&amp;f_pollanswer_nr=$f_pollanswer_nr&amp;f_fk_language_id=$f_fk_language_id&amp;f_attachment_id=".$file->getAttachmentId();
 	$downloadUrl = "/attachment/".basename($file->getStorageLocation())."?g_download=1";

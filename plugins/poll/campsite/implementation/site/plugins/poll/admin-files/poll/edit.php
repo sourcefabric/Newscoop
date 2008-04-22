@@ -15,8 +15,9 @@ $f_from = Input::Get('f_from', 'string', false);
 if ($f_poll_nr && $f_fk_language_id) {
     $poll = new Poll($f_fk_language_id, $f_poll_nr);
     
-    if ($poll->exists()) {  
-        $poll_nr = $poll->getNumber(); 
+    if ($poll->exists()) {
+        $parent_poll_nr = $poll->getProperty('parent_poll_nr');
+        $is_extended = $poll->getProperty('is_extended');        
         $title = $poll->getProperty('title');
         $question = $poll->getProperty('question');
         $date_begin = $poll->getProperty('date_begin');
@@ -24,7 +25,6 @@ if ($f_poll_nr && $f_fk_language_id) {
         $nr_of_answers = $poll->getProperty('nr_of_answers');
         $fk_language_id = $poll->getProperty('fk_language_id');
         $is_display_expired = $poll->getProperty('is_display_expired');
-        $is_hitlist = $poll->getProperty('is_hitlist');
         
         $poll_answers = $poll->getAnswers();
         foreach ($poll_answers as $poll_answer) {
@@ -107,7 +107,13 @@ camp_html_display_msgs();
                 ?>
 
             </TD>
-        </TR>
+          </TR>
+          <tr>
+            <TD ALIGN="RIGHT" ><?php  putGS("Extended poll"); ?>:</TD>
+            <TD>
+            <INPUT TYPE="checkbox" NAME="f_is_extended" class="input_checkbox" value="1" <?php $is_extended ? p('checked') : null; ?> >
+            </TD>
+          </TR>
           <TR>
             <TD ALIGN="RIGHT" ><?php  putGS("Date begin voting"); ?>:</TD>
             <TD>
@@ -169,12 +175,6 @@ camp_html_display_msgs();
             </TD>
         </TR>
         <tr>
-            <TD ALIGN="RIGHT" ><?php  putGS("Used as hitlist"); ?>:</TD>
-            <TD>
-            <INPUT TYPE="checkbox" NAME="f_is_hitlist" class="input_checkbox" value="1" <?php $is_hitlist ? p('checked') : null; ?> >
-            </TD>
-        </TR>
-        <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Title"); ?>:</TD>
             <TD>
             <INPUT TYPE="TEXT" NAME="f_title" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Title')); ?>" value="<?php echo htmlspecialchars($title); ?>">
@@ -189,11 +189,10 @@ camp_html_display_msgs();
         <TR>
             <TD ALIGN="RIGHT" ><?php  putGS("Number of answers"); ?>:</TD>
             <TD style="padding-top: 3px;">
-                <?php if (count($allLanguages) > 1) { ?>
                 <SELECT NAME="f_nr_of_answers" alt="select" emsg="<?php putGS("You must select number of answers.")?>" class="input_select" onchange="poll_set_nr_of_answers()">
                 <option value="0"><?php putGS("---Select---"); ?></option>
                 <?php
-                 for($n=2; $n<20; $n++) {
+                 for($n=1; $n<200; $n++) {
                      camp_html_select_option($n,
                                              $nr_of_answers,
                                              $n);
@@ -204,24 +203,21 @@ camp_html_display_msgs();
         </TR>
         
         <?php
-        for ($n=1; $n<=20; $n++) {
+        for ($n=1; $n<=200; $n++) {
             ?>
             <tr id="poll_answer_tr_<?php p($n); ?>" style="display: <?php $nr_of_answers >= $n ? p('table-row') : p('none'); ?>">
                 <TD ALIGN="RIGHT" ><?php  putGS("Answer $1", $n); ?>:</TD>
                 <TD>
-                <INPUT TYPE="TEXT" NAME="f_answer[<?php p($n); ?>]" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" id="poll_answer_input_<?php p($n); ?>" emsg="<?php putGS('You must complete the $1 field.', getGS('Answer $1', $n)); ?>" value="<?php isset($answers[$n]) ? p(htmlspecialchars($answers[$n])) : p('__undefined__'); ?>">
+                    <INPUT TYPE="TEXT" NAME="f_answer[<?php p($n); ?>]" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" id="poll_answer_input_<?php p($n); ?>" emsg="<?php putGS('You must complete the $1 field.', getGS('Answer $1', $n)); ?>" value="<?php isset($answers[$n]) ? p(htmlspecialchars($answers[$n])) : p('__undefined__'); ?>">
                 </TD>
                 
-                <td align='center'>
-                    <a href="javascript: void(0);" onclick="window.open('files/popup.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_pollanswer_nr=<?php p($n) ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=600, top=200, left=100');">
-                        <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" BORDER="0">
-                    </a>
-                </td>
-                
-                <td align='center'>
-                    <INPUT type="checkbox" name="f_onhitlist[<?php p($n); ?>]" value="1" <?php if (array_key_exists($n, $onhitlist) && $onhitlist[$n] == 1) p('checked') ?>>
-                    </a>
-                </td>                
+                <?php if (is_object($poll)) { ?>
+                    <td align='center'>
+                        <a href="javascript: void(0);" onclick="window.open('files/popup.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_pollanswer_nr=<?php p($n) ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=600, top=200, left=100');">
+                            <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" BORDER="0">
+                        </a>
+                    </td>  
+                <?php } ?>              
             </TR>
             <?php
         }
@@ -262,7 +258,7 @@ function poll_set_nr_of_answers()
         }
     }
     
-    for (m = n; m <= 20; m++) { 
+    for (m = n; m <= 200; m++) { 
         document.getElementById('poll_answer_tr_' + m).style.display = 'none';
         
         value = document.getElementById('poll_answer_input_' + m).value;
@@ -273,7 +269,7 @@ function poll_set_nr_of_answers()
     }
 }
 </script>
-<?php }
+<?php
 if (!$f_include) {
     camp_html_copyright_notice(); 
 }    

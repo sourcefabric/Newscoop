@@ -119,14 +119,14 @@ class PollAnswer extends DatabaseObject {
     /**
      * Create a translation of an answer set.
      *
-     * @param int $p_languageId
-     * @param int $p_userId
-     * @param string $p_name
-     * @return Article
+     * @param int $p_fk_poll_nr
+     * @param int $p_source_language_id
+     * @param int $p_target_language_id
+     * @return Poll
      */
     function CreateTranslationSet($p_fk_poll_nr, $p_source_language_id, $p_target_language_id)
     {
-        // Construct the duplicate PollQuestion object.
+        // Construct the duplicate PollAnswer object.
         foreach (PollAnswer::getAnswers($p_fk_poll_nr, $p_source_language_id) as $answer) {
             $answer_copy = new PollAnswer($p_target_language_id, $p_fk_poll_nr, $answer->getNumber());
             $answer_copy->create($answer->getProperty('answer'));
@@ -144,7 +144,58 @@ class PollAnswer extends DatabaseObject {
         return $pollAnswerCopy;
     } // fn createTranslation
 
-
+    /**
+     * Create a copy of an answer set.
+     *
+     * @param int $p_fk_poll_nr
+     * @param int $p_fk_language_id
+     * @param int $p_parent_nr
+     * @param array $p_answers
+     * @return Poll
+     */
+    function CreateCopySet($p_fk_poll_nr, $p_fk_language_id, $p_parent_nr, $p_answers)
+    {
+        // Construct the duplicate PollAnswer object.
+        foreach ($p_answers as $answer) {
+            if (isset($answer['number']) && !empty($answer['number']) && strlen($answer['text'])) {
+                $answer_copy = new PollAnswer($p_fk_language_id, $p_fk_poll_nr, $answer['number']);
+                $answer_copy->create($answer['text']);
+                
+                if (isset($answer['nr_of_votes']) && !empty($answer['nr_of_votes'])) {
+                    $answer_copy->setProperty('nr_of_votes', $answer['nr_of_votes']);    
+                }
+                
+                if (isset($answer['value']) && !empty($answer['nr_of_votes'])) {
+                    $answer_copy->setProperty('value', $answer['value']);
+                    $answer_copy->setProperty('average_value', $answer_copy->getProperty('value') / $answer_copy->getProperty('nr_of_votes'));
+                }   
+            }
+        }
+        
+        // Copy PollAnswerAttachments
+        PollAnswerAttachment::CreateCopySet($p_fk_poll_nr, $p_fk_language_id, $p_parent_nr);
+        
+        /*
+        if (function_exists("camp_load_translation_strings")) {
+            camp_load_translation_strings("api");
+        }
+        $logtext = getGS('Article #$1 "$2" ($3) translated to "$5" ($4)',
+            $this->getArticleNumber(), $this->getTitle(), $this->getLanguageName(),
+            $articleCopy->getTitle(), $articleCopy->getLanguageName());
+        Log::Message($logtext, null, 31);
+        */
+        
+        return $pollAnswerCopy;
+    } // fn createTranslation
+    
+    function getPollAnswerAttachments()
+    {
+        $PollAnswerAttachments = PollAnswerAttachment::getPollAnswerAttachments($this->getPollNumber(), $this->getNumber());
+           
+        return $PollAnswerAttachments;
+    }    
+    
+    
     /**
      * Delete poll from database.  This will
      * only delete one specific translation of the poll question.
@@ -152,8 +203,11 @@ class PollAnswer extends DatabaseObject {
      * @return boolean
      */
     function delete()
-    {        
-        // Delete from plugin_poll_question table
+    {      
+        // Delte PollAnswerAttachments
+        PollAnswerAttachment::OnPollAnswerDelete($this->getPollNumber(), $this->getNumber()); 
+          
+        // Delete from plugin_poll_answer table
         $deleted = parent::delete();
 
         /*

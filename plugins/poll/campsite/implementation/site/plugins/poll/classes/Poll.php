@@ -19,6 +19,12 @@ class Poll extends DatabaseObject {
     
         // int - default language id
         'fk_language_id',
+        
+        // int - parent poll number (0 on master)
+        'parent_poll_nr',
+        
+        // boolean - is extended poll type
+        'is_extended',
                 
         // string - title in given language
         'title',
@@ -162,11 +168,11 @@ class Poll extends DatabaseObject {
      * Create a translation of an poll.
      *
      * @param int $p_languageId
-     * @param int $p_userId
-     * @param string $p_name
-     * @return Article
+     * @param string $p_title
+     * @param string $p_question
+     * @return Poll
      */
-    public function createTranslation($p_language_id, $p_title = '', $p_question = '')
+    public function createTranslation($p_language_id, $p_title, $p_question)
     {        
         // Construct the duplicate poll object.  
         $poll_copy = new Poll();      
@@ -180,7 +186,8 @@ class Poll extends DatabaseObject {
             'date_begin' => $this->m_data['date_begin'],
             'date_end' => $this->m_data['date_end'],
             'nr_of_answers' => $this->m_data['nr_of_answers'],
-            'is_display_expired' => $this->m_data['is_display_expired'],     
+            'is_display_expired' => $this->m_data['is_display_expired'],
+            'is_extended' => $this->m_data['is_extended'],    
         );
 
         $success = $poll_copy->__create($values);
@@ -205,7 +212,58 @@ class Poll extends DatabaseObject {
         return $poll_copy;
     } // fn createTranslation
 
+    
+    /**
+     * Create a copy of an poll.
+     *
+     * @param string $p_title
+     * @param string $p_question
+     * @param array $p_answers
+     * @return Poll
+     */
+    public function createCopy($p_data, $p_answers)
+    {        
+        // Construct the duplicate poll object.  
+        $poll_copy = new Poll();  
+        $poll_copy->m_data['poll_nr'] = Poll::generatePollNumber();    
+        $poll_copy->m_data['parent_poll_nr'] = $this->m_data['poll_nr'];
+        $poll_copy->m_data['fk_language_id'] = $this->m_data['fk_language_id'];
 
+        // Create the record
+        $values = array(
+            'title' => $p_data['title'],
+            'question' => $p_data['question'],
+            'date_begin' => $p_data['date_begin'],
+            'date_end' => $p_data['date_end'],
+            'nr_of_answers' => count($p_answers),
+            'is_display_expired' => $p_data['is_display_expired'],
+        );
+
+        $success = $poll_copy->__create($values);
+        
+        if (!$success) {
+            return false;
+        }
+               
+        // create an set of answers
+        PollAnswer::CreateCopySet($poll_copy->getNumber(), $this->m_data['fk_language_id'], $this->m_data['poll_nr'], $p_answers);
+        
+        $poll_copy->triggerStatistics();
+
+        /*
+        if (function_exists("camp_load_translation_strings")) {
+            camp_load_translation_strings("api");
+        }
+        $logtext = getGS('Article #$1 "$2" ($3) translated to "$5" ($4)',
+            $this->getArticleNumber(), $this->getTitle(), $this->getLanguageName(),
+            $articleCopy->getTitle(), $articleCopy->getLanguageName());
+        Log::Message($logtext, null, 31);
+        */
+        
+        return $poll_copy;
+    } // fn createTranslation
+    
+    
     /**
      * Delete poll from database.  This will
      * only delete one specific translation of the poll.
@@ -367,27 +425,20 @@ class Poll extends DatabaseObject {
     	    $comparisonOperation = new ComparisonOperation('_assign_article_nr', $operator, $p_constraints['article_nr']);
     	    $constraints[] = $comparisonOperation;
 	    }
+	    
+	    if (array_key_exists('is_extendet', $p_constraints)) {
+    	    $comparisonOperation = new ComparisonOperation('is_extended', $operator, $p_constraints['is_extended']);
+    	    $constraints[] = $comparisonOperation;
+	    }
+	    
+	    if (array_key_exists('parent_poll_nr', $p_constraints)) {
+    	    $comparisonOperation = new ComparisonOperation('parent_poll_nr', $operator, $p_constraints['parent_poll_nr']);
+    	    $constraints[] = $comparisonOperation;
+	    }
 	    	    
 	    $order = array($p_orderBy => 'ASC');    
 
-	    
         return Poll::GetList($constraints, $p_item, $order, $p_offset, $p_limit, &$p_count);
-        
-        
-        
-        global $g_ado_db;
-        
-        $query = Poll::GetQuery($p_language_id, $p_orderBy, $p_orderBy);
-        
-        $res = $g_ado_db->SelectLimit($query, $p_limit, $p_offset);		
-		$polls = array();
-		
-		while ($row = $res->FetchRow()) { 
-		    $tmp_poll = new Poll($row['fk_language_id'], $row['poll_nr']);
-            $polls[] = $tmp_poll;  
-		}
-		
-		return $polls;
     }
 
     
