@@ -434,6 +434,8 @@ class TemplateConverterHelper
         } else {
             if (strtolower($p_optArray[1]) == 'current') {
                 $newTag = 'set_current_'.$p_optArray[0];
+            } elseif (strtolower($p_optArray[1]) == 'default') {
+                $newTag = 'set_default_'.$p_optArray[0];
             } else {
                 $newTag = 'set_' . $p_optArray[0];
                 if ($p_optArray[0] == 'language') {
