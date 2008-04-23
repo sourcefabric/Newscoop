@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Erstellungszeit: 22. April 2008 um 17:09
+-- Erstellungszeit: 23. April 2008 um 15:55
 -- Server Version: 5.0.32
 -- PHP-Version: 5.2.0-8+etch7
 -- 
@@ -26,8 +26,7 @@ CREATE TABLE `plugin_poll` (
   `date_begin` date NOT NULL default '0000-00-00',
   `date_end` date NOT NULL default '0000-00-00',
   `nr_of_answers` tinyint(3) unsigned NOT NULL default '0',
-  `is_display_expired` tinyint(3) unsigned NOT NULL default '0',
-  `is_hitlist` tinyint(3) unsigned NOT NULL,
+  `votes_per_user` tinyint(3) unsigned NOT NULL default '1',
   `nr_of_votes` int(10) unsigned NOT NULL,
   `nr_of_votes_overall` int(10) unsigned NOT NULL,
   `percentage_of_votes_overall` float unsigned NOT NULL,
