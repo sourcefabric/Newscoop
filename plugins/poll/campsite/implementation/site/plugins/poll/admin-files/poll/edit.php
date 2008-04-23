@@ -12,25 +12,26 @@ $f_poll_nr = Input::Get('f_poll_nr', 'int');
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 $f_from = Input::Get('f_from', 'string', false);
 
-if ($f_poll_nr && $f_fk_language_id) {
-    $poll = new Poll($f_fk_language_id, $f_poll_nr);
+$poll = new Poll($f_fk_language_id, $f_poll_nr);
+
+if ($poll->exists()) {
+    // edit existing poll
+    $parent_poll_nr = $poll->getProperty('parent_poll_nr');
+    $is_extended = $poll->getProperty('is_extended');        
+    $title = $poll->getProperty('title');
+    $question = $poll->getProperty('question');
+    $date_begin = $poll->getProperty('date_begin');
+    $date_end = $poll->getProperty('date_end');
+    $nr_of_answers = $poll->getProperty('nr_of_answers');
+    $fk_language_id = $poll->getProperty('fk_language_id');
+    $votes_per_user = $poll->getProperty('votes_per_user');
     
-    if ($poll->exists()) {
-        $parent_poll_nr = $poll->getProperty('parent_poll_nr');
-        $is_extended = $poll->getProperty('is_extended');        
-        $title = $poll->getProperty('title');
-        $question = $poll->getProperty('question');
-        $date_begin = $poll->getProperty('date_begin');
-        $date_end = $poll->getProperty('date_end');
-        $nr_of_answers = $poll->getProperty('nr_of_answers');
-        $fk_language_id = $poll->getProperty('fk_language_id');
-        $votes_per_user = $poll->getProperty('votes_per_user');
-        
-        $poll_answers = $poll->getAnswers();
-        foreach ($poll_answers as $poll_answer) {
-            $answers[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('answer');  
-        }
+    $poll_answers = $poll->getAnswers();
+    
+    foreach ($poll_answers as $poll_answer) {
+        $answers[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('answer');  
     }
+
 } else {
     // language_id may preset from from assign_popup.php
     $fk_language_id = Input::Get('f_language_id', 'int');
@@ -66,7 +67,7 @@ camp_html_display_msgs();
 
 <P>
 <FORM NAME="edit_poll" METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-<?php if ($poll) { ?>
+<?php if ($poll->exists()) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_poll_nr" VALUE="<?php p($poll->getNumber()); ?>">
 <?php } ?>
 <?php if ($f_from) { ?>
@@ -75,7 +76,7 @@ camp_html_display_msgs();
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
     <TD COLSPAN="2">
-        <B><?php  if ($poll) putGS("Edit Poll"); else putGS('Add new Poll'); ?></B>
+        <B><?php  if ($poll->exists()) putGS("Edit Poll"); else putGS('Add new Poll'); ?></B>
         <HR NOSHADE SIZE="1" COLOR="BLACK">
     </TD>
 </TR>
@@ -110,7 +111,7 @@ camp_html_display_msgs();
           <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Extended poll"); ?>:</TD>
             <TD>
-                <SELECT NAME="f_is_extended" alt="select" class="input_select">
+                <SELECT NAME="f_is_extended" class="input_select">
                     <option value="0"><?php putGS('No') ?></option>
                     <option value="1" <?php $is_extended ? p('selected="selected"') : null ?>><?php putGS('Yes') ?></option>
                 </SELECT>
@@ -197,32 +198,35 @@ camp_html_display_msgs();
                 </SELECT>
             </TD>
         </TR>
-        <TR>
-            <TD ALIGN="RIGHT" ><?php  putGS("Number of answers"); ?>:</TD>
-            <TD style="padding-top: 3px;">
-                <SELECT NAME="f_nr_of_answers" alt="select" emsg="<?php putGS("You must select number of answers.")?>" class="input_select" onchange="poll_set_nr_of_answers()">
-                <option value="0"><?php putGS("---Select---"); ?></option>
-                <?php
-                 for($n=1; $n<=255; $n++) {
-                     camp_html_select_option($n,
-                                             $nr_of_answers,
-                                             $n);
-                }
-                ?>
-                </SELECT>
-            </TD>
-        </TR>
+        
+        <?php if (!$poll->getProperty('parent_poll_nr')) { ?>
+            <TR>
+                <TD ALIGN="RIGHT" ><?php  putGS("Number of answers"); ?>:</TD>
+                <TD style="padding-top: 3px;">
+                    <SELECT NAME="f_nr_of_answers" alt="select" emsg="<?php putGS("You must select number of answers.")?>" class="input_select" onchange="poll_set_nr_of_answers()">
+                    <option value="0"><?php putGS("---Select---"); ?></option>
+                    <?php
+                     for($n=1; $n<=255; $n++) {
+                         camp_html_select_option($n,
+                                                 $nr_of_answers,
+                                                 $n);
+                    }
+                    ?>
+                    </SELECT>
+                </TD>
+            </TR>
+        <?php } ?> 
         
         <?php
-        for ($n=1; $n<=200; $n++) {
+        for ($n=1; $n<=255; $n++) {
             ?>
-            <tr id="poll_answer_tr_<?php p($n); ?>" style="display: <?php $nr_of_answers >= $n ? p('table-row') : p('none'); ?>">
+            <tr id="poll_answer_tr_<?php p($n); ?>" style="display: <?php is_array($answers) && array_key_exists($n, $answers) ? p('table-row') : p('none'); ?>">
                 <TD ALIGN="RIGHT" ><?php  putGS("Answer $1", $n); ?>:</TD>
                 <TD>
                     <INPUT TYPE="TEXT" NAME="f_answer[<?php p($n); ?>]" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" id="poll_answer_input_<?php p($n); ?>" emsg="<?php putGS('You must complete the $1 field.', getGS('Answer $1', $n)); ?>" value="<?php isset($answers[$n]) ? p(htmlspecialchars($answers[$n])) : p('__undefined__'); ?>">
                 </TD>
                 
-                <?php if (is_object($poll)) { ?>
+                <?php if ($poll->exists()) { ?>
                     <td align='center'>
                         <a href="javascript: void(0);" onclick="window.open('files/popup.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_pollanswer_nr=<?php p($n) ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=600, top=200, left=100');">
                             <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" BORDER="0">

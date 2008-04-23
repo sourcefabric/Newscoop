@@ -19,7 +19,9 @@ $f_nr_of_answers = Input::Get('f_nr_of_answers', 'int');
 $f_answers = Input::Get('f_answer', 'array');
 $f_onhitlist = Input::Get('f_onhitlist', 'array');
 
-if ($f_poll_nr) {
+$poll = new Poll($f_fk_language_id, $f_poll_nr);
+
+if ($poll->exists()) {
     // update existing poll   
     $poll = new Poll($f_fk_language_id, $f_poll_nr);
     $poll->setProperty('title', $f_title);
@@ -32,7 +34,7 @@ if ($f_poll_nr) {
 
     foreach ($f_answers as $nr_answer => $text) {
         if ($text !== '__undefined__') {
-            $answer =& new PollAnswer($f_fk_language_id, $poll->getNumber(), $nr_answer);
+            $answer =& new PollAnswer($f_fk_language_id, $f_poll_nr, $nr_answer);
             if ($answer->exists()) {
                 $answer->setProperty('answer', $text);   
             } else {
@@ -41,7 +43,7 @@ if ($f_poll_nr) {
         }
     }
     
-    PollAnswer::SyncNrOfAnswers($poll->getLanguageId(), $poll->getNumber());   
+    PollAnswer::SyncNrOfAnswers($f_fk_language_id, $f_poll_nr);   
 
 } else {
     // create new poll

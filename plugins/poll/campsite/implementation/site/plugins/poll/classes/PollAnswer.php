@@ -270,15 +270,18 @@ class PollAnswer extends DatabaseObject {
         global $g_ado_db;
         
         $poll = new Poll($p_fk_language_id, $p_fk_poll_nr);
-        $nr_of_answers = $poll->getProperty('nr_of_answers');
         
-        $query = "DELETE FROM   plugin_poll_answer
-                  WHERE         fk_poll_nr = $p_fk_poll_nr
-                            AND fk_language_id = $p_fk_language_id
-                            AND nr_answer > $nr_of_answers";
-        $g_ado_db->execute($query);  
-        
-        Poll::triggerStatistics($p_fk_poll_nr);
+        if (count($poll->getTranslations()) > 1) {
+            $nr_of_answers = $poll->getProperty('nr_of_answers');
+            
+            $query = "DELETE FROM   plugin_poll_answer
+                      WHERE         fk_poll_nr = $p_fk_poll_nr
+                                AND fk_language_id = $p_fk_language_id
+                                AND nr_answer > $nr_of_answers";
+            $g_ado_db->execute($query);  
+            
+            Poll::triggerStatistics($p_fk_poll_nr);
+        }
     }
        
     public function getPoll()
