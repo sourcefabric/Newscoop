@@ -80,6 +80,9 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     ."<input type=\"hidden\" name=\"unitcostalllang\" value=\""
     .$publication->subscription_unit_cost_all_lang."\" />\n";
     foreach ($campsite->url->form_parameters as $param) {
+        if ($param['name'] == 'tpl') {
+            continue;
+        }
         $html .= '<input type="hidden" name="'.$param['name']
             .'" value="'.htmlentities($param['value'])."\" />\n";
     }

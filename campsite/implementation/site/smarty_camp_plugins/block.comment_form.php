@@ -52,6 +52,9 @@ function smarty_block_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat
         $html = "<form name=\"submit_comment\" action=\"" . $url->uri_path . "$anchor\" method=\"post\">\n"
                ."<input type=\"hidden\" name=\"tpl\" value=\"" . $template->identifier . "\" />\n";
         foreach ($camp->url->form_parameters as $param) {
+            if ($param['name'] == 'tpl') {
+                continue;
+            }
             $html .= '<input type="hidden" name="'.$param['name']
                 .'" value="'.htmlentities($param['value'])."\" />\n";
         }

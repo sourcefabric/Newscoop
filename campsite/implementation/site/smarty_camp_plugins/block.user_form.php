@@ -50,6 +50,9 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
         ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n"
         ."<input type=\"hidden\" name=\"f_substype\" value=\"".$subsType."\" />\n";
         foreach ($camp->url->form_parameters as $param) {
+            if ($param['name'] == 'tpl') {
+                continue;
+            }
             $html .= '<input type="hidden" name="'.$param['name']
                 .'" value="'.htmlentities($param['value'])."\" />\n";
         }

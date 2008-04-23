@@ -56,6 +56,9 @@ function smarty_block_search_form($p_params, $p_content, &$p_smarty)
             if (strncasecmp($param[name], $searchListIdPrefix, strlen($searchListIdPrefix)) == 0) {
                 continue;
             }
+            if ($param['name'] == 'tpl') {
+                continue;
+            }
             $html .= '<input type="hidden" name="'.$param['name']
                 .'" value="'.htmlentities($param['value'])."\" />\n";
         }
