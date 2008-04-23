@@ -1,27 +1,4 @@
-3.0.0-rc3 (April 8, 2008)
-  - Many bug fixes
-
-3.0.0-rc2 (March 23, 2008)
-  - Many bug fixes
-
-3.0.0-rc1 (March 5, 2008)
-  - Many bug fixes
-  - Finished the features implementation
-
-3.0.0-beta2 (December 22, 2007)
-  For full details about these changes, see:
-  http://code.campware.org/projects/campsite/query?milestone=3.0.0
-  
-  - Many bug fixes
-  - Finished and fixed the URL classes
-  - Finished the request processing classes
-  - Implemented more features related to lists
-  - Rewrote the image display script
-  - Rewrote the indexing engine
-  - Implemented the backup/restore scripts
-  - Implemented the subtitle display and list
-  
-3.0.0-beta1 (October 30, 2007)
+3.0.0 (April 23, 2008)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=3.0.0
   
@@ -35,6 +12,17 @@
   - A caching mechanism for database objects was implemented. This
   will result in fewer database queries and greater speed and
   scalability.
+  
+  Small improvements
+  ------------------
+  - Variables for storing temporary data can be used in the template
+  language.
+  - Boolean expressions can be used in "if" statements.
+  - Many new small features in the template language.
+  - The web based installer provides a default demo package for
+  easier learning of the template language.
+  - Removed the constraint of having at most one limitted list of a
+  certain type in a template.
   
 2.7.0 "Tomas" (March 12, 2007)
   For full details about these changes, see:
