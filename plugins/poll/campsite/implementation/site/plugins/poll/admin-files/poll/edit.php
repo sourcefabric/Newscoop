@@ -24,12 +24,11 @@ if ($f_poll_nr && $f_fk_language_id) {
         $date_end = $poll->getProperty('date_end');
         $nr_of_answers = $poll->getProperty('nr_of_answers');
         $fk_language_id = $poll->getProperty('fk_language_id');
-        $is_display_expired = $poll->getProperty('is_display_expired');
+        $votes_per_user = $poll->getProperty('votes_per_user');
         
         $poll_answers = $poll->getAnswers();
         foreach ($poll_answers as $poll_answer) {
-            $answers[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('answer');
-            $onhitlist[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('on_hitlist');   
+            $answers[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('answer');  
         }
     }
 } else {
@@ -111,7 +110,10 @@ camp_html_display_msgs();
           <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Extended poll"); ?>:</TD>
             <TD>
-            <INPUT TYPE="checkbox" NAME="f_is_extended" class="input_checkbox" value="1" <?php $is_extended ? p('checked') : null; ?> >
+                <SELECT NAME="f_is_extended" alt="select" class="input_select">
+                    <option value="0"><?php putGS('No') ?></option>
+                    <option value="1" <?php $is_extended ? p('selected="selected"') : null ?>><?php putGS('Yes') ?></option>
+                </SELECT>
             </TD>
           </TR>
           <TR>
@@ -169,12 +171,6 @@ camp_html_display_msgs();
             </TD>
         </TR>
         <tr>
-            <TD ALIGN="RIGHT" ><?php  putGS("Display expired"); ?>:</TD>
-            <TD>
-            <INPUT TYPE="checkbox" NAME="f_is_display_expired" class="input_checkbox" value="1" <?php $is_display_expired ? p('checked') : null; ?> >
-            </TD>
-        </TR>
-        <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Title"); ?>:</TD>
             <TD>
             <INPUT TYPE="TEXT" NAME="f_title" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Title')); ?>" value="<?php echo htmlspecialchars($title); ?>">
@@ -186,13 +182,28 @@ camp_html_display_msgs();
             <TEXTAREA NAME="f_question" class="input_textarea" cols="28" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Question')); ?>"><?php echo htmlspecialchars($question); ?></TEXTAREA>
             </TD>
         </TR>
+        <tr>
+            <TD ALIGN="RIGHT" ><?php  putGS("Votes per single User"); ?>:</TD>
+            <TD style="padding-top: 3px;">
+                <SELECT NAME="f_votes_per_user" alt="select" emsg="<?php putGS("You must select number of votes per user.")?>" class="input_select" onchange="poll_set_nr_of_answers()">
+                <option value="0"><?php putGS("---Select---"); ?></option>
+                <?php
+                 for($n=1; $n<=255; $n++) {
+                     camp_html_select_option($n,
+                                             isset($votes_per_user) ? $votes_per_user : 1,
+                                             $n);
+                }
+                ?>
+                </SELECT>
+            </TD>
+        </TR>
         <TR>
             <TD ALIGN="RIGHT" ><?php  putGS("Number of answers"); ?>:</TD>
             <TD style="padding-top: 3px;">
                 <SELECT NAME="f_nr_of_answers" alt="select" emsg="<?php putGS("You must select number of answers.")?>" class="input_select" onchange="poll_set_nr_of_answers()">
                 <option value="0"><?php putGS("---Select---"); ?></option>
                 <?php
-                 for($n=1; $n<200; $n++) {
+                 for($n=1; $n<=255; $n++) {
                      camp_html_select_option($n,
                                              $nr_of_answers,
                                              $n);

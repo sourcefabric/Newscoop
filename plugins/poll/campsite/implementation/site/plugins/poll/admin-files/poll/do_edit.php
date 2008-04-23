@@ -12,7 +12,7 @@ $f_title = Input::Get('f_title', 'string');
 $f_question = Input::Get('f_question', 'string');
 $f_date_begin = Input::Get('f_date_begin', 'string');
 $f_date_end = Input::Get('f_date_end', 'string');
-$f_is_display_expired = Input::Get('f_is_display_expired', 'boolean');
+$f_votes_per_user = Input::Get('f_votes_per_user', 'int');
 $f_is_extended = Input::Get('f_is_extended', 'boolean');
 $f_nr_of_answers = Input::Get('f_nr_of_answers', 'int');
 
@@ -26,7 +26,7 @@ if ($f_poll_nr) {
     $poll->setProperty('question', $f_question);
     $poll->setProperty('date_begin', $f_date_begin);
     $poll->setProperty('date_end', $f_date_end);
-    $poll->setProperty('is_display_expired', $f_is_display_expired);
+    $poll->setProperty('votes_per_user', $f_votes_per_user);
     $poll->setProperty('nr_of_answers', $f_nr_of_answers);
     $poll->setProperty('is_extended', $f_is_extended);
 
@@ -46,7 +46,7 @@ if ($f_poll_nr) {
 } else {
     // create new poll
     $poll =& new Poll($f_fk_language_id);   
-    $success = $poll->create($f_title, $f_question, $f_date_begin, $f_date_end, $f_nr_of_answers, $f_is_display_expired);
+    $success = $poll->create($f_title, $f_question, $f_date_begin, $f_date_end, $f_nr_of_answers, $f_votes_per_user);
     
     if ($success) {
         $poll->setProperty('is_extended', $f_is_extended);

@@ -41,11 +41,8 @@ class Poll extends DatabaseObject {
         // int - Number of Answers
         'nr_of_answers',
 
-        // bool - Display Poll after Expiration,
-        'is_display_expired',
-        
-        // bool - Use as a hitlist
-        'is_hitlist',
+        // int - how many votes can single user make,
+        'votes_per_user',
         
         // int - number of votes in this language
         'nr_of_votes',
@@ -124,10 +121,10 @@ class Poll extends DatabaseObject {
      * @param date $p_date_begin
      * @param date $p_date_end
      * @param int $p_nr_of_answers
-     * @param bool $p_is_display_expired
+     * @param bool $p_votes_per_user
      * @return void
      */
-    public function create($p_title, $p_question, $p_date_begin, $p_date_end, $p_nr_of_answers, $p_is_display_expired=false)
+    public function create($p_title, $p_question, $p_date_begin, $p_date_end, $p_nr_of_answers, $p_votes_per_user=false)
     {
         global $g_ado_db;
         
@@ -144,7 +141,7 @@ class Poll extends DatabaseObject {
             'nr_of_answers' => $p_nr_of_answers,
             'title' => $p_title,
             'question' => $p_question,
-            'is_display_expired' => $p_is_display_expired ? 1 : 0        
+            'votes_per_user' => $p_votes_per_user ? 1 : 0        
         );
 
 
@@ -186,7 +183,7 @@ class Poll extends DatabaseObject {
             'date_begin' => $this->m_data['date_begin'],
             'date_end' => $this->m_data['date_end'],
             'nr_of_answers' => $this->m_data['nr_of_answers'],
-            'is_display_expired' => $this->m_data['is_display_expired'],
+            'votes_per_user' => $this->m_data['votes_per_user'],
             'is_extended' => $this->m_data['is_extended'],    
         );
 
@@ -236,7 +233,7 @@ class Poll extends DatabaseObject {
             'date_begin' => $p_data['date_begin'],
             'date_end' => $p_data['date_end'],
             'nr_of_answers' => count($p_answers),
-            'is_display_expired' => $p_data['is_display_expired'],
+            'votes_per_user' => $p_data['votes_per_user'],
         );
 
         $success = $poll_copy->__create($values);
@@ -855,23 +852,20 @@ class Poll extends DatabaseObject {
        
     /**
      * Return if this poll can be voted
-     * (must be in start-end interval, 
+     * (must be within start-end interval, 
      * and not been voted before by same client)
      *
      * @return boolean
      */
     public function isVotable()
-    {
-    	### !!debug!! ###
-    	return true;
-    	
+    {   	
         if (strtotime($this->m_data['date_begin']) > strtotime(date('Y-m-d'))) {
             return false;   
         }
         if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d')) + 60*60*24) {
             return false;   
         }
-        if ($this->m_mode == 'single' && $this->hasUserVoted()) {
+        if ($this->m_data['votes_per_user'] <= $this->getUserVoteCount()) {
             return false;   
         }
         
@@ -879,33 +873,37 @@ class Poll extends DatabaseObject {
     }
     
     /**
-     * Mark the poll as voted by client
+     * Increate counter poll has been voted by single client 
      *
      */
-    protected function setUserHasVoted()
+    public function increaseUserVoteCount()
     {
         $key = 'poll_'.$this->m_data['fk_language_id'].'_'.$this->m_data['poll_nr'];
-        $_SESSION[$key] = true;
+        $value = $this->getUserVoteCount() + 1;
+        
+        $_SESSION[$key] = $value;
         
         preg_match('/([0-9a-zA-Z]+\.[a-zA-Z]+)$/', $_SERVER['SERVER_NAME'], $hostname);
-        setcookie($key, 1, time()+60*60*24*365, '/', $hostname[0]);       
+        setcookie($key, $value, time()+60*60*24*365, '/', $hostname[0]);       
     }
     
     /**
-     * Return if client vote this poll already
+     * Return counter single client has votes this poll
      *
-     * @return boolean
+     * @return int
      */
-    public function hasUserVoted()
+    public function getUserVoteCount()
     {
         $key = 'poll_'.$this->m_data['fk_language_id'].'_'.$this->m_data['poll_nr'];
-        if (array_key_exists($key, $_SESSION)) {
-            return true;   
-        }
+        
         if (array_key_exists($key, $_COOKIE)) {
-            return true;   
+            return $_COOKIE[$key];   
         }
-        return false;
+        if (array_key_exists($key, $_SESSION)) {
+            return $_SESSION[$key];   
+        }
+
+        return 0;
     }
     
     /**

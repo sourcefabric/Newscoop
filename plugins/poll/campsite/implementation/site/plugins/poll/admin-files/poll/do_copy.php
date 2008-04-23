@@ -15,7 +15,7 @@ $data = array(
     'question' => Input::Get('f_question', 'string'),
     'date_begin' => Input::Get('f_date_begin', 'string'),
     'date_end' => Input::Get('f_date_end', 'string'),
-    'is_display_expired' => Input::Get('f_is_display_expired', 'boolean'),
+    'votes_per_user' => Input::Get('f_votes_per_user', 'int'),
 );
 
 foreach ($f_answers as $answer) {

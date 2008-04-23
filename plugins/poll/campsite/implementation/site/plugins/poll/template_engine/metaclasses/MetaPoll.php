@@ -17,8 +17,7 @@ final class MetaPoll extends MetaDbObject {
 		$this->m_properties['name'] = 'title';
 		$this->m_properties['question'] = 'question';
 		$this->m_properties['answers'] = 'nr_of_answers';
-		$this->m_properties['is_display_expired'] = 'is_display_expired';
-		#$this->m_properties['is_used_as_default'] = 'is_used_as_default';
+		$this->m_properties['votes_per_user'] = 'votes_per_user';
 		$this->m_properties['votes'] = 'nr_of_votes';
 		$this->m_properties['votes_overall'] = 'nr_of_votes_overall';
 		$this->m_properties['percentage_overall'] = 'percentage_of_votes_overall';
@@ -38,7 +37,7 @@ final class MetaPoll extends MetaDbObject {
         $this->m_customProperties['getpolls'] = 'getPolls';
         $this->m_customProperties['identifier'] = 'getIdentifier';
         $this->m_customProperties['is_votable'] = 'isVotable';
-        $this->m_customProperties['has_voted'] = 'hasUserVoted';
+        $this->m_customProperties['user_vote_count'] = 'getUserVoteCount';
     } // fn __construct
     
     public function isCurrent()
@@ -74,9 +73,9 @@ final class MetaPoll extends MetaDbObject {
         return $this->m_dbObject->isVotable();   
     }
     
-    public function hasUserVoted()
+    public function getUserVoteCount()
     {
-        return $this->m_dbObject->hasUserVoted();   
+        return $this->m_dbObject->getUserVoteCount();   
     }
 
 } // class MetaPoll

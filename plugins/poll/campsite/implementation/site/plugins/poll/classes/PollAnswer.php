@@ -283,7 +283,7 @@ class PollAnswer extends DatabaseObject {
        
     public function getPoll()
     {
-        $poll = new Poll($this->m_data['fk_language_id'], $this->m_data['fk_poll_id']); 
+        $poll = new Poll($this->m_data['fk_language_id'], $this->m_data['fk_poll_nr']); 
         
         return $poll;  
     }
@@ -297,7 +297,7 @@ class PollAnswer extends DatabaseObject {
         $this->setProperty('nr_of_votes', $this->getProperty('nr_of_votes') + 1);
         $this->setProperty('value', $this->getProperty('value') + $p_value);
         $this->setProperty('average_value', $this->getProperty('value') / $this->getProperty('nr_of_votes'));
-        
+        $this->getPoll()->increaseUserVoteCount();
         Poll::triggerStatistics($this->m_data['fk_poll_nr']);   
     }
         
@@ -320,6 +320,7 @@ class PollAnswer extends DatabaseObject {
     {
         return $this->getProperty('fk_language_id');   
     }
+    
     
     /////////////////// Special template engine methods below here /////////////////////////////
     

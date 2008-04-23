@@ -48,7 +48,6 @@ class MetaActionPoll extends MetaAction
             return;  
         } else {
             $allowed_values = $_SESSION['camp_poll_maxvote'][$this->m_properties['poll_nr']][$this->m_properties['poll_language_id']];
-            unset($_SESSION['camp_poll_maxvote'][$this->m_properties['poll_nr']][$this->m_properties['poll_language_id']]);
             
             foreach ($Poll->getAnswers() as $PollAnswer) {
                 $nr = $PollAnswer->getNumber();
@@ -89,8 +88,10 @@ class MetaActionPoll extends MetaAction
         $PollAnswer->vote($this->m_properties['value']);
         
         // reset the context
-        $p_context->default_url->reset_parameter('f_poll');
-        $p_context->url->reset_parameter('f_poll');
+        #$p_context->default_url->reset_parameter('f_poll_nr');
+        #$p_context->url->reset_parameter('f_poll_nr');
+        #$p_context->default_url->reset_parameter('f_poll_language_id');
+        #$p_context->url->reset_parameter('f_poll_language_id');
                 
         foreach ($this->m_poll->getAnswers() as $PollAnswer) {
             $nr = $PollAnswer->getNumber();
@@ -102,7 +103,9 @@ class MetaActionPoll extends MetaAction
             return false;
         }
 
-        $p_context->poll = new Poll($this->m_poll->getLanguageId(), $this->m_poll->getNumber());
+        // do not init poll, because CampPlugin is called later!
+        //$p_context->poll = new MetaPoll($this->m_poll->getLanguageId(), $this->m_poll->getNumber());
+        
         return true;
     }
 }
