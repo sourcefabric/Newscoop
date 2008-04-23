@@ -109,11 +109,15 @@ camp_html_display_msgs();
             </TD>
           </TR>
           <tr>
-            <TD ALIGN="RIGHT" ><?php  putGS("Extended poll"); ?>:</TD>
+            <TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
             <TD>
                 <SELECT NAME="f_is_extended" class="input_select">
-                    <option value="0"><?php putGS('No') ?></option>
-                    <option value="1" <?php $is_extended ? p('selected="selected"') : null ?>><?php putGS('Yes') ?></option>
+                <?php if ($poll->getProperty('parent_poll_nr')) { ?>
+                    <option value="0"><?php putGS('Copy') ?></option>
+                <?php } else { ?>
+                    <option value="0"><?php putGS('Standard') ?></option>
+                    <option value="1" <?php $is_extended ? p('selected="selected"') : null ?>><?php putGS('Extended') ?></option>
+                <?php } ?>
                 </SELECT>
             </TD>
           </TR>
