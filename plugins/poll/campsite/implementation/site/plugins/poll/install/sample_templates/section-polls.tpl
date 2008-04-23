@@ -31,7 +31,7 @@
             <th>Voting Begin</th>
             <th>Voting End</th>
             <th>Current</th>
-            <th>Voted</th>
+            <th>Alloved/Taken Votes</th>
             <th>Votes</th>
         </tr>  
         <tr><td colspan="6"><hr></td></tr>
@@ -47,7 +47,7 @@
             <td>{{ $campsite->poll->date_begin|date_format }}</td>
             <td>{{ $campsite->poll->date_end|date_format }}</td>
             <td>{{ if $campsite->poll->is_current }} Y {{ else }} N {{ /if }}</td>
-            <td>{{ if $campsite->poll->has_voted }} Y {{ else }} N {{ /if }}</td>
+            <td>{{ $campsite->poll->votes_per_user }}/{{ $campsite->poll->user_vote_count }}</td>
             <td>{{ $campsite->poll->votes }}
           </tr>
            
