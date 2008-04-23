@@ -66,6 +66,16 @@ final class CampVersion
     final public function __construct() { } // fn __construct
 
 
+    public function getVersion() {
+        $version = $this->m_release;
+        if (!empty($this->m_devStatus)) {
+            $version .= '-' . $this->m_devStatus;
+        }
+        $version .= ' (' . $this->m_codeName . ')';
+        return $version;
+    }
+
+
     public function getOrganization()
     {
         return $this->m_organization;
@@ -123,10 +133,10 @@ final class CampVersion
 
     function getFullInfo()
     {
-        $text  = $this->m_package.' "'.$this->m_codeName.'" '.$this->release;
-        $text .= (empty($this->m_devStatus)) ? '-'.$this->m_devStatus : '';
-        $text .= ' '.$this->m_releaseDate.'<br />';
-        $text .= $this->m_copyright;
+        $text  = $this->m_package.' '.$this->getVersion();
+        $text .= ' '.$this->m_releaseDate;
+        $text .= ' '.$this->m_organization;
+        return $text;
     } // fn getFullInfo
 
 } // fn class CampVersion

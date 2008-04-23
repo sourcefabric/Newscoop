@@ -58,6 +58,5 @@ $Campsite['DEBUG'] = true;
 
 require_once($Campsite['CAMPSITE_DIR'].'/template_engine/classes/CampVersion.php');
 $version = new CampVersion();
-$Campsite['VERSION'] = $version->getRelease() . '-'
-                       . $version->getDevelopmentStatus();
+$Campsite['VERSION'] = $version->getVersion();
 ?>
