@@ -25,8 +25,8 @@ function smarty_function_set_language($p_params, &$p_smarty)
     	$languageName = $p_params['name'];
     } else {
     	$property = array_shift(array_keys($p_params));
-    	$campsite->language->trigger_invalid_property_error($property, $p_smarty);
-        return false;
+        CampTemplate::singleton()->trigger_error("invalid parameter '$property' in set_language");
+    	return false;
     }
 
     if ($campsite->language->defined

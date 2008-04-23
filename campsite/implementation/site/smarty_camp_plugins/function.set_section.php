@@ -42,8 +42,8 @@ function smarty_function_set_section($p_params, &$p_smarty)
         }
     } else {
     	$property = array_shift(array_keys($p_params));
-    	$campsite->section->trigger_invalid_property_error($property, $p_smarty);
-        return false;
+        CampTemplate::singleton()->trigger_error("invalid parameter '$property' in set_section");
+    	return false;
     }
 
     if ($campsite->section->defined
