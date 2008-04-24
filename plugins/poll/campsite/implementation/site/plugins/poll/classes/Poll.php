@@ -184,7 +184,7 @@ class Poll extends DatabaseObject {
             'date_end' => $this->m_data['date_end'],
             'nr_of_answers' => $this->m_data['nr_of_answers'],
             'votes_per_user' => $this->m_data['votes_per_user'],
-            'is_extended' => $this->m_data['is_extended'],    
+            'is_extended' => $this->m_data['is_extended'] ? 'true' : 'false',    
         );
 
         $success = $poll_copy->__create($values);
@@ -527,6 +527,16 @@ class Poll extends DatabaseObject {
         $language = new Language($this->m_data['fk_language_id']);
         
         return $language->getName(); 
+    }
+    
+    /**
+     * Get the english language name
+     *
+     * @return string
+     */
+    public function isExtended()
+    {       
+        return $this->getProperty('is_extended') === 'true' ? true : false; 
     }
     
     /**

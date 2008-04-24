@@ -10,7 +10,7 @@ class PollsList extends ListObject
         'number' => array('field' => 'poll_nr', 'type' => 'integer'),
         'language_id' => array('field' => 'fk_language_id', 'type' => 'integer'),
         'parent_poll_nr' => array('field' => 'parent_poll_nr', 'type' => 'integer'),
-        'is_extended' => array('field' => 'is_extended', 'type' => 'integer'),
+        'is_extended' => array('field' => 'is_extended', 'type' => 'boolean'),
         'name' => array('field' => 'title', 'type' => 'string'),
         'begin' => array('field' => 'date_begin', 'type' => 'date'),
         'begin_year' => array('field' => 'YEAR(date_begin)', 'type' => 'integer'),
@@ -24,7 +24,7 @@ class PollsList extends ListObject
         'votes_overall' => array('field' => 'nr_of_votes_overall', 'type' => 'integer'),
         
         ## following fields are NOT real datebase fields, they are processed by Poll::GetList()
-        'current' => array('field' => '_current', 'type' => 'boolean'),
+        'is_current' => array('field' => '_current', 'type' => 'boolean'),
         '_assign_publication_id' => array('field' => '_assign_publication_id', 'type' => 'integer'),
         '_assign_issue_nr' => array('field' => '_assign_issue_nr', 'type' => 'integer'),
         '_assign_section_nr' => array('field' => '_assign_section_nr', 'type' => 'integer'),

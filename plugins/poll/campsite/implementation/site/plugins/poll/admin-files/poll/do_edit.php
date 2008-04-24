@@ -30,7 +30,7 @@ if ($poll->exists()) {
     $poll->setProperty('date_end', $f_date_end);
     $poll->setProperty('votes_per_user', $f_votes_per_user);
     $poll->setProperty('nr_of_answers', $f_nr_of_answers);
-    $poll->setProperty('is_extended', $f_is_extended);
+    $poll->setProperty('is_extended', $f_is_extended ? 'true' : 'false');
 
     foreach ($f_answers as $nr_answer => $text) {
         if ($text !== '__undefined__') {

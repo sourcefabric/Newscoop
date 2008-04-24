@@ -233,7 +233,7 @@ if (count($polls)) {
                 </td>
               
                 <td align='center'>
-                <?php if ($poll->getProperty('is_extended')) { ?>
+                <?php if ($poll->isExtended()) { ?>
                     <a href="copy.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()) ?>" title="<?php putGS('Copy') ?>">
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" BORDER="0">
                     </a>

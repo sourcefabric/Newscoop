@@ -17,7 +17,7 @@ $poll = new Poll($f_fk_language_id, $f_poll_nr);
 if ($poll->exists()) {
     // edit existing poll
     $parent_poll_nr = $poll->getProperty('parent_poll_nr');
-    $is_extended = $poll->getProperty('is_extended');        
+    $is_extended = $poll->isExtended();        
     $title = $poll->getProperty('title');
     $question = $poll->getProperty('question');
     $date_begin = $poll->getProperty('date_begin');
