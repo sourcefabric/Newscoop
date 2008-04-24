@@ -62,7 +62,7 @@ class Operator
 	                                                        'greater',
 	                                                        'not'
 	                                                  ),
-                                            'bool'=>array('is',
+                                            'boolean'=>array('is',
 	                                                      'not'
 	                                                ),
                                             'date'=>array('is',
