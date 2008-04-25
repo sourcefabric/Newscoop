@@ -37,10 +37,7 @@ class PollAnswer extends DatabaseObject {
         'value',
         
         // float - value / number of votes
-        'average_value',
-        
-        // bool - is on the hitlist
-        'on_hitlist', 
+        'average_value', 
         
         // timestamp - last_modified
         'last_modified'

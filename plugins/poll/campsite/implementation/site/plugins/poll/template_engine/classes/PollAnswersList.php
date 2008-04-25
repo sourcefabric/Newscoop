@@ -6,9 +6,7 @@ class PollAnswersList extends ListObject
 {                                 
     private $m_item;
 
-    public static $s_parameters = array(
-        'onhitlist' => array('field' => 'on_hitlist', 'type' => 'integer'),
-    );
+    public static $s_parameters = array();
 
     private static $s_orderFields = array(
 		                              'bynumber',
