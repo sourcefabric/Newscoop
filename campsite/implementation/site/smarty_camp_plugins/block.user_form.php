@@ -41,12 +41,19 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     if (!isset($p_params['submit_button'])) {
         $p_params['submit_button'] = 'Submit';
     }
+    if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
+        $p_params['html_code'] = '';
+    }
+    if (!isset($p_params['button_html_code']) || empty($p_params['button_html_code'])) {
+        $p_params['button_html_code'] = '';
+    }
 
     if (isset($p_content)) {
         $url = $camp->url;
         $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
-        $subsType = $camp->subscription->type == 'T' ? 'trial' : 'paid';
-        $html = "<form name=\"edit_user\" action=\"" . $url->uri_path . "\" method=\"post\">\n"
+        $subsType = $camp->user->subscription->type == 'T' ? 'trial' : 'paid';
+        $html = "<form name=\"edit_user\" action=\"" . $url->uri_path
+        . "\" method=\"post\" ".$p_params['html_code'].">\n"
         ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n"
         ."<input type=\"hidden\" name=\"f_substype\" value=\"".$subsType."\" />\n";
         foreach ($camp->url->form_parameters as $param) {
@@ -59,7 +66,7 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
         $html.= $p_content;
         $html.= "<input type=\"submit\" name=\"f_edit_user\" value=\""
         .smarty_function_escape_special_chars($p_params['submit_button'])
-        ."\" />\n</form>\n";
+        ."\" ".$p_params['button_html_code']."/>\n</form>\n";
     }
 
     return $html;

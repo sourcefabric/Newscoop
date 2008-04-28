@@ -58,6 +58,12 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     if (!isset($p_params['submit_button'])) {
         $p_params['submit_button'] = 'Submit';
     }
+    if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
+        $p_params['html_code'] = '';
+    }
+    if (!isset($p_params['button_html_code']) || empty($p_params['button_html_code'])) {
+        $p_params['button_html_code'] = '';
+    }
 
     $subsType = strtolower(CampRequest::GetVar('SubsType'));
     if ($subsType != 'trial' && $subsType != 'paid') {
@@ -70,7 +76,8 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
 
     $url = $campsite->url;
     $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
-    $html .= "<form name=\"subscription_form\" action=\"" . $url->uri_path . "\" method=\"post\">\n"
+    $html .= "<form name=\"subscription_form\" action=\"" . $url->uri_path
+    . "\" method=\"post\" ".$p_params['html_code'].">\n"
     ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n"
     ."<input type=\"hidden\" name=\"SubsType\" value=\"$subsType\" />\n"
     ."<input type=\"hidden\" name=\"tx_subs\" value=\"$timeUnits\" />\n"
@@ -97,7 +104,7 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     $html .= "<input type=\"submit\" name=\"f_edit_subscription\" "
     ."id=\"subscriptionEdit\" value=\""
     .smarty_function_escape_special_chars($p_params['submit_button'])
-    ."\" />\n";
+    ."\" ".$p_params['button_html_code']."/>\n";
     $html .= "</form>\n";
 
     if ($subsType == 'paid') {

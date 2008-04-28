@@ -45,11 +45,18 @@ function smarty_block_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat
         $p_params['submit_button'] = 'Submit';
     }
     $anchor = isset($p_params['anchor']) ? '#'.$p_params['anchor'] : null;
+    if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
+        $p_params['html_code'] = '';
+    }
+    if (!isset($p_params['button_html_code']) || empty($p_params['button_html_code'])) {
+        $p_params['button_html_code'] = '';
+    }
 
     if (isset($p_content)) {
         $url = $camp->url;
         $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
-        $html = "<form name=\"submit_comment\" action=\"" . $url->uri_path . "$anchor\" method=\"post\">\n"
+        $html = "<form name=\"submit_comment\" action=\"" . $url->uri_path . "$anchor\" "
+               . "method=\"post\" " . $p_params['html_code'] . ">\n"
                ."<input type=\"hidden\" name=\"tpl\" value=\"" . $template->identifier . "\" />\n";
         foreach ($camp->url->form_parameters as $param) {
             if ($param['name'] == 'tpl') {
@@ -66,12 +73,12 @@ function smarty_block_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat
         $html .= "<input type=\"submit\" name=\"f_submit_comment\" "
             ."id=\"article_comment_submit\" value=\""
             .smarty_function_escape_special_chars($p_params['submit_button'])
-            ."\" />\n";
+            ."\" " . $p_params['button_html_code'] . " />\n";
         if (isset($p_params['preview_button']) && !empty($p_params['preview_button'])) {
             $html .= "<input type=\"submit\" name=\"f_preview_comment\" "
                 ."id=\"article_comment_preview\" value=\""
                 .smarty_function_escape_special_chars($p_params['preview_button'])
-                ."\" />\n";
+                ."\" " . $p_params['button_html_code'] . " />\n";
         }
         $html .= "</form>\n";
     }
