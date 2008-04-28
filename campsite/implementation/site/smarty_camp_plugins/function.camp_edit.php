@@ -48,12 +48,17 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
     case 'user':
         // gets the attribute value from the context
         $fieldValue = $campsite->default_url->get_parameter('f_user_'.$attribute);
-        if (is_null($fieldValue)) {
+        if (is_null($fieldValue)
+        && strncasecmp($attribute, 'password', strlen('password')) != 0
+        && strcasecmp($attribute, 'subscription') != 0) {
             $fieldValue = $campsite->user->$attribute;
         }
         
         $passwdFields = array('password','passwordagain');
         $txtAreaFields = array('interests','improvements','text1','text2','text3');
+        $otherFields = array('name', 'uname', 'email', 'city', 'str_address', 'state',
+        'phone', 'fax', 'contact', 'second_phone', 'postal_code', 'employer', 'position',
+        'how', 'languages', 'field1', 'field2', 'field3', 'field4', 'field5');
 
         if (in_array($attribute, $passwdFields)) {
             $html = '<input type="password" name="f_user_'.$attribute.'" size="32" '
@@ -63,12 +68,7 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
             $html = '<textarea name="f_user_'.$attribute.'" cols="40" rows="4" '
                 .$p_params['html_code'].'>'
                 .smarty_function_escape_special_chars($fieldValue).'</textarea>';
-        } elseif ($attribute != 'fk_user_type') {
-            $sqlQuery = 'DESC liveuser_users '.$g_ado_db->escape($attribute);
-            $row = $g_ado_db->GetRow($sqlQuery);
-            if (!is_array($row) || sizeof($row) < 1) {
-                return false;
-            }
+        } elseif (in_array($attribute, $otherFields)) {
             $length = substr($row['Type'], strpos($row['Type'], '(') + 1, -1);
             $html = '<input type="text" name="f_user_'.$attribute
                 .'" size="'.($length > 32 ? 32 : $length)
