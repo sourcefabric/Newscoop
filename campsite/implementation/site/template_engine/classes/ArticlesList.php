@@ -123,7 +123,7 @@ class ArticlesList extends ListObject
 	                    $state = 3;
 	                } elseif ($attribute == 'matchalltopics' || $attribute == 'matchanytopic') {
 	                    if ($attribute == 'matchalltopics') {
-	                        $operator = new Operator('is', 'bool');
+	                        $operator = new Operator('is', 'boolean');
 	                        $comparisonOperation = new ComparisonOperation($attribute, $operator, 'true');
 	                        $parameters[] = $comparisonOperation;
 	                    }
