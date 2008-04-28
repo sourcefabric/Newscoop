@@ -492,7 +492,7 @@ final class MetaArticle extends MetaDbObject {
      */
     public function has_image($p_imageIndex) {
         $articleImage = new ArticleImage(CampTemplate::singleton()->context()->article->number,
-        $p_imageIndex);
+        null, $p_imageIndex);
         return (int)$articleImage->exists();
     }
 
@@ -507,7 +507,7 @@ final class MetaArticle extends MetaDbObject {
      */
     public function image($p_imageIndex) {
         $articleImage = new ArticleImage(CampTemplate::singleton()->context()->article->number,
-        $p_imageIndex);
+        null, $p_imageIndex);
         if (!$articleImage->exists()) {
             return new MetaImage();
         }
