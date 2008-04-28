@@ -25,17 +25,17 @@
 <th>{{* tr *}}Login{{* tr *}}</th>
 <tr>
   <td>
-    <div id="loginform">
-    {{ login_form submit_button="Login" html_code="class=\"loginbutton\"" }}
-      <span class="formtext">User ID:</span><br />
+    <div id="genericform">
+    {{ login_form submit_button="Login" button_html_code="class=\"submitbutton\"" }}
+      <div align="center"><span class="formtext">User ID:</span><br /></div>
       <div align="center">
       {{ camp_edit object="user" attribute="uname" }}
       </div>
-      <span class="formtext">Password:</span><br />
+      <div align="center"><span class="formtext">Password:</span><br /></div>
       <div align="center">
       {{camp_edit object="user" attribute="password" }}
       </div>
-    {{ /login_form }}
+    <div align="center">{{ /login_form }}</div>
     </div>
   </td>
 </tr>

@@ -113,23 +113,24 @@
 {{ if $campsite->user->logged_in || $campsite->publication->public_comments }}
 <tr>
   <td>
-    {{ comment_form submit_button="Submit" preview_button="Preview" anchor="comments" }}
+  <div id="genericform">
+    {{ comment_form submit_button="Submit" preview_button="Preview" anchor="comments" button_html_code="class=\"submitbutton\"" }}
     <table class="commentform" cellspacing="0" cellpadding="0">
-    <tr>
+    <tr align="left">
       <td>E-mail:</td>
       <td>
       {{ if $campsite->user->logged_in }}
         {{ $campsite->user->email }}
       {{ else }}
-        {{ camp_edit object="comment" attribute="reader_email" size="40" }}
+        {{ camp_edit object="comment" attribute="reader_email" html_code="class=\"input_long\"" }}
       {{ /if }}
       </td>
     </tr>
-    <tr>
+    <tr align="left">
       <td>Subject:</td>
-      <td>{{ camp_edit object="comment" attribute="subject" size="40" }}</td>
+      <td>{{ camp_edit object="comment" attribute="subject" html_code="class=\"input_long\"" }}</td>
     </tr>
-    <tr>
+    <tr align="left">
       <td valign="top">Comment:</td>
       <td>{{ camp_edit object="comment" attribute="content" }}</td>
     </tr>
@@ -147,7 +148,8 @@
     </tr>
     {{ /if }}
     </table>
-    {{ /comment_form }}
+    <div align="center">{{ /comment_form }}</div>
+    </div>
   </td>
 </tr>
 {{ else }}
