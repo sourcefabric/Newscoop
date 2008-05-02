@@ -183,10 +183,24 @@ echo "done.\n";
 echo " * Backup database name is '$origDbName'.\n";
 echo " * Destination database name (to be replaced) is '$destDbName'.\n";
 
+//
+// Get the version from the backup archive.
+//
+$backup_version_file = glob("$tempDirName/BACKUP-VERSION*");
+if (sizeof($backup_version_file) != 1) {
+    camp_exit_with_error("Archive $archive_file is invalid.");
+}
+$bversion_file_name = basename($backup_version_file[0]);
+$backupVersion = (int)substr($bversion_file_name, strlen('BACKUP-VERSION-'), 1);
+
 if ($useExistingConfig) {
     $includeFile = "$ETC_DIR/database_conf.php";
 } else {
-    $includeFile = "$tempDirName/$origDbName/database_conf.php";
+    if ($backupVersion < 3) { 
+        $includeFile = "$tempDirName/$origDbName/database_conf.php";
+    } else {
+        $includeFile = "$tempDirName/conf/database_conf.php";
+    }
 }
 
 // Check if the database configuration file exists.
@@ -211,16 +225,6 @@ require_once($includeFile);
 $destDbName = $Campsite['DATABASE_NAME'];
 
 //
-// Get the version from the backup archive.
-//
-$backup_version_file = glob("$tempDirName/BACKUP-VERSION*");
-if (sizeof($backup_version_file) != 1) {
-    camp_exit_with_error("Archive $archive_file is invalid.");
-}
-$bversion_file_name = basename($backup_version_file[0]);
-$backupVersion = (int)substr($bversion_file_name, strlen('BACKUP-VERSION-'), 1);
-
-//
 // Restore the backup files
 //
 if ($backupVersion < 3) {
@@ -232,7 +236,7 @@ if ($backupVersion < 3) {
     $configSrcDir = "$tempDirName/$origDbName/database_conf.php";
 } else {
     $templatesSrcDir = "$tempDirName/templates/*";
-    $configSrcDir = "$tempDirName/conf";
+    $configSrcDir = "$tempDirName/conf/database_conf.php";
 }
 
 $fileSrcDir = "$tempDirName/files";
@@ -314,10 +318,14 @@ camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
 echo "done.\n";
 
 if (!$useExistingConfig) {
-    echo " * Restoring configuration...";
-    $configFile = @file_get_contents("$ETC_DIR/database_conf.php");
-    $newConfigFile = camp_migrate_config_file($configFile);
-    @file_put_contents("$ETC_DIR/database_conf.php", $newConfigFile);
+    if ($backupVersion < 3) {
+        echo " * Restoring configuration...";
+        $configFile = @file_get_contents("$ETC_DIR/database_conf.php");
+        $newConfigFile = camp_migrate_config_file($configFile);
+        @file_put_contents("$ETC_DIR/database_conf.php", $newConfigFile);
+    } else {
+        camp_copy_files($configSrcDir, $CAMPSITE_DIR);
+    }
     echo "done.\n";
 }
 
