@@ -31,6 +31,12 @@ final class MetaArticleBodyField {
 
 
     /**
+     * Stores the body field name
+     */
+    private $m_fieldName;
+
+
+    /**
      * Constructor
      *
      * @param string $p_content
@@ -44,6 +50,7 @@ final class MetaArticleBodyField {
         foreach ($this->m_subtitles as $subtitle) {
             $this->m_sutitlesNames = $subtitle->name;
         }
+        $this->m_fieldName = $p_fieldName;
     }
 
 
@@ -124,6 +131,14 @@ final class MetaArticleBodyField {
      */
     private function getSubtitlesNames() {
         return $this->m_sutitlesNames;
+    }
+
+
+    final public function trigger_invalid_property_error($p_property, $p_smarty = null)
+    {
+        $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
+                        . OF_OBJECT_STRING . ' article->' . $this->m_fieldName;
+        CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     }
 }
 
