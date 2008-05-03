@@ -249,7 +249,7 @@ class TemplateConverterIfBlock
     private $m_sentences = array(
         'allowed' => array(
             'new_object' => 'article',
-            'attribute' => 'content_accesible'),
+            'attribute' => 'content_accessible'),
         'currentsubtitle' => array(
             'new_object' => 'subtitle',
             'attribute' => 'number',
