@@ -117,15 +117,18 @@ final class MetaArticle extends MetaDbObject {
         }
 
         try {
-            $methodName = $this->m_getPropertyMethod;
-            return $this->m_dbObject->$methodName($property);
-        } catch (InvalidPropertyException $e) {
-            try {
+            if (array_search($property, $this->m_properties)) {
+                $methodName = $this->m_getPropertyMethod;
+                return $this->m_dbObject->$methodName($property);
+            } elseif (array_key_exists($property, $this->m_customProperties)) {
                 return $this->getCustomProperty($property);
-            } catch (InvalidPropertyException $e) {
+            } else {
                 $this->trigger_invalid_property_error($p_property);
                 return null;
             }
+        } catch (InvalidPropertyException $e) {
+            $this->trigger_invalid_property_error($p_property);
+            return null;
         }
     } // fn __get
 
