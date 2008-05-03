@@ -61,6 +61,7 @@ final class MetaArticleBodyField {
 
     public function __get($p_property) {
         switch (strtolower($p_property)) {
+            case 'first_paragraph': return $this->getParagraphs($this->__toString(), array(1));
             case 'subtitles_count': return $this->getSubtitlesCount();
             case 'subtitle_number': return $this->m_subtitleNumber;
             case 'subtitle_is_current':
@@ -80,6 +81,26 @@ final class MetaArticleBodyField {
                 $this->trigger_invalid_property_error($p_property);
                 return null;
         }
+    }
+
+
+    private function getParagraphs($p_content, array $p_paragraphs = array()) {
+        $printAll = count($p_paragraphs) == 0;
+        $content = '';
+        $paragraphs = preg_split("/([\s]|&nbsp;)*(<[\s]*\/?[\s]*p[\s]*>|<[\s]*br[\s]*\/?>([\s]|&nbsp;)*<[\s]*br[\s]*\/?>)([\s]|&nbsp;)*/i", $p_content);
+        $index = 0;
+        foreach ($paragraphs as $paragraph) {
+            if (preg_match("/^([\s]|&nbsp;)*$/i", $paragraph)) {
+                // This is an empty paragraph, skip it.
+                continue;
+            }
+            $index++;
+            if (!$printAll && array_search($index, $p_paragraphs) === false) {
+                continue;
+            }
+            $content .= "<p>$paragraph</p>";
+        }
+        return $content;
     }
 
 
