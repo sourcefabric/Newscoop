@@ -610,7 +610,7 @@ final class CampContext
     final protected function trigger_invalid_property_error($p_property)
     {
         $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
-        . OF_OBJECT_STRING . ' ' . get_class($this);
+        . OF_OBJECT_STRING . ' campsite';
         CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     } // fn trigger_invalid_property_error
 
