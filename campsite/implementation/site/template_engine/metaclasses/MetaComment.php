@@ -48,6 +48,15 @@ final class MetaComment extends MetaDbObject {
         return $date->getDate();
     }
 
+
+    protected function trigger_invalid_property_error($p_property, $p_smarty = null)
+    {
+        $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
+                        . OF_OBJECT_STRING . ' comment';
+        CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
+    }
+
+
 } // class MetaComment
 
 ?>

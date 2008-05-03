@@ -36,15 +36,18 @@ class MetaDbObject {
         $property = $this->translateProperty($p_property);
 
         try {
-        	$methodName = $this->m_getPropertyMethod;
-        	return $this->m_dbObject->$methodName($property);
+            if (array_search($property, $this->m_properties)) {
+                $methodName = $this->m_getPropertyMethod;
+                return $this->m_dbObject->$methodName($property);
+            } elseif (array_key_exists($property, $this->m_customProperties)) {
+                return $this->getCustomProperty($property);
+            } else {
+                $this->trigger_invalid_property_error($p_property);
+                return null;
+            }
         } catch (InvalidPropertyException $e) {
-        	try {
-		        return $this->getCustomProperty($property);
-        	} catch (InvalidPropertyException $e) {
-        		$this->trigger_invalid_property_error($p_property);
-        		return null;
-        	}
+            $this->trigger_invalid_property_error($p_property);
+        	return null;
         }
     } // fn __get
 
@@ -105,7 +108,7 @@ class MetaDbObject {
     }
 
 
-    final public function trigger_invalid_property_error($p_property, $p_smarty = null)
+    protected function trigger_invalid_property_error($p_property, $p_smarty = null)
     {
     	$errorMessage = INVALID_PROPERTY_STRING . " $p_property "
         				. OF_OBJECT_STRING . ' ' . get_class($this->m_dbObject);
