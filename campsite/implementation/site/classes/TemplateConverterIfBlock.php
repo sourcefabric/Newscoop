@@ -373,7 +373,7 @@ class TemplateConverterIfBlock
                     }
                 } else {
                     if ($object == 'image' && is_numeric($attribute)) {
-                        $ifBlockStr.= '->'.$object.'->has_image('.$attribute.')';
+                        $ifBlockStr.= '->article->has_image('.$attribute.')';
                     } else {
                         $numElements = sizeof($p_optArray);
                         if (isset($p_optArray[$numElements - 2]) && array_key_exists($p_optArray[$numElements - 2], $this->m_operators)) {
