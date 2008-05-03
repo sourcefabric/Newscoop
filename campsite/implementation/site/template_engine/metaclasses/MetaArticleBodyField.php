@@ -155,7 +155,7 @@ final class MetaArticleBodyField {
     }
 
 
-    final public function trigger_invalid_property_error($p_property, $p_smarty = null)
+    protected function trigger_invalid_property_error($p_property, $p_smarty = null)
     {
         $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
                         . OF_OBJECT_STRING . ' article->' . $this->m_fieldName;
