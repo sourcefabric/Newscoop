@@ -47,8 +47,9 @@ class MetaAction
      *
      * @param array $p_input
      */
-    public function __construct()
+    public function __construct($p_name = 'default_action')
     {
+        $this->m_name = $p_name;
         if (!is_array($this->m_properties)) {
             $this->m_properties = array();
         }

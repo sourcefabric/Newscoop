@@ -168,7 +168,7 @@ final class CampContext
             if ($this->m_readonlyProperties['request_action']->name == $actionNameCase) {
                 $this->m_readonlyProperties[$propertyName] =& $this->m_readonlyProperties['request_action'];
             } else {
-                $this->m_readonlyProperties[$propertyName] = MetaAction::CreateAction(array());
+                $this->m_readonlyProperties[$propertyName] = new MetaAction($propertyName);
             }
         }
 
