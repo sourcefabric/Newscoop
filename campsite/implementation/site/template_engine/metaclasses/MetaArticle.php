@@ -432,7 +432,7 @@ final class MetaArticle extends MetaDbObject {
         if ($context->image->defined) {
             return $context->image;
         }
-        $images = ArticleImage::GetImagesByArticleNumber($context->article->number);
+        $images = ArticleImage::GetImagesByArticleNumber($this->m_dbObject->getArticleNumber());
         if (count($images) == 0) {
             return new MetaImage();
         }
@@ -505,7 +505,7 @@ final class MetaArticle extends MetaDbObject {
      * @return bool
      */
     public function has_image($p_imageIndex) {
-        $articleImage = new ArticleImage(CampTemplate::singleton()->context()->article->number,
+        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
         null, $p_imageIndex);
         return (int)$articleImage->exists();
     }
@@ -520,7 +520,7 @@ final class MetaArticle extends MetaDbObject {
      * @return MetaImage
      */
     public function image($p_imageIndex) {
-        $articleImage = new ArticleImage(CampTemplate::singleton()->context()->article->number,
+        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
         null, $p_imageIndex);
         if (!$articleImage->exists()) {
             return new MetaImage();
