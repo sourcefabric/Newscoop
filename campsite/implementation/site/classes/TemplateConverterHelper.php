@@ -407,7 +407,7 @@ class TemplateConverterHelper
                     $p_optArray[$i] = self::$m_printEx[strtolower($p_optArray[$i])];
                 }
                 if ($p_optArray[$i] == 'image' && is_numeric($p_optArray[$i+1])) {
-                    $newTag .= '->' . strtolower($p_optArray[$i]) . $p_optArray[$i+1];
+                    $newTag .= '->article->' . strtolower($p_optArray[$i]) . $p_optArray[$i+1];
                     $i += 1;
                 } else {
                     $newTag .= '->' . strtolower($p_optArray[$i]);
