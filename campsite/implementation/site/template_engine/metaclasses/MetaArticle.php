@@ -116,6 +116,17 @@ final class MetaArticle extends MetaDbObject {
             return $this;
         }
 
+        if (is_null($this->m_state) && $property != 'image_index'
+        && strncasecmp('image', $property, 5) == 0 && strlen($property) > 5) {
+            $imageNo = substr($property, 5);
+            $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(), null, $imageNo);
+            if (!$articleImage->exists()) {
+                $this->trigger_invalid_property_error($p_property);
+                return new MetaImage();
+            }
+            return new MetaImage($articleImage->getImageId());
+        }
+
         try {
             if (array_search($property, $this->m_properties)) {
                 $methodName = $this->m_getPropertyMethod;
