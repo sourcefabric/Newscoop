@@ -406,9 +406,16 @@ class TemplateConverterHelper
                 if (array_key_exists(strtolower($p_optArray[$i]), self::$m_printEx)) {
                     $p_optArray[$i] = self::$m_printEx[strtolower($p_optArray[$i])];
                 }
-                if ($p_optArray[$i] == 'image' && is_numeric($p_optArray[$i+1])) {
+                if ($object == 'article' && $i > 2 && $i == (sizeof($p_optArray) - 1)
+                && strstr($p_optArray[$i], '%') !== false) {
+                    // date/time format string
+                    $newTag .= '|camp_date_format:"'.$p_optArray[$i].'"';
+                } elseif ($p_optArray[$i] == 'image' && is_numeric($p_optArray[$i+1])) {
                     $newTag .= '->article->' . strtolower($p_optArray[$i]) . $p_optArray[$i+1];
                     $i += 1;
+                } elseif ($object == 'article'
+                && strtolower($p_optArray[$i]) == 'firstparagraph') {
+                    $newTag .= '->first_paragraph';
                 } else {
                     $newTag .= '->' . strtolower($p_optArray[$i]);
                 }
