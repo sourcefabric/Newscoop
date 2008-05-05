@@ -334,9 +334,8 @@ class TemplateConverterIfBlock
         $sentence = array_key_exists(strtolower($p_optArray[$idx]), $this->m_sentences) ? strtolower($p_optArray[$idx]) : '';
         $object = array_key_exists(strtolower($p_optArray[$idx]), $this->m_objects) ? strtolower($p_optArray[$idx]) : '';
 
-        $this->m_ifBlockStr = ($condType == true) ? 'if ! ' : 'if ';
-        $this->m_ifBlockStr.= CS_OBJECT;
         $ifBlockStr = '';
+        $openBracket = false;
         if (strlen($sentence) > 0) {
             $this->m_ifBlock = $sentence;
             if ($sentence == 'nextsubtitles' || $sentence == 'prevsubtitles') {
@@ -403,6 +402,24 @@ class TemplateConverterIfBlock
             if (strlen($operator) > 0) {
                 $ifBlockStr.= ' '.$operator;
                 $idx++;
+            } elseif ($object == 'list' && ($attribute == 'row'
+                                                || $attribute == 'column'
+                                                || $attribute == 'index')) {
+                $p_optArray[$idx] = isset($p_optArray[$idx]) ? strtolower($p_optArray[$idx]) : '';
+                if (isset($p_optArray[$idx]) && ($p_optArray[$idx] == 'odd' || $p_optArray[$idx] == 'even')) {
+                    $ifBlockStr.= ' is '.$p_optArray[$idx];
+                    $idx++;
+                } elseif(isset($p_optArray[$idx])) {
+                    $ifBlockStr.= ' == '.$p_optArray[$idx++];
+                    for ($i = $idx; $i < sizeof($p_optArray); $i++) {
+                        $ifBlockStr.= ' || '.CS_OBJECT.'->current_list->'.$attribute.' == '.$p_optArray[$i];
+                        $idx++;
+                    }
+                    if ($condType == true) {
+                        $ifBlockStr.= ')';
+                        $openBracket = true;
+                    }
+                }
             }
 
             //
@@ -428,6 +445,9 @@ class TemplateConverterIfBlock
 
         if (strlen($ifBlockStr) > 0) {
             $this->m_ifBlockStr = ($condType == true) ? 'if ! ' : 'if ';
+            if ($openBracket == true) {
+                $this->m_ifBlockStr.= '(';
+            }
             $this->m_ifBlockStr.= CS_OBJECT . $ifBlockStr;
         }
 
