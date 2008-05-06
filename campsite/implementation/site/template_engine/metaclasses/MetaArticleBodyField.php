@@ -87,18 +87,34 @@ final class MetaArticleBodyField {
     private function getParagraphs($p_content, array $p_paragraphs = array()) {
         $printAll = count($p_paragraphs) == 0;
         $content = '';
-        $paragraphs = preg_split("/([\s]|&nbsp;)*(<[\s]*\/?[\s]*p[\s]*>|<[\s]*br[\s]*\/?>([\s]|&nbsp;)*<[\s]*br[\s]*\/?>)([\s]|&nbsp;)*/i", $p_content);
+        $paragraphs = preg_split("/(<[\s]*\/?[\s]*p[\s]*>|<[\s]*br[\s]*\/?>([\s]|&nbsp;)*<[\s]*br[\s]*\/?>)/i",
+        $p_content, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
         $index = 0;
+        $pStart = false;
         foreach ($paragraphs as $paragraph) {
             if (preg_match("/^([\s]|&nbsp;)*$/i", $paragraph)) {
                 // This is an empty paragraph, skip it.
                 continue;
             }
-            $index++;
-            if (!$printAll && array_search($index, $p_paragraphs) === false) {
+            if (preg_match("/^<[\s]*\/p[\s]*>$/i", $paragraph)
+            || preg_match("/^<[\s]*br[\s]*\/?>([\s]|&nbsp;)*<[\s]*br[\s]*\/?>$/i", $paragraph)) {
+                if ($printAll || array_search($index, $p_paragraphs) !== false) {
+                    $content .= $paragraph;
+                }
                 continue;
+            } elseif (preg_match("/^<[\s]*p[\s]*>$/i", $paragraph)) {
+                // paragraph start
+                $pStart = true;
+                $index++;
+            } else {
+                if (!$pStart) {
+                    $index++;
+                }
+                $pStart = false;
             }
-            $content .= "<p>$paragraph</p>";
+            if ($printAll || array_search($index, $p_paragraphs) !== false) {
+                $content .= $paragraph;
+            }
         }
         return $content;
     }
