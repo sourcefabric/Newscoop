@@ -1,3 +1,6 @@
+3.0.1 (May 06, 2008)
+  - Many bug fixes in the template converter and the template engine
+
 3.0.0 (April 23, 2008)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=3.0.0
