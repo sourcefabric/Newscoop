@@ -94,7 +94,7 @@ foreach ($subscriptions as $subscription) { ?>
 	<?php  } ?>
 
 	<?php  if ($numSubscriptions > ($f_subscription_offset + $ItemsPerPage)) { ?>
-		| <B><A HREF="index.php?f_user_id=<?php p($f_user_id); ?>&f_subscription_offset=<?php  p($f_subscription_offset + $ItemsPerPage); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
+		| <B><A HREF="index.php?f_user_id=<?php p($f_user_id); ?>&f_subscription_offset=<?php  p($f_subscription_offset + $ItemsPerPage); ?>"><?php  putGS('Next'); ?> &gt;&gt;</A></B>
 	<?php  } ?>
 	</TD>
 </TR>
