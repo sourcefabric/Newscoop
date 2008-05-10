@@ -6,31 +6,32 @@
     {{ list_subtitles field_name="Full_text" }}
       <p>
       {{ if $campsite->article->full_text->subtitle_is_current }}
-      	<b>{{ $campsite->current_list->index }}. {{ $campsite->subtitle->name }}</b>
-	  {{ else }}
+        <b>{{ $campsite->current_list->index }}. {{ $campsite->subtitle->name }}</b>
+      {{ else }}
         <a href="{{ uri }}">{{ $campsite->current_list->index }}. {{ $campsite->subtitle->name }}</a>
       {{ /if }}
       </p>
     {{ /list_subtitles }}
+    <p>View subtitle:
     {{ if $campsite->article->full_text->has_previous_subtitles }}
-    	<a href="{{ uri options="previous_subtitle full_text" }}">Previous</a>
-	{{ else }}
-		Previous
-	{{ /if }}
-	|
+        <a href="{{ uri options="previous_subtitle full_text" }}">Previous</a>
+    {{ else }}
+        Previous
+    {{ /if }}
+    |
     {{ if $campsite->article->full_text->has_next_subtitles }}
-    	<a href="{{ uri options="next_subtitle full_text" }}">Next</a>
-	{{ else }}
-		Next
-	{{ /if }}
-	|
+        <a href="{{ uri options="next_subtitle full_text" }}">Next</a>
+    {{ else }}
+        Next
+    {{ /if }}
+    |
     {{ if $campsite->article->full_text->has_next_subtitles || $campsite->article->full_text->has_previous_subtitles }}
-    	<a href="{{ uri options="all_subtitles full_text" }}">All</a>
-	{{ else }}
-		All
-	{{ /if }}
-	<br/>
-    
+        <a href="{{ uri options="all_subtitles full_text" }}">All</a>
+    {{ else }}
+        All
+    {{ /if }}
+    </p>
+
     <p class="article_byline">Written by {{ $campsite->article->byline }}</p>
     <p class="article_intro">{{ $campsite->article->intro }}</p>
     <p class="article_fulltext">{{ $campsite->article->full_text }}</p>
