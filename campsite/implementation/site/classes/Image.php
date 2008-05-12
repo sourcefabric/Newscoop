@@ -48,7 +48,7 @@ class Image extends DatabaseObject {
 	 *
 	 * @param int $p_imageId
 	 */
-	function Image($p_imageId = null)
+	public function Image($p_imageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_imageId;
@@ -66,7 +66,7 @@ class Image extends DatabaseObject {
 	 * @param boolean $p_isSql
 	 * @return boolean
 	 */
-	function update($p_columns = null, $p_commit = true, $p_isSql = false)
+	public function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
 		$success = parent::update($p_columns, $p_commit, $p_isSql);
 		if ($success) {
@@ -88,7 +88,7 @@ class Image extends DatabaseObject {
 	 *		TRUE if the record was deleted,
 	 * 		return a PEAR_Error on failure.
 	 */
-	function delete()
+	public function delete()
 	{
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
@@ -133,7 +133,7 @@ class Image extends DatabaseObject {
 	 * @return boolean
 	 *		Return TRUE if the database was updated, false otherwise.
 	 */
-	function commit()
+	public function commit()
 	{
 		return parent::commit(array("TimeCreated", "LastModified"));
 	} // fn commit
@@ -144,7 +144,7 @@ class Image extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function inUse()
+	public function inUse()
 	{
 		global $g_ado_db;
 		// It is in use only if there is an entry in both
@@ -163,7 +163,7 @@ class Image extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getImageId()
+	public function getImageId()
 	{
 		return $this->m_data['Id'];
 	} // fn getImageId
@@ -172,7 +172,7 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getDescription()
+	public function getDescription()
 	{
 		return $this->m_data['Description'];
 	} // fn getDescription
@@ -181,7 +181,7 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getPhotographer()
+	public function getPhotographer()
 	{
 		return $this->m_data['Photographer'];
 	} // fn getPhotographer
@@ -190,7 +190,7 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getPlace()
+	public function getPlace()
 	{
 		return $this->m_data['Place'];
 	} // fn getPlace
@@ -199,7 +199,7 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getDate()
+	public function getDate()
 	{
 		return $this->m_data['Date'];
 	} // fn getDate
@@ -208,7 +208,7 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getLocation()
+	public function getLocation()
 	{
 		return $this->m_data['Location'];
 	} // fn getLocation
@@ -217,7 +217,7 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getUrl()
+	public function getUrl()
 	{
 		return $this->m_data['URL'];
 	} // fn getUrl
@@ -226,7 +226,7 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getContentType()
+	public function getContentType()
 	{
 		return $this->m_data['ContentType'];
 	} // fn getContentType
@@ -236,7 +236,7 @@ class Image extends DatabaseObject {
 	 * Return the full path to the image file.
 	 * @return string
 	 */
-	function getImageStorageLocation()
+	public function getImageStorageLocation()
 	{
 		global $Campsite;
 		if ($this->m_data['Location'] == 'local') {
@@ -251,7 +251,7 @@ class Image extends DatabaseObject {
 	 * Return the full path to the thumbnail file.
 	 * @return string
 	 */
-	function getThumbnailStorageLocation()
+	public function getThumbnailStorageLocation()
 	{
 		global $Campsite;
 		return $Campsite['THUMBNAIL_DIRECTORY'].$this->m_data['ThumbnailFileName'];
@@ -264,7 +264,7 @@ class Image extends DatabaseObject {
 	 *		The file extension for the filename.
 	 * @return string
 	 */
-	function generateThumbnailStorageLocation($p_fileExtension)
+	public function generateThumbnailStorageLocation($p_fileExtension)
 	{
 		global $Campsite;
 	    $thumbnailStorageLocation = $Campsite['THUMBNAIL_DIRECTORY']
@@ -280,7 +280,7 @@ class Image extends DatabaseObject {
 	 *		The file extension for the filename.
 	 * @return string
 	 */
-	function generateImageStorageLocation($p_fileExtension)
+	public function generateImageStorageLocation($p_fileExtension)
 	{
 		global $Campsite;
 	    $imageStorageLocation = $Campsite['IMAGE_DIRECTORY']
@@ -294,7 +294,7 @@ class Image extends DatabaseObject {
 	 * Return the full URL to the image image.
 	 * @return string
 	 */
-	function getImageUrl()
+	public function getImageUrl()
 	{
 		global $Campsite;
 		if ($this->m_data['Location'] == 'local') {
@@ -309,7 +309,7 @@ class Image extends DatabaseObject {
 	 * Get the full URL to the thumbnail image.
 	 * @return string
 	 */
-	function getThumbnailUrl()
+	public function getThumbnailUrl()
 	{
 		global $Campsite;
 		return $Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'];
@@ -319,7 +319,7 @@ class Image extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function GetMaxId()
+	public static function GetMaxId()
 	{
 		global $g_ado_db;
 		$queryStr = 'SHOW TABLE STATUS LIKE "Images"';
@@ -331,7 +331,7 @@ class Image extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function GetTotalImages()
+	public static function GetTotalImages()
 	{
 		global $g_ado_db;
 		$queryStr = 'SHOW TABLE STATUS LIKE "Images"';
@@ -340,7 +340,7 @@ class Image extends DatabaseObject {
 	} // fn GetTotalImages
 
 
-	function __ImageTypeToExtension($p_imageType)
+	private function __ImageTypeToExtension($p_imageType)
 	{
 		$extension = '';
 		switch($p_imageType) {
@@ -365,7 +365,7 @@ class Image extends DatabaseObject {
 	}
 
 
-	function __GetImageTypeCreateMethod($p_imageType)
+	private function __GetImageTypeCreateMethod($p_imageType)
 	{
 		$method = null;
 		switch ($p_imageType) {
@@ -420,7 +420,9 @@ class Image extends DatabaseObject {
 	 *		The Image object that was created or updated on success,
      * 		return PEAR_Error on error.
 	 */
-	function OnImageUpload($p_fileVar, $p_attributes, $p_userId = null, $p_id = null, $p_isLocalFile = false)
+	public static function OnImageUpload($p_fileVar, $p_attributes,
+	                                     $p_userId = null, $p_id = null,
+	                                     $p_isLocalFile = false)
 	{
 		global $Campsite;
 		if (function_exists("camp_load_translation_strings")) {
@@ -453,7 +455,7 @@ class Image extends DatabaseObject {
 		// Are we updating or creating?
 	 	if (!is_null($p_id)) {
 	 		// Updating the image
-	 		$image =& new Image($p_id);
+	 		$image = new Image($p_id);
 	 		$image->update($p_attributes);
 	    	// Remove the old image & thumbnail because
 			// the new file may have a different file extension.
@@ -465,7 +467,7 @@ class Image extends DatabaseObject {
 			}
 	    } else {
 	    	// Creating the image
-	    	$image =& new Image();
+	    	$image = new Image();
 	    	$image->create($p_attributes);
 			$image->setProperty('TimeCreated', 'NULL', true, true);
 			$image->setProperty('LastModified', 'NULL', true, true);
@@ -559,7 +561,8 @@ class Image extends DatabaseObject {
 	 * @return mixed
 	 * 		true if successful, PEAR_Error object in case of error
 	 */
-	function SaveImageToFile($p_image, $p_fileName, $p_imageType, $p_addExtension = true)
+	public static function SaveImageToFile($p_image, $p_fileName,
+	                                       $p_imageType, $p_addExtension = true)
 	{
 		$method = null;
 		switch ($p_imageType) {
@@ -595,7 +598,8 @@ class Image extends DatabaseObject {
 	 * @return int
 	 * 		Return the new image resource handler.
 	 */
-	function ResizeImage($p_image, $p_maxWidth, $p_maxHeight, $p_keepRatio = true)
+	public static function ResizeImage($p_image, $p_maxWidth, $p_maxHeight,
+	                                   $p_keepRatio = true)
 	{
 		$origImageWidth = imagesx($p_image);
 		$origImageHeight = imagesy($p_image);
@@ -646,7 +650,8 @@ class Image extends DatabaseObject {
 	 * @return mixed
 	 * 		Return an Image object on success, return a PEAR_Error otherwise.
 	 */
-	function OnAddRemoteImage($p_url, $p_attributes, $p_userId = null, $p_id = null)
+	public static function OnAddRemoteImage($p_url, $p_attributes,
+	                                        $p_userId = null, $p_id = null)
 	{
 		global $Campsite;
 		if (function_exists("camp_load_translation_strings")) {
@@ -663,7 +668,7 @@ class Image extends DatabaseObject {
 			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $thumbDir), CAMP_ERROR_WRITE_DIR);
 		}
 
-		$client =& new HTTP_Client();
+		$client = new HTTP_Client();
 	    $client->get($p_url);
 	    $response = $client->currentResponse();
 	    if ($response['code'] != 200) {
@@ -703,7 +708,7 @@ class Image extends DatabaseObject {
         // content-type = image
         if (!is_null($p_id)) {
         	// Updating the image
-        	$image =& new Image($p_id);
+        	$image = new Image($p_id);
         	$image->update($p_attributes);
 	    	// Remove the old image & thumbnail because
 	    	// the new file might have a different file extension.
@@ -723,7 +728,7 @@ class Image extends DatabaseObject {
 	    	}
         } else {
         	// Creating the image
-        	$image =& new Image();
+        	$image = new Image();
         	$image->create($p_attributes);
         	$image->setProperty('TimeCreated', 'NULL', true, true);
         	$image->setProperty('LastModified', 'NULL', true, true);
@@ -775,9 +780,9 @@ class Image extends DatabaseObject {
 	 * Get an array of users who have uploaded images.
 	 * @return array
 	 */
-	function GetUploadUsers()
+	public static function GetUploadUsers()
 	{
-		$tmpUser =& new User();
+		$tmpUser = new User();
 		$columnNames = $tmpUser->getColumnNames();
 		$queryColumnNames = array();
 		foreach ($columnNames as $columnName) {
@@ -797,12 +802,12 @@ class Image extends DatabaseObject {
 	 * @param string $p_url
 	 * @return Image
 	 */
-	function GetByUrl($p_url)
+	public static function GetByUrl($p_url)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT * FROM Images WHERE URL='".mysql_real_escape_string($p_url)."'";
 		$row = $g_ado_db->GetRow($queryStr);
-		$image =& new Image();
+		$image = new Image();
 		$image->fetch($row);
 		return $image;
 	} // fn GetByUrl
@@ -813,7 +818,7 @@ class Image extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function toTemplate()
+	public function toTemplate()
 	{
 		$template = array();
 		$template['id'] = $this->getImageId();

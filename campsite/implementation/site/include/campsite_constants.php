@@ -24,7 +24,8 @@ define('CS_PATH_CLASSES', CS_PATH_SITE.DIR_SEP.'classes');
 define('CS_PATH_INCLUDES', CS_PATH_SITE.DIR_SEP.'include');
 define('CS_PATH_PEAR_LOCAL', CS_PATH_INCLUDES.DIR_SEP.'pear');
 define('CS_PATH_SMARTY', CS_PATH_INCLUDES.DIR_SEP.'smarty');
-define('CS_PATH_SMARTY_TEMPLATES', CS_PATH_SITE.DIR_SEP.'templates');
+define('CS_PATH_SMARTY_TEMPLATES', 'templates');
+define('CS_PATH_SMARTY_SYS_TEMPLATES', 'sys-templates');
 
 // Campsite exception strings
 define('INVALID_OBJECT_STRING', 'invalid object');

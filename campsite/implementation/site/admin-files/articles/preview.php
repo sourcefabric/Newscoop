@@ -12,9 +12,9 @@ $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 $languageObj = & new Language($f_language_selected);
 $publicationObj = & new Publication($f_publication_id);
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 
 $errorStr = "";
 if (!$articleObj->exists()) {
@@ -30,7 +30,7 @@ if (!$articleObj->exists()) {
 	}
 }
 
-$templateObj =& new Template($templateId);
+$templateObj = new Template($templateId);
 
 if (!isset($_SERVER['SERVER_PORT']))
 {
@@ -44,7 +44,7 @@ $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_us
 				. "&AdminAccess=all";
 if ($publicationObj->getUrlTypeId() == 1) {
 	$templateObj = & new Template($templateId);
-	$url = "$websiteURL/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
+	$url = "$websiteURL/tpl/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
 		. "&IdPublication=$f_publication_id&NrIssue=$f_issue_number&NrSection=$f_section_number"
 		. "&NrArticle=$f_article_number&$accessParams";
 } else {
@@ -53,6 +53,10 @@ if ($publicationObj->getUrlTypeId() == 1) {
 		$errorStr = $url->getMessage();
 	}
 	$url .= '?' . $accessParams;
+}
+
+if (isset($_REQUEST['TOL_Language'])) {
+    $url .= '&previewLang='.$_REQUEST['TOL_Language'];
 }
 
 if ($errorStr != "") {

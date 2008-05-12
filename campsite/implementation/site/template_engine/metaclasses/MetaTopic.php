@@ -36,31 +36,32 @@ final class MetaTopic extends MetaDbObject {
 
 		$this->InitProperties();
 		$this->m_customProperties['name'] = 'getName';
+		$this->m_customProperties['value'] =  'getValue';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 
-    public function getName($p_languageId = null)
+    protected function getName($p_languageId = null)
     {
     	if (is_null($p_languageId)) {
-    		$smartyObj = CampTemplate::singleton();
-    		$contextObj = $smartyObj->get_template_vars('campsite');
-    		$p_languageId = $contextObj->language->number;
+    		$p_languageId = CampTemplate::singleton()->context()->language->number;
     	}
     	return $this->m_dbObject->getName($p_languageId);
     }
 
 
-    public function getValue()
+    protected function getValue()
     {
         if (!isset($this->m_dbObject) || !$this->m_dbObject->exists()) {
             return null;
         }
 
-        $campContext = CampTemplate::singleton()->context();
-        $name = $this->m_dbObject->getName($campContext->language->number);
-        $languageCode = $campContext->language->code;
-        return "$name:$languageCode";
+        $language = CampTemplate::singleton()->context()->language;
+        $name = $this->m_dbObject->getName($language->number);
+        if (empty($name)) {
+            return null;
+        }
+        return $name.':'.$language->code;
     }
 
 

@@ -172,6 +172,13 @@ $menu_item =& DynMenuItem::Create(getGS("Change your password"),
     array("icon" => sprintf($iconTemplateStr, "change_password.png")));
 $menu_actions->addItem($menu_item);
 
+if (CampCache::IsAPCEnabled() && $g_user->hasPermission("ClearCache")) {
+    $menu_item =& DynMenuItem::Create(getGS("Clear System Cache"),
+        "/$ADMIN/home.php?clear_cache=yes",
+        array("icon" => sprintf($iconTemplateStr, "actions.png")));
+    $menu_actions->addItem($menu_item);
+}
+
 if ($showConfigureMenu) {
     $menu_root->addSplit();
     $menu_config =& DynMenuItem::Create(getGS("Configure"), "",

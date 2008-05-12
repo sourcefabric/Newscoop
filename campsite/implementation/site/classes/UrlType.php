@@ -28,7 +28,7 @@ class UrlType extends DatabaseObject {
 	 * Constructor.
 	 * @param int $p_id
 	 */
-	function UrlType($p_id = null)
+	public function UrlType($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (!is_null($p_id)) {
@@ -42,7 +42,7 @@ class UrlType extends DatabaseObject {
 	 * Return an array of all URL types.
 	 * @return array
 	 */
-	function GetUrlTypes()
+	public static function GetUrlTypes()
 	{
 		$queryStr = 'SELECT * FROM URLTypes';
 		$urlTypes = DbObjectArray::Create('UrlType', $queryStr);
@@ -54,7 +54,7 @@ class UrlType extends DatabaseObject {
 	 * The unique ID of the URLType.
 	 * @return int
 	 */
-	function getId()
+	public function getId()
 	{
 		return $this->m_data['Id'];
 	} // fn getId
@@ -64,7 +64,7 @@ class UrlType extends DatabaseObject {
 	 * Return the name of this URLType.
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		$name = $this->m_data['Name'];
 		switch ($name) {
@@ -82,19 +82,19 @@ class UrlType extends DatabaseObject {
 	 * Return the description of the URL Type.
 	 * @return string
 	 */
-	function getDescription()
+	public function getDescription()
 	{
 		return $this->m_data['Description'];
 	} // fn getDescription
 
 
-	function GetByName($p_name)
+	public static function GetByName($p_name)
 	{
 		global $g_ado_db;
 		$sql = "SELECT * FROM URLTypes WHERE Name='".mysql_real_escape_string($p_name)."'";
 		$row = $g_ado_db->GetRow($sql);
 		if ($row && is_array($row)) {
-			$urlType =& new UrlType();
+			$urlType = new UrlType();
 			$urlType->fetch($row);
 			return $urlType;
 		} else {

@@ -26,27 +26,27 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$srcPublicationObj =& new Publication($f_src_publication_id);
+$srcPublicationObj = new Publication($f_src_publication_id);
 if (!$srcPublicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;
 }
 
-$srcIssueObj =& new Issue($f_src_publication_id, $f_language_id, $f_src_issue_number);
+$srcIssueObj = new Issue($f_src_publication_id, $f_language_id, $f_src_issue_number);
 if (!$srcIssueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;
 }
 
-$srcSectionObj =& new Section($f_src_publication_id, $f_src_issue_number, $f_language_id, $f_src_section_number);
+$srcSectionObj = new Section($f_src_publication_id, $f_src_issue_number, $f_language_id, $f_src_section_number);
 if (!$srcSectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'));
 	exit;
 }
 
-$dstPublicationObj =& new Publication($f_dest_publication_id);
-$dstIssueObj =& new Issue($f_dest_publication_id, $f_language_id, $f_dest_issue_number);
-$dstSectionObj =& new Section($f_dest_publication_id, $f_dest_issue_number, $f_language_id, $f_dest_section_number);
+$dstPublicationObj = new Publication($f_dest_publication_id);
+$dstIssueObj = new Issue($f_dest_publication_id, $f_language_id, $f_dest_issue_number);
+$dstSectionObj = new Section($f_dest_publication_id, $f_dest_issue_number, $f_language_id, $f_dest_section_number);
 
 $topArray = array('Pub' => $srcPublicationObj, 'Issue' => $srcIssueObj, 'Section' => $srcSectionObj);
 camp_html_content_top(getGS('Duplicating section'), $topArray);

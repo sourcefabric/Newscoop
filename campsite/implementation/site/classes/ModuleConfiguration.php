@@ -18,7 +18,7 @@ class ModuleConfiguration
 	var $m_variables;
 	var $m_variablesList;
 
-	function ModuleConfiguration($module_name = "", $directory = "")
+	public function ModuleConfiguration($module_name = "", $directory = "")
 	{
 		if ($module_name != "")
 			return $this->read($module_name, $directory);
@@ -31,7 +31,7 @@ class ModuleConfiguration
 	 *
 	 * @return string or false in case of error
 	 */
-	function configurationFileName($p_moduleName = "")
+	public function configurationFileName($p_moduleName = "")
 	{
 		$p_moduleName = $p_moduleName != "" ? $p_moduleName : $this->m_moduleName;
 		if (!ModuleConfiguration::validModuleName($p_moduleName))
@@ -48,7 +48,7 @@ class ModuleConfiguration
 	 *
 	 * @return string or false in case of error
 	 */
-	function configurationFilePath($p_moduleName = "", $p_directory = "")
+	public function configurationFilePath($p_moduleName = "", $p_directory = "")
 	{
 		$p_moduleName = $p_moduleName != "" ? $p_moduleName : $this->m_moduleName;
 		if (!ModuleConfiguration::validModuleName($p_moduleName))
@@ -69,7 +69,7 @@ class ModuleConfiguration
 	 *
 	 * @return 0 or string in case of error
 	 */
-	function read($p_moduleName, $p_directory)
+	public function read($p_moduleName, $p_directory)
 	{
 		global $Campsite, $CampsiteVars;
 
@@ -106,7 +106,7 @@ class ModuleConfiguration
 	 *
 	 * @return 0 or string in case of error
 	 */
-	function create($p_moduleName, $p_variables)
+	public function create($p_moduleName, $p_variables)
 	{
 		if (!ModuleConfiguration::validModuleName($p_moduleName))
 			return "Invalid module name";
@@ -124,7 +124,7 @@ class ModuleConfiguration
 	 *
 	 * @return 0 or string in case of error
 	 */
-	function save($p_destDirectory = "")
+	public function save($p_destDirectory = "")
 	{
 		// check if the object was initialized correctly
 		if (!ModuleConfiguration::validModuleName($this->m_moduleName))
@@ -156,7 +156,7 @@ class ModuleConfiguration
 	 *
 	 * @return string
 	 */
-	function moduleName()
+	public function moduleName()
 	{
 		return $this->m_moduleName;
 	}
@@ -166,7 +166,7 @@ class ModuleConfiguration
 	 *
 	 * @return array or false in case of error
 	 */
-	function variablesList()
+	public function variablesList()
 	{
 		if (!is_array($this->m_variables) || !is_array($this->m_variablesList))
 			return false;
@@ -182,7 +182,7 @@ class ModuleConfiguration
 	 *
 	 * @return string or false in case of error
 	 */
-	function valueOf($p_variableName)
+	public function valueOf($p_variableName)
 	{
 		if (!is_array($this->m_variables) || !is_array($this->m_variablesList))
 			return false;
@@ -199,7 +199,7 @@ class ModuleConfiguration
 	 *
 	 * @return bool
 	 */
-	function setValueOf($p_variableName, $p_value)
+	public function setValueOf($p_variableName, $p_value)
 	{
 		if (!is_array($this->m_variables) || !is_array($this->m_variablesList))
 			return false;
@@ -216,7 +216,7 @@ class ModuleConfiguration
 	 *
 	 * @return bool
 	 */
-	function validModuleName(&$p_moduleName)
+	public function validModuleName(&$p_moduleName)
 	{
 		$p_moduleName = trim(strtolower($p_moduleName));
 		if ($p_moduleName == "")
@@ -227,6 +227,6 @@ class ModuleConfiguration
 				return false;
 		return true;
 	}
-};
+}
 
 ?>

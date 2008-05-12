@@ -39,11 +39,14 @@ final class MetaSection extends MetaDbObject {
 
 		$this->InitProperties();
 		$this->m_customProperties['template'] = 'getTemplate';
+        $this->m_customProperties['publication'] = 'getPublication';
+        $this->m_customProperties['issue'] = 'getIssue';
+        $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 
-    public function getTemplate()
+    protected function getTemplate()
     {
     	if ($this->m_dbObject->getSectionTemplateId() > 0) {
    			return new MetaTemplate($this->m_dbObject->getSectionTemplateId());
@@ -52,6 +55,26 @@ final class MetaSection extends MetaDbObject {
     							  $this->m_dbObject->getProperty('IdLanguage'),
     							  $this->m_dbObject->getProperty('NrIssue'));
    		return new MetaTemplate($sectionIssue->getSectionTemplateId());
+    }
+
+
+    protected function getPublication()
+    {
+        return new MetaPublication($this->m_dbObject->getPublicationId());
+    }
+
+
+    protected function getLanguage()
+    {
+        return new MetaLanguage($this->m_dbObject->getLanguageId());
+    }
+
+
+    protected function getIssue()
+    {
+        return new MetaIssue($this->m_dbObject->getPublicationId(),
+                             $this->m_dbObject->getLanguageId(),
+                             $this->m_dbObject->getIssueNumber());
     }
 
 } // class MetaSection

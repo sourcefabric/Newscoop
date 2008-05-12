@@ -39,7 +39,7 @@ class Phorum_message extends DatabaseObject {
 	 * 		If specified, the message will be fetched from the database.
 	 * @return Phorum_message
 	 */
-	function Phorum_message($p_messageId = null)
+	public function Phorum_message($p_messageId = null)
 	{
 		global $PHORUM;
 		$this->m_dbTableName = $PHORUM['message_table'];
@@ -80,7 +80,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function create($p_forumId, $p_subject ='', $p_body = '',
+	public function create($p_forumId, $p_subject ='', $p_body = '',
 					$p_threadId = 0, $p_parentId = 0,
 				    $p_author = '', $p_email = '', $p_userId = 0)
 	{
@@ -121,7 +121,7 @@ class Phorum_message extends DatabaseObject {
 
 		// Fetch the forum object -
 		// we need it for the config values.
-		$forumObj =& new Phorum_forum($p_forumId);
+		$forumObj = new Phorum_forum($p_forumId);
 		if (!$forumObj->exists()) {
 			return false;
 		}
@@ -215,7 +215,7 @@ class Phorum_message extends DatabaseObject {
 	 * 		PHORUM_DELETE_TREE for deleting the children
 	 * @return void
 	 */
-	function delete($p_mode = PHORUM_DELETE_MESSAGE)
+	public function delete($p_mode = PHORUM_DELETE_MESSAGE)
 	{
 		global $PHORUM;
 		global $g_ado_db;
@@ -292,7 +292,7 @@ class Phorum_message extends DatabaseObject {
 	 * @param array $p_messageIds
 	 * @return void
 	 */
-	function __updateThreadDepth($p_messageIds)
+	private function __updateThreadDepth($p_messageIds)
 	{
 		global $g_ado_db;
 		global $PHORUM;
@@ -330,7 +330,7 @@ class Phorum_message extends DatabaseObject {
      *
      * @return void
      */
-	function __updateThreadInfo()
+	private function __updateThreadInfo()
 	{
 	    $thread_id = $this->m_data['thread'];
 		$searchConditions = array("thread" => $thread_id,
@@ -390,7 +390,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return unknown
 	 */
-	function getMessageId()
+	public function getMessageId()
 	{
 		return $this->m_data['message_id'];
 	} // fn getMessageId
@@ -401,7 +401,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getForumId()
+	public function getForumId()
 	{
 		return $this->m_data['forum_id'];
 	} // fn getForumId
@@ -415,7 +415,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getThreadId()
+	public function getThreadId()
 	{
 		return $this->m_data['thread'];
 	} // fn getThreadId
@@ -427,7 +427,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getParentId()
+	public function getParentId()
 	{
 	    return $this->m_data['parent_id'];
 	} // fn getParentId
@@ -438,7 +438,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getSubject()
+	public function getSubject()
 	{
 		return $this->m_data['subject'];
 	} // fn getSubject
@@ -450,7 +450,7 @@ class Phorum_message extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setSubject($p_value)
+	public function setSubject($p_value)
 	{
 		return $this->setProperty('subject', $p_value);
 	} // fn setSubject
@@ -461,7 +461,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getBody()
+	public function getBody()
 	{
 		return $this->m_data['body'];
 	} // fn getBody
@@ -473,7 +473,7 @@ class Phorum_message extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setBody($p_value)
+	public function setBody($p_value)
 	{
 		return $this->setProperty('body', $p_value);
 	} // fn setBody
@@ -484,7 +484,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getIpAddress()
+	public function getIpAddress()
 	{
 		return $this->m_data['ip'];
 	} // fn getIpAddress
@@ -495,7 +495,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getAuthor()
+	public function getAuthor()
 	{
 	    return $this->m_data['author'];
 	} // fn getAuthor
@@ -506,7 +506,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getEmail()
+	public function getEmail()
 	{
 	    return $this->m_data['email'];
 	} // fn getEmail
@@ -522,7 +522,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getStatus()
+	public function getStatus()
 	{
 		return $this->m_data['status'];
 	} // fn getStatus
@@ -539,7 +539,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function setStatus($p_value)
+	public function setStatus($p_value)
 	{
 		if ($p_value == PHORUM_STATUS_APPROVED
 			|| $p_value == PHORUM_STATUS_HIDDEN
@@ -558,7 +558,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getThreadLastModified()
+	public function getThreadLastModified()
 	{
 		return $this->m_data['modifystamp'];
 	} // fn getThreadLastModified
@@ -570,7 +570,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getCreationDate()
+	public function getCreationDate()
 	{
 	    return $this->m_data['datestamp'];
 	} // fn getCreationDate
@@ -581,7 +581,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getNumViews()
+	public function getNumViews()
 	{
 		return $this->m_data['viewcount'];
 	} // fn getNumViews
@@ -593,7 +593,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getNumMessagesInThread()
+	public function getNumMessagesInThread()
 	{
 		return $this->m_data['thread_count'];
 	} // fn getNumMessagesInThread
@@ -604,7 +604,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getUserId()
+	public function getUserId()
 	{
 		return $this->m_data['user_id'];
 	} // fn getUserId
@@ -615,7 +615,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function isModeratorPost()
+	public function isModeratorPost()
 	{
 		return $this->m_data['moderator_post'];
 	} // fn isModeratorPost
@@ -627,7 +627,7 @@ class Phorum_message extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setIsModeratorPost($p_value)
+	public function setIsModeratorPost($p_value)
 	{
 		$p_value = $p_value ? "1" : "0";
 		$this->setProperty("moderator_post", $p_value);
@@ -639,7 +639,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function isClosed()
+	public function isClosed()
 	{
 		return $this->m_data['closed'];
 	} // fn isClosed
@@ -651,7 +651,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function __initThreadDepth()
+	private function __initThreadDepth()
 	{
 		if ( ($this->m_data['message_id'] == $this->m_data['thread'])
 			|| ($this->m_data['parent_id'] <= 0)) {
@@ -659,10 +659,10 @@ class Phorum_message extends DatabaseObject {
 		} else {
 			// Walk the up the tree
 			$count = 1;
-			$tmpMsg =& new Phorum_message($this->m_data['parent_id']);
+			$tmpMsg = new Phorum_message($this->m_data['parent_id']);
 			while ($tmpMsg->m_data['parent_id'] > 0) {
 				$count++;
-				$tmpMsg =& new Phorum_message($tmpMsg->m_data['parent_id']);
+				$tmpMsg = new Phorum_message($tmpMsg->m_data['parent_id']);
 			}
 		}
 		$this->setProperty('thread_depth', $count);
@@ -676,7 +676,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function __initThreadOrder()
+	private function __initThreadOrder()
 	{
 		global $g_ado_db;
 
@@ -702,7 +702,7 @@ class Phorum_message extends DatabaseObject {
 				$parentId = $row['max_message_id'];
 			} while (!is_null($parentId));
 			if (is_null($orderNr)) {
-				$tmpMsg =& new Phorum_message($this->m_data['parent_id']);
+				$tmpMsg = new Phorum_message($this->m_data['parent_id']);
 				$orderNr = $tmpMsg->getProperty('thread_order');
 			}
 			$orderNr++;
@@ -721,7 +721,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getThreadDepth()
+	public function getThreadDepth()
 	{
 		return $this->m_data['thread_depth'];
 	} // fn getThreadDepth
@@ -731,7 +731,7 @@ class Phorum_message extends DatabaseObject {
 	 * Subscribe the author of the message to the thread.
 	 * @return void
 	 */
-	function subscribeToThread()
+	public function subscribeToThread()
 	{
 	    // Subscribe user to the thread if requested.
         phorum_user_subscribe($this->m_data['user_id'],
@@ -756,7 +756,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetMessages($p_match, $p_method = "AND")
+	public static function GetMessages($p_match, $p_method = "AND")
 	{
 		global $PHORUM;
 		global $g_ado_db;
@@ -791,7 +791,7 @@ class Phorum_message extends DatabaseObject {
                 } else {
                     $row["meta"] = unserialize($row["meta"]);
                 }
-                $tmpMessage =& new Phorum_message();
+                $tmpMessage = new Phorum_message();
                 $tmpMessage->fetch($row);
                 $returnArray[$row['message_id']] = $tmpMessage;
             }
@@ -806,7 +806,7 @@ class Phorum_message extends DatabaseObject {
 	 *
 	 * @param array $data
 	 */
-	function mod_emailcomments($data)
+	public function mod_emailcomments($data)
     {
 		$PHORUM = $GLOBALS["PHORUM"];
 
@@ -848,7 +848,7 @@ class Phorum_message extends DatabaseObject {
      * @param string $message
      * @param array $header
      */
-    function mail_mime(&$adresses, &$subject, &$message, &$header)
+    public function mail_mime(&$adresses, &$subject, &$message, &$header)
     {
 		require_once 'Mail.php';
 		require_once 'Mail/mime.php';
@@ -860,7 +860,7 @@ class Phorum_message extends DatabaseObject {
 
 		$body = $mime->get(array('head_charset' => 'UTF-8' , 'text_charset' => 'UTF-8', 'html_charset' => 'UTF-8'));
 		$hdrs = $mime->headers(array_merge($header, array('Subject' => $subject)));
-		$mail =& Mail::factory('mail');
+		$mail = Mail::factory('mail');
 
 		foreach ($adresses as $to) {
 		   $mail->send($to, $hdrs, $body);

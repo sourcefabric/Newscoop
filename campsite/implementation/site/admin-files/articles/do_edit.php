@@ -136,7 +136,7 @@ function TransformImageTags($p_match) {
 			$attrValue = isset($attr[1]) ? $attr[1] : '';
 			// Strip out the quotes
 			$attrValue = str_replace('"', '', $attrValue);
-			$attrValue = str_replace("'", '', $attrValue);
+//			$attrValue = str_replace("'", '', $attrValue);
 			$attrs[$attrName] = $attrValue;
 		}
 	}
@@ -145,7 +145,7 @@ function TransformImageTags($p_match) {
 		return '';
 	} else {
 		$templateId = $attrs['id'];
-		$articleImage =& new ArticleImage($f_article_number, null, $templateId);
+		$articleImage = new ArticleImage($f_article_number, null, $templateId);
 		if (!$articleImage->exists()) {
 			return '';
 		}
@@ -197,7 +197,7 @@ if (!Input::IsValid()) {
 }
 
 // Fetch article
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('No such article.'), $BackLink);
 }
@@ -226,7 +226,7 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
 	$hours = floor($diffSeconds/3600);
 	$diffSeconds -= $hours * 3600;
 	$minutes = floor($diffSeconds/60);
-	$lockUser =& new User($articleObj->getLockedByUser());
+	$lockUser = new User($articleObj->getLockedByUser());
 	camp_html_add_msg(getGS('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getRealName(), $hours, $minutes));
 	camp_html_goto_page($BackLink);
 }
@@ -235,7 +235,7 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
 if ($f_article_title != $articleObj->getTitle()) {
 	$firstPostId = ArticleComment::GetCommentThreadId($articleObj->getArticleNumber(), $articleObj->getLanguageId());
 	if ($firstPostId) {
-		$firstPost =& new Phorum_message($firstPostId);
+		$firstPost = new Phorum_message($firstPostId);
 		$firstPost->setSubject($f_article_title);
 	}
 }
@@ -292,11 +292,11 @@ foreach ($articleFields as $dbColumnName => $text) {
 
 	// Replace <img src="A" align="B" alt="C" sub="D">
 	// with <!** Image [image_template_id] align=B alt="C" sub="D">
-	$srcAttr = "(src\s*=\s*[\"'][^'\"]*[\"'])";
-	$altAttr = "(alt\s*=\s*['\"][^'\"]*['\"])";
-	$alignAttr = "(align\s*=\s*['\"][^'\"]*['\"])";
-	$subAttr = "(sub\s*=\s*['\"][^'\"]*['\"])";
-	$idAttr = "(id\s*=\s*['\"][^'\"]*['\"])";
+	$srcAttr = "(src\s*=\s*[\"][^\"]*[\"])";
+	$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";
+	$alignAttr = "(align\s*=\s*[\"][^\"]*[\"])";
+	$subAttr = "(sub\s*=\s*[\"][^\"]*[\"])";
+	$idAttr = "(id\s*=\s*[\"][^\"]*[\"])";
 	$pattern = "/<\s*img\s*(($srcAttr|$altAttr|$alignAttr|$subAttr|$idAttr)\s*)*[\s\w\"']*\/>/i";
 	$text = preg_replace_callback($pattern, "TransformImageTags", $text);
 	$articleTypeObj->setProperty($dbColumnName, $text);

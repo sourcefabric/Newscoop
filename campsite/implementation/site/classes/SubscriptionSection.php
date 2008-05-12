@@ -9,8 +9,10 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/include/pear/Date.php');
 
-class SubscriptionSection extends DatabaseObject {
+class SubscriptionSection extends DatabaseObject
+{
 	var $m_dbTableName = 'SubsSections';
 	var $m_keyColumnNames = array('IdSubscription', 'SectionNumber', 'IdLanguage');
 	var $m_columnNames = array(
@@ -31,7 +33,9 @@ class SubscriptionSection extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @return SubscriptionSection
 	 */
-	function SubscriptionSection($p_subscriptionId = null, $p_sectionNumber = null, $p_languageId = null)
+	public function SubscriptionSection($p_subscriptionId = null,
+	                                    $p_sectionNumber = null,
+	                                    $p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdSubscription'] = $p_subscriptionId;
@@ -46,7 +50,7 @@ class SubscriptionSection extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getSubscriptionId()
+	public function getSubscriptionId()
 	{
 		return $this->m_data['IdSubscription'];
 	} // fn getSubscriptionId
@@ -55,7 +59,7 @@ class SubscriptionSection extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getSectionNumber()
+	public function getSectionNumber()
 	{
 		return $this->m_data['SectionNumber'];
 	} // fn getSectionNumber
@@ -64,7 +68,7 @@ class SubscriptionSection extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getLanguageId()
+	public function getLanguageId()
 	{
 		return $this->m_data['IdLanguage'];
 	} // fn getSubscriptionId
@@ -75,10 +79,19 @@ class SubscriptionSection extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getStartDate()
+	public function getStartDate()
 	{
 		return $this->m_data['StartDate'];
 	} // fn getStartDate
+	
+	
+	public function getExpirationDate() {
+	    $startDate = new Date(isset($this->m_data['StartDate']) ? $this->m_data['StartDate'] : 0);
+	    $timeSpan = new Date_Span();
+	    $timeSpan->setFromDays($this->m_data['Days']);
+	    $startDate->addSpan($timeSpan);
+	    return $startDate->getDate();
+	}
 
 
 	/**
@@ -87,7 +100,7 @@ class SubscriptionSection extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setStartDate($p_value)
+	public function setStartDate($p_value)
 	{
 		return $this->setProperty('StartDate', $p_value);
 	} // fn setStartDate
@@ -98,7 +111,7 @@ class SubscriptionSection extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getDays()
+	public function getDays()
 	{
 		return $this->m_data['Days'];
 	} // fn getDays
@@ -110,7 +123,7 @@ class SubscriptionSection extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setDays($p_value)
+	public function setDays($p_value)
 	{
 		return $this->setProperty('Days', $p_value);
 	}
@@ -119,7 +132,7 @@ class SubscriptionSection extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getPaidDays()
+	public function getPaidDays()
 	{
 		return $this->m_data['PaidDays'];
 	} // fn getPaidDays
@@ -129,7 +142,7 @@ class SubscriptionSection extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setPaidDays($p_value)
+	public function setPaidDays($p_value)
 	{
 		return $this->setProperty('PaidDays', $p_value);
 	} // fn setPaidDays
@@ -138,7 +151,7 @@ class SubscriptionSection extends DatabaseObject {
 	/**
 	 * @return boolean
 	 */
-	function noticeSent()
+	public function noticeSent()
 	{
 		$sent = $this->m_data['NoticeSent'];
 		if ($sent == 'Y') {
@@ -157,14 +170,17 @@ class SubscriptionSection extends DatabaseObject {
 	 * @param array $p_values
 	 * @return boolean
 	 */
-	function AddSubscriberToPublication($p_subscriptionId, $p_publicationId, $p_languageId, $p_values = null)
+	public static function AddSubscriberToPublication($p_subscriptionId,
+	                                                  $p_publicationId,
+	                                                  $p_languageId,
+	                                                  $p_values = null)
 	{
 		global $g_ado_db;
 		$created = true;
 		$queryStr = "SELECT DISTINCT Number FROM Sections where IdPublication=$p_publicationId";
 		$sectionIds = $g_ado_db->GetCol($queryStr);
 		foreach ($sectionIds as $sectionId) {
-			$subscriptionSection =& new SubscriptionSection($p_subscriptionId, $sectionId, $p_languageId);
+			$subscriptionSection = new SubscriptionSection($p_subscriptionId, $sectionId, $p_languageId);
 			$created &= $subscriptionSection->create($p_values);
 		}
 		return $created;
@@ -180,7 +196,9 @@ class SubscriptionSection extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @return array
 	 */
-	function GetSubscriptionSections($p_subscriptionId, $p_sectionId = null, $p_languageId = null)
+	public static function GetSubscriptionSections($p_subscriptionId,
+	                                               $p_sectionId = null,
+	                                               $p_languageId = null)
 	{
 		$queryStr = "SELECT SubsSections.*, Sections.Name, Subscriptions.Type, "
 			."Languages.Name as LangName, Languages.OrigName as LangOrigName"
@@ -210,7 +228,8 @@ class SubscriptionSection extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @return int
 	 */
-	function GetNumSections($p_subscriptionId, $p_sectionId = null, $p_languageId = null)
+	public static function GetNumSections($p_subscriptionId, $p_sectionId = null,
+	                                      $p_languageId = null)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT count(*) FROM SubsSections WHERE IdSubscription = $p_subscriptionId";

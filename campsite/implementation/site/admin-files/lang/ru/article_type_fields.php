@@ -1,4 +1,5 @@
 <?php 
+regGS("Back to Article Types List", "");
 regGS("show", "Показать");
 regGS("hide", "Спрятать");
 regGS("You must enter a name for the field.", "Вы должны ввести название поля");

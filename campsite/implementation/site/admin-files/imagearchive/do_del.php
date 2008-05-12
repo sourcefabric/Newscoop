@@ -12,7 +12,7 @@ if (!Input::IsValid() || ($f_image_id <= 0)) {
 	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 }
 
-$imageObj =& new Image($f_image_id);
+$imageObj = new Image($f_image_id);
 
 // This file can only be accessed if the user has the right to delete images.
 if (!$g_user->hasPermission('DeleteImage')) {

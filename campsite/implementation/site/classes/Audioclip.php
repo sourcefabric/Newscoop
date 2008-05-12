@@ -398,13 +398,13 @@ class Audioclip {
      * @param string $p_gunId
      *      The audioclip gunid
      */
-    function Audioclip($p_gunId = null)
+    public function Audioclip($p_gunId = null)
     {
         if (!is_null($p_gunId)) {
-            $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($p_gunId);
+            $aclipDbaseMdataObj = new AudioclipDatabaseMetadata($p_gunId);
             $this->m_metaData = $aclipDbaseMdataObj->fetch();
             if ($this->m_metaData == false || sizeof($this->m_metaData) == 0) {
-                $aclipXMLMdataObj =& new AudioclipXMLMetadata($p_gunId);
+                $aclipXMLMdataObj = new AudioclipXMLMetadata($p_gunId);
                 $this->m_metaData = $aclipXMLMdataObj->m_metaData;
                 if ($aclipXMLMdataObj->exists()) {
 		            $this->m_gunId = $p_gunId;
@@ -425,7 +425,7 @@ class Audioclip {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    function exists()
+    public function exists()
     {
         return $this->m_exists;
     } // fn exists
@@ -437,7 +437,7 @@ class Audioclip {
      * @return string
      *      The audioclip global unique identifier
      */
-    function getGunId()
+    public function getGunId()
     {
     	return $this->m_gunId;
     } // fn getGunId
@@ -452,7 +452,7 @@ class Audioclip {
      * @return string
      *      The meta tag value
      */
-    function getMetatagValue($p_tagName)
+    public function getMetatagValue($p_tagName)
     {
     	$namespaces = array('dc', 'ls', 'dcterms');
 
@@ -487,7 +487,7 @@ class Audioclip {
      * @return array
      *      The available meta tags for the audioclip
      */
-    function getAvailableMetaTags()
+    public function getAvailableMetaTags()
     {
     	if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
     		return null;
@@ -504,12 +504,12 @@ class Audioclip {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    function deleteMetadata()
+    public function deleteMetadata()
     {
         if (is_null($this->m_gunId)) {
             return false;
         }
-        $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($this->m_gunId);
+        $aclipDbaseMdataObj = new AudioclipDatabaseMetadata($this->m_gunId);
         if ($aclipDbaseMdataObj->inUse() == false) {
             return $aclipDbaseMdataObj->delete();
         }
@@ -526,7 +526,7 @@ class Audioclip {
      * @return boolean|PEAR_Error
      *      TRUE on success, PEAR Error on failure
      */
-    function editMetadata($p_formData)
+    public function editMetadata($p_formData)
     {
         global $mask;
 
@@ -544,7 +544,7 @@ class Audioclip {
                     $recordSet['predicate_ns'] = $predicate_ns;
                     $recordSet['predicate'] = $predicate;
                     $recordSet['object'] = $p_formData['f_'.$key.'_'.$element_encode];
-                    $tmpMetadataObj =& new AudioclipMetadataEntry($recordSet);
+                    $tmpMetadataObj = new AudioclipMetadataEntry($recordSet);
                     $metaData[strtolower($v['element'])] = $tmpMetadataObj;
                 }
             }
@@ -552,11 +552,11 @@ class Audioclip {
 
         if (sizeof($metaData) == 0) return false;
 
-        $aclipXMLMdataObj =& new AudioclipXMLMetadata($this->m_gunId);
+        $aclipXMLMdataObj = new AudioclipXMLMetadata($this->m_gunId);
         if ($aclipXMLMdataObj->update($metaData) == false) {
             return new PEAR_Error(getGS('Cannot update audioclip metadata on storage server'));
         }
-        $aclipDbaseMdataObj =& new AudioclipDatabaseMetadata($this->m_gunId);
+        $aclipDbaseMdataObj = new AudioclipDatabaseMetadata($this->m_gunId);
         if ($aclipDbaseMdataObj->update($metaData) == false) {
             return new PEAR_Error(getGS('Cannot update audioclip metadata on Campsite'));
         }
@@ -575,7 +575,7 @@ class Audioclip {
      * @return string|PEAR_Error
      *      The full pathname to the file or Error
      */
-    function onFileUpload($p_fileVar)
+    public function onFileUpload($p_fileVar)
     {
         global $Campsite;
 
@@ -613,7 +613,7 @@ class Audioclip {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    function isValidFileType($p_fileName)
+    public function isValidFileType($p_fileName)
     {
         foreach ($this->m_fileTypes as $t) {
             if (preg_match('/'.str_replace('/', '\/', $t).'$/i', $p_fileName))
@@ -655,14 +655,15 @@ class Audioclip {
      * @return array
      *      Array of Audioclip objects
      */
-    function SearchAudioclips($offset = 0, $limit = 0, $conditions = array(),
-                              $operator = 'and',
-    						  $orderby = 'dc:creator, dc:source, dc:title',
-                              $desc = false)
+    public static function SearchAudioclips($offset = 0, $limit = 0,
+                                            $conditions = array(),
+                                            $operator = 'and',
+    						                $orderby = 'dc:creator, dc:source, dc:title',
+                                            $desc = false)
     {
         global $mdefs;
 
-        $xrc =& XR_CcClient::Factory($mdefs);
+        $xrc = XR_CcClient::Factory($mdefs);
 		if (PEAR::isError($xrc)) {
 			return $xrc;
 		}
@@ -681,7 +682,7 @@ class Audioclip {
 		}
 		$clips = array();
 		foreach ($result['results'] as $clipMetaData) {
-			$clip =& new Audioclip($clipMetaData['gunid']);
+			$clip = new Audioclip($clipMetaData['gunid']);
 			if ($clip->exists()) {
 				$clips[] = $clip;
 			}
@@ -724,15 +725,15 @@ class Audioclip {
      * @return array
      *      Array of Audioclip objects
      */
-    function BrowseCategory($p_category, $offset = 0, $limit = 0,
-    						$conditions = array(),
-                            $operator = 'and',
-    						$orderby = 'dc:creator, dc:source, dc:title',
-                            $desc = false)
+    public static function BrowseCategory($p_category, $offset = 0, $limit = 0,
+    						              $conditions = array(),
+                                          $operator = 'and',
+    						              $orderby = 'dc:creator, dc:source, dc:title',
+                                          $desc = false)
     {
         global $mdefs;
 
-        $xrc =& XR_CcClient::Factory($mdefs);
+        $xrc = XR_CcClient::Factory($mdefs);
 		if (PEAR::isError($xrc)) {
 			return $xrc;
 		}
@@ -762,7 +763,7 @@ class Audioclip {
      * @return int|PEAR_Error
      *      The gunid on success, PEAR Error on failure
      */
-    function StoreAudioclip($p_sessId, $p_filePath, $p_metaData)
+    public static function StoreAudioclip($p_sessId, $p_filePath, $p_metaData)
     {
         if (file_exists($p_filePath) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_fileName));
@@ -792,7 +793,7 @@ class Audioclip {
      * @return array
      *      An array with all the id3 metatags
      */
-    function AnalyzeFile($p_file)
+    public static function AnalyzeFile($p_file)
     {
         require_once($_SERVER['DOCUMENT_ROOT'].'/include/getid3/getid3.php');
 
@@ -809,7 +810,7 @@ class Audioclip {
      * @param string $p_fileName
      *      The temporary file to delete after stored in the Storage server
      */
-    function OnFileStore($p_fileName)
+    public static function OnFileStore($p_fileName)
     {
         if (file_exists($p_fileName)) {
             @unlink($p_fileName);
@@ -827,7 +828,7 @@ class Audioclip {
      * @return string $xmlTextFile
      *      The XML string
      */
-    function CreateXMLTextFile($p_metaData)
+    public static function CreateXMLTextFile($p_metaData)
     {
         global $mask;
 

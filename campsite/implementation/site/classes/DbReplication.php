@@ -26,7 +26,7 @@ class DbReplication {
 	 *
 	 * @return void
 	 */
-	function DbReplication() {}
+	public function DbReplication() {}
 
 	/**
 	 * Try to connect the resource based on supplied parameter.
@@ -37,7 +37,7 @@ class DbReplication {
 	 * @return boolean|PEAR_Error
      *
 	 */
-	function connect($host = null)
+	public function connect($host = null)
 	{
 		global $Campsite;
 		global $g_ado_db;

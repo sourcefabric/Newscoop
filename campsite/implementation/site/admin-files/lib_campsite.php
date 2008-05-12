@@ -30,7 +30,7 @@ function camp_check_admin_access($p_request)
     // actually exists in database table
     if ($LiveUser->getProperty('keyid') == $p_request['LoginUserKey']) {
         $access = true;
-        $user =& new User($LiveUser->getProperty('auth_user_id'));
+        $user = new User($LiveUser->getProperty('auth_user_id'));
     }
 	return array($access, $user);
 } // fn check_basic_access
@@ -265,11 +265,13 @@ function camp_mime_content_type($p_file)
  * @param string $p_prefix
  * @return void
  */
-function camp_load_translation_strings($p_prefix)
+function camp_load_translation_strings($p_prefix, $p_langCode = null)
 {
     require_once('localizer/Localizer.php');
     $langCode = null;
-     if (isset($_REQUEST['TOL_Language'])) {
+    if (!is_null($p_langCode)) {
+        $langCode = $p_langCode;
+    } elseif (isset($_REQUEST['TOL_Language'])) {
          $langCode = $_REQUEST['TOL_Language'];
     }
     Localizer::LoadLanguageFiles($p_prefix, $langCode);
@@ -407,6 +409,9 @@ function camp_campcaster_login($f_cc_username, $f_cc_password)
     }
     if (PEAR::isError($r)) {
         return $r;
+    }
+    if (!is_array($r) && !isset($r['sessid'])) {
+        return new PEAR_Error(getGS('Unable to connect to the Campcaster server, please verify the Campcaster server settings.'));
     }
     camp_session_set('cc_sessid', $r['sessid']);
     return true;

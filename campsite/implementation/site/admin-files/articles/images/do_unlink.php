@@ -25,7 +25,7 @@ if (!$g_user->hasPermission('AttachImageToArticle')) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 
 ArticleImage::RemoveImageFromArticle($f_image_id, $f_article_number, $f_image_template_id);
 

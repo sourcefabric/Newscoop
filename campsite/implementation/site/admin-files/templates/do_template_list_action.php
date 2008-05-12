@@ -38,7 +38,7 @@ case "delete":
 	$anyDeleted = 0;
 	$anyInUse = 0;
 	foreach ($templateCodes as $templateCode) {
-		$templateObj =& new Template($templateCode);
+		$templateObj = new Template($templateCode);
 		$deleted = $templateObj->delete();
 		if ($deleted == true) {
 			$anyDeleted = 1;

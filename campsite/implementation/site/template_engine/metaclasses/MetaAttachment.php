@@ -26,6 +26,7 @@ final class MetaAttachment extends MetaDbObject {
 		if (!is_null($this->m_properties)) {
 			return;
 		}
+		$this->m_properties['identifier'] = 'id';
 		$this->m_properties['file_name'] = 'file_name';
 		$this->m_properties['mime_type'] = 'mime_type';
 		$this->m_properties['extension'] = 'extension';
@@ -45,7 +46,7 @@ final class MetaAttachment extends MetaDbObject {
     } // fn __construct
 
 
-    public function getDescription($p_languageId = null)
+    protected function getDescription($p_languageId = null)
     {
     	if (is_null($p_languageId)) {
     		$smartyObj = CampTemplate::singleton();
@@ -56,13 +57,13 @@ final class MetaAttachment extends MetaDbObject {
     }
 
 
-	public function getSizeKB()
+	protected function getSizeKB()
 	{
 		return (int)($this->m_dbObject->getSizeInBytes() / 1024);
 	}
 
 
-	public function getSizeMB()
+	protected function getSizeMB()
 	{
 		return (int)($this->m_dbObject->getSizeInBytes() / 1048576);
 	}

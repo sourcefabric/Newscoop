@@ -68,7 +68,7 @@ $articles = array();
 $firstArticle = null;
 foreach ($f_article_code as $code) {
 	list($articleNumber, $languageId) = split("_", $code);
-	$tmpArticle =& new Article($languageId, $articleNumber);
+	$tmpArticle = new Article($languageId, $articleNumber);
 	if (is_null($firstArticle)) {
 		$firstArticle = $tmpArticle;
 	}
@@ -107,19 +107,19 @@ if (!Input::IsValid()) {
 }
 
 if ($f_publication_id > 0) {
-	$publicationObj =& new Publication($f_publication_id);
+	$publicationObj = new Publication($f_publication_id);
 	if (!$publicationObj->exists()) {
 		camp_html_display_error(getGS('Publication does not exist.'));
 		exit;
 	}
 
-	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+	$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 	if (!$issueObj->exists()) {
 		camp_html_display_error(getGS('Issue does not exist.'));
 		exit;
 	}
 
-	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+	$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 	if (!$sectionObj->exists()) {
 		camp_html_display_error(getGS('Section does not exist.'));
 		exit;
@@ -148,7 +148,7 @@ if ($f_destination_publication_id > 0) {
 // Get all the sections.
 $allSections = array();
 if ($f_destination_issue_number > 0) {
-	$destIssue =& new Issue($f_destination_publication_id);
+	$destIssue = new Issue($f_destination_publication_id);
 	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $firstArticle->getLanguageId(), null, null, array("ORDER BY" => array("Number" => "DESC")));
 	// Automatically select the section if there is only one.
 	if (count($allSections) == 1) {
@@ -238,7 +238,7 @@ if (isset($_REQUEST["action_button"])) {
 				// Set the default "comment enabled" status based
 				// on the publication config settings.
 				if ($f_destination_publication_id > 0) {
-                    $tmpPub =& new Publication($f_destination_publication_id);
+                    $tmpPub = new Publication($f_destination_publication_id);
                     $commentDefault = $tmpPub->commentsArticleDefaultEnabled();
                     $newArticle->setCommentsEnabled($commentDefault);
             	}
@@ -286,7 +286,7 @@ if (isset($_REQUEST["action_button"])) {
 		$tmpArticles = array();
 		foreach ($doAction as $articleNumber => $languageArray) {
 			foreach ($languageArray as $languageId => $action) {
-				$tmpArticle =& new Article($languageId, $articleNumber);
+				$tmpArticle = new Article($languageId, $articleNumber);
 				$tmpArticle->setTitle($articleNames[$articleNumber][$languageId]);
 
 				// Check if the name already exists in the destination section.

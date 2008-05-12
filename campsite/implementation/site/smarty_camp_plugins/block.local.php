@@ -28,8 +28,7 @@ function smarty_block_local($p_params, $p_content, &$p_smarty, &$p_repeat)
     $campContext = $p_smarty->get_template_vars('campsite');
 
     if (!isset($p_content)) {
-        $campContext->saveCurrentContext(array('language','publication',
-                                               'issue', 'section', 'article'));
+        $campContext->saveCurrentContext();
         $p_repeat = true;
     } else {
         $campContext->restoreContext();

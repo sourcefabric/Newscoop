@@ -31,8 +31,8 @@ function smarty_block_list_article_images($p_params, $p_content, &$p_smarty, &$p
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 0;
-    	$articleImagesList = new ArticleImagesList($start, $p_params);
+        $start = $campContext->next_list_start('ArticleImagesList');
+        $articleImagesList = new ArticleImagesList($start, $p_params);
     	$campContext->setCurrentList($articleImagesList, array('image'));
     }
 

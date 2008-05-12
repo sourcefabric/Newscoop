@@ -38,7 +38,7 @@ function translationForm($p_request)
 		} else {
 			$lang = $g_localizerConfig['DEFAULT_LANGUAGE'];
 		}
-		$tmpLanguage =& new LocalizerLanguage(null, $lang);
+		$tmpLanguage = new LocalizerLanguage(null, $lang);
 		$localizerSourceLanguage = $tmpLanguage->getLanguageId();
 	}
 
@@ -47,9 +47,9 @@ function translationForm($p_request)
 
 	// Load the language files.
 	//echo "Prefix: $prefix<br>";
-	$sourceLang =& new LocalizerLanguage($prefix, $localizerSourceLanguage);
-	$targetLang =& new LocalizerLanguage($prefix, $localizerTargetLanguage);
-	$defaultLang =& new LocalizerLanguage($prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
+	$sourceLang = new LocalizerLanguage($prefix, $localizerSourceLanguage);
+	$targetLang = new LocalizerLanguage($prefix, $localizerTargetLanguage);
+	$defaultLang = new LocalizerLanguage($prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
 
 	$mode = Localizer::GetMode();
 	if (!empty($prefix)) {
@@ -126,6 +126,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["user_types"] = getGS("Staff User Types");
     $mapPrefixToDisplay["bug_reporting"] = getGS("Bug Reporting");
     $mapPrefixToDisplay["feedback"] = getGS("Feedback");
+    $mapPrefixToDisplay["preview"] = getGS("Preview Window");
 	// Whether to show translated strings or not.
 	$hideTranslated = camp_session_get('hide_translated', 'off');
 

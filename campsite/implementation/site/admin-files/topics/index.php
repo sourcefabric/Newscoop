@@ -163,7 +163,7 @@ foreach ($topics as $topicPath) {
 		</td>
 		<TD <?php if (!$isFirstTopic & $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="center">
 			<?php
-			$topicLanguage =& new Language($topicLanguageId);
+			$topicLanguage = new Language($topicLanguageId);
 			p($topicLanguage->getCode());
 			?>
 		</TD>

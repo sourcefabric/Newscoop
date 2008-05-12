@@ -12,6 +12,7 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/template_engine/classes/Exceptions.php');
+require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 
 
 /**
@@ -27,7 +28,9 @@ final class MetaDate
 
     private $m_monthDay = null;
 
-	public function __construct($p_value)
+    private $m_weekDay = null;
+
+    public function __construct($p_value)
     {
         $this->setValue($p_value);
     } // fn __construct
@@ -39,6 +42,9 @@ final class MetaDate
         }
         $this->m_value = trim($p_value);
         list($this->m_year, $this->m_month, $this->m_monthDay) = preg_split('/-/', $this->m_value);
+        $timestamp = strtotime($this->m_value);
+        $date_time = getdate($timestamp);
+        $this->m_weekDay = $date_time['wday'];
     }
 
     public function getValue()
@@ -56,9 +62,29 @@ final class MetaDate
         return $this->m_month;
     }
 
+    public function getMonthName() {
+        $language = new Language(CampTemplate::singleton()->context()->language->number);
+        if (!$language->exists()) {
+            return null;
+        }
+        return $language->getProperty('Month'.(int)$this->getMonth());
+    }
+
     public function getMonthDay()
     {
         return $this->m_monthDay;
+    }
+
+    public function getWeekDay() {
+        return $this->m_weekDay;
+    }
+
+    public function getWeekDayName() {
+        $language = new Language(CampTemplate::singleton()->context()->language->number);
+        if (!$language->exists()) {
+            return null;
+        }
+        return $language->getProperty('WDay'.(int)$this->getWeekDay());
     }
 
     public static function IsValid($p_value)

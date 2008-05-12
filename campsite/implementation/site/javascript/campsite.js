@@ -175,3 +175,57 @@ function do_fade(element_id, milliseconds_between_changes, maxFade, disappear)
 		}
 	}
 }
+
+/**
+ * Returns true if the given object had the given property.
+ */
+function element_exists(object, property) {
+	for (i in object) {
+		if (object[i].name == property) {
+			return true
+		}
+	}
+	return false
+}
+
+/**
+ * Used in subscription form; computes the subscription cost and updates
+ * the corresponding field in the form.
+ */
+function update_subscription_payment() {
+	var sum = 0
+	var i
+	var my_form = document.forms["subscription_form"]
+	var subs_all_lang = false
+	var unitcost = my_form.unitcost.value
+	var lang_count = 1
+	if (element_exists(my_form.elements, "subs_all_languages")
+		&& my_form.subs_all_languages.checked) {
+		unitcost = my_form.unitcostalllang.value
+	} else if (element_exists(my_form.elements, "subscription_language[]")) {
+		lang_count = 0
+		for (i=0; i<my_form["subscription_language[]"].options.length; i++) {
+			if (my_form["subscription_language[]"].options[i].selected) {
+				lang_count++
+			}
+		}
+	}
+	for (i = 0; i < my_form.nos.value; i++) {
+		if (element_exists(my_form.elements, "by")
+			&& my_form.by.value == "publication") {
+			sum = parseInt(sum) + parseInt(my_form["tx_subs"].value)
+			continue
+		}
+		if (!my_form["cb_subs[]"][i].checked) {
+			continue
+		}
+		var section = my_form["cb_subs[]"][i].value
+		var time_var_name = "tx_subs" + section
+		if (element_exists(my_form.elements, time_var_name)) {
+			sum = parseInt(sum) + parseInt(my_form[time_var_name].value)
+		} else if (element_exists(my_form.elements, "tx_subs")) {
+			sum = parseInt(sum) + parseInt(my_form["tx_subs"].value)
+		}
+	}
+	my_form.suma.value = Math.round(100 * sum * unitcost * lang_count) / 100
+}

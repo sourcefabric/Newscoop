@@ -11,7 +11,7 @@ $f_topic_language_id = Input::Get('f_topic_language_id', 'int', 0);
 $f_topic_delete_id = Input::Get('f_topic_delete_id', 'int', 0);
 $errorMsgs = array();
 $doDelete = true;
-$deleteTopic =& new Topic($f_topic_delete_id);
+$deleteTopic = new Topic($f_topic_delete_id);
 if (($deleteTopic->getNumTranslations() == 1) && $deleteTopic->hasSubtopics()) {
 	$doDelete = false;
 	$errorMsgs[] = getGS('This topic has subtopics, therefore it cannot be deleted.');

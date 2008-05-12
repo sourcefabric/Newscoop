@@ -25,25 +25,25 @@ if (!Input::IsValid()) {
 }
 
 
-$publicationObj =& new Publication($f_publication_id);
+$publicationObj = new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;
 }
 
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;
 }
 
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'));
 	exit;
 }
 
-$articleObj =& new Article($f_article_language, $f_article_number);
+$articleObj = new Article($f_article_language, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'));
 	exit;

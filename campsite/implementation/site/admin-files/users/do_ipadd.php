@@ -39,7 +39,7 @@ if ($g_cAddresses == 0) {
 
 // check if the IP address group exists already
 $ipAddressArray = array($g_cStartIP1, $g_cStartIP2, $g_cStartIP3, $g_cStartIP4);
-$ipAccess =& new IPAccess($g_userId, $ipAddressArray, $g_cAddresses);
+$ipAccess = new IPAccess($g_userId, $ipAddressArray, $g_cAddresses);
 if ($ipAccess->exists()) {
 	$g_errorMsg = getGS('The IP address group $1:$2 conflicts with another existing group.',
 		$ipAccess->getStartIPstring(), $g_cAddresses);

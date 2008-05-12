@@ -31,14 +31,14 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 
 if (!$g_user->hasPermission('AttachAudioclipToArticle')) {
 	camp_html_display_error(getGS("You do not have the right to change audioclip information."), null, true);
     exit;
 }
 
-$audioclipObj =& new Audioclip($f_audioclip_id);
+$audioclipObj = new Audioclip($f_audioclip_id);
 $res = $audioclipObj->editMetadata($formData);
 if (PEAR::isError($res)) {
     camp_html_display_error(getGS("Failed to update audioclip information."), null, true);

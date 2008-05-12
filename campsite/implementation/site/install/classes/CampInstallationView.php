@@ -19,8 +19,6 @@
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 
-
-
 /**
  * Class CampInstallationView
  */
@@ -72,13 +70,14 @@ final class CampInstallationView
 
     private function preInstallationCheck()
     {
-        $requirementsOk = $this->phpFunctionsCheck();
+        $requirementsOk = $this->phpFunctionsCheck() && $this->sysCheck();
         $this->phpRecommendedOptions();
 
         $template = CampTemplate::singleton();
 
         $template->assign('php_req_ok', $requirementsOk);
         $template->assign('php_functions', $this->m_lists['phpFunctions']);
+        $template->assign('sys_requirements', $this->m_lists['sysRequirements']);
         $template->assign('php_options', $this->m_lists['phpOptions']);
     } // fn preInstallationCheck
 
@@ -87,6 +86,28 @@ final class CampInstallationView
     {
         $template = CampTemplate::singleton();
     } // fn databaseConfiguration
+
+
+    private function sysCheck()
+    {
+        $success = true;
+
+        $isConfigDirWritable = CampInstallationViewHelper::CheckDirWritable(CS_PATH_CONFIG);
+        $success = ($isConfigDirWritable == 'Yes') ? $success : false;
+        $sysRequirements[] = array(
+                                   'tag' => 'Configuration Files Writable',
+                                   'exists' => $isConfigDirWritable
+                                   );
+        if (CampInstallation::GetHostOS() == 'windows') {
+            $sysRequirements[] = array(
+                                       'tag' => 'Apache mod_rewrite enabled',
+                                       'exists' => '<a href="#" onmouseover="domTT_activate(this, event, \'caption\', \'What is this?\', \'content\', \''.wordwrap('As you are installing Campsite on a Windows server you will need to have the Apache mod_rewrite module enabled in order to be able to use friendly short names URLs.<br /><br />This, however, is not mandatory, as you still will can run Campsite by using template path URLs.', 60, '<br />', true).'\', \'trail\', true, \'delay\', 0);">?</a>'
+                                       );
+        }
+        $this->m_lists['sysRequirements'] = $sysRequirements;
+
+        return $success;
+    } // fn sysCheck
 
 
     /**
@@ -111,7 +132,6 @@ final class CampInstallationView
                                 );
 
         $hasAPC = CampInstallationViewHelper::CheckPHPAPC();
-        $success = ($hasAPC == 'Yes') ? $success : false;
         $phpFunctions[] = array(
                                 'tag' => 'APC (PHP Cache) Support',
                                 'exists' => $hasAPC
@@ -183,7 +203,7 @@ final class CampInstallationViewHelper
 
     public static function CheckPHPAPC()
     {
-        return (function_exists('apc_store')) ? 'Yes' : 'No';
+        return (ini_get('apc.enabled') && function_exists('apc_store')) ? 'Yes' : 'No';
     } // fn CheckPHPAPC
 
 
@@ -197,6 +217,12 @@ final class CampInstallationViewHelper
     {
         return (function_exists('session_start')) ? 'Yes' : 'No';
     } // fn CheckPHPSession
+
+
+    public static function CheckDirWritable($p_directory)
+    {
+        return (is_writable($p_directory)) ? 'Yes' : 'No';
+    } // fn CheckConfigDirRights
 
 } //
 

@@ -1,6 +1,7 @@
 <?PHP
 camp_load_translation_strings("article_images");
 camp_load_translation_strings('api');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
@@ -21,7 +22,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj = new Article($f_language_selected, $f_article_number);
 ?>
 <html>
 <head>

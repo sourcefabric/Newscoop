@@ -39,7 +39,7 @@ $orderDirectionUrl = "/$ADMIN/comments/index.php?f_comment_order_direction=$Reve
 
 // We check if a Campsite Online server is being used
 if (SystemPref::Get("UseDBReplication") == 'Y') {
-    $dbReplicationObj =& new DbReplication();
+    $dbReplicationObj = new DbReplication();
     $connectedToOnlineServer = $dbReplicationObj->connect();
 }
 
@@ -51,9 +51,9 @@ if (!isset($connectedToOnlineServer)
     $numArchive = ArticleComment::GetComments('approved', true, $f_comment_search);
 
     if ($f_comment_screen == 'inbox') {
-        $pager =& new SimplePager($numInbox, $f_comment_per_page, 'f_comment_start_inbox', "/$ADMIN/comments/index.php?");
+        $pager = new SimplePager($numInbox, $f_comment_per_page, 'f_comment_start_inbox', "/$ADMIN/comments/index.php?");
     } elseif ($f_comment_screen == 'archive') {
-        $pager =& new SimplePager($numArchive, $f_comment_per_page, 'f_comment_start_archive', "/$ADMIN/comments/index.php?");
+        $pager = new SimplePager($numArchive, $f_comment_per_page, 'f_comment_start_archive', "/$ADMIN/comments/index.php?");
     }
 
     // This is here again on purpose because sometimes the pager
@@ -128,7 +128,7 @@ if (is_object($pager)) {
 <tr>
     <td style="padding-left: 13px;">
         <table cellpadding="0" cellspacing="0">
-        <form method="GET">
+        <form method="POST">
         <tr>
             <td <?php if (!empty($pagerStr)) { ?>style="padding-right: 15px;"<?php } ?>>
                 <?php echo $pagerStr; ?>
@@ -247,7 +247,7 @@ function onSummaryClick(p_messageId)
     <td style="border-left: 1px solid #777;" valign="top">
         <!-- The column where you can edit the comments -->
         <table class="table_input" style="margin-top: 5px; margin-left: 5px;">
-        <form action="do_edit.php" method="GET">
+        <form action="do_edit.php" method="POST">
         <?php
         $count = 1;
         foreach ($comments as $commentPack) {
@@ -373,6 +373,7 @@ function onSummaryClick(p_messageId)
         </tr>
             <!-- END table with comment content -->
             <?php } ?>
+            </form>
         </table>
         <!-- END table containing comment controls+content -->
         <br>

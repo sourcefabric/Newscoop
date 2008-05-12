@@ -21,7 +21,7 @@ if (!Input::IsValid()) {
 }
 
 $backLink = "/$ADMIN/pub/countryadd.php?Pub=$cPub&Language=$Language";
-$publicationObj =& new Publication($cPub);
+$publicationObj = new Publication($cPub);
 
 if (empty($cCountryCode)) {
 	camp_html_add_msg(getGS('You must select a country.'));
@@ -30,7 +30,7 @@ if (empty($cCountryCode)) {
 
 $values = array('TrialTime' => $cTrialTime,
 				'PaidTime' => $cPaidTime);
-$defaultTime =& new SubscriptionDefaultTime($cCountryCode, $cPub);
+$defaultTime = new SubscriptionDefaultTime($cCountryCode, $cPub);
 if ($defaultTime->exists()) {
 	$defaultTime->update($values);
 } else {

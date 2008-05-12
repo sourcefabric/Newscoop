@@ -1,4 +1,6 @@
 <?php 
+regGS("Invalid resize width/height.", "");
+regGS("Can not fetch audioclip metadata: the connection to Campcaster was not established.", "");
 regGS("Image type $1 is not supported.", "");
 regGS("There was a problem trying to execute the XML RPC function.", "");
 regGS("The Campcaster server configuration is invalid.", "");

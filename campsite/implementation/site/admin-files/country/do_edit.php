@@ -10,8 +10,8 @@ $f_country_code = Input::Get('f_country_code');
 $f_country_language = Input::Get('f_country_language');
 $f_country_name = trim(Input::Get('f_country_name'));
 
-$country =& new Country($f_country_code, $f_country_language);
-$language =& new Language($f_country_language);
+$country = new Country($f_country_code, $f_country_language);
+$language = new Language($f_country_language);
 
 if (empty($f_country_name)) {
 	$errorMsgs[] = getGS("You must complete the $1 field.", "<B>".getGS("Name")."</B>");

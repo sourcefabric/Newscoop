@@ -12,7 +12,7 @@ if (!$canDelete) {
 }
 
 $userId = Input::Get('User', 'int', 0);
-$editUser =& new User($userId);
+$editUser = new User($userId);
 if (!$editUser->exists()) {
 	camp_html_display_error(getGS('No such user account.'));
 	exit;

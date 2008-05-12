@@ -1,4 +1,5 @@
 <?php 
+regGS("Back to Article Types List", "Înapoi la lista tipurilor de articole");
 regGS("show", "arată");
 regGS("hide", "ascunde");
 regGS("You must enter a name for the field.", "Trebuie să introduci un nume pentru câmp.");

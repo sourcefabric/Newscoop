@@ -1,7 +1,7 @@
 <?PHP
 require_once('Localizer.php');
 
-$localizerLanguage =& new LocalizerLanguage('locals', 'xx');
+$localizerLanguage = new LocalizerLanguage('locals', 'xx');
 $localizerLanguage->setMode('xml');
 echo "Add some strings...<br>";
 $localizerLanguage->addString("foo", "foo");
@@ -60,7 +60,7 @@ $gs = $localizerLanguage->saveFile('gs');
 echo "<pre>".htmlspecialchars($gs)."</pre>";
 
 echo "Load XML...<br>";
-$xmlLang =& new LocalizerLanguage('locals', 'xx');
+$xmlLang = new LocalizerLanguage('locals', 'xx');
 $result = $xmlLang->loadFile('xml');
 if (!$result) {
 	echo "Error!  Could not load XML file.<br>";
@@ -70,7 +70,7 @@ else {
 }
 
 echo "<br>Load GS...<br>";
-$gsLang =& new LocalizerLanguage('locals', 'xx');
+$gsLang = new LocalizerLanguage('locals', 'xx');
 $result = $gsLang->loadFile('gs');
 if (!$result) {
 	echo "Error!  Could not load GS file.<br>";
@@ -88,7 +88,7 @@ if (!$gsLang->equal($xmlLang)) {
 	$xmlLang->dumpToHtml();
 }
 else {
-	echo "Success! They are equal<br>";	
+	echo "Success! They are equal<br>";
 }
 
 echo "Testing ability to get languages in the base directory...<br>";

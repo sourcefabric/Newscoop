@@ -27,27 +27,27 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '3.0';
+    private $m_release = '3.0.1';
 
     /**
      * @var string
      */
-    private $m_devStatus = 'beta 1';
+    private $m_devStatus = null;
 
     /**
      * @var string
      */
-    private $m_codeName = 'undefined';
+    private $m_codeName = 'Filip';
 
     /**
      * @var string
      */
-    private $m_releaseDate = 'undefined';
+    private $m_releaseDate = '2008-05-06';
 
     /**
      * @var string
      */
-    private $m_copyright = 'Copyright &copy; 2007 Campware. All rights reserved.';
+    private $m_copyrightYear = 2008;
 
     /**
      * @var string
@@ -64,6 +64,16 @@ final class CampVersion
      * Class constructor
      */
     final public function __construct() { } // fn __construct
+
+
+    public function getVersion() {
+        $version = $this->m_release;
+        if (!empty($this->m_devStatus)) {
+            $version .= '-' . $this->m_devStatus;
+        }
+        $version .= ' (' . $this->m_codeName . ')';
+        return $version;
+    }
 
 
     public function getOrganization()
@@ -104,7 +114,8 @@ final class CampVersion
 
     public function getCopyright()
     {
-        return $this->m_copyright;
+        return 'Copyright &copy; ' . $this->m_organization . ' '
+        . $this->m_copyrightYear . '. All rights reserved.';
     } // fn getCopyright
 
 
@@ -122,10 +133,10 @@ final class CampVersion
 
     function getFullInfo()
     {
-        $text  = $this->m_package.' "'.$this->m_codeName.'" '.$this->release;
-        $text .= (empty($this->m_devStatus)) ? '-'.$this->m_devStatus : '';
-        $text .= ' '.$this->m_releaseDate.'<br />';
-        $text .= $this->m_copyright;
+        $text  = $this->m_package.' '.$this->getVersion();
+        $text .= ' '.$this->m_releaseDate;
+        $text .= ' '.$this->m_organization;
+        return $text;
     } // fn getFullInfo
 
 } // fn class CampVersion

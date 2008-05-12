@@ -28,7 +28,7 @@ class IPAccess extends DatabaseObject {
 		'StartIP',
 		'Addresses');
 
-	function __string2array($p_IPaddress)
+	private function __string2array($p_IPaddress)
 	{
 		$IPaddressArray = array();
 		$IPaddressArray[] = strtok($p_IPaddress, '.');
@@ -38,7 +38,7 @@ class IPAccess extends DatabaseObject {
 		return $IPaddressArray;
 	}
 
-	function __array2int($p_IPAddressArray)
+	private function __array2int($p_IPAddressArray)
 	{
 		if (!is_array($p_IPAddressArray) || sizeof($p_IPAddressArray) < 4) {
 			return null;
@@ -50,7 +50,7 @@ class IPAccess extends DatabaseObject {
 		return $IPAddress;
 	}
 
-	function __int2array($p_IPAddress)
+	private function __int2array($p_IPAddress)
 	{
 		$IPAddressArray = array();
 		for ($i = 3; $i >= 0; $i--) {
@@ -60,7 +60,7 @@ class IPAccess extends DatabaseObject {
 		return $IPAddressArray;
 	}
 
-	function __array2string($p_IPAddressArray)
+	private function __array2string($p_IPAddressArray)
 	{
 		if (!is_array($p_IPAddressArray) || sizeof($p_IPAddressArray) < 4) {
 			return null;
@@ -80,7 +80,7 @@ class IPAccess extends DatabaseObject {
 	 * @param int $p_startIP
 	 * @param int $p_addresses
 	 */
-	function IPAccess($p_userId = null, $p_startIP = null, $p_addresses = null)
+	public function IPAccess($p_userId = null, $p_startIP = null, $p_addresses = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdUser'] = $p_userId;
@@ -99,7 +99,7 @@ class IPAccess extends DatabaseObject {
 		}
 	}
 
-	function create($p_userId, $p_startIP, $p_addresses = 1)
+	public function create($p_userId, $p_startIP, $p_addresses = 1)
 	{
 		$startIP = null;
 		$startIPstring = '';
@@ -115,7 +115,7 @@ class IPAccess extends DatabaseObject {
 	    $tmpValues = array('IdUser'=>$p_userId, 'StartIP'=>$startIP, 'Addresses'=>$p_addresses);
 	    $result = parent::create($tmpValues);
 	    if ($result) {
-	    	$user =& new User($p_userId);
+	    	$user = new User($p_userId);
 			$logtext = getGS('IP Group $1 added for user $2', "$startIPstring:$p_addresses",
 							 $user->getUserName());
 			Log::Message($logtext, null, 57);
@@ -123,7 +123,7 @@ class IPAccess extends DatabaseObject {
 		return $result;
 	}
 
-	function delete()
+	public function delete()
 	{
 		$startIPstring = $this->getStartIPstring();
 		$addresses = $this->getAddresses();
@@ -135,32 +135,32 @@ class IPAccess extends DatabaseObject {
 		return $result;
 	}
 
-	function getUserId()
+	public function getUserId()
 	{
 		return $this->m_data['IdUser'];
 	}
 
-	function getStartIP()
+	public function getStartIP()
 	{
 		return $this->m_data['StartIP'];
 	}
 
-	function getStartIParray()
+	public function getStartIParray()
 	{
 		return $this->__int2array($this->m_data['StartIP']);
 	}
 
-	function getStartIPstring()
+	public function getStartIPstring()
 	{
 		return $this->__array2string($this->__int2array($this->m_data['StartIP']));
 	}
 
-	function getAddresses()
+	public function getAddresses()
 	{
 		return $this->m_data['Addresses'];
 	}
 
-	function GetUserIPAccessList($p_userId)
+	public static function GetUserIPAccessList($p_userId)
 	{
 		global $g_ado_db;
 
@@ -169,7 +169,7 @@ class IPAccess extends DatabaseObject {
 		$IPAccessList = array();
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
-				$tmpObj =& new IPAccess();
+				$tmpObj = new IPAccess();
 				$tmpObj->fetch($row);
 				$IPAccessList[] = $tmpObj;
 			}

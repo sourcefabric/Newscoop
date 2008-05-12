@@ -14,7 +14,7 @@ $articleTypeName = Input::Get('f_article_type');
 $fieldName = Input::Get('f_field_name');
 
 
-$field =& new ArticleTypeField($articleTypeName, $fieldName);
+$field = new ArticleTypeField($articleTypeName, $fieldName);
 if ($field->exists()) {
 	$field->delete();
 }

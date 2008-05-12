@@ -31,8 +31,8 @@ function smarty_block_list_article_audio_attachments($p_params, $p_content, &$p_
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 0;
-    	$articleAudioAttachmentsList = new ArticleAudioAttachmentsList($start, $p_params);
+        $start = $campContext->next_list_start('ArticleAudioAttachmentsList');
+        $articleAudioAttachmentsList = new ArticleAudioAttachmentsList($start, $p_params);
     	$campContext->setCurrentList($articleAudioAttachmentsList, array('audioclip'));
     }
 

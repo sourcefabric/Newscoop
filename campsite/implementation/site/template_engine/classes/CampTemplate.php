@@ -62,7 +62,7 @@ final class CampTemplate extends Smarty
         $this->config_dir = CS_PATH_SMARTY.DIR_SEP.'configs';
         $this->plugins_dir = array(CS_PATH_SITE.DIR_SEP.'smarty_camp_plugins',
                                    CS_PATH_SMARTY.DIR_SEP.'plugins');
-        $this->template_dir = CS_PATH_SMARTY_TEMPLATES;
+        $this->template_dir = CS_PATH_SITE.DIR_SEP.CS_PATH_SMARTY_TEMPLATES;
         $this->compile_dir = CS_PATH_SITE.DIR_SEP.'templates_c';
     } // fn __constructor
 
@@ -70,8 +70,7 @@ final class CampTemplate extends Smarty
     /**
      * Singleton function that returns the global class object.
      *
-     * @return object
-     *    CampTemplate
+     * @return CampTemplate object
      */
     public static function singleton()
     {
@@ -86,7 +85,7 @@ final class CampTemplate extends Smarty
     /**
      * Returns the template context object.
      *
-     * @return object
+     * @return CampContext object
      */
     public function &context()
     {
@@ -113,7 +112,7 @@ final class CampTemplate extends Smarty
      */
     public function trigger_error($p_message, $p_smarty = null)
     {
-    	if (!is_null($p_smarty)) {
+    	if (is_object($p_smarty)) {
     		$p_smarty->trigger_error($p_message);
     	} else {
     		trigger_error("Campsite error: $p_message");

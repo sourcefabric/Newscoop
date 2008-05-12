@@ -28,7 +28,7 @@ class TimeUnit extends DatabaseObject {
 	 * @param string $p_unit
 	 * @param int $p_languageId
 	 */
-	function TimeUnit($p_unit = null, $p_languageId = null)
+	public function TimeUnit($p_unit = null, $p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Unit'] = $p_unit;
@@ -42,9 +42,9 @@ class TimeUnit extends DatabaseObject {
 	} // constructor
 
 
-	function SetTimeUnit($p_unit, $p_languageId, $p_name)
+	public static function SetTimeUnit($p_unit, $p_languageId, $p_name)
 	{
-		$timeUnit =& new TimeUnit($p_unit, $p_languageId);
+		$timeUnit = new TimeUnit($p_unit, $p_languageId);
 		if ($timeUnit->exists()) {
 			$timeUnit->setProperty('Name', $p_name);
 		} else {
@@ -56,7 +56,7 @@ class TimeUnit extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getUnit()
+	public function getUnit()
 	{
 		return $this->m_data['Unit'];
 	} // fn getUnit
@@ -65,7 +65,7 @@ class TimeUnit extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->m_data['Name'];
 	} // fn getName
@@ -74,7 +74,7 @@ class TimeUnit extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getLanguageId()
+	public function getLanguageId()
 	{
 		return $this->m_data['IdLanguage'];
 	} // fn getLanguageId
@@ -84,7 +84,7 @@ class TimeUnit extends DatabaseObject {
 	 * Return an array of all time units.
 	 * @return array
 	 */
-	function GetTimeUnits($p_languageCode)
+	public static function GetTimeUnits($p_languageCode)
 	{
 		$queryStr = "SELECT TimeUnits.Unit, TimeUnits.Name "
 					." FROM TimeUnits, Languages "

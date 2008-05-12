@@ -18,12 +18,12 @@ if (!Input::IsValid()) {
 }
 
 if ($f_publication_id > 0) {
-	$publicationObj =& new Publication($f_publication_id);
-	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+	$publicationObj = new Publication($f_publication_id);
+	$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+	$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 }
-$articleObj =& new Article($f_language_selected, $f_article_number);
-$attachmentObj =& new Attachment($f_attachment_id);
+$articleObj = new Article($f_language_selected, $f_article_number);
+$attachmentObj = new Attachment($f_attachment_id);
 
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS("Article does not exist."), null, true);

@@ -780,7 +780,7 @@ class XR_CcClient {
      *
      *  @return this
      */
-    function XR_CcClient ($mdefs, $debug=0, $verbose=FALSE)
+    public function XR_CcClient ($mdefs, $debug=0, $verbose=FALSE)
     {
         $this->mdefs = $mdefs;
         $this->debug = $debug;
@@ -819,14 +819,14 @@ class XR_CcClient {
      *
      *  @return object, created object instance
      */
-    function &Factory($mdefs, $debug=0, $verbose=FALSE)
+    public static function &Factory($mdefs, $debug=0, $verbose=FALSE)
     {
     	if (class_exists('XR_CcClientCore')) {
-    		$xrc =& new XR_CcClientCore($mdefs, $debug, $verbose);
+    		$xrc = new XR_CcClientCore($mdefs, $debug, $verbose);
     		return $xrc;
     	}
     	if (!is_array($mdefs)) {
-    		$result =& new PEAR_Error("Invalid methods definition in XML-RCP client.");
+    		$result = new PEAR_Error("Invalid methods definition in XML-RCP client.");
     		return $result;
     	}
         $f = '';
@@ -844,12 +844,12 @@ class XR_CcClient {
             "}\n";
         $r = eval($e);
         if ($r === FALSE) {
-            $result =& new PEAR_Error(getGS("There was a problem trying to execute the XML RPC function."));
+            $result = new PEAR_Error(getGS("There was a problem trying to execute the XML RPC function."));
         	return $result;
         }
-        $xrc =& new XR_CcClientCore($mdefs, $debug, $verbose);
+        $xrc = new XR_CcClientCore($mdefs, $debug, $verbose);
         if (is_null($xrc->client)) {
-        	$result =& new PEAR_Error(getGS("The Campcaster server configuration is invalid."));
+        	$result = new PEAR_Error(getGS("The Campcaster server configuration is invalid."));
         	return $result;
         }
         return $xrc;
@@ -865,7 +865,7 @@ class XR_CcClient {
      *
      *  @return array, PHP hash with response
      */
-    function callMethod($method, $gettedPars)
+    public function callMethod($method, $gettedPars)
     {
         $parr = array();
         $XML_RPC_val = new XML_RPC_Value;
@@ -921,7 +921,7 @@ class XR_CcClient {
      * @return boolean|PEAR_Error
      *      TRUE on success, PEAR_Error on failure
      */
-    function ping($sessid = null)
+    public function ping($sessid = null)
     {
         $resp = $this->xr_loadPref($sessid, 'stationName');
         if (is_string($resp) && $resp == 'Connection refused') {
@@ -937,7 +937,7 @@ class XR_CcClient {
         }
         return true;
     } // fn ping
-    
+
 } // class XR_CcClient
 
 ?>

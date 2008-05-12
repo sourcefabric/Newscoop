@@ -26,12 +26,12 @@ if (!Input::IsValid()) {
 $languages = Language::GetLanguages();
 $urlTypes = UrlType::GetUrlTypes();
 $timeUnits = TimeUnit::GetTimeUnits($TOL_Language);
-$publicationObj =& new Publication($f_publication_id);
+$publicationObj = new Publication($f_publication_id);
 $aliases = Alias::GetAliases(null, $f_publication_id);
 
-$pubTimeUnit =& new TimeUnit($publicationObj->getTimeUnit(), $publicationObj->getLanguageId());
+$pubTimeUnit = new TimeUnit($publicationObj->getTimeUnit(), $publicationObj->getLanguageId());
 if (!$pubTimeUnit->exists()) {
-	$pubTimeUnit =& new TimeUnit($publicationObj->getTimeUnit(), 1);
+	$pubTimeUnit = new TimeUnit($publicationObj->getTimeUnit(), 1);
 }
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");

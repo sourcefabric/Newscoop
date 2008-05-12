@@ -33,7 +33,7 @@ if (empty($f_name)) {
     }
 
     if ($correct) {
-    	$old_articleTypeField =& new ArticleTypeField($articleTypeName, $f_oldName);
+    	$old_articleTypeField = new ArticleTypeField($articleTypeName, $f_oldName);
     	if (!$old_articleTypeField->exists()) {
 		    $correct = false;
 		    $errorMsgs[] = getGS('The field $1 does not exist.', '<B>'.htmlspecialchars($f_oldName).'</B>');
@@ -41,7 +41,7 @@ if (empty($f_name)) {
     }
 
 	if ($correct) {
-		$articleTypeField =& new ArticleTypeField($articleTypeName, $f_name);
+		$articleTypeField = new ArticleTypeField($articleTypeName, $f_name);
 		if ($articleTypeField->exists()) {
 			$correct = false;
 			$errorMsgs[] = getGS('The field $1 already exists.', '<B>'. htmlspecialchars($f_name). '</B>');

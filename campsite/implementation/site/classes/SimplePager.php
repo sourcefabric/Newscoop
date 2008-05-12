@@ -1,5 +1,6 @@
 <?php
-class SimplePager {
+class SimplePager
+{
 	var $m_offsets;
 	var $m_urls = array();
 	var $m_selectedPageNumber = null;
@@ -33,7 +34,8 @@ class SimplePager {
 	 * 		position in the pager when they leave the screen and come back
 	 * 		to it.
 	 */
-	function SimplePager($p_totalItems, $p_itemsPerPage, $p_offsetVarName, $p_baseUrl, $p_useSessions = true, $p_width = 10)
+	public function SimplePager($p_totalItems, $p_itemsPerPage, $p_offsetVarName,
+	                            $p_baseUrl, $p_useSessions = true, $p_width = 10)
 	{
 	    global $_REQUEST;
 
@@ -99,7 +101,7 @@ class SimplePager {
 			if ($this->m_selectedPageNumber > 1) {
     			$this->m_urls["first"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[0];
 	       		$this->m_urls["previous"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[max(0, $this->m_selectedPageNumber-2)];
-			} 
+			}
 	       	if ($this->m_selectedPageNumber > 10) {
 				$this->m_urls["previous_10_pages"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[max(0, $this->m_selectedPageNumber-11)];
 			}
@@ -108,7 +110,7 @@ class SimplePager {
 			}
 			if ( ($this->m_numPages > $this->m_selectedPageNumber)) {
     			$this->m_urls["next"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[min($this->m_numPages-1, $this->m_selectedPageNumber)];
-			} 
+			}
     		if ( ($this->m_numPages - $this->m_selectedPageNumber) > 9) {
 				$this->m_urls["next_10_pages"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[min($this->m_numPages-1, $this->m_selectedPageNumber+9)];
 			}
@@ -117,7 +119,7 @@ class SimplePager {
 			}
 			if ( ($this->m_numPages > $this->m_selectedPageNumber)) {
     			$this->m_urls["last"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[$this->m_numPages-1];
-			} 
+			}
 		}
 	} // constructor
 
@@ -126,7 +128,7 @@ class SimplePager {
 	 * Default way to render the links.  Feel free to come up with your own way.
 	 * @return string
 	 */
-	function render()
+	public function render()
 	{
 		if ($this->m_renderedStr !== null) {
 			return $this->m_renderedStr;
@@ -179,7 +181,7 @@ class SimplePager {
 	 * @param int $p_step
 	 * @return array
 	 */
-	function _range($p_num1, $p_num2, $p_step = 1)
+	public function _range($p_num1, $p_num2, $p_step = 1)
 	{
 		$temp = array();
 	   	for($i = $p_num1; $i <= $p_num2; $i += $p_step) {

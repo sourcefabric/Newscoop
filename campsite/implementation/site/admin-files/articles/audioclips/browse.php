@@ -232,7 +232,7 @@ for ($catIndex = 1; $catIndex <= 2; $catIndex++) {
 <?php
 	if (count($clips) > 0) {
 	    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";
-    	$pager =& new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
+    	$pager = new SimplePager($clipCount, $f_items_per_page, "f_audioclip_offset", $pagerUrl);
     	require('cliplist.php');
     } else {
 ?>

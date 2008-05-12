@@ -14,6 +14,7 @@ require_once('File/Find.php');
 require_once('LocalizerConfig.php');
 require_once('LocalizerLanguage.php');
 require_once('LanguageMetadata.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/classes/SyntaxError.php');
 
 /**
  * Translate the given string and print it.  This function accepts a variable
@@ -119,8 +120,8 @@ class Localizer {
     	if ($g_localizerConfig['DEFAULT_FILE_TYPE'] != '') {
     		return $g_localizerConfig['DEFAULT_FILE_TYPE'];
     	}
-	    $defaultLang =& new LocalizerLanguage('globals',
-	                                          $g_localizerConfig['DEFAULT_LANGUAGE']);
+	    $defaultLang = new LocalizerLanguage('globals',
+	                                         $g_localizerConfig['DEFAULT_LANGUAGE']);
 	    if ($defaultLang->loadGsFile()) {
 	    	return 'gs';
 	    }
@@ -156,7 +157,7 @@ class Localizer {
 
         $key = $p_prefix."_".$g_localizerConfig['DEFAULT_LANGUAGE'];
 	    if (!isset($g_localizerConfig['LOADED_FILES'][$key])) {
-	        $defaultLang =& new LocalizerLanguage($p_prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
+	        $defaultLang = new LocalizerLanguage($p_prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
     	    $defaultLang->loadFile(Localizer::GetMode());
     	    $defaultLangStrings = $defaultLang->getTranslationTable();
     	    // Merge default language strings into the translation array.
@@ -165,7 +166,7 @@ class Localizer {
 	    }
 	    $key = $p_prefix."_".$p_languageCode;
 	    if (!isset($g_localizerConfig['LOADED_FILES'][$key])) {
-    	    $userLang =& new LocalizerLanguage($p_prefix, $p_languageCode);
+    	    $userLang = new LocalizerLanguage($p_prefix, $p_languageCode);
     	    $userLang->loadFile(Localizer::GetMode());
     	    $userLangStrings = $userLang->getTranslationTable();
     	    // Merge user strings into translation array.
@@ -193,10 +194,10 @@ class Localizer {
     function CompareKeys($p_prefix, $p_data, $p_findExistingKeys = true)
     {
         global $g_localizerConfig;
-		$localData =& new LocalizerLanguage($p_prefix,
+		$localData = new LocalizerLanguage($p_prefix,
 		                                    $g_localizerConfig['DEFAULT_LANGUAGE']);
 		$localData->loadFile(Localizer::GetMode());
-        $globaldata =& new LocalizerLanguage($g_localizerConfig['FILENAME_PREFIX_GLOBAL'],
+        $globaldata = new LocalizerLanguage($g_localizerConfig['FILENAME_PREFIX_GLOBAL'],
                                              $g_localizerConfig['DEFAULT_LANGUAGE']);
         $globaldata->loadFile(Localizer::GetMode());
 
@@ -232,7 +233,7 @@ class Localizer {
                     $filepath = $g_localizerConfig['TRANSLATION_DIR'].'/'.$file;
                     if ( ($file != '.') && ($file != '..') && ($file[0] != '.')
                          && (filetype($filepath) == "dir")) {
-        		        $languageDef =& new LanguageMetadata();
+        		        $languageDef = new LanguageMetadata();
         		        $languageDef->m_languageId = $file;
         		        $languageDef->m_languageCode = $file;
                         $languages[] = $languageDef;
@@ -334,7 +335,7 @@ class Localizer {
         }
         $dir = $g_localizerConfig["MAP_PREFIX_TO_DIR"][$p_prefix];
 	    $existingKeys = Localizer::FindTranslationStrings($dir);
-		$localData =& new LocalizerLanguage($p_prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
+		$localData = new LocalizerLanguage($p_prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
 		$localData->loadFile(Localizer::GetMode());
 		$localTable = $localData->getTranslationTable();
 		$unusedKeys = array();
@@ -368,7 +369,7 @@ class Localizer {
 	        foreach ($languages as $language) {
 
 	        	// Load the language file
-	        	$source =& new LocalizerLanguage($p_prefix, $language->getLanguageId());
+	        	$source = new LocalizerLanguage($p_prefix, $language->getLanguageId());
 	        	$tmpResult = $source->loadFile(Localizer::GetMode());
 
 	        	// If we cant load the file, record the error and move on to the next file.
@@ -401,7 +402,7 @@ class Localizer {
       	// We only need to change the values in one file.
         else {
         	// Load the language file
-        	$source =& new LocalizerLanguage($p_prefix, $p_languageId);
+        	$source = new LocalizerLanguage($p_prefix, $p_languageId);
         	$result = $source->loadFile(Localizer::GetMode());
         	if (PEAR::isError($result)) {
         		return array($result);
@@ -428,14 +429,14 @@ class Localizer {
     function FixPositions($p_prefix)
     {
         global $g_localizerConfig;
-        $defaultLanguage =& new LocalizerLanguage($p_prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
+        $defaultLanguage = new LocalizerLanguage($p_prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
         $defaultLanguage->loadFile(Localizer::GetMode());
         $defaultTranslationTable = $defaultLanguage->getTranslationTable();
         $languageIds = Localizer::GetAllLanguages();
         foreach ($languageIds as $languageId) {
 
         	// Load the language file
-        	$source =& new LocalizerLanguage($p_prefix, $languageId);
+        	$source = new LocalizerLanguage($p_prefix, $languageId);
         	$source->loadFile(Localizer::GetMode());
 
         	$count = 0;
@@ -465,7 +466,7 @@ class Localizer {
         global $g_localizerConfig;
         $languages = Localizer::GetLanguages();
         foreach ($languages as $language) {
-        	$source =& new LocalizerLanguage($p_prefix, $language->getLanguageId());
+        	$source = new LocalizerLanguage($p_prefix, $language->getLanguageId());
         	$success = $source->loadFile(Localizer::GetMode());
         	if (!$success) {
         		$result = $source->saveFile(Localizer::GetMode());
@@ -509,7 +510,7 @@ class Localizer {
         $languages = Localizer::GetLanguages();
 
         foreach ($languages as $language) {
-        	$target =& new LocalizerLanguage($p_prefix, $language->getLanguageId());
+        	$target = new LocalizerLanguage($p_prefix, $language->getLanguageId());
         	$target->loadFile(Localizer::GetMode());
         	if (is_array($p_key)) {
         		foreach ($p_key as $key) {
@@ -536,7 +537,7 @@ class Localizer {
     {
         $languages = Localizer::GetLanguages();
         foreach ($languages as $language) {
-			$target =& new LocalizerLanguage($p_prefix, $language->getLanguageId());
+			$target = new LocalizerLanguage($p_prefix, $language->getLanguageId());
 			$target->loadFile(Localizer::GetMode());
 			$target->moveString($p_pos1, $p_pos2);
 			$target->saveFile(Localizer::GetMode());
@@ -555,11 +556,11 @@ class Localizer {
     {
         $languages = Localizer::GetLanguages();
         foreach ($languages as $language) {
-			$source =& new LocalizerLanguage($p_oldPrefix, $language->getLanguageId());
+			$source = new LocalizerLanguage($p_oldPrefix, $language->getLanguageId());
 			$source->loadFile(Localizer::GetMode());
 			$srcValue = $source->getValue($p_key);
 
-			$target =& new LocalizerLanguage($p_newPrefix, $language->getLanguageId());
+			$target = new LocalizerLanguage($p_newPrefix, $language->getLanguageId());
 			$target->loadFile(Localizer::GetMode());
 
 			$target->addString($p_key, $srcValue);
@@ -590,7 +591,7 @@ class Localizer {
 		}
 		$className = "LocalizerFileFormat_".strtoupper($p_mode);
 		if (class_exists($className)) {
-		    $object =& new $className();
+		    $object = new $className();
 		    if (method_exists($object, "getLanguages")) {
 		        $languages = $object->getLanguages();
 		    }

@@ -25,6 +25,13 @@ class MyArrayObject extends ArrayObject
  */
 abstract class ListObject
 {
+    /**
+     * The identifier of the list
+     *
+     * @var string
+     */
+    private $m_id;
+
 	/**
 	 * The name of the list
 	 *
@@ -131,6 +138,8 @@ abstract class ListObject
 			return;
 		}
 
+		$this->m_id = null;
+
 		/**
 		 * Processes the input parameters passed in an array; drops the invalid
 		 * parameters and parameters with invalid values. Returns an array of
@@ -164,6 +173,13 @@ abstract class ListObject
 		 * Process order constraints.
 		 */
 		$this->m_order = $this->ProcessOrder(ListObject::ParseConstraintsString($this->m_orderStr));
+
+        if ($this->m_constraints === false) {
+            $this->m_totalCount = 0;
+            $this->m_objects = new MyArrayObject(array());
+            $this->m_hasNextElements = false;
+            return;
+        }
 
 		$objects = $this->CreateList($this->m_start, $this->m_limit, $parameters, $this->m_totalCount);
 		if (!is_array($objects)) {
@@ -259,7 +275,7 @@ abstract class ListObject
 		if ($this->isEmpty()) {
 			return 0;
 		}
-		return 1 + $this->defaultIterator()->key();
+		return 1 + $this->m_start + $this->defaultIterator()->key();
 	}
 
 	/**
@@ -344,6 +360,34 @@ abstract class ListObject
 	}
 
 	/**
+	 * Returns the start element index of the previous group of items
+	 * from the list. Returns null if the list had no limit.
+	 *
+	 * @return int
+	 */
+	private function getPrevStart()
+	{
+	    if ($this->m_limit == 0) {
+	        return null;
+	    }
+	    return ($this->m_start >= $this->m_limit ? ($this->m_start - $this->m_limit) : 0);
+	}
+
+	/**
+	 * Returns the start element index of the next group of items
+	 * from the list. Returns null if the list had no limit.
+	 *
+	 * @return int
+	 */
+	private function getNextStart()
+	{
+	    if ($this->m_limit == 0) {
+	        return null;
+	    }
+	    return $this->m_start + $this->m_limit;
+	}
+
+	/**
 	 * Returns the index of the last element of this list in the
 	 * original list from which this was truncated.
 	 *
@@ -403,6 +447,22 @@ abstract class ListObject
 		}
 		return 1 + ($p_iterator->key() % $this->m_columns);
 	}
+	
+	/**
+	 * Returns the row number for the given iterator
+	 *
+	 * @param int $p_iterator
+	 */
+	public function getRow($p_iterator = null)
+	{
+		if (!isset($p_iterator)) {
+			$p_iterator = $this->defaultIterator();
+		}
+		if ($this->m_columns == 0 || $this->m_columns == 1) {
+			return (1 + $p_iterator->key());
+		}
+		return 1 + (int)($p_iterator->key() / $this->m_columns);
+	}
 
 	/**
 	 * Returns the number of columns.
@@ -460,15 +520,40 @@ abstract class ListObject
 	            return $this->getLimit();
 	        case 'name':
 	            return $this->getName();
+	        case 'row':
+	            return $this->getRow();
 	        case 'start':
 	            return $this->getStart();
 	        case 'count':
 	            return $this->getTotalCount();
 	        case 'at_beginning':
-	            return $this->getIndex() == 1;
+	            return $this->getIndex() == ($this->getStart() + 1);
 	        case 'at_end';
-	            return ($this->getStart() + $this->getIndex()) == $this->getEnd();
+	            return $this->getIndex() == $this->getEnd();
+	        case 'has_next_elements':
+	            return $this->hasNextElements();
+	        case 'has_previous_elements':
+	            return $this->hasPreviousElements();
+	        case 'previous_start':
+	            return $this->getPrevStart();
+	        case 'next_start':
+	            return $this->getNextStart();
+	        case 'id':
+	            return $this->m_id;
+	        default:
+    	        $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
+        				        . OF_OBJECT_STRING . ' list';
+	            CampTemplate::singleton()->trigger_error($errorMessage);
 	    }
+	}
+
+    /**
+     * Sets the list identifier
+     *
+     * @param string $p_id
+     */
+	public function setId($p_id) {
+	    $this->m_id = $p_id;
 	}
 
 	/**

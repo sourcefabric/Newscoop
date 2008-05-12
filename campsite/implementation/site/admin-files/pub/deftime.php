@@ -18,10 +18,10 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$publicationObj =& new Publication($Pub);
-$pubTimeUnit =& new TimeUnit($publicationObj->getTimeUnit(), $publicationObj->getLanguageId());
+$publicationObj = new Publication($Pub);
+$pubTimeUnit = new TimeUnit($publicationObj->getTimeUnit(), $publicationObj->getLanguageId());
 if (!$pubTimeUnit->exists()) {
-	$pubTimeUnit =& new TimeUnit($publicationObj->getTimeUnit(), 1);
+	$pubTimeUnit = new TimeUnit($publicationObj->getTimeUnit(), 1);
 }
 
 $defaultTimes = SubscriptionDefaultTime::GetSubscriptionDefaultTimes(null, $Pub);
@@ -54,7 +54,7 @@ camp_html_content_top(getGS("Subscription Settings by Country"), array("Pub" => 
 <?php
 $color = 0;
 foreach ($defaultTimes as $time) {
-	$country =& new Country($time->getCountryCode(), $Language);
+	$country = new Country($time->getCountryCode(), $Language);
 	?>
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD>

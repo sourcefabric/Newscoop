@@ -8,7 +8,7 @@ class Phorum_setting extends DatabaseObject {
 		"type",
 		"data");
 
-	function Phorum_setting($p_name, $p_type)
+	public function Phorum_setting($p_name, $p_type)
 	{
 		global $PHORUM;
 		$this->m_dbTableName = $PHORUM['settings_table'];
@@ -28,12 +28,12 @@ class Phorum_setting extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function create()
+	public function create()
 	{
 		parent::create($this->m_data);
 	} // fn create
 
-	function get()
+	public function get()
 	{
 		if ($this->m_data['type'] == 'S' && is_string($this->m_data['data'])) {
 			if (empty($this->m_data['data'])) {
@@ -44,7 +44,7 @@ class Phorum_setting extends DatabaseObject {
 		return $this->m_data['data'];
 	}
 
-	function update($p_value)
+	public function update($p_value)
 	{
 		if ($this->m_data['type'] == 'S') {
 			$current = $this->get();

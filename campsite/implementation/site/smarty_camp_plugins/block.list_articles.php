@@ -31,9 +31,12 @@ function smarty_block_list_articles($p_params, $p_content, &$p_smarty, &$p_repea
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 0;
-    	$articlesList = new ArticlesList($start, $p_params);
-    	$campContext->setCurrentList($articlesList, array('article'));
+        $start = $campContext->next_list_start('ArticlesList');
+        $articlesList = new ArticlesList($start, $p_params);
+    	$campContext->setCurrentList($articlesList, array('publication', 'language',
+    	                                                  'issue', 'section', 'article',
+    	                                                  'image', 'attachment', 'comment',
+    	                                                  'audioclip', 'subtitle'));
     }
 
     $currentArticle = $campContext->current_articles_list->current;

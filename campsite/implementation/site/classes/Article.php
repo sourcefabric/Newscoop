@@ -99,7 +99,8 @@ class Article extends DatabaseObject {
                                                 'keyword'=>'Keywords',
                                                 'onfrontpage'=>'OnFrontPage',
                                                 'onsection'=>'OnSection',
-                                                'public'=>'Public');
+                                                'public'=>'Public',
+                                                'published'=>'Published');
 
 	/**
 	 * Construct by passing in the primary key to access the article in
@@ -109,7 +110,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 *		Not required when creating an article.
 	 */
-	function Article($p_languageId = null, $p_articleNumber = null)
+	public function Article($p_languageId = null, $p_articleNumber = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdLanguage'] = $p_languageId;
@@ -124,7 +125,7 @@ class Article extends DatabaseObject {
 	 * A way for internal functions to call the superclass create function.
 	 * @param array $p_values
 	 */
-	function __create($p_values = null) { return parent::create($p_values); }
+	public function __create($p_values = null) { return parent::create($p_values); }
 
 
 	/**
@@ -143,7 +144,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_sectionNumber
 	 * @return void
 	 */
-	function create($p_articleType, $p_name = null, $p_publicationId = null, $p_issueNumber = null, $p_sectionNumber = null)
+	public function create($p_articleType, $p_name = null, $p_publicationId = null, $p_issueNumber = null, $p_sectionNumber = null)
 	{
 		global $g_ado_db;
 
@@ -200,7 +201,7 @@ class Article extends DatabaseObject {
 		$this->fetch();
 
 		// Insert an entry into the article type table.
-		$articleData =& new ArticleData($this->m_data['Type'],
+		$articleData = new ArticleData($this->m_data['Type'],
 			$this->m_data['Number'],
 			$this->m_data['IdLanguage']);
 		$articleData->create();
@@ -218,7 +219,7 @@ class Article extends DatabaseObject {
 	 * Create a unique identifier for an article.
 	 * @access private
 	 */
-	function __generateArticleNumber()
+	public function __generateArticleNumber()
 	{
 	    global $g_ado_db;
 		$queryStr = 'UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)';
@@ -252,8 +253,9 @@ class Article extends DatabaseObject {
 	 *     If $p_copyTranslations is TRUE or an array, return an array of newly created articles.
 	 *     If $p_copyTranslations is FALSE, return the new Article.
 	 */
-	function copy($p_destPublicationId = 0, $p_destIssueNumber = 0, $p_destSectionNumber = 0,
-	              $p_userId = null, $p_copyTranslations = false)
+	public function copy($p_destPublicationId = 0, $p_destIssueNumber = 0,
+	                     $p_destSectionNumber = 0, $p_userId = null,
+	                     $p_copyTranslations = false)
 	{
 		// It is an optimization to put these here because in most cases
 		// you dont need these files.
@@ -291,7 +293,7 @@ class Article extends DatabaseObject {
 		$newArticles = array();
 		foreach ($copyArticles as $copyMe) {
     		// Construct the duplicate article object.
-    		$articleCopy =& new Article();
+    		$articleCopy = new Article();
     		$articleCopy->m_data['IdPublication'] = $p_destPublicationId;
     		$articleCopy->m_data['NrIssue'] = $p_destIssueNumber;
     		$articleCopy->m_data['NrSection'] = $p_destSectionNumber;
@@ -323,7 +325,7 @@ class Article extends DatabaseObject {
     		$articleCopy->setProperty('UploadDate', 'NOW()', true, true);
 
     		// Insert an entry into the article type table.
-    		$newArticleData =& new ArticleData($articleCopy->m_data['Type'],
+    		$newArticleData = new ArticleData($articleCopy->m_data['Type'],
     			$articleCopy->m_data['Number'],
     			$articleCopy->m_data['IdLanguage']);
     		$newArticleData->create();
@@ -373,7 +375,8 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function move($p_destPublicationId = 0, $p_destIssueNumber = 0, $p_destSectionNumber = 0)
+	public function move($p_destPublicationId = 0, $p_destIssueNumber = 0,
+	                     $p_destSectionNumber = 0)
 	{
 		$columns = array();
 		if ($this->m_data["IdPublication"] != $p_destPublicationId) {
@@ -401,7 +404,7 @@ class Article extends DatabaseObject {
 	 * The name returned will have the form "original_article_name (duplicate #)"
 	 * @return string
 	 */
-	function getUniqueName($p_currentName)
+	public function getUniqueName($p_currentName)
 	{
 	    global $g_ado_db;
 		$origNewName = $p_currentName . " (".getGS("Duplicate");
@@ -434,10 +437,10 @@ class Article extends DatabaseObject {
 	 * @param string $p_name
 	 * @return Article
 	 */
-	function createTranslation($p_languageId, $p_userId, $p_name)
+	public function createTranslation($p_languageId, $p_userId, $p_name)
 	{
 		// Construct the duplicate article object.
-		$articleCopy =& new Article();
+		$articleCopy = new Article();
 		$articleCopy->m_data['IdPublication'] = $this->m_data['IdPublication'];
 		$articleCopy->m_data['NrIssue'] = $this->m_data['NrIssue'];
 		$articleCopy->m_data['NrSection'] = $this->m_data['NrSection'];
@@ -470,7 +473,7 @@ class Article extends DatabaseObject {
 		$articleCopy->setProperty('UploadDate', 'NOW()', true, true);
 
 		// Insert an entry into the article type table.
-		$articleCopyData =& new ArticleData($articleCopy->m_data['Type'],
+		$articleCopyData = new ArticleData($articleCopy->m_data['Type'],
 			$articleCopy->m_data['Number'], $articleCopy->m_data['IdLanguage']);
 		$articleCopyData->create();
 
@@ -495,7 +498,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function delete()
+	public function delete()
 	{
 		// It is an optimization to put these here because in most cases
 		// you dont need these files.
@@ -537,7 +540,7 @@ class Article extends DatabaseObject {
 		$deleted = parent::delete();
 
 		// Delete row from article type table.
-		$articleData =& new ArticleData($this->m_data['Type'],
+		$articleData = new ArticleData($this->m_data['Type'],
 			$this->m_data['Number'],
 			$this->m_data['IdLanguage']);
 		$articleData->delete();
@@ -563,7 +566,7 @@ class Article extends DatabaseObject {
 	 * @return string
 	 *		In the form of YYYY-MM-DD HH:MM:SS
 	 */
-	function getLockTime()
+	public function getLockTime()
 	{
 		return $this->m_data['LockTime'];
 	} // fn getLockTime
@@ -573,7 +576,7 @@ class Article extends DatabaseObject {
 	 * Return TRUE if the article is locked, FALSE if it isnt.
 	 * @return boolean
 	 */
-	function isLocked()
+	public function isLocked()
 	{
 	    if ( ($this->m_data['LockUser'] == 0) && ($this->m_data['LockTime'] == 0) ) {
 	        return false;
@@ -592,7 +595,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_userId
 	 * @return void
 	 */
-	function setIsLocked($p_lock, $p_userId = null)
+	public function setIsLocked($p_lock, $p_userId = null)
 	{
 	    // Check parameters
         if ($p_lock && !is_numeric($p_userId)) {
@@ -620,9 +623,9 @@ class Article extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function getLanguages()
+	public function getLanguages()
 	{
-		$tmpLanguage  =& new Language();
+		$tmpLanguage  = new Language();
 		$columnNames = $tmpLanguage->getColumnNames(true);
 	 	$queryStr = 'SELECT '.implode(',', $columnNames).' FROM Articles, Languages '
 	 				.' WHERE IdPublication='.$this->m_data['IdPublication']
@@ -644,7 +647,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function getTranslations($p_articleNumber = null)
+	public function getTranslations($p_articleNumber = null)
 	{
 		if (!is_null($p_articleNumber)) {
 			$articleNumber = $p_articleNumber;
@@ -667,10 +670,10 @@ class Article extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getLanguageName()
+	public function getLanguageName()
 	{
 		if (is_null($this->m_languageName)) {
-			$language =& new Language($this->m_data['IdLanguage']);
+			$language = new Language($this->m_data['IdLanguage']);
 			$this->m_languageName = $language->getNativeName();
 		}
 		return $this->m_languageName;
@@ -681,7 +684,7 @@ class Article extends DatabaseObject {
 	 * Get the section that this article is in.
 	 * @return object
 	 */
-	function getSection()
+	public function getSection()
 	{
 		global $g_ado_db;
 	    $queryStr = 'SELECT * FROM Sections '
@@ -697,7 +700,7 @@ class Article extends DatabaseObject {
 			$query = $g_ado_db->Execute($queryStr);
 		}
 		$row = $query->FetchRow();
-		$section =& new Section($this->getPublicationId(), $this->getIssueNumber(),
+		$section = new Section($this->getPublicationId(), $this->getIssueNumber(),
 			$this->getLanguageId());
 		$section->fetch($row);
 	    return $section;
@@ -717,7 +720,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function positionRelative($p_direction, $p_spacesToMove = 1)
+	public function positionRelative($p_direction, $p_spacesToMove = 1)
 	{
 		global $g_ado_db;
 
@@ -784,7 +787,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_moveToPosition
 	 * @return boolean
 	 */
-	function positionAbsolute($p_moveToPosition = 1)
+	public function positionAbsolute($p_moveToPosition = 1)
 	{
 		global $g_ado_db;
 		// Get the article that is in the location we are moving
@@ -800,7 +803,7 @@ class Article extends DatabaseObject {
 		}
 		if ($destRow['ArticleOrder'] == $this->m_data['ArticleOrder']) {
 			// Move the destination down one.
-			$destArticle =& new Article($destRow['IdLanguage'], $destRow['Number']);
+			$destArticle = new Article($destRow['IdLanguage'], $destRow['Number']);
 			$destArticle->positionRelative("down", 1);
 			return true;
 		}
@@ -846,7 +849,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function userCanModify($p_user)
+	public function userCanModify($p_user)
 	{
 		$userCreatedArticle = ($this->m_data['IdUser'] == $p_user->getUserId());
 		$articleIsNew = ($this->m_data['Published'] == 'N');
@@ -866,7 +869,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getArticleTypeTableName()
+	public function getArticleTypeTableName()
 	{
 		return 'X'.$this->m_data['Type'];
 	} // fn getArticleTypeTableName
@@ -876,7 +879,7 @@ class Article extends DatabaseObject {
 	 * Get the publication ID of the publication that contains this article.
 	 * @return int
 	 */
-	function getPublicationId()
+	public function getPublicationId()
 	{
 		return $this->m_data['IdPublication'];
 	} // fn getPublicationId
@@ -888,7 +891,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setPublicationId($p_value)
+	public function setPublicationId($p_value)
 	{
 		if (is_numeric($p_value)) {
 			return $this->setProperty('IdPublication', $p_value);
@@ -903,7 +906,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getIssueNumber()
+	public function getIssueNumber()
 	{
 		return $this->m_data['NrIssue'];
 	} // fn getIssueNumber
@@ -915,7 +918,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setIssueNumber($p_value)
+	public function setIssueNumber($p_value)
 	{
 		if (is_numeric($p_value)) {
 			return $this->setProperty('NrIssue', $p_value);
@@ -930,7 +933,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getSectionNumber()
+	public function getSectionNumber()
 	{
 		return $this->m_data['NrSection'];
 	} // fn getSectionNumber
@@ -942,7 +945,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setSectionNumber($p_value)
+	public function setSectionNumber($p_value)
 	{
 		if (is_numeric($p_value)) {
 			return $this->setProperty('NrSection', $p_value);
@@ -957,7 +960,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getLanguageId()
+	public function getLanguageId()
 	{
 		return $this->m_data['IdLanguage'];
 	} // fn getLanguageId
@@ -972,7 +975,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getArticleNumber()
+	public function getArticleNumber()
 	{
 		return $this->m_data['Number'];
 	} // fn getArticleNumber
@@ -983,7 +986,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getTitle()
+	public function getTitle()
 	{
 		return $this->m_data['Name'];
 	} // fn getTitle
@@ -994,7 +997,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->m_data['Name'];
 	} // fn getName
@@ -1007,7 +1010,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function setTitle($p_title)
+	public function setTitle($p_title)
 	{
 		return parent::setProperty('Name', $p_title);
 	} // fn setTitle
@@ -1017,7 +1020,7 @@ class Article extends DatabaseObject {
 	 * Get the article type.
 	 * @return string
 	 */
-	function getType()
+	public function getType()
 	{
 		return $this->m_data['Type'];
 	} // fn getType
@@ -1027,10 +1030,10 @@ class Article extends DatabaseObject {
 	 * Get the logged in language's translation of the article type.
 	 * @return string
 	 */
-	function getTranslateType()
+	public function getTranslateType()
 	{
 		$type = $this->getType();
-		$typeObj =& new ArticleType($type);
+		$typeObj = new ArticleType($type);
 		return $typeObj->getDisplayName();
 	}
 
@@ -1039,7 +1042,7 @@ class Article extends DatabaseObject {
 	 * Return the user ID of the user who created this article.
 	 * @return int
 	 */
-	function getCreatorId()
+	public function getCreatorId()
 	{
 		return $this->m_data['IdUser'];
 	} // fn getCreatorId
@@ -1051,7 +1054,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setCreatorId($p_value)
+	public function setCreatorId($p_value)
 	{
 		return parent::setProperty('IdUser', $p_value);
 	} // fn setCreatorId
@@ -1064,7 +1067,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getOrder()
+	public function getOrder()
 	{
 		return $this->m_data['ArticleOrder'];
 	} // fn getOrder
@@ -1075,7 +1078,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function onFrontPage()
+	public function onFrontPage()
 	{
 		return ($this->m_data['OnFrontPage'] == 'Y');
 	} // fn onFrontPage
@@ -1087,7 +1090,7 @@ class Article extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setOnFrontPage($p_value)
+	public function setOnFrontPage($p_value)
 	{
 		return parent::setProperty('OnFrontPage', $p_value?'Y':'N');
 	} // fn setOnFrontPage
@@ -1098,7 +1101,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function onSectionPage()
+	public function onSectionPage()
 	{
 		return ($this->m_data['OnSection'] == 'Y');
 	} // fn onSectionPage
@@ -1109,7 +1112,7 @@ class Article extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setOnSectionPage($p_value)
+	public function setOnSectionPage($p_value)
 	{
 		return parent::setProperty('OnSection', $p_value?'Y':'N');
 	} // fn setOnSectionPage
@@ -1124,7 +1127,7 @@ class Article extends DatabaseObject {
 	 * @return string
 	 * 		Can be 'Y', 'S', or 'N'.
 	 */
-	function getWorkflowStatus()
+	public function getWorkflowStatus()
 	{
 		return $this->m_data['Published'];
 	} // fn getWorkflowStatus
@@ -1138,7 +1141,7 @@ class Article extends DatabaseObject {
 	 * @param string $p_value
 	 * @return string
 	 */
-	function getWorkflowDisplayString($p_value = null)
+	public function getWorkflowDisplayString($p_value = null)
 	{
 		if (is_null($p_value)) {
 			$p_value = $this->m_data['Published'];
@@ -1166,7 +1169,7 @@ class Article extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setWorkflowStatus($p_value)
+	public function setWorkflowStatus($p_value)
 	{
 		global $g_documentRoot;
 		require_once($g_documentRoot.'/classes/ArticleIndex.php');
@@ -1210,7 +1213,7 @@ class Article extends DatabaseObject {
 	 * Get the date the article was published.
 	 * @return string
 	 */
-	function getPublishDate()
+	public function getPublishDate()
 	{
 	    return $this->m_data['PublishDate'];
 	} // fn getPublishDate
@@ -1222,7 +1225,7 @@ class Article extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setPublishDate($p_value)
+	public function setPublishDate($p_value)
 	{
 		return $this->setProperty('PublishDate', $p_value);
 	} // fn setPublishDate
@@ -1234,7 +1237,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getCreationDate()
+	public function getCreationDate()
 	{
 		return $this->m_data['UploadDate'];
 	} // fn getCreationDate
@@ -1246,7 +1249,7 @@ class Article extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setCreationDate($p_value)
+	public function setCreationDate($p_value)
 	{
 		return $this->setProperty('UploadDate', $p_value);
 	} // fn setCreationDate
@@ -1258,7 +1261,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getLastModified()
+	public function getLastModified()
 	{
 	    // Deal with the differences between MySQL 4
 	    // and MySQL 5.
@@ -1277,7 +1280,7 @@ class Article extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getKeywords()
+	public function getKeywords()
 	{
 		global $g_documentRoot;
 		require_once($g_documentRoot.'/classes/SystemPref.php');
@@ -1291,7 +1294,7 @@ class Article extends DatabaseObject {
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setKeywords($p_value)
+	public function setKeywords($p_value)
 	{
 		global $g_documentRoot;
 		require_once($g_documentRoot.'/classes/SystemPref.php');
@@ -1306,7 +1309,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function isPublished()
+	public function isPublished()
 	{
 		return ($this->m_data['Published'] == 'Y');
 	} // fn isPublic
@@ -1317,7 +1320,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function isPublic()
+	public function isPublic()
 	{
 		return ($this->m_data['Public'] == 'Y');
 	} // fn isPublic
@@ -1329,7 +1332,7 @@ class Article extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setIsPublic($p_value)
+	public function setIsPublic($p_value)
 	{
 		return parent::setProperty('Public', $p_value?'Y':'N');
 	} // fn setIsPublic
@@ -1338,7 +1341,7 @@ class Article extends DatabaseObject {
 	/**
 	 * @return boolean
 	 */
-	function isIndexed()
+	public function isIndexed()
 	{
 		return ($this->m_data['IsIndexed'] == 'Y');
 	} // fn isIndexed
@@ -1347,7 +1350,7 @@ class Article extends DatabaseObject {
 	/**
 	 * @param boolean value
 	 */
-	function setIsIndexed($p_value)
+	public function setIsIndexed($p_value)
 	{
 		return parent::setProperty('IsIndexed', $p_value?'Y':'N');
 	} // fn setIsIndexed
@@ -1357,7 +1360,7 @@ class Article extends DatabaseObject {
 	 * Return the user ID of the user who has locked the article.
 	 * @return int
 	 */
-	function getLockedByUser()
+	public function getLockedByUser()
 	{
 		return $this->m_data['LockUser'];
 	} // fn getLockedByUser
@@ -1369,7 +1372,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setLockedByUser($p_value)
+	public function setLockedByUser($p_value)
 	{
 	    // Dont change the timestamp when an article
 	    // is locked.
@@ -1387,7 +1390,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getUrlName()
+	public function getUrlName()
 	{
 		return $this->m_data['ShortName'];
 	} // fn getUrlName
@@ -1396,7 +1399,7 @@ class Article extends DatabaseObject {
 	/**
 	 * @param string value
 	 */
-	function setUrlName($p_value)
+	public function setUrlName($p_value)
 	{
 		return parent::setProperty('ShortName', $p_value);
 	} // fn setUrlName
@@ -1407,7 +1410,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return ArticleData
 	 */
-	function getArticleData()
+	public function getArticleData()
 	{
 		return new ArticleData($this->m_data['Type'],
 			$this->m_data['Number'],
@@ -1420,7 +1423,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function commentsEnabled()
+	public function commentsEnabled()
 	{
 	    return $this->m_data['comments_enabled'];
 	} // fn commentsEnabled
@@ -1432,7 +1435,7 @@ class Article extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setCommentsEnabled($p_value)
+	public function setCommentsEnabled($p_value)
 	{
 	    $p_value = $p_value ? '1' : '0';
 	    return $this->setProperty('comments_enabled', $p_value);
@@ -1445,7 +1448,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function commentsLocked()
+	public function commentsLocked()
 	{
 	    return $this->m_data['comments_locked'];
 	} // fn commentsLocked
@@ -1459,7 +1462,7 @@ class Article extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setCommentsLocked($p_value)
+	public function setCommentsLocked($p_value)
 	{
 	    $p_value = $p_value ? '1' : '0';
 	    return $this->setProperty('comments_locked', $p_value);
@@ -1488,8 +1491,8 @@ class Article extends DatabaseObject {
      * @return object|null
      *      An article object on success, null on failure
      */
-    function GetByNumber($p_articleNr, $p_publicationId, $p_issueNr,
-                         $p_sectionNr, $p_languageId)
+    public static function GetByNumber($p_articleNr, $p_publicationId, $p_issueNr,
+                                       $p_sectionNr, $p_languageId)
     {
         global $g_ado_db;
 
@@ -1517,8 +1520,8 @@ class Article extends DatabaseObject {
      *
      * @return array
      */
-    function GetByName($p_name, $p_publicationId = null, $p_issueId = null,
-    					$p_sectionId = null, $p_languageId = null)
+    public static function GetByName($p_name, $p_publicationId = null, $p_issueId = null,
+    					             $p_sectionId = null, $p_languageId = null)
     {
         global $g_ado_db;
         $queryStr = 'SELECT * FROM Articles';
@@ -1552,8 +1555,8 @@ class Article extends DatabaseObject {
 	 * @param int $p_sectionId
 	 * @return int
 	 */
-	function GetNumUniqueArticles($p_publicationId = null, $p_issueId = null,
-								  $p_sectionId = null)
+	public static function GetNumUniqueArticles($p_publicationId = null, $p_issueId = null,
+								                $p_sectionId = null)
 	{
 		global $g_ado_db;
 		$queryStr = 'SELECT COUNT(DISTINCT(Number)) FROM Articles';
@@ -1587,7 +1590,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetArticlesByUser($p_userId, $p_start = 0, $p_upperLimit = 20)
+	public static function GetArticlesByUser($p_userId, $p_start = 0, $p_upperLimit = 20)
 	{
 		global $g_ado_db;
 		$queryStr = 'SELECT * FROM Articles '
@@ -1597,7 +1600,7 @@ class Article extends DatabaseObject {
 		$query = $g_ado_db->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
-			$tmpArticle =& new Article();
+			$tmpArticle = new Article();
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
 		}
@@ -1620,10 +1623,10 @@ class Article extends DatabaseObject {
 	 * @param int $p_upperLimit
 	 * @return array
 	 */
-	function GetSubmittedArticles($p_start = 0, $p_upperLimit = 20)
+	public static function GetSubmittedArticles($p_start = 0, $p_upperLimit = 20)
 	{
 		global $g_ado_db;
-		$tmpArticle =& new Article();
+		$tmpArticle = new Article();
 		$columnNames = $tmpArticle->getColumnNames(true);
 		$queryStr = 'SELECT '.implode(", ", $columnNames)
 					.' FROM Articles '
@@ -1633,7 +1636,7 @@ class Article extends DatabaseObject {
 		$query = $g_ado_db->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
-			$tmpArticle =& new Article();
+			$tmpArticle = new Article();
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
 		}
@@ -1655,10 +1658,10 @@ class Article extends DatabaseObject {
 	 *     An array of two elements:
 	 *     An array of articles and the total number of articles.
 	 */
-	function GetUnplacedArticles($p_start = 0, $p_maxRows = 20)
+	public static function GetUnplacedArticles($p_start = 0, $p_maxRows = 20)
 	{
 		global $g_ado_db;
-		$tmpArticle =& new Article();
+		$tmpArticle = new Article();
 		$columnNames = $tmpArticle->getColumnNames(true);
 		$queryStr = 'SELECT '.implode(", ", $columnNames)
 					.' FROM Articles '
@@ -1668,7 +1671,7 @@ class Article extends DatabaseObject {
 		$query = $g_ado_db->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
-			$tmpArticle =& new Article();
+			$tmpArticle = new Article();
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
 		}
@@ -1684,9 +1687,9 @@ class Article extends DatabaseObject {
 	 * Get the list of all languages that articles have been written in.
 	 * @return array
 	 */
-	function GetAllLanguages()
+	public static function GetAllLanguages()
 	{
-		$tmpLanguage =& new Language();
+		$tmpLanguage = new Language();
 		$languageColumns = $tmpLanguage->getColumnNames(true);
 		$languageColumns = implode(",", $languageColumns);
 	 	$queryStr = 'SELECT DISTINCT(IdLanguage), '.$languageColumns
@@ -1724,12 +1727,9 @@ class Article extends DatabaseObject {
 	 *     Return an array of Article objects with indexes in sequential order
 	 *     starting from zero.
 	 */
-	function GetArticles($p_publicationId = null,
-						 $p_issueNumber = null,
-						 $p_sectionNumber = null,
-						 $p_languageId = null,
-						 $p_sqlOptions = null,
-						 $p_countOnly = false)
+	public static function GetArticles($p_publicationId = null, $p_issueNumber = null,
+						               $p_sectionNumber = null, $p_languageId = null,
+						               $p_sqlOptions = null, $p_countOnly = false)
     {
 		global $g_ado_db;
 
@@ -1813,13 +1813,13 @@ class Article extends DatabaseObject {
 	 * @return array
 	 *     Return an array of Article objects.
 	 */
-	function GetArticlesGrouped($p_publicationId = null,
-							    $p_issueNumber = null,
-						        $p_sectionNumber = null,
-						        $p_languageId = null,
-						        $p_preferredLanguage = null,
-						        $p_sqlOptions = null,
-						        $p_countOnly = false)
+	public static function GetArticlesGrouped($p_publicationId = null,
+							                  $p_issueNumber = null,
+						                      $p_sectionNumber = null,
+						                      $p_languageId = null,
+						                      $p_preferredLanguage = null,
+						                      $p_sqlOptions = null,
+						                      $p_countOnly = false)
     {
 		global $g_ado_db;
 
@@ -1908,7 +1908,7 @@ class Article extends DatabaseObject {
 	 *		Article Type
 	 * @return int
 	 */
-	function GetNumArticlesOfType($p_type)
+	public static function GetNumArticlesOfType($p_type)
 	{
 		global $g_ado_db;
 		$queryStr ="SELECT COUNT(*) FROM Articles WHERE Type='$p_type'";
@@ -1923,7 +1923,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetArticlesOfType($p_type)
+	public static function GetArticlesOfType($p_type)
 	{
 		global $g_ado_db;
 		$sql = "SELECT * FROM Articles WHERE Type='$p_type'";
@@ -1937,7 +1937,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_max
 	 * @return array
 	 */
-	function GetRecentArticles($p_max)
+	public static function GetRecentArticles($p_max)
 	{
 	    $queryStr = "SELECT * FROM Articles "
 	               ." WHERE Published='Y'"
@@ -1953,7 +1953,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_userId
 	 * @return void
 	 */
-	function UnlockByUser($p_userId)
+	public static function UnlockByUser($p_userId)
 	{
 		global $g_ado_db;
 		$queryStr = 'UPDATE Articles SET LockUser=0, LockTime=0, time_updated=time_updated'
@@ -2160,6 +2160,12 @@ class Article extends DatabaseObject {
         case 'topic':
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
             break;
+        case 'published':
+            if (strtolower($p_param->getRightOperand()) == 'true') {
+                $conditionOperation['symbol'] = '=';
+                $conditionOperation['right'] =  'Y';
+            }
+            break;
         default:
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
             break;
@@ -2209,6 +2215,7 @@ class Article extends DatabaseObject {
      * @return array
      */
     public static function SearchByKeyword(array $p_keywords,
+                                           $p_matchAll = false,
                                            array $p_constraints = array(),
                                            array $p_order = array(),
                                            $p_start = 0, $p_limit = 0, &$p_count)
@@ -2218,17 +2225,39 @@ class Article extends DatabaseObject {
         $selectClauseObj = new SQLSelectClause();
 
         // set tables and joins between tables
-        $selectClauseObj->setTable('KeywordIndex');
-        $selectClauseObj->addJoin('LEFT JOIN ArticleIndex ON KeywordIndex.Id = ArticleIndex.IdKeyword');
-        $selectClauseObj->addJoin('LEFT JOIN Articles ON ArticleIndex.NrArticle = Articles.Number'
-                                                   . ' AND ArticleIndex.IdPublication = Articles.IdPublication'
-                                                   . ' AND ArticleIndex.IdLanguage = Articles.IdLanguage'
-                                                   . ' AND ArticleIndex.NrIssue = Articles.NrIssue'
-                                                   . ' AND ArticleIndex.NrSection = Articles.NrSection');
+        $selectClauseObj->setTable('Articles');
 
         // set search keywords
-        foreach ($p_keywords as $keyword) {
-            $selectClauseObj->addWhere("KeywordIndex.Keyword = '" . $g_ado_db->escape($keyword) . "'");
+        if ($p_matchAll) {
+            foreach ($p_keywords as $keyword) {
+                $selectKeywordClauseObj = new SQLSelectClause();
+                $selectKeywordClauseObj->setTable('KeywordIndex AS KI');
+                $selectKeywordClauseObj->addJoin('LEFT JOIN ArticleIndex AS AI2 ON KI.Id = AI2.IdKeyword');
+                $selectKeywordClauseObj->addColumn('AI2.NrArticle');
+                $selectKeywordClauseObj->addColumn('AI2.IdLanguage');
+
+                $keywordConstraint = "KI.Keyword = '" . $g_ado_db->escape($keyword) . "'";
+                $selectKeywordClauseObj->addWhere($keywordConstraint);
+
+                $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ("
+                . $selectKeywordClauseObj->buildQuery() . ")";
+                $selectClauseObj->addWhere($mainClauseConstraint);
+            }
+        } else {
+            $selectKeywordClauseObj = new SQLSelectClause();
+            $selectKeywordClauseObj->setTable('KeywordIndex AS KI');
+            $selectKeywordClauseObj->addJoin('LEFT JOIN ArticleIndex AS AI2 ON KI.Id = AI2.IdKeyword');
+            $selectKeywordClauseObj->addColumn('AI2.NrArticle');
+            $selectKeywordClauseObj->addColumn('AI2.IdLanguage');
+
+            foreach ($p_keywords as $keyword) {
+                $keywordConstraint = "KI.Keyword = '" . $g_ado_db->escape($keyword) . "'";
+                $selectKeywordClauseObj->addConditionalWhere($keywordConstraint);
+            }
+
+            $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ("
+            . $selectKeywordClauseObj->buildQuery() . ")";
+            $selectClauseObj->addWhere($mainClauseConstraint);
         }
 
         // set other constraints

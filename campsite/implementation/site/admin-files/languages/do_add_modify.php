@@ -57,7 +57,7 @@ if ($f_language_code == "") {
 }
 
 if ($editMode) {
-    $languageObj =& new Language($f_language_id);
+    $languageObj = new Language($f_language_id);
 }
 
 if ($correct) {
@@ -88,7 +88,7 @@ if ($correct) {
     if ($editMode) {
 		$languageObj->update($columns);
     } else {
-    	$languageObj =& new Language();
+    	$languageObj = new Language();
     	$result = $languageObj->create($columns);
     	if (PEAR::isError($result)) {
     		camp_html_add_msg($result->getMessage());

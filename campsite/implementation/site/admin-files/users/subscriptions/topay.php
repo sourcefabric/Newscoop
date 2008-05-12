@@ -13,8 +13,8 @@ if (!$g_user->hasPermission('ManageSubscriptions')) {
 $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
 
-$manageUser =& new User($f_user_id);
-$subscription =& new Subscription($f_subscription_id);
+$manageUser = new User($f_user_id);
+$subscription = new Subscription($f_subscription_id);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");

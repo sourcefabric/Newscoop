@@ -16,12 +16,12 @@ if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;
 }
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
+$publicationObj = new Publication($Pub);
+$issueObj = new Issue($Pub, $Language, $Issue);
 $allSections = Section::GetSections($Pub, $Issue, $Language, null, null, array('ORDER BY' => 'Number', 'LIMIT' => array('START' => $SectOffs, 'MAX_ROWS' => $ItemsPerPage)));
 $totalSections = Section::GetTotalSections($Pub, $Issue, $Language);
 
-$pager =& new SimplePager($totalSections, $ItemsPerPage, "SectOffs_".$Pub."_".$Issue."_".$Language, "index.php?Pub=$Pub&Issue=$Issue&Language=$Language&");
+$pager = new SimplePager($totalSections, $ItemsPerPage, "SectOffs_".$Pub."_".$Issue."_".$Language, "index.php?Pub=$Pub&Issue=$Issue&Language=$Language&");
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
 camp_html_content_top(getGS('Section List'), $topArray);

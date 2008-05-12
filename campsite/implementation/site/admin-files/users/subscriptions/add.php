@@ -29,7 +29,7 @@ if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] != '') {
 $inSubscriptions = (strstr($uriPath, '/subscriptions') != '')
 					|| !$g_user->hasPermission('ManageUsers');
 
-$manageUser =& new User($f_user_id);
+$manageUser = new User($f_user_id);
 $publications = Publication::GetPublications();
 $subscriptions = Subscription::GetSubscriptions(null, $f_user_id);
 if (sizeof($subscriptions) > 0) {

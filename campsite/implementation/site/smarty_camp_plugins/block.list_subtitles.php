@@ -31,33 +31,35 @@ function smarty_block_list_subtitles($p_params, $p_content, &$p_smarty, &$p_repe
     $html = '';
 
     if (!isset($p_content)) {
-    	$start = 4;
-    	$subtitlesList = new SubtitlesList($start, $p_params);
-    	$campContext->setCurrentList($subtitlesList);
-    	echo "<p>start: " . $campContext->current_subtitles_list->getStart()
-    		. ", length: " . $campContext->current_subtitles_list->getLength()
-    		. ", limit: " . $campContext->current_subtitles_list->getLimit()
-    		. ", columns: " . $campContext->current_subtitles_list->getColumns()
-			. ", has next elements: " . (int)$campContext->current_subtitles_list->hasNextElements() . "</p>\n";
-    	echo "<p>name: " . $campContext->current_subtitles_list->getName() . "</p>\n";
-    	echo "<p>constraints: " . $campContext->current_subtitles_list->getConstraintsString() . "</p>\n";
-    	echo "<p>order: " . $campContext->current_subtitles_list->getOrderString() . "</p>\n";
+        $start = $campContext->next_list_start('SubtitlesList');
+        $subtitlesList = new SubtitlesList($start, $p_params);
+        $campContext->setCurrentList($subtitlesList, array('subtitle'));
     }
+    static $subtitleURLId = null;
 
-    $currentSubtitle = $campContext->current_subtitles_list->defaultIterator()->current();
+    $currentSubtitle = $campContext->current_subtitles_list->current;
     if (is_null($currentSubtitle)) {
-	    $p_repeat = false;
-	    $campContext->resetCurrentList();
-    	return $html;
+        $campContext->url->reset_parameter($subtitleURLId);
+        $p_repeat = false;
+        $campContext->resetCurrentList();
+        return $html;
     } else {
-    	$p_repeat = true;
+        $campContext->subtitle = $currentSubtitle;
+        $subtitleURLId = $campContext->article->subtitle_url_id($currentSubtitle->field_name);
+        $campContext->url->set_parameter($subtitleURLId, $currentSubtitle->number);
+        $p_repeat = true;
     }
 
     if (isset($p_content)) {
-		$html = $p_content;
-	    if ($p_repeat) {
-    		$campContext->current_subtitles_list->defaultIterator()->next();
-    	}
+        $html = $p_content;
+        if ($p_repeat) {
+            $campContext->current_subtitles_list->defaultIterator()->next();
+            if (!is_null($campContext->current_subtitles_list->current)) {
+                $campContext->subtitle = $campContext->current_subtitles_list->current;
+                $subtitleURLId = $campContext->article->subtitle_url_id($campContext->subtitle->field_name);
+                $campContext->url->set_parameter($subtitleURLId, $campContext->subtitle->number);
+            }
+        }
     }
 
     return $html;

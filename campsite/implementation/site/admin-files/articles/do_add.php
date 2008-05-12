@@ -55,7 +55,7 @@ if (empty($f_article_language)) {
 if (camp_html_has_msgs()) {
 	camp_html_goto_page($backLink);
 }
-$articleType =& new ArticleType($f_article_type);
+$articleType = new ArticleType($f_article_type);
 if (!$articleType->exists()) {
     camp_html_display_error(getGS('Invalid type: $1', $f_article_type));
 }
@@ -65,21 +65,21 @@ $issue_number = ($f_destination_issue_number > 0) ? $f_destination_issue_number 
 $section_number = ($f_destination_section_number > 0) ? $f_destination_section_number : $f_section_number;
 
 if ($publication_id > 0) {
-	$publicationObj =& new Publication($publication_id);
+	$publicationObj = new Publication($publication_id);
 	if (!$publicationObj->exists()) {
 		camp_html_display_error(getGS('Publication does not exist.'));
 		exit;
 	}
 
 	if ($issue_number > 0) {
-		$issueObj =& new Issue($publication_id, $f_article_language, $issue_number);
+		$issueObj = new Issue($publication_id, $f_article_language, $issue_number);
 		if (!$issueObj->exists()) {
 			camp_html_display_error(getGS('Issue does not exist.'));
 			exit;
 		}
 
 		if ($section_number > 0) {
-			$sectionObj =& new Section($publication_id, $issue_number, $f_article_language, $section_number);
+			$sectionObj = new Section($publication_id, $issue_number, $f_article_language, $section_number);
 			if (!$sectionObj->exists()) {
 				camp_html_display_error(getGS('Section does not exist.'));
 				exit;
@@ -89,7 +89,7 @@ if ($publication_id > 0) {
 }
 
 // Create article
-$articleObj =& new Article($f_article_language);
+$articleObj = new Article($f_article_language);
 
 $conflictingArticles = Article::GetByName($f_article_name,
 										  $publication_id,

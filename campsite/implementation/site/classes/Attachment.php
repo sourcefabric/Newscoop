@@ -34,7 +34,7 @@ class Attachment extends DatabaseObject {
 							   'last_modified',
 							   'time_created');
 
-	function Attachment($p_id = null)
+	public function Attachment($p_id = null)
 	{
 		if (!is_null($p_id)) {
 			$this->m_data['id'] = $p_id;
@@ -43,7 +43,7 @@ class Attachment extends DatabaseObject {
 	} // constructor
 
 
-	function delete()
+	public function delete()
 	{
 		if (!$this->exists()) {
 			return false;
@@ -71,7 +71,7 @@ class Attachment extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getAttachmentId()
+	public function getAttachmentId()
 	{
 		return $this->m_data['id'];
 	} // fn getAttachmentId
@@ -84,7 +84,7 @@ class Attachment extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getLanguageId()
+	public function getLanguageId()
 	{
 		return $this->m_data['fk_language_id'];
 	} // fn getLanguageId
@@ -94,7 +94,7 @@ class Attachment extends DatabaseObject {
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setLanguageId($p_value)
+	public function setLanguageId($p_value)
 	{
 		if (empty($p_value)) {
 			return $this->setProperty('fk_language_id', 'NULL', true, true);
@@ -107,7 +107,7 @@ class Attachment extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getFileName()
+	public function getFileName()
 	{
 		return $this->m_data['file_name'];
 	} // fn getFileName
@@ -118,7 +118,7 @@ class Attachment extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getExtension()
+	public function getExtension()
 	{
 		return $this->m_data['extension'];
 	} // fn getExtension
@@ -130,7 +130,7 @@ class Attachment extends DatabaseObject {
 	 *
 	 * @return mixed
 	 */
-	function getContentDisposition()
+	public function getContentDisposition()
 	{
 		return $this->m_data['content_disposition'];
 	} // fn getContentDisposition
@@ -142,7 +142,7 @@ class Attachment extends DatabaseObject {
 	 * @param mixed $p_value
 	 * @return boolean
 	 */
-	function setContentDisposition($p_value)
+	public function setContentDisposition($p_value)
 	{
 		if (!empty($p_value) && ($p_value != 'attachment')) {
 			return false;
@@ -161,7 +161,7 @@ class Attachment extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getCharset()
+	public function getCharset()
 	{
 		return $this->m_data['http_charset'];
 	} // fn getCharset
@@ -173,7 +173,7 @@ class Attachment extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getMimeType()
+	public function getMimeType()
 	{
 		return $this->m_data['mime_type'];
 	} // fn getMimeType
@@ -184,7 +184,7 @@ class Attachment extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getSizeInBytes()
+	public function getSizeInBytes()
 	{
 		return $this->m_data['size_in_bytes'];
 	} // fn getSizeInBytes
@@ -208,7 +208,7 @@ class Attachment extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @return string
 	 */
-	function getDescription($p_languageId)
+	public function getDescription($p_languageId)
 	{
 		return Translation::GetPhrase($p_languageId, $this->m_data['fk_description_id']);
 	} // fn getDescription
@@ -220,29 +220,29 @@ class Attachment extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @param string $p_text
 	 */
-	function setDescription($p_languageId, $p_text)
+	public function setDescription($p_languageId, $p_text)
 	{
 		Translation::SetPhrase($p_languageId, $this->m_data['fk_description_id'], $p_text);
 	} // fn setDescription
 
 
-	function getLastModified()
+	public function getLastModified()
 	{
 		return $this->m_data['last_modified'];
 	} // fn getLastModified
 
 
-	function getTimeCreated()
+	public function getTimeCreated()
 	{
 		return $this->m_data['time_created'];
 	} // fn getTimeCreated
 
 
 	/**
-         * Return the full URL to the attached image.
-         * @return string
-         */
-        function getAttachmentUrl()
+     * Return the full URL to the attached image.
+     * @return string
+     */
+    public function getAttachmentUrl()
 	{
 		global $Campsite;
 		$attachmentUrl = $Campsite['FILE_BASE_URL']
@@ -262,7 +262,7 @@ class Attachment extends DatabaseObject {
 	 * @param string $p_fileExtension
 	 * @return string
 	 */
-	function getStorageLocation()
+	public function getStorageLocation()
 	{
 		global $Campsite;
 	    $storageLocation = $Campsite['FILE_DIRECTORY']
@@ -276,7 +276,7 @@ class Attachment extends DatabaseObject {
 	} // fn getStorageLocation
 
 
-	function getLevel1DirectoryName()
+	public function getLevel1DirectoryName()
 	{
 		global $Campsite;
 		$level1Dir = floor($this->m_data['id']/($Campsite['FILE_NUM_DIRS_LEVEL_1']*$Campsite['FILE_NUM_DIRS_LEVEL_2']));
@@ -285,7 +285,7 @@ class Attachment extends DatabaseObject {
 	} // fn getLevel1DirectoryName
 
 
-	function getLevel2DirectoryName()
+	public function getLevel2DirectoryName()
 	{
 		global $Campsite;
 		$level2Dir = ($this->m_data['id']/$Campsite['FILE_NUM_DIRS_LEVEL_2'])%$Campsite['FILE_NUM_DIRS_LEVEL_1'];
@@ -294,7 +294,7 @@ class Attachment extends DatabaseObject {
 	} // fn getLevel2DirectoryName
 
 
-	function makeDirectories()
+	public function makeDirectories()
 	{
 	    // Make the directories if they dont exist
 	    global $Campsite;
@@ -336,7 +336,7 @@ class Attachment extends DatabaseObject {
 	 *		The Attachment object that was created or updated.
 	 *		Return a PEAR_Error on failure.
 	 */
-	function OnFileUpload($p_fileVar, $p_attributes, $p_id = null)
+	public static function OnFileUpload($p_fileVar, $p_attributes, $p_id = null)
 	{
 		if (!is_array($p_fileVar)) {
 			return null;
@@ -351,7 +351,7 @@ class Attachment extends DatabaseObject {
 		// Are we updating or creating?
 	 	if (!is_null($p_id)) {
 	 		// Updating the attachment
-	 		$attachment =& new Attachment($p_id);
+	 		$attachment = new Attachment($p_id);
 	 		$attachment->update($p_attributes);
 	    	// Remove the old file because
 			// the new file may have a different file extension.
@@ -360,7 +360,7 @@ class Attachment extends DatabaseObject {
 			}
 	    } else {
 	    	// Creating the attachment
-	    	$attachment =& new Attachment();
+	    	$attachment = new Attachment();
 	    	$attachment->create($p_attributes);
 			$attachment->setProperty('time_created', 'NULL', true, true);
 	    }

@@ -1,4 +1,6 @@
 <?php 
+regGS("User may clear up the system cache", "User may clear up the system cache");
+regGS("Another user is registered with that e-mail address, please choose a different one.", "Another user is registered with that e-mail address, please choose a different one.");
 regGS("You do not have the right to sync Campsite and Phorum users.", "You do not have the right to sync Campsite and Phorum users.");
 regGS("User may synchronize Campsite and Phorum users", "User may synchronize Campsite and Phorum users");
 regGS("There was an error when trying to update the user info.", "There was an error when trying to update the user info.");

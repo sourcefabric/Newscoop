@@ -1,4 +1,5 @@
 <?php 
+regGS("Back to Article Types List", "");
 regGS("show", "mostrar");
 regGS("hide", "ocultrar");
 regGS("You must enter a name for the field.", "Debe ingresar un nombre para este campo.");

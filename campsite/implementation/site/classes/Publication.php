@@ -14,7 +14,6 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
-require_once($g_documentRoot.'/classes/ParserCom.php');
 require_once($g_documentRoot.'/classes/Language.php');
 
 /**
@@ -51,7 +50,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @param int $p_publicationId
 	 */
-	function Publication($p_publicationId = null)
+	public function Publication($p_publicationId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_publicationId;
@@ -70,7 +69,7 @@ class Publication extends DatabaseObject {
 	 * @param array $p_values
 	 * @return boolean
 	 */
-	function create($p_values = null)
+	public function create($p_values = null)
 	{
 		$created = parent::create($p_values);
 		if ($created) {
@@ -79,7 +78,6 @@ class Publication extends DatabaseObject {
 			}
 			$logtext = getGS('Publication $1 added', $this->m_data['Name']." (".$this->m_data['Id'].")");
 			Log::Message($logtext, null, 1);
-			ParserCom::SendMessage('publications', 'create', array("IdPublication" => $this->m_data['Id']));
 		}
 		return $created;
 	} // fn create
@@ -97,7 +95,7 @@ class Publication extends DatabaseObject {
 	 * @param boolean $p_isSql
 	 * @return boolean
 	 */
-	function update($p_columns = null, $p_commit = true, $p_isSql = false)
+	public function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
 		$updated = parent::update($p_columns, $p_commit, $p_isSql);
 		if ($updated) {
@@ -106,7 +104,6 @@ class Publication extends DatabaseObject {
 			}
 			$logtext = getGS('Publication $1 changed', $this->m_data['Name']." (".$this->m_data['Id'].")");
 			Log::Message($logtext, null, 3);
-			ParserCom::SendMessage('publications', 'modify', array("IdPublication" => $this->m_data['Id']));
 		}
 		return $updated;
 	} // fn update
@@ -117,7 +114,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function delete()
+	public function delete()
 	{
 		$aliases = Alias::GetAliases(null, $this->m_data['Id']);
 		if ($aliases && (count($aliases) > 0)) {
@@ -132,7 +129,6 @@ class Publication extends DatabaseObject {
 			}
 			$logtext = getGS('Publication $1 deleted', $this->m_data['Name']." (".$this->m_data['Id'].")");
 			Log::Message($logtext, null, 2);
-			ParserCom::SendMessage('publications', 'delete', array("IdPublication" => $this->m_data['Id']));
 		}
 		return $deleted;
 	} // fn delete
@@ -143,7 +139,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getPublicationId()
+	public function getPublicationId()
 	{
 		return $this->m_data['Id'];
 	} // fn getPublicationId
@@ -154,7 +150,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getName()
+	public function getName()
 	{
 		return $this->m_data['Name'];
 	} // fn getName
@@ -165,7 +161,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getLanguageId()
+	public function getLanguageId()
 	{
 		return $this->m_data['IdDefaultLanguage'];
 	} // fn getLanguageId
@@ -174,16 +170,35 @@ class Publication extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getTimeUnit()
+	public function getTimeUnit()
 	{
 		return $this->m_data['TimeUnit'];
 	} // fn getTimeUnit
+	
+	
+	/**
+	 * Returns the publication subscription time unit name.
+	 *
+	 * @param int $p_languageId
+	 * @return string
+	 */
+	public function getTimeUnitName($p_languageId = null)
+	{
+	    $languageId = is_null($p_languageId) ? $this->m_data['IdDefaultLanguage'] : $p_languageId;
+	    $timeUnit = new TimeUnit($this->m_data['TimeUnit'], $languageId);
+	    if (!$timeUnit->exists()) {
+	        $timeUnit = new TimeUnit($this->m_data['TimeUnit'], 1);
+	    }
+	    return $timeUnit->getName();
+	}
+	
+	
 
 
 	/**
 	 * @return int
 	 */
-	function getDefaultAliasId()
+	public function getDefaultAliasId()
 	{
 		return $this->m_data['IdDefaultAlias'];
 	} // fn getDefaultAliasId
@@ -194,7 +209,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getDefaultLanguageId()
+	public function getDefaultLanguageId()
 	{
 		return $this->m_data['IdDefaultLanguage'];
 	} // fn getDefaultLanguageId
@@ -208,7 +223,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getUrlTypeId()
+	public function getUrlTypeId()
 	{
 		return $this->m_data['IdURLType'];
 	} // fn getUrlTypeId
@@ -217,7 +232,7 @@ class Publication extends DatabaseObject {
 	/**
 	 * @return float
 	 */
-	function getUnitCost()
+	public function getUnitCost()
 	{
 		return $this->m_data['UnitCost'];
 	} // fn getUnitCost
@@ -226,7 +241,7 @@ class Publication extends DatabaseObject {
 	/**
 	 * @return float
 	 */
-	function getUnitCostAllLang()
+	public function getUnitCostAllLang()
 	{
 		return $this->m_data['UnitCostAllLang'];
 	} // fn getUnitCost
@@ -235,7 +250,7 @@ class Publication extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getCurrency()
+	public function getCurrency()
 	{
 		return $this->m_data['Currency'];
 	} // fn getCurrency
@@ -244,7 +259,7 @@ class Publication extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getPaidTime()
+	public function getPaidTime()
 	{
 		return $this->m_data['PaidTime'];
 	} // fn getPaidTime
@@ -253,7 +268,7 @@ class Publication extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getTrialTime()
+	public function getTrialTime()
 	{
 		return $this->m_data['TrialTime'];
 	} // fn getTrialTime
@@ -264,13 +279,13 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getForumId()
+	public function getForumId()
 	{
 	    return $this->m_data['fk_forum_id'];
 	} // fn getForumId
 
 
-	function setForumId($p_value)
+	public function setForumId($p_value)
 	{
 	    return $this->setProperty('fk_forum_id', $p_value);
 	} // fn setForumId
@@ -281,7 +296,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function commentsEnabled()
+	public function commentsEnabled()
 	{
 	    return $this->m_data['comments_enabled'];
 	} // commentsEnabled
@@ -293,7 +308,7 @@ class Publication extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setCommentsEnabled($p_value)
+	public function setCommentsEnabled($p_value)
 	{
 	    $p_value = $p_value ? '1' : '0';
 	    return $this->setProperty('comments_enabled', $p_value);
@@ -306,7 +321,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function commentsArticleDefaultEnabled()
+	public function commentsArticleDefaultEnabled()
 	{
 	    return $this->m_data['comments_article_default_enabled'];
 	} // fn commentsArticleDefaultEnabled
@@ -319,7 +334,7 @@ class Publication extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setCommentsArticleDefaultEnabled($p_value)
+	public function setCommentsArticleDefaultEnabled($p_value)
 	{
 	    $p_value = $p_value ? '1' : '0';
 	    return $this->setProperty('comments_article_default_enabled', $p_value);
@@ -331,7 +346,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function commentsSubscribersModerated()
+	public function commentsSubscribersModerated()
 	{
 	    return $this->m_data['comments_subscribers_moderated'];
 	} // fn commentsSubscribersModerated
@@ -343,7 +358,7 @@ class Publication extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-	function setCommentsSubscribersModerated($p_value)
+	public function setCommentsSubscribersModerated($p_value)
 	{
 	    $p_value = $p_value ? '1' : '0';
 	    return $this->setProperty('comments_subscribers_moderated', $p_value);
@@ -355,7 +370,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function commentsPublicModerated()
+	public function commentsPublicModerated()
 	{
 	    return $this->m_data['comments_public_moderated'];
 	} // fn commentsPublicModerated
@@ -367,7 +382,7 @@ class Publication extends DatabaseObject {
 	 * @param boolean $p_value
 	 * @return boolean
 	 */
-    function setCommentsPublicModerated($p_value)
+    public function setCommentsPublicModerated($p_value)
     {
 	    $p_value = $p_value ? '1' : '0';
         return $this->setProperty('comments_public_moderated', $p_value);
@@ -380,7 +395,7 @@ class Publication extends DatabaseObject {
      *
      * @return boolean
      */
-    function isCaptchaEnabled()
+    public function isCaptchaEnabled()
     {
     	return $this->m_data['comments_captcha_enabled'];
     } // fn isCaptchaEnabled
@@ -393,7 +408,7 @@ class Publication extends DatabaseObject {
      * @param boolean $p_value
      * @return boolean
      */
-    function setCaptchaEnabled($p_value)
+    public function setCaptchaEnabled($p_value)
     {
 	    $p_value = $p_value ? '1' : '0';
         return $this->setProperty('comments_captcha_enabled', $p_value);
@@ -406,7 +421,7 @@ class Publication extends DatabaseObject {
      *
      * @return boolean
      */
-    function isSpamBlockingEnabled()
+    public function isSpamBlockingEnabled()
     {
     	return $this->m_data['comments_spam_blocking_enabled'];
     } // fn isSpamBlockingEnabled
@@ -418,18 +433,63 @@ class Publication extends DatabaseObject {
      * @param boolean $p_value
      * @return boolean
      */
-    function setSpamBlockingEnabled($p_value)
+    public function setSpamBlockingEnabled($p_value)
     {
 	    $p_value = $p_value ? '1' : '0';
         return $this->setProperty('comments_spam_blocking_enabled', $p_value);
     } // fn setSpamBlockingEnabled
 
 
+    /**
+     * Return true if comments can be posted by unknown readers.
+     *
+     * @return bool
+     */
+    public function publicComments() {
+        if (!$this->exists()) {
+            return null;
+        }
+	    $forum = new Phorum_forum($this->getForumId());
+	    if (!$forum->exists()) {
+	        $forum->create();
+	        $forum->setName($this->getName());
+	        $this->setForumId($forum->getForumId());
+	    }
+	    return $forum->getPublicPermissions()
+	    & (PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY);
+    }
+
+
+    /**
+     * Set a flag that controls whether an unknown user may post comments.
+     *
+     * @param boolean $isOn
+     * @return boolean
+     */
+    public function setPublicComments($isOn) {
+        if (!$this->exists()) {
+            return null;
+        }
+	    $forum = new Phorum_forum($this->getForumId());
+	    if (!$forum->exists()) {
+	        $forum->create();
+	        $forum->setName($this->getName());
+	        $this->setForumId($forum->getForumId());
+	    }
+	    $publicPermissions = $forum->getPublicPermissions();
+	    if ($isOn) {
+	        $publicPermissions |= PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY;
+	    } else {
+	        $publicPermissions &= !PHORUM_USER_ALLOW_NEW_TOPIC & !PHORUM_USER_ALLOW_REPLY;
+	    }
+	    return $forum->setPublicPermissions($publicPermissions);
+    }
+
 	/**
 	 * Return all languages used in the publication as an array of Language objects.
 	 * @return array
 	 */
-	function getLanguages($p_sqlOptions = null)
+	public function getLanguages($p_sqlOptions = null)
 	{
 	    if (is_null($p_sqlOptions)) {
 	        $p_sqlOptions = array();
@@ -450,7 +510,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function GetNumPublications()
+	public static function GetNumPublications()
 	{
 	    global $g_ado_db;
 	    $queryStr = "SELECT COUNT(*) FROM Publications";
@@ -467,7 +527,8 @@ class Publication extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetPublications($p_name = null, $p_aliasId = null, $p_sqlOptions = null)
+	public static function GetPublications($p_name = null, $p_aliasId = null,
+	                                       $p_sqlOptions = null)
 	{
 	    if (is_null($p_sqlOptions)) {
 	        $p_sqlOptions = array();
@@ -475,7 +536,7 @@ class Publication extends DatabaseObject {
 	    if (!isset($p_sqlOptions["ORDER BY"])) {
 	        $p_sqlOptions["ORDER BY"] = array("Name" => "ASC");
 	    }
-	    $tmpPub =& new Publication();
+	    $tmpPub = new Publication();
 	    $columns = $tmpPub->getColumnNames(true);
 		$queryStr = 'SELECT '.implode(',', $columns)
 		            .', Aliases.Name as Alias'

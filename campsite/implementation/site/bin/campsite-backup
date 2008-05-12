@@ -1,0 +1,193 @@
+#!/usr/bin/php
+<?php
+
+if (!is_array($GLOBALS['argv'])) {
+	echo "\n";
+	echo "Can't read command line arguments\n";
+	echo "\n";
+	exit(1);
+}
+
+$CAMPSITE_DIR = dirname(dirname(__FILE__));
+$ETC_DIR = $CAMPSITE_DIR . '/conf';
+
+require_once("cli_script_lib.php");
+
+if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+	exit(1);
+}
+
+// include install_conf.php file
+require_once("$ETC_DIR/install_conf.php");
+
+$help = false;
+$silent = false;
+$default_dir = false;
+for ($i = 0; ; $i++) {
+	if (!isset($GLOBALS['argv'][$i])) {
+		break;
+	}
+	$arg = trim($GLOBALS['argv'][$i]);
+    $help |= ($arg == "--help");
+	$silent |= ($arg == "--silent");
+	$default_dir |= ($arg == "--default_dir");
+}
+
+if (!$silent) {
+	echo "\n";
+	echo "Campsite Backup Utility\n";
+	echo "-----------------------\n";
+}
+
+$usage =
+"  Usage:
+  campsite-backup [--silent] [--default_dir]
+
+  This script will backup all of your website data needed to re-create
+  your site from scratch, except for the Campsite software itself.
+  Later, if you want to restore from a backup file, use the script
+  'campsite-restore'.
+
+  Parameters:
+    --help
+        Show this help and exit.
+
+    --silent
+        Don't display any messages on success.
+
+    --default_dir:
+        Save the backup archive in the backup default directory:
+            $CAMPSITE_DIR/backup/
+        By default the backup file is saved in the current directory.
+
+  See also:
+      campsite-restore
+
+";
+
+if (empty($ETC_DIR) || $help == true) {
+	echo $usage;
+	exit(1);
+}
+
+if (!is_file("$ETC_DIR/database_conf.php")) {
+	echo "\n";
+	echo "Database configuration file is missing!\n";
+	echo "\n";
+	exit(1);
+}
+require_once("$ETC_DIR/database_conf.php");
+$html_dir = $CAMPSITE_DIR;
+
+$timestampStr = date("Y-m-d-H-i-s");
+$backupDirName = 'backup-campsite-'.$timestampStr;
+
+if ($default_dir) {
+	$adviceOnError = "Please run this script as '".$Campsite['APACHE_USER']."' or as 'root'.";
+	$backupDirFullPath = $CAMPSITE_DIR . "/backup/$backupDirName";
+	camp_exec_command("mkdir -p " . camp_escape_shell_arg($backupDirFullPath),
+				 "Unable to create the default backup directory.\n$adviceOnError", !$silent);
+	$cmd = "chown " . escapeshellarg($Campsite['APACHE_USER']) . ":"
+			. escapeshellarg($Campsite['APACHE_GROUP']) . " " . escapeshellarg($backupDirFullPath);
+	camp_exec_command($cmd,
+				 "Unable to set the ownership of the default backup directory.\n$adviceOnError",
+				 !$silent);
+} else {
+	$adviceOnError = "You may not have the right to write to the current directory.\n"
+					. "Please set the current directory to a location where you have\n"
+					. "the right to write.";
+	$backupDirFullPath = getcwd()."/".$backupDirName;
+}
+
+if (!$silent) {
+	echo "Backup script version: ".$Campsite["VERSION"]."\n";
+	echo "Backing up campsite\n";
+}
+
+if (!file_exists($backupDirFullPath)) {
+	camp_create_dir($backupDirFullPath, $adviceOnError);
+}
+
+$tmpVersion = split(" ", $Campsite["VERSION"]);
+$tmpVersion = $tmpVersion[0];
+$cmd = "touch $backupDirFullPath/BACKUP-VERSION-$tmpVersion";
+camp_exec_command($cmd, "Couldn't write VERSION file.");
+
+// backup the database
+if (!$silent) {
+	echo " * Backing up the database...";
+}
+$db_file_name = "$backupDirFullPath/".$Campsite['DATABASE_NAME'].'-database.sql';
+
+if (is_file($db_file_name) && (camp_backup_file($db_file_name, $output) != 0)) {
+	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
+}
+if (camp_backup_database($Campsite['DATABASE_NAME'], $db_file_name, $output) != 0) {
+	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
+}
+if (!$silent) {
+	echo "done.\n";
+}
+
+if (!$silent) {
+	echo " * Backing up the templates...";
+}
+camp_copy_files("$html_dir/templates", $backupDirFullPath);
+if (!$silent) {
+	echo "done.\n";
+}
+
+if (!$silent) {
+	echo " * Backing up images...";
+}
+camp_copy_files("$html_dir/images", $backupDirFullPath);
+if (!$silent) {
+	echo "done.\n";
+}
+
+if (!$silent) {
+	echo " * Backing up file attachments...";
+}
+camp_copy_files("$html_dir/files", $backupDirFullPath);
+if (!$silent) {
+	echo "done.\n";
+}
+
+if (!$silent) {
+	echo " * Backing up configuration files...";
+}
+camp_copy_files("$ETC_DIR", $backupDirFullPath);
+if (!$silent) {
+	echo "done.\n";
+}
+
+if (!$silent) {
+	echo " * Creating tarball...";
+}
+if (camp_archive_file($backupDirFullPath, dirname($backupDirFullPath), $backupDirName, $output) != 0) {
+	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
+}
+if ($default_dir) {
+	$cmd = "chown " . escapeshellarg($Campsite['APACHE_USER']) . ":"
+			. escapeshellarg($Campsite['APACHE_GROUP']) . " "
+			. escapeshellarg("$backupDirFullPath.tar.gz");
+	camp_exec_command($cmd, $adviceOnError, !$silent);
+}
+if (!$silent) {
+	echo "done.\n";
+}
+
+if (!$silent) {
+	echo " * Cleaning up...";
+}
+camp_remove_dir($backupDirFullPath, "Unable to remove temporary directory $backupDirFullPath");
+if (!$silent) {
+	echo "done.\n";
+}
+
+if (!$silent) {
+	echo "\nBackup saved to file:\n  $backupDirFullPath.tar.gz\n\n";
+}
+exit(0);
+
+?>

@@ -19,7 +19,7 @@ $articles = array();
 $errorArticles = array();
 foreach ($f_article_code as $code) {
 	list($articleId, $languageId) = split("_", $code);
-	$tmpArticle =& new Article($languageId, $articleId);
+	$tmpArticle = new Article($languageId, $articleId);
 	if ($tmpArticle->getWorkflowStatus() != 'N') {
 		$articles[] = $tmpArticle;
 	}
@@ -33,19 +33,19 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$publicationObj =& new Publication($f_publication_id);
+$publicationObj = new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;
 }
 
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;
 }
 
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'));
 	exit;

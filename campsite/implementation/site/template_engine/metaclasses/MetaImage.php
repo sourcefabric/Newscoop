@@ -19,24 +19,24 @@ require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
  */
 final class MetaImage extends MetaDbObject {
 
-	private function InitProperties()
-	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
-		$this->m_properties['number'] = 'Id';
-		$this->m_properties['photographer'] = 'Photographer';
-		$this->m_properties['place'] = 'Place';
-		$this->m_properties['description'] = 'Description';
-		$this->m_properties['date'] = 'Date';
-	}
+    private function InitProperties()
+    {
+        if (!is_null($this->m_properties)) {
+            return;
+        }
+        $this->m_properties['number'] = 'Id';
+        $this->m_properties['photographer'] = 'Photographer';
+        $this->m_properties['place'] = 'Place';
+        $this->m_properties['description'] = 'Description';
+        $this->m_properties['date'] = 'Date';
+    }
 
 
     public function __construct($p_imageId = null)
     {
-		$this->m_dbObject = new Image($p_imageId);
+        $this->m_dbObject = new Image($p_imageId);
 
-		$this->InitProperties();
+        $this->InitProperties();
         $this->m_customProperties['year'] = 'getYear';
         $this->m_customProperties['mon'] = 'getMonth';
         $this->m_customProperties['wday'] = 'getWeekDay';
@@ -45,71 +45,97 @@ final class MetaImage extends MetaDbObject {
         $this->m_customProperties['hour'] = 'getHour';
         $this->m_customProperties['min'] = 'getMinute';
         $this->m_customProperties['sec'] = 'getSecond';
+        $this->m_customProperties['mon_name'] = 'getMonthName';
+        $this->m_customProperties['wday_name'] = 'getWeekDayName';
+        $this->m_customProperties['article_index'] = 'getArticleIndex';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 
-    public function getYear()
+    protected function getYear()
     {
-    	$timestamp = strtotime($this->m_dbObject->getProperty('Date'));
-    	$date_time = getdate($timestamp);
-    	return $date_time['year'];
+        $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
+        $date_time = getdate($timestamp);
+        return $date_time['year'];
     }
 
 
-    public function getMonth()
+    protected function getMonth()
     {
-    	$timestamp = strtotime($this->m_dbObject->getProperty('Date'));
-    	$date_time = getdate($timestamp);
-    	return $date_time['mon'];
+        $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
+        $date_time = getdate($timestamp);
+        return $date_time['mon'];
     }
 
 
-    public function getWeekDay()
+    protected function getWeekDay()
     {
-    	$timestamp = strtotime($this->m_dbObject->getProperty('Date'));
-    	$date_time = getdate($timestamp);
-    	return $date_time['wday'];
+        $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
+        $date_time = getdate($timestamp);
+        return $date_time['wday'];
     }
 
 
-    public function getMonthDay()
+    protected function getMonthDay()
     {
-    	$timestamp = strtotime($this->m_dbObject->getProperty('Date'));
-    	$date_time = getdate($timestamp);
-    	return $date_time['mday'];
+        $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
+        $date_time = getdate($timestamp);
+        return $date_time['mday'];
     }
 
 
-    public function getYearDay()
+    protected function getYearDay()
     {
-    	$timestamp = strtotime($this->m_dbObject->getProperty('Date'));
-    	$date_time = getdate($timestamp);
-    	return $date_time['yday'];
+        $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
+        $date_time = getdate($timestamp);
+        return $date_time['yday'];
     }
 
 
-    public function getHour()
+    protected function getHour()
     {
-    	$timestamp = strtotime($this->m_dbObject->getProperty('Date'));
-    	$date_time = getdate($timestamp);
-    	return $date_time['hours'];
+        $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
+        $date_time = getdate($timestamp);
+        return $date_time['hours'];
     }
 
 
-    public function getMinute()
+    protected function getMinute()
     {
-    	$timestamp = strtotime($this->m_dbObject->getProperty('Date'));
-    	$date_time = getdate($timestamp);
-    	return $date_time['minutes'];
+        $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
+        $date_time = getdate($timestamp);
+        return $date_time['minutes'];
     }
 
 
-    public function getSecond()
+    protected function getSecond()
     {
-    	$timestamp = strtotime($this->m_dbObject->getProperty('Date'));
-    	$date_time = getdate($timestamp);
-    	return $date_time['seconds'];
+        $timestamp = strtotime($this->m_dbObject->getProperty('Date'));
+        $date_time = getdate($timestamp);
+        return $date_time['seconds'];
+    }
+
+
+    protected function getMonthName() {
+        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('Date'));
+        return $dateTime->getMonthName();
+    }
+
+
+    protected function getWeekDayName() {
+        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('Date'));
+        return $dateTime->getWeekDayName();
+    }
+
+
+    /**
+     * Returns the index of the current image inside the article.
+     * If the image doesn't belong to the article returns null.
+     *
+     * @return int
+     */
+    protected function getArticleIndex() {
+        return CampTemplate::singleton()->context()->article->image_index;
     }
 
 } // class MetaSection

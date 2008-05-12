@@ -19,8 +19,8 @@ if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
-$publicationObj =& new Publication($f_publication_id);
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$publicationObj = new Publication($f_publication_id);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 
 $backLink = "/$ADMIN/issues/translate.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id";
 $created = false;

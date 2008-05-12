@@ -15,7 +15,7 @@ $sqlOptions = array("LIMIT" => array("START" => $PubOffs, "MAX_ROWS" => $ItemsPe
 $publications = Publication::GetPublications(null, null, $sqlOptions);
 $numPublications = Publication::GetNumPublications();
 
-$pager =& new SimplePager($numPublications, $ItemsPerPage, "PubOffs", "index.php?");
+$pager = new SimplePager($numPublications, $ItemsPerPage, "PubOffs", "index.php?");
 
 camp_html_content_top(getGS('Publication List'), null);
 
@@ -68,12 +68,15 @@ foreach ($publications as $pub) { ?>
         </TD>
         <TD>
             <?php
-            	$aliasObj =& new Alias($pub->getDefaultAliasId());
+            	$aliasObj = new Alias($pub->getDefaultAliasId());
             	p(htmlspecialchars($aliasObj->getName()));
             ?>&nbsp;
         </TD>
         <TD>
-            <?php  p(htmlspecialchars($pub->getProperty("Name"))); ?>&nbsp;
+            <?php
+                $languageObj =& new Language($pub->getDefaultLanguageId());
+                p(htmlspecialchars($languageObj->getName()));
+            ?>&nbsp;
         </TD>
         <?php  if ($g_user->hasPermission("ManagePub")) { ?>
         <TD align="center">
@@ -85,7 +88,7 @@ foreach ($publications as $pub) { ?>
         </TD>
         <TD align="center">
             <?php
-            	$urlTypeObj =& new UrlType($pub->getUrlTypeId());
+            	$urlTypeObj = new UrlType($pub->getUrlTypeId());
             	p(htmlspecialchars($urlTypeObj->getName()));
             ?>&nbsp;
         </TD>

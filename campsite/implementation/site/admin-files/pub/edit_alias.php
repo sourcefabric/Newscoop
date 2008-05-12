@@ -16,8 +16,8 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$publicationObj =& new Publication($f_publication_id);
-$alias =& new Alias($f_alias_id);
+$publicationObj = new Publication($f_publication_id);
+$alias = new Alias($f_alias_id);
 
 $crumbs = array(getGS("Publication Aliases") => "aliases.php?Pub=$f_publication_id");
 camp_html_content_top(getGS("Edit alias"), array("Pub" => $publicationObj), true, false, $crumbs);

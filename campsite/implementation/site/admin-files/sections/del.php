@@ -14,9 +14,9 @@ $f_section_number = Input::Get('Section', 'int', 0);
 
 $numArticles = count(Article::GetArticles($f_publication_id, $f_issue_number, $f_section_number, $f_language_id));
 $numSubscriptions = count(Subscription::GetSubscriptions($f_publication_id));
-$publicationObj =& new Publication($f_publication_id);
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$publicationObj = new Publication($f_publication_id);
+$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 camp_html_content_top(getGS('Delete section'), $topArray);

@@ -3,7 +3,7 @@
  * @package Campsite
  *
  * @author Holman Romero <holman.romero@gmail.com>
- * @copyright 2007 MDLF, Inc.
+ * @copyright 2008 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
  * @link http://www.campware.org
@@ -11,6 +11,7 @@
 
 global $Campsite;
 
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
 // sets the PEAR local directory
 set_include_path(CS_PATH_PEAR_LOCAL.PATH_SEPARATOR.get_include_path());
 

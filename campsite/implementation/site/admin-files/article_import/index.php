@@ -20,12 +20,12 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($sLanguage, $Article);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$publicationObj =& new Publication($Pub);
-$articleLanguage =& new Language($Language);
-$issueLanguage =& new Language($sLanguage);
+$articleObj = new Article($sLanguage, $Article);
+$sectionObj = new Section($Pub, $Issue, $Language, $Section);
+$issueObj = new Issue($Pub, $Language, $Issue);
+$publicationObj = new Publication($Pub);
+$articleLanguage = new Language($Language);
+$issueLanguage = new Language($sLanguage);
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">

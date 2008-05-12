@@ -17,8 +17,8 @@ if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
+$publicationObj = new Publication($Pub);
+$issueObj = new Issue($Pub, $Language, $Issue);
 
 $action = '';
 $publish_articles = '';
@@ -27,7 +27,7 @@ $publish_hour = (date("H") + 1);
 $publish_min = "00";
 
 if (!is_null($event_id)) {
-	$issuePublishObj =& new IssuePublish($event_id);
+	$issuePublishObj = new IssuePublish($event_id);
 	if ($issuePublishObj->exists()) {
 		$action = $issuePublishObj->getPublishAction();
 		$publish_articles = $issuePublishObj->getPublishArticlesAction();

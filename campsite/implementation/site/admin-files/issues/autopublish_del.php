@@ -12,14 +12,14 @@ $Issue = Input::Get('Issue', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 $event_id = trim(Input::Get('event_id', 'string', ''));
 
-$action =& new IssuePublish($event_id);
+$action = new IssuePublish($event_id);
 $deleted = $action->delete();
 
 if ($deleted) {
 	camp_html_goto_page("/$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 }
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
+$publicationObj = new Publication($Pub);
+$issueObj = new Issue($Pub, $Language, $Issue);
 $crumbs = array("Pub" => $publicationObj, "Issue" => $issueObj);
 camp_html_content_top(getGS("Delete scheduled publish action"), $crumbs);
 ?>

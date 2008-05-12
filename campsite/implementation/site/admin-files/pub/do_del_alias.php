@@ -16,8 +16,8 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$publicationObj =& new Publication($Pub);
-$aliasObj =& new Alias($Alias);
+$publicationObj = new Publication($Pub);
+$aliasObj = new Alias($Alias);
 $errorMsgs = array();
 
 if ($publicationObj->getDefaultAliasId() != $Alias) {

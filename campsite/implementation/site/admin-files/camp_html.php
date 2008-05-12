@@ -57,7 +57,7 @@ function camp_html_copyright_notice($p_displayBorder = true)
 	<tr>
 		<td style="padding-left: 5px; padding-top: 10px;" align="center">
 			<a style="font-size:8pt; color: black;" href="http://www.campware.org" target="campware">
-			Campsite <?php echo $Campsite['VERSION'] ?> &copy 1999-2007 MDLF,
+			Campsite <?php echo $Campsite['VERSION'] ?> &amp;copy 1999-2008 MDLF,
 			maintained and distributed under GNU GPL by CAMPWARE
 			</a>
 		</td>

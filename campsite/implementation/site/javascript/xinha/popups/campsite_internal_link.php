@@ -8,6 +8,7 @@
  *
  */
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');

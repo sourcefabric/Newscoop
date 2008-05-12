@@ -27,7 +27,7 @@ class ArticleComment
      * @param int $p_languageId
      * @return int
      */
-    function GetCommentThreadId($p_articleNumber, $p_languageId)
+    public function GetCommentThreadId($p_articleNumber, $p_languageId)
     {
         global $g_ado_db;
         $queryStr = "SELECT fk_comment_id FROM ArticleComments"
@@ -47,7 +47,8 @@ class ArticleComment
      * @param int $p_commentId
      * @return void
      */
-    function Link($p_articleNumber, $p_languageId, $p_commentId, $p_isFirstMessage = false)
+    public static function Link($p_articleNumber, $p_languageId,
+                                $p_commentId, $p_isFirstMessage = false)
     {
         global $g_ado_db;
         $p_isFirstMessage = $p_isFirstMessage ? '1' : '0';
@@ -67,7 +68,8 @@ class ArticleComment
      * @param int $p_languageId
      * @param int $p_commentId
      */
-    function Unlink($p_articleNumber = null, $p_languageId = null, $p_commentId = null)
+    public static function Unlink($p_articleNumber = null, $p_languageId = null,
+                                  $p_commentId = null)
     {
         global $g_ado_db;
         $constraints = array();
@@ -93,7 +95,7 @@ class ArticleComment
      * @param int $p_languageId
      * @return void
      */
-    function OnArticleDelete($p_articleNumber, $p_languageId)
+    public static function OnArticleDelete($p_articleNumber, $p_languageId)
     {
     	if (!is_numeric($p_articleNumber) || !is_numeric($p_languageId)) {
     		return;
@@ -120,7 +122,8 @@ class ArticleComment
      * @param boolean $p_countOnly
      * @return array
      */
-    function GetArticleComments($p_articleNumber, $p_languageId, $p_status = null, $p_countOnly = false)
+    public static function GetArticleComments($p_articleNumber, $p_languageId,
+                                              $p_status = null, $p_countOnly = false)
     {
         global $PHORUM;
         global $g_ado_db;
@@ -179,7 +182,8 @@ class ArticleComment
      *      See DatabaseObject::ProcessOptions().
      * @return array
      */
-    function GetComments($p_status = 'approved', $p_getTotal = false, $p_searchString = '', $p_sqlOptions = null)
+    public static function GetComments($p_status = 'approved', $p_getTotal = false,
+                                       $p_searchString = '', $p_sqlOptions = null)
     {
         global $PHORUM;
         global $g_ado_db;
@@ -236,9 +240,9 @@ class ArticleComment
             $returnArray = array();
             if (is_array($rows)) {
                 foreach ($rows as $row) {
-                    $comment =& new Phorum_message();
+                    $comment = new Phorum_message();
                     $comment->fetch($row);
-                    $article =& new Article();
+                    $article = new Article();
                     $article->fetch($row);
                     $returnArray[] = array("comment" => $comment, "article" => $article);
                 }

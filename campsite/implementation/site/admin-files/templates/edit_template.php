@@ -19,7 +19,7 @@ $templateName = (!empty($f_path) ? $f_path."/" : "").$f_name;
 if ($templateName[0] == '/') {
 	$templateName = substr($templateName, 1);
 }
-$templateObj =& new Template($templateName);
+$templateObj = new Template($templateName);
 
 if (!file_exists($filename)) {
 	camp_html_display_error(getGS("Invalid template file $1" , $f_path."/$f_name"), $backLink);

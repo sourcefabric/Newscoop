@@ -16,12 +16,12 @@
 // | Author: Chuck Hagenbuch <chuck@horde.org>                            |
 // +----------------------------------------------------------------------+
 //
-// $Id: mail.php,v 1.18 2006/09/13 05:32:08 jon Exp $
+// $Id: mail.php,v 1.13 2004/09/09 02:08:55 jon Exp $
 
 /**
  * internal PHP-mail() implementation of the PEAR Mail:: interface.
  * @package Mail
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.13 $
  */
 class Mail_mail extends Mail {
 
@@ -54,11 +54,7 @@ class Mail_mail extends Mail {
          * line arguments, we can't guarantee the use of the standard
          * "\r\n" separator.  Instead, we use the system's native line
          * separator. */
-        if (defined('PHP_EOL')) {
-            $this->sep = PHP_EOL;
-        } else {
-            $this->sep = (strpos(PHP_OS, 'WIN') === false) ? "\n" : "\r\n";
-        }
+        $this->sep = (strstr(PHP_OS, 'WIN')) ? "\r\n" : "\n";
     }
 
 	/**
@@ -89,8 +85,6 @@ class Mail_mail extends Mail {
      */
     function send($recipients, $headers, $body)
     {
-        $this->_sanitizeHeaders($headers);
-
         // If we're passed an array of recipients, implode it.
         if (is_array($recipients)) {
             $recipients = implode(', ', $recipients);
@@ -103,12 +97,6 @@ class Mail_mail extends Mail {
             $subject = $headers['Subject'];
             unset($headers['Subject']);
         }
-
-        /*
-         * Also remove the To: header.  The mail() function will add its own
-         * To: header based on the contents of $recipients.
-         */
-        unset($headers['To']);
 
         // Flatten the headers out.
         $headerElements = $this->prepareHeaders($headers);

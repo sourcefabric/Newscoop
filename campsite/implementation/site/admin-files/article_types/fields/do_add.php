@@ -15,7 +15,7 @@ $fieldName = trim(Input::Get('f_field_name'));
 $fieldType = trim(Input::Get('f_article_field_type'));
 $rootTopicId = Input::Get('f_root_topic_id', 'int', 0);
 
-$field =& new ArticleTypeField($articleTypeName, $fieldName);
+$field = new ArticleTypeField($articleTypeName, $fieldName);
 
 $correct = true;
 $errorMsgs = array();

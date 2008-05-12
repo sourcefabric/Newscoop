@@ -37,7 +37,7 @@ class UserType extends DatabaseObject {
      *
      * @return void
      */
-    function UserType($p_userTypeId = null)
+    public function UserType($p_userTypeId = null)
     {
         parent::DatabaseObject($this->m_columnNames);
         if (is_numeric($p_userTypeId) && $p_userTypeId > 0) {
@@ -54,7 +54,7 @@ class UserType extends DatabaseObject {
      *
      * @return void
      */
-    function fetch()
+    public function fetch()
     {
         global $g_ado_db, $LiveUserAdmin;
 
@@ -97,7 +97,7 @@ class UserType extends DatabaseObject {
      * @return bool
      *    $this->m_exists TRUE on success, FALSE on failure
      */
-    function exists()
+    public function exists()
     {
         return $this->m_exists;
     } // fn exists
@@ -113,7 +113,7 @@ class UserType extends DatabaseObject {
      * @return bool
      *    TRUE on success, FALSE on failure
      */
-    function create($p_name, $p_configVars = array())
+    public function create($p_name, $p_configVars = array())
     {
         global $LiveUserAdmin;
 
@@ -162,7 +162,7 @@ class UserType extends DatabaseObject {
      * @return bool
      *    TRUE on success, FALSE on failure
      */
-    function delete()
+    public function delete()
     {
         global $LiveUserAdmin;
 
@@ -185,7 +185,7 @@ class UserType extends DatabaseObject {
      *
      * @return int
      */
-    function getId()
+    public function getId()
     {
         return $this->m_data['group_id'];
     } // gn getId
@@ -195,7 +195,7 @@ class UserType extends DatabaseObject {
      * Get the name of this user type.
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return $this->m_data['group_define_name'];
     } // fn getName
@@ -208,7 +208,7 @@ class UserType extends DatabaseObject {
      * @param string $p_varName
      * @return mixed
      */
-    function getValue($p_varName)
+    public function getValue($p_varName)
     {
         if (isset($this->m_config[$p_varName])) {
             return $this->m_config[$p_varName];
@@ -227,7 +227,7 @@ class UserType extends DatabaseObject {
      *
      * @return void
      */
-    function setValue($p_varName, $p_value)
+    public function setValue($p_varName, $p_value)
     {
         global $g_ado_db, $LiveUserAdmin;
 
@@ -256,7 +256,7 @@ class UserType extends DatabaseObject {
      *
      * @return array
      */
-    function getConfig()
+    public function getConfig()
     {
         return $this->m_config;
     } // fn getConfig
@@ -269,7 +269,7 @@ class UserType extends DatabaseObject {
      *
      * @return boolean
      */
-    function hasPermission($p_permissionString)
+    public function hasPermission($p_permissionString)
     {
         return array_key_exists($p_permissionString, $this->m_config);
     } // fn hasPermission
@@ -284,7 +284,7 @@ class UserType extends DatabaseObject {
      *    $p_permissionValue
      *
      */
-	function setPermission($p_permissionString, $p_permissionValue)
+	public function setPermission($p_permissionString, $p_permissionValue)
     {
         $this->setValue($p_permissionString, $p_permissionValue);
     } // fn setPermission
@@ -300,7 +300,7 @@ class UserType extends DatabaseObject {
      *    null If the user type does not exists or any error
      *    UserType object
      */
-    function GetByName($p_name)
+    public static function GetByName($p_name)
     {
         global $LiveUserAdmin;
 
@@ -331,7 +331,7 @@ class UserType extends DatabaseObject {
      *    bool False The config passed does not match any user type
      *    object $userType The user type object matching
      */
-    function GetUserTypeFromConfig($p_configVars)
+    public static function GetUserTypeFromConfig($p_configVars)
     {
         global $LiveUserAdmin;
 
@@ -363,14 +363,14 @@ class UserType extends DatabaseObject {
      * @return array
      *    An array of UserType objects.
      */
-    function GetUserTypes()
+    public static function GetUserTypes()
     {
         global $LiveUserAdmin;
 
         $userTypes = array();
         $res = $LiveUserAdmin->perm->getGroups();
         foreach ($res as $userType) {
-            $tmpUserType =& new UserType($userType['group_id']);
+            $tmpUserType = new UserType($userType['group_id']);
             $userTypes[] = $tmpUserType;
         }
         return $userTypes;
