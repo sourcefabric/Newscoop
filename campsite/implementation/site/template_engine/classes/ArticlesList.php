@@ -164,7 +164,7 @@ class ArticlesList extends ListObject
 	                break;
 	            case 3: // reading the value to compare against
 	                $type = ArticlesList::$s_parameters[$attribute]['type'];
-	                $metaClassName = 'Meta'.ucfirst(strtolower($type));
+	                $metaClassName = 'Meta'.ucfirst($type);
 	                $valueObj = new $metaClassName($word);
        	            if ($attribute == 'type') {
                         $word = trim($word);
