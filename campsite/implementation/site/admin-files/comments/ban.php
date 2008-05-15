@@ -43,11 +43,11 @@ if (!isset($connectedToOnlineServer)
 </head>
 <body>
 
-<center>
 <?php
 if (isset($connectedToOnlineServer)
     && $connectedToOnlineServer == false) {
 ?>
+<center>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
 <TR>
         <TD >
@@ -61,13 +61,13 @@ if (isset($connectedToOnlineServer)
 		<INPUT TYPE="button" NAME="close" VALUE="<?php putGS('Close'); ?>" class="button" onclick="window.close();">
 	</TD>
 </TR>
+</TABLE>
 </center>
-</BODY>
-</HTML>
 <?php
     exit;
 }
 ?>
+<center>
 <form action="/<?php p($ADMIN); ?>/comments/do_ban.php" method="GET">
 <INPUT type="hidden" name="f_comment_id" value="<?php p($f_comment_id); ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
@@ -119,6 +119,3 @@ if (isset($connectedToOnlineServer)
 </TABLE>
 </form>
 </center>
-
-</BODY>
-</HTML>

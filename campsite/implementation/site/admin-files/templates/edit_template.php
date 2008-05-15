@@ -100,10 +100,10 @@ if (in_array($extension, $imageExtensions)) {
 		<?php  } else { ?>
 		<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates/?Path=".urlencode($f_path); ?>'">
 		<?php  } ?>
-		</FORM>
 		</TD>
     </tr>
 	</table>
+    </FORM>
  	<p></p>
  	<?php
  	if ($g_user->hasPermission("DeleteTempl")
@@ -112,10 +112,10 @@ if (in_array($extension, $imageExtensions)) {
 	<table class="table_input">
     <tr>
 		<td align="center" colspan="2">
-			<table >
 			<form method="POST" action="do_replace.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" ENCTYPE="multipart/form-data" >
 			<input type="hidden" name="f_path" value="<?php p(htmlspecialchars($f_path)); ?>">
 			<input type="hidden" name="f_old_name" value="<?php p(htmlspecialchars($f_name)); ?>">
+            <table >
 			<tr>
 				<td>
 					<b><?php putGS("Replace file:"); ?></b> <input type="FILE" name="f_file" class="input_file" alt="file|<?php echo implode(",",camp_get_text_extensions()).",".implode(",", camp_get_image_extensions()); ?>" emsg="<?php putGS("You must select a file to upload."); ?>">
@@ -124,8 +124,8 @@ if (in_array($extension, $imageExtensions)) {
 					<INPUT type="submit" name="replace" value="<?php putGS("Replace"); ?>" class="button">
 				</td>
 			</tr>
-			</form>
 			</table>
+            </form>
 		</td>
 	</TR>
 	</TABLE>
