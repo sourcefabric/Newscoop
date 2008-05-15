@@ -77,8 +77,8 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 <?php if ($is_admin) { ?>
     <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
     <TR>
-        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=600, top=200, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=600, top=200, left=100');" ><B><?php  putGS("Add new Interview"); ?></B></A></TD>
+        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=700, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=700, top=100, left=100');" ><B><?php  putGS("Add new Interview"); ?></B></A></TD>
     </tr>
     </TABLE>
 <?php } ?>
@@ -298,7 +298,7 @@ if ($InterviewsList->getLength()) {
                     p($MetaInterview->identifier.'.'); 
                     
                     if ($is_admin) {
-                        ?><a href="javascript: void(0);" onclick="window.open('edit.php?f_interview_id=<?php p($MetaInterview->identifier); ?>', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=600, top=200, left=100');"><?php p($MetaInterview->title); ?></a><?php
+                        ?><a href="javascript: void(0);" onclick="window.open('edit.php?f_interview_id=<?php p($MetaInterview->identifier); ?>', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=700, top=100, left=100');"><?php p($MetaInterview->title); ?></a><?php
                     } else {
                         p($MetaInterview->title);
                     }
@@ -355,10 +355,10 @@ if ($InterviewsList->getLength()) {
                 <td align="center"><?php putGS($MetaInterview->status); ?></td>
                 <td align="center"><?php putGS($MetaInterview->moderator->name); ?></td>
                 <td align="center"><?php putGS($MetaInterview->guest->name); ?></td>
-                <td align="center"><?php p(strftime('%Y-%m-%d', $MetaInterview->questions_begin)); ?></td>
-                <td align="center"><?php p(strftime('%Y-%m-%d', $MetaInterview->questions_end)); ?></td>
-                <td align="center"><?php p(strftime('%Y-%m-%d', $MetaInterview->interview_begin)); ?></td>
-                <td align="center"><?php p(strftime('%Y-%m-%d', $MetaInterview->interview_end)); ?></td>
+                <td align="center"><?php p(strftime('%Y-%m-%d', strtotime($MetaInterview->questions_begin))); ?></td>
+                <td align="center"><?php p(strftime('%Y-%m-%d', strtotime($MetaInterview->questions_end))); ?></td>
+                <td align="center"><?php p(strftime('%Y-%m-%d', strtotime($MetaInterview->interview_begin))); ?></td>
+                <td align="center"><?php p(strftime('%Y-%m-%d', strtotime($MetaInterview->interview_end))); ?></td>
               
                 <td align='center'>
                     <a href='list_items.php?f_interview_id=<?php p($MetaInterview->identifier); ?>'>

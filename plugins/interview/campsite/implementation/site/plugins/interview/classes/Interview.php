@@ -71,6 +71,9 @@ class Interview extends DatabaseObject {
         // datetime
         'invitation_sent',
         
+        // string
+        'invitation_password',
+        
         // int - custom list position
         'position',
         
@@ -532,14 +535,47 @@ class Interview extends DatabaseObject {
                 'default'   => $data['fk_moderator_user_id'],
                 'options'   => self::getUsersHavePermission('plugin_interview_moderator'),
                 'required'  => true,
+                'attributes' => array('onChange' => 'activate_fields("moderator")')
             ),
+            /*
+            array(
+                'element'   => 'f_moderator_new_user_login',
+                'type'      => 'text',
+                'label'     => getGS('Create new Moderator'),
+                'default'   => $data['f_moderator_new_user_login'],
+                'attributes' => $_REQUEST['f_moderator_user_id'] == '__new__' ? null : array('disabled'),
+            ),
+            array(
+                'element'   => 'f_moderator_new_user_email',
+                'type'      => 'text',
+                'label'     => getGS('New Moderator Email'),
+                'default'   => $data['f_moderator_new_user_email'],
+                'attributes' => $_REQUEST['f_moderator_user_id'] == '__new__' ? null : array('disabled'),
+            ),
+            */
             array(
                 'element'   => 'f_guest_user_id',
                 'type'      => 'select',
                 'label'     => getGS('Guest'),
                 'default'   => $data['fk_guest_user_id'],
-                'options'   => self::getUsersHavePermission('plugin_interview_guest'),
+                'options'   => self::getUsersHavePermission('plugin_interview_guest')
+                                + array('__new__' => 'Cretae new one...'),
                 'required'  => true,
+                'attributes' => array('onChange' => 'activate_fields("guest")')
+            ),
+            array(
+                'element'   => 'f_guest_new_user_login',
+                'type'      => 'text',
+                'label'     => getGS('Guest Login'),
+                'default'   => $data['f_guest_new_user_login'],
+                'attributes' => $_REQUEST['f_guest_user_id'] == '__new__' ? null : array('disabled'),
+            ),
+            array(
+                'element'   => 'f_guest_new_user_email',
+                'type'      => 'text',
+                'label'     => getGS('Guest Email'),
+                'default'   => $data['f_guest_new_user_email'],
+                'attributes' => $_REQUEST['f_guest_user_id'] == '__new__' ? null : array('disabled'),
             ),
             array(
                 'element'   => 'f_title',
@@ -792,11 +828,47 @@ class Interview extends DatabaseObject {
                 }
             }
             
+            // may have to create new user account for guest
+            foreach (array('guest') as $type) {
+                if ($data['f_'.$type.'_user_id'] == '__new__') {
+                    global $ADMIN_DIR;
+                    require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
+                    
+                    $passwd = substr(sha1(rand()), 0, 10);
+                    
+                    $fieldValues = array(
+                        'UName' => $data['f_'.$type.'_new_user_login'],
+                        'Name'  => $data['f_'.$type.'_new_user_login'].' (interview guest)',
+                        'EMail' => $data['f_'.$type.'_new_user_email'],
+                        'passwd' => $passwd,
+                        'Reader' => 'N'
+                    ); 
+                    // create user
+                    $editUser = new User();
+                    $phorumUser = new Phorum_user();
+                    
+                    if ($phorumUser->UserNameExists($fieldValues['UName']) || User::UserNameExists($fieldValues['UName'])) {
+                        return false;   
+                    }
+                    
+                    if (!$editUser->create($fieldValues)) {
+                        return false;   
+                    }
+                    
+                	$editUser->setUserType('Staff');
+                	$editUser->setPermission('plugin_interview_'.$type, true);
+                	
+                	$phorumUser->create($fieldValues['UName'], $passwd, $fieldValues['EMail'], $editUser->getUserId());
+                	
+                    $userid[$type] = $editUser->getUserId();
+                } else {
+                     $userid[$type] = $data['f_'.$type.'_user_id'];   
+                }
+            }
+            
             if ($this->exists()) {
                 // edit existing interview    
                 $this->setProperty('fk_language_id', $data['f_language_id']);
-                $this->setProperty('fk_moderator_user_id', $data['f_moderator_user_id']);
-                $this->setProperty('fk_guest_user_id', $data['f_guest_user_id']);
                 $this->setProperty('title', $data['f_title']);
                 $this->setProperty('fk_image_id', $image_id);
                 $this->setProperty('description_short', $data['f_description_short']);
@@ -807,14 +879,21 @@ class Interview extends DatabaseObject {
                 $this->setProperty('questions_end', $data['f_questions_end'].' 23:59:59');
                 $this->setProperty('questions_limit', $data['f_questions_limit']);
                 $this->setProperty('status', $data['f_status']);
+                $this->setProperty('fk_moderator_user_id', $data['f_moderator_user_id']);
+                $this->setProperty('fk_guest_user_id', $userid['guest']);
+                
+                if (strlen($passwd)) {
+                    $this->setProperty('invitation_password', $passwd);
+                }
                 
                 return true;
+                
             } else {
                 // create new interview
-                return $this->create(
+                $created = $this->create(
                     $data['f_language_id'], 
-                    $moderator, 
-                    $data['f_guest_user_id'],
+                    $userid['moderator'], 
+                    $userid['guest'],
                     $data['f_title'], 
                     $image_id, 
                     $data['f_description_short'], 
@@ -825,8 +904,13 @@ class Interview extends DatabaseObject {
                     $data['f_questions_end'].' 23:59:59',
                     $data['f_questions_limit'],
                     $data['f_status']
-                );   
+                );
                 
+                if (strlen($passwd)) {
+                    $this->setProperty('invitation_password', $passwd);
+                }
+                
+                return $created;
             }            
         }
         return false;
@@ -1085,6 +1169,12 @@ class Interview extends DatabaseObject {
     {   
         $MetaInterview = new MetaInterview($this->getId());
 
+        $headers = array(
+            'From' => $this->getProperty('invitation_sender'),
+            'Subject' =>  $this->getProperty('invitation_subject') 
+        );
+            
+        // invite questioneers
         foreach (self::getQuestioneersWantInvitation() as $Questioneer) {
             $MetaUser = new MetaUser($Questioneer->getUserId());
              
@@ -1098,15 +1188,24 @@ class Interview extends DatabaseObject {
                 $text = $parsed;   
             }
             
-            $headers = array(
-                'From' => $this->getProperty('invitation_sender'),
-                'Subject' =>  $this->getProperty('invitation_subject') 
-            );
-            
             CampMail::MailMime($Questioneer->getEmail(), $text, $html, $headers);
         }
         
+        // invite the guest       
+        $Guest = new User($this->getProperty('fk_guest_user_id'));
+
+        $text .= "\n\nYour account:\n";
+        $text .= "Login: {$Guest->getUserName()}\n";
+        
+        if ($passwd = $this->getProperty('invitation_password')) {
+            $text .= "Generated Password: {$passwd}\n";
+            $text .= "Please change the password immedatly for security reason!";
+            $this->setProperty('invitation_password', '');   
+        }
+        
         $this->setProperty('invitation_sent', date('Y-m-d H:i:s'));
+        CampMail::MailMime($Guest->getEmail(), $text, $html, $headers);
+
         if ($this->getProperty('status') == 'draft') {
             $this->setProperty('status', 'pending');   
         }
