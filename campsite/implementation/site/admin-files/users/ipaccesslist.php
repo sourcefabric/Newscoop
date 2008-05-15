@@ -74,12 +74,12 @@ if (sizeof($ipAccessList) > 0) {
 				<td colspan="2" nowrap>
 				<div align="center">
 				<input type="submit" class="button" name="Save" value="<?php putGS('Add new'); ?>">
-		</form>
 				<input type="submit" class="button" name="cancel" value="<?php putGS('Cancel'); ?>" onclick="ToggleRowVisibility('add_ip_row_id');;">
 				</div>
 				</td>
 			</tr>
 		</table>
+        </form>
 	</td>
 </tr>
 </table>

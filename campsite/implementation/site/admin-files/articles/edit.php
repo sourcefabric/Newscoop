@@ -854,8 +854,8 @@ window.location.reload();
 		</td>
 	</tr>
 	<?php } ?>
-    </form>
 	</table>
+    </form>
 	<!-- END Article Content -->
 </td>
 	<!-- END left side of article screen -->

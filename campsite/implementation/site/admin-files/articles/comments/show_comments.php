@@ -8,12 +8,12 @@ function onCommentAction(p_type, p_commentId)
 }
 </script>
 
-<a name="comments" />
-<table class="table_input" width="900px" style="padding-left: 5px;">
 <form method="GET" action="/<?php p($ADMIN); ?>/articles/comments/do_moderate.php">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
+<a name="comments"></a>
+<table class="table_input" width="900px" style="padding-left: 5px;">
 <tr>
     <td style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #8EAED7;"">
         &nbsp;<b><?php putGS("Comments"); ?></b>
@@ -148,13 +148,13 @@ if (count($comments) <= 0) {
     }
 }
 ?>
-</form>
 </table>
+</form>
 <?php
 // show the "add comment" form
 if (!$articleObj->commentsLocked() && ($f_edit_mode == "edit") ) {
 ?>
-<a name="add_comment" />
+<a name="add_comment"></a>
 <form action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">

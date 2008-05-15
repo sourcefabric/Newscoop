@@ -93,8 +93,8 @@ switch($f_action) {
 <body>
 <?php camp_html_display_msgs(); ?>
 
-<p>
 <form name="audioclip_metadata" id="audioclip_metadata" method="POST" action="/<?php echo $ADMIN; ?>/articles/audioclips/do_<?php echo $f_action; ?>.php" enctype="multipart/form-data" onsubmit="return validateForm(this, 0, 1, 0, 0, 8);">
+<p>
 <table style="margin-top: 10px; margin-left: 5px; margin-right: 5px;" cellpadding="0" cellspacing="0">
 <tr>
 	<?php if ($g_user->hasPermission('AddAudioclip')) { ?>
@@ -152,9 +152,9 @@ switch($f_action) {
     </td>
 </tr>
 </table>
-</form>
-
 </p>
+
+</form>
 
 </body>
 </html>
