@@ -67,7 +67,7 @@
   <td>
   <a name="comments"></a>
   <ul>
-  {{ list_article_comments }}
+  {{ list_article_comments order="bydate desc" }}
     <li>{{ if $campsite->comment == $campsite->default_comment }}<b>{{ /if }}
     <a href="{{ uri }}#comments">
     Subject: {{ $campsite->comment->subject }}, Reader email: {{ $campsite->comment->reader_email }}
