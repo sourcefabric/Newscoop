@@ -10,7 +10,7 @@ CONTENTS:
 
 PREPARATION - applications you need to have installed
   see the manual page at:
-  http://code.campware.org/manuals/campsite/2.7/index.php?id=5
+  http://code.campware.org/manuals/campsite/3.0/index.php?id=5
 
 ####################################################################
 
@@ -28,10 +28,8 @@ Example of virtual host configuration:
     <Directory /var/www/campsite/html>
             Options -Indexes FollowSymLinks MultiViews
             AllowOverride All
-            <IfModule mod_access.c>
-                Order allow,deny
-                Allow from all
-            </IfModule>
+            Order allow,deny
+            Allow from all
     </Directory>
 </VirtualHost>
 
