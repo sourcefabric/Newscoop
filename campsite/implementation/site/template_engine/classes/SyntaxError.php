@@ -18,6 +18,7 @@ define('SYNTAX_ERROR_INVALID_PARAMETER', 'Invalid parameter <em>$1</em> in state
 define('SYNTAX_ERROR_INVALID_PARAMETER_VALUE', 'Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>');
 define('SYNTAX_ERROR_MISSING_PARAMETER', 'Missing parameter <em>$1</em> in statement <em>$2</em>');
 define('SYNTAX_ERROR_INVALID_OPERATOR', 'Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>');
+define('SYNTAX_ERROR_INVALID_ATTRIBUTE', 'Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter');
 
 // Needed for localizer
 //getGS("Unknown error: $1");
