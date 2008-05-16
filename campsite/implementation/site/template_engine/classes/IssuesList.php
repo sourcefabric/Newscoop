@@ -100,8 +100,8 @@ class IssuesList extends ListObject
 	        switch ($state) {
 	            case 1: // reading the parameter name
 	                if (!array_key_exists($word, IssuesList::$s_parameters)) {
-	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_issues, constraints parameter");
-	                    break;
+	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in statement list_issues, constraints parameter");
+	                    return false;
 	                }
 	                $attribute = $word;
 	                $state = 2;
@@ -112,7 +112,8 @@ class IssuesList extends ListObject
 	                    $operator = new Operator($word, $type);
 	                }
 	                catch (InvalidOperatorException $e) {
-	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_issues, constraints parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid operator $word of parameter constraints.$attribute in statement list_issues");
+	                    return false;
 	                }
 	                $state = 3;
 	                break;
@@ -125,7 +126,8 @@ class IssuesList extends ListObject
        	                $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
     	                $parameters[] = $comparisonOperation;
 	                } catch (InvalidValueException $e) {
-	                    CampTemplate::singleton()->trigger_error("invalid value $word of attribute $attribute in list_issues, constraints parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_issues");
+	                    return false;
 	                }
 	                $state = 1;
 	                break;
@@ -133,6 +135,7 @@ class IssuesList extends ListObject
 	    }
 	    if ($state != 1) {
             CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_issues");
+            return false;
 	    }
 
 		return $parameters;
