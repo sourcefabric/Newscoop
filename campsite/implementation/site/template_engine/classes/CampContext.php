@@ -35,7 +35,8 @@ final class CampContext
 								    				 'handler'=>'setCommentHandler'),
 								    'subtitle'=>array('class'=>'Subtitle',
                                                       'handler'=>'setSubtitleHandler'),
-								    'topic'=>array('class'=>'Topic'),
+								    'topic'=>array('class'=>'Topic',
+                                                   'handler'=>'setTopicHandler'),
 								    'user'=>array('class'=>'User'),
 								    'template'=>array('class'=>'Template')
     );
@@ -843,6 +844,14 @@ final class CampContext
     private function setSubtitleHandler(MetaSubtitle $p_oldSubtitle, MetaSubtitle $p_newSubtitle) {
         if ($p_oldSubtitle != $p_newSubtitle) {
             $this->m_objects['subtitle'] = $p_newSubtitle;
+        }
+    }
+
+
+    private function setTopicHandler(MetaTopic $p_oldTopic, MetaTopic $p_newTopic) {
+        if ($p_oldTopic != $p_newTopic) {
+            $this->m_readonlyProperties['url']->set_parameter('tpid', $p_newTopic->identifier);
+            $this->m_objects['topic'] = $p_newTopic;
         }
     }
 
