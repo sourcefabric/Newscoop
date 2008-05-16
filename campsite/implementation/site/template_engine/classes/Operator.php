@@ -28,15 +28,15 @@ class Operator
 	 * @var array
 	 */
 	private static $s_symbols = array('sql' => array('is' => '=',
-                                                     'equal_smaller' => '<=',
-                                                     'equal_greater' => '>=',
+                                                     'smaller_equal' => '<=',
+                                                     'greater_equal' => '>=',
                                                      'smaller' => '<',
                                                      'greater' => '>',
                                                      'not' => '<>'
                                                ),
                                       'php' => array('is' => '==',
-                                                     'equal_smaller' => '<=',
-                                                     'equal_greater' => '>=',
+                                                     'smaller_equal' => '<=',
+                                                     'greater_equal' => '>=',
                                                      'smaller' => '<',
                                                      'greater' => '>',
                                                      'not' => '!='
@@ -49,15 +49,15 @@ class Operator
 	 * @var array
 	 */
 	private static $s_typeOperators = array('integer'=>array('is',
-                                                             'equal_smaller',
-                                                             'equal_greater',
+                                                             'smaller_equal',
+                                                             'greater_equal',
                                                              'smaller',
                                                              'greater',
                                                              'not'
                                                        ),
                                             'string'=>array('is',
-	                                                        'equal_smaller',
-	                                                        'equal_greater',
+	                                                        'smaller_equal',
+	                                                        'greater_equal',
 	                                                        'smaller',
 	                                                        'greater',
 	                                                        'not'
@@ -66,29 +66,29 @@ class Operator
 	                                                      'not'
 	                                                ),
                                             'date'=>array('is',
-	                                                      'equal_smaller',
-	                                                      'equal_greater',
+	                                                      'smaller_equal',
+	                                                      'greater_equal',
 	                                                      'smaller',
 	                                                      'greater',
 	                                                      'not'
 	                                                ),
                                             'datetime'=>array('is',
-	                                                          'equal_smaller',
-	                                                          'equal_greater',
+	                                                          'smaller_equal',
+	                                                          'greater_equal',
 	                                                          'smaller',
 	                                                          'greater',
 	                                                          'not'
 	                                                    ),
                                             'time'=>array('is',
-	                                                      'equal_smaller',
-	                                                      'equal_greater',
+	                                                      'smaller_equal',
+	                                                      'greater_equal',
 	                                                      'smaller',
 	                                                      'greater',
 	                                                      'not'
 	                                                ),
                                             'timestamp'=>array('is',
-	                                                           'equal_smaller',
-	                                                           'equal_greater',
+	                                                           'smaller_equal',
+	                                                           'greater_equal',
 	                                                           'smaller',
 	                                                           'greater',
 	                                                           'not'
