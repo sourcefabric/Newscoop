@@ -34,6 +34,7 @@ if ($userEmail != $editUser->getEmail()) {
 
 $setPassword = Input::Get('setPassword', 'string', 'false') == 'true';
 $customizeRights = Input::Get('customizeRights', 'string', 'false') == 'true';
+$customizeSectionRights = Input::Get('customizeSectionRights', 'string', 'false') == 'true';
 
 if ($setPassword) {
 	$password = Input::Get('password', 'string', 0);
@@ -87,8 +88,8 @@ if($isPhorumUser) {
     $editUser->syncPhorumUser();
 }
 
-if ($editUser->isAdmin() && $customizeRights && $canManage) {
-	// save user customized rights
+if ($editUser->isAdmin() && ($customizeRights || $customizeSectionRights)
+        && $canManage) {
 	$rightsFields = $editUser->GetDefaultConfig();
 	$permissions = array();
 	foreach ($rightsFields as $field=>$value) {
@@ -96,7 +97,10 @@ if ($editUser->isAdmin() && $customizeRights && $canManage) {
 		$permissionEnabled = ($val == 'on') ? true : false;
 		$permissions[$field] = $permissionEnabled;
 	}
+}
 
+if ($editUser->isAdmin() && $customizeRights && $canManage) {
+	// save user customized rights
 	$editUser->updatePermissions($permissions);
 
 	$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
@@ -108,6 +112,19 @@ if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 	if ($userTypeId != 0) {
 		$editUser->setUserType($userTypeId);
 	}
+}
+if ($editUser->isAdmin() && $customizeSectionRights && $canManage) {
+    // save user rights per section
+    $sqlQuery = "SELECT right_define_name FROM liveuser_rights WHERE right_define_name LIKE 'ManageSection%_P%'";
+    $sectionRights = $g_ado_db->GetAll($sqlQuery);
+    foreach($sectionRights as $sectionRight) {
+        $field = $sectionRight['right_define_name'];
+        $val = Input::Get($field, 'string', 'off');
+        $permissionEnabled = ($val == 'on') ? true : false;
+        $sectionPermissions[$field] = $permissionEnabled;
+    }
+    $permissions = array_merge($permissions, $sectionPermissions);
+    $editUser->updatePermissions($permissions);
 }
 
 camp_html_add_msg(getGS("User '$1' information was changed successfully.",

@@ -350,6 +350,17 @@ class Section extends DatabaseObject {
 	} // fn setSectionTemplateId
 
 
+    /**
+     * @return string
+     *      $sectionRight The section right name
+     */
+    public function getSectionRightName()
+    {
+        $sectionRight = 'ManageSection'.$this->getSectionNumber().'_P'.$this->getPublicationId().'_I'.$this->getIssueNumber().'_L'.$this->getLanguageId();
+        return $sectionRight;
+    } // fn getSectionRightName
+
+
 	/**
 	 * Return an array of sections in the given issue.
 	 * @param int $p_publicationId
