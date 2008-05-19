@@ -48,9 +48,7 @@ if (count($allSections) > 0) {
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Number"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Name<BR><SMALL>(click to see articles)</SMALL>"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("URL Name"); ?></TD>
-	<?php if ($g_user->hasPermission('ManageSection')) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Configure"); ?></TD>
-	<?php } ?>
 	<?php if ($g_user->hasPermission('ManageSection') && $g_user->hasPermission('AddArticle')) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Duplicate"); ?></TD>
 	<?php } ?>
@@ -59,7 +57,9 @@ if (count($allSections) > 0) {
 	<?php } ?>
 </TR>
 <?php
-	foreach ($allSections as $section) { ?>
+	foreach ($allSections as $section) {
+        $sectionRightName = $section->getSectionRightName();
+?>
 	<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 
 		<TD ALIGN="RIGHT">
@@ -73,13 +73,15 @@ if (count($allSections) > 0) {
 		<TD >
 			<?php p(htmlspecialchars($section->getUrlName())); ?>
 		</TD>
+        <TD ALIGN="CENTER">
+		<?php  if ($g_user->hasPermission('ManageSection')
+                       || $g_user->hasPermission($sectionRightName)) { ?>
 
-		<?php  if ($g_user->hasPermission('ManageSection')) { ?>
-		<TD ALIGN="CENTER">
 			<A HREF="/<?php p($ADMIN); ?>/sections/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($section->getIssueNumber()); ?>&Section=<?php p($section->getSectionNumber()); ?>&Language=<?php  p($section->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>" border="0"></A>
-		</TD>
-		<?php 	} ?>
-
+		<?php 	} else { ?>
+            <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure-disable.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>" border="0" />
+        <?php   } ?>
+        </TD>
 		<?php if ($g_user->hasPermission('ManageSection') && $g_user->hasPermission('AddArticle')) { ?>
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php p($ADMIN);?>/sections/duplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php p($section->getSectionNumber()); ?>&Language=<?php  p($Language); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" alt="<?php putGS('Duplicate'); ?>" title="<?php putGS('Duplicate'); ?>" border="0"></A>

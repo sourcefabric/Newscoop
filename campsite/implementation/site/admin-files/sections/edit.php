@@ -3,19 +3,23 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_xinha.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Template.php');
 
-if (!$g_user->hasPermission('ManageSection')) {
-	camp_html_display_error(getGS("You do not have the right to modify sections."));
-	exit;
-}
+
 $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 $Section = Input::Get('Section', 'int', 0);
 
-
 $publicationObj = new Publication($Pub);
 $issueObj = new Issue($Pub, $Language, $Issue);
 $sectionObj = new Section($Pub, $Issue, $Language, $Section);
+
+$sectionRightName = $sectionObj->getSectionRightName();
+if (!$g_user->hasPermission('ManageSection')
+        && !$g_user->hasPermission($sectionRightName)) {
+	camp_html_display_error(getGS("You do not have the right to modify sections."));
+	exit;
+}
+
 $templates = Template::GetAllTemplates(array('ORDER BY' => array('Level' => 'ASC', 'Name' => 'ASC')));
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);

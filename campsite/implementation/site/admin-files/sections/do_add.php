@@ -64,6 +64,11 @@ if ($correct) {
     $columns['Description'] = $f_description;
     $created = $newSection->create($f_name, $f_url_name, $columns);
     if ($created) {
+        // adds the corresponding section right to the rights table
+        $right = array('area_id' => 0,
+                       'right_define_name' => $newSection->getSectionRightName(),
+                       'has_implied' => 1);
+        $GLOBALS['LiveUserAdmin']->perm->addRight($right);
 	    if ($f_add_subscriptions) {
 	        $numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($f_publication_id, $f_number);
 			if ($numSubscriptionsAdded == -1) {
