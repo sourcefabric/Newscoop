@@ -65,9 +65,6 @@ class Interview extends DatabaseObject {
         // text - template to build message
         'invitation_template',
         
-        // string - text, html
-        'invitation_type',
-        
         // datetime
         'invitation_sent',
         
@@ -1014,7 +1011,7 @@ class Interview extends DatabaseObject {
             $MetaUser = new MetaUser($p_userid);           
             $parsed_text = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser);
             
-            if ($data['invitation_type'] == 'text') {
+            if (0) {
                 $parsed_text = htmlspecialchars($parsed_text);
                 $parsed_text = str_replace("\r\n", '<br>', $parsed_text); 
                 $parsed_text = str_replace("\n", '<br>', $parsed_text);  
@@ -1069,18 +1066,30 @@ class Interview extends DatabaseObject {
                 ),
             isset($p_preview) ? null :
                 array(
+                'element'   => 'tiny_mce',
+                'text'      => '<script language="javascript" type="text/javascript" src="/javascript/tiny_mce/tiny_mce.js"></script>'.
+                               '<script language="javascript" type="text/javascript">'.
+                               '     tinyMCE.init({'.
+                               '     	mode : "exact",'.
+                               '        elements : "tiny_mce_box",'.
+                               '        theme : "advanced",'.
+                               '        plugins : "emotions, paste", '.
+                               '        paste_auto_cleanup_on_paste : true, '.
+                               '        theme_advanced_buttons1 : "bold, italic, underline, undo, redo, link", '.
+                               '        theme_advanced_buttons2 : "", '.
+                               '        theme_advanced_buttons3 : "" '.
+                               '     });'.
+                               '</script>',
+                'type'      => 'static'           
+            ),
+            isset($p_preview) ? null :
+                array(
                     'element'   => 'f_invitation_template',
                     'type'      => 'textarea',
                     'label'     => getGS('Invitation Template'),
                     'default'   => $data['invitation_template'],
                     'required'  => true,
-                    'attributes'=> array('cols' => 70, 'rows' => 20),
-                ),
-            isset($p_preview) ? null : array(
-                    'element'   => 'f_invitation_type',
-                    'type'      => 'checkbox',
-                    'label'     => getGS('HTML'),
-                    'attributes'=> array($data['invitation_type'] == 'html' ? 'checked' : null)
+                    'attributes'=> array('cols' => 70, 'rows' => 20, 'id' => 'tiny_mce_box'),
                 ),
             $this->getProperty('invitation_sent') !== null ?
                 array(
@@ -1140,14 +1149,14 @@ class Interview extends DatabaseObject {
         $mask = self::getInvitationFormMask();        
         $form = new html_QuickForm('invitation', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask);   
-           
+
         if ($form->validate()) {
             $data = $form->getSubmitValues();
+            $data['f_invitation_template'] = preg_replace_callback('/{{[^}]*}}/', create_function('$input', 'return html_entity_decode($input[0]);'), $data['f_invitation_template']);
 
             $this->setProperty('invitation_sender', $data['f_invitation_sender']);
             $this->setProperty('invitation_subject', $data['f_invitation_subject']);            
             $this->setProperty('invitation_template', $data['f_invitation_template']);
-            $this->setProperty('invitation_type', $data['f_invitation_type'] ? 'html' : 'text' );
             
             return true;
         }
@@ -1181,30 +1190,26 @@ class Interview extends DatabaseObject {
             $parsed = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser);
             $parsed = str_replace("\r\n",  "\n", $parsed);
             #$parsed = str_replace("\n",  "\r\n", $parsed);
-            
-            if ($this->getProperty('invitation_type') == 'html') {
-                $html = $parsed;   
-            } else {
-                $text = $parsed;   
-            }
-            
-            CampMail::MailMime($Questioneer->getEmail(), $text, $html, $headers);
+                        
+            CampMail::MailMime($Questioneer->getEmail(), null, $parsed, $headers);
         }
         
         // invite the guest       
         $Guest = new User($this->getProperty('fk_guest_user_id'));
 
-        $text .= "\n\nYour account:\n";
-        $text .= "Login: {$Guest->getUserName()}\n";
+        $parsed .= "<p><hr>Your interview guest account:<br>";
+        $parsed .= "Login: {$Guest->getUserName()}<br>";
         
         if ($passwd = $this->getProperty('invitation_password')) {
-            $text .= "Generated Password: {$passwd}\n";
+            $text .= "Generated Password: {$passwd}<br>";
             $text .= "Please change the password immedatly for security reason!";
             $this->setProperty('invitation_password', '');   
         }
         
+        $parsed .= '<hr>';
+        
         $this->setProperty('invitation_sent', date('Y-m-d H:i:s'));
-        CampMail::MailMime($Guest->getEmail(), $text, $html, $headers);
+        CampMail::MailMime($Guest->getEmail(), null, $parsed, $headers);
 
         if ($this->getProperty('status') == 'draft') {
             $this->setProperty('status', 'pending');   

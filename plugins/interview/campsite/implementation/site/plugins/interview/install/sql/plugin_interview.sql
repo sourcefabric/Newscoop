@@ -34,7 +34,6 @@ CREATE TABLE `plugin_interview_interviews` (
   `invitation_sender` varchar(256) NOT NULL,
   `invitation_subject` varchar(256) NOT NULL,
   `invitation_template` text NOT NULL,
-  `invitation_type` enum('text','html') NOT NULL,
   `invitation_sent` datetime default NULL,
   `position` int(10) unsigned NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
