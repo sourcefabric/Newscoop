@@ -216,9 +216,7 @@ if (!empty($f_message)) {
 	camp_html_add_msg($f_message, "ok");
 }
 
-$articleLang = $f_language_id ? $f_language_id : $articleObj->getLanguageId();
-$userSectionRight = 'ManageSection'.$articleObj->getSectionNumber().'_P'.$articleObj->getPublicationId().'_I'.$articleObj->getIssueNumber().'_L'.$articleLang;
-if (!$articleObj->userCanModify($g_user, $userSectionRight)) {
+if (!$articleObj->userCanModify($g_user)) {
 	camp_html_add_msg(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
 	camp_html_goto_page($BackLink);
 }

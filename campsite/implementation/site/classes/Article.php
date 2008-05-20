@@ -849,17 +849,14 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	public function userCanModify($p_user, $p_userSectionRight = null)
+	public function userCanModify($p_user)
 	{
 		$userCreatedArticle = ($this->m_data['IdUser'] == $p_user->getUserId());
 		$articleIsNew = ($this->m_data['Published'] == 'N');
 		$articleIsNotPublished = (($this->m_data['Published'] == 'N') || ($this->m_data['Published'] == 'S'));
-        $userSectionRight = is_null($p_userSectionRight) ? 'ManageSection' : $p_userSectionRight;
-		if (($p_user->hasPermission('ManageSection')
-                 || $p_user->hasPermission($userSectionRight))
-            && ($p_user->hasPermission('Publish')
-                || ($p_user->hasPermission('ChangeArticle') && $articleIsNotPublished)
-                || ($userCreatedArticle && $articleIsNew))) {
+		if ($p_user->hasPermission('Publish')
+			|| ($p_user->hasPermission('ChangeArticle') && $articleIsNotPublished)
+			|| ($userCreatedArticle && $articleIsNew)) {
 			return true;
 		} else {
 			return false;

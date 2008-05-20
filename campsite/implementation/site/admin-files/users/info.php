@@ -321,7 +321,6 @@ if (!$isNewUser) {
 if ($editUser->isAdmin() && $canManage) {
 ?>
 <input type="hidden" name="customizeRights" id="customize_rights" value="false">
-<input type="hidden" name="customizeSectionRights" id="customize_section_rights" value="false">
 <tr id="user_type_dialog">
 	<td style="padding-left: 4px; padding-top: 4px; padding-bottom: 4px;">
 		<?php putGS("User Type"); ?>:
@@ -335,38 +334,6 @@ if ($editUser->isAdmin() && $canManage) {
 		</select>
 	</td>
 </tr>
-
-
-<tr id="section_rights_show_link">
-	<td style="padding-left: 6px; padding-top: 6px; padding-right: 6px;">
-		<a href="javascript: void(0);" onclick="ToggleRowVisibility('section_rights_dialog'); ToggleRowVisibility('section_rights_hide_link'); ToggleRowVisibility('section_rights_show_link'); ToggleBoolValue('customize_section_rights');">
-			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmagplus.png" id="my_icon" border="0" align="center">
-			<?php putGS("Click here to customize user permissions per section"); ?>
-		</a>
-	</td>
-</tr>
-<tr id="section_rights_hide_link" style="display: none;">
-	<td style="padding-left: 6px; padding-top: 6px; padding-right: 6px;">
-		<a href="javascript: void(0);" onclick="ToggleRowVisibility('section_rights_dialog'); ToggleRowVisibility('section_rights_hide_link'); ToggleRowVisibility('section_rights_show_link'); ToggleBoolValue('customize_section_rights');">
-			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmagminus.png" id="my_icon" border="0" align="center">
-			<?php putGS("Click here to use existing user type permissions (discard section customization)"); ?>
-		</a>
-	</td>
-</tr>
-<tr id="section_rights_dialog" style="display: none;">
-	<td>
-		<table border="0" cellspacing="0" cellpadding="6" align="center" width="100%">
-			<tr>
-				<td>
-<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/section_access_form.php"); ?>
-				</td>
-			</tr>
-		</table>
-	</td>
-</tr>
-
-
-
 <tr id="rights_show_link">
 	<td style="padding-left: 6px; padding-top: 6px; padding-right: 6px;">
 		<a href="javascript: void(0);" onclick="ToggleRowVisibility('rights_dialog'); ToggleRowVisibility('user_type_dialog'); ToggleRowVisibility('rights_hide_link'); ToggleRowVisibility('rights_show_link'); ToggleBoolValue('customize_rights');">
