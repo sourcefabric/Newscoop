@@ -27,7 +27,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '3.0.1';
+    private $m_release = '3.1-dev';
 
     /**
      * @var string
@@ -37,7 +37,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_codeName = 'Filip';
+    private $m_codeName = '';
 
     /**
      * @var string
@@ -71,7 +71,9 @@ final class CampVersion
         if (!empty($this->m_devStatus)) {
             $version .= '-' . $this->m_devStatus;
         }
-        $version .= ' (' . $this->m_codeName . ')';
+        if (!empty($this->m_codeName)) {
+            $version .= ' (' . $this->m_codeName . ')';
+        }
         return $version;
     }
 
