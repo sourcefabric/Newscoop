@@ -25,6 +25,9 @@
 <th>{{* tr *}}Login{{* tr *}}</th>
 <tr>
   <td>
+    {{ if $campsite->login_action->is_error }}
+        <p>There was an error logging in: {{ $campsite->login_action->error_message }}</p>
+    {{ /if }}
     <div id="genericform">
     {{ login_form submit_button="Login" button_html_code="class=\"submitbutton\"" }}
       <div align="center"><span class="formtext">User ID:</span><br /></div>
