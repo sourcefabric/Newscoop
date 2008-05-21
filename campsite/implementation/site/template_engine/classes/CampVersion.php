@@ -71,7 +71,9 @@ final class CampVersion
         if (!empty($this->m_devStatus)) {
             $version .= '-' . $this->m_devStatus;
         }
-        $version .= ' (' . $this->m_codeName . ')';
+        if (!empty($this->m_codeName)) {
+            $version .= ' (' . $this->m_codeName . ')';
+        }
         return $version;
     }
 
