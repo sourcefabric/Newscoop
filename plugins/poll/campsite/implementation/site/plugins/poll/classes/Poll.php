@@ -872,7 +872,7 @@ class Poll extends DatabaseObject {
         if (strtotime($this->m_data['date_begin']) > strtotime(date('Y-m-d'))) {
             return false;   
         }
-        if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d')) + 60*60*24) {
+        if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d'))) {
             return false;   
         }
         if ($this->m_data['votes_per_user'] <= $this->getUserVoteCount()) {

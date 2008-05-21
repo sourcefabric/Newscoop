@@ -42,10 +42,10 @@ final class MetaPoll extends MetaDbObject {
     
     public function isCurrent()
     {
-        if ($this->date_begin > strtotime(date('Y-m-d'))) {
+        if (strtotime($this->date_begin) > strtotime(date('Y-m-d'))) {
             return false;   
         }
-        if (empty($this->is_display_expired) && ($this->date_end + 60*60*24 < strtotime(date('Y-m-d')))) {
+        if (strtotime($this->date_end) < strtotime(date('Y-m-d'))) {
             return false;   
         }
         
