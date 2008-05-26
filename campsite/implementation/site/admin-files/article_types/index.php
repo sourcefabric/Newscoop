@@ -44,10 +44,10 @@ if ($g_user->hasPermission("ManageArticleTypes")) { ?>
 	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 	<TR>
 		<TD><A HREF="add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-		<TD><B><A HREF="add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><?php  putGS("Add new article type"); ?></B></A></TD>
+		<TD><B><A HREF="add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><?php  putGS("Add new article type"); ?></A></B></TD>
 		<TD><DIV STYLE="width:15px;"></DIV></TD>
 		<TD><A HREF="merge.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/merge.png" BORDER="0"></A></TD>
-		<TD><B><A HREF="merge.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><?php  putGS("Merge types"); ?></B></A></TD>
+		<TD><B><A HREF="merge.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><?php  putGS("Merge types"); ?></A></B></TD>
 		<TD><DIV STYLE="width:15px;"></DIV></TD>
 		<TD><A HREF="javascript: void(0);"
                ONCLICK="if (allShown == 0) {

@@ -383,7 +383,6 @@ if ($f_publication_id > 0) {
 <?php p($title); ?>:
 </div>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" style="margin-left: 10px;">
 <FORM NAME="move_duplicate" METHOD="POST">
 <?php if ($f_publication_id > 0) { ?>
 <input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
@@ -402,6 +401,7 @@ foreach ($articles as $languageArray) {
 }
 ?>
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" style="margin-left: 10px;">
 <TR>
 	<TD>
 		<TABLE cellpadding="3">
@@ -588,8 +588,8 @@ foreach ($articles as $languageArray) {
 		</TABLE>
 	</TD>
 </TR>
-</FORM>
 </table>
+</FORM>
 <p>
 
 <?php camp_html_copyright_notice(); ?>
