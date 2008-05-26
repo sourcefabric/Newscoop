@@ -9,9 +9,9 @@ if (!$g_user->hasPermission('SyncPhorumUsers')) {
 }
 
 $queryStr = "SELECT u.Id, pu.user_id, u.UName, u.Password, u.EMail "
-            . "FROM Users AS u LEFT JOIN phorum_users AS pu "
+            . "FROM liveuser_users AS u LEFT JOIN phorum_users AS pu "
             . "ON u.UName = pu.username "
-            . "WHERE fk_campsite_user_id IS NULL";
+            . "WHERE fk_campsite_user_id IS NULL OR fk_campsite_user_id = 0";
 $nullUsers = $g_ado_db->GetAll($queryStr);
 if (sizeof($nullUsers) > 0) {
     foreach ($nullUsers as $nullUser) {
