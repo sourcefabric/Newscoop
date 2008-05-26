@@ -4,7 +4,7 @@
     <ul id="topmenulist">
       <li><a
         href="/">Home</a></li>
-    {{ list_sections name="sections" constraints="number equal_greater 200" }}
+    {{ list_sections name="sections" constraints="number greater_equal 200" }}
       <li><a
         href="{{ uri options="section" }}">{{ $campsite->section->name }}</a></li>
     {{ /list_sections }}
