@@ -288,7 +288,7 @@ final class CampContext
      *
      * @param string $p_property
      */
-    public function hasProperty($p_property)
+    public function has_property($p_property)
     {
         $p_property = CampContext::TranslateProperty($p_property);
         return !is_null(CampContext::ObjectType($p_property))
@@ -296,7 +296,7 @@ final class CampContext
         && array_key_exists($p_property, $this->m_properties))
         || (is_array($this->m_readonlyProperties)
         && array_key_exists($p_property, $this->m_readonlyProperties));
-    } // fn hasProperty
+    } // fn has_property
 
 
     /**
@@ -304,10 +304,10 @@ final class CampContext
      *
      * @param string $p_object
      */
-    public function hasObject($p_object)
+    public function has_object($p_object)
     {
         return !is_null(CampContext::ObjectType($p_object));
-    } // fn hasObject
+    } // fn has_object
 
 
     /**
@@ -361,7 +361,7 @@ final class CampContext
     {
         $savedProperties = array();
         foreach ($p_propertiesList as $propertyName) {
-            if (!$this->hasProperty($propertyName)) {
+            if (!$this->has_property($propertyName)) {
                 continue;
             }
             $savedProperties[$propertyName] = $this->$propertyName;
@@ -399,7 +399,7 @@ final class CampContext
         }
         $savedContext = array();
         foreach ($p_propertiesList as $propertyName) {
-            if ($this->hasProperty($propertyName)) {
+            if ($this->has_property($propertyName)) {
                 $savedContext[$propertyName] = $this->$propertyName;
             }
         }
