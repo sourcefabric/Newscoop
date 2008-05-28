@@ -117,6 +117,7 @@ if ($editUser->isAdmin() && $customizeSectionRights && $canManage) {
     // save user rights per section
     $sqlQuery = "SELECT right_define_name FROM liveuser_rights WHERE right_define_name LIKE 'ManageSection%_P%'";
     $sectionRights = $g_ado_db->GetAll($sqlQuery);
+    $sectionPermissions = array();
     foreach($sectionRights as $sectionRight) {
         $field = $sectionRight['right_define_name'];
         $val = Input::Get($field, 'string', 'off');

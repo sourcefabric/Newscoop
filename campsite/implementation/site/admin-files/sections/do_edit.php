@@ -102,6 +102,9 @@ if (!camp_html_has_msgs()) {
 		// getGS("The section could not be changed.");
 	} else {
 		$modified &= $sectionObj->setUrlName($cShortName);
+        // adds the corresponding section right to the rights table
+        // only if right does not exist yet
+        $sectionObj->addSectionRight();
 		camp_html_add_msg(getGS("Section updated"), "ok");
 	}
 	$logtext = getGS('Section #$1 "$2" updated. (Publication: $3, Issue: $4)',
