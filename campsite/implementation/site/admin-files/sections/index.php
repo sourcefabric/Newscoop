@@ -45,10 +45,11 @@ if (count($allSections) > 0) {
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
-	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Number"); ?></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Number"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Name<BR><SMALL>(click to see articles)</SMALL>"); ?></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Nr. Of Articles<BR><SMALL>(Total/Published)</SMALL>"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("URL Name"); ?></TD>
-	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Configure"); ?></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Configure"); ?></TD>
 	<?php if ($g_user->hasPermission('ManageSection') && $g_user->hasPermission('AddArticle')) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Duplicate"); ?></TD>
 	<?php } ?>
@@ -59,18 +60,30 @@ if (count($allSections) > 0) {
 <?php
 	foreach ($allSections as $section) {
         $sectionRightName = $section->getSectionRightName();
+        $numberOfArticles = Article::GetArticles($section->getPublicationId(),
+                                                 $section->getIssueNumber(),
+                                                 $section->getSectionNumber(),
+                                                 $section->getLanguageId(),
+                                                 null, true);
+        $whereOptions = array("Published='Y'");
+        $numberOfPublishedArticles = Article::GetArticles($section->getPublicationId(),
+                                                          $section->getIssueNumber(),
+                                                          $section->getSectionNumber(),
+                                                          $section->getLanguageId(),
+                                                          null, true,
+                                                          $whereOptions);
 ?>
 	<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-
 		<TD ALIGN="RIGHT">
-			<?php  p($section->getSectionNumber()); ?>
+			<?php p($section->getSectionNumber()); ?>
 		</TD>
-
 		<TD >
-			<A HREF="/<?php p($ADMIN); ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php  p($section->getIssueNumber()); ?>&f_section_number=<?php p($section->getSectionNumber()); ?>&f_language_id=<?php  p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></A>
+              <A HREF="/<?php p($ADMIN); ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php  p($section->getIssueNumber()); ?>&f_section_number=<?php p($section->getSectionNumber()); ?>&f_language_id=<?php  p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></A>
 		</TD>
-
-		<TD >
+        <TD ALIGN="CENTER">
+            <?php echo $numberOfArticles.' / '.$numberOfPublishedArticles; ?>
+        </TD>
+		<TD>
 			<?php p(htmlspecialchars($section->getUrlName())); ?>
 		</TD>
         <TD ALIGN="CENTER">

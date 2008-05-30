@@ -1732,7 +1732,8 @@ class Article extends DatabaseObject {
 	 */
 	public static function GetArticles($p_publicationId = null, $p_issueNumber = null,
 						               $p_sectionNumber = null, $p_languageId = null,
-						               $p_sqlOptions = null, $p_countOnly = false)
+						               $p_sqlOptions = null, $p_countOnly = false,
+                                       $p_whereOptions = null)
     {
 		global $g_ado_db;
 
@@ -1749,6 +1750,11 @@ class Article extends DatabaseObject {
 		if (!is_null($p_languageId)) {
 			$whereClause[] = "IdLanguage=$p_languageId";
 		}
+        if (!is_null($p_whereOptions) && is_array($p_whereOptions)) {
+            foreach ($p_whereOptions as $key => $value) {
+                $whereClause[] = $value;
+            }
+        }
 
 		$selectStr = "*";
 		if ($p_countOnly) {
