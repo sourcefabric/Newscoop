@@ -31,7 +31,7 @@ if (isset($_REQUEST['f_preview'])) {
 }
 
 if (isset($_REQUEST['f_invite_now'])) {
-    $Interview->sendInvitation();
+    $Interview->sendGuestInvitation();
     ?>
     <script language="javascript">
         window.opener.location.reload();

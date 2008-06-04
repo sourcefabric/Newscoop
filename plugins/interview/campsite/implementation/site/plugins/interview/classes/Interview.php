@@ -63,10 +63,16 @@ class Interview extends DatabaseObject {
         'invitation_subject',
         
         // text - template to build message
-        'invitation_template',
+        'invitation_template_guest',
+        
+        // text - template to build message
+        'invitation_template_questioneer',
+
+        // datetime
+        'guest_invitation_sent',
         
         // datetime
-        'invitation_sent',
+        'questioneer_invitation_sent',
         
         // string
         'invitation_password',
@@ -945,9 +951,16 @@ class Interview extends DatabaseObject {
     }
     
     
-    function smarty_get_template($p_void, &$tpl_source, &$smarty_obj)
+    function smarty_get_guest_template($p_void, &$tpl_source, &$smarty_obj)
     {
-        $tpl_source = $this->getProperty('invitation_template');
+        $tpl_source = $this->getProperty('invitation_template_guest');
+        
+        return true;
+    }
+    
+    function smarty_get_questioneer_template($p_void, &$tpl_source, &$smarty_obj)
+    {
+        $tpl_source = $this->getProperty('invitation_template_questioneer');
         
         return true;
     }
@@ -968,17 +981,18 @@ class Interview extends DatabaseObject {
     
     }
     
-    private function smarty_parse_inviation_template(MetaInterview $p_metainterview, MetaUser $p_metauser)
+    private function smarty_parse_inviation_template(MetaInterview $p_metainterview, MetaUser $p_metauser, $p_type)
     {
         $smarty = CampTemplate::singleton();
         $campsite = new stdClass();
         $campsite->interview = $p_metainterview;
         $campsite->user = $p_metauser;
+        $campsite->WEBSITE_URL = $GLOBALS['Campsite']['WEBSITE_URL'];
         $smarty->assign_by_ref('campsite', $campsite);
         
         $smarty->register_resource("interview", 
             array(
-                array(&$this, "smarty_get_template"),
+                array(&$this, "smarty_get_{$p_type}_template"),
                 array(&$this, "smarty_get_timestamp"),
                 array(&$this, "smarty_get_secure"),
                 array(&$this, "smarty_get_trusted")
@@ -1009,13 +1023,8 @@ class Interview extends DatabaseObject {
             
             $MetaInterview = new MetaInterview($this->getId()); 
             $MetaUser = new MetaUser($p_userid);           
-            $parsed_text = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser);
-            
-            if (0) {
-                $parsed_text = htmlspecialchars($parsed_text);
-                $parsed_text = str_replace("\r\n", '<br>', $parsed_text); 
-                $parsed_text = str_replace("\n", '<br>', $parsed_text);  
-            }
+            $guest_text = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser, 'guest');
+            $questioneer_text = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser, 'questioneer');
         }
          
         $mask = array(
@@ -1042,11 +1051,19 @@ class Interview extends DatabaseObject {
                 ) : null,
             isset($p_preview) ?
                 array(
-                    'element'   => 'f_invitation_preview',
+                    'element'   => 'f_invitation_preview_guest',
                     'type'      => 'static',
-                    'label'     => getGS('Preview'),
-                    'default'   => $parsed_text,
-                    'attributes'=> array('cols' => 70, 'rows' => 20, 'disabled' => true, 'readonly' => true),
+                    'label'     => getGS('Guest preview text'),
+                    'default'   => $guest_text,
+                    'attributes'=> array('cols' => 70, 'rows' => 12, 'disabled' => true, 'readonly' => true),
+                ) : null,
+            isset($p_preview) ?
+                array(
+                    'element'   => 'f_invitation_preview_questioneer',
+                    'type'      => 'static',
+                    'label'     => getGS('Questioneer preview text'),
+                    'default'   => $questioneer_text,
+                    'attributes'=> array('cols' => 70, 'rows' => 12, 'disabled' => true, 'readonly' => true),
                 ) : null,
             isset($p_preview) ? null :
                 array(
@@ -1071,7 +1088,10 @@ class Interview extends DatabaseObject {
                                '<script language="javascript" type="text/javascript">'.
                                '     tinyMCE.init({'.
                                '     	mode : "exact",'.
-                               '        elements : "tiny_mce_box",'.
+                               '        elements : "f_invitation_template_guest, f_invitation_template_questioneer",'.
+                               '        entity_encoding : "raw",'.
+                               '        relative_urls : false,'.
+                               '        convert_urls : false,'.
                                '        theme : "advanced",'.
                                '        plugins : "emotions, paste", '.
                                '        paste_auto_cleanup_on_paste : true, '.
@@ -1084,18 +1104,32 @@ class Interview extends DatabaseObject {
             ),
             isset($p_preview) ? null :
                 array(
-                    'element'   => 'f_invitation_template',
+                    'element'   => 'f_invitation_template_guest',
                     'type'      => 'textarea',
-                    'label'     => getGS('Invitation Template'),
-                    'default'   => $data['invitation_template'],
+                    'label'     => getGS('Invitation Template for Guest').'<br><a href="">Help</a>',
+                    'default'   => $data['invitation_template_guest'],
                     'required'  => true,
-                    'attributes'=> array('cols' => 70, 'rows' => 20, 'id' => 'tiny_mce_box'),
+                    'attributes'=> array('cols' => 70, 'rows' => 12, 'id' => 'f_invitation_template_guest'),
                 ),
-            $this->getProperty('invitation_sent') !== null ?
+           isset($p_preview) ? null : array(
+                    'element'   => 'f_invitation_template_questioneer',
+                    'type'      => 'textarea',
+                    'label'     => getGS('Invitation Template for Questioneer').'<br><a href="">Help</a>',
+                    'default'   => $data['invitation_template_questioneer'],
+                    'required'  => true,
+                    'attributes'=> array('cols' => 70, 'rows' => 12, 'id' => 'f_invitation_template_questioneer'),
+                ),
+            $this->getProperty('guest_invitation_sent') !== null ?
                 array(
                     'element'   => 'f_warning',
                     'type'      => 'static',
-                    'text'  => '<font color="red"><b>'.getGS('Invitation has already been sent on $1', $this->getProperty('invitation_sent')).'</b></font>'
+                    'text'  => '<font color="red"><b>'.getGS('Invitation to interview guest has already been sent on $1', $this->getProperty('guest_invitation_sent')).'</b></font>'
+                ) : null,
+            $this->getProperty('questioneer_invitation_sent') !== null ?
+                array(
+                    'element'   => 'f_warning',
+                    'type'      => 'static',
+                    'text'  => '<font color="red"><b>'.getGS('Invitations to questioneers has already been sent on $1', $this->getProperty('questioneer_invitation_sent')).'</b></font>'
                 ) : null,
             array(
                 'element'   => 'f_reset',
@@ -1152,11 +1186,16 @@ class Interview extends DatabaseObject {
 
         if ($form->validate()) {
             $data = $form->getSubmitValues();
-            $data['f_invitation_template'] = preg_replace_callback('/{{[^}]*}}/', create_function('$input', 'return html_entity_decode($input[0]);'), $data['f_invitation_template']);
+            
+            $data['f_invitation_template_guest'] = preg_replace_callback('/(%7B%7B.*%7D%7D)/u', create_function('$input', 'return urldecode($input[0]);'), $data['f_invitation_template_guest']);
+            $data['f_invitation_template_guest'] = preg_replace_callback('/{{[^}]*}}/', create_function('$input', 'return html_entity_decode($input[0]);'), $data['f_invitation_template_guest']);
+            $data['f_invitation_template_questioneer'] = preg_replace_callback('/(%7B%7B.*%7D%7D)/u', create_function('$input', 'return urldecode($input[0]);'), $data['f_invitation_template_questioneer']);
+            $data['f_invitation_template_questioneer'] = preg_replace_callback('/{{[^}]*}}/', create_function('$input', 'return html_entity_decode($input[0]);'), $data['f_invitation_template_questioneer']);
 
             $this->setProperty('invitation_sender', $data['f_invitation_sender']);
             $this->setProperty('invitation_subject', $data['f_invitation_subject']);            
-            $this->setProperty('invitation_template', $data['f_invitation_template']);
+            $this->setProperty('invitation_template_guest', $data['f_invitation_template_guest']);
+            $this->setProperty('invitation_template_questioneer', $data['f_invitation_template_questioneer']);
             
             return true;
         }
@@ -1174,7 +1213,27 @@ class Interview extends DatabaseObject {
         return $Questioneer;  
     }
     
-    public function sendInvitation()
+    public function sendGuestInvitation()
+    {   
+        $MetaInterview = new MetaInterview($this->getId());
+
+        $headers = array(
+            'From' => $this->getProperty('invitation_sender'),
+            'Subject' =>  $this->getProperty('invitation_subject') 
+        );
+        
+        // invite the guest       
+        $MetaUser = new MetaUser($this->getProperty('fk_guest_user_id'));
+         
+        $parsed = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser, 'guest');
+        $parsed = str_replace("\r\n",  "\n", $parsed);
+        #$parsed = str_replace("\n",  "\r\n", $parsed);
+                    
+        CampMail::MailMime($MetaUser->email, null, $parsed, $headers);
+        
+    }
+    
+    public function sendQuestioneerInvitation()
     {   
         $MetaInterview = new MetaInterview($this->getId());
 
@@ -1187,36 +1246,13 @@ class Interview extends DatabaseObject {
         foreach (self::getQuestioneersWantInvitation() as $Questioneer) {
             $MetaUser = new MetaUser($Questioneer->getUserId());
              
-            $parsed = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser);
+            $parsed = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser, 'questioneer');
             $parsed = str_replace("\r\n",  "\n", $parsed);
             #$parsed = str_replace("\n",  "\r\n", $parsed);
                         
             CampMail::MailMime($Questioneer->getEmail(), null, $parsed, $headers);
         }
-        
-        // invite the guest       
-        $Guest = new User($this->getProperty('fk_guest_user_id'));
-
-        $parsed .= "<p><hr>Your interview guest account:<br>";
-        $parsed .= "Login: {$Guest->getUserName()}<br>";
-        
-        if ($passwd = $this->getProperty('invitation_password')) {
-            $text .= "Generated Password: {$passwd}<br>";
-            $text .= "Please change the password immedatly for security reason!";
-            $this->setProperty('invitation_password', '');   
-        }
-        
-        $parsed .= '<hr>';
-        
-        $this->setProperty('invitation_sent', date('Y-m-d H:i:s'));
-        CampMail::MailMime($Guest->getEmail(), null, $parsed, $headers);
-
-        if ($this->getProperty('status') == 'draft') {
-            $this->setProperty('status', 'pending');   
-        }
-    }
-    
-    
+    }    
     
     /////////////////// Special template engine methods below here /////////////////////////////
     

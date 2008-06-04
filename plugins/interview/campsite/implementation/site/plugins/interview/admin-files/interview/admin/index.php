@@ -368,7 +368,7 @@ if ($InterviewsList->getLength()) {
               
                 <?php if($is_admin) { ?>
                     <td align='center'>
-                        <a href="javascript: void(0);" onclick="window.open('invitation.php?f_interview_id=<?php p($MetaInterview->identifier); ?>', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=720, height=580, top=200, left=100');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"], '/', $MetaInterview->invitation_sent ? 'email_red.png' : 'email_green.png' ?>" BORDER="0"></a>
+                        <a href="javascript: void(0);" onclick="window.open('invitation.php?f_interview_id=<?php p($MetaInterview->identifier); ?>', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=720, height=700, top=200, left=100');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"], '/', ($MetaInterview->guest_invitation_sent || $MetaInterview->questioneer_invitation_sent) ? 'email_red.png' : 'email_green.png' ?>" BORDER="0"></a>
                     </td>
                     <td align='center'>
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {

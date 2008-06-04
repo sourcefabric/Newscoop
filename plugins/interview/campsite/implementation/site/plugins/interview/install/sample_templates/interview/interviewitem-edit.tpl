@@ -4,10 +4,10 @@
 
 {{ if $campsite->interviewitem_action->defined }}
 
-    {{ if $campsite->interviewitem_action->error }}
+    {{ if $campsite->interviewitem_action->is_error }}
         <h6>Form Errors:</h6>
         
-        <font color="red">{{ $campsite->interviewitem_action->error->message }}</font>
+        <font color="red">{{ $campsite->interviewitem_action->error_message }}</font>
         <p>
         
         {{ include file='interview/interviewitem-form.tpl' }}
