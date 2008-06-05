@@ -15,8 +15,8 @@
     
     <tr>
         <td><a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}">{{ $campsite->interview->title }}</a></td>
-        <td>{{ $campsite->interview->questions_begin|camp_date_format:'%Y-%m-%d' }} - {{ $campsite->interview->questions_end|camp_date_format:'%Y-%m-%d' }}</td>
-        <td>{{ $campsite->interview->interview_begin|camp_date_format:'%Y-%m-%d' }} - {{ $campsite->interview->interview_end|camp_date_format:'%Y-%m-%d' }}</td>
+        <td>{{ $campsite->interview->questions_begin|camp_date_format:'%Y-%m-%d %H:%i' }} - {{ $campsite->interview->questions_end|camp_date_format:'%Y-%m-%d %H:%i' }}</td>
+        <td>{{ $campsite->interview->interview_begin|camp_date_format:'%Y-%m-%d %H:%i' }} - {{ $campsite->interview->interview_end|camp_date_format:'%Y-%m-%d %H:%i' }}</td>
         <td>{{ $campsite->interview->status }}</td>
         <td>{{ $campsite->interview->moderator->name }}</td>
         <td>{{ $campsite->interview->guest->name }}</td>

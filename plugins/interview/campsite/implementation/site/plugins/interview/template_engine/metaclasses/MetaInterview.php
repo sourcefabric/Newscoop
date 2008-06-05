@@ -37,10 +37,6 @@ final class MetaInterview extends MetaDbObject {
         $this->m_customProperties['image'] = 'getImage';
         $this->m_customProperties['image_description'] = 'getImageDescription';
         $this->m_customProperties['image_delete'] = 'null';
-        $this->m_customProperties['interview_begin'] = 'getInterviewBegin';
-		$this->m_customProperties['interview_end'] = 'getInterviewEnd';
-        $this->m_customProperties['questions_begin'] = 'getQuestionsBegin';
-		$this->m_customProperties['questions_end'] = 'getQuestionsEnd';
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['moderator'] = 'getModerator';
         $this->m_customProperties['guest'] = 'getGuest';
@@ -49,41 +45,20 @@ final class MetaInterview extends MetaDbObject {
         $this->m_customProperties['is_user_guest'] = 'isUserGuest';
         $this->m_customProperties['in_questions_timeframe'] = 'inQuestionsTimeframe';
         $this->m_customProperties['in_interview_timeframe'] = 'inInterviewTimeframe';
-        $this->m_customProperties['invitation_sent'] = 'getInvitationSent';
         
 
     } // fn __construct
     
     public function isInValid()
     {
-        if ($this->date_begin > strtotime(date('Y-m-d'))) {
+        if (strtotime($this->date_begin) > time()) {
             return false;   
         }
-        if (empty($this->is_show_after_expiration) && ($this->date_end + 60*60*24 < strtotime(date('Y-m-d')))) {
+        if (strtotime($this->date_end) < time()) {
             return false;   
         }
         
         return true;  
-    }
-    
-    public function getInterviewBegin()
-    {
-        return strtotime($this->m_dbObject->getProperty('interview_begin'));   
-    }
-    
-    public function getInterviewEnd()
-    {
-        return strtotime($this->m_dbObject->getProperty('interview_end'));   
-    }
-    
-    public function getQuestionsBegin()
-    {
-        return strtotime($this->m_dbObject->getProperty('questions_begin'));   
-    }
-    
-    public function getQuestionsEnd()
-    {
-        return strtotime($this->m_dbObject->getProperty('questions_end'));   
     }
     
     public function getLanguage()
@@ -171,7 +146,7 @@ final class MetaInterview extends MetaDbObject {
     
     public function inQuestionsTimeframe()
     {
-        if ($this->getQuestionsBegin() <= time() && $this->getQuestionsEnd() >= time()) {
+        if (strtotime($this->questions_begin) <= time() && strtotime($this->questions_end) >= time()) {
             return true;   
         } 
         return false;
@@ -179,16 +154,12 @@ final class MetaInterview extends MetaDbObject {
     
     public function inInterviewTimeframe()
     {
-        if ($this->getInterviewBegin() <= time() && $this->getInterviewEnd() >= time()) {
+        if (strtotime($this->interview_begin) <= time() && strtotime($this->interview_end) >= time()) {
             return true;   
         } 
         return false;
     }
-      
-    public function getInvitationSent()
-    {
-        return strtotime($this->m_dbObject->getProperty('invitation_sent'));   
-    }
+    
 } // class MetaInterview
 
 ?>

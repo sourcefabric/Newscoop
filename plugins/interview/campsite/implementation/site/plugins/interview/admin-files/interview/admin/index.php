@@ -355,10 +355,10 @@ if ($InterviewsList->getLength()) {
                 <td align="center"><?php putGS($MetaInterview->status); ?></td>
                 <td align="center"><?php putGS($MetaInterview->moderator->name); ?></td>
                 <td align="center"><?php putGS($MetaInterview->guest->name); ?></td>
-                <td align="center"><?php p(strftime('%Y-%m-%d', strtotime($MetaInterview->questions_begin))); ?></td>
-                <td align="center"><?php p(strftime('%Y-%m-%d', strtotime($MetaInterview->questions_end))); ?></td>
-                <td align="center"><?php p(strftime('%Y-%m-%d', strtotime($MetaInterview->interview_begin))); ?></td>
-                <td align="center"><?php p(strftime('%Y-%m-%d', strtotime($MetaInterview->interview_end))); ?></td>
+                <td align="center"><?php p(substr($MetaInterview->questions_begin, 0, 16)); ?></td>
+                <td align="center"><?php p(substr($MetaInterview->questions_end, 0, 16)); ?></td>
+                <td align="center"><?php p(substr($MetaInterview->interview_begin, 0, 16)); ?></td>
+                <td align="center"><?php p(substr($MetaInterview->interview_end, 0, 16)); ?></td>
               
                 <td align='center'>
                     <a href='list_items.php?f_interview_id=<?php p($MetaInterview->identifier); ?>'>

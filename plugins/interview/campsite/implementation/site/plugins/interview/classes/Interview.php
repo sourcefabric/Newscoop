@@ -621,9 +621,9 @@ class Interview extends DatabaseObject {
             array(
                 'element'   => 'f_interview_begin',
                 'type'      => 'text',
-                'default'   => substr($data['interview_begin'], 0, 10),
+                'default'   => substr($data['interview_begin'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_interview_begin', 'size' => 10, 'maxlength' => 10),
+                'attributes'    => array('id' => 'f_interview_begin', 'size' => 16, 'maxlength' => 16),
                 'groupit'   => true          
             ),
             array(
@@ -638,8 +638,8 @@ class Interview extends DatabaseObject {
                      <script type="text/javascript">
                         Calendar.setup({
                             inputField:"f_interview_begin",
-                            ifFormat:"%Y-%m-%d",
-                            showsTime:false,
+                            ifFormat:"%Y-%m-%d %H:%M",
+                            showsTime:true,
                             showOthers:true,
                             weekNumbers:false,
                             range:new Array(2008, 2020),
@@ -655,9 +655,9 @@ class Interview extends DatabaseObject {
             array(
                 'element'   => 'f_interview_end',
                 'type'      => 'text',
-                'default'   => substr($data['interview_end'], 0, 10),
+                'default'   => substr($data['interview_end'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_interview_end', 'size' => 10, 'maxlength' => 10),
+                'attributes'    => array('id' => 'f_interview_end', 'size' => 16, 'maxlength' => 16),
                 'groupit'   => true          
             ),
             array(
@@ -672,8 +672,8 @@ class Interview extends DatabaseObject {
                     <script type="text/javascript">
                         Calendar.setup({
                             inputField:"f_interview_end",
-                            ifFormat:"%Y-%m-%d",
-                            showsTime:false,
+                            ifFormat:"%Y-%m-%d %H:%M",
+                            showsTime:true,
                             showOthers:true,
                             weekNumbers:false,
                             range:new Array(2008, 2020),
@@ -689,10 +689,10 @@ class Interview extends DatabaseObject {
             array(
                 'element'   => 'f_questions_begin',
                 'type'      => 'text',
-                'default'   => substr($data['questions_begin'], 0, 10),
+                'default'   => substr($data['questions_begin'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_questions_begin', 'size' => 10, 'maxlength' => 10),
-                'groupit'   => true          
+                'attributes'    => array('id' => 'f_questions_begin', 'size' => 16, 'maxlength' => 16),
+                'groupit'   => true         
             ),
             array(
                 'element'   => 'f_calendar_questions_begin',
@@ -706,8 +706,8 @@ class Interview extends DatabaseObject {
                     <script type="text/javascript">
                         Calendar.setup({
                             inputField:"f_questions_begin",
-                            ifFormat:"%Y-%m-%d",
-                            showsTime:false,
+                            ifFormat:"%Y-%m-%d %H:%M",
+                            showsTime:true,
                             showOthers:true,
                             weekNumbers:false,
                             range:new Array(2008, 2020),
@@ -723,9 +723,9 @@ class Interview extends DatabaseObject {
             array(
                 'element'   => 'f_questions_end',
                 'type'      => 'text',
-                'default'   => substr($data['questions_end'], 0, 10),
+                'default'   => substr($data['questions_end'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_questions_end', 'size' => 10, 'maxlength' => 10),
+                'attributes'    => array('id' => 'f_questions_end', 'size' => 16, 'maxlength' => 16),
                 'groupit'   => true          
             ),
             array(
@@ -740,8 +740,8 @@ class Interview extends DatabaseObject {
                     <script type="text/javascript">
                         Calendar.setup({
                             inputField:"f_questions_end",
-                            ifFormat:"%Y-%m-%d",
-                            showsTime:false,
+                            ifFormat:"%Y-%m-%d %H:%M",
+                            showsTime:true,
                             showOthers:true,
                             weekNumbers:false,
                             range:new Array(2008, 2020),
@@ -877,9 +877,9 @@ class Interview extends DatabaseObject {
                 $this->setProperty('description_short', $data['f_description_short']);
                 $this->setProperty('description', $data['f_description']);
                 $this->setProperty('interview_begin', $data['f_interview_begin']);
-                $this->setProperty('interview_end', $data['f_interview_end'].' 23:59:59');
+                $this->setProperty('interview_end', $data['f_interview_end']);
                 $this->setProperty('questions_begin', $data['f_questions_begin']);
-                $this->setProperty('questions_end', $data['f_questions_end'].' 23:59:59');
+                $this->setProperty('questions_end', $data['f_questions_end']);
                 $this->setProperty('questions_limit', $data['f_questions_limit']);
                 $this->setProperty('status', $data['f_status']);
                 $this->setProperty('fk_moderator_user_id', $data['f_moderator_user_id']);

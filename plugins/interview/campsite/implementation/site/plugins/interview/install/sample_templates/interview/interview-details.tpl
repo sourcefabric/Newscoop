@@ -9,10 +9,10 @@
     <tr><td>Thumbnail</td><td>{{ if $campsite->interview->image->thumbnailurl }}<img src="{{ $campsite->interview->image->thumbnailurl }}">{{ /if }}</td></tr>
     <tr><td>Description (short)</td><td>{{ $campsite->interview->description_short }}</td></tr>
     <tr><td>Description</td><td>{{ $campsite->interview->description }}</td></tr>
-    <tr><td>Interview Begin</td><td>{{ $campsite->interview->interview_begin|date_format }}</td></tr>
-    <tr><td>Interview End</td><td>{{ $campsite->interview->interview_end|date_format }}</td></tr>
-    <tr><td>Questions Begin</td><td>{{ $campsite->interview->questions_begin|date_format }}</td></tr>
-    <tr><td>Questions End</td><td>{{ $campsite->interview->questions_end|date_format }}</td></tr>
+    <tr><td>Interview Begin</td><td>{{ $campsite->interview->interview_begin|camp_date_format:'%Y-%m-%d %H:%i' }}</td></tr>
+    <tr><td>Interview End</td><td>{{ $campsite->interview->interview_end|camp_date_format:'%Y-%m-%d %H:%i' }}</td></tr>
+    <tr><td>Questions Begin</td><td>{{ $campsite->interview->questions_begin|camp_date_format:'%Y-%m-%d %H:%i' }}</td></tr>
+    <tr><td>Questions End</td><td>{{ $campsite->interview->questions_end|camp_date_format:'%Y-%m-%d %H:%i' }}</td></tr>
     <tr><td>Questions Limit</td><td>{{ $campsite->interview->questions_limit }}</td></tr>
     <tr><td>Status</td><td>{{ $campsite->interview->status }}</td></tr>
     <tr><td>Order</td><td>{{ $campsite->interview->order }}</td></tr>
