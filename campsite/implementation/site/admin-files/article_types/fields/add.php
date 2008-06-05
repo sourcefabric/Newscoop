@@ -39,12 +39,20 @@ function UpdateArticleFieldContext() {
 		ToggleRowVisibility('topic_list')
 		ToggleBoolValue('is_topic')
 	}
+
+	var show_is_content = my_form.elements["show_is_content"].value
+	if ((show_is_content == "true" && field_type != "body")
+	        || (show_is_content == "false" && field_type == "body")) {
+	    ToggleRowVisibility('is_content');
+	    ToggleBoolValue('show_is_content');
+	}
 }
 </script>
 
 <P>
 <FORM NAME="add_field_form" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <input type="hidden" name="is_topic" id="is_topic" value="false">
+<input type="hidden" name="show_is_content" id="show_is_content" value="false">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
@@ -90,6 +98,10 @@ foreach ($topics as $topicPath) {
 ?>
 		</select>
 	</td>
+</tr>
+<tr style="display: none;" id="is_content">
+    <td><?php putGS('Is Content'); ?>:</td>
+    <td><input type="checkbox" name="f_is_content"></td>
 </tr>
 <TR>
 	<TD COLSPAN="2">

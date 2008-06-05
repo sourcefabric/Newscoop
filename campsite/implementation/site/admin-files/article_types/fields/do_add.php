@@ -14,6 +14,7 @@ $articleTypeName = Input::Get('f_article_type');
 $fieldName = trim(Input::Get('f_field_name'));
 $fieldType = trim(Input::Get('f_article_field_type'));
 $rootTopicId = Input::Get('f_root_topic_id', 'int', 0);
+$isContent = Input::Get('f_is_content');
 
 $field = new ArticleTypeField($articleTypeName, $fieldName);
 
@@ -36,7 +37,7 @@ if (!in_array($fieldType, $validTypes)) {
 }
 
 if ($correct) {
-	$field->create($fieldType, $rootTopicId);
+	$field->create($fieldType, $rootTopicId, strtolower($isContent) == 'on');
 	camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 }
 
@@ -61,12 +62,14 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
+		<ul>
 		<?php
 		foreach ($errorMsgs as $errorMsg) { ?>
 			<li><?php p($errorMsg); ?></li>
 			<?php
 		}
 		?>
+		</ul>
 		</BLOCKQUOTE>
 	</TD>
 </TR>

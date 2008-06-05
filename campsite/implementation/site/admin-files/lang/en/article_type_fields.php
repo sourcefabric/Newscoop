@@ -1,4 +1,5 @@
 <?php 
+regGS("Is Content", "Is Content");
 regGS("Back to Article Types List", "Back to Article Types List");
 regGS("show", "show");
 regGS("hide", "hide");
