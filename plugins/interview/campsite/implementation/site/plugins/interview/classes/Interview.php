@@ -895,7 +895,7 @@ class Interview extends DatabaseObject {
                 // create new interview
                 $created = $this->create(
                     $data['f_language_id'], 
-                    $userid['moderator'], 
+                    $data['f_moderator_user_id'], 
                     $userid['guest'],
                     $data['f_title'], 
                     $image_id, 
@@ -1123,13 +1123,13 @@ class Interview extends DatabaseObject {
                 array(
                     'element'   => 'f_warning',
                     'type'      => 'static',
-                    'text'  => '<font color="red"><b>'.getGS('Invitation to interview guest has already been sent on $1', $this->getProperty('guest_invitation_sent')).'</b></font>'
+                    'text'  => '<font color="red"><b>'.getGS('Invitation to interview guest has already been sent at $1', $this->getProperty('guest_invitation_sent')).'</b></font>'
                 ) : null,
             $this->getProperty('questioneer_invitation_sent') !== null ?
                 array(
                     'element'   => 'f_warning',
                     'type'      => 'static',
-                    'text'  => '<font color="red"><b>'.getGS('Invitations to questioneers has already been sent on $1', $this->getProperty('questioneer_invitation_sent')).'</b></font>'
+                    'text'  => '<font color="red"><b>'.getGS('Invitations to questioneers has already been sent at $1', $this->getProperty('questioneer_invitation_sent')).'</b></font>'
                 ) : null,
             array(
                 'element'   => 'f_reset',
@@ -1231,6 +1231,7 @@ class Interview extends DatabaseObject {
                     
         CampMail::MailMime($MetaUser->email, null, $parsed, $headers);
         
+        $this->setProperty('guest_invitation_sent', strftime('%Y-%m-%d %H:%M:%S'));
     }
     
     public function sendQuestioneerInvitation()
@@ -1252,6 +1253,7 @@ class Interview extends DatabaseObject {
                         
             CampMail::MailMime($Questioneer->getEmail(), null, $parsed, $headers);
         }
+        $this->setProperty('questioneer_invitation_sent', strftime('%Y-%m-%d %H:%M:%S'));
     }    
     
     /////////////////// Special template engine methods below here /////////////////////////////

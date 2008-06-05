@@ -24,10 +24,7 @@ $Interview = new Interview($f_interview_id);
 
 
 if (isset($_REQUEST['f_preview'])) {
-    if ($Interview->storeInvitation()) {
-           
-        
-    }   
+    $Interview->storeInvitation();
 }
 
 if (isset($_REQUEST['f_invite_now'])) {
