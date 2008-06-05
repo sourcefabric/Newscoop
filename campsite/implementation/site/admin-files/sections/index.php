@@ -47,7 +47,7 @@ if (count($allSections) > 0) {
 <TR class="table_list_header">
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Number"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Name<BR><SMALL>(click to see articles)</SMALL>"); ?></TD>
-    <TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Nr. Of Articles<BR><SMALL>(Total/Published)</SMALL>"); ?></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("URL Name"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Configure"); ?></TD>
 	<?php if ($g_user->hasPermission('ManageSection') && $g_user->hasPermission('AddArticle')) { ?>
@@ -81,7 +81,7 @@ if (count($allSections) > 0) {
               <A HREF="/<?php p($ADMIN); ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php  p($section->getIssueNumber()); ?>&f_section_number=<?php p($section->getSectionNumber()); ?>&f_language_id=<?php  p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></A>
 		</TD>
         <TD ALIGN="CENTER">
-            <?php echo $numberOfArticles.' / '.$numberOfPublishedArticles; ?>
+            <?php echo $numberOfPublishedArticles.' / '.$numberOfArticles; ?>
         </TD>
 		<TD>
 			<?php p(htmlspecialchars($section->getUrlName())); ?>
