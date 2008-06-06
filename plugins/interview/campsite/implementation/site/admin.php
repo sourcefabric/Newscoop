@@ -129,17 +129,18 @@ if (($extension == '.php') || ($extension == '')) {
 	$_top_menu = '';
 	if ($needs_menu) {
 		ob_start();
-		echo "<html><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td>\n";
+		echo "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td>\n";
 		require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
 		echo "</td></tr>\n<tr><td>\n";
 		$_top_menu = ob_get_clean();
 	}
 
-	echo $_top_menu . $content;
+	echo "<html>\n" . $_top_menu . $content;
 
 	if ($needs_menu) {
-		echo "</td></tr>\n</table>\n</html>\n";
+		echo "</td></tr>\n</table>\n";
 	}
+	echo "</html>\n";
 
 	camp_html_clear_msgs(true);
 } else {

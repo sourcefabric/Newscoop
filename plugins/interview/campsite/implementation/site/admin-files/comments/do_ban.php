@@ -62,11 +62,11 @@ if (!isset($connectedToOnlineServer)
 	<title><?php putGS("Ban user from comments"); ?></title>
 </head>
 <body>
-<center>
 <?php
 if (isset($connectedToOnlineServer)
         && $connectedToOnlineServer == false) {
 ?>
+<center>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
 <TR>
         <TD >
@@ -80,6 +80,7 @@ if (isset($connectedToOnlineServer)
                 <INPUT TYPE="button" NAME="close" VALUE="<?php putGS('Close'); ?>" class="button" onclick="window.close();">
         </TD>
 </TR>
+</TABLE>
 </center>
 </BODY>
 </HTML>
@@ -106,5 +107,3 @@ if (isset($connectedToOnlineServer)
 	</td>
 </tr>
 </table>
-</body>
-</html>

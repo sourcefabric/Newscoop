@@ -290,8 +290,11 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		</TR>
 		</table>
 
-		<br>
 		<FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+        <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php echo $Pub; ?>">
+        <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php echo $Issue; ?>">
+        <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php echo $Language; ?>">
+        <p>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 		<TR>
 			<TD COLSPAN="2">
@@ -299,9 +302,6 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 				<HR NOSHADE SIZE="1" COLOR="BLACK">
 			</TD>
 		</TR>
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php echo $Pub; ?>">
-		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php echo $Issue; ?>">
-		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php echo $Language; ?>">
 		<TR>
 			<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 			<TD>
@@ -361,8 +361,8 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 			</TD>
 		</TR>
 		</TABLE>
+        </P>
 		</FORM>
-		</P>
 	</td>
 </tr>
 </table>

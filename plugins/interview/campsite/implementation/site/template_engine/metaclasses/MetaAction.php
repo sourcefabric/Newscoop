@@ -47,8 +47,9 @@ class MetaAction
      *
      * @param array $p_input
      */
-    public function __construct()
+    public function __construct($p_name = 'default_action')
     {
+        $this->m_name = $p_name;
         if (!is_array($this->m_properties)) {
             $this->m_properties = array();
         }
@@ -270,10 +271,10 @@ class MetaAction
      * @param string $p_property
      * @param mixed $p_smarty
      */
-    final public function trigger_invalid_property_error($p_property, $p_smarty = null)
+    protected function trigger_invalid_property_error($p_property, $p_smarty = null)
     {
         $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
-        . OF_OBJECT_STRING . ' ' . get_class($this->m_dbObject);
+        . OF_OBJECT_STRING . ' ' . $this->m_name;
         CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     }
 

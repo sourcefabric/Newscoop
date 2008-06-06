@@ -46,8 +46,8 @@ if (PEAR::isError($xrc) && $xrc->getCode() != 805) {
 </tr>
 </table>
 
-<table width="400px" border="0" cellspacing="0" cellpadding="6" align="center" style="margin-top: 20px; background-color: #d5e2ee; border: 1px solid #8baed1;">
 <form action="do_campcaster_login.php" name="campcaster_login" method="post" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<table width="400px" border="0" cellspacing="0" cellpadding="6" align="center" style="margin-top: 20px; background-color: #d5e2ee; border: 1px solid #8baed1;">
 <tr>
     <td colspan="2">
 		<b><?php  putGS("Login"); ?></b>
@@ -89,9 +89,9 @@ if (PEAR::isError($xrc) && $xrc->getCode() != 805) {
     ?>
 	</td>
 </tr>
+</table>
 <input type="hidden" name="f_backlink" value="<?php p($BackLink); ?>" />
 </form>
-</table>
 <script>
     document.forms.campcaster_login.f_cc_password.focus();
 </script>

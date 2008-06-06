@@ -1,10 +1,10 @@
-			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
             <FORM action="do_sortlist.php" method="POST" name="audioclip_sortlist_form" id="audioclip_sortlist_form" onsubmit="populateHiddenVars('audioclip_sortlist');">
             <INPUT type="hidden" name="f_sortlist_order" id="f_sortlist_order" size="60" />
             <INPUT type="hidden" name="f_sortlist_name" value="audioclip_sortlist" />
             <INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
             <INPUT type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>" />
             <INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
+            <TABLE width="100%" style="border: 1px solid #EEEEEE;">
 			<TR>
 				<TD>
 					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
@@ -75,10 +75,10 @@
             } // foreach($articleAudioclips as $articleAudioclip) {
             ?>
             </DIV>
-            </FORM>
                 </TD>
             </TR>
             </TABLE>
+            </FORM>
             <SCRIPT type="text/javascript">
             // <![CDATA[
                 Sortable.create('audioclip_sortlist', {tag:'div'});

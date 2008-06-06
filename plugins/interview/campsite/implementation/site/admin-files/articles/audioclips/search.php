@@ -122,8 +122,8 @@ if ($isCcOnline) {
 
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-audiosearch.js"></script>
 
-<table cellspacing="1" cellpadding="2" class="table_list">
 <form method="POST" name="search" action="popup.php">
+<table cellspacing="1" cellpadding="2" class="table_list">
 <?php
 for ($c = 1; $c <= $maxCriteria; $c++) {
 ?>
@@ -213,6 +213,7 @@ for ($c = 1; $c <= $maxCriteria; $c++) {
         <input type="submit" class="button" value="<?php putGS("Submit"); ?>" />
     </td>
 </tr>
+</table>
 <input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>" />
 <input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>" />
 <input type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>" />
@@ -225,7 +226,6 @@ for ($c = 1; $c <= $maxCriteria; $c++) {
 <input type="hidden" name="f_order_by" value="" />
 <input type="hidden" name="f_order_direction" value="" />
 </form>
-</table>
 <?php
 	if (count($clips) > 0) {
 		$pagerUrl = camp_html_article_url($articleObj, $f_language_id, "audioclips/popup.php")."&f_order_by=$f_order_by&f_order_direction=$f_order_direction&";

@@ -107,7 +107,6 @@ camp_html_display_msgs();
 <?php p(putGS("These templates")); ?>:
 </DIV>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" style="margin-left: 10px;">
 <FORM NAME="move" METHOD="POST" ONSUBMIT="return validateForm(this, 0, 1, 0, 1, 8);">
 <INPUT type="hidden" name="f_action" value="<?php p($f_action); ?>">
 <?php
@@ -122,6 +121,7 @@ foreach ($templates as $template) {
 <?php
 }
 ?>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" style="margin-left: 10px;">
 <TR>
 	<TD>
 		<TABLE cellpadding="3">
@@ -188,8 +188,8 @@ foreach ($templates as $template) {
 		</TABLE>
 	</TD>
 </TR>
-</FORM>
 </TABLE>
+</FORM>
 <P>
 
 <?php camp_html_copyright_notice(); ?>

@@ -116,7 +116,7 @@
         <ul id="steps_list">
         {{ foreach from=$step_titles key="step" item="s" }}
           {{ if $s.order < 4 }}
-            <li class="stepdone">{{ $s.title }}</span>
+            <li class="stepdone">{{ $s.title }}
           {{ else }}
             <li>{{ $s.title }}
           {{ /if }}
@@ -135,8 +135,8 @@
     </div>
   </td>
 </tr>
+</table>
 <input type="hidden" name="step" value="" />
 </form>
-</table>
 
 {{ include file="html_footer.tpl" }}

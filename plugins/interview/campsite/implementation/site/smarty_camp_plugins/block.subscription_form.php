@@ -26,37 +26,48 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
  */
 function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
-    // gets the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
-    if (strtolower($p_params['type']) == 'by_publication') {
-        $campsite->subs_by_type = 'publication';
-    } elseif (strtolower($p_params['type']) == 'by_section') {
-        $campsite->subs_by_type = 'section';
-    }
-    if (!isset($p_content)) {
-        return null;
-    }
-
-    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
-
-    $html = '';
-
     if (!isset($p_params['type'])
     || (strtolower($p_params['type']) != 'by_section'
     && strtolower($p_params['type']) != 'by_publication')) {
         return null;
     }
 
+    // gets the context variable
+    $campsite = $p_smarty->get_template_vars('campsite');
+
+    if (strtolower($p_params['type']) == 'by_publication') {
+        $campsite->subs_by_type = 'publication';
+    } elseif (strtolower($p_params['type']) == 'by_section') {
+        $campsite->subs_by_type = 'section';
+    }
+
+    if (!isset($p_content)) {
+        return null;
+    }
+
+    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
+
+    $url = $campsite->url;
+    $url->uri_parameter = "";
+    $template = null;
     if (isset($p_params['template'])) {
         $template = new MetaTemplate($p_params['template']);
         if (!$template->defined()) {
-            $template = null;
+            CampTemplate::trigger_error('invalid template "' . $p_params['template']
+            . '" specified in the subscription form');
+            return false;
         }
+    } elseif (is_numeric($url->get_parameter('tpl'))) {
+        $template = $campsite->default_template;
     }
-    $templateId = is_null($template) ? $campsite->template->identifier : $template->identifier;
-
     if (!isset($p_params['submit_button'])) {
         $p_params['submit_button'] = 'Submit';
+    }
+    if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
+        $p_params['html_code'] = '';
+    }
+    if (!isset($p_params['button_html_code']) || empty($p_params['button_html_code'])) {
+        $p_params['button_html_code'] = '';
     }
 
     $subsType = strtolower(CampRequest::GetVar('SubsType'));
@@ -68,11 +79,15 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     $timeUnits = $subsType == 'trial' ? $publication->subscription_trial_time : $publication->subscription_paid_time;
     $sectionsNumber = Section::GetNumUniqueSections($publication->identifier, false);
 
-    $url = $campsite->url;
-    $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
-    $html .= "<form name=\"subscription_form\" action=\"" . $url->uri_path . "\" method=\"post\">\n"
-    ."<input type=\"hidden\" name=\"tpl\" value=\"$templateId\" />\n"
-    ."<input type=\"hidden\" name=\"SubsType\" value=\"$subsType\" />\n"
+    if (isset($template)) {
+        $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
+    }
+    $html = "<form name=\"subscription_form\" action=\"" . $url->uri_path
+    . "\" method=\"post\" ".$p_params['html_code'].">\n";
+    if (isset($template)) {
+        $html .= "<input type=\"hidden\" name=\"tpl\" value=\"".$template->identifier."\" />\n";
+    }
+    $html .= "<input type=\"hidden\" name=\"SubsType\" value=\"$subsType\" />\n"
     ."<input type=\"hidden\" name=\"tx_subs\" value=\"$timeUnits\" />\n"
     ."<input type=\"hidden\" name=\"nos\" value=\"$sectionsNumber\" />\n"
     ."<input type=\"hidden\" name=\"unitcost\" value=\""
@@ -80,6 +95,9 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     ."<input type=\"hidden\" name=\"unitcostalllang\" value=\""
     .$publication->subscription_unit_cost_all_lang."\" />\n";
     foreach ($campsite->url->form_parameters as $param) {
+        if ($param['name'] == 'tpl') {
+            continue;
+        }
         $html .= '<input type="hidden" name="'.$param['name']
             .'" value="'.htmlentities($param['value'])."\" />\n";
     }
@@ -94,7 +112,7 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     $html .= "<input type=\"submit\" name=\"f_edit_subscription\" "
     ."id=\"subscriptionEdit\" value=\""
     .smarty_function_escape_special_chars($p_params['submit_button'])
-    ."\" />\n";
+    ."\" ".$p_params['button_html_code']."/>\n";
     $html .= "</form>\n";
 
     if ($subsType == 'paid') {

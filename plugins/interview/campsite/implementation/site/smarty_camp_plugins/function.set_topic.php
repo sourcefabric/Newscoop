@@ -38,8 +38,8 @@ function smarty_function_set_topic($p_params, &$p_smarty)
         }
     } else {
     	$property = array_shift(array_keys($p_params));
-    	$campsite->topic->trigger_invalid_property_error($property, $p_smarty);
-        return false;
+        CampTemplate::singleton()->trigger_error("invalid parameter '$property' in set_topic");
+    	return false;
     }
 
     if ($campsite->topic->defined

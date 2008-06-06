@@ -1,4 +1,7 @@
 <?php 
+regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Unable to connect to the Campcaster server, please verify the Campcaster server settings.");
+regGS("Clear System Cache", "Clear System Cache");
+regGS("Campsite cache was cleaned up", "Campsite cache was cleaned up");
 regGS("The system was unable to upload the file '$1'. ", "The system was unable to upload the file '$1'. ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Please check the file you are trying to upload, it might be corrupted.");
 regGS("Synchronize Campsite and Phorum users", "Synchronize Campsite and Phorum users");

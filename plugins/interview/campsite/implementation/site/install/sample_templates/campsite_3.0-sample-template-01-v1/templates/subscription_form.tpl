@@ -1,4 +1,5 @@
-<div id="userform">{{ subscription_form type="by_section" total="Total" template="subscription.tpl" }}
+<div id="genericform">
+{{ subscription_form type="by_section" total="Total" template="subscription.tpl" button_html_code="class=\"submitbutton\"" }}
 <table class="userform">
 	<tr>
 		<th colspan="2">Please fill in the following form in order to create

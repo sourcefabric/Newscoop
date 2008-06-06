@@ -68,8 +68,8 @@ class SectionsList extends ListObject
 	        switch ($state) {
 	            case 1: // reading the parameter name
 	                if (!array_key_exists($word, SectionsList::$s_parameters)) {
-	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_sections, constraints parameter");
-	                    break;
+	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in statement list_sections, constraints parameter");
+	                    return false;
 	                }
 	                $attribute = $word;
 	                $state = 2;
@@ -80,7 +80,8 @@ class SectionsList extends ListObject
 	                    $operator = new Operator($word, $type);
 	                }
 	                catch (InvalidOperatorException $e) {
-	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_sections, constraints parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid operator $word of parameter constraints.$attribute in statement list_sections");
+	                    return false;
 	                }
 	                $state = 3;
 	                break;
@@ -93,7 +94,8 @@ class SectionsList extends ListObject
        	                $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
     	                $parameters[] = $comparisonOperation;
 	                } catch (InvalidValueException $e) {
-	                    CampTemplate::singleton()->trigger_error("invalid value $word of attribute $attribute in list_sections, constraints parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_sections");
+	                    return false;
 	                }
 	                $state = 1;
 	                break;
@@ -101,6 +103,7 @@ class SectionsList extends ListObject
 	    }
 	    if ($state != 1) {
             CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_sections");
+            return false;
 	    }
 
 		return $parameters;

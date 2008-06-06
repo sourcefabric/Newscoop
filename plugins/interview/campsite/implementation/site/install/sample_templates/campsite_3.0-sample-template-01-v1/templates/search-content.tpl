@@ -15,6 +15,9 @@
         </tr>
     </table>
     {{ if $campsite->current_list->at_end }}
+        {{ local }}
+        {{ unset_article }}
+        {{ unset_section }}
         {{ if $campsite->current_list->has_previous_elements }}
           <a href="{{ uri options="previous_items template search.tpl" }}">Previous</a>
         {{ else }}
@@ -26,6 +29,7 @@
         {{ else }}
           Next
         {{ /if }}
+        {{ /local }}
     {{ /if }}
     {{ /list_search_results }}
   </td>

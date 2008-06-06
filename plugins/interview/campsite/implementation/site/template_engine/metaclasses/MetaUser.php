@@ -54,6 +54,12 @@ final class MetaUser extends MetaDbObject {
         $this->m_properties['text3'] = 'Text3';
         $this->m_properties['title'] = 'Title';
         $this->m_properties['age'] = 'Age';
+        $this->m_properties['country_code'] = 'CountryCode';
+        $this->m_properties['gender'] = 'Gender';
+        $this->m_properties['pref1'] = 'Pref1';
+        $this->m_properties['pref2'] = 'Pref2';
+        $this->m_properties['pref3'] = 'Pref3';
+        $this->m_properties['pref4'] = 'Pref4';
         $this->m_properties['password_encrypted'] = 'Password';
     }
 

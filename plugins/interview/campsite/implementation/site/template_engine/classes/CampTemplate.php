@@ -112,7 +112,7 @@ final class CampTemplate extends Smarty
      */
     public function trigger_error($p_message, $p_smarty = null)
     {
-    	if (!is_null($p_smarty)) {
+    	if (is_object($p_smarty)) {
     		$p_smarty->trigger_error($p_message);
     	} else {
     		trigger_error("Campsite error: $p_message");

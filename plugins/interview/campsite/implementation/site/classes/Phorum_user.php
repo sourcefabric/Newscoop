@@ -86,7 +86,7 @@ class Phorum_user extends DatabaseObject {
 
 		if (!is_null($p_userId) && is_numeric($p_userId)) {
 			$tmpUser = new Phorum_user($p_userId);
-			$userdata['user_id'] = $p_userId;
+//			$userdata['user_id'] = $p_userId;
 			$userdata['fk_campsite_user_id'] = $p_userId;
 			if ($tmpUser->exists()) {
 				unset($userdata['user_id']);

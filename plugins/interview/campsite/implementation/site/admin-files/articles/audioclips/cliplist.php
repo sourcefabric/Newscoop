@@ -26,11 +26,11 @@ if ($f_order_direction == 1) {
     </td>
 </tr>
 </table>
-<table border="0" cellspacing="1" cellpadding="6" class="table_list" width="100%">
 <form method="POST" name="audioclip_list" action="do_link.php">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>" />
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
+<table border="0" cellspacing="1" cellpadding="6" class="table_list" width="100%">
 <tr class="table_list_header">
     <?php if ($articleObj->userCanModify($g_user)) { ?>
     <td align="center" valign="top" style="padding: 3px;"></td>
@@ -118,8 +118,9 @@ foreach ($clips as $clip) {
         <input type="button" class="button" onclick="if (validateCheckboxes('audioclip_list', 'f_audioclip_code[]', 1, '*', '<?php putGS("You must select at least one audioclip to attach."); ?>')) { this.form.submit(); }" value="Attach" />
     </td>
 </tr>
-</form>
 </table>
+</form>
+
 <table class="action_buttons">
 <tr>
     <td>

@@ -9,7 +9,7 @@ require_once('ListObject.php');
  */
 class ArticleCommentsList extends ListObject
 {
-    private static $s_orderFields = array('bydate');
+    private static $s_orderFields = array('bydate', 'default');
 
     /**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to

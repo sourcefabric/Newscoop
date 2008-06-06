@@ -6,31 +6,32 @@
     {{ list_subtitles field_name="Full_text" }}
       <p>
       {{ if $campsite->article->full_text->subtitle_is_current }}
-      	<b>{{ $campsite->current_list->index }}. {{ $campsite->subtitle->name }}</b>
-	  {{ else }}
+        <b>{{ $campsite->current_list->index }}. {{ $campsite->subtitle->name }}</b>
+      {{ else }}
         <a href="{{ uri }}">{{ $campsite->current_list->index }}. {{ $campsite->subtitle->name }}</a>
       {{ /if }}
       </p>
     {{ /list_subtitles }}
+    <p>View subtitle:
     {{ if $campsite->article->full_text->has_previous_subtitles }}
-    	<a href="{{ uri options="previous_subtitle full_text" }}">Previous</a>
-	{{ else }}
-		Previous
-	{{ /if }}
-	|
+        <a href="{{ uri options="previous_subtitle full_text" }}">Previous</a>
+    {{ else }}
+        Previous
+    {{ /if }}
+    |
     {{ if $campsite->article->full_text->has_next_subtitles }}
-    	<a href="{{ uri options="next_subtitle full_text" }}">Next</a>
-	{{ else }}
-		Next
-	{{ /if }}
-	|
+        <a href="{{ uri options="next_subtitle full_text" }}">Next</a>
+    {{ else }}
+        Next
+    {{ /if }}
+    |
     {{ if $campsite->article->full_text->has_next_subtitles || $campsite->article->full_text->has_previous_subtitles }}
-    	<a href="{{ uri options="all_subtitles full_text" }}">All</a>
-	{{ else }}
-		All
-	{{ /if }}
-	<br/>
-    
+        <a href="{{ uri options="all_subtitles full_text" }}">All</a>
+    {{ else }}
+        All
+    {{ /if }}
+    </p>
+
     <p class="article_byline">Written by {{ $campsite->article->byline }}</p>
     <p class="article_intro">{{ $campsite->article->intro }}</p>
     <p class="article_fulltext">{{ $campsite->article->full_text }}</p>
@@ -66,7 +67,7 @@
   <td>
   <a name="comments"></a>
   <ul>
-  {{ list_article_comments }}
+  {{ list_article_comments order="bydate desc" }}
     <li>{{ if $campsite->comment == $campsite->default_comment }}<b>{{ /if }}
     <a href="{{ uri }}#comments">
     Subject: {{ $campsite->comment->subject }}, Reader email: {{ $campsite->comment->reader_email }}
@@ -113,23 +114,24 @@
 {{ if $campsite->user->logged_in || $campsite->publication->public_comments }}
 <tr>
   <td>
-    {{ comment_form submit_button="Submit" preview_button="Preview" anchor="comments" }}
+  <div id="genericform">
+    {{ comment_form submit_button="Submit" preview_button="Preview" anchor="comments" button_html_code="class=\"submitbutton\"" }}
     <table class="commentform" cellspacing="0" cellpadding="0">
-    <tr>
+    <tr align="left">
       <td>E-mail:</td>
       <td>
       {{ if $campsite->user->logged_in }}
         {{ $campsite->user->email }}
       {{ else }}
-        {{ camp_edit object="comment" attribute="reader_email" size="40" }}
+        {{ camp_edit object="comment" attribute="reader_email" html_code="class=\"input_long\"" }}
       {{ /if }}
       </td>
     </tr>
-    <tr>
+    <tr align="left">
       <td>Subject:</td>
-      <td>{{ camp_edit object="comment" attribute="subject" size="40" }}</td>
+      <td>{{ camp_edit object="comment" attribute="subject" html_code="class=\"input_long\"" }}</td>
     </tr>
-    <tr>
+    <tr align="left">
       <td valign="top">Comment:</td>
       <td>{{ camp_edit object="comment" attribute="content" }}</td>
     </tr>
@@ -147,7 +149,8 @@
     </tr>
     {{ /if }}
     </table>
-    {{ /comment_form }}
+    <div align="center">{{ /comment_form }}</div>
+    </div>
   </td>
 </tr>
 {{ else }}

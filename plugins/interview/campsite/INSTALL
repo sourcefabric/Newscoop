@@ -10,7 +10,7 @@ CONTENTS:
 
 PREPARATION - applications you need to have installed
   see the manual page at:
-  http://code.campware.org/manuals/campsite/2.7/index.php?id=5
+  http://code.campware.org/manuals/campsite/3.0/index.php?id=5
 
 ####################################################################
 
@@ -22,25 +22,14 @@ virtual host.
 Example of virtual host configuration:
 <VirtualHost *>
     DocumentRoot /var/www/campsite/html
-    ScriptAlias /cgi-bin/ /var/www/campsite/cgi-bin/
     ServerName [site_name]
     ServerAlias [site_alias]
     DirectoryIndex index.php index.html
     <Directory /var/www/campsite/html>
             Options -Indexes FollowSymLinks MultiViews
             AllowOverride All
-            <IfModule mod_access.c>
-                Order allow,deny
-                Allow from all
-            </IfModule>
-    </Directory>
-    <Directory /var/www/campsite/cgi-bin>
-        AllowOverride All
-        Options ExecCGI
-        <IfModule mod_access.c>
             Order allow,deny
             Allow from all
-        </IfModule>
     </Directory>
 </VirtualHost>
 

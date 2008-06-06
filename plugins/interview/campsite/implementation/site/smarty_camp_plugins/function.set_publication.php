@@ -38,8 +38,8 @@ function smarty_function_set_publication($p_params, &$p_smarty)
         }
     } else {
     	$property = array_shift(array_keys($p_params));
-    	$campsite->publication->trigger_invalid_property_error($property, $p_smarty);
-        return false;
+        CampTemplate::singleton()->trigger_error("invalid parameter '$property' in set_publication");
+    	return false;
     }
 
     if ($campsite->publication->defined

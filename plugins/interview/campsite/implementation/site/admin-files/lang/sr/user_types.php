@@ -1,4 +1,6 @@
-<?php
+<?php 
+regGS("User Type '$1' successfully deleted", "");
+regGS("Permissions successfully modified", "");
 regGS("User types", "Типови корисника");
 regGS("No user types.", "Нема типова корисника");
 regGS("Are you sure you want to delete the user type $1?", "Сигурни сте да желите да обришете тип корисника $1?");

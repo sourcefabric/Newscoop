@@ -28,7 +28,8 @@ class TemplateConverterIfBlock
             'name' => 'name',
             'number' => 'number',
             'translated_to' => 'translated_to',
-            'type' => 'type',
+            'type' => array(
+                'attribute' => 'type_name'),
             'upload_date' => 'upload_date',
             'hasattachments' => array(
                 'attribute' => 'has_attachments'),
@@ -248,7 +249,7 @@ class TemplateConverterIfBlock
     private $m_sentences = array(
         'allowed' => array(
             'new_object' => 'article',
-            'attribute' => 'content_accesible'),
+            'attribute' => 'content_accessible'),
         'currentsubtitle' => array(
             'new_object' => 'subtitle',
             'attribute' => 'number',
@@ -333,9 +334,8 @@ class TemplateConverterIfBlock
         $sentence = array_key_exists(strtolower($p_optArray[$idx]), $this->m_sentences) ? strtolower($p_optArray[$idx]) : '';
         $object = array_key_exists(strtolower($p_optArray[$idx]), $this->m_objects) ? strtolower($p_optArray[$idx]) : '';
 
-        $this->m_ifBlockStr = ($condType == true) ? 'if ! ' : 'if ';
-        $this->m_ifBlockStr.= CS_OBJECT;
         $ifBlockStr = '';
+        $openBracket = false;
         if (strlen($sentence) > 0) {
             $this->m_ifBlock = $sentence;
             if ($sentence == 'nextsubtitles' || $sentence == 'prevsubtitles') {
@@ -357,6 +357,7 @@ class TemplateConverterIfBlock
         }
 
         if (strlen($object) > 0) {
+            $objectIdx = $idx;
             $idx++;
             $attribute = (isset($p_optArray[$idx])) ? strtolower($p_optArray[$idx]) : '';
             if ($attribute == 'fromstart') {
@@ -371,9 +372,26 @@ class TemplateConverterIfBlock
                     }
                 } else {
                     if ($object == 'image' && is_numeric($attribute)) {
-                        $ifBlockStr.= '->'.$object.'->has_image'.$attribute;
+                        $ifBlockStr.= '->article->has_image('.$attribute.')';
                     } else {
-                        $ifBlockStr.= '->'.$object.'->'.$attribute;
+                        $numElements = sizeof($p_optArray);
+                        if (isset($p_optArray[$numElements - 2]) && array_key_exists($p_optArray[$numElements - 2], $this->m_operators)) {
+                            $operatorIdx = $numElements - 2;
+                            if ($operatorIdx > $objectIdx) {
+                                $numIdentifiers = $operatorIdx - $objectIdx;
+                                if ($numIdentifiers == 3) {
+                                    $type = $attribute;
+                                    $attribute = $p_optArray[$idx+1];
+                                    $ifBlockStr.= '->'.$object.'->type->'.$type.'->'.$attribute;
+                                    $idx++;
+                                } elseif ($numIdentifiers == 2) {
+                                    $ifBlockStr.= '->'.$object.'->'.$attribute;
+                                }
+                            }
+
+                        } else {
+                            $ifBlockStr.= '->'.$object.'->'.$attribute;
+                        }
                     }
                 }
             }
@@ -384,6 +402,24 @@ class TemplateConverterIfBlock
             if (strlen($operator) > 0) {
                 $ifBlockStr.= ' '.$operator;
                 $idx++;
+            } elseif ($object == 'list' && ($attribute == 'row'
+                                                || $attribute == 'column'
+                                                || $attribute == 'index')) {
+                $p_optArray[$idx] = isset($p_optArray[$idx]) ? strtolower($p_optArray[$idx]) : '';
+                if (isset($p_optArray[$idx]) && ($p_optArray[$idx] == 'odd' || $p_optArray[$idx] == 'even')) {
+                    $ifBlockStr.= ' is '.$p_optArray[$idx];
+                    $idx++;
+                } elseif(isset($p_optArray[$idx])) {
+                    $ifBlockStr.= ' == '.$p_optArray[$idx++];
+                    for ($i = $idx; $i < sizeof($p_optArray); $i++) {
+                        $ifBlockStr.= ' || '.CS_OBJECT.'->current_list->'.$attribute.' == '.$p_optArray[$i];
+                        $idx++;
+                    }
+                    if ($condType == true) {
+                        $ifBlockStr.= ')';
+                        $openBracket = true;
+                    }
+                }
             }
 
             //
@@ -396,6 +432,8 @@ class TemplateConverterIfBlock
                 }
             }
             if (!is_null($value)) {
+                if ($value == '""') $value = '';
+                $value = (is_numeric($value)) ? $value : '"'.$value.'"';
                 $ifBlockStr.= (strlen($operator) <= 0) ? ' == '.$value : ' '.$value;
                 $idx++;
             }
@@ -407,6 +445,9 @@ class TemplateConverterIfBlock
 
         if (strlen($ifBlockStr) > 0) {
             $this->m_ifBlockStr = ($condType == true) ? 'if ! ' : 'if ';
+            if ($openBracket == true) {
+                $this->m_ifBlockStr.= '(';
+            }
             $this->m_ifBlockStr.= CS_OBJECT . $ifBlockStr;
         }
 

@@ -26,6 +26,8 @@ class TemplateConverterHelper
      */
     private static $m_exceptions = array(
         'article' => array(
+            'date' => array(
+                'attribute' => 'date'),
             'type' => array(
                 'attribute' => 'type_name'),
             'mon_nr' => array(
@@ -111,6 +113,8 @@ class TemplateConverterHelper
                 'attribute' => 'wday')
             ),
         'issue' => array(
+            'date' => array(
+                'attribute' => 'date'),
             'mon_nr' => array(
                 'attribute' => 'mon'),
             'wday_nr' => array(
@@ -257,7 +261,7 @@ class TemplateConverterHelper
     /**
      * @param array $p_optArray
      */
-    public static function GetNewTagContent($p_optArray)
+    public static function GetNewTagContent($p_optArray, $p_tplPath = null)
     {
         if (!is_array($p_optArray) || sizeof($p_optArray) < 1) {
             continue;
@@ -353,8 +357,11 @@ class TemplateConverterHelper
             $newTag = '$smarty.now|camp_date_format:"' . $p_optArray[1] . '"';
             break;
         // <!** include header.tpl> to {{ include file="header.tpl" }}
+        // <!** include article.tpl> to {{ include file="news/article.tpl" }}
         case 'include':
-            $newTag = 'include file="' . $p_optArray[1] . '"';
+            $filePath = (!is_null($p_tplPath)) ? $p_tplPath.'/'.$p_optArray[1]
+                : $p_optArray[1];
+            $newTag = 'include file="' . $filePath . '"';
             break;
         // <!** local> to {{ local }}
         case 'local':
@@ -366,7 +373,7 @@ class TemplateConverterHelper
             break;
         // <!** else> to {{ /else }}
         case 'else':
-            $newTag = '/else';
+            $newTag = 'else';
             break;
         }
         
@@ -388,7 +395,7 @@ class TemplateConverterHelper
             $e = self::$m_exceptions[$object][strtolower($p_optArray[2])];
             $newTag .= (isset($e['new_object'])) ? '->'.$e['new_object'] : '->'.strtolower($p_optArray[1]);
             $newTag .= (isset($e['attribute'])) ? '->'.$e['attribute'] : '';
-            if ($e['attribute'] == 'creation_date'
+            if ($e['attribute'] == 'date' || $e['attribute'] == 'creation_date'
                     || $e['attribute'] == 'publish_date') {
                 $newTag.= (isset($p_optArray[3])) ? '|camp_date_format:"'.$p_optArray[3].'"' : '';
             }
@@ -399,9 +406,16 @@ class TemplateConverterHelper
                 if (array_key_exists(strtolower($p_optArray[$i]), self::$m_printEx)) {
                     $p_optArray[$i] = self::$m_printEx[strtolower($p_optArray[$i])];
                 }
-                if ($p_optArray[$i] == 'image' && is_numeric($p_optArray[$i+1])) {
-                    $newTag .= '->' . strtolower($p_optArray[$i]) . $p_optArray[$i+1];
+                if ($object == 'article' && $i > 2 && $i == (sizeof($p_optArray) - 1)
+                && strstr($p_optArray[$i], '%') !== false) {
+                    // date/time format string
+                    $newTag .= '|camp_date_format:"'.$p_optArray[$i].'"';
+                } elseif ($p_optArray[$i] == 'image' && is_numeric($p_optArray[$i+1])) {
+                    $newTag .= '->article->' . strtolower($p_optArray[$i]) . $p_optArray[$i+1];
                     $i += 1;
+                } elseif ($object == 'article'
+                && strtolower($p_optArray[$i]) == 'firstparagraph') {
+                    $newTag .= '->first_paragraph';
                 } else {
                     $newTag .= '->' . strtolower($p_optArray[$i]);
                 }
@@ -425,12 +439,21 @@ class TemplateConverterHelper
             }
             $newTag = 'unset_' . $p_optArray[0];
         } else {
-            $newTag = 'set_' . $p_optArray[0];
-                if ($p_optArray[0] == 'language') {
-                $newTag.= ' name="' . strtolower($p_optArray[1]) . '"';
+            if (strtolower($p_optArray[1]) == 'current') {
+                $newTag = 'set_current_'.$p_optArray[0];
+            } elseif (strtolower($p_optArray[1]) == 'default') {
+                $newTag = 'set_default_'.$p_optArray[0];
             } else {
-                $newTag.= (isset($p_optArray[1])) ? ' ' . strtolower($p_optArray[1]) : '';
-                $newTag.= (isset($p_optArray[2])) ? '="' . strtolower($p_optArray[2]) . '"' : '';
+                $newTag = 'set_' . $p_optArray[0];
+                if ($p_optArray[0] == 'language') {
+                    $newTag.= ' name="' . strtolower($p_optArray[1]) . '"';
+                } else {
+                    if (preg_match('/ /', $p_optArray[1])) {
+                        $p_optArray[1] = '"'.$p_optArray[1].'"';
+                    }
+                    $newTag.= (isset($p_optArray[1])) ? ' ' . $p_optArray[1] : '';
+                    $newTag.= (isset($p_optArray[2])) ? '="' . $p_optArray[2] . '"' : '';
+                }
             }
         }
 
@@ -491,6 +514,16 @@ class TemplateConverterHelper
     public static function BuildSimpleFormStatement($p_optArray)
     {
         $newTag = $p_optArray[0] . '_form';
+        if ($p_optArray[0] == 'user') {
+            $tmpArr = array();
+            $tmpArr[0] = $p_optArray[0];
+            for ($i = 1; $i < sizeof($p_optArray); $i++) {
+                if (isset($p_optArray[$i+1])) {
+                    $tmpArr[$i] = $p_optArray[$i+1];
+                }
+            }
+            $p_optArray = $tmpArr;
+        }
         $newTag.= (isset($p_optArray[1])) ? ' template="' . $p_optArray[1] . '"' : '';
         $newTag.= (isset($p_optArray[2])) ? ' submit_button="' . $p_optArray[2] . '"' : '';
         $newTag.= (isset($p_optArray[3])) ? ' html_code="' . $p_optArray[3] . '"' : '';

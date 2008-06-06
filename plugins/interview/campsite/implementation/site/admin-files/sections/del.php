@@ -23,6 +23,7 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 
 ?>
 <P>
+<FORM METHOD="POST" ACTION="do_del.php">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
@@ -30,7 +31,6 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
-	<FORM METHOD="POST" ACTION="do_del.php">
 <TR>
 	<TD COLSPAN="2" align="center"><?php putGS('There are $1 articles in this section.', '<b>'.$numArticles.'</b>'); ?></TD>
 </TR>
@@ -54,10 +54,10 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 	<INPUT TYPE="submit" class="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>">
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<INPUT TYPE="button" class="button" NAME="No" VALUE="<?php  putGS('No'); ?>" ONCLICK="location.href='/<?php p($ADMIN);?>/sections/?Pub=<?php p($f_publication_id); ?>&Issue=<?php p($f_issue_number); ?>&Language=<?php  p($f_language_id); ?>'">
-	</FORM>
 	</TD>
 </TR>
 </TABLE>
+</FORM>
 <P>
 
 <?php camp_html_copyright_notice(); ?>

@@ -91,6 +91,5 @@ echo camp_html_content_top(getGS("Deleting publication"), array("Pub" => $public
 	</TD>
 </TR>
 </TABLE>
-</CENTER>
 <P>
 <?php camp_html_copyright_notice(); ?>
