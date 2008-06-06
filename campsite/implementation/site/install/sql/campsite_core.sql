@@ -1569,7 +1569,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `liveuser_rights_right_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_rights_right_id_seq` VALUES (69);
+INSERT INTO `liveuser_rights_right_id_seq` VALUES (71);
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
