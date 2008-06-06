@@ -316,13 +316,6 @@ if ($f_edit_mode == "edit") { ?>
 						</select>
 					</td>
 
-					<?php if ($f_publication_id > 0) { ?>
-					<td>
-						<!-- Preview Link -->
-						<a href="" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php  p($f_article_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" border="0" alt="<?php putGS("Preview"); ?>" title="<?php putGS("Preview"); ?>"></a>
-					</td>
-					<?php } ?>
-
 					<!-- BEGIN Workflow -->
 					<td style="padding-left: 1em;">
 						<?php
@@ -443,8 +436,14 @@ if ($f_edit_mode == "edit") { ?>
 		<td style="padding-top: 3px;">
 			<?php if ($f_edit_mode == "edit") { ?>
 			<table width="100%" style="border-bottom: 1px solid #8baed1; padding: 0px;">
+
 			<tr>
 				<td align="center">
+                    <?php if ($f_publication_id > 0) { ?>
+                    <!-- Preview Link -->
+                    <input type="submit" name="preview" value="<?php putGS('Preview'); ?>" class="button" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php p($f_publication_id); ?>&amp;f_issue_number=<?php p($f_issue_number); ?>&amp;f_section_number=<?php p($f_section_number); ?>&amp;f_article_number=<?php p($f_article_number); ?>&amp;f_language_id=<?php p($f_language_id); ?>&amp;f_language_selected=<?php p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <?php } ?>
 					<input type="submit" name="save" value="<?php putGS('Save'); ?>" class="button" />
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="submit" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
@@ -848,14 +847,19 @@ window.location.reload();
 	<?php if ($f_edit_mode == "edit") { ?>
 	<tr>
 		<td colspan="2" align="center">
+            <?php if ($f_publication_id > 0) { ?>
+            <!-- Preview Link -->
+            <input type="submit" name="preview" value="<?php putGS('Preview'); ?>" class="button" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php p($f_publication_id); ?>&amp;f_issue_number=<?php p($f_issue_number); ?>&amp;f_section_number=<?php p($f_section_number); ?>&amp;f_article_number=<?php p($f_article_number); ?>&amp;f_language_id=<?php p($f_language_id); ?>&amp;f_language_selected=<?php p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <?php } ?>
 			<input type="submit" name="save" value="<?php putGS('Save'); ?>" class="button" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="submit" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
 		</td>
 	</tr>
 	<?php } ?>
-    </form>
 	</table>
+    </form>
 	<!-- END Article Content -->
 </td>
 	<!-- END left side of article screen -->

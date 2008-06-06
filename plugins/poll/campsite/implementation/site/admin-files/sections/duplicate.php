@@ -317,8 +317,8 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 	   </table>
 	</td>
 </tr>
-</FORM>
 </table>
+</FORM>
 </td>
 </tr>
 </table>

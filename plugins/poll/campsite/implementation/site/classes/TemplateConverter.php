@@ -30,6 +30,11 @@ class TemplateConverter
     /**
      * @var string
      */
+    private $m_templatePathDirectory = null;
+
+    /**
+     * @var string
+     */
     private $m_templateDirectory = null;
 
     /**
@@ -69,9 +74,19 @@ class TemplateConverter
             return false;
         }
 
-        // sets template full path directory and file name
-        $this->m_templateDirectory = dirname($p_filePath);
+        if (substr($p_filePath, -4) != '.tpl') {
+            return false;
+        }
+
+        // sets the template full path directory and template file name
+        $this->m_templatePathDirectory = dirname($p_filePath);
         $this->m_templateFileName = basename($p_filePath);
+        // sets the relative template directory, if any
+        $tplDirPos = strpos($this->m_templatePathDirectory, 'templates/');
+        $tplDirLength = strlen('templates/');
+        if ($tplDirPos && $tplDir = substr($this->m_templatePathDirectory, $tplDirPos + $tplDirLength)) {
+            $this->m_templateDirectory = $tplDir;
+        }
 
         // reads the template file content
         if (!($this->m_templateOriginalContent = @file_get_contents($p_filePath))) {
@@ -90,7 +105,8 @@ class TemplateConverter
     public function parse()
     {
         // gets all the tags from the original template file
-        $this->m_oldTags = $this->getAllTagsFromTemplate();
+        $pattern = '/<!\*\*\s*([^>]+)>/';
+        $this->m_oldTags = $this->getAllTagsFromTemplate($pattern);
         if ($this->m_oldTags == false || sizeof($this->m_oldTags) == 0) {
             return false;
         }
@@ -110,7 +126,7 @@ class TemplateConverter
             }
 
             // sets pattern and replacement strings
-            $pattern = '/<!\*\*\s*'.preg_quote($oldTagContent).'\s*>/';
+            $pattern = '/<!\*\*\s*'.@preg_quote($oldTagContent).'\s*>/';
             if ($newTagContent == 'DISCARD_SENTENCE') {
                 $replacement = '';
             } else {
@@ -120,17 +136,38 @@ class TemplateConverter
             $replacementsArray[] = $replacement;
         }
 
-        // sets pattern and replacement for templates path
-        $patternsArray[] = "/\/look\//";
-        $replacementsArray[] = "/templates/";
         // sets pattern and replacement for get_img script
-        $patternsArray[] = "/get_img/";
+        $patternsArray[] = "/cgi-bin\/get_img/";
         $replacementsArray[] = "get_img.php";
 
         // replaces all patterns with corresponding replacements
-        $this->m_templateContent = preg_replace($patternsArray,
-                                                $replacementsArray,
-                                                $this->m_templateOriginalContent);
+        $this->m_templateContent = @preg_replace($patternsArray,
+                                                 $replacementsArray,
+                                                 $this->m_templateOriginalContent);
+
+        // replaces templates path properly
+        $pattern = '/\/look\/(.*?)[^"\']+/';
+        $oldTplTags = $this->getAllTagsFromTemplate($pattern);
+        if ($oldTplTags == false || sizeof($oldTplTags) == 0) {
+            return false;
+        }
+        foreach($oldTplTags[0] as $oldTplTag) {
+            if (!empty($oldTplTag)) {
+                //$pattern = '/(.*?)[^\.tpl]$/';
+                $pattern = '/\.tpl/';
+                preg_match($pattern, $oldTplTag, $m);
+                if (is_array($m) && !empty($m[0])) {
+                    $replacement = '/tpl/';
+                } else {
+                    $replacement = '/templates/';
+                }
+                $pattern = '/\/look\//';
+                $this->m_templateContent = @preg_replace($pattern,
+                                                         $replacement,
+                                                         $this->m_templateContent,
+                                                         1);
+            }
+        }
 
         return true;
     } // fn parse
@@ -151,14 +188,14 @@ class TemplateConverter
     {
         // sets the output file to write to
         if (!is_null($p_templateFileName)) {
-            $output = $this->m_templateDirectory.'/'.$p_templateFileName;
+            $output = $this->m_templatePathDirectory.'/'.$p_templateFileName;
         } else {
-            $output = $this->m_templateDirectory.'/'.$this->m_templateFileName;
+            $output = $this->m_templatePathDirectory.'/'.$this->m_templateFileName;
         }
 
 
         if ((file_exists($output) && !is_writable($output))
-                 || !is_writable($this->m_templateDirectory)) {
+                 || !is_writable($this->m_templatePathDirectory)) {
             return new PEAR_Error('Could not write template file');
         }
 
@@ -175,9 +212,9 @@ class TemplateConverter
      *
      * @return array $matches
      */
-    private function getAllTagsFromTemplate()
+    private function getAllTagsFromTemplate($p_pattern)
     {
-        preg_match_all('/<!\*\*\s*([^>]+)>/', $this->m_templateOriginalContent, $matches);
+        preg_match_all($p_pattern, $this->m_templateOriginalContent, $matches);
         return $matches;
     } // fn getAllTagsFromTemplate
 
@@ -209,6 +246,7 @@ class TemplateConverter
                 if ($char == '"') {
                     $words[] = trim(trim($quotedString, '"'));
                     $quotedString = '';
+                    $isOpenQuote = false;
                 }
             } else {
                 if (preg_match('/[\s]/', $char) && !$escaped) {
@@ -253,17 +291,17 @@ class TemplateConverter
             if (in_array($p_optArray[0], array('uri','uripath','url','urlparameters'))) {
                 $newTag = TemplateConverterHelper::GetNewTagContent($p_optArray);
             } else {
-                return TemplateConverterHelper::GetNewTagContent($p_optArray);
+                return TemplateConverterHelper::GetNewTagContent($p_optArray, $this->m_templateDirectory);
             }
         }
 
         if (strlen($newTag) > 0) {
-            $pattern = '/<!\*\*\s*'.preg_quote($p_oldTagContent).'\s*>/';
+            $pattern = '/<!\*\*\s*'.@preg_quote($p_oldTagContent).'\s*>/';
             $replacement = CS_OPEN_TAG.' '.$newTag.' '.CS_CLOSE_TAG;
-            $this->m_templateOriginalContent = preg_replace($pattern,
-                                                            $replacement,
-                                                            $this->m_templateOriginalContent,
-                                                            1);
+            $this->m_templateOriginalContent = @preg_replace($pattern,
+                                                             $replacement,
+                                                             $this->m_templateOriginalContent,
+                                                             1);
             return null;
         }
 

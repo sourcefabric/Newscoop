@@ -98,7 +98,7 @@ echo camp_html_breadcrumbs($crumbs);
     	</DIV>
 	</TD>
 </TR>
-</TABLE></CENTER>
+</TABLE>
 <P>
 
 <?php camp_html_copyright_notice(); ?>

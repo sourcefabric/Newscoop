@@ -1,4 +1,6 @@
-<?php
+<?php 
+regGS("User Type '$1' successfully deleted", "");
+regGS("Permissions successfully modified", "");
 regGS("User types", "사용자 타입");
 regGS("No user types.", "사용자 타입 없슴");
 regGS("Are you sure you want to delete the user type $1?", "사용자 타입 $1을 확실히 삭제합니까?");

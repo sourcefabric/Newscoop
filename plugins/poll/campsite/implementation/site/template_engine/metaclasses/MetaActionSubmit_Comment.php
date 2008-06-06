@@ -190,6 +190,11 @@ class MetaActionSubmit_Comment extends MetaAction
 
         $p_context->comment = new MetaComment($commentObj->getMessageId());
 
+        $p_context->default_url->reset_parameter('f_comment_reader_email');
+        $p_context->default_url->reset_parameter('f_comment_subject');
+        $p_context->default_url->reset_parameter('f_comment_content');
+        $p_context->default_url->reset_parameter('f_submit_comment');
+        $p_context->default_url->reset_parameter('f_captcha_code');
         $p_context->url->reset_parameter('f_comment_reader_email');
         $p_context->url->reset_parameter('f_comment_subject');
         $p_context->url->reset_parameter('f_comment_content');

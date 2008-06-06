@@ -116,16 +116,30 @@ final class MetaArticle extends MetaDbObject {
             return $this;
         }
 
+        if (is_null($this->m_state) && $property != 'image_index'
+        && strncasecmp('image', $property, 5) == 0 && strlen($property) > 5) {
+            $imageNo = substr($property, 5);
+            $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(), null, $imageNo);
+            if (!$articleImage->exists()) {
+                $this->trigger_invalid_property_error($p_property);
+                return new MetaImage();
+            }
+            return new MetaImage($articleImage->getImageId());
+        }
+
         try {
-            $methodName = $this->m_getPropertyMethod;
-            return $this->m_dbObject->$methodName($property);
-        } catch (InvalidPropertyException $e) {
-            try {
+            if (array_search($property, $this->m_properties)) {
+                $methodName = $this->m_getPropertyMethod;
+                return $this->m_dbObject->$methodName($property);
+            } elseif (array_key_exists($property, $this->m_customProperties)) {
                 return $this->getCustomProperty($property);
-            } catch (InvalidPropertyException $e) {
+            } else {
                 $this->trigger_invalid_property_error($p_property);
                 return null;
             }
+        } catch (InvalidPropertyException $e) {
+            $this->trigger_invalid_property_error($p_property);
+            return null;
         }
     } // fn __get
 
@@ -398,7 +412,8 @@ final class MetaArticle extends MetaDbObject {
 
 
     protected function getCommentCount() {
-        return ArticleComment::GetComments('approved', true);
+        return ArticleComment::GetArticleComments($this->m_dbObject->getArticleNumber(),
+        $this->m_dbObject->getLanguageId(), 'approved', true);
     }
 
 
@@ -417,7 +432,7 @@ final class MetaArticle extends MetaDbObject {
         if ($context->image->defined) {
             return $context->image;
         }
-        $images = ArticleImage::GetImagesByArticleNumber($context->article->number);
+        $images = ArticleImage::GetImagesByArticleNumber($this->m_dbObject->getArticleNumber());
         if (count($images) == 0) {
             return new MetaImage();
         }
@@ -490,8 +505,8 @@ final class MetaArticle extends MetaDbObject {
      * @return bool
      */
     public function has_image($p_imageIndex) {
-        $articleImage = new ArticleImage(CampTemplate::singleton()->context()->article->number,
-        $p_imageIndex);
+        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
+        null, $p_imageIndex);
         return (int)$articleImage->exists();
     }
 
@@ -505,8 +520,8 @@ final class MetaArticle extends MetaDbObject {
      * @return MetaImage
      */
     public function image($p_imageIndex) {
-        $articleImage = new ArticleImage(CampTemplate::singleton()->context()->article->number,
-        $p_imageIndex);
+        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
+        null, $p_imageIndex);
         if (!$articleImage->exists()) {
             return new MetaImage();
         }

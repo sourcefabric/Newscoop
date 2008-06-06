@@ -32,8 +32,8 @@ class ArticleAttachmentsList extends ListObject
 	                                                   $context->article->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
-        if (isset($p_parameters['all_languages'])
-                && strtolower($p_parameters['all_languages']) != 'true'
+        if (isset($p_parameters['language'])
+                && strtolower($p_parameters['language']) == 'current'
                 && $context->language->defined) {
             $comparisonOperation = new ComparisonOperation('language_id', $operator,
                                                            $context->language->number);
@@ -87,7 +87,7 @@ class ArticleAttachmentsList extends ListObject
     			case 'length':
     			case 'columns':
     			case 'name':
-    			case 'all_languages':
+    			case 'language':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {

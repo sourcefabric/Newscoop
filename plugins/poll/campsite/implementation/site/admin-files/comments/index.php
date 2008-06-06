@@ -127,8 +127,8 @@ if (is_object($pager)) {
 <table width="100%" style="padding-top: 2px;">
 <tr>
     <td style="padding-left: 13px;">
-        <table cellpadding="0" cellspacing="0">
         <form method="POST">
+        <table cellpadding="0" cellspacing="0">
         <tr>
             <td <?php if (!empty($pagerStr)) { ?>style="padding-right: 15px;"<?php } ?>>
                 <?php echo $pagerStr; ?>
@@ -165,8 +165,8 @@ if (is_object($pager)) {
             </td>
 
         </tr>
-        </form>
         </table>
+        </form>
     </td>
 </tr>
 </table>
@@ -246,8 +246,8 @@ function onSummaryClick(p_messageId)
 
     <td style="border-left: 1px solid #777;" valign="top">
         <!-- The column where you can edit the comments -->
-        <table class="table_input" style="margin-top: 5px; margin-left: 5px;">
         <form action="do_edit.php" method="POST">
+        <table class="table_input" style="margin-top: 5px; margin-left: 5px;">
         <?php
         $count = 1;
         foreach ($comments as $commentPack) {
@@ -373,8 +373,8 @@ function onSummaryClick(p_messageId)
         </tr>
             <!-- END table with comment content -->
             <?php } ?>
-            </form>
         </table>
+        </form>
         <!-- END table containing comment controls+content -->
         <br>
     </td>

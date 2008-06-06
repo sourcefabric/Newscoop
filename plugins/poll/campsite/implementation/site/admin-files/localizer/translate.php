@@ -136,10 +136,10 @@ function translationForm($p_request)
 	<tr>
 		<td valign="top"> <!-- Begin top control panel -->
 
+        <form action="index.php" method="post">
+        <input type="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLanguageId(); ?>">
+        <input type="hidden" name="search_string" value="<?php echo htmlspecialchars($searchString); ?>">
 		<table border="0" style="background-color: #d5e2ee; border: 1px solid #8baed1; margin-left: 10px; margin-top: 5px;" width="700px;">
-		<form action="index.php" method="post">
-	    <input type="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLanguageId(); ?>">
-	    <input type="hidden" name="search_string" value="<?php echo htmlspecialchars($searchString); ?>">
 		<tr>
 			<td>
 				<table>
@@ -215,8 +215,8 @@ function translationForm($p_request)
 				</table>
 			</td>
 		</tr>
-        </form>
 		</table>
+        </form>
 
 		</td><!-- End top controls -->
 	</tr>
@@ -224,11 +224,11 @@ function translationForm($p_request)
 	<!-- Begin search dialog -->
 	<tr>
 		<td valign="top">
+            <form>
+            <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
+            <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
+            <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
 			<table border="0" style="background-color: #FAEFFF; border: 1px solid black; margin-left: 10px;" width="700px;" align="center">
-			<form>
-	        <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
-	        <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
-	        <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
 			<tr>
 				<td width="1%" style="padding-left: 5px;">
 					<img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/preview.png">
@@ -242,8 +242,8 @@ function translationForm($p_request)
 					<input type="button" value="<?php putGS("Search"); ?>" onclick="this.form.submit();" class="button">
 				</td>
 			</tr>
-			</form>
 			</table>
+            </form>
 		</td>
 	</tr>
 
@@ -254,11 +254,11 @@ function translationForm($p_request)
 	<?PHP
 	if ((count($missingStrings) > 0)  && ($screenDropDownSelection != 'globals')) {
 		?>
-		<table align="center" style="background-color: #EDFFDF; border: 1px solid #357654; margin-left: 10px; margin-bottom: 5px;" width="700px">
         <form action="do_add_missing_strings.php" method="post">
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
         <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
+        <table align="center" style="background-color: #EDFFDF; border: 1px solid #357654; margin-left: 10px; margin-bottom: 5px;" width="700px">
 		<tr>
 			<td>
 				<img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/add.png">
@@ -279,18 +279,18 @@ function translationForm($p_request)
 		        <input type="submit" value="<?php putGS("Add"); ?>" class="button">
 			</td>
 		</tr>
-		</form>
 		</table>
+        </form>
 		<?php
 	}
 
 	if ((count($unusedStrings) > 0) && ($screenDropDownSelection != 'globals')) {
 		?>
-		<table style="background-color: #FFE0DF; border: 1px solid #C51325; margin-top: 3px; margin-left: 10px; margin-bottom: 5px;" width="700px">
         <form action="do_delete_unused_strings.php" method="post">
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
         <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
+        <table style="background-color: #FFE0DF; border: 1px solid #C51325; margin-top: 3px; margin-left: 10px; margin-bottom: 5px;" width="700px">
 		<tr>
 			<td>
 				<img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/delete.png">
@@ -311,8 +311,8 @@ function translationForm($p_request)
 		        <input type="submit" value="<?php putGS("Delete"); ?>" class="button">
 			</td>
 		</tr>
-		</form>
 		</table>
+        </form>
 		<?php
 	}
 	?>

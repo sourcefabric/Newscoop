@@ -39,13 +39,13 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 
 ?>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;" align="center">
 <form method="POST" action="popup.php">
 <input type="hidden" name="f_order_direction" value="<?php echo $f_order_direction; ?>">
 <input type="hidden" name="f_image_offset" value="0">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;" align="center">
 <tr>
 	<td><input type="submit" name="submit_button" value="Search" class="button"></td>
 	<td><input type="text" name="f_search_string" value="<?php echo $f_search_string; ?>" class="input_text" style="width: 150px;"></td>
@@ -74,8 +74,8 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 	</td>
 	<td><?php putGS("Items per page"); ?>: <input type="text" name="f_items_per_page" value="<?php p($f_items_per_page); ?>" class="input_text" size="4"></td>
 </tr>
-</form>
 </table>
+</form>
 
 <?php
 if (count($imageData) > 0) {
@@ -117,15 +117,15 @@ foreach ($imageData as $image) {
     <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
         <?php
         if ($articleObj->userCanModify($g_user)) { ?>
+            <TD ALIGN="CENTER">
     		<form method="POST" action="do_link.php">
 			<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 			<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 			<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
     		<input type="hidden" name="f_image_id" value="<?php echo $image['id']; ?>">
-        	<TD ALIGN="CENTER">
-				<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png"></td>
+				<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png">
+            </form>
           	</TD>
-       		</form>
         	<?php
      	}
      	else {

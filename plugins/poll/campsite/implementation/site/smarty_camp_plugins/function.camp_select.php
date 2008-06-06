@@ -30,6 +30,9 @@ function smarty_function_camp_select($p_params, &$p_smarty)
     if (!isset($p_params['object']) || !isset($p_params['attribute'])) {
         return;
     }
+    if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
+        $p_params['html_code'] = '';
+    }
 
     // gets the context variable
     $campsite = $p_smarty->get_template_vars('campsite');
@@ -42,22 +45,30 @@ function smarty_function_camp_select($p_params, &$p_smarty)
     switch($object) {
     case 'user':
         $fieldValue = CampRequest::GetVar('f_user_'.$attribute);
-        if (is_null($fieldValue)) {
-            $fieldValue = $campsite->user->$attribute;
-        }
         if ($attribute == 'gender') {
+            if (is_null($fieldValue)) {
+                $fieldValue = $campsite->user->$attribute;
+            }
             $html = '<input type="radio" name="f_user_'.$attribute
-                .'" value="M" '.(($fieldValue == 'M') ? 'checked' : '').' /> '
+                .'" value="M" '.(($fieldValue == 'M') ? 'checked' : '').' '
+                . $p_params['html_code'] . '/> '
                 .smarty_function_escape_special_chars($p_params['male_name'])
                 .' <input type="radio" name="f_user_'.$attribute
-                .'" value="F" '.(($fieldValue == 'F') ? 'checked' : '').' /> '
+                .'" value="F" '.(($fieldValue == 'F') ? 'checked' : '').' '
+                . $p_params['html_code'] . '/> '
                 .smarty_function_escape_special_chars($p_params['female_name']);
         } elseif ($attribute == 'title') {
+            if (is_null($fieldValue)) {
+                $fieldValue = $campsite->user->$attribute;
+            }
             $selectTag = true;
             $output = array('Mr.', 'Mrs.', 'Ms.', 'Dr.');
             $values = array('Mr.', 'Mrs.', 'Ms.', 'Dr.');
-            $html = '<select name="f_user_'.$attribute.'">';
+            $html = '<select name="f_user_'.$attribute.'" ' . $p_params['html_code'] . '>';
         } elseif ($attribute == 'country') {
+            if (is_null($fieldValue)) {
+                $fieldValue = $campsite->user->country_code;
+            }
             $sqlQuery = 'SELECT Code, Name FROM Countries '
                        .'GROUP BY Code ASC ORDER BY Name ASC';
             $data = $g_ado_db->GetAll($sqlQuery);
@@ -66,28 +77,41 @@ function smarty_function_camp_select($p_params, &$p_smarty)
                 $values[] = $country['Code'];
             }
             $selectTag = true;
-            $html = '<select name="f_user_'.$attribute.'">';
+            $html = '<select name="f_user_'.$attribute.'" ' . $p_params['html_code'] . '>';
         } elseif ($attribute == 'age') {
+            if (is_null($fieldValue)) {
+                $fieldValue = $campsite->user->$attribute;
+            }
             $selectTag = true;
             $output = array('0-17', '18-24', '25-39', '40-49', '50-65', '65 or over');
             $values = array('0-17', '18-24', '25-39', '40-49', '50-65', '65-');
-            $html = '<select name="f_user_'.$attribute.'">';
+            $html = '<select name="f_user_'.$attribute.'" ' . $p_params['html_code'] . '>';
         } elseif ($attribute == 'employertype') {
+            if (is_null($fieldValue)) {
+                $fieldValue = $campsite->user->$attribute;
+            }
             $selectTag = true;
             $output = array('Corporate', 'Non-Governmental', 'Government Agency', 'Academic', 'Media', 'Other');
             $values = array('Corporate', 'NGO', 'Government Agency', 'Academic', 'Media', 'Other');
-            $html = '<select name="f_user_'.$attribute.'">';
+            $html = '<select name="f_user_'.$attribute.'" ' . $p_params['html_code'] . '>';
         } elseif (substr($attribute, 0, 4) == 'pref') {
+            if (is_null($fieldValue)) {
+                $fieldValue = $campsite->user->$attribute;
+            }
             $html = '<input type="checkbox" name="f_user_'.$attribute.'" '
                 .(($attrValue == 'Y') ? ' value="on" checked />' : ' />')
                 .'<input type="hidden" name="f_has_pref'
-                .substr($attribute, 4, 1).'" value="1" />';
+                .substr($attribute, 4, 1).'" value="1" ' . $p_params['html_code'] . ' />';
         }
         break;
 
     case 'login':
         if ($attribute == 'rememberuser') {
-            $html = '<input type="checkbox" name="f_login_'.$attribute.'" />';
+            if (is_null($fieldValue)) {
+                $fieldValue = $campsite->user->$attribute;
+            }
+            $html = '<input type="checkbox" name="f_login_'.$attribute.'" '
+            . $p_params['html_code'] . ' />';
         }
         break;
 
@@ -108,28 +132,31 @@ function smarty_function_camp_select($p_params, &$p_smarty)
                 .'size="3" ' // TODO set the size value
                 .' ' // TODO set multipleability
                 .'onchange="update_subscription_payment();" '
-                .'id="select_language">';
+                .'id="select_language" ' . $p_params['html_code'] . '>';
         } elseif ($attribute == 'alllanguages') {
             $html = '<input type="checkbox" name="subs_all_languages" '
                 .'onchange="update_subscription_payment(); '
-                .'ToggleElementEnabled(\'select_language\');" />';
+                .'ToggleElementEnabled(\'select_language\');" '
+                . $p_params['html_code'] . ' />';
         } elseif ($attribute == 'section') {
             if ($campsite->subs_by_type == 'publication') {
                 $html = '<input type="hidden" name="cb_subs[]" value="'
-                    .$campsite->section->number.'" ';
+                    .$campsite->section->number.'" >';
             } elseif ($campsite->subs_by_type == 'section') {
                 $html = '<input type="checkbox" name="cb_subs[]" value="'
                     .$campsite->section->number.'" '
-                    .'onchange="update_subscription_payment();">';
+                    .'onchange="update_subscription_payment();" '
+                    . $p_params['html_code'] . '>';
             }
         }
         break;
 
     case 'search':
         if ($attribute == 'mode') {
-            $html = '<input type="checkbox" name="f_search_'.$attribute.'" />';
+            $html = '<input type="checkbox" name="f_search_'.$attribute.'" '
+            . $p_params['html_code'] . ' />';
         } elseif ($attribute == 'level') {
-            $html = '<select name="f_search_'.$attribute.'">'
+            $html = '<select name="f_search_'.$attribute.'" ' . $p_params['html_code'] . '>'
                 .'<option value="0">Publication</option>'
                 .'<option value="1">Issue</option>'
                 .'<option value="2">Section</option>'

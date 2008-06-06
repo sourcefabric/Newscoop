@@ -66,10 +66,10 @@ if ($g_user->hasPermission('AddImage')) { ?>
 
 <?php camp_html_display_msgs(); ?>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;">
 <form method="POST" action="index.php">
 <input type="hidden" name="f_order_direction" value="<?php echo $f_order_direction; ?>">
 <input type="hidden" name="f_image_offset" value="0">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;">
 <tr>
 	<td><input type="submit" name="submit_button" value="<?php putGS("Search"); ?>" class="button"></td>
 	<td><input type="text" name="f_search_string" value="<?php echo $f_search_string; ?>" class="input_text" style="width: 150px;"></td>
@@ -98,8 +98,8 @@ if ($g_user->hasPermission('AddImage')) { ?>
 	</td>
 	<td><?php putGS("Items per page"); ?>: <input type="text" name="f_items_per_page" value="<?php p($f_items_per_page); ?>" class="input_text" size="4"></td>
 </tr>
-</form>
 </table>
+</form>
 
 <?php
 if (count($imageData) > 0) {
@@ -184,6 +184,7 @@ foreach ($imageData as $image) {
 }
 
 ?>
+<tr>
 <td colspan="3"><?php putGS('$1 images found', $NumImagesFound); ?></TD>
 </TR>
 </TABLE>

@@ -42,7 +42,7 @@ function smarty_function_set_article($p_params, &$p_smarty)
         }
     } else {
     	$property = array_shift(array_keys($p_params));
-    	$campsite->article->trigger_invalid_property_error($property, $p_smarty);
+    	CampTemplate::singleton()->trigger_error("invalid parameter '$property' in set_article");
         return false;
     }
 

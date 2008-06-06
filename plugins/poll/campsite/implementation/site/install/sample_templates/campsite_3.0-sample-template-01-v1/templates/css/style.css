@@ -206,48 +206,56 @@ div#dotline {
     background-image: url(/templates/img/dotline.png);
 }
 
-/*** Search Form ***/
-div#searchform {
+
+/*** Forms ***/
+div#genericform {
     margin: 0;
     padding: 0;
     text-align: right;
 }
-div#searchform form {
+div#genericform form {
     margin: 0;
     padding: 0;
 }
-div#searchform form input {
-    width: 120px;
+div#genericform .input_long {
+    width: 240px;
 }
-div#searchform form input,
-div#searchform .submitbutton {
-    font-size: 75%;
+div#genericform form input {
+    width: 90px;
+}
+div#genericform form input,
+div#genericform .submitbutton {
     font-size: 70%;
     border: 1px solid #a5a5a5;
+    margin-bottom: 5px;
 }
-div#searchform .submitbutton {
-    width: 60px;
+div#genericform .submitbutton {
+    width: 70px;
+    margin-top: 5px;
+}
+div#genericform .formtext {
+    font-size: 70%;
+    margin-bottom: 5px;
+}
+div#genericform form textarea {
+	width: 340px;
+    font-size: 70%;
+    border: 1px solid #a5a5a5;
+    margin-bottom: 5px;
+}
+div#genericform form select {
+	width: 100px;
+    font-size: 70%;
+    border: 1px solid #a5a5a5;
+    margin-bottom: 5px;
+}
+div#genericform .select_long {
+    width: 240px;
+    font-size: 70%;
+    border: 1px solid #a5a5a5;
+    margin-bottom: 5px;
 }
 
-/*** User Form ***/
-div#userform {
-    margin: 0;
-    padding: 0;
-    text-align: right;
-}
-div#userform form {
-    margin: 0;
-    padding: 0;
-}
-div#userform form input,
-div#userform .submitbutton {
-    font-size: 75%;
-    font-size: 70%;
-    border: 1px solid #a5a5a5;
-}
-div#userform .submitbutton {
-    width: 60px;
-}
 
 /*** Main Navigation Menu ***/
 div#topicsmenu {
@@ -283,33 +291,6 @@ div#topicsmenu ul li a:hover {
 .datetime {
     font-size: 75%;
     color: #8a8a8a;
-}
-
-/*** Login Form ***/
-div#loginform {
-    margin: 0;
-    padding: 0;
-}
-div#loginform form {
-    margin: 0;
-    padding: 0;
-}
-div#loginform form input{
-    width: 120px;
-}
-div#loginform form input,
-div#loginform .loginbutton {
-    font-size: 75%;
-    font-size: 70%;
-    border: 1px solid #a5a5a5;
-    margin-bottom: 5px;
-}
-div#loginform .loginbutton {
-    width: 50px;
-    margin-top: 5px;
-}
-div#loginform .formtext {
-    font-size: 70%;
 }
 
 

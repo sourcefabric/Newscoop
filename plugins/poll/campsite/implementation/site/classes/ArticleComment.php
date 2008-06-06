@@ -319,8 +319,8 @@ class ArticleComment
         $countClauseObj->addWhere('message_id != thread');
         $countClauseObj->addWhere('status = '.PHORUM_STATUS_APPROVED);
 
-        if (!is_array($p_order)) {
-            $p_order = array();
+        if (!is_array($p_order) || count($p_order) == 0) {
+            $p_order = array('default'=>'asc');
         }
 
         // sets the order condition if any
@@ -396,14 +396,17 @@ class ArticleComment
         foreach ($p_order as $field=>$direction) {
             $dbField = null;
             switch (strtolower($field)) {
+                case 'default':
+                    $dbField = 'thread_order';
+                    break;
                 case 'bydate':
                     $dbField = 'datestamp';
                     break;
             }
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';
+                $order[$dbField] = $direction;
             }
-            $order[$dbField] = $direction;
         }
         return $order;
     }

@@ -46,7 +46,7 @@ camp_html_content_top(getGS('Publication List'), null);
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
 	<td align="center" valign="top"><?php putGS("Number"); ?></td>
-    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name<BR><SMALL>(click to see issues)</SMALL>"); ?></B></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name<BR><SMALL>(click to see issues)</SMALL>"); ?></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Default Site Alias"); ?></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Default Language"); ?></TD>
     <?php  if ($g_user->hasPermission("ManagePub")) { ?>

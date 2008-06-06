@@ -22,5 +22,3 @@ require_once("translate.php");
 translationForm($_REQUEST);
 
 ?>
-</body>
-</html>

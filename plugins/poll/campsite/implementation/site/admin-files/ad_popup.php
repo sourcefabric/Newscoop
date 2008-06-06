@@ -29,6 +29,5 @@ $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to
 </TR>
 </TABLE>
 </CENTER>
-</FORM>
 
 <?php camp_html_copyright_notice(); ?>

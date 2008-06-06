@@ -2,11 +2,16 @@
 
 RewriteEngine On
 
-RewriteCond %{REQUEST_URI} (/|\.php|\.tpl|\.html|/[^.]*)$  [NC]
-RewriteCond %{REQUEST_URI} !^/admin/
-RewriteCond %{REQUEST_URI} !^/install/
+RewriteCond %{REQUEST_URI} ![^.]\.php
+RewriteCond %{REQUEST_URI} ![^.]\.html
+RewriteCond %{REQUEST_URI} ![^.]\.css
+RewriteCond %{REQUEST_URI} ![^.]\.js
+RewriteCond %{REQUEST_URI} !^/admin
+RewriteCond %{REQUEST_URI} !^/install
+RewriteCond %{REQUEST_URI} !^/get_img
+RewriteCond %{REQUEST_URI} !^/attachment
+RewriteCond %{REQUEST_URI} !^/templates
+RewriteCond %{REQUEST_URI} !^/admin-files
+RewriteCond %{REQUEST_URI} !^/css
+RewriteCond %{REQUEST_URI} !^/images
 RewriteRule . /index.php [L]
-
-# For Rewrite debug purposes
-# RewriteLog /tmp/apache-rewrite.log
-# RewriteLogLevel 9

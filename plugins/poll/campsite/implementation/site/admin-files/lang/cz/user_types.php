@@ -1,4 +1,6 @@
-<?php
+<?php 
+regGS("User Type '$1' successfully deleted", "");
+regGS("Permissions successfully modified", "");
 regGS("User types", "Typy uživatelů");
 regGS("No user types.", "Žádné typy uživatelů");
 regGS("You do not have the right to add user types.", "Nemáte právo přidat typy uživatelů");

@@ -64,7 +64,13 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 	} elseif (preg_match('/invalid\s+operator\s+(.+)\s+of\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
 		$errorCode = SYNTAX_ERROR_INVALID_OPERATOR;
 		$what = array($matches[1], $matches[2], $matches[3]);
-	} else {
+    } elseif (preg_match('/invalid\s+attribute\s+(.+)\s+in\s+statement\s+(.*),\s+(.*)\s+parameter/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_INVALID_ATTRIBUTE;
+        $what = array($matches[1], $matches[2], $matches[3]);
+    } elseif (preg_match('/invalid\s+template\s+(.*)\s+specified\s+in\s+the\s+(.*)\s+form/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_INVALID_TEMPLATE;
+        $what = array($matches[1], $matches[2]);
+    } else {
 		$errorCode = SYNTAX_ERROR_UNKNOWN;
 		$what = array($errorString);
 	}
@@ -83,7 +89,7 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 }
 
 
-set_error_handler('templateErrorHandler');
+#set_error_handler('templateErrorHandler');
 
 // initiates the campsite site
 $campsite = new CampSite();

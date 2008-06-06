@@ -35,7 +35,8 @@ final class CampContext
 								    				 'handler'=>'setCommentHandler'),
 								    'subtitle'=>array('class'=>'Subtitle',
                                                       'handler'=>'setSubtitleHandler'),
-								    'topic'=>array('class'=>'Topic'),
+								    'topic'=>array('class'=>'Topic',
+                                                   'handler'=>'setTopicHandler'),
 								    'user'=>array('class'=>'User'),
 								    'template'=>array('class'=>'Template')
     );
@@ -168,7 +169,7 @@ final class CampContext
             if ($this->m_readonlyProperties['request_action']->name == $actionNameCase) {
                 $this->m_readonlyProperties[$propertyName] =& $this->m_readonlyProperties['request_action'];
             } else {
-                $this->m_readonlyProperties[$propertyName] = MetaAction::CreateAction(array());
+                $this->m_readonlyProperties[$propertyName] = new MetaAction($propertyName);
             }
         }
 
@@ -287,7 +288,7 @@ final class CampContext
      *
      * @param string $p_property
      */
-    public function hasProperty($p_property)
+    public function has_property($p_property)
     {
         $p_property = CampContext::TranslateProperty($p_property);
         return !is_null(CampContext::ObjectType($p_property))
@@ -295,7 +296,7 @@ final class CampContext
         && array_key_exists($p_property, $this->m_properties))
         || (is_array($this->m_readonlyProperties)
         && array_key_exists($p_property, $this->m_readonlyProperties));
-    } // fn hasProperty
+    } // fn has_property
 
 
     /**
@@ -303,10 +304,10 @@ final class CampContext
      *
      * @param string $p_object
      */
-    public function hasObject($p_object)
+    public function has_object($p_object)
     {
         return !is_null(CampContext::ObjectType($p_object));
-    } // fn hasObject
+    } // fn has_object
 
 
     /**
@@ -360,7 +361,7 @@ final class CampContext
     {
         $savedProperties = array();
         foreach ($p_propertiesList as $propertyName) {
-            if (!$this->hasProperty($propertyName)) {
+            if (!$this->has_property($propertyName)) {
                 continue;
             }
             $savedProperties[$propertyName] = $this->$propertyName;
@@ -398,7 +399,7 @@ final class CampContext
         }
         $savedContext = array();
         foreach ($p_propertiesList as $propertyName) {
-            if ($this->hasProperty($propertyName)) {
+            if ($this->has_property($propertyName)) {
                 $savedContext[$propertyName] = $this->$propertyName;
             }
         }
@@ -610,7 +611,7 @@ final class CampContext
     final protected function trigger_invalid_property_error($p_property)
     {
         $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
-        . OF_OBJECT_STRING . ' ' . get_class($this);
+        . OF_OBJECT_STRING . ' campsite';
         CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     } // fn trigger_invalid_property_error
 
@@ -897,6 +898,14 @@ final class CampContext
     private function setSubtitleHandler(MetaSubtitle $p_oldSubtitle, MetaSubtitle $p_newSubtitle) {
         if ($p_oldSubtitle != $p_newSubtitle) {
             $this->m_objects['subtitle'] = $p_newSubtitle;
+        }
+    }
+
+
+    private function setTopicHandler(MetaTopic $p_oldTopic, MetaTopic $p_newTopic) {
+        if ($p_oldTopic != $p_newTopic) {
+            $this->m_readonlyProperties['url']->set_parameter('tpid', $p_newTopic->identifier);
+            $this->m_objects['topic'] = $p_newTopic;
         }
     }
 

@@ -116,23 +116,23 @@ final class CampSite extends CampSystem
 
         // sets the appropiate template if site is not in mode online
         if ($this->getSetting('site.online') == 'N') {
+            $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
             $template = '_campsite_offline.tpl';
-            $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
         } elseif (!$uri->publication->defined) {
-            $template = '_campsite_error.tpl';
             $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
+            $template = '_campsite_error.tpl';
             $error_message = 'The site alias \'' . $_SERVER['HTTP_HOST']
             . '\' was not assigned to a publication. Please create a publication and '
             . ' assign it the current site alias.';
         } else {
-            // gets the template file name
+            $templates_dir = CS_PATH_SMARTY_TEMPLATES;
             $template = $this->getTemplateName();
             if (empty($template)) {
                 $tplId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
                 if (is_null($tplId)) {
                     $error_message = 'Unable to select a template! '
-                    .'Please make sure there is at least one issue published and '
-                    .'it had assigned a valid template.';
+                    .'Please make sure there is at least one issue published and it had '
+                    .'assigned valid templates for the front, section and article pages.';
                 } else {
                     $error_message = 'The template identified by the number ' . $tplId
                     .' does not exist.';
@@ -140,7 +140,6 @@ final class CampSite extends CampSystem
                 $template = '_campsite_error.tpl';
                 $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
             }
-            $templates_dir = CS_PATH_SMARTY_TEMPLATES;
         }
 
         $params = array(

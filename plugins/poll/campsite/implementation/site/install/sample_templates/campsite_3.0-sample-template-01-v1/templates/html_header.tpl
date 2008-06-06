@@ -31,8 +31,8 @@
     </div>
   </td>
   <td>
-    <div id="searchform">
-    {{ search_form template="search.tpl" submit_button="Search" html_code="class=\"submitbutton\"" }}
+    <div id="genericform">
+    {{ search_form template="search.tpl" submit_button="Search" button_html_code="class=\"submitbutton\"" }}
       {{ camp_edit object="search" attribute="keywords" }}
     {{ /search_form }}
     </div>

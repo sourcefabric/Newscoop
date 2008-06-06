@@ -1,4 +1,5 @@
-<div id="userform">{{ user_form template="subscription.tpl" }}
+<div id="genericform">
+{{ user_form template="subscription.tpl" button_html_code="class=\"submitbutton\"" }}
 <table class="userform">
 	<tr>
 		<th colspan="2">Please fill in the following form in order to create
@@ -9,12 +10,12 @@
 		<td><select name="SubsType">
 			<option value="trial">Trial</option>
 			<option value="paid">Paid</option>
-		</select>
-	
+		    </select>
+        </td>
 	</tr>
 	<tr>
 		<td><span class="formtext">Full name:</span></td>
-		<td>{{ camp_edit object="user" attribute="name" }}</td>
+		<td>{{ camp_edit object="user" attribute="name" html_code="class=\"input_long\"" }}</td>
 	</tr>
 	<tr>
 		<td><span class="formtext">Login name:</span></td>
@@ -30,11 +31,11 @@
 	</tr>
 	<tr>
 		<td><span class="formtext">Email:</span></td>
-		<td>{{ camp_edit object="user" attribute="email" }}</td>
+		<td>{{ camp_edit object="user" attribute="email" html_code="class=\"input_long\"" }}</td>
 	</tr>
 	<tr>
 		<td><span class="formtext">Country:</span></td>
-		<td>{{ camp_select object="user" attribute="country" }}</td>
+		<td>{{ camp_select object="user" attribute="country" html_code="class=\"select_long\"" }}</td>
 	</tr>
 	<tr>
 		<td><span class="formtext">City:</span></td>
@@ -42,7 +43,7 @@
 	</tr>
 	<tr>
 		<td><span class="formtext">Street address:</span></td>
-		<td>{{ camp_edit object="user" attribute="straddress" }}</td>
+		<td>{{ camp_edit object="user" attribute="str_address" html_code="class=\"input_long\"" }}</td>
 	</tr>
 	<tr>
 		<td><span class="formtext">State:</span></td>
@@ -58,15 +59,15 @@
 	</tr>
 	<tr>
 		<td><span class="formtext">Contact:</span></td>
-		<td>{{ camp_edit object="user" attribute="contact" }}</td>
+		<td>{{ camp_edit object="user" attribute="contact" html_code="class=\"input_long\"" }}</td>
 	</tr>
 	<tr>
 		<td><span class="formtext">Second phone:</span></td>
-		<td>{{ camp_edit object="user" attribute="phone2" }}</td>
+		<td>{{ camp_edit object="user" attribute="second_phone" }}</td>
 	</tr>
 	<tr>
 		<td><span class="formtext">Postal code:</span></td>
-		<td>{{ camp_edit object="user" attribute="postalcode" }}</td>
+		<td>{{ camp_edit object="user" attribute="postal_code" }}</td>
 	</tr>
 	<tr>
 		<td><span class="formtext">Gender:</span></td>

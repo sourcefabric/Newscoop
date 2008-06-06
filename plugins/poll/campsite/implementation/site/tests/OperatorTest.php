@@ -59,7 +59,7 @@ class OperatorTest extends PHPUnit_Framework_TestCase {
 
         $exceptionThrown = false;
         try {
-            $operator = new Operator('greater', 'bool');
+            $operator = new Operator('greater', 'boolean');
         }
         catch (InvalidOperatorException $e) {
             $exceptionThrown = true;
@@ -159,7 +159,7 @@ class OperatorTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($allOperators, Operator::GetOperators('int'));
         $this->assertEquals($allOperators, Operator::GetOperators('string'));
-        $this->assertEquals($identityOperators, Operator::GetOperators('bool'));
+        $this->assertEquals($identityOperators, Operator::GetOperators('boolean'));
         $this->assertEquals($allOperators, Operator::GetOperators('date'));
         $this->assertEquals($allOperators, Operator::GetOperators('datetime'));
         $this->assertEquals($allOperators, Operator::GetOperators('time'));

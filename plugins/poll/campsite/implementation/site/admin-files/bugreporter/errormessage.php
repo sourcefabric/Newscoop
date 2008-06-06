@@ -40,7 +40,7 @@ global $ADMIN;
                         <p><?php
                            putGS("In order to help the Campsite team investigate and pinpoint the issue please take a moment to describe what happened.");
                            ?></p>
-                           </td>&nbsp;</td>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">&nbsp;

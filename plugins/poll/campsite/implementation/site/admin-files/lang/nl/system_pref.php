@@ -1,4 +1,5 @@
 <?php 
+regGS("Invalid: You need PHP APC enabled in order to use the caching system.", "");
 regGS("Site Title:", "");
 regGS("Site On-Line:", "");
 regGS("Site Meta Keywords:", "");
