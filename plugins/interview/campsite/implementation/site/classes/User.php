@@ -535,13 +535,13 @@ class User extends DatabaseObject {
         } else {
             $rightId = $right[0]['right_id'];
             $params = array('right_id' => $rightId,
-                            'perm_user_id' => $this->getPermUserId());
+                            'group_id' => $this->m_data['group_id']);
             if (isset($this->m_config[$p_varName])) {
                 if (!$p_value) {
-                    $LiveUserAdmin->perm->revokeUserRight($params);
+                    $LiveUserAdmin->perm->revokeGroupRight($params);
                 }
             } elseif ($p_value) {
-                $LiveUserAdmin->perm->grantUserRight($params);
+                 $LiveUserAdmin->perm->grantGroupRight($params);
             }
             // update the auth and perm user data to reload changes
             $LiveUser->updateProperty(true, true);
