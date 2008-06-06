@@ -541,7 +541,7 @@ class User extends DatabaseObject {
                     $LiveUserAdmin->perm->revokeGroupRight($params);
                 }
             } elseif ($p_value) {
-                 $LiveUserAdmin->perm->grantGroupRight($params);
+                $LiveUserAdmin->perm->grantGroupRight($params);
             }
             // update the auth and perm user data to reload changes
             $LiveUser->updateProperty(true, true);
