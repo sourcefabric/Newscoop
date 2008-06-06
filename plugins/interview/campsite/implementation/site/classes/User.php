@@ -72,7 +72,7 @@ class User extends DatabaseObject {
         'isActive');
 
     // TODO: Put it out, it does nothing. This could be a global array.
-    var $m_defaultConfig = array(
+    public static $m_defaultConfig = array(
         'ManagePub'=>'N',
         'DeletePub'=>'N',
         'ManageIssue'=>'N',
@@ -142,11 +142,7 @@ class User extends DatabaseObject {
         'DeleteFile'=>'N',
         'CommentModerate'=>'N',
         'CommentEnable'=>'N',
-        'SyncPhorumUsers'=>'N',
-        'plugin_interview_notify'=>'N',
-        'plugin_interview_admin'=>'N',
-        'plugin_interview_moderator'=>'N',
-        'plugin_interview_guest'=>'N',        
+        'SyncPhorumUsers'=>'N',       
         'ClearCache'=>'N');
     var $m_liveUserData = array();
 
@@ -575,12 +571,7 @@ class User extends DatabaseObject {
      */
     public static function GetDefaultConfig()
     {
-        if (isset($this) && isset($this->m_defaultConfig)) {
-            return $this->m_defaultConfig;
-        } else {
-            $tmpUser = new User();
-            return $tmpUser->m_defaultConfig;
-        }
+        return self::$m_defaultConfig;
     } // fn GetDefaultConfig
 
 

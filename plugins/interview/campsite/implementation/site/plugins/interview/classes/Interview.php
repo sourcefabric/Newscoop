@@ -125,7 +125,8 @@ class Interview extends DatabaseObject {
                            $p_title, $p_fk_image_id, 
                            $p_description_short, $p_description,
                            $p_interview_begin, $p_interview_end,
-                           $p_questions_begin, $p_questions_end, $p_questions_limit,
+                           $p_questions_begin, $p_questions_end,
+                           $p_questions_limit,
                            $p_status = 'draft')
         {
         global $g_ado_db;
@@ -902,9 +903,9 @@ class Interview extends DatabaseObject {
                     $data['f_description_short'], 
                     $data['f_description'],
                     $data['f_interview_begin'], 
-                    $data['f_interview_end'].' 23:59:59',
+                    $data['f_interview_end'],
                     $data['f_questions_begin'],
-                    $data['f_questions_end'].' 23:59:59',
+                    $data['f_questions_end'],
                     $data['f_questions_limit'],
                     $data['f_status']
                 );
