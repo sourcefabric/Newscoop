@@ -150,6 +150,7 @@ if (count($comments) <= 0) {
 ?>
 </table>
 </form>
+<p>
 <?php
 // show the "add comment" form
 if (!$articleObj->commentsLocked() && ($f_edit_mode == "edit") ) {

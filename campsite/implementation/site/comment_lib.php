@@ -29,9 +29,14 @@ function camp_comment_first_post($p_article, $p_forumId)
 	// Check if the first post already exists.
 	$articleNumber = $p_article->getArticleNumber();
 	$languageId = $p_article->getLanguageId();
-	$firstPost = ArticleComment::GetCommentThreadId($articleNumber, $languageId);
-	if ($firstPost) {
-		return new Phorum_message($firstPost);
+	$firstPostId = ArticleComment::GetCommentThreadId($articleNumber, $languageId);
+	if ($firstPostId) {
+        $firstPost = new Phorum_message($firstPostId);
+        if ($firstPost->exists()) {
+            return $firstPost;
+        }
+        // Unlink the message from the current article.
+		ArticleComment::Unlink($articleNumber, $languageId, $firstPostId);
 	}
 
 	// Get article creator
