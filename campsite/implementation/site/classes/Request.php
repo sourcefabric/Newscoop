@@ -22,8 +22,8 @@ class Request extends DatabaseObject {
 	var $m_dbTableName = 'Requests';
 	var $m_columnNames = array('session_id',
                                'object_id',
-	                           'object_type_id',
-	                           'request_time');
+	                           'request_count',
+	                           'last_request_time');
 
 	public function __construct($p_sessionId = null, $p_objectId = null)
 	{
@@ -56,18 +56,17 @@ class Request extends DatabaseObject {
     /**
      * @return integer
      */
-    public function getObjectTypeId()
-    {
-        return $this->m_data['object_type_id'];
-    } // fn getObjectTypeId
+    public function getRequestCount() {
+        return $this->m_data['request_count'];
+    }
 
 
     /**
 	 * @return string
 	 */
-	public function getRequestTime()
+	public function getLastRequestTime()
 	{
-		return $this->m_data['request_time'];
+		return $this->m_data['last_request_time'];
 	} // fn getLastRequestTime
 } // class Request
 
