@@ -34,7 +34,7 @@ class CampPlugin {
         
     static public function initPlugins4TemplateEngine()
     {
-        User::$m_defaultConfig += self::$m_userDefaultConfig;
+        User::registerDefaultConfig(self::$m_userDefaultConfig);
         
         $context = CampTemplate::singleton()->context();
         
@@ -63,7 +63,7 @@ class CampPlugin {
         global $no_menu_scripts;
         $no_menu_scripts = array_merge($no_menu_scripts, self::$m_no_menu_scripts);
         
-        User::$m_defaultConfig += self::$m_userDefaultConfig;
+        User::registerDefaultConfig(self::$m_userDefaultConfig);
     }     
 }
 
