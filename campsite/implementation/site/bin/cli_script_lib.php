@@ -555,12 +555,10 @@ function camp_detect_database_version($p_dbName, &$version)
                 $version = "3.0";
             }
         }
-        // TODO: Add a sentence to identify database is 3.1 version.
-        //       There is no difference at the moment with 3.0 db.
-        if (!$res2 = mysql_query("SHOW TABLES LIKE 'User%'")) {
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'ObjectTypes'")) {
             return "Unable to query the database $p_dbName";
         }
-        if (mysql_num_rows($res2) == 0) {
+        if (mysql_num_rows($res2) > 0) {
             $version = "3.1";
         }
     }
