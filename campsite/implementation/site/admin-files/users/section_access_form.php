@@ -35,7 +35,7 @@ foreach($publications as $publication) {
         <input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox" <?php if ($editUser->hasPermission($right_name)) { p("CHECKED"); } ?> />
       </td>
       <td style="padding-right: 10px;">
-        <?php p($section->getName() . ' (<em>' . $right_name . '</em>)'); ?>
+        <?php p($section->getName()); ?>
       </td>
     </tr>
 <?php
