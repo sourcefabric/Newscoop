@@ -32,7 +32,11 @@ class SessionRequest {
 
         $session = new Session($p_sessionId);
         if (!$session->exists()) {
-            $session->create(array('start_time'=>time(), 'user_id'=>$p_userId));
+            $sessionParams = array('start_time'=>strftime("%Y-%m-%d %T"));
+            if (!empty($p_userId)) {
+                $sessionParams['user_id'] = $p_userId;
+            }
+            $session->create($sessionParams);
         }
         if (!empty($p_userId) && $session->getUserId() != $p_userId) {
             throw new InvalidUserId();
@@ -51,8 +55,9 @@ class SessionRequest {
 
         $request = new Request($p_sessionId, $p_objectId);
         if (!$request->exists()) {
-            $request->create(array('request_count'=>1));
+            $request->create();
         }
+        $request->incrementRequestCount();
     }
 }
 

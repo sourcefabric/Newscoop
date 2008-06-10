@@ -27,7 +27,7 @@ class RequestObject extends DatabaseObject {
 
 	public function __construct($p_objectId = null)
 	{
-        if (!is_null($p_objectId)) {
+        if (!is_null($p_objectId) && !empty($p_objectId)) {
             $this->m_data['object_id'] = $p_objectId;
             $this->fetch();
         }

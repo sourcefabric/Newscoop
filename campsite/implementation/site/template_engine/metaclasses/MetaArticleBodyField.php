@@ -31,6 +31,22 @@ final class MetaArticleBodyField {
 
 
     /**
+     * Stores the article object that owns the body field
+     *
+     * @var MetaArticle
+     */
+    private $m_parent;
+
+
+    /**
+     * Stores the object describing the article type field
+     *
+     * @var ArticleTypeField
+     */
+    private $m_articleTypeField;
+
+
+    /**
      * Stores the body field name
      */
     private $m_fieldName;
@@ -41,16 +57,19 @@ final class MetaArticleBodyField {
      *
      * @param string $p_content
      */
-    public function MetaArticleBodyField($p_content, $p_fieldName, $p_articleName,
-    $p_subtitleNumber = null, $p_headerFormatStart = null, $p_headerFormatEnd = null) {
+    public function __construct($p_content, MetaArticle $p_parent, $p_fieldName,
+                                $p_articleName, $p_subtitleNumber = null,
+                                $p_headerFormatStart = null, $p_headerFormatEnd = null) {
         $this->m_subtitleNumber = $p_subtitleNumber;
         $this->m_subtitles = MetaSubtitle::ReadSubtitles($p_content, $p_fieldName, $p_articleName,
-        $p_headerFormatStart, $p_headerFormatEnd);
+                                                         $p_headerFormatStart, $p_headerFormatEnd);
         $this->m_sutitlesNames = array();
         foreach ($this->m_subtitles as $subtitle) {
             $this->m_sutitlesNames = $subtitle->name;
         }
+        $this->m_parent = $p_parent;
         $this->m_fieldName = $p_fieldName;
+        $this->m_articleTypeField = new ArticleTypeField($p_parent->type_name, $p_fieldName);
     }
 
 
@@ -136,6 +155,19 @@ final class MetaArticleBodyField {
             }
             $content .= $index > 0 ? $subtitle->formatted_name : '';
             $content .= $subtitle->content;
+        }
+        if ($this->m_articleTypeField->isContent()) {
+            $objectType = new ObjectType('article');
+            $userId = CampTemplate::singleton()->context()->user->identifier;
+            $requestObjectId = $this->m_parent->request_object_id;
+            $updateArticle = empty($requestObjectId);
+            SessionRequest::Create(session_id(), $requestObjectId,
+                                   $objectType->getObjectTypeId(), $userId);
+            if ($updateArticle) {
+                $article = new Article($this->m_parent->language->number,
+                                       $this->m_parent->number);
+                $article->setProperty('object_id', $requestObjectId);
+            }
         }
         return $content;
     }

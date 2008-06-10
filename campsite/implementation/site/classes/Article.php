@@ -79,7 +79,8 @@ class Article extends DatabaseObject {
 		'ArticleOrder',
 		'comments_enabled',
 		'comments_locked',
-		'time_updated');
+		'time_updated',
+	    'object_id');
 
 	var $m_languageName = null;
 

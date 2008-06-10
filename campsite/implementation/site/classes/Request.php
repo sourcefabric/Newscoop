@@ -68,6 +68,15 @@ class Request extends DatabaseObject {
 	{
 		return $this->m_data['last_request_time'];
 	} // fn getLastRequestTime
+
+
+	public function incrementRequestCount() {
+        global $g_ado_db;
+        $sql = "UPDATE " . $this->m_dbTableName . " SET request_count = LAST_INSERT_ID(request_count + 1)";
+        $g_ado_db->Execute($sql);
+        $this->m_data['request_count'] = $g_ado_db->GetOne("SELECT LAST_INSERT_ID()");
+        return $this->m_data['request_count'];
+	}
 } // class Request
 
 ?>

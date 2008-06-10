@@ -30,6 +30,7 @@ class ObjectType extends DatabaseObject {
             if (is_numeric($p_idOrName)) {
                 $this->m_data['id'] = $p_idOrName;
 		    } else {
+		        $this->m_data['name'] = $p_idOrName;
 		        $this->m_keyColumnNames = array('name');
 		    }
             $this->fetch();

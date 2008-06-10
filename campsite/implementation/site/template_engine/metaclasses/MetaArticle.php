@@ -43,6 +43,7 @@ final class MetaArticle extends MetaDbObject {
         $this->m_properties['url_name'] = 'ShortName';
         $this->m_properties['comments_locked'] = 'comments_locked';
         $this->m_properties['last_update'] = 'time_updated';
+        $this->m_properties['request_object_id'] = 'object_id';
     }
 
 
@@ -183,7 +184,7 @@ final class MetaArticle extends MetaDbObject {
                         } elseif ($subtitleNo == 'all') {
                             $subtitleNo = null;
                         }
-                        $bodyField = new MetaArticleBodyField($fieldValue,
+                        $bodyField = new MetaArticleBodyField($fieldValue, $this,
                                          $articleFieldType->getPrintName(), $this->name, $subtitleNo);
                         $this->setContentCache($property, $bodyField);
                     }
