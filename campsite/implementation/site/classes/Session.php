@@ -18,7 +18,7 @@ require_once($g_documentRoot.'/classes/DatabaseObject.php');
  */
 class Session extends DatabaseObject {
 	var $m_keyColumnNames = array('id');
-	var $m_keyIsAutoIncrement = true;
+	var $m_keyIsAutoIncrement = false;
 	var $m_dbTableName = 'Sessions';
 	var $m_columnNames = array('id',
 							   'start_time',

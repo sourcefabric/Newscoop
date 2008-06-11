@@ -67,7 +67,9 @@ class RequestObject extends DatabaseObject {
     public function incrementRequestCount($p_count)
     {
         global $g_ado_db;
-        $sql = "UPDATE " . $this->m_dbTableName . " SET request_count = LAST_INSERT_ID(request_count + 1)";
+        $sql = "UPDATE " . $this->m_dbTableName
+             . " SET request_count = LAST_INSERT_ID(request_count + 1)"
+             . " WHERE object_id = '" . $g_ado_db->Escape($this->m_data['object_id']) . "'";
         $g_ado_db->Execute($sql);
         $this->m_data['request_count'] = $g_ado_db->GetOne("SELECT LAST_INSERT_ID()");
         return $this->m_data['request_count'];

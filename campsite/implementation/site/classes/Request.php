@@ -18,7 +18,7 @@ require_once($g_documentRoot.'/classes/DatabaseObject.php');
  */
 class Request extends DatabaseObject {
 	var $m_keyColumnNames = array('session_id', 'object_id');
-	var $m_keyIsAutoIncrement = true;
+	var $m_keyIsAutoIncrement = false;
 	var $m_dbTableName = 'Requests';
 	var $m_columnNames = array('session_id',
                                'object_id',
@@ -72,7 +72,10 @@ class Request extends DatabaseObject {
 
 	public function incrementRequestCount() {
         global $g_ado_db;
-        $sql = "UPDATE " . $this->m_dbTableName . " SET request_count = LAST_INSERT_ID(request_count + 1)";
+        $sql = "UPDATE " . $this->m_dbTableName
+             . " SET request_count = LAST_INSERT_ID(request_count + 1)"
+             . " WHERE session_id = '" . $g_ado_db->Escape($this->m_data['session_id']) . "'"
+             . " AND object_id = '" . $g_ado_db->Escape($this->m_data['object_id']) . "'";
         $g_ado_db->Execute($sql);
         $this->m_data['request_count'] = $g_ado_db->GetOne("SELECT LAST_INSERT_ID()");
         return $this->m_data['request_count'];
