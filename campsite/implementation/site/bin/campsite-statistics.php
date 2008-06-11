@@ -15,29 +15,38 @@ function update_statistics($p_confDir)
 {
     db_connect($p_confDir);
 
-    $sql = "SELECT ss.id, TIMESTAMPDIFF(HOUR, ss.start_time, NOW()) AS session_time_diff, "
-         . "MIN(TIMESTAMPDIFF(SECOND, rq.last_request_time, NOW())) AS last_update_diff "
-         . "FROM Sessions AS ss LEFT JOIN Requests AS rq ON ss.id = rq.session_id "
-         . "WHERE TIMESTAMPDIFF(HOUR, ss.start_time, NOW()) >= 1 GROUP BY ss.id";
+    $sessionDiff = 3600 * 12;
+    // select sections older than 12 hours
+    $sql = "SELECT ss.id, TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) AS session_time_diff,"
+         . " MIN(TIME_TO_SEC(TIMEDIFF(NOW(), rq.last_request_time))) AS last_update_diff"
+         . " FROM Sessions AS ss LEFT JOIN Requests AS rq ON ss.id = rq.session_id"
+         . " WHERE TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) >= $sessionDiff GROUP BY ss.id";
     $sessRes = mysql_query($sql);
     while ($sessRow = mysql_fetch_array($sessRes, MYSQL_ASSOC)) {
-        if ($sessRow['last_update_diff'] < 300) {
+        if ($sessRow['last_update_diff'] < 3600) {
+            // if there was a request for this session less than one hour ago
+            // do not process the session
             continue;
         }
 
+        // select session requests (each requests identifies an object)
         $sessionId = $sessRow['id'];
         $sql = "SELECT * FROM Requests WHERE session_id = '"
              . mysql_escape_string($sessionId) . "'";
         $reqRes = mysql_query($sql);
         while ($reqRow = mysql_fetch_array($reqRes, MYSQL_ASSOC)) {
+            // increment the request count for the object id
             $objectId = $reqRow['object_id'];
             $sql = "UPDATE RequestObjects SET request_count = LAST_INSERT_ID(request_count + 1)"
                  . " WHERE object_id = '" . mysql_escape_string($objectId) . "'";
             mysql_query($sql);
         }
+
+        // delete the session requests
         $sql = "DELETE FROM Requests WHERE session_id = '"
              . mysql_escape_string($sessionId) . "'";
         mysql_query($sql);
+        // delete the session
         $sql = "DELETE FROM Sessions WHERE id = '" . mysql_escape_string($sessionId) . "'";
         mysql_query($sql);
     }
