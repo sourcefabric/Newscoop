@@ -108,6 +108,7 @@ class CampInstallationBase
 
             if ($this->finish()) {
                 $this->saveConfiguration();
+                $this->saveCronJobsScripts();
             }
             break;
         }
@@ -328,6 +329,38 @@ class CampInstallationBase
 
         return true;
     } // fn finish
+
+
+    /**
+     *
+     */
+    private function saveCronJobsScripts()
+    {
+        $cronJobs = array('campsite_autopublish',
+                          'campsite_indexer',
+                          'campsite_notifyendsubs',
+                          'campsite_notifyevents');
+
+        $template = CampTemplate::singleton();
+        $template->assign('CAMPSITE_BIN_DIR', CS_PATH_SITE.DIR_SEP.'bin');
+
+        $buffer = '';
+        $isFileWritable = is_writable(CS_INSTALL_DIR.DIR_SEP.'cron_jobs');
+        foreach ($cronJobs as $cronJob) {
+            $buffer = $template->fetch('_'.$cronJob.'.tpl');
+            $cronJobFile = CS_INSTALL_DIR.DIR_SEP.'cron_jobs'.DIR_SEP.$cronJob;
+            if (file_exists($cronJobFile)) {
+                $isFileWritable = is_writable($cronJobFile);
+            }
+
+            if (!$isFileWritable) {
+                continue;
+            }
+            file_put_contents($cronJobFile, $buffer);
+        }
+
+        return true;
+    } // fn saveCronJobsScripts
 
 
     /**
