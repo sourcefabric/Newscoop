@@ -472,6 +472,23 @@ if ($f_edit_mode == "edit") { ?>
 				<td align="left" valign="top">
 				    <!-- Left-hand column underneath article title -->
 				    <table>
+				    <tr>
+				        <td align="right" valign="top" style="padding-left: 1em;"><b><?php putGS("Reads"); ?>:</b></td>
+				        <td align="left" valign="top">
+                        <?php
+                          if ($articleObj->isPublished()) {
+                              $requestObject = new RequestObject($articleObj->getProperty('object_id'));
+                              if ($requestObject->exists()) {
+                                  echo $requestObject->getRequestCount();
+                              } else {
+                                  echo "0";
+                              }
+                          } else {
+                              putGS("N/A");
+                          }
+                        ?>
+				        </td>
+				    </tr>
 
 				    <!-- Type -->
 				    <tr>

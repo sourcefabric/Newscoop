@@ -38,7 +38,8 @@ class SessionRequest {
             }
             $session->create($sessionParams);
         }
-        if (!empty($p_userId) && $session->getUserId() != $p_userId) {
+        $sessionUserId = $session->getUserId();
+        if (!empty($p_userId) && !empty($sessionUserId) && $sessionUserId != $p_userId) {
             throw new InvalidUserId();
         }
 
