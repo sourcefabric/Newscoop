@@ -101,7 +101,8 @@ class Article extends DatabaseObject {
                                                 'onfrontpage'=>'OnFrontPage',
                                                 'onsection'=>'OnSection',
                                                 'public'=>'Public',
-                                                'published'=>'Published');
+                                                'published'=>'Published',
+                                                'reads'=>'RequestObjects.request_count');
 
 	/**
 	 * Construct by passing in the primary key to access the article in
@@ -1294,6 +1295,15 @@ class Article extends DatabaseObject {
 	} // fn getKeywords
 
 
+	public function getReads() {
+	    if (empty($this->m_data['object_id'])) {
+	        return null;
+	    }
+	    $requestObject = new RequestObject($this->m_data['object_id']);
+	    return $requestObject->getRequestCount();
+	}
+
+
 	/**
 	 * @param string $p_value
 	 * @return boolean
@@ -2000,6 +2010,7 @@ class Article extends DatabaseObject {
         $hasNotTopics = array();
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
+        $otherTables = array();
 
         // gets the column list to be retrieved for the database table
         $selectClauseObj->addColumn('Articles.*');
@@ -2009,12 +2020,13 @@ class Article extends DatabaseObject {
         $tmpArticle = new Article();
         $selectClauseObj->setTable($tmpArticle->getDbTableName());
         $countClauseObj->setTable($tmpArticle->getDbTableName());
+        $articleTable = $tmpArticle->getDbTableName();
         unset($tmpArticle);
 
         // parses the given parameters in order to build the WHERE part of
         // the SQL SELECT sentence
         foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param);
+            $comparisonOperation = self::ProcessListParameters($param, $otherTables);
             $leftOperand = strtolower($comparisonOperation['left']);
 
             if (array_key_exists($leftOperand, Article::$s_regularParameters)) {
@@ -2079,9 +2091,19 @@ class Article extends DatabaseObject {
 
         // sets the ORDER BY condition
         $p_order = count($p_order) > 0 ? $p_order : Article::$s_defaultOrder;
-        $order = Article::ProcessListOrder($p_order);
+        $order = Article::ProcessListOrder($p_order, $otherTables);
         foreach ($order as $orderColumn => $orderDirection) {
             $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+        if (count($otherTables) > 0) {
+            foreach ($otherTables as $table=>$fields) {
+                $tableJoin = "LEFT JOIN `" . $g_ado_db->Escape($table) . "` ON ";
+                foreach ($fields as $parent=>$child) {
+                    $tableJoin .= "`$articleTable`.`$parent` = `$table`.`$child`";
+                }
+                $selectClauseObj->addJoin($tableJoin);
+                $countClauseObj->addJoin($tableJoin);
+            }
         }
 
         // sets the LIMIT start and offset values
@@ -2143,7 +2165,7 @@ class Article extends DatabaseObject {
     /**
      *
      */
-    private static function ProcessListParameters($p_param)
+    private static function ProcessListParameters($p_param, array &$p_otherTables = array())
     {
         $conditionOperation = array();
 
@@ -2176,6 +2198,8 @@ class Article extends DatabaseObject {
                 $conditionOperation['right'] =  'Y';
             }
             break;
+        case 'reads':
+            $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
         default:
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
             break;
@@ -2317,7 +2341,7 @@ class Article extends DatabaseObject {
      * @return array
      *      The array containing processed values of the condition
      */
-    private static function ProcessListOrder(array $p_order)
+    private static function ProcessListOrder(array $p_order, array &$p_otherTables = array())
     {
         $order = array();
         foreach ($p_order as $field=>$direction) {
@@ -2350,6 +2374,10 @@ class Article extends DatabaseObject {
                     break;
                 case 'bysectionorder':
                     $dbField = 'Articles.ArticleOrder';
+                    break;
+                case 'bypopularity':
+                    $dbField = '`RequestObjects`.`request_count`';
+                    $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
                     break;
             }
             if (!is_null($dbField)) {
