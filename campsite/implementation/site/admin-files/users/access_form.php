@@ -35,7 +35,7 @@ foreach ($rights as $group_name => $group) {
 		</td>
 	</tr>
 <?php
-	foreach ($group as $right_name=>$right_text) {
+	foreach ($group as $right_name => $right_text) {
 ?>
 	<tr>
 		<td align="right" style="padding-left: 10px;">
