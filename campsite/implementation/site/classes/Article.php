@@ -1296,8 +1296,11 @@ class Article extends DatabaseObject {
 
 
 	public function getReads() {
-	    if (empty($this->m_data['object_id'])) {
+	    if (!$this->exists()) {
 	        return null;
+	    }
+	    if (empty($this->m_data['object_id'])) {
+	        return 0;
 	    }
 	    $requestObject = new RequestObject($this->m_data['object_id']);
 	    return $requestObject->getRequestCount();
@@ -2092,7 +2095,9 @@ class Article extends DatabaseObject {
         // sets the ORDER BY condition
         $p_order = count($p_order) > 0 ? $p_order : Article::$s_defaultOrder;
         $order = Article::ProcessListOrder($p_order, $otherTables);
-        foreach ($order as $orderColumn => $orderDirection) {
+        foreach ($order as $orderDesc) {
+            $orderColumn = $orderDesc['field'];
+            $orderDirection = $orderDesc['dir'];
             $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
         if (count($otherTables) > 0) {
@@ -2311,7 +2316,9 @@ class Article extends DatabaseObject {
         // set the order for the select clause
         $p_order = count($p_order) > 0 ? $p_order : Article::$s_defaultOrder;
         $order = Article::ProcessListOrder($p_order);
-        foreach ($order as $orderField=>$orderDirection) {
+        foreach ($order as $orderDesc) {
+            $orderField = $orderDesc['field'];
+            $orderDirection = $orderDesc['dir'];
             $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
         }
 
@@ -2344,7 +2351,9 @@ class Article extends DatabaseObject {
     private static function ProcessListOrder(array $p_order, array &$p_otherTables = array())
     {
         $order = array();
-        foreach ($p_order as $field=>$direction) {
+        foreach ($p_order as $orderDesc) {
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
             $dbField = null;
             switch (strtolower($field)) {
                 case 'bynumber':
@@ -2383,7 +2392,7 @@ class Article extends DatabaseObject {
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';
             }
-            $order[$dbField] = $direction;
+            $order[] = array('field'=>$dbField, 'dir'=>$direction);
         }
         return $order;
     }

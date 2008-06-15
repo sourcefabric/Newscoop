@@ -327,7 +327,9 @@ class ArticleComment
         if (is_array($p_order)) {
             $order = ArticleComment::ProcessListOrder($p_order);
             // sets the order condition if any
-            foreach ($order as $orderField=>$orderDirection) {
+            foreach ($order as $orderDesc) {
+                $orderField = $orderDesc['field'];
+                $orderDirection = $orderDesc['dir'];
                 $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
@@ -393,8 +395,10 @@ class ArticleComment
     private static function ProcessListOrder(array $p_order)
     {
         $order = array();
-        foreach ($p_order as $field=>$direction) {
+        foreach ($p_order as $orderDesc) {
             $dbField = null;
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
             switch (strtolower($field)) {
                 case 'default':
                     $dbField = 'thread_order';
@@ -405,7 +409,7 @@ class ArticleComment
             }
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';
-                $order[$dbField] = $direction;
+                $order[] = array('field'=>$dbField, 'dir'=>$direction);
             }
         }
         return $order;

@@ -86,12 +86,12 @@ class SearchResultsList extends ListObject
 	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_searchresult, order parameter");
 	                } else {
     	                $orderField = $word;
+                        $state = 2;
 	                }
-	                $state = 2;
 	                break;
                 case 2: // reading the order direction
                     if (MetaOrder::IsValid($word)) {
-                        $order[$orderField] = $word;
+                        $order[] = array('field'=>$orderField, 'dir'=>$word);
                     } else {
                         CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_searchresult, order parameter");
                     }
