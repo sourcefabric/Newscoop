@@ -16,6 +16,7 @@ function update_statistics($p_confDir)
     db_connect($p_confDir);
 
     $sessionDiff = 3600 * 12;
+    $requestTimeDiff = 3600;
     // select sections older than 12 hours
     $sql = "SELECT ss.id, TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) AS session_time_diff,"
          . " MIN(TIME_TO_SEC(TIMEDIFF(NOW(), rq.last_request_time))) AS last_update_diff"
@@ -23,7 +24,7 @@ function update_statistics($p_confDir)
          . " WHERE TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) >= $sessionDiff GROUP BY ss.id";
     $sessRes = mysql_query($sql);
     while ($sessRow = mysql_fetch_array($sessRes, MYSQL_ASSOC)) {
-        if ($sessRow['last_update_diff'] < 3600) {
+        if ($sessRow['last_update_diff'] < $requestTimeDiff) {
             // if there was a request for this session less than one hour ago
             // do not process the session
             continue;
@@ -46,6 +47,7 @@ function update_statistics($p_confDir)
         $sql = "DELETE FROM Requests WHERE session_id = '"
              . mysql_escape_string($sessionId) . "'";
         mysql_query($sql);
+
         // delete the session
         $sql = "DELETE FROM Sessions WHERE id = '" . mysql_escape_string($sessionId) . "'";
         mysql_query($sql);

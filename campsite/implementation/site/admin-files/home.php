@@ -33,7 +33,7 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 list($unplacedArticles, $numUnplacedArticles) = Article::GetUnplacedArticles($f_unplaced_articles_offset, $NumDisplayArticles);
 $popularArticlesParams = array(new ComparisonOperation('published', new Operator('is'), 'true'),
                                new ComparisonOperation('reads', new Operator('greater'), '0'));
-$popularArticles = Article::GetList($popularArticlesParams, array('bypopularity'=>'desc'), $f_popular_articles_offset, $NumDisplayArticles, $popularArticlesCount);
+$popularArticles = Article::GetList($popularArticlesParams, array(array('field'=>'bypopularity', 'dir'=>'desc')), $f_popular_articles_offset, $NumDisplayArticles, $popularArticlesCount);
 
 $yourArticlesPager = new SimplePager($NumYourArticles, $NumDisplayArticles, "f_your_articles_offset", "home.php?f_screen=your_articles&");
 $submittedArticlesPager = new SimplePager($NumSubmittedArticles, $NumDisplayArticles, 'f_submitted_articles_offset', 'home.php?f_screen=submitted_articles&');
@@ -623,7 +623,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
         if (count($popularArticles) == 0) {
             ?>
             <TR>
-            <TD colspan="7" class="list_row_odd"><?php putGS("There are currently no articles in statistics."); ?></td>
+            <TD colspan="8" class="list_row_odd"><?php putGS("There are currently no articles in statistics."); ?></td>
             </tr>
             <?php
         }

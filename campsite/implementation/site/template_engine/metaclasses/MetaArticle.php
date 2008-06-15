@@ -92,6 +92,7 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['comment_count'] =  'getCommentCount';
         $this->m_customProperties['content_accessible'] = 'isContentAccessible';
         $this->m_customProperties['image'] = 'getImage';
+        $this->m_customProperties['reads'] = 'getReads';
     } // fn __construct
 
 
@@ -438,6 +439,11 @@ final class MetaArticle extends MetaDbObject {
             return new MetaImage();
         }
         return new MetaImage($images[0]->getImageId());
+    }
+
+
+    protected function getReads() {
+        return $this->m_dbObject->getReads();
     }
 
 
