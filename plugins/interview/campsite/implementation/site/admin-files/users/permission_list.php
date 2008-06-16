@@ -109,7 +109,8 @@ function camp_get_permission_list()
 				getGS('Editor Table Settings')=>$editor_group_3,
 				getGS('Editor Miscellaneous Settings')=>$editor_group_4);
 	
-    // modules: extend permission list
+    // plugins: extend permission list
+    $rights[getGS('Plugins')] = array('plugin_manager' => 'User may manage Plugins');
     if ($path = camp_get_plugin_path('interview', __FILE__)) {
         include ($path);   
     }

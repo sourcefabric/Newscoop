@@ -3,6 +3,12 @@
 INSERT INTO `liveuser_rights`
 SET right_id = (SELECT (id + 1) FROM `liveuser_rights_right_id_seq`),
     area_id = 0,
+    right_define_name = 'plugin_manager',
+    has_implied = 1 ;
+
+INSERT INTO `liveuser_rights`
+SET right_id = (SELECT (id + 1) FROM `liveuser_rights_right_id_seq`),
+    area_id = 0,
     right_define_name = 'plugin_interview_notify',
     has_implied = 1 ;
 

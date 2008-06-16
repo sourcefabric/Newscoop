@@ -840,13 +840,14 @@ class User extends DatabaseObject {
         }
     } // fn syncPhorumUser
     
+    
     /**
      * Register additional defaultConfig items (for plugin)
      *
      * @param array $p_defaultConfig
      * structure: array(key name => key default value, ...) 
      */
-    final public function registerDefaultConfig(array $p_defaultConfig)
+    public function registerDefaultConfig(array $p_defaultConfig)
     {        
         self::$m_defaultConfig += $p_defaultConfig;   
     }
