@@ -97,11 +97,21 @@ class CampPlugin extends DatabaseObject {
     public function enable()
     {
         $this->setProperty('Enabled', 1);
+        
+        $info = $this->getPluginInfo();
+        if (function_exists($info['enable'])) {
+            call_user_func($info['enable']);   
+        }
     }
 
     public function disable()
     {
         $this->setProperty('Enabled', 0);
+        
+        $info = $this->getPluginInfo();
+        if (function_exists($info['disable'])) {
+            call_user_func($info['disable']);   
+        }
     }
 
 
@@ -131,6 +141,22 @@ class CampPlugin extends DatabaseObject {
         }
 
         return $plugin_infos;
+    }
+    
+    public function getPluginInfo($p_plugin_name = '')
+    {
+        if (!empty($p_plugin_name)) {
+            $name = $p_plugin_name;    
+        } elseif (isset($this) && is_a($this, 'CampPlugin')) {
+            $name = $this->getName();   
+        } else {
+            return false;    
+        }
+         
+        $infos = self::getPluginInfos();
+        $info = $infos[$name]; 
+        
+        return $info;  
     }
     
     public function initPlugins4TemplateEngine()
@@ -188,9 +214,9 @@ class CampPlugin extends DatabaseObject {
                 $menu_plugin = null;
                 $parent_menu = false;
                 
-                if (isset($menu_info['permission']) && $g_user->hasPermission($menu_info['permission'])) {
+                if (isset($info['menu']['permission']) && $g_user->hasPermission($info['menu']['permission'])) {
                     $parent_menu = true;
-                } else {
+                } elseif (is_array($info['menu']['sub'])) {
                     foreach ($info['menu']['sub'] as $menu_info) {
                         if ($g_user->hasPermission($menu_info['permission'])) {
                             $parent_menu = true;

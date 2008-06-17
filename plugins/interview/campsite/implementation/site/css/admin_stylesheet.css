@@ -91,6 +91,12 @@ hr {
 	font-size: 9pt;
 }
 
+.input_textarea {
+	border: 1px solid #777;
+	background-color: #f0f0ff;
+	font-size: 9pt;
+}
+
 /**
  * This is for fValidate to color input boxes that failed validation.
  */
