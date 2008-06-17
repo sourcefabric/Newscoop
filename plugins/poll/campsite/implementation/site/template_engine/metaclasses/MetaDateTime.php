@@ -94,6 +94,12 @@ final class MetaDateTime
     public static function IsValid($p_value)
     {
         $p_value = trim($p_value);
+        
+        // now() is an value which have to be computed
+        if (strtolower($p_value) == 'now()') {
+            return true;   
+        }
+        
         $datetimeParts = preg_split('/[\s]+/', $p_value);
         $date = $datetimeParts[0];
         $time = isset($datetimeParts[1]) ? $datetimeParts[1] : '00:00:00';
