@@ -109,9 +109,14 @@ function camp_get_permission_list()
 				getGS('Editor Table Settings')=>$editor_group_3,
 				getGS('Editor Miscellaneous Settings')=>$editor_group_4);
 	
-    // modules: extend permission list
-    if ($path = camp_get_plugin_path('poll', __FILE__)) {
-        include ($path);   
+    // plugins: extend permission list
+    $rights[getGS('Plugins')] = array('plugin_manager' => 'User may manage Plugins');
+    foreach (CampPlugin::getPluginInfos() as $info) {
+        if (CampPlugin::isPluginEnabled($info['name'])) {
+            foreach ($info['permissions'] as $permission => $label) {
+                $rights[$info['label']][$permission] = getGS($label);
+            }
+        }   
     }
     
 	return $rights;

@@ -6,7 +6,7 @@
     			<TD align="left">
     			<STRONG><?php putGS("Polls"); ?></STRONG>
     			</TD>
-    			<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('ManagePoll')) {  ?>
+    			<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('plugin_poll')) {  ?>
     			<TD align="right">
     				<IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
     				<A href="javascript: void(0);" onclick="window.open('<?php p("/$ADMIN/poll/assign_popup.php?f_poll_item=article&amp;f_language_id={$articleObj->getLanguageId()}&amp;f_article_nr=$f_article_number"); ?>', 'assign_poll', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=600, top=200, left=100');"><?php putGS("Attach"); ?></A>

@@ -10,7 +10,7 @@ $publication_id = $issueObj->getPublicationId();
 	<TD>
 		<B><?php  putGS("Polls"); ?></B>
 	</TD>
-    <?php if ($g_user->hasPermission('ManagePoll')) {  ?>
+    <?php if ($g_user->hasPermission('plugin_poll')) {  ?>
 
     	<TD align="right">
     		<IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/configure.png" border="0">

@@ -13,7 +13,7 @@
 -- --------------------------------------------------------
 
 -- 
--- Tabellenstruktur für Tabelle `plugin_poll`
+-- Tabellenstruktur fï¿½r Tabelle `plugin_poll`
 -- 
 
 CREATE TABLE `plugin_poll` (
@@ -37,7 +37,7 @@ CREATE TABLE `plugin_poll` (
 -- --------------------------------------------------------
 
 -- 
--- Tabellenstruktur für Tabelle `plugin_poll_answer`
+-- Tabellenstruktur fï¿½r Tabelle `plugin_poll_answer`
 -- 
 
 CREATE TABLE `plugin_poll_answer` (
@@ -58,7 +58,7 @@ CREATE TABLE `plugin_poll_answer` (
 -- --------------------------------------------------------
 
 -- 
--- Tabellenstruktur für Tabelle `plugin_poll_article`
+-- Tabellenstruktur fï¿½r Tabelle `plugin_poll_article`
 -- 
 
 CREATE TABLE `plugin_poll_article` (
@@ -71,7 +71,7 @@ CREATE TABLE `plugin_poll_article` (
 -- --------------------------------------------------------
 
 -- 
--- Tabellenstruktur für Tabelle `plugin_poll_issue`
+-- Tabellenstruktur fï¿½r Tabelle `plugin_poll_issue`
 -- 
 
 CREATE TABLE `plugin_poll_issue` (
@@ -85,7 +85,7 @@ CREATE TABLE `plugin_poll_issue` (
 -- --------------------------------------------------------
 
 -- 
--- Tabellenstruktur für Tabelle `plugin_poll_publication`
+-- Tabellenstruktur fï¿½r Tabelle `plugin_poll_publication`
 -- 
 
 CREATE TABLE `plugin_poll_publication` (
@@ -97,7 +97,7 @@ CREATE TABLE `plugin_poll_publication` (
 -- --------------------------------------------------------
 
 -- 
--- Tabellenstruktur für Tabelle `plugin_poll_section`
+-- Tabellenstruktur fï¿½r Tabelle `plugin_poll_section`
 -- 
 
 CREATE TABLE `plugin_poll_section` (
@@ -112,7 +112,7 @@ CREATE TABLE `plugin_poll_section` (
 -- --------------------------------------------------------
 
 -- 
--- Tabellenstruktur für Tabelle `plugin_pollanswer_attachment`
+-- Tabellenstruktur fï¿½r Tabelle `plugin_pollanswer_attachment`
 -- 
 
 CREATE TABLE `plugin_pollanswer_attachment` (
@@ -122,13 +122,6 @@ CREATE TABLE `plugin_pollanswer_attachment` (
   PRIMARY KEY  (`fk_poll_nr`,`fk_pollanswer_nr`,`fk_attachment_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
--- INSERT ROW FOR liveuser tables
-INSERT INTO `liveuser_rights` ( `right_id` , `area_id` , `right_define_name` , `has_implied` ) 
-VALUES ('71', '1', 'ManagePoll', '1');
-INSERT INTO `liveuser_grouprights` (`group_id`, `right_id`, `right_level`) VALUES ('1', '71', '3');
-UPDATE `liveuser_rights_right_id_seq` SET `id` = '71' WHERE `liveuser_rights_right_id_seq`.`id` =70 LIMIT 1 ;
 
 -- INSERT Polls section
 INSERT INTO `Sections` (`IdPublication`, `NrIssue`, `IdLanguage`, `Number`, `Name`, `ShortName`, `Description`, `SectionTplId`, `ArticleTplId`) 

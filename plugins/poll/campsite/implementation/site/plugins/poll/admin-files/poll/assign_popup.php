@@ -1,5 +1,5 @@
 <?php
-if (!$g_user->hasPermission("ManagePoll")) {
+if (!$g_user->hasPermission("plugin_poll")) {
 	camp_html_display_error(getGS("You do not have the right to manage poll."));
 	exit;
 }
