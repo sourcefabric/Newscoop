@@ -70,6 +70,19 @@ $info = array(
                     } else {
                         $context->interview = new MetaInterview($interview_id);
                     }'
-    )
+    ),
+    'enable' => 'plugin_interview_enable',
+    'update' => '',
+    'disable' => '',
 );
+
+function plugin_interview_enable()
+{
+    global $LiveUserAdmin;
+    
+    $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_interview_notify', 'has_implied' => 1));
+    $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_interview_guest', 'has_implied' => 1));
+    $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_interview_moderator', 'has_implied' => 1));
+    $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_interview_admin', 'has_implied' => 1)); 
+}
 ?>
