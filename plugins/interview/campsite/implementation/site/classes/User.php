@@ -143,7 +143,8 @@ class User extends DatabaseObject {
         'CommentModerate'=>'N',
         'CommentEnable'=>'N',
         'SyncPhorumUsers'=>'N',       
-        'ClearCache'=>'N');
+        'ClearCache'=>'N',
+        'plugin_manager'=>'N');
     var $m_liveUserData = array();
 
 
@@ -571,6 +572,16 @@ class User extends DatabaseObject {
      */
     public static function GetDefaultConfig()
     {
+        static $pluginConfig;
+        
+        if (empty($pluginConfig)) {
+            $pluginConfig = true;
+            foreach (CampPlugin::getPluginInfos() as $info) {
+                if (CampPlugin::isPluginEnabled($info['name'])) {
+                    self::$m_defaultConfig += $info['userDefaultConfig'];
+                }
+            }     
+        }
         return self::$m_defaultConfig;
     } // fn GetDefaultConfig
 
@@ -839,18 +850,6 @@ class User extends DatabaseObject {
             Log::Message($logtext, null, 161);
         }
     } // fn syncPhorumUser
-    
-    
-    /**
-     * Register additional defaultConfig items (for plugin)
-     *
-     * @param array $p_defaultConfig
-     * structure: array(key name => key default value, ...) 
-     */
-    public function registerDefaultConfig(array $p_defaultConfig)
-    {        
-        self::$m_defaultConfig += $p_defaultConfig;   
-    }
 
 } // class User
 
