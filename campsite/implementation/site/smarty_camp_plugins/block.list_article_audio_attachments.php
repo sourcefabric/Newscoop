@@ -28,35 +28,29 @@ function smarty_block_list_article_audio_attachments($p_params, $p_content, &$p_
 
     // gets the context variable
     $campContext = $p_smarty->get_template_vars('campsite');
-    $html = '';
 
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('ArticleAudioAttachmentsList');
         $articleAudioAttachmentsList = new ArticleAudioAttachmentsList($start, $p_params);
+        if ($articleAudioAttachmentsList->isEmpty()) {
+            $p_repeat = false;
+            return null;
+        }
     	$campContext->setCurrentList($articleAudioAttachmentsList, array('audioclip'));
-    }
-
-    $currentArticleAudioAttachment = $campContext->current_article_audio_attachments_list->defaultIterator()->current();
-    if (is_null($currentArticleAudioAttachment)) {
-	    $p_repeat = false;
-	    $campContext->resetCurrentList();
-    	return $html;
-    } else {
+    	$campContext->audioclip = $campContext->current_article_audio_attachments_list->current;
     	$p_repeat = true;
-    	$campContext->audioclip = $currentArticleAudioAttachment;
+    } else {
+        $campContext->current_article_audio_attachments_list->defaultIterator()->next();
+        if (!is_null($campContext->current_article_audio_attachments_list->current)) {
+            $campContext->audioclip = $campContext->current_article_audio_attachments_list->current;
+            $p_repeat = true;
+        } else {
+            $campContext->resetCurrentList();
+            $p_repeat = false;
+        }
     }
 
-    if (isset($p_content)) {
-		$html = $p_content;
-	    if ($p_repeat) {
-    		$campContext->current_article_audio_attachments_list->defaultIterator()->next();
-    		if (!is_null($campContext->current_article_audio_attachments_list->current)) {
-    		    $campContext->audioclip = $campContext->current_article_audio_attachments_list->current;
-    		}
-    	}
-    }
-
-    return $html;
+    return $p_content;
 }
 
 ?>
