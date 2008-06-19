@@ -204,7 +204,7 @@
 {{ /list_subtitles }}
 
 
-{{ if $campsite->hasProperty('invalid_property') }}
+{{ if $campsite->has_property('invalid_property') }}
 	<h3>Context error: 'invalid_property' was reported as valid.</h3>
 {{ /if }}
 
@@ -1339,8 +1339,7 @@
 {{ /list_article_images }}
 
 
-{{ set_section number="10" }}
-{{ set_article number="1" }}
+{{ set_article number="140" }}
 {{**** Attachment ****}}
 <table cellspacing="1" cellpadding="4">
 <tr>
