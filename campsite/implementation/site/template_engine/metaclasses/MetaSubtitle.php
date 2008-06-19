@@ -174,7 +174,7 @@ final class MetaSubtitle {
      */
     private static function ProcessContent($p_content) {
         // process internal links
-        $linkPattern = '<!\*\*[\s]*Link[\s]+Internal[\s]+(([\d\w]+[=][\d\w]+&?)*)[\s]+(TARGET[\s]+([^>\s]*)[\s]*)*>([^<\s]*)<!\*\*[\s]*EndLink[\s]*>';
+        $linkPattern = '<!\*\*[\s]*Link[\s]+Internal[\s]+(([\d\w]+[=][\d\w]+&?)*)([\s]+TARGET[\s]+([^>\s]*))*[\s]*>(.*)<!\*\*[\s]*EndLink[\s]*>';
         $content = preg_replace_callback("|$linkPattern|i",
                                          array('MetaSubtitle', 'ProcessInternalLink'),
                                          $p_content);
