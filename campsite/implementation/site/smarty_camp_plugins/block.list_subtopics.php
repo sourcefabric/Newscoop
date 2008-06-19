@@ -28,35 +28,29 @@ function smarty_block_list_subtopics($p_params, $p_content, &$p_smarty, &$p_repe
 
     // gets the context variable
     $campContext = $p_smarty->get_template_vars('campsite');
-    $html = '';
 
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('SubtopicsList');
     	$subtopicsList = new SubtopicsList($start, $p_params);
-    	$campContext->setCurrentList($subtopicsList, array('topic'));
-    }
-
-    $currentSubtopic = $campContext->current_subtopics_list->defaultIterator()->current();
-    if (is_null($currentSubtopic)) {
-	    $p_repeat = false;
-	    $campContext->resetCurrentList();
-    	return $html;
-    } else {
-    	$p_repeat = true;
-    	$campContext->topic = $currentSubtopic;
-    }
-
-    if (isset($p_content)) {
-		$html = $p_content;
-	    if ($p_repeat) {
-    		$campContext->current_subtopics_list->defaultIterator()->next();
-    		if (!is_null($campContext->current_subtopics_list->current)) {
-    		    $campContext->topic = $campContext->current_subtopics_list->current;
-    		}
+    	if ($subtopicsList->isEmpty()) {
+    	    $p_repeat = false;
+    	    return null;
     	}
+    	$campContext->setCurrentList($subtopicsList, array('topic'));
+    	$campContext->topic = $campContext->current_subtopics_list->current;
+    	$p_repeat = true;
+    } else {
+        $campContext->current_subtopics_list->defaultIterator()->next();
+        if (!is_null($campContext->current_subtopics_list->current)) {
+            $campContext->topic = $campContext->current_subtopics_list->current;
+            $p_repeat = true;
+        } else {
+            $campContext->resetCurrentList();
+            $p_repeat = false;
+        }
     }
 
-    return $html;
+    return $p_content;
 }
 
 ?>

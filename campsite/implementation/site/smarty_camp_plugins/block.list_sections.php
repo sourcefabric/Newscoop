@@ -28,38 +28,32 @@ function smarty_block_list_sections($p_params, $p_content, &$p_smarty, &$p_repea
 
     // gets the context variable
     $campContext = $p_smarty->get_template_vars('campsite');
-    $html = '';
 
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('SectionsList');
     	$sectionsList = new SectionsList($start, $p_params);
+    	if ($sectionsList->isEmpty()) {
+    	    $p_repeat = false;
+    	    return null;
+    	}
     	$campContext->setCurrentList($sectionsList, array('publication', 'language',
     	                                                  'issue', 'section', 'article',
     	                                                  'image', 'attachment', 'comment',
     	                                                  'audioclip', 'subtitle'));
-    }
-
-    $currentSection = $campContext->current_sections_list->defaultIterator()->current();
-    if (is_null($currentSection)) {
-	    $p_repeat = false;
-	    $campContext->resetCurrentList();
-    	return $html;
-    } else {
-        $campContext->section = $currentSection;
+    	$campContext->section = $campContext->current_sections_list->current;
     	$p_repeat = true;
+    } else {
+        $campContext->current_sections_list->defaultIterator()->next();
+        if (!is_null($campContext->current_sections_list->current)) {
+            $campContext->section = $campContext->current_sections_list->current;
+            $p_repeat = true;
+        } else {
+            $campContext->resetCurrentList();
+            $p_repeat = false;
+        }
     }
 
-    if (isset($p_content)) {
-		$html = $p_content;
-	    if ($p_repeat) {
-    		$campContext->current_sections_list->defaultIterator()->next();
-            if (!is_null($campContext->current_sections_list->current)) {
-                $campContext->section = $campContext->current_sections_list->current;
-            }
-    	}
-    }
-
-    return $html;
+    return $p_content;
 }
 
 ?>

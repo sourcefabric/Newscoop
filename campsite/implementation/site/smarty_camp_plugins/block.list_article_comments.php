@@ -33,33 +33,27 @@ function smarty_block_list_article_comments($p_params, $p_content, &$p_smarty, &
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('ArticleCommentsList');
         $articleCommentsList = new ArticleCommentsList($start, $p_params);
+        if ($articleCommentsList->isEmpty()) {
+            $p_repeat = false;
+            return null;
+        }
         $campContext->setCurrentList($articleCommentsList, array('comment'));
-    }
-
-    $currentArticleComment = $campContext->current_article_comments_list->defaultIterator()->current();
-    if (is_null($currentArticleComment)) {
-        $campContext->url->reset_parameter('acid');
-        $p_repeat = false;
-        $campContext->resetCurrentList();
-        return $html;
-    } else {
+        $campContext->comment = $campContext->current_article_comments_list->current;
         $p_repeat = true;
-        $campContext->comment = $currentArticleComment;
-        $campContext->url->set_parameter('acid', $campContext->comment->identifier);
-    }
-
-    if (isset($p_content)) {
-        $html = $p_content;
-        if ($p_repeat) {
-            $campContext->current_article_comments_list->defaultIterator()->next();
-            if (!is_null($campContext->current_article_comments_list->current)) {
-                $campContext->comment = $campContext->current_article_comments_list->current;
-                $campContext->url->set_parameter('acid', $campContext->comment->identifier);
-            }
+    } else {
+        $campContext->current_article_comments_list->defaultIterator()->next();
+        if (!is_null($campContext->current_article_comments_list->current)) {
+            $campContext->comment = $campContext->current_article_comments_list->current;
+            $campContext->url->set_parameter('acid', $campContext->comment->identifier);
+            $p_repeat = true;
+        } else {
+            $campContext->url->reset_parameter('acid');
+            $campContext->resetCurrentList();
+            $p_repeat = false;
         }
     }
 
-    return $html;
+    return $p_content;
 }
 
 ?>

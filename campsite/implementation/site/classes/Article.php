@@ -84,10 +84,10 @@ class Article extends DatabaseObject {
 
 	var $m_languageName = null;
 
-	private static $s_defaultOrder = array('byPublication'=>'asc',
-                                           'byIssue'=>'desc',
-                                           'bySection'=>'desc',
-                                           'bySectionOrder'=>'asc');
+	private static $s_defaultOrder = array(array('field'=>'byPublication', 'dir'=>'asc'),
+                                           array('field'=>'byIssue', 'dir'=>'desc'),
+                                           array('field'=>'bySection', 'dir'=>'desc'),
+                                           array('field'=>'bySectionOrder', 'dir'=>'asc'));
 
     private static $s_regularParameters = array('idpublication'=>'IdPublication',
                                                 'nrissue'=>'NrIssue',
