@@ -1,3 +1,43 @@
+3.0.3 (June 06, 2008)
+  Bugs Fixed
+  ----------
+  - #2581: Lists loop over the content more times than needed.
+  - #2582: The internal link popup crashes with error message.
+  - #2583: Internal links are not processed in certain conditions.
+  - #2574: After all permissions are granted to an user, it is not
+  possible to remove permissions from him by unchecking single
+  checkboxes.
+  - #2580: Bad template path in template conversions
+
+3.0.2 (May 26, 2008)
+  Bugs Fixed
+  ----------
+  - Syncing campsite and phorum users still queries Users table
+  which is no longer in use.
+  - Introduce text button for preview, get rid of the magnifying
+  glass icon in the article edit screen.
+  - Fixed a typo in the French language definition.
+  - Fixes in all form statements in the template language: do not
+  set the hidden tpl parameter when the template was not defined,
+  set the template based on the given parameters, code cleanup,
+  added new error message for invalid template error.
+  - Fixed invalid error message when the issue, section or article
+  template was not set.
+  - Fixed bug in phorum user creation: do not set the user id
+  manually, the user id is an autoincrement key.
+  - The topic parameter is not set in the URI when the topic was
+  defined.
+  - Fixed error reporting in issue, section and article lists;
+  added new error message.
+  - In article comments list initialize the default order to the
+  thread order.
+  - Fixed the htaccess file for the windows install.
+  - HTML coding fixes.
+  - Small fixes in the INSTALL file.
+  - Fixes in the default demo templates.
+  - Fixed declarations for operators greater_equal, smaller_equal.
+  - Fixed the version display in the admin interface.
+
 3.0.1 (May 06, 2008)
   - Many bug fixes in the template converter and the template engine
 
@@ -16,7 +56,7 @@
   will result in fewer database queries and greater speed and
   scalability.
   
-  Small improvements
+  Small Improvements
   ------------------
   - Variables for storing temporary data can be used in the template
   language.
