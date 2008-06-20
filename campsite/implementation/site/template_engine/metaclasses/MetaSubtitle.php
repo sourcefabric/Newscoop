@@ -174,10 +174,12 @@ final class MetaSubtitle {
      */
     private static function ProcessContent($p_content) {
         // process internal links
-        $linkPattern = '<!\*\*[\s]*Link[\s]+Internal[\s]+(([\d\w]+[=][\d\w]+&?)*)([\s]+TARGET[\s]+([^>\s]*))*[\s]*>(.*)<!\*\*[\s]*EndLink[\s]*>';
+        $linkPattern = '<!\*\*[\s]*Link[\s]+Internal[\s]+(([\d\w]+[=][\d\w]+&?)*)([\s]+TARGET[\s]+([^>\s]*))*[\s]*>';
         $content = preg_replace_callback("|$linkPattern|i",
                                          array('MetaSubtitle', 'ProcessInternalLink'),
                                          $p_content);
+        $endLinkPattern = '<!\*\*[\s]*EndLink[\s]*>';
+        $content = preg_replace("|$endLinkPattern|i", '</a>', $content);
 
         //      image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF">
         $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub)="?[^"]+"?)*)[\s]*>';
@@ -245,7 +247,6 @@ final class MetaSubtitle {
     public static function ProcessInternalLink(array $p_matches) {
         $parametersString = $p_matches[1];
         $targetName = $p_matches[4];
-        $linkText = $p_matches[5];
         preg_match_all('/([\d\w]+)=([\d\w]+)&?/i', $parametersString, $parametersArray);
         $parametersArray = array_combine($parametersArray[1], $parametersArray[2]);
 
@@ -266,7 +267,7 @@ final class MetaSubtitle {
         $parametersArray[CampRequest::SECTION_NR]);
         $uri->article = new MetaArticle($parametersArray[CampRequest::LANGUAGE_ID],
         $parametersArray[CampRequest::ARTICLE_NR]);
-        $urlString = '<a href="'.$uri->url.'" target="'.$targetName.'">'.$linkText.'</a>';
+        $urlString = '<a href="'.$uri->url.'" target="'.$targetName.'">';
         return $urlString;
     }
 
