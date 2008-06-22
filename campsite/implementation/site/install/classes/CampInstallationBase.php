@@ -111,6 +111,9 @@ class CampInstallationBase
                 $this->saveCronJobsScripts();
             }
             break;
+        case 'cron_jobs':
+            $this->saveCronJobsScripts();
+            break;
         }
     } // fn execute
 
@@ -339,7 +342,8 @@ class CampInstallationBase
         $cronJobs = array('campsite_autopublish',
                           'campsite_indexer',
                           'campsite_notifyendsubs',
-                          'campsite_notifyevents');
+                          'campsite_notifyevents',
+                          'campsite_statistics');
 
         $template = CampTemplate::singleton();
         $template->assign('CAMPSITE_BIN_DIR', CS_PATH_SITE.DIR_SEP.'bin');

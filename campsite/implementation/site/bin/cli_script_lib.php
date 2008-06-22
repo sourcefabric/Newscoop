@@ -552,14 +552,14 @@ function camp_detect_database_version($p_dbName, &$version)
                 return "Unable to query the database $p_dbName";
             }
             if (mysql_num_rows($res2) > 0) {
-                $version = "3.0";
+                $version = "3.0.x";
             }
         }
         if (!$res2 = mysql_query("SHOW TABLES LIKE 'ObjectTypes'")) {
             return "Unable to query the database $p_dbName";
         }
         if (mysql_num_rows($res2) > 0) {
-            $version = "3.1";
+            $version = "3.1.x";
         }
     }
 

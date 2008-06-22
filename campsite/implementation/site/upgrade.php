@@ -20,6 +20,8 @@ define('CS_INSTALL_DIR', dirname(__FILE__) . '/install');
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/include/campsite_init.php');
+require_once($g_documentRoot.'/bin/cli_script_lib.php');
+require_once($g_documentRoot.'/install/classes/CampInstallation.php');
 
 // initiates the campsite site
 $campsite = new CampSite();
@@ -30,15 +32,30 @@ $campsite->loadConfiguration(CS_PATH_CONFIG.DIR_SEP.'configuration.php');
 // starts the session
 $campsite->initSession();
 
-$template = '_campsite_message.tpl';
-$templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
-$params = array('context' => null,
-                'template' => $template,
-                'templates_dir' => $templates_dir,
-                'info_message' => 'Upgrading the database...'
-);
-$document = CampSite::GetHTMLDocumentInstance();
-$document->render($params);
+// upgrading the database
+$res = camp_upgrade_database($Campsite['DATABASE_NAME']);
+if ($res !== 0) {
+    $res = "while upgrading the database: $res";
+    $template = '_campsite_error.tpl';
+    $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
+    $params = array('context' => null,
+                    'template' => $template,
+                    'templates_dir' => $templates_dir,
+                    'error_message' => $res
+    );
+    $document = CampSite::GetHTMLDocumentInstance();
+    $document->render($params);
+    exit(0);
+}
+
+CampRequest::SetVar('step', 'cron_jobs');
+
+$install = new CampInstallation();
+
+$install->initSession();
+
+$step = $install->execute();
+
+//header("Location: /");
 
 ?>
-<META HTTP-EQUIV="Refresh" content="1;url=/upgrade.php">
