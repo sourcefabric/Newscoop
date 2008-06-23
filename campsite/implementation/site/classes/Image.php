@@ -606,7 +606,10 @@ class Image extends DatabaseObject {
 		if ($origImageWidth <= 0 || $origImageHeight <= 0) {
 		    return new PEAR_Error(getGS("The file uploaded is not an image."));
 		}
-		if ($p_maxWidth <= 0 || $p_maxWidth <= 0) {
+
+        $p_maxWidth = is_numeric($p_maxWidth) ? (int) $p_maxWidth : 0;
+        $p_maxHeight = is_numeric($p_maxHeight) ? (int) $p_maxHeight : 0;
+		if ($p_maxWidth <= 0 || $p_maxHeight <= 0) {
 		    return new PEAR_Error(getGS("Invalid resize width/height."));
 		}
 		if ($p_keepRatio) {
