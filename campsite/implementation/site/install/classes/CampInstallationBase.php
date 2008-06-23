@@ -349,10 +349,12 @@ class CampInstallationBase
         $template->assign('CAMPSITE_BIN_DIR', CS_PATH_SITE.DIR_SEP.'bin');
 
         $buffer = '';
-        $isFileWritable = is_writable(CS_INSTALL_DIR.DIR_SEP.'cron_jobs');
+        $cronJobsDir = CS_INSTALL_DIR.DIR_SEP.'cron_jobs';
+        $allAtOnceFile = $cronJobsDir.DIR_SEP.'all_at_once';
+        $isFileWritable = is_writable($cronJobsDir);
         foreach ($cronJobs as $cronJob) {
             $buffer = $template->fetch('_'.$cronJob.'.tpl');
-            $cronJobFile = CS_INSTALL_DIR.DIR_SEP.'cron_jobs'.DIR_SEP.$cronJob;
+            $cronJobFile = $cronJobsDir.DIR_SEP.$cronJob;
             if (file_exists($cronJobFile)) {
                 $isFileWritable = is_writable($cronJobFile);
             }
@@ -360,7 +362,15 @@ class CampInstallationBase
             if (!$isFileWritable) {
                 continue;
             }
-            file_put_contents($cronJobFile, $buffer);
+            if (file_put_contents($cronJobFile, $buffer)) {
+                $buffer .= "\n";
+                file_put_contents($allAtOnceFile, $buffer, FILE_APPEND);
+            }
+        }
+
+        if (file_exists($allAtOnceFile)) {
+            $cmd = 'crontab '.$allAtOnceFile;
+            system($cmd);
         }
 
         return true;
