@@ -23,6 +23,19 @@ require_once($g_documentRoot.'/include/campsite_init.php');
 require_once($g_documentRoot.'/bin/cli_script_lib.php');
 require_once($g_documentRoot.'/install/classes/CampInstallation.php');
 
+function display_upgrade_error($p_errorMessage) {
+    $template = '_campsite_error.tpl';
+    $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
+    $params = array('context' => null,
+                    'template' => $template,
+                    'templates_dir' => $templates_dir,
+                    'error_message' => $p_errorMessage
+    );
+    $document = CampSite::GetHTMLDocumentInstance();
+    $document->render($params);
+    exit(0);
+}
+
 // initiates the campsite site
 $campsite = new CampSite();
 
@@ -35,17 +48,7 @@ $campsite->initSession();
 // upgrading the database
 $res = camp_upgrade_database($Campsite['DATABASE_NAME']);
 if ($res !== 0) {
-    $res = "while upgrading the database: $res";
-    $template = '_campsite_error.tpl';
-    $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
-    $params = array('context' => null,
-                    'template' => $template,
-                    'templates_dir' => $templates_dir,
-                    'error_message' => $res
-    );
-    $document = CampSite::GetHTMLDocumentInstance();
-    $document->render($params);
-    exit(0);
+    display_upgrade_error("while upgrading the database: $res");
 }
 
 CampRequest::SetVar('step', 'cron_jobs');
@@ -56,6 +59,14 @@ $install->initSession();
 
 $step = $install->execute();
 
-//header("Location: /");
+$copyAdmin = copy('install/scripts/admin.php', 'admin.php');
+$copyIndex = copy('install/scripts/index.php', 'index.php');
+if (!$copyAdmin || !$copyIndex) {
+    display_upgrade_error("while upgrading the database: $res");
+}
+
+unlink('upgrade.php');
+
+header("Location: /");
 
 ?>
