@@ -29,6 +29,8 @@ $campsite->loadConfiguration(CS_PATH_CONFIG.DIR_SEP.'configuration.php');
 
 // starts the session
 $campsite->initSession();
+$session = CampSite::GetSessionInstance();
+$forward = $session->setData('forward', $_SERVER['REQUEST_URI']);
 
 $template = '_campsite_message.tpl';
 $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;

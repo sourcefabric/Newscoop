@@ -65,8 +65,11 @@ if (!$copyAdmin || !$copyIndex) {
     display_upgrade_error("while upgrading the database: $res");
 }
 
-unlink('upgrade.php');
+$session = CampSite::GetSessionInstance();
+$forward = $session->getData('forward');
+$session->unsetData('forward');
+header("Location: " . $forward);
 
-header("Location: /");
+unlink('upgrade.php');
 
 ?>
