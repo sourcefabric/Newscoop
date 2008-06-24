@@ -387,7 +387,11 @@ if ($dbVersion < '2.6.0') {
 
 // Upgrade the database
 echo " * Upgrading (if necessary)...";
-camp_upgrade_database($destDbName);
+$res = camp_upgrade_database($destDbName);
+if ($res !== 0) {
+    echo "ERROR: $res\n";
+    exit(1);
+}
 echo "   done.\n";
 
 //

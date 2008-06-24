@@ -125,9 +125,7 @@ final class CampInstallation extends CampInstallationBase
         $tpl->assign('site_title', $this->m_title);
         $tpl->assign('message', $this->m_message);
         $tpl->assign('package', $this->m_version->getPackage());
-        $tpl->assign('version', $this->m_version->getRelease() . '-'
-                                . $this->m_version->getDevelopmentStatus());
-        $tpl->assign('code_name', $this->m_version->getCodeName());
+        $tpl->assign('version', $this->m_version->getVersion());
         $tpl->assign('release_date', $this->m_version->getReleaseDate());
         $tpl->assign('organization', $this->m_version->getOrganization());
         $tpl->assign('copyright', $this->m_version->getCopyright());

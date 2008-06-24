@@ -5,7 +5,7 @@
   <td>
     <p class="footer_text">
       {{ $copyright }}<br />
-      {{ $package }} {{ $version }} ({{ $code_name }}) Installer
+      {{ $package }} {{ $version }} Installer
     </p>
   </td>
 </tr>
