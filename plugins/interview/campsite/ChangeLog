@@ -1,14 +1,3 @@
-3.0.3 (June 06, 2008)
-  Bugs Fixed
-  ----------
-  - #2581: Lists loop over the content more times than needed.
-  - #2582: The internal link popup crashes with error message.
-  - #2583: Internal links are not processed in certain conditions.
-  - #2574: After all permissions are granted to an user, it is not
-  possible to remove permissions from him by unchecking single
-  checkboxes.
-  - #2580: Bad template path in template conversions
-
 3.0.2 (May 26, 2008)
   Bugs Fixed
   ----------

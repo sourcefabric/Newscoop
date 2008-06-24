@@ -35,14 +35,8 @@ class ArticlesList extends ListObject
                                           'byname',
                                           'bydate',
                                           'bycreationdate',
-                                          'bypublishdate',
-                                          'bypopularity',
-                                          'bypublication',
-                                          'byissue',
-                                          'bysection',
-                                          'bylanguage',
-                                          'bysectionorder'
-                                          );
+                                          'bypublishdate'
+                                    );
 
 
     /**

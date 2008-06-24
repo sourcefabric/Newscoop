@@ -28,29 +28,35 @@ function smarty_block_list_article_images($p_params, $p_content, &$p_smarty, &$p
 
     // gets the context variable
     $campContext = $p_smarty->get_template_vars('campsite');
+    $html = '';
 
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('ArticleImagesList');
         $articleImagesList = new ArticleImagesList($start, $p_params);
-        if ($articleImagesList->isEmpty()) {
-            $p_repeat = false;
-            return null;
-        }
     	$campContext->setCurrentList($articleImagesList, array('image'));
-    	$campContext->image = $campContext->current_article_images_list->current;
-    	$p_repeat = true;
-    } else {
-        $campContext->current_article_images_list->defaultIterator()->next();
-        if (!is_null($campContext->current_article_images_list->current)) {
-            $campContext->image = $campContext->current_article_images_list->current;
-            $p_repeat = true;
-        } else {
-            $campContext->resetCurrentList();
-            $p_repeat = false;
-        }
     }
 
-    return $p_content;
+    $currentArticleImage = $campContext->current_article_images_list->defaultIterator()->current();
+    if (is_null($currentArticleImage)) {
+	    $p_repeat = false;
+	    $campContext->resetCurrentList();
+    	return $html;
+    } else {
+    	$p_repeat = true;
+    	$campContext->image = $currentArticleImage;
+    }
+
+    if (isset($p_content)) {
+		$html = $p_content;
+	    if ($p_repeat) {
+    		$campContext->current_article_images_list->defaultIterator()->next();
+    		if (!is_null($campContext->current_article_images_list->current)) {
+    		    $campContext->image = $campContext->current_article_images_list->current;
+    		}
+    	}
+    }
+
+    return $html;
 }
 
 ?>

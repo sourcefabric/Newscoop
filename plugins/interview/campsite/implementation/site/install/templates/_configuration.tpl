@@ -15,8 +15,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
 // sets the PEAR local directory
 set_include_path(CS_PATH_PEAR_LOCAL.PATH_SEPARATOR.get_include_path());
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
-
 /**
  * Includes
  *

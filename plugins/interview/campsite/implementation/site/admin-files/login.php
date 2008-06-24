@@ -3,7 +3,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 include($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/LoginAttempts.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 
 // token
 $key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
