@@ -1,0 +1,11 @@
+<?php
+camp_load_translation_strings("sections");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Subscription.php');
+?>

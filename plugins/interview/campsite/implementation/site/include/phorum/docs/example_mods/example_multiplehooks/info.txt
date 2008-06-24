@@ -1,0 +1,4 @@
+title: Multiplehooks example module
+desc: This is a module that demonstrates the use of multiple hooks in one module. It will display "Hello" after the header and "World!" before the footer of each page.
+hook: after_header|phorum_mod_example_multiplehooks_after_header
+hook: before_footer|phorum_mod_example_multiplehooks_before_footer

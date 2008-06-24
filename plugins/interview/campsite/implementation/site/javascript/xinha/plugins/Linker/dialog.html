@@ -1,0 +1,107 @@
+<h1 id="[h1]"><l10n>Insert/Modify Link</l10n></h1>
+<div style="position:relative">
+<div id="[dTree]">(the dTree goes in here)</div>
+<div id="[options]" >
+  <fieldset>
+    <legend><label><input type="radio" name="[type]" value="url" checked onclick="
+      document.getElementById('[urltable]').style.display=this.checked?'':'none';
+      document.getElementById('[mailtable]').style.display=this.checked?'none':'';
+      document.getElementById('[anchortable]').style.display=this.checked?'none':'';
+    " /> <l10n>URL Link</l10n></label></legend>
+    <table id="[urltable]" width="100%">
+      <tr>
+        <th><label for="[href]"><l10n>URL:</l10n> </label></th>
+        <td><input type="text" name="[href]" style="width:100%" value="http://www.example.com/" /></td>
+      </tr>
+      <tr valign="top">
+        <th><l10n>Target:</l10n></th>
+        <td>
+          <div><label><input type="radio" name="[target]" value="" onclick="document.getElementById('[popuptable]').style.display='none';"      checked /> <l10n>Ordinary Link</l10n></label></div>
+          <div><label><input type="radio" name="[target]" value="_top" onclick="document.getElementById('[popuptable]').style.display='none';"   /> <l10n>Same Window (jump out of frames)</l10n></label></div>
+          <div><label><input type="radio" name="[target]" value="_blank" onclick="document.getElementById('[popuptable]').style.display='none';"/> <l10n>New Window</l10n> </label></div>
+          <div>
+            <label><input type="radio" name="[target]" value="popup"    onclick="document.getElementById('[popuptable]').style.display='';" /> <l10n>Popup Window</l10n> </label>
+             <div style="padding-left:10px">
+              <table id="[popuptable]">
+                <tr>
+                  <th align="left"><l10n>Size:</l10n></th>
+                  <td colspan="3"><input type="text" name="[p_width]" size="4" />x<input type="text" name="[p_height]" size="4" /> <l10n>(px)</l10n></td>
+                </tr>
+                <tr>
+                  <th align="left"><l10n>Name:</l10n></th>
+                  <td colspan="3"><input type="text" name="[p_name]" atyle="width:100%" value="_(PopupWindow)" /></td>
+                </tr>
+                <tr>
+                  <th align="left"><l10n>Menu Bar:</l10n></th>
+                  <td><input type="checkbox" name="[p_options]" value="menubar=yes" /></td>
+
+                  <th align="left"><l10n>Toolbar:</l10n></th>
+                  <td><input type="checkbox" name="[p_options]" value="toolbar=yes" checked /></td>
+                </tr>
+                <tr>
+                  <th align="left"><l10n>Location Bar:</l10n></th>
+                  <td><input type="checkbox" name="[p_options]" value="location=yes" /></td>
+
+                  <th align="left"><l10n>Status Bar:</l10n></th>
+                  <td><input type="checkbox" name="[p_options]" value="status=yes"   /></td>
+                </tr>
+                <tr>
+                  <th align="left"><l10n>Scrollbars:</l10n></th>
+                  <td><input type="checkbox" name="[p_options]" value="scrollbars=yes" checked /></td>
+
+                  <th align="left"><l10n>Resizeable:</l10n></th>
+                  <td><input type="checkbox" name="[p_options]" value="resizeable=yes" checked /></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset>
+    <legend><label><input type="radio" name="[type]" value="mailto" onclick="
+      document.getElementById('[mailtable]').style.display=this.checked?'':'none';
+      document.getElementById('[urltable]').style.display=this.checked?'none':'';
+      document.getElementById('[anchortable]').style.display=this.checked?'none':'';
+    "/> <l10n>Email Link</l10n></label></legend>
+    <table id="[mailtable]" width="100%">
+      <tr>
+        <th><label for="[to]"><l10n>Email Address:</l10n> </label></th>
+        <td><input type="text" name="[to]" style="width:100%" value="alice@example.com" /></td>
+      </tr>
+      <tr>
+        <th><label for="[subject]"><l10n>Subject:</l10n> </label></th>
+        <td><input type="text" name="[subject]" style="width:100%" value="" /></td>
+      </tr>
+      <tr>
+        <th><label for="[body]"><l10n>Message Template:</l10n> </label></th>
+        <td><textarea name="[body]" style="width:100%" rows="5"></textarea></td>
+      </tr>
+    </table>
+  </fieldset>
+
+  <fieldset id="[anchorfieldset]">
+    <legend><label><input type="radio" name="[type]" value="anchor" onclick="
+      document.getElementById('[urltable]').style.display=this.checked?'none':'';
+      document.getElementById('[mailtable]').style.display=this.checked?'none':'';
+      document.getElementById('[anchortable]').style.display=this.checked?'':'none';
+    "/> <l10n>Anchor-Link</l10n></label></legend>
+    <table id="[anchortable]" width="100%">
+      <tr>
+        <th><label for="[anchor]"><l10n>Anchor:</l10n> </label></th>
+        <td>
+            <select name="[anchor]" id="[anchor]">
+            </select>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+
+  <div style="text-align:right">
+    <input type="button" id="[ok]"     value="_(OK)"     />
+    <input type="button" id="[clear]"  value="_(REMOVE LINK)" onclick="this.form['[href]'].value='';this.form['[to]'].value='';document.getElementById('[ok]').click();" />
+    <input type="button" id="[cancel]" value="_(CANCEL)" />
+  </div>
+</div>
+</div>

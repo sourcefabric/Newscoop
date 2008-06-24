@@ -1,0 +1,35 @@
+1. Go to Campsite's base install folder (e.g. /var/www/campsite) and run the following commands:
+
+cd smarty_camp_plugins/
+ln -s ../plugins/interview/smarty_camp_plugins/* .
+cd ..
+
+cd classes
+ln -s ../plugins/interview/classes/* .
+cd ..
+
+cd template_engine/classes/
+ln -s ../../plugins/interview/template_engine/classes/* .
+cd ../..
+
+cd template_engine/metaclasses/
+ln -s ../../plugins/interview/template_engine/metaclasses/* .
+cd ../..
+
+cd admin-files
+ln -s ../plugins/interview/admin-files/interview/
+cd ..
+
+cd css
+ln -s ../plugins/interview/css/* .
+cd ..
+
+cd javascript
+ln -s ../plugins/interview/javascript/* .
+cd ..
+
+2. Install the plugins/interview/install/sql/*.sql to campsite database.
+
+3. If you have the demo installation, you can add the interview templates in this package by copying to templates folder. You will need to go to Campsite admin -> templates afterwards to register them.
+cp -r plugins/interview/install/sample_templates/* templates
+

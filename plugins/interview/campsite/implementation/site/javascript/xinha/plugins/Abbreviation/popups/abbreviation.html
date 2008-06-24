@@ -1,0 +1,93 @@
+<html>
+<head>
+  <title>Abbreviation</title>
+  <link rel="stylesheet" type="text/css" href="../../../popups/popup.css" />
+  <script type="text/javascript" src="../../../popups/popup.js"></script>
+
+<script type="text/javascript">
+var Abbreviation = window.opener.Abbreviation; // load the Abbreviation plugin and lang file ;-)
+
+function fillSelect(text) {
+  var abbr = window.location.href;
+  abbr = abbr.replace(/popups\/abbreviation.html/g, "abbr\/" + window.opener._editor_lang + ".js");
+  var abbrData = HTMLArea._geturlcontent(abbr);
+  if (abbrData) {
+    eval('abbrObj = ' + abbrData);
+    if (abbrObj != "") {
+      dest = document.getElementById("select");
+      for (var i in abbrObj) {
+        same = (i==text);
+	    dest.options[dest.options.length] = new Option(i + "=" + abbrObj[i], abbrObj[i], false, same);
+	    if (same)
+	      document.getElementById("title").value = abbrObj[i];
+      }
+    }
+  }
+}
+
+function Init() {
+  window.resizeTo(260, 160);
+  __dlg_translate("Abbreviation");
+  __dlg_init();
+  var param = window.dialogArguments;
+  var text = null;
+  if (param) {
+    text = param["text"];
+    document.getElementById("title").value = param["title"];
+  }
+  fillSelect(text);
+  document.getElementById("title").focus();
+};
+
+function onOK() {
+  var param = new Object();
+  param["title"] = document.getElementById("title").value;
+  __dlg_close(param);
+  return false;
+}
+
+
+function onDelete() {
+  // pass data back to the calling window
+  var param = new Object();
+  param["title"] = "";
+  __dlg_close(param);
+  return false;
+};
+
+function onCancel() {
+  __dlg_close(null);
+  return false;
+};
+</script>
+
+</head>
+<body class="dialog" onload="Init()">
+<div class="title">Abbreviation</div>
+<form name="form">
+<table border="0" style="width: 100%;">
+  <tr>
+    <td class="lable">Expansion:</td>
+    <td>
+    <select id="select" name="select"
+	        onChange="document.form.title.value=document.form.select.options[document.form.select.selectedIndex].value"
+	        style="position:absolute; top:35px; left:100px; width:118px; clip:rect(0 120 22 100)">
+	  <option value=""></option>
+
+	</select>
+	<input type="title" id="title" name="text"
+	       onChange="document.form.select.selectedIndex=-1"
+           style="position:absolute; top:35px; left:100px; width:100px; border-right:0">
+    <!--<input type="text" id="title" name="title" value="" size="30">-->
+    </td>
+  </tr>
+</table>
+
+<div id="buttons">
+   <button type="submit" name="ok" onclick="return onOK();">OK</button>
+   <button type="button" name="delete" onclick="return onDelete();">Delete</button>
+   <button type="button" name="cancel" onclick="return onCancel();">Cancel</button>
+</div>
+</form>
+</body>
+</html>

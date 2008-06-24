@@ -1,0 +1,202 @@
+Phorum 5 performance notes
+==========================
+
+Several of Phorum's options have a tradeoff effect: enabling more 
+features can slow Phorum down. This document describes which options 
+these are and tries to explain the performance cost of each one.
+
+Which options you should turn off to improve performance depends 
+on the way you use your Phorum installation.
+
+Table of contents:
+
+1. Global Settings
+   1.1 DNS Lookups
+   1.2 Count New Private Messages
+   1.3 Enable Moderator Notifications
+   1.4 Track User Usage
+2. Forum Settings
+   2.1 Email Messages to Moderators
+   2.2 Allow Email Notification
+   2.3 Count Views
+   2.4 Show New Count in Forum List
+   2.5 Ban List
+   2.6 Censor List
+   2.7 Move Threads on Reply
+   2.8 Check for duplicates
+
+
+1. Global Settings
+-------------------------------------------------------------------------------
+
+
+ 1.1 DNS Lookups
+ ---------------
+
+    DNS lookups cause Phorum to display DNS entries (hostnames) instead
+    of IP addresses on posts. It also will enable checking if mail
+    addresses point to valid domains.
+
+    On a forum with a lot of posts, enabling this will result in a
+    significant number of queries to your DNS server. Phorum's performance
+    will slow down while a query is running, as it will wait for the result
+    of the query.
+
+    If your DNS server is slow, this may give the impression to your users
+    that posting a message is very slow. If that is the case, you should
+    turn DNS lookups off. If you have access to a fast DNS server or only
+    have a few regular posters, you should be able to leave it on.
+
+
+ 1.2 Count New Private Messages
+ ------------------------------
+
+    If enabled, this option will alert users when they have new private
+    messages. On every page a logged in user visits, Phorum will check
+    to see if they have new private messages.
+
+    If you have a large number of active users at one time with a large
+    number of private messages, this query can start to slow down your
+    database. Turning it off may help performance, but will also remove
+    the notification users get when they receive a new private message.
+    You can also enable userdata caching under "Cache Settings" to
+    improve performance.
+
+
+ 1.3 Enable Moderator Notifications
+ ----------------------------------
+
+    Similar to the Count New Private Messages option, this option will
+    alert users who are also moderators when they have a new item that
+    requires their attention.
+
+    The performance hit of this feature is basically nothing for users
+    without moderator permissions, as Phorum will never perform the checks.
+    Moderators will suffer a small performance hit, depending on what type
+    of moderator they are.
+
+    Administrators will suffer a larger performance hit, as they are
+    effectively moderators of every type, so all of the checks will be
+    performed.
+
+
+ 1.4 Track User Usage
+ --------------------
+
+    This option controls how often Phorum will record when a user was last
+    active. Setting this to be more frequent results in more accurate last
+    activity data, but also causes more database writes.
+
+    The "Constantly" setting will record the users activity on every page
+    hit by any logged in user, resulting in a dramatic increase in the number
+    of database writes. In most databases, a write is much slower then a
+    read, so this can dramatically reduce performance. This setting is not
+    recommended, except for installations with very few users, or very
+    powerful hardware.
+
+    If you are using a module that actively requires this data (such as the
+    Online Users module), the setting "Once per 5 minutes" is the best
+    setting, as the data will be too out of date if you update the data
+    less frequently.
+
+    If you are not using such a module, "Once per day" or "Once per hour" are
+    highly recommended over the other options. "Never" disables this function
+    entirely, and is recommended if you simply don't care to know if a user
+    is active or not.
+
+    Note: the option "Cache User Data" should be disabled if you have this
+    feature set to "Once per 5 minutes" or "Constantly", as the caching
+    will not be of much use.
+
+
+2. Forum Settings
+-------------------------------------------------------------------------------
+
+
+ 2.1 Email Messages to Moderators
+ --------------------------------
+
+    If enabled, every post in the forum will be emailed to the forum's
+    moderators. Administrators are automatically moderators in every forum,
+    and will also get the emails.
+
+    This option should not directly affect Phorum's performance, but when
+    a post is made, it will cause some emails to be created. If you have a
+    large number of moderators and a lot of posts being made by users, this
+    can generate a significant amount of email traffic.
+
+    The traffic should only be a problem on very large forums or if you have
+    a slow mail server. In other cases, it should not cause significant
+    performance issues.
+
+
+ 2.2 Allow Email Notification
+ ----------------------------
+
+    This option has similar issues to the Email Messages to Moderators 
+    setting, except the recipients of the emails are users who have
+    selected the option to have replies in a followed thread emailed to
+    them.
+
+    If a large number of users is using this feature in a busy thread, it
+    can affect performance. If only few users are using this feature, it 
+    will not cause significant performance issues.
+
+
+ 2.3 Count Views
+ ---------------
+    
+    If enabled, this feature records the number of views each post gets.
+    For every post read, the counter will be incremented in the database.
+    On a busy forum, this will result in a tremendous number of database
+    writes, dramatically slowing down performance.
+
+    Enabling this feature is not recommended for high traffic forums,
+    unless you have very powerful hardware.
+
+
+ 2.4 Show New Count in Forum List
+ --------------------------------
+
+    If enabled, the count of new messages for each forum will appear in
+    index.php. While quite handy, this has to run several queries per
+    listed forum. If there are many forums on the index.php page, there
+    could be a significant performance hit.  
+
+	
+ 2.5 Ban List
+ ------------
+
+    The ban list is a list of words that are banned when posting a message.
+    There is a small performance penalty for searching for the banned words,
+    but only when posting.
+
+
+ 2.6 Censor List
+ ---------------
+
+    The censor list is a list of filtered words, that is checked on every
+    post read. Because it is checked far more often than the ban list, a
+    large censor list will affect performance much more.
+
+
+ 2.7 Move Threads on Reply
+ -------------------------
+
+    "Move Threads on Reply" means that a thread which gets a new reply causes
+    the topic to be moved to the top of the forum, hence the topics are
+    sorted by their last reply and not by their first post in the message
+    list.
+
+    In Flat-mode there is no performance hit. In Threaded-mode it causes
+    a large overhead because of the complexity of the sorting and the
+    counting of posts on a page.
+
+
+ 2.8 Check for duplicates
+ ------------------------
+   
+    "Check for duplicates" runs one additional query while posting to check
+    if that post has been made before. That query should be fast and just
+    a small overhead.
+
