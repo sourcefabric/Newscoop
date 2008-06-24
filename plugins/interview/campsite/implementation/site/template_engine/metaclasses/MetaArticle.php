@@ -43,6 +43,7 @@ final class MetaArticle extends MetaDbObject {
         $this->m_properties['url_name'] = 'ShortName';
         $this->m_properties['comments_locked'] = 'comments_locked';
         $this->m_properties['last_update'] = 'time_updated';
+        $this->m_properties['request_object_id'] = 'object_id';
     }
 
 
@@ -91,6 +92,7 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['comment_count'] =  'getCommentCount';
         $this->m_customProperties['content_accessible'] = 'isContentAccessible';
         $this->m_customProperties['image'] = 'getImage';
+        $this->m_customProperties['reads'] = 'getReads';
     } // fn __construct
 
 
@@ -183,7 +185,7 @@ final class MetaArticle extends MetaDbObject {
                         } elseif ($subtitleNo == 'all') {
                             $subtitleNo = null;
                         }
-                        $bodyField = new MetaArticleBodyField($fieldValue,
+                        $bodyField = new MetaArticleBodyField($fieldValue, $this,
                                          $articleFieldType->getPrintName(), $this->name, $subtitleNo);
                         $this->setContentCache($property, $bodyField);
                     }
@@ -437,6 +439,11 @@ final class MetaArticle extends MetaDbObject {
             return new MetaImage();
         }
         return new MetaImage($images[0]->getImageId());
+    }
+
+
+    protected function getReads() {
+        return $this->m_dbObject->getReads();
     }
 
 

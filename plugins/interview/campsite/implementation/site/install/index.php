@@ -33,6 +33,13 @@ $install = new CampInstallation();
 $install->initSession();
 
 $step = $install->execute();
+if ($step == 'finish') {
+    $copyAdmin = @copy($g_documentRoot.'/install/scripts/admin.php', $g_documentRoot.'/admin.php');
+    $copyIndex = @copy($g_documentRoot.'/install/scripts/index.php', $g_documentRoot.'/index.php');
+    if ($copyAdmin && $copyIndex && file_exists($g_documentRoot.'/upgrade.php')) {
+        @unlink($g_documentRoot.'/upgrade.php');
+    }
+}
 
 $install->dispatch($step);
 

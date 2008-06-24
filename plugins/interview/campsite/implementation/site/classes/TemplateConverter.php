@@ -86,6 +86,8 @@ class TemplateConverter
         $tplDirLength = strlen('templates/');
         if ($tplDirPos && $tplDir = substr($this->m_templatePathDirectory, $tplDirPos + $tplDirLength)) {
             $this->m_templateDirectory = $tplDir;
+        } else {
+            $this->m_templateDirectory = null;
         }
 
         // reads the template file content

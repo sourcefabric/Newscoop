@@ -1,4 +1,5 @@
 <?php 
+regGS("Is Content", "");
 regGS("Back to Article Types List", "Înapoi la lista tipurilor de articole");
 regGS("show", "arată");
 regGS("hide", "ascunde");

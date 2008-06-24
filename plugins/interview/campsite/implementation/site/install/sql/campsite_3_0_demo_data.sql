@@ -215,6 +215,20 @@ INSERT INTO `liveuser_users` VALUES (2,0,'John Doe','johndoe','acd0a99c6caa54883
 UNLOCK TABLES;
 
 ##
+## Dumping data for table `liveuser_rights`
+##
+LOCK TABLES `liveuser_rights` WRITE;
+INSERT INTO `liveuser_rights` VALUES (72, 0, 'ManageSection10_P1_I1_L1', 1),(73, 0, 'ManageSection20_P1_I1_L1', 1),(74, 0, 'ManageSection30_P1_I1_L1', 1),(75, 0, 'ManageSection40_P1_I1_L1', 1),(76, 0, 'ManageSection50_P1_I1_L1', 1),(77, 0, 'ManageSection60_P1_I1_L1', 1),(78, 0, 'ManageSection70_P1_I1_L1', 1),(79, 0, 'ManageSection200_P1_I1_L1', 1),(80, 0, 'ManageSection210_P1_I1_L1', 1),(81, 0, 'ManageSection220_P1_I1_L1', 1),(82, 0, 'ManageSection230_P1_I1_L1', 1),(83, 0, 'ManageSection10_P1_I2_L1', 1),(84, 0, 'ManageSection20_P1_I2_L1', 1),(85, 0, 'ManageSection30_P1_I2_L1', 1),(86, 0, 'ManageSection40_P1_I2_L1', 1),(87, 0, 'ManageSection50_P1_I2_L1', 1),(88, 0, 'ManageSection60_P1_I2_L1', 1),(89, 0, 'ManageSection200_P1_I2_L1', 1),(90, 0, 'ManageSection210_P1_I2_L1', 1),(91, 0, 'ManageSection220_P1_I2_L1', 1),(92, 0, 'ManageSection230_P1_I2_L1', 1);
+UNLOCK TABLES;
+
+##
+## Dumping data for table `liveuser_rights_right_id_seq`
+##
+LOCK TABLES `liveuser_rights_right_id_seq` WRITE;
+INSERT INTO `liveuser_rights_right_id_seq` VALUES (92);
+UNLOCK TABLES;
+
+##
 ## Dumping data for table `phorum_forums`
 ##
 

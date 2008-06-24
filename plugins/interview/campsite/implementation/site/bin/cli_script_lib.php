@@ -406,7 +406,7 @@ function camp_upgrade_database($p_dbName)
     $first = true;
     $versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
                       "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x",
-                      "2.7.x");
+                      "2.7.x", "3.0.x");
     foreach ($versions as $index=>$db_version) {
         if ($old_version > $db_version) {
             continue;
@@ -552,8 +552,14 @@ function camp_detect_database_version($p_dbName, &$version)
                 return "Unable to query the database $p_dbName";
             }
             if (mysql_num_rows($res2) > 0) {
-                $version = "3.0";
+                $version = "3.0.x";
             }
+        }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'ObjectTypes'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            $version = "3.1.x";
         }
     }
 

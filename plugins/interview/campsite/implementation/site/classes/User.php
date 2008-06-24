@@ -646,6 +646,7 @@ class User extends DatabaseObject {
                 if (isset($this->m_config[$permission])) {
                     if (!$value) {
                         $LiveUserAdmin->perm->revokeUserRight($params);
+                        unset($this->m_config[$permission]);
                     }
                 }
                 if ($value) {

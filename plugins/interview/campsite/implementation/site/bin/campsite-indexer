@@ -353,7 +353,7 @@ function mymin($p_a, $p_b)
 
 function usage()
 {
-    printf("Usage: campsite_indexer [options]\n"
+    printf("Usage: campsite-indexer [options]\n"
            ."Options:\n"
            ."\t--conf_dir=[configuration_dir]: Host name of the MySQL Server.\n"
            ."\t--help: Display this information.\n");

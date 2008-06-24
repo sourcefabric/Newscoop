@@ -59,6 +59,10 @@ if (!$forumId) {
 
 // Create/get first post.
 $firstPost = camp_comment_first_post($articleObj, $forumId);
+// Exit if the forum hasnt been created (this should never happen).
+if (!$firstPost->exists()) {
+    camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
+}
 $threadId = $firstPost->getThreadId();
 
 // If reply isnt specified, then its a reply to the base message.

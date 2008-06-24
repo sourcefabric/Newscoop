@@ -108,9 +108,11 @@ class ArticleTypeField {
 	 * @param string $p_type
 	 *		Can be one of: 'text', 'date', 'body'.
 	 */
-	public function create($p_type, $p_rootTopicId = 0)
+	public function create($p_type, $p_rootTopicId = 0, $p_isContent = false)
 	{
 		global $g_ado_db;
+
+		$isContent = 0;
 		$p_type = strtolower($p_type);
 		$queryStr = "ALTER TABLE ".$this->m_dbTableName." ADD COLUMN ".$this->m_dbColumnName;
 		switch ($p_type) {
@@ -121,7 +123,8 @@ class ArticleTypeField {
 		    	$queryStr .= " DATE NOT NULL";
 		    	break;
 			case 'body':
-		    	$queryStr .= " MEDIUMBLOB NOT NULL";
+                $isContent = (int)$p_isContent;
+			    $queryStr .= " MEDIUMBLOB NOT NULL";
 		    	break;
 			case 'topic':
 				$queryStr .= " INTEGER UNSIGNED NOT NULL";
@@ -139,7 +142,7 @@ class ArticleTypeField {
 		if ($success) {
 			$success = 0;
 			$weight = $this->getNextOrder();
-			$queryStr = "INSERT INTO ArticleTypeMetadata (type_name, field_name, field_type, field_weight) VALUES ('". $this->m_articleTypeName ."','". $this->m_fieldName ."', '". $p_type ."', $weight)";
+			$queryStr = "INSERT INTO ArticleTypeMetadata (type_name, field_name, field_type, field_weight, is_content_field) VALUES ('". $this->m_articleTypeName ."','". $this->m_fieldName ."', '". $p_type ."', $weight, '$isContent')";
 			$success = $g_ado_db->Execute($queryStr);
 		}
 
@@ -508,6 +511,19 @@ class ArticleTypeField {
 		return $return;
 	} // fn getTransltions
 
+	
+	public function isContent() {
+	    return $this->m_metadata['is_content_field'];
+	}
+	
+	public function setIsContent($p_isContent) {
+        global $g_ado_db;
+	    $queryStr = "UPDATE ArticleTypeMetadata "
+                    ." SET is_content_field = " . (int)$p_isContent
+                    ." WHERE type_name='". $this->m_articleTypeName ."'"
+                    ." AND field_name='". $this->m_fieldName ."'";
+        $ret = $g_ado_db->Execute($queryStr);
+	}
 
 	/**
 	 * Quick lookup to see if the current language is already translated for this article type: used by delete and update in setName

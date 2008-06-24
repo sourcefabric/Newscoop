@@ -108,7 +108,11 @@ class CampInstallationBase
 
             if ($this->finish()) {
                 $this->saveConfiguration();
+                $this->saveCronJobsScripts();
             }
+            break;
+        case 'cron_jobs':
+            $this->saveCronJobsScripts();
             break;
         }
     } // fn execute
@@ -328,6 +332,49 @@ class CampInstallationBase
 
         return true;
     } // fn finish
+
+
+    /**
+     *
+     */
+    private function saveCronJobsScripts()
+    {
+        $cronJobs = array('campsite_autopublish',
+                          'campsite_indexer',
+                          'campsite_notifyendsubs',
+                          'campsite_notifyevents',
+                          'campsite_statistics');
+
+        $template = CampTemplate::singleton();
+        $template->assign('CAMPSITE_BIN_DIR', CS_PATH_SITE.DIR_SEP.'bin');
+
+        $buffer = '';
+        $cronJobsDir = CS_INSTALL_DIR.DIR_SEP.'cron_jobs';
+        $allAtOnceFile = $cronJobsDir.DIR_SEP.'all_at_once';
+        $isFileWritable = is_writable($cronJobsDir);
+        foreach ($cronJobs as $cronJob) {
+            $buffer = $template->fetch('_'.$cronJob.'.tpl');
+            $cronJobFile = $cronJobsDir.DIR_SEP.$cronJob;
+            if (file_exists($cronJobFile)) {
+                $isFileWritable = is_writable($cronJobFile);
+            }
+
+            if (!$isFileWritable) {
+                continue;
+            }
+            if (file_put_contents($cronJobFile, $buffer)) {
+                $buffer .= "\n";
+                file_put_contents($allAtOnceFile, $buffer, FILE_APPEND);
+            }
+        }
+
+        if (file_exists($allAtOnceFile)) {
+            $cmd = 'crontab '.$allAtOnceFile;
+            system($cmd);
+        }
+
+        return true;
+    } // fn saveCronJobsScripts
 
 
     /**

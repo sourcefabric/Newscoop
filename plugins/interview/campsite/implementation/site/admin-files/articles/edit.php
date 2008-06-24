@@ -95,7 +95,9 @@ if ($showComments) {
 }
 
 // Automatically switch to "view" mode if user doesnt have permissions.
-if (!$articleObj->userCanModify($g_user)) {
+$articleLang = $f_language_id ? $f_language_id : $articleObj->getLanguageId();
+$userSectionRight = 'ManageSection'.$articleObj->getSectionNumber().'_P'.$articleObj->getPublicationId().'_I'.$articleObj->getIssueNumber().'_L'.$articleLang;
+if (!$articleObj->userCanModify($g_user, $userSectionRight)) {
 	$f_edit_mode = "view";
 }
 
@@ -176,7 +178,7 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 }
 
 // If the article is locked.
-if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) {
+if ($articleObj->userCanModify($g_user, $userSectionRight) && $locked && ($f_edit_mode == "edit")) {
 	?><P>
 	<table border="0" cellspacing="0" cellpadding="6" class="table_input">
 	<tr>
@@ -235,7 +237,8 @@ if ($f_edit_mode == "edit") { ?>
 	<td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" border="0"></a></td>
 	<td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><B><?php  putGS("Article List"); ?></B></a></td>
 
-	<?php if ($g_user->hasPermission('AddArticle')) { ?>
+	<?php if ($g_user->hasPermission($userSectionRight)
+                  && $g_user->hasPermission('AddArticle')) { ?>
 	<td style="padding-left: 20px;"><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a></td>
 	<td><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><B><?php  putGS("Add new article"); ?></B></a></td>
 <?php  } ?>
@@ -294,7 +297,7 @@ if ($f_edit_mode == "edit") { ?>
 						<option value=""><?php putGS("Actions"); ?>...</option>
 						<option value="">-----------</option>
 
-						<?php if ($articleObj->userCanModify($g_user) && $articleObj->isLocked()) { ?>
+						<?php if ($articleObj->userCanModify($g_user, $userSectionRight) && $articleObj->isLocked()) { ?>
 						<option value="unlock"><?php putGS("Unlock"); ?></option>
 						<?php } ?>
 
@@ -328,7 +331,7 @@ if ($f_edit_mode == "edit") { ?>
 						camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
 						?>
 						</select>
-						<?php } elseif ($articleObj->userCanModify($g_user) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
+						<?php } elseif ($articleObj->userCanModify($g_user, $userSectionRight) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
 						<select name="f_action_workflow" class="input_select" onchange="this.form.submit();">
 						<?php
 						camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
@@ -395,7 +398,7 @@ if ($f_edit_mode == "edit") { ?>
 			</td>
 
 			<?php
-			if ($articleObj->userCanModify($g_user)) {
+			if ($articleObj->userCanModify($g_user, $userSectionRight)) {
 			$switchModeUrl = camp_html_article_url($articleObj, $f_language_id, "edit.php")
 				."&f_edit_mode=".( ($f_edit_mode =="edit") ? "view" : "edit");
 			?>
@@ -436,7 +439,6 @@ if ($f_edit_mode == "edit") { ?>
 		<td style="padding-top: 3px;">
 			<?php if ($f_edit_mode == "edit") { ?>
 			<table width="100%" style="border-bottom: 1px solid #8baed1; padding: 0px;">
-
 			<tr>
 				<td align="center">
                     <?php if ($f_publication_id > 0) { ?>
@@ -470,6 +472,23 @@ if ($f_edit_mode == "edit") { ?>
 				<td align="left" valign="top">
 				    <!-- Left-hand column underneath article title -->
 				    <table>
+				    <tr>
+				        <td align="right" valign="top" style="padding-left: 1em;"><b><?php putGS("Reads"); ?>:</b></td>
+				        <td align="left" valign="top">
+                        <?php
+                          if ($articleObj->isPublished()) {
+                              $requestObject = new RequestObject($articleObj->getProperty('object_id'));
+                              if ($requestObject->exists()) {
+                                  echo $requestObject->getRequestCount();
+                              } else {
+                                  echo "0";
+                              }
+                          } else {
+                              putGS("N/A");
+                          }
+                        ?>
+				        </td>
+				    </tr>
 
 				    <!-- Type -->
 				    <tr>

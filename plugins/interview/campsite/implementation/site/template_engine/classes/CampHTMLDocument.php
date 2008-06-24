@@ -271,6 +271,7 @@ final class CampHTMLDocument
         $context = $p_params['context'];
         $template = $p_params['template'];
 
+        $siteinfo['info_message'] = isset($p_params['info_message']) ? $p_params['info_message'] : null;
         $siteinfo['error_message'] = isset($p_params['error_message']) ? $p_params['error_message'] : null;
         $siteinfo['templates_path'] = isset($p_params['templates_dir'])
                             ? $p_params['templates_dir'] : CS_PATH_SMARTY_TEMPLATES;

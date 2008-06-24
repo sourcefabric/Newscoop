@@ -1,4 +1,5 @@
 <?php 
+regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "");
 regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "El nombre de URL deber ser único para todas las secciones en esta edición.  <br>El nombre del URL que especificó (\"$1\") tiene conflicto con la sección \"$2$3. $4$5\"");
 regGS("Section updated", "Sección actualizada");
 regGS("There are $1 subscriptions which will be affected.", "Hay $1 suscripciones que se verán afectadas.");

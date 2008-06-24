@@ -79,14 +79,15 @@ class Article extends DatabaseObject {
 		'ArticleOrder',
 		'comments_enabled',
 		'comments_locked',
-		'time_updated');
+		'time_updated',
+	    'object_id');
 
 	var $m_languageName = null;
 
-	private static $s_defaultOrder = array('byPublication'=>'asc',
-                                           'byIssue'=>'desc',
-                                           'bySection'=>'desc',
-                                           'bySectionOrder'=>'asc');
+	private static $s_defaultOrder = array(array('field'=>'byPublication', 'dir'=>'asc'),
+                                           array('field'=>'byIssue', 'dir'=>'desc'),
+                                           array('field'=>'bySection', 'dir'=>'desc'),
+                                           array('field'=>'bySectionOrder', 'dir'=>'asc'));
 
     private static $s_regularParameters = array('idpublication'=>'IdPublication',
                                                 'nrissue'=>'NrIssue',
@@ -100,7 +101,8 @@ class Article extends DatabaseObject {
                                                 'onfrontpage'=>'OnFrontPage',
                                                 'onsection'=>'OnSection',
                                                 'public'=>'Public',
-                                                'published'=>'Published');
+                                                'published'=>'Published',
+                                                'reads'=>'RequestObjects.request_count');
 
 	/**
 	 * Construct by passing in the primary key to access the article in
@@ -849,14 +851,17 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	public function userCanModify($p_user)
+	public function userCanModify($p_user, $p_userSectionRight = null)
 	{
 		$userCreatedArticle = ($this->m_data['IdUser'] == $p_user->getUserId());
 		$articleIsNew = ($this->m_data['Published'] == 'N');
 		$articleIsNotPublished = (($this->m_data['Published'] == 'N') || ($this->m_data['Published'] == 'S'));
-		if ($p_user->hasPermission('Publish')
-			|| ($p_user->hasPermission('ChangeArticle') && $articleIsNotPublished)
-			|| ($userCreatedArticle && $articleIsNew)) {
+        $userSectionRight = is_null($p_userSectionRight) ? 'ManageSection' : $p_userSectionRight;
+		if (($p_user->hasPermission('ManageSection')
+                 || $p_user->hasPermission($userSectionRight))
+            && ($p_user->hasPermission('Publish')
+                || ($p_user->hasPermission('ChangeArticle') && $articleIsNotPublished)
+                || ($userCreatedArticle && $articleIsNew))) {
 			return true;
 		} else {
 			return false;
@@ -1288,6 +1293,18 @@ class Article extends DatabaseObject {
 		$keywordSeparator = SystemPref::Get("KeywordSeparator");
 		return str_replace(",", $keywordSeparator, $keywords);
 	} // fn getKeywords
+
+
+	public function getReads() {
+	    if (!$this->exists()) {
+	        return null;
+	    }
+	    if (empty($this->m_data['object_id'])) {
+	        return 0;
+	    }
+	    $requestObject = new RequestObject($this->m_data['object_id']);
+	    return $requestObject->getRequestCount();
+	}
 
 
 	/**
@@ -1729,7 +1746,8 @@ class Article extends DatabaseObject {
 	 */
 	public static function GetArticles($p_publicationId = null, $p_issueNumber = null,
 						               $p_sectionNumber = null, $p_languageId = null,
-						               $p_sqlOptions = null, $p_countOnly = false)
+						               $p_sqlOptions = null, $p_countOnly = false,
+                                       $p_whereOptions = null)
     {
 		global $g_ado_db;
 
@@ -1746,6 +1764,11 @@ class Article extends DatabaseObject {
 		if (!is_null($p_languageId)) {
 			$whereClause[] = "IdLanguage=$p_languageId";
 		}
+        if (!is_null($p_whereOptions) && is_array($p_whereOptions)) {
+            foreach ($p_whereOptions as $key => $value) {
+                $whereClause[] = $value;
+            }
+        }
 
 		$selectStr = "*";
 		if ($p_countOnly) {
@@ -1990,6 +2013,7 @@ class Article extends DatabaseObject {
         $hasNotTopics = array();
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
+        $otherTables = array();
 
         // gets the column list to be retrieved for the database table
         $selectClauseObj->addColumn('Articles.*');
@@ -1999,12 +2023,13 @@ class Article extends DatabaseObject {
         $tmpArticle = new Article();
         $selectClauseObj->setTable($tmpArticle->getDbTableName());
         $countClauseObj->setTable($tmpArticle->getDbTableName());
+        $articleTable = $tmpArticle->getDbTableName();
         unset($tmpArticle);
 
         // parses the given parameters in order to build the WHERE part of
         // the SQL SELECT sentence
         foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param);
+            $comparisonOperation = self::ProcessListParameters($param, $otherTables);
             $leftOperand = strtolower($comparisonOperation['left']);
 
             if (array_key_exists($leftOperand, Article::$s_regularParameters)) {
@@ -2069,9 +2094,21 @@ class Article extends DatabaseObject {
 
         // sets the ORDER BY condition
         $p_order = count($p_order) > 0 ? $p_order : Article::$s_defaultOrder;
-        $order = Article::ProcessListOrder($p_order);
-        foreach ($order as $orderColumn => $orderDirection) {
+        $order = Article::ProcessListOrder($p_order, $otherTables);
+        foreach ($order as $orderDesc) {
+            $orderColumn = $orderDesc['field'];
+            $orderDirection = $orderDesc['dir'];
             $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+        if (count($otherTables) > 0) {
+            foreach ($otherTables as $table=>$fields) {
+                $tableJoin = "LEFT JOIN `" . $g_ado_db->Escape($table) . "` ON ";
+                foreach ($fields as $parent=>$child) {
+                    $tableJoin .= "`$articleTable`.`$parent` = `$table`.`$child`";
+                }
+                $selectClauseObj->addJoin($tableJoin);
+                $countClauseObj->addJoin($tableJoin);
+            }
         }
 
         // sets the LIMIT start and offset values
@@ -2133,7 +2170,7 @@ class Article extends DatabaseObject {
     /**
      *
      */
-    private static function ProcessListParameters($p_param)
+    private static function ProcessListParameters($p_param, array &$p_otherTables = array())
     {
         $conditionOperation = array();
 
@@ -2166,6 +2203,8 @@ class Article extends DatabaseObject {
                 $conditionOperation['right'] =  'Y';
             }
             break;
+        case 'reads':
+            $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
         default:
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
             break;
@@ -2277,7 +2316,9 @@ class Article extends DatabaseObject {
         // set the order for the select clause
         $p_order = count($p_order) > 0 ? $p_order : Article::$s_defaultOrder;
         $order = Article::ProcessListOrder($p_order);
-        foreach ($order as $orderField=>$orderDirection) {
+        foreach ($order as $orderDesc) {
+            $orderField = $orderDesc['field'];
+            $orderDirection = $orderDesc['dir'];
             $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
         }
 
@@ -2307,10 +2348,12 @@ class Article extends DatabaseObject {
      * @return array
      *      The array containing processed values of the condition
      */
-    private static function ProcessListOrder(array $p_order)
+    private static function ProcessListOrder(array $p_order, array &$p_otherTables = array())
     {
         $order = array();
-        foreach ($p_order as $field=>$direction) {
+        foreach ($p_order as $orderDesc) {
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
             $dbField = null;
             switch (strtolower($field)) {
                 case 'bynumber':
@@ -2341,11 +2384,15 @@ class Article extends DatabaseObject {
                 case 'bysectionorder':
                     $dbField = 'Articles.ArticleOrder';
                     break;
+                case 'bypopularity':
+                    $dbField = '`RequestObjects`.`request_count`';
+                    $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
+                    break;
             }
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';
             }
-            $order[$dbField] = $direction;
+            $order[] = array('field'=>$dbField, 'dir'=>$direction);
         }
         return $order;
     }

@@ -50,7 +50,7 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 <TR>
 	<TD><A HREF="add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
 	</TD>
-	<TD><B><A HREF="add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><B><?php  putGS("Add new field"); ?></B></A>
+	<TD><B><A HREF="add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><?php  putGS("Add new field"); ?></A></B>
 	</TD>
 	<TD><DIV STYLE="width:15px;"></DIV></TD>
 		<TD><A HREF="javascript: void(0);"
@@ -95,6 +95,7 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 	<?php  if ($g_user->hasPermission("ManageArticleTypes")) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Display Name"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Translate"); ?></B></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Is Content"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Show/Hide"); ?></B></TD>
 
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
@@ -113,6 +114,15 @@ foreach ($fields as $field) {
 		$hideShowText = getGS('hide');
 		$hideShowStatus = 'hide';
 		$hideShowImage = "is_shown.png";
+	}
+	if ($field->isContent()) {
+	    $contentType = 'non content';
+        $isContentField = 'true';
+        $setContentField = 'false';
+	} else {
+	    $contentType = 'content';
+        $isContentField = 'false';
+        $setContentField = 'true';
 	}
 
 ?>
@@ -150,6 +160,14 @@ foreach ($fields as $field) {
 	<td>
 		<a href="javascript: void(0);" onclick="HideAll(field_ids); ShowElement('translate_field_<?php p($i); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/localizer.png" alt="<?php putGS("Translate"); ?>" title="<?php putGS("Translate"); ?>" border="0"></a>
 	</td>
+
+    <TD ALIGN="CENTER">
+        <?php if ($field->getType() == 'mediumblob') { ?>
+        <input type="checkbox" <?php if ($field->isContent()) { ?>checked<?php } ?> id="set_is_content_<?php echo $i; ?>" name="set_is_content_<?php echo $i; ?>" onclick="if (confirm('<?php putGS('Are you sure you want to make $1 a $2 field?', $field->getPrintName(), $contentType); ?>')) { location.href='/<?php p($ADMIN); ?>/article_types/fields/set_is_content.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_is_content=<?php print $setContentField; ?>' } else { document.getElementById('set_is_content_<?php echo $i; ?>').checked = <?php echo $isContentField; ?> }">
+        <?php } else { ?>
+        <?php putGS('N/A'); ?>
+        <?php } ?>
+    </TD>
 
 	<TD ALIGN="CENTER">
 		<A HREF="/<?php p($ADMIN); ?>/article_types/fields/do_hide.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_status=<?php print $hideShowStatus; ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type field $2?', $hideShowText, $field->getPrintName()); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('$1 article type field $2', ucfirst($hideShowText), $field->getPrintName()); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), $field->getPrintName()); ?>" ></A>

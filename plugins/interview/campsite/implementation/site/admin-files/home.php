@@ -22,17 +22,23 @@ $f_screen = camp_session_get("f_screen", $defaultScreen);
 $f_submitted_articles_offset = camp_session_get('f_submitted_articles_offset', 0);
 $f_your_articles_offset = camp_session_get('f_your_articles_offset', 0);
 $f_unplaced_articles_offset = camp_session_get('f_unplaced_articles_offset', 0);
+$f_popular_articles_offset = camp_session_get('f_popular_articles_offset', 0);
 $NumDisplayArticles = 20;
+
 list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($g_user->getUserId(), $f_your_articles_offset,
 	$NumDisplayArticles);
 
 list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles($f_submitted_articles_offset, $NumDisplayArticles);
 
 list($unplacedArticles, $numUnplacedArticles) = Article::GetUnplacedArticles($f_unplaced_articles_offset, $NumDisplayArticles);
+$popularArticlesParams = array(new ComparisonOperation('published', new Operator('is'), 'true'),
+                               new ComparisonOperation('reads', new Operator('greater'), '0'));
+$popularArticles = Article::GetList($popularArticlesParams, array(array('field'=>'bypopularity', 'dir'=>'desc')), $f_popular_articles_offset, $NumDisplayArticles, $popularArticlesCount);
 
 $yourArticlesPager = new SimplePager($NumYourArticles, $NumDisplayArticles, "f_your_articles_offset", "home.php?f_screen=your_articles&");
 $submittedArticlesPager = new SimplePager($NumSubmittedArticles, $NumDisplayArticles, 'f_submitted_articles_offset', 'home.php?f_screen=submitted_articles&');
 $unplacedArticlesPager = new SimplePager($numUnplacedArticles, $NumDisplayArticles, 'f_unplaced_articles_offset', 'home.php?f_screen=unplaced_articles&');
+$popularArticlesPager = new SimplePager($popularArticlesCount, $NumDisplayArticles, 'f_popular_articles_offset', 'home.php?f_screen=popular_articles&');
 
 $recentlyPublishedArticles = Article::GetRecentArticles($NumDisplayArticles);
 
@@ -52,12 +58,14 @@ home_page_elements = new Array("your_articles",
 							   "submitted_articles",
 							   "recently_published_articles",
 							   "scheduled_actions",
-							   "unplaced_articles");
+							   "unplaced_articles",
+							   "popular_articles");
 home_page_links = new Array("link_your_articles",
 							"link_submitted_articles",
 							"link_recently_published_articles",
 							"link_scheduled_actions",
-							"link_unplaced_articles");
+							"link_unplaced_articles",
+							"link_popular_articles");
 function on_link_click(id, home_page_links)
 {
 	for (i = 0; i < home_page_links.length; i++) {
@@ -124,6 +132,8 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		<tr><td nowrap><a href="javascript: void(0);" id="link_scheduled_actions" onclick="HideAll(home_page_elements); ShowElement('scheduled_actions'); on_link_click('link_scheduled_actions', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "scheduled_actions") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Scheduled Publishing"); ?></a></td></tr>
 
 		<tr><td nowrap><a href="javascript: void(0);" id="link_unplaced_articles" onclick="HideAll(home_page_elements); ShowElement('unplaced_articles'); on_link_click('link_unplaced_articles', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "unplaced_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Pending Articles"); ?></a></td></tr>
+
+        <tr><td nowrap><a href="javascript: void(0);" id="link_popular_articles" onclick="HideAll(home_page_elements); ShowElement('popular_articles'); on_link_click('link_popular_articles', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "popular_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Most Popular Articles"); ?></a></td></tr>
 
 		</TABLE>
 	</td>
@@ -594,6 +604,97 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		<?php
 		} // for
     	?>
+
+        <!-- Most popular articles -->
+        <?php if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish')) { ?>
+        <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="popular_articles" <?php if ($f_screen != "popular_articles") { echo 'style="display:none;"'; } ?>>
+        <TR class="table_list_header">
+            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Most Popular Articles"); ?></TD>
+            <td align="center" valign="top"><?php putGS("Publication"); ?></td>
+            <td align="center" valign="top"><?php putGS("Issue"); ?></td>
+            <td align="center" valign="top"><?php putGS("Section"); ?></td>
+            <td align="center" valign="top"><?php putGS("Type"); ?></td>
+            <td align="center" valign="top"><?php echo str_replace(" ", "<br>", getGS("Created by")); ?></td>
+            <td align="center" valign="top"><?php echo str_replace(" ", "<br>", getGS("Publish date")); ?></td>
+            <td align="center" valign="top"><?php putGS("Reads"); ?></td>
+        </TR>
+        <?php
+        $color=0;
+        if (count($popularArticles) == 0) {
+            ?>
+            <TR>
+            <TD colspan="8" class="list_row_odd"><?php putGS("There are currently no articles in statistics."); ?></td>
+            </tr>
+            <?php
+        }
+
+        foreach ($popularArticles as $tmpArticle) {
+            $section = $tmpArticle->getSection();
+            $language = new Language($tmpArticle->getLanguageId());
+            $pub = new Publication($tmpArticle->getPublicationId());
+            $issue = new Issue($tmpArticle->getPublicationId(),
+                                $tmpArticle->getLanguageId(),
+                                $tmpArticle->getIssueNumber());
+            $section = new Section($tmpArticle->getPublicationId(),
+                                    $tmpArticle->getIssueNumber(),
+                                    $tmpArticle->getLanguageId(),
+                                    $tmpArticle->getSectionNumber());
+            $creator = new User($tmpArticle->getCreatorId());
+            ?>
+        <TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+            <TD valign="top">
+            <?php echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php"); ?>
+            <?php
+            p(htmlspecialchars($tmpArticle->getTitle()));
+            p(" (".htmlspecialchars($language->getNativeName()).")");
+            ?>
+            </A>
+            </TD>
+
+            <td align="center" valign="top">
+                <?php p(htmlspecialchars($pub->getName())); ?>
+            </td>
+
+            <td align="center" valign="top">
+                <?php p(htmlspecialchars($issue->getName())); ?>
+            </td>
+
+            <td align="center" valign="top">
+                <?php p(htmlspecialchars($section->getName())); ?>
+            </td>
+
+            <td align="center" valign="top">
+                <?php p(htmlspecialchars($tmpArticle->getType())); ?>
+            </td>
+
+            <td align="center" valign="top">
+                <?php p(htmlspecialchars($creator->getRealName())); ?>
+            </td>
+
+            <td align="center" valign="top">
+                <?php p(htmlspecialchars($tmpArticle->getPublishDate())); ?>
+            </td>
+
+            <td align="center" valign="top">
+                <?php p(htmlspecialchars($tmpArticle->getReads())); ?>
+            </td>
+
+        </TR>
+        <?php
+        } // for ($popularArticles ...)
+        ?>
+
+        <TR>
+            <TD COLSPAN="2" NOWRAP style="padding-top: 10px;">
+            <?php
+            echo $popularArticlesPager->render();
+            ?>
+            </TD>
+        </TR>
+        </TABLE>
+        <?php
+        } // if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish'))
+        ?>
 
     	<TR>
     		<TD COLSPAN="2" NOWRAP style="padding-top: 10px;">

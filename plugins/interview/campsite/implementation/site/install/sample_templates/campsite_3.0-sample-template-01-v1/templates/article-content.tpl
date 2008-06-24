@@ -111,7 +111,8 @@
   </td>
 </tr>
 {{ /if }}
-{{ if $campsite->user->logged_in || $campsite->publication->public_comments }}
+{{ if !$campsite->article->comments_locked
+      && ($campsite->user->logged_in || $campsite->publication->public_comments) }}
 <tr>
   <td>
   <div id="genericform">
@@ -153,9 +154,13 @@
     </div>
   </td>
 </tr>
-{{ else }}
+{{ elseif !$campsite->article->comments_locked }}
 <tr>
   <td>You must be a registered reader in order to submit comments.</td>
+</tr>
+{{ else }}
+<tr>
+  <td>Comment posting is not allowed.</td>
 </tr>
 {{ /if }}
 {{ /if }} {{* comments enabled *}}
