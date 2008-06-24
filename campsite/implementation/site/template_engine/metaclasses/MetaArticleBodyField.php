@@ -80,6 +80,7 @@ final class MetaArticleBodyField {
 
     public function __get($p_property) {
         switch (strtolower($p_property)) {
+            case 'all_subtitles': return $this->getContent(array());
             case 'first_paragraph': return $this->getParagraphs($this->__toString(), array(1));
             case 'subtitles_count': return $this->getSubtitlesCount();
             case 'subtitle_number': return $this->m_subtitleNumber;
