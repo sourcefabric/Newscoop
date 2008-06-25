@@ -37,21 +37,36 @@
           <td width="35%" valign="top">
             <div class="help">
               <p><em>Campsite</em> needs some tasks to be run automatically
-              in order to keep some things up to date. At this step we
+              in order to keep specific stuff up to date. At this step we
               will install them for you.</p>
 
-              <p>...</p>
+              <p>This tasks will run as cron jobs on your system and so you
+              will be able to edit and customize them depending on your
+              own requirements.</p>
+
+              <p>Individual cron job files will be saved to
+              <em>install/cron_jobs/</em> directory. There will be an
+              <em>all_at_once</em> file in the same directory which includes
+              all the cron jobs.
+
+              <p>Campsite has tools that perform the following automated tasks:</p>
             </div>
           </td>
           <td width="5%">&nbsp;</td>
           <td width="60%" valign="top">
             <div class="message">{{ $message }}</div>
             <div class="form_field">
-            <p><strong>campsite_autopublish:</strong> This ...</p>
-            <p><strong>campsite_events_notifier:</strong> This ...</p>
-            <p><strong>campsite_indexer:</strong> This ...</p>
-            <p><strong>campsite_statistics:</strong> This ...</p>
-            <p><strong>campsite_subscriptions_notifier:</strong> This ...</p>
+            <p><strong>Autopublish:</strong> Modifies the status of issues and articles scheduled for certain actions.</p>
+
+            <p><strong>Events Notifier:</strong> Sends emails to administrative users containing the latest events that took place in Campsite.</p>
+
+            <p><strong>Indexer:</strong> Indexes the article content (update the search engine database).</p>
+
+            <p><strong>Statistics:</strong> Updates Web site statistics.</p>
+
+            <p><strong>Subscriptions Notifier:</strong> Sends emails to subscribers alerting them when their subscription ends.</p><br />
+
+            <p>You can read more on this in the <a href="http://code.campware.org/manuals/campsite/3.0/index.php?id=198" target="_blank">Campsite manual</a>.</p>
             </div>
           </td>
         </tr>
