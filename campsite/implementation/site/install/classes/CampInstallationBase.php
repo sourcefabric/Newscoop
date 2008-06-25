@@ -94,25 +94,30 @@ class CampInstallationBase
             }
             break;
         case 'loaddemo':
-            if ($this->generalConfiguration($input)) {
+            $prevStep = (isset($input['this_step'])) ? $input['this_step'] : '';
+            if ($prevStep != 'loaddemo'
+                    && $this->generalConfiguration($input)) {
                 $session->setData('config.site', $this->m_config['mainconfig'], 'installation', true);
             }
             break;
-        case 'finish':
+        case 'cronjobs':
+            if ($this->m_os != 'linux') {
+                break;
+            }
             if (isset($input['install_demo']) && $input['install_demo'] == 1) {
                 $session->setData('config.demo', array('loaddemo' => true), 'installation', true);
                 if (!$this->loadDemoSite()) {
                     break;
                 }
             }
-
+            break;
+        case 'finish':
+            if ($this->m_os == 'linux' && !$this->saveCronJobsScripts()) {
+                break;
+            }
             if ($this->finish()) {
                 $this->saveConfiguration();
-                $this->saveCronJobsScripts();
             }
-            break;
-        case 'cron_jobs':
-            $this->saveCronJobsScripts();
             break;
         }
     } // fn execute
@@ -352,6 +357,7 @@ class CampInstallationBase
         $cronJobsDir = CS_INSTALL_DIR.DIR_SEP.'cron_jobs';
         $allAtOnceFile = $cronJobsDir.DIR_SEP.'all_at_once';
         $isFileWritable = is_writable($cronJobsDir);
+        $error = false;
         foreach ($cronJobs as $cronJob) {
             $buffer = $template->fetch('_'.$cronJob.'.tpl');
             $cronJobFile = $cronJobsDir.DIR_SEP.$cronJob;
@@ -360,12 +366,24 @@ class CampInstallationBase
             }
 
             if (!$isFileWritable) {
+                $error = true;
                 continue;
             }
             if (file_put_contents($cronJobFile, $buffer)) {
                 $buffer .= "\n";
-                file_put_contents($allAtOnceFile, $buffer, FILE_APPEND);
+                if (!file_put_contents($allAtOnceFile, $buffer, FILE_APPEND)) {
+                    $error = true;
+                }
+            } else {
+                $error = true;
             }
+        }
+
+        if ($error) {
+            $this->m_step = 'cronjobs';
+            $this->m_message = 'Error: Could not save cron job files. '
+                .'Apache user must have write permissions on <em>install/cron_jobs/</em> directory.';
+            return false;
         }
 
         if (file_exists($allAtOnceFile)) {
@@ -439,6 +457,7 @@ class CampInstallationBase
 
         return true;
     } // fn saveConfiguration
+
 
     /**
      * Creates the given directory; verifies if it already exists of if

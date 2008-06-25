@@ -50,9 +50,12 @@ final class CampInstallation extends CampInstallationBase
                              'loaddemo' => array('tplfile' => 'loaddemo.tpl',
                                                  'title' => 'Sample Site',
                                                  'order' => 5),
+                             'cronjobs' => array('tplfile' => 'cronjobs.tpl',
+                                                 'title' => 'Automated Tasks',
+                                                 'order' => 6),
                              'finish' => array('tplfile' => 'finish.tpl',
                                                'title' => 'Finish',
-                                               'order' => 6)
+                                               'order' => 7)
                              );
 
     /**
@@ -99,7 +102,7 @@ final class CampInstallation extends CampInstallationBase
         $cVersion = new CampVersion();
         $this->m_title = $cVersion->getPackage().' '.$cVersion->getRelease();
         $this->m_title .= (strlen($cVersion->getDevelopmentStatus()) > 0) ? '-'.$cVersion->getDevelopmentStatus() : '';
-        $this->m_title .= (!is_null($cVersion->getCodeName())
+        $this->m_title .= (strlen($cVersion->getCodeName()) > 0
                                && $cVersion->getCodeName() != 'undefined') ?
                           ' [ '.$cVersion->getCodeName().' ]' : '';
         $this->m_title .= ' Installer';
@@ -129,6 +132,8 @@ final class CampInstallation extends CampInstallationBase
         $tpl->assign('release_date', $this->m_version->getReleaseDate());
         $tpl->assign('organization', $this->m_version->getOrganization());
         $tpl->assign('copyright', $this->m_version->getCopyright());
+
+        $tpl->assign('host_os', $this->m_os);
         
         $tpl->assign('current_step', $this->m_step);
         $tpl->assign('current_step_title', $this->m_steps[$this->m_step]['title']);

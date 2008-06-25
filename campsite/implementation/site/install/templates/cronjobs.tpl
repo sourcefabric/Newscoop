@@ -9,23 +9,16 @@
     <table class="header" cellspacing="0" cellpadding="0">
     <tr>
       <td width="70%">
-        <div class="title">Sample Site</div>
+        <div class="title">Automated Tasks</div>
       </td>
       <td width="30%" nowrap>
         <div class="navigate"><input
         class="nav_button" type="button" value="&#139; Previous"
-        onclick="submitForm( install_form, 'mainconfig' );" /> &nbsp;
-      {{ if $host_os == 'linux' }}
-        <input
-        class="nav_button" type="button" value="Next &#155;"
-        onclick="if (validateForm(install_form, 0, 1, 0, 1, 8) == true) {
-                 submitForm(install_form, 'cronjobs'); }" />
-      {{ else }}
+        onclick="submitForm( install_form, 'loaddemo' );" /> &nbsp;
         <input
         class="nav_button" type="button" value="Next &#155;"
         onclick="if (validateForm(install_form, 0, 1, 0, 1, 8) == true) {
                  submitForm(install_form, 'finish'); }" />
-      {{ /if }}
         </div>
       </td>
     </tr>
@@ -37,38 +30,28 @@
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
           <td colspan="3">
-            <div class="subtitle">Load Sample Data:</div>
+            <div class="subtitle">What is this?</div>
           </td>
         </tr>
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              <p>Is this the first time you install <em>Campsite</em>?
-              are not you familiar with the template engine system?
-              do you want to see <em>Campsite</em> in action before start
-              writing template files for your own Web site? Then, choose
-              "Yes" to install the sample site and you will can see a
-              simple and functional Web site to get familiar with the
-              system.</p>
+              <p><em>Campsite</em> needs some tasks to be run automatically
+              in order to keep some things up to date. At this step we
+              will install them for you.</p>
 
-              <p>Otherwise, simply check "No" and click on "Next" button to
-              finish the installation.</p>
+              <p>...</p>
             </div>
           </td>
           <td width="5%">&nbsp;</td>
           <td width="60%" valign="top">
             <div class="message">{{ $message }}</div>
             <div class="form_field">
-              <label for="install_demo">Install Sample Site?</label> &nbsp;
-              <input
-                type="radio" id="install_demo" name="install_demo" value="1"
-                {{ if $dm.loaddemo eq true }} checked {{ /if }} /> &nbsp; Yes &nbsp;
-              <input
-                type="radio" id="install_demo" name="install_demo" value="0"
-                {{ if !$dm.loaddemo }} checked {{ /if }}/> &nbsp; No
-            </div>
-            <div class="demo_img">
-              <img src="img/campsite_demo.png" />
+            <p><strong>campsite_autopublish:</strong> This ...</p>
+            <p><strong>campsite_events_notifier:</strong> This ...</p>
+            <p><strong>campsite_indexer:</strong> This ...</p>
+            <p><strong>campsite_statistics:</strong> This ...</p>
+            <p><strong>campsite_subscriptions_notifier:</strong> This ...</p>
             </div>
           </td>
         </tr>
@@ -91,7 +74,7 @@
       <td>
         <ul id="steps_list">
         {{ foreach from=$step_titles key="step" item="s" }}
-          {{ if $s.order < 5 }}
+          {{ if $s.order < 6 }}
             <li class="stepdone">{{ $s.title }}</span>
           {{ else }}
             <li>{{ $s.title }}
