@@ -34,9 +34,10 @@ class SubtopicsList extends ListObject
 	    } else {
 	        $sqlOptions = null;
 	    }
+        $languageId = $context->language->defined ? $context->language->number : null;
 
-	    $topicsList = Topic::GetTopics(null, null, null, $rootTopicId, $sqlOptions);
-	    $allTopicsList = Topic::GetTopics(null, null, null, $rootTopicId);
+	    $topicsList = Topic::GetTopics(null, $languageId, null, $rootTopicId, $sqlOptions);
+	    $allTopicsList = Topic::GetTopics(null, $languageId, null, $rootTopicId);
 	    $metaTopicsList = array();
 	    $index = 0;
 	    foreach ($topicsList as $topic) {
