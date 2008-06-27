@@ -51,7 +51,7 @@ if ($res !== 0) {
     display_upgrade_error("while upgrading the database: $res");
 }
 
-CampRequest::SetVar('step', 'cron_jobs');
+CampRequest::SetVar('step', 'finish');
 
 $install = new CampInstallation();
 
