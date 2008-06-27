@@ -27,7 +27,8 @@ class ArticlesList extends ListObject
                                          'matchanytopic'=>array('field'=>null,
                                                                 'type'=>'void'),
                                          'topic'=>array('field'=>null,
-                                                        'type'=>'topic')
+                                                        'type'=>'topic'),
+                                         'reads'=>array('field'=>null, 'type'=>'integer')
                                    );
 
     private static $s_orderFields = array(
