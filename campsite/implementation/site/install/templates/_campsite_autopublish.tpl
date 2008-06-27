@@ -1,1 +1,1 @@
-* * * * * root {{ $CAMPSITE_BIN_DIR }}/campsite_autopublish
+* * * * * root {{ $CAMPSITE_BIN_DIR }}/campsite-autopublish

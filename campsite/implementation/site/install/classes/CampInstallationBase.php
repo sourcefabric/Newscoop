@@ -356,6 +356,9 @@ class CampInstallationBase
         $buffer = '';
         $cronJobsDir = CS_INSTALL_DIR.DIR_SEP.'cron_jobs';
         $allAtOnceFile = $cronJobsDir.DIR_SEP.'all_at_once';
+        if (file_exists($allAtOnceFile)) {
+            unlink($allAtOnceFile);
+        }
         $isFileWritable = is_writable($cronJobsDir);
         $error = false;
         foreach ($cronJobs as $cronJob) {
