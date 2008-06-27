@@ -1,10 +1,10 @@
 UPGRADE
 
-Upgrading from versions 1.x, 2.0.x, 2.1.x, 2.2.x and 2.3.x is not
-supported anymore. You will have to upgrade first to Campsite 2.6
-or 2.7 and then follow the regular procedure.
+Upgrading from versions 1.x, 2.0.x, 2.1.x, 2.2.x, 2.3.x, 2.4.x and
+2.5.x is not supported anymore. You will have to upgrade first to
+Campsite 2.6 or 2.7 and then follow the regular procedure.
 
-Upgrading from Campsite 2.4.x and newer versions:
+Upgrading from Campsite 2.6.x and 2.7.x versions:
 Repeat the following steps for each instance:
 
 1. Backup the instance using campsite-backup-instance
