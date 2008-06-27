@@ -1,1 +1,1 @@
-*/2 * * * * root {{ $CAMPSITE_BIN_DIR }}/events-notifier
+*/2 * * * * {{ $CAMPSITE_BIN_DIR }}/events-notifier
