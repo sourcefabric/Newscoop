@@ -62,6 +62,7 @@ if ($num_rows > 0) {
     $tpl->template_dir = 'sys-templates';
 }
 
+$last_tstamp = 0;
 while ($i < $num_rows && $row = mysql_fetch_array($result, MYSQL_ASSOC)) {
     if ($i == 0) {
         $last_tstamp = $row['LogTimeCreated'];
