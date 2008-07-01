@@ -282,6 +282,10 @@ $menu_help->addItem($menu_item);
 $menu_item =& DynMenuItem::Create(getGS("Feedback"), '/'. $ADMIN .'/feedback',
     array('icon' => sprintf($iconTemplateStr, "mail_generic.png")));
 $menu_help->addItem($menu_item);
+
+// plugins: extend menu
+CampPlugin::createPluginMenu($menu_root, $iconTemplateStr);
+
 ?>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">

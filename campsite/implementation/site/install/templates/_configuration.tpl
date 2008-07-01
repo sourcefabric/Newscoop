@@ -86,7 +86,8 @@ require_once($g_documentRoot.'/conf/install_conf.php');
  */
 function __autoload($p_className)
 {
-    global $g_documentRoot, $ADMIN, $ADMIN_DIR, $g_documentRoot;
+    global $g_documentRoot, $ADMIN, $ADMIN_DIR;
+    require_once($g_documentRoot.'/classes/CampPlugin.php');
 
     if (!is_string($p_className)) {
         return;
@@ -96,11 +97,25 @@ function __autoload($p_className)
                               'template_engine',
                               'template_engine/classes',
                               'template_engine/metaclasses');
+                      
     foreach ($classDirectories as $dirName) {
         $fileName = "$g_documentRoot/$dirName/$p_className.php";
         if (file_exists($fileName)) {
             require_once($fileName);
             return;
+        }
+    }
+    
+    foreach (CampPlugin::getEnabled() as $CampPlugin) {
+        $basePaths[] = $CampPlugin->getBasePath();  
+    }
+    foreach ($basePaths as $basePath) {                       
+        foreach ($classDirectories as $dirName) {
+            $fileName = "$g_documentRoot/$basePath/$dirName/$p_className.php";
+            if (file_exists($fileName)) {
+                require_once($fileName);
+                return;
+            }
         }
     }
 }

@@ -103,6 +103,8 @@ $campsite->initSession();
 // initiates the context
 $campsite->init();
 
+CampPlugin::initPlugins4TemplateEngine();
+
 // dispatches campsite
 $campsite->dispatch();
 

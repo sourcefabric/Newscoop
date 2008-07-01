@@ -128,23 +128,30 @@ class MetaAction
         require_once('File/Find.php');
 
         $actions = array();
-        $directoryPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses';
-        $actionIncludeFiles = File_Find::search('/^MetaAction[^.]*\.php$/',
-        $directoryPath, 'perl', false);
-
-        foreach ($actionIncludeFiles as $includeFile) {
-            if (preg_match('/MetaAction([^.]+)\.php/', $includeFile, $matches) == 0
-            || strtolower($matches[1]) == 'request') {
-                continue;
-            }
-
-            require_once($includeFile);
-            $actionName = $matches[1];
-            if (class_exists('MetaAction'.$actionName)) {
-                $actions[strtolower($actionName)] = array('name'=>$actionName,
-                'file'=>"$directoryPath/MetaAction$actionName.php");
-            }
+        
+        $basePaths = array('.');
+        foreach (CampPlugin::getEnabled() as $CampPlugin) {
+            $basePaths[] = $CampPlugin->getBasePath();  
         }
+        foreach ($basePaths as $basePath) {
+            $directoryPath = $_SERVER['DOCUMENT_ROOT'].'/'.$basePath.'/template_engine/metaclasses';
+            $actionIncludeFiles = File_Find::search('/^MetaAction[^.]*\.php$/',
+            $directoryPath, 'perl', false);
+    
+            foreach ($actionIncludeFiles as $includeFile) {
+                if (preg_match('/MetaAction([^.]+)\.php/', $includeFile, $matches) == 0
+                || strtolower($matches[1]) == 'request') {
+                    continue;
+                }
+    
+                require_once($includeFile);
+                $actionName = $matches[1];
+                if (class_exists('MetaAction'.$actionName)) {
+                    $actions[strtolower($actionName)] = array('name'=>$actionName,
+                    'file'=>"$directoryPath/MetaAction$actionName.php");
+                }
+            }
+        }    
         MetaAction::$m_availableActions = $actions;
         return MetaAction::$m_availableActions;
     }

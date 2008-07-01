@@ -646,7 +646,7 @@ class CampInstallationBaseHelper
             $d = dir($p_source);
 
             while(($entry = $d->read()) !== false) {
-                if ($entry == '.' || $entry == '..') {
+                if ($entry == '.' || $entry == '..' || $entry == '.svn') {
                     continue;
                 }
 

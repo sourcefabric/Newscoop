@@ -107,6 +107,17 @@ function camp_get_permission_list()
 				getGS('Editor Advanced Font Settings')=>$editor_group_2,
 				getGS('Editor Table Settings')=>$editor_group_3,
 				getGS('Editor Miscellaneous Settings')=>$editor_group_4);
+	
+    // plugins: extend permission list
+    $rights[getGS('Plugins')] = array('plugin_manager' => 'User may manage Plugins');
+    foreach (CampPlugin::getPluginInfos() as $info) {
+        if (CampPlugin::isPluginEnabled($info['name'])) {
+            foreach ($info['permissions'] as $permission => $label) {
+                $rights[$info['label']][$permission] = getGS($label);
+            }
+        }   
+    }
+    
 	return $rights;
 }
 ?>

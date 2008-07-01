@@ -44,6 +44,8 @@ $no_menu_scripts = array(
 	'/comments/do_ban.php',
 	'/imagearchive/do_add.php'
 	);
+	
+CampPlugin::extendNoMenuScripts($no_menu_scripts);
 
 $request_uri = $_SERVER['REQUEST_URI'];
 $call_script = substr($request_uri, strlen("/$ADMIN"));
@@ -92,13 +94,24 @@ if (($extension == '.php') || ($extension == '')) {
 		}
 		$call_script .= 'index.php';
 	}
-	$needs_menu = ! in_array($call_script, $no_menu_scripts);
+	$needs_menu = ! (in_array($call_script, $no_menu_scripts) || Input::Get('p_no_menu', 'boolean'));
 
 	// Verify the file exists
 	$path_name = $Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script";
+	
 	if (!file_exists($path_name)) {
-		header("HTTP/1.1 404 Not found");
-		exit;
+	    
+	    foreach (CampPlugin::getEnabled() as $CampPlugin) {
+	       $plugin_path_name = $Campsite['HTML_DIR'].'/'.$CampPlugin->getBasePath()."/$ADMIN_DIR/$call_script";
+	       if (file_exists($plugin_path_name)) {
+	           $path_name = $plugin_path_name;
+	           break;    
+	       }      
+	    }
+	    if (!file_exists($path_name)) {
+    		header("HTTP/1.1 404 Not found");
+    		exit;
+	    }
 	}
 
 	// Clean up the global namespace before we call the script

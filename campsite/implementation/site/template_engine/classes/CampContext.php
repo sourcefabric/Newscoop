@@ -240,10 +240,26 @@ final class CampContext
 
                 $classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/'
                 . CampContext::ObjectType($p_element).'.php';
-                if (!file_exists($classFullPath)) {
-                    throw new InvalidObjectException($p_element);
+                
+                if (file_exists($classFullPath)) {
+                    require_once($classFullPath);
+                } else {
+                    $pluginImplementsClassFullPath = false;
+                     
+                    foreach (CampPlugin::getEnabled() as $CampPlugin) {
+                        $pluginClassFullPath = $_SERVER['DOCUMENT_ROOT'].'/'.$CampPlugin->getBasePath().
+                                        '/template_engine/metaclasses/'.CampContext::ObjectType($p_element).'.php';
+                        if (file_exists($pluginClassFullPath)) {
+                            $pluginImplementsClassFullPath = $pluginClassFullPath;   
+                        }
+                    }
+                    if ($pluginImplementsClassFullPath) {
+                        require_once(($pluginImplementsClassFullPath));
+                    } else {  
+                        throw new InvalidObjectException($p_element);
+                    }
                 }
-                require_once($classFullPath);
+                
 
                 $metaclass = CampContext::ObjectType($p_element);
                 if (!is_a($p_value, $metaclass)) {
@@ -568,10 +584,25 @@ final class CampContext
 
         $classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/'
         . CampContext::ObjectType($p_objectType).'.php';
-        if (!file_exists($classFullPath)) {
-            throw new InvalidObjectException($p_objectType);
+        
+        if (file_exists($classFullPath)) {
+            require_once($classFullPath);
+        } else {
+            $pluginImplementsClassFullPath = false;
+             
+            foreach (CampPlugin::getEnabled() as $CampPlugin) {
+                $pluginClassFullPath = $_SERVER['DOCUMENT_ROOT'].'/'.$CampPlugin->getBasePath().
+                                '/template_engine/metaclasses/'.CampContext::ObjectType($p_objectType).'.php';
+                if (file_exists($pluginClassFullPath)) {
+                    $pluginImplementsClassFullPath = $pluginClassFullPath;   
+                }
+            }
+            if ($pluginImplementsClassFullPath) {
+                require_once(($pluginImplementsClassFullPath));
+            } else { 
+                throw new InvalidObjectException($p_objectType);
+            }
         }
-        require_once($classFullPath);
 
         $className = CampContext::ObjectType($p_objectType);
         $this->m_objects[$p_objectType] = new $className;
@@ -615,6 +646,60 @@ final class CampContext
         CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     } // fn trigger_invalid_property_error
 
+    
+    /**
+     * Register an new object type (for plugin)
+     *
+     * @param array $p_objectType
+     * structure: array(object name => object class name) 
+     */
+    final public function registerObjectType(array $p_objectType)
+    {        
+        try {
+            // check the structure
+            $keys = array_keys($p_objectType);
+            $values = array_values($p_objectType);
+            
+            if (count($keys) !== 1 || count($values) !== 1) {
+                throw new Exception('CampContext::registerObjectType called with malformed parameter: '.print_r($p_objectType));
+            }
+        } catch (Exception $e) {
+            $this->trigger_invalid_register_error($e->getMessage());
+        }
+    
+        CampContext::$m_objectTypes += $p_objectType;   
+    }
+    
+    
+    /**
+     * Register an list object (for plugins)
+     *
+     * @param array $p_listObject
+     * structure: array(list object name => array('class' => class name, 'list' => list class name))
+     */
+    final public function registerListObject(array $p_listObject)
+    {       
+        try {
+            // check the structure
+            $keys = array_keys($p_listObject);
+            $values = array_values($p_listObject);
+            
+            if (count($keys) !== 1 || count($values) !== 1) {
+                throw new Exception('CampContext::registerListObject called with malformed parameter: '.print_r($p_listObject));
+            }
+        } catch (Exception $e) {
+            $this->trigger_invalid_register_error($e->getMessage());   
+        }
+        
+        $this->m_listObjects += $p_listObject;    
+    }
+    
+    
+    final protected function trigger_invalid_register_error($p_message)
+    {
+        CampTemplate::singleton()->trigger_error($p_message);   
+    }
+    
 
     /**
      * Returns the language defined in the current context; if it

@@ -72,7 +72,7 @@ class User extends DatabaseObject {
         'isActive');
 
     // TODO: Put it out, it does nothing. This could be a global array.
-    var $m_defaultConfig = array(
+    public static $m_defaultConfig = array(
         'ManagePub'=>'N',
         'DeletePub'=>'N',
         'ManageIssue'=>'N',
@@ -141,8 +141,9 @@ class User extends DatabaseObject {
         'DeleteFile'=>'N',
         'CommentModerate'=>'N',
         'CommentEnable'=>'N',
-        'SyncPhorumUsers'=>'N',
-        'ClearCache'=>'N');
+        'SyncPhorumUsers'=>'N',       
+        'ClearCache'=>'N',
+        'plugin_manager'=>'N');
     var $m_liveUserData = array();
 
 
@@ -570,12 +571,17 @@ class User extends DatabaseObject {
      */
     public static function GetDefaultConfig()
     {
-        if (isset($this) && isset($this->m_defaultConfig)) {
-            return $this->m_defaultConfig;
-        } else {
-            $tmpUser = new User();
-            return $tmpUser->m_defaultConfig;
+        static $pluginConfig;
+        
+        if (empty($pluginConfig)) {
+            $pluginConfig = true;
+            foreach (CampPlugin::getPluginInfos() as $info) {
+                if (CampPlugin::isPluginEnabled($info['name'])) {
+                    self::$m_defaultConfig += $info['userDefaultConfig'];
+                }
+            }     
         }
+        return self::$m_defaultConfig;
     } // fn GetDefaultConfig
 
 
