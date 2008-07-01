@@ -1216,6 +1216,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `Translations` WRITE;
 /*!40000 ALTER TABLE `Translations` DISABLE KEYS */;
+INSERT INTO `Translations` VALUES (1,1,1,'article');
 /*!40000 ALTER TABLE `Translations` ENABLE KEYS */;
 UNLOCK TABLES;
 
