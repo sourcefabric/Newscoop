@@ -1,3 +1,0 @@
-hook:  format|phorum_mod_replace
-title: Simple Text Replacement Mod
-desc:  This module allows admins to define text replacement in messages.
