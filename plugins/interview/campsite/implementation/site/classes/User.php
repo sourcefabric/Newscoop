@@ -135,7 +135,6 @@ class User extends DatabaseObject {
         'EditorTextDirection'=>'N',
         'EditorLink'=>'N',
         'EditorSubhead'=>'N',
-        'InitializeTemplateEngine'=>'N',
         'ChangeSystemPreferences'=>'N',
         'AddFile'=>'N',
         'ChangeFile'=>'N',

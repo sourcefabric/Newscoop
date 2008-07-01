@@ -1,6 +1,6 @@
 -- MySQL dump 10.11
 --
--- Host: localhost    Database: campsite30
+-- Host: localhost    Database: campsite31
 -- ------------------------------------------------------
 -- Server version	5.0.51a-3ubuntu5.1
 
@@ -240,6 +240,7 @@ CREATE TABLE `ArticleTypeMetadata` (
   `fk_phrase_id` int(10) unsigned default NULL,
   `field_type` varchar(255) default NULL,
   `field_type_param` varchar(255) default NULL,
+  `is_content_field` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`type_name`,`field_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
@@ -284,6 +285,7 @@ CREATE TABLE `Articles` (
   `comments_enabled` tinyint(1) NOT NULL default '0',
   `comments_locked` tinyint(1) NOT NULL default '0',
   `time_updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `object_id` int(11) default NULL,
   PRIMARY KEY  (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -384,7 +386,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `AutoId` WRITE;
 /*!40000 ALTER TABLE `AutoId` DISABLE KEYS */;
-INSERT INTO `AutoId` VALUES (0,'0000-00-00 00:00:00',0,0);
+INSERT INTO `AutoId` VALUES (0,'0000-00-00 00:00:00',0,1);
 /*!40000 ALTER TABLE `AutoId` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -759,6 +761,31 @@ LOCK TABLES `Log` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ObjectTypes`
+--
+
+DROP TABLE IF EXISTS `ObjectTypes`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `ObjectTypes` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `OBJECTTYPES_NAME` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ObjectTypes`
+--
+
+LOCK TABLES `ObjectTypes` WRITE;
+/*!40000 ALTER TABLE `ObjectTypes` DISABLE KEYS */;
+INSERT INTO `ObjectTypes` VALUES (1,'article');
+/*!40000 ALTER TABLE `ObjectTypes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Publications`
 --
 
@@ -800,6 +827,56 @@ LOCK TABLES `Publications` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `RequestObjects`
+--
+
+DROP TABLE IF EXISTS `RequestObjects`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `RequestObjects` (
+  `object_id` int(11) NOT NULL auto_increment,
+  `object_type_id` int(11) NOT NULL,
+  `request_count` int(11) NOT NULL,
+  `last_update_time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`object_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `RequestObjects`
+--
+
+LOCK TABLES `RequestObjects` WRITE;
+/*!40000 ALTER TABLE `RequestObjects` DISABLE KEYS */;
+/*!40000 ALTER TABLE `RequestObjects` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Requests`
+--
+
+DROP TABLE IF EXISTS `Requests`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `Requests` (
+  `session_id` varchar(255) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `request_count` int(11) NOT NULL,
+  `last_request_time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`session_id`,`object_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `Requests`
+--
+
+LOCK TABLES `Requests` WRITE;
+/*!40000 ALTER TABLE `Requests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Requests` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Sections`
 --
 
@@ -829,6 +906,30 @@ SET character_set_client = @saved_cs_client;
 LOCK TABLES `Sections` WRITE;
 /*!40000 ALTER TABLE `Sections` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Sections` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Sessions`
+--
+
+DROP TABLE IF EXISTS `Sessions`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `Sessions` (
+  `id` varchar(255) NOT NULL,
+  `start_time` datetime NOT NULL,
+  `user_id` int(11) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `Sessions`
+--
+
+LOCK TABLES `Sessions` WRITE;
+/*!40000 ALTER TABLE `Sessions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -960,7 +1061,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `SystemPreferences` WRITE;
 /*!40000 ALTER TABLE `SystemPreferences` DISABLE KEYS */;
-INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','16M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','N','2007-07-26 04:50:19'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite 3.0','2007-10-07 01:39:13'),(23,'SiteMetaDescription','Campsite 3.0 site, try it out!','2007-10-07 01:36:18'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45');
+INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','16M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','N','2007-07-26 04:50:19'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite 3.1','2008-06-27 14:06:50'),(23,'SiteMetaDescription','Campsite 3.1 site, try it out!','2008-06-27 14:06:50'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45');
 /*!40000 ALTER TABLE `SystemPreferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1106,7 +1207,7 @@ CREATE TABLE `Translations` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `phrase_language_index` (`phrase_id`,`fk_language_id`),
   KEY `phrase_id` (`phrase_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1115,6 +1216,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `Translations` WRITE;
 /*!40000 ALTER TABLE `Translations` DISABLE KEYS */;
+INSERT INTO `Translations` VALUES (1,1,1,'article');
 /*!40000 ALTER TABLE `Translations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1569,7 +1671,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `liveuser_rights_right_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_rights_right_id_seq` VALUES (71);
+INSERT INTO `liveuser_rights_right_id_seq` VALUES (69),(71);
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2332,4 +2434,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2008-05-23 16:09:15
+-- Dump completed on 2008-06-27 14:06:53

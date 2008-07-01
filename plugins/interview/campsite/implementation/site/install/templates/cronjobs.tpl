@@ -9,23 +9,16 @@
     <table class="header" cellspacing="0" cellpadding="0">
     <tr>
       <td width="70%">
-        <div class="title">Sample Site</div>
+        <div class="title">Automated Tasks</div>
       </td>
       <td width="30%" nowrap>
         <div class="navigate"><input
         class="nav_button" type="button" value="&#139; Previous"
-        onclick="submitForm( install_form, 'mainconfig' );" /> &nbsp;
-      {{ if $host_os == 'linux' }}
-        <input
-        class="nav_button" type="button" value="Next &#155;"
-        onclick="if (validateForm(install_form, 0, 1, 0, 1, 8) == true) {
-                 submitForm(install_form, 'cronjobs'); }" />
-      {{ else }}
+        onclick="submitForm( install_form, 'loaddemo' );" /> &nbsp;
         <input
         class="nav_button" type="button" value="Next &#155;"
         onclick="if (validateForm(install_form, 0, 1, 0, 1, 8) == true) {
                  submitForm(install_form, 'finish'); }" />
-      {{ /if }}
         </div>
       </td>
     </tr>
@@ -37,38 +30,43 @@
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
           <td colspan="3">
-            <div class="subtitle">Load Sample Data:</div>
+            <div class="subtitle">What is this?</div>
           </td>
         </tr>
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              <p>Is this the first time you install <em>Campsite</em>?
-              are not you familiar with the template engine system?
-              do you want to see <em>Campsite</em> in action before start
-              writing template files for your own Web site? Then, choose
-              "Yes" to install the sample site and you will can see a
-              simple and functional Web site to get familiar with the
-              system.</p>
+              <p><em>Campsite</em> needs some tasks to be run automatically
+              in order to keep specific stuff up to date. At this step we
+              will install them for you.</p>
 
-              <p>Otherwise, simply check "No" and click on "Next" button to
-              finish the installation.</p>
+              <p>This tasks will run as cron jobs on your system and so you
+              will be able to edit and customize them depending on your
+              own requirements.</p>
+
+              <p>Individual cron job files will be saved to
+              <em>install/cron_jobs/</em> directory. There will be an
+              <em>all_at_once</em> file in the same directory which includes
+              all the cron jobs.
+
+              <p>Campsite has tools that perform the following automated tasks:</p>
             </div>
           </td>
           <td width="5%">&nbsp;</td>
           <td width="60%" valign="top">
             <div class="message">{{ $message }}</div>
             <div class="form_field">
-              <label for="install_demo">Install Sample Site?</label> &nbsp;
-              <input
-                type="radio" id="install_demo" name="install_demo" value="1"
-                {{ if $dm.loaddemo eq true }} checked {{ /if }} /> &nbsp; Yes &nbsp;
-              <input
-                type="radio" id="install_demo" name="install_demo" value="0"
-                {{ if !$dm.loaddemo }} checked {{ /if }}/> &nbsp; No
-            </div>
-            <div class="demo_img">
-              <img src="img/campsite_demo.png" />
+            <p><strong>Autopublish:</strong> Modifies the status of issues and articles scheduled for certain actions.</p>
+
+            <p><strong>Events Notifier:</strong> Sends emails to administrative users containing the latest events that took place in Campsite.</p>
+
+            <p><strong>Indexer:</strong> Indexes the article content (update the search engine database).</p>
+
+            <p><strong>Statistics:</strong> Updates Web site statistics.</p>
+
+            <p><strong>Subscriptions Notifier:</strong> Sends emails to subscribers alerting them when their subscription ends.</p><br />
+
+            <p>You can read more on this in the <a href="http://code.campware.org/manuals/campsite/3.0/index.php?id=198" target="_blank">Campsite manual</a>.</p>
             </div>
           </td>
         </tr>
@@ -91,7 +89,7 @@
       <td>
         <ul id="steps_list">
         {{ foreach from=$step_titles key="step" item="s" }}
-          {{ if $s.order < 5 }}
+          {{ if $s.order < 6 }}
             <li class="stepdone">{{ $s.title }}</span>
           {{ else }}
             <li>{{ $s.title }}

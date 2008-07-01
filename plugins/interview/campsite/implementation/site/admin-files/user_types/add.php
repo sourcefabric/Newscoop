@@ -12,6 +12,27 @@ if (!$canManage) {
 
 $rights = camp_get_permission_list();
 
+// gets section rights array
+$section_rights = array();
+$publications = Publication::GetPublications();
+foreach($publications as $publication) {
+    $section_rights[$publication->getName()] = array();
+    $issues = Issue::GetIssues($publication->getPublicationId());
+    foreach($issues as $issue) {
+        $section_rights[$publication->getName()][$issue->getName()] = array();
+        $sections = Section::GetSections($publication->getPublicationId(),
+                                         $issue->getIssueNumber(),
+                                         $issue->getLanguageId());
+        $rightsKeyValue = array();
+        foreach($sections as $section) {
+            $right_name = $section->getSectionRightName();
+            $right_text = $section->getName();
+            $rightsKeyValue[$right_name] = $right_text;
+        }
+        $section_rights[$publication->getName()][$issue->getName()] = $rightsKeyValue;
+    }
+}
+
 $crumbs = array();
 $crumbs[] = array(getGS("Users"), "");
 $crumbs[] = array(getGS("User types"), "/$ADMIN/user_types");
@@ -58,7 +79,7 @@ foreach ($group as $right_name=>$right_text) {
 ?>
 <tr>
 	<td align="right" style="padding-left: 10px;">
-		<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox">
+		<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox" />
 	</td>
 	<td style="padding-right: 10px;">
 		<?php putGS($right_text); ?>
@@ -66,6 +87,63 @@ foreach ($group as $right_name=>$right_text) {
 </tr>
 <?php
 }
+}
+?>
+<tr>
+	<td colspan="2" align="left" style="padding-top: 10px; padding-left: 10px;">
+		--- <?php p('Sections'); ?> ---
+	</td>
+</tr>
+<?php
+foreach ($section_rights as $publication => $issues) {
+?>
+<tr>
+    <td colspan="2">
+     <?php p('<strong>Publication</strong>: '.$publication); ?>
+    </td>
+</tr>
+<?php
+    if (sizeof($issues) <= 0) {
+?>
+<tr>
+    <td colspan="2" style="padding-left: 10px;">
+    <?php putGS("There is no issues"); ?>
+    </td>
+</tr>
+<?php
+    } else {
+        foreach ($issues as $issue => $sections) {
+?>
+<tr>
+    <td colspan="2" style="padding-left: 10px;">
+    <?php p('<strong>Issue</strong>: '.$issue); ?>
+    </td>
+</tr>
+<?php
+            if (sizeof($sections) <= 0) {
+?>
+<tr>
+    <td colspan="2" style="padding-left: 20px;">
+    <?php putGS("There is no sections"); ?>
+    </td>
+</tr>
+<?php
+            } else {
+                foreach ($sections as $section_right => $section_name) {
+?>
+<tr>
+	<td align="right" style="padding-left: 20px;">
+		<input type="checkbox" name="<?php echo $section_right; ?>" class="input_checkbox" />
+	</td>    
+    <td>
+    <?php p($section_name); ?>
+    </td>
+</tr>
+<?php
+                }
+            }
+        }
+    }
 }
 ?>
 <tr>

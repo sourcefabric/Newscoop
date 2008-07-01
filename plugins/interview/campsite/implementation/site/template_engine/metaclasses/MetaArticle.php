@@ -93,6 +93,8 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['content_accessible'] = 'isContentAccessible';
         $this->m_customProperties['image'] = 'getImage';
         $this->m_customProperties['reads'] = 'getReads';
+        $this->m_customProperties['topics_count'] = 'topicsCount';
+        $this->m_customProperties['has_topics'] = 'hasTopics';
     } // fn __construct
 
 
@@ -444,6 +446,41 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getReads() {
         return $this->m_dbObject->getReads();
+    }
+
+
+    protected function topicsCount() {
+        $articleTopics = $this->getContentCache('article_topics');
+        if (is_null($articleTopics)) {
+            $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
+            $this->setContentCache('article_topics', $articleTopics);
+        }
+        return count($articleTopics);
+    }
+    
+    
+    protected function hasTopics() {
+        return (int)($this->topicsCount() > 0);
+    }
+
+
+    public function has_topic($p_topicName) {
+        $topic = new Topic($p_topicName);
+        if (!$topic->exists()) {
+            $this->trigger_invalid_value_error('has_topic', $p_topicName);
+            return null;
+        }
+        $articleTopics = $this->getContentCache('article_topics');
+        if (is_null($articleTopics)) {
+            $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
+            $this->setContentCache('article_topics', $articleTopics);
+        }
+        foreach ($articleTopics as $articleTopic) {
+            if ($articleTopic->getTopicId() == $topic->getTopicId()) {
+                return (int)true;
+            }
+        }
+        return (int)false;
     }
 
 

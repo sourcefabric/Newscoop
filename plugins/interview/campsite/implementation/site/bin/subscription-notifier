@@ -56,7 +56,6 @@ if (!$result = mysql_query($sql_query)) {
 
 // inits smarty template system
 $tpl = init_smarty();
-$tpl->template_dir = 'sys-templates';
 
 while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
     $sql_query = "SELECT MAX(Number) AS MaxNumber "
@@ -277,7 +276,7 @@ function init_smarty()
     $tpl->right_delimiter = '}}';
     $tpl->force_compile = true;
     $tpl->config_dir = $CAMPSITE_DIR.'/include/smarty/configs';
-    $tpl->template_dir = $CAMPSITE_DIR.'/templates';
+    $tpl->template_dir = $CAMPSITE_DIR.'/sys-templates';
     $tpl->compile_dir = $CAMPSITE_DIR.'/templates_c';
 
     return $tpl;

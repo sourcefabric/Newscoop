@@ -1,7 +1,5 @@
 <?php
 
-
-
 $publications = Publication::GetPublications();
 ?>
 <form action="" name="section_rights" method="post">
@@ -18,25 +16,32 @@ foreach($publications as $publication) {
   ?>
     <table>
     <tr>
-      <td colspan="3">
-        <?php p('&nbsp;&nbsp;Issue: '.$issue->getName().' ('.$issue->getLanguageName().')'); ?>
+      <td colspan="2" style="padding-left: 10px;">
+        <?php p('Issue: '.$issue->getName().' ('.$issue->getLanguageName().')'); ?>
       </td>
     </tr>
     <?php
         $sections = Section::GetSections($publication->getPublicationId(),
                                          $issue->getIssueNumber(),
                                          $issue->getLanguageId());
+        $sectionsNo = sizeof($sections);
         foreach($sections as $section) {
             $right_name = $section->getSectionRightName();
     ?>
     <tr>
-      <td>&nbsp;&nbsp;&nbsp;</td>
-      <td>
+      <td align="left" width="20" style="padding-left: 20px;">
         <input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox" <?php if ($editUser->hasPermission($right_name)) { p("CHECKED"); } ?> />
       </td>
-      <td style="padding-right: 10px;">
+      <td align="left" style="padding-left: 5px;">
         <?php p($section->getName()); ?>
       </td>
+    </tr>
+<?php
+        }
+        if ($sectionsNo < 1) {
+?>
+    <tr>
+         <td style="padding-left: 25px;"><?php putGS("No sections"); ?></td>
     </tr>
 <?php
         }

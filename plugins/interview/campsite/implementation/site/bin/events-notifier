@@ -59,13 +59,11 @@ $num_rows = mysql_num_rows($result);
 // if events log exists, inits smarty template system
 if ($num_rows > 0) {
     $tpl = init_smarty();
-    $tpl->template_dir = 'sys-templates';
 }
 
+$last_tstamp = 0;
 while ($i < $num_rows && $row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-    if ($i == 0) {
-        $last_tstamp = $row['LogTimeCreated'];
-    }
+    $last_tstamp = $row['LogTimeCreated'];
 
     // assigns values to smarty template variables
     $tpl->assign('user_real_name', $row['UserRealName']);
@@ -250,7 +248,7 @@ function init_smarty()
     $tpl->right_delimiter = '}}';
     $tpl->force_compile = true;
     $tpl->config_dir = $CAMPSITE_DIR.'/include/smarty/configs';
-    $tpl->template_dir = $CAMPSITE_DIR.'/templates';
+    $tpl->template_dir = $CAMPSITE_DIR.'/sys-templates';
     $tpl->compile_dir = $CAMPSITE_DIR.'/templates_c';
 
     return $tpl;

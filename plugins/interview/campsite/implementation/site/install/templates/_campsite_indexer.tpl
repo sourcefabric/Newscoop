@@ -1,1 +1,1 @@
-0 */4 * * * root {{ $CAMPSITE_BIN_DIR }}/campsite-indexer
+0 */4 * * * {{ $CAMPSITE_BIN_DIR }}/campsite-indexer
