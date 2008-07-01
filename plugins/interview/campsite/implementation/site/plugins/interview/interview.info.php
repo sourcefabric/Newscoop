@@ -62,14 +62,17 @@ $info = array(
         ),
         'init' => 'plugin_interview_init'
     ),
-    'enable' => 'plugin_interview_enable',
-    'update' => '',
+    'install' => 'plugin_interview_install',
+    'enable'  => 'plugin_interview_install',
+    'update'  => '',
     'disable' => '',
 );
 
 
-if (!function_exists('plugin_interview_enable')) {
-    function plugin_interview_enable()
+if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
+    define('PLUGIN_INTERVIEW_FUNCTIONS', true);
+     
+    function plugin_interview_install()
     {
         global $LiveUserAdmin, $g_documentRoot;
         
