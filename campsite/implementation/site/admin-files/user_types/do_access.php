@@ -20,9 +20,7 @@ if (is_numeric($uTypeId) && $uTypeId > 0) {
 	exit;
 }
 
-$sectionRights = Section::GetRightsDefaultConfig();
 $rightsFields = User::GetDefaultConfig();
-$rightsFields = array_merge($rightsFields, $sectionRights);
 foreach ($rightsFields as $field=>$value) {
 	$val = Input::Get($field, 'string', 'off');
 	$userType->setPermission($field, ($val == 'on'));

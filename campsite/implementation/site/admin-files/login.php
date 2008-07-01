@@ -1,9 +1,13 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-include($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/LoginAttempts.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
+
+global $g_documentRoot;
+$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+
+require_once($g_documentRoot.'/db_connect.php');
+require_once($g_documentRoot."/$ADMIN_DIR/languages.php");
+require_once($g_documentRoot.'/classes/LoginAttempts.php');
+require_once($g_documentRoot.'/include/captcha/php-captcha.inc.php');
+require_once($g_documentRoot."/$ADMIN_DIR/lib_campsite.php");
 
 // token
 $key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));

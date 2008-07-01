@@ -71,79 +71,8 @@ class User extends DatabaseObject {
         'lastLogin',
         'isActive');
 
-    // TODO: Put it out, it does nothing. This could be a global array.
-    public static $m_defaultConfig = array(
-        'ManagePub'=>'N',
-        'DeletePub'=>'N',
-        'ManageIssue'=>'N',
-        'DeleteIssue'=>'N',
-        'ManageSection'=>'N',
-        'DeleteSection'=>'N',
-        'AddArticle'=>'N',
-        'ChangeArticle'=>'N',
-        'MoveArticle'=>'N',
-        'TranslateArticle'=>'N',
-        'DeleteArticle'=>'N',
-        'AttachImageToArticle'=>'N',
-        'AttachTopicToArticle'=>'N',
-        'AttachAudioclipToArticle'=>'N',
-        'AddImage'=>'N',
-        'AddAudioclip'=>'N',
-        'ChangeImage'=>'N',
-        'DeleteImage'=>'N',
-        'ManageTempl'=>'N',
-        'DeleteTempl'=>'N',
-        'ManageUsers'=>'N',
-        'ManageReaders'=>'N',
-        'ManageSubscriptions'=>'N',
-        'DeleteUsers'=>'N',
-        'ManageUserTypes'=>'N',
-        'ManageArticleTypes'=>'N',
-        'DeleteArticleTypes'=>'N',
-        'ManageLanguages'=>'N',
-        'DeleteLanguages'=>'N',
-        'MailNotify'=>'N',
-        'ManageCountries'=>'N',
-        'DeleteCountries'=>'N',
-        'ViewLogs'=>'N',
-        'ManageLocalizer'=>'N',
-        'ManageIndexer'=>'N',
-        'Publish'=>'N',
-        'ManageTopics'=>'N',
-        'EditorBold'=>'N',
-        'EditorItalic'=>'N',
-        'EditorUnderline'=>'N',
-        'EditorUndoRedo'=>'N',
-        'EditorCopyCutPaste'=>'N',
-        'EditorFindReplace'=>'N',
-        'EditorCharacterMap'=>'N',
-        'EditorImage'=>'N',
-        'EditorTextAlignment'=>'N',
-        'EditorFontColor'=>'N',
-        'EditorFontSize'=>'N',
-        'EditorFontFace'=>'N',
-        'EditorTable'=>'N',
-        'EditorSuperscript'=>'N',
-        'EditorSubscript'=>'N',
-        'EditorStrikethrough'=>'N',
-        'EditorIndent'=>'N',
-        'EditorListBullet'=>'N',
-        'EditorListNumber'=>'N',
-        'EditorHorizontalRule'=>'N',
-        'EditorSourceView'=>'N',
-        'EditorEnlarge'=>'N',
-        'EditorTextDirection'=>'N',
-        'EditorLink'=>'N',
-        'EditorSubhead'=>'N',
-        'ChangeSystemPreferences'=>'N',
-        'AddFile'=>'N',
-        'ChangeFile'=>'N',
-        'DeleteFile'=>'N',
-        'CommentModerate'=>'N',
-        'CommentEnable'=>'N',
-        'SyncPhorumUsers'=>'N',       
-        'ClearCache'=>'N',
-        'plugin_manager'=>'N');
+    private static $m_defaultConfig = array();
+
     var $m_liveUserData = array();
 
 
@@ -571,8 +500,19 @@ class User extends DatabaseObject {
      */
     public static function GetDefaultConfig()
     {
+        global $g_ado_db;
         static $pluginConfig;
-        
+
+        // loads rights default config from database
+        $queryStr = 'SELECT right_define_name FROM liveuser_rights';
+        $rights = $g_ado_db->GetAll($queryStr);
+        if (!is_array($rights) || sizeof($rights) <= 0) {
+            $rights = array();
+        }
+        foreach ($rights as $right) {
+            self::$m_defaultConfig[$right['right_define_name']] = 'N';
+        }
+
         if (empty($pluginConfig)) {
             $pluginConfig = true;
             foreach (CampPlugin::getPluginInfos() as $info) {

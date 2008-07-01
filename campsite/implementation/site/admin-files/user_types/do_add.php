@@ -25,9 +25,7 @@ if ($uType != '') {
 }
 
 $rights = array();
-$sectionRights = Section::GetRightsDefaultConfig();
 $rightsFields = User::GetDefaultConfig();
-$rightsFields = array_merge($rightsFields, $sectionRights);
 foreach ($rightsFields as $field=>$value) {
 	$val = Input::Get($field, 'string', 'off');
 	if ($val == 'on') {
