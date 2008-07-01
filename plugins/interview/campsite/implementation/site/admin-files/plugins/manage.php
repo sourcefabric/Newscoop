@@ -60,11 +60,18 @@ echo camp_html_breadcrumbs($crumbs);
 <P>
 
 <FORM name="plugin_upload" action="manage.php" method='POST' enctype='multipart/form-data'>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" width="95%">
-<tr><td><?php putGS('Upload new plugin'); ?><input type="file" name="package"></td><td><input type="submit" name="upload_package"></td></tr>
+<table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
+  <tr>
+    <td>
+      <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0" alt="<?php  putGS('Add new image'); ?>">
+      <?php putGS('Upload Plugin'); ?>
+      <input type="file" name="package" class="button">
+    </td>
+    <td valign="bottom">&nbsp;<input type="submit" name="upload_package" value="<?php putGS('Save') ?>" class="button"></td>
+  </tr>
 </table>
-<P>
 
+<P>
 <?php if (count($infos = CampPlugin::getPluginInfos()) > 0) { ?>
 <FORM name="plugins_enabled" action="manage.php">
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" width="95%">
