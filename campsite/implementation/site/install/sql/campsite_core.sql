@@ -786,6 +786,30 @@ INSERT INTO `ObjectTypes` VALUES (1,'article');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Plugins`
+--
+
+DROP TABLE IF EXISTS `Plugins`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `Plugins` (
+  `Name` varchar(255) NOT NULL,
+  `Version` varchar(255) NOT NULL,
+  `Enabled` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY  (`Name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `Plugins`
+--
+
+LOCK TABLES `Plugins` WRITE;
+/*!40000 ALTER TABLE `Plugins` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Plugins` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Publications`
 --
 
