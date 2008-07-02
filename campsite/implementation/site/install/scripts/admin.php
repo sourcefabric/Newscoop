@@ -94,7 +94,7 @@ if (($extension == '.php') || ($extension == '')) {
 		}
 		$call_script .= 'index.php';
 	}
-	$needs_menu = ! (in_array($call_script, $no_menu_scripts) || Input::Get('p_no_menu', 'boolean'));
+	$needs_menu = ! (in_array($call_script, $no_menu_scripts) || Input::Get('p_no_menu', 'boolean', false, true));
 
 	// Verify the file exists
 	$path_name = $Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script";
