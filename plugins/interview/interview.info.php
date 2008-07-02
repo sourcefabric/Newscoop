@@ -86,7 +86,7 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         CampInstallationBaseHelper::copyFiles($g_documentRoot.DIR_SEP.PLUGINS_DIR.'/interview/javascript', $g_documentRoot.'/javascript');
         $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
         $errors = CampInstallationBaseHelper::ImportDB($g_documentRoot.DIR_SEP.PLUGINS_DIR.DIR_SEP.'interview/install/sql/plugin_interview.sql', &$error_queries);
-        
+        unset($GLOBALS['g_db']);        
     }
     
     function plugin_interview_init()
