@@ -59,10 +59,16 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     if (isset($template)) {
         $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
     }
-    $subsType = $campsite->user->subscription->type == 'T' ? 'trial' : 'paid';
+    if ($campsite->user->defined && $campsite->user->subscription->defined) {
+        $subsType = $campsite->user->subscription->type == 'T' ? 'trial' : 'paid';
+    } else {
+        $subsType = null;
+    }
     $html = "<form name=\"edit_user\" action=\"" . $url->uri_path
-    . "\" method=\"post\" ".$p_params['html_code'].">\n"
-    ."<input type=\"hidden\" name=\"f_substype\" value=\"".$subsType."\" />\n";
+    . "\" method=\"post\" ".$p_params['html_code'].">\n";
+    if (!is_null($subsType)) {
+        $html .= "<input type=\"hidden\" name=\"f_substype\" value=\"".$subsType."\" />\n";
+    }
     if (isset($template)) {
         $html .= "<input type=\"hidden\" name=\"tpl\" value=\"".$template->identifier."\" />\n";
     }
