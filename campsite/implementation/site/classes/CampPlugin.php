@@ -65,6 +65,9 @@ class CampPlugin extends DatabaseObject {
                   FROM   $tblname";
 
         $res = $g_ado_db->execute($query);
+        if (!$res) {
+            return array();
+        }
         $plugins = array();
 
         while ($row = $res->FetchRow()) {
@@ -146,6 +149,9 @@ class CampPlugin extends DatabaseObject {
 
             foreach ($directories as $dirName) {
                 $dirName = "$g_documentRoot/$dirName";
+                if (!is_dir($dirName)) {
+                    continue;
+                }
 
                 $handle=opendir($dirName);
                 while ($entry = readdir($handle)) {
