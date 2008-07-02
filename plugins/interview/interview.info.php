@@ -63,7 +63,7 @@ $info = array(
         'init' => 'plugin_interview_init'
     ),
     'install' => 'plugin_interview_install',
-    'enable'  => 'plugin_interview_install',
+    'enable'  => '',
     'update'  => '',
     'disable' => '',
 );
@@ -84,6 +84,9 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
         CampInstallationBaseHelper::copyFiles($g_documentRoot.DIR_SEP.PLUGINS_DIR.'/interview/css', $g_documentRoot.'/css');
         CampInstallationBaseHelper::copyFiles($g_documentRoot.DIR_SEP.PLUGINS_DIR.'/interview/javascript', $g_documentRoot.'/javascript');
+        $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
+        $errors = CampInstallationBaseHelper::ImportDB($g_documentRoot.DIR_SEP.PLUGINS_DIR.DIR_SEP.'interview/install/sql/plugin_interview.sql', &$error_queries);
+        
     }
     
     function plugin_interview_init()

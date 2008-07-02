@@ -19,8 +19,7 @@
 -- Table structure for table `plugin_interview_interviews`
 --
 
-DROP TABLE IF EXISTS `plugin_interview_interviews`;
-CREATE TABLE `plugin_interview_interviews` (
+CREATE TABLE IF NOT EXISTS `plugin_interview_interviews` (
   `interview_id` int(10) unsigned NOT NULL auto_increment,
   `fk_language_id` int(10) unsigned NOT NULL,
   `fk_moderator_user_id` int(10) unsigned NOT NULL,
@@ -51,8 +50,7 @@ CREATE TABLE `plugin_interview_interviews` (
 -- Table structure for table `plugin_interview_items`
 --
 
-DROP TABLE IF EXISTS `plugin_interview_items`;
-CREATE TABLE `plugin_interview_items` (
+CREATE TABLE IF NOT EXISTS  `plugin_interview_items` (
   `item_id` int(10) unsigned NOT NULL auto_increment,
   `fk_interview_id` int(10) unsigned NOT NULL,
   `fk_questioneer_user_id` int(11) default NULL,
