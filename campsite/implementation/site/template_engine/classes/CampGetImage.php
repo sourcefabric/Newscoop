@@ -38,13 +38,14 @@ class CampGetImage
     {
         global $g_ado_db;
 
-        if (empty($p_articleNr) || empty($p_imageNr)) {
+        if (empty($p_articleNr) || empty($p_imageNr)
+        || !is_numeric($p_articleNr) || !is_numeric($p_imageNr)) {
             self::ExitError('Invalid parameters');
         }
 
         $query = 'SELECT IdImage FROM ArticleImages '
-            . 'WHERE NrArticle = ' . $p_articleNr
-            . ' AND Number = '.$p_imageNr;
+            . "WHERE NrArticle = '" . $g_ado_db->Escape($p_articleNr)."'"
+            . " AND Number = '".$g_ado_db->Escape($p_imageNr)."'";
         $idImage = $g_ado_db->GetOne($query);
 
         if (empty($idImage)) {
@@ -53,7 +54,7 @@ class CampGetImage
         }
 
         $query = 'SELECT ImageFileName, URL, ContentType FROM Images '
-            . 'WHERE Id = '.$idImage;
+            . "WHERE Id = '".$g_ado_db->Escape($idImage)."'";
         $imageMetaData = $g_ado_db->GetRow($query);
 
         if (empty($imageMetaData)) {
