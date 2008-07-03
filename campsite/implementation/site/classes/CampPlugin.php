@@ -17,12 +17,14 @@ define('PLUGINS_DIR', 'plugins');
 
 
 class CampPlugin extends DatabaseObject {
-    var $m_keyColumnNames = array('Name');
+    public $m_keyColumnNames = array('Name');
 
-    var $m_dbTableName = 'Plugins';
+    public $m_dbTableName = 'Plugins';
 
-    var $m_columnNames = array('Name', 'Version', 'Enabled');
-    
+    public $m_columnNames = array('Name', 'Version', 'Enabled');
+
+    static private $m_allPlugins = null;
+
     static protected $m_pluginInfos = null;
 
     public function CampPlugin($p_name = null, $p_version = null)
@@ -54,7 +56,7 @@ class CampPlugin extends DatabaseObject {
         }
     }
 
-    public function getAll()
+    static public function getAll()
     {
         global $g_ado_db;
 
@@ -77,7 +79,7 @@ class CampPlugin extends DatabaseObject {
         return $plugins;
     }
 
-    public function getEnabled()
+    static public function getEnabled()
     {
         $plugins = array();
 
@@ -110,7 +112,7 @@ class CampPlugin extends DatabaseObject {
         return $this->getProperty('Enabled') == 1 ? true : false;
     }
 
-    public function isPluginEnabled($p_name, $p_version = null)
+    static public function isPluginEnabled($p_name, $p_version = null)
     {
         $plugin = new CampPlugin($p_name, $p_version);
 
@@ -138,7 +140,7 @@ class CampPlugin extends DatabaseObject {
     }
 
 
-    public function getPluginInfos()
+    static public function getPluginInfos()
     {
         global $g_documentRoot;
         
@@ -169,12 +171,12 @@ class CampPlugin extends DatabaseObject {
         return self::$m_pluginInfos;
     }
     
-    public function clearPluginInfos()
+    static public function clearPluginInfos()
     {
         self::$m_pluginInfos = null;
     }
 
-    public function getPluginInfo($p_plugin_name = '')
+    static public function getPluginInfo($p_plugin_name = '')
     {
         if (!empty($p_plugin_name)) {
             $name = $p_plugin_name;
@@ -190,7 +192,7 @@ class CampPlugin extends DatabaseObject {
         return $info;
     }
 
-    public function initPlugins4TemplateEngine()
+    static public function initPlugins4TemplateEngine()
     {
         $context = CampTemplate::singleton()->context();
         $infos = self::getPluginInfos();
@@ -211,7 +213,7 @@ class CampPlugin extends DatabaseObject {
         }
     }
 
-    public function extendNoMenuScripts(&$p_no_menu_scripts)
+    static public function extendNoMenuScripts(&$p_no_menu_scripts)
     {
         foreach (self::getPluginInfos() as $info) {
             if (CampPlugin::isPluginEnabled($info['name'])) {
@@ -220,7 +222,7 @@ class CampPlugin extends DatabaseObject {
         }
     }
 
-    public function createPluginMenu(&$p_menu_root, $p_iconTemplateStr)
+    static public function createPluginMenu(&$p_menu_root, $p_iconTemplateStr)
     {
         global $ADMIN;
         global $g_user;
@@ -279,7 +281,7 @@ class CampPlugin extends DatabaseObject {
         }
     }
 
-    public function extractPackage($p_uploaded_package)
+    static public function extractPackage($p_uploaded_package)
     {
         global $g_documentRoot;
 
