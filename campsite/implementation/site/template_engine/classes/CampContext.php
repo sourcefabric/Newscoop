@@ -672,7 +672,7 @@ final class CampContext
      * @param array $p_objectType
      * structure: array(object name => object class name) 
      */
-    final public function registerObjectType(array $p_objectType)
+    final private function registerObjectType(array $p_objectType)
     {        
         try {
             // check the structure
@@ -696,7 +696,7 @@ final class CampContext
      * @param array $p_listObject
      * structure: array(list object name => array('class' => class name, 'list' => list class name))
      */
-    final public function registerListObject(array $p_listObject)
+    final private function registerListObject(array $p_listObject)
     {       
         try {
             // check the structure
