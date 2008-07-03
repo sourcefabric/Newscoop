@@ -60,6 +60,10 @@ class CampPlugin extends DatabaseObject {
     {
         global $g_ado_db;
 
+        if (!is_null(self::$m_allPlugins)) {
+            return self::$m_allPlugins;
+        }
+
         $CampPlugin = new CampPlugin();
         $tblname = $CampPlugin->m_dbTableName;
 
@@ -70,13 +74,13 @@ class CampPlugin extends DatabaseObject {
         if (!$res) {
             return array();
         }
-        $plugins = array();
+        self::$m_allPlugins = array();
 
         while ($row = $res->FetchRow()) {
-            $plugins[] = new CampPlugin($row['Name']);;
+            self::$m_allPlugins[] = new CampPlugin($row['Name']);;
         }
 
-        return $plugins;
+        return self::$m_allPlugins;
     }
 
     static public function getEnabled()
