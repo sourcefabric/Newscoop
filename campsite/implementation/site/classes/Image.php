@@ -19,6 +19,7 @@ require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/ArticleImage.php');
 require_once('HTTP/Client.php');
 
+
 /**
  * @package Campsite
  */
@@ -456,7 +457,7 @@ class Image extends DatabaseObject {
 	 	if (!is_null($p_id)) {
 	 		// Updating the image
 	 		$image = new Image($p_id);
-	 		$image->update($p_attributes);
+	 		$image->update($p_attributes, false);
 	    	// Remove the old image & thumbnail because
 			// the new file may have a different file extension.
 			if (file_exists($image->getImageStorageLocation())) {
@@ -490,54 +491,61 @@ class Image extends DatabaseObject {
 	    $image->setProperty('ImageFileName', basename($target), false);
 	    $image->setProperty('ThumbnailFileName', basename($thumbnail), false);
 
-	    if ($p_isLocalFile) {
-	    	if (!copy($p_fileVar['tmp_name'], $target)) {
-	        	if (is_null($p_id)) {
-	        		$image->delete();
-	        	}
-	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target),
-	    							  CAMP_ERROR_CREATE_FILE);
-	    	}
-	    } else {
-	        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
-	        	if (is_null($p_id)) {
-	        		$image->delete();
-	        	}
-	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target),
-	    							  CAMP_ERROR_CREATE_FILE);
-	        }
-	    }
-		chmod($target, 0644);
-
-		$createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
-		if ($createMethodName != null) {
-			$imageHandler = $createMethodName($target);
-            if ($imageHandler == false) {
-                return new PEAR_Error(camp_get_error_message(CAMP_ERROR_UPLOAD_FILE, $p_fileVar['name']), CAMP_ERROR_UPLOAD_FILE);
-            }
-			$thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'],
-												 $Campsite['THUMBNAIL_MAX_SIZE']);
-			if (PEAR::isError($thumbnailImage)) {
-				return $result;
-			}
-			$result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
-			if (PEAR::isError($result)) {
-				return $result;
-			}
-           	chmod($thumbnail, 0644);
-		} elseif ($Campsite['IMAGEMAGICK_INSTALLED']) {
-            $cmd = $Campsite['THUMBNAIL_COMMAND'].' '.$target.' '.$thumbnail;
-            system($cmd);
-            if (file_exists($thumbnail)) {
-            	chmod($thumbnail, 0644);
+	    try {
+    	    if ($p_isLocalFile) {
+    	    	if (!copy($p_fileVar['tmp_name'], $target)) {
+    	    		throw new Exception(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target),
+    	    							CAMP_ERROR_CREATE_FILE);
+    	    	}
+    	    } else {
+    	        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
+    	    		throw new Exception(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target),
+    	    							CAMP_ERROR_CREATE_FILE);
+    	        }
+    	    }
+    		chmod($target, 0644);
+    
+    		$createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
+    		if ($createMethodName != null) {
+    			$imageHandler = $createMethodName($target);
+                if ($imageHandler == false) {
+                    throw new Exception(camp_get_error_message(CAMP_ERROR_UPLOAD_FILE, $p_fileVar['name']), CAMP_ERROR_UPLOAD_FILE);
+                }
+    			$thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'],
+    												 $Campsite['THUMBNAIL_MAX_SIZE']);
+    			if (PEAR::isError($thumbnailImage)) {
+    				throw new Exception($thumbnailImage->getMessage(), $thumbnailImage->getCode());
+    			}
+    			$result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
+    			if (PEAR::isError($result)) {
+    				throw new Exception($result->getMessage(), $result->getCode());
+    			}
+               	chmod($thumbnail, 0644);
+    		} elseif ($Campsite['IMAGEMAGICK_INSTALLED']) {
+                $cmd = $Campsite['THUMBNAIL_COMMAND'].' '.$target.' '.$thumbnail;
+                system($cmd);
+                if (file_exists($thumbnail)) {
+                	chmod($thumbnail, 0644);
+                } else {
+    	    		throw new Exception(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $thumbnail),
+    	    							CAMP_ERROR_CREATE_FILE);
+                }
             } else {
-	    		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $thumbnail),
-	    							  CAMP_ERROR_CREATE_FILE);
+            	throw new Exception(getGS("Image type $1 is not supported.",
+    								image_type_to_mime_type($p_imageType)));
             }
-        } else {
-        	return new PEAR_Error(getGS("Image type $1 is not supported.",
-								  image_type_to_mime_type($p_imageType)));
-        }
+	    } catch (Exception $ex) {
+	        if (file_exists($target)) {
+	            @unlink($target);
+	        }
+	        if (file_exists($thumbnail)) {
+	            @unlink($thumbnail);
+	        }
+            if (is_null($p_id)) {
+                $image->delete();
+            }
+	        return new PEAR_Error($ex->getMessage(), $ex->getCode());
+	    }
         $image->commit();
 		$logtext = getGS('The image $1 has been added.',
 						$image->m_data['Description']." (".$image->m_data['Id'].")");
