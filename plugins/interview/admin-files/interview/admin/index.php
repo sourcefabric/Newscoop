@@ -63,6 +63,8 @@ $parameters = array(
     'order' => "$f_order ASC"
 );
 
+define('PLUGIN_INTERVIEW_ADMIN_MODE', true);
+
 $InterviewsList = new InterviewsList($f_start, $parameters);
 $count = $InterviewsList->getTotalCount();
 $pager =& new SimplePager($count, $f_length, "f_start", "index.php?f_order=$f_order&amp;", false);

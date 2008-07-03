@@ -17,7 +17,7 @@
 
   <link rel="stylesheet" type="text/css" href="/{{ $siteinfo.templates_path }}/css/style.css" />
   
-  {{ if $campsite->interviewstatus_action->defined }}
+    {{ if $campsite->interviewstatus_action->defined }}
     <script language="javascript">
     {{ if $campsite->interviewstatus_action->is_error }}
         alert("{{ $campsite->interviewstatus_action->error_message }}");
@@ -42,8 +42,8 @@
     </div>
   </td>
   <td>
-    <div id="searchform">
-    {{ search_form template="search.tpl" submit_button="Search" html_code="class=\"submitbutton\"" }}
+    <div id="genericform">
+    {{ search_form template="search.tpl" submit_button="Search" button_html_code="class=\"submitbutton\"" }}
       {{ camp_edit object="search" attribute="keywords" }}
     {{ /search_form }}
     </div>

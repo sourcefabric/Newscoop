@@ -71,13 +71,13 @@
             {{ /if }}
                 
             <h4>Interviews awaiting questions:</h4>
-            {{ include file='interview/interviews-list.tpl' _constraints="status is pending questions_begin smaller_equal curdate() questions_end greater_equal curdate() language is current()"}} 
+            {{ include file='interview/interviews-list.tpl' _constraints="status is pending questions_begin smaller_equal now() questions_end greater_equal now()"}} 
         
             <h4>Interviews awaiting answers:</h4>
-            {{ include file='interview/interviews-list.tpl' _constraints="status is pending interview_begin smaller_equal curdate() interview_end greater_equal curdate() language is current()"}}
+            {{ include file='interview/interviews-list.tpl' _constraints="status is pending interview_begin smaller_equal now() interview_end greater_equal now()"}}
             
             <h4>Interviews already answered:</h4>
-            {{ include file='interview/interviews-list.tpl' _constraints="status is published language is current()"}}
+            {{ include file='interview/interviews-list.tpl' _constraints="status is published"}}
         {{ /if }}  
         
       </td>

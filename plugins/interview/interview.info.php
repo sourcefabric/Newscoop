@@ -66,6 +66,7 @@ $info = array(
     'enable'  => '',
     'update'  => '',
     'disable' => '',
+    'uninstall' => 'plugin_interview_uninstall'
 );
 
 
@@ -86,22 +87,41 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         CampInstallationBaseHelper::copyFiles($g_documentRoot.DIR_SEP.PLUGINS_DIR.'/interview/javascript', $g_documentRoot.'/javascript');
         $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
         $errors = CampInstallationBaseHelper::ImportDB($g_documentRoot.DIR_SEP.PLUGINS_DIR.DIR_SEP.'interview/install/sql/plugin_interview.sql', &$error_queries);
-        unset($GLOBALS['g_db']);        
+        unset($GLOBALS['g_db']);       
     }
     
-    function plugin_interview_init()
+    function plugin_interview_uninstall()
     {
-        $context = CampTemplate::singleton()->context();
+        global $LiveUserAdmin, $g_documentRoot, $g_ado_db;
         
+        foreach (array('plugin_interview_notify', 'plugin_interview_guest', 'plugin_interview_moderator', 'plugin_interview_admin') as $right_def_name) {
+            $filter = array(
+                "fields" => array("right_id"),
+                "filters" => array("right_define_name" => $right_def_name)
+            );
+            $rights = $LiveUserAdmin->getRights($filter);
+            if(!empty($rights)) {
+                $LiveUserAdmin->removeRight(array('right_id' => $rights[0]['right_id']));
+            }
+        }
+        
+        $g_ado_db->execute('DROP TABLE plugin_interview_interviews');
+        $g_ado_db->execute('DROP TABLE plugin_interview_items');
+        
+        system('rm -rf '.$g_documentRoot.DIR_SEP.PLUGINS_DIR.'/interview/');    
+    }
+    
+    function plugin_interview_init(&$p_context)
+    {      
         $interview_id = Input::Get("f_interview_id", "int");
         $interviewitem_id = Input::Get("f_interviewitem_id", "int");
 
-        $context->interviewitem = new MetaInterviewItem($interviewitem_id, $interview_id);
+        $p_context->interviewitem = new MetaInterviewItem($interviewitem_id, $interview_id);
 
-        if ($context->interviewitem->defined) {
-            $context->interview = new MetaInterview($context->interviewitem->interview_id);
+        if ($p_context->interviewitem->defined) {
+            $p_context->interview = new MetaInterview($context->interviewitem->interview_id);
         } else {
-            $context->interview = new MetaInterview($interview_id);
+            $p_context->interview = new MetaInterview($interview_id);
         }
     }
 }
