@@ -226,7 +226,33 @@ class CampPlugin extends DatabaseObject {
     {
         global $ADMIN;
         global $g_user;
+        
+        $root_menu = false;
+        $plugin_infos = self::getPluginInfos();
+        
+        if ($g_user->hasPermission('plugin_manager')) {
+            $root_menu = true;   
+        }
 
+        
+        foreach ($plugin_infos as $info) {
+            if (CampPlugin::isPluginEnabled($info['name'])) {
+                if (isset($info['menu']['permission']) && $g_user->hasPermission($info['menu']['permission'])) {
+                    $root_menu = true;
+                } elseif (is_array($info['menu']['sub'])) {
+                    foreach ($info['menu']['sub'] as $menu_info) {
+                        if ($g_user->hasPermission($menu_info['permission'])) {
+                            $root_menu = true;
+                        }
+                    }
+                }
+            }
+        }
+        
+        if (empty($root_menu)) {
+            return;   
+        }     
+                    
         $p_menu_root->addSplit();
         $menu_modules =& DynMenuItem::Create("Plugins", "",
         array("icon" => sprintf($p_iconTemplateStr, "plugin.png"), "id" => "plugins"));
@@ -239,8 +265,6 @@ class CampPlugin extends DatabaseObject {
             $menu_modules->addItem($menu_item);
 
         }
-
-        $plugin_infos = self::getPluginInfos();
 
         foreach ($plugin_infos as $info) {
             if (CampPlugin::isPluginEnabled($info['name'])) {

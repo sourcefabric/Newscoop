@@ -271,8 +271,8 @@ if ($showUserMenu) {
 
 // plugins: extend menu
 CampPlugin::createPluginMenu($menu_root, $iconTemplateStr);
-$menu_root->addSplit();
 
+$menu_root->addSplit();
 $menu_help =& DynMenuItem::Create(getGS("Help"), "",
     array("icon" => sprintf($iconTemplateStr, "help.png"), "id" => "help"));
 $menu_root->addItem($menu_help);
