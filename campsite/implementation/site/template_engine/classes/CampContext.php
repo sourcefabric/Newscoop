@@ -117,6 +117,18 @@ final class CampContext
         if (!is_null($this->m_properties)) {
             return;
         }
+        
+        // register plugin objects and listobjects
+        foreach (CampPlugin::GetPluginInfos() as $info) {
+            if (CampPlugin::IsPluginEnabled($info['name'])) {
+                foreach ($info['template_engine']['objecttypes'] as $objecttype) {
+                    $this->registerObjectType($objecttype);
+                }
+                foreach ($info['template_engine']['listobjects'] as $listobject) {
+                    $this->registerListObject($listobject);
+                }
+            }
+        }
 
         $this->m_properties['htmlencoding'] = false;
         $this->m_properties['subs_by_type'] = null;
@@ -176,6 +188,13 @@ final class CampContext
         // Initialize the default comment attribute at the end, after the
         // submit comment action had run.
         $this->m_readonlyProperties['default_comment'] = $this->comment;
+        
+        // initialize plugins
+        foreach (CampPlugin::GetPluginInfos() as $info) {
+            if (CampPlugin::IsPluginEnabled($info['name']) && function_exists($info['template_engine']['init'])) {
+                call_user_func($info['template_engine']['init'], &$this);
+            }
+        }
     } // fn __construct
 
 

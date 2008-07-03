@@ -44,9 +44,9 @@ class CampPlugin extends DatabaseObject {
     {
         // Create the record
         $values = array(
-        'Name' => $p_name,
-        'Version' => $p_version,
-        'Enabled' => $p_enabled ? 1 : 0
+            'Name' => $p_name,
+            'Version' => $p_version,
+            'Enabled' => $p_enabled ? 1 : 0
         );
 
 
@@ -56,7 +56,7 @@ class CampPlugin extends DatabaseObject {
         }
     }
 
-    static public function getAll()
+    static public function GetAll()
     {
         global $g_ado_db;
 
@@ -83,7 +83,7 @@ class CampPlugin extends DatabaseObject {
         return self::$m_allPlugins;
     }
 
-    static public function getEnabled()
+    static public function GetEnabled()
     {
         $plugins = array();
 
@@ -95,7 +95,7 @@ class CampPlugin extends DatabaseObject {
         return $plugins;
     }
 
-    public function getBasePath()
+    public function GetBasePath()
     {
         return PLUGINS_DIR.'/'.$this->getName();
     }
@@ -110,19 +110,26 @@ class CampPlugin extends DatabaseObject {
         return $this->getProperty('Version');
     }
 
-
     public function isEnabled()
     {
         return $this->getProperty('Enabled') == 1 ? true : false;
     }
 
-    static public function isPluginEnabled($p_name, $p_version = null)
+    static public function IsPluginEnabled($p_name, $p_version = null)
     {
         $plugin = new CampPlugin($p_name, $p_version);
 
         return $plugin->isEnabled();
     }
 
+    public function install()
+    {
+        $info = $this->getPluginInfo();
+        if (function_exists($info['install'])) {
+            call_user_func($info['install']);
+        }
+    }
+    
     public function enable()
     {
         $this->setProperty('Enabled', 1);
@@ -142,9 +149,19 @@ class CampPlugin extends DatabaseObject {
             call_user_func($info['disable']);
         }
     }
+    
+    public function uninstall()
+    {
+        $info = $this->getPluginInfo();
+        if (function_exists($info['uninstall'])) {
+            call_user_func($info['uninstall']);
+        }
+        
+        self::clearPluginInfos();        
+        $this->delete();   
+    }
 
-
-    static public function getPluginInfos()
+    static public function GetPluginInfos()
     {
         global $g_documentRoot;
         
@@ -175,12 +192,12 @@ class CampPlugin extends DatabaseObject {
         return self::$m_pluginInfos;
     }
     
-    static public function clearPluginInfos()
+    static public function ClearPluginInfos()
     {
         self::$m_pluginInfos = null;
     }
 
-    static public function getPluginInfo($p_plugin_name = '')
+    public function getPluginInfo($p_plugin_name = '')
     {
         if (!empty($p_plugin_name)) {
             $name = $p_plugin_name;
@@ -196,28 +213,7 @@ class CampPlugin extends DatabaseObject {
         return $info;
     }
 
-    static public function initPlugins4TemplateEngine()
-    {
-        $context = CampTemplate::singleton()->context();
-        $infos = self::getPluginInfos();
-
-        foreach ($infos as $info) {
-            if (CampPlugin::isPluginEnabled($info['name'])) {
-
-                foreach ($info['template_engine']['objecttypes'] as $objecttype) {
-                    $context->registerObjectType($objecttype);
-                }
-                foreach ($info['template_engine']['listobjects'] as $listobject) {
-                    $context->registerListObject($listobject);
-                }
-                if (function_exists($info['template_engine']['init'])) {
-                    call_user_func($info['template_engine']['init']);
-                }
-            }
-        }
-    }
-
-    static public function extendNoMenuScripts(&$p_no_menu_scripts)
+    static public function ExtendNoMenuScripts(&$p_no_menu_scripts)
     {
         foreach (self::getPluginInfos() as $info) {
             if (CampPlugin::isPluginEnabled($info['name'])) {
@@ -226,7 +222,7 @@ class CampPlugin extends DatabaseObject {
         }
     }
 
-    static public function createPluginMenu(&$p_menu_root, $p_iconTemplateStr)
+    static public function CreatePluginMenu(&$p_menu_root, $p_iconTemplateStr)
     {
         global $ADMIN;
         global $g_user;
@@ -285,53 +281,44 @@ class CampPlugin extends DatabaseObject {
         }
     }
 
-    static public function extractPackage($p_uploaded_package)
+    static public function ExtractPackage($p_uploaded_package, &$p_log = null)
     {
         global $g_documentRoot;
-
-        /*
-        $rar_file = rar_open($p_uploaded_package) or die("Can't open Rar archive");
-        $entries = rar_list($rar_file);
-
-        foreach ($entries as $entry) {
-        $log .= '<b>Filename:</b> ' . $entry->getName();
-        #$log .= '  <b>Packed size:</b> ' . $entry->getPackedSize();
-        #$log .= '  <b>Unpacked size:</b> ' . $entry->getUnpackedSize();
-
-        if ($entry->extract($g_documentRoot.DIR_SEP.PLUGINS_DIR)) {
-        $log .= '<font color="green">OK</font><p>';
-        } else {
-        $log .= '<font color="red">FAILED</font><p>';
-        }
-        }
-
-        rar_close($rar_file);
-
-        return $log;
-        */
-
-        /*
-        // Open archives/test.tar
-        require_once($g_documentRoot.'/include/archive/archive.php');
-        $tar = new tar_file($p_uploaded_package);
-        // Extract in memory
-        $tar->set_options(array('overwrite' => 1, 'basedir' => $g_documentRoot.DIR_SEP.PLUGINS_DIR));
-        // Extract contents of archive to disk
-        $tar->extract_files();
-
-        return array('error' => $tar->error, 'files' => $tar->files);
-        */
+        
+        $plugin_name = false;
 
         require_once('Archive/Tar.php');
         $tar = new Archive_Tar($p_uploaded_package);
-        if (($file_list = $tar->ListContent()) != 0) {
+        
+        
+        if (($file_list = $tar->ListContent()) == 0) {
+            $p_log = getGS('The uploaded file format is unsupported.');
+            return false;
+        } else {
             foreach ($file_list as $v) {
-                $log .= sprintf("Name: %s  Size: %d   modtime: %s mode: %s<br>",
+                
+                if (preg_match('/[^\/]+\/([^.]+)\.info\.php/', $v['filename'], $matches)) {
+                    $plugin_name = $matches[1];    
+                }
+                
+                $p_log .= sprintf("Name: %s  Size: %d   modtime: %s mode: %s<br>",
                 $v['filename'],$v['size'],$v['mtime'],$v['mode']);
             }
         }
+        
+        if ($plugin_name === false) {
+            $p_log = getGS('The uploaded archive does not contain an valid campsite plugin.');
+            return false;    
+        }
+        
         $tar->extract($g_documentRoot.DIR_SEP.PLUGINS_DIR);
-        return $log;
+        
+        CampPlugin::clearPluginInfos();
+        
+        $Plugin = new CampPlugin($plugin_name);
+        $Plugin->install();
+                
+        return $Plugin;
     }
 }
 

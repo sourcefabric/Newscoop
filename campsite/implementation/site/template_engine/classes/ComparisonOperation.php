@@ -73,14 +73,17 @@ class ComparisonOperation
 	{
 	    // some values have to be computed
 	    switch (strtolower($this->m_rightOperand)) {
-	       case 'now()':   
-	       case 'curdate()':   
+	        
+	       case 'now()': 
+	           $this->m_rightOperand = strftime('%Y-%m-%d %H:%M:%S');
+	       break;
+	       
+	       case 'curdate()':
+	           $this->m_rightOperand = strftime('%Y-%m-%d');    
+	       break;
+	       
 	       case 'curtime()':
-	           // those special values are mapped to correspondending mysql functions
-	           global $g_ado_db;
-	           $queryStr = "SELECT $this->m_rightOperand AS value";
-	           $res = $g_ado_db->GetRow($queryStr);
-	           $this->m_rightOperand = $res['value'];
+	           $this->m_rightOperand = strftime('%H:%M:%S');
 	       break;
 	       
 	       case 'current()':

@@ -47,8 +47,17 @@ if (Input::Get('save')) {
 
 if (Input::Get('upload_package')) {
     $file = $_FILES['package'];
-    $log = CampPlugin::extractPackage($file['tmp_name']);
-    CampPlugin::clearPluginInfos();    
+    if ($Plugin = CampPlugin::extractPackage($file['tmp_name'], &$log)) {
+        $success = getGS('The plugin $1 was sucessfully installed.', $Plugin->getName());
+    } else {
+        $error = $log;   
+    }
+    //$Plugin->enable();    
+}
+
+if (Input::Get('p_uninstall')) {
+    $Plugin = new CampPlugin(Input::Get('p_plugin', 'string'));
+    $Plugin->uninstall();    
 }
 
 $crumbs = array();
@@ -58,7 +67,6 @@ echo camp_html_breadcrumbs($crumbs);
 
 ?>
 <P>
-
 <FORM name="plugin_upload" action="manage.php" method='POST' enctype='multipart/form-data'>
 <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
   <tr>
@@ -67,9 +75,29 @@ echo camp_html_breadcrumbs($crumbs);
       <?php putGS('Upload Plugin'); ?>
       <input type="file" name="package" class="button">
     </td>
-    <td valign="bottom">&nbsp;<input type="submit" name="upload_package" value="<?php putGS('Save') ?>" class="button"></td>
+    <td valign="bottom">&nbsp;<input type="submit" name="upload_package" value="<?php putGS('Upload') ?>" class="button"></td>
   </tr>
 </table>
+
+<?php
+if ($success) {
+    ?>
+    <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
+      <tr>
+        <td class="info_message" ><?php echo $success ?></td>
+      </tr>
+   </table>
+   <?php
+} else {
+    ?>
+    <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
+      <tr>
+        <td class="error_message" ><?php echo $error ?></td>
+      </tr>
+   </table>
+   <?php  
+}
+?>
 
 <P>
 <?php if (count($infos = CampPlugin::getPluginInfos()) > 0) { ?>
@@ -80,6 +108,7 @@ echo camp_html_breadcrumbs($crumbs);
         <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Version"); ?></B></TD>
         <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Description"); ?></B></TD>
         <TD align="center" VALIGN="TOP"><B><?php  putGS("Enabled"); ?></B></TD>
+        <TD align="center" VALIGN="TOP"><B><?php  putGS("Uninstall"); ?></B></TD>
     </TR>
     <?php
     $color=0;
@@ -107,12 +136,18 @@ echo camp_html_breadcrumbs($crumbs);
                 
                 <input type="checkbox" name="p_enabled[<?php p(htmlspecialchars($info['name']))?>]" <?php p($checked) ?>>
             </TD>
+            
+            <TD  width="80px" align="center">
+               <a href="manage.php?p_plugin=<?php p(htmlspecialchars($info['name']))?>&amp;p_uninstall=1" onClick="return confirm('<?php putGS('Are you sure to uninstall this plugin? All plugin data will be deleted !') ?>')">
+                 <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete plugin')?>" TITLE="<?php putGS('Delete plugin') ?>">
+               </a>
+            </TD>
         </TR>
     <?php
     }
     ?>
     <tr class="table_list_header">
-        <td colspan="4" align="center">
+        <td colspan="5" align="center">
             <input type="submit" name="save" value="<?php putGS('Save') ?>" class="button">
         </td>
     </tr>

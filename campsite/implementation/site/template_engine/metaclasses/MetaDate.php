@@ -92,7 +92,7 @@ final class MetaDate
         $p_value = trim($p_value);
         
         // curdate() is an value which have to be computed
-        if (strtolower($p_value) == 'curdate()') {
+        if (preg_match('/now\(\)|curdate\(\)|curtime\(\)/i', $p_value)) {
             return true;   
         }
         
