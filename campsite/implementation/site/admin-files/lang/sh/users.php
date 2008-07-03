@@ -1,4 +1,6 @@
 <?php 
+regGS("Click here to use existing user type permissions (discard section customization)", "");
+regGS("Click here to customize user permissions per section", "");
 regGS("User may clear up the system cache", "");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "");
 regGS("You do not have the right to sync Campsite and Phorum users.", "");
@@ -190,7 +192,6 @@ regGS("User may insert horizontal rules", "Korisnik može da ubacuje horizontaln
 regGS("User may change the font color", "Korisnik može da menja boju slova");
 regGS("User may use superscripts", "Korisink može da koristi tekst u eksponentu");
 regGS("User may use subscripts", "Korisink može da koristi tekst u imeniocu");
-regGS("User may restart the template engine", "Korisnik može restartovati  šablon-mašinu");
 regGS("Miscellaneous", "Razno");
 regGS("Staff/Subscribers Management", "Upravljanje saradničkim/pretplatničkim nalozima");
 regGS("Editor Basic Settings", "Osnovno podešavanje editora");

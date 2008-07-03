@@ -1,4 +1,5 @@
 <?php 
+regGS("Are you sure you want to make $1 a $2 field?", "Are you sure you want to make $1 a $2 field?");
 regGS("Is Content", "Is Content");
 regGS("Back to Article Types List", "Back to Article Types List");
 regGS("show", "show");

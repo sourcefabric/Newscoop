@@ -265,4 +265,6 @@ regGS("Please take a minute to send us an email.", "Please take a minute to send
 regGS("(optional)", "(optional)");
 regGS("The URL you entered is invalid: '$1'", "The URL you entered is invalid: '$1'");
 regGS("There was an error logging in to the Campcaster server", "There was an error logging in to the Campcaster server");
+regGS("Reads", "Reads");
+regGS("Plugins", "Plugins");
 ?>

@@ -408,4 +408,6 @@ regGS("New Field", "Nieuw Veld");
 regGS("Add New Field", "Voeg nieuw veld toe");
 regGS("No such section.", "Sectie bestaat niet.");
 regGS("There was an error logging in to the Campcaster server", "");
+regGS("Reads", "");
+regGS("Plugins", "");
 ?>

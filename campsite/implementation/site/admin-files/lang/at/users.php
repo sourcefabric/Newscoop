@@ -1,4 +1,6 @@
 <?php 
+regGS("Click here to use existing user type permissions (discard section customization)", "");
+regGS("Click here to customize user permissions per section", "");
 regGS("User may clear up the system cache", "");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "");
 regGS("You do not have the right to sync Campsite and Phorum users.", "");
@@ -189,7 +191,6 @@ regGS("User may insert horizontal rules", "User darf horizontale Linien einfüge
 regGS("User may change the font color", "User darf die Zeichenfarbe verändern");
 regGS("User may use superscripts", "User darf Zeichen hochstellen");
 regGS("User may use subscripts", "User darf Zeichen in Kleinschrift umwandeln");
-regGS("User may restart the template engine", "User darf das Template-Engine neustarten");
 regGS("Miscellaneous", "Verschiedenes");
 regGS("Staff/Subscribers Management", "Personal / Abonnementen verwalten");
 regGS("Editor Basic Settings", "Editor Voreinstellungen");

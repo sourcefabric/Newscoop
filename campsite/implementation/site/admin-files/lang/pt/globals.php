@@ -279,4 +279,6 @@ regGS("There are $1 keyword(s) left.", "Existe(m) ainda $1 Palavra(s)-Chave.");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nome <br> (Carregue para Alterar)");
 regGS("New field", "Novo Campo");
 regGS("There was an error logging in to the Campcaster server", "");
+regGS("Reads", "");
+regGS("Plugins", "");
 ?>

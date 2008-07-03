@@ -1,4 +1,6 @@
 <?php 
+regGS("Click here to use existing user type permissions (discard section customization)", "");
+regGS("Click here to customize user permissions per section", "");
 regGS("User may clear up the system cache", "");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "");
 regGS("You do not have the right to sync Campsite and Phorum users.", "");
@@ -146,7 +148,6 @@ regGS("User may insert horizontal rules", "사용자가 수평줄자를 삽입�
 regGS("User may change the font color", "사용자가 글자 색을 수정합니다. ");
 regGS("User may use superscripts", "사용자가 윗첨자를 사용합니다.");
 regGS("User may use subscripts", "사용자가 아랫첨자를 사용합니다.");
-regGS("User may restart the template engine", "사용자가 템플레이트 엔진을 재시동합니다. ");
 regGS("Miscellaneous", "기타");
 regGS("Staff/Subscribers Management", "스탬/구독자 관리");
 regGS("Editor Basic Settings", "에디터 기본 설정");

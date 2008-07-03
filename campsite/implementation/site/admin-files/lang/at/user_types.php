@@ -1,4 +1,6 @@
 <?php 
+regGS("There are no sections", "");
+regGS("There are no issues", "");
 regGS("User Type '$1' successfully deleted", "");
 regGS("Permissions successfully modified", "");
 regGS("User types", "Benutzertypen");

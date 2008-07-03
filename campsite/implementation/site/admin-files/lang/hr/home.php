@@ -1,4 +1,7 @@
 <?php 
+regGS("There are currently no articles in statistics.", "");
+regGS("Publish date", "");
+regGS("Most Popular Articles", "");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "");
 regGS("Clear System Cache", "");
 regGS("Campsite cache was cleaned up", "");

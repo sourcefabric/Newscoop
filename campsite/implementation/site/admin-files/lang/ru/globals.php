@@ -280,4 +280,6 @@ regGS("There are $1 keyword(s) left.", "Осталось $1 ключевое(-ы
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(Щелкнуть для правки)</SMALL>:ru");
 regGS("New field", "Новое поле");
 regGS("There was an error logging in to the Campcaster server", "");
+regGS("Reads", "");
+regGS("Plugins", "");
 ?>

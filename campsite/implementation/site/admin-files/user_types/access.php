@@ -123,7 +123,7 @@ foreach ($section_rights as $publication => $issues) {
 ?>
 <tr>
     <td colspan="2" style="padding-left: 10px;">
-    <?php putGS("There is no issues"); ?>
+    <?php putGS("There are no issues"); ?>
     </td>
 </tr>
 <?php
@@ -140,7 +140,7 @@ foreach ($section_rights as $publication => $issues) {
 ?>
 <tr>
     <td colspan="2" style="padding-left: 20px;">
-    <?php putGS("There is no sections"); ?>
+    <?php putGS("There are no sections"); ?>
     </td>
 </tr>
 <?php

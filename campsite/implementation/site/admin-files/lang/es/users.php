@@ -1,4 +1,6 @@
 <?php 
+regGS("Click here to use existing user type permissions (discard section customization)", "");
+regGS("Click here to customize user permissions per section", "");
 regGS("User may clear up the system cache", "");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "");
 regGS("You do not have the right to sync Campsite and Phorum users.", "");
@@ -146,7 +148,6 @@ regGS("User may insert horizontal rules", "El usuario puede insertar una línea 
 regGS("User may change the font color", "El usuario puede cambiar el color de la fuente");
 regGS("User may use superscripts", "El usuario puede usar superscripts");
 regGS("User may use subscripts", "El usuario puede usar subscripts");
-regGS("User may restart the template engine", "El usuario puede reiniciar el motor de templates");
 regGS("Miscellaneous", "Misceláneo");
 regGS("Staff/Subscribers Management", "Manejo de cuentas de miembros del equipo/suscriptores");
 regGS("Editor Basic Settings", "Preferencias básicas del editor");

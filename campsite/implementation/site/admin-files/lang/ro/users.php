@@ -1,4 +1,6 @@
 <?php 
+regGS("Click here to use existing user type permissions (discard section customization)", "");
+regGS("Click here to customize user permissions per section", "");
 regGS("User may clear up the system cache", "");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "");
 regGS("You do not have the right to sync Campsite and Phorum users.", "");
@@ -146,7 +148,6 @@ regGS("User may insert horizontal rules", "Utilizatorul poate insera linii orizo
 regGS("User may change the font color", "Utilizatorul poate schimba culoarea font-ului");
 regGS("User may use superscripts", "Utilizatorul poate folosi stilul exponent");
 regGS("User may use subscripts", "Utilizatorul poate folosi stilul indice");
-regGS("User may restart the template engine", "Utilizatorul poate reporni baza de date a şabloanelor");
 regGS("Miscellaneous", "Diverse");
 regGS("Staff/Subscribers Management", "Administrarea echipei/abonaţilor");
 regGS("Editor Basic Settings", "Caracteristicile de bază ale uneltei de editare");
