@@ -87,7 +87,7 @@ class CampPlugin extends DatabaseObject {
     {
         $plugins = array();
 
-        foreach (self::getAll() as $CampPlugin) {
+        foreach (self::GetAll() as $CampPlugin) {
             if ($CampPlugin->isEnabled()) {
                 $plugins[] = $CampPlugin;
             }
@@ -95,7 +95,7 @@ class CampPlugin extends DatabaseObject {
         return $plugins;
     }
 
-    public function GetBasePath()
+    public function getBasePath()
     {
         return PLUGINS_DIR.'/'.$this->getName();
     }
@@ -157,7 +157,7 @@ class CampPlugin extends DatabaseObject {
             call_user_func($info['uninstall']);
         }
         
-        self::clearPluginInfos();        
+        self::ClearPluginInfos();        
         $this->delete();   
     }
 
@@ -207,7 +207,7 @@ class CampPlugin extends DatabaseObject {
             return false;
         }
 
-        $infos = self::getPluginInfos();
+        $infos = self::GetPluginInfos();
         $info = $infos[$name];
 
         return $info;
@@ -215,8 +215,8 @@ class CampPlugin extends DatabaseObject {
 
     static public function ExtendNoMenuScripts(&$p_no_menu_scripts)
     {
-        foreach (self::getPluginInfos() as $info) {
-            if (CampPlugin::isPluginEnabled($info['name'])) {
+        foreach (self::GetPluginInfos() as $info) {
+            if (CampPlugin::IsPluginEnabled($info['name'])) {
                 $p_no_menu_scripts = array_merge($p_no_menu_scripts, $info['no_menu_scripts']);
             }
         }
@@ -228,7 +228,7 @@ class CampPlugin extends DatabaseObject {
         global $g_user;
         
         $root_menu = false;
-        $plugin_infos = self::getPluginInfos();
+        $plugin_infos = self::GetPluginInfos();
         
         if ($g_user->hasPermission('plugin_manager')) {
             $root_menu = true;   
@@ -236,7 +236,7 @@ class CampPlugin extends DatabaseObject {
 
         
         foreach ($plugin_infos as $info) {
-            if (CampPlugin::isPluginEnabled($info['name'])) {
+            if (CampPlugin::IsPluginEnabled($info['name'])) {
                 if (isset($info['menu']['permission']) && $g_user->hasPermission($info['menu']['permission'])) {
                     $root_menu = true;
                 } elseif (is_array($info['menu']['sub'])) {
@@ -267,7 +267,7 @@ class CampPlugin extends DatabaseObject {
         }
 
         foreach ($plugin_infos as $info) {
-            if (CampPlugin::isPluginEnabled($info['name'])) {
+            if (CampPlugin::IsPluginEnabled($info['name'])) {
                 $menu_plugin = null;
                 $parent_menu = false;
 

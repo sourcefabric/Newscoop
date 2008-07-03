@@ -45,7 +45,7 @@ $no_menu_scripts = array(
 	'/imagearchive/do_add.php'
 	);
 	
-CampPlugin::extendNoMenuScripts($no_menu_scripts);
+CampPlugin::ExtendNoMenuScripts($no_menu_scripts);
 
 $request_uri = $_SERVER['REQUEST_URI'];
 $call_script = substr($request_uri, strlen("/$ADMIN"));
@@ -101,7 +101,7 @@ if (($extension == '.php') || ($extension == '')) {
 	
 	if (!file_exists($path_name)) {
 	    
-	    foreach (CampPlugin::getEnabled() as $CampPlugin) {
+	    foreach (CampPlugin::GetEnabled() as $CampPlugin) {
 	       $plugin_path_name = $Campsite['HTML_DIR'].'/'.$CampPlugin->getBasePath()."/$ADMIN_DIR/$call_script";
 	       if (file_exists($plugin_path_name)) {
 	           $path_name = $plugin_path_name;

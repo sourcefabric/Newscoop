@@ -62,7 +62,7 @@ final class CampTemplate extends Smarty
         $this->config_dir = CS_PATH_SMARTY.DIR_SEP.'configs';
         
         $plugin_smarty_camp_plugin_paths = array();
-        foreach (CampPlugin::getEnabled() as $CampPlugin) {
+        foreach (CampPlugin::GetEnabled() as $CampPlugin) {
             $plugin_smarty_camp_plugin_paths[] = CS_PATH_SITE.DIR_SEP.$CampPlugin->getBasePath().DIR_SEP.'smarty_camp_plugins';   
         }
 

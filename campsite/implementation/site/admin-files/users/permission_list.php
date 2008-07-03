@@ -110,8 +110,8 @@ function camp_get_permission_list()
 	
     // plugins: extend permission list
     $rights[getGS('Plugins')] = array('plugin_manager' => 'User may manage Plugins');
-    foreach (CampPlugin::getPluginInfos() as $info) {
-        if (CampPlugin::isPluginEnabled($info['name'])) {
+    foreach (CampPlugin::GetPluginInfos() as $info) {
+        if (CampPlugin::IsPluginEnabled($info['name'])) {
             foreach ($info['permissions'] as $permission => $label) {
                 $rights[$info['label']][$permission] = getGS($label);
             }

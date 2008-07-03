@@ -106,7 +106,8 @@ function __autoload($p_className)
         }
     }
     
-    foreach (CampPlugin::getEnabled() as $CampPlugin) {
+    $basePaths = array();
+    foreach (CampPlugin::GetEnabled() as $CampPlugin) {
         $basePaths[] = $CampPlugin->getBasePath();  
     }
     foreach ($basePaths as $basePath) {                       

@@ -130,7 +130,7 @@ class MetaAction
         $actions = array();
         
         $basePaths = array('.');
-        foreach (CampPlugin::getEnabled() as $CampPlugin) {
+        foreach (CampPlugin::GetEnabled() as $CampPlugin) {
             $basePaths[] = $CampPlugin->getBasePath();  
         }
         foreach ($basePaths as $basePath) {
