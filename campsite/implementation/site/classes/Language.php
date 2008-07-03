@@ -11,6 +11,8 @@
 // is not defined in these cases.
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
+global $ADMIN_DIR;
+
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/conf/configuration.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
