@@ -624,7 +624,7 @@ class Interview extends DatabaseObject {
                 'type'      => 'text',
                 'default'   => substr($data['interview_begin'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_interview_begin', 'size' => 16, 'maxlength' => 16),
+                'attributes'    => array('id' => 'f_interview_begin', 'size' => 17, 'maxlength' => 16),
                 'groupit'   => true          
             ),
             array(
@@ -658,7 +658,7 @@ class Interview extends DatabaseObject {
                 'type'      => 'text',
                 'default'   => substr($data['interview_end'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_interview_end', 'size' => 16, 'maxlength' => 16),
+                'attributes'    => array('id' => 'f_interview_end', 'size' => 17, 'maxlength' => 16),
                 'groupit'   => true          
             ),
             array(
@@ -692,7 +692,7 @@ class Interview extends DatabaseObject {
                 'type'      => 'text',
                 'default'   => substr($data['questions_begin'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_questions_begin', 'size' => 16, 'maxlength' => 16),
+                'attributes'    => array('id' => 'f_questions_begin', 'size' => 17, 'maxlength' => 16),
                 'groupit'   => true         
             ),
             array(
@@ -726,7 +726,7 @@ class Interview extends DatabaseObject {
                 'type'      => 'text',
                 'default'   => substr($data['questions_end'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_questions_end', 'size' => 16, 'maxlength' => 16),
+                'attributes'    => array('id' => 'f_questions_end', 'size' => 17, 'maxlength' => 16),
                 'groupit'   => true          
             ),
             array(
