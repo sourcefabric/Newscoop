@@ -32,17 +32,17 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_devStatus = 'beta1';
+    private $m_devStatus = '';
 
     /**
      * @var string
      */
-    private $m_codeName = '';
+    private $m_codeName = 'Tomás';
 
     /**
      * @var string
      */
-    private $m_releaseDate = '2008-06-26';
+    private $m_releaseDate = '2008-07-04';
 
     /**
      * @var string
@@ -72,7 +72,7 @@ final class CampVersion
             $version .= '-' . $this->m_devStatus;
         }
         if (!empty($this->m_codeName)) {
-            $version .= ' (' . $this->m_codeName . ')';
+            $version .= ' "' . $this->m_codeName . '"';
         }
         return $version;
     }

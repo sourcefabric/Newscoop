@@ -1,3 +1,31 @@
+3.1.0 (July 04, 2008)
+  Improvements
+  ------------
+  - #1549: Install cron jobs all at once
+  - #2176: Implement a statement that will display the whole
+  article body
+  - #2362: Check for topics in articles in template language
+  - #2484: Online interview module
+  - #2522: Security checks
+  - #2536: Introduce permissions based on sections for staff users
+  - #2552: Allow plugins to register attributes in Campsite context
+  - #2560: Article statistics: Most Read
+  - #2564: Make Ubuntu package
+  - #2565: Special values for ComparisionOperation class
+  - #2566: Show number of articles in each section
+  - #2579: Beginning of the plugins API
+  - #2584: Implement a method to upgrade the database on new install
+
+  Bugs Fixed
+  ----------
+  - #2366: Fix image handling
+  - #2449: Crash when uploading image
+  - #2577: Unexpected error in comments when the thread id did not
+  exist in phorum
+  - #2578: The order of the order fields is not preserved in lists
+  - #2589: Subscription form set to paid by default
+
+
 3.0.3 (June 06, 2008)
   Bugs Fixed
   ----------

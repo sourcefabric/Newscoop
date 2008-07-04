@@ -14,10 +14,15 @@ Repeat the following steps for each instance:
 
 Read INSTALL file and follow the steps; read on Compatibility issues.
 
+Upgrading from Campsite 3.0.x:
+
+Drop the 3.1 sources over the existing 3.0 install, open a browser
+and make a request for the publication home page: http://[site_name]
+
 
 Compatibility issues
 
-In version 3.0 the template language as modified extensively. The
+In version 3.0 the template language was modified extensively. The
 backup restore script will provide an automated conversion of the old
 template files to the new format. For more details on language changes
 please read the manual.

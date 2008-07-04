@@ -16,16 +16,17 @@ PREPARATION - applications you need to have installed
 
 INSTALLATION - the usual procedure
 
-1. Create an apache virtual host or use the default apache 
-virtual host.
+1. Create an apache virtual host or use the default apache virtual
+host. You may skip this step if you wanted to use the apache default
+host (localhost).
 
 Example of virtual host configuration:
 <VirtualHost *>
-    DocumentRoot /var/www/campsite/html
+    DocumentRoot /var/www/campsite
     ServerName [site_name]
     ServerAlias [site_alias]
     DirectoryIndex index.php index.html
-    <Directory /var/www/campsite/html>
+    <Directory /var/www/campsite>
             Options -Indexes FollowSymLinks MultiViews
             AllowOverride All
             Order allow,deny
@@ -33,8 +34,8 @@ Example of virtual host configuration:
     </Directory>
 </VirtualHost>
 
-2. Unzip and Untar the campsite file. This will generate a
-   folder named 'campsite'.
+2. Unzip and Untar the campsite file. This will generate a folder
+named 'campsite'.
 
 3. Change into the 'campsite' directory.
 
