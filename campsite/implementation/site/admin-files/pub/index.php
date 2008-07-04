@@ -74,7 +74,7 @@ foreach ($publications as $pub) { ?>
         </TD>
         <TD>
             <?php
-                $languageObj =& new Language($pub->getDefaultLanguageId());
+                $languageObj = new Language($pub->getDefaultLanguageId());
                 p(htmlspecialchars($languageObj->getName()));
             ?>&nbsp;
         </TD>
