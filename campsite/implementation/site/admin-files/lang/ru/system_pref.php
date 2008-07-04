@@ -1,4 +1,10 @@
 <?php 
+regGS("Session Lifetime", "");
+regGS("Please enter the site title", "");
+regGS("Please enter the site meta keywords", "");
+regGS("Please enter the site meta description", "");
+regGS("Please enter the secret key", "");
+regGS("Please enter the Keyword Seperator", "");
 regGS("Invalid: You need PHP APC enabled in order to use the caching system.", "");
 regGS("Site Title:", "");
 regGS("Site On-Line:", "");
@@ -19,7 +25,6 @@ regGS("System preferences updated", "");
 regGS("Setting up a Campsite Replication Server?", "");
 regGS("Reader subscriptions managed externally?", "");
 regGS("Port:", "");
-regGS("Please enter a positive number for the '$2' field.", "");
 regGS("Maximum upload file size:", "");
 regGS("Max Upload File Size", "");
 regGS("Invalid Max Upload File Size value submitted", "");
