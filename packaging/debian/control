@@ -1,34 +1,14 @@
 Source: campsite
-Section: universe/web
+Section: web
 Priority: optional
 Maintainer: Campware <campsite-support@campware.org>
-Build-Depends: autotools-dev,
-			   libc6-dev (>= 2.4-1ubuntu12 ),
-			   libcurl3-dev (>= 7.14.0-2ubuntu1 ),
-			   libstdc++6-4.0-dev (>= 4.0.1-4ubuntu9 ),
-			   libgcj6-dev (>= 4.0.1-4ubuntu9 ),
-			   libxml2-dev (>= 2.6.21-0ubuntu1 )
-Standards-Version: 3.6.1
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.7.2
 
 Package: campsite
-Architecture: any
-Depends: apache2,
-		 base-files (>= 3.1.5ubuntu4 ),
-		 binutils (>= 2.16.1-2ubuntu6 ),
-		 gcc-4.0 (>= 4.0.1-4ubuntu9 ),
-		 libacl1 (>= 2.2.29-1 ),
-		 libapache2-mod-php5,
-		 libattr1 (>= 2.4.21-1 ),
-		 libc6 (>= 2.3.5-1ubuntu12 ),
-		 libncurses5 (>= 5.4-9ubuntu4 ),
-		 libpng12-0 (>= 1.2.8rel-1ubuntu3 ),
-		 locales (>= 2.3.5-1ubuntu12 ),
-		 mysql-client,
-		 mysql-server,
-		 php5-cli,
-		 php5-gd,
-		 php5-mysql,
-		 zlib1g (>= 1 )
+Architecture: all
+Depends: apache2 | httpd, php5, libapache2-mod-php5, php5-mysql, php5-cli, php5-gd, mysql-client | virtual-mysql-client
+Suggests: mysql-server | virtual-mysql-server
 Description: Open Source Newspaper/Magazine Software for Web Publishing
  Campsite is a web publishing system that can bring your newspaper or magazine content to the online world. It is often used by media organizations who also have a printed version of their publication, and enables them to increase their revenues with online subscriptions and ads.  There are many systems that might seem similar to Campsite, but it is the only open-source system designed to work in the same style of newspapers and magazines - for example, with multiple journalists, editor review, issue publishing, and subscription management.
  .
