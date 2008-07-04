@@ -97,6 +97,7 @@ $mapPrefixToDir["user_types"] = "/admin-files/user_types";
 $mapPrefixToDir["bug_reporting"] = "/admin-files/bugreporter";
 $mapPrefixToDir["feedback"] = "/admin-files/feedback";
 $mapPrefixToDir["preview"] = "/template_engine/classes";
+$mapPrefixToDir["plugins"] = "/admin-files/plugins";
 
 $g_localizerConfig["MAP_PREFIX_TO_DIR"] = $mapPrefixToDir;
 unset($mapPrefixToDir);

@@ -1,4 +1,11 @@
 <?php 
+regGS("The uploaded file format is unsupported.", "The uploaded file format is unsupported.");
+regGS("The uploaded archive does not contain an valid campsite plugin.", "The uploaded archive does not contain an valid campsite plugin.");
+regGS("The following fields are mandatory:", "The following fields are mandatory:");
+regGS("Missing value for $1", "Missing value for $1");
+regGS("Manage Plugins", "Manage Plugins");
+regGS("* Marked fields are mandatory.", "* Marked fields are mandatory.");
+regGS("$1 is of type $2", "$1 is of type $2");
 regGS("Invalid resize width/height.", "Invalid resize width/height.");
 regGS("Can not fetch audioclip metadata: the connection to Campcaster was not established.", "Can not fetch audioclip metadata: the connection to Campcaster was not established.");
 regGS("Image type $1 is not supported.", "Image type $1 is not supported.");

@@ -15,8 +15,8 @@ define('CAMP_FORM_TEXTAREA_STANDARD_ROWS', 8);
 define('CAMP_FORM_TEXTAREA_STANDARD_COLS', 60);
 define('CAMP_FORM_STANDARD_ELEMENTS_CLASS', 'input_text input_checkbox input_radio input_select input_file input_textarea');
 define('CAMP_FORM_MISSINGNOTE', '$1');
-define('CAMP_FORM_REQUIREDNOTE', getGS('* Marked fields are obligate.'));
-define('CAMP_FORM_JS_PREWARNING', getGS('The following fields are obligate:'));
+define('CAMP_FORM_REQUIREDNOTE', getGS('* Marked fields are mandatory.'));
+define('CAMP_FORM_JS_PREWARNING', getGS('The following fields are mandatory:'));
 define('CAMP_FORM_JS_POSTWARNING', '');
 
 /**

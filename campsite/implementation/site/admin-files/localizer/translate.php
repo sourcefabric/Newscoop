@@ -127,6 +127,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["bug_reporting"] = getGS("Bug Reporting");
     $mapPrefixToDisplay["feedback"] = getGS("Feedback");
     $mapPrefixToDisplay["preview"] = getGS("Preview Window");
+    $mapPrefixToDisplay["plugins"] = getGS("Plugins");
 	// Whether to show translated strings or not.
 	$hideTranslated = camp_session_get('hide_translated', 'off');
 
