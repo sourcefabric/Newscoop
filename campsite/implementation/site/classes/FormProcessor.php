@@ -9,15 +9,15 @@
  * @link http://www.campware.org
  */
 
-define('UI_INPUT_STANDARD_SIZE', 50);
-define('UI_INPUT_STANDARD_MAXLENGTH', 256);
-define('UI_TEXTAREA_STANDART_ROWS', 8);
-define('UI_TEXTAREA_STANDART_COLS', 60);
-define('FORM_MISSINGNOTE', getGS('FORM_MISSINGNOTE'));
-define('FORM_REQUIREDNOTE', getGS('FORM_REQUIREDNOTE'));
-define('FORM_JS_PREWARNING', getGS('FORM_JS_PREWARNING'));
-define('FORM_JS_POSTWARNING', getGS('FORM_JS_POSTWARNING'));
-define('UI_BUTTON_STYLE', '');
+define('CAMP_FORM_INPUT_TEXT_STANDARD_SIZE', 50);
+define('CAMP_FORM_INPUT_TEXT_STANDARD_MAXLENGTH', 256);
+define('CAMP_FORM_TEXTAREA_STANDARD_ROWS', 8);
+define('CAMP_FORM_TEXTAREA_STANDARD_COLS', 60);
+define('CAMP_FORM_STANDARD_ELEMENTS_CLASS', 'input_text input_checkbox input_radio input_select input_file input_textarea');
+define('CAMP_FORM_MISSINGNOTE', '$1');
+define('CAMP_FORM_REQUIREDNOTE', getGS('* Marked fields are obligate.'));
+define('CAMP_FORM_JS_PREWARNING', getGS('The following fields are obligate:'));
+define('CAMP_FORM_JS_POSTWARNING', '');
 
 /**
  * This class provides functionality to build an form using Pear Quickform
@@ -37,6 +37,11 @@ class FormProcessor
     static public function ParseArr2Form(&$form, &$mask, $side='client')
     {
         foreach($mask as $k=>$v) {
+           if (!is_array($v['attributes'])) {
+                $v['attributes'] = array();
+            }
+            $v['attributes'] = array_merge($v['attributes'], array('class' => CAMP_FORM_STANDARD_ELEMENTS_CLASS));
+                
             ## add elements ########################
             if ($v['type']=='radio') {
                 foreach($v['options'] as $rk=>$rv) {
@@ -76,18 +81,17 @@ class FormProcessor
                 $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], $v['src'], $v['attributes']);
                 if (!$v['groupit'])     $form->addElement($elem[$v['element']]);
                 
-            } elseif (isset($v['type'])) {
-                if (!is_array($v['attributes'])) $v['attributes'] = array();
+            } elseif (isset($v['type'])) {                
                 $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], $v['label'],
-                                            ($v['type']=='text' || $v['type']=='file' || $v['type']=='password') ? array_merge(array('size'=>UI_INPUT_STANDARD_SIZE, 'maxlength'=>UI_INPUT_STANDARD_MAXLENGTH), $v['attributes']) :
-                                            ($v['type']=='textarea' ? array_merge(array('rows'=>UI_TEXTAREA_STANDART_ROWS, 'cols'=>UI_TEXTAREA_STANDART_COLS), $v['attributes']) :
-                                            ($v['type']=='button' || $v['type']=='submit' || $v['type']=='reset' ? array_merge(array('class'=>UI_BUTTON_STYLE), $v['attributes']) : $v['attributes']))
+                                            ($v['type']=='text' || $v['type']=='file' || $v['type']=='password') ? array_merge(array('size'=>CAMP_FORM_INPUT_TEXT_STANDARD_SIZE, 'maxlength'=>CAMP_FORM_INPUT_TEXT_STANDARD_MAXLENGTH), $v['attributes']) :
+                                            ($v['type']=='textarea' ? array_merge(array('rows'=>CAMP_FORM_TEXTAREA_STANDARD_ROWS, 'cols'=>CAMP_FORM_TEXTAREA_STANDARD_COLS), $v['attributes']) :
+                                            ($v['type']=='button' || $v['type']=='submit' || $v['type']=='reset' ? array_merge(array('class'=>CAMP_FORM_STANDARD_ELEMENTS_CLASS), $v['attributes']) : $v['attributes']))
                                         );
                 if (!$v['groupit'])     $form->addElement($elem[$v['element']]);
             }
             ## add required rule ###################
             if ($v['required']) {
-                $form->addRule($v['element'], isset($v['requiredmsg']) ? $v['requiredmsg'] : getGS(FORM_MISSINGNOTE, $v['label']), 'required', NULL, $side);
+                $form->addRule($v['element'], isset($v['requiredmsg']) ? $v['requiredmsg'] : getGS(CAMP_FORM_MISSINGNOTE, $v['label']), 'required', NULL, $side);
             }
             ## add constant value ##################
             if (isset($v['constant'])) {
@@ -99,7 +103,7 @@ class FormProcessor
             }
             ## add other rules #####################
             if ($v['rule']) {
-                $form->addRule($v['element'], isset($v['rulemsg']) ? $v['rulemsg'] : getGS('$1 must be $2', $v['element'], getGS($v['rule'])), $v['rule'] ,$v['format'], $side);
+                $form->addRule($v['element'], isset($v['rulemsg']) ? $v['rulemsg'] : getGS('$1 is of type $2', $v['element'], getGS($v['rule'])), $v['rule'] ,$v['format'], $side);
             }
             ## add group ###########################
             if (is_array($v['group'])) {
@@ -108,7 +112,7 @@ class FormProcessor
                 }
                 $form->addGroup($groupthose, $v['name'], $v['label'], $v['seperator'], $v['appendName']);
                 if ($v['rule']) {
-                    $form->addRule($v['name'], isset($v['rulemsg']) ? $v['rulemsg'] : getGS('$1 must be $2', $v['name'], getGS($v['rule'])), $v['rule'], $v['format'], $side);
+                    $form->addRule($v['name'], isset($v['rulemsg']) ? $v['rulemsg'] : getGS('$1 is of type $2', $v['name'], getGS($v['rule'])), $v['rule'], $v['format'], $side);
                 }
                 if ($v['grouprule']) {
                     $form->addGroupRule($v['name'], $v['arg1'], $v['grouprule'], $v['format'], $v['howmany'], $side, $v['reset']);
@@ -125,7 +129,7 @@ class FormProcessor
     
         reset($mask);
         $form->validate();
-        $form->setJsWarnings(FORM_JS_PREWARNING, FORM_JS_POSTWARNING);
-        $form->setRequiredNote(FORM_REQUIREDNOTE);
+        $form->setJsWarnings(CAMP_FORM_JS_PREWARNING, CAMP_FORM_JS_POSTWARNING);
+        $form->setRequiredNote(CAMP_FORM_REQUIREDNOTE);
     }        
 }
