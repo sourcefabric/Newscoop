@@ -98,6 +98,12 @@ final class CampInstallationView
                                    'tag' => 'Configuration Files Writable',
                                    'exists' => $isConfigDirWritable
                                    );
+        $isPluginsDirWritable = CampInstallationViewHelper::CheckDirWritable(CS_PATH_PLUGINS);
+        $success = ($isPluginsDirWritable == 'Yes') ? $success : false;
+        $sysRequirements[] = array(
+                                   'tag' => 'Plugins Folder Writable',
+                                   'exists' => $isPluginsDirWritable
+                                   );
         if (CampInstallation::GetHostOS() == 'windows') {
             $sysRequirements[] = array(
                                        'tag' => 'Apache mod_rewrite enabled',

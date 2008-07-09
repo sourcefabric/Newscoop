@@ -102,7 +102,7 @@ if (($extension == '.php') || ($extension == '')) {
 	if (!file_exists($path_name)) {
 	    
 	    foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-	       $plugin_path_name = $Campsite['HTML_DIR'].'/'.$CampPlugin->getBasePath()."/$ADMIN_DIR/$call_script";
+	       $plugin_path_name = $CampPlugin->getBasePath()."/$ADMIN_DIR/$call_script";
 	       if (file_exists($plugin_path_name)) {
 	           $path_name = $plugin_path_name;
 	           break;    
