@@ -1,4 +1,0 @@
-hook:  format|phorum_bb_code
-hook:  quote|phorum_bb_code_quote
-title: BB Code Phorum Mod
-desc:  This module converts BB Code into HTML.

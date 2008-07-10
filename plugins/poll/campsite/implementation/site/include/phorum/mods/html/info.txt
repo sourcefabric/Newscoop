@@ -1,3 +1,0 @@
-hook:  format|phorum_html
-title: HTML Phorum Mod
-desc:  This module allow HTML to be used in posts.  This includes allowing special characters (eg. UTF-8) that are HTML encoded. NOTE: Bad HTML input by users could mess up your page layout.
