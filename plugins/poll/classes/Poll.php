@@ -124,7 +124,7 @@ class Poll extends DatabaseObject {
      * @param bool $p_votes_per_user
      * @return void
      */
-    public function create($p_title, $p_question, $p_date_begin, $p_date_end, $p_nr_of_answers, $p_votes_per_user=false)
+    public function create($p_title, $p_question, $p_date_begin, $p_date_end, $p_nr_of_answers, $p_votes_per_user)
     {
         global $g_ado_db;
         
@@ -141,7 +141,7 @@ class Poll extends DatabaseObject {
             'nr_of_answers' => $p_nr_of_answers,
             'title' => $p_title,
             'question' => $p_question,
-            'votes_per_user' => $p_votes_per_user ? 1 : 0        
+            'votes_per_user' => $p_votes_per_user        
         );
 
 

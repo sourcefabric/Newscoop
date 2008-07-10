@@ -121,8 +121,3 @@ CREATE TABLE `plugin_pollanswer_attachment` (
   `fk_attachment_id` int(11) NOT NULL,
   PRIMARY KEY  (`fk_poll_nr`,`fk_pollanswer_nr`,`fk_attachment_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
--- INSERT Polls section
-INSERT INTO `Sections` (`IdPublication`, `NrIssue`, `IdLanguage`, `Number`, `Name`, `ShortName`, `Description`, `SectionTplId`, `ArticleTplId`) 
-VALUES (1, 1, 1, 90, 'Polls', '90', 0x506f6c6c73, 240, 0);

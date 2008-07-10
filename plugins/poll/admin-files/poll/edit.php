@@ -188,7 +188,7 @@ camp_html_display_msgs();
             </TD>
         </TR>
         <tr>
-            <TD ALIGN="RIGHT" ><?php  putGS("Votes per single User"); ?>:</TD>
+            <TD ALIGN="RIGHT" ><?php  putGS("Votes per unique User"); ?>:</TD>
             <TD style="padding-top: 3px;">
                 <SELECT NAME="f_votes_per_user" alt="select" emsg="<?php putGS("You must select number of votes per user.")?>" class="input_select" onchange="poll_set_nr_of_answers()">
                 <option value="0"><?php putGS("---Select---"); ?></option>
