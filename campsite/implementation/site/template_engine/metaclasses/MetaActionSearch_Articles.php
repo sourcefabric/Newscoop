@@ -20,14 +20,14 @@ class MetaActionSearch_Articles extends MetaAction
      *
      * @var array
      */
-    private $m_articlesList = array();
+    private $m_articlesList = null;
 
     /**
      * Stores the total number of articles that matched the search criteria.
      *
      * @var int
      */
-    private $m_totalCount;
+    private $m_totalCount = null;
 
 
     /**
@@ -46,9 +46,10 @@ class MetaActionSearch_Articles extends MetaAction
         }
         $this->m_properties['search_phrase'] = $p_input['f_search_keywords'];
         $this->m_properties['search_keywords'] = preg_split('/[\s,.-]/', $p_input['f_search_keywords']);
+        $this->m_properties['search_results'] = 'getSearchResults';
 
         $this->m_properties['match_all'] = isset($p_input['f_match_all'])
-        && strtolower($p_input['f_match_all']) == true ? 'true' : 'false';
+        && strtolower($p_input['f_match_all']) == 'on';
 
         if (isset($p_input['f_search_level'])) {
             if ($p_input['f_search_level'] < MetaActionSearch_Articles::SEARCH_LEVEL_MULTIPLE_PUBLICATION
@@ -61,7 +62,6 @@ class MetaActionSearch_Articles extends MetaAction
         }
 
         $this->m_properties['submit_button'] = $p_input['f_search_articles'];
-
         $this->m_error = ACTION_OK;
     }
 
@@ -91,7 +91,57 @@ class MetaActionSearch_Articles extends MetaAction
             $p_context->url->reset_parameter($field);
         }
 
+	    $operator = new Operator('is', 'integer');
+	    $this->m_properties['constraints'] = array();
+	    if ($this->m_properties['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_PUBLICATION) {
+	        $this->m_properties['constraints'][] = new ComparisonOperation('Articles.IdPublication', $operator,
+	                                                         $p_context->publication->identifier);
+	    }
+	    if ($this->m_properties['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_ISSUE) {
+	        $this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrIssue', $operator,
+	                                                         $p_context->issue->number);
+	    }
+	    if ($this->m_properties['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_SECTION) {
+	        $this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrSection', $operator,
+	                                                         $p_context->section->number);
+	    }
         return true;
+    }
+
+
+    /**
+     * Returns the value of the given property; throws
+     * InvalidPropertyHandlerException if the property didn't exist.
+     *
+     * @param string $p_property
+     * @return mixed
+     */
+    public function __get($p_property)
+    {
+        $p_property = MetaAction::TranslateProperty($p_property);
+        if ($p_property == 'results_count') {
+            if (is_null($this->m_totalCount)) {
+                $this->getSearchResults();
+            }
+            return $this->m_totalCount;
+        }
+        return parent::__get($p_property);
+    }
+
+
+    /**
+     * Returns an array of Articles
+     *
+     */
+    protected function getSearchResults() {
+        if (is_null($this->m_articlesList)) {
+            $this->m_articlesList = Article::SearchByKeyword($this->m_properties['search_keywords'],
+                                                             $this->m_properties['match_all'],
+                                                             $this->m_properties['constraints'],
+                                                             array(), 0, 0,
+                                                             $this->m_totalCount);
+        }
+        return $this->m_articlesList;
     }
 }
 
