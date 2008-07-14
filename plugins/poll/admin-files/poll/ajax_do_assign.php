@@ -1,7 +1,9 @@
 <?php
+camp_load_translation_strings("plugin_poll");
+
 // Check permissions
 if (!$g_user->hasPermission('plugin_poll')) {
-    echo "alert('".(getGS('You do not have the right to manage polls.'))."');";
+    camp_html_display_error(getGS('You do not have the right to manage polls.'));
     exit;
 }
 

@@ -39,6 +39,7 @@
 </head>
 <body>
 <?php
+camp_load_translation_strings("plugin_interview");
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_interview_admin')) {

@@ -529,7 +529,7 @@ class Interview extends DatabaseObject {
                 'type'      => 'select',
                 'label'     => getGS('Language'),
                 'default'   => $data['fk_language_id'],
-                'options'   => self::GetCampLanguagesList(),
+                'options'   => array_merge(array('' => getGS('---Select Language---')), self::GetCampLanguagesList()),
                 'required'  => true,
             ),
             array(

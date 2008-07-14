@@ -1,4 +1,6 @@
 <?php
+camp_load_translation_strings("plugin_poll");
+
 // Check permissions
 if (!$g_user->hasPermission('plugin_poll')) {
     camp_html_display_error(getGS('You do not have the right to manage polls.'));
@@ -127,7 +129,7 @@ camp_html_display_msgs();
             </TD>
         </TR>
         <tr>
-            <TD ALIGN="RIGHT" ><?php  putGS("Votes per single User"); ?>:</TD>
+            <TD ALIGN="RIGHT" ><?php  putGS("Votes per unique User"); ?>:</TD>
             <TD style="padding-top: 3px;">
                 <SELECT NAME="f_votes_per_user" alt="select" emsg="<?php putGS("You must select number of votes per user.")?>" class="input_select" onchange="poll_set_nr_of_answers()">
                 <option value="0"><?php putGS("---Select---"); ?></option>
