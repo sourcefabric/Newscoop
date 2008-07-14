@@ -128,6 +128,10 @@ function translationForm($p_request)
     $mapPrefixToDisplay["feedback"] = getGS("Feedback");
     $mapPrefixToDisplay["preview"] = getGS("Preview Window");
     $mapPrefixToDisplay["plugins"] = getGS("Plugins");
+    
+    CampPlugin::IsPluginEnabled('interview') ? $mapPrefixToDisplay["plugin_interview"] = getGS("Interview") : null;
+    CampPlugin::IsPluginEnabled('poll') ? $mapPrefixToDisplay["plugin_poll"] = getGS("Polls") : null;
+    
 	// Whether to show translated strings or not.
 	$hideTranslated = camp_session_get('hide_translated', 'off');
 
