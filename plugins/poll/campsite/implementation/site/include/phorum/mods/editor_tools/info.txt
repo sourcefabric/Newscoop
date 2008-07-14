@@ -1,4 +1,0 @@
-hook:  lang|
-hook:  tpl_editor_before_textarea|phorum_mod_smileys_editor_tools
-title: Editor tools
-desc:  This module implements editor tools to help users with writing their messages. For now, the module has implemented an easy way to add smileys to messages (the smileys mod has to be enabled for this to work). The next thing that will be implemented is a tool for BBcode.

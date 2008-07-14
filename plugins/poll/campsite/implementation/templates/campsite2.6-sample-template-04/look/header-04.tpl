@@ -1,1 +1,0 @@
-<a href="<!** uri issue>"><img src="/look/img/banner.gif" border="0"></a>
