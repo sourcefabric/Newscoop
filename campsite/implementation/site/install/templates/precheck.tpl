@@ -86,10 +86,19 @@ var domTT_styleClass = 'domTTOverlib';
               <td align="center">
               {{ if $sysreq.exists eq 'Yes' }}
                 <span class="success">
+                    {{ $sysreq.exists }}
+                </span>
               {{ elseif $sysreq.exists eq 'No' }}
                 <span class="error">
+                    {{ $sysreq.exists }}
+                </span>
+                <small>
+                  <br>
+                  You will need to grant permissions to folder
+                  <br>
+                  <i>{{ $sysreq.path }}</i>
+               </small>
               {{ /if }}
-                {{ $sysreq.exists }}</span>
               </td>
             </tr>
             {{ /foreach }}
