@@ -1,5 +1,4 @@
 <?php
-define('PLUGINS_DIR', 'plugins');
 /**
  * @package Campsite
  *
@@ -97,7 +96,7 @@ class CampPlugin extends DatabaseObject {
 
     public function getBasePath()
     {
-        return PLUGINS_DIR.'/'.$this->getName();
+        return CS_PATH_PLUGINS.'/'.$this->getName();
     }
 
     public function getName()
@@ -162,16 +161,14 @@ class CampPlugin extends DatabaseObject {
     }
 
     static public function GetPluginInfos()
-    {
-        global $g_documentRoot;
-        
-        $directories = array(PLUGINS_DIR);
+    {       
+        $directories = array(CS_PATH_PLUGINS);
 
         if (!is_array(self::$m_pluginInfos)) {
             self::$m_pluginInfos = array();
 
             foreach ($directories as $dirName) {
-                $dirName = "$g_documentRoot/$dirName";
+                
                 if (!is_dir($dirName)) {
                     continue;
                 }
@@ -340,7 +337,7 @@ class CampPlugin extends DatabaseObject {
             return false;    
         }
         
-        $tar->extract($g_documentRoot.DIR_SEP.PLUGINS_DIR);
+        $tar->extract(CS_PATH_PLUGINS);
         
         CampPlugin::clearPluginInfos();
         
