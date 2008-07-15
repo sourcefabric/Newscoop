@@ -1,7 +1,5 @@
 {{ include file="html_header.tpl" }}
 
-<script language="javascript" src="/javascript/prototype/prototype.js"></script>
-
 <table class="main" cellspacing="0" cellpadding="0">
 <tr>
   <td valign="top">
