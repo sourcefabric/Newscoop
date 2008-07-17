@@ -344,6 +344,24 @@ class CampPlugin extends DatabaseObject {
                 
         return $Plugin;
     }
+    
+    public static function PluginAdminHooks($p_filename, $p_area=null)
+    {
+        global $ADMIN, $ADMIN_DIR, $Campsite, $g_user;
+        
+        $paths = array();
+        
+        $filename = realpath($p_filename);
+        $admin_path = realpath(CS_PATH_SITE.DIR_SEP.$ADMIN_DIR);
+        $script = str_replace($admin_path, '', $filename);
+        
+        foreach (self::GetEnabled() as $plugin) {
+            $filepath = $plugin->getBasePath().DIR_SEP.'admin-files'.DIR_SEP.'include'.DIR_SEP.$script;
+            if (file_exists($filepath))  {
+                include $filepath;   
+            }  
+        }  
+    }
 }
 
 ?>

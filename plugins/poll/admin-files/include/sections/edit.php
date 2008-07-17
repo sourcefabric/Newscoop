@@ -1,4 +1,6 @@
 <?php
+global $sectionObj;
+
 $section_language_id = $sectionObj->getLanguageId();
 $section_nr = $sectionObj->getSectionNumber();
 $issue_nr = $sectionObj->getIssueNumber();

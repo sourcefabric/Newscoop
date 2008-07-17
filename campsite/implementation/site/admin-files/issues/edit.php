@@ -226,6 +226,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		</TABLE>
 		</FORM>
 		<P>
+		<?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 	</td>
 
 	<td valign="top">
