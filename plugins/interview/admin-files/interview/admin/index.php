@@ -1,4 +1,4 @@
-<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/scriptaculous/prototype.js"></script>
+<script language="javascript" src="/javascript/prototype/prototype.js"></script>
 <SCRIPT language="javascript">
 function ajax_action(action)
 {

@@ -24,8 +24,6 @@
  */
 function smarty_block_poll_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
-    global $Campsite;
-    
     if (isset($p_content)) {
     	require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
 
@@ -49,7 +47,7 @@ function smarty_block_poll_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 	    if ($p_params['ajax'] == true && !Input::Get('f_poll_ajax_request')) {
 	       $html .= 
 '
-<script language="javascript" src="'.$Campsite['WEBSITE_URL'].'/javascript/scriptaculous/prototype.js"></script>
+<script language="javascript" src="/javascript/prototype/prototype.js"></script>
 <script language="javascript">
     function poll_'.$campsite->poll->identifier.'_vote()
     {

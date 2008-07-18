@@ -1,5 +1,5 @@
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
-<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/scriptaculous/prototype.js"></script>
+<script language="javascript" src="/javascript/prototype/prototype.js"></script>
 <SCRIPT language="javascript">
 function poll_assign(poll_nr, action)
 {
