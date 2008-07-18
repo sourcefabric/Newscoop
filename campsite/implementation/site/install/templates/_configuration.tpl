@@ -112,7 +112,7 @@ function __autoload($p_className)
     }
     foreach ($basePaths as $basePath) {                       
         foreach ($classDirectories as $dirName) {
-            $fileName = "$basePath/$dirName/$p_className.php";
+            $fileName = "$g_documentRoot/$basePath/$dirName/$p_className.php";
             if (file_exists($fileName)) {
                 require_once($fileName);
                 return;

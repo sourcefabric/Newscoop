@@ -1,4 +1,5 @@
 <?php
+define('PLUGINS_DIR', 'plugins');
 /**
  * @package Campsite
  *
@@ -96,7 +97,7 @@ class CampPlugin extends DatabaseObject {
 
     public function getBasePath()
     {
-        return CS_PATH_PLUGINS.'/'.$this->getName();
+        return PLUGINS_DIR.'/'.$this->getName();
     }
 
     public function getName()
@@ -161,14 +162,16 @@ class CampPlugin extends DatabaseObject {
     }
 
     static public function GetPluginInfos()
-    {       
-        $directories = array(CS_PATH_PLUGINS);
+    {
+        global $g_documentRoot;
+        
+        $directories = array(PLUGINS_DIR);
 
         if (!is_array(self::$m_pluginInfos)) {
             self::$m_pluginInfos = array();
 
             foreach ($directories as $dirName) {
-                
+                $dirName = "$g_documentRoot/$dirName";
                 if (!is_dir($dirName)) {
                     continue;
                 }
@@ -223,9 +226,6 @@ class CampPlugin extends DatabaseObject {
     {
         global $ADMIN;
         global $g_user;
-        global $Campsite;
-        
-        
         
         $root_menu = false;
         $plugin_infos = self::GetPluginInfos();
@@ -268,8 +268,6 @@ class CampPlugin extends DatabaseObject {
 
         foreach ($plugin_infos as $info) {
             if (CampPlugin::IsPluginEnabled($info['name'])) {
-                
-                $pluginIconTemplateStr = str_replace($Campsite['ADMIN_IMAGE_BASE_URL' ], $Campsite['PLUGINS_BASE_URL'].'/'.$info['name'], $p_iconTemplateStr);
                 $menu_plugin = null;
                 $parent_menu = false;
 
@@ -286,7 +284,7 @@ class CampPlugin extends DatabaseObject {
                 if ($parent_menu) {
                     $menu_plugin =& DynMenuItem::Create(getGS($info['menu']['label']),
                     is_null($info['menu']['path']) ? null : "/$ADMIN/".$info['menu']['path'],
-                    array("icon" => sprintf($pluginIconTemplateStr, $info['menu']['icon'])));
+                    array("icon" => sprintf($p_iconTemplateStr, $info['menu']['icon'])));
                 }
 
                 if (is_array($info['menu']['sub'])) {
@@ -294,7 +292,7 @@ class CampPlugin extends DatabaseObject {
                         if ($g_user->hasPermission($menu_info['permission'])) {
                             $menu_item =& DynMenuItem::Create(getGS($menu_info['label']),
                             is_null($menu_info['path']) ? null : "/$ADMIN/".$menu_info['path'],
-                            array("icon" => sprintf($pluginIconTemplateStr, $menu_info['icon'])));
+                            array("icon" => sprintf($p_iconTemplateStr, $menu_info['icon'])));
                             $menu_plugin->addItem($menu_item);
                         }
                     }
@@ -337,7 +335,7 @@ class CampPlugin extends DatabaseObject {
             return false;    
         }
         
-        $tar->extract(CS_PATH_PLUGINS);
+        $tar->extract($g_documentRoot.DIR_SEP.PLUGINS_DIR);
         
         CampPlugin::clearPluginInfos();
         

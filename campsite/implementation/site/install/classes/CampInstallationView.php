@@ -92,22 +92,12 @@ final class CampInstallationView
     {
         $success = true;
 
-        $to_check = array(
-            CS_PATH_SITE => 'Document Root Writable',
-            CS_INSTALL_DIR.DIR_SEP.'cron_jobs' => 'Cron Jobs Writable',
-            CS_PATH_CONFIG => 'Configuration Files Writable',   
-        );
-        
-        foreach ($to_check as $path => $tag) {
-            $isWritable = CampInstallationViewHelper::CheckDirWritable($path);
-            $success = ($isWritable == 'Yes') ? $success : false;
-            $sysRequirements[] = array(
-                                   'tag' => $tag,
-                                   'exists' => $isWritable,
-                                   'path' => $path
-                                   );   
-        }
-
+        $isConfigDirWritable = CampInstallationViewHelper::CheckDirWritable(CS_PATH_CONFIG);
+        $success = ($isConfigDirWritable == 'Yes') ? $success : false;
+        $sysRequirements[] = array(
+                                   'tag' => 'Configuration Files Writable',
+                                   'exists' => $isConfigDirWritable
+                                   );
         if (CampInstallation::GetHostOS() == 'windows') {
             $sysRequirements[] = array(
                                        'tag' => 'Apache mod_rewrite enabled',

@@ -369,10 +369,6 @@ class CampInstallationBase
             }
 
             if (!$isFileWritable) {
-                // try to unlink existing file
-                $isFileWritable = @unlink($cronJobFile);
-            }
-            if (!$isFileWritable) {
                 $error = true;
                 continue;
             }

@@ -59,8 +59,6 @@ $install->initSession();
 
 $step = $install->execute();
 
-@unlink('admin.php');
-@unlink('index.php');
 $copyAdmin = copy('install/scripts/admin.php', 'admin.php');
 $copyIndex = copy('install/scripts/index.php', 'index.php');
 if (!$copyAdmin || !$copyIndex) {

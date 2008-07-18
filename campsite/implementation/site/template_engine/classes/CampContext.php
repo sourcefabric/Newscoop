@@ -266,7 +266,7 @@ final class CampContext
                     $pluginImplementsClassFullPath = false;
                      
                     foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-                        $pluginClassFullPath = $CampPlugin->getBasePath().
+                        $pluginClassFullPath = $_SERVER['DOCUMENT_ROOT'].'/'.$CampPlugin->getBasePath().
                                         '/template_engine/metaclasses/'.CampContext::ObjectType($p_element).'.php';
                         if (file_exists($pluginClassFullPath)) {
                             $pluginImplementsClassFullPath = $pluginClassFullPath;   
@@ -610,7 +610,7 @@ final class CampContext
             $pluginImplementsClassFullPath = false;
              
             foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-                $pluginClassFullPath = $CampPlugin->getBasePath().
+                $pluginClassFullPath = $_SERVER['DOCUMENT_ROOT'].'/'.$CampPlugin->getBasePath().
                                 '/template_engine/metaclasses/'.CampContext::ObjectType($p_objectType).'.php';
                 if (file_exists($pluginClassFullPath)) {
                     $pluginImplementsClassFullPath = $pluginClassFullPath;   
