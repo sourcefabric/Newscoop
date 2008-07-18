@@ -7,7 +7,7 @@ $info = array(
     'menu' => array(
         'name' => 'poll',
         'label' => 'Polls',
-        'icon' => 'poll.png',
+        'icon' => 'css/poll.png',
         'permission' => 'plugin_poll',
         'path' => "poll/index.php",
     ),
@@ -44,7 +44,7 @@ $info = array(
         )
     ),
     'install' => 'plugin_poll_install',
-    'enable' => '',
+    'enable' => 'plugin_poll_install',
     'update' => '',
     'disable' => '',
     'uninstall' => 'plugin_poll_uninstall'
@@ -60,10 +60,10 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_poll', 'has_implied' => 1));  
         
         require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
-        CampInstallationBaseHelper::copyFiles($g_documentRoot.DIR_SEP.PLUGINS_DIR.'/poll/css', $g_documentRoot.'/css');
-        CampInstallationBaseHelper::copyFiles($g_documentRoot.DIR_SEP.PLUGINS_DIR.'/poll/javascript', $g_documentRoot.'/javascript');
         $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
+        
         $errors = CampInstallationBaseHelper::ImportDB($g_documentRoot.DIR_SEP.PLUGINS_DIR.DIR_SEP.'poll/install/sql/plugin_poll.sql', &$error_queries);
+        
         unset($GLOBALS['g_db']);       
     }
     
