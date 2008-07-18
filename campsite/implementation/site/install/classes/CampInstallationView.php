@@ -96,6 +96,7 @@ final class CampInstallationView
             CS_PATH_SITE => 'Document Root Writable',
             CS_INSTALL_DIR.DIR_SEP.'cron_jobs' => 'Cron Jobs Writable',
             CS_PATH_CONFIG => 'Configuration Files Writable',   
+            CS_PATH_SITE.DIR_SEP.'plugins' => 'Plugins Folder Writable',
         );
         
         foreach ($to_check as $path => $tag) {
