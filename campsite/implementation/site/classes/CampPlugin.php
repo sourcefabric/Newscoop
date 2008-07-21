@@ -338,11 +338,6 @@ class CampPlugin extends DatabaseObject {
         $tar->extract($g_documentRoot.DIR_SEP.PLUGINS_DIR);
         
         CampPlugin::clearPluginInfos();
-        
-        $Plugin = new CampPlugin($plugin_name);
-        $Plugin->install();
-                
-        return $Plugin;
     }
     
     public static function PluginAdminHooks($p_filename, $p_area=null)
