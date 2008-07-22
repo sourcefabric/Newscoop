@@ -85,9 +85,10 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
         CampInstallationBaseHelper::copyFiles($g_documentRoot.DIR_SEP.PLUGINS_DIR.'/interview/css', $g_documentRoot.'/css');
         CampInstallationBaseHelper::copyFiles($g_documentRoot.DIR_SEP.PLUGINS_DIR.'/interview/javascript', $g_documentRoot.'/javascript');
-        $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
-        $errors = CampInstallationBaseHelper::ImportDB($g_documentRoot.DIR_SEP.PLUGINS_DIR.DIR_SEP.'interview/install/sql/plugin_interview.sql', &$error_queries);
-        unset($GLOBALS['g_db']);       
+        if (!array_key_exists('g_db', $GLOBALS)) {
+            $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
+        }
+        $errors = CampInstallationBaseHelper::ImportDB($g_documentRoot.DIR_SEP.PLUGINS_DIR.DIR_SEP.'interview/install/sql/plugin_interview.sql', &$error_queries); 
     }
     
     function plugin_interview_uninstall()
@@ -123,6 +124,28 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         } else {
             $p_context->interview = new MetaInterview($interview_id);
         }
+    }
+    
+    function plugin_interview_addPermissions()
+    {
+        $Admin = new UserType(1);
+        $ChiefEditor = new UserType(2);
+        $Editor = new UserType(3);
+        
+        $Admin->setPermission('plugin_interview_admin', true);
+        $Admin->setPermission('plugin_interview_moderator', true);
+        // $Admin->setPermission('plugin_interview_guest', true);
+        $Admin->setPermission('plugin_interview_notify', true);
+        
+        $ChiefEditor->setPermission('plugin_interview_admin', true);
+        $ChiefEditor->setPermission('plugin_interview_moderator', true);
+        // $ChiefEditor->setPermission('plugin_interview_guest', true);
+        $ChiefEditor->setPermission('plugin_interview_notify', true);
+        
+        // $Editor->setPermission('plugin_interview_admin', true);
+        $Editor->setPermission('plugin_interview_moderator', true);
+        // $Editor->setPermission('plugin_interview_guest', true);
+        $Editor->setPermission('plugin_interview_notify', true);
     }
 }
 ?>

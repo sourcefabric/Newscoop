@@ -117,6 +117,7 @@ class CampInstallationBase
             }
             if ($this->finish()) {
                 $this->saveConfiguration();
+                self::EnablePlugins();
             }
             break;
         }
@@ -481,6 +482,25 @@ class CampInstallationBase
             mkdir($p_directoryPath);
         }
     }
+    
+    private static function EnablePlugins()
+    {
+        global $g_documentRoot;
+        
+        require_once($g_documentRoot.'/include/campsite_constants.php');
+        require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
+                
+        foreach (CampPlugin::GetPluginInfos() as $info) {
+            $CampPlugin = new CampPlugin($info['name']);
+            $CampPlugin->create($info['name'], $info['version']);
+            $CampPlugin->install();
+            $CampPlugin->enable();
+            
+            if (function_exists("plugin_{$info['name']}_addPermissions")) {
+                call_user_func("plugin_{$info['name']}_addPermissions");
+            }
+        }
+    }
 
 } // fn ClassInstallationBase
 
@@ -669,7 +689,7 @@ class CampInstallationBaseHelper
 
         return true;
     } // fn CopyFiles
-
+    
 } // class CampInstallationBaseHelper
 
 ?>
