@@ -170,6 +170,16 @@ if (!$articleObj->commentsLocked() && ($f_edit_mode == "edit") ) {
 
 <tr>
     <td valign="middle" align="right">
+        <?php putGS("Author:"); ?>
+    </td>
+
+    <td>
+        <input type="text" name="f_comment_nickname" value="<?php p($g_user->getRealName()); ?>" class="input_text" size="41">
+    </td>
+</tr>
+
+<tr>
+    <td valign="middle" align="right">
         <?php putGS("Subject:"); ?>
     </td>
 

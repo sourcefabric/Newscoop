@@ -26,6 +26,7 @@ final class MetaComment extends MetaDbObject {
             return;
         }
         $this->m_properties['identifier'] = 'message_id';
+        $this->m_properties['nickname'] = 'author';
         $this->m_properties['reader_email'] = 'email';
         $this->m_properties['subject'] = 'subject';
         $this->m_properties['content'] = 'body';
