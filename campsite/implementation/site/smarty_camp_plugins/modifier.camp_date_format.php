@@ -29,6 +29,14 @@ function smarty_modifier_camp_date_format($p_unixtime, $p_format = null)
 {
     global $g_ado_db;
 
+    $attributes = array('year'=>'%Y', 'mon'=>'%c', 'mday'=>'%e', 'yday'=>'%j',
+                        'wday'=>'%w', 'hour'=>'%H', 'min'=>'%i', 'sec'=>'%S',
+                        'mon_name'=>'%M', 'wday_name'=>'%W');
+
+    if (array_key_exists(trim(strtolower($p_format)), $attributes)) {
+        $p_format = $attributes[trim(strtolower($p_format))];
+    }
+
     // gets the context variable
     $campsite = CampTemplate::singleton()->get_template_vars('campsite');
 
