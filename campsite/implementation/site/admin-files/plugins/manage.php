@@ -142,7 +142,7 @@ if ($success) {
             </TD>
             
             <TD  width="80px" align="center">
-               <a href="manage.php?p_plugin=<?php p(htmlspecialchars($info['name']))?>&amp;p_uninstall=1" onClick="return confirm('<?php putGS('Are you sure to uninstall plugin $1? All plugin data will be deleted!', $info['name']) ?>')">
+               <a href="manage.php?p_plugin=<?php p(htmlspecialchars($info['name']))?>&amp;p_uninstall=1" onClick="return confirm('<?php putGS('Please confirm the plugin $1 uninstall? All plugin data will be deleted!', $info['name']) ?>')">
                  <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete plugin')?>" TITLE="<?php putGS('Delete plugin') ?>">
                </a>
             </TD>
