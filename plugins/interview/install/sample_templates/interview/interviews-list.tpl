@@ -27,7 +27,7 @@
     {{ /if }}
 {{ /list_interviews }}
 
-{{ if !$campsite->current_interviews_list->count }}
+{{ if $campsite->prev_list_empty }}
     No interview found
 {{ /if }}
 
