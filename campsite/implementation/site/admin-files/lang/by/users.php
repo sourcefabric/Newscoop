@@ -1,6 +1,13 @@
 <?php 
+regGS("Click here to use existing user type permissions (discard section customization)", "");
+regGS("Click here to customize user permissions per section", "");
+regGS("User may clear up the system cache", "");
+regGS("Another user is registered with that e-mail address, please choose a different one.", "");
 regGS("You do not have the right to sync Campsite and Phorum users.", "Вы не маеце права доступу для сінхранізацыі работы Campsite и наведвальнiкаў форума.");
 regGS("User may synchronize Campsite and Phorum users", "Карыстальнiк можа сінхранізаваць Campsite и наведвальнiкаў форума.");
+regGS("There was an error when trying to update the user info.", "");
+regGS("User may attach audioclips to articles", "");
+regGS("User may add audioclips", "");
 regGS("Are you sure you want to delete the IP Group $1:$2?", "Ці Вы ўпэўнены, што хаціце выдалiць IP групы?");
 regGS("User may moderate comments", "Карыстальнiк можа мадерыраваць каментары");
 regGS("User may enable comments", "Карыстальнiк можа дазваляць каментары");
@@ -141,7 +148,6 @@ regGS("User may insert horizontal rules", "Карыстальнiк можа ўс
 regGS("User may change the font color", "Карыстальнiк можа змяняць колер шрыфту");
 regGS("User may use superscripts", "Карыстальнiк можа выкарыстовываць верхнi шрыфт");
 regGS("User may use subscripts", "Карыстальнiк можа выкарыстовываць ніжні шрыфт");
-regGS("User may restart the template engine", "Карыстальнiк можа перазагрузiць рухавічок шаблонаў");
 regGS("Miscellaneous", "Рознае");
 regGS("Staff/Subscribers Management", "Кiраванне персаналам/падпiсальнiкамi ");
 regGS("Editor Basic Settings", "Асноўныя налады рэдактару");
@@ -153,6 +159,7 @@ regGS("Paid", " Аплочана");
 regGS("No subscriptions.", "Няма падпiсанняў");
 regGS("Editor Miscellaneous Settings", "Iншыя налады рэдактару");
 regGS("No such user account.", "Няма такога улiковага запicу карыстальнiка.");
+regGS("User may restart the template engine", "Карыстальнiк можа перазагрузiць рухавічок шаблонаў");
 regGS("User Name", "Iмя карыстальнiка");
 regGS(" management", "");
 regGS("Change password", "Змянiць пароль карыстальнiка");

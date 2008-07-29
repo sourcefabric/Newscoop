@@ -1,9 +1,18 @@
 <?php 
+regGS("There are currently no articles in statistics.", "");
+regGS("Publish date", "");
+regGS("Most Popular Articles", "");
+regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "");
+regGS("Clear System Cache", "");
+regGS("Campsite cache was cleaned up", "");
+regGS("The system was unable to upload the file '$1'. ", "");
+regGS("Please check the file you are trying to upload, it might be corrupted.", "");
 regGS("Synchronize Campsite and Phorum users", "Ciнхранiзаваць работу Campsite i наведывальнIкаў форума");
 regGS("Campsite and Phorum users were synchronized", "Работа Campsite i наведывальнIкаў форума былi сiнхранiзаваны");
+regGS("Your user is not a valid Campcaster user", "");
+regGS("Connection refused", "");
 regGS("An error occured in session management. Please reload the login page.", "Адбылася памылка ў кiраваннi БД. Калi ласка, перагрузiце старонку.");
 regGS("This file is stored on disk as '$1'.", "Гэты файл захаваны на дыску як '$1'.");
-regGS("Instance", "Прыклад ");
 regGS("The system is unable to write to the directory '$1'.", "Немагчыма запісаць у папку '$1'.");
 regGS("The system was unable to read the file '$1'.", "Немагчыма прачытаць файл '$1'.");
 regGS("The system was unable to delete the directory '$1'.", "Немагчыма выдалiць папку '$1'.");
@@ -40,4 +49,5 @@ regGS("You do not have the right to access this page.", "Вы не маеце п
 regGS("Login failed", "Памылка увахода");
 regGS("Please make sure that you typed the correct user name and password.", "Калi ласка, праверце, цi правiльна Вы азначылi лагiн і пароль.");
 regGS("If your problem persists please contact the site administrator $1", "Калi праблема iснуе, звярнiцеся к адмiнiстратару сайта $1");
+regGS("Instance", "Прыклад ");
 ?>

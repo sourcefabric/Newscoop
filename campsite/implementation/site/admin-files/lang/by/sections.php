@@ -1,4 +1,5 @@
 <?php 
+regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "");
 regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "URL павiнны быць унікальны для ўсiх рубрык у гэтым выданнi.<br> Азначаны URL (\"$1\") канфлiктуе з рубрыкай \"$2$3. $4$5\"");
 regGS("Section updated", "Рубрыка абноўленая");
 regGS("There are $1 subscriptions which will be affected.", "Гэта будзе прыменена да $1 подпiсання(ў) ");

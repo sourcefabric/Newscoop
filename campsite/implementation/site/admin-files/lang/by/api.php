@@ -1,5 +1,23 @@
 <?php 
+regGS("The uploaded file format is unsupported.", "");
+regGS("The uploaded archive does not contain an valid campsite plugin.", "");
+regGS("The following fields are mandatory:", "");
+regGS("Missing value for $1", "");
+regGS("Manage Plugins", "");
+regGS("* Marked fields are mandatory.", "");
+regGS("$1 is of type $2", "");
+regGS("Invalid resize width/height.", "");
+regGS("Can not fetch audioclip metadata: the connection to Campcaster was not established.", "");
 regGS("Image type $1 is not supported.", "Тып графiчнага файла $1не падтрымлiваецца.");
+regGS("There was a problem trying to execute the XML RPC function.", "");
+regGS("The Campcaster server configuration is invalid.", "");
+regGS("Template $1 was moved to $2", "");
+regGS("Template $1 was deleted", "");
+regGS("Invalid parameter given to Audioclip::editMetadata()", "");
+regGS("File $1 does not exist", "");
+regGS("Communication error: ", "");
+regGS("Cannot update audioclip metadata on storage server", "");
+regGS("Cannot update audioclip metadata on Campsite", "");
 regGS("Base data synchronized to phorum user for $1", "Перадача даных сiнхранiзавана з работай наведавальнiка форума за");
 regGS("Template $1 no longer exists!", "Шаблон $1 больш не iснуе!");
 regGS("The file uploaded is not an image.", "Загружаны файл не з'яўляецца графiчным файлам.");

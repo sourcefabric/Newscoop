@@ -1,5 +1,4 @@
 <?php 
-regGS("Change issue status", "Змянiць статут выпуску");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Велічынi, якiя Вы спрабуеце усталяваць, канфлiктуюць з выпускам \"$1$2. $3 ($4)$5\". ");
 regGS("The number must be unique for each issue in this publication of the same language.", "Нумар павiнен быць унікальным для кожнага выпуску гэтага выдання на гэтай жа мове.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Мова i URL павiнны быць унікальным для кожнага выпуску гэтага выдання.");
@@ -52,6 +51,7 @@ regGS("There was an error reading the publication parameter.", "Памылка �
 regGS("There was an error reading the issue parameter.", "Памылка чытання параметраў выпуску.");
 regGS("There was an error scheduling the $1 action on $2", "Памылка планавання аперацыi $1 на $2");
 regGS("The action scheduled on $1 could not be deleted.", "Прызначаная на $1аперацыя не можа быць адменена");
+regGS("Change issue status", "Змянiць статут выпуску");
 regGS("No such issue.", "Няма такога выпуску.");
 regGS("Change Issue Status", "Змянiць стан выпуску");
 regGS("Are you sure you want to delete this event?", "Цi Вы ўпэўнены, што жадаеце выдалiць гэту падзею");

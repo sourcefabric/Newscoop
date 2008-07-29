@@ -265,6 +265,8 @@ regGS("Please take a minute to send us an email.", "Калi ласка затр�
 regGS("(optional)", "(дадаткова)");
 regGS("The URL you entered is invalid: '$1'", "Уведены URL няправільны: '$1' ");
 regGS("There was an error logging in to the Campcaster server", "");
+regGS("Reads", "");
+regGS("Plugins", "");
 regGS("User name", "Карыстальнiк");
 regGS("User Types", "Тыпы карыстальнiкаў ");
 regGS("Add new user account", "Дадаць новы ўлiковы запiс карыстальнiка");
