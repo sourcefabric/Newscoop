@@ -4,6 +4,7 @@
   - #2445: Creating standardards/API for campsite plugins
   - #2606: Add a nickname field to the comment form
   - #2607: Implement a way to remember the user upon login
+  - #2609: Update the Russian and Belarusian translations
 
   Bugs Fixed
   ----------
