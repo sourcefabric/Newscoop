@@ -5,6 +5,8 @@
   - #2606: Add a nickname field to the comment form
   - #2607: Implement a way to remember the user upon login
   - #2609: Update the Russian and Belarusian translations
+  - #2600: Implement an attribute that returns the number of
+  articles in the search action
 
   Bugs Fixed
   ----------
@@ -15,8 +17,6 @@
 
   Other Tasks:
   - #2563: Test the PHP template engine under stress
-  - #2600: Implement an attribute that returns the number of 
-  articles in a search
 
 3.1.0 (July 04, 2008)
   Improvements
