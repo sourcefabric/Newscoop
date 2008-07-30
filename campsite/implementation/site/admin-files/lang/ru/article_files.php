@@ -1,5 +1,14 @@
 <?php 
 regGS("Unable to add attachment.", "Невозможно добавить файл.");
+regGS("There was a problem uploading the file.", "Проблема загрузки файла.");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Загруженный файл сохранен на сервер частично. Это в связано с тем, что максимально допустимое время загрузки файла превосходит время, необходимое для загрузки этого файла. Максимальное время загрузки определено в файле  'php.ini'");
+regGS("The maximum file upload size was not configured in Campsite.", "Максимальный размер файла для загрузки не определен в Campsite.");
+regGS("The file exceeds the allowed max file size.", "Рамер этого файла превосходит допустимый.");
+regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Пожалуйста убедитесь, что Вы правильно обновили базу данных: запуск $1 в оболочке");
+regGS("Maximum Upload Size", "Максимальный размер загружаемого файла");
+regGS("File Size", "Размер файла");
+regGS("File Name", "Имя файла");
+regGS("Download", "Загрузить");
 regGS("File '$1' updated.", "Файл '$1' обновлен.");
 regGS("File '$1' deleted.", "Файл '$1' удален.");
 regGS("File '$1' added.", "Файл '$1' добавлен.");

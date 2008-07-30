@@ -1,4 +1,7 @@
 <?php 
+regGS("Are you sure you want to make $1 a $2 field?", "Вы уверены, что хотите сделать $1 поля $2");
+regGS("Is Content", "В контексте");
+regGS("Back to Article Types List", "Вернуться к списку типов статей");
 regGS("show", "Показать");
 regGS("hide", "Спрятать");
 regGS("You must enter a name for the field.", "Вы должны ввести название поля.");

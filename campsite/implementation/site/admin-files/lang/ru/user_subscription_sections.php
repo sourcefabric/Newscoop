@@ -17,7 +17,7 @@ regGS("Are you sure you want to delete the subscription to the section $1?", "В
 regGS("Change subscription", "Изменить подписку");
 regGS("You do not have the right to change subscriptions.", "Вы не имеете прав доступа для изменения подписок.");
 regGS("Paid Days", "Оплаченные дни");
-regGS("-- ALL SECTIONS --", "-- ВСЕ СЕКЦИИ --");
+regGS("-- ALL SECTIONS --", "-- ВСЕ РУБРИКИ --");
 regGS("Updating subscription", "Обновление подписки");
 regGS("The subscription could not be updated.", "Невозможно обновить подписку.");
 regGS("Changing subscription", "Изменение подписки");

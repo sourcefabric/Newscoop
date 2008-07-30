@@ -4,7 +4,7 @@ regGS("Online Server: Off", "Сервер он-лайн: выключен");
 regGS("Title", "Заголовок");
 regGS("Length", "Длина");
 regGS("Download", "Загрузка");
-regGS("Creator", "");
+regGS("Creator", "Автор");
 regGS("Audioclips order saved.", "Порядок аудиоклиппов сохранен");
 regGS("Audioclips", "Аудиклипы");
 regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "Вы уверены, что хотите удалить этот аудио файл из этой статьи");

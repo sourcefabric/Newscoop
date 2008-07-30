@@ -1,4 +1,8 @@
 <?php 
+regGS("There are no sections", "Нет выбранных рубрик");
+regGS("There are no issues", "Нет выпусков");
+regGS("User Type '$1' successfully deleted", "Тип пользователя '$1' успешно удален");
+regGS("Permissions successfully modified", "Права доступа успешно обновлены");
 regGS("User types", "Типы пользователей");
 regGS("No user types.", "Нет типов пользователей.");
 regGS("Are you sure you want to delete the user type $1?", "Вы уверены, что хотите удалить тип пользователей $1?");

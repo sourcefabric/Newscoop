@@ -1,16 +1,16 @@
 <?php 
-regGS("There are currently no articles in statistics.", "");
-regGS("Publish date", "");
-regGS("Most Popular Articles", "");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "");
-regGS("Clear System Cache", "");
-regGS("Campsite cache was cleaned up", "");
-regGS("The system was unable to upload the file '$1'. ", "");
-regGS("Please check the file you are trying to upload, it might be corrupted.", "");
+regGS("There are currently no articles in statistics.", "Нет статей в статистике просмотра.");
+regGS("Publish date", "Дата опубликования");
+regGS("Most Popular Articles", "Самые популярные статьи");
+regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Невозможно соединиться с сервером Campsite, пожалуйста, проверьте настройки сервера.");
+regGS("Clear System Cache", "Очистить систему кеширования");
+regGS("Campsite cache was cleaned up", "Система кеширования Campsite очищена");
+regGS("The system was unable to upload the file '$1'. ", "Система не может загрузить файл '$1'.");
+regGS("Please check the file you are trying to upload, it might be corrupted.", "Пожалуйста проверьте, какой файл Вы пытаетесь загрузить. Файл может быть запорчен.");
 regGS("Synchronize Campsite and Phorum users", "Синхронизировать работу Campsite и посетителей форума");
 regGS("Campsite and Phorum users were synchronized", "Работа Campsite и посетителей форума синхронизированы");
-regGS("Your user is not a valid Campcaster user", "");
-regGS("Connection refused", "");
+regGS("Your user is not a valid Campcaster user", "Данный пользователь не является зарегистрированным пользователем Campsite");
+regGS("Connection refused", "Соединение сброшено");
 regGS("An error occured in session management. Please reload the login page.", "Произошла ошибка в управлении БД. Пожалуйста, перезагрузите страницу.");
 regGS("This file is stored on disk as '$1'.", "Этот файл сохранен на диске как '$1'.");
 regGS("The system is unable to write to the directory '$1'.", "Система не может записать в папку '$1'.");

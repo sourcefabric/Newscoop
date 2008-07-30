@@ -264,9 +264,9 @@ regGS("Thank you.", "Спасибо.");
 regGS("Please take a minute to send us an email.", "Пожалуйста уделите минутку, чтобы послать нам e-mail.");
 regGS("(optional)", "(дополнительно)");
 regGS("The URL you entered is invalid: '$1'", "Введенный URL неверен: '$1'");
-regGS("There was an error logging in to the Campcaster server", "");
-regGS("Reads", "");
-regGS("Plugins", "");
+regGS("There was an error logging in to the Campcaster server", "Произошла ошибка входа в административный интерфейс Campsite");
+regGS("Reads", "Количество просмотров");
+regGS("Plugins", "Утилиты");
 regGS("User name", "Пользователь");
 regGS("User Types", "Типы пользователей");
 regGS("Add new user account", "Добавить новую учетную запись пользователя");
@@ -282,4 +282,5 @@ regGS("There are $1 issue(s) left.", "Осталось $1 выпуск(ов):ru"
 regGS("There are $1 keyword(s) left.", "Осталось $1 ключевое(-ых) слов(о):ru");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(Щелкнуть для правки)</SMALL>:ru");
 regGS("New field", "Новое поле");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Вы уверены, что хотите удалить картинку \\'$1\\'?");
 ?>
