@@ -1,0 +1,11 @@
+/* Begin hacks for IE and all it's non-compliant glory!!! */
+/* \*/
+
+* html div.exceed,* html div.fail,* html div.pass,* html div.warn { background-image: none !important; }
+* html div.exceed { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true', sizingMethod='crop', src='images/img_status_exceed.png'); }
+* html div.fail { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true', sizingMethod='crop', src='images/img_status_fail.png'); }
+* html div.pass { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true', sizingMethod='crop', src='images/img_status_pass.png'); }
+* html div.warn { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true', sizingMethod='crop', src='images/img_status_warn.png'); }
+
+/* */
+/* End hacks for IE */

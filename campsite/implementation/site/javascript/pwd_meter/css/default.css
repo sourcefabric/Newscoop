@@ -1,0 +1,127 @@
+#score {
+	color: #000;
+	font-size: 85%;
+	position:absolute;
+	text-align: center;
+	width: 100px;
+	z-index: 10;
+}
+#score,#rating,#standards {
+	font-weight: bold;
+}
+#scorebar {
+	background-image: url(../images/bg_strength_gradient.jpg);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	position:absolute;
+	width: 100px;
+	z-index: 0;
+}
+#scorebarBorder {
+	background: #333;
+	border: 1px #D5C3DF solid;
+	height: 16px;
+	margin-bottom: 2px;
+	width: 100px;
+	float: left;
+}
+#password {
+	border: 1px #777 solid;
+	background-color: #f0f0ff;
+        text-indent: 3px;
+        font-size: 9pt;
+}
+#complexity {
+	font-size: 70%;
+	padding: 4px;
+	float: left;
+}
+#tablePwdScoring {
+	margin-bottom: 0 !important;
+}
+div.fail,div.pass,div.exceed,div.warn {
+	background-repeat: no-repeat;
+	background-position: left top;
+	height: 16px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 16px;
+}
+div.exceed {
+	background-image: url(../images/img_status_exceed.png);
+}
+div.fail {
+	background-image: url(../images/img_status_fail.png);
+}
+div.pass {
+	background-image: url(../images/img_status_pass.png);
+}
+div.warn {
+	background-image: url(../images/img_status_warn.png);
+}
+div.box {
+	background: #456;
+	border: 1px #000 solid;
+	color: #fff;
+	height: 16px;
+	padding: 2px;
+	white-space: nowrap;
+	width: 16px;
+}
+div.boxMinus,div.boxPlus {
+	border: none;
+	color: #fff;
+	font-weight: bold;
+	padding: 2px;
+	text-align: left;
+	white-space: nowrap;
+}
+.clearNone {
+	clear: none;
+}
+.floatRight {
+	float: right;
+}
+.floatLeft {
+	float: left;
+}
+.hide {
+	display: none;
+}
+.imgLegend {
+	clear: left !important;
+	float: left !important;
+	position: relative !important;
+	margin-bottom: -3px !important;
+	margin-right: 5px !important;
+}
+.inline {
+	display: inline;
+}
+.italic {
+	font-style: italic;
+}
+.noPad {
+	padding: 0;
+}
+.show {
+	display: inline !important;
+}
+.txtLg {
+	font-size: 125%;
+}
+.txtSmall {
+	font-size: 75%;
+}
+.txtCenter {
+	text-align: center;
+}
+.txtRight {
+	text-align: right;
+}
+div.xtend {
+	clear: both !important; 
+	line-height: 0; 
+	height: 0;
+}
+

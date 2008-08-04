@@ -37,8 +37,55 @@ $countries = Country::GetCountries(1);
 $my_user_type = $editUser->getUserType();
 
 ?>
+<link href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/pwd_meter/css/default.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/pwd_strength.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/pwd_meter/js/pwd_meter_min.js"></script>
+
+<div id="div_nLength" style="display: none;">&nbsp;</div>
+<div id="nLength" style="display: none;">&nbsp;</div>
+<div id="nLengthBonus" style="display: none;">&nbsp;</div>
+<div id="div_nAlphaUC" style="display: none;">&nbsp;</div>
+<div id="nAlphaUC" style="display: none;">&nbsp;</div>
+<div id="nAlphaUCBonus" style="display: none;">&nbsp;</div>
+<div id="div_nAlphaLC" style="display: none;">&nbsp;</div>
+<div id="nAlphaLC" style="display: none;">&nbsp;</div>
+<div id="nAlphaLCBonus" style="display: none;">&nbsp;</div>
+<div id="div_nNumber" style="display: none;">&nbsp;</div>
+<div id="nNumber" style="display: none;">&nbsp;</div>
+<div id="nNumberBonus" style="display: none;">&nbsp;</div>
+<div id="div_nSymbol" style="display: none;">&nbsp;</div>
+<div id="nSymbol" style="display: none;">&nbsp;</div>
+<div id="nSymbolBonus" style="display: none;">&nbsp;</div>
+<div id="div_nMidChar" style="display: none;">&nbsp;</div>
+<div id="nMidChar" style="display: none;">&nbsp;</div>
+<div id="nMidCharBonus" style="display: none;">&nbsp;</div>
+<div id="div_nRequirements" style="display: none;">&nbsp;</div>
+<div id="nRequirements" style="display: none;">&nbsp;</div>
+<div id="nRequirementsBonus" style="display: none;">&nbsp;</div>
+<div id="div_nAlphasOnly" style="display: none;">&nbsp;</div>
+<div id="nAlphasOnly" style="display: none;">&nbsp;</div>
+<div id="nAlphasOnlyBonus" style="display: none;">&nbsp;</div>
+<div id="div_nNumbersOnly" style="display: none;">&nbsp;</div>
+<div id="nNumbersOnly" style="display: none;">&nbsp;</div>
+<div id="nNumbersOnlyBonus" style="display: none;">&nbsp;</div>
+<div id="div_nRepChar" style="display: none;">&nbsp;</div>
+<div id="nRepChar" style="display: none;">&nbsp;</div>
+<div id="nRepCharBonus" style="display: none;">&nbsp;</div>
+<div id="div_nConsecAlphaUC" style="display: none;">&nbsp;</div>
+<div id="nConsecAlphaUC" style="display: none;">&nbsp;</div>
+<div id="nConsecAlphaUCBonus" style="display: none;">&nbsp;</div>
+<div id="div_nConsecAlphaLC" style="display: none;">&nbsp;</div>
+<div id="nConsecAlphaLC" style="display: none;">&nbsp;</div>
+<div id="nConsecAlphaLCBonus" style="display: none;">&nbsp;</div>
+<div id="div_nConsecNumber" style="display: none;">&nbsp;</div>
+<div id="nConsecNumber" style="display: none;">&nbsp;</div>
+<div id="nConsecNumberBonus" style="display: none;">&nbsp;</div>
+<div id="div_nSeqAlpha" style="display: none;">&nbsp;</div>
+<div id="nSeqAlpha" style="display: none;">&nbsp;</div>
+<div id="nSeqAlphaBonus" style="display: none;">&nbsp;</div>
+<div id="div_nSeqNumber" style="display: none;">&nbsp;</div>
+<div id="nSeqNumber" style="display: none;">&nbsp;</div>
+<div id="nSeqNumberBonus" style="display: none;">&nbsp;</div>
 
 <form name="user_add" method="POST" action="<?php echo $action; ?>" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <input type="hidden" name="uType" value="<?php echo $uType; ?>">
@@ -66,12 +113,16 @@ if (!$isNewUser) {
 			</tr>
 			<tr>
 				<td align="right"><?php putGS("Password"); ?>:</td>
-				<td width="20%">
-				<input type="password" class="input_text" id="password" name="password" onkeyup="runPassword(this.value, 'password');" size="16" maxlength="32" alt="length|6" emsg="<?php putGS("The password must be at least 6 characters long and both passwords should match."); ?>">
+				<td width="20%" nowrap>
+				         <input type="password" class="input_text" id="password" name="password" autocomplete="off" onkeyup="chkPass(this.value);" size="16" maxlength="32" alt="length|6" emsg="<?php putGS("The password must be at least 6 characters long and both passwords should match."); ?>" />
+					  <input type="text" id="passwordTxt" name="passwordTxt" maxlength="16" autocomplete="off" onkeyup="chkPass(this.value);" style="display: none;" /> <a href="">Strength meter</a>:
                                 </td>
                                 <td>
-                                  <div id="password_text" style="font-size: 10px;"></div>
-                                  <div id="password_bar" style="font-size: 1px; height: 2px; width: 0px; border: 1px solid white;"></div>
+                                        <div id="scorebarBorder">
+                                          <div id="score">0%</div>
+                                          <div id="scorebar">&nbsp;</div>
+                                        </div>
+					<div id="complexity">&nbsp;</div>
                                 </td>
 			</tr>
 			<tr>
@@ -161,21 +212,23 @@ if (!$isNewUser) {
 		<?php
 		}
 		?>
-
 		<tr>
 			<td align="right" nowrap width="1%"><?php putGS("Password"); ?>:</td>
-			<td width="20%">
-			<input type="password" class="input_text" id="password" name="password" onkeyup="runPassword(this.value, 'password');" size="16" maxlength="32">
+			<td width="20%" nowrap>
+			         <input type="password" class="input_text" id="password" name="password" autocomplete="off" onkeyup="chkPass(this.value);" size="16" maxlength="32" alt="length|6" emsg="<?php putGS("The password must be at least 6 characters long and both passwords should match."); ?>" />
+											    <input type="text" id="passwordTxt" name="passwordTxt" maxlength="16" autocomplete="off" onkeyup="chkPass(this.value);" style="display: none;" /> <a href="">Strength meter</a>:
 			</td>
                         <td>
-                                <div id="password_text" style="font-size: 10px;"></div>
-                                <div id="password_bar" style="font-size: 1px; height: 2px; width: 0px; border: 1px solid white;"></div>
+                                <div id="scorebarBorder">
+                                  <div id="score">0%</div>
+                                  <div id="scorebar">&nbsp;</div>
+                                </div>
+                                <div id="complexity">&nbsp;</div>
                         </td>
 		</tr>
-
 		<tr>
 			<td align="right" nowrap width="1%"><?php putGS("Confirm password"); ?>:</td>
-			<td colspan="2">
+			<td>
 			<input type="password" class="input_text" name="passwordConf" size="16" maxlength="32">
 			</td>
 		</tr>
