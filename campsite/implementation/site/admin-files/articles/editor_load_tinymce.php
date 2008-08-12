@@ -11,8 +11,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage)
 {
 	global $Campsite;
 
-	$stylesheetFile = $Campsite['HTML_DIR']
-		."/admin-files/articles/article_stylesheet.css";
+	$stylesheetFile = '/admin/articles/article_stylesheet.css';
 
 	/** STEP 1 ********************************************************
 	 * What are the names of the textareas you will be turning
@@ -104,6 +103,9 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage)
 	    //$toolbar1[] = "\"campsite-internal-link\"";
 	    $toolbar1[] = "link";
 	}
+	if ($p_user->hasPermission('EditorSubhead')) {
+	    $toolbar1[] = "campsite-subhead";
+	}
 	if ($p_user->hasPermission('EditorImage')) {
 	    $toolbar1[] = "image";
 	}
@@ -134,8 +136,8 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage)
 
 	$toolbar2 = array();
 	// Slice up the first toolbar if it is too long.
-	if (count($toolbar1) > 30) {
-		$toolbar2 = array_splice($toolbar1, 30);
+	if (count($toolbar1) > 31) {
+		$toolbar2 = array_splice($toolbar1, 31);
 	}
 
 	// This is to put the bulleted and numbered list controls
@@ -144,7 +146,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage)
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "bullist";
 	    $toolbar1[] = "numlist";
-	} elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 30) {
+	} elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 31) {
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "bullist";
 	} elseif (!$p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 20) {
@@ -186,40 +188,63 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage)
 <!-- TinyMCE -->
 <script type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>
 <script type="text/javascript">
-        // Default skin
-        tinyMCE.init({
-                // General options
-                language : "<?php p($p_editorLanguage); ?>",
-                mode : "exact",
-	        elements : "<?php p($textareas); ?>",
-                theme : "advanced",
-	        plugins : "<?php p($plugins_list); ?>",
+function CampsiteSubhead(ed) {
+    element = ed.dom.getParent(ed.selection.getNode(), 'span');
+    if (element && ed.dom.getAttrib(element, 'class') == 'campsite_subhead') {
+	return false;
+    } else {
+        html = ed.selection.getContent({format : 'text'});
+	ed.selection.setContent('<span class="campsite_subhead">' + html + '</span>');
+    }
+} // fn CampsiteSubhead
 
-                // Theme options
-	        theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
-	        theme_advanced_buttons2 : "<?php p($theme_buttons2); ?>",
-                theme_advanced_buttons3 : "<?php p($theme_buttons3); ?>",
 
-                theme_advanced_toolbar_location : "top",
-                theme_advanced_toolbar_align : "left",
-                theme_advanced_resizing : false,
+// Default skin
+tinyMCE.init({
+    // General options
+    language : "<?php p($p_editorLanguage); ?>",
+    mode : "exact",
+    elements : "<?php p($textareas); ?>",
+    theme : "advanced",
+    plugins : "<?php p($plugins_list); ?>",
 
-                // Example content CSS (should be your site CSS)
-	        content_css : "<?php echo $stylesheetFile; ?>",
+    // Theme options
+    theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
+    theme_advanced_buttons2 : "<?php p($theme_buttons2); ?>",
+    theme_advanced_buttons3 : "<?php p($theme_buttons3); ?>",
 
-                // Drop lists for link/image/media/template dialogs
-                template_external_list_url : "lists/template_list.js",
-                external_link_list_url : "lists/link_list.js",
-                external_image_list_url : "lists/image_list.js",
-                media_external_list_url : "lists/media_list.js",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    theme_advanced_resizing : false,
 
-		// paste options
-		paste_use_dialog: false,
-		paste_auto_cleanup_on_paste: true,
-		paste_convert_headers_to_strong: true,
-		paste_remove_spans: true,
-		paste_remove_styles: true,
+    // Example content CSS (should be your site CSS)
+    content_css : "<?php echo $stylesheetFile; ?>",
+
+    // Drop lists for link/image/media/template dialogs
+    template_external_list_url : "lists/template_list.js",
+    external_link_list_url : "lists/link_list.js",
+    external_image_list_url : "lists/image_list.js",
+    media_external_list_url : "lists/media_list.js",
+
+    // paste options
+    paste_use_dialog: false,
+    paste_auto_cleanup_on_paste: true,
+    paste_convert_headers_to_strong: true,
+    paste_remove_spans: true,
+    paste_remove_styles: true,
+
+    setup : function(ed) {
+    <?php if ($p_user->hasPermission('EditorSubhead')) { ?>
+        ed.addButton('campsite-subhead', {
+        title : 'Subhead',
+        image : '/javascript/tinymce/themes/advanced/img/campsite_subhead.gif',
+        onclick : function() {
+                      CampsiteSubhead(ed);
+                  }
         });
+    <?php } ?>
+    }
+});
 </script>
 <!-- /TinyMCE -->
 <?php
