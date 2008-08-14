@@ -193,6 +193,9 @@ final class MetaArticle extends MetaDbObject {
                     }
                     $fieldValue = $this->getContentCache($property);
                 }
+                if ($articleFieldType->getType() == 'topic') {
+                    $fieldValue = new MetaTopic($fieldValue);
+                }
                 return $fieldValue;
             } catch (InvalidPropertyException $e) {
                 // do nothing; will throw another exception with original property field name
