@@ -14,9 +14,9 @@ Repeat the following steps for each instance:
 
 Read INSTALL file and follow the steps; read on Compatibility issues.
 
-Upgrading from Campsite 3.0.x:
+Upgrading from Campsite 3.0.x and 3.1.x:
 
-Drop the 3.1 sources over the existing 3.0 install, open a browser
+Drop the 3.2 sources over the existing 3.0/3.1 install, open a browser
 and make a request for the publication home page: http://[site_name]
 
 
