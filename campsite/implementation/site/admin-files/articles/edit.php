@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_xinha.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAttachment.php');
@@ -174,7 +174,7 @@ foreach ($dbColumns as $dbColumn) {
 if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 	$languageSelectedObj = new Language($f_language_selected);
 	$editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
-	editor_load_xinha($dbColumns, $g_user, $editorLanguage);
+	editor_load_tinymce($dbColumns, $g_user, $editorLanguage);
 }
 
 // If the article is locked.
@@ -798,7 +798,7 @@ window.location.reload();
 					<?php if ($f_edit_mode == "edit") { ?>
 					<td><textarea name="<?php print $dbColumn->getName() ?>"
 								  id="<?php print $dbColumn->getName() ?>"
-								  rows="20" cols="80"><?php print $text; ?></textarea>
+								  rows="20" cols="70"><?php print $text; ?></textarea>
 					</td>
 					<?php } else { ?>
 					<td align="left" style="padding: 5px; <?php if (!empty($text)) {?>border: 1px solid #888; margin-right: 5px;<?php } ?>" <?php if (!empty($text)) {?>bgcolor="#EEEEEE"<?php } ?>><?php p($text); ?></td>
