@@ -268,6 +268,8 @@ function onCommentsActivated(p_checkbox)
     <!-- END right column -->
 </tr>
 
+<?php CampPlugin::PluginAdminHooks(__FILE__); ?> 
+
 <TR>
 	<TD COLSPAN="2" align="center" style="padding-left: 8px; padding-right: 8px;">
 	   <table style="border-top: 1px solid black; padding-top: 7px; padding-bottom: 6px; margin-top: 10px;" width="100%">

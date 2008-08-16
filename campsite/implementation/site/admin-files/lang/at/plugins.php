@@ -1,4 +1,5 @@
 <?php 
+regGS("Please confirm the plugin $1 uninstall? All plugin data will be deleted!", "");
 regGS("You do not have the right to manage plugins.", "");
 regGS("Version", "");
 regGS("Upload Plugin", "");
@@ -9,6 +10,5 @@ regGS("No plugins found.", "");
 regGS("Manage", "");
 regGS("Enabled", "");
 regGS("Delete plugin", "");
-regGS("Are you sure to uninstall this plugin? All plugin data will be deleted !", "");
 regGS("Add new image", "");
 ?>

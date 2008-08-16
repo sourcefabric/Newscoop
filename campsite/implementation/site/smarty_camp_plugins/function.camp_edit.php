@@ -113,7 +113,8 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
                     .$p_params['html_code'].'>'
                     .smarty_function_escape_special_chars($fieldValue)
                     .'</textarea>';
-            } elseif ($attribute == 'subject' || $attribute == 'reader_email') {
+            } elseif ($attribute == 'subject' || $attribute == 'reader_email'
+                      || $attribute == 'nickname') {
                 $html = '<input type="text" name="f_comment_'.$attribute
                     .'" maxlength="255" size="'.$p_params['size'].'" value="'
                     .smarty_function_escape_special_chars($fieldValue)

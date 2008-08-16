@@ -163,4 +163,6 @@ editor_load_xinha('cDescription', $g_user, $editorLanguage);
 <SCRIPT>
 document.section_edit.cName.focus();
 </SCRIPT>
+
+<?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 <?php camp_html_copyright_notice(); ?>

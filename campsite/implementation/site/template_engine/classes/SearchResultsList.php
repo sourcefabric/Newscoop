@@ -45,17 +45,18 @@ class SearchResultsList extends ListObject
 	        $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
 	                                                         $context->section->number);
 	    }
-	    $matchAll = strtolower($p_parameters['match_all']) == 'true';
 
 	    $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
-
-	    $articlesList = Article::SearchByKeyword($keywords, $matchAll, $this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+	    $articlesList = $p_parameters['search_results'];
+		if (($p_start != 0) || ($p_limit != 0) || (count($this->m_order) != 0)) {
+	    	$articlesList = Article::SearchByKeyword($keywords, $p_parameters['match_all'], $this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+		}
 	    $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
 	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),
 	                                              $article->getArticleNumber());
 	    }
-	    return $metaArticlesList;
+		return $metaArticlesList;
 	}
 
 	/**
@@ -128,7 +129,8 @@ class SearchResultsList extends ListObject
     			case 'match_all':
     			case 'search_level':
     			case 'search_phrase':
-    			    if ($parameter == 'length' || $parameter == 'columns') {
+    			case 'search_results':
+    				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {
     						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_search_results");

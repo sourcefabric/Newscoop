@@ -226,9 +226,6 @@ class CampPlugin extends DatabaseObject {
     {
         global $ADMIN;
         global $g_user;
-        global $Campsite;
-        
-        
         
         $root_menu = false;
         $plugin_infos = self::GetPluginInfos();
@@ -271,8 +268,6 @@ class CampPlugin extends DatabaseObject {
 
         foreach ($plugin_infos as $info) {
             if (CampPlugin::IsPluginEnabled($info['name'])) {
-                
-                $pluginIconTemplateStr = str_replace($Campsite['ADMIN_IMAGE_BASE_URL' ], $Campsite['PLUGINS_BASE_URL'].'/'.$info['name'], $p_iconTemplateStr);
                 $menu_plugin = null;
                 $parent_menu = false;
 
@@ -289,7 +284,7 @@ class CampPlugin extends DatabaseObject {
                 if ($parent_menu) {
                     $menu_plugin =& DynMenuItem::Create(getGS($info['menu']['label']),
                     is_null($info['menu']['path']) ? null : "/$ADMIN/".$info['menu']['path'],
-                    array("icon" => sprintf($pluginIconTemplateStr, $info['menu']['icon'])));
+                    array("icon" => sprintf($p_iconTemplateStr, $info['menu']['icon'])));
                 }
 
                 if (is_array($info['menu']['sub'])) {
@@ -297,7 +292,7 @@ class CampPlugin extends DatabaseObject {
                         if ($g_user->hasPermission($menu_info['permission'])) {
                             $menu_item =& DynMenuItem::Create(getGS($menu_info['label']),
                             is_null($menu_info['path']) ? null : "/$ADMIN/".$menu_info['path'],
-                            array("icon" => sprintf($pluginIconTemplateStr, $menu_info['icon'])));
+                            array("icon" => sprintf($p_iconTemplateStr, $menu_info['icon'])));
                             $menu_plugin->addItem($menu_item);
                         }
                     }
@@ -343,11 +338,24 @@ class CampPlugin extends DatabaseObject {
         $tar->extract($g_documentRoot.DIR_SEP.PLUGINS_DIR);
         
         CampPlugin::clearPluginInfos();
+    }
+    
+    public static function PluginAdminHooks($p_filename, $p_area=null)
+    {
+        global $ADMIN, $ADMIN_DIR, $Campsite, $g_user;
         
-        $Plugin = new CampPlugin($plugin_name);
-        $Plugin->install();
-                
-        return $Plugin;
+        $paths = array();
+        
+        $filename = realpath($p_filename);
+        $admin_path = realpath(CS_PATH_SITE.DIR_SEP.$ADMIN_DIR);
+        $script = str_replace($admin_path, '', $filename);
+        
+        foreach (self::GetEnabled() as $plugin) {
+            $filepath = $plugin->getBasePath().DIR_SEP.'admin-files'.DIR_SEP.'include'.DIR_SEP.$script;
+            if (file_exists($filepath))  {
+                include $filepath;   
+            }  
+        }  
     }
 }
 

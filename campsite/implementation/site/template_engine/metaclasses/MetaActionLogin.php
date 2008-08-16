@@ -39,6 +39,9 @@ class MetaActionLogin extends MetaAction
             ACTION_LOGIN_ERR_INVALID_CREDENTIALS);
             return;
         }
+        if (isset($p_input['f_login_rememberuser']) && !empty($p_input['f_login_rememberuser'])) {
+            $this->m_properties['remember_user'] = true;
+        }
         $this->m_error = ACTION_OK;
         $this->m_user = $user;
         $this->m_user->initLoginKey();
@@ -64,9 +67,10 @@ class MetaActionLogin extends MetaAction
         if ($this->m_error != ACTION_OK) {
             return false;
         }
+        $time = $this->remember_user ? time() + 14 * 24 * 3600 : null;
 
-        setcookie("LoginUserId", $this->m_user->getUserId(), null, '/');
-        setcookie("LoginUserKey", $this->m_user->getKeyId(), null, '/');
+        setcookie("LoginUserId", $this->m_user->getUserId(), $time, '/');
+        setcookie("LoginUserKey", $this->m_user->getKeyId(), $time, '/');
         $p_context->user = new MetaUser($this->m_user->getUserId());
         return true;
     }

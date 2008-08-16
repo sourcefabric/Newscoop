@@ -69,9 +69,8 @@
   <ul>
   {{ list_article_comments order="bydate desc" }}
     <li>{{ if $campsite->comment == $campsite->default_comment }}<b>{{ /if }}
-    <a href="{{ uri }}#comments">
-    Subject: {{ $campsite->comment->subject }}, Reader email: {{ $campsite->comment->reader_email }}
-    </a>
+    <a href="{{ uri }}#comments">Subject: {{ $campsite->comment->subject }}</a>,
+    Author: {{ $campsite->comment->nickname }}, Email: {{ $campsite->comment->email }}
     {{ if $campsite->comment == $campsite->default_comment }}</b>{{ /if }}<br/>
     Content: {{ $campsite->comment->content }}
     </li>
@@ -106,7 +105,9 @@
 <tr>
   <td>
     <b>Comment preview</b><br/>
-    Subject: {{ $campsite->preview_comment_action->subject }}, Reader email: {{ $campsite->preview_comment_action->reader_email }}<br/>
+    Subject: {{ $campsite->preview_comment_action->subject }},
+    Author: {{ $campsite->preview_comment_action->nickname }},
+    Reader email: {{ $campsite->preview_comment_action->reader_email }}<br/>
     Content: {{ $campsite->preview_comment_action->content }}
   </td>
 </tr>
@@ -118,6 +119,12 @@
   <div id="genericform">
     {{ comment_form submit_button="Submit" preview_button="Preview" anchor="comments" button_html_code="class=\"submitbutton\"" }}
     <table class="commentform" cellspacing="0" cellpadding="0">
+    <tr align="left">
+      <td>Nickname:</td>
+      <td>
+        {{ camp_edit object="comment" attribute="nickname" html_code="class=\"input_long\"" }}
+      </td>
+    </tr>
     <tr align="left">
       <td>E-mail:</td>
       <td>

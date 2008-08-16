@@ -38,6 +38,8 @@ class MetaActionSubmit_Comment extends MetaAction
             ACTION_SUBMIT_COMMENT_ERR_NO_CONTENT);
             return;
         }
+        $this->m_properties['nickname'] = isset($p_input['f_comment_nickname']) ?
+                                          $p_input['f_comment_nickname'] : 'anonymous';
         $this->m_properties['subject'] = $p_input['f_comment_subject'];
         $this->m_properties['content'] = $p_input['f_comment_content'];
         if (isset($p_input['f_comment_reader_email'])) {
@@ -166,7 +168,7 @@ class MetaActionSubmit_Comment extends MetaAction
         $commentObj = new Phorum_message();
         if (!$commentObj->create($forumId, $this->m_properties['subject'],
         $this->m_properties['content'], $firstPost->getThreadId(),
-        $parentMessage->getMessageId(), $userRealName, $userEmail,
+        $parentMessage->getMessageId(), $this->m_properties['nickname'], $userEmail,
         is_null($userId) ? 0 : $userId)) {
             $this->m_error = new PEAR_Error('There was an internal error when submitting the comment (code 3).',
             ACTION_SUBMIT_COMMENT_ERR_INTERNAL);

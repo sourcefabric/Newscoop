@@ -12,6 +12,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/comment_lib.php");
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_comment_nickname = Input::Get('f_comment_nickname', 'string', '', true);
 $f_comment_subject = Input::Get('f_comment_subject', 'string', '', true);
 $f_comment_body = Input::Get('f_comment_body');
 $f_comment_parent_id = Input::Get('f_comment_id', 'int', 0, true);
@@ -77,7 +78,7 @@ $commentObj->create($forumId,
                     $f_comment_body,
                     $threadId,
                     $f_comment_parent_id,
-                    $g_user->getRealName(),
+                    $f_comment_nickname,
                     $g_user->getEmail(),
                     $g_user->getUserId());
 $commentObj->setStatus(PHORUM_STATUS_APPROVED);

@@ -932,6 +932,9 @@ window.location.reload();
             <!-- END Audioclips table -->
         </td></tr>
         <?php } ?>
+        
+        <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
+        
 		</table>
 	</td>
 </tr>

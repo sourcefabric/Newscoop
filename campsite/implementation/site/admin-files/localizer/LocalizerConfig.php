@@ -98,6 +98,8 @@ $mapPrefixToDir["bug_reporting"] = "/admin-files/bugreporter";
 $mapPrefixToDir["feedback"] = "/admin-files/feedback";
 $mapPrefixToDir["preview"] = "/template_engine/classes";
 $mapPrefixToDir["plugins"] = "/admin-files/plugins";
+$mapPrefixToDir["plugin_interview"] = "/plugins/interview/admin-files/interview/admin";
+$mapPrefixToDir["plugin_poll"] = "/plugins/poll/admin-files/poll";
 
 $g_localizerConfig["MAP_PREFIX_TO_DIR"] = $mapPrefixToDir;
 unset($mapPrefixToDir);

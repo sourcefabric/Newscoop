@@ -1,4 +1,6 @@
 <?php 
+regGS("Polls", "");
+regGS("Interview", "");
 regGS("Preview Window", "");
 regGS("Article Audioclips", "");
 regGS("Show translated strings", "Afişează string-urile traduse");

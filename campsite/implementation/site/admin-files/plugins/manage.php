@@ -25,20 +25,24 @@ if (Input::Get('save')) {
     foreach ($p_plugins as $plugin => $version) {
         $CampPlugin = new CampPlugin($plugin);
         
-        if ($CampPlugin->exists()) {
-            if ($CampPlugin->getVersion() != $version) {
-                // update plugin
-                $CampPlugin->delete();
-                $CampPlugin->create($plugin, $version);        
-            }
-        } else {
-            // add plugin
-            $CampPlugin->create($plugin, $version);
-        }
-           
-        // enable/disable 
         if ($p_enabled[$plugin]) {
-            $CampPlugin->enable();   
+            if ($CampPlugin->exists()) {
+                if ($CampPlugin->getVersion() != $version) {
+                    // update plugin
+                    $CampPlugin->delete();
+                    $CampPlugin->create($plugin, $version);
+                    $CampPlugin->update();
+                    $CampPlugin->enable();        
+                } else {
+                    // just enable disabled plugin
+                    $CampPlugin->enable();   
+                }
+            } else {
+                // install + enable not previously installed plugin
+                $CampPlugin->create($plugin, $version);
+                $CampPlugin->install();
+                $CampPlugin->enable();
+            }
         } else {
             $CampPlugin->disable();   
         }
@@ -138,7 +142,7 @@ if ($success) {
             </TD>
             
             <TD  width="80px" align="center">
-               <a href="manage.php?p_plugin=<?php p(htmlspecialchars($info['name']))?>&amp;p_uninstall=1" onClick="return confirm('<?php putGS('Are you sure to uninstall this plugin? All plugin data will be deleted !') ?>')">
+               <a href="manage.php?p_plugin=<?php p(htmlspecialchars($info['name']))?>&amp;p_uninstall=1" onClick="return confirm('<?php putGS('Please confirm the plugin $1 uninstall? All plugin data will be deleted!', $info['name']) ?>')">
                  <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete plugin')?>" TITLE="<?php putGS('Delete plugin') ?>">
                </a>
             </TD>

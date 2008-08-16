@@ -153,7 +153,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
 
     case 'search':
         if ($attribute == 'mode') {
-            $html = '<input type="checkbox" name="f_search_'.$attribute.'" '
+            $html = '<input type="checkbox" name="f_match_all" '
             . $p_params['html_code'] . ' />';
         } elseif ($attribute == 'level') {
             $html = '<select name="f_search_'.$attribute.'" ' . $p_params['html_code'] . '>'
