@@ -13,7 +13,7 @@ $queryStr = "SELECT u.Id, pu.user_id, u.UName, u.Password, u.EMail "
             . "ON u.UName = pu.username "
             . "WHERE fk_campsite_user_id IS NULL OR fk_campsite_user_id = 0";
 $nullUsers = $g_ado_db->GetAll($queryStr);
-if (sizeof($nullUsers) > 0) {
+if (is_array($nullUsers) && sizeof($nullUsers) > 0) {
     foreach ($nullUsers as $nullUser) {
         if (empty($nullUser['user_id'])) {
             $phorumUser = new Phorum_user();
