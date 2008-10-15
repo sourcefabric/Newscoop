@@ -1,5 +1,4 @@
 <?php
-define('PLUGINS_DIR', 'plugins');
 /**
  * @package Campsite
  *
@@ -97,7 +96,7 @@ class CampPlugin extends DatabaseObject {
 
     public function getBasePath()
     {
-        return PLUGINS_DIR.'/'.$this->getName();
+        return CS_PLUGINS_DIR.DIR_SEP.$this->getName();
     }
 
     public function getName()
@@ -162,31 +161,24 @@ class CampPlugin extends DatabaseObject {
     }
 
     static public function GetPluginInfos()
-    {
-        global $g_documentRoot;
-        
-        $directories = array(PLUGINS_DIR);
-
+    {          
         if (!is_array(self::$m_pluginInfos)) {
             self::$m_pluginInfos = array();
 
-            foreach ($directories as $dirName) {
-                $dirName = "$g_documentRoot/$dirName";
-                if (!is_dir($dirName)) {
-                    continue;
-                }
+            if (!is_dir(CS_PATH_PLUGINS)) {
+                continue;
+            }
 
-                $handle=opendir($dirName);
-                while ($entry = readdir($handle)) {
-                    if ($entry != "." && $entry != ".." && $entry != '.svn' && is_dir("$dirName/$entry")) {
-                        if (file_exists("$dirName/$entry/$entry.info.php")) {
-                            include ("$dirName/$entry/$entry.info.php");
-                            self::$m_pluginInfos[$entry] = $info;
-                        }
+            $handle=opendir(CS_PATH_PLUGINS);
+            while ($entry = readdir($handle)) {
+                if ($entry != "." && $entry != ".." && $entry != '.svn' && is_dir(CS_PATH_PLUGINS.DIR_SEP.$entry)) {
+                    if (file_exists(CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php')) {
+                        include (CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php');
+                        self::$m_pluginInfos[$entry] = $info;
                     }
                 }
-                closedir($handle);
             }
+            closedir($handle);
         }
 
         return self::$m_pluginInfos;
@@ -216,7 +208,7 @@ class CampPlugin extends DatabaseObject {
     static public function ExtendNoMenuScripts(&$p_no_menu_scripts)
     {
         foreach (self::GetPluginInfos() as $info) {
-            if (CampPlugin::IsPluginEnabled($info['name'])) {
+            if (is_array($info['no_menu_scripts']) && CampPlugin::IsPluginEnabled($info['name'])) {
                 $p_no_menu_scripts = array_merge($p_no_menu_scripts, $info['no_menu_scripts']);
             }
         }
@@ -270,6 +262,8 @@ class CampPlugin extends DatabaseObject {
             if (CampPlugin::IsPluginEnabled($info['name'])) {
                 $menu_plugin = null;
                 $parent_menu = false;
+                
+                $Plugin = new CampPlugin($info['name']);
 
                 if (isset($info['menu']['permission']) && $g_user->hasPermission($info['menu']['permission'])) {
                     $parent_menu = true;
@@ -284,7 +278,7 @@ class CampPlugin extends DatabaseObject {
                 if ($parent_menu) {
                     $menu_plugin =& DynMenuItem::Create(getGS($info['menu']['label']),
                     is_null($info['menu']['path']) ? null : "/$ADMIN/".$info['menu']['path'],
-                    array("icon" => sprintf($p_iconTemplateStr, $info['menu']['icon'])));
+                    array("icon" => sprintf($p_iconTemplateStr, '..'.DIR_SEP.$Plugin->getBasePath().DIR_SEP.$info['menu']['icon'])));
                 }
 
                 if (is_array($info['menu']['sub'])) {
@@ -292,7 +286,7 @@ class CampPlugin extends DatabaseObject {
                         if ($g_user->hasPermission($menu_info['permission'])) {
                             $menu_item =& DynMenuItem::Create(getGS($menu_info['label']),
                             is_null($menu_info['path']) ? null : "/$ADMIN/".$menu_info['path'],
-                            array("icon" => sprintf($p_iconTemplateStr, $menu_info['icon'])));
+                            array("icon" => sprintf($p_iconTemplateStr, '..'.DIR_SEP.$Plugin->getBasePath().DIR_SEP.$info['menu']['icon'])));
                             $menu_plugin->addItem($menu_item);
                         }
                     }
@@ -335,7 +329,7 @@ class CampPlugin extends DatabaseObject {
             return false;    
         }
         
-        $tar->extract($g_documentRoot.DIR_SEP.PLUGINS_DIR);
+        $tar->extract(CS_PATH_PLUGINS);
         
         CampPlugin::clearPluginInfos();
     }

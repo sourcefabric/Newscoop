@@ -24,7 +24,7 @@ class CampMail
      * @param string $html
      * @param array $hdrs
      */
-    static function MailMime($recipients, $text=false, $html=false, $hdrs)
+    static public function MailMime($recipients, $text=false, $html=false, $hdrs)
     {
         include_once 'Mail.php';
         include_once 'Mail/mime.php';
@@ -54,4 +54,18 @@ class CampMail
             $mail->send($recipients, $hdrs, $body);   
         }
     }
+    
+    /**
+     * Validate the syntax of an email address
+     *
+     * @param string $p_email
+     * @return boolean
+     */
+    static public function ValidateAddress($p_email)
+    {
+        if(eregi("^[a-z0-9]+([-_\.]?[a-z0-9])+@[a-z0-9]+([-_\.]?[a-z0-9])+\.[a-z]{2,4}$", $p_email)) {
+            return true;
+        }
+        return false;      
+    } 
 }

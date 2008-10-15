@@ -128,10 +128,15 @@ function translationForm($p_request)
     $mapPrefixToDisplay["feedback"] = getGS("Feedback");
     $mapPrefixToDisplay["preview"] = getGS("Preview Window");
     $mapPrefixToDisplay["plugins"] = getGS("Plugins");
-    
-    CampPlugin::IsPluginEnabled('interview') ? $mapPrefixToDisplay["plugin_interview"] = getGS("Interview") : null;
-    CampPlugin::IsPluginEnabled('poll') ? $mapPrefixToDisplay["plugin_poll"] = getGS("Polls") : null;
-    
+
+    foreach (CampPlugin::GetPluginInfos() as $info) {
+        if (CampPlugin::IsPluginEnabled($info['name'])) {
+            if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {
+                $mapPrefixToDisplay[$info['localizer']['id']] = $info['localizer']['screen_name'];
+            }   
+        }   
+    }
+
 	// Whether to show translated strings or not.
 	$hideTranslated = camp_session_get('hide_translated', 'off');
 

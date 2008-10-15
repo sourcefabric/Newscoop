@@ -101,6 +101,14 @@ $mapPrefixToDir["plugins"] = "/admin-files/plugins";
 $mapPrefixToDir["plugin_interview"] = "/plugins/interview/admin-files/interview/admin";
 $mapPrefixToDir["plugin_poll"] = "/plugins/poll/admin-files/poll";
 
+foreach (CampPlugin::GetPluginInfos() as $info) {
+    if (CampPlugin::IsPluginEnabled($info['name'])) {
+        if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {
+            $mapPrefixToDir[$info['localizer']['id']] = $info['localizer']['path'];
+        }     
+    }   
+}
+
 $g_localizerConfig["MAP_PREFIX_TO_DIR"] = $mapPrefixToDir;
 unset($mapPrefixToDir);
 

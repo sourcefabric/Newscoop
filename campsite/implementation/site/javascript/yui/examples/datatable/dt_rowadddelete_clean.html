@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Adding and Deleting Rows</title>
+
+<style type="text/css">
+/*margin and padding on body element
+  can introduce errors in determining
+  element position and are not recommended;
+  we turn them off as a foundation for YUI
+  CSS treatments. */
+body {
+	margin:0;
+	padding:0;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="../../build/button/assets/skins/sam/button.css" />
+<link rel="stylesheet" type="text/css" href="../../build/datatable/assets/skins/sam/datatable.css" />
+<script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
+<script type="text/javascript" src="../../build/button/button-min.js"></script>
+<script type="text/javascript" src="../../build/dragdrop/dragdrop-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+
+
+<!--begin custom header content for this example-->
+<style type="text/css">
+/* custom styles for this example */
+#buttons {margin-bottom: 1em;}
+</style>
+
+<!--end custom header content for this example-->
+
+</head>
+
+<body class=" yui-skin-sam">
+
+<h1>Adding and Deleting Rows</h1>
+
+<div class="exampleIntro">
+	<p>Adding and deleting rows dynamically.</p>
+			
+</div>
+
+<!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
+
+<div id="buttons">
+    <span id="addrow" class="yui-button yui-push-button">
+        <span class="first-child">
+            <button type="button">Add one row</button>
+        </span>
+    </span>
+    <span id="deleterow" class="yui-button yui-push-button">
+        <span class="first-child">
+            <button type="button">Delete top row</button>
+        </span>
+    </span>
+    <span id="addrows" class="yui-button yui-push-button">
+        <span class="first-child">
+            <button type="button">Add 20 rows</button>
+        </span>
+    </span>
+    <span id="deleterows" class="yui-button yui-push-button">
+        <span class="first-child">
+            <button type="button" name="button5">Delete top 20 rows</button>
+        </span>
+    </span>
+</div>
+<div id="basic"></div>
+
+<script type="text/javascript" src="assets/js/data.js"></script>
+<script type="text/javascript">
+YAHOO.util.Event.addListener(window, "load", function() {
+    YAHOO.example.DynamicData = new function() {
+        var data = {one:"one",two:"two",three:"three"};
+        
+        var myColumnDefs = [
+            {key:"row",resizeable:true,sortable:true},
+            {key:"one",resizeable:true},
+            {key:"two",resizeable:true},
+            {key:"three",resizeable:true}   
+        ];
+
+        this.myDataSource = new YAHOO.util.DataSource([]);
+        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        this.myDataSource.responseSchema = {
+            fields: ["one","two","three"]
+        };
+        
+
+        this.myDataTable = new YAHOO.widget.DataTable("basic",
+                myColumnDefs, this.myDataSource, {});
+                
+        var i=1;
+        
+        YAHOO.util.Event.addListener("addrow","click",function() {
+            var record = YAHOO.widget.DataTable._cloneObject(data);
+            record.row = i++;
+            this.myDataTable.addRow(record);
+        },this,true);
+
+        YAHOO.util.Event.addListener("deleterow","click",function() {
+            if(this.myDataTable.getRecordSet().getLength() > 0) {
+                this.myDataTable.deleteRow(0);
+            }
+        },this,true);
+        
+ 
+        YAHOO.util.Event.addListener("addrows","click",function(e) {
+            var myArray = [];
+            for(var l=i;i<=l+19;i++) {
+                var record = YAHOO.widget.DataTable._cloneObject(data);
+                record.row = i;
+                myArray.push(record);
+            }
+            this.myDataTable.addRows(myArray); 
+        },this,true);
+
+        YAHOO.util.Event.addListener("deleterows","click",function() {
+            var length = this.myDataTable.getRecordSet().getLength();
+            if(length > 0) {
+                var count = (length > 19) ? 20 : length;
+                this.myDataTable.deleteRows(0,count);
+            }
+        },this,true);
+
+
+        var oPushButton4 = new YAHOO.widget.Button("addrow");
+        var oPushButton5 = new YAHOO.widget.Button("addrows");
+        var oPushButton6 = new YAHOO.widget.Button("deleterow");
+        var oPushButton6 = new YAHOO.widget.Button("deleterows");
+    };
+});
+</script>
+
+<!--END SOURCE CODE FOR EXAMPLE =============================== -->
+
+</body>
+</html>

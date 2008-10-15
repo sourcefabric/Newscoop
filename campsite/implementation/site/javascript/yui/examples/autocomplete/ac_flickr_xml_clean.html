@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Use AutoComplete with Flickr's XML Webservice</title>
+
+<style type="text/css">
+/*margin and padding on body element
+  can introduce errors in determining
+  element position and are not recommended;
+  we turn them off as a foundation for YUI
+  CSS treatments. */
+body {
+	margin:0;
+	padding:0;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="../../build/autocomplete/assets/skins/sam/autocomplete.css" />
+<script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../../build/animation/animation-min.js"></script>
+<script type="text/javascript" src="../../build/connection/connection-min.js"></script>
+<script type="text/javascript" src="../../build/autocomplete/autocomplete-min.js"></script>
+
+
+<!--begin custom header content for this example-->
+<style type="text/css">
+/* custom styles for scrolling container */
+#flickrautocomplete {
+    width:25em; /* set width of widget here */
+    padding-bottom:2em;
+}
+#flickrautocomplete .yui-ac-content {
+    max-height:30em;overflow:auto;overflow-x:hidden; /* set scrolling */
+    _height:30em; /* ie6 */
+}
+#flickrautocomplete .flickrImg {
+    width:6em;height:6em;padding:.1em;vertical-align:middle;
+}
+</style>
+
+
+<!--end custom header content for this example-->
+
+</head>
+
+<body class=" yui-skin-sam">
+
+<h1>Use AutoComplete with Flickr's XML Webservice</h1>
+
+<div class="exampleIntro">
+	<p>This example uses a DataSource that points to Flickr Web
+Services; Flickr returns XML data via a simple PHP proxy. In order to return
+valid data from the Flickr application, <code>scriptQueryParameter</code>
+has been customized to be <code>tags</code>, and <code>scriptQueryAppend</code> is used
+to pass in additional required arguments. The cache has been disabled so
+that each query is forced to make a trip to the live application.</p>
+
+<p>This instance of AutoComplete defines a robust custom
+<code>formatResult()</code> function to format the result data into
+images in HTML. Automatic
+highlighting of the first result item in the container has been disabled by
+setting <code>autoHighlight</code> to <code>false</code>.</p>
+			
+</div>
+
+<!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
+
+<h3>Enter Flickr tags to find a photo (separate with commas):</h3>
+<div id="flickrautocomplete">
+	<input id="flickrinput" type="text">
+	<div id="flickrcontainer"></div>
+</div>
+	
+<script type="text/javascript">
+YAHOO.example.ACFlickr = new function() {
+    // Instantiate an XHR DataSource and define schema as an array:
+    //     ["ResultNodeName",
+    //     "QueryKeyAttributeOrNodeName",
+    //     "AdditionalParamAttributeOrNodeName1",
+    //     ...
+    //     "AdditionalParamAttributeOrNodeNameN"]
+    this.oACDS = new YAHOO.widget.DS_XHR("assets/php/flickr_proxy.php",
+        ["photo", "title", "id", "owner", "secret", "server"]);
+    this.oACDS.scriptQueryParam = "tags";
+    this.oACDS.responseType = YAHOO.widget.DS_XHR.TYPE_XML;
+    this.oACDS.maxCacheEntries = 0;
+    this.oACDS.scriptQueryAppend = "method=flickr.photos.search";
+
+    // Instantiate AutoComplete
+    this.oAutoComp = new YAHOO.widget.AutoComplete('flickrinput','flickrcontainer', this.oACDS);
+    this.oAutoComp.autoHighlight = false;
+    this.oAutoComp.formatResult = function(oResultItem, sQuery) {
+        // This was defined by the schema array of the data source
+        var sTitle = oResultItem[0];
+        var sId = oResultItem[1];
+        var sOwner = oResultItem[2];
+        var sSecret = oResultItem[3];
+        var sServer = oResultItem[4];
+        var sUrl = "http://static.flickr.com/" +
+            sServer +
+            "/" +
+            sId +
+            "_" +
+            sSecret +
+            "_s.jpg";
+        var sMarkup = "<img src='" + sUrl + "' class='flickrImg'> " + sTitle;
+        return (sMarkup);
+    };
+};
+</script>
+
+<!--END SOURCE CODE FOR EXAMPLE =============================== -->
+
+</body>
+</html>

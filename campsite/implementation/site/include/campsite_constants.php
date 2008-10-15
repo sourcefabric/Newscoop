@@ -26,6 +26,8 @@ define('CS_PATH_PEAR_LOCAL', CS_PATH_INCLUDES.DIR_SEP.'pear');
 define('CS_PATH_SMARTY', CS_PATH_INCLUDES.DIR_SEP.'smarty');
 define('CS_PATH_SMARTY_TEMPLATES', 'templates');
 define('CS_PATH_SMARTY_SYS_TEMPLATES', 'sys-templates');
+define('CS_PLUGINS_DIR', 'plugins');
+define('CS_PATH_PLUGINS', CS_PATH_SITE.DIR_SEP.CS_PLUGINS_DIR);
 
 // Campsite exception strings
 define('INVALID_OBJECT_STRING', 'invalid object');

@@ -88,10 +88,10 @@ class DatabaseObject {
 	 */
 	public function DatabaseObject($p_columnNames = null)
 	{
-        self::$m_useCache = (SystemPref::Get('SiteCacheEnabled') == 'Y') ? true : false;
-		if (!is_null($p_columnNames)) {
-			$this->setColumnNames($p_columnNames);
-		}
+	    self::$m_useCache = (SystemPref::Get('SiteCacheEnabled') == 'Y') ? true : false;
+	    if (!is_null($p_columnNames)) {
+	      $this->setColumnNames($p_columnNames);
+	    }
 	} // constructor
 
 
@@ -439,10 +439,12 @@ class DatabaseObject {
 		$g_ado_db->Execute($queryStr);
 		$wasDeleted = ($g_ado_db->Affected_Rows() > 0);
 
-        // removes object from cache
-        $cacheKey = $this->getCacheKey();
-        $cacheObj = CampCache::singleton();
-        $cacheObj->delete($cacheKey);
+		// removes object from cache
+		if (DatabaseObject::GetUseCache()) {
+		    $cacheKey = $this->getCacheKey();
+		    $cacheObj = CampCache::singleton();
+		    $cacheObj->delete($cacheKey);
+		}
 
 		// Always set "exists" to false because if a row wasnt
 		// deleted it means it probably didnt exist in the first place.

@@ -249,6 +249,7 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
         </table>
     </td>
 </tr>
+<?php CampPlugin::PluginAdminHooks(__FILE__); ?> 
 <tr>
 	<td colspan="2" align="center" style="padding-top: 10px;">
 		<input type="submit" name="save" value="<?php putGS("Save"); ?>" class="button">

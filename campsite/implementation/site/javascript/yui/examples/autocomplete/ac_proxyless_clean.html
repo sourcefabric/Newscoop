@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Proxyless AutoComplete pointing to the Yahoo! Search API</title>
+
+<style type="text/css">
+/*margin and padding on body element
+  can introduce errors in determining
+  element position and are not recommended;
+  we turn them off as a foundation for YUI
+  CSS treatments. */
+body {
+	margin:0;
+	padding:0;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="../../build/autocomplete/assets/skins/sam/autocomplete.css" />
+<script type="text/javascript" src="../../build/utilities/utilities.js"></script>
+<script type="text/javascript" src="../../build/autocomplete/autocomplete-min.js"></script>
+
+
+<!--begin custom header content for this example-->
+<style type="text/css">
+/* custom styles for this implementation */
+#ysearchautocomplete { margin-bottom:2em;width:25em;}
+#ysearchautocomplete .result {position:relative;height:62px;}
+#ysearchautocomplete .name {position:absolute;bottom:0;left:64px;}
+#ysearchautocomplete .img {position:absolute;top:0;left:0;width:58px;height:58px;border:1px solid black;}
+#ysearchautocomplete .imgtext {position:absolute;width:58px;top:50%;text-align:center;}
+#ysearchautocomplete img {width:60px;height:60px;margin-right:4px;}
+</style>
+
+<!--end custom header content for this example-->
+
+</head>
+
+<body class=" yui-skin-sam">
+
+<h1>Proxyless AutoComplete pointing to the Yahoo! Search API</h1>
+
+<div class="exampleIntro">
+	<p>This AutoComplete instance uses a Script Node type of DataSource in order to
+retrieve data from a cross-domain server, Yahoo!'s Audio Search API, without
+the need for a proxy. The webservice must support a "callback" parameter, which
+the AutoComplete widget will use to pass in its internal callback function.
+The DataSource schema is defined to parse the return data
+for fields named "Name" and "Thumbnail" (in order to display a thumbnail image to
+the user).</p>
+			
+</div>
+
+<!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
+
+<form action="http://audio.search.yahoo.com/search/audio" onsubmit="return YAHOO.example.ACScriptNode.validateForm();">
+	<h3>Yahoo! Audio Search:</h3>
+	<div id="ysearchautocomplete">
+		<input id="ysearchinput" type="text" name="p">
+		<div id="ysearchcontainer"></div>
+	</div>
+</form>
+
+<script type="text/javascript">
+YAHOO.example.ACScriptNode = new function(){
+    // Instantiate an Script Node DataSource and define schema as an array:
+    //     ["Multi-depth.object.notation.to.find.a.single.result.item",
+    //     "Query Key",
+    //     "Additional Param Name 1",
+    //     ...
+    //     "Additional Param Name n"]
+    this.oACDS = new YAHOO.widget.DS_ScriptNode("http://search.yahooapis.com/AudioSearchService/V1/artistSearch?appid=YahooDemo&output=json", ["ResultSet.Result","Name","Thumbnail"]);
+    this.oACDS.scriptQueryParam = "artist";
+
+    // Instantiate AutoComplete
+    this.oAutoComp = new YAHOO.widget.AutoComplete("ysearchinput","ysearchcontainer", this.oACDS);
+    this.oAutoComp.formatResult = function(oResultItem, sQuery) {
+        var img = "", nonimg = "";
+        var oThumbnail = oResultItem[1];
+        if(oThumbnail && (oThumbnail !== "")) {
+            img = "<img src=\""+ oThumbnail.Url + "\">";
+        }
+        else {
+            img = "<span class=\"img\"><span class=\"imgtext\">N/A</span></span>";
+        }
+        return "<div class=\"result\">" + img + "&nbsp;<span class=\"name\">" + oResultItem[0] + "</span></div>";
+    };
+
+    // Stub for form validation
+    this.validateForm = function() {
+        // Validation code goes here
+        return true;
+    };
+};
+</script>
+
+<!--END SOURCE CODE FOR EXAMPLE =============================== -->
+
+</body>
+</html>

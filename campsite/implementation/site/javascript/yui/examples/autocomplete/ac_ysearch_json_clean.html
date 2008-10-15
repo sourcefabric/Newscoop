@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Use AutoComplete to access the Yahoo! Search JSON API</title>
+
+<style type="text/css">
+/*margin and padding on body element
+  can introduce errors in determining
+  element position and are not recommended;
+  we turn them off as a foundation for YUI
+  CSS treatments. */
+body {
+	margin:0;
+	padding:0;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="../../build/autocomplete/assets/skins/sam/autocomplete.css" />
+<script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../../build/animation/animation-min.js"></script>
+<script type="text/javascript" src="../../build/connection/connection-min.js"></script>
+<script type="text/javascript" src="../../build/json/json-min.js"></script>
+<script type="text/javascript" src="../../build/autocomplete/autocomplete-min.js"></script>
+
+
+<!--begin custom header content for this example-->
+<style type="text/css">
+/* custom styles for centered example */
+body, h1 { margin:0;padding:0; } /* needed for known issue with Dom.getXY() in safari for absolute elements in positioned containers */
+#ysearch { text-align:center; }
+#ysearchinput { position:static;width:20em; } /* to center, set static and explicit width: */
+#ysearchcontainer { text-align:left;width:20em; } /* to center, set left-align and explicit width: */
+</style>
+
+<!--end custom header content for this example-->
+
+</head>
+
+<body class=" yui-skin-sam">
+
+<h1>Use AutoComplete to access the Yahoo! Search JSON API</h1>
+
+<div class="exampleIntro">
+	<p>This example's DataSource instance points to Yahoo! Search Web Services,
+which returns JSON data via a simple PHP proxy. The DataSource schema will
+parse the return data for fields named "Title", "Summary", and "Cache". In order
+for the Yahoo! Search application to return
+valid data, the DataSource property <code>scriptQueryAppend</code> is used
+to pass along all the required query parameters, and the property
+<code>queryMatchContains</code> has been enabled.</p>
+
+<p>To achieve the shrink-wrapped, centered search module, custom CSS rules have
+been applied, and the method <code>doBeforeExpandContainer</code> has been
+customized to position the container directly below the input field.</p>
+			
+</div>
+
+<!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
+
+<form action="http://search.yahoo.com/search" onsubmit="return YAHOO.example.ACJson.validateForm();">
+    <div id="ysearch">
+		<label>Yahoo! Search: </label>
+		<input id="ysearchinput" type="text" name="p">
+		<input id="ysearchsubmit" type="submit" value="Submit Query">
+		<div id="ysearchcontainer"></div>
+    </div>
+</form>
+	
+<script type="text/javascript">
+YAHOO.example.ACJson = new function(){
+    // Instantiate an XHR DataSource and define schema as an array:
+    //     ["Multi-depth.object.notation.to.find.a.single.result.item",
+    //     "Query Key",
+    //     "Additional Param Name 1",
+    //     ...
+    //     "Additional Param Name n"]
+    this.oACDS = new YAHOO.widget.DS_XHR("assets/php/ysearch_proxy.php", ["ResultSet.Result","Title"]);
+    this.oACDS.queryMatchContains = true;
+    this.oACDS.scriptQueryAppend = "output=json&results=100"; // Needed for YWS
+
+    // Instantiate AutoComplete
+    this.oAutoComp = new YAHOO.widget.AutoComplete("ysearchinput","ysearchcontainer", this.oACDS);
+    this.oAutoComp.useShadow = true;
+    this.oAutoComp.formatResult = function(oResultItem, sQuery) {
+        return oResultItem[1].Title + " (" + oResultItem[1].Url + ")";
+    };
+    this.oAutoComp.doBeforeExpandContainer = function(oTextbox, oContainer, sQuery, aResults) {
+        var pos = YAHOO.util.Dom.getXY(oTextbox);
+        pos[1] += YAHOO.util.Dom.get(oTextbox).offsetHeight + 2;
+        YAHOO.util.Dom.setXY(oContainer,pos);
+        return true;
+    };
+
+    // Stub for form validation
+    this.validateForm = function() {
+        // Validation code goes here
+        return true;
+    };
+};
+</script>
+
+<!--END SOURCE CODE FOR EXAMPLE =============================== -->
+
+</body>
+</html>

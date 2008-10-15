@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Query a JavaScript Function for In-memory Data</title>
+
+<style type="text/css">
+/*margin and padding on body element
+  can introduce errors in determining
+  element position and are not recommended;
+  we turn them off as a foundation for YUI
+  CSS treatments. */
+body {
+	margin:0;
+	padding:0;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="../../build/autocomplete/assets/skins/sam/autocomplete.css" />
+<script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../../build/animation/animation-min.js"></script>
+<script type="text/javascript" src="../../build/autocomplete/autocomplete-min.js"></script>
+
+
+<!--begin custom header content for this example-->
+<style type="text/css">
+/* custom styles for scrolling container */
+#statesautocomplete {
+    width:15em; /* set width of widget here*/
+    height:12em; /* define height for container to appear inline */
+}
+#statescontainer .yui-ac-content {
+    max-height:11em;overflow:auto;overflow-x:hidden; /* scrolling */
+    _height:11em; /* ie6 */
+}
+</style>
+
+
+
+<!--end custom header content for this example-->
+
+</head>
+
+<body class=" yui-skin-sam">
+
+<h1>Query a JavaScript Function for In-memory Data</h1>
+
+<div class="exampleIntro">
+	<p>This example uses a DS_JSFunction DataSource pointing to a JavaScript function
+that returns data as an array of strings. Since the data for this example is
+already loaded into memory, queries should be very fast to return data,
+and since there is no server load concern, the AutoComplete instance can be
+configured to have a query delay of zero seconds.</p>
+
+<p>In this example, the AutoComplete instance is able to keep its container
+always open by customizing the appropriate CSS styles and enabling the
+<code>alwaysShowContainer</code> property. We hook into the custom events
+<code>containerExpandEvent</code> and <code>containerCollapseEvent</code>
+and calling the <code>setHeader()</code>, <code>setBody()</code>, and
+<code>setFooter()</code> methods to dynamically update the contents of the open
+container. Finally, the AutoComplete's <code>formatResults()</code> method
+has been customized to display multiple data fields in the container.</p>
+			
+</div>
+
+<!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
+
+<h3>Filter the US states:</h3>
+<div id="statesautocomplete">
+	<input id="statesinput" type="text">
+	<div id="statescontainer"></div>
+</div>
+	
+
+<!-- In-memory JS dataset begins-->
+<script type="text/javascript" src="assets/js/states_jsfunction.js"></script>
+<!-- In-memory JS dataset ends-->
+
+
+<script type="text/javascript">
+YAHOO.example.ACJSFunction = new function(){
+    // Instantiate JS Function DataSource
+    this.oACDS = new YAHOO.widget.DS_JSFunction(getStates);
+    this.oACDS.maxCacheEntries = 0;
+
+    // Instantiate AutoComplete
+    this.oAutoComp = new YAHOO.widget.AutoComplete('statesinput','statescontainer', this.oACDS);
+    this.oAutoComp.alwaysShowContainer = true;
+    this.oAutoComp.minQueryLength = 0;
+    this.oAutoComp.maxResultsDisplayed = 50;
+    this.oAutoComp.formatResult = function(oResultItem, sQuery) {
+        var sMarkup = oResultItem[0] + " (" + oResultItem[1] + ")";
+        return (sMarkup);
+    };
+
+    // Show custom message if no results found
+    this.myOnDataReturn = function(sType, aArgs) {
+        var oAutoComp = aArgs[0];
+        var sQuery = aArgs[1];
+        var aResults = aArgs[2];
+
+        if(aResults.length == 0) {
+            oAutoComp.setBody("<div id=\"statescontainerdefault\">No matching results</div>");
+        }
+    };
+    this.oAutoComp.dataReturnEvent.subscribe(this.myOnDataReturn);
+        
+    // Preload content in the container
+    this.oAutoComp.sendQuery("");
+};
+</script>
+
+<!--END SOURCE CODE FOR EXAMPLE =============================== -->
+
+</body>
+</html>

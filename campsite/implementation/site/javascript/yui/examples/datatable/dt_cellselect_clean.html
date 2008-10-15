@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Cell Selection</title>
+
+<style type="text/css">
+/*margin and padding on body element
+  can introduce errors in determining
+  element position and are not recommended;
+  we turn them off as a foundation for YUI
+  CSS treatments. */
+body {
+	margin:0;
+	padding:0;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="../../build/datatable/assets/skins/sam/datatable.css" />
+<script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+
+
+<!--begin custom header content for this example-->
+<style type="text/css">
+/* custom styles for this example */
+.yui-skin-sam .yui-dt-body { cursor:pointer; } /* when cells are selectable */
+#cellrange, #singlecell { margin-top:2em; }
+</style>
+
+<!--end custom header content for this example-->
+
+</head>
+
+<body class=" yui-skin-sam">
+
+<h1>Cell Selection</h1>
+
+<div class="exampleIntro">
+	<p>These examples demonstrate "cellblock", "cellrange", and "singlecell"
+selection modes.</p>
+			
+</div>
+
+<!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
+
+<div id="cellblock"></div>
+<div id="cellrange"></div>
+<div id="singlecell"></div>
+
+<script type="text/javascript" src="assets/js/data.js"></script>
+<script type="text/javascript">
+YAHOO.util.Event.addListener(window, "load", function() {
+    YAHOO.example.CellSelection = new function() {
+        var myColumnDefs = [
+            {key:"col1", sortable:true},
+            {key:"col2", sortable:true},
+            {key:"col3", sortable:true},
+            {key:"col4", sortable:true}
+        ];
+
+        this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.webstats);
+        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        this.myDataSource.responseSchema = {
+            fields: ["col0","col1","col2","col3","col4"]
+        };
+
+        this.cellBlockSelectDataTable = new YAHOO.widget.DataTable("cellblock",
+                myColumnDefs, this.myDataSource, {
+                    caption:"Cell-Block Selection Mode with Support for Modifier Keys",
+                    selectionMode:"cellblock"
+                });
+
+        // Subscribe to events for cell selection
+        this.cellBlockSelectDataTable.subscribe("cellMouseoverEvent", this.cellBlockSelectDataTable.onEventHighlightCell);
+        this.cellBlockSelectDataTable.subscribe("cellMouseoutEvent", this.cellBlockSelectDataTable.onEventUnhighlightCell);
+        this.cellBlockSelectDataTable.subscribe("cellClickEvent", this.cellBlockSelectDataTable.onEventSelectCell);
+        this.cellBlockSelectDataTable.subscribe("cellSelectEvent", this.cellBlockSelectDataTable.clearTextSelection);
+
+        this.cellRangeSelectDataTable = new YAHOO.widget.DataTable("cellrange",
+                myColumnDefs, this.myDataSource, {
+                    caption:"Example: Cell-Range Selection Mode Support for Modifier Keys",
+                    selectionMode:"cellrange"
+                });
+
+        // Subscribe to events for cell selection
+        this.cellRangeSelectDataTable.subscribe("cellMouseoverEvent", this.cellRangeSelectDataTable.onEventHighlightCell);
+        this.cellRangeSelectDataTable.subscribe("cellMouseoutEvent", this.cellRangeSelectDataTable.onEventUnhighlightCell);
+        this.cellRangeSelectDataTable.subscribe("cellClickEvent", this.cellRangeSelectDataTable.onEventSelectCell);
+        this.cellRangeSelectDataTable.subscribe("cellSelectEvent", this.cellRangeSelectDataTable.clearTextSelection);
+
+        this.singleCellSelectDataTable = new YAHOO.widget.DataTable("singlecell",
+                myColumnDefs, this.myDataSource, {
+                    caption:"Single-Cell Selection Mode with Modifier Keys Disabled",
+                    selectionMode:"singlecell"
+                });
+
+        // Subscribe to events for cell selection
+        this.singleCellSelectDataTable.subscribe("cellMouseoverEvent", this.singleCellSelectDataTable.onEventHighlightCell);
+        this.singleCellSelectDataTable.subscribe("cellMouseoutEvent", this.singleCellSelectDataTable.onEventUnhighlightCell);
+        this.singleCellSelectDataTable.subscribe("cellClickEvent", this.singleCellSelectDataTable.onEventSelectCell);
+        this.singleCellSelectDataTable.subscribe("cellSelectEvent", this.singleCellSelectDataTable.clearTextSelection);
+    };
+});
+</script>
+
+<!--END SOURCE CODE FOR EXAMPLE =============================== -->
+
+</body>
+</html>

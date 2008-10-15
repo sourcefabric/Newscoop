@@ -254,31 +254,30 @@ class Localizer {
     function FindTranslationStrings($p_directory)
     {
         global $g_localizerConfig;
-        // All .php files
-        $filePattern = '/(.*).php/';
-        $patterns = array();
-
+        
+        if (($pos = strpos($p_directory, '*')) === false) {
+            $startDirectory = $p_directory;
+            $deepth = 0;
+        } else {
+            $startDirectory = substr($p_directory, 0, $pos-1);
+            $deepth = substr_count($p_directory, '*');
+        }
+        
         // like get GS('edit "$1"', ...);  '
         $functPattern1 = '/(put|get)gs( )*\(( )*\'([^\']*)\'/iU';
         // like get GS("edit '$1'", ...);
         $functPattern2 = '/(put|get)gs( )*\(( )*"([^"]*)"/iU';
 
         // Get all files in this directory
-        $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$p_directory, 1);
+        $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$startDirectory, 3);
 
         // Get all the PHP files
-        $filelist = array();
-        foreach ($files as $name) {
-            if (preg_match($filePattern, $name)) {
-            	// list of .php-scripts in this folder
-                $filelist[] = $name;
-            }
-        }
+        $filelist = self::CompilePhpFileList($files);
 
 		// Read in all the PHP files.
 		$data = array();
         foreach ($filelist as $name) {
-            $data = array_merge($data, file($g_localizerConfig['BASE_DIR'].$p_directory.'/'.$name));
+            $data = array_merge($data, file($g_localizerConfig['BASE_DIR'].$startDirectory.'/'.$name));
         }
 
        	// Collect all matches
@@ -301,6 +300,35 @@ class Localizer {
         asort($matches);
         return $matches;
     } // fn FindTranslationStrings
+    
+    /**
+     * The method creates an flat array of full paths
+     * out of an deep array mapping directory structure,
+     * and filter .php files.
+     *
+     * @param array $p_entries
+     * @param string $p_subdir (for recursive calls by itself)
+     * @return array() Flat list of files
+     */
+    private static function CompilePhpFileList(array $p_entries, $p_subdir=null)
+    {
+        // All .php files
+        $filePattern = '/(.*).php$/';
+        $filelist = array();
+        
+        foreach ($p_entries as $subdir => $entry) {
+            if (is_array($entry)) {
+                $subdir = isset($p_subdir) ? $p_subdir.DIR_SEP.$subdir : $subdir;
+                $filelist = array_merge($filelist, self::CompilePhpFileList($entry, $subdir));    
+            } else {
+                if (preg_match($filePattern, $entry)) {
+                	// list of .php-scripts in this folder
+                    $filelist[] = isset($p_subdir) ? $p_subdir.DIR_SEP.$entry : $entry;
+                }
+            }
+        }
+        return $filelist;
+    }
 
 
     /**

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Highlighting Cells, Rows, or Columns</title>
+
+<style type="text/css">
+/*margin and padding on body element
+  can introduce errors in determining
+  element position and are not recommended;
+  we turn them off as a foundation for YUI
+  CSS treatments. */
+body {
+	margin:0;
+	padding:0;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="../../build/button/assets/skins/sam/button.css" />
+<link rel="stylesheet" type="text/css" href="../../build/container/assets/skins/sam/container.css" />
+<link rel="stylesheet" type="text/css" href="../../build/datatable/assets/skins/sam/datatable.css" />
+<script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
+<script type="text/javascript" src="../../build/button/button-min.js"></script>
+<script type="text/javascript" src="../../build/container/container-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+
+<!--there is no custom header content for this example-->
+
+</head>
+
+<body class=" yui-skin-sam">
+
+<h1>Highlighting Cells, Rows, or Columns</h1>
+
+<div class="exampleIntro">
+				
+</div>
+
+<!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
+
+<div id="cell"></div>
+<div id="row"></div>
+<div id="column"></div>
+
+<script type="text/javascript" src="assets/js/data.js"></script>
+<script type="text/javascript">
+YAHOO.util.Event.addListener(window, "load", function() {
+    YAHOO.example.Highlighting = new function() {
+        var myColumnDefs = [
+            {key:"Page"},
+            {key:"VisitsThisMonth"},
+            {key:"VisitsThisYear"},
+            {key:"ViewsThisMonth"},
+            {key:"ViewsThisYear"}
+        ];
+
+        this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.webstats);
+        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        this.myDataSource.responseSchema = {
+            fields: ["Page","VisitsThisMonth","VisitsThisYear","ViewsThisMonth","ViewsThisYear"]
+        };
+
+        this.cellHighlightDataTable = new YAHOO.widget.DataTable("cell",
+                myColumnDefs, this.myDataSource, {
+                    caption:"Example: Cell Highlighting"
+                });
+        // Enable cell highlighting
+        this.cellHighlightDataTable.subscribe("cellMouseoverEvent", this.cellHighlightDataTable.onEventHighlightCell);
+        this.cellHighlightDataTable.subscribe("cellMouseoutEvent", this.cellHighlightDataTable.onEventUnhighlightCell);
+
+        this.rowHighlightDataTable = new YAHOO.widget.DataTable("row",
+                myColumnDefs, this.myDataSource, {
+                    caption:"Example: Row Highlighting"
+                });
+        // Enable row highlighting
+        this.rowHighlightDataTable.subscribe("rowMouseoverEvent", this.rowHighlightDataTable.onEventHighlightRow);
+        this.rowHighlightDataTable.subscribe("rowMouseoutEvent", this.rowHighlightDataTable.onEventUnhighlightRow);
+
+        this.colHighlightDataTable = new YAHOO.widget.DataTable("column",
+                myColumnDefs, this.myDataSource, {
+                    caption:"Example: Column Highlighting"
+                });
+        // Enable Column highlighting
+        this.colHighlightDataTable.subscribe("theadCellMouseoverEvent", this.colHighlightDataTable.onEventHighlightColumn);
+        this.colHighlightDataTable.subscribe("theadCellMouseoutEvent", this.colHighlightDataTable.onEventUnhighlightColumn);
+    };
+});
+</script>
+
+<!--END SOURCE CODE FOR EXAMPLE =============================== -->
+
+</body>
+</html>

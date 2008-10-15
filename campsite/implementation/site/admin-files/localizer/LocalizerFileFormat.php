@@ -79,7 +79,15 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
         $p_localizerLanguage->_setSourceFile($filePath);
 
         // Create the language directory if it doesnt exist.
-        $dirName = $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_localizerLanguage->getLanguageCode();
+        if (substr($p_localizerLanguage->m_prefix, 0, 7) == 'plugin_') {
+            // use the plugin storage location
+            $pluginName = str_replace('plugin_', '', $p_localizerLanguage->m_prefix);
+	        $dirName = CS_PATH_PLUGINS.DIR_SEP.$pluginName.DIR_SEP.'admin-files'.DIR_SEP.'lang'.DIR_SEP.$p_localizerLanguage->getLanguageCode();    
+        } else {
+            // use the default storage location
+            $dirName = $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_localizerLanguage->getLanguageCode();
+        }
+        
         if (!file_exists($dirName)) {
         	if (is_writable(dirname($dirName))) {
             	mkdir($dirName);
@@ -115,8 +123,17 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 	function getFilePath($p_localizerLanguage)
 	{
 	    global $g_localizerConfig;
-       	return $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_localizerLanguage->getLanguageCode()
+	    
+	    if (substr($p_localizerLanguage->m_prefix, 0, 7) == 'plugin_') {
+	        // use the plugin storage location
+	        $pluginName = str_replace('plugin_', '', $p_localizerLanguage->m_prefix);
+	        $path = CS_PATH_PLUGINS.DIR_SEP.$pluginName.DIR_SEP.'admin-files'.DIR_SEP.'lang'.DIR_SEP.$p_localizerLanguage->getLanguageCode().'/'.$p_localizerLanguage->getPrefix().'.php'; 
+	       return $path;   
+	    } else {
+	       // use the default storage location	    
+       	    return $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_localizerLanguage->getLanguageCode()
        	    .'/'.$p_localizerLanguage->getPrefix().'.php';
+	    }
 	} // fn getFilePath
 
 

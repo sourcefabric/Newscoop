@@ -76,6 +76,8 @@ class SystemPref {
 
 	/**
 	 * Set the system preferences to the given value.
+	 * If the preference key was not already registered, 
+	 * it will added to database.
 	 *
 	 * @param string $p_varName
 	 * @param mixed $p_value
@@ -93,14 +95,19 @@ class SystemPref {
 			SystemPref::__LoadConfig();
 		}
 
-		if (isset($Campsite['system_preferences'][$p_varName])) {
+	    if (array_key_exists($p_varName, $Campsite['system_preferences'])) {
 			if ($Campsite['system_preferences'][$p_varName] != $p_value) {
 				$sql = "UPDATE SystemPreferences SET value='".mysql_real_escape_string($p_value)."'"
 					   ." WHERE varname='".mysql_real_escape_string($p_varName)."'";
 				$g_ado_db->Execute($sql);
 				$Campsite['system_preferences'][$p_varName] = $p_value;
 			}
-		}
+	    } else {
+				$sql = "INSERT INTO SystemPreferences 
+				        (varname, value) VALUES ('".mysql_real_escape_string($p_varName)."', '".mysql_real_escape_string($p_value)."')";
+				$g_ado_db->Execute($sql);
+				$Campsite['system_preferences'][$p_varName] = $p_value;   
+	    }
 	} // fn Set
 
 } // class SystemPref

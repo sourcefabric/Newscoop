@@ -132,72 +132,15 @@ if ($canManage) {
 </table>
 </form>
 
-<?php camp_html_display_msgs(); ?>
-
 <?php
-$sqlBase = "SELECT DISTINCT u.Id, u.Name, u.UName, u.EMail, DATE_FORMAT(u.time_created, '%Y-%m-%d %T') as time_created FROM liveuser_users AS u";
-$sql = '';
-if ($userSearchParameters['startIP1'] != 0) {
-	$sql .= " LEFT JOIN SubsByIP AS sip ON u.Id = sip.IdUser";
-}
-if ($userSearchParameters['subscription_date'] != ""
-	|| $userSearchParameters['subscription_status'] != "") {
-	$sql .= " LEFT JOIN Subscriptions AS s ON u.Id = s.IdUser";
-	if ($userSearchParameters['subscription_date'] != "") {
-		$sql .= " LEFT JOIN SubsSections AS ss ON s.Id = ss.IdSubscription";
-	}
-}
-$sql .= " WHERE u.Reader = '$isReader'";
-if ($userSearchParameters['full_name'] != '') {
-	$sql .= " AND Name like '%" . mysql_escape_string($userSearchParameters['full_name']) . "%'";
-}
-if ($userSearchParameters['user_name'] != '') {
-	$sql .= " AND UName like '%" . mysql_escape_string($userSearchParameters['user_name']) . "%'";
-}
-if ($userSearchParameters['email'] != '') {
-	$sql .= " AND EMail like '%" . mysql_escape_string($userSearchParameters['email']) . "%'";
-}
-if ($userSearchParameters['subscription_date'] != '') {
-	$ss_field = "TO_DAYS(ss.StartDate) - TO_DAYS('".$userSearchParameters['subscription_date']."')";
-	if ($userSearchParameters['subscription_how'] == 'expires') {
-		$ss_field .= " + CAST(Days AS SIGNED)";
-	}
-	switch ($userSearchParameters['subscription_when']) {
-		case 'before': $comp_sign = "<="; break;
-		case 'after': $comp_sign = ">="; break;
-		case 'on': $comp_sign = "="; break;
-	}
-	$sql .= " AND ($ss_field) $comp_sign 0";
-}
-if ($userSearchParameters['subscription_status'] != "") {
-	$sql .= " AND s.Active = '" . ($userSearchParameters['subscription_status'] == 'active' ? 'Y' : 'N') . "'";
-}
-if ($userSearchParameters['startIP1'] != 0) {
-	$minIP = $userSearchParameters['startIP1'] * 256 * 256 * 256
-		+ $userSearchParameters['startIP2'] * 256 * 256
-		+ $userSearchParameters['startIP3'] * 256
-		+ $userSearchParameters['startIP4'];
-	$maxIP2 = $userSearchParameters['startIP2'] != 0 ? $userSearchParameters['startIP2'] : 255;
-	$maxIP3 = $userSearchParameters['startIP3'] != 0 ? $userSearchParameters['startIP3'] : 255;
-	$maxIP4 = $userSearchParameters['startIP4'] != 0 ? $userSearchParameters['startIP4'] : 255;
-	$maxIP = $userSearchParameters['startIP1'] * 256 * 256 * 256 + $maxIP2 * 256 * 256 + $maxIP3 * 256 + $maxIP4;
-	$sql .= " AND ((sip.StartIP >= $minIP AND sip.StartIP <= $maxIP)"
-	     . " OR ((sip.StartIP - 1 + sip.Addresses) >= $minIP AND (sip.StartIP - 1 + sip.Addresses) <= $maxIP))";
-}
-if ($userSearchParameters['subscription_date'] != "") {
-	$sql .= " GROUP BY s.Id";
-}
-$sql .= " ORDER BY " . $orderFields[$orderField] . " $orderDir";
-$searchSql = $sqlBase.$sql." LIMIT $userOffs, $ItemsPerPage";
-$res = $g_ado_db->Execute($searchSql);
+camp_html_display_msgs();
 
-$countSql = "SELECT COUNT(*) FROM liveuser_users as u ".$sql;
-$totalUsers = $g_ado_db->GetOne($countSql);
+$usersSearchResult = get_users_from_search($isReader, $orderFields, $orderField, $orderDir, $totalUsers);
 
 $pager = new SimplePager($totalUsers, $ItemsPerPage, "userOffs", "index.php?".get_user_urlparams(0)."&", false);
 
-if (gettype($res) == 'object' && $res->NumRows() > 0) {
-	$nr = $res->NumRows();
+if (is_array($usersSearchResult) && sizeof($usersSearchResult) > 0) {
+	$nr = sizeof($usersSearchResult);
 	$last = $nr > $ItemsPerPage ? $ItemsPerPage : $nr;
 	?>
 	<table class="indent">
@@ -245,7 +188,7 @@ if (gettype($res) == 'object' && $res->NumRows() > 0) {
 	</TR>
 <?php
 for($loop = 0; $loop < $last; $loop++) {
-	$row = $res->FetchRow();
+        $row = $usersSearchResult[$loop];
 	$userId = $row['Id'];
 	$rowClass = ($loop + 1) % 2 == 0 ? "list_row_even" : "list_row_odd";
 	$editUser = new User($userId);

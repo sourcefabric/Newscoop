@@ -145,5 +145,8 @@ Log::Message($logtext, $g_user->getUserId(), 171);
 if ($msg_ok == 1) {
 	camp_html_add_msg(getGS("System preferences updated."), "ok");
 }
+
+CampPlugin::PluginAdminHooks(__FILE__);
+
 camp_html_goto_page("/$ADMIN/system_pref/");
 ?>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Use AutoComplete to access the Yahoo! Search XML API</title>
+
+<style type="text/css">
+/*margin and padding on body element
+  can introduce errors in determining
+  element position and are not recommended;
+  we turn them off as a foundation for YUI
+  CSS treatments. */
+body {
+	margin:0;
+	padding:0;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="../../build/autocomplete/assets/skins/sam/autocomplete.css" />
+<script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../../build/animation/animation-min.js"></script>
+<script type="text/javascript" src="../../build/connection/connection-min.js"></script>
+<script type="text/javascript" src="../../build/autocomplete/autocomplete-min.js"></script>
+
+
+<!--begin custom header content for this example-->
+<style type="text/css">
+/* custom styles for this example */
+#ysearchautocomplete { margin-bottom:2em;width:25em; }
+</style>
+
+<!--end custom header content for this example-->
+
+</head>
+
+<body class=" yui-skin-sam">
+
+<h1>Use AutoComplete to access the Yahoo! Search XML API</h1>
+
+<div class="exampleIntro">
+	<p>This DataSource instance points to Yahoo! Search Web Services via a
+simple PHP proxy. The DataSource schema is defined for XML data. In order
+to be compatible with the Yahoo! Search application, the DataSource property
+<code>queryMatchContains</code> is enabled, and the <code>scriptQueryAppend</code>
+has been defined to pass in additional arguments.</p>
+			
+</div>
+
+<!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
+
+<form action="http://search.yahoo.com/search" onsubmit="return YAHOO.example.ACXml.validateForm();">
+	<h3>Yahoo! Search:</h3>
+	<div id="ysearchautocomplete">
+		<input id="ysearchinput" type="text" name="p">
+		<div id="ysearchcontainer"></div>
+	</div>
+</form>
+
+<script type="text/javascript">
+YAHOO.example.ACXml = new function(){
+    // Instantiate an XHR DataSource and define schema as an array:
+    //     ["Multi-depth.object.notation.to.find.a.single.result.item",
+    //     "Query Key",
+    //     "Additional Param Name 1",
+    //     ...
+    //     "Additional Param Name n"]
+    this.oACDS = new YAHOO.widget.DS_XHR("assets/php/ysearch_proxy.php", ["Result", "Title"]);
+    this.oACDS.responseType = YAHOO.widget.DS_XHR.TYPE_XML;
+    this.oACDS.queryMatchContains = true;
+    this.oACDS.scriptQueryAppend = "results=100"; // Needed for YWS
+
+    // Instantiate AutoComplete
+    this.oAutoComp = new YAHOO.widget.AutoComplete("ysearchinput","ysearchcontainer", this.oACDS);
+    
+    // Stub for AutoComplete form validation
+    this.validateForm = function() {
+        // Validation code goes here
+        return true;
+    };
+};
+</script>
+
+<!--END SOURCE CODE FOR EXAMPLE =============================== -->
+
+</body>
+</html>

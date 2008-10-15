@@ -123,6 +123,7 @@ class User extends DatabaseObject {
                             'filters' => array('perm_user_id' => $permUserId));
             $user = $LiveUserAdmin->getUsers($filter);
             $p_values['Id'] = $user[0]['auth_user_id'];
+            $p_values['Password'] = $user[0]['passwd'];
             $this->fetch($p_values);
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");

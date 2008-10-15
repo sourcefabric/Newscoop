@@ -121,11 +121,17 @@ final class CampContext
         // register plugin objects and listobjects
         foreach (CampPlugin::GetPluginInfos() as $info) {
             if (CampPlugin::IsPluginEnabled($info['name'])) {
-                foreach ($info['template_engine']['objecttypes'] as $objecttype) {
-                    $this->registerObjectType($objecttype);
+                
+                if (is_array($info['template_engine']['objecttypes'])) {
+                    foreach ($info['template_engine']['objecttypes'] as $objecttype) {
+                        $this->registerObjectType($objecttype);
+                    }
                 }
-                foreach ($info['template_engine']['listobjects'] as $listobject) {
-                    $this->registerListObject($listobject);
+                
+                if (is_array($info['template_engine']['listobjects'])) {
+                    foreach ($info['template_engine']['listobjects'] as $listobject) {
+                        $this->registerListObject($listobject);
+                    }
                 }
             }
         }
