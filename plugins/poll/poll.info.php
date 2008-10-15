@@ -37,11 +37,9 @@ $info = array(
         'init' => 'plugin_poll_init'
     ),
     'localizer' => array(
-        array(
-            'id' => 'plugin_poll',
-            'path' => '/plugins/poll/admin-files/poll/',
-            'screen_name' => 'Poll'
-        )
+        'id' => 'plugin_poll',
+        'path' => '/plugins/poll/admin-files/poll/',
+        'screen_name' => 'Poll'
     ),
     'install' => 'plugin_poll_install',
     'enable' => 'plugin_poll_install',
@@ -62,7 +60,7 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
         require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
         
-        $errors = CampInstallationBaseHelper::ImportDB($g_documentRoot.DIR_SEP.PLUGINS_DIR.DIR_SEP.'poll/install/sql/plugin_poll.sql', &$error_queries);
+        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'poll/install/sql/plugin_poll.sql', &$error_queries);
         
         unset($GLOBALS['g_db']);       
     }

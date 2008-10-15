@@ -127,7 +127,7 @@ camp_html_display_msgs();
                 <?php $now = getdate(); ?>
                 <table cellpadding="0" cellspacing="2"><tr>
                     <td><INPUT TYPE="TEXT" class="input_text" NAME="f_date_begin" id="f_date_begin" maxlength="10" SIZE="11" VALUE="<?php p($date_begin); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date begin')."'"); ?>"></td>
-                    <td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
+                    <td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_date_begin"
                          style="cursor: pointer; border: 1px solid red;"
                           title="Date selector"
                           onmouseover="this.style.background='red';"
@@ -142,7 +142,7 @@ camp_html_display_msgs();
                         showOthers:true,
                         weekNumbers:false,
                         range:new Array(<?php p($now["year"]); ?>, 2020),
-                        button:"f_trigger_c"
+                        button:"f_trigger_date_begin"
                     });
                 </script>
 
@@ -154,7 +154,7 @@ camp_html_display_msgs();
                 <?php $now = getdate(); ?>
                 <table cellpadding="0" cellspacing="2"><tr>
                     <td><INPUT TYPE="TEXT" class="input_text" NAME="f_date_end" id="f_date_end" maxlength="10" SIZE="11" VALUE="<?php p($date_end); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date end')."'"); ?>"></td>
-                    <td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
+                    <td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_date_end"
                          style="cursor: pointer; border: 1px solid red;"
                           title="Date selector"
                           onmouseover="this.style.background='red';"
@@ -169,7 +169,7 @@ camp_html_display_msgs();
                         showOthers:true,
                         weekNumbers:false,
                         range:new Array(<?php p($now["year"]); ?>, 2020),
-                        button:"f_trigger_c"
+                        button:"f_trigger_date_end"
                     });
                 </script>
 
@@ -190,7 +190,7 @@ camp_html_display_msgs();
         <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Votes per unique User"); ?>:</TD>
             <TD style="padding-top: 3px;">
-                <SELECT NAME="f_votes_per_user" alt="select" emsg="<?php putGS("You must select number of votes per user.")?>" class="input_select" onchange="poll_set_nr_of_answers()">
+                <SELECT NAME="f_votes_per_user" alt="select" emsg="<?php putGS("You must select number of votes per user.")?>" class="input_select">
                 <option value="0"><?php putGS("---Select---"); ?></option>
                 <?php
                  for($n=1; $n<=255; $n++) {

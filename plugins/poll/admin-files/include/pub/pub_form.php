@@ -1,3 +1,9 @@
+<?php 
+global $publicationObj;
+
+if (is_object($publicationObj)) {
+?>
+
 <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-top: 0.5em; padding-left: 10px; padding-right: 10px;" width="100%">
     <tr><td colspan="2"><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
     <tr width="100%">
@@ -28,3 +34,6 @@
         </TD>
     </TR>
 </TABLE>
+<?php
+}
+?>

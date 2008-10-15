@@ -536,7 +536,7 @@ class Poll extends DatabaseObject {
      */
     public function isExtended()
     {       
-        return $this->getProperty('is_extended') === 'true' ? true : false; 
+        return $this->getProperty('is_extended') == 1 ? true : false; 
     }
     
     /**

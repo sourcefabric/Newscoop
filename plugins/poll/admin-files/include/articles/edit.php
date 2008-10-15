@@ -1,3 +1,5 @@
+<?php global $articleObj, $f_article_number; ?>
+
 <TABLE width="100%" style="border: 1px solid #EEEEEE;">
     <TR>
     	<TD>

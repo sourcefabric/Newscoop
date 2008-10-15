@@ -1,4 +1,6 @@
 <?php
+global $issueObj;
+
 $issue_language_id = $issueObj->getLanguageId();
 $issue_nr = $issueObj->getIssueNumber();
 $publication_id = $issueObj->getPublicationId();

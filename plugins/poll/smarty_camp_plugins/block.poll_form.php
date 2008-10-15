@@ -100,7 +100,7 @@ function smarty_block_poll_form($p_params, $p_content, &$p_smarty, &$p_repeat)
         
         if (strlen($p_params['submit_button']) && $campsite->poll->is_votable) { 
 	        $html .= "<div align=\"center\">\n.
-	        		 <input type=\"submit\" name=\"f_login\" value=\"".
+	        		 <input type=\"submit\" name=\"f_poll\" value=\"".
 	        		 smarty_function_escape_special_chars($p_params['submit_button']).
 	            	 "\" ".
 	            	 $p_params['html_code']." />\n".

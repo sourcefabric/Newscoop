@@ -63,11 +63,9 @@ $info = array(
         'init' => 'plugin_interview_init'
     ),
     'localizer' => array(
-        array(
             'id' => 'plugin_interview',
-            'path' => '/plugins/interview/admin-files/interview/admin',
+            'path' => '/plugins/interview/admin-files/*/*',
             'screen_name' => 'Interview'
-        )
     ),
     'install' => 'plugin_interview_install',
     'enable'  => 'plugin_interview_install',
@@ -92,7 +90,7 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
         
-        $errors = CampInstallationBaseHelper::ImportDB($g_documentRoot.DIR_SEP.PLUGINS_DIR.DIR_SEP.'interview/install/sql/plugin_interview.sql', &$error_queries);
+        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'interview/install/sql/plugin_interview.sql', &$error_queries);
         
         unset($GLOBALS['g_db']);       
     }

@@ -9,7 +9,7 @@
  * Campsite pollanswer_edit function plugin
  *
  * Type:     function
- * Name:     camp_edit
+ * Name:     pollanswer_edit
  * Purpose:  
  *
  * @param array

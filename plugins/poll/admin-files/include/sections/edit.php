@@ -1,9 +1,12 @@
 <?php
+global $sectionObj;
+
 $section_language_id = $sectionObj->getLanguageId();
 $section_nr = $sectionObj->getSectionNumber();
 $issue_nr = $sectionObj->getIssueNumber();
 $publication_id = $sectionObj->getPublicationId();
 ?>
+
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" width="806">
 <TR>
