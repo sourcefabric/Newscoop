@@ -1,10 +1,12 @@
-<?php global $publicationObj ?>
+<?php 
+global $publicationObj;
 
-<TR>
-  <TD COLSPAN="2">
-    <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-top: 0.5em; padding-left: 10px; padding-right: 10px;" width="100%">
-      <tr><td colspan="2"><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
-      <tr width="100%">
+if (is_object($publicationObj)) {
+?>
+
+<table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-top: 0.5em; padding-left: 10px; padding-right: 10px;" width="100%">
+    <tr><td colspan="2"><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
+    <tr width="100%">
         <td>
             <font size="+1"><b><?php putGS("Polls"); ?></b></font>
         </td>
@@ -16,9 +18,9 @@
     		<A href="javascript: void(0);" onclick="window.open('<?php p("/$ADMIN/poll/assign_popup.php?f_poll_item=publication&amp;f_publication_id=$f_publication_id&f_language_id={$publicationObj->getLanguageId()}"); ?>', 'assign_poll', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=600, top=200, left=100');"><?php putGS("Edit"); ?></A>
     	</TD>
     	<?php } ?>
-      </TR>
+    </TR>
     
-      <TR>
+    <TR>
     	<TD colspan="2" align="left" valign="top" width="100%">  
     	<div style="overflow: auto; max-height: 50px">  
         <?php
@@ -30,7 +32,8 @@
     	?>
     	</div>
         </TD>
-      </TR>
-    </TABLE>
-  </TD>
-</TR>
+    </TR>
+</TABLE>
+<?php
+}
+?>
