@@ -123,7 +123,7 @@ class User extends DatabaseObject {
                             'filters' => array('perm_user_id' => $permUserId));
             $user = $LiveUserAdmin->getUsers($filter);
             $p_values['Id'] = $user[0]['auth_user_id'];
-            $p_values['Password'] = $user[0]['passwd'];
+	    $p_values['Password'] = $user[0]['passwd'];
             $this->fetch($p_values);
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
@@ -559,12 +559,17 @@ class User extends DatabaseObject {
      * @param array
      *    $p_permissions The list of permissions
      *
-     * @return void
+     * @return bool
      */
     public function updatePermissions($p_permissions)
     {
         global $LiveUserAdmin;
 
+	if (!is_array($p_permissions) || sizeof($p_permissions) == 0) {
+	    return false;
+	}
+
+	$permissions = array();
         // generate an array of granted permissions
         foreach ($p_permissions as $permission => $value) {
             if ($value) {
@@ -580,6 +585,9 @@ class User extends DatabaseObject {
             foreach ($p_permissions as $permission => $value) {
                 $filter = array('filters' => array('right_define_name' => $permission));
                 $right = $LiveUserAdmin->perm->getRights($filter);
+		if (!is_array($right) || sizeof($right) == 0) {
+		    continue;
+		}
                 $params = array('right_id' => $right[0]['right_id'],
                                 'perm_user_id' => $this->getPermUserId());
                 // revoke or grant the given right
