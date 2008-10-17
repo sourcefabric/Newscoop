@@ -171,6 +171,8 @@ final class MetaArticleBodyField {
                     $article->setProperty('object_id', $requestObjectId);
                 }
             } catch (Exception $ex) {
+                $content .= "<p><strong><font color=\"red\">INTERNAL ERROR! " . $ex->getMessage()
+                         . "</font></strong></p>\n";
                 // do something
             }
         }

@@ -48,9 +48,9 @@ class SearchResultsList extends ListObject
 
 	    $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
 	    $articlesList = $p_parameters['search_results'];
-		if (($p_start != 0) || ($p_limit != 0) || (count($this->m_order) != 0)) {
-	    	$articlesList = Article::SearchByKeyword($keywords, $p_parameters['match_all'], $this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
-		}
+    	$articlesList = Article::SearchByKeyword($keywords, $p_parameters['match_all'],
+    	                                         $this->m_constraints, $this->m_order, $p_start,
+    	                                         $p_limit, $p_count);
 	    $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
 	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),

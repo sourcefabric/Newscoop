@@ -2286,7 +2286,7 @@ class Article extends DatabaseObject {
             $selectKeywordClauseObj = new SQLSelectClause();
             $selectKeywordClauseObj->setTable('KeywordIndex AS KI');
             $selectKeywordClauseObj->addJoin('LEFT JOIN ArticleIndex AS AI2 ON KI.Id = AI2.IdKeyword');
-            $selectKeywordClauseObj->addColumn('AI2.NrArticle');
+            $selectKeywordClauseObj->addColumn('DISTINCT AI2.NrArticle');
             $selectKeywordClauseObj->addColumn('AI2.IdLanguage');
 
             foreach ($p_keywords as $keyword) {
