@@ -67,7 +67,7 @@ class MetaActionLogin extends MetaAction
         if ($this->m_error != ACTION_OK) {
             return false;
         }
-        $time = $this->remember_user ? time() + 14 * 24 * 3600 : null;
+        $time = $this->m_properties['remember_user'] ? time() + 14 * 24 * 3600 : null;
 
         setcookie("LoginUserId", $this->m_user->getUserId(), $time, '/');
         setcookie("LoginUserKey", $this->m_user->getKeyId(), $time, '/');

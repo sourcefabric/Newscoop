@@ -2,7 +2,6 @@
 
 $publications = Publication::GetPublications();
 ?>
-<form action="" name="section_rights" method="post">
 <table border="0" cellspacing="0" cellpadding="3" align="left">
 <?php
 foreach($publications as $publication) {
@@ -56,4 +55,3 @@ foreach($publications as $publication) {
 }
 ?>
 </table>
-</form>
