@@ -325,8 +325,7 @@ class CampPlugin extends DatabaseObject {
                     $plugin_name = $matches[1];    
                 }
                 
-                $p_log .= sprintf("Name: %s  Size: %d   modtime: %s mode: %s<br>",
-                $v['filename'],$v['size'],$v['mtime'],$v['mode']);
+                #$p_log .= sprintf("Name: %s  Size: %d   modtime: %s mode: %s<br>", $v['filename'], $v['size'], $v['mtime'], $v['mode']);
             }
         }
         
