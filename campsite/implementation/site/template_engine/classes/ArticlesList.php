@@ -63,22 +63,22 @@ class ArticlesList extends ListObject
 	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
 
-	    if ($context->publication->defined) {
+	    if ($context->publication->defined && !$p_parameters['ignore_publication']) {
     	    $comparisonOperation = new ComparisonOperation('IdPublication', $operator,
 	                                                       $context->publication->identifier);
             $this->m_constraints[] = $comparisonOperation;
 	    }
-	    if ($context->language->defined) {
+	    if ($context->language->defined && !$p_parameters['ignore_language']) {
 	        $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
 	                                                       $context->language->number);
 	        $this->m_constraints[] = $comparisonOperation;
 	    }
-	    if ($context->issue->defined) {
+	    if ($context->issue->defined && !$p_parameters['ignore_issue']) {
             $comparisonOperation = new ComparisonOperation('NrIssue', $operator,
                                                            $context->issue->number);
     	    $this->m_constraints[] = $comparisonOperation;
 	    }
-	    if ($context->section->defined) {
+	    if ($context->section->defined && !$p_parameters['ignore_section']) {
             $comparisonOperation = new ComparisonOperation('NrSection', $operator,
                                                            $context->section->number);
     	    $this->m_constraints[] = $comparisonOperation;
@@ -258,7 +258,11 @@ class ArticlesList extends ListObject
 	protected function ProcessParameters(array $p_parameters)
 	{
 		$parameters = array();
-    	foreach ($p_parameters as $parameter=>$value) {
+		$parameters['ignore_publication'] = false;
+        $parameters['ignore_issue'] = false;
+		$parameters['ignore_section'] = false;
+        $parameters['ignore_language'] = false;
+		foreach ($p_parameters as $parameter=>$value) {
     		$parameter = strtolower($parameter);
     		switch ($parameter) {
     			case 'length':
@@ -276,7 +280,13 @@ class ArticlesList extends ListObject
 	    				$parameters[$parameter] = $value;
     				}
     				break;
-    			default:
+                case 'ignore_publication':
+                case 'ignore_issue':
+                case 'ignore_section':
+                case 'ignore_language':
+                    $parameters[$parameter] = strtolower($value) == 'true';
+                    break;
+    		    default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_articles", $p_smarty);
     		}
     	}
