@@ -194,7 +194,9 @@ class User extends DatabaseObject {
                 $this->m_liveUserData['auth_user_id'] = $liveUserData[0]['auth_user_id'];
                 $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
                 $permData = $LiveUserAdmin->perm->getUsers($params);
-                $this->m_liveUserData['perm_user_id'] = $permData[0]['perm_user_id'];
+		if (is_array($permData) && sizeof($permData) > 0) {
+		  $this->m_liveUserData['perm_user_id'] = $permData[0]['perm_user_id'];
+		}
             }
 
             // fetch the permissions for this user
@@ -202,8 +204,9 @@ class User extends DatabaseObject {
                 $userType = new UserType($this->getUserType());
                 if ($userType) {
                     $this->m_config = $userType->getConfig();
+		    $this->m_exists = true;
                 }
-            } else {
+            } elseif ($this->getPermUserId()) {
                 $queryStr = 'SELECT r.right_id as value, '
                                   .'r.right_define_name as varname '
                            .'FROM liveuser_users as u, '
@@ -221,8 +224,8 @@ class User extends DatabaseObject {
                         $this->m_config[$value['varname']] = $value['value'];
                     }
                 }
+		$this->m_exists = true;
             }
-            $this->m_exists = true;
         }
     } // fn fetch
 
