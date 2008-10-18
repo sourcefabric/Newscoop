@@ -21,6 +21,9 @@ global $g_user;
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
+set_include_path(get_include_path() . PATH_SEPARATOR
+                 . $_SERVER['DOCUMENT_ROOT'] . '/include/pear');
+
 camp_set_error_handler("camp_report_bug");
 
 $no_menu_scripts = array(
