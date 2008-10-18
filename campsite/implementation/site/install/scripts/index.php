@@ -24,6 +24,8 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once($g_documentRoot.'/include/campsite_init.php');
 require_once($g_documentRoot.'/template_engine/classes/SyntaxError.php');
 
+set_include_path(get_include_path() . PATH_SEPARATOR
+                 . $_SERVER['DOCUMENT_ROOT'] . '/include/pear');
 
 function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 							  $p_errorLine = null, $p_errorContext = null)
