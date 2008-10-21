@@ -1,3 +1,23 @@
+3.1.1 (July 29, 2008)
+  Small Improvements
+  ------------------
+  - #2445: Creating standardards/API for campsite plugins
+  - #2606: Add a nickname field to the comment form
+  - #2607: Implement a way to remember the user upon login
+  - #2609: Update the Russian and Belarusian translations
+  - #2600: Implement an attribute that returns the number of
+  articles in the search action
+
+  Bugs Fixed
+  ----------
+  - #2599: Localizations for poll/interview plugins
+  - #2601: The installer has to check for more permissions
+  - #2605: Run the plugin install code at activation
+  - #2608: Reimplement the missing date attributes in date formatting
+
+  Other Tasks:
+  - #2563: Test the PHP template engine under stress
+
 3.1.0 (July 04, 2008)
   Improvements
   ------------
