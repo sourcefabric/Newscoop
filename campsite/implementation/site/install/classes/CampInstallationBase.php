@@ -335,6 +335,11 @@ class CampInstallationBase
             $this->m_message = 'Error: Could not save the configuration.';
             return false;
         }
+        if (!copy(CS_PATH_SITE . '/htaccess', CS_PATH_SITE . '/.htaccess')) {
+            $this->m_step = 'mainconfig';
+            $this->m_message = 'Error: Could not create the htaccess file.';
+            return false;
+        }
 
         return true;
     } // fn finish
@@ -448,20 +453,21 @@ class CampInstallationBase
         CampInstallationBase::CreateDirectory($_SERVER['DOCUMENT_ROOT'].DIR_SEP.'images'.DIR_SEP.'thumbnails');
         CampInstallationBase::CreateDirectory($_SERVER['DOCUMENT_ROOT'].DIR_SEP.'files');
 
-        if ($this->m_os !== 'windows') {
+// We use htaccess files instead of links
+//        if ($this->m_os !== 'windows') {
             // create the symlinks to the index.php file for each language
-            require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-            Language::CreateLanguageLinks();
+//            require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+//            Language::CreateLanguageLinks();
 
             // create the symlink tpl.php -> index.php, needed for template
             // path URL processing
-            $indexFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'index.php';
-            $tplFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'tpl.php';
-            if (file_exists($tplFile)) {
-                @unlink($tplFile);
-            }
-            @symlink($indexFile, $tplFile);
-        }
+//            $indexFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'index.php';
+//            $tplFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'tpl.php';
+//            if (file_exists($tplFile)) {
+//                @unlink($tplFile);
+//            }
+//            @symlink($indexFile, $tplFile);
+//        }
 
         return true;
     } // fn saveConfiguration

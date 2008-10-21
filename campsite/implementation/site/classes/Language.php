@@ -63,7 +63,8 @@ class Language extends DatabaseObject {
 	    		$this->delete(false);
 	    		return $result;
 	    	}
-	    	Language::CreateLanguageLinks();
+// We use htaccess files instead of links
+//	    	Language::CreateLanguageLinks();
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
