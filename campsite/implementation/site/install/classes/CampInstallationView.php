@@ -162,6 +162,13 @@ final class CampInstallationView
                                 'exists' => $hasSession
                                 );
 
+        $hasRewriteModule = CampInstallationViewHelper::CheckRewriteModule();
+        $success = ($hasRewriteModule == 'Yes') ? $success : false;
+        $phpFunctions[] = array(
+                                'tag' => 'Rewrite Module',
+                                'exists' => $hasRewriteModule
+                                );
+
         $this->m_lists['phpFunctions'] = $phpFunctions;
 
         return $success;
@@ -210,6 +217,12 @@ final class CampInstallationViewHelper
     {
         return (function_exists('mysql_connect')) ? 'Yes' : 'No';
     } // fn CheckPHPMySQL
+
+
+    public static function CheckRewriteModule()
+    {
+        return array_search('mod_rewrite', apache_get_modules()) !== FALSE ? 'Yes' : 'No';
+    }
 
 
     public static function CheckPHPAPC()

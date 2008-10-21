@@ -64,7 +64,7 @@ $step = $install->execute();
 $copyAdmin = copy('install/scripts/admin.php', 'admin.php');
 $copyIndex = copy('install/scripts/index.php', 'index.php');
 if (!$copyAdmin || !$copyIndex) {
-    display_upgrade_error("while upgrading the database: $res");
+    display_upgrade_error("while upgrading the database: Can't create the index.php file.");
 }
 
 $session = CampSite::GetSessionInstance();

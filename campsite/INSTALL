@@ -37,20 +37,13 @@ Example of virtual host configuration:
 2. Unzip and Untar the campsite file. This will generate a folder
 named 'campsite'.
 
-3. Change into the 'campsite' directory.
+3. Open the 'campsite' directory.
 
 4. Copy the content of implementation/site directory into the document
 root directory of the apache virtual host.
 
 5. Start a browser, point it to the http://site_name URL and follow the
 steps.
-
-6. For Windows: Please rename htaccess file to .htaccess and be sure
-your apache installation is able to read it in order for Campsite to
-work well on this platform.
-
-For Linux, FBSD: You can delete htaccess file if you want it, as it
-is useless on these platforms.
 
 
 ####################################################################
