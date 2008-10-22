@@ -90,7 +90,7 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
         
-        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'interview/install/sql/plugin_interview.sql', &$error_queries);
+        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'interview/install/sql/plugin_interview.sql', $error_queries);
         
         unset($GLOBALS['g_db']);       
     }
@@ -129,5 +129,11 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
             $p_context->interview = new MetaInterview($interview_id);
         }
     }
+}
+
+// sets the PEAR local directory
+if (!defined('PLUGINS_INTERVIEW_INCLUDE_PATH')) {
+    define ('PLUGINS_INTERVIEW_INCLUDE_PATH', CS_PATH_PLUGINS.DIR_SEP.'interview'.DIR_SEP.'include'.DIR_SEP.'pear');
+    set_include_path(PLUGINS_INTERVIEW_INCLUDE_PATH.PATH_SEPARATOR.get_include_path());
 }
 ?>

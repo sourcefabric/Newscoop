@@ -60,7 +60,7 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
         require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
         
-        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'poll/install/sql/plugin_poll.sql', &$error_queries);
+        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'poll/install/sql/plugin_poll.sql', $error_queries);
         
         unset($GLOBALS['g_db']);       
     }
