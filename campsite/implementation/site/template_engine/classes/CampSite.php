@@ -111,9 +111,12 @@ final class CampSite extends CampSystem
      */
     public function render()
     {
+        global $g_errorList;
+
         $uri = self::GetURIInstance();
         $document = self::GetHTMLDocumentInstance();
 
+        $context = CampTemplate::singleton()->context();
         // sets the appropiate template if site is not in mode online
         if ($this->getSetting('site.online') == 'N') {
             $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
@@ -124,6 +127,10 @@ final class CampSite extends CampSystem
             $error_message = 'The site alias \'' . $_SERVER['HTTP_HOST']
             . '\' was not assigned to a publication. Please create a publication and '
             . ' assign it the current site alias.';
+        } elseif (is_array($g_errorList) && !empty($g_errorList)) {
+            $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
+            $template = '_campsite_error.tpl';
+            $error_message = 'At initialization: ' . $g_errorList[0]->getMessage();
         } else {
             $templates_dir = CS_PATH_SMARTY_TEMPLATES;
             $template = $this->getTemplateName();
@@ -143,7 +150,7 @@ final class CampSite extends CampSystem
         }
 
         $params = array(
-                        'context' => CampTemplate::singleton()->context(),
+                        'context' => $context,
                         'template' => $template,
                         'templates_dir' => $templates_dir,
                         'error_message' => isset($error_message) ? $error_message : null

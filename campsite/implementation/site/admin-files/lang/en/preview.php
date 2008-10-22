@@ -1,7 +1,7 @@
 <?php 
 regGS("line", "line");
 regGS("template", "template");
-regGS("Unknown error: $1", "Unknown error: $1");
+regGS("Unknown error: $1", "$1");
 regGS("Unrecognized tag <em>$1</em>", "Unrecognized tag <em>$1</em>");
 regGS("Unknown reference <em>$1</em>", "Unknown reference <em>$1</em>");
 regGS("Invalid property <em>$1</em> of object <em>$2</em>", "Invalid property <em>$1</em> of object <em>$2</em>");
