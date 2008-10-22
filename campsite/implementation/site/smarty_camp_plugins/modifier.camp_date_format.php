@@ -25,7 +25,7 @@ require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
  *     string the formatted date
  *     null in case a non-valid format was passed
  */
-function smarty_modifier_camp_date_format($p_unixtime, $p_format = null)
+function smarty_modifier_camp_date_format($p_unixtime, $p_format = null, $p_onlyEnglish = false)
 {
     global $g_ado_db;
 
@@ -72,10 +72,14 @@ function smarty_modifier_camp_date_format($p_unixtime, $p_format = null)
             return $formattedDate;
         }
         if ($hasTxtMonth) {
-            $formattedDate = str_replace($lang[0]['month'], $lang[1]['month'], $formattedDate);
+	    if (!$p_onlyEnglish) {
+                $formattedDate = str_replace($lang[0]['month'], $lang[1]['month'], $formattedDate);
+	    }
         }
         if ($hasTxtWDay) {
-            $formattedDate = str_replace($lang[0]['day'], $lang[1]['day'], $formattedDate);
+	    if (!$p_onlyEnglish) {
+	        $formattedDate = str_replace($lang[0]['day'], $lang[1]['day'], $formattedDate);
+	    }
         }
     }
 
