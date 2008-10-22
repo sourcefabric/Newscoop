@@ -1,7 +1,7 @@
 <?php 
 regGS("line", "строка");
 regGS("template", "шаблон");
-regGS("Unknown error: $1", "Незнакомая ошибка: $1");
+regGS("Unknown error: $1", "$1");
 regGS("Unrecognized tag <em>$1</em>", "Неопознанный тэг <em>$1</em>");
 regGS("Unknown reference <em>$1</em>", "Неизвестное обращение <em>$1</em>");
 regGS("Invalid property <em>$1</em> of object <em>$2</em>", "Недействительное свойство <em>$1</em> объекта<em>$2</em>");

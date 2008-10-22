@@ -288,7 +288,7 @@ class CampURITemplatePath extends CampURI
             $this->m_publication = new MetaPublication($aliasArray[0]->getPublicationId());
         }
         if (!$this->m_publication->defined()) {
-            CampTemplate::singleton()->trigger_error('not valid site alias');
+            CampTemplate::singleton()->trigger_error('Invalid site alias in URL.');
             return;
         }
 
@@ -300,7 +300,7 @@ class CampURITemplatePath extends CampURI
             $this->m_language = new MetaLanguage($this->m_publication->default_language->number);
         }
         if (!$this->m_language->defined()) {
-            CampTemplate::singleton()->trigger_error('not valid language');
+            CampTemplate::singleton()->trigger_error('Invalid language number in URL.');
             return;
         }
 
@@ -315,7 +315,7 @@ class CampURITemplatePath extends CampURI
             $this->m_language->number, $issueObj->getIssueNumber());
         }
         if (!$this->m_issue->defined()) {
-            CampTemplate::singleton()->trigger_error('not valid issue');
+            CampTemplate::singleton()->trigger_error('Invalid issue number in URL.');
             return;
         }
 
@@ -325,7 +325,7 @@ class CampURITemplatePath extends CampURI
             $this->m_issue->number, $this->m_language->number,
             CampRequest::GetVar(CampRequest::SECTION_NR));
             if (!$this->m_section->defined()) {
-                CampTemplate::singleton()->trigger_error('not valid section');
+                CampTemplate::singleton()->trigger_error('Invalid section number in URL.');
                 return;
             }
         }
@@ -335,7 +335,7 @@ class CampURITemplatePath extends CampURI
             $this->m_article = new MetaArticle($this->m_language->number,
             CampRequest::GetVar(CampRequest::ARTICLE_NR));
             if (!$this->m_article->defined()) {
-                CampTemplate::singleton()->trigger_error('not valid article');
+                CampTemplate::singleton()->trigger_error('Invalid article number in URL.');
                 return;
             }
         }
