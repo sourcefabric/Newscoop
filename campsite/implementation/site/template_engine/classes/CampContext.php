@@ -198,7 +198,7 @@ final class CampContext
         // initialize plugins
         foreach (CampPlugin::GetPluginInfos() as $info) {
             if (CampPlugin::IsPluginEnabled($info['name']) && function_exists($info['template_engine']['init'])) {
-                call_user_func($info['template_engine']['init'], &$this);
+                call_user_func($info['template_engine']['init'], $this);
             }
         }
     } // fn __construct
