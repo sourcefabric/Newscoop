@@ -59,7 +59,7 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
         if (!array_key_exists('g_db', $GLOBALS)) {
             $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
         }
-        $errors = CampInstallationBaseHelper::ImportDB($g_documentRoot.DIR_SEP.PLUGINS_DIR.DIR_SEP.'poll/install/sql/plugin_poll.sql', &$error_queries);      
+        $errors = CampInstallationBaseHelper::ImportDB($g_documentRoot.DIR_SEP.PLUGINS_DIR.DIR_SEP.'poll/install/sql/plugin_poll.sql', $error_queries);      
     }
     
     function plugin_poll_uninstall()
