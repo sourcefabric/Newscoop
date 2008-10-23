@@ -357,14 +357,37 @@ class CampInstallationBase
                           'campsite_statistics');
 
         $template = CampTemplate::singleton();
+        $campsiteBinDir = CS_PATH_SITE.DIR_SEP.'bin';
         $template->assign('CAMPSITE_BIN_DIR', CS_PATH_SITE.DIR_SEP.'bin');
 
-        $buffer = '';
+        $cmd = 'crontab -l';
+        exec($cmd, $output, $result);
+        if ($result != 0) {
+            $this->m_step = 'cronjobs';
+            $this->m_message = 'Error: Could not save cron job files. '
+                .'Could not run the crontab executable.';
+            return false;
+        }
+
         $cronJobsDir = CS_INSTALL_DIR.DIR_SEP.'cron_jobs';
         $allAtOnceFile = $cronJobsDir.DIR_SEP.'all_at_once';
         if (file_exists($allAtOnceFile)) {
             unlink($allAtOnceFile);
         }
+        $alreadyInstalled = false;
+        foreach ($output as $cronLine) {
+            if (!file_put_contents($allAtOnceFile, "$cronLine\n", FILE_APPEND)) {
+                $error = true;
+            }
+            if (strstr($cronLine, $campsiteBinDir)) {
+                $alreadyInstalled = true;
+            }
+        }
+        if ($alreadyInstalled) {
+            return true;
+        }
+
+        $buffer = '';
         $isFileWritable = is_writable($cronJobsDir);
         $error = false;
         foreach ($cronJobs as $cronJob) {
