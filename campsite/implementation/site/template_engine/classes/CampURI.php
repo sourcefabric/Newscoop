@@ -875,6 +875,9 @@ abstract class CampURI {
                     $this->m_buildQueryArray = array();
                     $this->m_buildQueryArray['NrImage'] = $context->image->article_index;
                     $this->m_buildQueryArray['NrArticle'] = $context->article->number;
+                    if(isset($p_params[0]))
+                        $this->m_buildQueryArray['ImageRatio'] = $p_params[0];
+
                 }
                 if (!is_null($option)) {
                     $context->image = $oldImage;
