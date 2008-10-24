@@ -24,7 +24,8 @@ require_once($g_documentRoot.'/template_engine/classes/CampGetImage.php');
 // reads parameters from image link URI
 $articleNr = (int) CampRequest::GetVar('NrArticle', null, 'get');
 $imageNr = (int) CampRequest::GetVar('NrImage', null, 'get');
+$imageRatio = (int) CampRequest::GetVar('ImageRatio', null, 'get');
 
-$showImage = new CampGetImage($imageNr, $articleNr);
+$showImage = new CampGetImage($imageNr, $articleNr,$imageRatio);
 
 ?>

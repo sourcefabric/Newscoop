@@ -1,15 +1,5 @@
 <?php
 /**
- * @package Campsite
- *
- * @author Holman Romero <holman.romero@gmail.com>
- * @copyright 2007 MDLF, Inc.
- * @license http://www.gnu.org/licenses/gpl.txt
- * @version $Revision$
- * @link http://www.campware.org
- */
-
-/**
  * Includes
  *
  * We indirectly reference the DOCUMENT_ROOT so we can enable
@@ -27,114 +17,74 @@ require_once($g_documentRoot.'/template_engine/classes/CampRequest.php');
 class CampGetImage
 {
     /**
+     * @param string $m_imagePath
+     *      Path to a local file.
+     */
+    private $m_imagePath = '';
+
+    /**
+     * @param string $m_location
+     *      Flag if image is local ore remote.
+     */
+    private $m_location = TRUE;
+
+    /**
+     * @param array $m_imageMetaData
+     *      Consists name, type and url of the image
+     */
+    private $m_imageMetaData = array();
+
+
+    /**
+     * @param integer $m_ratio
+     *      resize ratio in percent
+     */
+    private $m_ratio = 100;
+
+
+    /**
      * Class constructor.
      *
      * @param integer $p_imageNr
      *      The image number within the article
      * @param integer $p_articleNr
      *      The article number
+     * @param integer $p_imageRatio
+     *      The ratio for image resize
      */
-    public function __construct($p_imageNr, $p_articleNr)
+    public function __construct($p_imageNr, $p_articleNr,$p_imageRatio=100)
     {
-        global $g_ado_db;
-
         if (empty($p_articleNr) || empty($p_imageNr)
         || !is_numeric($p_articleNr) || !is_numeric($p_imageNr)) {
-            self::ExitError('Invalid parameters');
+            $this->ExitError('Invalid parameters');
         }
-
-        $query = 'SELECT IdImage FROM ArticleImages '
-            . "WHERE NrArticle = '" . $g_ado_db->Escape($p_articleNr)."'"
-            . " AND Number = '".$g_ado_db->Escape($p_imageNr)."'";
-        $idImage = $g_ado_db->GetOne($query);
-
-        if (empty($idImage)) {
-            self::ExitError('Image ' . $p_imageNr
-                           .' not found for article ' . $p_articleNr);
+        if($p_imageRatio>0 && $p_imageRatio<100){
+            $this->m_ratio = $p_imageRatio;
         }
-
-        $query = 'SELECT ImageFileName, URL, ContentType FROM Images '
-            . "WHERE Id = '".$g_ado_db->Escape($idImage)."'";
-        $imageMetaData = $g_ado_db->GetRow($query);
-
-        if (empty($imageMetaData)) {
-            self::ExitError('Image with id ' . $idImage . ' not found');
-        }
-
-        if (!empty($imageMetaData['URL'])) {
-            self::ReadFileFromURL($imageMetaData);
-        } else {
-            $filePath = $_SERVER['DOCUMENT_ROOT'].'/images/'.$imageMetaData['ImageFileName'];
-            if (!file_exists($filePath)) {
-                self::ExitError('Image file ' . $filePath . ' does not exist');
-            }
-
-            self::PushFile($filePath, $imageMetaData['ContentType']);
-        }
-
-    } // fn __construct
+        $this->GetImage($p_imageNr, $p_articleNr);
+    }   // fn __construct
 
 
     /**
-     * Reads an image file from given URL and displays it.
+     * Sets path to the local image file.
      *
-     * @param array $p_imageMetaData
+     * @param string $p_path
      */
-    private static function ReadFileFromURL($p_imageMetaData)
+    public function SetImagePath($p_path)
     {
-        $fp = @fopen($p_imageMetaData['URL'], 'r');
-        if ($fp == false) {
-            self::ExitError('Error reading ' . $p_imageMetaData['URL']);
-        }
-
-        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-        header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
-        header('Cache-Control: no-store, no-cache, must-revalidate');
-        header('Cache-Control: post-check=0, pre-check=0', false);
-        header('Pragma: no-cache');
-        header('Content-type: ' . $p_imageMetaData['ContentType']);
-        readfile($p_imageMetaData['URL']);
-
-        /*
-         * this is the version using curl library functions.
-         * we keep this out as it is not built-in PHP feature, but it
-         * can be worth using this option as it is better way to do this.
-         *
-         * $curlHandler = curl_init();
-         * if ($curlHandler) {
-         *   curl_setopt($curlHandler, CURLOPT_URL, $p_imageMetaData['URL']);
-         *   header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-         *   header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
-         *   header('Cache-Control: no-store, no-cache, must-revalidate');
-         *   header('Cache-Control: post-check=0, pre-check=0', false);
-         *   header('Pragma: no-cache');
-         *   header('Content-type: ' . $p_imageMetaData['ContentType']);
-         *   curl_exec ($curlHandler);
-         *   curl_close ($curlHandler);
-         * }
-         */
-    } // fn ReadFileFromURL
+        $this->m_imagePath = $p_path;
+        return 0;
+    }   // fn SetImagePath
 
 
     /**
-     * Reads an image file from local server and displays it.
+     * Returns path to the local image file.
      *
-     * @param string $p_filePath
-     *      The full path to the image file
-     * @param string $p_contentType
-     *      The mime content type for the image file
      */
-    private static function PushFile($p_filePath, $p_contentType)
+    public function GetImagePath()
     {
-        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-        header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
-        header('Cache-Control: no-store, no-cache, must-revalidate');
-        header('Cache-Control: post-check=0, pre-check=0', false);
-        header('Pragma: no-cache');
-        header('Content-length: ' . filesize($p_filePath));
-        header('Content-type: ' . $p_contentType);
-        readfile($p_filePath);
-    } // fn PushFile
+        return $this->m_imagePath;
+    }   // fn GetImagePath
 
 
     /**
@@ -142,13 +92,135 @@ class CampGetImage
      *
      * @param string $p_errorMessage
      */
-    private static function ExitError($p_errorMessage)
+    public function ExitError($p_errorMessage)
     {
         header('Content-type: text/html; charset=utf-8');
-        print($p_errorMessage);
-        exit;
-    } // fn ExitError
+        die($p_errorMessage);
+    }  // fn ExitError
 
-} // class CampGetImage
+
+    /**
+     * Checkes if local file exists
+     *
+     * @param string $p_imagePath
+     */
+    private function CheckLocalFile($p_imagePath)
+    {
+        return file_exists($p_imagePath);
+    }  // fn CheckLocalFile
+
+
+    /**
+     * Checkes if remote file exists
+     *
+     * @param string $p_imageUrl
+     */
+    private function CheckRemoteFile($p_imageUrl)
+    {
+        $status = array();
+        $status = get_headers($p_imageUrl);
+        return (strpos($status[0],'404'))?0:1;
+    }  // fn CheckRemoteFile
+
+
+    /**
+     * Reads image from a local or remote file.
+     * Creates image string
+     *
+     * @param string $p_ending
+     */
+    private function ReadImage($p_ending)
+    {
+        $func = 'imagecreatefrom'.$p_ending;;
+        return $func($this->GetImagePath());
+    }  // fn ReadImage
+    /**
+     * Sends headers and output image
+     * Send image to resize if need
+     *
+     */
+    private function PushImage()
+    {
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
+        header('Content-type: ' . $this->m_imageMetaData['ContentType']);
+
+        if($this->m_ratio<100){
+           $func_ending = '';
+           switch($this->m_imageMetaData['ContentType']){
+               case 'image/gif':$func_ending ='gif'; break;
+               case 'image/jpeg':$func_ending ='jpeg'; break;
+               case 'image/png':$func_ending ='png'; break;
+               default:$func_ending ='jpeg';break;
+           }
+           $t = $this->ReadImage($func_ending);
+           $t = $this->ResizeImage($t);
+           $function = 'image'.$func_ending;
+           $function($t);
+        }
+        else{
+            readfile($this->GetImagePath());
+        }
+    }  // fn PushImage
+
+
+    /**
+     * resizes image
+     *
+     * @param resource $p_im
+     */
+    private function ResizeImage($p_im)
+    {
+        $w_src = imagesx($p_im);
+        $h_src = imagesy($p_im);
+
+        $ratio = $this->m_ratio/100;
+        $w_dest = round($w_src*$ratio);
+        $h_dest = round($h_src*$ratio);
+
+        $dest = imagecreatetruecolor($w_dest,$h_dest);
+        imagecopyresized($dest, $p_im, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
+        return $dest;
+     }  // fn ResizeImage
+
+
+    /**
+     * Receives image name, type and url if any from DB.
+     *
+     * @param string $p_imageNr
+     * @param string $p_articleNr
+     */
+    private function GetImage($p_imageNr, $p_articleNr)
+    {
+        global $g_ado_db;
+
+        $query = 'SELECT `Images`.`URL`, `Images`.`ImageFileName`, `Images`.`ContentType`
+                  FROM `Images`, `ArticleImages`
+                  WHERE `Images`.`Id` = `ArticleImages`.`IdImage`
+                  AND `ArticleImages`.NrArticle = "'.$g_ado_db->Escape($p_articleNr).'"
+                  AND `ArticleImages`.`Number` = "'.$g_ado_db->Escape($p_imageNr).'"
+                  LIMIT 1';
+
+        $this->m_imageMetaData = $g_ado_db->GetRow($query);
+
+        if(empty($this->m_imageMetaData)){
+            $this->ExitError('Image not found');
+        }
+        $this->m_location = empty($this->m_imageMetaData['URL']);
+        $this->SetImagePath($this->m_location?
+            $_SERVER['DOCUMENT_ROOT'].'/images/'.$this->m_imageMetaData['ImageFileName']:
+            $this->m_imageMetaData['URL']);
+
+
+        if(!($this->m_location?$this->CheckLocalFile($this->GetImagePath()):
+                                $this->CheckRemoteFile($this->GetImagePath()))){
+            $this->ExitError('File "'.$this->m_imageMetaData['ImageFileName'].'" not found');
+        }
+        $this->PushImage();
+    } // fn GetImage
+} // class CampGetImagePlus
 
 ?>
