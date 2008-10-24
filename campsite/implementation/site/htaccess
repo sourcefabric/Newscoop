@@ -1,11 +1,8 @@
 # There might be no access to apache config, set options here
-
 Options -Indexes FollowSymLinks MultiViews
 
-
 # Options might not aloowed here, use Rewrite rules instead
-
- <IfModule mod_rewrite.c>
+<IfModule mod_rewrite.c>
     RewriteEngine On
     
     RewriteCond %{REQUEST_URI} ^/get_img$
@@ -20,15 +17,16 @@ Options -Indexes FollowSymLinks MultiViews
     RewriteCond %{REQUEST_URI} ![^.]\.js
     RewriteCond %{REQUEST_URI} !^/admin
     RewriteCond %{REQUEST_URI} !^/install
-    RewriteCond %{REQUEST_URI} !^/get_img
-    RewriteCond %{REQUEST_URI} !^/attachment
+    RewriteCond %{REQUEST_URI} !^/javascript
     RewriteCond %{REQUEST_URI} !^/templates
     RewriteCond %{REQUEST_URI} !^/sys-templates
     RewriteCond %{REQUEST_URI} !^/css
     RewriteCond %{REQUEST_URI} !^/images
     RewriteRule . /index.php [L]
     
+    RewriteCond %{REQUEST_URI} [^.]\.tpl
+    RewriteRule . /index.php [L]
+    
     RewriteCond %{REQUEST_URI} ^/admin$|^/admin/.*|^/admin-files
     RewriteRule . /admin.php [L]
 </IfModule>
-
