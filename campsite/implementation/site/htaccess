@@ -1,7 +1,18 @@
-# Rewrite rules for Campsite URLs
+# There might be no access to apache config, set options here
 
- <IfModule mod_rewrite.c>
+Options -Indexes FollowSymLinks MultiViews
+
+
+# Options might not aloowed here, use Rewrite rules instead
+
+ <IfModule mod_rewritex.c>
     RewriteEngine On
+    
+    RewriteCond %{REQUEST_URI} ^/get_img$
+    RewriteRule . /get_img.php [L]
+    
+    RewriteCond %{REQUEST_URI} ^/attachment/
+    RewriteRule . /attachment.php [L]
     
     RewriteCond %{REQUEST_URI} ![^.]\.php
     RewriteCond %{REQUEST_URI} ![^.]\.html
@@ -20,3 +31,4 @@
     RewriteCond %{REQUEST_URI} ^/admin$|^/admin/.*|^/admin-files
     RewriteRule . /admin.php [L]
 </IfModule>
+
