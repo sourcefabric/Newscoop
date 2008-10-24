@@ -5,7 +5,7 @@ Options -Indexes FollowSymLinks MultiViews
 
 # Options might not aloowed here, use Rewrite rules instead
 
- <IfModule mod_rewritex.c>
+ <IfModule mod_rewrite.c>
     RewriteEngine On
     
     RewriteCond %{REQUEST_URI} ^/get_img$
