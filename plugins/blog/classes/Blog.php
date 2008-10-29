@@ -65,8 +65,6 @@ class Blog extends DatabaseObject {
 
     function create($p_user_id, $p_language_id, $p_title, $p_info, $p_request_text, $p_tags=null)
     {
-        global $Campsite;
-
         // Create the record
         $values = array(
         'fk_user_id'    => $p_user_id,
@@ -99,8 +97,6 @@ class Blog extends DatabaseObject {
 
     function getData()
     {
-        global $Campsite;
-
         return $this->m_data;
     }
 
@@ -127,11 +123,11 @@ class Blog extends DatabaseObject {
 
     function getBlogs($p_cond, $p_currPage=0, $p_perPage=20)
     {
-        global $Campsite;
+        global $g_ado_db;
 
         $queryStr = Blog::_buildQueryStr($p_cond);
 
-        $query = $Campsite['db']->SelectLimit($queryStr, $p_perPage, ($p_currPage-1) * $p_perPage);
+        $query = $g_ado_db->SelectLimit($queryStr, $p_perPage, ($p_currPage-1) * $p_perPage);
         $blogs = array();
 
         while ($row = $query->FetchRow()) {
@@ -144,10 +140,10 @@ class Blog extends DatabaseObject {
 
     function countBlogs($p_cond=array())
     {
-        global $Campsite;
+        global $g_ado_db;
 
         $queryStr   = Blog::_buildQueryStr($p_cond);
-        $query      = $Campsite['db']->Execute($queryStr); #
+        $query      = $g_ado_db->Execute($queryStr); #
 
         return $query->RecordCount();
     }
@@ -162,15 +158,21 @@ class Blog extends DatabaseObject {
     function triggerCounter($p_blog_id)
     {
         global $g_ado_db;
+        
+        $Blog = new Blog();
+        $blogs_tbl = $Blog->m_dbTableName;
+        
+        $BlogEntry = new BlogEntry();
+        $entries_tbl = $BlogEntry->m_dbTableName;
 
-        $queryStr = "UPDATE mod_blog_blogs
+        $queryStr = "UPDATE $blogs_tbl
                      SET    entries_online = 
                         (SELECT COUNT(entry_id) 
-                         FROM   mod_blog_entries
+                         FROM   $entries_tbl
                          WHERE  fk_blog_id = $p_blog_id AND status = 'online' AND admin_status = 'online'),
                             entries_offline = 
                         (SELECT COUNT(entry_id) 
-                         FROM   mod_blog_entries
+                         FROM   $entries_tbl
                          WHERE  fk_blog_id = $p_blog_id AND (status != 'online' OR admin_status != 'online'))
                      WHERE  blog_id = $p_blog_id";  
         $g_ado_db->Execute($queryStr);

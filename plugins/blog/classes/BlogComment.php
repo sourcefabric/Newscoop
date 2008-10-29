@@ -77,8 +77,6 @@ class BlogComment extends DatabaseObject {
     
     function create($p_entry_id, $p_user_id, $p_user_name, $p_user_email, $p_title=null, $p_content=null, $p_mood=null)
     {
-        global $Campsite;
-
 		// Create the record
 		$values = array(
 		  'fk_entry_id'   => $p_entry_id,
@@ -105,20 +103,27 @@ class BlogComment extends DatabaseObject {
     
     function delete()
     {
+        $entry_id = $this->getProperty('fk_entry_id');
         parent::delete();
-       
-        BlogEntry::triggerCounter($this->getProperty('fk_entry_id'));   
+        BlogEntry::triggerCounter($entry_id);   
     }
     
     function getData()
     {
-        global $Campsite;
-        
         return $this->m_data;    
     }
     
     function _buildQueryStr($p_cond, $p_checkParent, $p_order=null)
-    {        
+    {    
+        $Blog = new Blog();
+        $blogs_tbl = $Blog->m_dbTableName;
+        
+        $BlogEntry = new BlogEntry();
+        $entries_tbl = $BlogEntry->m_dbTableName;
+        
+        $BlogComment = new BlogComment();
+        $comments_tbl = $BlogComment->m_dbTableName;
+            
         if (array_key_exists('fk_entry_id', $p_cond)) {
             $cond .= " AND c.fk_entry_id = {$p_cond['fk_entry_id']}";    
         }
@@ -135,11 +140,11 @@ class BlogComment extends DatabaseObject {
         }
         
         $queryStr = "SELECT     c.comment_id
-                     FROM       mod_blog_comments AS c, 
-                                mod_blog_entries  AS e,
-                                mod_blog_blogs    AS b
-                     WHERE      c.fk_entry_id = e.fk_entry_id     AND
-                                e.IdBlog  = b.IdBlog 
+                     FROM       $comments_tbl AS c, 
+                                $entries_tbl  AS e,
+                                $blogs_tbl    AS b
+                     WHERE      c.fk_entry_id = e.entry_id     AND
+                                e.fk_blog_id  = b.blog_id 
                                 $cond ";
         if (strlen($p_order)) {
             $queryStr .= "ORDER BY   comment_id $p_order";
@@ -150,10 +155,10 @@ class BlogComment extends DatabaseObject {
     
     function getComments($p_cond=array(), $p_currPage=0, $p_perPage=10, $p_checkParent=false, $p_order='ASC')
     {
-        global $Campsite;
+        global $g_ado_db;
         
         $queryStr   = BlogComment::_buildQueryStr($p_cond, $p_checkParent, $p_order);       
-        $query      = $Campsite['db']->SelectLimit($queryStr, $p_perPage, ($p_currPage-1) * $p_perPage);		
+        $query      = $g_ado_db->SelectLimit($queryStr, $p_perPage, ($p_currPage-1) * $p_perPage);		
 		$comments   = array();
 		
 		while ($row = $query->FetchRow()) { 
@@ -165,10 +170,10 @@ class BlogComment extends DatabaseObject {
     
     function countComments($p_cond=array(), $p_checkParent=false)
     {
-        global $Campsite;
+        global $g_ado_db;
         
         $queryStr   = BlogComment::_buildQueryStr($p_cond, $p_checkParent); 
-        $query      = $Campsite['db']->Execute($queryStr); #
+        $query      = $g_ado_db->Execute($queryStr); #
         
         return $query->RecordCount();  
     }

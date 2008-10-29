@@ -4,20 +4,30 @@ $info = array(
     'version' => '0.1',
     'label' => 'Blogs',
     'description' => 'This plugin provides blogs.',
-    /*
     'menu' => array(
         'name' => 'blog',
-        'label' => 'Blogs',
-        'icon' => 'css/blog.png',
-        'permission' => 'plugin_blog',
-        'path' => "blog/index.php",
+        'label' => 'Blog',
+        'icon' => '/css/blog.png',
+        'sub' => array(
+            array(
+                'permission' => 'plugin_blog_admin',
+                'path' => "blog/admin/index.php",
+                'label' => 'Administrate Blogs',
+                'icon' => 'css/blog.png',
+            ),
+            array(
+                'permission' => 'plugin_blog_moderator',
+                'path' => "blog/moderator/index.php",
+                'label' => 'Moderate Blogs',
+                'icon' => 'css/blog.png',
+            ),
+        ),
     ),
-    */
     'userDefaultConfig' => array(
         'plugin_blog' => 'N',
     ),
     'permissions' => array(
-        'plugin_blog' => 'User may manage Blogs',
+        'plugin_blog_admin' => 'User may manage Blogs',
     ),
     'template_engine' => array(
         'objecttypes' => array(

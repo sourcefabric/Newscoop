@@ -40,7 +40,29 @@ final class MetaBlog extends MetaDbObject {
 
         $this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';
+        $this->m_customProperties['language'] = 'getLanguage';
+        $this->m_customProperties['user'] = 'getUser';
+        $this->m_customProperties['entries'] = 'getEntriesCount';
+        
     } // fn __construct
+    
+    public function getLanguage()
+    {
+        $Language = new MetaLanguage($this->m_dbObject->getProperty('fk_language_id'));
+        return $Language;   
+    }
+    
+    public function getUser()
+    {
+        $User = new MetaUser($this->m_dbObject->getProperty('fk_user_id'));
+        return $User;   
+    }
+    
+        
+    public function getEntriesCount()
+    {
+        return $this->entries_online + $this->entries_offline;
+    }
 
 } // class MetaBlog
 

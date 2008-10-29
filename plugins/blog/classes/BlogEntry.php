@@ -54,7 +54,7 @@ class BlogEntry extends DatabaseObject {
 
         if ($this->keyValuesExist()) {
             $this->fetch();
-            $this->m_data['images'] = BlogEntry::_getImagePaths($p_entry_id, true);
+            #$this->m_data['images'] = BlogEntry::_getImagePaths($p_entry_id, true);
 
         } elseif ($p_blog_id) {
             $this->m_data['fk_blog_id'] = $p_blog_id;
@@ -80,8 +80,6 @@ class BlogEntry extends DatabaseObject {
 
     function create($p_blog_id, $p_user_id, $p_title=null, $p_content=null, $p_tags=null, $p_mood=null)
     {
-        global $Campsite;
-
         // Create the record
         $values = array(
         'fk_blog_id'    => $p_blog_id,
@@ -109,14 +107,17 @@ class BlogEntry extends DatabaseObject {
 
     function delete()
     {
+        $entry_id = $this->getProperty('entry_id');
+        $blog_id = $this->getProperty('fk_blog_id');
+        
         foreach (BlogComment::getComments(array('entry_id' => $this->getProperty('entry_id'))) as $Comment) {
             $Comment->delete();
         }
 
         parent::delete();
 
-        BlogEntry::_removeImage($this->getProperty('entry_id'));
-        Blog::triggerCounter($this->getProperty('fk_blog_id'));
+        #BlogEntry::_removeImage($entry_id);
+        Blog::triggerCounter($blog_id);
     }
 
     function getData()
@@ -126,6 +127,12 @@ class BlogEntry extends DatabaseObject {
 
     function _buildQueryStr($p_cond, $p_checkParent)
     {
+        $Blog = new Blog();
+        $blogs_tbl = $Blog->m_dbTableName;
+        
+        $BlogEntry = new BlogEntry();
+        $entries_tbl = $BlogEntry->m_dbTableName;
+        
         if (array_key_exists('fk_blog_id', $p_cond)) {
             $cond .= " AND e.fk_blog_id = {$p_cond['fk_blog_id']}";
         }
@@ -153,9 +160,9 @@ class BlogEntry extends DatabaseObject {
         }
 
         $queryStr = "$select
-                     FROM       mod_blog_entries AS e, 
-                                mod_blog_blogs   AS b
-                     WHERE      e.fk_blog_id = b.fk_blog_id 
+                     FROM       $entries_tbl AS e, 
+                                $blogs_tbl  AS b
+                     WHERE      e.fk_blog_id = b.blog_id 
                                 $cond
                      $groupby
                      ORDER BY   entry_id DESC";
@@ -184,10 +191,10 @@ class BlogEntry extends DatabaseObject {
 
     function getEntries($p_cond=array(), $p_currPage=0, $p_perPage=20, $p_checkParent=false)
     {
-        global $Campsite;
+        global $g_ado_db;
 
         $queryStr   = BlogEntry::_buildQueryStr($p_cond, $p_checkParent);
-        $query      = $Campsite['db']->SelectLimit($queryStr, $p_perPage, ($p_currPage-1) * $p_perPage);
+        $query      = $g_ado_db->SelectLimit($queryStr, $p_perPage, ($p_currPage-1) * $p_perPage);
         $entries    = array();
 
         while ($row = $query->FetchRow()) {
@@ -200,11 +207,11 @@ class BlogEntry extends DatabaseObject {
 
     function countEntries($p_cond=array(), $p_checkParent=false)
     {
-        global $Campsite;
+        global $g_ado_db;
 
         $queryStr = BlogEntry::_buildQueryStr($p_cond, $p_checkParent);
 
-        $query = $Campsite['db']->Execute($queryStr);
+        $query = $g_ado_db->Execute($queryStr);
 
         return $query->RecordCount();
     }
@@ -606,7 +613,7 @@ class BlogEntry extends DatabaseObject {
 
     static function getis_onfrontpageEntry()
     {
-        global $Campsite;
+        global $g_ado_db;
 
         $BlogEntry = new BlogEntry();
         $tblName = $BlogEntry->m_dbTableName;
@@ -615,7 +622,7 @@ class BlogEntry extends DatabaseObject {
                   FROM      `{$tblName}`
                   WHERE     is_onfrontpage = 1
                   LIMIT     0, 1";
-        $res = $Campsite['db']->execute($query);
+        $res = $g_ado_db->execute($query);
 
         if ($row = $res->fetchRow()) {
             $Entry = new BlogEntry($row['entry_id']);

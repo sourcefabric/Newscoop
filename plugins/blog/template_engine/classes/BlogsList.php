@@ -62,22 +62,23 @@ class BlogsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $operator = new Operator('is', 'integer');
-	    $context = CampTemplate::singleton()->context();
-	    $overwritten = false;
-	    
-	    foreach ($this->m_constraints as $ComparisionOperation) {
-	       if ($ComparisionOperation->getLeftOperand() == 'language_id') {
-	           $overwritten = true;
-	           break;   
-	       } 
+	    if (!defined('PLUGIN_BLOG_ADMIN_MODE')) {
+    	    $operator = new Operator('is', 'integer');
+    	    $context = CampTemplate::singleton()->context();
+    	    $overwritten = false;
+    	    
+    	    foreach ($this->m_constraints as $ComparisionOperation) {
+    	       if ($ComparisionOperation->getLeftOperand() == 'language_id') {
+    	           $overwritten = true;
+    	           break;   
+    	       } 
+    	    }
+    	    if (!$overwritten && $context->language->defined) {
+        	    $comparisonOperation = new ComparisonOperation('language_id', $operator,
+    	                                                       $context->language->number);
+                $this->m_constraints[] = $comparisonOperation;
+    	    }
 	    }
-	    if (!$overwritten && $context->language->defined) {
-    	    $comparisonOperation = new ComparisonOperation('language_id', $operator,
-	                                                       $context->language->number);
-            $this->m_constraints[] = $comparisonOperation;
-	    }
-	    
 	    $blogsList = Blog::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
         $metaBlogsList = array();
 	    foreach ($blogsList as $blog) {
