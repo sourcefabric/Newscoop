@@ -66,8 +66,9 @@ $parameters = array(
 define('PLUGIN_INTERVIEW_ADMIN_MODE', true);
 
 $InterviewsList = new InterviewsList($f_start, $parameters);
-$count = $InterviewsList->getTotalCount();
-$pager =& new SimplePager($count, $f_length, "f_start", "index.php?f_order=$f_order&amp;", false);
+$total = $InterviewsList->getTotalCount();
+$count = $InterviewsList->getLength();
+$pager =& new SimplePager($total, $f_length, "f_start", "index.php?f_order=$f_order&amp;", false);
 
 $TotalList = new InterviewsList();
 $total = $TotalList->count;
@@ -313,7 +314,9 @@ if ($InterviewsList->getLength()) {
 					<table cellpadding="0" cellspacing="0">
 					<tr>
 						<td width="18px">
-							<?php if ($count) { ?>
+							<?php if (
+							
+							) { ?>
 							<a href="javascript: 
                             uncheckAll(<?php p($count); ?>);
                             document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
@@ -355,8 +358,8 @@ if ($InterviewsList->getLength()) {
 				<?php } ?>
               
                 <td align="center"><?php putGS($MetaInterview->status); ?></td>
-                <td align="center"><?php putGS($MetaInterview->moderator->name); ?></td>
-                <td align="center"><?php putGS($MetaInterview->guest->name); ?></td>
+                <td align="center"><?php p($MetaInterview->moderator->name); ?></td>
+                <td align="center"><?php p($MetaInterview->guest->name); ?></td>
                 <td align="center"><?php p(substr($MetaInterview->questions_begin, 0, 16)); ?></td>
                 <td align="center"><?php p(substr($MetaInterview->questions_end, 0, 16)); ?></td>
                 <td align="center"><?php p(substr($MetaInterview->interview_begin, 0, 16)); ?></td>
