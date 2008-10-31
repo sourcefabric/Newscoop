@@ -34,16 +34,18 @@ function camp_successful_login($user, $f_login_language)
 	global $ADMIN, $LiveUser, $LiveUserAdmin;
 
 	$user->initLoginKey();
-    $data = array('KeyId' => $user->getKeyId());
-    $permUserId = $LiveUser->_perm->getProperty('perm_user_id');
-    $LiveUserAdmin->updateUser($data, $permUserId);
-    $LiveUser->updateProperty(true, true);
-	LoginAttempts::ClearLoginAttemptsForIp();
-	setcookie("LoginUserId", $user->getUserId());
-	setcookie("LoginUserKey", $user->getKeyId());
-	setcookie("TOL_Language", $f_login_language);
-	Article::UnlockByUser($user->getUserId());
-	camp_html_goto_page("/$ADMIN/index.php");
+	$data = array('KeyId' => $user->getKeyId());
+	if (is_object($LiveUser->_perm)) {
+	  $permUserId = $LiveUser->_perm->getProperty('perm_user_id');
+	  $LiveUserAdmin->updateUser($data, $permUserId);
+	  $LiveUser->updateProperty(true, true);
+	  LoginAttempts::ClearLoginAttemptsForIp();
+	  setcookie("LoginUserId", $user->getUserId());
+	  setcookie("LoginUserKey", $user->getKeyId());
+	  setcookie("TOL_Language", $f_login_language);
+	  Article::UnlockByUser($user->getUserId());
+	  camp_html_goto_page("/$ADMIN/index.php");
+	}
 }
 
 function camp_passwd_decrypt($xorkey, $password)
