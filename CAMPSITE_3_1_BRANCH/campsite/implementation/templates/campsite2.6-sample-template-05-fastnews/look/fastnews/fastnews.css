@@ -1,0 +1,62 @@
+div.rightfloat{ float:right; clear:right; border:0; padding:0; margin:0}
+
+div.topics{ width:150pt; border: solid 2pt #FFBB00; padding:5pt;margin-top:10pt;margin-left:10pt }
+div.userinfo {width:150pt; border:solid 2pt #2233BB; margin-top:10pt; padding:5pt; margin-left:10pt}
+div.printbox {width:150pt; border: solid 2pt #22BB33; margin-top:10pt; padding:5pt; margin-left:10pt}
+
+div.subheads{ width:150pt; border: solid 2pt #BB2233; padding:5pt;margin-top:10pt;margin-left:10pt }
+div.subheads ol{padding-left:1.5em; font-size:small}
+div.subheads ol b{font-weight:normal}
+
+div.nextprev {text-alignment:center}
+hr.endart { clear:both }
+h1 { padding-top:15pt; margin-top:0 }
+
+div.masthead { margin-bottom:0; padding-left:20pt; padding-bottom:0;border-bottom:solid 1pt black }
+
+div.edition {clear:both; border-bottom:solid 1pt black;}
+div.edition div.issue { float:left; width:150pt; }
+div.edition div.date { text-align:right}
+
+p.opt{margin-top:5pt; margin-bottom:5pt}
+
+
+
+body{font-family: verdana, sans-serif}
+
+div.sitemap {float:left;clear:left;padding:0;margin-right:-20pt}
+div.sitemap div.sm1 {width:150pt; border:solid 1pt black; margin-right:20pt; margin-top:10pt; padding:5pt}
+
+div.artlist { border:solid 1pt red; float:left }
+
+table.navart {clear:both; margin-bottom:15pt}
+
+address { margin:0; padding-top:5pt; padding-bottom:10pt }
+
+div.footer {border-top:solid 1pt black;padding-top:10pt; font-size:small}
+
+td.sitemap {width:150pt; border-right: solid 1pt #eeeeee; padding-top:20pt; margin-top:0pt}
+
+table.rsslinks {margin-top:10pt}
+
+table.rsslinks td {font-size:x-small}
+
+div.notallowed { margin-top:15pt; border: solid 2pt #FFDDDD; background-color: #FFF8F8; padding-left:5pt}
+
+.csmain {max-width:42em}
+/*
+	What to do with images and captions?!?
+
+	<table border=0 cellspacing=0 cellpadding=0 align=LEFT>
+		<tr>	
+			<td align="center">
+				<img src="/cgi-bin/get_img?NrArticle=154&NrImage=2" 
+					alt="NUCLEAR POWER USE LARGE COOLING TOWERS TO DISPOSE OF EXCESS HEAT." BORDER=0 HSPACE=5 VSPACE=5>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" class="caption">NUCLEAR POWER USE LARGE COOLING TOWERS TO DISPOSE OF EXCESS HEAT.</td>
+		</tr>
+	</table>
+*/
+td.caption {font-size:small; width: 10pt; background-color:#F4F4F4}

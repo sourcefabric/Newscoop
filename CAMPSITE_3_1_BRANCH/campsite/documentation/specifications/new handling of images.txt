@@ -1,0 +1,113 @@
+NEW HANDLING OF IMAGES
+
+Feature description
+
+Images are currently linked to articles directly, so that for example one
+cannot duplicate a link to an image but make a copy of the image itself; make
+the image manipulation consistent with other multimedia files manipulation.
+1. Images should be uploaded into the file system, not in CAMPSITE DB. This 
+should enable us to allow for audio and video links in CAMPFIRE.
+2. Allow images and other multimedia to reside on another server (by allowing
+for absolute links)
+
+
+Implementation specifications
+
+DATABASE SCRIPTS
+
+-- Step 1: Create ImagesDup table and populate it with data from Images table
+CREATE TABLE `ImagesDup` (
+    `Id` int(10) unsigned NOT NULL auto_increment,
+    `Description` varchar(255) NOT NULL default '',
+    `Photographer` varchar(255) NOT NULL default '',
+    `Place` varchar(255) NOT NULL default '',
+    `Caption` varchar(255) NOT NULL default '',
+    `Date` date NOT NULL default '0000-00-00',
+    `ContentType` varchar(64) NOT NULL default '',
+    `Location` enum('local','remote') NOT NULL default 'local',
+    `URL` varchar(255) NOT NULL default '',
+    `NrArticle` int(10) unsigned NOT NULL default '0',
+    `Number` int(10) unsigned NOT NULL default '0',
+    `Image` mediumblob NOT NULL,
+    PRIMARY KEY (`Id`)
+);
+INSERT INTO ImagesDup (Description, Photographer, Place, Date, ContentType, Location, URL, NrArticle, Number, Image) SELECT Description, Photographer, Place, Date, ContentType, 'local', '', NrArticle, Number, Image FROM Images;
+
+
+-- Step 2: Run the 'transfer_images' script now!!!
+
+
+-- Step 3: Create ArticleImages table and populate it with data from ImagesDup table
+CREATE TABLE `ArticleImages` (
+    `NrArticle` int(10) unsigned NOT NULL default '0',
+    `IdImage` int(10) unsigned NOT NULL default '0',
+    `Number` int(10) unsigned NOT NULL default '0',
+    PRIMARY KEY  (`NrArticle`,`IdImage`),
+    UNIQUE KEY `ArticleImage` (`NrArticle`,`Number`)
+);
+INSERT INTO ArticleImages (NrArticle, IdImage, Number) SELECT NrArticle, Id, Number FROM ImagesDup;
+
+
+-- Step 4: Drop Images table, clean table ImagesDup and rename it to Images
+DROP TABLE Images;
+ALTER TABLE ImagesDup DROP COLUMN Image;
+ALTER TABLE ImagesDup DROP COLUMN Number;
+ALTER TABLE ImagesDup DROP COLUMN NrArticle;
+ALTER TABLE ImagesDup RENAME TO Images;
+
+
+--------------------------------------------------------------------------------
+
+USER INTERFACE of the Image Management Module
+
+Images list screen
+
+List existing images; display the following fields:
+- Description
+- Photographer
+- Place
+- Date
+- Delete
+
+The user should be able to search for keywords in the following fields:
+- description
+- photographer
+- place
+- date
+- all of the above
+
+The user should be able to order the image list by description, photographer,
+place, date.
+
+Clicking on description will take the user to the image edit screen.
+Clicking on delete will:
+- verify if the image is in use (by articles); if yes, display error message
+- if the image was not in use ask for deletion confirmation and delete the image
+
+Image add/edit screen
+
+This screen will display a form containing the following fields:
+- Description
+- Photographer
+- Place
+- Date
+- Image upload field
+- URL text field for remote images
+and buttons:
+- Save
+- Cancel
+
+Image upload field will allow the user to upload a new image. Pressing cancel
+will navigate the user to the list screen.
+
+Pressing Save will save the values:
+- if the Image upload field has a value the image is 'local' (see Location
+field in Images table), URL field will be set to the empty and the image will
+be saved in images directory in the HTML directory (e.g. /var/www/html/images).
+The image name is the image identifier from the Images tables. E.g. if image
+Id is 263 the image file will be: /var/www/html/images/263.
+- if the Image upload field is empty and URL field has a non-empty value set
+the Location to 'remote' and the URL field to the given value
+- if the image is new one of the 'Image upload' and 'URL' fields must be filled
+- if an existing image was edited both 'Image upload' and 'URL' fields may be
+empty; if they were both empty no changes are made to the image file/URL.

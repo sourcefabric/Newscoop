@@ -1,0 +1,16 @@
+#!/bin/sh
+
+NAME="campsite"
+
+case "$1" in
+
+  purge)
+    rm -rf /etc/campsite
+    rm -rf /usr/share/campsite
+    ;;
+
+esac
+
+
+
+exit 0

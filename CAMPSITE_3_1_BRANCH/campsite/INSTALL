@@ -1,0 +1,54 @@
+INSTALLATION PROCEDURE FOR CAMPSITE V.3.1.x
+http://www.campware.org
+
+CONTENTS:
+   * PREPARATION - applications you need to have installed
+   * INSTALLATION - the usual procedure
+   * INSTALLATION of multiple instances
+
+####################################################################
+
+PREPARATION - applications you need to have installed
+  see the manual page at:
+  http://code.campware.org/manuals/campsite/3.1/index.php?id=5
+
+####################################################################
+
+INSTALLATION - the usual procedure
+
+1. Create an apache virtual host or use the default apache virtual
+host. You may skip this step if you wanted to use the apache default
+host (localhost).
+
+Example of virtual host configuration:
+<VirtualHost *>
+    DocumentRoot /var/www/campsite
+    ServerName [site_name]
+    ServerAlias [site_alias]
+    DirectoryIndex index.php index.html
+    <Directory /var/www/campsite>
+            Options -Indexes FollowSymLinks MultiViews
+            AllowOverride All
+            Order allow,deny
+            Allow from all
+    </Directory>
+</VirtualHost>
+
+2. Unzip and Untar the campsite file. This will generate a folder
+named 'campsite'.
+
+3. Open the 'campsite' directory.
+
+4. Copy the content of implementation/site directory into the document
+root directory of the apache virtual host.
+
+5. Start a browser, point it to the http://site_name URL and follow the
+steps.
+
+
+####################################################################
+
+INSTALLATION of multiple instances
+
+Since version 3.0 Campsite doesn't support multiple instances anymore.
+You will have to perform one install for each Campsite instance.

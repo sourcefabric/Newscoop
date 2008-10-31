@@ -1,0 +1,31 @@
+<?php 
+regGS("You must select at least one item to perform an action.", "Вы должны выбрать по меньшей мере один вопрос для выполнения действия");
+regGS("You do not have the right to perform this action.", "У Вас нет прав доступа для выполнения этого действия.");
+regGS("You do not have the right to manage interviews.", "У Вас нет прав доступа для управления процессом интервью.");
+regGS("User name $1 already exists, please choose a different login name.", "Имя пользователя $1 уже существует, выберите другое имя для логина");
+regGS("Status: Published", "Статус: Опубликовано");
+regGS("Status: Pending", "Статус: Ожидающий решения");
+regGS("Status: Offline", "Статус: не в сети");
+regGS("Status: Draft", "Статус: Черновик");
+regGS("Send Invitation", "Послать Приглашение");
+regGS("Questions End", "Конец процедуры задания вопросов");
+regGS("Questions Begin", "Начало процедуры задания вопросов");
+regGS("Questioneer", "Вопросник");
+regGS("Question", "Вопрос");
+regGS("No interviews.", "Нет интервью.");
+regGS("No interview items.", "Нет пунктов интервью.");
+regGS("Moderator", "Модератор");
+regGS("List Items", "Список вопросов");
+regGS("Invite", "Пригласить");
+regGS("Interview: $1", "Интервью: $1");
+regGS("Interview End", "Начало Интервью");
+regGS("Interview Begin", "Конец Интервью");
+regGS("Guest", "Гость");
+regGS("Edit Interview Item", "Редактировать пункт Интервью");
+regGS("Edit Interview", "Редактировать Интервью");
+regGS("Click to edit", "Кликните для редактирования");
+regGS("Click to answer", "Кликните для ответа");
+regGS("Are you sure you want to delete the selected item(s)?", "Вы уверены, что хотите удалить выделенный(е) пункт(ы)?");
+regGS("Answer", "Ответ");
+regGS("Add new Interview", "Добавить новое Интервью");
+?>

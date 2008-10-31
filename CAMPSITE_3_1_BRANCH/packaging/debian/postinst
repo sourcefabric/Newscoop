@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+chmod 750 /var/www/campsite/conf >/dev/null 2>&1 || true
+chmod 750 /var/www/campsite/css >/dev/null 2>&1 || true
+chmod 750 /var/www/campsite/install/cron_jobs >/dev/null 2>&1 || true
+chmod 750 /var/www/campsite/javascript >/dev/null 2>&1 || true
+chmod 750 /var/www/campsite/plugins >/dev/null 2>&1 || true
+chmod 750 /var/www/campsite/templates >/dev/null 2>&1 || true
+chmod 750 /var/www/campsite/templates_c >/dev/null 2>&1 || true
+chmod 640 /var/www/campsite/admin.php >/dev/null 2>&1 || true
+chmod 640 /var/www/campsite/index.php >/dev/null 2>&1 || true
+
+chgrp -R www-data /var/www/campsite >/dev/null 2>&1 || true
+chown www-data.root /var/www/campsite >/dev/null 2>&1 || true
+chown www-data /var/www/campsite/conf >/dev/null 2>&1 || true
+chown www-data /var/www/campsite/css >/dev/null 2>&1 || true
+chown www-data /var/www/campsite/install/cron_jobs >/dev/null 2>&1 || true
+chown www-data /var/www/campsite/javascript >/dev/null 2>&1 || true
+chown www-data /var/www/campsite/plugins >/dev/null 2>&1 || true
+chown www-data /var/www/campsite/templates >/dev/null 2>&1 || true
+chown www-data /var/www/campsite/templates_c >/dev/null 2>&1 || true
+
+chown www-data.www-data /var/www/campsite/admin.php >/dev/null 2>&1 || true
+chown www-data.www-data /var/www/campsite/index.php >/dev/null 2>&1 || true
+
+exit 0
