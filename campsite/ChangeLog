@@ -1,3 +1,30 @@
+3.1.2 (October 31, 2008)
+  Improvements
+  ------------
+  - #2623: Like operator for strings in searching
+  - #2625: Allow accessing of time in published articles
+  - #2634: Make Campsite more friendly to shared hosting
+  - #2637: Allow image resize when displaying article images
+
+  Bugs Fixed
+  ----------
+  - #2310: Username restrictions problem
+  - #2499: Array expected as argument: Fixed since 2.7 release
+  - #2528: Unset include path for PEAR classes
+  - #2530: PEAR error when trying to post a comment
+  - #2551: Syncing Phorum and Campsite users fails in data type validation
+  - #2573: User login error on inconsistent databases
+  - #2593: Update user permissions fails in some specific conditions
+  - #2595: QuickForm PEAR package missed for Interview plugin
+  - #2610: The value of the article custom fields of topic type is not correct
+  - #2621: Unsetting issue in local behaves different than in previous versions
+  - #2622: MetaDateTime class file is not correct, __autoload() fails
+  - #2624: Invalid property remember_user of object login
+  - #2629: Poll plugin fails in form interactions
+  - #2630: Article search is slow on big databases
+  - #2633: Plugin warnings: "Call-time pass-by-reference has been deprecated"
+  - #2636: Crontab overwritted when multiple Campsite instances are installed
+
 3.1.1 (July 29, 2008)
   Small Improvements
   ------------------
