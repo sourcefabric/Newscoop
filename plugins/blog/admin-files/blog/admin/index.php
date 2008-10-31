@@ -75,8 +75,8 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 <?php if ($is_admin) { ?>
     <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
     <TR>
-        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=700, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=700, top=100, left=100');" ><B><?php  putGS("Add new Blog"); ?></B></A></TD>
+        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=600, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=600, top=100, left=100');" ><B><?php  putGS("Add new Blog"); ?></B></A></TD>
     </tr>
     </TABLE>
 <?php } ?>

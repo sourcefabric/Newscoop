@@ -67,12 +67,12 @@ class Blog extends DatabaseObject {
     {
         // Create the record
         $values = array(
-        'fk_user_id'    => $p_user_id,
-        'fk_language_id' => $p_language_id,
-        'title'         => $p_title,
-        'info'          => $p_info,
-        'request_text'  => $p_request_text,
-        'tags'          => $p_tags
+            'fk_user_id'    => $p_user_id,
+            'fk_language_id' => $p_language_id,
+            'title'         => $p_title,
+            'info'          => $p_info,
+            'request_text'  => $p_request_text,
+            'tags'          => $p_tags
         );
 
         $success = parent::create($values);
@@ -110,8 +110,8 @@ class Blog extends DatabaseObject {
         if (array_key_exists('status', $p_cond)) {
             $cond .= " AND status = '{$p_cond['status']}'";
         }
-        if (array_key_exists('Adminstatus', $p_cond)) {
-            $cond .= " AND Adminstatus = '{$p_cond['Adminstatus']}'";
+        if (array_key_exists('admin_status', $p_cond)) {
+            $cond .= " AND admin_status = '{$p_cond['admin_status']}'";
         }
 
         $queryStr = "SELECT     blog_id
@@ -181,167 +181,149 @@ class Blog extends DatabaseObject {
     function _getFormMask($p_owner=false, $p_admin=false)
     {
         $data = $this->getData();
+        
+        foreach (User::GetUsers() as $User) {
+            if (1 || $User->hasPermission('PLUGIN_BLOG_USER')) {
+                $ownerList[$User->getUserId()] = "{$User->getRealName()} ({$User->getUserName()})";
+            }
+        }
+        asort($ownerList);
+        
+        foreach (Language::GetLanguages() as $Language) {
+            $languageList[$Language->getLanguageId()] = $Language->getNativeName();   
+        }
+        asort($languageList);
 
         foreach ($data as $k => $v) {
             // clean user input
             if (!in_array($k, Blog::$m_html_allowed_fields)) {
-                $data[$k] = html_entity_decode_array($v);
+                $data[$k] = camp_html_entity_decode_array($v);
             }
         }
 
         $mask = array(
-        'action'    => array(
-        'element'   => 'action',
-        'type'      => 'hidden',
-        'constant'  => $data['blog_id'] ? 'blog_edit' : 'blog_create'
-        ),
-        'request_text' => array(
-        'element'   => 'Blog[request_text]',
-        'type'      => 'textarea',
-        'label'     => 'Beschreibe bitte kurz worum es in deinem Blog gehen soll',
-        'default'   => $data['request_text'],
-        'required'  => true,
-        'attributes'=> array('cols' => 40, 'rows' => 5)
-        ),
-        'blog_id'    => $data['blog_id'] ? array(
-        'element'   => 'blog_id',
-        'type'      => 'hidden',
-        'constant'  => $data['blog_id'],
-        'required'  => true
-        ) : null,
-        'page'      => $_REQUEST['page'] ? array(
-        'element'   => 'page',
-        'type'      => 'hidden',
-        'constant'  => $_REQUEST['page']
-        ) : null,
-        'tiny_mce'  => array(
-        'element'   => 'tiny_mce',
-        'text'      => '<script language="javascript" type="text/javascript" src="/phpwrapper/tiny_mce/tiny_mce.js"></script>'.
-        '<script language="javascript" type="text/javascript">'.
-        '     tinyMCE.init({'.
-        '     	mode : "exact",'.
-        '        elements : "tiny_mce_box",'.
-        '        theme : "advanced",'.
-        '        plugins : "emotions, paste", '.
-        '        paste_auto_cleanup_on_paste : true, '.
-        '        theme_advanced_buttons1 : "bold, italic, underline, undo, redo, link, emotions", '.
-        '        theme_advanced_buttons2 : "", '.
-        '        theme_advanced_buttons3 : "" '.
-        '     });'.
-        '</script>',
-        'type'      => 'static'
-        ),
-        'title'     => array(
-        'element'   => 'Blog[title]',
-        'type'      => 'text',
-        'label'     => 'Der Titel deines Blogs',
-        'default'   => $data['title'],
-        'required'  => true
-        ),
-        'info'      => array(
-        'element'   => 'Blog[info]',
-        'type'      => 'textarea',
-        'label'     => 'Ein kurzes Intro, das mit dem Titel aufgelistet wird',
-        'default'   => $data['info'],
-        'required'  => true,
-        'attributes'=> array('cols' => 40, 'rows' => 5, 'id' => 'tiny_mce_box')
-        ),
-        /*
-        'tags'      => array(
-        'element'   => 'Blog[tags]',
-        'type'      => 'checkbox_multi',
-        'label'     => 'tags',
-        'default'   => explode(', ', $data['tags']),
-        'options'   => $this->_getTagList()
-        ),
-        */
-        );
-
-        if ($p_owner && $data['blog_id']) {
-            $mask += array(
+            'f_blog_id'    => array(
+                'element'   => 'f_blog_id',
+                'type'      => 'hidden',
+                'constant'  => $data['blog_id']
+            ),
+            'language' => array(
+                    'element'   => 'Blog[fk_language_id]',
+                    'type'      => 'select',
+                    'label'     => 'Language',
+                    'default'   => $data['fk_uder_id'],
+                    'options'   => $languageList,
+            ),   
+            'title'     => array(
+                'element'   => 'Blog[title]',
+                'type'      => 'text',
+                'label'     => 'Title',
+                'default'   => $data['title'],
+                'required'  => true
+            ),
+            'tiny_mce'  => array(
+                'element'   => 'tiny_mce',
+                'text'      => '<script language="javascript" type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>'.
+                '<script language="javascript" type="text/javascript">'.
+                '     tinyMCE.init({'.
+                '     	mode : "exact",'.
+                '        elements : "tiny_mce_box",'.
+                '        theme : "advanced",'.
+                '        plugins : "emotions, paste", '.
+                '        paste_auto_cleanup_on_paste : true, '.
+                '        theme_advanced_buttons1 : "bold, italic, underline, undo, redo, link, emotions", '.
+                '        theme_advanced_buttons2 : "", '.
+                '        theme_advanced_buttons3 : "" '.
+                '     });'.
+                '</script>',
+                'type'      => 'static'
+            ),
+            'info'      => array(
+                'element'   => 'Blog[info]',
+                'type'      => 'textarea',
+                'label'     => 'Info',
+                'default'   => $data['info'],
+                'required'  => true,
+                'attributes'=> array('cols' => 60, 'rows' => 8, 'id' => 'tiny_mce_box')
+            ),
+            'feature'     => array(
+                'element'   => 'Blog[feature]',
+                'type'      => 'text',
+                'label'     => 'Feature',
+                'default'   => $data['feature'],
+            ),
+            'tags'      => array(
+                'element'   => 'Blog[tags]',
+                'type'      => 'checkbox_multi',
+                'label'     => 'Tags',
+                'default'   => explode(', ', $data['tags']),
+                'options'   => $this->_getTagList()
+            ),
             'status' => array(
-            'element'   => 'Blog[status]',
-            'type'      => 'select',
-            'label'     => 'status',
-            'default'   => $data['status'],
-            'options'   => array(
-            'online'        => 'online',
-            'offline'       => 'offline',
-            'moderated'     => 'moderated',
-            'readonly'      => 'read only',
+                'element'   => 'Blog[status]',
+                'type'      => 'select',
+                'label'     => 'Status',
+                'default'   => $data['status'],
+                'required'  => true,
+                'options'   => array(
+                    'online'        => 'online',
+                    'offline'       => 'offline',
+                    'moderated'     => 'moderated',
+                    'readonly'      => 'read only',
+                ),
+                
+           ),
+            'admin_status' => array(
+                'element'   => 'Blog[admin_status]',
+                'type'      => 'select',
+                'label'     => 'Admin Status',
+                'default'   => $data['admin_status'],
+                'required'  => true,
+                'options'   => array(
+                    'pending'       => 'pending',
+                    'online'        => 'online',
+                    'offline'       => 'offline',
+                    'moderated'     => 'moderated',
+                    'readonly'      => 'read only',
+                ),
             ),
-            'required'  => true
-            )
-            );
-        }
-
-        if ($p_admin) {
-            $mask += array(
-            'Adminstatus' => array(
-            'element'   => 'Blog[Adminstatus]',
-            'type'      => 'select',
-            'label'     => 'Admin status',
-            'default'   => $data['Adminstatus'],
-            'options'   => array(
-            'pending'       => 'pending',
-            'online'        => 'online',
-            'offline'       => 'offline',
-            'moderated'     => 'moderated',
-            'readonly'      => 'read only',
-
-            ),
-            'required'  => true
-            ),
+            'owner' => array(
+                    'element'   => 'Blog[fk_user_id]',
+                    'type'      => 'select',
+                    'label'     => 'Owner',
+                    'default'   => $data['fk_user_id'],
+                    'options'   => $ownerList,
+            ),        
             'admin_remark'      => array(
-            'element'   => 'Blog[admin_remark]',
-            'type'      => 'textarea',
-            'label'     => 'Anmerkung',
-            'default'   => $data['admin_remark'],
-            'attributes'=> array('cols' => 40, 'rows' => 5)
+                'element'   => 'Blog[admin_remark]',
+                'type'      => 'textarea',
+                'label'     => 'Admin Remark',
+                'default'   => $data['admin_remark'],
+                'attributes'=> array('cols' => 60, 'rows' => 8)
             ),
-            );
-        };
-
-        $mask += array(
-        /*
-        $p_admin ? null : 'captcha_image' => array(
-        'element'       => 'captcha_image',
-        'type'          => 'image',
-        'src'           => '/look/img/captcha/0f60a7c97b199d88d028c8f483e.jpg',
-        'attributes'    => array('onclick' => 'return false')
-        ),
-        $p_admin ? null : 'captcha'       => array(
-        'element'       => 'captcha',
-        'type'          => 'text',
-        'label'         => 'Code:',
-        'required'      => true,
-        'requiredmsg'   => 'Bitte die Zeichenfolge auf dem Bild in das darunterliegende Feld eingeben.',
-        'attributes'    => array('class' => 'verschicken'),
-        ),
-        */
-        'reset'     => array(
-        'element'   => 'reset',
-        'type'      => 'reset',
-        'label'     => 'Zurücksetzen',
-        'groupit'   => true
-        ),
-        'xsubmit'     => array(
-        'element'   => 'xsubmit',
-        'type'      => 'button',
-        'label'     => 'Abschicken',
-        'attributes'=> array('onclick' => 'this.form.submit()'),
-        'groupit'   => true
-        ),
-        'cancel'     => array(
-        'element'   => 'cancel',
-        'type'      => 'button',
-        'label'     => 'Cancel',
-        'attributes' => array('onClick' => 'history.back()'),
-        'groupit'   => true
-        ),
-        'buttons'   => array(
-        'group'     => array('xsubmit', 'reset')
-        )
+            'reset'     => array(
+                'element'   => 'reset',
+                'type'      => 'reset',
+                'label'     => 'Reset',
+                'groupit'   => true
+            ),
+            'xsubmit'     => array(
+                'element'   => 'xsubmit',
+                'type'      => 'button',
+                'label'     => 'Submit',
+                'attributes'=> array('onclick' => 'if (this.form.onsubmit()) this.form.submit()'),
+                'groupit'   => true
+            ),
+            'cancel'     => array(
+                'element'   => 'cancel',
+                'type'      => 'button',
+                'label'     => 'Cancel',
+                'attributes' => array('onClick' => 'window.close()'),
+                'groupit'   => true
+            ),
+            'buttons'   => array(
+                'group'     => array('cancel', 'reset', 'xsubmit')
+            )
         );
 
         return $mask;
@@ -350,7 +332,6 @@ class Blog extends DatabaseObject {
     function getForm($p_target, $p_add_hidden_vars=array(), $p_owner=false, $p_admin=false, $p_html=false)
     {
         require_once 'HTML/QuickForm.php';
-        require_once $_SERVER['DOCUMENT_ROOT'].'/phpwrapper/functions.php';
 
         $mask = $this->_getFormMask($p_owner, $p_admin);
         #mergePostParams(&$mask);
@@ -364,7 +345,7 @@ class Blog extends DatabaseObject {
         }
 
         $form =& new html_QuickForm('blog', 'post', $p_target, null, null, true);
-        parseArr2Form(&$form, &$mask);
+        FormProcessor::parseArr2Form($form, $mask);
 
         if ($p_html) {
             return $form->toHTML();
@@ -381,13 +362,12 @@ class Blog extends DatabaseObject {
     function store($p_admin=false, $p_user_id=null)
     {
         require_once 'HTML/QuickForm.php';
-        require_once $_SERVER['DOCUMENT_ROOT'].'/phpwrapper/functions.php';
 
         $mask = $this->_getFormMask($p_admin);
         #mergePostParams(&$mask);
 
         $form =& new html_QuickForm('blog', 'post', '', null, null, true);
-        parseArr2Form(&$form, &$mask);
+        FormProcessor::parseArr2Form($form, $mask);
 
         if ($form->validate()){
             $data = $form->getSubmitValues();
@@ -397,11 +377,11 @@ class Blog extends DatabaseObject {
                 if (in_array($k, Blog::$m_html_allowed_fields)) {
                     $data['Blog'][$k] = strip_tags($v, Blog::$m_html_allowed_tags);
                 } else {
-                    $data['Blog'][$k] = htmlspecialchars($v);
+                    $data['Blog'][$k] = htmlspecialchars_array($v);
                 }
             }
 
-            if ($data['blog_id']) {
+            if ($data['f_blog_id']) {
                 foreach ($data['Blog'] as $k => $v) {
                     if (is_array($v)) {
                         foreach($v as $key => $value) {
@@ -427,9 +407,15 @@ class Blog extends DatabaseObject {
                     }
                     $tags = substr($string, 0, -2);
                 }
-                if ($this->create($p_user_id, $data['Blog']['title'], $data['Blog']['info'], $data['Blog']['request_text'], $tags)) {
-                    if ($p_owner && $data['Blog']['status'])        $this->setProperty('status',   $data['Blog']['status']);
-                    if ($p_admin && $data['Blog']['Adminstatus'])   $this->setProperty('Adminstatus',   $data['Blog']['Adminstatus']);
+                if ($this->create(  $p_user_id, 
+                                    $data['Blog']['fk_language_id'],
+                                    $data['Blog']['title'], 
+                                    $data['Blog']['info'], 
+                                    $data['Blog']['request_text'], 
+                                    $tags)
+                                  ) {
+                    if ($p_owner && $data['Blog']['status'])         $this->setProperty('status',   $data['Blog']['status']);
+                    if ($p_admin && $data['Blog']['admin_status'])   $this->setProperty('admin_status',   $data['Blog']['admin_status']);
                     if ($p_admin && $data['Blog']['admin_remark'])   $this->setProperty('admin_remark',   $data['Blog']['admin_remark']);
 
                     return true;

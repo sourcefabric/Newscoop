@@ -47,6 +47,15 @@ $info = array(
         'path' => '/plugins/blog/admin-files/blog/',
         'screen_name' => 'Blogs'
     ),
+    'no_menu_scripts' => array(
+    	'/blog/admin/edit.php',
+    	'/blog/admin/edit_item.php',
+    	'/blog/moderator/edit.php',
+    	'/blog/moderator/edit_item.php',
+    	'/blog/guest/edit.php',
+    	'/blog/guest/edit_item.php',
+    	'/blog/admin/invitation.php'
+    ),
     'install' => 'plugin_blog_install',
     'enable' => 'plugin_blog_install',
     'update' => '',
