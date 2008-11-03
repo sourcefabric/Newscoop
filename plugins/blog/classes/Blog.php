@@ -32,7 +32,8 @@ class Blog extends DatabaseObject {
         'request_text',
         'entries_online',
         'entries_offline',
-        'feature'
+        'feature',
+        'last_modified'
     );
 
     static $m_html_allowed_fields = array('info');

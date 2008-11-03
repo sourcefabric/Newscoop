@@ -31,7 +31,8 @@ class BlogComment extends DatabaseObject {
         'content',
         'mood',
         'admin_status',
-        'feature'
+        'feature',
+        'last_modified'
     );
     
     static $m_html_allowed_fields = array('content');

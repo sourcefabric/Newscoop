@@ -32,7 +32,8 @@ class BlogEntry extends DatabaseObject {
         'admin_status',
         'comments_online',
         'comments_offline',
-        'feature'
+        'feature',
+        'last_modified'
     );
 
     static $m_html_allowed_fields = array('content');

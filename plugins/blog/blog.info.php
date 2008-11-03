@@ -70,7 +70,8 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
     {
         global $LiveUserAdmin, $g_documentRoot;
         
-        $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_blog', 'has_implied' => 1));  
+        $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_blog_admin', 'has_implied' => 1));
+        $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_blog_moderator', 'has_implied' => 1)); 
         
         require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
@@ -84,7 +85,7 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
     {
         global $LiveUserAdmin, $g_documentRoot, $g_ado_db;
         
-        foreach (array('plugin_blog') as $right_def_name) {
+        foreach (array('plugin_blog_admin', 'plugin_blog_moderator') as $right_def_name) {
             $filter = array(
                 "fields" => array("right_id"),
                 "filters" => array("right_define_name" => $right_def_name)
@@ -99,7 +100,7 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
         $g_ado_db->execute('DROP TABLE plugin_blog_entry');
         $g_ado_db->execute('DROP TABLE plugin_blog_comment');        
         
-        system('rm -rf '.$g_documentRoot.DIR_SEP.PLUGINS_DIR.DIR_SEP.'blog');    
+        system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'blog');    
     }
     
     function plugin_blog_init(&$p_context)
@@ -140,6 +141,18 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
             $p_context->url->reset_parameter($v);
             $p_context->default_url->reset_parameter($v);   
         }
+    }
+       
+    function plugin_interview_addPermissions()
+    {
+        $Admin = new UserType(1);
+        $ChiefEditor = new UserType(2);
+        $Editor = new UserType(3);
+        
+        $Admin->setPermission('plugin_blog_admin', true);
+        $Admin->setPermission('plugin_blog_moderator', true);
+        
+        $ChiefEditor->setPermission('plugin_blog_moderator', true);
     }
 }
 ?>
