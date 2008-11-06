@@ -7,19 +7,19 @@ $info = array(
     'menu' => array(
         'name' => 'blog',
         'label' => 'Blog',
-        'icon' => '/css/blog.png',
+        'icon' => '/css/kedit.png',
         'sub' => array(
             array(
                 'permission' => 'plugin_blog_admin',
                 'path' => "blog/admin/index.php",
                 'label' => 'Administrate Blogs',
-                'icon' => 'css/blog.png',
+                'icon' => 'css/configure.png',
             ),
             array(
                 'permission' => 'plugin_blog_moderator',
                 'path' => "blog/moderator/index.php",
                 'label' => 'Moderate Blogs',
-                'icon' => 'css/blog.png',
+                'icon' => 'css/format_increaseindent.png',
             ),
         ),
     ),
@@ -28,6 +28,7 @@ $info = array(
     ),
     'permissions' => array(
         'plugin_blog_admin' => 'User may manage Blogs',
+        'plugin_blog_moderator' => 'User may moderate Blogs',
     ),
     'template_engine' => array(
         'objecttypes' => array(
@@ -116,26 +117,30 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
         
         foreach (array('f_blog', 
                        'f_blog_action',
+                       'f_blogaction',
                        
                        'f_blog_id', 
                        'f_blog_title',
                        'f_blog_info',
                        'f_blog_request_text',
-                       'f_blog_action',
+                       'f_blog_status',
                        'f_blogentry_action',
                        'f_blogcomment_action',
                        
+                       'f_blogentry',
                        'f_blogentry_id',
                        'f_blogentry_title',
                        'f_blogentry_content',
                        'f_blogentry_mood',
                        
+                       'f_blogcomment',
                        'f_blogcomment_id',
                        'f_blogcomment_title',
                        'f_blogcomment_content',
                        'f_blogcomment_mood',
                        'f_preview_blogcomment',
-                       'f_submit_blogcomment'
+                       'f_submit_blogcomment',
+                       'f_captcha_code'
                    ) as $v) {
                        
             $p_context->url->reset_parameter($v);
@@ -143,7 +148,7 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
         }
     }
        
-    function plugin_interview_addPermissions()
+    function plugin_blog_addPermissions()
     {
         $Admin = new UserType(1);
         $ChiefEditor = new UserType(2);

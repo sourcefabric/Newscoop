@@ -228,7 +228,7 @@ class Blog extends DatabaseObject {
                 '<script language="javascript" type="text/javascript">'.
                 '     tinyMCE.init({'.
                 '     	mode : "exact",'.
-                '        elements : "tiny_mce_box",'.
+                '        elements : "tiny_mce_box_dectivated",'.
                 '        theme : "advanced",'.
                 '        plugins : "emotions, paste", '.
                 '        paste_auto_cleanup_on_paste : true, '.

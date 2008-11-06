@@ -39,6 +39,10 @@ class MetaActionBlog extends MetaAction
             $this->m_properties['request_text'] = $p_input['f_blog_request_text'];
         }
         
+        if (isset($p_input['f_blog_status'])) {
+            $this->m_properties['status'] = $p_input['f_blog_status'];
+        }
+        
         $this->m_blog = new Blog($p_input['f_blog_id']);
     }
 
@@ -59,10 +63,9 @@ class MetaActionBlog extends MetaAction
         if ($this->m_blog->exists()) {
             
             // to edit existing blog, check privileges
-            if ($this->m_blog->getProperty('fk_user_id') != $p_context->user->identifier) {
-                if (!$p_context->user->has_property('plugin_blog_moderator')) {
-                    $this->m_error = new PEAR_Error('You are not allowed to edit this blog.', ACTION_BLOG_ERR_NO_PERMISSION);      
-                } 
+            if ($this->m_blog->getProperty('fk_user_id') != $p_context->user->identifier && !$p_context->user->has_property('plugin_blog_moderator')) {
+                $this->m_error = new PEAR_Error('You are not allowed to edit this blog.', ACTION_BLOG_ERR_NO_PERMISSION);      
+                return false;
             }
                 
             if (isset($this->m_properties['title']) && !strlen($this->m_properties['title'])) {
@@ -85,6 +88,10 @@ class MetaActionBlog extends MetaAction
             
             if (isset($this->m_properties['request_text'])) {
                 $this->m_blog->setProperty('request_text', $this->m_properties['request_text']);
+            }
+                    
+            if (isset($this->m_properties['status'])) {
+                $this->m_blog->setProperty('status', $this->m_properties['status']);
             }
             
             $this->m_error = ACTION_OK;

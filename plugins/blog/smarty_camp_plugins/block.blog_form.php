@@ -31,7 +31,7 @@ function smarty_block_blog_form($p_params, $p_content, &$p_smarty, &$p_repeat)
         return getGS('Only registered users are allowed to blog.');
     }
     
-    if (($campsite->blog->user_id != $campsite->user->identifier) && !$campsite->user->has_permission('plugin_blog')) {
+    if ($campsite->blog->defined && ($campsite->blog->user_id != $campsite->user->identifier) && !$campsite->user->has_permission('plugin_blog')) {
         // owner or blog superuser
         return getGS('You are not allowed to edit this blog.');
     }

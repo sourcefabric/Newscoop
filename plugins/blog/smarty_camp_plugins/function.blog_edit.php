@@ -64,7 +64,23 @@ function smarty_function_blog_edit($p_params, &$p_smarty)
        
         case 'request_text':
             $value = htmlspecialchars(isset($_REQUEST['f_blog_request_text']) ? Input::Get('f_blog_request_text') : $campsite->blog->request_text);
-            $html .= "<textarea name=\"f_blog_request_text\"  {$p_params['html_code']} />{$value}</textarea>";         break; 
+            $html .= "<textarea name=\"f_blog_request_text\"  {$p_params['html_code']}>{$value}</textarea>";
+        break;
+        
+        case 'status':
+            $value = isset($_REQUEST['f_blog_status']) ? Input::Get('f_blog_status') : $campsite->blog->status;           
+            $html .= "<select name=\"f_blog_status\"  {$p_params['html_code']}>";
+            
+            foreach (array('online', 'offline', 'moderated') as $status) {
+                if ($value == $status) {
+                    $selected = 'selected="selected"';   
+                } else {
+                    $selected = '';   
+                }
+                $html .= "<option value=\"$status\" $selected {$p_params['html_code']}>$status</option>";   
+            }
+            $html .= "</select>"; 
+        break;  
     }
 
     return $html;
