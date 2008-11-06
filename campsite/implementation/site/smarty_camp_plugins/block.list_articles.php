@@ -33,7 +33,9 @@ function smarty_block_list_articles($p_params, $p_content, &$p_smarty, &$p_repea
         $start = $campContext->next_list_start('ArticlesList');
         $articlesList = new ArticlesList($start, $p_params);
         if ($articlesList->isEmpty()) {
-            $p_repeat = false;
+            $campContext->setCurrentList($articlesList, array());
+            $campContext->resetCurrentList();
+        	$p_repeat = false;
             return null;
         }
     	$campContext->setCurrentList($articlesList, array('publication', 'language',

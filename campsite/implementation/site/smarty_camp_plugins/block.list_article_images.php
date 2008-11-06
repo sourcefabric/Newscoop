@@ -33,7 +33,9 @@ function smarty_block_list_article_images($p_params, $p_content, &$p_smarty, &$p
         $start = $campContext->next_list_start('ArticleImagesList');
         $articleImagesList = new ArticleImagesList($start, $p_params);
         if ($articleImagesList->isEmpty()) {
-            $p_repeat = false;
+            $campContext->setCurrentList($articleImagesList, array());
+            $campContext->resetCurrentList();
+        	$p_repeat = false;
             return null;
         }
     	$campContext->setCurrentList($articleImagesList, array('image'));

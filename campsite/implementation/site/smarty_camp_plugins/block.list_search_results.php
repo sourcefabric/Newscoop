@@ -46,7 +46,9 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
         
         $searchResultsList = new SearchResultsList($start, $p_params);
         if ($searchResultsList->isEmpty()) {
-            $p_repeat = false;
+        	$campContext->setCurrentList($searchResultsList, array());
+            $campContext->resetCurrentList();
+        	$p_repeat = false;
             return null;
         }
 

@@ -33,7 +33,9 @@ function smarty_block_list_sections($p_params, $p_content, &$p_smarty, &$p_repea
         $start = $campContext->next_list_start('SectionsList');
     	$sectionsList = new SectionsList($start, $p_params);
     	if ($sectionsList->isEmpty()) {
-    	    $p_repeat = false;
+            $campContext->setCurrentList($sectionsList, array());
+            $campContext->resetCurrentList();
+    		$p_repeat = false;
     	    return null;
     	}
     	$campContext->setCurrentList($sectionsList, array('publication', 'language',

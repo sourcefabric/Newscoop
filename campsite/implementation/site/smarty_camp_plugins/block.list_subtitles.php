@@ -34,7 +34,9 @@ function smarty_block_list_subtitles($p_params, $p_content, &$p_smarty, &$p_repe
         $start = $campContext->next_list_start('SubtitlesList');
         $subtitlesList = new SubtitlesList($start, $p_params);
         if ($subtitlesList->isEmpty()) {
-            $p_repeat = false;
+            $campContext->setCurrentList($subtitlesList, array());
+            $campContext->resetCurrentList();
+        	$p_repeat = false;
             return null;
         }
         $campContext->setCurrentList($subtitlesList, array('subtitle'));

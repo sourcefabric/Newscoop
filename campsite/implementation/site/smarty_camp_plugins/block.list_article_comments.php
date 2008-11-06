@@ -34,7 +34,9 @@ function smarty_block_list_article_comments($p_params, $p_content, &$p_smarty, &
         $start = $campContext->next_list_start('ArticleCommentsList');
         $articleCommentsList = new ArticleCommentsList($start, $p_params);
         if ($articleCommentsList->isEmpty()) {
-            $p_repeat = false;
+            $campContext->setCurrentList($articleCommentsList, array());
+            $campContext->resetCurrentList();
+        	$p_repeat = false;
             return null;
         }
         $campContext->setCurrentList($articleCommentsList, array('comment'));
