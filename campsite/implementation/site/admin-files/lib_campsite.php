@@ -500,4 +500,60 @@ function camp_get_plugin_path($p_plugin_name, $p_source_fullpath)
     
     else return false; 
 }
+
+function get($p_input)
+{
+    return $p_input;   
+}
+
+
+/**
+ * Decode an structured array
+ *
+ * @param array $input
+ * @return array
+ */
+function camp_html_entity_decode_array($p_input, $p_decode_keys=false)
+{
+    if ($p_decode_keys) {
+        $function = 'html_entity_decode';    
+    } else {
+        $function = 'get';   
+    }
+    
+    if (is_array($p_input)) {
+        foreach ($p_input as $key=>$val) { 
+            if (is_array($val)) {
+                $arr[$function($key)] = html_entity_decode_array($val, $p_decode_keys);
+            } else {
+                $arr[$function($key)] = $function($val);
+            }            
+        }
+        return $arr;
+    } else {
+        return html_entity_decode($p_input);
+    }
+}
+
+function htmlspecialchars_array($p_input, $p_decode_keys=false)
+{
+    if ($p_decode_keys) {
+        $function = 'html_specialchars';    
+    } else {
+        $function = 'get'; 
+    }
+    
+    if (is_array($p_input)) {
+        foreach ($p_input as $key=>$val) { 
+            if (is_array($val)) {
+                $arr[$function($key)] = html_entity_decode_array($val, $p_decode_keys);
+            } else {
+                $arr[$function($key)] = $function($val);
+            }            
+        }
+        return $arr;
+    } else {
+        return html_entity_decode($p_input);
+    }
+}
 ?>

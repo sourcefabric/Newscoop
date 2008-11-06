@@ -286,7 +286,7 @@ class CampPlugin extends DatabaseObject {
                         if ($g_user->hasPermission($menu_info['permission'])) {
                             $menu_item =& DynMenuItem::Create(getGS($menu_info['label']),
                             is_null($menu_info['path']) ? null : "/$ADMIN/".$menu_info['path'],
-                            array("icon" => sprintf($p_iconTemplateStr, '..'.DIR_SEP.$Plugin->getBasePath().DIR_SEP.$info['menu']['icon'])));
+                            array("icon" => sprintf($p_iconTemplateStr, '..'.DIR_SEP.$Plugin->getBasePath().DIR_SEP.$menu_info['icon'])));
                             $menu_plugin->addItem($menu_item);
                         }
                     }
