@@ -284,7 +284,8 @@ class ArticlesList extends ListObject
                 case 'ignore_issue':
                 case 'ignore_section':
                 case 'ignore_language':
-                    $parameters[$parameter] = strtolower($value) == 'true';
+                    settype($value, 'boolean');
+                    $parameters[$parameter] = $value;
                     break;
     		    default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_articles", $p_smarty);
