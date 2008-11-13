@@ -72,14 +72,17 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 
-<?php if ($is_admin) { ?>
-    <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
-    <TR>
-        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=600, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-        <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=600, top=100, left=100');" ><B><?php  putGS("Add new Blog"); ?></B></A></TD>
-    </tr>
-    </TABLE>
-<?php } ?>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
+<TR>
+    <TD><A HREF="list_entries.php" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/go_to.png" BORDER="0"></A></TD>
+    <TD><A HREF="list_entries.php" ><B><?php  putGS("List Entries"); ?></B></A></TD>    
+    <?php if ($is_admin) { ?>
+            <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=600, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+            <TD><A HREF="javascript: void(0);" onclick="window.open('edit.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=600, top=100, left=100');" ><B><?php  putGS("Add new Blog"); ?></B></A></TD>
+    <?php } ?>
+
+</tr>
+</TABLE>
 
 <p>
 
@@ -312,7 +315,7 @@ if ($BlogsList->getLength()) {
                 <td align="center"><?php p($MetaBlog->feature); ?></td>
               
                 <td align='center'>
-                    <a href='list_items.php?f_blog_id=<?php p($MetaBlog->identifier); ?>'>
+                    <a href='list_entries.php?f_blog_id=<?php p($MetaBlog->identifier); ?>'>
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
                     </a>
                 </td>
