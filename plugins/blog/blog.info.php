@@ -11,13 +11,13 @@ $info = array(
         'sub' => array(
             array(
                 'permission' => 'plugin_blog_admin',
-                'path' => "blog/admin/index.php",
+                'path' => "blog/admin/list_blogs.php",
                 'label' => 'Administrate Blogs',
                 'icon' => 'css/configure.png',
             ),
             array(
                 'permission' => 'plugin_blog_moderator',
-                'path' => "blog/moderator/index.php",
+                'path' => "blog/moderator/list_blogs.php",
                 'label' => 'Moderate Blogs',
                 'icon' => 'css/format_increaseindent.png',
             ),
@@ -49,13 +49,12 @@ $info = array(
         'screen_name' => 'Blogs'
     ),
     'no_menu_scripts' => array(
-    	'/blog/admin/edit.php',
-    	'/blog/admin/edit_item.php',
-    	'/blog/moderator/edit.php',
-    	'/blog/moderator/edit_item.php',
-    	'/blog/guest/edit.php',
-    	'/blog/guest/edit_item.php',
-    	'/blog/admin/invitation.php'
+    	'/blog/admin/blog_form.php',
+    	'/blog/admin/entry_form.php',
+    	'/blog/admin/comment_form.php',
+    	'/blog/moderator/blog_form.php',
+    	'/blog/moderator/entry_form.php',
+    	'/blog/moderator/comment_form.php',
     ),
     'install' => 'plugin_blog_install',
     'enable' => 'plugin_blog_install',

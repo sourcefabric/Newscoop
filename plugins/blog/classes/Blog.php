@@ -89,7 +89,7 @@ class Blog extends DatabaseObject {
 
     function delete()
     {
-        foreach (BlogEntry::getEntries(array('blog_id' => $this->getProperty('blog_id'))) as $Entry) {
+        foreach (BlogEntry::getEntries(array('fk_blog_id' => $this->getProperty('blog_id'))) as $Entry) {
             $Entry->delete();
         }
 
@@ -99,6 +99,12 @@ class Blog extends DatabaseObject {
     function getData()
     {
         return $this->m_data;
+    }
+    
+        
+    function getSubject()
+    {
+        return $this->getProperty('title');   
     }
 
     function _buildQueryStr($p_cond)
@@ -212,7 +218,7 @@ class Blog extends DatabaseObject {
                     'element'   => 'Blog[fk_language_id]',
                     'type'      => 'select',
                     'label'     => 'Language',
-                    'default'   => $data['fk_uder_id'],
+                    'default'   => $data['fk_language_id'],
                     'options'   => $languageList,
             ),   
             'title'     => array(
@@ -228,7 +234,7 @@ class Blog extends DatabaseObject {
                 '<script language="javascript" type="text/javascript">'.
                 '     tinyMCE.init({'.
                 '     	mode : "exact",'.
-                '        elements : "tiny_mce_box_dectivated",'.
+                '        elements : "tiny_mce_box",'.
                 '        theme : "advanced",'.
                 '        plugins : "emotions, paste", '.
                 '        paste_auto_cleanup_on_paste : true, '.
@@ -312,7 +318,7 @@ class Blog extends DatabaseObject {
                 'element'   => 'xsubmit',
                 'type'      => 'button',
                 'label'     => 'Submit',
-                'attributes'=> array('onclick' => 'if (this.form.onsubmit()) this.form.submit()'),
+                'attributes'=> array('onclick' => 'tinyMCE.triggerSave(); if (this.form.onsubmit()) this.form.submit()'),
                 'groupit'   => true
             ),
             'cancel'     => array(
@@ -330,20 +336,11 @@ class Blog extends DatabaseObject {
         return $mask;
     }
 
-    function getForm($p_target, $p_add_hidden_vars=array(), $p_owner=false, $p_admin=false, $p_html=false)
+    function getForm($p_target, $p_admin, $p_html=true)
     {
         require_once 'HTML/QuickForm.php';
 
         $mask = $this->_getFormMask($p_owner, $p_admin);
-        #mergePostParams(&$mask);
-
-        foreach ($p_add_hidden_vars as $k => $v) {
-            $mask[] = array(
-            'element'   => $k,
-            'type'      => 'hidden',
-            'constant'  => $v
-            );
-        }
 
         $form =& new html_QuickForm('blog', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
@@ -360,7 +357,7 @@ class Blog extends DatabaseObject {
         }
     }
 
-    function store($p_admin=false, $p_user_id=null)
+    function store($p_admin, $p_user_id=null)
     {
         require_once 'HTML/QuickForm.php';
 
@@ -441,6 +438,13 @@ class Blog extends DatabaseObject {
     public function getId()
     {
         return $this->getProperty('blog_id');   
+    }
+    
+    
+    static function getLanguageId($p_blog_id)
+    {
+        $tmpBlog =& new Blog($p_blog_id);
+        return $tmpBlog->getProperty('fk_language_id');
     }
     
     
@@ -573,6 +577,6 @@ class Blog extends DatabaseObject {
             $order['blog_id'] = 'asc';
         }
         return $order;
-    }
+    } // fn ProcessListOrder
 }
 ?>

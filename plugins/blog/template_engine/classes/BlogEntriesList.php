@@ -13,6 +13,7 @@ class BlogEntriesList extends ListObject
 {   
     public static $s_parameters = array('identifier' => array('field' => 'entry_id', 'type' => 'integer'),
                                         'blog_id' => array('field' => 'fk_blog_id', 'type' => 'integer'),
+                                        'language_id' => array('field' => 'fk_language_id', 'type' => 'integer'),
                                         'user_id' => array('field' => 'fk_user_id', 'type' => 'integer'),
                                         'published' => array('field' => 'published', 'type' => 'datetime'),
                                         'published_year' => array('field' => 'YEAR(published)', 'type' => 'integer'),
@@ -73,15 +74,16 @@ class BlogEntriesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $operator = new Operator('is', 'integer');
-	    $context = CampTemplate::singleton()->context();
-	        
-	    if ($context->blog->defined) {
-    	    $comparisonOperation = new ComparisonOperation('blog_id', $operator,
-	                                                       $context->blog->identifier);
-            $this->m_constraints[] = $comparisonOperation;
+	    if (!defined('PLUGIN_BLOG_ADMIN_MODE')) {
+    	    $operator = new Operator('is', 'integer');
+    	    $context = CampTemplate::singleton()->context();
+    	        
+    	    if ($context->blog->defined) {
+        	    $comparisonOperation = new ComparisonOperation('blog_id', $operator,
+    	                                                       $context->blog->identifier);
+                $this->m_constraints[] = $comparisonOperation;
+    	    }
 	    }
-	    
 	    $blogEntriesList = BlogEntry::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
         $metaBlogEntriesList = array();
 	    foreach ($blogEntriesList as $blogEntry) {

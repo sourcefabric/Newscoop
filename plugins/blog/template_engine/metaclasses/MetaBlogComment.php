@@ -19,6 +19,7 @@ final class MetaBlogComment extends MetaDbObject {
         $this->m_properties['identifier'] = 'comment_id';
         $this->m_properties['entry_id'] = 'fk_entry_id';
         $this->m_properties['blog_id'] = 'fk_blog_id';
+        $this->m_properties['language_id'] = 'fk_language_id';
         $this->m_properties['user_id'] = 'fk_user_id';
         $this->m_properties['user_name'] = 'user_name';
         $this->m_properties['user_email'] = 'user_email';
@@ -39,8 +40,37 @@ final class MetaBlogComment extends MetaDbObject {
 
         $this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';
+        $this->m_customProperties['blog'] = 'getBlog';
+        $this->m_customProperties['entry'] = 'getEntry';
+        $this->m_customProperties['language'] = 'getLanguage';
+        $this->m_customProperties['user'] = 'getUser';
     } // fn __construct
 
-} // class MetaBlog
+        
+    public function getBlog()
+    {
+        $MetaBlog = new MetaBlog($this->fk_blog_id);
+        return $MetaBlog;   
+    }
+
+    public function getEntry()
+    {
+        $MetaBlogEntry = new MetaBlogEntry($this->fk_entry_id);
+        return $MetaBlogEntry;   
+    }
+
+    public function getLanguage()
+    {
+        $MetaLanguage = new MetaLanguage($this->language_id);
+        return $MetaLanguage;   
+    }
+    
+    public function getUser()
+    {
+        $MetaUser = new MetaUser($this->user_id);
+        return $MetaUser;   
+    }
+    
+} // class MetaBlogComment
 
 ?>

@@ -22,6 +22,7 @@ class BlogComment extends DatabaseObject {
         'comment_id',
         'fk_entry_id',
         'fk_blog_id',
+        'fk_language_id',
         'fk_user_id',
         'user_name',
         'user_email',
@@ -81,9 +82,11 @@ class BlogComment extends DatabaseObject {
 		// Create the record
 		$values = array(
 		  'fk_entry_id'   => $p_entry_id,
+		  'fk_blog_id'    => BlogEntry::getBlogId($p_entry_id),
+		  'fk_language_id'=> BlogEntry::getLanguageId($p_entry_id),
 		  'fk_user_id'    => $p_user_id,
-		  'user_name'   => $p_poster_name,
-		  'user_email'  => $p_poster_email,
+		  'user_name'     => $p_poster_name,
+		  'user_email'    => $p_poster_email,
 		  'title'         => $p_title,
 		  'content'       => $p_content,
 		  'mood'          => $p_mood, 
@@ -180,12 +183,30 @@ class BlogComment extends DatabaseObject {
     }
     
         
-    function getEntryId($p_comment_id)
+    static function getEntryId($p_comment_id)
     {
         $tmpComment =& new BlogComment($p_comment_id);
         return $tmpComment->getProperty('fk_entry_id');           
     }
-    
+
+    function getBlog()
+    {
+        $Blog = new Blog($this->getProperty('fk_blog_id'));
+        return $Blog;   
+    }
+   
+    function getEntry()
+    {
+        $Entry = new $Entry($this->getProperty('fk_entry_id'));
+        return $Entry;   
+    }
+       
+    static function getBlogId($p_comment_id)
+    {
+        $tmpComment =& new BlogComment($p_comment_id);
+        return $tmpComment->getProperty('fk_blog_id');           
+    }
+
     function _getFormMask($p_admin=false, $p_owner=false)
     {
         $data = $this->getData();
@@ -193,36 +214,24 @@ class BlogComment extends DatabaseObject {
         foreach ($data as $k => $v) {
             // clean user input
             if (!in_array($k, BlogComment::$m_html_allowed_fields)) { 
-                $data[$k] = html_entity_decode_array($v);
+                $data[$k] = camp_html_entity_decode_array($v);
             }
         }
         
         $mask = array(
-            'action'    => array(
-                'element'   => 'action',
+            'f_comment_id' => array(
+                'element'   => 'f_comment_id',
                 'type'      => 'hidden',
-                'constant'  => $data['comment_id'] ? 'comment_edit' : 'comment_create'
+                'constant'  => $data['comment_id'],          
+            ),            
+            'f_entry_id' => array(
+                'element'   => 'f_entry_id',
+                'type'      => 'hidden',
+                'constant'  => $data['fk_entry_id'],         
             ),
-            'comment_id'    => $data['comment_id'] ? array(
-                'element'   => 'comment_id',
-                'type'      => 'hidden',
-                'constant'  => $data['comment_id'],
-                'required'  => true           
-            ) : null,            
-            'fk_entry_id'    => $data['fk_entry_id'] ? array(
-                'element'   => 'fk_entry_id',
-                'type'      => 'hidden',
-                'constant'  => $data['fk_entry_id'],
-                'required'  => true           
-            ) : null,
-            'page'      => $_REQUEST['page'] ? array(
-                'element'   => 'page',
-                'type'      => 'hidden',
-                'constant'  => $_REQUEST['page']
-            ) : null,
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
-                'text'      => '<script language="javascript" type="text/javascript" src="/phpwrapper/tiny_mce/tiny_mce.js"></script>'.
+                'text'      => '<script language="javascript" type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>'.
                                '<script language="javascript" type="text/javascript">'.
                                '     tinyMCE.init({'.
                                '     	mode : "exact",'.
@@ -244,119 +253,91 @@ class BlogComment extends DatabaseObject {
                 'default'   => $data['title'],
                 'required'  => true            
             ),
+            'user_name'     => array(
+                'element'   => 'BlogComment[user_name]',
+                'type'      => 'text',
+                'label'     => 'Poster Name',
+                'default'   => $data['user_name']           
+            ),
+            'user_email'     => array(
+                'element'   => 'BlogComment[user_email]',
+                'type'      => 'text',
+                'label'     => 'EMail',
+                'default'   => $data['user_email']           
+            ),
             'content'      => array(
                 'element'   => 'BlogComment[content]',
                 'type'      => 'textarea',
                 'label'     => 'Kommentar',
                 'default'   => $data['content'],
                 'required'  => true,
-                'attributes'=> array('cols' => 40, 'rows' => 5, 'id' => 'tiny_mce_box')            
-            ),  
-            /*          
+                'attributes'=> array('cols' => 60, 'rows' => 8, 'id' => 'tiny_mce_box')            
+            ),       
             'mood'      => array(
                 'element'   => 'BlogComment[mood]',
                 'type'      => 'checkbox_multi',
                 'label'     => 'mood',
                 'default'   => explode(', ', $data['mood']),
                 'options'   => $this->_getmoodList()      
-            )
-            */
-        );
-        
-        if ($p_owner && $data['comment_id']) {
-            $mask += array(            
-                'status' => array(
-                    'element'   => 'BlogComment[status]',
-                    'type'      => 'select',
-                    'label'     => 'status',
-                    'default'   => $data['status'],
-                    'options'   => array(
-                                    'online'    => 'online',
-                                    'offline'   => 'offline'
-                                   ),
-                    'required'  => true            
-                )
-            );
-        };
-        
-        if ($p_admin) {
-            $mask += array(            
-                'admin_status' => array(
-                    'element'   => 'BlogComment[admin_status]',
-                    'type'      => 'select',
-                    'label'     => 'Admin status',
-                    'default'   => $data['admin_status'],
-                    'options'   => array(
-                                    'online'    => 'online',
-                                    'offline'   => 'offline',
-                                   ),
-                    'required'  => true            
-                )
-            );
-        };
-        
-        $mask += array(
-            /*
-            $p_admin ? null : 'captcha_image' => array(
-                'element'       => 'captcha_image',
-                'type'          => 'image',
-                'src'           => '/look/img/captcha/0f60a7c97b199d88d028c8f483e.jpg',
-                'attributes'    => array('onclick' => 'return false')
+            ),         
+            'status' => array(
+                'element'   => 'BlogComment[status]',
+                'type'      => 'select',
+                'label'     => 'status',
+                'default'   => $data['status'],
+                'options'   => array(
+                                'online'    => 'online',
+                                'offline'   => 'offline'
+                               ),
+                'required'  => true            
+            ),          
+            'admin_status' => array(
+                'element'   => 'BlogComment[admin_status]',
+                'type'      => 'select',
+                'label'     => 'Admin status',
+                'default'   => $data['admin_status'],
+                'options'   => array(
+                                'online'    => 'online',
+                                'offline'   => 'offline',
+                               ),
+                'required'  => true            
             ),
-            $p_admin ? null : 'captcha'       => array(
-                'element'       => 'captcha',
-                'type'          => 'text',
-                'label'         => 'Code:',
-                'required'      => true,
-                'requiredmsg'   => 'Bitte die Zeichenfolge auf dem Bild in das darunterliegende Feld eingeben.',
-                'attributes'    => array('class' => 'verschicken'),
-            ),
-            */
             'reset'     => array(
                 'element'   => 'reset',
                 'type'      => 'reset',
-                'label'     => 'Zurücksetzen',
+                'label'     => 'Reset',
                 'groupit'   => true
             ),
             'xsubmit'     => array(
                 'element'   => 'xsubmit',
                 'type'      => 'button',
-                'label'     => 'Abschicken',
-                'attributes'=> array('onclick' => 'this.form.submit()'),
+                'label'     => 'Submit',
+                'attributes'=> array('onclick' => 'tinyMCE.triggerSave(); if (this.form.onsubmit()) this.form.submit()'),
                 'groupit'   => true
-            ), 
+            ),
             'cancel'     => array(
                 'element'   => 'cancel',
                 'type'      => 'button',
                 'label'     => 'Cancel',
-                'attributes' => array('onClick' => 'history.back()'),
+                'attributes' => array('onClick' => 'window.close()'),
                 'groupit'   => true
             ),
             'buttons'   => array(
-                'group'     => array('xsubmit', 'reset')
-            )       
+                'group'     => array('cancel', 'reset', 'xsubmit')
+            )      
         );
         
         return $mask;   
     }
     
-    function getForm($p_target, $p_add_hidden_vars=array(), $p_admin=false, $p_owner=false, $p_html=false)
+    function getForm($p_target, $p_admin=true, $p_html=true)
     {
         require_once 'HTML/QuickForm.php';
-        require_once $_SERVER['DOCUMENT_ROOT'].'/phpwrapper/functions.php';
               
         $mask = $this->_getFormMask($p_admin, $p_owner);
-
-        foreach ($p_add_hidden_vars as $k => $v) {       
-            $mask[] = array(
-                'element'   => $k,
-                'type'      => 'hidden',
-                'constant'  => $v
-            );   
-        } 
         
         $form =& new html_QuickForm('blog_comment', 'post', $p_target, null, null, true);
-        parseArr2Form(&$form, &$mask); 
+        FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($p_html) {
             return $form->toHTML();    
@@ -370,16 +351,14 @@ class BlogComment extends DatabaseObject {
         } 
     }
     
-    function store($p_admin=false, $p_owner=false, $p_user_id)
+    function store($p_admin, $p_user_id=null)
     {
         require_once 'HTML/QuickForm.php';
-        require_once $_SERVER['DOCUMENT_ROOT'].'/phpwrapper/functions.php';
               
         $mask = $this->_getFormMask($p_admin, $p_owner);
-        #mergePostParams(&$mask);
       
         $form =& new html_QuickForm('blog_comment', 'post', '', null, null, true); 
-        parseArr2Form(&$form, &$mask); 
+        FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($form->validate()) {
             $data = $form->getSubmitValues();
@@ -389,11 +368,11 @@ class BlogComment extends DatabaseObject {
                 if (in_array($k, BlogComment::$m_html_allowed_fields)) { 
                     $data['BlogComment'][$k] = strip_tags($v, Blog::$m_html_allowed_tags);
                 } else {
-                    $data['BlogComment'][$k] = htmlspecialchars($v);
+                    $data['BlogComment'][$k] = htmlspecialchars_array($v);
                 }
             }
             
-            if ($data['comment_id']) {
+            if ($data['f_comment_id']) {
                 foreach ($data['BlogComment'] as $k => $v) {
                     if (is_array($v)) {
                         foreach($v as $key => $value) {
@@ -420,9 +399,17 @@ class BlogComment extends DatabaseObject {
                     }
                     $mood = substr($string, 0, -2);
                 }
-                if ($this->create($data['fk_entry_id'], $p_user_id, $data['BlogComment']['title'], $data['BlogComment']['content'], $mood)) {
+                if ($this->create(  $data['f_entry_id'], 
+                                    $p_user_id, 
+                                    $data['BlogComment']['user_name'], 
+                                    $data['BlogComment']['user_email'], 
+                                    $data['BlogComment']['title'], 
+                                    $data['BlogComment']['content'], 
+                                    $mood)) {
+                                        
                     if ($p_owner && $data['BlogComment']['status'])         $this->setProperty('status', $data['BlogComment']['status']);
-                    if ($p_admin && $data['BlogComment']['admin_status'])    $this->setProperty('admin_status', $data['BlogComment']['admin_status']);
+                    if ($p_admin && $data['BlogComment']['admin_status'])   $this->setProperty('admin_status', $data['BlogComment']['admin_status']);
+                    
                     BlogEntry::triggerCounter($this->getProperty('fk_entry_id'));  
                       
                     return true;    

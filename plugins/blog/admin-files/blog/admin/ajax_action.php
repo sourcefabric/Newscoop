@@ -11,9 +11,6 @@ function camp_blog_permission_check($p_action)
     if (strpos($call_script, '/blog/moderator/') !== false && $g_user->hasPermission('plugin_blog_moderator')) {
         $is_moderator = true;   
     }
-    if (strpos($call_script, '/blog/guest/') !== false && $g_user->hasPermission('plugin_blog_guest')) {
-        $is_guest = true;   
-    }
     
     switch ($p_action) {    
         case 'blogs_delete':
@@ -22,46 +19,46 @@ function camp_blog_permission_check($p_action)
             }
         break;
         
-        case 'items_delete':
+        case 'entries_delete':
             if ($is_admin || $is_moderator) {
                 return true;    
             }
         break;
         
-        case 'blogs_setdraft':
-        case 'blogs_setpending':
-        case 'blogs_setpublished':
-        case 'blogs_setrejected':
+        case 'comments_delete':
+            if ($is_admin || $is_moderator) {
+                return true;    
+            }
+        break;
+       
+        case 'blogs_set_online':
+        case 'blogs_set_offline':
+        case 'blogs_set_moderated':
+        case 'blogs_set_readonly':
+        case 'blogs_set_pending':
             if ($is_admin) {
                 return true;    
             }
         break;
         
-        case 'items_setdraft':
-        case 'items_setpending':
-        case 'items_setpublished':
-        case 'items_setrejected':
+        case 'entries_set_online':
+        case 'entries_set_offline':
+        case 'entries_set_pending':
             if ($is_admin || $is_moderator) {
                 return true;    
             }
         break;
         
-        case 'item_move_up_rel':
-        case 'item_move_down_rel':
-        case 'item_move_abs':
+        case 'comments_set_online':
+        case 'comments_set_offline':
+        case 'comments_set_pending':
             if ($is_admin || $is_moderator) {
                 return true;    
             }
-        return false;
+        break;
         
-        case 'blog_move_up_rel':
-        case 'blog_move_down_rel':
-        case 'blog_move_abs':
-            if ($is_admin || $is_moderator) {
-                return true;    
-            }
-        return false;
-    }  
+    } 
+    return false; 
 }
 
 $f_action = Input::Get('f_action', 'string');
@@ -81,85 +78,63 @@ switch ($f_action) {
         }
     break;
     
-    case 'items_delete':
-        $f_items = Input::Get('f_items', 'array');
+    case 'entries_delete':
+        $f_entries = Input::Get('f_entries', 'array');
         
-        foreach ($f_items as $item_id) {
-            $BlogItem = new BlogItem(null, $item_id);
-            $BlogItem->delete();   
+        foreach ($f_entries as $entry_id) {
+            $BlogEntry = new BlogEntry($entry_id);
+            $BlogEntry->delete();   
         }
     break;
+
+        
+    case 'comments_delete':
+        $f_comments = Input::Get('f_comments', 'array');
+        
+        foreach ($f_comments as $comment_id) {
+            $BlogComment = new BlogComment($comment_id);
+            $BlogComment->delete();   
+        }
+    break;
+
     
-    case 'blogs_setdraft':
-    case 'blogs_setpending':
-    case 'blogs_setpublished':
-    case 'blogs_setrejected':
+    case 'blogs_set_online':
+    case 'blogs_set_offline':
+    case 'blogs_set_moderated':
+    case 'blogs_set_readonly':
+    case 'blogs_set_pending':
         $f_blogs = Input::Get('f_blogs', 'array');
-        $status = substr($f_action, 14);
+        $status = substr($f_action, 10);
         
         foreach ($f_blogs as $blog_id) {
             $Blog = new Blog($blog_id);
-            $Blog->setProperty('status', $status);   
+            $Blog->setProperty('admin_status', $status);   
         }
     break;
     
-    case 'items_setdraft':
-    case 'items_setpending':
-    case 'items_setpublished':
-    case 'items_setrejected':
-        $f_items = Input::Get('f_items', 'array');
-        $status = substr($f_action, 9);
+   
+    case 'entries_set_online':
+    case 'entries_set_offline':
+    case 'entries_set_pending':
+        $f_entries = Input::Get('f_entries', 'array');
+        $status = substr($f_action, 12);
         
-        foreach ($f_items as $item_id) {
-            $BlogItem = new BlogItem(null, $item_id);
-            $BlogItem->setProperty('status', $status);   
+        foreach ($f_entries as $entry_id) {
+            $BlogEntry = new BlogEntry($entry_id);
+            $BlogEntry->setProperty('admin_status', $status);   
         }
     break;
-    
-    case 'item_move_up_rel':
-    case 'item_move_down_rel':
-        $f_items = Input::Get('f_items', 'array');
-        list(,,$dir,) = explode('_', $f_action);
-       
-        foreach ($f_items as $item_id) {
-            $BlogItem = new BlogItem(null, $item_id);
-            $BlogItem->positionRelative($dir);   
-        }
+
+    case 'comments_set_online':
+    case 'comments_set_offline':
+    case 'comments_set_pending':
+        $f_comments = Input::Get('f_comments', 'array');
+        $status = substr($f_action, 13);
         
-    break;
-    
-    case 'item_move_abs':
-        $f_items = Input::Get('f_items', 'array');
-        $f_new_pos = Input::Get('f_new_pos', 'int');
-       
-        foreach ($f_items as $item_id) {
-            $BlogItem = new BlogItem(null, $item_id);
-            $BlogItem->positionAbsolute($f_new_pos);   
+        foreach ($f_comments as $comment_id) {
+            $BlogComment = new BlogComment($comment_id);
+            $BlogComment->setProperty('admin_status', $status);   
         }
-        
-    break;
-    
-    case 'blog_move_up_rel':
-    case 'blog_move_down_rel':
-        $f_blogs = Input::Get('f_blogs', 'array');
-        list(,,$dir,) = explode('_', $f_action);
-       
-        foreach ($f_blogs as $blog_id) {
-            $Blog = new Blog($blog_id);
-            $Blog->positionRelative($dir);   
-        }
-        
-    break;
-    
-    case 'blog_move_abs':
-        $f_blogs = Input::Get('f_blogs', 'array');
-        $f_new_pos = Input::Get('f_new_pos', 'int');
-       
-        foreach ($f_blogs as $blog_id) {
-            $Blog = new Blog($blog_id);
-            $Blog->positionAbsolute($f_new_pos);   
-        }
-        
     break;
 }
 

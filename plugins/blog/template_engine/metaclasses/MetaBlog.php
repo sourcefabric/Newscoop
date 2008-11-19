@@ -48,17 +48,16 @@ final class MetaBlog extends MetaDbObject {
     
     public function getLanguage()
     {
-        $Language = new MetaLanguage($this->m_dbObject->getProperty('fk_language_id'));
-        return $Language;   
+        $MetaLanguage = new MetaLanguage($this->language_id);
+        return $MetaLanguage;   
     }
     
     public function getUser()
     {
-        $User = new MetaUser($this->m_dbObject->getProperty('fk_user_id'));
-        return $User;   
+        $MetaUser = new MetaUser($this->user_id);
+        return $MetaUser;   
     }
-    
-        
+            
     public function getEntriesCount()
     {
         return $this->entries_online + $this->entries_offline;

@@ -8,7 +8,7 @@ function ajax_action(action)
             "/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php",
             { 
                 method: 'get',
-                parameters: Form.serialize($('blogs_list')),
+                parameters: Form.serialize($('entries_list')),
                 onComplete: do_reload
             }
         );      
@@ -63,11 +63,15 @@ $parameters = array(
 );
 
 define('PLUGIN_BLOG_ADMIN_MODE', true);
+$self = basename(__FILE__);
+$self_params = $self.'?';
+if ($f_blog_id) $self_params .= "f_blog_id=$f_blog_id&amp;";
+if ($f_start)   $self_params .= "f_start=$f_start&amp;";
 
 $BlogEntriesList = new BlogEntriesList($f_start, $parameters);
 $total = $BlogEntriesList->getTotalCount();
 $count = $BlogEntriesList->getLength();
-$pager =& new SimplePager($total, $f_length, "f_start", "index.php?f_order=$f_order&amp;", false);
+$pager =& new SimplePager($total, $f_length, "f_start", "$self?f_order=$f_order&amp;", false);
 
 $TotalList = new BlogEntriesList();
 $total = $TotalList->count;
@@ -78,12 +82,22 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
   <TR>
-    <TD><A HREF="list_blogs.php" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-    <TD><A HREF="list_blogs.php" ><B><?php  putGS("List Blogs"); ?></B></A></TD>
-    <?php if ($is_admin) { ?>
-        <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('eentry_form.php', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=600, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-        <TD><A HREF="javascript: void(0);" onclick="window.open('entry_form.php', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=600, top=100, left=100');" ><B><?php  putGS("Add new Entry"); ?></B></A></TD>
-    <?php } ?>
+    <TD><A HREF="list_blogs.php" ><B><?php  putGS("Blogs"); ?></B></A></TD>
+
+    
+    <?php if ($f_blog_id) { 
+        $Blog = new Blog($f_blog_id);
+        ?>
+       <TD> >> <B><?php p($Blog->getSubject()) ?></B></TD>
+    <?php } else { ?> 
+        <TD> >> <B><?php putGS("All Entrys"); ?></B></TD>
+    <?php } ?> 
+    
+    <?php if ($f_blog_id && $is_admin) { ?>
+        <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=450, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+        <TD><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=450, top=100, left=100');" ><B><?php  putGS("Add new Entry"); ?></B></A></TD>
+    <?php } ?>  
+    
   </tr>
 </TABLE>
 
@@ -130,9 +144,29 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                         <SELECT NAME="f_status" class="input_select" onchange="this.form.submit()">
                         <option value="0"><?php putGS("All"); ?></option>
                         <?php
-                        foreach (array('draft', 'pending', 'published', 'rejected') as $item) {
+                        foreach (array('online', 'offline') as $item) {
                             echo '<OPTION value="'.$item.'"' ;
                             if ($item == $f_status) {
+                                echo " selected";
+                            }
+                            echo '>'.getGS($item).'</option>';
+                        } ?>
+                        </SELECT>
+                    </TD>
+                </TR>
+                </TABLE>
+            </TD>
+            <TD ALIGN="left">
+                <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" >
+                <TR>
+                    <TD><?php  putGS('Admin Status'); ?>:</TD>
+                    <TD valign="middle">
+                        <SELECT NAME="f_admin_status" class="input_select" onchange="this.form.submit()">
+                        <option value="0"><?php putGS("All"); ?></option>
+                        <?php
+                        foreach (array('pending', 'online', 'offline') as $item) {
+                            echo '<OPTION value="'.$item.'"' ;
+                            if ($item == $f_admin_status) {
                                 echo " selected";
                             }
                             echo '>'.getGS($item).'</option>';
@@ -149,7 +183,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                 function action_selected(dropdownElement)
                 {
                     // Verify that at least one checkbox has been selected.
-                    checkboxes = document.forms.blogs_list["f_blogs[]"];
+                    checkboxes = document.forms.entries_list["f_entries[]"];
                     if (checkboxes) {
                         isValid = false;
                         numCheckboxesChecked = 0;
@@ -183,7 +217,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                     deleteOptionIndex = -1;
 
                     for (var index = 0; index < dropdownElement.options.length; index++) {
-                        if (dropdownElement.options[index].value == "blogs_delete") {
+                        if (dropdownElement.options[index].value == "entries_delete") {
                             deleteOptionIndex = index;
                         }
                     }
@@ -206,11 +240,10 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
                 
                 <SELECT name="f_action" class="input_select" onchange="action_selected(this);">
                     <OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
-                    <OPTION value="blogs_delete"><?php putGS("Delete"); ?></OPTION>
-                    <OPTION value="blogs_setdraft"><?php putGS("Status: Draft"); ?></OPTION>
-                    <OPTION value="blogs_setpending"><?php putGS("Status: Pending"); ?></OPTION>
-                    <OPTION value="blogs_setpublished"><?php putGS("Status: Published"); ?></OPTION>
-                    <OPTION value="blogs_setrejected"><?php putGS("Status: Offline"); ?></OPTION>
+                    <OPTION value="entries_delete"><?php putGS("Delete"); ?></OPTION>
+                    <OPTION value="entries_set_online"><?php putGS("Admin Status: Online"); ?></OPTION>
+                    <OPTION value="entries_set_offline"><?php putGS("Admin Status: Offline"); ?></OPTION>
+                    <OPTION value="entries_set_pending"><?php putGS("Admin Status: Pending"); ?></OPTION>                   
                 </SELECT>
               </TD>
         
@@ -233,7 +266,7 @@ $color= 0;
 
 if ($BlogEntriesList->getLength()) {
     ?>
-    <FORM name="blogs_list" id="blogs_list" action="action.php" method="POST">
+    <FORM name="entries_list" id="entries_list" action="action.php" method="POST">
     <input type="hidden" name="f_action" id="f_action" />
     <input type="hidden" name="f_new_pos" id="f_new_pos" />
     
@@ -245,32 +278,33 @@ if ($BlogEntriesList->getLength()) {
             <?php } ?>
             
             <TD ALIGN="LEFT" VALIGN="TOP" width="500">
-                <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=byname"><?php  putGS("Title"); ?></a>
+                <A href="<?php p($self_params) ?>f_order=byname"><?php  putGS("Title"); ?></a>
                 &nbsp;<SMALL>
                 <?php if ($is_admin) putGS('Click to edit'); ?>
                 </SMALL>
+            </TD>           
+            <TD align="center" valign="top" width="60">
+                <A href="<?php p($self_params) ?>f_order=byuser_id"><?php  putGS("User"); ?></a>
             </TD>
-                        
-            <TD align="center" valign="top"><?php putGS("Poster"); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP" width="60">
+                <A href="<?php p($self_params) ?>f_order=bystatus"><?php  putGS("Status"); ?></a>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="60">
+                <A href="<?php p($self_params) ?>f_order=byadmin_status"><?php  putGS("Admin Status"); ?></a>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="60">
+                <A href="<?php p($self_params) ?>f_order=bypublished"><?php  putGS("Published"); ?></a>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="60">
+                <A href="<?php p($self_params) ?>f_order=bycomments"><?php  putGS("Comments"); ?></a>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="60">
+                <A href="<?php p($self_params) ?>f_order=byfeature"><?php  putGS("Feature"); ?></a>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="60">
+                <A href="<?php p($self_params) ?>f_order=byblog_begin"><?php  putGS("List Comments"); ?></a>
+            </TD>
             
-            <TD ALIGN="center" VALIGN="TOP" width="30">
-                <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=bystatus"><?php  putGS("Status"); ?></a>
-            </TD>
-            <TD ALIGN="center" VALIGN="TOP" width="30">
-                <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=bymoderator"><?php  putGS("Admin Status"); ?></a>
-            </TD>
-            <TD ALIGN="center" VALIGN="TOP" width="30">
-                <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=byguest"><?php  putGS("Published"); ?></a>
-            </TD>
-            <TD ALIGN="center" VALIGN="TOP" width="30">
-                <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=byquestions_begin"><?php  putGS("Comments"); ?></a>
-            </TD>
-            <TD ALIGN="center" VALIGN="TOP" width="30">
-                <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=byblog_begin"><?php  putGS("Feature"); ?></a>
-            </TD>
-            <TD ALIGN="center" VALIGN="TOP" width="30">
-                <A href="index.php?f_start=<?php echo $f_start ?>&amp;f_order=byblog_begin"><?php  putGS("List Comments"); ?></a>
-            </TD>
             <?php if($is_admin) { ?>
                 <TD width="10">&nbsp;</TD>
             <?php } ?>
@@ -292,7 +326,7 @@ if ($BlogEntriesList->getLength()) {
                 
                 <?php if($is_admin) { ?>
                     <TD>
-                        <input type="checkbox" value="<?php p((int)$MetaBlogEntry->identifier); ?>" name="f_blogs[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
+                        <input type="checkbox" value="<?php p((int)$MetaBlogEntry->identifier); ?>" name="f_entries[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
                     </TD>
                 <?php } ?>
                 
@@ -301,7 +335,7 @@ if ($BlogEntriesList->getLength()) {
                     p($MetaBlogEntry->identifier.'.'); 
                     
                     if ($is_admin) {
-                        ?><a href="javascript: void(0);" onclick="window.open('edit.php?f_blog_id=<?php p($MetaBlogEntry->identifier); ?>', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=700, top=100, left=100');"><?php p($MetaBlogEntry->title); ?></a><?php
+                        ?><a href="javascript: void(0);" onclick="window.open('entry_form.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=450, top=100, left=100');"><?php p($MetaBlogEntry->title); ?></a><?php
                     } else {
                         p($MetaBlogEntry->title);
                     }
@@ -317,7 +351,7 @@ if ($BlogEntriesList->getLength()) {
                 <td align="center"><?php p($MetaBlogEntry->feature); ?></td>
               
                 <td align='center'>
-                    <a href='list_items.php?f_blog_id=<?php p($MetaBlogEntry->identifier); ?>'>
+                    <a href='list_comments.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>'>
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
                     </a>
                 </td>
@@ -327,7 +361,7 @@ if ($BlogEntriesList->getLength()) {
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {
                             uncheckAll(<?php p($count); ?>);
                             document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
-                            ajax_action('blogs_delete') 
+                            ajax_action('entries_delete') 
                             }">
                             <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">
                         </a>

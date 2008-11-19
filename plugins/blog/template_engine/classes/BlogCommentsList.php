@@ -14,12 +14,14 @@ class BlogCommentsList extends ListObject
     public static $s_parameters = array('identifier' => array('field' => 'comment_id', 'type' => 'integer'),
                                         'entry_id' => array('field' => 'fk_entry_id', 'type' => 'integer'),
                                         'blog_id' => array('field' => 'fk_blog_id', 'type' => 'integer'),
+                                        'language_id' => array('field' => 'fk_language_id', 'type' => 'integer'),
                                         'user_id' => array('field' => 'fk_user_id', 'type' => 'integer'),
                                         'published' => array('field' => 'published', 'type' => 'datetime'),
                                         'published_year' => array('field' => 'YEAR(published)', 'type' => 'integer'),
                                         'published_month' => array('field' => 'MONTH(published)', 'type' => 'integer'),
                                         'published_mday' => array('field' => 'DAYOFMONTH(published)', 'type' => 'integer'),
                                         'published_wday' => array('field' => 'DAYOFWEEK(published)', 'type' => 'integer'),
+                                        'name' => array('field' => 'title', 'type' => 'string'),
                                         'title' => array('field' => 'title', 'type' => 'string'),
                                         'content' => array('field' => 'content', 'type' => 'string'),
                                         'mood' => array('field' => 'mood', 'type' => 'string'),
@@ -30,14 +32,15 @@ class BlogCommentsList extends ListObject
                                    
     private static $s_orderFields = array(
                                       'byidentifier',
-                                      'entry_id',
-                                      'blog_id',
-                                      'user_id',
+                                      'byentry_id',
+                                      'byblog_id',
+                                      'byuser_id',
                                       'bypublished',
                                       'bypublished_year',
                                       'bypublished_month',
                                       'bypublished_mday',
                                       'bypublished_wday',
+                                      'byname',
                                       'bytitle',
                                       'bycontent',
                                       'bymood',
@@ -59,17 +62,19 @@ class BlogCommentsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $operator = new Operator('is', 'integer');
-	    $context = CampTemplate::singleton()->context();
-	    
-	    if ($context->blogentry->defined) {
-    	    $comparisonOperation = new ComparisonOperation('entry_id', $operator, $context->blogentry->identifier);
-            $this->m_constraints[] = $comparisonOperation;
-	    } elseif ($context->blog->defined) {
-    	    $comparisonOperation = new ComparisonOperation('blog_id', $operator, $context->blog->identifier);
-            $this->m_constraints[] = $comparisonOperation;
+	    if (!defined('PLUGIN_BLOG_ADMIN_MODE')) {
+    	    $operator = new Operator('is', 'integer');
+    	    $context = CampTemplate::singleton()->context();
+    	    
+    	    if ($context->blogentry->defined) {
+        	    $comparisonOperation = new ComparisonOperation('entry_id', $operator, $context->blogentry->identifier);
+                $this->m_constraints[] = $comparisonOperation;
+    	    } elseif ($context->blog->defined) {
+        	    $comparisonOperation = new ComparisonOperation('blog_id', $operator, $context->blog->identifier);
+                $this->m_constraints[] = $comparisonOperation;
+    	    }
 	    }
-
+	    
 	    $BlogCommentsList = BlogComment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
         $metaBlogCommentsList = array();
 	    foreach ($BlogCommentsList as $blogComment) {
