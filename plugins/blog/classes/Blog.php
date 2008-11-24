@@ -32,6 +32,8 @@ class Blog extends DatabaseObject {
         'request_text',
         'entries_online',
         'entries_offline',
+        'comments_online',
+        'comments_offline',
         'feature',
         'last_modified'
     );
@@ -162,7 +164,7 @@ class Blog extends DatabaseObject {
         return $BlogEntry->getEntrys();
     }
 
-    function triggerCounter($p_blog_id)
+    static function TriggerCounters($p_blog_id)
     {
         global $g_ado_db;
         
@@ -176,11 +178,19 @@ class Blog extends DatabaseObject {
                      SET    entries_online = 
                         (SELECT COUNT(entry_id) 
                          FROM   $entries_tbl
-                         WHERE  fk_blog_id = $p_blog_id AND status = 'online' AND admin_status = 'online'),
+                         WHERE  fk_blog_id = $p_blog_id AND (status = 'online' AND admin_status = 'online')),
                             entries_offline = 
                         (SELECT COUNT(entry_id) 
                          FROM   $entries_tbl
-                         WHERE  fk_blog_id = $p_blog_id AND (status != 'online' OR admin_status != 'online'))
+                         WHERE  fk_blog_id = $p_blog_id AND (status != 'online' OR admin_status != 'online')),
+                            comments_online =
+                        (SELECT SUM(comments_online) 
+                         FROM   $entries_tbl
+                         WHERE  fk_blog_id = $p_blog_id),
+                            comments_offline = 
+                        (SELECT SUM(comments_offline) 
+                         FROM   $entries_tbl
+                         WHERE  fk_blog_id = $p_blog_id)
                      WHERE  blog_id = $p_blog_id";  
         $g_ado_db->Execute($queryStr);
     }

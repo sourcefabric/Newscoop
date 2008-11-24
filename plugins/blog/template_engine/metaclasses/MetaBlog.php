@@ -30,6 +30,8 @@ final class MetaBlog extends MetaDbObject {
         $this->m_properties['admin_status'] = 'admin_status';
         $this->m_properties['entries_online'] = 'entries_online';
         $this->m_properties['entries_offline'] = 'entries_offline';
+        $this->m_properties['comments_online'] = 'comments_online';
+        $this->m_properties['comments_offline'] = 'comments_offline';
         $this->m_properties['feature'] = 'feature';
     }
 
@@ -43,6 +45,7 @@ final class MetaBlog extends MetaDbObject {
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['user'] = 'getUser';
         $this->m_customProperties['entries'] = 'getEntriesCount';
+        $this->m_customProperties['captcha_enabled'] = 'getCaptchaEnabled';
         
     } // fn __construct
     
@@ -62,7 +65,16 @@ final class MetaBlog extends MetaDbObject {
     {
         return $this->entries_online + $this->entries_offline;
     }
-
+            
+    public function getCommentsCount()
+    {
+        return $this->comments_online + $this->comments_offline;
+    }
+    
+    public function getCaptchaEnabled()
+    {
+        return 0;
+    }
 } // class MetaBlog
 
 ?>

@@ -13,13 +13,19 @@ $info = array(
                 'permission' => 'plugin_blog_admin',
                 'path' => "blog/admin/list_blogs.php",
                 'label' => 'Administrate Blogs',
-                'icon' => 'css/configure.png',
+                'icon' => 'css/gear.png',
             ),
             array(
                 'permission' => 'plugin_blog_moderator',
                 'path' => "blog/moderator/list_blogs.php",
                 'label' => 'Moderate Blogs',
                 'icon' => 'css/format_increaseindent.png',
+            ),
+            array(
+                'permission' => 'plugin_blog_admin',
+                'path' => "blog/admin/blog_prefs.php",
+                'label' => 'Blog Preferences',
+                'icon' => 'css/configure.png',
             ),
         ),
     ),
@@ -106,13 +112,19 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
     function plugin_blog_init(&$p_context)
     {      
         $blog_id = Input::Get("f_blog_id", "int");
-        $p_context->blog = new MetaBlog($blog_id);
-        
         $entry_id = Input::Get('f_blogentry_id', 'int');
-        $p_context->blogentry = new MetaBlogEntry($entry_id);
-        
         $comment_id = Input::Get('f_blogcomment_id', 'int');
-        $p_context->blogcomment = new MetaBlogComment($comment_id);
+        
+        if (!empty($comment_id)) {
+            $p_context->blogcomment = new MetaBlogComment($comment_id);
+            $p_context->blogentry = new MetaBlogEntry($p_context->blogcomment->entry_id);
+            $p_context->blog = new MetaBlog($p_context->blogcomment->blog_id);        
+        } elseif (!empty($entry_id)) {
+            $p_context->blogentry = new MetaBlogEntry($entry_id);
+            $p_context->blog = new MetaBlog($p_context->blogentry->blog_id);        
+        } elseif (!empty($blog_id)) {
+            $p_context->blog = new MetaBlog($blog_id);      
+        }
         
         foreach (array('f_blog', 
                        'f_blog_action',
@@ -136,6 +148,8 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
                        'f_blogcomment_id',
                        'f_blogcomment_title',
                        'f_blogcomment_content',
+                       'f_blogcomment_user_name',
+                       'f_blogcomment_user_email',
                        'f_blogcomment_mood',
                        'f_preview_blogcomment',
                        'f_submit_blogcomment',

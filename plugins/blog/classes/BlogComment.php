@@ -65,7 +65,7 @@ class BlogComment extends DatabaseObject {
         parent::setProperty($p_name, $p_value); 
     
         if ($p_name == 'status' || $p_name == 'admin_status') {
-            BlogEntry::triggerCounter($this->getProperty('fk_entry_id'));   
+            BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));   
         }   
     }
 
@@ -82,7 +82,7 @@ class BlogComment extends DatabaseObject {
 		// Create the record
 		$values = array(
 		  'fk_entry_id'   => $p_entry_id,
-		  'fk_blog_id'    => BlogEntry::getBlogId($p_entry_id),
+		  'fk_blog_id'    => BlogEntry::GetBlogId($p_entry_id),
 		  'fk_language_id'=> BlogEntry::getLanguageId($p_entry_id),
 		  'fk_user_id'    => $p_user_id,
 		  'user_name'     => $p_poster_name,
@@ -100,7 +100,7 @@ class BlogComment extends DatabaseObject {
 
 		$this->fetch();
 		
-		BlogEntry::triggerCounter($p_entry_id);
+		BlogEntry::TriggerCounters($p_entry_id);
 
         return true; 
     }
@@ -109,7 +109,7 @@ class BlogComment extends DatabaseObject {
     {
         $entry_id = $this->getProperty('fk_entry_id');
         parent::delete();
-        BlogEntry::triggerCounter($entry_id);   
+        BlogEntry::TriggerCounters($entry_id);   
     }
     
     function getData()
@@ -183,7 +183,7 @@ class BlogComment extends DatabaseObject {
     }
     
         
-    static function getEntryId($p_comment_id)
+    static function GetEntryId($p_comment_id)
     {
         $tmpComment =& new BlogComment($p_comment_id);
         return $tmpComment->getProperty('fk_entry_id');           
@@ -201,7 +201,7 @@ class BlogComment extends DatabaseObject {
         return $Entry;   
     }
        
-    static function getBlogId($p_comment_id)
+    static function GetBlogId($p_comment_id)
     {
         $tmpComment =& new BlogComment($p_comment_id);
         return $tmpComment->getProperty('fk_blog_id');           
@@ -386,7 +386,7 @@ class BlogComment extends DatabaseObject {
                     } 
                     $this->setProperty($k, $v); 
                 }
-                BlogEntry::triggerCounter(BlogComment::getEntryId($data['comment_id']));
+                BlogEntry::TriggerCounters(BlogComment::GetEntryId($data['comment_id']));
                 return true;
                 
             } else {
@@ -410,7 +410,7 @@ class BlogComment extends DatabaseObject {
                     if ($p_owner && $data['BlogComment']['status'])         $this->setProperty('status', $data['BlogComment']['status']);
                     if ($p_admin && $data['BlogComment']['admin_status'])   $this->setProperty('admin_status', $data['BlogComment']['admin_status']);
                     
-                    BlogEntry::triggerCounter($this->getProperty('fk_entry_id'));  
+                    BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));  
                       
                     return true;    
                 }

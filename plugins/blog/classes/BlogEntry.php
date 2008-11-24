@@ -69,7 +69,7 @@ class BlogEntry extends DatabaseObject {
 
         if ($p_name == 'status' || $p_name == 'admin_status') {
             require_once 'Blog.php';
-            Blog::triggerCounter($this->getProperty('fk_blog_id'));
+            Blog::TriggerCounters($this->getProperty('fk_blog_id'));
         }
     }
 
@@ -102,7 +102,7 @@ class BlogEntry extends DatabaseObject {
         $this->fetch();
 
         require_once 'Blog.php';
-        Blog::triggerCounter($p_blog_id);
+        Blog::TriggerCounters($p_blog_id);
 
         return true;
     }
@@ -120,7 +120,7 @@ class BlogEntry extends DatabaseObject {
         parent::delete();
 
         #BlogEntry::_removeImage($entry_id);
-        Blog::triggerCounter($blog_id);
+        Blog::TriggerCounters($blog_id);
     }
 
     function getData()
@@ -230,7 +230,7 @@ class BlogEntry extends DatabaseObject {
         return $query->RecordCount();
     }
 
-    function triggerCounter($p_entry_id)
+    static function TriggerCounters($p_entry_id)
     {
         global $g_ado_db;
         
@@ -248,16 +248,18 @@ class BlogEntry extends DatabaseObject {
                      SET    comments_online = 
                         (SELECT COUNT(comment_id) 
                          FROM   $commentTbl
-                         WHERE  fk_entry_id = $p_entry_id AND status = 'online' AND admin_status = 'online'),
+                         WHERE  fk_entry_id = $p_entry_id AND (status = 'online' AND admin_status = 'online')),
                             comments_offline = 
                         (SELECT COUNT(comment_id) 
                          FROM   $commentTbl
                          WHERE  fk_entry_id = $p_entry_id AND (status != 'online' OR admin_status != 'online'))
                      WHERE  entry_id = $p_entry_id";  
         $g_ado_db->Execute($queryStr);
+        
+        Blog::TriggerCounters(self::GetBlogId($p_entry_id));
     }
 
-    static function getBlogId($p_entry_id)
+    static function GetBlogId($p_entry_id)
     {
         $tmpEntry =& new BlogEntry($p_entry_id);
         return $tmpEntry->getProperty('fk_blog_id');
@@ -459,7 +461,7 @@ class BlogEntry extends DatabaseObject {
                 if ($data['BlogEntry_Image_remove']) BlogEntry::_removeImage($data['entry_id']);
                 if ($data['BlogEntry_Image'])        BlogEntry::_storeImage($data['BlogEntry_Image'], $data['entry_id']);
 
-                Blog::triggerCounter(BlogEntry::getBlogId($data['entry_id']));
+                Blog::TriggerCounters(BlogEntry::GetBlogId($data['entry_id']));
 
                 return true;
 
@@ -489,7 +491,7 @@ class BlogEntry extends DatabaseObject {
                     if ($data['BlogEntry_Image_remove']) BlogEntry::_removeImage($this->getProperty('entry_id'));
                     if ($data['BlogEntry_Image'])        BlogEntry::_storeImage( $data['BlogEntry_Image'], $this->getProperty('entry_id'));
 
-                    Blog::triggerCounter($this->getProperty('fk_blog_id'));
+                    Blog::TriggerCounters($this->getProperty('fk_blog_id'));
 
                     return true;
                 }
