@@ -46,6 +46,7 @@ final class MetaBlog extends MetaDbObject {
         $this->m_customProperties['user'] = 'getUser';
         $this->m_customProperties['entries'] = 'getEntriesCount';
         $this->m_customProperties['captcha_enabled'] = 'getCaptchaEnabled';
+        $this->m_customProperties['comment_mode'] = 'getCommentMode';
         
     } // fn __construct
     
@@ -73,7 +74,12 @@ final class MetaBlog extends MetaDbObject {
     
     public function getCaptchaEnabled()
     {
-        return 0;
+        return (SystemPref::Get("PLUGIN_BLOGCOMMENT_USE_CAPTCHA") == 'Y');
+    }
+    
+    public function getCommentMode()
+    {
+        return SystemPref::Get("PLUGIN_BLOGCOMMENT_MODE");
     }
 } // class MetaBlog
 

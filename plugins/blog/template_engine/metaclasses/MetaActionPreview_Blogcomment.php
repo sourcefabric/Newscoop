@@ -1,11 +1,10 @@
 <?php
-
-define('ACTION_PREVIEW_BLOGCOMMENT_ERR_NO_TITLE', 'ACTION_PREVIEW_BLOGCOMMENT_ERR_NO_TITLE');
-define('ACTION_PREVIEW_BLOGCOMMENT_ERR_NO_CONTENT', 'ACTION_PREVIEW_BLOGCOMMENT_ERR_NO_CONTENT');
-define('ACTION_PREVIEW_BLOGCOMMENT_ERR_NOT_REGISTERED', 'ACTION_PREVIEW_BLOGCOMMENT_ERR_NOT_REGISTERED');
-define('ACTION_PREVIEW_BLOGCOMMENT_ERR_NO_EMAIL', 'ACTION_PREVIEW_BLOGCOMMENT_ERR_NO_EMAIL');
-define('ACTION_PREVIEW_BLOGCOMMENT_ERR_NO_NAME', 'ACTION_PREVIEW_BLOGCOMMENT_ERR_NO_NAME');
-
+define('ACTION_BLOGCOMMENT_ERR_INVALID_ENTRY', 'ACTION_BLOGCOMMENT_ERR_INVALID_ENTRY');
+define('ACTION_BLOGCOMMENT_ERR_NO_TITLE', 'ACTION_BLOGCOMMENT_ERR_NO_TITLE');
+define('ACTION_BLOGCOMMENT_ERR_NO_CONTENT', 'ACTION_BLOGCOMMENT_ERR_NO_CONTENT');
+define('ACTION_BLOGCOMMENT_ERR_NO_NAME', 'ACTION_BLOGCOMMENT_ERR_NO_NAME');
+define('ACTION_BLOGCOMMENT_ERR_NO_EMAIL', 'ACTION_BLOGCOMMENT_ERR_NO_EMAIL');
+define('ACTION_BLOGCOMMENT_ERR_NOT_REGISTERED', 'ACTION_BLOGCOMMENT_ERR_NOT_REGISTERED');
 
 class MetaActionPreview_Blogcomment extends MetaAction
 {
@@ -20,18 +19,19 @@ class MetaActionPreview_Blogcomment extends MetaAction
         $this->m_name = 'preview_blogcomment';
         $this->m_error = null;
 
-        $BlogEntry = new BlogEntry($p_input['f_blogentry_id']);   
+        $BlogEntry = new BlogEntry($p_input['f_blogentry_id']); 
+          
         if (!$BlogEntry->exists()) {
-                $this->m_error = new PEAR_Error('None or invalid blogentry was given.', ACTION_BLOGCOMMENT_ERR_INVALID_ENTRY);
-                return;
+            $this->m_error = new PEAR_Error('None or invalid blogentry was given.', ACTION_BLOGCOMMENT_ERR_INVALID_ENTRY);
+            return;
         }
         
         if (!isset($p_input['f_blogcomment_title']) || empty($p_input['f_blogcomment_title'])) {
-            $this->m_error = new PEAR_Error('The comment subject was not filled in.', ACTION_PREVIEW_BLOGCOMMENT_ERR_NO_TITLE);
+            $this->m_error = new PEAR_Error('The comment subject was not filled in.', ACTION_BLOGCOMMENT_ERR_NO_TITLE);
             return;
         }
         if (!isset($p_input['f_blogcomment_content']) || empty($p_input['f_blogcomment_content'])) {
-            $this->m_error = new PEAR_Error('The comment content was not filled in.', ACTION_PREVIEW_BLOGCOMMENT_ERR_NO_CONTENT);
+            $this->m_error = new PEAR_Error('The comment content was not filled in.', ACTION_BLOGCOMMENT_ERR_NO_CONTENT);
             return;
         }
         
@@ -61,13 +61,14 @@ class MetaActionPreview_Blogcomment extends MetaAction
         $user = $p_context->user;
         
         if ($user->defined) {
-            $this->m_properties['user_name'] = '';
-            $this->m_properties['user_email'] = '';
+            $this->m_properties['user_name'] = $p_context->user->name;
+            $this->m_properties['user_email'] = $p_context->user->email;
         } else {
             switch(SystemPref::Get('PLUGIN_BLOGCOMMENT_MODE')) {                
                 case 'name':
                     if (!strlen($this->m_properties['user_name'])) {
-                        $this->m_error = new PEAR_Error('Name was empty.', ACTION_BLOGCOMMENT_ERR_INVALID_USER);    
+                        $this->m_error = new PEAR_Error('Name was empty.', ACTION_BLOGCOMMENT_ERR_NO_NAME);
+                        return false;
                     } 
                 break;   
                 
@@ -84,7 +85,7 @@ class MetaActionPreview_Blogcomment extends MetaAction
                 
                 case 'registered':
                 default:
-                    $this->m_error = new PEAR_Error('Only registered users can post comments.', ACTION_BLOGCOMMENT_ERR_INVALID_USER);
+                    $this->m_error = new PEAR_Error('Only registered users can post comments.', ACTION_BLOGCOMMENT_ERR_NOT_REGISTERED);
                     return false;     
                 break;
             }
