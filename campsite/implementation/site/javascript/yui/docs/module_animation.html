@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>animation&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>animation&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_animation.html">animation</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                    
@@ -41,6 +43,10 @@
                         The animation module provides allows effects to be added to HTMLElements.
                     </div>
 
+
+
+<div class="yui-gc">
+    <div class="yui-u first">
                     <form onsubmit="return false">
                         <p>Search animation:
                         <div id="propertysearch">
@@ -53,7 +59,11 @@
                     <script type="text/javascript">
                         ALL_YUI_PROPS = [{"access": "private", "host": "YAHOO.util.Anim", "name": "actualFrames", "url": "YAHOO.util.Anim.html#property_actualFrames"}, {"access": "", "host": "YAHOO.util.Anim", "name": "animate", "url": "YAHOO.util.Anim.html#method_animate"}, {"access": "", "host": "YAHOO.util.Anim", "name": "attributes", "url": "YAHOO.util.Anim.html#property_attributes"}, {"access": "", "host": "YAHOO.util.Easing", "name": "backBoth", "url": "YAHOO.util.Easing.html#method_backBoth"}, {"access": "", "host": "YAHOO.util.Easing", "name": "backIn", "url": "YAHOO.util.Easing.html#method_backIn"}, {"access": "", "host": "YAHOO.util.Easing", "name": "backOut", "url": "YAHOO.util.Easing.html#method_backOut"}, {"access": "", "host": "YAHOO.util.Easing", "name": "bounceBoth", "url": "YAHOO.util.Easing.html#method_bounceBoth"}, {"access": "", "host": "YAHOO.util.Easing", "name": "bounceIn", "url": "YAHOO.util.Easing.html#method_bounceIn"}, {"access": "", "host": "YAHOO.util.Easing", "name": "bounceOut", "url": "YAHOO.util.Easing.html#method_bounceOut"}, {"access": "private", "host": "YAHOO.util.AnimMgr", "name": "correctFrame", "url": "YAHOO.util.AnimMgr.html#method_correctFrame"}, {"access": "", "host": "YAHOO.util.Anim", "name": "currentFrame", "url": "YAHOO.util.Anim.html#property_currentFrame"}, {"access": "", "host": "YAHOO.util.AnimMgr", "name": "delay", "url": "YAHOO.util.AnimMgr.html#property_delay"}, {"access": "", "host": "YAHOO.util.Anim", "name": "doMethod", "url": "YAHOO.util.Anim.html#method_doMethod"}, {"access": "", "host": "YAHOO.util.Anim", "name": "duration", "url": "YAHOO.util.Anim.html#property_duration"}, {"access": "", "host": "YAHOO.util.Easing", "name": "easeBoth", "url": "YAHOO.util.Easing.html#method_easeBoth"}, {"access": "", "host": "YAHOO.util.Easing", "name": "easeBothStrong", "url": "YAHOO.util.Easing.html#method_easeBothStrong"}, {"access": "", "host": "YAHOO.util.Easing", "name": "easeIn", "url": "YAHOO.util.Easing.html#method_easeIn"}, {"access": "", "host": "YAHOO.util.Easing", "name": "easeInStrong", "url": "YAHOO.util.Easing.html#method_easeInStrong"}, {"access": "", "host": "YAHOO.util.Easing", "name": "easeNone", "url": "YAHOO.util.Easing.html#method_easeNone"}, {"access": "", "host": "YAHOO.util.Easing", "name": "easeOut", "url": "YAHOO.util.Easing.html#method_easeOut"}, {"access": "", "host": "YAHOO.util.Easing", "name": "easeOutStrong", "url": "YAHOO.util.Easing.html#method_easeOutStrong"}, {"access": "private", "host": "YAHOO.util.Anim", "name": "el", "url": "YAHOO.util.Anim.html#property_el"}, {"access": "", "host": "YAHOO.util.Easing", "name": "elasticBoth", "url": "YAHOO.util.Easing.html#method_elasticBoth"}, {"access": "", "host": "YAHOO.util.Easing", "name": "elasticIn", "url": "YAHOO.util.Easing.html#method_elasticIn"}, {"access": "", "host": "YAHOO.util.Easing", "name": "elasticOut", "url": "YAHOO.util.Easing.html#method_elasticOut"}, {"access": "", "host": "YAHOO.util.AnimMgr", "name": "fps", "url": "YAHOO.util.AnimMgr.html#property_fps"}, {"access": "", "host": "YAHOO.util.Anim", "name": "getAttribute", "url": "YAHOO.util.Anim.html#method_getAttribute"}, {"access": "", "host": "YAHOO.util.Anim", "name": "getDefaultUnit", "url": "YAHOO.util.Anim.html#method_getDefaultUnit"}, {"access": "", "host": "YAHOO.util.Anim", "name": "getEl", "url": "YAHOO.util.Anim.html#method_getEl"}, {"access": "", "host": "YAHOO.util.Bezier", "name": "getPosition", "url": "YAHOO.util.Bezier.html#method_getPosition"}, {"access": "", "host": "YAHOO.util.Anim", "name": "getStartTime", "url": "YAHOO.util.Anim.html#method_getStartTime"}, {"access": "", "host": "YAHOO.util.Anim", "name": "init", "url": "YAHOO.util.Anim.html#method_init"}, {"access": "private", "host": "YAHOO.util.Anim", "name": "isAnimated", "url": "YAHOO.util.Anim.html#property_isAnimated"}, {"access": "", "host": "YAHOO.util.Anim", "name": "isAnimated", "url": "YAHOO.util.Anim.html#method_isAnimated"}, {"access": "", "host": "YAHOO.util.Anim", "name": "method", "url": "YAHOO.util.Anim.html#property_method"}, {"access": "private", "host": "YAHOO.util.Anim", "name": "_onComplete", "url": "YAHOO.util.Anim.html#property__onComplete"}, {"access": "", "host": "YAHOO.util.Anim", "name": "onComplete", "url": "YAHOO.util.Anim.html#event_onComplete"}, {"access": "private", "host": "YAHOO.util.Anim", "name": "_onStart", "url": "YAHOO.util.Anim.html#property__onStart"}, {"access": "", "host": "YAHOO.util.Anim", "name": "onStart", "url": "YAHOO.util.Anim.html#event_onStart"}, {"access": "private", "host": "YAHOO.util.Anim", "name": "_onTween", "url": "YAHOO.util.Anim.html#property__onTween"}, {"access": "private", "host": "YAHOO.util.Anim", "name": "onTween", "url": "YAHOO.util.Anim.html#method_onTween"}, {"access": "", "host": "YAHOO.util.Anim", "name": "onTween", "url": "YAHOO.util.Anim.html#event_onTween"}, {"access": "", "host": "YAHOO.util.ColorAnim", "name": "parseColor", "url": "YAHOO.util.ColorAnim.html#method_parseColor"}, {"access": "private", "host": "YAHOO.util.AnimMgr", "name": "queue", "url": "YAHOO.util.AnimMgr.html#property_queue"}, {"access": "", "host": "YAHOO.util.AnimMgr", "name": "registerElement", "url": "YAHOO.util.AnimMgr.html#method_registerElement"}, {"access": "", "host": "YAHOO.util.AnimMgr", "name": "run", "url": "YAHOO.util.AnimMgr.html#method_run"}, {"access": "", "host": "YAHOO.util.Anim", "name": "setAttribute", "url": "YAHOO.util.Anim.html#method_setAttribute"}, {"access": "", "host": "YAHOO.util.Anim", "name": "setEl", "url": "YAHOO.util.Anim.html#method_setEl"}, {"access": "private", "host": "YAHOO.util.Anim", "name": "setRuntimeAttribute", "url": "YAHOO.util.Anim.html#method_setRuntimeAttribute"}, {"access": "", "host": "YAHOO.util.AnimMgr", "name": "start", "url": "YAHOO.util.AnimMgr.html#method_start"}, {"access": "private", "host": "YAHOO.util.Anim", "name": "startTime", "url": "YAHOO.util.Anim.html#property_startTime"}, {"access": "", "host": "YAHOO.util.Anim", "name": "stop", "url": "YAHOO.util.Anim.html#method_stop"}, {"access": "", "host": "YAHOO.util.AnimMgr", "name": "stop", "url": "YAHOO.util.AnimMgr.html#method_stop"}, {"access": "private", "host": "YAHOO.util.AnimMgr", "name": "thread", "url": "YAHOO.util.AnimMgr.html#property_thread"}, {"access": "", "host": "YAHOO.util.Anim", "name": "toString", "url": "YAHOO.util.Anim.html#method_toString"}, {"access": "", "host": "YAHOO.util.Anim", "name": "totalFrames", "url": "YAHOO.util.Anim.html#property_totalFrames"}, {"access": "private", "host": "YAHOO.util.AnimMgr", "name": "tweenCount", "url": "YAHOO.util.AnimMgr.html#property_tweenCount"}, {"access": "private", "host": "YAHOO.util.AnimMgr", "name": "unRegister", "url": "YAHOO.util.AnimMgr.html#method_unRegister"}, {"access": "", "host": "YAHOO.util.Anim", "name": "useSeconds", "url": "YAHOO.util.Anim.html#property_useSeconds"}];
                     </script>
+	    </div>
+    <div class="yui-u">
 
+	    </div>
+</div>
 
 			</div>
 		</div>
@@ -71,6 +81,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -111,6 +123,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -171,7 +185,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -95,14 +95,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
 </tr>
 <tr>
 <td width="20"></td><td>
-   The data the chart displays.</td>
+   </td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IPlotArea.html#dataProvider">dataProvider</a> &mdash; Property in interface com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IPlotArea.html">IPlotArea</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IChart.html#dataProvider">dataProvider</a> &mdash; Property in interface com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IChart.html">IChart</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-   The data displayed in the plot area.</td>
+   The data to be displayed by the chart.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/legend/class-list.html');" href="com/yahoo/astra/fl/charts/legend/ILegend.html#dataProvider">dataProvider</a> &mdash; Property in interface com.yahoo.astra.fl.charts.legend.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/legend/class-list.html');" href="com/yahoo/astra/fl/charts/legend/ILegend.html">ILegend</a></td>
@@ -176,20 +176,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
 <tr>
 <td width="20"></td><td>
   The TextFormat object to use to render data tips.</td>
-</tr>
-<tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/CartesianChart.html#dataToLocal()">dataToLocal</a>(data, series:<a href="com/yahoo/astra/fl/charts/series/ISeries.html" onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series./class-list.html');">com.yahoo.astra.fl.charts.series:ISeries</a>) &mdash; Method in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/CartesianChart.html">CartesianChart</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   Calculates the position of a data point along the axis.</td>
-</tr>
-<tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IPlotArea.html#dataToLocal()">dataToLocal</a>(data, series:<a href="com/yahoo/astra/fl/charts/series/ISeries.html" onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series./class-list.html');">com.yahoo.astra.fl.charts.series:ISeries</a>) &mdash; Method in interface com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IPlotArea.html">IPlotArea</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   Calculates the position of a data point along the axis.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/DateUtil.html">DateUtil</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/package-detail.html">com.yahoo.astra.utils</a></td>
@@ -325,20 +311,56 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
    Decodes a JSON string into a native object.</td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/DefaultAxisRenderer.html">DefaultAxisRenderer</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  The default axis renderer for a cartesian chart.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/DefaultAxisRenderer.html#DefaultAxisRenderer()">DefaultAxisRenderer</a>(orientation) &mdash; Constructor in class com.yahoo.astra.fl.charts.axes.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/DefaultAxisRenderer.html">DefaultAxisRenderer</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Constructor.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/PieChart.html#defaultDataTipFunction()">defaultDataTipFunction</a>(item, index, series:<a href="com/yahoo/astra/fl/charts/series/ISeries.html" onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series./class-list.html');">com.yahoo.astra.fl.charts.series:ISeries</a>) &mdash; Method in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/PieChart.html">PieChart</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   
+   </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/DefaultGridLinesRenderer.html">DefaultGridLinesRenderer</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  Renders grid lines associated with a cartesian axis.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/DefaultGridLinesRenderer.html#DefaultGridLinesRenderer()">DefaultGridLinesRenderer</a>() &mdash; Constructor in class com.yahoo.astra.fl.charts.axes.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/DefaultGridLinesRenderer.html">DefaultGridLinesRenderer</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Constructor.</td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/Chart.html#defaultSeriesType">defaultSeriesType</a> &mdash; Property in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/Chart.html">Chart</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-   When data is encountered where an ISeries is expected, it will be converted
-   to this default type.</td>
+   When raw data (like an Array of Numbers) is encountered where an
+   ISeries instance is expected, it will be converted to this default
+   type.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IPlotArea.html#defaultSeriesType">defaultSeriesType</a> &mdash; Property in interface com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IPlotArea.html">IPlotArea</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/GeomUtil.html#degreesToRadians()">degreesToRadians</a>(degrees) &mdash; Static method in class com.yahoo.astra.utils.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/GeomUtil.html">GeomUtil</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-   When data is encountered where an ISeries is expected, it will be converted
-   to this default type.</td>
+   Converts an angle from degrees to radians.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/skins/class-list.html');" href="com/yahoo/astra/fl/charts/skins/DiamondSkin.html">DiamondSkin</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/skins/class-list.html');" href="com/yahoo/astra/fl/charts/skins/package-detail.html">com.yahoo.astra.fl.charts.skins</a></td>
@@ -374,6 +396,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
 <tr>
 <td width="20"></td><td>
    The direction in which children of the target are laid out.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('./class-list.html');" href="./Uploader.html#disable()">disable</a>() &mdash; Method in class <a onclick="javascript:loadClassListFrame('class-list.html');" href="Uploader.html">Uploader</a></td>
+</tr>
+<tr>
+<td width="20"></td><td></td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/LineSeries.html#style:discontinuousDashLength">discontinuousDashLength</a> &mdash; Style in class com.yahoo.astra.fl.charts.series.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/LineSeries.html">LineSeries</a></td>
@@ -428,27 +456,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
 <td width="20"></td><td></td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/CategoryAxis.html#drawAxis()">drawAxis</a>() &mdash; Method in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/CategoryAxis.html">CategoryAxis</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   Draws the axis origin line.</td>
-</tr>
-<tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/NumericAxis.html#drawAxis()">drawAxis</a>() &mdash; Method in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/NumericAxis.html">NumericAxis</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   Draws the axis origin line.</td>
-</tr>
-<tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/TimeAxis.html#drawAxis()">drawAxis</a>() &mdash; Method in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/TimeAxis.html">TimeAxis</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   Redraws the main axis.</td>
-</tr>
-<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/GraphicsUtil.html#drawDashedLine()">drawDashedLine</a>(target, xStart, yStart, xEnd, yEnd, dashSize, gapSize) &mdash; Static method in class com.yahoo.astra.utils.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/GraphicsUtil.html">GraphicsUtil</a></td>
 </tr>
 <tr>
@@ -456,16 +463,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
    Draws a dashed line between two points.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/BarSeries.html#drawMarkers()">drawMarkers</a>(data) &mdash; Method in class com.yahoo.astra.fl.charts.series.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/BarSeries.html">BarSeries</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/DefaultGridLinesRenderer.html#drawLines()">drawLines</a>(data, showLines, lineWeight, lineColor, fillColors, fillAlphas) &mdash; Method in class com.yahoo.astra.fl.charts.axes.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/DefaultGridLinesRenderer.html">DefaultGridLinesRenderer</a></td>
 </tr>
 <tr>
-<td width="20"></td><td></td>
-</tr>
-<tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/ColumnSeries.html#drawMarkers()">drawMarkers</a>(data) &mdash; Method in class com.yahoo.astra.fl.charts.series.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/ColumnSeries.html">ColumnSeries</a></td>
-</tr>
-<tr>
-<td width="20"></td><td></td>
+<td width="20"></td><td>
+   Draws a set of lines based on AxisData positioning.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/yui/charts/class-list.html');" href="com/yahoo/yui/charts/BackgroundAndBorder.html#drawMask()">drawMask</a>() &mdash; Method in class com.yahoo.yui.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/yui/charts/class-list.html');" href="com/yahoo/yui/charts/BackgroundAndBorder.html">BackgroundAndBorder</a></td>
@@ -474,39 +476,19 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
 <td width="20"></td><td></td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/CategoryAxis.html#drawObjects()">drawObjects</a>() &mdash; Method in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/CategoryAxis.html">CategoryAxis</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   Draws the labels, ticks, and gridlines of the axis.</td>
-</tr>
-<tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/NumericAxis.html#drawObjectsOnMajorUnit()">drawObjectsOnMajorUnit</a>() &mdash; Method in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/NumericAxis.html">NumericAxis</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   Draws labels, grid lines, and ticks at the major unit positions.</td>
-</tr>
-<tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/TimeAxis.html#drawObjectsOnMajorUnit()">drawObjectsOnMajorUnit</a>() &mdash; Method in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/TimeAxis.html">TimeAxis</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   Draws labels and ticks at the major unit positions.</td>
-</tr>
-<tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/NumericAxis.html#drawObjectsOnMinorUnit()">drawObjectsOnMinorUnit</a>() &mdash; Method in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/NumericAxis.html">NumericAxis</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   Draws grid lines and ticks at the minor unit positions.</td>
-</tr>
-<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/animation/class-list.html');" href="com/yahoo/astra/animation/Animation.html#duration">duration</a> &mdash; Property in class com.yahoo.astra.animation.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/animation/class-list.html');" href="com/yahoo/astra/animation/Animation.html">Animation</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
    The duration in milliseconds that the animation will run.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/DynamicRegistration.html">DynamicRegistration</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/package-detail.html">com.yahoo.astra.utils</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  Allows you to manipulate display objects based on a registration point other
+  than the standard (0,0).</td>
 </tr>
 <tr>
 <td style="padding-bottom:20px" colspan="2"></td>

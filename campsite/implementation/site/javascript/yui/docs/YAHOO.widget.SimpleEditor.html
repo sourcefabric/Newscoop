@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>editor&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>editor&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_editor.html">editor</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -269,12 +271,73 @@
                                     <hr />
                                     </div>
                                     <div class="private">
+                                    <h4><a name="property__formButtonClicked">_formButtonClicked</a>
+                                        <code>- private HTMLElement</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The form button that was clicked to submit the form.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4><a name="property__formButtons">_formButtons</a>
+                                        <code>- private Array</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Array of buttons that are in the Editor's parent form (for handleSubmit)
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4><a name="property__keyMap">_keyMap</a>
+                                        <code>- private {Object/Mixed}</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Named key maps for various actions in the Editor. Example: <code>CLOSE_WINDOW: { key: 87, mods: ['shift', 'ctrl'] }</code>. 
+This entry shows that when key 87 (W) is found with the modifiers of shift and control, the window will close. You can customize this object to tweak keyboard shortcuts.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
                                     <h4><a name="property__lastButton">_lastButton</a>
                                         <code>- private Object</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
                                             The last button pressed, so we don't disable it.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4><a name="property__lastCommand">_lastCommand</a>
+                                        <code>- private String</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            A cache of the last execCommand (used for Undo/Redo so they don't mark an undo level)
                                         </div>
                                     </div>
      
@@ -374,6 +437,21 @@
                                     <hr />
                                     </div>
                                     <div class="private">
+                                    <h4><a name="property__resizeConfig">_resizeConfig</a>
+                                        <code>- private object</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The default config for the Resize Utility
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
                                     <h4><a name="property__selection">_selection</a>
                                         <code>- private Object</code>
                                     </h4>
@@ -425,6 +503,21 @@
                                     <div class="detail">
                                         <div class="description">
                                             A tag map of HTML tags to convert to the different types of commands so we can select the proper toolbar button.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property__textarea">_textarea</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Flag to determine if we are using a textarea or an HTML Node.
                                         </div>
                                     </div>
      
@@ -614,6 +707,21 @@
                                     <hr />
                                     </div>
                                     <div class="">
+                                    <h4><a name="property_dd">dd</a>
+                                        <code>- YAHOO.util.DD/YAHOO.util.DDProxy</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            A reference to the DragDrop object.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
                                     <h4><a name="property_dompath">dompath</a>
                                         <code>- HTMLElement</code>
                                     </h4>
@@ -635,21 +743,6 @@
                                     <div class="detail">
                                         <div class="description">
                                             Flag to determine if DOM is ready or not
-                                        </div>
-                                    </div>
-     
-                                        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="">
-                                    <h4><a name="property_EDITOR_PANEL_ID">EDITOR_PANEL_ID</a>
-                                        <code>- String</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            HTML id to give the properties window in the DOM.
                                         </div>
                                     </div>
      
@@ -711,6 +804,21 @@ inside of the iframe, so we have to place the newly inserted data in the best pl
                                     <div class="detail">
                                         <div class="description">
                                             setTimeout holder for Opera and Image DoubleClick event..
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_resize">resize</a>
+                                        <code>- YAHOO.util.Resize</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            A reference to the Resize object
                                         </div>
                                     </div>
      
@@ -908,6 +1016,63 @@ inside of the iframe, so we have to place the newly inserted data in the best pl
                             <div class="content">
                                     <div class="private">
                                     <h4>
+                                        <a name="method__checkKey">_checkKey</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        Boolean
+                                            <strong>_checkKey</strong>
+                                           (
+                                                
+                                                        
+                                                         k
+                                                    
+                                                
+                                                        , 
+                                                         e
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Checks a keyMap entry against a key event
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>k &lt;Object&gt;</code>
+                                                             The _keyMap object
+                                                        </dd>
+                                                        <dd>
+                                                            <code>e &lt;Event&gt;</code>
+                                                             The Mouse Event
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Boolean
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
                                         <a name="method__checkLoaded">_checkLoaded</a></h4>
                                     <div class="detail">
                                         <code>
@@ -934,7 +1099,10 @@ inside of the iframe, so we have to place the newly inserted data in the best pl
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -980,7 +1148,10 @@ inside of the iframe, so we have to place the newly inserted data in the best pl
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1026,7 +1197,10 @@ inside of the iframe, so we have to place the newly inserted data in the best pl
                                                     </code></dt>
                                                     <dd>The filtered HTML</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1060,7 +1234,10 @@ inside of the iframe, so we have to place the newly inserted data in the best pl
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1116,7 +1293,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1162,7 +1342,52 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd>iFrame object</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__createInsertElement">_createInsertElement</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        
+                                            <strong>_createInsertElement</strong>
+                                           (
+                                                
+                                                        
+                                                         css
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Creates a new "currentElement" then adds some text (and other things) to make it selectable and stylable. Then the user can continue typing.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>css &lt;Object&gt;</code>
+                                                             (optional) Object literal containing styles to apply to the new element.
+                                                        </dd>
+                                                </dl>
+
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1208,7 +1433,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1242,7 +1470,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1288,7 +1519,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1322,7 +1556,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd>The URL to the blank image</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1356,7 +1593,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1402,7 +1642,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd>An array of node references that will create the DOM Path.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1436,7 +1679,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd>Range Object</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1470,7 +1716,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd>The currently selected element.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1504,7 +1753,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd>Selection Object</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1538,7 +1790,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1572,7 +1827,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1618,7 +1876,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1652,7 +1913,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1698,7 +1962,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1744,7 +2011,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1778,7 +2048,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1812,7 +2085,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1858,7 +2134,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1904,7 +2183,59 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__handleFormButtonClick">_handleFormButtonClick</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>_handleFormButtonClick</strong>
+                                           (
+                                                
+                                                        
+                                                         ev
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            The click listener assigned to each submit button in the Editor's parent form.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>ev &lt;Event&gt;</code>
+                                                             The click event
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1950,7 +2281,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1984,7 +2318,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2018,7 +2355,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2064,7 +2404,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2110,7 +2453,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2156,7 +2502,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2202,7 +2551,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2248,7 +2600,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2294,7 +2649,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2308,7 +2666,7 @@ It will then search the document for an element with the font-family set to <str
                                          private 
                                         
                                         
-                                        void
+                                        
                                             <strong>_hasParent</strong>
                                            (
                                                 
@@ -2341,14 +2699,10 @@ It will then search the document for an element with the font-family set to <str
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>HTMLElement</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2382,7 +2736,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2416,7 +2773,47 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__initEditorEvents">_initEditorEvents</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>_initEditorEvents</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            This method sets up the listeners on the Editors document.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -2470,7 +2867,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2516,7 +2916,10 @@ It will then search the document for an element with the font-family set to <str
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2530,7 +2933,7 @@ It will then search the document for an element with the font-family set to <str
                                          private 
                                         
                                         
-                                        void
+                                        
                                             <strong>_isNonEditable</strong>
                                            (
                                                 
@@ -2557,14 +2960,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>Boolean</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2610,7 +3009,96 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__nodeChange">_nodeChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>_nodeChange</strong>
+                                           (
+                                                
+                                                        
+                                                         force
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fired from nodeChange in a setTimeout.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>force &lt;Boolean&gt;</code>
+                                                             Optional paramenter to skip the threshold counter
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__removeEditorEvents">_removeEditorEvents</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>_removeEditorEvents</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            This method removes the listeners on the Editors document (for disabling).
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -2644,41 +3132,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
-                                        </div>
 
-                                    </div>
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4>
-                                        <a name="method__renderPanel">_renderPanel</a></h4>
-                                    <div class="detail">
-                                        <code>
-                                         private 
-                                        
-                                        
-                                        void
-                                            <strong>_renderPanel</strong>
-                                           (
-                                            )
-                                        </code>
-                                        
-                                        <div class="description">
-                                            Override Method for Advanced Editor
-                                        </div>
-
-                                        <div class="description">
-
-
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd></dd>
-                                                </dl>
-             
                                         </div>
 
                                     </div>
@@ -2724,7 +3181,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2770,7 +3230,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2816,7 +3279,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2862,7 +3328,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2896,7 +3365,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2942,7 +3414,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2976,7 +3451,47 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__setupResize">_setupResize</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>_setupResize</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Creates the Resize instance and binds its events.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -3038,7 +3553,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3072,7 +3590,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd>The state that it was set to.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3134,7 +3655,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3168,7 +3692,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3214,7 +3741,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd>The filtered HTML</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3248,7 +3778,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3282,7 +3815,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3328,7 +3864,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3374,7 +3913,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3420,7 +3962,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3466,7 +4011,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3512,7 +4060,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3558,7 +4109,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3604,7 +4158,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3650,7 +4207,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3696,7 +4256,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3742,7 +4305,59 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_cmd_underline">cmd_underline</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>cmd_underline</strong>
+                                           (
+                                                
+                                                        
+                                                         value
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            This is an execCommand override method. It is called from execCommand when the execCommand('underline') is used.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>value &lt;object&gt;</code>
+                                                             Value passed from the execCommand method
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -3788,7 +4403,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3822,7 +4440,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3876,7 +4497,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3890,7 +4514,7 @@ disable and enable the Editor's toolbar based on the noedit state.
                                         
                                         
                                         
-                                        void
+                                        
                                             <strong>filter_all_rgb</strong>
                                            (
                                                 
@@ -3915,14 +4539,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>String</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3936,7 +4556,7 @@ disable and enable the Editor's toolbar based on the noedit state.
                                         
                                         
                                         
-                                        void
+                                        
                                             <strong>filter_internals</strong>
                                            (
                                                 
@@ -3961,14 +4581,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>String</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4014,7 +4630,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4028,7 +4647,7 @@ disable and enable the Editor's toolbar based on the noedit state.
                                         
                                         
                                         
-                                        void
+                                        
                                             <strong>filter_rgb</strong>
                                            (
                                                 
@@ -4053,14 +4672,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>String</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4074,7 +4689,7 @@ disable and enable the Editor's toolbar based on the noedit state.
                                         
                                         
                                         
-                                        void
+                                        
                                             <strong>filter_safari</strong>
                                            (
                                                 
@@ -4099,14 +4714,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>String</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4140,7 +4751,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4174,7 +4788,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4208,7 +4825,10 @@ disable and enable the Editor's toolbar based on the noedit state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4256,7 +4876,10 @@ configuration attributes used to create the editor.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4290,7 +4913,10 @@ configuration attributes used to create the editor.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4336,7 +4962,10 @@ configuration attributes used to create the editor.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4370,7 +4999,10 @@ configuration attributes used to create the editor.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4384,7 +5016,7 @@ configuration attributes used to create the editor.
                                         
                                         
                                         
-                                        void
+                                        
                                             <strong>post_filter_linebreaks</strong>
                                            (
                                                 
@@ -4415,14 +5047,10 @@ configuration attributes used to create the editor.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>String</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4436,7 +5064,7 @@ configuration attributes used to create the editor.
                                         
                                         
                                         
-                                        void
+                                        
                                             <strong>pre_filter_linebreaks</strong>
                                            (
                                                 
@@ -4467,14 +5095,10 @@ configuration attributes used to create the editor.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>String</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4508,7 +5132,10 @@ configuration attributes used to create the editor.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4522,7 +5149,7 @@ configuration attributes used to create the editor.
                                         
                                         
                                         
-                                        void
+                                        
                                             <strong>saveHTML</strong>
                                            (
                                             )
@@ -4535,14 +5162,10 @@ configuration attributes used to create the editor.
                                         <div class="description">
 
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>String</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4561,7 +5184,7 @@ configuration attributes used to create the editor.
                                            (
                                                 
                                                         
-                                                         html
+                                                         incomingHTML
                                                     
                                                 
                                             )
@@ -4576,7 +5199,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>html &lt;String&gt;</code>
+                                                            <code>incomingHTML &lt;String&gt;</code>
                                                              The html content to load into the editor
                                                         </dd>
                                                 </dl>
@@ -4588,7 +5211,10 @@ configuration attributes used to create the editor.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4622,7 +5248,10 @@ configuration attributes used to create the editor.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4656,7 +5285,10 @@ configuration attributes used to create the editor.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4677,7 +5309,7 @@ configuration attributes used to create the editor.
                                 <h4>Methods inherited from <a href="YAHOO.util.AttributeProvider.html">YAHOO.util.AttributeProvider</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_configureAttribute">configureAttribute</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireBeforeChangeEvent">fireBeforeChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireChangeEvent">fireChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_get">get</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_getAttributeConfig">getAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_getAttributeKeys">getAttributeKeys</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_refresh">refresh</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_register">register</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_resetAttributeConfig">resetAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_resetValue">resetValue</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_set">set</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributeConfig">setAttributeConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributes">setAttributes</a>
+                                            <a class=" deprecated" href="YAHOO.util.AttributeProvider.html#method_configureAttribute">configureAttribute</a><span class=" deprecated">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireBeforeChangeEvent">fireBeforeChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireChangeEvent">fireChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_get">get</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_getAttributeConfig">getAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_getAttributeKeys">getAttributeKeys</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_refresh">refresh</a><span class="">,</span>                                            <a class=" deprecated" href="YAHOO.util.AttributeProvider.html#method_register">register</a><span class=" deprecated">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_resetAttributeConfig">resetAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_resetValue">resetValue</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_set">set</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributeConfig">setAttributeConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributes">setAttributes</a>
                                     </code>
                                 </div>
                             </div>
@@ -4793,7 +5425,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -4810,7 +5442,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -4834,7 +5466,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -4851,8 +5483,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -4875,7 +5507,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -4892,8 +5524,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -4916,7 +5548,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -4933,8 +5565,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -4957,7 +5589,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -4974,8 +5606,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -4998,7 +5630,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5015,8 +5647,295 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeEditorClick">beforeEditorClick</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeEditorClick</strong>
+
+                                            (
+                                                
+                                                        
+                                                         ev
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before editor event, returning false will stop the internal processing.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>ev &lt;Event&gt;</code>
+                                                             The DOM Event that occured
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeEditorDoubleClick">beforeEditorDoubleClick</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeEditorDoubleClick</strong>
+
+                                            (
+                                                
+                                                        
+                                                         ev
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before editor event, returning false will stop the internal processing.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>ev &lt;Event&gt;</code>
+                                                             The DOM Event that occured
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeEditorKeyDown">beforeEditorKeyDown</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeEditorKeyDown</strong>
+
+                                            (
+                                                
+                                                        
+                                                         ev
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before editor event, returning false will stop the internal processing.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>ev &lt;Event&gt;</code>
+                                                             The DOM Event that occured
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeEditorKeyPress">beforeEditorKeyPress</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeEditorKeyPress</strong>
+
+                                            (
+                                                
+                                                        
+                                                         ev
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before editor event, returning false will stop the internal processing.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>ev &lt;Event&gt;</code>
+                                                             The DOM Event that occured
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeEditorKeyUp">beforeEditorKeyUp</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeEditorKeyUp</strong>
+
+                                            (
+                                                
+                                                        
+                                                         ev
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before editor event, returning false will stop the internal processing.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>ev &lt;Event&gt;</code>
+                                                             The DOM Event that occured
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeEditorMouseDown">beforeEditorMouseDown</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeEditorMouseDown</strong>
+
+                                            (
+                                                
+                                                        
+                                                         ev
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before editor event, returning false will stop the internal processing.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>ev &lt;Event&gt;</code>
+                                                             The DOM Event that occured
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeEditorMouseUp">beforeEditorMouseUp</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeEditorMouseUp</strong>
+
+                                            (
+                                                
+                                                        
+                                                         ev
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before editor event, returning false will stop the internal processing.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>ev &lt;Event&gt;</code>
+                                                             The DOM Event that occured
                                                         </dd>
                                                 </dl>
 
@@ -5068,7 +5987,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5085,8 +6004,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -5109,7 +6028,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5126,8 +6045,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -5150,7 +6069,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5167,8 +6086,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -5191,7 +6110,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5208,8 +6127,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -5232,7 +6151,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5249,8 +6168,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -5273,7 +6192,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5290,8 +6209,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -5343,7 +6262,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5360,8 +6279,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -5384,7 +6303,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5401,8 +6320,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -5425,7 +6344,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5442,8 +6361,8 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -5466,7 +6385,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5483,7 +6402,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -5536,7 +6455,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5553,7 +6472,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -5577,7 +6496,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5594,7 +6513,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -5618,7 +6537,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5635,8 +6554,49 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_editorClick">editorClick</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>editorClick</strong>
+
+                                            (
+                                                
+                                                        
+                                                         ev
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Passed through HTML Event. See <a href="YAHOO.util.Element.html#addListener">Element.addListener</a> for more information on listening for this event.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>ev &lt;Event&gt;</code>
+                                                             The DOM Event that occured
                                                         </dd>
                                                 </dl>
 
@@ -5934,7 +6894,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5951,7 +6911,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -5975,7 +6935,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -5992,7 +6952,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -6016,7 +6976,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -6033,7 +6993,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -6057,7 +7017,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -6074,7 +7034,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -6098,7 +7058,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -6115,7 +7075,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -6139,7 +7099,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -6156,7 +7116,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -6180,7 +7140,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -6197,7 +7157,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -6221,7 +7181,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -6238,7 +7198,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -6291,7 +7251,7 @@ configuration attributes used to create the editor.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -6308,7 +7268,7 @@ configuration attributes used to create the editor.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -6499,6 +7459,20 @@ All Toolbar buttons are also disabled so they cannot be used.
 
                                     <hr />
                                     </div>        
+                                    <div class="">
+                                    <h4><a name="config_drag">drag</a>
+                                        <code>- {Boolean/String}</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Set this config to make the Editor draggable, pass 'proxy' to make use YAHOO.util.DDProxy.
+                                        </div>
+                                    </div>
+ 
+     
+
+                                    <hr />
+                                    </div>        
                                     <div class="private">
                                     <h4><a name="config_editor_wrapper">editor_wrapper</a>
                                         <code>- private HTMLElement</code>
@@ -6662,6 +7636,23 @@ Then it will trigger the editors save handler and place the new content back int
                                     <hr />
                                     </div>        
                                     <div class="">
+                                    <h4><a name="config_insert">insert</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            If true, selection is not required for: fontname, fontsize, forecolor, backcolor.
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: false
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
                                     <h4><a name="config_limitCommands">limitCommands</a>
                                         <code>- Boolean</code>
                                     </h4>
@@ -6691,6 +7682,40 @@ Then it will trigger the editors save handler and place the new content back int
      
                                     <div class="default">
                                         Default Value: "semantic"
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
+                                    <h4><a name="config_maxUndo">maxUndo</a>
+                                        <code>- Number</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The max number of undo levels to store.
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: 30
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
+                                    <h4><a name="config_nodeChangeDelay">nodeChangeDelay</a>
+                                        <code>- Number</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Do we wrap the nodeChange method in a timeout for performance, default: true.
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: true
                                     </div>        
 
                                     <hr />
@@ -6747,6 +7772,23 @@ Then it will trigger the editors save handler and place the new content back int
                                     <hr />
                                     </div>        
                                     <div class="">
+                                    <h4><a name="config_ptags">ptags</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            If true, the editor uses <P> tags instead of <br> tags. (Use Shift + Enter to get a <br>)
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: false
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
                                     <h4><a name="config_removeLineBreaks">removeLineBreaks</a>
                                         <code>- Boolean</code>
                                     </h4>
@@ -6759,6 +7801,38 @@ Then it will trigger the editors save handler and place the new content back int
      
                                     <div class="default">
                                         Default Value: false
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
+                                    <h4><a name="config_resize">resize</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Set this to true to make the Editor Resizable with YAHOO.util.Resize. The default config is available: myEditor._resizeConfig
+Animation will be ignored while performing this resize to allow for the dynamic change in size of the toolbar.
+                                        </div>
+                                    </div>
+ 
+     
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
+                                    <h4><a name="config_saveEl">saveEl</a>
+                                        <code>- HTMLElement</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            When save HTML is called, this element will be updated as well as the source of data.
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: element
                                     </div>        
 
                                     <hr />
@@ -6858,6 +7932,8 @@ Then it will trigger the editors save handler and place the new content back int
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -6897,6 +7973,8 @@ Then it will trigger the editors save handler and place the new content back int
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -6981,7 +8059,19 @@ Then it will trigger the editors save handler and place the new content back int
                                 <li class="private"><a href="#property__fixNodesTimer">_fixNodesTimer</a>
                                         <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
                                 </li>
+                                <li class="private"><a href="#property__formButtonClicked">_formButtonClicked</a>
+                                        <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
+                                </li>
+                                <li class="private"><a href="#property__formButtons">_formButtons</a>
+                                        <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
+                                </li>
+                                <li class="private"><a href="#property__keyMap">_keyMap</a>
+                                        <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
+                                </li>
                                 <li class="private"><a href="#property__lastButton">_lastButton</a>
+                                        <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
+                                </li>
+                                <li class="private"><a href="#property__lastCommand">_lastCommand</a>
                                         <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__lastImage">_lastImage</a>
@@ -7002,6 +8092,9 @@ Then it will trigger the editors save handler and place the new content back int
                                 <li class="private"><a href="#property__rendered">_rendered</a>
                                         <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
                                 </li>
+                                <li class="private"><a href="#property__resizeConfig">_resizeConfig</a>
+                                        <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
+                                </li>
                                 <li class="private"><a href="#property__selection">_selection</a>
                                         <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
                                 </li>
@@ -7012,6 +8105,9 @@ Then it will trigger the editors save handler and place the new content back int
                                         <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__tag2cmd">_tag2cmd</a>
+                                        <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property__textarea">_textarea</a>
                                         <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_afterElement">afterElement</a>
@@ -7050,13 +8146,13 @@ Then it will trigger the editors save handler and place the new content back int
                                 <li class=""><a href="#property_currentWindow">currentWindow</a>
                                         <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
                                 </li>
+                                <li class=""><a href="#property_dd">dd</a>
+                                        <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
+                                </li>
                                 <li class=""><a href="#property_dompath">dompath</a>
                                         <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property_DOMReady">DOMReady</a>
-                                        <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
-                                </li>
-                                <li class=""><a href="#property_EDITOR_PANEL_ID">EDITOR_PANEL_ID</a>
                                         <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_editorDirty">editorDirty</a>
@@ -7069,6 +8165,9 @@ Then it will trigger the editors save handler and place the new content back int
                                         <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property_operaEvent">operaEvent</a>
+                                        <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_resize">resize</a>
                                         <!--<code>&lt;<a href="YAHOO.widget.Toolbar.html">YAHOO.widget.Toolbar</a>&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_sel">sel</a>
@@ -7107,6 +8206,9 @@ Then it will trigger the editors save handler and place the new content back int
                     <div class="module">
                         <h4>Methods</h4>
                         <ul class="content">        
+                                <li class="private"><!--<code>Boolean</code>-->
+                                <a href="#method__checkKey">_checkKey</a>
+                                </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__checkLoaded">_checkLoaded</a>
                                 </li>
@@ -7124,6 +8226,9 @@ Then it will trigger the editors save handler and place the new content back int
                                 </li>
                                 <li class="private"><!--<code>Object</code>-->
                                 <a href="#method__createIframe">_createIframe</a>
+                                </li>
+                                <li class="private"><!--<code></code>-->
+                                <a href="#method__createInsertElement">_createInsertElement</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__disableEditor">_disableEditor</a>
@@ -7183,6 +8288,9 @@ Then it will trigger the editors save handler and place the new content back int
                                 <a href="#method__handleFontSize">_handleFontSize</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
+                                <a href="#method__handleFormButtonClick">_handleFormButtonClick</a>
+                                </li>
+                                <li class="private"><!--<code>void</code>-->
                                 <a href="#method__handleFormSubmit">_handleFormSubmit</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
@@ -7209,7 +8317,7 @@ Then it will trigger the editors save handler and place the new content back int
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__handleToolbarClick">_handleToolbarClick</a>
                                 </li>
-                                <li class="private"><!--<code>void</code>-->
+                                <li class="private"><!--<code></code>-->
                                 <a href="#method__hasParent">_hasParent</a>
                                 </li>
                                 <li class="private"><!--<code>Boolean</code>-->
@@ -7218,23 +8326,29 @@ Then it will trigger the editors save handler and place the new content back int
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__initEditor">_initEditor</a>
                                 </li>
+                                <li class="private"><!--<code>void</code>-->
+                                <a href="#method__initEditorEvents">_initEditorEvents</a>
+                                </li>
                                 <li class="private"><!--<code>Boolean</code>-->
                                 <a href="#method__isElement">_isElement</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__isLocalFile">_isLocalFile</a>
                                 </li>
-                                <li class="private"><!--<code>void</code>-->
+                                <li class="private"><!--<code></code>-->
                                 <a href="#method__isNonEditable">_isNonEditable</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__listFix">_listFix</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
-                                <a href="#method__render">_render</a>
+                                <a href="#method__nodeChange">_nodeChange</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
-                                <a href="#method__renderPanel">_renderPanel</a>
+                                <a href="#method__removeEditorEvents">_removeEditorEvents</a>
+                                </li>
+                                <li class="private"><!--<code>void</code>-->
+                                <a href="#method__render">_render</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__selectNode">_selectNode</a>
@@ -7256,6 +8370,9 @@ Then it will trigger the editors save handler and place the new content back int
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__setupAfterElement">_setupAfterElement</a>
+                                </li>
+                                <li class="private"><!--<code>void</code>-->
+                                <a href="#method__setupResize">_setupResize</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__swapEl">_swapEl</a>
@@ -7309,6 +8426,9 @@ Then it will trigger the editors save handler and place the new content back int
                                 <a href="#method_cmd_list">cmd_list</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
+                                <a href="#method_cmd_underline">cmd_underline</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
                                 <a href="#method_cmd_unlink">cmd_unlink</a>
                                 </li>
                                 <li class=""><!--<code>Boolean</code>-->
@@ -7317,19 +8437,19 @@ Then it will trigger the editors save handler and place the new content back int
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_execCommand">execCommand</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_filter_all_rgb">filter_all_rgb</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_filter_internals">filter_internals</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_filter_invalid_lists">filter_invalid_lists</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_filter_rgb">filter_rgb</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_filter_safari">filter_safari</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
@@ -7353,16 +8473,16 @@ Then it will trigger the editors save handler and place the new content back int
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_openWindow">openWindow</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_post_filter_linebreaks">post_filter_linebreaks</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_pre_filter_linebreaks">pre_filter_linebreaks</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_render">render</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_saveHTML">saveHTML</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
@@ -7406,6 +8526,27 @@ Then it will trigger the editors save handler and place the new content back int
                                 </li>
                                 <li class="">
                                 <a href="#event_beforeDompathChange">beforeDompathChange</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_beforeEditorClick">beforeEditorClick</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_beforeEditorDoubleClick">beforeEditorDoubleClick</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_beforeEditorKeyDown">beforeEditorKeyDown</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_beforeEditorKeyPress">beforeEditorKeyPress</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_beforeEditorKeyUp">beforeEditorKeyUp</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_beforeEditorMouseDown">beforeEditorMouseDown</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_beforeEditorMouseUp">beforeEditorMouseUp</a>
                                 </li>
                                 <li class="">
                                 <a href="#event_beforeExecCommand">beforeExecCommand</a>
@@ -7454,6 +8595,9 @@ Then it will trigger the editors save handler and place the new content back int
                                 </li>
                                 <li class="">
                                 <a href="#event_dompathChange">dompathChange</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_editorClick">editorClick</a>
                                 </li>
                                 <li class="">
                                 <a href="#event_editorContentLoaded">editorContentLoaded</a>
@@ -7536,6 +8680,9 @@ Then it will trigger the editors save handler and place the new content back int
                                 <li class="">
                                 <a href="#config_dompath">dompath</a>
                                 </li>
+                                <li class="">
+                                <a href="#config_drag">drag</a>
+                                </li>
                                 <li class="private">
                                 <a href="#config_editor_wrapper">editor_wrapper</a>
                                 </li>
@@ -7561,10 +8708,19 @@ Then it will trigger the editors save handler and place the new content back int
                                 <a href="#config_iframe">iframe</a>
                                 </li>
                                 <li class="">
+                                <a href="#config_insert">insert</a>
+                                </li>
+                                <li class="">
                                 <a href="#config_limitCommands">limitCommands</a>
                                 </li>
                                 <li class="">
                                 <a href="#config_markup">markup</a>
+                                </li>
+                                <li class="">
+                                <a href="#config_maxUndo">maxUndo</a>
+                                </li>
+                                <li class="">
+                                <a href="#config_nodeChangeDelay">nodeChangeDelay</a>
                                 </li>
                                 <li class="">
                                 <a href="#config_nodeChangeThreshold">nodeChangeThreshold</a>
@@ -7576,7 +8732,16 @@ Then it will trigger the editors save handler and place the new content back int
                                 <a href="#config_plainText">plainText</a>
                                 </li>
                                 <li class="">
+                                <a href="#config_ptags">ptags</a>
+                                </li>
+                                <li class="">
                                 <a href="#config_removeLineBreaks">removeLineBreaks</a>
+                                </li>
+                                <li class="">
+                                <a href="#config_resize">resize</a>
+                                </li>
+                                <li class="">
+                                <a href="#config_saveEl">saveEl</a>
                                 </li>
                                 <li class="private">
                                 <a href="#config_textarea">textarea</a>
@@ -7598,7 +8763,7 @@ Then it will trigger the editors save handler and place the new content back int
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

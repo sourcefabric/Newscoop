@@ -1,5 +1,16 @@
 YUI Library - Reset - Release Notes
 
+Version 2.6.0 
+
+  * Added del,ins{text-decoration:none;} per SF-1957908
+  * KNOWN ISSUE:
+    Beginning in Opera 9.5, a padding value of 0 on radio 
+    buttons and checkboxes prevents Opera from rendering 
+    their visually attractive checkmarks and filled circles 
+    for the radios. This has NOT been addressed in 2.6.0, 
+    however you can apply this patch if you desire:
+   	input[type="checkbox"],input[type="radio"] {padding:1px;}
+
 Version 2.5.2
 
   * No changes.
@@ -17,7 +28,7 @@ Version 2.4.0
   * Moved background and default font color to HTML from BODY
   * Removed invalid sub/sup negative line-height values because they
     were invalid and because they weren't have a big impact.
-  * Added legent element color to accomodate IE6 issues.
+  * Added legend element color to accommodate IE6 issues.
 
 Version 2.3.0
 

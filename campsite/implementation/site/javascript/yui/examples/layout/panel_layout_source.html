@@ -13,6 +13,7 @@ body {
 	margin:0;
 	padding:0;
 }
+
 #demo .yui-resize-handle-br {
     height: 11px;
     width: 11px;
@@ -32,9 +33,9 @@ body {
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
 <script type="text/javascript" src="../../build/dragdrop/dragdrop-min.js"></script>
 <script type="text/javascript" src="../../build/container/container-min.js"></script>
-<script type="text/javascript" src="../../build/resize/resize-beta-min.js"></script>
+<script type="text/javascript" src="../../build/resize/resize-min.js"></script>
 <script type="text/javascript" src="../../build/animation/animation-min.js"></script>
-<script type="text/javascript" src="../../build/layout/layout-beta-min.js"></script>
+<script type="text/javascript" src="../../build/layout/layout-min.js"></script>
 </head>
 <body class=" yui-skin-sam">
 
@@ -48,20 +49,10 @@ body {
         resize = null;
 
     Event.onDOMReady(function() {
-        // Setup constants
-
-		// QUIRKS FLAG, FOR BOX MODEL
-		var IE_QUIRKS = (YAHOO.env.ua.ie && document.compatMode == "BackCompat");
-
-		// UNDERLAY/IFRAME SYNC REQUIRED
-		var IE_SYNC = (YAHOO.env.ua.ie == 6 || (YAHOO.env.ua.ie == 7 && IE_QUIRKS));
-
-		// PADDING USED FOR BODY ELEMENT (Hardcoded for example)
-		var PANEL_BODY_PADDING = (10*2) // 10px top/bottom padding applied to Panel body element. The top/bottom border width is 0
-    
         var panel = new YAHOO.widget.Panel('demo', {
             draggable: true,
             close: false,
+            autofillheight: "body", // default value, specified here to highlight its use in the example            
             underlay: 'none',
             width: '500px',
             xy: [100, 100]
@@ -88,36 +79,20 @@ body {
         resize = new YAHOO.util.Resize('demo', {
             handles: ['br'],
             autoRatio: true,
-            status: true,
+            status: false,
             minWidth: 380,
             minHeight: 400
         });
         resize.on('resize', function(args) {
-            var panelHeight = args.height;
-			var headerHeight = this.header.offsetHeight; // Content + Padding + Border
-			var bodyHeight = (panelHeight - headerHeight);
-			var bodyContentHeight = (IE_QUIRKS) ? bodyHeight : bodyHeight - PANEL_BODY_PADDING;
-
-			YAHOO.util.Dom.setStyle(this.body, 'height', bodyContentHeight + 'px');
-
-			if (IE_SYNC) {
-
-				// Keep the underlay and iframe size in sync.
-
-				// You could also set the width property, to achieve the 
-				// same results, if you wanted to keep the panel's internal
-				// width property in sync with the DOM width. 
-
-				this.sizeUnderlay();
-
-				// Syncing the iframe can be expensive. Disable iframe if you
-				// don't need it.
-
-				this.syncIframe();
-			}
-
-            layout.set('height', bodyContentHeight);
-            layout.set('width', (args.width - PANEL_BODY_PADDING));
+            var panelHeight = args.height,
+            padding = 20;
+            //Hack to trick IE into behaving
+            Dom.setStyle('layout', 'display', 'none');
+            this.cfg.setProperty("height", panelHeight + 'px');
+            layout.set('height', this.body.offsetHeight - padding);
+            layout.set('width', this.body.offsetWidth - padding);
+            //Hack to trick IE into behaving
+            Dom.setStyle('layout', 'display', 'block');
             layout.resize();
             
         }, panel, true);

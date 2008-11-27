@@ -6,6 +6,7 @@ package
 	import com.yahoo.astra.fl.charts.legend.Legend;
 	import com.yahoo.astra.fl.charts.series.*;
 	import com.yahoo.astra.fl.charts.skins.*;
+	import com.yahoo.astra.fl.utils.UIComponentUtil;
 	import com.yahoo.astra.utils.InstanceFactory;
 	import com.yahoo.astra.utils.JavaScriptUtil;
 	import com.yahoo.yui.LoggerCategory;
@@ -21,6 +22,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
 	import flash.text.TextFormat;
+	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 
 	[SWF(backgroundColor=0xffffff)]
@@ -49,53 +51,97 @@ package
 	//--------------------------------------
 	
 		/**
-		 * @private (protected)
+		 * @private
 		 * A reference to the chart instance.
 		 */
 		protected var chart:Chart;
 		
+		/**
+		 * @private
+		 * The type of the chart specified by setType().
+		 */
+		protected var type:String;
+		
+		/**
+		 * @private
+		 * A reference to the legend instance.
+		 */
 		protected var legend:Legend;
 		
+		/**
+		 * @private
+		 * Storage for the legendDisplay property.
+		 */
 		protected var _legendDisplay:String = "none";
 		
+		/**
+		 * @private
+		 * Specifies the location of the legend, or "none" if the legend
+		 * is not to be displayed.
+		 */
 		public function get legendDisplay():String
 		{
 			return this._legendDisplay;
 		}
 		
+		/**
+		 * @private
+		 */
 		public function set legendDisplay(value:String):void
 		{
 			this._legendDisplay = value;
 			this.refreshComponentSize();
 		}
 		
+		/**
+		 * @private
+		 * Storage for the spacing property.
+		 */
 		protected var _spacing:Number = 6;
 		
+		/**
+		 * @private
+		 * The spacing between the chart and other objects, such as the legend.
+		 */
 		public function get spacing():Number
 		{
 			return this._spacing;
 		}
 		
+		/**
+		 * @private
+		 */
 		public function set spacing(value:Number):void
 		{
 			this._spacing = value;
 			this.refreshComponentSize();
 		}
 		
+		/**
+		 * @private
+		 * Storage for the padding property.
+		 */
 		protected var _padding:Number = 10;
 		
+		/**
+		 * @private
+		 * The padding around the chart, in pixels.
+		 */
 		public function get padding():Number
 		{
 			return this._padding;
 		}
 		
+		/**
+		 * @private
+		 */
 		public function set padding(value:Number):void
 		{
 			this._padding = value;
 		}
 		
 		/**
-		 * @private (protected)
+		 * @private
 		 */
 		protected var backgroundAndBorder:BackgroundAndBorder;
 		
@@ -136,7 +182,8 @@ package
 				this.chart.removeEventListener(MouseEvent.MOUSE_DOWN, chartItemExtraEventHandler);
 			}
 			
-			var ChartType:Class = ChartSerializer.getType(value);
+			this.type = value;
+			var ChartType:Class = ChartSerializer.getType(this.type);
 			var chart:Chart = new ChartType();
 			chart.setStyle("contentPadding", 0);
 			chart.setStyle("backgroundSkin", Sprite);
@@ -158,10 +205,10 @@ package
 			
 			this.chart.legend = this.legend;
 			
-			this.log("Type set to \"" + value + "\"");
+			this.log("Type set to \"" + this.type + "\"");
 		}
 		
-		public function setDataProvider(value:Array, styleChanged:Boolean = false):void
+		public function setDataProvider(value:Array):void
 		{
 			var dataProvider:Array = [];
 			var seriesCount:int = value.length;
@@ -170,9 +217,10 @@ package
 			{
 				var dataFromJavaScript:Object = value[i];
 				var currentData:ISeries = this.chart.dataProvider[i] as ISeries;
-				var seriesType:Class = SeriesSerializer.shortNameToSeriesType(dataFromJavaScript.type);
+				var seriesType:Class = SeriesSerializer.shortNameToSeriesType(dataFromJavaScript.type ? dataFromJavaScript.type : this.type);
+				
 				var series:ISeries;
-				if(currentData is seriesType)
+				if(currentData && getDefinitionByName(getQualifiedClassName(currentData)) == seriesType)
 				{
 					//reuse the series if possible because we want animation
 					series = SeriesSerializer.readSeries(dataFromJavaScript, currentData);
@@ -202,10 +250,7 @@ package
 			this.chart.drawNow();
 			
 			//set the styles for the series
-			if(styleChanged)
-			{
-				this.setSeriesStyles(seriesStyles);
-			}
+			this.setSeriesStyles(seriesStyles);
 			
 			this.refreshComponentSize();
 		}
@@ -221,7 +266,7 @@ package
 				return categoryChart.categoryNames;
 			}
 			var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-			this.log("Cannot find categoryNames on a chart of type " + shortName);
+			this.log("Cannot find categoryNames on a chart of type " + shortName, LoggerCategory.WARN);
 			return null;
 		}
 		
@@ -240,7 +285,7 @@ package
 			else
 			{
 				var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-				this.log("Unable to set categoryNames on a chart of type " + shortName);
+				this.log("Unable to set categoryNames on a chart of type " + shortName, LoggerCategory.WARN);
 			}
 		}
 		
@@ -257,7 +302,7 @@ package
 			}
 			
 			var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-			this.log("Unable to find dataField on a chart of type " + shortName);
+			this.log("Unable to find dataField on a chart of type " + shortName, LoggerCategory.WARN);
 			return null;
 		}
 		
@@ -275,7 +320,7 @@ package
 			else
 			{
 				var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-				this.log("Unable to set dataField on a chart of type " + shortName);
+				this.log("Unable to set dataField on a chart of type " + shortName, LoggerCategory.WARN);
 			}
 		}
 		
@@ -292,7 +337,7 @@ package
 			}
 			
 			var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-			this.log("Unable to find categoryField on a chart of type " + shortName);
+			this.log("Unable to find categoryField on a chart of type " + shortName, LoggerCategory.WARN);
 			return null;
 		}
 		
@@ -310,7 +355,7 @@ package
 			else
 			{
 				var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-				this.log("Unable to set categoryField on a chart of type " + shortName);
+				this.log("Unable to set categoryField on a chart of type " + shortName, LoggerCategory.WARN);
 			}
 		}
 		
@@ -327,7 +372,7 @@ package
 			}
 			
 			var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-			this.log("Unable to find horizontalField on a chart of type " + shortName);
+			this.log("Unable to find horizontalField on a chart of type " + shortName, LoggerCategory.WARN);
 			return null;
 		}
 		
@@ -347,7 +392,7 @@ package
 			else
 			{
 				var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-				this.log("Unable to set horizontalField on a chart of type " + shortName);
+				this.log("Unable to set horizontalField on a chart of type " + shortName, LoggerCategory.WARN);
 			}
 		}
 		
@@ -364,7 +409,7 @@ package
 			}
 			
 			var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-			this.log("Unable to find verticalField on a chart of type " + shortName);
+			this.log("Unable to find verticalField on a chart of type " + shortName, LoggerCategory.WARN);
 			return null;
 		}
 		
@@ -384,7 +429,7 @@ package
 			else
 			{
 				var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-				this.log("Unable to set verticalField on a chart of type " + shortName);
+				this.log("Unable to set verticalField on a chart of type " + shortName, LoggerCategory.WARN);
 			}
 		}
 		
@@ -400,7 +445,7 @@ package
 			}
 			
 			var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-			this.log("Unable to find horizontalAxisTitle on a chart of type " + shortName);
+			this.log("Unable to find horizontalAxisTitle on a chart of type " + shortName, LoggerCategory.WARN);
 			return null;
 		}
 		
@@ -417,7 +462,7 @@ package
 			else
 			{
 				var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-				this.log("Unable to set horizontalAxisTitle on a chart of type " + shortName);
+				this.log("Unable to set horizontalAxisTitle on a chart of type " + shortName, LoggerCategory.WARN);
 			}
 		}
 		
@@ -433,7 +478,7 @@ package
 			}
 			
 			var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-			this.log("Unable to find verticalAxisTitle on a chart of type " + shortName);
+			this.log("Unable to find verticalAxisTitle on a chart of type " + shortName, LoggerCategory.WARN);
 			return null;
 		}
 		
@@ -450,7 +495,7 @@ package
 			else
 			{
 				var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-				this.log("Unable to set verticalAxisTitle on a chart of type " + shortName);
+				this.log("Unable to set verticalAxisTitle on a chart of type " + shortName, LoggerCategory.WARN);
 			}
 		}
 		
@@ -467,7 +512,7 @@ package
 			else
 			{
 				var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-				this.log("Unable to set horizontalAxis on a chart of type " + shortName);
+				this.log("Unable to set horizontalAxis on a chart of type " + shortName, LoggerCategory.WARN);
 			}
 		}
 		
@@ -484,7 +529,7 @@ package
 			else
 			{
 				var shortName:String = ChartSerializer.getShortName(getQualifiedClassName(this.chart));
-				this.log("Unable to set verticalAxis on a chart of type " + shortName);
+				this.log("Unable to set verticalAxis on a chart of type " + shortName, LoggerCategory.WARN);
 			}
 		}
 		
@@ -589,7 +634,7 @@ package
 					this.setLegendStyles(value);
 					break;
 				default:
-					this.log("Unknown style: " + name);
+					this.log("Unknown style: " + name, LoggerCategory.WARN);
 			}
 			
 			if(needsSizingRefresh)
@@ -600,7 +645,6 @@ package
 		
 		public function setSeriesStyles(styles:Array):void
 		{
-			var defaultPointSkins:Array = [CircleSkin, DiamondSkin, RectangleSkin, TriangleSkin];
 			var defaultSeriesColors:Array =
 					[0x00b8bf, 0x8dd5e7, 0xedff9f, 0xffa928, 0xc0fff6, 0xd00050,
 					0xc6c6c6, 0xc3eafb, 0xfcffad, 0xcfff83, 0x444444, 0x4d95dd,
@@ -634,7 +678,7 @@ package
 				var defaultSkin:Object = RectangleSkin;
 				if(series is LineSeries)
 				{
-					defaultSkin = defaultPointSkins[i % defaultPointSkins.length];
+					defaultSkin = CircleSkin;
 				}
 				else if(series is PieSeries)
 				{
@@ -652,9 +696,9 @@ package
 						switch(styleName)
 						{
 							case "images":
-								if(!series is PieSeries)
+								if(!(series is PieSeries))
 								{
-									this.log(styleName + " style not supported by specified series type.");
+									this.log(styleName + " style is only supported by series of type 'pie'.", LoggerCategory.WARN);
 									break;
 								}
 								var images:Array = style.images as Array;
@@ -677,9 +721,9 @@ package
 								mode = style.mode;
 								break;
 							case "colors":
-								if(!series is PieSeries)
+								if(!(series is PieSeries))
 								{
-									this.log(styleName + " style not supported by specified series type.");
+									this.log(styleName + " style is only supported by series of type 'pie'.", LoggerCategory.WARN);
 									break;
 								}
 								var colors:Array = style.colors;
@@ -701,20 +745,74 @@ package
 							case "size":
 								UIComponent(series).setStyle("markerSize", style.size);
 								break;
-							case "lineSize":
+							case "alpha":
+								UIComponent(series).setStyle("markerAlpha", style.alpha);
+								break;
+							case "showAreaFill": //LineSeries only
+								if(!(series is LineSeries))
+								{
+									this.log("The style " + styleName + " is only supported by series of type 'line'.", LoggerCategory.WARN);
+								}
+								UIComponent(series).setStyle("showAreaFill", style.showAreaFill);
+								break;
+							case "areaFillAlpha": //LineSeries only
+								if(!(series is LineSeries))
+								{
+									this.log("The style " + styleName + " is only supported by series of type 'line'.", LoggerCategory.WARN);
+								}
+								UIComponent(series).setStyle("areaFillAlpha", style.areaFillAlpha);
+								break;
+							case "lineSize": //LineSeries only
+								if(!(series is LineSeries))
+								{
+									this.log("The style " + styleName + " is only supported by series of type 'line'.", LoggerCategory.WARN);
+								}
 								UIComponent(series).setStyle("lineWeight", style.lineSize);
 								break;
-							case "connectPoints":
+							case "connectPoints": //LineSeries only
+								if(!(series is LineSeries))
+								{
+									this.log("The style " + styleName + " is only supported by series of type 'line'.", LoggerCategory.WARN);
+								}
 								UIComponent(series).setStyle("connectPoints", style.connectPoints);
 								break;
-							case "connectDiscontinuousPoints":
+							case "connectDiscontinuousPoints": //LineSeries only
+								if(!(series is LineSeries))
+								{
+									this.log("The style " + styleName + " is only supported by series of type 'line'.", LoggerCategory.WARN);
+								}
 								UIComponent(series).setStyle("connectDiscontinuousPoints", style.connectDiscontinuousPoints);
 								break;
-							case "discontinuousDashLength":
+							case "discontinuousDashLength": //LineSeries only
+								if(!(series is LineSeries))
+								{
+									this.log("The style " + styleName + " is only supported by series of type 'line'.", LoggerCategory.WARN);
+								}
 								UIComponent(series).setStyle("discontinuousDashLength", style.discontinuousDashLength);
 								break;
+							case "showLabels": //PieSeries only
+								if(!(series is PieSeries))
+								{
+									this.log("The style " + styleName + " is only supported by series of type 'pie'.", LoggerCategory.WARN);
+								}
+								UIComponent(series).setStyle("showLabels", style.showLabels);
+								break;
+							case "hideOverlappingLabels": //PieSeries only
+								if(!(series is PieSeries))
+								{
+									this.log("The style " + styleName + " is only supported by series of type 'pie'.", LoggerCategory.WARN);
+								}
+								UIComponent(series).setStyle("hideOverlappingLabels", style.showLabels);
+								break;
+							case "font": //PieSeries only
+								if(!(series is PieSeries))
+								{
+									this.log("The style " + styleName + " is only supported by series of type 'pie'.", LoggerCategory.WARN);
+								}
+								UIComponent(series).setStyle("textFormat", TextFormatSerializer.readTextFormat(style.font))
+								break;
 							default:
-								this.log("Unknown series style: " + styleName);
+								this.log("Unknown series style: " + styleName, LoggerCategory.WARN);
 						}
 					}
 				}
@@ -861,6 +959,16 @@ package
 						//center horizontally
 						this.legend.x = Math.max(0, (this.stage.stageWidth - this.legend.width) / 2);
 						this.chart.height -= (this.legend.height + this.spacing);
+					}
+						
+					//we disable animation temporarily because we don't want the markers
+					//sliding around because the legend resized
+					if(this.legend && this.legendDisplay != "none")
+					{
+						var oldAnimationEnabled:Boolean = UIComponentUtil.getStyleValue(this.chart, "animationEnabled");
+						this.chart.setStyle("animationEnabled", false);
+						this.chart.drawNow();
+						this.chart.setStyle("animationEnabled", oldAnimationEnabled);
 					}
 				}
 				else
@@ -1017,6 +1125,11 @@ package
 			if(styles.showLabels != null)
 			{
 				this.chart.setStyle("show" + axisName.substr(0, 1).toUpperCase() + axisName.substr(1) + "AxisLabels", styles.showLabels);
+			}
+			
+			if(styles.hideOverlappingLabels != null)
+			{
+				this.chart.setStyle(axisName.substr(0, 1).toUpperCase() + axisName.substr(1) + "AxisHideOverlappingLabels", styles.hideOverlappingLabels);
 			}
 			
 			if(styles.majorGridLines)

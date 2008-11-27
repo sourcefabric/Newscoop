@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Browser History Manager&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Browser History Manager&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_history.html">history</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                    
@@ -46,6 +48,10 @@ This library requires the following static markup:
 &lt;input id="yui-history-field" type="hidden"&gt;
                     </div>
 
+
+
+<div class="yui-gc">
+    <div class="yui-u first">
                     <form onsubmit="return false">
                         <p>Search history:
                         <div id="propertysearch">
@@ -56,9 +62,13 @@ This library requires the following static markup:
                         </div>
                     </form>
                     <script type="text/javascript">
-                        ALL_YUI_PROPS = [{"access": "private", "host": "YAHOO.util.History", "name": "_checkIframeLoaded", "url": "YAHOO.util.History.html#method__checkIframeLoaded"}, {"access": "private", "host": "YAHOO.util.History", "name": "_fqstates", "url": "YAHOO.util.History.html#property__fqstates"}, {"access": "", "host": "YAHOO.util.History", "name": "getBookmarkedState", "url": "YAHOO.util.History.html#method_getBookmarkedState"}, {"access": "", "host": "YAHOO.util.History", "name": "getCurrentState", "url": "YAHOO.util.History.html#method_getCurrentState"}, {"access": "private", "host": "YAHOO.util.History", "name": "_getHash", "url": "YAHOO.util.History.html#method__getHash"}, {"access": "", "host": "YAHOO.util.History", "name": "getQueryStringParameter", "url": "YAHOO.util.History.html#method_getQueryStringParameter"}, {"access": "private", "host": "YAHOO.util.History", "name": "_handleFQStateChange", "url": "YAHOO.util.History.html#method__handleFQStateChange"}, {"access": "private", "host": "YAHOO.util.History", "name": "_histFrame", "url": "YAHOO.util.History.html#property__histFrame"}, {"access": "private", "host": "YAHOO.util.History", "name": "_initialize", "url": "YAHOO.util.History.html#method__initialize"}, {"access": "", "host": "YAHOO.util.History", "name": "initialize", "url": "YAHOO.util.History.html#method_initialize"}, {"access": "private", "host": "YAHOO.util.History", "name": "_initialized", "url": "YAHOO.util.History.html#property__initialized"}, {"access": "private", "host": "YAHOO.util.History", "name": "_modules", "url": "YAHOO.util.History.html#property__modules"}, {"access": "", "host": "YAHOO.util.History", "name": "multiNavigate", "url": "YAHOO.util.History.html#method_multiNavigate"}, {"access": "", "host": "YAHOO.util.History", "name": "navigate", "url": "YAHOO.util.History.html#method_navigate"}, {"access": "", "host": "YAHOO.util.History", "name": "onLoadEvent", "url": "YAHOO.util.History.html#event_onLoadEvent"}, {"access": "", "host": "YAHOO.util.History", "name": "onReady", "url": "YAHOO.util.History.html#method_onReady"}, {"access": "", "host": "YAHOO.util.History", "name": "register", "url": "YAHOO.util.History.html#method_register"}, {"access": "private", "host": "YAHOO.util.History", "name": "_stateField", "url": "YAHOO.util.History.html#property__stateField"}, {"access": "private", "host": "YAHOO.util.History", "name": "_storeStates", "url": "YAHOO.util.History.html#method__storeStates"}, {"access": "private", "host": "YAHOO.util.History", "name": "_updateIFrame", "url": "YAHOO.util.History.html#method__updateIFrame"}];
+                        ALL_YUI_PROPS = [{"access": "private", "host": "YAHOO.util.History", "name": "_checkIframeLoaded", "url": "YAHOO.util.History.html#method__checkIframeLoaded"}, {"access": "private", "host": "YAHOO.util.History", "name": "_fqstates", "url": "YAHOO.util.History.html#property__fqstates"}, {"access": "", "host": "YAHOO.util.History", "name": "getBookmarkedState", "url": "YAHOO.util.History.html#method_getBookmarkedState"}, {"access": "", "host": "YAHOO.util.History", "name": "getCurrentState", "url": "YAHOO.util.History.html#method_getCurrentState"}, {"access": "private", "host": "YAHOO.util.History", "name": "_getHash", "url": "YAHOO.util.History.html#method__getHash"}, {"access": "", "host": "YAHOO.util.History", "name": "getQueryStringParameter", "url": "YAHOO.util.History.html#method_getQueryStringParameter"}, {"access": "private", "host": "YAHOO.util.History", "name": "_handleFQStateChange", "url": "YAHOO.util.History.html#method__handleFQStateChange"}, {"access": "private", "host": "YAHOO.util.History", "name": "_histFrame", "url": "YAHOO.util.History.html#property__histFrame"}, {"access": "private", "host": "YAHOO.util.History", "name": "_initialize", "url": "YAHOO.util.History.html#method__initialize"}, {"access": "", "host": "YAHOO.util.History", "name": "initialize", "url": "YAHOO.util.History.html#method_initialize"}, {"access": "private", "host": "YAHOO.util.History", "name": "_initialized", "url": "YAHOO.util.History.html#property__initialized"}, {"access": "private", "host": "YAHOO.util.History", "name": "_modules", "url": "YAHOO.util.History.html#property__modules"}, {"access": "", "host": "YAHOO.util.History", "name": "multiNavigate", "url": "YAHOO.util.History.html#method_multiNavigate"}, {"access": "", "host": "YAHOO.util.History", "name": "navigate", "url": "YAHOO.util.History.html#method_navigate"}, {"access": "", "host": "YAHOO.util.History", "name": "onLoadEvent", "url": "YAHOO.util.History.html#event_onLoadEvent"}, {"access": "", "host": "YAHOO.util.History", "name": "onReady", "url": "YAHOO.util.History.html#method_onReady"}, {"access": "private", "host": "YAHOO.util.History", "name": "QUERY_STRING_REGEXP", "url": "YAHOO.util.History.html#property_QUERY_STRING_REGEXP"}, {"access": "", "host": "YAHOO.util.History", "name": "register", "url": "YAHOO.util.History.html#method_register"}, {"access": "private", "host": "YAHOO.util.History", "name": "_stateField", "url": "YAHOO.util.History.html#property__stateField"}, {"access": "private", "host": "YAHOO.util.History", "name": "_storeStates", "url": "YAHOO.util.History.html#method__storeStates"}, {"access": "private", "host": "YAHOO.util.History", "name": "_updateIFrame", "url": "YAHOO.util.History.html#method__updateIFrame"}];
                     </script>
+	    </div>
+    <div class="yui-u">
 
+	    </div>
+</div>
 
 			</div>
 		</div>
@@ -76,6 +86,8 @@ This library requires the following static markup:
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -116,6 +128,8 @@ This library requires the following static markup:
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -164,7 +178,7 @@ This library requires the following static markup:
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

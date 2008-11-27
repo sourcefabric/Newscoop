@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>yuiloader&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>yuiloader&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_yuiloader.html">yuiloader</a>
@@ -21,14 +21,16 @@
                  &gt; yuiloader.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -70,7 +72,14 @@
 <span class="c">         * @static</span>
 <span class="c">         */</span>
         <span class="nx">info</span><span class="o">:</span> <span class="o">{</span>
-    <span class="s1">&#39;base&#39;</span><span class="o">:</span> <span class="s1">&#39;http://yui.yahooapis.com/2.5.1/build/&#39;</span><span class="o">,</span>
+
+    <span class="c">// &#39;root&#39;: &#39;2.5.2/build/&#39;,</span>
+<span class="c"></span>    <span class="c">// &#39;base&#39;: &#39;http://yui.yahooapis.com/2.5.2/build/&#39;,</span>
+<span class="c"></span>
+    <span class="s1">&#39;root&#39;</span><span class="o">:</span> <span class="s1">&#39;@VERSION@/build/&#39;</span><span class="o">,</span>
+    <span class="s1">&#39;base&#39;</span><span class="o">:</span> <span class="s1">&#39;http://yui.yahooapis.com/@VERSION@/build/&#39;</span><span class="o">,</span>
+
+    <span class="s1">&#39;comboBase&#39;</span><span class="o">:</span> <span class="s1">&#39;http://yui.yahooapis.com/combo?&#39;</span><span class="o">,</span>
 
     <span class="s1">&#39;skin&#39;</span><span class="o">:</span> <span class="o">{</span>
         <span class="s1">&#39;defaultSkin&#39;</span><span class="o">:</span> <span class="s1">&#39;sam&#39;</span><span class="o">,</span>
@@ -93,7 +102,7 @@
         <span class="s1">&#39;autocomplete&#39;</span><span class="o">:</span> <span class="o">{</span>
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;autocomplete/autocomplete-min.js&#39;</span><span class="o">,</span>
-            <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;dom&#39;</span><span class="o">,</span> <span class="s1">&#39;event&#39;</span><span class="o">],</span>
+            <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;dom&#39;</span><span class="o">,</span> <span class="s1">&#39;event&#39;</span><span class="o">,</span> <span class="s1">&#39;datasource&#39;</span><span class="o">],</span>
             <span class="s1">&#39;optional&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;connection&#39;</span><span class="o">,</span> <span class="s1">&#39;animation&#39;</span><span class="o">],</span>
             <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span>
         <span class="o">},</span>
@@ -116,6 +125,14 @@
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;calendar/calendar-min.js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;event&#39;</span><span class="o">,</span> <span class="s1">&#39;dom&#39;</span><span class="o">],</span>
+            <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span>
+        <span class="o">},</span>
+
+        <span class="s1">&#39;carousel&#39;</span><span class="o">:</span> <span class="o">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;carousel/carousel-beta-min.js&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;element&#39;</span><span class="o">],</span>
+            <span class="s1">&#39;optional&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;animation&#39;</span><span class="o">],</span>
             <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span>
         <span class="o">},</span>
 
@@ -160,22 +177,22 @@
 
         <span class="s1">&#39;cookie&#39;</span><span class="o">:</span> <span class="o">{</span>
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
-            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;cookie/cookie-beta-min.js&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;cookie/cookie-min.js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;yahoo&#39;</span><span class="o">]</span>
         <span class="o">},</span>
 
         <span class="s1">&#39;datasource&#39;</span><span class="o">:</span> <span class="o">{</span>
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
-            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;datasource/datasource-beta-min.js&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;datasource/datasource-min.js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;event&#39;</span><span class="o">],</span>
             <span class="s1">&#39;optional&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;connection&#39;</span><span class="o">]</span>
         <span class="o">},</span>
 
         <span class="s1">&#39;datatable&#39;</span><span class="o">:</span> <span class="o">{</span>
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
-            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;datatable/datatable-beta-min.js&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;datatable/datatable-min.js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;element&#39;</span><span class="o">,</span> <span class="s1">&#39;datasource&#39;</span><span class="o">],</span>
-            <span class="s1">&#39;optional&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;calendar&#39;</span><span class="o">,</span> <span class="s1">&#39;dragdrop&#39;</span><span class="o">],</span>
+            <span class="s1">&#39;optional&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;calendar&#39;</span><span class="o">,</span> <span class="s1">&#39;dragdrop&#39;</span><span class="o">,</span> <span class="s1">&#39;paginator&#39;</span><span class="o">],</span>
             <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span>
         <span class="o">},</span>
 
@@ -193,9 +210,10 @@
 
         <span class="s1">&#39;editor&#39;</span><span class="o">:</span> <span class="o">{</span>
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
-            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;editor/editor-beta-min.js&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;editor/editor-min.js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;menu&#39;</span><span class="o">,</span> <span class="s1">&#39;element&#39;</span><span class="o">,</span> <span class="s1">&#39;button&#39;</span><span class="o">],</span>
             <span class="s1">&#39;optional&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;animation&#39;</span><span class="o">,</span> <span class="s1">&#39;dragdrop&#39;</span><span class="o">],</span>
+            <span class="s1">&#39;supersedes&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;simpleeditor&#39;</span><span class="o">],</span>
             <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span>
         <span class="o">},</span>
 
@@ -256,7 +274,7 @@
 
          <span class="s1">&#39;layout&#39;</span><span class="o">:</span> <span class="o">{</span>
              <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
-             <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;layout/layout-beta-min.js&#39;</span><span class="o">,</span>
+             <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;layout/layout-min.js&#39;</span><span class="o">,</span>
              <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;dom&#39;</span><span class="o">,</span> <span class="s1">&#39;event&#39;</span><span class="o">,</span> <span class="s1">&#39;element&#39;</span><span class="o">],</span>
              <span class="s1">&#39;optional&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;animation&#39;</span><span class="o">,</span> <span class="s1">&#39;dragdrop&#39;</span><span class="o">,</span> <span class="s1">&#39;resize&#39;</span><span class="o">,</span> <span class="s1">&#39;selector&#39;</span><span class="o">],</span>
              <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span>
@@ -277,9 +295,16 @@
             <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span>
         <span class="o">},</span>
 
+        <span class="s1">&#39;paginator&#39;</span><span class="o">:</span> <span class="o">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;paginator/paginator-min.js&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;element&#39;</span><span class="o">],</span>
+            <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span>
+        <span class="o">},</span>
+
         <span class="s1">&#39;profiler&#39;</span><span class="o">:</span> <span class="o">{</span>
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
-            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;profiler/profiler-beta-min.js&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;profiler/profiler-min.js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;yahoo&#39;</span><span class="o">]</span>
         <span class="o">},</span>
 
@@ -312,7 +337,7 @@
 
          <span class="s1">&#39;resize&#39;</span><span class="o">:</span> <span class="o">{</span>
              <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
-             <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;resize/resize-beta-min.js&#39;</span><span class="o">,</span>
+             <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;resize/resize-min.js&#39;</span><span class="o">,</span>
              <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;dom&#39;</span><span class="o">,</span> <span class="s1">&#39;event&#39;</span><span class="o">,</span> <span class="s1">&#39;dragdrop&#39;</span><span class="o">,</span> <span class="s1">&#39;element&#39;</span><span class="o">],</span>
              <span class="s1">&#39;optional&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;animation&#39;</span><span class="o">],</span>
              <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span>
@@ -326,7 +351,7 @@
 
         <span class="s1">&#39;simpleeditor&#39;</span><span class="o">:</span> <span class="o">{</span>
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
-            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;editor/simpleeditor-beta-min.js&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;editor/simpleeditor-min.js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;element&#39;</span><span class="o">],</span>
             <span class="s1">&#39;optional&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;containercore&#39;</span><span class="o">,</span> <span class="s1">&#39;menu&#39;</span><span class="o">,</span> <span class="s1">&#39;button&#39;</span><span class="o">,</span> <span class="s1">&#39;animation&#39;</span><span class="o">,</span> <span class="s1">&#39;dragdrop&#39;</span><span class="o">],</span>
             <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span>
@@ -337,7 +362,8 @@
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;slider/slider-min.js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;dragdrop&#39;</span><span class="o">],</span>
-            <span class="s1">&#39;optional&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;animation&#39;</span><span class="o">]</span>
+            <span class="s1">&#39;optional&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;animation&#39;</span><span class="o">],</span>
+            <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span>
         <span class="o">},</span>
 
         <span class="s1">&#39;tabview&#39;</span><span class="o">:</span> <span class="o">{</span>
@@ -351,14 +377,14 @@
         <span class="s1">&#39;treeview&#39;</span><span class="o">:</span> <span class="o">{</span>
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;treeview/treeview-min.js&#39;</span><span class="o">,</span>
-            <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;event&#39;</span><span class="o">],</span>
+            <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;event&#39;</span><span class="o">,</span> <span class="s1">&#39;dom&#39;</span><span class="o">],</span>
             <span class="s1">&#39;skinnable&#39;</span><span class="o">:</span> <span class="kc">true</span>
         <span class="o">},</span>
 
         <span class="s1">&#39;uploader&#39;</span><span class="o">:</span> <span class="o">{</span>
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;uploader/uploader-experimental.js&#39;</span><span class="o">,</span>
-            <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;yahoo&#39;</span><span class="o">]</span>
+            <span class="s1">&#39;requires&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;element&#39;</span><span class="o">]</span>
         <span class="o">},</span>
 
         <span class="s1">&#39;utilities&#39;</span><span class="o">:</span> <span class="o">{</span>
@@ -382,7 +408,7 @@
 
         <span class="s1">&#39;yuiloader&#39;</span><span class="o">:</span> <span class="o">{</span>
             <span class="s1">&#39;type&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">,</span>
-            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;yuiloader/yuiloader-beta-min.js&#39;</span><span class="o">,</span>
+            <span class="s1">&#39;path&#39;</span><span class="o">:</span> <span class="s1">&#39;yuiloader/yuiloader-min.js&#39;</span><span class="o">,</span>
             <span class="s1">&#39;supersedes&#39;</span><span class="o">:</span> <span class="o">[</span><span class="s1">&#39;yahoo&#39;</span><span class="o">,</span> <span class="s1">&#39;get&#39;</span><span class="o">]</span>
         <span class="o">},</span>
 
@@ -506,6 +532,13 @@
         <span class="k">this</span><span class="o">.</span><span class="nx">onProgress</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
         <span class="c">/**</span>
+<span class="c">         * Callback that will be executed if a timeout occurs</span>
+<span class="c">         * @method onTimeout</span>
+<span class="c">         * @type function</span>
+<span class="c">         */</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">onTimeout</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+        <span class="c">/**</span>
 <span class="c">         * The execution scope for all callbacks</span>
 <span class="c">         * @property scope</span>
 <span class="c">         * @default this</span>
@@ -551,6 +584,44 @@
 <span class="c">         * @default http://yui.yahooapis.com/[YUI VERSION]/build/</span>
 <span class="c">         */</span>
         <span class="k">this</span><span class="o">.</span><span class="nx">base</span> <span class="o">=</span> <span class="nx">YUI</span><span class="o">.</span><span class="nx">info</span><span class="o">.</span><span class="nx">base</span><span class="o">;</span>
+
+        <span class="c">/**</span>
+<span class="c">         * Base path for the combo service</span>
+<span class="c">         * @property comboBase</span>
+<span class="c">         * @type string</span>
+<span class="c">         * @default http://yui.yahooapis.com/combo?</span>
+<span class="c">         */</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">comboBase</span> <span class="o">=</span> <span class="nx">YUI</span><span class="o">.</span><span class="nx">info</span><span class="o">.</span><span class="nx">comboBase</span><span class="o">;</span>
+
+        <span class="c">/**</span>
+<span class="c">         * If configured, YUI will use the the combo handler on the</span>
+<span class="c">         * Yahoo! CDN to pontentially reduce the number of http requests</span>
+<span class="c">         * required.</span>
+<span class="c">         * @property combine</span>
+<span class="c">         * @type boolean</span>
+<span class="c">         * @default false</span>
+<span class="c">         */</span>
+        <span class="c">// this.combine = (o &amp;&amp; !(&#39;base&#39; in o));</span>
+<span class="c"></span>        <span class="k">this</span><span class="o">.</span><span class="nx">combine</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+
+        <span class="c">/**</span>
+<span class="c">         * Root path to prepend to module path for the combo</span>
+<span class="c">         * service</span>
+<span class="c">         * @property root</span>
+<span class="c">         * @type string</span>
+<span class="c">         * @default [YUI VERSION]/build/</span>
+<span class="c">         */</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">root</span> <span class="o">=</span> <span class="nx">YUI</span><span class="o">.</span><span class="nx">info</span><span class="o">.</span><span class="nx">root</span><span class="o">;</span>
+
+        <span class="c">/**</span>
+<span class="c">         * Timeout value in milliseconds.  If set, this value will be used by</span>
+<span class="c">         * the get utility.  the timeout event will fire if</span>
+<span class="c">         * a timeout occurs.</span>
+<span class="c">         * @property timeout</span>
+<span class="c">         * @type int</span>
+<span class="c">         */</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">timeout</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
 
         <span class="c">/**</span>
 <span class="c">         * A list of modules that should not be loaded, even if</span>
@@ -980,7 +1051,7 @@
 <span class="c">         * @param o optional options object</span>
 <span class="c">         */</span>
         <span class="nx">calculate</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">o</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">dirty</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nx">o</span> <span class="o">||</span> <span class="k">this</span><span class="o">.</span><span class="nx">dirty</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_config</span><span class="o">(</span><span class="nx">o</span><span class="o">);</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_setup</span><span class="o">();</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_explode</span><span class="o">();</span>
@@ -1010,19 +1081,22 @@
 
             <span class="c">// Create skin modules</span>
 <span class="c"></span>            <span class="k">for</span> <span class="o">(</span><span class="nx">name</span> <span class="k">in</span> <span class="nx">info</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">var</span> <span class="nx">m</span> <span class="o">=</span> <span class="nx">info</span><span class="o">[</span><span class="nx">name</span><span class="o">];</span>
-                <span class="k">if</span> <span class="o">(</span><span class="nx">m</span> <span class="o">&amp;&amp;</span> <span class="nx">m</span><span class="o">.</span><span class="nx">skinnable</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="c">// Y.log(&quot;skinning: &quot; + name);</span>
-<span class="c"></span>                    <span class="k">var</span> <span class="nx">o</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="nx">skin</span><span class="o">.</span><span class="nx">overrides</span><span class="o">,</span> <span class="nx">smod</span><span class="o">;</span>
-                    <span class="k">if</span> <span class="o">(</span><span class="nx">o</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span><span class="o">[</span><span class="nx">name</span><span class="o">])</span> <span class="o">{</span>
-                        <span class="k">for</span> <span class="o">(</span><span class="nx">i</span><span class="o">=</span><span class="m">0</span><span class="o">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">o</span><span class="o">[</span><span class="nx">name</span><span class="o">].</span><span class="nx">length</span><span class="o">;</span> <span class="nx">i</span><span class="o">=</span><span class="nx">i</span><span class="o">+</span><span class="m">1</span><span class="o">)</span> <span class="o">{</span>
-                            <span class="nx">smod</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_addSkin</span><span class="o">(</span><span class="nx">o</span><span class="o">[</span><span class="nx">name</span><span class="o">][</span><span class="nx">i</span><span class="o">],</span> <span class="nx">name</span><span class="o">);</span>
-                        <span class="o">}</span>
-                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                        <span class="nx">smod</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_addSkin</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">skin</span><span class="o">.</span><span class="nx">defaultSkin</span><span class="o">,</span> <span class="nx">name</span><span class="o">);</span>
-                    <span class="o">}</span>
 
-                    <span class="nx">m</span><span class="o">.</span><span class="nx">requires</span><span class="o">.</span><span class="nx">push</span><span class="o">(</span><span class="nx">smod</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nx">lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">info</span><span class="o">,</span> <span class="nx">name</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">var</span> <span class="nx">m</span> <span class="o">=</span> <span class="nx">info</span><span class="o">[</span><span class="nx">name</span><span class="o">];</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">m</span> <span class="o">&amp;&amp;</span> <span class="nx">m</span><span class="o">.</span><span class="nx">skinnable</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="c">// Y.log(&quot;skinning: &quot; + name);</span>
+<span class="c"></span>                        <span class="k">var</span> <span class="nx">o</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="nx">skin</span><span class="o">.</span><span class="nx">overrides</span><span class="o">,</span> <span class="nx">smod</span><span class="o">;</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="nx">o</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span><span class="o">[</span><span class="nx">name</span><span class="o">])</span> <span class="o">{</span>
+                            <span class="k">for</span> <span class="o">(</span><span class="nx">i</span><span class="o">=</span><span class="m">0</span><span class="o">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">o</span><span class="o">[</span><span class="nx">name</span><span class="o">].</span><span class="nx">length</span><span class="o">;</span> <span class="nx">i</span><span class="o">=</span><span class="nx">i</span><span class="o">+</span><span class="m">1</span><span class="o">)</span> <span class="o">{</span>
+                                <span class="nx">smod</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_addSkin</span><span class="o">(</span><span class="nx">o</span><span class="o">[</span><span class="nx">name</span><span class="o">][</span><span class="nx">i</span><span class="o">],</span> <span class="nx">name</span><span class="o">);</span>
+                            <span class="o">}</span>
+                        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                            <span class="nx">smod</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_addSkin</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">skin</span><span class="o">.</span><span class="nx">defaultSkin</span><span class="o">,</span> <span class="nx">name</span><span class="o">);</span>
+                        <span class="o">}</span>
+
+                        <span class="nx">m</span><span class="o">.</span><span class="nx">requires</span><span class="o">.</span><span class="nx">push</span><span class="o">(</span><span class="nx">smod</span><span class="o">);</span>
+                    <span class="o">}</span>
                 <span class="o">}</span>
 
             <span class="o">}</span>
@@ -1076,13 +1150,15 @@
             <span class="k">var</span> <span class="nx">r</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="nx">required</span><span class="o">,</span> <span class="nx">i</span><span class="o">,</span> <span class="nx">mod</span><span class="o">;</span>
 
             <span class="k">for</span> <span class="o">(</span><span class="nx">i</span> <span class="k">in</span> <span class="nx">r</span><span class="o">)</span> <span class="o">{</span>
-                <span class="nx">mod</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">moduleInfo</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
-                <span class="k">if</span> <span class="o">(</span><span class="nx">mod</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nx">lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">r</span><span class="o">,</span> <span class="nx">i</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="nx">mod</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">moduleInfo</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">mod</span><span class="o">)</span> <span class="o">{</span>
 
-                    <span class="k">var</span> <span class="nx">req</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">getRequires</span><span class="o">(</span><span class="nx">mod</span><span class="o">);</span>
+                        <span class="k">var</span> <span class="nx">req</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">getRequires</span><span class="o">(</span><span class="nx">mod</span><span class="o">);</span>
 
-                    <span class="k">if</span> <span class="o">(</span><span class="nx">req</span><span class="o">)</span> <span class="o">{</span>
-                        <span class="nx">YUI</span><span class="o">.</span><span class="nx">ObjectUtil</span><span class="o">.</span><span class="nx">appendArray</span><span class="o">(</span><span class="nx">r</span><span class="o">,</span> <span class="nx">req</span><span class="o">);</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="nx">req</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nx">YUI</span><span class="o">.</span><span class="nx">ObjectUtil</span><span class="o">.</span><span class="nx">appendArray</span><span class="o">(</span><span class="nx">r</span><span class="o">,</span> <span class="nx">req</span><span class="o">);</span>
+                        <span class="o">}</span>
                     <span class="o">}</span>
                 <span class="o">}</span>
             <span class="o">}</span>
@@ -1147,15 +1223,18 @@
 <span class="c">         * @private</span>
 <span class="c">         */</span>
         <span class="nx">_rollup</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
-            <span class="k">var</span> <span class="nx">i</span><span class="o">,</span> <span class="nx">j</span><span class="o">,</span> <span class="nx">m</span><span class="o">,</span> <span class="nx">s</span><span class="o">,</span> <span class="nx">rollups</span><span class="o">={},</span> <span class="nx">r</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="nx">required</span><span class="o">,</span> <span class="nx">roll</span><span class="o">;</span>
+            <span class="k">var</span> <span class="nx">i</span><span class="o">,</span> <span class="nx">j</span><span class="o">,</span> <span class="nx">m</span><span class="o">,</span> <span class="nx">s</span><span class="o">,</span> <span class="nx">rollups</span><span class="o">={},</span> <span class="nx">r</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="nx">required</span><span class="o">,</span> <span class="nx">roll</span><span class="o">,</span>
+                <span class="nx">info</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">moduleInfo</span><span class="o">;</span>
 
             <span class="c">// find and cache rollup modules</span>
 <span class="c"></span>            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">dirty</span> <span class="o">||</span> <span class="o">!</span><span class="k">this</span><span class="o">.</span><span class="nx">rollups</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">for</span> <span class="o">(</span><span class="nx">i</span> <span class="k">in</span> <span class="k">this</span><span class="o">.</span><span class="nx">moduleInfo</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="nx">m</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">moduleInfo</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
-                    <span class="c">//if (m &amp;&amp; m.rollup &amp;&amp; m.supersedes) {</span>
-<span class="c"></span>                    <span class="k">if</span> <span class="o">(</span><span class="nx">m</span> <span class="o">&amp;&amp;</span> <span class="nx">m</span><span class="o">.</span><span class="nx">rollup</span><span class="o">)</span> <span class="o">{</span>
-                        <span class="nx">rollups</span><span class="o">[</span><span class="nx">i</span><span class="o">]</span> <span class="o">=</span> <span class="nx">m</span><span class="o">;</span>
+                <span class="k">for</span> <span class="o">(</span><span class="nx">i</span> <span class="k">in</span> <span class="nx">info</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">info</span><span class="o">,</span> <span class="nx">i</span><span class="o">))</span> <span class="o">{</span>
+                        <span class="nx">m</span> <span class="o">=</span> <span class="nx">info</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
+                        <span class="c">//if (m &amp;&amp; m.rollup &amp;&amp; m.supersedes) {</span>
+<span class="c"></span>                        <span class="k">if</span> <span class="o">(</span><span class="nx">m</span> <span class="o">&amp;&amp;</span> <span class="nx">m</span><span class="o">.</span><span class="nx">rollup</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nx">rollups</span><span class="o">[</span><span class="nx">i</span><span class="o">]</span> <span class="o">=</span> <span class="nx">m</span><span class="o">;</span>
+                        <span class="o">}</span>
                     <span class="o">}</span>
                 <span class="o">}</span>
 
@@ -1171,7 +1250,7 @@
 
                     <span class="c">// there can be only one</span>
 <span class="c"></span>                    <span class="k">if</span> <span class="o">(!</span><span class="nx">r</span><span class="o">[</span><span class="nx">i</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="o">.</span><span class="nx">loaded</span><span class="o">[</span><span class="nx">i</span><span class="o">])</span> <span class="o">{</span>
-                        <span class="nx">m</span> <span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="nx">moduleInfo</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">m</span><span class="o">.</span><span class="nx">supersedes</span><span class="o">;</span> <span class="nx">roll</span><span class="o">=</span><span class="kc">false</span><span class="o">;</span>
+                        <span class="nx">m</span> <span class="o">=</span><span class="nx">info</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">m</span><span class="o">.</span><span class="nx">supersedes</span><span class="o">;</span> <span class="nx">roll</span><span class="o">=</span><span class="kc">false</span><span class="o">;</span>
 
                         <span class="k">if</span> <span class="o">(!</span><span class="nx">m</span><span class="o">.</span><span class="nx">rollup</span><span class="o">)</span> <span class="o">{</span>
                             <span class="k">continue</span><span class="o">;</span>
@@ -1182,12 +1261,14 @@
                         <span class="c">// Y.log(&#39;skin? &#39; + i + &quot;: &quot; + skin);</span>
 <span class="c"></span>                        <span class="k">if</span> <span class="o">(</span><span class="nx">skin</span><span class="o">)</span> <span class="o">{</span>
                             <span class="k">for</span> <span class="o">(</span><span class="nx">j</span> <span class="k">in</span> <span class="nx">r</span><span class="o">)</span> <span class="o">{</span>
-                                <span class="k">if</span> <span class="o">(</span><span class="nx">i</span> <span class="o">!==</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="nx">parseSkin</span><span class="o">(</span><span class="nx">j</span><span class="o">))</span> <span class="o">{</span>
-                                    <span class="nx">c</span><span class="o">++;</span>
-                                    <span class="nx">roll</span> <span class="o">=</span> <span class="o">(</span><span class="nx">c</span> <span class="o">&gt;=</span> <span class="nx">m</span><span class="o">.</span><span class="nx">rollup</span><span class="o">);</span>
-                                    <span class="k">if</span> <span class="o">(</span><span class="nx">roll</span><span class="o">)</span> <span class="o">{</span>
-                                        <span class="c">// Y.log(&quot;skin rollup &quot; + lang.dump(r));</span>
-<span class="c"></span>                                        <span class="k">break</span><span class="o">;</span>
+                                <span class="k">if</span> <span class="o">(</span><span class="nx">lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">r</span><span class="o">,</span> <span class="nx">j</span><span class="o">))</span> <span class="o">{</span>
+                                    <span class="k">if</span> <span class="o">(</span><span class="nx">i</span> <span class="o">!==</span> <span class="nx">j</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="nx">parseSkin</span><span class="o">(</span><span class="nx">j</span><span class="o">))</span> <span class="o">{</span>
+                                        <span class="nx">c</span><span class="o">++;</span>
+                                        <span class="nx">roll</span> <span class="o">=</span> <span class="o">(</span><span class="nx">c</span> <span class="o">&gt;=</span> <span class="nx">m</span><span class="o">.</span><span class="nx">rollup</span><span class="o">);</span>
+                                        <span class="k">if</span> <span class="o">(</span><span class="nx">roll</span><span class="o">)</span> <span class="o">{</span>
+                                            <span class="c">// Y.log(&quot;skin rollup &quot; + lang.dump(r));</span>
+<span class="c"></span>                                            <span class="k">break</span><span class="o">;</span>
+                                        <span class="o">}</span>
                                     <span class="o">}</span>
                                 <span class="o">}</span>
                             <span class="o">}</span>
@@ -1260,11 +1341,14 @@
                             <span class="k">var</span> <span class="nx">skin_pre</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">SKIN_PREFIX</span> <span class="o">+</span> <span class="nx">skinDef</span><span class="o">.</span><span class="nx">skin</span><span class="o">;</span>
                             <span class="c">//YAHOO.log(&quot;skin_pre: &quot; + skin_pre);</span>
 <span class="c"></span>                            <span class="k">for</span> <span class="o">(</span><span class="nx">j</span> <span class="k">in</span> <span class="nx">r</span><span class="o">)</span> <span class="o">{</span>
-                                <span class="nx">m</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">moduleInfo</span><span class="o">[</span><span class="nx">j</span><span class="o">];</span>
-                                <span class="k">var</span> <span class="nx">ext</span> <span class="o">=</span> <span class="nx">m</span> <span class="o">&amp;&amp;</span> <span class="nx">m</span><span class="o">.</span><span class="nx">ext</span><span class="o">;</span>
-                                <span class="k">if</span> <span class="o">(!</span><span class="nx">ext</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">!==</span> <span class="nx">i</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span><span class="o">.</span><span class="nx">indexOf</span><span class="o">(</span><span class="nx">skin_pre</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="m">1</span><span class="o">)</span> <span class="o">{</span>
-                                    <span class="c">// Y.log (&quot;removing component skin: &quot; + j);</span>
-<span class="c"></span>                                    <span class="nx">delete</span> <span class="nx">r</span><span class="o">[</span><span class="nx">j</span><span class="o">];</span>
+
+                                <span class="k">if</span> <span class="o">(</span><span class="nx">lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">r</span><span class="o">,</span> <span class="nx">j</span><span class="o">))</span> <span class="o">{</span>
+                                    <span class="nx">m</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">moduleInfo</span><span class="o">[</span><span class="nx">j</span><span class="o">];</span>
+                                    <span class="k">var</span> <span class="nx">ext</span> <span class="o">=</span> <span class="nx">m</span> <span class="o">&amp;&amp;</span> <span class="nx">m</span><span class="o">.</span><span class="nx">ext</span><span class="o">;</span>
+                                    <span class="k">if</span> <span class="o">(!</span><span class="nx">ext</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">!==</span> <span class="nx">i</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span><span class="o">.</span><span class="nx">indexOf</span><span class="o">(</span><span class="nx">skin_pre</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="m">1</span><span class="o">)</span> <span class="o">{</span>
+                                        <span class="c">// Y.log (&quot;removing component skin: &quot; + j);</span>
+<span class="c"></span>                                        <span class="nx">delete</span> <span class="nx">r</span><span class="o">[</span><span class="nx">j</span><span class="o">];</span>
+                                    <span class="o">}</span>
                                 <span class="o">}</span>
                             <span class="o">}</span>
                         <span class="o">}</span>
@@ -1283,6 +1367,31 @@
                 <span class="o">}</span>
             <span class="o">}</span>
         <span class="o">},</span>
+
+        <span class="nx">_onFailure</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">msg</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Failure&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;loader&#39;</span><span class="o">);</span>
+
+            <span class="k">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">onFailure</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nx">f</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">f</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">scope</span><span class="o">,</span> <span class="o">{</span>
+                    <span class="nx">msg</span><span class="o">:</span> <span class="s1">&#39;failure: &#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="o">,</span>
+                    <span class="nx">data</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">data</span><span class="o">,</span>
+                    <span class="nx">success</span><span class="o">:</span> <span class="kc">false</span>
+                <span class="o">});</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
+
+        <span class="nx">_onTimeout</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Timeout&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;loader&#39;</span><span class="o">);</span>
+            <span class="k">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">onTimeout</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nx">f</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">f</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">scope</span><span class="o">,</span> <span class="o">{</span>
+                    <span class="nx">msg</span><span class="o">:</span> <span class="s1">&#39;timeout&#39;</span><span class="o">,</span>
+                    <span class="nx">data</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">data</span><span class="o">,</span>
+                    <span class="nx">success</span><span class="o">:</span> <span class="kc">false</span>
+                <span class="o">});</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
         
         <span class="c">/**</span>
 <span class="c">         * Sorts the dependency tree.  The last step of calculate()</span>
@@ -1292,17 +1401,24 @@
         <span class="nx">_sort</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
             <span class="c">// create an indexed list</span>
 <span class="c"></span>            <span class="k">var</span> <span class="nx">s</span><span class="o">=[],</span> <span class="nx">info</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="nx">moduleInfo</span><span class="o">,</span> <span class="nx">loaded</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="nx">loaded</span><span class="o">,</span>
-                <span class="nx">me</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+                <span class="nx">checkOptional</span><span class="o">=!</span><span class="k">this</span><span class="o">.</span><span class="nx">loadOptional</span><span class="o">,</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
 
             <span class="c">// returns true if b is not loaded, and is required</span>
 <span class="c"></span>            <span class="c">// directly or by means of modules it supersedes.</span>
 <span class="c"></span>            <span class="k">var</span> <span class="nx">requires</span> <span class="o">=</span> <span class="k">function</span><span class="o">(</span><span class="nx">aa</span><span class="o">,</span> <span class="nx">bb</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="nx">loaded</span><span class="o">[</span><span class="nx">bb</span><span class="o">])</span> <span class="o">{</span>
+
+                <span class="k">var</span> <span class="nx">mm</span><span class="o">=</span><span class="nx">info</span><span class="o">[</span><span class="nx">aa</span><span class="o">];</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="nx">loaded</span><span class="o">[</span><span class="nx">bb</span><span class="o">]</span> <span class="o">||</span> <span class="o">!</span><span class="nx">mm</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
                 <span class="o">}</span>
 
-                <span class="k">var</span> <span class="nx">ii</span><span class="o">,</span> <span class="nx">mm</span><span class="o">=</span><span class="nx">info</span><span class="o">[</span><span class="nx">aa</span><span class="o">],</span> <span class="nx">rr</span><span class="o">=</span><span class="nx">mm</span> <span class="o">&amp;&amp;</span> <span class="nx">mm</span><span class="o">.</span><span class="nx">expanded</span><span class="o">,</span> 
-                    <span class="nx">after</span> <span class="o">=</span> <span class="nx">mm</span> <span class="o">&amp;&amp;</span> <span class="nx">mm</span><span class="o">.</span><span class="nx">after</span><span class="o">,</span> <span class="nx">other</span><span class="o">=</span><span class="nx">info</span><span class="o">[</span><span class="nx">bb</span><span class="o">];</span>
+                <span class="k">var</span> <span class="nx">ii</span><span class="o">,</span> 
+                    <span class="nx">rr</span> <span class="o">=</span> <span class="nx">mm</span><span class="o">.</span><span class="nx">expanded</span><span class="o">,</span> 
+                    <span class="nx">after</span> <span class="o">=</span> <span class="nx">mm</span><span class="o">.</span><span class="nx">after</span><span class="o">,</span> 
+                    <span class="nx">other</span> <span class="o">=</span> <span class="nx">info</span><span class="o">[</span><span class="nx">bb</span><span class="o">],</span>
+                    <span class="nx">optional</span> <span class="o">=</span> <span class="nx">mm</span><span class="o">.</span><span class="nx">optional</span><span class="o">;</span>
+
 
                 <span class="c">// check if this module requires the other directly</span>
 <span class="c"></span>                <span class="k">if</span> <span class="o">(</span><span class="nx">rr</span> <span class="o">&amp;&amp;</span> <span class="nx">YUI</span><span class="o">.</span><span class="nx">ArrayUtil</span><span class="o">.</span><span class="nx">indexOf</span><span class="o">(</span><span class="nx">rr</span><span class="o">,</span> <span class="nx">bb</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="m">1</span><span class="o">)</span> <span class="o">{</span>
@@ -1311,6 +1427,12 @@
 
                 <span class="c">// check if this module should be sorted after the other</span>
 <span class="c"></span>                <span class="k">if</span> <span class="o">(</span><span class="nx">after</span> <span class="o">&amp;&amp;</span> <span class="nx">YUI</span><span class="o">.</span><span class="nx">ArrayUtil</span><span class="o">.</span><span class="nx">indexOf</span><span class="o">(</span><span class="nx">after</span><span class="o">,</span> <span class="nx">bb</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="m">1</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+                <span class="o">}</span>
+
+                <span class="c">// if loadOptional is not specified, optional dependencies still</span>
+<span class="c"></span>                <span class="c">// must be sorted correctly when present.</span>
+<span class="c"></span>                <span class="k">if</span> <span class="o">(</span><span class="nx">checkOptional</span> <span class="o">&amp;&amp;</span> <span class="nx">optional</span> <span class="o">&amp;&amp;</span> <span class="nx">YUI</span><span class="o">.</span><span class="nx">ArrayUtil</span><span class="o">.</span><span class="nx">indexOf</span><span class="o">(</span><span class="nx">optional</span><span class="o">,</span> <span class="nx">bb</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="m">1</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
                 <span class="o">}</span>
 
@@ -1334,7 +1456,7 @@
 <span class="c"></span>                <span class="c">// }</span>
 <span class="c"></span>
                 <span class="c">// external css files should be sorted below yui css</span>
-<span class="c"></span>                <span class="k">if</span> <span class="o">(</span><span class="nx">mm</span><span class="o">.</span><span class="nx">ext</span> <span class="o">&amp;&amp;</span> <span class="nx">mm</span><span class="o">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s1">&#39;css&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">(!</span><span class="nx">other</span><span class="o">.</span><span class="nx">ext</span><span class="o">))</span> <span class="o">{</span>
+<span class="c"></span>                <span class="k">if</span> <span class="o">(</span><span class="nx">mm</span><span class="o">.</span><span class="nx">ext</span> <span class="o">&amp;&amp;</span> <span class="nx">mm</span><span class="o">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s1">&#39;css&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">other</span><span class="o">.</span><span class="nx">ext</span> <span class="o">&amp;&amp;</span> <span class="nx">other</span><span class="o">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s1">&#39;css&#39;</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
                 <span class="o">}</span>
 
@@ -1344,7 +1466,9 @@
             <span class="c">// get the required items out of the obj into an array so we</span>
 <span class="c"></span>            <span class="c">// can sort</span>
 <span class="c"></span>            <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="k">this</span><span class="o">.</span><span class="nx">required</span><span class="o">)</span> <span class="o">{</span>
-                <span class="nx">s</span><span class="o">.</span><span class="nx">push</span><span class="o">(</span><span class="nx">i</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nx">lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">required</span><span class="o">,</span> <span class="nx">i</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="nx">s</span><span class="o">.</span><span class="nx">push</span><span class="o">(</span><span class="nx">i</span><span class="o">);</span>
+                <span class="o">}</span>
             <span class="o">}</span>
 
             <span class="c">// pointer to the first unsorted item</span>
@@ -1412,6 +1536,101 @@
             <span class="nx">lang</span><span class="o">.</span><span class="nx">dump</span><span class="o">(</span><span class="nx">o</span><span class="o">,</span> <span class="m">1</span><span class="o">);</span>
         <span class="o">},</span>
 
+        <span class="nx">_combine</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+
+                <span class="k">this</span><span class="o">.</span><span class="nx">_combining</span> <span class="o">=</span> <span class="o">[];</span> 
+
+                <span class="k">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="o">,</span>
+                    <span class="nx">s</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="nx">sorted</span><span class="o">,</span>
+                    <span class="nx">len</span> <span class="o">=</span> <span class="nx">s</span><span class="o">.</span><span class="nx">length</span><span class="o">,</span>
+                    <span class="nx">js</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">comboBase</span><span class="o">,</span>
+                    <span class="nx">css</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">comboBase</span><span class="o">,</span>
+                    <span class="nx">target</span><span class="o">,</span> 
+                    <span class="nx">startLen</span> <span class="o">=</span> <span class="nx">js</span><span class="o">.</span><span class="nx">length</span><span class="o">,</span>
+                    <span class="nx">i</span><span class="o">,</span> <span class="nx">m</span><span class="o">,</span> <span class="nx">type</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">loadType</span><span class="o">;</span>
+
+                <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;type &#39;</span> <span class="o">+</span> <span class="nx">type</span><span class="o">);</span>
+
+                <span class="k">for</span> <span class="o">(</span><span class="nx">i</span><span class="o">=</span><span class="m">0</span><span class="o">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">len</span><span class="o">;</span> <span class="nx">i</span><span class="o">=</span><span class="nx">i</span><span class="o">+</span><span class="m">1</span><span class="o">)</span> <span class="o">{</span>
+
+                    <span class="nx">m</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">moduleInfo</span><span class="o">[</span><span class="nx">s</span><span class="o">[</span><span class="nx">i</span><span class="o">]];</span>
+
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">m</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">m</span><span class="o">.</span><span class="nx">ext</span> <span class="o">&amp;&amp;</span> <span class="o">(!</span><span class="nx">type</span> <span class="o">||</span> <span class="nx">type</span> <span class="o">===</span> <span class="nx">m</span><span class="o">.</span><span class="nx">type</span><span class="o">))</span> <span class="o">{</span>
+
+                        <span class="nx">target</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">root</span> <span class="o">+</span> <span class="nx">m</span><span class="o">.</span><span class="nx">path</span><span class="o">;</span>
+
+                        <span class="c">// if (i &lt; len-1) {</span>
+<span class="c"></span>                        <span class="nx">target</span> <span class="o">+=</span> <span class="s1">&#39;&amp;&#39;</span><span class="o">;</span>
+                        <span class="c">// }</span>
+<span class="c"></span>
+                        <span class="k">if</span> <span class="o">(</span><span class="nx">m</span><span class="o">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s1">&#39;js&#39;</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nx">js</span> <span class="o">+=</span> <span class="nx">target</span><span class="o">;</span>
+                        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                            <span class="nx">css</span> <span class="o">+=</span> <span class="nx">target</span><span class="o">;</span>
+                        <span class="o">}</span>
+
+                        <span class="c">// YAHOO.log(target);</span>
+<span class="c"></span>                        <span class="k">this</span><span class="o">.</span><span class="nx">_combining</span><span class="o">.</span><span class="nx">push</span><span class="o">(</span><span class="nx">s</span><span class="o">[</span><span class="nx">i</span><span class="o">]);</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_combining</span><span class="o">.</span><span class="nx">length</span><span class="o">)</span> <span class="o">{</span>
+
+<span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Attempting to combine: &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">_combining</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;loader&quot;</span><span class="o">);</span>
+
+                    <span class="k">var</span> <span class="nx">callback</span><span class="o">=</span><span class="k">function</span><span class="o">(</span><span class="nx">o</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="c">// YAHOO.log(&#39;Combo complete: &#39; + o.data, &quot;info&quot;, &quot;loader&quot;);</span>
+<span class="c"></span>                        <span class="c">// this._combineComplete = true;</span>
+<span class="c"></span>
+                        <span class="k">var</span> <span class="nx">c</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="nx">_combining</span><span class="o">,</span> <span class="nx">len</span><span class="o">=</span><span class="nx">c</span><span class="o">.</span><span class="nx">length</span><span class="o">,</span> <span class="nx">i</span><span class="o">,</span> <span class="nx">m</span><span class="o">;</span>
+                        <span class="k">for</span> <span class="o">(</span><span class="nx">i</span><span class="o">=</span><span class="m">0</span><span class="o">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">len</span><span class="o">;</span> <span class="nx">i</span><span class="o">=</span><span class="nx">i</span><span class="o">+</span><span class="m">1</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="k">this</span><span class="o">.</span><span class="nx">inserted</span><span class="o">[</span><span class="nx">c</span><span class="o">[</span><span class="nx">i</span><span class="o">]]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                        <span class="o">}</span>
+
+                        <span class="k">this</span><span class="o">.</span><span class="nx">loadNext</span><span class="o">(</span><span class="nx">o</span><span class="o">.</span><span class="nx">data</span><span class="o">);</span>
+                    <span class="o">},</span> 
+                    
+                    <span class="nx">loadScript</span> <span class="o">=</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+                        <span class="c">// YAHOO.log(&#39;combining js: &#39; + js);</span>
+<span class="c"></span>                        <span class="k">if</span> <span class="o">(</span><span class="nx">js</span><span class="o">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">startLen</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Get</span><span class="o">.</span><span class="nx">script</span><span class="o">(</span><span class="nx">self</span><span class="o">.</span><span class="nx">_filter</span><span class="o">(</span><span class="nx">js</span><span class="o">),</span> <span class="o">{</span>
+                                <span class="nx">data</span><span class="o">:</span> <span class="nx">self</span><span class="o">.</span><span class="nx">_loading</span><span class="o">,</span>
+                                <span class="nx">onSuccess</span><span class="o">:</span> <span class="nx">callback</span><span class="o">,</span>
+                                <span class="nx">onFailure</span><span class="o">:</span> <span class="nx">self</span><span class="o">.</span><span class="nx">_onFailure</span><span class="o">,</span>
+                                <span class="nx">onTimeout</span><span class="o">:</span> <span class="nx">self</span><span class="o">.</span><span class="nx">_onTimeout</span><span class="o">,</span>
+                                <span class="nx">insertBefore</span><span class="o">:</span> <span class="nx">self</span><span class="o">.</span><span class="nx">insertBefore</span><span class="o">,</span>
+                                <span class="nx">charset</span><span class="o">:</span> <span class="nx">self</span><span class="o">.</span><span class="nx">charset</span><span class="o">,</span>
+                                <span class="nx">timeout</span><span class="o">:</span> <span class="nx">self</span><span class="o">.</span><span class="nx">timeout</span><span class="o">,</span>
+                                <span class="nx">scope</span><span class="o">:</span> <span class="nx">self</span> 
+                            <span class="o">});</span>
+                        <span class="o">}</span>
+                    <span class="o">};</span>
+
+                    <span class="c">// load the css first</span>
+<span class="c"></span>                    <span class="c">// YAHOO.log(&#39;combining css: &#39; + css);</span>
+<span class="c"></span>                    <span class="k">if</span> <span class="o">(</span><span class="nx">css</span><span class="o">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">startLen</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Get</span><span class="o">.</span><span class="nx">css</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_filter</span><span class="o">(</span><span class="nx">css</span><span class="o">),</span> <span class="o">{</span>
+                            <span class="nx">data</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_loading</span><span class="o">,</span>
+                            <span class="nx">onSuccess</span><span class="o">:</span> <span class="nx">loadScript</span><span class="o">,</span>
+                            <span class="nx">onFailure</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_onFailure</span><span class="o">,</span>
+                            <span class="nx">onTimeout</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_onTimeout</span><span class="o">,</span>
+                            <span class="nx">insertBefore</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">insertBefore</span><span class="o">,</span>
+                            <span class="nx">charset</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">charset</span><span class="o">,</span>
+                            <span class="nx">timeout</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">timeout</span><span class="o">,</span>
+                            <span class="nx">scope</span><span class="o">:</span> <span class="nx">self</span> 
+                        <span class="o">});</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="nx">loadScript</span><span class="o">();</span>
+                    <span class="o">}</span>
+
+                    <span class="k">return</span><span class="o">;</span>
+
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="c">// this._combineComplete = true;</span>
+<span class="c"></span>                    <span class="k">this</span><span class="o">.</span><span class="nx">loadNext</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_loading</span><span class="o">);</span>
+                <span class="o">}</span>
+        <span class="o">},</span> 
+
         <span class="c">/**</span>
 <span class="c">         * inserts the requested modules and their dependencies.  </span>
 <span class="c">         * &lt;code&gt;type&lt;/code&gt; can be &quot;js&quot; or &quot;css&quot;.  Both script and </span>
@@ -1430,6 +1649,22 @@
             <span class="c">// build the dependency list</span>
 <span class="c"></span>            <span class="k">this</span><span class="o">.</span><span class="nx">calculate</span><span class="o">(</span><span class="nx">o</span><span class="o">);</span>
 
+
+            <span class="c">// set a flag to indicate the load has started</span>
+<span class="c"></span>            <span class="k">this</span><span class="o">.</span><span class="nx">_loading</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+
+            <span class="c">// flag to indicate we are done with the combo service</span>
+<span class="c"></span>            <span class="c">// and any additional files will need to be loaded</span>
+<span class="c"></span>            <span class="c">// individually</span>
+<span class="c"></span>            <span class="c">// this._combineComplete = false;</span>
+<span class="c"></span>
+            <span class="c">// keep the loadType (js, css or undefined) cached</span>
+<span class="c"></span>            <span class="k">this</span><span class="o">.</span><span class="nx">loadType</span> <span class="o">=</span> <span class="nx">type</span><span class="o">;</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">combine</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">_combine</span><span class="o">();</span>
+            <span class="o">}</span>
+
             <span class="k">if</span> <span class="o">(!</span><span class="nx">type</span><span class="o">)</span> <span class="o">{</span>
                 <span class="c">// Y.log(&quot;trying to load css first&quot;);</span>
 <span class="c"></span>                <span class="k">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
@@ -1441,18 +1676,13 @@
                 <span class="k">return</span><span class="o">;</span>
             <span class="o">}</span>
 
-            <span class="c">// set a flag to indicate the load has started</span>
-<span class="c"></span>            <span class="k">this</span><span class="o">.</span><span class="nx">_loading</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-
-            <span class="c">// keep the loadType (js, css or undefined) cached</span>
-<span class="c"></span>            <span class="k">this</span><span class="o">.</span><span class="nx">loadType</span> <span class="o">=</span> <span class="nx">type</span><span class="o">;</span>
 
             <span class="c">// start the load</span>
 <span class="c"></span>            <span class="k">this</span><span class="o">.</span><span class="nx">loadNext</span><span class="o">();</span>
 
         <span class="o">},</span>
 
-        <span class="c">/*</span>
+        <span class="c">/**</span>
 <span class="c">         * Interns the script for the requested modules.  The callback is</span>
 <span class="c">         * provided a reference to the sandboxed YAHOO object.  This only</span>
 <span class="c">         * applies to the script: css can not be sandboxed; css will be</span>
@@ -1462,12 +1692,12 @@
 <span class="c">         *        complete.</span>
 <span class="c">         */</span>
         <span class="nx">sandbox</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">o</span><span class="o">,</span> <span class="nx">type</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="nx">o</span><span class="o">)</span> <span class="o">{</span>
-                <span class="c">// YAHOO.log(&quot;sandbox: &quot; + lang.dump(o, 1) + &quot;, &quot; + type);</span>
-<span class="c"></span>            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="c">// YAHOO.log(&quot;sandbox: &quot; + this.toString() + &quot;, &quot; + type);</span>
-<span class="c"></span>            <span class="o">}</span>
-
+            <span class="c">// if (o) {</span>
+<span class="c"></span>                <span class="c">// YAHOO.log(&quot;sandbox: &quot; + lang.dump(o, 1) + &quot;, &quot; + type);</span>
+<span class="c"></span>            <span class="c">// } else {</span>
+<span class="c"></span>                <span class="c">// YAHOO.log(&quot;sandbox: &quot; + this.toString() + &quot;, &quot; + type);</span>
+<span class="c"></span>            <span class="c">// }</span>
+<span class="c"></span>
             <span class="k">this</span><span class="o">.</span><span class="nx">_config</span><span class="o">(</span><span class="nx">o</span><span class="o">);</span>
 
             <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">onSuccess</span><span class="o">)</span> <span class="o">{</span>
@@ -1520,10 +1750,7 @@
 
                 <span class="c">// undefined modules cause a failure</span>
 <span class="c"></span>                <span class="k">if</span> <span class="o">(!</span><span class="nx">m</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="k">this</span><span class="o">.</span><span class="nx">onFailure</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">scope</span><span class="o">,</span> <span class="o">{</span>
-                            <span class="nx">msg</span><span class="o">:</span> <span class="s2">&quot;undefined module &quot;</span> <span class="o">+</span> <span class="nx">m</span><span class="o">,</span>
-                            <span class="nx">data</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">data</span>
-                        <span class="o">});</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">_onFailure</span><span class="o">(</span><span class="s2">&quot;undefined module &quot;</span> <span class="o">+</span> <span class="nx">m</span><span class="o">);</span>
                     <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">j</span><span class="o">=</span><span class="m">0</span><span class="o">;</span><span class="nx">j</span><span class="o">&lt;</span><span class="k">this</span><span class="o">.</span><span class="nx">_xhr</span><span class="o">.</span><span class="nx">length</span><span class="o">;</span><span class="nx">j</span><span class="o">=</span><span class="nx">j</span><span class="o">+</span><span class="m">1</span><span class="o">)</span> <span class="o">{</span>
                         <span class="k">this</span><span class="o">.</span><span class="nx">_xhr</span><span class="o">[</span><span class="nx">j</span><span class="o">].</span><span class="nx">abort</span><span class="o">();</span>
                     <span class="o">}</span>
@@ -1536,7 +1763,8 @@
                     <span class="k">continue</span><span class="o">;</span>
                 <span class="o">}</span>
 
-                <span class="nx">url</span> <span class="o">=</span> <span class="nx">m</span><span class="o">.</span><span class="nx">fullpath</span> <span class="o">||</span> <span class="k">this</span><span class="o">.</span><span class="nx">_url</span><span class="o">(</span><span class="nx">m</span><span class="o">.</span><span class="nx">path</span><span class="o">);</span>
+                <span class="nx">url</span> <span class="o">=</span> <span class="nx">m</span><span class="o">.</span><span class="nx">fullpath</span><span class="o">;</span>
+                <span class="nx">url</span> <span class="o">=</span> <span class="o">(</span><span class="nx">url</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_filter</span><span class="o">(</span><span class="nx">url</span><span class="o">)</span> <span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_url</span><span class="o">(</span><span class="nx">m</span><span class="o">.</span><span class="nx">path</span><span class="o">);</span>
 
                 <span class="c">// YAHOO.log(&quot;xhr request: &quot; + url + &quot;, &quot; + i);</span>
 <span class="c"></span>
@@ -1584,10 +1812,7 @@
                                         <span class="nx">data</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">data</span>
                                     <span class="o">});</span>
                             <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                                <span class="k">this</span><span class="o">.</span><span class="nx">onFailure</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">scope</span><span class="o">,</span> <span class="o">{</span>
-                                        <span class="nx">msg</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">varName</span> <span class="o">+</span> <span class="s2">&quot; reference failure&quot;</span><span class="o">,</span>
-                                        <span class="nx">data</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">data</span>
-                                    <span class="o">});</span>
+                                <span class="k">this</span><span class="o">.</span><span class="nx">_onFailure</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">varName</span> <span class="o">+</span> <span class="s2">&quot; reference failure&quot;</span><span class="o">);</span>
                             <span class="o">}</span>
                         <span class="o">}</span>
                     <span class="o">},</span>
@@ -1629,6 +1854,7 @@
 <span class="c"></span>            <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">_loading</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">return</span><span class="o">;</span>
             <span class="o">}</span>
+
 
             <span class="k">if</span> <span class="o">(</span><span class="nx">mname</span><span class="o">)</span> <span class="o">{</span>
 
@@ -1692,10 +1918,13 @@
                     <span class="c">//YAHOO.log(&quot;attempting to load &quot; + s[i] + &quot;, &quot; + this.base);</span>
 <span class="c"></span>
                     <span class="k">var</span> <span class="nx">fn</span><span class="o">=(</span><span class="nx">m</span><span class="o">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s2">&quot;css&quot;</span><span class="o">)</span> <span class="o">?</span> <span class="nx">util</span><span class="o">.</span><span class="nx">Get</span><span class="o">.</span><span class="nx">css</span> <span class="o">:</span> <span class="nx">util</span><span class="o">.</span><span class="nx">Get</span><span class="o">.</span><span class="nx">script</span><span class="o">,</span>
-                        <span class="nx">url</span><span class="o">=</span><span class="nx">m</span><span class="o">.</span><span class="nx">fullpath</span> <span class="o">||</span> <span class="k">this</span><span class="o">.</span><span class="nx">_url</span><span class="o">(</span><span class="nx">m</span><span class="o">.</span><span class="nx">path</span><span class="o">),</span> <span class="nx">self</span><span class="o">=</span><span class="k">this</span><span class="o">,</span> 
+                        <span class="nx">url</span> <span class="o">=</span> <span class="nx">m</span><span class="o">.</span><span class="nx">fullpath</span><span class="o">,</span>
+                        <span class="nx">self</span><span class="o">=</span><span class="k">this</span><span class="o">,</span> 
                         <span class="nx">c</span><span class="o">=</span><span class="k">function</span><span class="o">(</span><span class="nx">o</span><span class="o">)</span> <span class="o">{</span>
                             <span class="nx">self</span><span class="o">.</span><span class="nx">loadNext</span><span class="o">(</span><span class="nx">o</span><span class="o">.</span><span class="nx">data</span><span class="o">);</span>
                         <span class="o">};</span>
+
+                        <span class="nx">url</span> <span class="o">=</span> <span class="o">(</span><span class="nx">url</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_filter</span><span class="o">(</span><span class="nx">url</span><span class="o">)</span> <span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_url</span><span class="o">(</span><span class="nx">m</span><span class="o">.</span><span class="nx">path</span><span class="o">);</span>
 
                     <span class="c">// safari 2.x or lower, script, and part of YUI</span>
 <span class="c"></span>                    <span class="k">if</span> <span class="o">(</span><span class="nx">env</span><span class="o">.</span><span class="nx">ua</span><span class="o">.</span><span class="nx">webkit</span> <span class="o">&amp;&amp;</span> <span class="nx">env</span><span class="o">.</span><span class="nx">ua</span><span class="o">.</span><span class="nx">webkit</span> <span class="o">&lt;</span> <span class="m">420</span> <span class="o">&amp;&amp;</span> <span class="nx">m</span><span class="o">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s2">&quot;js&quot;</span> <span class="o">&amp;&amp;</span> 
@@ -1709,8 +1938,11 @@
                     <span class="nx">fn</span><span class="o">(</span><span class="nx">url</span><span class="o">,</span> <span class="o">{</span>
                         <span class="nx">data</span><span class="o">:</span> <span class="nx">s</span><span class="o">[</span><span class="nx">i</span><span class="o">],</span>
                         <span class="nx">onSuccess</span><span class="o">:</span> <span class="nx">c</span><span class="o">,</span>
+                        <span class="nx">onFailure</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_onFailure</span><span class="o">,</span>
+                        <span class="nx">onTimeout</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_onTimeout</span><span class="o">,</span>
                         <span class="nx">insertBefore</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">insertBefore</span><span class="o">,</span>
                         <span class="nx">charset</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">charset</span><span class="o">,</span>
+                        <span class="nx">timeout</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">timeout</span><span class="o">,</span>
                         <span class="nx">varName</span><span class="o">:</span> <span class="nx">m</span><span class="o">.</span><span class="nx">varName</span><span class="o">,</span>
                         <span class="nx">scope</span><span class="o">:</span> <span class="nx">self</span> 
                     <span class="o">});</span>
@@ -1751,6 +1983,17 @@
         <span class="o">},</span>
 
         <span class="c">/**</span>
+<span class="c">         * Applies filter</span>
+<span class="c">         * method _filter</span>
+<span class="c">         * @return {string} the filtered string</span>
+<span class="c">         * @private</span>
+<span class="c">         */</span>
+        <span class="nx">_filter</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">str</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">filter</span><span class="o">;</span>
+            <span class="k">return</span> <span class="o">(</span><span class="nx">f</span><span class="o">)</span> <span class="o">?</span>  <span class="nx">str</span><span class="o">.</span><span class="nx">replace</span><span class="o">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="o">(</span><span class="nx">f</span><span class="o">.</span><span class="nx">searchExp</span><span class="o">),</span> <span class="nx">f</span><span class="o">.</span><span class="nx">replaceStr</span><span class="o">)</span> <span class="o">:</span> <span class="nx">str</span><span class="o">;</span>
+        <span class="o">},</span>
+
+        <span class="c">/**</span>
 <span class="c">         * Generates the full url for a module</span>
 <span class="c">         * method _url</span>
 <span class="c">         * @param path {string} the path fragment</span>
@@ -1761,16 +2004,7 @@
             
             <span class="k">var</span> <span class="nx">u</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">base</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="o">,</span> <span class="nx">f</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="nx">filter</span><span class="o">;</span>
             <span class="nx">u</span> <span class="o">=</span> <span class="nx">u</span> <span class="o">+</span> <span class="nx">path</span><span class="o">;</span>
-
-            <span class="k">if</span> <span class="o">(</span><span class="nx">f</span><span class="o">)</span> <span class="o">{</span>
-                <span class="c">// YAHOO.log(&quot;filter: &quot; + f + &quot;, &quot; + f.searchExp + </span>
-<span class="c"></span>                <span class="c">// &quot;, &quot; + f.replaceStr);</span>
-<span class="c"></span>                <span class="nx">u</span> <span class="o">=</span> <span class="nx">u</span><span class="o">.</span><span class="nx">replace</span><span class="o">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="o">(</span><span class="nx">f</span><span class="o">.</span><span class="nx">searchExp</span><span class="o">),</span> <span class="nx">f</span><span class="o">.</span><span class="nx">replaceStr</span><span class="o">);</span>
-            <span class="o">}</span>
-
-            <span class="c">// YAHOO.log(u);</span>
-<span class="c"></span>
-            <span class="k">return</span> <span class="nx">u</span><span class="o">;</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">_filter</span><span class="o">(</span><span class="nx">u</span><span class="o">);</span>
         <span class="o">}</span>
 
     <span class="o">};</span>
@@ -1794,6 +2028,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -1834,6 +2070,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1882,7 +2120,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

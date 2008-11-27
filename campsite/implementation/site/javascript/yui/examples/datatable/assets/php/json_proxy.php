@@ -102,6 +102,7 @@ function returnData($results, $startIndex, $sort, $dir, $sort_dir) {
         'startIndex'=>$startIndex,
         'sort'=>$sort,
         'dir'=>$dir,
+        'pageSize'=>$results,
         'records'=>$data
     );
 

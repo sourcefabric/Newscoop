@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../../print.css" type="text/css" media="print">
-<meta content="BorderLayout,com.yahoo.astra.layout.modes.BorderLayout,horizontalGap,verticalGap,layoutChildren" name="keywords">
+<meta content="BorderLayout,com.yahoo.astra.layout.modes.BorderLayout,horizontalGap,verticalGap,layoutObjects" name="keywords">
 <title>com.yahoo.astra.layout.modes.BorderLayout</title>
 </head>
 <body>
@@ -197,13 +197,22 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
    Registers a specific display object with the layout algorithm.</div>
 </td><td class="summaryTableOwnerCol"><a href="BaseLayoutMode.html">BaseLayoutMode</a></td>
 </tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="BaseLayoutMode.html#hasClient()">hasClient</a>(target:DisplayObject):Boolean</div>
+<div class="summaryTableDescription">
+   
+   Returns true if a display object has been registered as a client.</div>
+</td><td class="summaryTableOwnerCol"><a href="BaseLayoutMode.html">BaseLayoutMode</a></td>
+</tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#layoutChildren()">layoutChildren</a>(target:DisplayObjectContainer, bounds:Rectangle):Rectangle</div>
+<a class="signatureLink" href="#layoutObjects()">layoutObjects</a>(displayObjects:Array, bounds:Rectangle):Rectangle</div>
 <div class="summaryTableDescription">
    
-   Children of the target DisplayObjectContainer will be positioned and sized
+   The DisplayObjects in the input parameter will be positioned and sized
    based on a specified rectangle.</div>
 </td><td class="summaryTableOwnerCol">BorderLayout</td>
 </tr>
@@ -273,35 +282,36 @@ showHideInherited();
    </p></div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Method detail</div>
-<a name="layoutChildren()"></a>
+<a name="layoutObjects()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">layoutChildren</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+<td class="detailHeaderName">layoutObjects</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>public override function layoutChildren(target:DisplayObjectContainer, bounds:Rectangle):Rectangle</code><p>
+<code>public override function layoutObjects(displayObjects:Array, bounds:Rectangle):Rectangle</code><p>
    
-   Children of the target DisplayObjectContainer will be positioned and sized
-   based on a specified rectangle. There is no requirement that the children
-   remain entirely within that rectangle.
+   The DisplayObjects in the input parameter will be positioned and sized
+   based on a specified rectangle. There is no requirement that the
+   display objects remain entirely within the rectangle.
    
    </p><p>Returns the actual rectangular region in which the laid out
    children will appear. This may be larger or smaller than the
    suggested rectangle. This returned value is expected to be used by
-   container components to determine if scrollbars are needed.</p>
+   container components to determine if scrollbars or other navigation
+   controls are needed.</p>
    
    <span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">target</span>:DisplayObjectContainer</code> &mdash;  The DisplayObjectContainer whose children will be laid out.
+<td width="20px"></td><td><code><span class="label">displayObjects</span>:Array</code> &mdash; An Array of DisplayObjects to be laid out.
    </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">bounds</span>:Rectangle</code> &mdash;  The rectangular region in which the children should be laid out.
+<td width="20px"></td><td><code><span class="label">bounds</span>:Rectangle</code> &mdash;   The rectangular region in which the display objects should be placed.
    </td>
 </tr>
 </table>
@@ -309,7 +319,7 @@ showHideInherited();
 <span class="label">Returns</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20"></td><td><code>Rectangle</code> &mdash;    The actual region in which the children are contained.
+<td width="20"></td><td><code>Rectangle</code> &mdash;     The actual region in which the display objects are contained.
    </td>
 </tr>
 </table>

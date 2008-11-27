@@ -64,8 +64,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#chart">chart</a> : <a href="../../charts/Chart.html">Chart</a>
-<div class="summaryTableDescription">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#chart">chart</a> : Object<div class="summaryTableDescription">
    </div>
 </td><td class="summaryTableOwnerCol">Series</td>
 </tr>
@@ -152,7 +151,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
 <a class="signatureLink" href="#invalidateMarker()">invalidateMarker</a>(marker:<a href="ISeriesItemRenderer.html">ISeriesItemRenderer</a>):void</div>
-<div class="summaryTableDescription"></div>
+<div class="summaryTableDescription">
+   Invalidates a marker (considered new).</div>
 </td><td class="summaryTableOwnerCol">Series</td>
 </tr>
 <tr class="">
@@ -212,8 +212,17 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <span class="signatureLink">fillColor</span>
 </div>
-</td><td class="summaryTableDescription"><span class="label">Type: </span>Color<br>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>uint<br>
   The base color used by objects displayed in this series.
+  </td><td class="summaryTableOwnerCol">Series</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol"><a name="style:markerAlpha"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">markerAlpha</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Number<br>
+  The alpha value from 0.0 to 1.0 to use for drawing the markers.
   </td><td class="summaryTableOwnerCol">Series</td>
 </tr>
 <tr class="">
@@ -221,7 +230,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <span class="signatureLink">markerSize</span>
 </div>
-</td><td class="summaryTableDescription"><span class="label">Type: </span>Class<br>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Number<br>
   The size, in pixels, of each marker.
   </td><td class="summaryTableOwnerCol">Series</td>
 </tr>
@@ -250,12 +259,12 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>chart:<a href="../../charts/Chart.html">Chart</a></code>&nbsp;&nbsp;[read-write]<p>
+<code>chart:Object</code>&nbsp;&nbsp;[read-write]<p>
    </p><span class="label">Implementation</span>
 <br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get chart():<a href="../../charts/Chart.html">Chart</a></code>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get chart():Object</code>
 <br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set chart(value:<a href="../../charts/Chart.html">Chart</a>):void</code>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set chart(value:Object):void</code>
 <br>
 </div>
 <a name="dataProvider"></a>
@@ -376,7 +385,9 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected function invalidateMarker(marker:<a href="ISeriesItemRenderer.html">ISeriesItemRenderer</a>):void</code><span class="label">Parameters</span>
+<code>protected function invalidateMarker(marker:<a href="ISeriesItemRenderer.html">ISeriesItemRenderer</a>):void</code><p>
+   Invalidates a marker (considered new).
+   </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">marker</span>:<a href="ISeriesItemRenderer.html">ISeriesItemRenderer</a></code></td>

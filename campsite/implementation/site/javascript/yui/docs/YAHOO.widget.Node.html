@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>TreeView Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>TreeView Widget&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_treeview.html">treeview</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -96,6 +98,8 @@ response to mouse events is handled in Node subclasses.
                                                       a string or object containing the data that will
 be used to render this node, and any custom attributes that should be
 stored with the node (which is available in noderef.data).
+All values in oData will be used to set equally named properties in the node
+as long as the node does have such properties, they are not undefined, private or functions.
                                                 </dd>
                                                 <dd>
                                                     <code>oParent
@@ -107,7 +111,7 @@ stored with the node (which is available in noderef.data).
                                                     <code>expanded
                                                     &lt;boolean&gt; 
                                                     </code>
-                                                      the initial expanded/collapsed state
+                                                      the initial expanded/collapsed state (deprecated, use oData.expanded)
                                                 </dd>
                                         </dl>
                                     
@@ -137,8 +141,24 @@ data dynamically.
                                     <hr />
                                     </div>
                                     <div class="private">
+                                    <h4><a name="property__focusHighlightedItems">_focusHighlightedItems</a>
+                                        <code>- private Array of DOM elements</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            array of items that had the focus set on them
+so that they can be cleaned when focus is lost
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
                                     <h4><a name="property__type">_type</a>
-                                        <code>- private object</code>
+                                        <code>- private string</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
@@ -147,6 +167,9 @@ data dynamically.
                                     </div>
      
                                         
+                                    <div class="default">
+                                        Default Value: "Node"
+                                    </div>        
 
 
                                     <hr />
@@ -174,6 +197,37 @@ data dynamically.
                                         <div class="description">
                                             This flag is set to true when the html is generated for this node's
 children, and set to false when new children are added.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_contentElId">contentElId</a>
+                                        <code>- string</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The generated id that will contain the data passed in by the implementer.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_contentStyle">contentStyle</a>
+                                        <code>- string</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The CSS class for the html content container.  Defaults to ygtvhtml, but 
+can be overridden to provide a custom presentation for a specific node.
                                         </div>
                                     </div>
      
@@ -236,6 +290,21 @@ value, and the data can be used in getNodeHtml().
                                         <div class="description">
                                             Dynamically loaded nodes only fetch the data the first time they are
 expanded.  This flag is set to true once the data has been fetched.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_editable">editable</a>
+                                        <code>- boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Signals if the label is editable.  (Ignored on TextNodes with href set.)
                                         </div>
                                     </div>
      
@@ -547,7 +616,10 @@ need this, and implement it if we do.
                                                     </code></dt>
                                                     <dd>the child node</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -593,7 +665,10 @@ need this, and implement it if we do.
                                                     </code></dt>
                                                     <dd>The appended node</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -642,7 +717,10 @@ make it possible to move a branch from one tree to another.
                                                     </code></dt>
                                                     <dd>true if the application was successful</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -650,23 +728,20 @@ make it possible to move a branch from one tree to another.
                                     </div>
                                     <div class="">
                                     <h4>
-                                        <a name="method_collapse
-toggle style.">collapse
-toggle style.</a></h4>
+                                        <a name="method_collapse">collapse</a></h4>
                                     <div class="detail">
                                         <code>
                                         
                                         
                                         
                                         void
-                                            <strong>collapse
-toggle style.</strong>
+                                            <strong>collapse</strong>
                                            (
                                             )
                                         </code>
                                         
                                         <div class="description">
-                                            Hides this nodes children (creating them if necessary), changes the
+                                            Hides this nodes children (creating them if necessary), changes the toggle style.
                                         </div>
 
                                         <div class="description">
@@ -679,7 +754,10 @@ toggle style.</strong>
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -713,7 +791,10 @@ toggle style.</strong>
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -747,7 +828,98 @@ toggle style.</strong>
                                                     </code></dt>
                                                     <dd>children html</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_destroyEditorContents">destroyEditorContents</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>destroyEditorContents</strong>
+                                           (
+                                                
+                                                        
+                                                         editorData
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Node-specific destroy function to empty the contents of the inline editor panel
+This function is the worst case alternative that will purge all possible events and remove the editor contents
+Method Event.purgeElement is somewhat costly so if it can be replaced by specifc Event.removeListeners, it is better to do so.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>editorData &lt;YAHOO.widget.TreeView.editorData&gt;</code>
+                                                               a shortcut to the static object holding editing information
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_editNode">editNode</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>editNode</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            pops up the contents editor, if there is one and the node is declared editable
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -782,7 +954,10 @@ toggle style, and collapses its siblings if multiExpand is not set.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -816,7 +991,95 @@ toggle style, and collapses its siblings if multiExpand is not set.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_fillEditorContainer">fillEditorContainer</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        
+                                            <strong>fillEditorContainer</strong>
+                                           (
+                                                
+                                                        
+                                                         editorData
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Placeholder for a function that should provide the inline node label editor.
+Leaving it set to null will indicate that this node type is not editable.
+It should be overridden by nodes that provide inline editing.
+The Node-specific editing element (input box, textarea or whatever) should be inserted into editorData.inputContainer.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>editorData &lt;YAHOO.widget.TreeView.editorData&gt;</code>
+                                                               a shortcut to the static object holding editing information
+                                                        </dd>
+                                                </dl>
+
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_focus">focus</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        boolean
+                                            <strong>focus</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Sets the focus on the node element.
+It will only be able to set the focus on nodes that have anchor elements in it.  
+Toggle or branch icons have anchors and can be focused on.  
+If will fail in nodes that have no anchor
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        boolean
+                                                    </code></dt>
+                                                    <dd>success</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -862,7 +1125,10 @@ toggle style, and collapses its siblings if multiExpand is not set.
                                                     </code></dt>
                                                     <dd>the ancestor</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -896,7 +1162,10 @@ toggle style, and collapses its siblings if multiExpand is not set.
                                                     </code></dt>
                                                     <dd>this node's children div</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -930,7 +1199,10 @@ toggle style, and collapses its siblings if multiExpand is not set.
                                                     </code></dt>
                                                     <dd>the element id for this node's children div</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -966,7 +1238,85 @@ unless this node is expanded.
                                                     </code></dt>
                                                     <dd>the children container div html and any expanded children</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getContentEl">getContentEl</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        HTMLElement
+                                            <strong>getContentEl</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Returns the outer html element for this node's content
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        HTMLElement
+                                                    </code></dt>
+                                                    <dd>the element</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getContentHtml">getContentHtml</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        string
+                                            <strong>getContentHtml</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Get the markup for the contents of the node.  This is designed to be overrided so that we can
+support different types of nodes.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        string
+                                                    </code></dt>
+                                                    <dd>The HTML that will render the content of this node.</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1015,7 +1365,10 @@ does not have a next sibling
                                                     </code></dt>
                                                     <dd>the css class for the spacer</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1049,7 +1402,10 @@ does not have a next sibling
                                                     </code></dt>
                                                     <dd>the container html element</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1083,7 +1439,10 @@ does not have a next sibling
                                                     </code></dt>
                                                     <dd>the element id</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1117,7 +1476,10 @@ does not have a next sibling
                                                     </code></dt>
                                                     <dd>the css class hover state</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1151,7 +1513,10 @@ does not have a next sibling
                                                     </code></dt>
                                                     <dd>the markup for this node and its expanded children.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1187,7 +1552,86 @@ load request produced no children).
                                                     </code></dt>
                                                     <dd>0 for collapse style, 1 for leaf node style</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getNodeCount">getNodeCount</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        int
+                                            <strong>getNodeCount</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Count of nodes in tree
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        int
+                                                    </code></dt>
+                                                    <dd>number of nodes in the tree</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getNodeDefinition">getNodeDefinition</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        Object | false
+                                            <strong>getNodeDefinition</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Returns an object which could be used to build a tree out of this node and its children.
+It can be passed to the tree constructor to reproduce this node as a tree.
+It will return false if the node or any children loads dynamically, regardless of whether it is loaded or not.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Object | false
+                                                    </code></dt>
+                                                    <dd>definition of the tree or false if the node or any children is defined as dynamic</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1208,7 +1652,7 @@ load request produced no children).
                                         </code>
                                         
                                         <div class="description">
-                                            Get the markup for the node.  This is designed to be overrided so that we can
+                                            Get the markup for the node.  This may be overrided so that we can
 support different types of nodes.
                                         </div>
 
@@ -1222,7 +1666,10 @@ support different types of nodes.
                                                     </code></dt>
                                                     <dd>The HTML that will render this node.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1236,7 +1683,7 @@ support different types of nodes.
                                         
                                         
                                         
-                                        void
+                                        
                                             <strong>getSiblings</strong>
                                            (
                                             )
@@ -1249,14 +1696,10 @@ support different types of nodes.
                                         <div class="description">
 
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>Node[]</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1290,7 +1733,10 @@ support different types of nodes.
                                                     </code></dt>
                                                     <dd>the css class for this node's toggle</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1324,7 +1770,10 @@ support different types of nodes.
                                                     </code></dt>
                                                     <dd>this node's toggle html element</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1358,7 +1807,10 @@ support different types of nodes.
                                                     </code></dt>
                                                     <dd>the toggel element id</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1392,7 +1844,10 @@ support different types of nodes.
                                                     </code></dt>
                                                     <dd>the javascript url for toggling this node</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1444,7 +1899,10 @@ children.  For the latter, "checkForLazyLoad" should be false.
                                                     <dd>true if this has children or if it might and we are
 checking for this condition.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1478,7 +1936,10 @@ checking for this condition.</dd>
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1541,7 +2002,10 @@ be used to render this node
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1587,7 +2051,10 @@ be used to render this node
                                                     </code></dt>
                                                     <dd>the inserted node</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1633,7 +2100,10 @@ be used to render this node
                                                     </code></dt>
                                                     <dd>the inserted node</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1680,7 +2150,10 @@ be used to render this node
                                                     <dd>The node index if this Node is a child of 
 supplied Node, else -1.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1717,7 +2190,10 @@ defined in the root node
                                                     </code></dt>
                                                     <dd>true if this node's children are to be loaded dynamically</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1751,7 +2227,10 @@ defined in the root node
                                                     </code></dt>
                                                     <dd>true if this is the root node</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1786,7 +2265,10 @@ in dynamic load situations.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1821,7 +2303,10 @@ node is expanded and new children have been added.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1856,7 +2341,60 @@ is expanded.
                                                     </code></dt>
                                                     <dd>the html for this node's children</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_saveEditorValue">saveEditorValue</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>saveEditorValue</strong>
+                                           (
+                                                
+                                                        
+                                                         editorData
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Saves the value entered into the editor.
+Should be overridden by each node type
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>editorData &lt;YAHOO.widget.TreeView.editorData&gt;</code>
+                                                               a shortcut to the static object holding editing information
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1915,7 +2453,10 @@ displayed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1949,7 +2490,10 @@ displayed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1983,7 +2527,10 @@ displayed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2017,7 +2564,10 @@ displayed.
                                                     </code></dt>
                                                     <dd>string representation of the node</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2094,6 +2644,8 @@ one tree to another.
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -2134,6 +2686,8 @@ one tree to another.
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
 
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
+
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
                                 <li class=""><a href="module_profilerviewer.html">profilerviewer</a></li>
@@ -2161,6 +2715,7 @@ one tree to another.
                     <div class="module">
                         <h4>Classes</h4>
                         <ul class="content">
+                                <li class=""><a href="YAHOO.widget.DateNode.html">YAHOO.widget.DateNode</a></li>
                                 <li class=""><a href="YAHOO.widget.HTMLNode.html">YAHOO.widget.HTMLNode</a></li>
                                 <li class=""><a href="YAHOO.widget.MenuNode.html">YAHOO.widget.MenuNode</a></li>
                                 <li class="selected"><a href="YAHOO.widget.Node.html">YAHOO.widget.Node</a></li>
@@ -2176,12 +2731,14 @@ one tree to another.
                     <div class="module">
                         <h4>Files</h4>
                         <ul class="content">        
+                                <li class=""><a href="DateNode.js.html">DateNode.js</a></li>
                                 <li class=""><a href="HTMLNode.js.html">HTMLNode.js</a></li>
                                 <li class=""><a href="MenuNode.js.html">MenuNode.js</a></li>
                                 <li class=""><a href="Node.js.html">Node.js</a></li>
                                 <li class=""><a href="RootNode.js.html">RootNode.js</a></li>
                                 <li class=""><a href="TextNode.js.html">TextNode.js</a></li>
                                 <li class=""><a href="TreeView.js.html">TreeView.js</a></li>
+                                <li class=""><a href="TreeViewEd.js.html">TreeViewEd.js</a></li>
                                 <li class=""><a href="TVAnim.js.html">TVAnim.js</a></li>
                                 <li class=""><a href="TVFadeIn.js.html">TVFadeIn.js</a></li>
                                 <li class=""><a href="TVFadeOut.js.html">TVFadeOut.js</a></li>
@@ -2194,6 +2751,9 @@ one tree to another.
                                 <li class="private"><a href="#property__dynLoad">_dynLoad</a>
                                         <!--<code>&lt;TreeView&gt;</code>-->
                                 </li>
+                                <li class="private"><a href="#property__focusHighlightedItems">_focusHighlightedItems</a>
+                                        <!--<code>&lt;TreeView&gt;</code>-->
+                                </li>
                                 <li class="private"><a href="#property__type">_type</a>
                                         <!--<code>&lt;TreeView&gt;</code>-->
                                 </li>
@@ -2201,6 +2761,12 @@ one tree to another.
                                         <!--<code>&lt;TreeView&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_childrenRendered">childrenRendered</a>
+                                        <!--<code>&lt;TreeView&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_contentElId">contentElId</a>
+                                        <!--<code>&lt;TreeView&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_contentStyle">contentStyle</a>
                                         <!--<code>&lt;TreeView&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_data">data</a>
@@ -2213,6 +2779,9 @@ one tree to another.
                                         <!--<code>&lt;TreeView&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_dynamicLoadComplete">dynamicLoadComplete</a>
+                                        <!--<code>&lt;TreeView&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_editable">editable</a>
                                         <!--<code>&lt;TreeView&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_expanded">expanded</a>
@@ -2276,9 +2845,7 @@ one tree to another.
                                 <a href="#method_applyParent">applyParent</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
-                                <a href="#method_collapse
-toggle style.">collapse
-toggle style.</a>
+                                <a href="#method_collapse">collapse</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_collapseAll">collapseAll</a>
@@ -2287,10 +2854,22 @@ toggle style.</a>
                                 <a href="#method_completeRender">completeRender</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
+                                <a href="#method_destroyEditorContents">destroyEditorContents</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_editNode">editNode</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
                                 <a href="#method_expand">expand</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_expandAll">expandAll</a>
+                                </li>
+                                <li class=""><!--<code></code>-->
+                                <a href="#method_fillEditorContainer">fillEditorContainer</a>
+                                </li>
+                                <li class=""><!--<code>boolean</code>-->
+                                <a href="#method_focus">focus</a>
                                 </li>
                                 <li class=""><!--<code>Node</code>-->
                                 <a href="#method_getAncestor">getAncestor</a>
@@ -2303,6 +2882,12 @@ toggle style.</a>
                                 </li>
                                 <li class="private"><!--<code>string</code>-->
                                 <a href="#method_getChildrenHtml">getChildrenHtml</a>
+                                </li>
+                                <li class=""><!--<code>HTMLElement</code>-->
+                                <a href="#method_getContentEl">getContentEl</a>
+                                </li>
+                                <li class=""><!--<code>string</code>-->
+                                <a href="#method_getContentHtml">getContentHtml</a>
                                 </li>
                                 <li class=""><!--<code>string</code>-->
                                 <a href="#method_getDepthStyle">getDepthStyle</a>
@@ -2322,10 +2907,16 @@ toggle style.</a>
                                 <li class=""><!--<code>int</code>-->
                                 <a href="#method_getIconMode">getIconMode</a>
                                 </li>
+                                <li class=""><!--<code>int</code>-->
+                                <a href="#method_getNodeCount">getNodeCount</a>
+                                </li>
+                                <li class=""><!--<code>Object | false</code>-->
+                                <a href="#method_getNodeDefinition">getNodeDefinition</a>
+                                </li>
                                 <li class=""><!--<code>string</code>-->
                                 <a href="#method_getNodeHtml">getNodeHtml</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_getSiblings">getSiblings</a>
                                 </li>
                                 <li class=""><!--<code>string</code>-->
@@ -2374,6 +2965,9 @@ toggle style.</a>
                                 <a href="#method_renderChildren">renderChildren</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
+                                <a href="#method_saveEditorValue">saveEditorValue</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
                                 <a href="#method_setDynamicLoad">setDynamicLoad</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
@@ -2403,7 +2997,7 @@ toggle style.</a>
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -1,10 +1,14 @@
 package com.yahoo.yui.charts
 {
-	import com.yahoo.astra.fl.charts.*;
-	import flash.utils.Dictionary;
-	import flash.utils.getQualifiedClassName;
-	import flash.utils.getDefinitionByName;
+	import com.yahoo.astra.fl.charts.axes.CategoryAxis;
+	import com.yahoo.astra.fl.charts.axes.IAxis;
+	import com.yahoo.astra.fl.charts.axes.NumericAxis;
+	import com.yahoo.astra.fl.charts.axes.TimeAxis;
 	import com.yahoo.astra.utils.JavaScriptUtil;
+	
+	import flash.utils.Dictionary;
+	import flash.utils.getDefinitionByName;
+	import flash.utils.getQualifiedClassName;
 	
 	public class AxisSerializer
 	{
@@ -13,20 +17,19 @@ package com.yahoo.yui.charts
 	//  Class Properties
 	//--------------------------------------
 	
-		private static var shortNameToType:Object = {numeric: NumericAxis, category: CategoryAxis, time: TimeAxis};
-		private static var typeToShortName:Dictionary = new Dictionary();
+		private static var shortNameToType:Object = {};
+		shortNameToType.numeric = NumericAxis;
+		shortNameToType.category = CategoryAxis;
+		shortNameToType.time = TimeAxis;
+		
+		private static var typeToShortName:Dictionary = new Dictionary(true);
+		typeToShortName[NumericAxis] = "numeric";
+		typeToShortName[CategoryAxis] = "category";
+		typeToShortName[TimeAxis] = "time";
 		
 	//--------------------------------------
-	//  Class Methods
+	//  Static Methods
 	//--------------------------------------
-	
-		private static function initializeTypes():void
-		{
-			typeToShortName[NumericAxis] = "numeric";
-			typeToShortName[CategoryAxis] = "category";
-			typeToShortName[TimeAxis] = "time";
-		}
-		initializeTypes();
 		
 		public static function getShortName(input:Object):String
 		{
@@ -55,11 +58,8 @@ package com.yahoo.yui.charts
 		{
 			var AxisType:Class = AxisSerializer.getType(input.type);
 			var axis:IAxis = new AxisType();
-			
 			axis.title = input.title;
-			axis.orientation = input.orientation;
 			axis.reverse = input.reverse;
-			axis.hideOverlappingLabels = input.hideOverlappingLabels;
 			if(input.labelFunction)
 			{
 				axis.labelFunction = JavaScriptUtil.createCallbackFunction(input.labelFunction).callback;
@@ -87,6 +87,7 @@ package com.yahoo.yui.charts
 				numericAxis.snapToUnits = input.snapToUnits;
 				numericAxis.alwaysShowZero = input.alwaysShowZero;
 				numericAxis.scale = input.scale;
+				numericAxis.stackingEnabled = input.stackingEnabled;
 			}
 			else if(axis is TimeAxis)
 			{
@@ -116,6 +117,7 @@ package com.yahoo.yui.charts
 					timeAxis.minorTimeUnit = input.minorTimeUnit;
 				}
 				timeAxis.snapToUnits = input.snapToUnits;
+				timeAxis.stackingEnabled = input.stackingEnabled;
 			}
 			else if(axis is CategoryAxis)
 			{

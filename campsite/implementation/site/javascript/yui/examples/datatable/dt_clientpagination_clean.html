@@ -17,13 +17,15 @@ body {
 </style>
 
 <link rel="stylesheet" type="text/css" href="../../build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="../../build/paginator/assets/skins/sam/paginator.css" />
 <link rel="stylesheet" type="text/css" href="../../build/datatable/assets/skins/sam/datatable.css" />
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../../build/connection/connection-min.js"></script>
 <script type="text/javascript" src="../../build/json/json-min.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/paginator/paginator-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 
 <!--begin custom header content for this example-->
@@ -33,12 +35,6 @@ body {
     }
     #paginated table {
         margin-left:auto; margin-right:auto;
-    }
-    #paginated .yui-pg-container a {
-        color: #00d;
-    }
-    #paginated .yui-pg-pages a {
-        text-decoration: underline;
     }
     #paginated, #paginated .yui-dt-loading {
         text-align: center; background-color: transparent;
@@ -50,6 +46,7 @@ body {
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>Client-side Pagination</h1>
 
@@ -64,7 +61,7 @@ body {
 
 <script type="text/javascript">
 YAHOO.util.Event.onDOMReady(function() {
-    YAHOO.example.ClientPagination = new function() {
+    YAHOO.example.ClientPagination = function() {
         var myColumnDefs = [
             {key:"id", label:"ID"},
             {key:"name", label:"Name"},
@@ -73,9 +70,9 @@ YAHOO.util.Event.onDOMReady(function() {
             {key:"number", label:"Number"}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource("assets/php/json_proxy.php?");
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource("assets/php/json_proxy.php?");
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
+        myDataSource.responseSchema = {
             resultsList: "records",
             fields: ["id","name","date","price","number"]
         };
@@ -86,9 +83,14 @@ YAHOO.util.Event.onDOMReady(function() {
                 }),
                 initialRequest: "results=504"
         };
-        this.myDataTable = new YAHOO.widget.DataTable("paginated", myColumnDefs,
-                this.myDataSource, oConfigs);
-    };
+        var myDataTable = new YAHOO.widget.DataTable("paginated", myColumnDefs,
+                myDataSource, oConfigs);
+                
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
 });
 </script>
 </body>

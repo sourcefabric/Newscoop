@@ -2,7 +2,7 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
+version: 2.6.0
 */
 /* Place the border around the editor */
 .yui-skin-sam .yui-editor-container {
@@ -16,6 +16,9 @@ version: 2.5.2
 .yui-skin-sam .yui-toolbar-container .yui-toolbar-titlebar {
     background: url(../../../../assets/skins/sam/sprite.png) repeat-x 0 -200px;
     position: relative;
+}
+.yui-skin-sam .yui-editor-container .draggable .yui-toolbar-titlebar {
+    cursor: move;
 }
 
 /* Give the titlebar some color and padding */
@@ -62,7 +65,8 @@ version: 2.5.2
 }
 
 /* Remove the shadows from the menus in the toolbar - Menu.css override */
-.yui-skin-sam .yui-editor-container .visible .yui-menu-shadow, .yui-skin-sam .yui-editor-panel .visible .yui-menu-shadow {
+.yui-skin-sam .yui-editor-container .visible .yui-menu-shadow,
+.yui-skin-sam .yui-editor-panel .visible .yui-menu-shadow {
     display: none;
 }
 
@@ -118,10 +122,13 @@ version: 2.5.2
     display: block;
     height: 22px;
     width: 30px;
+    _font-size: 0;
     margin: 0;
     border-color: #808080;
+    color: #f2f2f2;
     border-style: solid;
     border-width: 1px 0;
+    zoom: 1;
 }
 /* Set the height of the buttons and pad them on the left for the icon */
 .yui-skin-sam .yui-toolbar-container .yui-push-button a,
@@ -130,11 +137,16 @@ version: 2.5.2
     padding-left: 35px;
     height: 20px;
     text-decoration: none;
-    font-size: 93%;
+    font-size: 0px;
     line-height: 2;
     display: block;
-    color: #000000;
+    color: #000;
     overflow: hidden;
+    white-space: nowrap;
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton a,
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-select a {
+    font-size: 12px;
 }
 /* Set the height of the buttons and pad them on the left for the icon */
 .yui-skin-sam .yui-toolbar-container .yui-push-button .first-child,
@@ -145,6 +157,7 @@ version: 2.5.2
     border-width: 0 1px;
     margin: 0 -1px;
     display: block;
+    position: relative;
 }
 .yui-skin-sam .yui-toolbar-container .yui-push-button-disabled .first-child,
 .yui-skin-sam .yui-toolbar-container .yui-color-button-disabled .first-child,
@@ -230,6 +243,10 @@ version: 2.5.2
 .yui-skin-sam .yui-toolbar-container .yui-button-menu {
     background-color: #fff;
 }
+/* Adding this style to Menu's allows the scrolled menu to work in IE */
+.yui-skin-sam .yui-toolbar-container .yui-button-menu .yui-menu-body-scrolled {
+    position: relative;
+}
 /* Set the background of all menu items that are selected */
 .yui-skin-sam div.yuimenu li.selected {
     background-color: #B3D4FF;
@@ -251,6 +268,16 @@ version: 2.5.2
 /* Setting the background position of the sprite */
 .yui-skin-sam .yui-toolbar-container .yui-toolbar-italic span.yui-toolbar-icon {
     background-position: 0 -36px;
+    left: 5px;
+}
+/* Setting the background position of the sprite */
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-undo span.yui-toolbar-icon {
+    background-position: 0 -1326px;
+    left: 5px;
+}
+/* Setting the background position of the sprite */
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-redo span.yui-toolbar-icon {
+    background-position: 0 -1355px;
     left: 5px;
 }
 /* Setting the background position of the sprite */
@@ -438,6 +465,7 @@ version: 2.5.2
     border: none;
     background-color: transparent;
     overflow: visible;
+    position: absolute;
 }
 
 /* Margins on the header of the Property Editor */
@@ -565,6 +593,7 @@ version: 2.5.2
 /* Give the padding group a width */
 .yui-skin-sam .yui-editor-panel .yui-toolbar-group-padding {
     width: 203px;
+    _width: 198px;
 }
 .yui-skin-sam .yui-editor-panel .no-button .yui-toolbar-group-padding {
     width: 172px;
@@ -665,4 +694,14 @@ version: 2.5.2
 /* This image is the one used to place the blankimage placeholder into the editor when you click on Insert an Image */
 .yui-editor-blankimage {
     background-image: url( blankimage.png );
+}
+
+.yui-skin-sam .yui-editor-container .yui-resize-handle-br {
+    /* Make the handle a little bigger than the default */
+    height: 11px;
+    width: 11px;
+    /* Resposition the image */
+    background-position: -20px -60px;
+    /* Kill the hover on the handle */
+    background-color: transparent;
 }

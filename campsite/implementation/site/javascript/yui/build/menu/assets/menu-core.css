@@ -2,13 +2,19 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
+version: 2.6.0
 */
 /* Menu & MenuBar styles */
 
+.yuimenu {
+
+    top: -999em;
+    left: -999em;
+
+}
+
 .yuimenubar {
 
-    visibility: visible;
     position: static;
 
 }
@@ -16,10 +22,7 @@ version: 2.5.2
 .yuimenu .yuimenu,
 .yuimenubar .yuimenu {
 
-    visibility: hidden;
     position: absolute;
-    top: -10000px;
-    left: -10000px;
 
 }
 

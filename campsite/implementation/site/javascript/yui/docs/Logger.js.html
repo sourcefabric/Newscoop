@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Logger Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Logger Widget&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_logger.html">logger</a>
@@ -21,14 +21,16 @@
                  &gt; Logger.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -470,6 +472,11 @@
                 <span class="nx">elapsedTime</span> <span class="o">+</span> <span class="s2">&quot;ms): &quot;</span> <span class="o">+</span>
                 <span class="nx">oEntry</span><span class="o">.</span><span class="nx">source</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span><span class="o">;</span>
 
+            <span class="c">// for bug 1987607</span>
+<span class="c"></span>            <span class="k">if</span> <span class="o">(</span><span class="nx">YAHOO</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">ua</span><span class="o">.</span><span class="nx">webkit</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">output</span> <span class="o">+=</span> <span class="nx">oEntry</span><span class="o">.</span><span class="nx">msg</span><span class="o">;</span>
+            <span class="o">}</span>
+
             <span class="nx">console</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="nx">output</span><span class="o">,</span> <span class="nx">oEntry</span><span class="o">.</span><span class="nx">msg</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">};</span>
@@ -529,6 +536,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -568,6 +577,8 @@
                                 <li class="selected"><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -622,7 +633,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -33,9 +33,9 @@ body {
 <script type="text/javascript" src="../../build/dom/dom-min.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
 <script type="text/javascript" src="../../build/dragdrop/dragdrop-min.js"></script>
-<script type="text/javascript" src="../../build/resize/resize-beta-min.js"></script>
+<script type="text/javascript" src="../../build/resize/resize-min.js"></script>
 <script type="text/javascript" src="../../build/animation/animation-min.js"></script>
-<script type="text/javascript" src="../../build/layout/layout-beta-min.js"></script>
+<script type="text/javascript" src="../../build/layout/layout-min.js"></script>
 
 
 </head>
@@ -97,18 +97,21 @@ body {
     Event.onDOMReady(function() {
         var layout = new YAHOO.widget.Layout({
             minWidth: 1000,
+            minHeight: 500,
             units: [
                 { position: 'top', height: 50, resize: false, body: 'top1', header: 'Top', gutter: '5px', collapse: true, resize: true, maxHeight: 100 },
                 { position: 'right', header: 'Right', width: 300, resize: true, gutter: '2px 5px', footer: 'Footer', collapse: true, scroll: true, body: 'right1', maxWidth: 400 },
                 { position: 'bottom', header: 'Bottom', height: 100, resize: true, body: 'bottom1', gutter: '5px', collapse: true, maxHeight: 130 },
                 { position: 'left', header: 'Left', width: 200, resize: true, body: 'left1', gutter: '2px 5px', collapse: true, collapseSize: 50, scroll: true, maxWidth: 300 },
-                { position: 'center' }
+                { position: 'center', minWidth: 400, minHeight: 200 }
             ]
         });
         layout.on('render', function() {
             var el = layout.getUnitByPosition('center').get('wrap');
             var layout2 = new YAHOO.widget.Layout(el, {
                 parent: layout,
+                minWidth: 400,
+                minHeight: 200,
                 units: [
                     { position: 'top', header: 'Top 2', height: 30, gutter: '2px', maxHeight: 80 },
                     { position: 'right', header: 'Right 2', width: 90, resize: true, proxy: false, body: 'Right Content Data', collapse: true, gutter: '2px 2px 2px 5px', maxWidth: 200 },

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>Use AutoComplete with Flickr's XML Webservice</title>
+<title>Find Photos on Flickr</title>
 
 <style type="text/css">
 /*margin and padding on body element
@@ -21,14 +21,27 @@ body {
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../../build/animation/animation-min.js"></script>
 <script type="text/javascript" src="../../build/connection/connection-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
 <script type="text/javascript" src="../../build/autocomplete/autocomplete-min.js"></script>
 
 
 <!--begin custom header content for this example-->
 <style type="text/css">
+#flickrselections {
+    float:right;
+    width:240px;
+    padding:10px;
+    background-color:#FFA928;
+}
+
+#flickrselections h5 {
+    color:#009;
+    margin:0;
+}
+
 /* custom styles for scrolling container */
 #flickrautocomplete {
-    width:25em; /* set width of widget here */
+    width:15em; /* set width of widget here */
     padding-bottom:2em;
 }
 #flickrautocomplete .yui-ac-content {
@@ -47,68 +60,77 @@ body {
 
 <body class=" yui-skin-sam">
 
-<h1>Use AutoComplete with Flickr's XML Webservice</h1>
+
+<h1>Find Photos on Flickr</h1>
 
 <div class="exampleIntro">
-	<p>This example uses a DataSource that points to Flickr Web
-Services; Flickr returns XML data via a simple PHP proxy. In order to return
-valid data from the Flickr application, <code>scriptQueryParameter</code>
-has been customized to be <code>tags</code>, and <code>scriptQueryAppend</code> is used
-to pass in additional required arguments. The cache has been disabled so
-that each query is forced to make a trip to the live application.</p>
-
-<p>This instance of AutoComplete defines a robust custom
-<code>formatResult()</code> function to format the result data into
-images in HTML. Automatic
-highlighting of the first result item in the container has been disabled by
-setting <code>autoHighlight</code> to <code>false</code>.</p>
+	<p>This example uses AutoComplete to find images by tag from the Flickr webservice. A simple PHP proxy is used to access the remote server via XHR. The <code>generateRequest()</code> method has been customized in order send additional required parameters to the Flickr application. The <code>formatResult()</code> method has been customized in order to display images in the results container, and the default CSS has been enhanced so the results container can scroll. Finally, a <code>itemSelectEvent</code> handler has been defined to collect selected images in a separate container.
 			
 </div>
 
 <!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
 
-<h3>Enter Flickr tags to find a photo (separate with commas):</h3>
+<h3>Find photos by tag and collect your selections:</h3>
+<div id="flickrselections">
+    <h5>Selections</h5>
+    <div id="photos"></div>
+</div>
+
 <div id="flickrautocomplete">
 	<input id="flickrinput" type="text">
 	<div id="flickrcontainer"></div>
 </div>
+
 	
 <script type="text/javascript">
-YAHOO.example.ACFlickr = new function() {
-    // Instantiate an XHR DataSource and define schema as an array:
-    //     ["ResultNodeName",
-    //     "QueryKeyAttributeOrNodeName",
-    //     "AdditionalParamAttributeOrNodeName1",
-    //     ...
-    //     "AdditionalParamAttributeOrNodeNameN"]
-    this.oACDS = new YAHOO.widget.DS_XHR("assets/php/flickr_proxy.php",
-        ["photo", "title", "id", "owner", "secret", "server"]);
-    this.oACDS.scriptQueryParam = "tags";
-    this.oACDS.responseType = YAHOO.widget.DS_XHR.TYPE_XML;
-    this.oACDS.maxCacheEntries = 0;
-    this.oACDS.scriptQueryAppend = "method=flickr.photos.search";
-
+YAHOO.example.ACFlickr = function() {
+    // Set up a local proxy to the Flickr webservice
+    var myDS = new YAHOO.util.XHRDataSource("assets/php/flickr_proxy.php");
+    myDS.responseSchema = {
+        resultNode: "photo",
+        fields: ["title", "id", "owner", "secret", "server"]
+    };
+    myDS.responseType = YAHOO.util.XHRDataSource.TYPE_XML;
+    myDS.maxCacheEntries = 100;
+    
     // Instantiate AutoComplete
-    this.oAutoComp = new YAHOO.widget.AutoComplete('flickrinput','flickrcontainer', this.oACDS);
-    this.oAutoComp.autoHighlight = false;
-    this.oAutoComp.formatResult = function(oResultItem, sQuery) {
-        // This was defined by the schema array of the data source
-        var sTitle = oResultItem[0];
-        var sId = oResultItem[1];
-        var sOwner = oResultItem[2];
-        var sSecret = oResultItem[3];
-        var sServer = oResultItem[4];
+    var myAC = new YAHOO.widget.AutoComplete("flickrinput","flickrcontainer", myDS);
+    myAC.resultTypeList = false;
+    myAC.suppressInputUpdate = true;
+    myAC.generateRequest = function(sQuery) {
+        return "?method=flickr.photos.search&tags="+sQuery;
+    };
+    var getImgUrl = function(oPhoto, sSize) {
+        var sId = oPhoto.id;
+        var sSecret = oPhoto.secret;
+        var sServer = oPhoto.server;
         var sUrl = "http://static.flickr.com/" +
             sServer +
             "/" +
             sId +
             "_" +
             sSecret +
-            "_s.jpg";
-        var sMarkup = "<img src='" + sUrl + "' class='flickrImg'> " + sTitle;
+            "_"+ (sSize || "s") +".jpg";
+        return "<img src='" + sUrl + "' class='flickrImg'>";
+    }
+    
+    myAC.formatResult = function(oResultItem, sQuery) {
+        // This was defined by the schema array of the data source
+        var sTitle = oResultItem.title;
+        var sMarkup = getImgUrl(oResultItem) + " " + sTitle;
         return (sMarkup);
     };
-};
+    myAC.itemSelectEvent.subscribe(function(sType, aArgs){
+        var oPhoto = aArgs[2];
+        YAHOO.util.Dom.get("photos").innerHTML = 
+            "<p>"+getImgUrl(oPhoto, "m")+"</p>"+YAHOO.util.Dom.get("photos").innerHTML
+    });
+    
+    return {
+        oDS: myDS,
+        oAC: myAC
+    };
+}();
 </script>
 
 <!--END SOURCE CODE FOR EXAMPLE =============================== -->

@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Browser History Manager&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Browser History Manager&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_history.html">history</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -56,22 +58,6 @@ buttons in a DHTML application. It also allows a DHTML application to
 be bookmarked in a specific state.
                     </div>
 
-                        <div class="section constructor details">
-                        <h3 id="constructor">Constructor</h3>
-                        <div class="content">
-                            <div class="detail">
-                                <strong>YAHOO.util.History</strong>
-                                <code>
-                                    (
-                                    )
-                                </code>
-                                <div class="description">
-                                    
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                         <div class="section field details">
                             <h3 id="properties">Properties</h3>
@@ -168,6 +154,21 @@ the list of all states across pages within a single browser session.
 
                                     <hr />
                                     </div>
+                                    <div class="private">
+                                    <h4><a name="property_QUERY_STRING_REGEXP">QUERY_STRING_REGEXP</a>
+                                        <code>- private RegExp</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Regular expression used to parse "&"-separated key-value pairs
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
 
 
                             </div>
@@ -205,7 +206,10 @@ the list of all states across pages within a single browser session.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -242,7 +246,10 @@ implementation of an equivalent is trivial.
                                                     </code></dt>
                                                     <dd>The hash portion of the document's location</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -290,7 +297,10 @@ changed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -324,7 +334,10 @@ changed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -361,7 +374,10 @@ place in the form field specified during initialization.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -395,7 +411,10 @@ place in the form field specified during initialization.
                                                     </code></dt>
                                                     <dd>true if successful. false otherwise.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -443,7 +462,10 @@ if your application was bookmarked from a particular state.
                                                     </code></dt>
                                                     <dd>The bookmarked state of the specified module.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -489,7 +511,10 @@ if your application was bookmarked from a particular state.
                                                     </code></dt>
                                                     <dd>The current state of the specified module.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -548,7 +573,10 @@ this method uses the URL in the address bar.
                                                     </code></dt>
                                                     <dd>The value of the specified parameter, or null.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -605,7 +633,10 @@ the history (only required on Internet Explorer)
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -651,7 +682,10 @@ the history (only required on Internet Explorer)
                                                     </code></dt>
                                                     <dd>Indicates whether the new state was successfully added to the history.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -705,7 +739,10 @@ the history (only required on Internet Explorer)
                                                     </code></dt>
                                                     <dd>Indicates whether the new state was successfully added to the history.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -769,7 +806,10 @@ History Manager onLoad event has fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -852,7 +892,10 @@ execution scope of the listener.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -921,6 +964,8 @@ method instead.
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -960,6 +1005,8 @@ method instead.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1003,19 +1050,22 @@ method instead.
                         <h4>Properties</h4>
                         <ul class="content">        
                                 <li class="private"><a href="#property__fqstates">_fqstates</a>
-                                        <!--<code>&lt;HTMLInputElement|HTMLTextAreaElement&gt;</code>-->
+                                        <!--<code>&lt;RegExp&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__histFrame">_histFrame</a>
-                                        <!--<code>&lt;HTMLInputElement|HTMLTextAreaElement&gt;</code>-->
+                                        <!--<code>&lt;RegExp&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__initialized">_initialized</a>
-                                        <!--<code>&lt;HTMLInputElement|HTMLTextAreaElement&gt;</code>-->
+                                        <!--<code>&lt;RegExp&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__modules">_modules</a>
-                                        <!--<code>&lt;HTMLInputElement|HTMLTextAreaElement&gt;</code>-->
+                                        <!--<code>&lt;RegExp&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__stateField">_stateField</a>
-                                        <!--<code>&lt;HTMLInputElement|HTMLTextAreaElement&gt;</code>-->
+                                        <!--<code>&lt;RegExp&gt;</code>-->
+                                </li>
+                                <li class="private"><a href="#property_QUERY_STRING_REGEXP">QUERY_STRING_REGEXP</a>
+                                        <!--<code>&lt;RegExp&gt;</code>-->
                                 </li>
                         </ul>
                     </div>
@@ -1083,7 +1133,7 @@ method instead.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

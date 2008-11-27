@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>layout&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>layout&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_layout.html">layout</a>
@@ -21,14 +21,16 @@
                  &gt; layoutunit.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -107,6 +109,13 @@
 <span class="c">        * @type {String}</span>
 <span class="c">        */</span>
         <span class="nx">STR_EXPAND</span><span class="o">:</span> <span class="s1">&#39;Click to expand this pane.&#39;</span><span class="o">,</span>
+        <span class="c">/**</span>
+<span class="c">	    * The class name applied to dynamic tabs while loading.</span>
+<span class="c">	    * @property LOADING_CLASSNAME</span>
+<span class="c">	    * @type String</span>
+<span class="c">	    * @default &quot;disabled&quot;</span>
+<span class="c">	    */</span>
+	    <span class="nx">LOADING_CLASSNAME</span><span class="o">:</span> <span class="s1">&#39;loading&#39;</span><span class="o">,</span>
         <span class="c">/**</span>
 <span class="c">        * @property browser</span>
 <span class="c">        * @description A modified version of the YAHOO.env.ua object</span>
@@ -249,7 +258,6 @@
                 <span class="k">var</span> <span class="nx">hd</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_getBoxSize</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">header</span><span class="o">),</span>
                     <span class="nx">ft</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_getBoxSize</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">footer</span><span class="o">),</span>
                     <span class="nx">box</span> <span class="o">=</span> <span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">),</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">)];</span>
-
 
                 <span class="k">var</span> <span class="nx">nh</span> <span class="o">=</span> <span class="o">(</span><span class="nx">box</span><span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="o">-</span> <span class="nx">hd</span><span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="o">-</span> <span class="nx">ft</span><span class="o">[</span><span class="m">0</span><span class="o">])</span> <span class="o">-</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_gutter</span><span class="o">.</span><span class="nx">top</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">_gutter</span><span class="o">.</span><span class="nx">bottom</span><span class="o">),</span>
                     <span class="nx">nw</span> <span class="o">=</span> <span class="nx">box</span><span class="o">[</span><span class="m">1</span><span class="o">]</span> <span class="o">-</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_gutter</span><span class="o">.</span><span class="nx">left</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">_gutter</span><span class="o">.</span><span class="nx">right</span><span class="o">);</span>
@@ -504,8 +512,7 @@
 
             <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_anim</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="s1">&#39;display&#39;</span><span class="o">,</span> <span class="s1">&#39;none&#39;</span><span class="o">);</span>
-                <span class="c">//Animation Fails Here</span>
-<span class="c"></span>                <span class="k">var</span> <span class="nx">attr</span> <span class="o">=</span> <span class="o">{},</span> <span class="nx">s</span><span class="o">;</span>
+                <span class="k">var</span> <span class="nx">attr</span> <span class="o">=</span> <span class="o">{},</span> <span class="nx">s</span><span class="o">;</span>
 
                 <span class="nx">switch</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;position&#39;</span><span class="o">))</span> <span class="o">{</span>
                     <span class="nx">case</span> <span class="s1">&#39;left&#39;</span><span class="o">:</span>
@@ -573,11 +580,11 @@
             <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_collapsing</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_toggleClip</span><span class="o">();</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_collapsed</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="s1">&#39;zIndex&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;parent&#39;</span><span class="o">).</span><span class="nx">_zIndex</span><span class="o">);</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="s1">&#39;display&#39;</span><span class="o">,</span> <span class="s1">&#39;block&#39;</span><span class="o">);</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_lastWidth</span><span class="o">);</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_lastHeight</span><span class="o">);</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">_collapsed</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">resize</span><span class="o">();</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;scroll&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_lastScroll</span><span class="o">);</span>
                 <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_lastScrollTop</span> <span class="o">&gt;</span> <span class="m">0</span><span class="o">)</span> <span class="o">{</span>
@@ -691,6 +698,69 @@
                 <span class="k">this</span><span class="o">.</span><span class="nx">_clip</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
             <span class="o">}</span>
             <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;parent&#39;</span><span class="o">);</span>
+        <span class="o">},</span>
+		<span class="c">/**</span>
+<span class="c">        * @property loadHandler</span>
+<span class="c">        * @description Callback method for the YUI Connection Manager used for load the body using AJAX</span>
+<span class="c">        * @type Object</span>
+<span class="c">        */</span>
+		<span class="nx">loadHandler</span><span class="o">:</span> <span class="o">{</span>
+            <span class="nx">success</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">o</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">this</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">o</span><span class="o">.</span><span class="nx">responseText</span><span class="o">;</span>
+				<span class="k">this</span><span class="o">.</span><span class="nx">resize</span> <span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+            <span class="o">},</span>
+            <span class="nx">failure</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">o</span><span class="o">)</span> <span class="o">{</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
+		<span class="c">/**</span>
+<span class="c">        * @property dataConnection</span>
+<span class="c">        * @description YUI Connection Manager handler</span>
+<span class="c">        * @type Object</span>
+<span class="c">        */</span>
+		<span class="nx">dataConnection</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
+		<span class="c">/**</span>
+<span class="c">        * @private</span>
+<span class="c">        * @property _loading</span>
+<span class="c">        * @description During the loading process this variable will be true</span>
+<span class="c">        * @type Number</span>
+<span class="c">        */</span>
+        <span class="nx">_loading</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+		<span class="c">/**</span>
+<span class="c">        * @method loadContent</span>
+<span class="c">        * @description Loading the content of the unit using the connection manager</span>
+<span class="c">        * @return {object} YUI Connection Manager handler</span>
+<span class="c">        */</span>
+        <span class="nx">loadContent</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+			<span class="c">// load dynamic content unless already loading or loaded and caching</span>
+<span class="c"></span>			<span class="k">if</span> <span class="o">(</span><span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Connect</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;dataSrc&#39;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="o">.</span><span class="nx">_loading</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;dataLoaded&#39;</span><span class="o">))</span> <span class="o">{</span>
+		        <span class="k">this</span><span class="o">.</span><span class="nx">_loading</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> 
+		        <span class="nx">Dom</span><span class="o">.</span><span class="nx">addClass</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">body</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">LOADING_CLASSNAME</span><span class="o">);</span>
+				<span class="k">this</span><span class="o">.</span><span class="nx">dataConnection</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Connect</span><span class="o">.</span><span class="nx">asyncRequest</span><span class="o">(</span>
+		            <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;loadMethod&#39;</span><span class="o">),</span>
+		            <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;dataSrc&#39;</span><span class="o">),</span> 
+		            <span class="o">{</span>
+		                <span class="nx">success</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">o</span><span class="o">)</span> <span class="o">{</span>
+		                    <span class="k">this</span><span class="o">.</span><span class="nx">loadHandler</span><span class="o">.</span><span class="nx">success</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="nx">o</span><span class="o">);</span>
+		                    <span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;dataLoaded&#39;</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+		                    <span class="k">this</span><span class="o">.</span><span class="nx">dataConnection</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		                    <span class="nx">Dom</span><span class="o">.</span><span class="nx">removeClass</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">body</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">LOADING_CLASSNAME</span><span class="o">);</span>
+							<span class="k">this</span><span class="o">.</span><span class="nx">_loading</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+							<span class="k">this</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="s1">&#39;load&#39;</span><span class="o">);</span>
+		                <span class="o">},</span>
+		                <span class="nx">failure</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">o</span><span class="o">)</span> <span class="o">{</span>
+		                    <span class="k">this</span><span class="o">.</span><span class="nx">loadHandler</span><span class="o">.</span><span class="nx">failure</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="nx">o</span><span class="o">);</span>
+		                    <span class="k">this</span><span class="o">.</span><span class="nx">dataConnection</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		                    <span class="nx">Dom</span><span class="o">.</span><span class="nx">removeClass</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">body</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">LOADING_CLASSNAME</span><span class="o">);</span>
+		                    <span class="k">this</span><span class="o">.</span><span class="nx">_loading</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+							<span class="k">this</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="s1">&#39;loadError&#39;</span><span class="o">,</span> <span class="o">{</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">o</span> <span class="o">});</span>
+		                <span class="o">},</span>
+		                <span class="nx">scope</span><span class="o">:</span> <span class="k">this</span><span class="o">,</span>
+		                <span class="nx">timeout</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;dataTimeout&#39;</span><span class="o">)</span>
+		            <span class="o">}</span>
+		        <span class="o">);</span>
+				<span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">dataConnection</span><span class="o">;</span>
+	        <span class="o">}</span>
+			<span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
         <span class="o">},</span>
         <span class="c">/**</span>
 <span class="c">        * @private</span>
@@ -887,6 +957,17 @@
                     <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">_collapsing</span><span class="o">)</span> <span class="o">{</span>
                         <span class="k">this</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="nx">w</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="o">);</span>
                     <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">});</span>
+            <span class="c">/**</span>
+<span class="c">            * @attribute zIndex</span>
+<span class="c">            * @description The CSS zIndex to give to the unit, so you can have overlapping elements such as menus in a unit.</span>
+<span class="c">            * @type {Number}</span>
+<span class="c">            */</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">setAttributeConfig</span><span class="o">(</span><span class="s1">&#39;zIndex&#39;</span><span class="o">,</span> <span class="o">{</span>
+                <span class="nx">value</span><span class="o">:</span> <span class="nx">attr</span><span class="o">.</span><span class="nx">zIndex</span> <span class="o">||</span> <span class="kc">false</span><span class="o">,</span>
+                <span class="nx">method</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">z</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="s1">&#39;zIndex&#39;</span><span class="o">,</span> <span class="nx">z</span><span class="o">);</span>
                 <span class="o">}</span>
             <span class="o">});</span>
             <span class="c">/**</span>
@@ -1136,6 +1217,10 @@
                     <span class="o">}</span>
                     <span class="k">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getElementsByClassName</span><span class="o">(</span><span class="s1">&#39;close&#39;</span><span class="o">,</span> <span class="s1">&#39;div&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">header</span><span class="o">)[</span><span class="m">0</span><span class="o">];</span>
                     <span class="k">if</span> <span class="o">(</span><span class="nx">close</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="c">//Force some header text if there isn&#39;t any</span>
+<span class="c"></span>                        <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;header&#39;</span><span class="o">))</span> <span class="o">{</span>
+                            <span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;header&#39;</span><span class="o">,</span> <span class="s1">&#39;&amp;nbsp;&#39;</span><span class="o">);</span>
+                        <span class="o">}</span>
                         <span class="k">if</span> <span class="o">(!</span><span class="nx">c</span><span class="o">)</span> <span class="o">{</span>
                             <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="o">.</span><span class="nx">createElement</span><span class="o">(</span><span class="s1">&#39;div&#39;</span><span class="o">);</span>
                             <span class="nx">c</span><span class="o">.</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;close&#39;</span><span class="o">;</span>
@@ -1169,6 +1254,10 @@
                     <span class="o">}</span>
                     <span class="k">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getElementsByClassName</span><span class="o">(</span><span class="s1">&#39;collapse&#39;</span><span class="o">,</span> <span class="s1">&#39;div&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">header</span><span class="o">)[</span><span class="m">0</span><span class="o">];</span>
                     <span class="k">if</span> <span class="o">(</span><span class="nx">collapse</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="c">//Force some header text if there isn&#39;t any</span>
+<span class="c"></span>                        <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;header&#39;</span><span class="o">))</span> <span class="o">{</span>
+                            <span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;header&#39;</span><span class="o">,</span> <span class="s1">&#39;&amp;nbsp;&#39;</span><span class="o">);</span>
+                        <span class="o">}</span>
                         <span class="k">if</span> <span class="o">(!</span><span class="nx">c</span><span class="o">)</span> <span class="o">{</span>
                             <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="o">.</span><span class="nx">createElement</span><span class="o">(</span><span class="s1">&#39;div&#39;</span><span class="o">);</span>
                             <span class="k">this</span><span class="o">.</span><span class="nx">header</span><span class="o">.</span><span class="nx">appendChild</span><span class="o">(</span><span class="nx">c</span><span class="o">);</span>
@@ -1184,11 +1273,12 @@
             <span class="o">});</span>
             <span class="c">/**</span>
 <span class="c">            * @attribute scroll</span>
-<span class="c">            * @description Adds a class to the unit to allow for overflow: auto, default is overflow: hidden</span>
+<span class="c">            * @description Adds a class to the unit to allow for overflow: auto (yui-layout-scroll), default is overflow: hidden (yui-layout-noscroll). If true scroll bars will be placed on the element when the content exceeds the given area, false will put overflow hidden to hide the content. Passing null will render the content as usual overflow.</span>
+<span class="c">            * @type Boolean/Null</span>
 <span class="c">            */</span>
 
             <span class="k">this</span><span class="o">.</span><span class="nx">setAttributeConfig</span><span class="o">(</span><span class="s1">&#39;scroll&#39;</span><span class="o">,</span> <span class="o">{</span>
-                <span class="nx">value</span><span class="o">:</span> <span class="nx">attr</span><span class="o">.</span><span class="nx">scroll</span> <span class="o">||</span> <span class="kc">false</span><span class="o">,</span>
+                <span class="nx">value</span><span class="o">:</span> <span class="o">(((</span><span class="nx">attr</span><span class="o">.</span><span class="nx">scroll</span> <span class="o">===</span> <span class="kc">true</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="nx">attr</span><span class="o">.</span><span class="nx">scroll</span> <span class="o">===</span> <span class="kc">false</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="nx">attr</span><span class="o">.</span><span class="nx">scroll</span> <span class="o">===</span> <span class="kc">null</span><span class="o">))</span> <span class="o">?</span> <span class="nx">attr</span><span class="o">.</span><span class="nx">scroll</span> <span class="o">:</span> <span class="kc">false</span><span class="o">),</span>
                 <span class="nx">method</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">scroll</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">if</span> <span class="o">((</span><span class="nx">scroll</span> <span class="o">===</span> <span class="kc">false</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="o">.</span><span class="nx">_collapsed</span><span class="o">)</span> <span class="o">{</span> <span class="c">//Removing scroll bar</span>
 <span class="c"></span>                        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">body</span><span class="o">)</span> <span class="o">{</span>
@@ -1198,15 +1288,20 @@
                         <span class="o">}</span>
                     <span class="o">}</span>
                     
-                    <span class="k">if</span> <span class="o">(</span><span class="nx">scroll</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">scroll</span> <span class="o">===</span> <span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
                         <span class="k">this</span><span class="o">.</span><span class="nx">addClass</span><span class="o">(</span><span class="s1">&#39;yui-layout-scroll&#39;</span><span class="o">);</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">removeClass</span><span class="o">(</span><span class="s1">&#39;yui-layout-noscroll&#39;</span><span class="o">);</span>
                         <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_lastScrollTop</span> <span class="o">&gt;</span> <span class="m">0</span><span class="o">)</span> <span class="o">{</span>
                             <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">body</span><span class="o">)</span> <span class="o">{</span>
                                 <span class="k">this</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">scrollTop</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_lastScrollTop</span><span class="o">;</span>
                             <span class="o">}</span>
                         <span class="o">}</span>
-                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="nx">scroll</span> <span class="o">===</span> <span class="kc">false</span><span class="o">)</span> <span class="o">{</span>
                         <span class="k">this</span><span class="o">.</span><span class="nx">removeClass</span><span class="o">(</span><span class="s1">&#39;yui-layout-scroll&#39;</span><span class="o">);</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">addClass</span><span class="o">(</span><span class="s1">&#39;yui-layout-noscroll&#39;</span><span class="o">);</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="nx">scroll</span> <span class="o">===</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">removeClass</span><span class="o">(</span><span class="s1">&#39;yui-layout-scroll&#39;</span><span class="o">);</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">removeClass</span><span class="o">(</span><span class="s1">&#39;yui-layout-noscroll&#39;</span><span class="o">);</span>
                     <span class="o">}</span>
                 <span class="o">}</span>
             <span class="o">});</span>
@@ -1218,6 +1313,19 @@
                 <span class="nx">writeOnce</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span>
                 <span class="nx">value</span><span class="o">:</span> <span class="nx">attr</span><span class="o">.</span><span class="nx">hover</span> <span class="o">||</span> <span class="kc">false</span><span class="o">,</span>
                 <span class="nx">validator</span><span class="o">:</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">isBoolean</span>
+            <span class="o">});</span>
+            <span class="c">/**</span>
+<span class="c">            * @attribute useShim</span>
+<span class="c">            * @description Config option to pass to the Resize Utility</span>
+<span class="c">            */</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">setAttributeConfig</span><span class="o">(</span><span class="s1">&#39;useShim&#39;</span><span class="o">,</span> <span class="o">{</span>
+                <span class="nx">value</span><span class="o">:</span> <span class="nx">attr</span><span class="o">.</span><span class="nx">useShim</span> <span class="o">||</span> <span class="kc">false</span><span class="o">,</span>
+                <span class="nx">validator</span><span class="o">:</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">isBoolean</span><span class="o">,</span>
+                <span class="nx">method</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">u</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;useShim&#39;</span><span class="o">,</span> <span class="nx">u</span><span class="o">);</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
             <span class="o">});</span>
             <span class="c">/**</span>
 <span class="c">            * @attribute resize</span>
@@ -1270,7 +1378,9 @@
                                 <span class="nx">maxHeight</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;maxHeight&#39;</span><span class="o">),</span>
                                 <span class="nx">height</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">),</span>
                                 <span class="nx">width</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">),</span>
-                                <span class="nx">setSize</span><span class="o">:</span> <span class="kc">false</span>
+                                <span class="nx">setSize</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+                                <span class="nx">useShim</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;useShim&#39;</span><span class="o">),</span>
+                                <span class="nx">wrap</span><span class="o">:</span> <span class="kc">false</span>
                             <span class="o">});</span>
                             
                             <span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">.</span><span class="nx">_handles</span><span class="o">[</span><span class="nx">handle</span><span class="o">].</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;&lt;div class=&quot;yui-layout-resize-knob&quot;&gt;&lt;/div&gt;&#39;</span><span class="o">;</span>
@@ -1293,11 +1403,15 @@
                             <span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="s1">&#39;resize&#39;</span><span class="o">,</span> <span class="k">function</span><span class="o">(</span><span class="nx">ev</span><span class="o">)</span> <span class="o">{</span>
                                 <span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">,</span> <span class="nx">ev</span><span class="o">.</span><span class="nx">height</span><span class="o">);</span>
                                 <span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="nx">ev</span><span class="o">.</span><span class="nx">width</span><span class="o">);</span>
+                            <span class="o">},</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                            <span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="s1">&#39;endResize&#39;</span><span class="o">,</span> <span class="k">function</span><span class="o">(</span><span class="nx">ev</span><span class="o">)</span> <span class="o">{</span>
                                 <span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;scroll&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_lastScroll</span><span class="o">);</span>
                                 <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;parent&#39;</span><span class="o">))</span> <span class="o">{</span>
                                     <span class="k">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;parent&#39;</span><span class="o">).</span><span class="nx">getUnitByPosition</span><span class="o">(</span><span class="s1">&#39;center&#39;</span><span class="o">);</span>
                                     <span class="nx">c</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;scroll&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_lastCenterScroll</span><span class="o">);</span>
                                 <span class="o">}</span>
+                                <span class="k">this</span><span class="o">.</span><span class="nx">resize</span><span class="o">();</span>
+                                <span class="k">this</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="s1">&#39;endResize&#39;</span><span class="o">);</span>
                             <span class="o">},</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
                         <span class="o">}</span>
                     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
@@ -1307,6 +1421,44 @@
                     <span class="o">}</span>
                 <span class="o">}</span>
             <span class="o">});</span>
+			<span class="c">/**</span>
+<span class="c">	         * The unit data source, used for loading content dynamically.</span>
+<span class="c">	         * @attribute dataSrc</span>
+<span class="c">	         * @type String</span>
+<span class="c">	         */</span>
+	        <span class="k">this</span><span class="o">.</span><span class="nx">setAttributeConfig</span><span class="o">(</span><span class="s1">&#39;dataSrc&#39;</span><span class="o">,</span> <span class="o">{</span>
+	            <span class="nx">value</span><span class="o">:</span> <span class="nx">attr</span><span class="o">.</span><span class="nx">dataSrc</span>
+	        <span class="o">});</span>
+	        <span class="c">/**</span>
+<span class="c">	         * The method to use for the data request.</span>
+<span class="c">	         * @attribute loadMethod</span>
+<span class="c">	         * @type String</span>
+<span class="c">	         * @default &quot;GET&quot;</span>
+<span class="c">	         */</span>
+	        <span class="k">this</span><span class="o">.</span><span class="nx">setAttributeConfig</span><span class="o">(</span><span class="s1">&#39;loadMethod&#39;</span><span class="o">,</span> <span class="o">{</span>
+	            <span class="nx">value</span><span class="o">:</span> <span class="nx">attr</span><span class="o">.</span><span class="nx">loadMethod</span> <span class="o">||</span> <span class="s1">&#39;GET&#39;</span><span class="o">,</span>
+	            <span class="nx">validator</span><span class="o">:</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">isString</span>
+	        <span class="o">});</span>	
+	        <span class="c">/**</span>
+<span class="c">	         * Whether or not any data has been loaded from the server.</span>
+<span class="c">	         * @attribute dataLoaded</span>
+<span class="c">	         * @type Boolean</span>
+<span class="c">	         */</span>        
+	        <span class="k">this</span><span class="o">.</span><span class="nx">setAttributeConfig</span><span class="o">(</span><span class="s1">&#39;dataLoaded&#39;</span><span class="o">,</span> <span class="o">{</span>
+	            <span class="nx">value</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+	            <span class="nx">validator</span><span class="o">:</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">isBoolean</span><span class="o">,</span>
+	            <span class="nx">writeOnce</span><span class="o">:</span> <span class="kc">true</span>
+	        <span class="o">});</span>
+	        <span class="c">/**</span>
+<span class="c">	         * Number if milliseconds before aborting and calling failure handler.</span>
+<span class="c">	         * @attribute dataTimeout</span>
+<span class="c">	         * @type Number</span>
+<span class="c">	         * @default null</span>
+<span class="c">	         */</span>
+	        <span class="k">this</span><span class="o">.</span><span class="nx">setAttributeConfig</span><span class="o">(</span><span class="s1">&#39;dataTimeout&#39;</span><span class="o">,</span> <span class="o">{</span>
+	            <span class="nx">value</span><span class="o">:</span> <span class="nx">attr</span><span class="o">.</span><span class="nx">dataTimeout</span> <span class="o">||</span> <span class="kc">null</span><span class="o">,</span>
+	            <span class="nx">validator</span><span class="o">:</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">isNumber</span>
+	        <span class="o">});</span>
         <span class="o">},</span>
         <span class="c">/**</span>
 <span class="c">        * @private</span>
@@ -1344,22 +1496,30 @@
         <span class="o">},</span>
         <span class="c">/**</span>
 <span class="c">        * @method destroy</span>
+<span class="c">        * @param {Boolean} force Don&#39;t report to the parent, because we are being called from the parent.</span>
 <span class="c">        * @description Removes this unit from the parent and cleans up after itself.</span>
 <span class="c">        * @return {&lt;a href=&quot;YAHOO.widget.Layout.html&quot;&gt;YAHOO.widget.Layout&lt;/a&gt;} The parent Layout instance</span>
 <span class="c">        */</span>
-        <span class="nx">destroy</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nx">destroy</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">force</span><span class="o">)</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">.</span><span class="nx">destroy</span><span class="o">();</span>
             <span class="o">}</span>
             <span class="k">var</span> <span class="nx">par</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;parent&#39;</span><span class="o">);</span>
 
             <span class="k">this</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="s1">&#39;display&#39;</span><span class="o">,</span> <span class="s1">&#39;none&#39;</span><span class="o">);</span>
-            <span class="nx">par</span><span class="o">.</span><span class="nx">removeUnit</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
             <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_clip</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_clip</span><span class="o">.</span><span class="nx">parentNode</span><span class="o">.</span><span class="nx">removeChild</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_clip</span><span class="o">);</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_clip</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
             <span class="o">}</span>
 
+            <span class="k">if</span> <span class="o">(!</span><span class="nx">force</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">par</span><span class="o">.</span><span class="nx">removeUnit</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+            <span class="o">}</span>
+            
+            <span class="k">if</span> <span class="o">(</span><span class="nx">par</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">par</span><span class="o">.</span><span class="nx">removeListener</span><span class="o">(</span><span class="s1">&#39;resize&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">resize</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">unsubscribeAll</span><span class="o">();</span>
             <span class="nx">Event</span><span class="o">.</span><span class="nx">purgeElement</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;element&#39;</span><span class="o">));</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;parentNode&#39;</span><span class="o">).</span><span class="nx">removeChild</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;element&#39;</span><span class="o">));</span>
 
@@ -1393,6 +1553,11 @@
     <span class="c">/**</span>
 <span class="c">    * @event startResize</span>
 <span class="c">    * @description Fired when the Resize Utility fires it&#39;s startResize Event.</span>
+<span class="c">    * @type YAHOO.util.CustomEvent</span>
+<span class="c">    */</span>
+    <span class="c">/**</span>
+<span class="c">    * @event endResize</span>
+<span class="c">    * @description Fired when the Resize Utility fires it&#39;s endResize Event.</span>
 <span class="c">    * @type YAHOO.util.CustomEvent</span>
 <span class="c">    */</span>
     <span class="c">/**</span>
@@ -1430,6 +1595,16 @@
 <span class="c">    * @description Fired before the unit is exanded. If you return false, the collapse is cancelled.</span>
 <span class="c">    * @type YAHOO.util.CustomEvent</span>
 <span class="c">    */</span>
+    <span class="c">/**</span>
+<span class="c">    * @event load</span>
+<span class="c">    * @description Fired when data is loaded via the dataSrc config.</span>
+<span class="c">    * @type YAHOO.util.CustomEvent</span>
+<span class="c">    */</span>
+    <span class="c">/**</span>
+<span class="c">    * @event loadError</span>
+<span class="c">    * @description Fired when an error occurs loading data via the dataSrc config. Error message is passed as argument to this event.</span>
+<span class="c">    * @type YAHOO.util.CustomEvent</span>
+<span class="c">    */</span>
     <span class="o">});</span>
 
     <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">LayoutUnit</span> <span class="o">=</span> <span class="nx">LayoutUnit</span><span class="o">;</span>
@@ -1452,6 +1627,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -1492,6 +1669,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1542,7 +1721,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

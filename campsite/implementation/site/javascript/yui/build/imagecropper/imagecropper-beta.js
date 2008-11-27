@@ -2,7 +2,7 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
+version: 2.6.0
 */
 /**
  * @description <p>Creates a Image Cropper control.</p>
@@ -434,6 +434,12 @@ var Dom = YAHOO.util.Dom,
         _setBackgroundPosition: function(l, t) {
             var bl = parseInt(Dom.getStyle(this._resize.get('element'), 'borderLeftWidth'), 10);
             var bt = parseInt(Dom.getStyle(this._resize.get('element'), 'borderTopWidth'), 10);
+            if (isNaN(bl)) {
+                bl = 0;
+            }
+            if (isNaN(bt)) {
+                bt = 0;
+            }
             var mask = this._resize.getWrapEl().firstChild;
             var pos = (l - bl) + 'px ' + (t - bt) + 'px';
             this._resizeMaskEl.style.backgroundPosition = pos;
@@ -581,10 +587,10 @@ var Dom = YAHOO.util.Dom,
         * @return {<a href="YAHOO.widget.ImageCropper.html">YAHOO.widget.ImageCropper</a>} The ImageCropper instance
         */
         reset: function() {
-            this._resize.resize(null, this.get('initHeight'), this.get('initWidth'), 0, 0, true);
-            this._resizeEl.style.top = this.get('initialXY')[1] + 'px';
-            this._resizeEl.style.left = this.get('initialXY')[0] + 'px';
-            this._syncBackgroundPosition();
+            this._resize.destroy();
+            this._resizeEl.parentNode.removeChild(this._resizeEl);
+            this._createResize();
+            this._setConstraints();
             return this;
         },
 
@@ -880,4 +886,4 @@ var Dom = YAHOO.util.Dom,
 
 })();
 
-YAHOO.register("imagecropper", YAHOO.widget.ImageCropper, {version: "2.5.2", build: "1076"});
+YAHOO.register("imagecropper", YAHOO.widget.ImageCropper, {version: "2.6.0", build: "1321"});

@@ -19,10 +19,10 @@
 <td><a href="com/yahoo/astra/animation/AnimationEvent.html">AnimationEvent</a></td>
 </tr>
 <tr>
-<td><a href="com/yahoo/astra/fl/charts/Axis.html">Axis</a></td>
+<td><a href="com/yahoo/astra/fl/charts/axes/AxisData.html">AxisData</a></td>
 </tr>
 <tr>
-<td><a href="com/yahoo/astra/fl/charts/AxisOrientation.html">AxisOrientation</a></td>
+<td><a href="com/yahoo/astra/fl/charts/axes/AxisOrientation.html">AxisOrientation</a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/yui/charts/AxisSerializer.html">AxisSerializer</a></td>
@@ -38,6 +38,9 @@
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/fl/charts/series/BarSeries.html">BarSeries</a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/axes/BaseAxis.html">BaseAxis</a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/layout/modes/BaseLayoutMode.html">BaseLayoutMode</a></td>
@@ -58,7 +61,7 @@
 <td><a href="com/yahoo/astra/fl/charts/series/CartesianSeries.html">CartesianSeries</a></td>
 </tr>
 <tr>
-<td><a href="com/yahoo/astra/fl/charts/CategoryAxis.html">CategoryAxis</a></td>
+<td><a href="com/yahoo/astra/fl/charts/axes/CategoryAxis.html">CategoryAxis</a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/fl/charts/Chart.html">Chart</a></td>
@@ -71,6 +74,9 @@
 </tr>
 <tr>
 <td><a href="com/yahoo/yui/charts/ChartSerializer.html">ChartSerializer</a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/ChartUtil.html">ChartUtil</a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/fl/charts/skins/CircleSkin.html">CircleSkin</a></td>
@@ -88,13 +94,25 @@
 <td><a href="com/yahoo/astra/utils/DateUtil.html">DateUtil</a></td>
 </tr>
 <tr>
+<td><a href="com/yahoo/astra/fl/charts/axes/DefaultAxisRenderer.html">DefaultAxisRenderer</a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/axes/DefaultGridLinesRenderer.html">DefaultGridLinesRenderer</a></td>
+</tr>
+<tr>
 <td><a href="com/yahoo/astra/fl/charts/skins/DiamondSkin.html">DiamondSkin</a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/utils/DisplayObjectUtil.html">DisplayObjectUtil</a></td>
 </tr>
 <tr>
+<td><a href="com/yahoo/astra/utils/DynamicRegistration.html">DynamicRegistration</a></td>
+</tr>
+<tr>
 <td><a href="com/yahoo/astra/layout/modes/FlowLayout.html">FlowLayout</a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/utils/GeomUtil.html">GeomUtil</a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/utils/GraphicsUtil.html">GraphicsUtil</a></td>
@@ -106,7 +124,13 @@
 <td><a href="com/yahoo/astra/layout/modes/IAdvancedLayoutMode.html"><i>IAdvancedLayoutMode</i></a></td>
 </tr>
 <tr>
-<td><a href="com/yahoo/astra/fl/charts/IAxis.html"><i>IAxis</i></a></td>
+<td><a href="com/yahoo/astra/fl/charts/axes/IAxis.html"><i>IAxis</i></a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/axes/IAxisRenderer.html"><i>IAxisRenderer</i></a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/axes/ICartesianAxisRenderer.html"><i>ICartesianAxisRenderer</i></a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/fl/charts/ICategoryChart.html"><i>ICategoryChart</i></a></td>
@@ -115,7 +139,16 @@
 <td><a href="com/yahoo/astra/fl/charts/series/ICategorySeries.html"><i>ICategorySeries</i></a></td>
 </tr>
 <tr>
+<td><a href="com/yahoo/astra/fl/charts/IChart.html"><i>IChart</i></a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/axes/IClusteringAxis.html"><i>IClusteringAxis</i></a></td>
+</tr>
+<tr>
 <td><a href="com/yahoo/astra/fl/charts/IDataTipRenderer.html"><i>IDataTipRenderer</i></a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/axes/IGridLinesRenderer.html"><i>IGridLinesRenderer</i></a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/layout/ILayoutContainer.html"><i>ILayoutContainer</i></a></td>
@@ -133,16 +166,25 @@
 <td><a href="com/yahoo/astra/utils/InstanceFactory.html">InstanceFactory</a></td>
 </tr>
 <tr>
-<td><a href="com/yahoo/astra/fl/charts/IPlotArea.html"><i>IPlotArea</i></a></td>
+<td><a href="com/yahoo/astra/fl/charts/axes/IOriginAxis.html"><i>IOriginAxis</i></a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/fl/charts/skins/IProgrammaticSkin.html"><i>IProgrammaticSkin</i></a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/axes/IRadialAxisRenderer.html"><i>IRadialAxisRenderer</i></a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/fl/charts/series/ISeries.html"><i>ISeries</i></a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/fl/charts/series/ISeriesItemRenderer.html"><i>ISeriesItemRenderer</i></a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/series/IStackedSeries.html"><i>IStackedSeries</i></a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/axes/IStackingAxis.html"><i>IStackingAxis</i></a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/utils/JavaScriptUtil.html">JavaScriptUtil</a></td>
@@ -205,7 +247,7 @@
 <td><a href="com/yahoo/astra/utils/NumberUtil.html">NumberUtil</a></td>
 </tr>
 <tr>
-<td><a href="com/yahoo/astra/fl/charts/NumericAxis.html">NumericAxis</a></td>
+<td><a href="com/yahoo/astra/fl/charts/axes/NumericAxis.html">NumericAxis</a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/layout/modes/PercentageSizeUtil.html">PercentageSizeUtil</a></td>
@@ -217,10 +259,13 @@
 <td><a href="com/yahoo/astra/fl/charts/series/PieSeries.html">PieSeries</a></td>
 </tr>
 <tr>
+<td><a href="com/yahoo/astra/fl/charts/axes/RadialAxisRenderer.html">RadialAxisRenderer</a></td>
+</tr>
+<tr>
 <td><a href="com/yahoo/astra/fl/charts/skins/RectangleSkin.html">RectangleSkin</a></td>
 </tr>
 <tr>
-<td><a href="com/yahoo/astra/fl/charts/ScaleType.html">ScaleType</a></td>
+<td><a href="com/yahoo/astra/fl/charts/axes/ScaleType.html">ScaleType</a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/fl/charts/series/Series.html">Series</a></td>
@@ -232,16 +277,28 @@
 <td><a href="com/yahoo/yui/charts/SeriesSerializer.html">SeriesSerializer</a></td>
 </tr>
 <tr>
+<td><a href="com/yahoo/astra/fl/charts/StackedBarChart.html">StackedBarChart</a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/series/StackedBarSeries.html">StackedBarSeries</a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/StackedColumnChart.html">StackedColumnChart</a></td>
+</tr>
+<tr>
+<td><a href="com/yahoo/astra/fl/charts/series/StackedColumnSeries.html">StackedColumnSeries</a></td>
+</tr>
+<tr>
 <td><a href="com/yahoo/yui/charts/TextFormatSerializer.html">TextFormatSerializer</a></td>
 </tr>
 <tr>
-<td><a href="com/yahoo/astra/fl/charts/TickPosition.html">TickPosition</a></td>
+<td><a href="com/yahoo/astra/fl/charts/axes/TickPosition.html">TickPosition</a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/layout/modes/TileLayout.html">TileLayout</a></td>
 </tr>
 <tr>
-<td><a href="com/yahoo/astra/fl/charts/TimeAxis.html">TimeAxis</a></td>
+<td><a href="com/yahoo/astra/fl/charts/axes/TimeAxis.html">TimeAxis</a></td>
 </tr>
 <tr>
 <td><a href="com/yahoo/astra/utils/TimeUnit.html">TimeUnit</a></td>

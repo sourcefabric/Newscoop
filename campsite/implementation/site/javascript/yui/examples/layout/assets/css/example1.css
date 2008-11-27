@@ -210,7 +210,7 @@ a {
     border: none;
 }
 #composeViewEl {
-    display: none;
+    /*display: none;*/
 }
 #composeBarWrap {
     background-color: #EDF5FF;
@@ -526,6 +526,7 @@ a {
 }
 #inboxToolbar .yui-button .first-child a {
     padding-left: 22px;
+    font-size: 13px;
 }
 
 #inboxToolbar .yui-toolbar-subcont {
@@ -561,6 +562,7 @@ a {
 }
 #composeBar .yui-button .first-child a {
     padding-left: 23px;
+    font-size: 12px;
 }
 
 #composeTo {
@@ -595,19 +597,29 @@ a {
 .yui-skin-sam .yui-toolbar-container .yui-push-button span.yui-toolbar-icon,
 .yui-skin-sam .yui-toolbar-container .yui-color-button span.yui-toolbar-icon,
 .yui-skin-sam .yui-toolbar-container .yui-menu-button span.yui-toolbar-icon {
-    background-image: url(editor-sprite-active.gif);
+    /*background-image: url(editor-sprite-active.gif);*/
 }
 
 /* Swap out the image to an active image */
 .yui-skin-sam .yui-toolbar-container .yui-button-selected span.yui-toolbar-icon, .yui-skin-sam .yui-toolbar-container .yui-button-hover span.yui-toolbar-icon {
-    background-image: url(editor-sprite.gif);
+    /*background-image: url(editor-sprite.gif);*/
 }
 .yui-skin-sam .yui-dt-scrollable .yui-dt-hd,
 .yui-skin-sam .yui-dt-scrollable .yui-dt-bd {
     border: none;
 }
+#compose_editor {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
 .yui-skin-sam .yui-dt-scrollable .yui-dt-hd {
     border-top: 1px solid #808080;
+}
+.yui-skin-sam .yui-editor-panel .bd {
+    background-color: #EDF5FF;
+}
+.yui-skin-sam .yui-editor-panel .hd h3 {
+    background:transparent url(sprite.png) repeat-x scroll 0pt -1300px;
 }
 .yui-skin-sam .yui-dt th {
     background:transparent url(sprite.png) repeat-x scroll 0 -1300px;
@@ -769,7 +781,8 @@ a {
 }
 
 .yui-skin-sam .yui-log .yui-log-btns,
-.yui-skin-sam .yui-log .yui-log-hd {
+.yui-skin-sam .yui-log .yui-log-hd,
+.yui-skin-sam .yui-log .yui-log-ft {
     display: none;
 }
 .yui-skin-sam .yui-log .info {

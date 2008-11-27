@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>resize&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>resize&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_resize.html">resize</a>
@@ -21,14 +21,16 @@
                  &gt; resize.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -190,6 +192,13 @@
         <span class="nx">browser</span><span class="o">:</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">ua</span><span class="o">,</span>
         <span class="c">/** </span>
 <span class="c">        * @private</span>
+<span class="c">        * @property _locked</span>
+<span class="c">        * @description A flag to show if the resize is locked</span>
+<span class="c">        * @type Boolean</span>
+<span class="c">        */</span>
+        <span class="nx">_locked</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
+        <span class="c">/** </span>
+<span class="c">        * @private</span>
 <span class="c">        * @property _positioned</span>
 <span class="c">        * @description A flag to show if the element is absolutely positioned</span>
 <span class="c">        * @type Boolean</span>
@@ -288,13 +297,13 @@
                     <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Auto-wrapping the element (&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;element&#39;</span><span class="o">).</span><span class="nx">tagName</span><span class="o">.</span><span class="nx">toLowerCase</span><span class="o">()</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="o">,</span> <span class="s1">&#39;warn&#39;</span><span class="o">,</span> <span class="s1">&#39;Resize&#39;</span><span class="o">);</span>
                     <span class="k">break</span><span class="o">;</span>
             <span class="o">}</span>
-            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;wrap&#39;</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;wrap&#39;</span><span class="o">)</span> <span class="o">===</span> <span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
                 <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Creating the wrap element&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Resize&#39;</span><span class="o">);</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span> <span class="o">=</span> <span class="nb">document</span><span class="o">.</span><span class="nx">createElement</span><span class="o">(</span><span class="s1">&#39;div&#39;</span><span class="o">);</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">.</span><span class="nx">id</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;element&#39;</span><span class="o">).</span><span class="nx">id</span> <span class="o">+</span> <span class="s1">&#39;_wrap&#39;</span><span class="o">;</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">.</span><span class="nx">className</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">CSS_WRAP</span><span class="o">;</span>
-                <span class="nx">D</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">));</span>
-                <span class="nx">D</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="s1">&#39;height&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">));</span>
+                <span class="nx">D</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">)</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="o">);</span>
+                <span class="nx">D</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="s1">&#39;height&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">)</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="o">);</span>
                 <span class="nx">D</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="s1">&#39;z-index&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">getStyle</span><span class="o">(</span><span class="s1">&#39;z-index&#39;</span><span class="o">));</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="s1">&#39;z-index&#39;</span><span class="o">,</span> <span class="m">0</span><span class="o">);</span>
                 <span class="k">var</span> <span class="nx">pos</span> <span class="o">=</span> <span class="nx">D</span><span class="o">.</span><span class="nx">getStyle</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;element&#39;</span><span class="o">),</span> <span class="s1">&#39;position&#39;</span><span class="o">);</span>
@@ -339,7 +348,7 @@
         <span class="nx">_setupDragDrop</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
             <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Setting up the dragdrop instance on the element&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Resize&#39;</span><span class="o">);</span>
             <span class="nx">D</span><span class="o">.</span><span class="nx">addClass</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">CSS_DRAG</span><span class="o">);</span>
-            <span class="k">this</span><span class="o">.</span><span class="nx">dd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">DD</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">)</span> <span class="o">+</span> <span class="s1">&#39;-resize&#39;</span><span class="o">,</span> <span class="o">{</span> <span class="nx">dragOnly</span><span class="o">:</span> <span class="kc">true</span> <span class="o">});</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">dd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">DD</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">)</span> <span class="o">+</span> <span class="s1">&#39;-resize&#39;</span><span class="o">,</span> <span class="o">{</span> <span class="nx">dragOnly</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span> <span class="nx">useShim</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;useShim&#39;</span><span class="o">)</span> <span class="o">});</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">dd</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="s1">&#39;dragEvent&#39;</span><span class="o">,</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="s1">&#39;dragEvent&#39;</span><span class="o">,</span> <span class="nx">arguments</span><span class="o">);</span>
             <span class="o">},</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
@@ -365,7 +374,7 @@
                 <span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">.</span><span class="nx">appendChild</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_handles</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]]);</span>
                 <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_handles</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]],</span> <span class="s1">&#39;mouseover&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_handleMouseOver</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
                 <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_handles</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]],</span> <span class="s1">&#39;mouseout&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_handleMouseOut</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">_dds</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">DragDrop</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_handles</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]],</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">)</span> <span class="o">+</span> <span class="s1">&#39;-handle-&#39;</span> <span class="o">+</span> <span class="nx">h</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_dds</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">DragDrop</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_handles</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]],</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">)</span> <span class="o">+</span> <span class="s1">&#39;-handle-&#39;</span> <span class="o">+</span> <span class="nx">h</span><span class="o">,</span> <span class="o">{</span> <span class="nx">dragOnly</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span> <span class="nx">useShim</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;useShim&#39;</span><span class="o">)</span> <span class="o">});</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_dds</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]].</span><span class="nx">setPadding</span><span class="o">(</span><span class="m">15</span><span class="o">,</span> <span class="m">15</span><span class="o">,</span> <span class="m">15</span><span class="o">,</span> <span class="m">15</span><span class="o">);</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_dds</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]].</span><span class="nx">on</span><span class="o">(</span><span class="s1">&#39;startDragEvent&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_handleStartDrag</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_dds</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]],</span> <span class="k">this</span><span class="o">);</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_dds</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]].</span><span class="nx">on</span><span class="o">(</span><span class="s1">&#39;mouseDownEvent&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_handleMouseDown</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_dds</span><span class="o">[</span><span class="nx">h</span><span class="o">[</span><span class="nx">i</span><span class="o">]],</span> <span class="k">this</span><span class="o">);</span>
@@ -415,6 +424,10 @@
 <span class="c">        * @description This method preps the autoRatio on MouseDown.</span>
 <span class="c">        */</span>
         <span class="nx">_handleMouseDown</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">ev</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_locked</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Resize Locked&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Resize&#39;</span><span class="o">);</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="o">}</span>
             <span class="k">if</span> <span class="o">(</span><span class="nx">D</span><span class="o">.</span><span class="nx">getStyle</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="s1">&#39;position&#39;</span><span class="o">)</span> <span class="o">==</span> <span class="s1">&#39;absolute&#39;</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_positioned</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
             <span class="o">}</span>
@@ -433,6 +446,10 @@
 <span class="c">        * @description Adds CSS class names to the handles</span>
 <span class="c">        */</span>
         <span class="nx">_handleMouseOver</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">ev</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_locked</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Resize Locked&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Resize&#39;</span><span class="o">);</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="o">}</span>
             <span class="c">//Internet Explorer needs this</span>
 <span class="c"></span>            <span class="nx">D</span><span class="o">.</span><span class="nx">removeClass</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">CSS_RESIZE</span><span class="o">);</span>
             <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;hover&#39;</span><span class="o">))</span> <span class="o">{</span>
@@ -629,6 +646,14 @@
 
             <span class="k">this</span><span class="o">.</span><span class="nx">_resizeEvent</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">_currentHandle</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            
+            <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;animate&#39;</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_cache</span><span class="o">.</span><span class="nx">height</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_cache</span><span class="o">.</span><span class="nx">width</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="o">}</span>
+
+            <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Firing endResize Event&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Resize&#39;</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="s1">&#39;endResize&#39;</span><span class="o">,</span> <span class="o">{</span> <span class="nx">ev</span><span class="o">:</span> <span class="s1">&#39;endResize&#39;</span><span class="o">,</span> <span class="nx">target</span><span class="o">:</span> <span class="k">this</span><span class="o">,</span> <span class="nx">height</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_cache</span><span class="o">.</span><span class="nx">height</span><span class="o">,</span> <span class="nx">width</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_cache</span><span class="o">.</span><span class="nx">width</span><span class="o">,</span> <span class="nx">top</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_cache</span><span class="o">.</span><span class="nx">top</span><span class="o">,</span> <span class="nx">left</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_cache</span><span class="o">.</span><span class="nx">left</span> <span class="o">});</span>
         <span class="o">},</span>
         <span class="c">/** </span>
 <span class="c">        * @private</span>
@@ -751,6 +776,42 @@
             <span class="o">}</span>
         <span class="o">},</span>
         <span class="c">/** </span>
+<span class="c">        * @method lock</span>
+<span class="c">        * @description Lock the resize so it can&#39;t be resized</span>
+<span class="c">        * @param {Boolean} dd If the draggable config is set, lock it too</span>
+<span class="c">        * @return {&lt;a href=&quot;YAHOO.util.Resize.html&quot;&gt;YAHOO.util.Resize&lt;/a&gt;} The Resize instance</span>
+<span class="c">        */</span>
+        <span class="nx">lock</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">dd</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_locked</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nx">dd</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="nx">dd</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">D</span><span class="o">.</span><span class="nx">removeClass</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="s1">&#39;yui-draggable&#39;</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">dd</span><span class="o">.</span><span class="nx">lock</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+        <span class="o">},</span>
+        <span class="c">/** </span>
+<span class="c">        * @method unlock</span>
+<span class="c">        * @description Unlock the resize so it can be resized</span>
+<span class="c">        * @param {Boolean} dd If the draggable config is set, unlock it too</span>
+<span class="c">        * @return {&lt;a href=&quot;YAHOO.util.Resize.html&quot;&gt;YAHOO.util.Resize&lt;/a&gt;} The Resize instance</span>
+<span class="c">        */</span>
+        <span class="nx">unlock</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">dd</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_locked</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nx">dd</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="nx">dd</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">D</span><span class="o">.</span><span class="nx">addClass</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="s1">&#39;yui-draggable&#39;</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">dd</span><span class="o">.</span><span class="nx">unlock</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+        <span class="o">},</span>
+        <span class="c">/** </span>
+<span class="c">        * @method isLocked</span>
+<span class="c">        * @description Check the locked status of the resize instance</span>
+<span class="c">        * @return {Boolean}</span>
+<span class="c">        */</span>
+        <span class="nx">isLocked</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">_locked</span><span class="o">;</span>
+        <span class="o">},</span>
+        <span class="c">/** </span>
 <span class="c">        * @method reset</span>
 <span class="c">        * @description Resets the element to is start state.</span>
 <span class="c">        * @return {&lt;a href=&quot;YAHOO.util.Resize.html&quot;&gt;YAHOO.util.Resize&lt;/a&gt;} The Resize instance</span>
@@ -761,6 +822,7 @@
             <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
         <span class="o">},</span>
         <span class="c">/** </span>
+<span class="c">        * @private</span>
 <span class="c">        * @method resize</span>
 <span class="c">        * @param {Event} ev The mouse event.</span>
 <span class="c">        * @param {Number} h The new height setting.</span>
@@ -773,6 +835,10 @@
 <span class="c">        * @return {&lt;a href=&quot;YAHOO.util.Resize.html&quot;&gt;YAHOO.util.Resize&lt;/a&gt;} The Resize instance</span>
 <span class="c">        */</span>
         <span class="nx">resize</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">ev</span><span class="o">,</span> <span class="nx">h</span><span class="o">,</span> <span class="nx">w</span><span class="o">,</span> <span class="nx">t</span><span class="o">,</span> <span class="nx">l</span><span class="o">,</span> <span class="nx">force</span><span class="o">,</span> <span class="nx">silent</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_locked</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Resize Locked&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Resize&#39;</span><span class="o">);</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="o">}</span>
             <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Resize: &#39;</span> <span class="o">+</span> <span class="nx">h</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">w</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">t</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">l</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Resize&#39;</span><span class="o">);</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">_resizeEvent</span> <span class="o">=</span> <span class="nx">ev</span><span class="o">;</span>
             <span class="k">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_wrap</span><span class="o">,</span> <span class="nx">anim</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;animate&#39;</span><span class="o">),</span> <span class="nx">set</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
@@ -1188,6 +1254,7 @@
 <span class="c">        */</span>        
         <span class="nx">init</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">p_oElement</span><span class="o">,</span> <span class="nx">p_oAttributes</span><span class="o">)</span> <span class="o">{</span>
             <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;init&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Resize&#39;</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_locked</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">_cache</span> <span class="o">=</span> <span class="o">{</span>
                 <span class="nx">xy</span><span class="o">:</span> <span class="o">[],</span>
                 <span class="nx">height</span><span class="o">:</span> <span class="m">0</span><span class="o">,</span>
@@ -1278,6 +1345,26 @@
         <span class="nx">initAttributes</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">attr</span><span class="o">)</span> <span class="o">{</span>
             <span class="nx">Resize</span><span class="o">.</span><span class="nx">superclass</span><span class="o">.</span><span class="nx">initAttributes</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="nx">attr</span><span class="o">);</span>
 
+            <span class="c">/**</span>
+<span class="c">            * @attribute useShime</span>
+<span class="c">            * @description This setting will be passed to the DragDrop instances on the resize handles and for the draggable property.</span>
+<span class="c">            * This property should be used if you want the resize handles to work over iframe and other elements.</span>
+<span class="c">            * @type Boolean</span>
+<span class="c">            */</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">setAttributeConfig</span><span class="o">(</span><span class="s1">&#39;useShim&#39;</span><span class="o">,</span> <span class="o">{</span>
+                <span class="nx">value</span><span class="o">:</span> <span class="o">((</span><span class="nx">attr</span><span class="o">.</span><span class="nx">useShim</span> <span class="o">===</span> <span class="kc">true</span><span class="o">)</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="o">),</span>
+                <span class="nx">validator</span><span class="o">:</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">isBoolean</span><span class="o">,</span>
+                <span class="nx">method</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">u</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="k">this</span><span class="o">.</span><span class="nx">_dds</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="nx">Lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_dds</span><span class="o">,</span> <span class="nx">i</span><span class="o">))</span> <span class="o">{</span>
+                            <span class="k">this</span><span class="o">.</span><span class="nx">_dds</span><span class="o">[</span><span class="nx">i</span><span class="o">].</span><span class="nx">useShim</span> <span class="o">=</span> <span class="nx">u</span><span class="o">;</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">dd</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">dd</span><span class="o">.</span><span class="nx">useShim</span> <span class="o">=</span> <span class="nx">u</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">});</span>
             <span class="c">/**</span>
 <span class="c">            * @attribute setSize</span>
 <span class="c">            * @description Set the size of the resized element, if set to false the element will not be auto resized,</span>
@@ -1461,9 +1548,9 @@
             <span class="k">this</span><span class="o">.</span><span class="nx">setAttributeConfig</span><span class="o">(</span><span class="s1">&#39;animateEasing&#39;</span><span class="o">,</span> <span class="o">{</span>
                 <span class="nx">value</span><span class="o">:</span> <span class="nx">attr</span><span class="o">.</span><span class="nx">animateEasing</span> <span class="o">||</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
                     <span class="k">var</span> <span class="nx">easing</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-                    <span class="k">try</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Easing</span> <span class="o">&amp;&amp;</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Easing</span><span class="o">.</span><span class="nx">easeOut</span><span class="o">)</span> <span class="o">{</span>
                         <span class="nx">easing</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Easing</span><span class="o">.</span><span class="nx">easeOut</span><span class="o">;</span>
-                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{}</span>
+                    <span class="o">}</span>
                     <span class="k">return</span> <span class="nx">easing</span><span class="o">;</span>
                 <span class="o">}()</span>
             <span class="o">});</span>
@@ -1657,7 +1744,12 @@
 <span class="c">*/</span>
 <span class="c">/**</span>
 <span class="c">* @event startResize</span>
-<span class="c">* @description Fires when when a resize action is started.</span>
+<span class="c">* @description Fires when a resize action is started.</span>
+<span class="c">* @type YAHOO.util.CustomEvent</span>
+<span class="c">*/</span>
+<span class="c">/**</span>
+<span class="c">* @event endResize</span>
+<span class="c">* @description Fires when the mouseUp event from the Drag Instance fires.</span>
 <span class="c">* @type YAHOO.util.CustomEvent</span>
 <span class="c">*/</span>
 <span class="c">/**</span>
@@ -1695,6 +1787,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -1735,6 +1829,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1783,7 +1879,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

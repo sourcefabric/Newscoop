@@ -17,6 +17,7 @@ body {
 </style>
 
 <link rel="stylesheet" type="text/css" href="../../build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="../../build/slider/assets/skins/sam/slider.css" />
 <link rel="stylesheet" type="text/css" href="../../build/menu/assets/skins/sam/menu.css" />
 <link rel="stylesheet" type="text/css" href="../../build/button/assets/skins/sam/button.css" />
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
@@ -131,6 +132,7 @@ body {
 
 <body class=" yui-skin-sam">
 
+
 <h1>Slider Button</h1>
 
 <div class="exampleIntro">
@@ -233,12 +235,11 @@ create an opacity slider button, similar to that found in Adobe Photoshop.
 
 
             /*
-                Add a "render" event handler to the Menu instance that 
+                Add a "beforeShow" event handler to the Menu instance that 
                 will instantiate the Slider.
             */
 
-
-            oOpacityMenu.subscribe("render", function () {
+			var onMenuBeforeShow = function () {
 
                 // Instantiate the Slider
 
@@ -300,7 +301,7 @@ create an opacity slider button, similar to that found in Adobe Photoshop.
                 });
 
 
-                function focusSlider() {
+                var focusSlider = function () {
 
                     if ((YAHOO.env.ua.ie || YAHOO.env.ua.gecko) && oSliderEl) {
     
@@ -312,14 +313,26 @@ create an opacity slider button, similar to that found in Adobe Photoshop.
                     
                     }                    
                 
-                }    
+                };
+
+
+				focusSlider();
 
 
                 // Focus the Slider instance each time it is made visible
 
                 oOpacityMenu.subscribe("show", focusSlider);
+                
+
+                // Unsubscribe from the "beforeShow" event, since we only need to initialize the 
+                // Slider once.
+                
+            	oOpacityMenu.unsubscribe("beforeShow", onMenuBeforeShow);
             
-            });
+            };
+
+
+            oOpacityMenu.subscribe("beforeShow", onMenuBeforeShow);
 
         });
         

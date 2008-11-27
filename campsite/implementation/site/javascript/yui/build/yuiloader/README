@@ -1,9 +1,22 @@
 yuiloader - Release Notes
 
+2.6.0
+ * Autocomplete requires datasource.
+ * Config always used if provided to insert().
+ * Added timeout support, which is off by default.  Add a 'timeout'
+   config value greater than zero and an onTimeout handler to use it.
+ * Added combo handler support, which is off by default.  Set
+   'combine' to true to use it.
+ * Filters are applied to new modules that have a 'fullpath' attribute.
+ * resize, editor, simpleeditor, layout, datasource, datatable,
+   cookie, profiler, yuiloader out of beta.
+ * Added carousel, paginator
+ * Added slider skin.
+
 2.5.2
-  * uploader requires element
-  * editer supersedes simpleditor
-  * optional dependencies are sorted correctly when present even when
+  * uploader requires element.
+  * editer supersedes simpleditor.
+  * Optional dependencies are sorted correctly when present even when
     loadOptional is not specified.
 
 2.5.1
@@ -58,4 +71,13 @@ yuiloader - Release Notes
      it was looking for "skin.override".
 
 2.3.0
-   * Initial release
+   * Initial release.  YUILoader can dynamically load the optimized list of dependencies
+     for a given set of requirements.  It is designed to be the only YUI component you
+     need on your page in order to get the library running.  It includes the pieces of YUI
+     that it requires to work.  If you are using yuiloader.js, then you don't need the
+     following:
+
+     yahoo.js
+     get.js
+     
+

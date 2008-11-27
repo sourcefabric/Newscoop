@@ -2,7 +2,7 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
+version: 2.6.0
 */
 /**
  * CORE
@@ -57,6 +57,8 @@ version: 2.5.2
 .yui-calcontainer .close-icon {
 	position:absolute;
 	z-index:1;
+	text-indent:-10000em;
+	overflow:hidden;
 }
 
 /* CALENDAR TABLE */
@@ -68,12 +70,16 @@ version: 2.5.2
 .yui-calendar .calnavleft {
 	position:absolute;
 	z-index:1;
+	text-indent:-10000em;
+	overflow:hidden;
 }
 
 /* NAVBAR RIGHT ARROW CONTAINER */
 .yui-calendar .calnavright {
 	position:absolute;
 	z-index:1;
+	text-indent:-10000em;
+	overflow:hidden;
 }
 
 /* NAVBAR TEXT CONTAINER */

@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>cookie&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>cookie&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_cookie.html">cookie</a>
@@ -21,14 +21,16 @@
                  &gt; Cookie.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -39,7 +41,6 @@
 <span class="c"> * Utilities for cookie management</span>
 <span class="c"> * @namespace YAHOO.util</span>
 <span class="c"> * @module cookie</span>
-<span class="c"> * @beta</span>
 <span class="c"> */</span>
 <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">namespace</span><span class="o">(</span><span class="s2">&quot;util&quot;</span><span class="o">);</span>
 
@@ -136,13 +137,15 @@
 <span class="c">     */</span>
     <span class="nx">_parseCookieHash</span> <span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">text</span> <span class="c">/*:String*/</span><span class="o">)</span> <span class="c">/*:Object*/</span> <span class="o">{</span>
     
-        <span class="k">var</span> <span class="nx">hashParts</span> <span class="c">/*:Array*/</span> <span class="o">=</span> <span class="nx">text</span><span class="o">.</span><span class="nx">split</span><span class="o">(</span><span class="s2">&quot;&amp;&quot;</span><span class="o">);</span>
-        <span class="k">var</span> <span class="nx">hashPart</span> <span class="c">/*:Array*/</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="k">var</span> <span class="nx">hash</span> <span class="c">/*:Object*/</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="o">();</span>
+        <span class="k">var</span> <span class="nx">hashParts</span> <span class="c">/*:Array*/</span> <span class="o">=</span> <span class="nx">text</span><span class="o">.</span><span class="nx">split</span><span class="o">(</span><span class="s2">&quot;&amp;&quot;</span><span class="o">),</span>
+            <span class="nx">hashPart</span> <span class="c">/*:Array*/</span> <span class="o">=</span> <span class="kc">null</span><span class="o">,</span>
+            <span class="nx">hash</span> <span class="c">/*:Object*/</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="o">();</span>
         
-        <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">i</span><span class="o">=</span><span class="m">0</span><span class="o">,</span> <span class="nx">len</span><span class="o">=</span><span class="nx">hashParts</span><span class="o">.</span><span class="nx">length</span><span class="o">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="o">;</span> <span class="nx">i</span><span class="o">++){</span>
-            <span class="nx">hashPart</span> <span class="o">=</span> <span class="nx">hashParts</span><span class="o">[</span><span class="nx">i</span><span class="o">].</span><span class="nx">split</span><span class="o">(</span><span class="s2">&quot;=&quot;</span><span class="o">);</span>
-            <span class="nx">hash</span><span class="o">[</span><span class="nb">decodeURIComponent</span><span class="o">(</span><span class="nx">hashPart</span><span class="o">[</span><span class="m">0</span><span class="o">])]</span> <span class="o">=</span> <span class="nb">decodeURIComponent</span><span class="o">(</span><span class="nx">hashPart</span><span class="o">[</span><span class="m">1</span><span class="o">]);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nx">text</span><span class="o">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="m">0</span><span class="o">){</span>
+            <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">i</span><span class="o">=</span><span class="m">0</span><span class="o">,</span> <span class="nx">len</span><span class="o">=</span><span class="nx">hashParts</span><span class="o">.</span><span class="nx">length</span><span class="o">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="o">;</span> <span class="nx">i</span><span class="o">++){</span>
+                <span class="nx">hashPart</span> <span class="o">=</span> <span class="nx">hashParts</span><span class="o">[</span><span class="nx">i</span><span class="o">].</span><span class="nx">split</span><span class="o">(</span><span class="s2">&quot;=&quot;</span><span class="o">);</span>
+                <span class="nx">hash</span><span class="o">[</span><span class="nb">decodeURIComponent</span><span class="o">(</span><span class="nx">hashPart</span><span class="o">[</span><span class="m">0</span><span class="o">])]</span> <span class="o">=</span> <span class="nb">decodeURIComponent</span><span class="o">(</span><span class="nx">hashPart</span><span class="o">[</span><span class="m">1</span><span class="o">]);</span>
+            <span class="o">}</span>
         <span class="o">}</span>
         
         <span class="k">return</span> <span class="nx">hash</span><span class="o">;</span>
@@ -177,7 +180,7 @@
 <span class="c"></span>                    <span class="nx">cookieNameValue</span> <span class="o">=</span> <span class="nx">cookieParts</span><span class="o">[</span><span class="nx">i</span><span class="o">].</span><span class="nx">match</span><span class="o">(</span><span class="sr">/([^=]+)=/i</span><span class="o">);</span>
                     <span class="k">if</span> <span class="o">(</span><span class="nx">cookieNameValue</span> <span class="k">instanceof</span> <span class="nb">Array</span><span class="o">){</span>
                         <span class="nx">cookieName</span> <span class="o">=</span> <span class="nb">decodeURIComponent</span><span class="o">(</span><span class="nx">cookieNameValue</span><span class="o">[</span><span class="m">1</span><span class="o">]);</span>
-                        <span class="nx">cookieValue</span> <span class="o">=</span> <span class="nx">decodeValue</span><span class="o">(</span><span class="nx">cookieParts</span><span class="o">[</span><span class="nx">i</span><span class="o">].</span><span class="nx">substring</span><span class="o">(</span><span class="nx">cookieName</span><span class="o">.</span><span class="nx">length</span><span class="o">+</span><span class="m">1</span><span class="o">));</span>
+                        <span class="nx">cookieValue</span> <span class="o">=</span> <span class="nx">decodeValue</span><span class="o">(</span><span class="nx">cookieParts</span><span class="o">[</span><span class="nx">i</span><span class="o">].</span><span class="nx">substring</span><span class="o">(</span><span class="nx">cookieNameValue</span><span class="o">[</span><span class="m">1</span><span class="o">].</span><span class="nx">length</span><span class="o">+</span><span class="m">1</span><span class="o">));</span>
                     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
                         <span class="c">//means the cookie does not have an &quot;=&quot;, so treat it as a boolean flag</span>
 <span class="c"></span>                        <span class="nx">cookieName</span> <span class="o">=</span> <span class="nb">decodeURIComponent</span><span class="o">(</span><span class="nx">cookieParts</span><span class="o">[</span><span class="nx">i</span><span class="o">]);</span>
@@ -315,6 +318,45 @@
     <span class="o">},</span>
 
     <span class="c">/**</span>
+<span class="c">     * Removes a sub cookie with a given name.</span>
+<span class="c">     * @param {String} name The name of the cookie in which the subcookie exists.</span>
+<span class="c">     * @param {String} subName The name of the subcookie to remove.</span>
+<span class="c">     * @param {Object} options (Optional) An object containing one or more</span>
+<span class="c">     *      cookie options: path (a string), domain (a string), expires (a Date object),</span>
+<span class="c">     *      and secure (true/false). This must be the same settings as the original</span>
+<span class="c">     *      subcookie.</span>
+<span class="c">     * @return {String} The created cookie string.</span>
+<span class="c">     * @method removeSub</span>
+<span class="c">     * @static</span>
+<span class="c">     */</span>
+    <span class="nx">removeSub</span> <span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">name</span> <span class="c">/*:String*/</span><span class="o">,</span> <span class="nx">subName</span> <span class="c">/*:String*/</span><span class="o">,</span> <span class="nx">options</span> <span class="c">/*:Object*/</span><span class="o">)</span> <span class="c">/*:String*/</span> <span class="o">{</span>
+    
+        <span class="c">//check cookie name</span>
+<span class="c"></span>        <span class="k">if</span> <span class="o">(!</span><span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">isString</span><span class="o">(</span><span class="nx">name</span><span class="o">)</span> <span class="o">||</span> <span class="nx">name</span> <span class="o">===</span> <span class="s2">&quot;&quot;</span><span class="o">){</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">TypeError</span><span class="o">(</span><span class="s2">&quot;Cookie.removeSub(): Cookie name must be a non-empty string.&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+        
+        <span class="c">//check subcookie name</span>
+<span class="c"></span>        <span class="k">if</span> <span class="o">(!</span><span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">isString</span><span class="o">(</span><span class="nx">subName</span><span class="o">)</span> <span class="o">||</span> <span class="nx">subName</span> <span class="o">===</span> <span class="s2">&quot;&quot;</span><span class="o">){</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">TypeError</span><span class="o">(</span><span class="s2">&quot;Cookie.removeSub(): Subcookie name must be a non-empty string.&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+        
+        <span class="c">//get all subcookies for this cookie</span>
+<span class="c"></span>        <span class="k">var</span> <span class="nx">subs</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">getSubs</span><span class="o">(</span><span class="nx">name</span><span class="o">);</span>
+        
+        <span class="c">//delete the indicated subcookie</span>
+<span class="c"></span>        <span class="k">if</span> <span class="o">(</span><span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">isObject</span><span class="o">(</span><span class="nx">subs</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">subs</span><span class="o">,</span> <span class="nx">subName</span><span class="o">)){</span>
+            <span class="nx">delete</span> <span class="nx">subs</span><span class="o">[</span><span class="nx">subName</span><span class="o">];</span>
+            
+            <span class="c">//reset the cookie</span>
+<span class="c"></span>            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">setSubs</span><span class="o">(</span><span class="nx">name</span><span class="o">,</span> <span class="nx">subs</span><span class="o">,</span> <span class="nx">options</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">;</span>
+        <span class="o">}</span>
+        
+    <span class="o">},</span>
+
+    <span class="c">/**</span>
 <span class="c">     * Sets a cookie with a given name and value.</span>
 <span class="c">     * @param {String} name The name of the cookie to set.</span>
 <span class="c">     * @param {Variant} value The value to set for the cookie.</span>
@@ -431,6 +473,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -470,6 +514,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -518,7 +564,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

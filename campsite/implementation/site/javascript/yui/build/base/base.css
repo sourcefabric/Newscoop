@@ -2,7 +2,7 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
+version: 2.6.0
 */
 /* base.css, part of YUI's CSS Foundation */
 h1 {
@@ -33,6 +33,9 @@ abbr,acronym {
 em {
 	/*bringing italics back to the em element*/
 	font-style:italic;
+}
+del {
+	text-decoration:line-through;
 }
 blockquote,ul,ol,dl {
 	/*giving blockquotes and lists room to breath*/

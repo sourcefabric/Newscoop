@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>yuitest&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>yuitest&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_yuitest.html">yuitest</a>
@@ -21,14 +21,16 @@
                  &gt; TestRunner.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -49,13 +51,7 @@
 <span class="c">// TestRunner object</span>
 <span class="c">//-----------------------------------------------------------------------------</span>
 <span class="c"></span>
-<span class="c">/**</span>
-<span class="c"> * Runs test suites and test cases, providing events to allowing for the</span>
-<span class="c"> * interpretation of test results.</span>
-<span class="c"> * @namespace YAHOO.tool</span>
-<span class="c"> * @class TestRunner</span>
-<span class="c"> * @static</span>
-<span class="c"> */</span>
+
 <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">tool</span><span class="o">.</span><span class="nx">TestRunner</span> <span class="o">=</span> <span class="o">(</span><span class="k">function</span><span class="o">(){</span>
 
     <span class="c">/**</span>
@@ -147,6 +143,13 @@
         <span class="o">}</span>       
     <span class="o">};</span>
 
+    <span class="c">/**</span>
+<span class="c">     * Runs test suites and test cases, providing events to allowing for the</span>
+<span class="c">     * interpretation of test results.</span>
+<span class="c">     * @namespace YAHOO.tool</span>
+<span class="c">     * @class TestRunner</span>
+<span class="c">     * @static</span>
+<span class="c">     */</span>
     <span class="k">function</span> <span class="nx">TestRunner</span><span class="o">(){</span>
     
         <span class="c">//inherit from EventProvider</span>
@@ -157,6 +160,7 @@
 <span class="c">         * @type YAHOO.tool.TestSuite</span>
 <span class="c">         * @property masterSuite</span>
 <span class="c">         * @private</span>
+<span class="c">         * @static</span>
 <span class="c">         */</span>
         <span class="k">this</span><span class="o">.</span><span class="nx">masterSuite</span> <span class="c">/*:YAHOO.tool.TestSuite*/</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">tool</span><span class="o">.</span><span class="nx">TestSuite</span><span class="o">(</span><span class="s2">&quot;YUI Test Results&quot;</span><span class="o">);</span>        
 
@@ -165,6 +169,7 @@
 <span class="c">         * @type TestNode</span>
 <span class="c">         * @private</span>
 <span class="c">         * @property _cur</span>
+<span class="c">         * @static</span>
 <span class="c">         */</span>
         <span class="k">this</span><span class="o">.</span><span class="nx">_cur</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
         
@@ -173,6 +178,7 @@
 <span class="c">         * @type TestNode</span>
 <span class="c">         * @private</span>
 <span class="c">         * @property _root</span>
+<span class="c">         * @static</span>
 <span class="c">         */</span>
         <span class="k">this</span><span class="o">.</span><span class="nx">_root</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
         
@@ -344,6 +350,7 @@
 <span class="c">         * @return {Void}</span>
 <span class="c">         * @method _handleTestObjectComplete</span>
 <span class="c">         * @private</span>
+<span class="c">         * @static</span>
 <span class="c">         */</span>
         <span class="nx">_handleTestObjectComplete</span> <span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">node</span> <span class="c">/*:TestNode*/</span><span class="o">)</span> <span class="c">/*:Void*/</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">isObject</span><span class="o">(</span><span class="nx">node</span><span class="o">.</span><span class="nx">testObject</span><span class="o">)){</span>
@@ -388,8 +395,8 @@
                 <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_cur</span> <span class="o">==</span> <span class="k">this</span><span class="o">.</span><span class="nx">_root</span><span class="o">){</span>
                     <span class="k">this</span><span class="o">.</span><span class="nx">_cur</span><span class="o">.</span><span class="nx">results</span><span class="o">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;report&quot;</span><span class="o">;</span>
                     <span class="k">this</span><span class="o">.</span><span class="nx">_cur</span><span class="o">.</span><span class="nx">results</span><span class="o">.</span><span class="nx">timestamp</span> <span class="o">=</span> <span class="o">(</span><span class="k">new</span> <span class="nb">Date</span><span class="o">()).</span><span class="nx">toLocaleString</span><span class="o">();</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">_cur</span><span class="o">.</span><span class="nx">results</span><span class="o">.</span><span class="nx">duration</span> <span class="o">=</span> <span class="o">(</span><span class="k">new</span> <span class="nb">Date</span><span class="o">())</span> <span class="o">-</span> <span class="k">this</span><span class="o">.</span><span class="nx">_cur</span><span class="o">.</span><span class="nx">results</span><span class="o">.</span><span class="nx">duration</span><span class="o">;</span>
                     <span class="k">this</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">COMPLETE_EVENT</span><span class="o">,</span> <span class="o">{</span> <span class="nx">results</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_cur</span><span class="o">.</span><span class="nx">results</span><span class="o">});</span>
-                    <span class="k">this</span><span class="o">.</span><span class="nx">results</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_cur</span><span class="o">.</span><span class="nx">results</span><span class="o">;</span>
                     <span class="k">this</span><span class="o">.</span><span class="nx">_cur</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
                 <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
                     <span class="k">this</span><span class="o">.</span><span class="nx">_handleTestObjectComplete</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_cur</span><span class="o">);</span>               
@@ -450,6 +457,12 @@
             <span class="k">var</span> <span class="nx">testName</span> <span class="c">/*:String*/</span> <span class="o">=</span> <span class="nx">node</span><span class="o">.</span><span class="nx">testObject</span><span class="o">;</span>
             <span class="k">var</span> <span class="nx">testCase</span> <span class="c">/*:YAHOO.tool.TestCase*/</span> <span class="o">=</span> <span class="nx">node</span><span class="o">.</span><span class="nx">parent</span><span class="o">.</span><span class="nx">testObject</span><span class="o">;</span>
             
+            <span class="c">//cancel other waits if available</span>
+<span class="c"></span>            <span class="k">if</span> <span class="o">(</span><span class="nx">testCase</span><span class="o">.</span><span class="nx">__yui_wait</span><span class="o">){</span>
+                <span class="nx">clearTimeout</span><span class="o">(</span><span class="nx">testCase</span><span class="o">.</span><span class="nx">__yui_wait</span><span class="o">);</span>
+                <span class="nx">delete</span> <span class="nx">testCase</span><span class="o">.</span><span class="nx">__yui_wait</span><span class="o">;</span>
+            <span class="o">}</span>            
+            
             <span class="c">//get the &quot;should&quot; test cases</span>
 <span class="c"></span>            <span class="k">var</span> <span class="nx">shouldFail</span> <span class="c">/*:Object*/</span> <span class="o">=</span> <span class="o">(</span><span class="nx">testCase</span><span class="o">.</span><span class="nx">_should</span><span class="o">.</span><span class="nx">fail</span> <span class="o">||</span> <span class="o">{})[</span><span class="nx">testName</span><span class="o">];</span>
             <span class="k">var</span> <span class="nx">shouldError</span> <span class="c">/*:Object*/</span> <span class="o">=</span> <span class="o">(</span><span class="nx">testCase</span><span class="o">.</span><span class="nx">_should</span><span class="o">.</span><span class="nx">error</span> <span class="o">||</span> <span class="o">{})[</span><span class="nx">testName</span><span class="o">];</span>
@@ -486,9 +499,9 @@
                         
                             <span class="c">//some environments don&#39;t support setTimeout</span>
 <span class="c"></span>                            <span class="k">if</span> <span class="o">(</span><span class="k">typeof</span> <span class="nx">setTimeout</span> <span class="o">!=</span> <span class="s2">&quot;undefined&quot;</span><span class="o">){</span>
-                                <span class="nx">setTimeout</span><span class="o">(</span><span class="k">function</span><span class="o">(){</span>
+                                <span class="nx">testCase</span><span class="o">.</span><span class="nx">__yui_wait</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="o">(</span><span class="k">function</span><span class="o">(){</span>
                                     <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">tool</span><span class="o">.</span><span class="nx">TestRunner</span><span class="o">.</span><span class="nx">_resumeTest</span><span class="o">(</span><span class="nx">thrown</span><span class="o">.</span><span class="nx">segment</span><span class="o">);</span>
-                                <span class="o">},</span> <span class="nx">thrown</span><span class="o">.</span><span class="nx">delay</span><span class="o">);</span>
+                                <span class="o">},</span> <span class="nx">thrown</span><span class="o">.</span><span class="nx">delay</span><span class="o">);</span>                             
                             <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
                                 <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="o">(</span><span class="s2">&quot;Asynchronous tests not supported in this environment.&quot;</span><span class="o">);</span>
                             <span class="o">}</span>
@@ -629,7 +642,7 @@
 <span class="c"></span>        <span class="c">// Protected Methods</span>
 <span class="c"></span>        <span class="c">//-------------------------------------------------------------------------   </span>
 <span class="c"></span>    
-        <span class="c">/*</span>
+        <span class="c">/**</span>
 <span class="c">         * Fires events for the TestRunner. This overrides the default fireEvent()</span>
 <span class="c">         * method from EventProvider to add the type property to the data that is</span>
 <span class="c">         * passed through on each event call.</span>
@@ -696,6 +709,9 @@
             <span class="c">//build the test tree</span>
 <span class="c"></span>            <span class="nx">runner</span><span class="o">.</span><span class="nx">_buildTestTree</span><span class="o">();</span>
             
+            <span class="c">//set when the test started</span>
+<span class="c"></span>            <span class="nx">runner</span><span class="o">.</span><span class="nx">_root</span><span class="o">.</span><span class="nx">results</span><span class="o">.</span><span class="nx">duration</span> <span class="o">=</span> <span class="o">(</span><span class="k">new</span> <span class="nb">Date</span><span class="o">()).</span><span class="nx">valueOf</span><span class="o">();</span>
+            
             <span class="c">//fire the begin event</span>
 <span class="c"></span>            <span class="nx">runner</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="nx">runner</span><span class="o">.</span><span class="nx">BEGIN_EVENT</span><span class="o">);</span>
        
@@ -725,6 +741,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -765,6 +783,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -842,7 +862,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

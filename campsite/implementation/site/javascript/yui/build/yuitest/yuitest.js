@@ -2,122 +2,135 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
+version: 2.6.0
 */
 YAHOO.namespace("tool");
 
 //-----------------------------------------------------------------------------
 // TestCase object
 //-----------------------------------------------------------------------------
-
-/**
- * Test case containing various tests to run.
- * @param template An object containing any number of test methods, other methods,
- *                 an optional name, and anything else the test case needs.
- * @class TestCase
- * @namespace YAHOO.tool
- * @constructor
- */
-YAHOO.tool.TestCase = function (template /*:Object*/) {
+(function(){
+    
+    //used for autogenerating test case names
+    var tempId = 0;
     
     /**
-     * Special rules for the test case. Possible subobjects
-     * are fail, for tests that should fail, and error, for
-     * tests that should throw an error.
+     * Test case containing various tests to run.
+     * @param template An object containing any number of test methods, other methods,
+     *                 an optional name, and anything else the test case needs.
+     * @class TestCase
+     * @namespace YAHOO.tool
+     * @constructor
      */
-    this._should /*:Object*/ = {};
-    
-    //copy over all properties from the template to this object
-    for (var prop in template) {
-        this[prop] = template[prop];
-    }    
-    
-    //check for a valid name
-    if (!YAHOO.lang.isString(this.name)){
+    YAHOO.tool.TestCase = function (template /*:Object*/) {
+        
         /**
-         * Name for the test case.
+         * Special rules for the test case. Possible subobjects
+         * are fail, for tests that should fail, and error, for
+         * tests that should throw an error.
          */
-        this.name /*:String*/ = YAHOO.util.Dom.generateId(null, "testCase");
-    }
-
-};
-
-
-YAHOO.tool.TestCase.prototype = {  
-
-    /**
-     * Resumes a paused test and runs the given function.
-     * @param {Function} segment (Optional) The function to run.
-     *      If omitted, the test automatically passes.
-     * @return {Void}
-     * @method resume
-     */
-    resume : function (segment /*:Function*/) /*:Void*/ {
-        YAHOO.tool.TestRunner.resume(segment);
-    },
-
-    /**
-     * Causes the test case to wait a specified amount of time and then
-     * continue executing the given code.
-     * @param {Function} segment (Optional) The function to run after the delay.
-     *      If omitted, the TestRunner will wait until resume() is called.
-     * @param {int} delay (Optional) The number of milliseconds to wait before running
-     *      the function. If omitted, defaults to zero.
-     * @return {Void}
-     * @method wait
-     */
-    wait : function (segment /*:Function*/, delay /*:int*/) /*:Void*/{
-        throw new YAHOO.tool.TestCase.Wait(segment, delay);
-    },
-
-    //-------------------------------------------------------------------------
-    // Stub Methods
-    //-------------------------------------------------------------------------
-
-    /**
-     * Function to run before each test is executed.
-     * @return {Void}
-     * @method setUp
-     */
-    setUp : function () /*:Void*/ {
-    },
+        this._should /*:Object*/ = {};
+        
+        //copy over all properties from the template to this object
+        for (var prop in template) {
+            this[prop] = template[prop];
+        }    
+        
+        //check for a valid name
+        if (!YAHOO.lang.isString(this.name)){
+            /**
+             * Name for the test case.
+             */
+            this.name /*:String*/ = "testCase" + (tempId++);
+        }
+    
+    };
+    
+    
+    YAHOO.tool.TestCase.prototype = {  
+    
+        /**
+         * Resumes a paused test and runs the given function.
+         * @param {Function} segment (Optional) The function to run.
+         *      If omitted, the test automatically passes.
+         * @return {Void}
+         * @method resume
+         */
+        resume : function (segment /*:Function*/) /*:Void*/ {
+            YAHOO.tool.TestRunner.resume(segment);
+        },
+    
+        /**
+         * Causes the test case to wait a specified amount of time and then
+         * continue executing the given code.
+         * @param {Function} segment (Optional) The function to run after the delay.
+         *      If omitted, the TestRunner will wait until resume() is called.
+         * @param {int} delay (Optional) The number of milliseconds to wait before running
+         *      the function. If omitted, defaults to zero.
+         * @return {Void}
+         * @method wait
+         */
+        wait : function (segment /*:Function*/, delay /*:int*/) /*:Void*/{
+            var args = arguments;
+            if (YAHOO.lang.isFunction(args[0])){
+                throw new YAHOO.tool.TestCase.Wait(args[0], args[1]);
+            } else {
+                throw new YAHOO.tool.TestCase.Wait(function(){
+                    YAHOO.util.Assert.fail("Timeout: wait() called but resume() never called.");
+                }, (YAHOO.lang.isNumber(args[0]) ? args[0] : 10000));
+            }            
+        },
+    
+        //-------------------------------------------------------------------------
+        // Stub Methods
+        //-------------------------------------------------------------------------
+    
+        /**
+         * Function to run before each test is executed.
+         * @return {Void}
+         * @method setUp
+         */
+        setUp : function () /*:Void*/ {
+        },
+        
+        /**
+         * Function to run after each test is executed.
+         * @return {Void}
+         * @method tearDown
+         */
+        tearDown: function () /*:Void*/ {    
+        }
+    };
     
     /**
-     * Function to run after each test is executed.
-     * @return {Void}
-     * @method tearDown
+     * Represents a stoppage in test execution to wait for an amount of time before
+     * continuing.
+     * @param {Function} segment A function to run when the wait is over.
+     * @param {int} delay The number of milliseconds to wait before running the code.
+     * @class Wait
+     * @namespace YAHOO.tool.TestCase
+     * @constructor
+     *
      */
-    tearDown: function () /*:Void*/ {    
-    }
-};
-
-/**
- * Represents a stoppage in test execution to wait for an amount of time before
- * continuing.
- * @param {Function} segment A function to run when the wait is over.
- * @param {int} delay The number of milliseconds to wait before running the code.
- * @class Wait
- * @namespace YAHOO.tool.TestCase
- * @constructor
- *
- */
-YAHOO.tool.TestCase.Wait = function (segment /*:Function*/, delay /*:int*/) {
+    YAHOO.tool.TestCase.Wait = function (segment /*:Function*/, delay /*:int*/) {
+        
+        /**
+         * The segment of code to run when the wait is over.
+         * @type Function
+         * @property segment
+         */
+        this.segment /*:Function*/ = (YAHOO.lang.isFunction(segment) ? segment : null);
     
-    /**
-     * The segment of code to run when the wait is over.
-     * @type Function
-     * @property segment
-     */
-    this.segment /*:Function*/ = (YAHOO.lang.isFunction(segment) ? segment : null);
+        /**
+         * The delay before running the segment of code.
+         * @type int
+         * @property delay
+         */
+        this.delay /*:int*/ = (YAHOO.lang.isNumber(delay) ? delay : 0);
+    
+    };
 
-    /**
-     * The delay before running the segment of code.
-     * @type int
-     * @property delay
-     */
-    this.delay /*:int*/ = (YAHOO.lang.isNumber(delay) ? delay : 0);
-
-};
+})();
 
 YAHOO.namespace("tool");
 
@@ -213,13 +226,7 @@ YAHOO.namespace("tool");
 // TestRunner object
 //-----------------------------------------------------------------------------
 
-/**
- * Runs test suites and test cases, providing events to allowing for the
- * interpretation of test results.
- * @namespace YAHOO.tool
- * @class TestRunner
- * @static
- */
+
 YAHOO.tool.TestRunner = (function(){
 
     /**
@@ -311,6 +318,13 @@ YAHOO.tool.TestRunner = (function(){
         }       
     };
 
+    /**
+     * Runs test suites and test cases, providing events to allowing for the
+     * interpretation of test results.
+     * @namespace YAHOO.tool
+     * @class TestRunner
+     * @static
+     */
     function TestRunner(){
     
         //inherit from EventProvider
@@ -321,6 +335,7 @@ YAHOO.tool.TestRunner = (function(){
          * @type YAHOO.tool.TestSuite
          * @property masterSuite
          * @private
+         * @static
          */
         this.masterSuite /*:YAHOO.tool.TestSuite*/ = new YAHOO.tool.TestSuite("YUI Test Results");        
 
@@ -329,6 +344,7 @@ YAHOO.tool.TestRunner = (function(){
          * @type TestNode
          * @private
          * @property _cur
+         * @static
          */
         this._cur = null;
         
@@ -337,6 +353,7 @@ YAHOO.tool.TestRunner = (function(){
          * @type TestNode
          * @private
          * @property _root
+         * @static
          */
         this._root = null;
         
@@ -508,6 +525,7 @@ YAHOO.tool.TestRunner = (function(){
          * @return {Void}
          * @method _handleTestObjectComplete
          * @private
+         * @static
          */
         _handleTestObjectComplete : function (node /*:TestNode*/) /*:Void*/ {
             if (YAHOO.lang.isObject(node.testObject)){
@@ -552,6 +570,7 @@ YAHOO.tool.TestRunner = (function(){
                 if (this._cur == this._root){
                     this._cur.results.type = "report";
                     this._cur.results.timestamp = (new Date()).toLocaleString();
+                    this._cur.results.duration = (new Date()) - this._cur.results.duration;
                     this.fireEvent(this.COMPLETE_EVENT, { results: this._cur.results});
                     this._cur = null;
                 } else {
@@ -613,6 +632,12 @@ YAHOO.tool.TestRunner = (function(){
             var testName /*:String*/ = node.testObject;
             var testCase /*:YAHOO.tool.TestCase*/ = node.parent.testObject;
             
+            //cancel other waits if available
+            if (testCase.__yui_wait){
+                clearTimeout(testCase.__yui_wait);
+                delete testCase.__yui_wait;
+            }            
+            
             //get the "should" test cases
             var shouldFail /*:Object*/ = (testCase._should.fail || {})[testName];
             var shouldError /*:Object*/ = (testCase._should.error || {})[testName];
@@ -649,9 +674,9 @@ YAHOO.tool.TestRunner = (function(){
                         
                             //some environments don't support setTimeout
                             if (typeof setTimeout != "undefined"){
-                                setTimeout(function(){
+                                testCase.__yui_wait = setTimeout(function(){
                                     YAHOO.tool.TestRunner._resumeTest(thrown.segment);
-                                }, thrown.delay);
+                                }, thrown.delay);                             
                             } else {
                                 throw new Error("Asynchronous tests not supported in this environment.");
                             }
@@ -792,7 +817,7 @@ YAHOO.tool.TestRunner = (function(){
         // Protected Methods
         //-------------------------------------------------------------------------   
     
-        /*
+        /**
          * Fires events for the TestRunner. This overrides the default fireEvent()
          * method from EventProvider to add the type property to the data that is
          * passed through on each event call.
@@ -858,6 +883,9 @@ YAHOO.tool.TestRunner = (function(){
 
             //build the test tree
             runner._buildTestTree();
+            
+            //set when the test started
+            runner._root.results.duration = (new Date()).valueOf();
             
             //fire the begin event
             runner.fireEvent(runner.BEGIN_EVENT);
@@ -2731,6 +2759,7 @@ YAHOO.tool.TestManager = {
         r.failed += results.failed;
         r.ignored += results.ignored;
         r.total += results.total;
+        r.duration += results.duration;
         
         if (results.failed){
             r.failedPages.push(page);
@@ -2852,7 +2881,7 @@ YAHOO.tool.TestManager = {
                 frame.style.visibility = "hidden";
                 frame.style.position = "absolute";
                 document.body.appendChild(frame);
-                this._frame = frame.contentWindow || frame.contentDocument.ownerWindow;
+                this._frame = frame.contentWindow || frame.contentDocument.parentWindow;
             }
             
             //create test logger if not already available
@@ -2873,6 +2902,7 @@ YAHOO.tool.TestManager = {
             total: 0,
             type: "report",
             name: "YUI Test Results",
+            duration: 0,
             failedPages:[],
             passedPages:[]
             /*
@@ -3123,6 +3153,10 @@ YAHOO.tool.TestFormat.XML = function(results /*:Object*/) /*:String*/ {
     var l = YAHOO.lang;
     var xml /*:String*/ = "<" + results.type + " name=\"" + results.name.replace(/"/g, "&quot;").replace(/'/g, "&apos;") + "\"";
     
+    if (l.isNumber(results.duration)){
+        xml += " duration=\"" + results.duration + "\"";
+    }
+    
     if (results.type == "test"){
         xml += " result=\"" + results.result + "\" message=\"" + results.message + "\">";
     } else {
@@ -3196,6 +3230,29 @@ YAHOO.tool.TestReporter.prototype = {
 
     //restore missing constructor
     constructor: YAHOO.tool.TestReporter,
+    
+    /**
+     * Convert a date into ISO format.
+     * From Douglas Crockford's json2.js
+     * @param {Date} date The date to convert.
+     * @return {String} An ISO-formatted date string
+     * @method _convertToISOString
+     * @private
+     */    
+    _convertToISOString: function(date){
+        function f(n) {
+            // Format integers to have at least two digits.
+            return n < 10 ? '0' + n : n;
+        }
+
+        return date.getUTCFullYear()   + '-' +
+             f(date.getUTCMonth() + 1) + '-' +
+             f(date.getUTCDate())      + 'T' +
+             f(date.getUTCHours())     + ':' +
+             f(date.getUTCMinutes())   + ':' +
+             f(date.getUTCSeconds())   + 'Z';     
+    
+    },
 
     /**
      * Adds a field to the form that submits the results.
@@ -3280,7 +3337,7 @@ YAHOO.tool.TestReporter.prototype = {
         //create default fields
         this._fields.results = this.format(results);
         this._fields.useragent = navigator.userAgent;
-        this._fields.timestamp = (new Date()).toLocaleString();
+        this._fields.timestamp = this._convertToISOString(new Date());
 
         //add fields to the form
         for (var prop in this._fields){
@@ -3310,4 +3367,4 @@ YAHOO.tool.TestReporter.prototype = {
 
 };
 
-YAHOO.register("yuitest", YAHOO.tool.TestRunner, {version: "2.5.2", build: "1076"});
+YAHOO.register("yuitest", YAHOO.tool.TestRunner, {version: "2.6.0", build: "1321"});

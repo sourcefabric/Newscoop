@@ -52,9 +52,9 @@ body {
 <script type="text/javascript" src="../../build/utilities/utilities.js"></script>
 <script type="text/javascript" src="../../build/container/container-min.js"></script>
 <script type="text/javascript" src="../../build/calendar/calendar-min.js"></script>
-<script type="text/javascript" src="../../build/resize/resize-beta-min.js"></script>
-<script type="text/javascript" src="../../build/editor/simpleeditor-beta-min.js"></script>
-<script type="text/javascript" src="../../build/layout/layout-beta-min.js"></script>
+<script type="text/javascript" src="../../build/resize/resize-min.js"></script>
+<script type="text/javascript" src="../../build/editor/simpleeditor-min.js"></script>
+<script type="text/javascript" src="../../build/layout/layout-min.js"></script>
 </head>
 <body class=" yui-skin-sam">
 
@@ -67,13 +67,14 @@ body {
         layout = null,
         cal = null,
         editor = null,
-        conn = null
+        conn = null,
+        panel = null,
         dateSelected = null,
         editorData = {};
 
-    var panel = new YAHOO.widget.Panel('demo', {
+    panel = new YAHOO.widget.Panel('demo', {
         width: '700px',
-        underlay: false,
+        underlay: 'none',
         close: false,
         xy: [100, 100]
     });
@@ -185,12 +186,9 @@ body {
         autoRatio: true,
         status: true,
         proxy: true,
+        useShim: true,
         minWidth: 700,
         minHeight: 400
-    });
-    resize.on('startResize', function() {
-        editor.set('disbaled', true);
-        editor.hide();
     });
     resize.on('resize', function(args) {
         var h = args.height;
@@ -207,7 +205,12 @@ body {
         var eH = (h - th);
         editor.set('width', args.width + 'px');
         editor.set('height', eH + 'px');
-        editor.show();
+    }, panel, true);
+    resize.on('endResize', function() {
+        //Fixing IE's calculations
+        this.innerElement.style.height = '';
+        //Focus the Editor so they can type.
+        editor._focusWindow();
     }, panel, true);
     
 })();

@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>TreeView Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>TreeView Widget&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_treeview.html">treeview</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -84,25 +86,12 @@ one sibling can be expanded at a time.
                                                     </code>
                                                       a string or object containing the data that will
 be used to render this node.
-Valid properties: 
-<dl>
-<dt>label</dt>
-<dd>The text for the node's label</dd>
-<dt>title</dt>
-<dd>The title attribute for the label anchor</dd>
-<dt>title</dt>
-<dd>The title attribute for the label anchor</dd>
-<dt>href</dt>
-<dd>The href for the node's label.  By default it is set to
-expand/collapse the node.</dd>
-<dt>target</dt>
-<dd>The target attribute for the label anchor</dd>
-<dt>style</dt>
-<dd>A CSS class to apply to the label anchor</dd>
-</dl>
-All other attributes are made available in noderef.data, which
+Providing a string is the same as providing an object with a single property named label.
+All values in the oData will be used to set equally named properties in the node
+as long as the node does have such properties, they are not undefined, private or functions.
+All attributes are made available in noderef.data, which
 can be used to store custom attributes.  TreeView.getNode(s)ByProperty
-can be used to retreive a node by one of the attributes.
+can be used to retrieve a node by one of the attributes.
                                                 </dd>
                                                 <dd>
                                                     <code>oParent
@@ -114,7 +103,7 @@ can be used to retreive a node by one of the attributes.
                                                     <code>expanded
                                                     &lt;boolean&gt; 
                                                     </code>
-                                                      the initial expanded/collapsed state
+                                                      the initial expanded/collapsed state (deprecated; use oData.expanded)
                                                 </dd>
                                         </dl>
                                     
@@ -124,15 +113,42 @@ can be used to retreive a node by one of the attributes.
                         </div>
                     </div>
 
+                        <div class="section field details">
+                            <h3 id="properties">Properties</h3>
+                            <div class="content">
+                                    <div class="private">
+                                    <h4><a name="property__type">_type</a>
+                                        <code>- private object</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The node type
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: "MenuNode"
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+
+
+                            </div>
+                        </div>
 
                         <div class="section field inheritance">
                             <h4>Properties inherited from <a href="YAHOO.widget.TextNode.html">YAHOO.widget.TextNode</a>:</h4>
                             <div class="content">
                                 <code>
                                     
+                                        <a class="private" href="YAHOO.widget.TextNode.html#property__type">_type</a><span class="private">,</span>
                                         <a class="" href="YAHOO.widget.TextNode.html#property_label">label</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.TextNode.html#property_labelElId">labelElId</a><span class="">,</span>
-                                        <a class="" href="YAHOO.widget.TextNode.html#property_labelStyle">labelStyle</a>
+                                        <a class="" href="YAHOO.widget.TextNode.html#property_labelStyle">labelStyle</a><span class="">,</span>
+                                        <a class="" href="YAHOO.widget.TextNode.html#property_title">title</a>
                                 </code>
                             </div>
                         </div>
@@ -142,13 +158,17 @@ can be used to retreive a node by one of the attributes.
                                 <code>
                                     
                                         <a class="private" href="YAHOO.widget.Node.html#property__dynLoad">_dynLoad</a><span class="private">,</span>
+                                        <a class="private" href="YAHOO.widget.Node.html#property__focusHighlightedItems">_focusHighlightedItems</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Node.html#property__type">_type</a><span class="private">,</span>
                                         <a class="" href="YAHOO.widget.Node.html#property_children">children</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Node.html#property_childrenRendered">childrenRendered</a><span class="">,</span>
+                                        <a class="" href="YAHOO.widget.Node.html#property_contentElId">contentElId</a><span class="">,</span>
+                                        <a class="" href="YAHOO.widget.Node.html#property_contentStyle">contentStyle</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Node.html#property_data">data</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Node.html#property_dataLoader">dataLoader</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Node.html#property_depth">depth</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Node.html#property_dynamicLoadComplete">dynamicLoadComplete</a><span class="">,</span>
+                                        <a class="" href="YAHOO.widget.Node.html#property_editable">editable</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Node.html#property_expanded">expanded</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Node.html#property_hasIcon">hasIcon</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Node.html#property_href">href</a><span class="">,</span>
@@ -183,7 +203,7 @@ can be used to retreive a node by one of the attributes.
                                 <h4>Methods inherited from <a href="YAHOO.widget.TextNode.html">YAHOO.widget.TextNode</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="" href="YAHOO.widget.TextNode.html#method_getLabelEl">getLabelEl</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.TextNode.html#method_onLabelClick">onLabelClick</a>
+                                            <a class="" href="YAHOO.widget.TextNode.html#method_destroyEditorContents">destroyEditorContents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.TextNode.html#method_fillEditorContainer">fillEditorContainer</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.TextNode.html#method_getLabelEl">getLabelEl</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.TextNode.html#method_getNodeDefinition">getNodeDefinition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.TextNode.html#method_saveEditorValue">saveEditorValue</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.TextNode.html#method_setUpLabel">setUpLabel</a>
                                     </code>
                                 </div>
                             </div>
@@ -191,9 +211,7 @@ can be used to retreive a node by one of the attributes.
                                 <h4>Methods inherited from <a href="YAHOO.widget.Node.html">YAHOO.widget.Node</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="private" href="YAHOO.widget.Node.html#method_appendChild">appendChild</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_appendTo">appendTo</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_applyParent">applyParent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_collapse
-toggle style.">collapse
-toggle style.</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_collapseAll">collapseAll</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_completeRender">completeRender</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_expand">expand</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_expandAll">expandAll</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getAncestor">getAncestor</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getChildrenEl">getChildrenEl</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getChildrenElId">getChildrenElId</a><span class="">,</span>                                            <a class="private" href="YAHOO.widget.Node.html#method_getChildrenHtml">getChildrenHtml</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getDepthStyle">getDepthStyle</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getEl">getEl</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getElId">getElId</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getHoverStyle">getHoverStyle</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getHtml">getHtml</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getIconMode">getIconMode</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getNodeHtml">getNodeHtml</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getSiblings">getSiblings</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getStyle">getStyle</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getToggleEl">getToggleEl</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getToggleElId">getToggleElId</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getToggleLink">getToggleLink</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_hasChildren">hasChildren</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_hideChildren">hideChildren</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_insertAfter">insertAfter</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_insertBefore">insertBefore</a><span class="">,</span>                                            <a class="private" href="YAHOO.widget.Node.html#method_isChildOf">isChildOf</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_isDynamic">isDynamic</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_isRoot">isRoot</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_loadComplete">loadComplete</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_refresh">refresh</a><span class="">,</span>                                            <a class="private" href="YAHOO.widget.Node.html#method_renderChildren">renderChildren</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_setDynamicLoad">setDynamicLoad</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_showChildren">showChildren</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_toggle">toggle</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_toString">toString</a>
+                                            <a class="private" href="YAHOO.widget.Node.html#method_appendChild">appendChild</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_appendTo">appendTo</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_applyParent">applyParent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_collapse">collapse</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_collapseAll">collapseAll</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_completeRender">completeRender</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_destroyEditorContents">destroyEditorContents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_editNode">editNode</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_expand">expand</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_expandAll">expandAll</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_fillEditorContainer">fillEditorContainer</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_focus">focus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getAncestor">getAncestor</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getChildrenEl">getChildrenEl</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getChildrenElId">getChildrenElId</a><span class="">,</span>                                            <a class="private" href="YAHOO.widget.Node.html#method_getChildrenHtml">getChildrenHtml</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getContentEl">getContentEl</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getContentHtml">getContentHtml</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getDepthStyle">getDepthStyle</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getEl">getEl</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getElId">getElId</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getHoverStyle">getHoverStyle</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getHtml">getHtml</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getIconMode">getIconMode</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getNodeCount">getNodeCount</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getNodeDefinition">getNodeDefinition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getNodeHtml">getNodeHtml</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getSiblings">getSiblings</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getStyle">getStyle</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getToggleEl">getToggleEl</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getToggleElId">getToggleElId</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_getToggleLink">getToggleLink</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_hasChildren">hasChildren</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_hideChildren">hideChildren</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_insertAfter">insertAfter</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_insertBefore">insertBefore</a><span class="">,</span>                                            <a class="private" href="YAHOO.widget.Node.html#method_isChildOf">isChildOf</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_isDynamic">isDynamic</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_isRoot">isRoot</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_loadComplete">loadComplete</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_refresh">refresh</a><span class="">,</span>                                            <a class="private" href="YAHOO.widget.Node.html#method_renderChildren">renderChildren</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_saveEditorValue">saveEditorValue</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_setDynamicLoad">setDynamicLoad</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_showChildren">showChildren</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_toggle">toggle</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Node.html#method_toString">toString</a>
                                     </code>
                                 </div>
                             </div>
@@ -236,6 +254,8 @@ toggle style.</a><span class="">,</span>                                        
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -276,6 +296,8 @@ toggle style.</a><span class="">,</span>                                        
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
 
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
+
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
                                 <li class=""><a href="module_profilerviewer.html">profilerviewer</a></li>
@@ -303,6 +325,7 @@ toggle style.</a><span class="">,</span>                                        
                     <div class="module">
                         <h4>Classes</h4>
                         <ul class="content">
+                                <li class=""><a href="YAHOO.widget.DateNode.html">YAHOO.widget.DateNode</a></li>
                                 <li class=""><a href="YAHOO.widget.HTMLNode.html">YAHOO.widget.HTMLNode</a></li>
                                 <li class="selected"><a href="YAHOO.widget.MenuNode.html">YAHOO.widget.MenuNode</a></li>
                                 <li class=""><a href="YAHOO.widget.Node.html">YAHOO.widget.Node</a></li>
@@ -318,18 +341,28 @@ toggle style.</a><span class="">,</span>                                        
                     <div class="module">
                         <h4>Files</h4>
                         <ul class="content">        
+                                <li class=""><a href="DateNode.js.html">DateNode.js</a></li>
                                 <li class=""><a href="HTMLNode.js.html">HTMLNode.js</a></li>
                                 <li class=""><a href="MenuNode.js.html">MenuNode.js</a></li>
                                 <li class=""><a href="Node.js.html">Node.js</a></li>
                                 <li class=""><a href="RootNode.js.html">RootNode.js</a></li>
                                 <li class=""><a href="TextNode.js.html">TextNode.js</a></li>
                                 <li class=""><a href="TreeView.js.html">TreeView.js</a></li>
+                                <li class=""><a href="TreeViewEd.js.html">TreeViewEd.js</a></li>
                                 <li class=""><a href="TVAnim.js.html">TVAnim.js</a></li>
                                 <li class=""><a href="TVFadeIn.js.html">TVFadeIn.js</a></li>
                                 <li class=""><a href="TVFadeOut.js.html">TVFadeOut.js</a></li>
                         </ul>
                     </div>
 
+                    <div class="module">
+                        <h4>Properties</h4>
+                        <ul class="content">        
+                                <li class="private"><a href="#property__type">_type</a>
+                                        <!--<code>&lt;object&gt;</code>-->
+                                </li>
+                        </ul>
+                    </div>
 
 
 
@@ -339,7 +372,7 @@ toggle style.</a><span class="">,</span>                                        
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

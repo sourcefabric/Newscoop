@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Calendar&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Calendar&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_calendar.html">calendar</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -245,7 +247,7 @@ For example if an ID is not provided, and the container's ID is "calContainer", 
 
                                     <hr />
                                     </div>
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4><a name="property_YAHOO.widget.CalendarGroup.CSS_2UPCLOSE">YAHOO.widget.CalendarGroup.CSS_2UPCLOSE</a>
                                         <code>- static final String</code>
                                     </h4>
@@ -346,7 +348,10 @@ Calendar's <a href="YAHOO.widget.Calendar.html#Style.CSS_CLOSE">Style.CSS_CLOSE<
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -401,7 +406,10 @@ The Date object passed in is modified. It should be cloned before passing it int
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -456,7 +464,10 @@ when a date cell matches the month passed to this method.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -503,7 +514,10 @@ calendar page date to the new month.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -559,7 +573,10 @@ include date (12/24/2005), month/day (12/24), and range (12/1/2004-1/1/2005)
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -614,7 +631,10 @@ when a date cell matches the weekday passed to this method.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -661,7 +681,10 @@ calendar page date to the new month.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -715,7 +738,10 @@ calendar page date to the new month.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -750,7 +776,10 @@ to the current month and year.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -812,7 +841,10 @@ to the current month and year.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -874,7 +906,10 @@ to the current month and year.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -936,7 +971,10 @@ to the current month and year.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -999,7 +1037,10 @@ calendar is to be used.
                                                     </code></dt>
                                                     <dd>The YAHOO.widget.Calendar instance that is constructed</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1061,7 +1102,10 @@ calendar is to be used.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1112,7 +1156,10 @@ This method can also take a JavaScript Date object or an array of Date objects.
                                                     </code></dt>
                                                     <dd>Array of JavaScript Date objects representing all individual dates that are currently selected.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1149,7 +1196,10 @@ Assuming that this function executes properly, the return value should be an emp
 However, the empty array is returned for the sake of being able to check the selection status
 of the calendar.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1196,7 +1246,50 @@ deselectCell will deselect the cell at the specified index on each displayed Cal
                                                     </code></dt>
                                                     <dd>Array of JavaScript Date objects representing all individual dates that are currently selected.</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_destroy">destroy</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>destroy</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Destroys the CalendarGroup instance. The method will remove references
+to HTML elements, remove any event listeners added by the CalendarGroup.
+It will also destroy the Config and CalendarNavigator instances created by the 
+CalendarGroup and the individual Calendar instances created for each page.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1244,7 +1337,10 @@ Returns null if no match is found.
                                                     <dd>The Calendar page instance representing the month to which the date 
 belongs.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1258,7 +1354,7 @@ belongs.</dd>
                                         
                                         
                                         
-                                        void
+                                        
                                             <strong>getSelectedDates</strong>
                                            (
                                             )
@@ -1271,14 +1367,10 @@ belongs.</dd>
                                         <div class="description">
 
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>An array of currently selected JavaScript Date objects.</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1341,7 +1433,10 @@ group to be initialized properly.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1375,7 +1470,10 @@ group to be initialized properly.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1409,7 +1507,10 @@ group to be initialized properly.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1443,7 +1544,10 @@ group to be initialized properly.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1477,7 +1581,10 @@ group to be initialized properly.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1511,7 +1618,10 @@ group to be initialized properly.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1547,7 +1657,10 @@ to see the changes applied.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1581,7 +1694,10 @@ to see the changes applied.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1616,7 +1732,10 @@ unimplemented.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1650,7 +1769,10 @@ unimplemented.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1685,7 +1807,10 @@ sets the calendar to the initial selection(s).
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1736,7 +1861,10 @@ This method can also take a JavaScript Date object or an array of Date objects.
                                                     </code></dt>
                                                     <dd>Array of JavaScript Date objects representing all individual dates that are currently selected.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1787,7 +1915,10 @@ The value of the MULTI_SELECT Configuration attribute will determine the set of 
                                                     </code></dt>
                                                     <dd>Array of JavaScript Date objects representing all individual dates that are currently selected.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1841,7 +1972,10 @@ The value of the MULTI_SELECT Configuration attribute will determine the set of 
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1888,7 +2022,10 @@ page of the multi-page calendar, and all other months will be iterated appropria
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1935,7 +2072,10 @@ page of the multi-page calendar, and all other months will be iterated appropria
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1997,7 +2137,10 @@ page of the multi-page calendar, and all other months will be iterated appropria
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2044,7 +2187,10 @@ calendar page date to the new month.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2091,7 +2237,10 @@ calendar page date to the new month.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2125,7 +2274,10 @@ calendar page date to the new month.
                                                     </code></dt>
                                                     <dd>A string representation of the CalendarGroup object.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2179,7 +2331,10 @@ calendar page date to the new month.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2209,6 +2364,35 @@ calendar page date to the new month.
                                         
                                         <div class="description">
                                             Fired before a selection is made
+                                        </div>
+
+                                        <div class="description">
+
+
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeDestroyEvent">beforeDestroyEvent</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeDestroyEvent</strong>
+
+                                            (
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fired just before the CalendarGroup is to be destroyed
                                         </div>
 
                                         <div class="description">
@@ -2516,6 +2700,39 @@ calendar page date to the new month.
                                                              of Date field arrays in the format [YYYY, MM, DD].
                                                         </dd>
                                                 </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_destroyEvent">destroyEvent</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>destroyEvent</strong>
+
+                                            (
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fired after the CalendarGroup is destroyed. This event should be used
+for notification only. When this event is fired, important CalendarGroup instance
+properties, dom references and event listeners have already been 
+removed/dereferenced, and hence the CalendarGroup instance is not in a usable 
+state.
+                                        </div>
+
+                                        <div class="description">
+
+
 
 
                                         </div>
@@ -2915,7 +3132,7 @@ enabled if required.
                                     </div>        
                                     <div class="">
                                     <h4><a name="config_maxdate">maxdate</a>
-                                        <code>- String</code>
+                                        <code>- String | Date</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
@@ -3017,7 +3234,7 @@ enabled if required.
                                     </div>        
                                     <div class="">
                                     <h4><a name="config_mindate">mindate</a>
-                                        <code>- String</code>
+                                        <code>- String | Date</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
@@ -3202,7 +3419,7 @@ enabled if required.
 
                                     <hr />
                                     </div>        
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4><a name="config_NAV_ARROW_LEFT">NAV_ARROW_LEFT</a>
                                         <code>- String</code>
                                     </h4>
@@ -3222,7 +3439,7 @@ enabled if required.
 
                                     <hr />
                                     </div>        
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4><a name="config_NAV_ARROW_RIGHT">NAV_ARROW_RIGHT</a>
                                         <code>- String</code>
                                     </h4>
@@ -3244,7 +3461,7 @@ enabled if required.
                                     </div>        
                                     <div class="">
                                     <h4><a name="config_pagedate">pagedate</a>
-                                        <code>- String</code>
+                                        <code>- String | Date</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
@@ -3362,6 +3579,28 @@ enabled if required.
                                     <hr />
                                     </div>        
                                     <div class="">
+                                    <h4><a name="config_strings">strings</a>
+                                        <code>- {Object}</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The map of UI strings which the CalendarGroup UI uses.
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: An object with the properties shown below:
+<dl>
+<dt>previousMonth</dt><dd><em>String</em> : The string to use for the "Previous Month" navigation UI. Defaults to "Previous Month".</dd>
+<dt>nextMonth</dt><dd><em>String</em> : The string to use for the "Next Month" navigation UI. Defaults to "Next Month".</dd>
+<dt>close</dt><dd><em>String</em> : The string to use for the close button label. Defaults to "Close".</dd>
+</dl>
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
                                     <h4><a name="config_title">title</a>
                                         <code>- String</code>
                                     </h4>
@@ -3468,6 +3707,8 @@ enabled if required.
 
                                 <li class="selected"><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -3507,6 +3748,8 @@ enabled if required.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -3578,7 +3821,7 @@ enabled if required.
                                 <li class="private"><a href="#property_YAHOO.widget.CalendarGroup._DEFAULT_CONFIG">YAHOO.widget.CalendarGroup._DEFAULT_CONFIG</a>
                                         <!--<code>&lt;String&gt;</code>-->
                                 </li>
-                                <li class=""><a href="#property_YAHOO.widget.CalendarGroup.CSS_2UPCLOSE">YAHOO.widget.CalendarGroup.CSS_2UPCLOSE</a>
+                                <li class=" deprecated"><a href="#property_YAHOO.widget.CalendarGroup.CSS_2UPCLOSE">YAHOO.widget.CalendarGroup.CSS_2UPCLOSE</a>
                                         <!--<code>&lt;String&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_YAHOO.widget.CalendarGroup.CSS_2UPTITLE">YAHOO.widget.CalendarGroup.CSS_2UPTITLE</a>
@@ -3647,10 +3890,13 @@ enabled if required.
                                 <li class=""><!--<code>Date[]</code>-->
                                 <a href="#method_deselectCell">deselectCell</a>
                                 </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_destroy">destroy</a>
+                                </li>
                                 <li class=""><!--<code>Calendar</code>-->
                                 <a href="#method_getCalendarPage">getCalendarPage</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_getSelectedDates">getSelectedDates</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
@@ -3726,6 +3972,9 @@ enabled if required.
                                 <a href="#event_beforeDeselectEvent">beforeDeselectEvent</a>
                                 </li>
                                 <li class="">
+                                <a href="#event_beforeDestroyEvent">beforeDestroyEvent</a>
+                                </li>
+                                <li class="">
                                 <a href="#event_beforeHideEvent">beforeHideEvent</a>
                                 </li>
                                 <li class="">
@@ -3754,6 +4003,9 @@ enabled if required.
                                 </li>
                                 <li class="">
                                 <a href="#event_deselectEvent">deselectEvent</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_destroyEvent">destroyEvent</a>
                                 </li>
                                 <li class="">
                                 <a href="#event_hideEvent">hideEvent</a>
@@ -3860,10 +4112,10 @@ enabled if required.
                                 <li class="">
                                 <a href="#config_NAV">NAV</a>
                                 </li>
-                                <li class="">
+                                <li class=" deprecated">
                                 <a href="#config_NAV_ARROW_LEFT">NAV_ARROW_LEFT</a>
                                 </li>
-                                <li class="">
+                                <li class=" deprecated">
                                 <a href="#config_NAV_ARROW_RIGHT">NAV_ARROW_RIGHT</a>
                                 </li>
                                 <li class="">
@@ -3888,6 +4140,9 @@ enabled if required.
                                 <a href="#config_START_WEEKDAY">START_WEEKDAY</a>
                                 </li>
                                 <li class="">
+                                <a href="#config_strings">strings</a>
+                                </li>
+                                <li class="">
                                 <a href="#config_title">title</a>
                                 </li>
                                 <li class="">
@@ -3910,7 +4165,7 @@ enabled if required.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

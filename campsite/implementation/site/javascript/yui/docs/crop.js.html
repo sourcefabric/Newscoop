@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>imagecropper&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>imagecropper&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_imagecropper.html">imagecropper</a>
@@ -21,14 +21,16 @@
                  &gt; crop.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -472,6 +474,12 @@
             <span class="c">//YAHOO.log(&#39;Setting the image background position of the mask to: (&#39; + l + &#39;, &#39; + t + &#39;)&#39;, &#39;log&#39;, &#39;ImageCropper&#39;);</span>
 <span class="c"></span>            <span class="k">var</span> <span class="nx">bl</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="o">(</span><span class="nx">Dom</span><span class="o">.</span><span class="nx">getStyle</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;element&#39;</span><span class="o">),</span> <span class="s1">&#39;borderLeftWidth&#39;</span><span class="o">),</span> <span class="m">10</span><span class="o">);</span>
             <span class="k">var</span> <span class="nx">bt</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="o">(</span><span class="nx">Dom</span><span class="o">.</span><span class="nx">getStyle</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;element&#39;</span><span class="o">),</span> <span class="s1">&#39;borderTopWidth&#39;</span><span class="o">),</span> <span class="m">10</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nb">isNaN</span><span class="o">(</span><span class="nx">bl</span><span class="o">))</span> <span class="o">{</span>
+                <span class="nx">bl</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nb">isNaN</span><span class="o">(</span><span class="nx">bt</span><span class="o">))</span> <span class="o">{</span>
+                <span class="nx">bt</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
+            <span class="o">}</span>
             <span class="k">var</span> <span class="nx">mask</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">.</span><span class="nx">getWrapEl</span><span class="o">().</span><span class="nx">firstChild</span><span class="o">;</span>
             <span class="k">var</span> <span class="nx">pos</span> <span class="o">=</span> <span class="o">(</span><span class="nx">l</span> <span class="o">-</span> <span class="nx">bl</span><span class="o">)</span> <span class="o">+</span> <span class="s1">&#39;px &#39;</span> <span class="o">+</span> <span class="o">(</span><span class="nx">t</span> <span class="o">-</span> <span class="nx">bt</span><span class="o">)</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="o">;</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">_resizeMaskEl</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">backgroundPosition</span> <span class="o">=</span> <span class="nx">pos</span><span class="o">;</span>
@@ -626,10 +634,10 @@
 <span class="c">        */</span>
         <span class="nx">reset</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
             <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Resetting the control&#39;</span><span class="o">,</span> <span class="s1">&#39;log&#39;</span><span class="o">,</span> <span class="s1">&#39;ImageCropper&#39;</span><span class="o">);</span>
-            <span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">.</span><span class="nx">resize</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;initHeight&#39;</span><span class="o">),</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;initWidth&#39;</span><span class="o">),</span> <span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-            <span class="k">this</span><span class="o">.</span><span class="nx">_resizeEl</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">top</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;initialXY&#39;</span><span class="o">)[</span><span class="m">1</span><span class="o">]</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="o">;</span>
-            <span class="k">this</span><span class="o">.</span><span class="nx">_resizeEl</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">left</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;initialXY&#39;</span><span class="o">)[</span><span class="m">0</span><span class="o">]</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="o">;</span>
-            <span class="k">this</span><span class="o">.</span><span class="nx">_syncBackgroundPosition</span><span class="o">();</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_resize</span><span class="o">.</span><span class="nx">destroy</span><span class="o">();</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_resizeEl</span><span class="o">.</span><span class="nx">parentNode</span><span class="o">.</span><span class="nx">removeChild</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_resizeEl</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_createResize</span><span class="o">();</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_setConstraints</span><span class="o">();</span>
             <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
         <span class="o">},</span>
 
@@ -947,6 +955,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -986,6 +996,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1034,7 +1046,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

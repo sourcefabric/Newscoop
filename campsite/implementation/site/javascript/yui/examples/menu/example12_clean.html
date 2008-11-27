@@ -57,6 +57,7 @@ body {
 
 <body class=" yui-skin-sam">
 
+
 <h1>Setting Menu Configuration Properties At Runtime</h1>
 
 <div class="exampleIntro">
@@ -167,11 +168,6 @@ visible if it is hidden.
         oMenu.getItem(2).cfg.setProperty("url", "http://www.yahoo.com");
         oMenu.getItem(3).cfg.setProperty("checked", true);
         
-
-        // Set focus to the Menu when it is made visible
-
-        oMenu.subscribe("show", oMenu.focus);
-
 
         YAHOO.util.Event.addListener("menutoggle", "click", oMenu.show, null, oMenu);
 

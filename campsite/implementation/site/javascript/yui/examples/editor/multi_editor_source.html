@@ -24,7 +24,7 @@ body {
 <script type="text/javascript" src="../../build/container/container_core-min.js"></script>
 <script type="text/javascript" src="../../build/menu/menu-min.js"></script>
 <script type="text/javascript" src="../../build/button/button-min.js"></script>
-<script type="text/javascript" src="../../build/editor/editor-beta-min.js"></script>
+<script type="text/javascript" src="../../build/editor/editor-min.js"></script>
 <style>
     .yui-editor-container {
         position: absolute;
@@ -127,20 +127,23 @@ body {
 
     Event.on('editable_cont', 'dblclick', function(ev) {
         var tar = Event.getTarget(ev);
-        if (Dom.hasClass(tar, 'editable')) {
-            YAHOO.log('An element with the classname of editable was double clicked on.', 'info', 'example');
-            if (editing !== null) {
-                YAHOO.log('There is an editor open, save its data before continuing..', 'info', 'example');
-                myEditor.saveHTML();
-                editing.innerHTML = myEditor.get('element').value;
+        while(tar.id != 'editable_cont') {
+            if (Dom.hasClass(tar, 'editable')) {
+                YAHOO.log('An element with the classname of editable was double clicked on.', 'info', 'example');
+                if (editing !== null) {
+                    YAHOO.log('There is an editor open, save its data before continuing..', 'info', 'example');
+                    myEditor.saveHTML();
+                    editing.innerHTML = myEditor.get('element').value;
+                }
+                YAHOO.log('Get the XY position of the Element that was clicked', 'info', 'example');
+                var xy = Dom.getXY(tar);
+                YAHOO.log('Set the Editors HTML with the elements innerHTML', 'info', 'example');
+                myEditor.setEditorHTML(tar.innerHTML);
+                YAHOO.log('Reposition the editor with the elements xy', 'info', 'example');
+                Dom.setXY(myEditor.get('element_cont').get('element'), xy);
+                editing = tar;
             }
-            YAHOO.log('Get the XY position of the Element that was clicked', 'info', 'example');
-            var xy = Dom.getXY(tar);
-            YAHOO.log('Set the Editors HTML with the elements innerHTML', 'info', 'example');
-            myEditor.setEditorHTML(tar.innerHTML);
-            YAHOO.log('Reposition the editor with the elements xy', 'info', 'example');
-            Dom.setXY(myEditor.get('element_cont').get('element'), xy);
-            editing = tar;
+            tar = tar.parentNode;
         }
     });
 

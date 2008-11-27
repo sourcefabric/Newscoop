@@ -24,8 +24,8 @@ body {
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
 <script type="text/javascript" src="../../build/button/button-min.js"></script>
 <script type="text/javascript" src="../../build/container/container-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 <!--there is no custom header content for this example-->
 
@@ -33,10 +33,12 @@ body {
 
 <body class=" yui-skin-sam">
 
+
 <h1>Highlighting Cells, Rows, or Columns</h1>
 
 <div class="exampleIntro">
-				
+	<p></p>
+			
 </div>
 
 <!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
@@ -48,7 +50,7 @@ body {
 <script type="text/javascript" src="assets/js/data.js"></script>
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.Highlighting = new function() {
+    YAHOO.example.Highlighting = function() {
         var myColumnDefs = [
             {key:"Page"},
             {key:"VisitsThisMonth"},
@@ -57,36 +59,43 @@ YAHOO.util.Event.addListener(window, "load", function() {
             {key:"ViewsThisYear"}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.webstats);
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.webstats);
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        myDataSource.responseSchema = {
             fields: ["Page","VisitsThisMonth","VisitsThisYear","ViewsThisMonth","ViewsThisYear"]
         };
 
-        this.cellHighlightDataTable = new YAHOO.widget.DataTable("cell",
-                myColumnDefs, this.myDataSource, {
+        var cellHighlightDataTable = new YAHOO.widget.DataTable("cell",
+                myColumnDefs, myDataSource, {
                     caption:"Example: Cell Highlighting"
                 });
         // Enable cell highlighting
-        this.cellHighlightDataTable.subscribe("cellMouseoverEvent", this.cellHighlightDataTable.onEventHighlightCell);
-        this.cellHighlightDataTable.subscribe("cellMouseoutEvent", this.cellHighlightDataTable.onEventUnhighlightCell);
+        cellHighlightDataTable.subscribe("cellMouseoverEvent", cellHighlightDataTable.onEventHighlightCell);
+        cellHighlightDataTable.subscribe("cellMouseoutEvent", cellHighlightDataTable.onEventUnhighlightCell);
 
-        this.rowHighlightDataTable = new YAHOO.widget.DataTable("row",
-                myColumnDefs, this.myDataSource, {
+        var rowHighlightDataTable = new YAHOO.widget.DataTable("row",
+                myColumnDefs, myDataSource, {
                     caption:"Example: Row Highlighting"
                 });
         // Enable row highlighting
-        this.rowHighlightDataTable.subscribe("rowMouseoverEvent", this.rowHighlightDataTable.onEventHighlightRow);
-        this.rowHighlightDataTable.subscribe("rowMouseoutEvent", this.rowHighlightDataTable.onEventUnhighlightRow);
+        rowHighlightDataTable.subscribe("rowMouseoverEvent", rowHighlightDataTable.onEventHighlightRow);
+        rowHighlightDataTable.subscribe("rowMouseoutEvent", rowHighlightDataTable.onEventUnhighlightRow);
 
-        this.colHighlightDataTable = new YAHOO.widget.DataTable("column",
-                myColumnDefs, this.myDataSource, {
+        var colHighlightDataTable = new YAHOO.widget.DataTable("column",
+                myColumnDefs, myDataSource, {
                     caption:"Example: Column Highlighting"
                 });
         // Enable Column highlighting
-        this.colHighlightDataTable.subscribe("theadCellMouseoverEvent", this.colHighlightDataTable.onEventHighlightColumn);
-        this.colHighlightDataTable.subscribe("theadCellMouseoutEvent", this.colHighlightDataTable.onEventUnhighlightColumn);
-    };
+        colHighlightDataTable.subscribe("theadCellMouseoverEvent", colHighlightDataTable.onEventHighlightColumn);
+        colHighlightDataTable.subscribe("theadCellMouseoutEvent", colHighlightDataTable.onEventUnhighlightColumn);
+        
+        return {
+            oDS: myDataSource,
+            oDTCellHighlight: cellHighlightDataTable,
+            oDTRowHighlight: rowHighlightDataTable,
+            oDTColHighlight: colHighlightDataTable
+        };
+    }();
 });
 </script>
 

@@ -21,8 +21,8 @@ body {
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../../build/dragdrop/dragdrop-min.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 <!--there is no custom header content for this example-->
 
@@ -30,10 +30,12 @@ body {
 
 <body class=" yui-skin-sam">
 
+
 <h1>Nested Headers</h1>
 
 <div class="exampleIntro">
-				
+	<p></p>
+			
 </div>
 
 <!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
@@ -43,7 +45,7 @@ body {
 <script type="text/javascript" src="assets/js/data.js"></script>
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.NestedHeaders = new function() {
+    YAHOO.example.NestedHeaders = function() {
         var myColumnDefs = [
             {key:"page", label:"Page", sortable:true, resizeable:true},
             {label:"Statistics", formatter:YAHOO.widget.DataTable.formatNumber, children:[
@@ -63,14 +65,19 @@ YAHOO.util.Event.addListener(window, "load", function() {
             ]}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.webstats);
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.webstats);
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        myDataSource.responseSchema = {
             fields: ["page","visitsmonth","visitsytd","viewsmonth","viewsytd"]
         };
 
-        this.myDataTable = new YAHOO.widget.DataTable("nested", myColumnDefs, this.myDataSource);
-    };
+        var myDataTable = new YAHOO.widget.DataTable("nested", myColumnDefs, myDataSource);
+        
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
 });
 </script>
 

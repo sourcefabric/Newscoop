@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>DataTable Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>DataTable Widget&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_datatable.html">datatable</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -148,6 +150,36 @@
                                     <hr />
                                     </div>
                                     <div class="private">
+                                    <h4><a name="property__elThLabel">_elThLabel</a>
+                                        <code>- private HTMLElement</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The DOM reference to the associated TH element's label SPAN element.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4><a name="property__elThLiner">_elThLiner</a>
+                                        <code>- private HTMLElement</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The DOM reference to the associated TH element's liner DIV element.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
                                     <h4><a name="property__nColspan">_nColspan</a>
                                         <code>- private Number</code>
                                     </h4>
@@ -212,12 +244,12 @@ level parent Columns.
                                     <hr />
                                     </div>
                                     <div class="private">
-                                    <h4><a name="property__oDefinition">_oDefinition</a>
-                                        <code>- private Object</code>
+                                    <h4><a name="property__nWidth">_nWidth</a>
+                                        <code>- private Number</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Object literal definition
+                                            Internal width tracker.
                                         </div>
                                     </div>
      
@@ -317,12 +349,48 @@ level parent Columns.
                                     <hr />
                                     </div>
                                     <div class="">
-                                    <h4><a name="property_editor">editor</a>
-                                        <code>- String || HTMLFunction</code>
+                                    <h4><a name="property_currencyOptions">currencyOptions</a>
+                                        <code>- Object</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Defines an editor function, otherwise Column is not editable.
+                                            Config passed to YAHOO.util.Number.format() by the 'currency' Column formatter.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: null
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_dateOptions">dateOptions</a>
+                                        <code>- Object</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Config passed to YAHOO.util.Date.format() by the 'date' Column formatter.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: null
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_editor">editor</a>
+                                        <code>- YAHOO.widget.CellEditor</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            A CellEditor instance, otherwise Column is not editable.
                                         </div>
                                     </div>
      
@@ -332,12 +400,12 @@ level parent Columns.
                                     <hr />
                                     </div>
                                     <div class="">
-                                    <h4><a name="property_editorOptions">editorOptions</a>
-                                        <code>- Object</code>
+                                    <h4><a name="property_field">field</a>
+                                        <code>- String</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Defines editor options for Column in an object literal of param:value pairs.
+                                            Associated database field, or null.
                                         </div>
                                     </div>
      
@@ -385,7 +453,7 @@ level parent Columns.
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Associated database field, or null.
+                                            Unique name, required.
                                         </div>
                                     </div>
      
@@ -410,6 +478,28 @@ level parent Columns.
                                     <hr />
                                     </div>
                                     <div class="">
+                                    <h4><a name="property_maxAutoWidth">maxAutoWidth</a>
+                                        <code>- Number</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            When a width is not defined for a Column, maxAutoWidth defines an upper
+limit that the Column should be auto-sized to. If resizeable is enabled, 
+users may still resize to a greater width. Most useful for Columns intended
+to hold long unbroken, unwrapped Strings, such as URLs, to prevent very
+wide Columns from disrupting visual readability by inducing truncation.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: null
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
                                     <h4><a name="property_minWidth">minWidth</a>
                                         <code>- Number</code>
                                     </h4>
@@ -421,7 +511,7 @@ level parent Columns.
      
                                         
                                     <div class="default">
-                                        Default Value: 10
+                                        Default Value: null
                                     </div>        
 
 
@@ -501,7 +591,7 @@ resizeble.
 
                                     <hr />
                                     </div>
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4><a name="property_sortOptions.defaultOrder">sortOptions.defaultOrder</a>
                                         <code>- object</code>
                                     </h4>
@@ -516,6 +606,24 @@ resizeble.
                                     <div class="deprecated">
                                         <strong>Deprecated:</strong> Use sortOptions.defaultDir.
                                     </div>        
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_sortOptions.field">sortOptions.field</a>
+                                        <code>- String</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Custom field to sort on.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: null
+                                    </div>        
+
 
                                     <hr />
                                     </div>
@@ -561,7 +669,7 @@ resizeble.
                         <div class="section method details">
                             <h3 id="methods">Methods</h3>
                             <div class="content">
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4>
                                         <a name="method_getColEl">getColEl</a></h4>
                                     <div class="detail">
@@ -589,10 +697,13 @@ resizeble.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
                                             <div class="deprecated">
                                                 <strong>Deprecated</strong> Use getThEl
                                             </div>        
+
                                         </div>
 
                                     </div>
@@ -626,7 +737,10 @@ resizeble.
                                                     </code></dt>
                                                     <dd>Column's COLSPAN value.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -660,7 +774,47 @@ resizeble.
                                                     </code></dt>
                                                     <dd>Object literal definition.</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getField">getField</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        String
+                                            <strong>getField</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Returns field.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        String
+                                                    </code></dt>
+                                                    <dd>Column field.</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -694,7 +848,10 @@ resizeble.
                                                     </code></dt>
                                                     <dd>Unique ID string.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -728,7 +885,10 @@ resizeble.
                                                     </code></dt>
                                                     <dd>Column key.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -764,7 +924,10 @@ child Columns will return a value.
                                                     </code></dt>
                                                     <dd>Position index, or null.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -798,7 +961,10 @@ child Columns will return a value.
                                                     </code></dt>
                                                     <dd>Column's parent instance.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -832,7 +998,10 @@ child Columns will return a value.
                                                     </code></dt>
                                                     <dd>DIV element.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -866,7 +1035,48 @@ child Columns will return a value.
                                                     </code></dt>
                                                     <dd>Column's ROWSPAN value.</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getSanitizedKey">getSanitizedKey</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        String
+                                            <strong>getSanitizedKey</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Returns Column key which has been sanitized for DOM (class and ID) usage
+starts with letter, contains only letters, numbers, hyphen, or period.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        String
+                                                    </code></dt>
+                                                    <dd>Sanitized Column key.</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -900,7 +1110,49 @@ child Columns will return a value.
                                                     </code></dt>
                                                     <dd>TH element.</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getThLInerEl">getThLInerEl</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        HTMLElement
+                                            <strong>getThLInerEl</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Returns DOM reference to the TH's liner DIV element. Introduced since
+resizeable Columns may have an extra resizer liner, making the DIV liner
+not reliably the TH element's first child.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        HTMLElement
+                                                    </code></dt>
+                                                    <dd>TH element.</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -936,7 +1188,10 @@ Columns will return a value;
                                                     </code></dt>
                                                     <dd>Position index, or null.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -970,7 +1225,10 @@ Columns will return a value;
                                                     </code></dt>
                                                     <dd>Column's unique name.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1001,6 +1259,8 @@ Columns will return a value;
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -1042,6 +1302,8 @@ Columns will return a value;
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
 
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
+
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
                                 <li class=""><a href="module_profilerviewer.html">profilerviewer</a></li>
@@ -1073,30 +1335,32 @@ Columns will return a value;
                                 <li class=""><a href="YAHOO.util.ColumnDD.html">YAHOO.util.ColumnDD</a></li>
                                 <li class=""><a href="YAHOO.util.ColumnResizer.html">YAHOO.util.ColumnResizer</a></li>
                                 <li class=""><a href="YAHOO.util.Sort.html">YAHOO.util.Sort</a></li>
+                                <li class=""><a href="YAHOO.widget.BaseCellEditor.html">YAHOO.widget.BaseCellEditor</a></li>
+                                <li class=""><a href="YAHOO.widget.CellEditor.html">YAHOO.widget.CellEditor</a></li>
+                                <li class=""><a href="YAHOO.widget.CheckboxCellEditor.html">YAHOO.widget.CheckboxCellEditor</a></li>
                                 <li class="selected"><a href="YAHOO.widget.Column.html">YAHOO.widget.Column</a></li>
                                 <li class=""><a href="YAHOO.widget.ColumnSet.html">YAHOO.widget.ColumnSet</a></li>
                                 <li class=""><a href="YAHOO.widget.DataTable.html">YAHOO.widget.DataTable</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.html">YAHOO.widget.Paginator</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.CurrentPageReport.html">YAHOO.widget.Paginator.ui.CurrentPageReport</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.FirstPageLink.html">YAHOO.widget.Paginator.ui.FirstPageLink</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.LastPageLink.html">YAHOO.widget.Paginator.ui.LastPageLink</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.NextPageLink.html">YAHOO.widget.Paginator.ui.NextPageLink</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.PageLinks.html">YAHOO.widget.Paginator.ui.PageLinks</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.PreviousPageLink.html">YAHOO.widget.Paginator.ui.PreviousPageLink</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.RowsPerPageDropdown.html">YAHOO.widget.Paginator.ui.RowsPerPageDropdown</a></li>
+                                <li class=""><a href="YAHOO.widget.DateCellEditor.html">YAHOO.widget.DateCellEditor</a></li>
+                                <li class=""><a href="YAHOO.widget.DropdownCellEditor.html">YAHOO.widget.DropdownCellEditor</a></li>
+                                <li class=""><a href="YAHOO.widget.RadioCellEditor.html">YAHOO.widget.RadioCellEditor</a></li>
                                 <li class=""><a href="YAHOO.widget.Record.html">YAHOO.widget.Record</a></li>
                                 <li class=""><a href="YAHOO.widget.RecordSet.html">YAHOO.widget.RecordSet</a></li>
+                                <li class=""><a href="YAHOO.widget.ScrollingDataTable.html">YAHOO.widget.ScrollingDataTable</a></li>
+                                <li class=""><a href="YAHOO.widget.TextareaCellEditor.html">YAHOO.widget.TextareaCellEditor</a></li>
+                                <li class=""><a href="YAHOO.widget.TextboxCellEditor.html">YAHOO.widget.TextboxCellEditor</a></li>
                         </ul>
                     </div>
 
                     <div class="module">
                         <h4>Files</h4>
                         <ul class="content">        
+                                <li class=""><a href="CellEditor.js.html">CellEditor.js</a></li>
                                 <li class=""><a href="Chain.js.html">Chain.js</a></li>
                                 <li class=""><a href="ColumnSet.js.html">ColumnSet.js</a></li>
                                 <li class=""><a href="DataTable.js.html">DataTable.js</a></li>
-                                <li class=""><a href="Paginator.js.html">Paginator.js</a></li>
                                 <li class=""><a href="RecordSet.js.html">RecordSet.js</a></li>
+                                <li class=""><a href="ScrollingDataTable.js.html">ScrollingDataTable.js</a></li>
                         </ul>
                     </div>
 
@@ -1115,6 +1379,12 @@ Columns will return a value;
                                 <li class="private"><a href="#property__elTh">_elTh</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
+                                <li class="private"><a href="#property__elThLabel">_elThLabel</a>
+                                        <!--<code>&lt;Number&gt;</code>-->
+                                </li>
+                                <li class="private"><a href="#property__elThLiner">_elThLiner</a>
+                                        <!--<code>&lt;Number&gt;</code>-->
+                                </li>
                                 <li class="private"><a href="#property__nColspan">_nColspan</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
@@ -1127,7 +1397,7 @@ Columns will return a value;
                                 <li class="private"><a href="#property__nTreeIndex">_nTreeIndex</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property__oDefinition">_oDefinition</a>
+                                <li class="private"><a href="#property__nWidth">_nWidth</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__oParent">_oParent</a>
@@ -1148,10 +1418,16 @@ Columns will return a value;
                                 <li class="private"><a href="#property_Column._nCount">Column._nCount</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
+                                <li class=""><a href="#property_currencyOptions">currencyOptions</a>
+                                        <!--<code>&lt;Number&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_dateOptions">dateOptions</a>
+                                        <!--<code>&lt;Number&gt;</code>-->
+                                </li>
                                 <li class=""><a href="#property_editor">editor</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
-                                <li class=""><a href="#property_editorOptions">editorOptions</a>
+                                <li class=""><a href="#property_field">field</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_formatter">formatter</a>
@@ -1164,6 +1440,9 @@ Columns will return a value;
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_label">label</a>
+                                        <!--<code>&lt;Number&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_maxAutoWidth">maxAutoWidth</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_minWidth">minWidth</a>
@@ -1181,7 +1460,10 @@ Columns will return a value;
                                 <li class=""><a href="#property_sortOptions.defaultDir">sortOptions.defaultDir</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
-                                <li class=""><a href="#property_sortOptions.defaultOrder">sortOptions.defaultOrder</a>
+                                <li class=" deprecated"><a href="#property_sortOptions.defaultOrder">sortOptions.defaultOrder</a>
+                                        <!--<code>&lt;Number&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_sortOptions.field">sortOptions.field</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_sortOptions.sortFunction">sortOptions.sortFunction</a>
@@ -1196,7 +1478,7 @@ Columns will return a value;
                     <div class="module">
                         <h4>Methods</h4>
                         <ul class="content">        
-                                <li class=""><!--<code>void</code>-->
+                                <li class=" deprecated"><!--<code>void</code>-->
                                 <a href="#method_getColEl">getColEl</a>
                                 </li>
                                 <li class=""><!--<code>Number</code>-->
@@ -1204,6 +1486,9 @@ Columns will return a value;
                                 </li>
                                 <li class=""><!--<code>Object</code>-->
                                 <a href="#method_getDefinition">getDefinition</a>
+                                </li>
+                                <li class=""><!--<code>String</code>-->
+                                <a href="#method_getField">getField</a>
                                 </li>
                                 <li class=""><!--<code>String</code>-->
                                 <a href="#method_getId">getId</a>
@@ -1223,8 +1508,14 @@ Columns will return a value;
                                 <li class=""><!--<code>Number</code>-->
                                 <a href="#method_getRowspan">getRowspan</a>
                                 </li>
+                                <li class=""><!--<code>String</code>-->
+                                <a href="#method_getSanitizedKey">getSanitizedKey</a>
+                                </li>
                                 <li class=""><!--<code>HTMLElement</code>-->
                                 <a href="#method_getThEl">getThEl</a>
+                                </li>
+                                <li class=""><!--<code>HTMLElement</code>-->
+                                <a href="#method_getThLInerEl">getThLInerEl</a>
                                 </li>
                                 <li class=""><!--<code>Number</code>-->
                                 <a href="#method_getTreeIndex">getTreeIndex</a>
@@ -1242,7 +1533,7 @@ Columns will return a value;
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

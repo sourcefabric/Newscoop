@@ -1,4 +1,4 @@
-	/*
+/*
 Copyright (c) 2007, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
@@ -22,6 +22,15 @@ ol li {
 ul li {
 	list-style: disc outside;
 }
+
+/*
+AutoComplete Control CSS:
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.6.0
+*/
+.yui-skin-sam .yui-ac{position:relative;font-family:arial;font-size:100%;}.yui-skin-sam .yui-ac-input{position:absolute;width:100%;}.yui-skin-sam .yui-ac-container{position:absolute;top:1.6em;width:100%;}.yui-skin-sam .yui-ac-content{position:absolute;width:100%;border:1px solid #808080;background:#fff;overflow:hidden;z-index:9050;}.yui-skin-sam .yui-ac-shadow{position:absolute;margin:.3em;width:100%;background:#000;-moz-opacity:0.10;opacity:.10;filter:alpha(opacity=10);z-index:9049;}.yui-skin-sam .yui-ac iframe{opacity:0;filter:alpha(opacity=0);padding-right:.3em;padding-bottom:.3em;}.yui-skin-sam .yui-ac-content ul{margin:0;padding:0;width:100%;}.yui-skin-sam .yui-ac-content li{margin:0;padding:2px 5px;cursor:default;white-space:nowrap;list-style:none;zoom:1;}.yui-skin-sam .yui-ac-content li.yui-ac-prehighlight{background:#B3D4FF;}.yui-skin-sam .yui-ac-content li.yui-ac-highlight{background:#426FD9;color:#FFF;}
 
 /*begin YDN/YUI styles*/
 #bd {padding-top:1em;}
@@ -194,7 +203,10 @@ img.rssbadge {display:inline;border:none !important;}
 .example .promo h1 {font-size:159%; padding-top:0; margin-top:0;}
 .exampleIntro, .exampleIntro p, .exampleIntro a, .exampleIntro a code {color:#fff;}
 .example .promo p {margin-top:.7em;}
-.firstContent {margin-top:0; padding-top:0;}
+
+.example cite.byline {display:block; padding:0.5em; background-color:#eee; border:1px solid #000;margin-bottom:5px}
+
+firstContent {margin-top:0; padding-top:0;}
 #logger {margin-top:1em;}
 .example-container {background-color:#F1F6F7;}
 
@@ -300,7 +312,7 @@ p.loggerButton {text-align:center;}
 
 /*for site search suggest via autocomplete*/
 #ygunav {overflow:visible !important;}
-#sitesearch {float:right; width:37em; position:relative; text-align:right; z-index:1000;}
+#sitesearch {float:right; width:40em; position:relative; text-align:right;}
 #searchinput {width:15em; font-size:11px; font-weight:bold; position:relative; top:2px;}
 #searchcontainer {text-align:left; width:40em; overflow:hidden; line-height:normal; position:absolute;}
 #searchcontainer .yui-ac-bd {font-size:10px; color:#666; background-color:#EAEFF2; text-align:left;}

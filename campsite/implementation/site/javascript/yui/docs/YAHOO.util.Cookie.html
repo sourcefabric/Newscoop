@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>cookie&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>cookie&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_cookie.html">cookie</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -100,7 +102,10 @@
                                                     </code></dt>
                                                     <dd>A string suitable for use as a cookie value.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -170,7 +175,10 @@
                                                     </code></dt>
                                                     <dd>The formatted cookie string.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -216,7 +224,10 @@
                                                     </code></dt>
                                                     <dd>An object containing entries for each cookie value.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -270,7 +281,10 @@
                                                     </code></dt>
                                                     <dd>An object containing entries for each accessible cookie.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -327,7 +341,10 @@ it. The function is not used if the cookie doesn't exist.
 the cookie doesn't exist. If the converter is specified, returns the value
 returned from the converter or null if the cookie doesn't exist.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -374,7 +391,10 @@ returned from the converter or null if the cookie doesn't exist.</dd>
                                                     <dd>An object of name-value pairs if the cookie with the given name
 exists, null if it does not.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -440,7 +460,10 @@ doesn't exist, null if also returned. If no converter is specified and the
 subcookie exists, a string is returned. If a converter is specified and the
 subcookie exists, the value returned from the converter is returned.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -498,7 +521,78 @@ by the method.
                                                     </code></dt>
                                                     <dd>The created cookie string.</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_removeSub">removeSub</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        String
+                                            <strong>removeSub</strong>
+                                           (
+                                                
+                                                        
+                                                         name
+                                                    
+                                                
+                                                        , 
+                                                         subName
+                                                    
+                                                
+                                                        , 
+                                                         options
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Removes a sub cookie with a given name.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>name &lt;String&gt;</code>
+                                                             The name of the cookie in which the subcookie exists.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>subName &lt;String&gt;</code>
+                                                             The name of the subcookie to remove.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>options &lt;Object&gt;</code>
+                                                             (Optional) An object containing one or more
+cookie options: path (a string), domain (a string), expires (a Date object),
+and secure (true/false). This must be the same settings as the original
+subcookie.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        String
+                                                    </code></dt>
+                                                    <dd>The created cookie string.</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -562,7 +656,10 @@ and secure (true/false).
                                                     </code></dt>
                                                     <dd>The created cookie string.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -634,7 +731,10 @@ and secure (true/false).
                                                     </code></dt>
                                                     <dd>The created cookie string.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -698,7 +798,10 @@ and secure (true/false).
                                                     </code></dt>
                                                     <dd>The created cookie string.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -729,6 +832,8 @@ and secure (true/false).
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -769,6 +874,8 @@ and secure (true/false).
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -837,6 +944,9 @@ and secure (true/false).
                                 <a href="#method_remove">remove</a>
                                 </li>
                                 <li class=""><!--<code>String</code>-->
+                                <a href="#method_removeSub">removeSub</a>
+                                </li>
+                                <li class=""><!--<code>String</code>-->
                                 <a href="#method_set">set</a>
                                 </li>
                                 <li class=""><!--<code>String</code>-->
@@ -855,7 +965,7 @@ and secure (true/false).
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

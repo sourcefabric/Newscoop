@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>get&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>get&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_get.html">get</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -213,7 +215,10 @@ property TIMEOUT
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -259,7 +264,10 @@ property TIMEOUT
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -305,7 +313,10 @@ property TIMEOUT
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -359,7 +370,10 @@ property TIMEOUT
                                                     </code></dt>
                                                     <dd>the generated node</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -413,7 +427,10 @@ property TIMEOUT
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -475,7 +492,10 @@ property TIMEOUT
                                                     </code></dt>
                                                     <dd>the generated node</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -509,7 +529,10 @@ property TIMEOUT
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -543,7 +566,10 @@ property TIMEOUT
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -597,7 +623,59 @@ property TIMEOUT
                                                     </code></dt>
                                                     <dd>the generated node</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__timeout">_timeout</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>_timeout</strong>
+                                           (
+                                                
+                                                        
+                                                         id
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Timeout detected
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>id &lt;string&gt;</code>
+                                                              the id of the request
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -695,7 +773,10 @@ the default is _next
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -742,7 +823,10 @@ script() or css()
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -838,7 +922,10 @@ YAHOO.util.Get.css(["http://yui.yahooapis.com/2.3.1/build/menu/assets/skins/sam/
                                                     </code></dt>
                                                     <dd>an object containing info about the transaction</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -901,7 +988,10 @@ the requested urls
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -985,6 +1075,25 @@ that were inserted</dd>
 <dt>
 </dl>
 </dd>
+<dt>onTimeout</dt>
+<dd>
+callback to execute when a timeout occurs.
+The callback receives an object back with the following
+data:
+<dl>
+<dt>win</dt>
+<dd>the window the script(s) were inserted into</dd>
+<dt>data</dt>
+<dd>the data object passed in when the request was made</dd>
+<dt>nodes</dt>
+<dd>An array containing references to the nodes that were
+inserted</dd>
+<dt>purge</dt>
+<dd>A function that, when executed, will remove the nodes
+that were inserted</dd>
+<dt>
+</dl>
+</dd>
 <dt>scope</dt>
 <dd>the execution context for the callbacks</dd>
 <dt>win</dt>
@@ -1014,6 +1123,8 @@ each script.
 </dl>
 <dt>charset</dt>
 <dd>Node charset, default utf-8</dd>
+<dt>timeout</dt>
+<dd>Number of milliseconds to wait before aborting and firing the timeout event</dd>
 <pre>
 // assumes yahoo, dom, and event are already on the page
 &nbsp;&nbsp;YAHOO.util.Get.script(
@@ -1030,6 +1141,7 @@ each script.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YAHOO.log("transaction failed");
 &nbsp;&nbsp;&nbsp;&nbsp;&#125;,
 &nbsp;&nbsp;&nbsp;&nbsp;data: "foo",
+&nbsp;&nbsp;&nbsp;&nbsp;timeout: 10000, // 10 second timeout
 &nbsp;&nbsp;&nbsp;&nbsp;scope: YAHOO,
 &nbsp;&nbsp;&nbsp;&nbsp;// win: otherframe // target another window/frame
 &nbsp;&nbsp;&nbsp;&nbsp;autopurge: true // allow the utility to choose when to remove the nodes
@@ -1045,7 +1157,10 @@ each script.
                                                     </code></dt>
                                                     <dd>an object containing info about the transaction</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1076,6 +1191,8 @@ each script.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -1116,6 +1233,8 @@ each script.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1213,6 +1332,9 @@ each script.
                                 <a href="#method__scriptNode">_scriptNode</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
+                                <a href="#method__timeout">_timeout</a>
+                                </li>
+                                <li class="private"><!--<code>void</code>-->
                                 <a href="#method__track">_track</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
@@ -1237,7 +1359,7 @@ each script.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

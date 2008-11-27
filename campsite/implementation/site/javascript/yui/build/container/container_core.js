@@ -2,7 +2,7 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
+version: 2.6.0
 */
 (function () {
 
@@ -197,16 +197,19 @@ version: 2.5.2
         getConfig: function () {
         
             var cfg = {},
+                currCfg = this.config,
                 prop,
                 property;
                 
-            for (prop in this.config) {
-                property = this.config[prop];
-                if (property && property.event) {
-                    cfg[prop] = property.value;
+            for (prop in currCfg) {
+                if (Lang.hasOwnProperty(currCfg, prop)) {
+                    property = currCfg[prop];
+                    if (property && property.event) {
+                        cfg[prop] = property.value;
+                    }
                 }
             }
-            
+
             return cfg;
         },
         
@@ -479,11 +482,13 @@ version: 2.5.2
         * @method refresh
         */
         refresh: function () {
-        
+
             var prop;
-        
+
             for (prop in this.config) {
-                this.refireEvent(prop);
+                if (Lang.hasOwnProperty(this.config, prop)) {
+                    this.refireEvent(prop);
+                }
             }
         },
         
@@ -507,9 +512,14 @@ version: 2.5.2
                     key = queueItem[0];
                     value = queueItem[1];
                     property = this.config[key];
-        
+
                     property.value = value;
-        
+
+                    // Clear out queue entry, to avoid it being 
+                    // re-added to the queue by any queueProperty/supercedes
+                    // calls which are invoked during fireEvent
+                    this.eventQueue[i] = null;
+
                     this.fireEvent(key,value);
                 }
             }
@@ -1147,8 +1157,18 @@ version: 2.5.2
             });
 
             /**
+            * <p>
             * Object or array of objects representing the ContainerEffect 
             * classes that are active for animating the container.
+            * </p>
+            * <p>
+            * <strong>NOTE:</strong> Although this configuration 
+            * property is introduced at the Module level, an out of the box
+            * implementation is not shipped for the Module class so setting
+            * the proroperty on the Module class has no effect. The Overlay 
+            * class is the first class to provide out of the box ContainerEffect 
+            * support.
+            * </p>
             * @config effect
             * @type Object
             * @default null
@@ -1338,6 +1358,7 @@ version: 2.5.2
                     }
 
                     oIFrame.id = "_yuiResizeMonitor";
+                    oIFrame.title = "Text Resize Monitor";
                     /*
                         Need to set "position" property before inserting the 
                         iframe into the document or Safari's status bar will 
@@ -1494,17 +1515,19 @@ version: 2.5.2
         },
 
         /**
-        * Sets the Module's body content to the HTML specified, or appends the
-        * passed element to the body. If no body is present, one will be 
-        * automatically created. An empty string can be passed to the method
-        * to clear the contents of the body.
+        * Sets the Module's body content to the HTML specified. 
+        * 
+        * If no body is present, one will be automatically created. 
+        * 
+        * An empty string can be passed to the method to clear the contents of the body.
         * @method setBody
         * @param {String} bodyContent The HTML used to set the body. 
         * As a convenience, non HTMLElement objects can also be passed into 
         * the method, and will be treated as strings, with the body innerHTML
         * set to their default toString implementations.
         * <em>OR</em>
-        * @param {HTMLElement} bodyContent The HTMLElement to append to the body
+        * @param {HTMLElement} bodyContent The HTMLElement to add as the first and only
+        * child of the body element.
         * <em>OR</em>
         * @param {DocumentFragment} bodyContent The document fragment 
         * containing elements which are to be added to the body
@@ -1710,13 +1733,6 @@ version: 2.5.2
             this.cfg = null;
 
             this.destroyEvent.fire();
-        
-            for (e in this) {
-                if (e instanceof CustomEvent) {
-                    e.unsubscribeAll();
-                }
-            }
-
         },
 
         /**
@@ -1852,7 +1868,11 @@ version: 2.5.2
         Event = YAHOO.util.Event,
         Dom = YAHOO.util.Dom,
         Config = YAHOO.util.Config,
+        UA = YAHOO.env.ua,
         Overlay = YAHOO.widget.Overlay,
+
+        _SUBSCRIBE = "subscribe",
+        _UNSUBSCRIBE = "unsubscribe",
 
         m_oIFrameTemplate,
 
@@ -1911,15 +1931,22 @@ version: 2.5.2
             },
 
             "WIDTH": { 
-                key: "width", 
-                suppressEvent: true, 
-                supercedes: ["context", "fixedcenter", "iframe"] 
+                key: "width",
+                suppressEvent: true,
+                supercedes: ["context", "fixedcenter", "iframe"]
             }, 
 
             "HEIGHT": { 
                 key: "height", 
                 suppressEvent: true, 
                 supercedes: ["context", "fixedcenter", "iframe"] 
+            },
+
+            "AUTO_FILL_HEIGHT" : {
+                key: "autofillheight",
+                supressEvent: true,
+                supercedes: ["height"],
+                value:"body"
             },
 
             "ZINDEX": { 
@@ -1936,10 +1963,18 @@ version: 2.5.2
 
             "IFRAME": { 
                 key: "iframe", 
-                value: (YAHOO.env.ua.ie == 6 ? true : false), 
+                value: (UA.ie == 6 ? true : false), 
                 validator: Lang.isBoolean, 
                 supercedes: ["zindex"] 
+            },
+            
+            "PREVENT_CONTEXT_OVERLAP": {
+                key: "preventcontextoverlap",
+                value: false,
+                validator: Lang.isBoolean,  
+                supercedes: ["constraintoviewport"]
             }
+            
         };
 
     /**
@@ -2023,6 +2058,16 @@ version: 2.5.2
     Overlay.CSS_OVERLAY = "yui-overlay";
 
     /**
+     * Constant representing the names of the standard module elements
+     * used in the overlay.
+     * @property YAHOO.widget.Overlay.STD_MOD_RE
+     * @static
+     * @final
+     * @type RegExp
+     */
+    Overlay.STD_MOD_RE = /^\s*?(body|footer|header)\s*?$/i;
+
+    /**
     * A singleton CustomEvent used for reacting to the DOM event for 
     * window scroll
     * @event YAHOO.widget.Overlay.windowScrollEvent
@@ -2043,21 +2088,31 @@ version: 2.5.2
     * @param {DOMEvent} e The DOM scroll event
     */
     Overlay.windowScrollHandler = function (e) {
+        var t = Event.getTarget(e);
 
-        if (YAHOO.env.ua.ie) {
+        // - Webkit (Safari 2/3) and Opera 9.2x bubble scroll events from elements to window
+        // - FF2/3 and IE6/7, Opera 9.5x don't bubble scroll events from elements to window
+        // - IE doesn't recognize scroll registered on the document.
+        //
+        // Also, when document view is scrolled, IE doesn't provide a target, 
+        // rest of the browsers set target to window.document, apart from opera 
+        // which sets target to window.
+        if (!t || t === window || t === window.document) {
+            if (UA.ie) {
 
-            if (! window.scrollEnd) {
-                window.scrollEnd = -1;
+                if (! window.scrollEnd) {
+                    window.scrollEnd = -1;
+                }
+
+                clearTimeout(window.scrollEnd);
+        
+                window.scrollEnd = setTimeout(function () { 
+                    Overlay.windowScrollEvent.fire(); 
+                }, 1);
+        
+            } else {
+                Overlay.windowScrollEvent.fire();
             }
-
-            clearTimeout(window.scrollEnd);
-    
-            window.scrollEnd = setTimeout(function () { 
-                Overlay.windowScrollEvent.fire(); 
-            }, 1);
-    
-        } else {
-            Overlay.windowScrollEvent.fire();
         }
     };
 
@@ -2069,7 +2124,7 @@ version: 2.5.2
     */
     Overlay.windowResizeHandler = function (e) {
 
-        if (YAHOO.env.ua.ie) {
+        if (UA.ie) {
             if (! window.resizeEnd) {
                 window.resizeEnd = -1;
             }
@@ -2096,11 +2151,49 @@ version: 2.5.2
     if (Overlay._initialized === null) {
         Event.on(window, "scroll", Overlay.windowScrollHandler);
         Event.on(window, "resize", Overlay.windowResizeHandler);
-    
         Overlay._initialized = true;
     }
 
+    /**
+     * Internal map of special event types, which are provided
+     * by the instance. It maps the event type to the custom event 
+     * instance. Contains entries for the "windowScroll", "windowResize" and
+     * "textResize" static container events.
+     *
+     * @property YAHOO.widget.Overlay._TRIGGER_MAP
+     * @type Object
+     * @static
+     * @private
+     */
+    Overlay._TRIGGER_MAP = {
+        "windowScroll" : Overlay.windowScrollEvent,
+        "windowResize" : Overlay.windowResizeEvent,
+        "textResize"   : Module.textResizeEvent
+    };
+
     YAHOO.extend(Overlay, Module, {
+
+        /**
+         * <p>
+         * Array of default event types which will trigger
+         * context alignment for the Overlay class.
+         * </p>
+         * <p>The array is empty by default for Overlay,
+         * but maybe populated in future releases, so classes extending
+         * Overlay which need to define their own set of CONTEXT_TRIGGERS
+         * should concatenate their super class's prototype.CONTEXT_TRIGGERS 
+         * value with their own array of values.
+         * </p>
+         * <p>
+         * E.g.:
+         * <code>CustomOverlay.prototype.CONTEXT_TRIGGERS = YAHOO.widget.Overlay.prototype.CONTEXT_TRIGGERS.concat(["windowScroll"]);</code>
+         * </p>
+         * 
+         * @property CONTEXT_TRIGGERS
+         * @type Array
+         * @final
+         */
+        CONTEXT_TRIGGERS : [],
 
         /**
         * The Overlay initialization method, which is executed for Overlay and  
@@ -2115,23 +2208,23 @@ version: 2.5.2
         * See configuration documentation for more details.
         */
         init: function (el, userConfig) {
-    
+
             /*
                  Note that we don't pass the user config in here yet because we
                  only want it executed once, at the lowest subclass level
             */
-    
-            Overlay.superclass.init.call(this, el/*, userConfig*/);  
+
+            Overlay.superclass.init.call(this, el/*, userConfig*/);
 
             this.beforeInitEvent.fire(Overlay);
-            
+
             Dom.addClass(this.element, Overlay.CSS_OVERLAY);
-            
+
             if (userConfig) {
                 this.cfg.applyConfig(userConfig, true);
             }
 
-            if (this.platform == "mac" && YAHOO.env.ua.gecko) {
+            if (this.platform == "mac" && UA.gecko) {
 
                 if (! Config.alreadySubscribed(this.showEvent,
                     this.showMacGeckoScrollbars, this)) {
@@ -2159,11 +2252,11 @@ version: 2.5.2
         * @method initEvents
         */
         initEvents: function () {
-    
+
             Overlay.superclass.initEvents.call(this);
-            
+
             var SIGNATURE = CustomEvent.LIST;
-            
+
             /**
             * CustomEvent fired before the Overlay is moved.
             * @event beforeMoveEvent
@@ -2172,7 +2265,7 @@ version: 2.5.2
             */
             this.beforeMoveEvent = this.createEvent(EVENT_TYPES.BEFORE_MOVE);
             this.beforeMoveEvent.signature = SIGNATURE;
-            
+
             /**
             * CustomEvent fired after the Overlay is moved.
             * @event moveEvent
@@ -2181,7 +2274,7 @@ version: 2.5.2
             */
             this.moveEvent = this.createEvent(EVENT_TYPES.MOVE);
             this.moveEvent.signature = SIGNATURE;
-        
+
         },
         
         /**
@@ -2192,8 +2285,9 @@ version: 2.5.2
         initDefaultConfig: function () {
     
             Overlay.superclass.initDefaultConfig.call(this);
-            
-            
+
+            var cfg = this.cfg;
+
             // Add overlay config properties //
             
             /**
@@ -2202,7 +2296,7 @@ version: 2.5.2
             * @type Number
             * @default null
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.X.key, { 
+            cfg.addProperty(DEFAULT_CONFIG.X.key, { 
     
                 handler: this.configX, 
                 validator: DEFAULT_CONFIG.X.validator, 
@@ -2217,7 +2311,7 @@ version: 2.5.2
             * @type Number
             * @default null
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.Y.key, {
+            cfg.addProperty(DEFAULT_CONFIG.Y.key, {
 
                 handler: this.configY, 
                 validator: DEFAULT_CONFIG.Y.validator, 
@@ -2225,37 +2319,70 @@ version: 2.5.2
                 supercedes: DEFAULT_CONFIG.Y.supercedes
 
             });
-    
+
             /**
             * An array with the absolute x and y positions of the Overlay
             * @config xy
             * @type Number[]
             * @default null
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.XY.key, {
-            
+            cfg.addProperty(DEFAULT_CONFIG.XY.key, {
                 handler: this.configXY, 
                 suppressEvent: DEFAULT_CONFIG.XY.suppressEvent, 
                 supercedes: DEFAULT_CONFIG.XY.supercedes
-            
             });
-    
+
             /**
-            * The array of context arguments for context-sensitive positioning.  
-            * The format is: [id or element, element corner, context corner]. 
-            * For example, setting this property to ["img1", "tl", "bl"] would 
-            * align the Overlay's top left corner to the context element's 
-            * bottom left corner.
+            * <p>
+            * The array of context arguments for context-sensitive positioning. 
+            * </p>
+            *
+            * <p>
+            * The format of the array is: <code>[contextElementOrId, overlayCorner, contextCorner, arrayOfTriggerEvents (optional)]</code>, the
+            * the 4 array elements described in detail below:
+            * </p>
+            *
+            * <dl>
+            * <dt>contextElementOrId &#60;String|HTMLElement&#62;</dt>
+            * <dd>A reference to the context element to which the overlay should be aligned (or it's id).</dd>
+            * <dt>overlayCorner &#60;String&#62;</dt>
+            * <dd>The corner of the overlay which is to be used for alignment. This corner will be aligned to the 
+            * corner of the context element defined by the "contextCorner" entry which follows. Supported string values are: 
+            * "tr" (top right), "tl" (top left), "br" (bottom right), or "bl" (bottom left).</dd>
+            * <dt>contextCorner &#60;String&#62;</dt>
+            * <dd>The corner of the context element which is to be used for alignment. Supported string values are the same ones listed for the "overlayCorner" entry above.</dd>
+            * <dt>arrayOfTriggerEvents (optional) &#60;Array[String|CustomEvent]&#62;</dt>
+            * <dd>
+            * <p>
+            * By default, context alignment is a one time operation, aligning the Overlay to the context element when context configuration property is set, or when the <a href="#method_align">align</a> 
+            * method is invoked. However, you can use the optional "arrayOfTriggerEvents" entry to define the list of events which should force the overlay to re-align itself with the context element. 
+            * This is useful in situations where the layout of the document may change, resulting in the context element's position being modified.
+            * </p>
+            * <p>
+            * The array can contain either event type strings for events the instance publishes (e.g. "beforeShow") or CustomEvent instances. Additionally the following
+            * 3 static container event types are also currently supported : <code>"windowResize", "windowScroll", "textResize"</code> (defined in <a href="#property__TRIGGER_MAP">_TRIGGER_MAP</a> private property).
+            * </p>
+            * </dd>
+            * </dl>
+            *
+            * <p>
+            * For example, setting this property to <code>["img1", "tl", "bl"]</code> will 
+            * align the Overlay's top left corner to the bottom left corner of the
+            * context element with id "img1".
+            * </p>
+            * <p>
+            * Adding the optional trigger values: <code>["img1", "tl", "bl", ["beforeShow", "windowResize"]]</code>,
+            * will re-align the overlay position, whenever the "beforeShow" or "windowResize" events are fired.
+            * </p>
+            *
             * @config context
             * @type Array
             * @default null
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.CONTEXT.key, {
-            
+            cfg.addProperty(DEFAULT_CONFIG.CONTEXT.key, {
                 handler: this.configContext, 
                 suppressEvent: DEFAULT_CONFIG.CONTEXT.suppressEvent, 
                 supercedes: DEFAULT_CONFIG.CONTEXT.supercedes
-            
             });
 
             /**
@@ -2265,13 +2392,11 @@ version: 2.5.2
             * @type Boolean
             * @default false
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.FIXED_CENTER.key, {
-            
+            cfg.addProperty(DEFAULT_CONFIG.FIXED_CENTER.key, {
                 handler: this.configFixedCenter,
                 value: DEFAULT_CONFIG.FIXED_CENTER.value, 
                 validator: DEFAULT_CONFIG.FIXED_CENTER.validator, 
                 supercedes: DEFAULT_CONFIG.FIXED_CENTER.supercedes
-            
             });
     
             /**
@@ -2280,12 +2405,10 @@ version: 2.5.2
             * @type String
             * @default null
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.WIDTH.key, {
-
+            cfg.addProperty(DEFAULT_CONFIG.WIDTH.key, {
                 handler: this.configWidth, 
                 suppressEvent: DEFAULT_CONFIG.WIDTH.suppressEvent, 
                 supercedes: DEFAULT_CONFIG.WIDTH.supercedes
-
             });
 
             /**
@@ -2294,25 +2417,37 @@ version: 2.5.2
             * @type String
             * @default null
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.HEIGHT.key, {
-
+            cfg.addProperty(DEFAULT_CONFIG.HEIGHT.key, {
                 handler: this.configHeight, 
                 suppressEvent: DEFAULT_CONFIG.HEIGHT.suppressEvent, 
                 supercedes: DEFAULT_CONFIG.HEIGHT.supercedes
-            
             });
-            
+
+            /**
+            * Standard module element which should auto fill out the height of the Overlay if the height config property is set.
+            * Supported values are "header", "body", "footer".
+            *
+            * @config autofillheight
+            * @type String
+            * @default null
+            */
+            cfg.addProperty(DEFAULT_CONFIG.AUTO_FILL_HEIGHT.key, {
+                handler: this.configAutoFillHeight, 
+                value : DEFAULT_CONFIG.AUTO_FILL_HEIGHT.value,
+                validator : this._validateAutoFill,
+                suppressEvent: DEFAULT_CONFIG.AUTO_FILL_HEIGHT.suppressEvent, 
+                supercedes: DEFAULT_CONFIG.AUTO_FILL_HEIGHT.supercedes
+            });
+
             /**
             * CSS z-index of the Overlay.
             * @config zIndex
             * @type Number
             * @default null
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.ZINDEX.key, {
-
+            cfg.addProperty(DEFAULT_CONFIG.ZINDEX.key, {
                 handler: this.configzIndex,
                 value: DEFAULT_CONFIG.ZINDEX.value
-
             });
 
             /**
@@ -2322,7 +2457,7 @@ version: 2.5.2
             * @type Boolean
             * @default false
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.CONSTRAIN_TO_VIEWPORT.key, {
+            cfg.addProperty(DEFAULT_CONFIG.CONSTRAIN_TO_VIEWPORT.key, {
 
                 handler: this.configConstrainToViewport, 
                 value: DEFAULT_CONFIG.CONSTRAIN_TO_VIEWPORT.value, 
@@ -2341,7 +2476,7 @@ version: 2.5.2
             * @type Boolean
             * @default true for IE6 and below, false for all other browsers.
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.IFRAME.key, {
+            cfg.addProperty(DEFAULT_CONFIG.IFRAME.key, {
 
                 handler: this.configIframe, 
                 value: DEFAULT_CONFIG.IFRAME.value, 
@@ -2349,6 +2484,23 @@ version: 2.5.2
                 supercedes: DEFAULT_CONFIG.IFRAME.supercedes
 
             });
+
+            /**
+            * @config preventcontextoverlap
+            * @description Boolean indicating whether or not the Overlay should overlap its 
+            * context element (defined using the "context" configuration property) when the 
+            * "constraintoviewport" configuration property is set to "true".
+            * @type Boolean
+            * @default false
+            */
+            cfg.addProperty(DEFAULT_CONFIG.PREVENT_CONTEXT_OVERLAP.key, {
+
+                value: DEFAULT_CONFIG.PREVENT_CONTEXT_OVERLAP.value, 
+                validator: DEFAULT_CONFIG.PREVENT_CONTEXT_OVERLAP.validator, 
+                supercedes: DEFAULT_CONFIG.PREVENT_CONTEXT_OVERLAP.supercedes
+
+            });
+
         },
 
         /**
@@ -2369,10 +2521,7 @@ version: 2.5.2
         * @method hideMacGeckoScrollbars
         */
         hideMacGeckoScrollbars: function () {
-    
-            Dom.removeClass(this.element, "show-scrollbars");
-            Dom.addClass(this.element, "hide-scrollbars");
-    
+            Dom.replaceClass(this.element, "show-scrollbars", "hide-scrollbars");
         },
 
         /**
@@ -2382,10 +2531,7 @@ version: 2.5.2
         * @method showMacGeckoScrollbars
         */
         showMacGeckoScrollbars: function () {
-    
-            Dom.removeClass(this.element, "hide-scrollbars");
-            Dom.addClass(this.element, "show-scrollbars");
-    
+            Dom.replaceClass(this.element, "hide-scrollbars", "show-scrollbars");
         },
 
         // BEGIN BUILT-IN PROPERTY EVENT HANDLERS //
@@ -2406,7 +2552,7 @@ version: 2.5.2
                 currentVis = Dom.getStyle(this.element, "visibility"),
                 effect = this.cfg.getProperty("effect"),
                 effectInstances = [],
-                isMacGecko = (this.platform == "mac" && YAHOO.env.ua.gecko),
+                isMacGecko = (this.platform == "mac" && UA.gecko),
                 alreadySubscribed = Config.alreadySubscribed,
                 eff, ei, e, i, j, k, h,
                 nEffects,
@@ -2601,6 +2747,37 @@ version: 2.5.2
         },
 
         /**
+         * The default event handler fired when the "autofillheight" property is changed.
+         * @method configAutoFillHeight
+         *
+         * @param {String} type The CustomEvent type (usually the property name)
+         * @param {Object[]} args The CustomEvent arguments. For configuration 
+         * handlers, args[0] will equal the newly applied value for the property.
+         * @param {Object} obj The scope object. For configuration handlers, 
+         * this will usually equal the owner.
+         */
+        configAutoFillHeight: function (type, args, obj) {
+            var fillEl = args[0],
+                currEl = this.cfg.getProperty("autofillheight");
+
+            this.cfg.unsubscribeFromConfigEvent("height", this._autoFillOnHeightChange);
+            Module.textResizeEvent.unsubscribe("height", this._autoFillOnHeightChange);
+
+            if (currEl && fillEl !== currEl && this[currEl]) {
+                Dom.setStyle(this[currEl], "height", "");
+            }
+
+            if (fillEl) {
+                fillEl = Lang.trim(fillEl.toLowerCase());
+
+                this.cfg.subscribeToConfigEvent("height", this._autoFillOnHeightChange, this[fillEl], this);
+                Module.textResizeEvent.subscribe(this._autoFillOnHeightChange, this[fillEl], this);
+
+                this.cfg.setProperty("autofillheight", fillEl, true);
+            }
+        },
+
+        /**
         * The default event handler fired when the "width" property is changed.
         * @method configWidth
         * @param {String} type The CustomEvent type (usually the property name)
@@ -2613,11 +2790,11 @@ version: 2.5.2
 
             var width = args[0],
                 el = this.element;
-    
+
             Dom.setStyle(el, "width", width);
             this.cfg.refireEvent("iframe");
         },
-        
+
         /**
         * The default event handler fired when the "zIndex" property is changed.
         * @method configzIndex
@@ -2853,8 +3030,7 @@ version: 2.5.2
                             doesn't modify the opacity of any transparent 
                             elements that may be on top of it (like a shadow).
                         */
-
-                        if (YAHOO.env.ua.ie) {
+                        if (UA.ie) {
                             m_oIFrameTemplate.style.filter = "alpha(opacity=0)";
                             /*
                                  Need to set the "frameBorder" property to 0 
@@ -2986,8 +3162,9 @@ version: 2.5.2
         },
 
          /**
-        * The default event handler fired when the "context" property 
+        * The default event handler fired when the "context" property
         * is changed.
+        * 
         * @method configContext
         * @param {String} type The CustomEvent type (usually the property name)
         * @param {Object[]} args The CustomEvent arguments. For configuration 
@@ -2996,28 +3173,114 @@ version: 2.5.2
         * this will usually equal the owner.
         */
         configContext: function (type, args, obj) {
-    
+
             var contextArgs = args[0],
                 contextEl,
                 elementMagnetCorner,
-                contextMagnetCorner;
+                contextMagnetCorner,
+                triggers,
+                defTriggers = this.CONTEXT_TRIGGERS;
 
             if (contextArgs) {
+
                 contextEl = contextArgs[0];
                 elementMagnetCorner = contextArgs[1];
                 contextMagnetCorner = contextArgs[2];
-                
+                triggers = contextArgs[3];
+
+                if (defTriggers && defTriggers.length > 0) {
+                    triggers = (triggers || []).concat(defTriggers);
+                }
+
                 if (contextEl) {
                     if (typeof contextEl == "string") {
-                        this.cfg.setProperty("context", 
-                            [document.getElementById(contextEl), 
-                                elementMagnetCorner, contextMagnetCorner], 
+                        this.cfg.setProperty("context", [
+                                document.getElementById(contextEl), 
+                                elementMagnetCorner,
+                                contextMagnetCorner,
+                                triggers ],
                                 true);
                     }
-                    
+
                     if (elementMagnetCorner && contextMagnetCorner) {
                         this.align(elementMagnetCorner, contextMagnetCorner);
                     }
+
+                    if (this._contextTriggers) {
+                        // Unsubscribe Old Set
+                        this._processTriggers(this._contextTriggers, _UNSUBSCRIBE, this._alignOnTrigger);
+                    }
+
+                    if (triggers) {
+                        // Subscribe New Set
+                        this._processTriggers(triggers, _SUBSCRIBE, this._alignOnTrigger);
+                        this._contextTriggers = triggers;
+                    }
+                }
+            }
+        },
+
+        /**
+         * Custom Event handler for context alignment triggers. Invokes the align method
+         * 
+         * @method _alignOnTrigger
+         * @protected
+         * 
+         * @param {String} type The event type (not used by the default implementation)
+         * @param {Any[]} args The array of arguments for the trigger event (not used by the default implementation)
+         */
+        _alignOnTrigger: function(type, args) {
+            this.align();
+        },
+
+        /**
+         * Helper method to locate the custom event instance for the event name string
+         * passed in. As a convenience measure, any custom events passed in are returned.
+         *
+         * @method _findTriggerCE
+         * @private
+         *
+         * @param {String|CustomEvent} t Either a CustomEvent, or event type (e.g. "windowScroll") for which a 
+         * custom event instance needs to be looked up from the Overlay._TRIGGER_MAP.
+         */
+        _findTriggerCE : function(t) {
+            var tce = null;
+            if (t instanceof CustomEvent) {
+                tce = t;
+            } else if (Overlay._TRIGGER_MAP[t]) {
+                tce = Overlay._TRIGGER_MAP[t];
+            }
+            return tce;
+        },
+
+        /**
+         * Utility method that subscribes or unsubscribes the given 
+         * function from the list of trigger events provided.
+         *
+         * @method _processTriggers
+         * @protected 
+         *
+         * @param {Array[String|CustomEvent]} triggers An array of either CustomEvents, event type strings 
+         * (e.g. "beforeShow", "windowScroll") to/from which the provided function should be 
+         * subscribed/unsubscribed respectively.
+         *
+         * @param {String} mode Either "subscribe" or "unsubscribe", specifying whether or not
+         * we are subscribing or unsubscribing trigger listeners
+         * 
+         * @param {Function} fn The function to be subscribed/unsubscribed to/from the trigger event.
+         * Context is always set to the overlay instance, and no additional object argument 
+         * get passed to the subscribed function.
+         */
+        _processTriggers : function(triggers, mode, fn) {
+            var t, tce;
+
+            for (var i = 0, l = triggers.length; i < l; ++i) {
+                t = triggers[i];
+                tce = this._findTriggerCE(t);
+                if (tce) {
+                    tce[mode](fn, this, true);
+                } else {
+                    this[mode](t, fn);
                 }
             }
         },
@@ -3119,11 +3382,343 @@ version: 2.5.2
         */
         enforceConstraints: function (type, args, obj) {
             var pos = args[0];
+            
             var cXY = this.getConstrainedXY(pos[0], pos[1]);
             this.cfg.setProperty("x", cXY[0], true);
             this.cfg.setProperty("y", cXY[1], true);
             this.cfg.setProperty("xy", cXY, true);
         },
+
+
+        /**
+         * Given x coordinate value, returns the calculated x coordinate required to 
+         * position the Overlay if it is to be constrained to the viewport, based on the 
+         * current element size, viewport dimensions and scroll values.
+         *
+         * @param {Number} x The X coordinate value to be constrained
+         * @return {Number} The constrained x coordinate
+         */		
+        getConstrainedX: function (x) {
+
+            var oOverlay = this,
+                oOverlayEl = oOverlay.element,
+                nOverlayOffsetWidth = oOverlayEl.offsetWidth,
+
+                nViewportOffset = Overlay.VIEWPORT_OFFSET,
+                viewPortWidth = Dom.getViewportWidth(),
+                scrollX = Dom.getDocumentScrollLeft(),
+
+                bCanConstrain = (nOverlayOffsetWidth + nViewportOffset < viewPortWidth),
+
+                aContext = this.cfg.getProperty("context"),
+                oContextEl,
+                nContextElX,
+                nContextElWidth,
+
+                bFlipped = false,
+
+                nLeftRegionWidth,
+                nRightRegionWidth,
+
+                leftConstraint,
+                rightConstraint,
+
+                xNew = x,
+
+                oOverlapPositions = {
+
+                    "tltr": true,
+                    "blbr": true,
+                    "brbl": true,
+                    "trtl": true
+                
+                };
+
+
+            var flipHorizontal = function () {
+            
+                var nNewX;
+            
+                if ((oOverlay.cfg.getProperty("x") - scrollX) > nContextElX) {
+                    nNewX = (nContextElX - nOverlayOffsetWidth);
+                }
+                else {
+                    nNewX = (nContextElX + nContextElWidth);
+                }
+                
+    
+                oOverlay.cfg.setProperty("x", (nNewX + scrollX), true);
+    
+                return nNewX;
+    
+            };
+
+
+
+            /*
+                 Uses the context element's position to calculate the availble width 
+                 to the right and left of it to display its corresponding Overlay.
+            */
+
+            var getDisplayRegionWidth = function () {
+
+                // The Overlay is to the right of the context element
+
+                if ((oOverlay.cfg.getProperty("x") - scrollX) > nContextElX) {
+                    return (nRightRegionWidth - nViewportOffset);
+                }
+                else {	// The Overlay is to the left of the context element
+                    return (nLeftRegionWidth - nViewportOffset);
+                }
+            
+            };
+    
+
+            /*
+                Positions the Overlay to the left or right of the context element so that it remains 
+                inside the viewport.
+            */
+    
+            var setHorizontalPosition = function () {
+            
+                var nDisplayRegionWidth = getDisplayRegionWidth(),
+                    fnReturnVal;
+
+                if (nOverlayOffsetWidth > nDisplayRegionWidth) {
+        
+                    if (bFlipped) {
+        
+                        /*
+                             All possible positions and values have been 
+                             tried, but none were successful, so fall back 
+                             to the original size and position.
+                        */
+    
+                        flipHorizontal();
+                        
+                    }
+                    else {
+        
+                        flipHorizontal();
+
+                        bFlipped = true;
+        
+                        fnReturnVal = setHorizontalPosition();
+        
+                    }
+                
+                }
+        
+                return fnReturnVal;
+            
+            };
+
+
+            if (this.cfg.getProperty("preventcontextoverlap") && aContext && 
+				oOverlapPositions[(aContext[1] + aContext[2])]) {
+
+                if (bCanConstrain) {
+
+                    oContextEl = aContext[0];
+                    nContextElX = Dom.getX(oContextEl) - scrollX;
+                    nContextElWidth = oContextEl.offsetWidth;
+                    nLeftRegionWidth = nContextElX;
+                    nRightRegionWidth = (viewPortWidth - (nContextElX + nContextElWidth));
+    
+                    setHorizontalPosition();
+
+                }
+                
+                xNew = this.cfg.getProperty("x");
+            
+            }
+            else {
+
+                if (bCanConstrain) {
+    
+                    leftConstraint = scrollX + nViewportOffset;
+                    rightConstraint = 
+                        scrollX + viewPortWidth - nOverlayOffsetWidth - nViewportOffset;
+    
+                    if (x < leftConstraint) {
+                        xNew = leftConstraint;
+                    } else if (x > rightConstraint) {
+                        xNew = rightConstraint;
+                    }
+                } else {
+                    xNew = nViewportOffset + scrollX;
+                }
+            
+            }
+
+            return xNew;
+        
+        },
+
+
+        /**
+         * Given y coordinate value, returns the calculated y coordinate required to 
+         * position the Overlay if it is to be constrained to the viewport, based on the 
+         * current element size, viewport dimensions and scroll values.
+         *
+         * @param {Number} y The Y coordinate value to be constrained
+         * @return {Number} The constrained y coordinate
+         */		
+        getConstrainedY: function (y) {
+
+            var oOverlay = this,
+                oOverlayEl = oOverlay.element,
+                nOverlayOffsetHeight = oOverlayEl.offsetHeight,
+            
+                nViewportOffset = Overlay.VIEWPORT_OFFSET,
+                viewPortHeight = Dom.getViewportHeight(),
+                scrollY = Dom.getDocumentScrollTop(),
+
+                bCanConstrain = (nOverlayOffsetHeight + nViewportOffset < viewPortHeight),
+
+                aContext = this.cfg.getProperty("context"),
+                oContextEl,
+                nContextElY,
+                nContextElHeight,
+
+                bFlipped = false,
+
+                nTopRegionHeight,
+                nBottomRegionHeight,
+
+                topConstraint,
+                bottomConstraint,
+
+                yNew = y,
+                
+                oOverlapPositions = {
+                    "trbr": true,
+                    "tlbl": true,
+                    "bltl": true,
+                    "brtr": true
+                };
+
+
+            var flipVertical = function () {
+
+                var nNewY;
+            
+                // The Overlay is below the context element, flip it above
+                if ((oOverlay.cfg.getProperty("y") - scrollY) > nContextElY) { 
+                    nNewY = (nContextElY - nOverlayOffsetHeight);
+                }
+                else {	// The Overlay is above the context element, flip it below
+                    nNewY = (nContextElY + nContextElHeight);
+                }
+    
+                oOverlay.cfg.setProperty("y", (nNewY + scrollY), true);
+                
+                return nNewY;
+            
+            };
+
+
+            /*
+                 Uses the context element's position to calculate the availble height 
+                 above and below it to display its corresponding Overlay.
+            */
+
+            var getDisplayRegionHeight = function () {
+
+                // The Overlay is below the context element
+                if ((oOverlay.cfg.getProperty("y") - scrollY) > nContextElY) {
+                    return (nBottomRegionHeight - nViewportOffset);				
+                }
+                else {	// The Overlay is above the context element
+                    return (nTopRegionHeight - nViewportOffset);				
+                }
+        
+            };
+
+
+            /*
+                Trys to place the Overlay in the best possible position (either above or 
+                below its corresponding context element).
+            */
+        
+            var setVerticalPosition = function () {
+        
+                var nDisplayRegionHeight = getDisplayRegionHeight(),
+                    fnReturnVal;
+                    
+
+                if (nOverlayOffsetHeight > nDisplayRegionHeight) {
+                   
+                    if (bFlipped) {
+        
+                        /*
+                             All possible positions and values for the 
+                             "maxheight" configuration property have been 
+                             tried, but none were successful, so fall back 
+                             to the original size and position.
+                        */
+    
+                        flipVertical();
+                        
+                    }
+                    else {
+        
+                        flipVertical();
+
+                        bFlipped = true;
+        
+                        fnReturnVal = setVerticalPosition();
+        
+                    }
+                
+                }
+        
+                return fnReturnVal;
+        
+            };
+
+
+            if (this.cfg.getProperty("preventcontextoverlap") && aContext && 
+            	oOverlapPositions[(aContext[1] + aContext[2])]) {
+
+                if (bCanConstrain) {
+
+                    oContextEl = aContext[0];
+                    nContextElHeight = oContextEl.offsetHeight;
+                    nContextElY = (Dom.getY(oContextEl) - scrollY);
+    
+                    nTopRegionHeight = nContextElY;
+                    nBottomRegionHeight = (viewPortHeight - (nContextElY + nContextElHeight));
+    
+                    setVerticalPosition();
+                
+                }
+
+                yNew = oOverlay.cfg.getProperty("y");
+
+            }
+            else {
+
+                if (bCanConstrain) {
+    
+                    topConstraint = scrollY + nViewportOffset;
+                    bottomConstraint = 
+                        scrollY + viewPortHeight - nOverlayOffsetHeight - nViewportOffset;
+    
+                    if (y < topConstraint) {
+                        yNew  = topConstraint;
+                    } else if (y  > bottomConstraint) {
+                        yNew  = bottomConstraint;
+                    }
+                } else {
+                    yNew = nViewportOffset + scrollY;
+                }
+
+            }
+
+            return yNew;
+        },
+
 
         /**
          * Given x, y coordinate values, returns the calculated coordinates required to 
@@ -3135,47 +3730,7 @@ version: 2.5.2
          * @return {Array} The constrained x and y coordinates at index 0 and 1 respectively;
          */
         getConstrainedXY: function(x, y) {
-
-            var nViewportOffset = Overlay.VIEWPORT_OFFSET,
-                viewPortWidth = Dom.getViewportWidth(),
-                viewPortHeight = Dom.getViewportHeight(),
-                offsetHeight = this.element.offsetHeight,
-                offsetWidth = this.element.offsetWidth,
-                scrollX = Dom.getDocumentScrollLeft(),
-                scrollY = Dom.getDocumentScrollTop();
-
-            var xNew = x;
-            var yNew = y;
-
-            if (offsetWidth + nViewportOffset < viewPortWidth) {
-
-                var leftConstraint = scrollX + nViewportOffset;
-                var rightConstraint = scrollX + viewPortWidth - offsetWidth - nViewportOffset;
-
-                if (x < leftConstraint) {
-                    xNew = leftConstraint;
-                } else if (x > rightConstraint) {
-                    xNew = rightConstraint;
-                }
-            } else {
-                xNew = nViewportOffset + scrollX;
-            }
-
-            if (offsetHeight + nViewportOffset < viewPortHeight) {
-
-                var topConstraint = scrollY + nViewportOffset;
-                var bottomConstraint = scrollY + viewPortHeight - offsetHeight - nViewportOffset;
-
-                if (y < topConstraint) {
-                    yNew  = topConstraint;
-                } else if (y  > bottomConstraint) {
-                    yNew  = bottomConstraint;
-                }
-            } else {
-                yNew = nViewportOffset + scrollY;
-            }
-
-            return [xNew, yNew];
+            return [this.getConstrainedX(x), this.getConstrainedY(y)];
         },
 
         /**
@@ -3241,7 +3796,152 @@ version: 2.5.2
                 me.cfg.refireEvent("iframe");
                 me.cfg.refireEvent("context");
             }, 0);
+        },
+
+        /**
+         * Determines the content box height of the given element (height of the element, without padding or borders) in pixels.
+         *
+         * @method _getComputedHeight
+         * @private
+         * @param {HTMLElement} el The element for which the content height needs to be determined
+         * @return {Number} The content box height of the given element, or null if it could not be determined.
+         */
+        _getComputedHeight : (function() {
+
+            if (document.defaultView && document.defaultView.getComputedStyle) {
+                return function(el) {
+                    var height = null;
+                    if (el.ownerDocument && el.ownerDocument.defaultView) {
+                        var computed = el.ownerDocument.defaultView.getComputedStyle(el, '');
+                        if (computed) {
+                            height = parseInt(computed.height, 10);
+                        }
+                    }
+                    return (Lang.isNumber(height)) ? height : null;
+                };
+            } else {
+                return function(el) {
+                    var height = null;
+                    if (el.style.pixelHeight) {
+                        height = el.style.pixelHeight;
+                    }
+                    return (Lang.isNumber(height)) ? height : null;
+                };
+            }
+        })(),
+
+        /**
+         * autofillheight validator. Verifies that the autofill value is either null 
+         * or one of the strings : "body", "header" or "footer".
+         *
+         * @method _validateAutoFillHeight
+         * @protected
+         * @param {String} val
+         * @return true, if valid, false otherwise
+         */
+        _validateAutoFillHeight : function(val) {
+            return (!val) || (Lang.isString(val) && Overlay.STD_MOD_RE.test(val));
+        },
+
+        /**
+         * The default custom event handler executed when the overlay's height is changed, 
+         * if the autofillheight property has been set.
+         *
+         * @method _autoFillOnHeightChange
+         * @protected
+         * @param {String} type The event type
+         * @param {Array} args The array of arguments passed to event subscribers
+         * @param {HTMLElement} el The header, body or footer element which is to be resized to fill
+         * out the containers height
+         */
+        _autoFillOnHeightChange : function(type, args, el) {
+            this.fillHeight(el);
+        },
+
+        /**
+         * Returns the sub-pixel height of the el, using getBoundingClientRect, if available,
+         * otherwise returns the offsetHeight
+         * @method _getPreciseHeight
+         * @private
+         * @param {HTMLElement} el
+         * @return {Float} The sub-pixel height if supported by the browser, else the rounded height.
+         */
+        _getPreciseHeight : function(el) {
+            var height = el.offsetHeight;
+
+            if (el.getBoundingClientRect) {
+                var rect = el.getBoundingClientRect();
+                height = rect.bottom - rect.top;
+            }
+
+            return height;
+        },
+
+        /**
+         * <p>
+         * Sets the height on the provided header, body or footer element to 
+         * fill out the height of the container. It determines the height of the 
+         * containers content box, based on it's configured height value, and 
+         * sets the height of the autofillheight element to fill out any 
+         * space remaining after the other standard module element heights 
+         * have been accounted for.
+         * </p>
+         * <p><strong>NOTE:</strong> This method is not designed to work if an explicit 
+         * height has not been set on the container, since for an "auto" height container, 
+         * the heights of the header/body/footer will drive the height of the container.</p>
+         *
+         * @method fillHeight
+         * @param {HTMLElement} el The element which should be resized to fill out the height
+         * of the container element.
+         */
+        fillHeight : function(el) {
+            if (el) {
+                var container = this.innerElement || this.element,
+                    containerEls = [this.header, this.body, this.footer],
+                    containerEl,
+                    total = 0,
+                    filled = 0,
+                    remaining = 0,
+                    validEl = false;
+
+                for (var i = 0, l = containerEls.length; i < l; i++) {
+                    containerEl = containerEls[i];
+                    if (containerEl) {
+                        if (el !== containerEl) {
+                            filled += this._getPreciseHeight(containerEl);
+                        } else {
+                            validEl = true;
+                        }
+                    }
+                }
+
+                if (validEl) {
+
+                    if (UA.ie || UA.opera) {
+                        // Need to set height to 0, to allow height to be reduced
+                        Dom.setStyle(el, 'height', 0 + 'px');
+                    }
+
+                    total = this._getComputedHeight(container);
+
+                    // Fallback, if we can't get computed value for content height
+                    if (total === null) {
+                        Dom.addClass(container, "yui-override-padding");
+                        total = container.clientHeight; // Content, No Border, 0 Padding (set by yui-override-padding)
+                        Dom.removeClass(container, "yui-override-padding");
+                    }
     
+                    remaining = total - filled;
+    
+                    Dom.setStyle(el, "height", remaining + "px");
+    
+                    // Re-adjust height if required, to account for el padding and border
+                    if (el.offsetHeight != remaining) {
+                        remaining = remaining - (el.offsetHeight - remaining);
+                    }
+                    Dom.setStyle(el, "height", remaining + "px");
+                }
+            }
         },
 
         /**
@@ -3273,10 +3973,10 @@ version: 2.5.2
 
             function isOverlayElement(p_oElement) {
 
-                var oOverlay = Dom.hasClass(p_oElement, Overlay.CSS_OVERLAY),
+                var isOverlay = Dom.hasClass(p_oElement, Overlay.CSS_OVERLAY),
                     Panel = YAHOO.widget.Panel;
 
-                if (oOverlay && !Dom.isAncestor(oElement, oOverlay)) {
+                if (isOverlay && !Dom.isAncestor(oElement, p_oElement)) {
                     if (Panel && Dom.hasClass(p_oElement, Panel.CSS_PANEL)) {
                         aOverlays[aOverlays.length] = p_oElement.parentNode;
                     } else {
@@ -3326,16 +4026,18 @@ version: 2.5.2
             }
 
             this.iframe = null;
-        
+
             Overlay.windowResizeEvent.unsubscribe(
                 this.doCenterOnDOMEvent, this);
     
             Overlay.windowScrollEvent.unsubscribe(
                 this.doCenterOnDOMEvent, this);
-        
+
+            Module.textResizeEvent.unsubscribe(this._autoFillOnHeightChange);
+
             Overlay.superclass.destroy.call(this);
         },
-        
+
         /**
         * Returns a String representation of the object.
         * @method toString
@@ -3349,7 +4051,7 @@ version: 2.5.2
 }());
 
 (function () {
-    
+
     /**
     * OverlayManager is used for maintaining the focus status of 
     * multiple Overlays.
@@ -3372,7 +4074,7 @@ version: 2.5.2
         Config = YAHOO.util.Config,
         CustomEvent = YAHOO.util.CustomEvent,
         OverlayManager = YAHOO.widget.OverlayManager;
-    
+
     /**
     * The CSS class representing a focused Overlay
     * @property OverlayManager.CSS_FOCUSED
@@ -3381,29 +4083,28 @@ version: 2.5.2
     * @type String
     */
     OverlayManager.CSS_FOCUSED = "focused";
-    
+
     OverlayManager.prototype = {
-    
+
         /**
         * The class's constructor function
         * @property contructor
         * @type Function
         */
         constructor: OverlayManager,
-        
+
         /**
         * The array of Overlays that are currently registered
         * @property overlays
         * @type YAHOO.widget.Overlay[]
         */
         overlays: null,
-        
+
         /**
         * Initializes the default configuration of the OverlayManager
         * @method initDefaultConfig
         */
         initDefaultConfig: function () {
-        
             /**
             * The collection of registered Overlays in use by 
             * the OverlayManager
@@ -3412,7 +4113,7 @@ version: 2.5.2
             * @default null
             */
             this.cfg.addProperty("overlays", { suppressEvent: true } );
-        
+
             /**
             * The default DOM event that should be used to focus an Overlay
             * @config focusevent
@@ -3420,7 +4121,6 @@ version: 2.5.2
             * @default "mousedown"
             */
             this.cfg.addProperty("focusevent", { value: "mousedown" } );
-
         },
 
         /**
@@ -3474,22 +4174,10 @@ version: 2.5.2
             this.focus = function (overlay) {
                 var o = this.find(overlay);
                 if (o) {
-                    if (activeOverlay != o) {
-                        if (activeOverlay) {
-                            activeOverlay.blur();
-                        }
-                        this.bringToTop(o);
-
-                        activeOverlay = o;
-
-                        Dom.addClass(activeOverlay.element, 
-                            OverlayManager.CSS_FOCUSED);
-
-                        o.focusEvent.fire();
-                    }
+                    o.focus();
                 }
             };
-        
+
             /**
             * Removes the specified Overlay from the manager
             * @method remove
@@ -3497,8 +4185,10 @@ version: 2.5.2
             * @param {String} overlay The id of the Overlay to remove
             */
             this.remove = function (overlay) {
+
                 var o = this.find(overlay), 
                         originalZ;
+
                 if (o) {
                     if (activeOverlay == o) {
                         activeOverlay = null;
@@ -3517,24 +4207,21 @@ version: 2.5.2
 
                     o.hideEvent.unsubscribe(o.blur);
                     o.destroyEvent.unsubscribe(this._onOverlayDestroy, o);
+                    o.focusEvent.unsubscribe(this._onOverlayFocusHandler, o);
+                    o.blurEvent.unsubscribe(this._onOverlayBlurHandler, o);
 
                     if (!bDestroyed) {
-                        Event.removeListener(o.element, 
-                                    this.cfg.getProperty("focusevent"), 
-                                    this._onOverlayElementFocus);
-
+                        Event.removeListener(o.element, this.cfg.getProperty("focusevent"), this._onOverlayElementFocus);
                         o.cfg.setProperty("zIndex", originalZ, true);
                         o.cfg.setProperty("manager", null);
                     }
 
-                    o.focusEvent.unsubscribeAll();
-                    o.blurEvent.unsubscribeAll();
+                    /* _managed Flag for custom or existing. Don't want to remove existing */
+                    if (o.focusEvent._managed) { o.focusEvent = null; }
+                    if (o.blurEvent._managed) { o.blurEvent = null; }
 
-                    o.focusEvent = null;
-                    o.blurEvent = null;
-
-                    o.focus = null;
-                    o.blur = null;
+                    if (o.focus._managed) { o.focus = null; }
+                    if (o.blur._managed) { o.blur = null; }
                 }
             };
 
@@ -3543,37 +4230,71 @@ version: 2.5.2
             * @method blurAll
             */
             this.blurAll = function () {
-    
+
                 var nOverlays = this.overlays.length,
                     i;
 
                 if (nOverlays > 0) {
                     i = nOverlays - 1;
-
                     do {
                         this.overlays[i].blur();
                     }
                     while(i--);
                 }
             };
-        
-            this._onOverlayBlur = function (p_sType, p_aArgs) {
-                activeOverlay = null;
+
+            /**
+             * Updates the state of the OverlayManager and overlay, as a result of the overlay
+             * being blurred.
+             * 
+             * @method _manageBlur
+             * @param {Overlay} overlay The overlay instance which got blurred.
+             * @protected
+             */
+            this._manageBlur = function (overlay) {
+                var changed = false;
+                if (activeOverlay == overlay) {
+                    Dom.removeClass(activeOverlay.element, OverlayManager.CSS_FOCUSED);
+                    activeOverlay = null;
+                    changed = true;
+                }
+                return changed;
             };
-        
+
+            /**
+             * Updates the state of the OverlayManager and overlay, as a result of the overlay 
+             * receiving focus.
+             *
+             * @method _manageFocus
+             * @param {Overlay} overlay The overlay instance which got focus.
+             * @protected
+             */
+            this._manageFocus = function(overlay) {
+                var changed = false;
+                if (activeOverlay != overlay) {
+                    if (activeOverlay) {
+                        activeOverlay.blur();
+                    }
+                    activeOverlay = overlay;
+                    this.bringToTop(activeOverlay);
+                    Dom.addClass(activeOverlay.element, OverlayManager.CSS_FOCUSED);
+                    changed = true;
+                }
+                return changed;
+            };
+
             var overlays = this.cfg.getProperty("overlays");
-        
+
             if (! this.overlays) {
                 this.overlays = [];
             }
-        
+
             if (overlays) {
                 this.register(overlays);
                 this.overlays.sort(this.compareZIndexDesc);
             }
         },
-        
-        
+
         /**
         * @method _onOverlayElementFocus
         * @description Event handler for the DOM event that is used to focus 
@@ -3584,18 +4305,17 @@ version: 2.5.2
         * object passed back by the event utility (Event).
         */
         _onOverlayElementFocus: function (p_oEvent) {
-        
+
             var oTarget = Event.getTarget(p_oEvent),
                 oClose = this.close;
-            
+
             if (oClose && (oTarget == oClose || Dom.isAncestor(oClose, oTarget))) {
                 this.blur();
             } else {
                 this.focus();
             }
         },
-        
-        
+
         /**
         * @method _onOverlayDestroy
         * @description "destroy" event handler for the Overlay.
@@ -3604,90 +4324,195 @@ version: 2.5.2
         * that was fired.
         * @param {Array} p_aArgs Array of arguments sent when the event 
         * was fired.
-        * @param {Overlay} p_oOverlay Object representing the menu that 
+        * @param {Overlay} p_oOverlay Object representing the overlay that 
         * fired the event.
         */
         _onOverlayDestroy: function (p_sType, p_aArgs, p_oOverlay) {
             this.remove(p_oOverlay);
         },
-        
+
+        /**
+        * @method _onOverlayFocusHandler
+        *
+        * focusEvent Handler, used to delegate to _manageFocus with the 
+        * correct arguments.
+        *
+        * @private
+        * @param {String} p_sType String representing the name of the event  
+        * that was fired.
+        * @param {Array} p_aArgs Array of arguments sent when the event 
+        * was fired.
+        * @param {Overlay} p_oOverlay Object representing the overlay that 
+        * fired the event.
+        */
+        _onOverlayFocusHandler: function(p_sType, p_aArgs, p_oOverlay) {
+            this._manageFocus(p_oOverlay);
+        },
+
+        /**
+        * @method _onOverlayBlurHandler
+        *
+        * blurEvent Handler, used to delegate to _manageBlur with the 
+        * correct arguments.
+        *
+        * @private
+        * @param {String} p_sType String representing the name of the event  
+        * that was fired.
+        * @param {Array} p_aArgs Array of arguments sent when the event 
+        * was fired.
+        * @param {Overlay} p_oOverlay Object representing the overlay that 
+        * fired the event.
+        */
+        _onOverlayBlurHandler: function(p_sType, p_aArgs, p_oOverlay) {
+            this._manageBlur(p_oOverlay);
+        },
+
+        /**
+         * Subscribes to the Overlay based instance focusEvent, to allow the OverlayManager to
+         * monitor focus state.
+         * 
+         * If the instance already has a focusEvent (e.g. Menu), OverlayManager will subscribe 
+         * to the existing focusEvent, however if a focusEvent or focus method does not exist
+         * on the instance, the _bindFocus method will add them, and the focus method will 
+         * update the OverlayManager's state directly.
+         * 
+         * @method _bindFocus
+         * @param {Overlay} overlay The overlay for which focus needs to be managed
+         * @protected
+         */
+        _bindFocus : function(overlay) {
+            var mgr = this;
+
+            if (!overlay.focusEvent) {
+                overlay.focusEvent = overlay.createEvent("focus");
+                overlay.focusEvent.signature = CustomEvent.LIST;
+                overlay.focusEvent._managed = true;
+            } else {
+                overlay.focusEvent.subscribe(mgr._onOverlayFocusHandler, overlay, mgr);
+            }
+
+            if (!overlay.focus) {
+                Event.on(overlay.element, mgr.cfg.getProperty("focusevent"), mgr._onOverlayElementFocus, null, overlay);
+                overlay.focus = function () {
+                    if (mgr._manageFocus(this)) {
+                        // For Panel/Dialog
+                        if (this.cfg.getProperty("visible") && this.focusFirst) {
+                            this.focusFirst();
+                        }
+                        this.focusEvent.fire();
+                    }
+                };
+                overlay.focus._managed = true;
+            }
+        },
+
+        /**
+         * Subscribes to the Overlay based instance's blurEvent to allow the OverlayManager to
+         * monitor blur state.
+         *
+         * If the instance already has a blurEvent (e.g. Menu), OverlayManager will subscribe 
+         * to the existing blurEvent, however if a blurEvent or blur method does not exist
+         * on the instance, the _bindBlur method will add them, and the blur method 
+         * update the OverlayManager's state directly.
+         *
+         * @method _bindBlur
+         * @param {Overlay} overlay The overlay for which blur needs to be managed
+         * @protected
+         */
+        _bindBlur : function(overlay) {
+            var mgr = this;
+
+            if (!overlay.blurEvent) {
+                overlay.blurEvent = overlay.createEvent("blur");
+                overlay.blurEvent.signature = CustomEvent.LIST;
+                overlay.focusEvent._managed = true;
+            } else {
+                overlay.blurEvent.subscribe(mgr._onOverlayBlurHandler, overlay, mgr);
+            }
+
+            if (!overlay.blur) {
+                overlay.blur = function () {
+                    if (mgr._manageBlur(this)) {
+                        this.blurEvent.fire();
+                    }
+                };
+                overlay.blur._managed = true;
+            }
+
+            overlay.hideEvent.subscribe(overlay.blur);
+        },
+
+        /**
+         * Subscribes to the Overlay based instance's destroyEvent, to allow the Overlay
+         * to be removed for the OverlayManager when destroyed.
+         * 
+         * @method _bindDestroy
+         * @param {Overlay} overlay The overlay instance being managed
+         * @protected
+         */
+        _bindDestroy : function(overlay) {
+            var mgr = this;
+            overlay.destroyEvent.subscribe(mgr._onOverlayDestroy, overlay, mgr);
+        },
+
+        /**
+         * Ensures the zIndex configuration property on the managed overlay based instance
+         * is set to the computed zIndex value from the DOM (with "auto" translating to 0).
+         *
+         * @method _syncZIndex
+         * @param {Overlay} overlay The overlay instance being managed
+         * @protected
+         */
+        _syncZIndex : function(overlay) {
+            var zIndex = Dom.getStyle(overlay.element, "zIndex");
+            if (!isNaN(zIndex)) {
+                overlay.cfg.setProperty("zIndex", parseInt(zIndex, 10));
+            } else {
+                overlay.cfg.setProperty("zIndex", 0);
+            }
+        },
+
         /**
         * Registers an Overlay or an array of Overlays with the manager. Upon 
         * registration, the Overlay receives functions for focus and blur, 
         * along with CustomEvents for each.
+        *
         * @method register
         * @param {Overlay} overlay  An Overlay to register with the manager.
         * @param {Overlay[]} overlay  An array of Overlays to register with 
         * the manager.
-        * @return {Boolean} True if any Overlays are registered.
+        * @return {boolean} true if any Overlays are registered.
         */
         register: function (overlay) {
-        
-            var mgr = this,
-                zIndex,
-                regcount,
+
+            var zIndex,
+                registered = false,
                 i,
-                nOverlays;
-        
+                n;
+
             if (overlay instanceof Overlay) {
 
                 overlay.cfg.addProperty("manager", { value: this } );
 
-                overlay.focusEvent = overlay.createEvent("focus");
-                overlay.focusEvent.signature = CustomEvent.LIST;
-
-                overlay.blurEvent = overlay.createEvent("blur");
-                overlay.blurEvent.signature = CustomEvent.LIST;
-        
-                overlay.focus = function () {
-                    mgr.focus(this);
-                };
-        
-                overlay.blur = function () {
-                    if (mgr.getActive() == this) {
-                        Dom.removeClass(this.element, OverlayManager.CSS_FOCUSED);
-                        this.blurEvent.fire();
-                    }
-                };
-        
-                overlay.blurEvent.subscribe(mgr._onOverlayBlur);
-                overlay.hideEvent.subscribe(overlay.blur);
-                
-                overlay.destroyEvent.subscribe(this._onOverlayDestroy, overlay, this);
-        
-                Event.on(overlay.element, this.cfg.getProperty("focusevent"), 
-                            this._onOverlayElementFocus, null, overlay);
-        
-                zIndex = Dom.getStyle(overlay.element, "zIndex");
-
-                if (!isNaN(zIndex)) {
-                    overlay.cfg.setProperty("zIndex", parseInt(zIndex, 10));
-                } else {
-                    overlay.cfg.setProperty("zIndex", 0);
-                }
+                this._bindFocus(overlay);
+                this._bindBlur(overlay);
+                this._bindDestroy(overlay);
+                this._syncZIndex(overlay);
 
                 this.overlays.push(overlay);
                 this.bringToTop(overlay);
 
-                return true;
+                registered = true;
 
             } else if (overlay instanceof Array) {
 
-                regcount = 0;
-                nOverlays = overlay.length;
-
-                for (i = 0; i < nOverlays; i++) {
-                    if (this.register(overlay[i])) {
-                        regcount++;
-                    }
+                for (i = 0, n = overlay.length; i < n; i++) {
+                    registered = this.register(overlay[i]) || registered;
                 }
 
-                if (regcount > 0) {
-                    return true;
-                }
-            } else {
-                return false;
             }
+
+            return registered;
         },
 
         /**
@@ -3749,33 +4574,26 @@ version: 2.5.2
         */
         find: function (overlay) {
 
-            var aOverlays = this.overlays,
-                nOverlays = aOverlays.length,
+            var isInstance = overlay instanceof Overlay,
+                overlays = this.overlays,
+                n = overlays.length,
+                found = null,
+                o,
                 i;
 
-            if (nOverlays > 0) {
-                i = nOverlays - 1;
-
-                if (overlay instanceof Overlay) {
-                    do {
-                        if (aOverlays[i] == overlay) {
-                            return aOverlays[i];
-                        }
+            if (isInstance || typeof overlay == "string") {
+                for (i = n-1; i >= 0; i--) {
+                    o = overlays[i];
+                    if ((isInstance && (o === overlay)) || (o.id == overlay)) {
+                        found = o;
+                        break;
                     }
-                    while(i--);
-
-                } else if (typeof overlay == "string") {
-                    do {
-                        if (aOverlays[i].id == overlay) {
-                            return aOverlays[i];
-                        }
-                    }
-                    while(i--);
                 }
-                return null;
             }
+
+            return found;
         },
-        
+
         /**
         * Used for sorting the manager's Overlays by z-index.
         * @method compareZIndexDesc
@@ -3802,23 +4620,18 @@ version: 2.5.2
                 return 0;
             }
         },
-        
+
         /**
         * Shows all Overlays in the manager.
         * @method showAll
         */
         showAll: function () {
-        
-            var aOverlays = this.overlays,
-                nOverlays = aOverlays.length,
+            var overlays = this.overlays,
+                n = overlays.length,
                 i;
 
-            if (nOverlays > 0) {
-                i = nOverlays - 1;
-                do {
-                    aOverlays[i].show();
-                }
-                while(i--);
+            for (i = n - 1; i >= 0; i--) {
+                overlays[i].show();
             }
         },
 
@@ -3827,17 +4640,12 @@ version: 2.5.2
         * @method hideAll
         */
         hideAll: function () {
-        
-            var aOverlays = this.overlays,
-                nOverlays = aOverlays.length,
+            var overlays = this.overlays,
+                n = overlays.length,
                 i;
 
-            if (nOverlays > 0) {
-                i = nOverlays - 1;
-                do {
-                    aOverlays[i].hide();
-                }
-                while(i--);
+            for (i = n - 1; i >= 0; i--) {
+                overlays[i].hide();
             }
         },
 
@@ -3850,7 +4658,6 @@ version: 2.5.2
             return "OverlayManager";
         }
     };
-
 }());
 
 (function () {
@@ -3876,14 +4683,12 @@ version: 2.5.2
     * @param {class} Optional. The animation class to instantiate. Defaults to 
     * YAHOO.util.Anim. Other options include YAHOO.util.Motion.
     */
-    YAHOO.widget.ContainerEffect = 
-    
-        function (overlay, attrIn, attrOut, targetElement, animClass) {
-    
+    YAHOO.widget.ContainerEffect = function (overlay, attrIn, attrOut, targetElement, animClass) {
+
         if (!animClass) {
             animClass = YAHOO.util.Anim;
         }
-        
+
         /**
         * The overlay to animate
         * @property overlay
@@ -3924,7 +4729,6 @@ version: 2.5.2
 
     var Dom = YAHOO.util.Dom,
         CustomEvent = YAHOO.util.CustomEvent,
-        Easing = YAHOO.util.Easing,
         ContainerEffect = YAHOO.widget.ContainerEffect;
 
 
@@ -3939,19 +4743,18 @@ version: 2.5.2
     */
     ContainerEffect.FADE = function (overlay, dur) {
 
-        var fin = {
-            attributes: {opacity:{from:0, to:1}},
-            duration: dur,
-            method: Easing.easeIn
-        };
-
-        var fout = {
-            attributes: {opacity:{to:0}},
-            duration: dur,
-            method: Easing.easeOut
-        };
-
-        var fade = new ContainerEffect(overlay, fin, fout, overlay.element);
+        var Easing = YAHOO.util.Easing,
+            fin = {
+                attributes: {opacity:{from:0, to:1}},
+                duration: dur,
+                method: Easing.easeIn
+            },
+            fout = {
+                attributes: {opacity:{to:0}},
+                duration: dur,
+                method: Easing.easeOut
+            },
+            fade = new ContainerEffect(overlay, fin, fout, overlay.element);
 
         fade.handleUnderlayStart = function() {
             var underlay = this.overlay.underlay;
@@ -3970,7 +4773,7 @@ version: 2.5.2
             }
         };
 
-        fade.handleStartAnimateIn = function (type,args,obj) {
+        fade.handleStartAnimateIn = function (type, args, obj) {
             Dom.addClass(obj.overlay.element, "hide-select");
 
             if (!obj.overlay.underlay) {
@@ -4030,33 +4833,32 @@ version: 2.5.2
     * @return {YAHOO.widget.ContainerEffect} The configured ContainerEffect object
     */
     ContainerEffect.SLIDE = function (overlay, dur) {
-    
-        var x = overlay.cfg.getProperty("x") || Dom.getX(overlay.element),
-    
+        var Easing = YAHOO.util.Easing,
+
+            x = overlay.cfg.getProperty("x") || Dom.getX(overlay.element),
             y = overlay.cfg.getProperty("y") || Dom.getY(overlay.element),
-    
             clientWidth = Dom.getClientWidth(),
-    
             offsetWidth = overlay.element.offsetWidth,
-    
-            slide = new ContainerEffect(overlay, 
-            
-            { attributes: { points: { to: [x, y] } },
+
+            sin =  { 
+                attributes: { points: { to: [x, y] } },
                 duration: dur,
-                method: Easing.easeIn },
-    
-            { attributes: { points: { to: [(clientWidth + 25), y] } },
+                method: Easing.easeIn 
+            },
+
+            sout = {
+                attributes: { points: { to: [(clientWidth + 25), y] } },
                 duration: dur,
-                method: Easing.easeOut },
-    
-            overlay.element, YAHOO.util.Motion);
-        
-        
+                method: Easing.easeOut 
+            },
+
+            slide = new ContainerEffect(overlay, sin, sout, overlay.element, YAHOO.util.Motion);
+
         slide.handleStartAnimateIn = function (type,args,obj) {
             obj.overlay.element.style.left = ((-25) - offsetWidth) + "px";
             obj.overlay.element.style.top  = y + "px";
         };
-        
+
         slide.handleTweenAnimateIn = function (type, args, obj) {
         
             var pos = Dom.getXY(obj.overlay.element),
@@ -4107,13 +4909,13 @@ version: 2.5.2
             obj.overlay.cfg.setProperty("xy", [x, y]);
             obj.animateOutCompleteEvent.fire();
         };
-        
+
         slide.init();
         return slide;
     };
-    
+
     ContainerEffect.prototype = {
-    
+
         /**
         * Initializes the animation classes and events.
         * @method init
@@ -4162,7 +4964,7 @@ version: 2.5.2
             this.beforeAnimateInEvent.fire();
             this.animIn.animate();
         },
-        
+
         /**
         * Triggers the out-animation.
         * @method animateOut
@@ -4171,7 +4973,7 @@ version: 2.5.2
             this.beforeAnimateOutEvent.fire();
             this.animOut.animate();
         },
-        
+
         /**
         * The default onStart handler for the in-animation.
         * @method handleStartAnimateIn
@@ -4180,7 +4982,7 @@ version: 2.5.2
         * @param {Object} obj The scope object
         */
         handleStartAnimateIn: function (type, args, obj) { },
-    
+
         /**
         * The default onTween handler for the in-animation.
         * @method handleTweenAnimateIn
@@ -4189,7 +4991,7 @@ version: 2.5.2
         * @param {Object} obj The scope object
         */
         handleTweenAnimateIn: function (type, args, obj) { },
-    
+
         /**
         * The default onComplete handler for the in-animation.
         * @method handleCompleteAnimateIn
@@ -4198,7 +5000,7 @@ version: 2.5.2
         * @param {Object} obj The scope object
         */
         handleCompleteAnimateIn: function (type, args, obj) { },
-        
+
         /**
         * The default onStart handler for the out-animation.
         * @method handleStartAnimateOut
@@ -4207,7 +5009,7 @@ version: 2.5.2
         * @param {Object} obj The scope object
         */
         handleStartAnimateOut: function (type, args, obj) { },
-    
+
         /**
         * The default onTween handler for the out-animation.
         * @method handleTweenAnimateOut
@@ -4216,7 +5018,7 @@ version: 2.5.2
         * @param {Object} obj The scope object
         */
         handleTweenAnimateOut: function (type, args, obj) { },
-    
+
         /**
         * The default onComplete handler for the out-animation.
         * @method handleCompleteAnimateOut
@@ -4238,11 +5040,10 @@ version: 2.5.2
             }
             return output;
         }
-    
     };
 
     YAHOO.lang.augmentProto(ContainerEffect, YAHOO.util.EventProvider);
 
 })();
 
-YAHOO.register("containercore", YAHOO.widget.Module, {version: "2.5.2", build: "1076"});
+YAHOO.register("containercore", YAHOO.widget.Module, {version: "2.6.0", build: "1321"});

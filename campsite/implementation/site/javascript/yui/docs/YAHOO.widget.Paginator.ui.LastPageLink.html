@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-	<title>API: datatable  YAHOO.widget.Paginator.ui.LastPageLink   (YUI Library)</title>
+	<title>API: paginator  YAHOO.widget.Paginator.ui.LastPageLink   (YUI Library)</title>
 	<link rel="stylesheet" type="text/css" href="assets/api.css">
     <script type="text/javascript" src="assets/api-js"></script>
     <script type="text/javascript" src="assets/ac-js"></script>
@@ -13,13 +13,14 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>DataTable Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>paginator&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
-            &gt; <a href="./module_datatable.html">datatable</a>
+            &gt; <a href="./module_paginator.html">paginator</a>
                  &gt; YAHOO.widget.Paginator.ui.LastPageLink 
                 
             </p>
+
 
 	</div>
 
@@ -27,8 +28,9 @@
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -172,8 +174,7 @@ display in any form (unlimited paging).
                                         </code>
                                         
                                         <div class="description">
-                                            Removes the onClick listener from the link in preparation for content
-removal.
+                                            Removes the link/span node and clears event listeners
                                         </div>
 
                                         <div class="description">
@@ -186,7 +187,10 @@ removal.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -233,7 +237,10 @@ Paginator instantiation.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -279,7 +286,10 @@ Paginator instantiation.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -326,7 +336,10 @@ pagination state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -372,7 +385,10 @@ pagination state.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -398,7 +414,7 @@ pagination state.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -415,8 +431,8 @@ pagination state.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -439,7 +455,7 @@ pagination state.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -456,8 +472,8 @@ pagination state.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -480,7 +496,7 @@ pagination state.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -497,7 +513,7 @@ pagination state.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -521,7 +537,7 @@ pagination state.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -538,7 +554,7 @@ pagination state.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -613,6 +629,8 @@ pagination state.
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -625,7 +643,7 @@ pagination state.
 
                                 <li class=""><a href="module_datasource.html">datasource</a></li>
 
-                                <li class="selected"><a href="module_datatable.html">datatable</a></li>
+                                <li class=""><a href="module_datatable.html">datatable</a></li>
 
                                 <li class=""><a href="module_dom.html">dom</a></li>
 
@@ -652,6 +670,8 @@ pagination state.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class="selected"><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -680,13 +700,6 @@ pagination state.
                     <div class="module">
                         <h4>Classes</h4>
                         <ul class="content">
-                                <li class=""><a href="YAHOO.util.Chain.html">YAHOO.util.Chain</a></li>
-                                <li class=""><a href="YAHOO.util.ColumnDD.html">YAHOO.util.ColumnDD</a></li>
-                                <li class=""><a href="YAHOO.util.ColumnResizer.html">YAHOO.util.ColumnResizer</a></li>
-                                <li class=""><a href="YAHOO.util.Sort.html">YAHOO.util.Sort</a></li>
-                                <li class=""><a href="YAHOO.widget.Column.html">YAHOO.widget.Column</a></li>
-                                <li class=""><a href="YAHOO.widget.ColumnSet.html">YAHOO.widget.ColumnSet</a></li>
-                                <li class=""><a href="YAHOO.widget.DataTable.html">YAHOO.widget.DataTable</a></li>
                                 <li class=""><a href="YAHOO.widget.Paginator.html">YAHOO.widget.Paginator</a></li>
                                 <li class=""><a href="YAHOO.widget.Paginator.ui.CurrentPageReport.html">YAHOO.widget.Paginator.ui.CurrentPageReport</a></li>
                                 <li class=""><a href="YAHOO.widget.Paginator.ui.FirstPageLink.html">YAHOO.widget.Paginator.ui.FirstPageLink</a></li>
@@ -695,19 +708,20 @@ pagination state.
                                 <li class=""><a href="YAHOO.widget.Paginator.ui.PageLinks.html">YAHOO.widget.Paginator.ui.PageLinks</a></li>
                                 <li class=""><a href="YAHOO.widget.Paginator.ui.PreviousPageLink.html">YAHOO.widget.Paginator.ui.PreviousPageLink</a></li>
                                 <li class=""><a href="YAHOO.widget.Paginator.ui.RowsPerPageDropdown.html">YAHOO.widget.Paginator.ui.RowsPerPageDropdown</a></li>
-                                <li class=""><a href="YAHOO.widget.Record.html">YAHOO.widget.Record</a></li>
-                                <li class=""><a href="YAHOO.widget.RecordSet.html">YAHOO.widget.RecordSet</a></li>
                         </ul>
                     </div>
 
                     <div class="module">
                         <h4>Files</h4>
                         <ul class="content">        
-                                <li class=""><a href="Chain.js.html">Chain.js</a></li>
-                                <li class=""><a href="ColumnSet.js.html">ColumnSet.js</a></li>
-                                <li class=""><a href="DataTable.js.html">DataTable.js</a></li>
+                                <li class=""><a href="CurrentPageReport.js.html">CurrentPageReport.js</a></li>
+                                <li class=""><a href="FirstPageLink.js.html">FirstPageLink.js</a></li>
+                                <li class=""><a href="LastPageLink.js.html">LastPageLink.js</a></li>
+                                <li class=""><a href="NextPageLink.js.html">NextPageLink.js</a></li>
+                                <li class=""><a href="PageLinks.js.html">PageLinks.js</a></li>
                                 <li class=""><a href="Paginator.js.html">Paginator.js</a></li>
-                                <li class=""><a href="RecordSet.js.html">RecordSet.js</a></li>
+                                <li class=""><a href="PreviousPageLink.js.html">PreviousPageLink.js</a></li>
+                                <li class=""><a href="RowsPerPageDropDown.js.html">RowsPerPageDropDown.js</a></li>
                         </ul>
                     </div>
 
@@ -785,7 +799,7 @@ pagination state.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

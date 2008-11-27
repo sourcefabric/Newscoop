@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>layout&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>layout&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_layout.html">layout</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -98,36 +100,6 @@
                             <h3 id="properties">Properties</h3>
                             <div class="content">
                                     <div class="private">
-                                    <h4><a name="property__bottom">_bottom</a>
-                                        <code>- private {<a href="YAHOO.widget.LayoutUnit.html">YAHOO.widget.LayoutUnit</a>} A LayoutUnit instance</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Reference to the bottom LayoutUnit Object
-                                        </div>
-                                    </div>
-     
-                                        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4><a name="property__center">_center</a>
-                                        <code>- private {<a href="YAHOO.widget.LayoutUnit.html">YAHOO.widget.LayoutUnit</a>} A LayoutUnit instance</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Reference to the center LayoutUnit Object
-                                        </div>
-                                    </div>
-     
-                                        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
                                     <h4><a name="property__doc">_doc</a>
                                         <code>- private HTMLElement</code>
                                     </h4>
@@ -173,42 +145,12 @@
                                     <hr />
                                     </div>
                                     <div class="private">
-                                    <h4><a name="property__left">_left</a>
-                                        <code>- private {<a href="YAHOO.widget.LayoutUnit.html">YAHOO.widget.LayoutUnit</a>} A LayoutUnit instance</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Reference to the left LayoutUnit Object
-                                        </div>
-                                    </div>
-     
-                                        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
                                     <h4><a name="property__rendered">_rendered</a>
                                         <code>- private Boolean</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
                                             Set to true when the layout is rendered
-                                        </div>
-                                    </div>
-     
-                                        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4><a name="property__right">_right</a>
-                                        <code>- private {<a href="YAHOO.widget.LayoutUnit.html">YAHOO.widget.LayoutUnit</a>} A LayoutUnit instance</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Reference to the right LayoutUnit Object
                                         </div>
                                     </div>
      
@@ -233,12 +175,12 @@
                                     <hr />
                                     </div>
                                     <div class="private">
-                                    <h4><a name="property__top">_top</a>
-                                        <code>- private {<a href="YAHOO.widget.LayoutUnit.html">YAHOO.widget.LayoutUnit</a>} A LayoutUnit instance</code>
+                                    <h4><a name="property__units">_units</a>
+                                        <code>- private Object</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Reference to the top LayoutUnit Object
+                                            An object literal that contains a list of units in the layout
                                         </div>
                                     </div>
      
@@ -342,7 +284,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -388,7 +333,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -434,7 +382,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -480,7 +431,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -514,7 +468,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -548,7 +505,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -582,7 +542,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -628,7 +591,47 @@
                                                     </code></dt>
                                                     <dd>The LayoutUnit instance</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_destroy">destroy</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>destroy</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Removes this layout from the page and destroys all units that it contains. This will destroy all data inside the layout and it's children.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -662,7 +665,10 @@
                                                     </code></dt>
                                                     <dd>The Layout Object</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -696,7 +702,10 @@
                                                     </code></dt>
                                                     <dd>An object of the layout unit sizes</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -742,7 +751,10 @@
                                                     </code></dt>
                                                     <dd>The LayoutUnit instance</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -788,7 +800,10 @@
                                                     </code></dt>
                                                     <dd>The LayoutUnit instance</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -822,7 +837,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -856,7 +874,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -902,7 +923,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -936,7 +960,10 @@
                                                     </code></dt>
                                                     <dd>The Layout instance</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -982,7 +1009,10 @@
                                                     </code></dt>
                                                     <dd>The Layout instance</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1016,7 +1046,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1037,7 +1070,7 @@
                                 <h4>Methods inherited from <a href="YAHOO.util.AttributeProvider.html">YAHOO.util.AttributeProvider</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_configureAttribute">configureAttribute</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireBeforeChangeEvent">fireBeforeChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireChangeEvent">fireChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_get">get</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_getAttributeConfig">getAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_getAttributeKeys">getAttributeKeys</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_refresh">refresh</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_register">register</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_resetAttributeConfig">resetAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_resetValue">resetValue</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_set">set</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributeConfig">setAttributeConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributes">setAttributes</a>
+                                            <a class=" deprecated" href="YAHOO.util.AttributeProvider.html#method_configureAttribute">configureAttribute</a><span class=" deprecated">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireBeforeChangeEvent">fireBeforeChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireChangeEvent">fireChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_get">get</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_getAttributeConfig">getAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_getAttributeKeys">getAttributeKeys</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_refresh">refresh</a><span class="">,</span>                                            <a class=" deprecated" href="YAHOO.util.AttributeProvider.html#method_register">register</a><span class=" deprecated">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_resetAttributeConfig">resetAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_resetValue">resetValue</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_set">set</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributeConfig">setAttributeConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributes">setAttributes</a>
                                     </code>
                                 </div>
                             </div>
@@ -1066,7 +1099,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1083,8 +1116,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1107,7 +1140,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1124,8 +1157,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1148,7 +1181,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1165,8 +1198,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1189,7 +1222,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1206,8 +1239,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1259,7 +1292,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1276,8 +1309,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1300,7 +1333,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1317,8 +1350,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1341,7 +1374,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1358,7 +1391,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1382,7 +1415,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1399,7 +1432,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1423,7 +1456,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1440,7 +1473,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1464,7 +1497,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1481,7 +1514,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1592,7 +1625,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1609,7 +1642,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1633,7 +1666,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1650,7 +1683,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1791,6 +1824,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -1830,6 +1865,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1874,12 +1911,6 @@
                     <div class="module">
                         <h4>Properties</h4>
                         <ul class="content">        
-                                <li class="private"><a href="#property__bottom">_bottom</a>
-                                        <!--<code>&lt;Object&gt;</code>-->
-                                </li>
-                                <li class="private"><a href="#property__center">_center</a>
-                                        <!--<code>&lt;Object&gt;</code>-->
-                                </li>
                                 <li class="private"><a href="#property__doc">_doc</a>
                                         <!--<code>&lt;Object&gt;</code>-->
                                 </li>
@@ -1889,19 +1920,13 @@
                                 <li class="private"><a href="#property__isBody">_isBody</a>
                                         <!--<code>&lt;Object&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property__left">_left</a>
-                                        <!--<code>&lt;Object&gt;</code>-->
-                                </li>
                                 <li class="private"><a href="#property__rendered">_rendered</a>
-                                        <!--<code>&lt;Object&gt;</code>-->
-                                </li>
-                                <li class="private"><a href="#property__right">_right</a>
                                         <!--<code>&lt;Object&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__sizes">_sizes</a>
                                         <!--<code>&lt;Object&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property__top">_top</a>
+                                <li class="private"><a href="#property__units">_units</a>
                                         <!--<code>&lt;Object&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__zIndex">_zIndex</a>
@@ -1939,6 +1964,9 @@
                                 </li>
                                 <li class=""><!--<code><a href="YAHOO.widget.LayoutUnit.html">YAHOO.widget.LayoutUnit</a></code>-->
                                 <a href="#method_addUnit">addUnit</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_destroy">destroy</a>
                                 </li>
                                 <li class=""><!--<code>Object</code>-->
                                 <a href="#method_getLayoutById">getLayoutById</a>
@@ -2056,7 +2084,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

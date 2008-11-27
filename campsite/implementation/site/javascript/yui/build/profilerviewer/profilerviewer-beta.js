@@ -2,7 +2,7 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
+version: 2.6.0
 */
 (function() {
 
@@ -747,11 +747,9 @@ version: 2.5.2
 	 * @private
 	 **/
 	proto._sortedByChange = function(o) {
-		if(o.newValue && o.newValue.key) {
-			this.set("sortedBy", {key: o.newValue.key, dir:o.newValue.dir});
-		}
+		this.set("sortedBy", {key: o.newValue.key, dir:o.newValue.dir});
 	};
-	
+
 	/**
 	 * Proxy the render event in DataTable into the ProfilerViewer
 	 * attribute.
@@ -1189,4 +1187,4 @@ version: 2.5.2
     };
 	
 })();
-YAHOO.register("profilerviewer", YAHOO.widget.ProfilerViewer, {version: "2.5.2", build: "1076"});
+YAHOO.register("profilerviewer", YAHOO.widget.ProfilerViewer, {version: "2.6.0", build: "1321"});

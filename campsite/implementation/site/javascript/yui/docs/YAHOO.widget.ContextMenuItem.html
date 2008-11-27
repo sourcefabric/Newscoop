@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Menu&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Menu&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_menu.html">menu</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -137,13 +139,11 @@ documentation for more details.
                                         <a class="private" href="YAHOO.widget.MenuItem.html#property__oOnclickAttributeValue">_oOnclickAttributeValue</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.MenuItem.html#property__oSubmenu">_oSubmenu</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.MenuItem.html#property__sClassName">_sClassName</a><span class="private">,</span>
-                                        <a class="" href="YAHOO.widget.MenuItem.html#property_browser">browser</a><span class="">,</span>
+                                        <a class=" deprecated" href="YAHOO.widget.MenuItem.html#property_browser">browser</a><span class=" deprecated">,</span>
                                         <a class="" href="YAHOO.widget.MenuItem.html#property_constructor">constructor</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.MenuItem.html#property_CSS_CLASS_NAME">CSS_CLASS_NAME</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.MenuItem.html#property_CSS_LABEL_CLASS_NAME">CSS_LABEL_CLASS_NAME</a><span class="">,</span>
-                                        <a class="private" href="YAHOO.widget.MenuItem.html#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a><span class="private">,</span>
                                         <a class="" href="YAHOO.widget.MenuItem.html#property_element">element</a><span class="">,</span>
-                                        <a class="private" href="YAHOO.widget.MenuItem.html#property_EVENT_TYPES">EVENT_TYPES</a><span class="private">,</span>
                                         <a class="" href="YAHOO.widget.MenuItem.html#property_groupIndex">groupIndex</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.MenuItem.html#property_id">id</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.MenuItem.html#property_index">index</a><span class="">,</span>
@@ -160,7 +160,7 @@ documentation for more details.
                                 <h4>Methods inherited from <a href="YAHOO.widget.MenuItem.html">YAHOO.widget.MenuItem</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="private" href="YAHOO.widget.MenuItem.html#method__createRootNodeStructure">_createRootNodeStructure</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.MenuItem.html#method__initSubTree">_initSubTree</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.MenuItem.html#method__onSubmenuBeforeHide">_onSubmenuBeforeHide</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_blur">blur</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configChecked">configChecked</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configClassName">configClassName</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configDisabled">configDisabled</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configEmphasis">configEmphasis</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configHelpText">configHelpText</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configOnClick">configOnClick</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configSelected">configSelected</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configStrongEmphasis">configStrongEmphasis</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configSubmenu">configSubmenu</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configTarget">configTarget</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configText">configText</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configURL">configURL</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_focus">focus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_getNextEnabledSibling">getNextEnabledSibling</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_getPreviousEnabledSibling">getPreviousEnabledSibling</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_hasFocus">hasFocus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_toString">toString</a>
+                                            <a class="private" href="YAHOO.widget.MenuItem.html#method__createRootNodeStructure">_createRootNodeStructure</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.MenuItem.html#method__initSubTree">_initSubTree</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.MenuItem.html#method__onSubmenuBeforeHide">_onSubmenuBeforeHide</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.MenuItem.html#method_addClassNameForState">addClassNameForState</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_blur">blur</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configChecked">configChecked</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configClassName">configClassName</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configDisabled">configDisabled</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configEmphasis">configEmphasis</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configHelpText">configHelpText</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configOnClick">configOnClick</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configSelected">configSelected</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configStrongEmphasis">configStrongEmphasis</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configSubmenu">configSubmenu</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configTarget">configTarget</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configText">configText</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_configURL">configURL</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_focus">focus</a><span class="">,</span>                                            <a class="private" href="YAHOO.widget.MenuItem.html#method_getClassNameForState">getClassNameForState</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_getNextEnabledSibling">getNextEnabledSibling</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_getPreviousEnabledSibling">getPreviousEnabledSibling</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_hasFocus">hasFocus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="private" href="YAHOO.widget.MenuItem.html#method_removeClassNameForState">removeClassNameForState</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.MenuItem.html#method_toString">toString</a>
                                     </code>
                                 </div>
                             </div>
@@ -181,7 +181,7 @@ documentation for more details.
                             <h4>Configuration attributes inherited from <a href="YAHOO.widget.MenuItem.html">YAHOO.widget.MenuItem</a>:</h4>
                             <div class="content">
                                 <code>
-                                        <a class="" href="YAHOO.widget.MenuItem.html#config_checked">checked</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_classname">classname</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_disabled">disabled</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_emphasis">emphasis</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_helptext">helptext</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_onclick">onclick</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_selected">selected</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_strongemphasis">strongemphasis</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_submenu">submenu</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_target">target</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_text">text</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_url">url</a>
+                                        <a class="" href="YAHOO.widget.MenuItem.html#config_checked">checked</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_classname">classname</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_disabled">disabled</a><span class="">,</span>                                        <a class=" deprecated" href="YAHOO.widget.MenuItem.html#config_emphasis">emphasis</a><span class=" deprecated">,</span>                                        <a class=" deprecated" href="YAHOO.widget.MenuItem.html#config_helptext">helptext</a><span class=" deprecated">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_onclick">onclick</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_selected">selected</a><span class="">,</span>                                        <a class=" deprecated" href="YAHOO.widget.MenuItem.html#config_strongemphasis">strongemphasis</a><span class=" deprecated">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_submenu">submenu</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_target">target</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_text">text</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.MenuItem.html#config_url">url</a><span class="">,</span>
                                 </code>
                             </div>
                         </div>
@@ -202,6 +202,8 @@ documentation for more details.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -242,6 +244,8 @@ documentation for more details.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class="selected"><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -302,7 +306,7 @@ documentation for more details.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

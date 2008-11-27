@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Container&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Container&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_container.html">container</a>
@@ -21,14 +21,16 @@
                  &gt; Panel.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -54,14 +56,20 @@
         <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">Panel</span><span class="o">.</span><span class="nx">superclass</span><span class="o">.</span><span class="nx">constructor</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="nx">el</span><span class="o">,</span> <span class="nx">userConfig</span><span class="o">);</span>
     <span class="o">};</span>
 
+    <span class="k">var</span> <span class="nx">_currentModal</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
     <span class="k">var</span> <span class="nx">Lang</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">,</span>
-        <span class="nx">DD</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">DD</span><span class="o">,</span>
-        <span class="nx">Dom</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Dom</span><span class="o">,</span>
-        <span class="nx">Event</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Event</span><span class="o">,</span>
+        <span class="nx">Util</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">,</span>
+        <span class="nx">Dom</span> <span class="o">=</span> <span class="nx">Util</span><span class="o">.</span><span class="nx">Dom</span><span class="o">,</span>
+        <span class="nx">Event</span> <span class="o">=</span> <span class="nx">Util</span><span class="o">.</span><span class="nx">Event</span><span class="o">,</span>
+        <span class="nx">CustomEvent</span> <span class="o">=</span> <span class="nx">Util</span><span class="o">.</span><span class="nx">CustomEvent</span><span class="o">,</span>
+        <span class="nx">KeyListener</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">KeyListener</span><span class="o">,</span>
+        <span class="nx">Config</span> <span class="o">=</span> <span class="nx">Util</span><span class="o">.</span><span class="nx">Config</span><span class="o">,</span>
         <span class="nx">Overlay</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">Overlay</span><span class="o">,</span>
-        <span class="nx">CustomEvent</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">CustomEvent</span><span class="o">,</span>
-        <span class="nx">Config</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Config</span><span class="o">,</span>
         <span class="nx">Panel</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">Panel</span><span class="o">,</span>
+        <span class="nx">UA</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">ua</span><span class="o">,</span>
+
+        <span class="nx">bIEQuirks</span> <span class="o">=</span> <span class="o">(</span><span class="nx">UA</span><span class="o">.</span><span class="nx">ie</span> <span class="o">==</span> <span class="m">6</span> <span class="o">||</span> <span class="o">(</span><span class="nx">UA</span><span class="o">.</span><span class="nx">ie</span> <span class="o">==</span> <span class="m">7</span> <span class="o">&amp;&amp;</span> <span class="nb">document</span><span class="o">.</span><span class="nx">compatMode</span> <span class="o">==</span> <span class="s2">&quot;BackCompat&quot;</span><span class="o">)),</span>
 
         <span class="nx">m_oMaskTemplate</span><span class="o">,</span>
         <span class="nx">m_oUnderlayTemplate</span><span class="o">,</span>
@@ -96,9 +104,9 @@
                 <span class="nx">supercedes</span><span class="o">:</span> <span class="o">[</span><span class="s2">&quot;visible&quot;</span><span class="o">]</span> 
             <span class="o">},</span>
 
-            <span class="s2">&quot;DRAGGABLE&quot;</span><span class="o">:</span> <span class="o">{</span> 
+            <span class="s2">&quot;DRAGGABLE&quot;</span><span class="o">:</span> <span class="o">{</span>
                 <span class="nx">key</span><span class="o">:</span> <span class="s2">&quot;draggable&quot;</span><span class="o">,</span> 
-                <span class="nx">value</span><span class="o">:</span> <span class="o">(</span><span class="nx">DD</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="o">),</span> 
+                <span class="nx">value</span><span class="o">:</span> <span class="o">(</span><span class="nx">Util</span><span class="o">.</span><span class="nx">DD</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="o">),</span> 
                 <span class="nx">validator</span><span class="o">:</span> <span class="nx">Lang</span><span class="o">.</span><span class="nx">isBoolean</span><span class="o">,</span> 
                 <span class="nx">supercedes</span><span class="o">:</span> <span class="o">[</span><span class="s2">&quot;visible&quot;</span><span class="o">]</span>  
             <span class="o">},</span>
@@ -127,6 +135,15 @@
                 <span class="nx">key</span><span class="o">:</span> <span class="s2">&quot;keylisteners&quot;</span><span class="o">,</span>
                 <span class="nx">suppressEvent</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span>
                 <span class="nx">supercedes</span><span class="o">:</span> <span class="o">[</span><span class="s2">&quot;visible&quot;</span><span class="o">]</span>
+            <span class="o">},</span>
+
+            <span class="s2">&quot;STRINGS&quot;</span> <span class="o">:</span> <span class="o">{</span>
+                <span class="nx">key</span><span class="o">:</span> <span class="s2">&quot;strings&quot;</span><span class="o">,</span>
+                <span class="nx">supercedes</span><span class="o">:</span> <span class="o">[</span><span class="s2">&quot;close&quot;</span><span class="o">],</span>
+                <span class="nx">validator</span><span class="o">:</span> <span class="nx">Lang</span><span class="o">.</span><span class="nx">isObject</span><span class="o">,</span>
+                <span class="nx">value</span><span class="o">:</span> <span class="o">{</span>
+                    <span class="nx">close</span><span class="o">:</span> <span class="s2">&quot;Close&quot;</span>
+                <span class="o">}</span>
             <span class="o">}</span>
         <span class="o">};</span>
 
@@ -163,7 +180,8 @@
         <span class="s2">&quot;button&quot;</span><span class="o">,</span>
         <span class="s2">&quot;select&quot;</span><span class="o">,</span>
         <span class="s2">&quot;textarea&quot;</span><span class="o">,</span>
-        <span class="s2">&quot;input&quot;</span>
+        <span class="s2">&quot;input&quot;</span><span class="o">,</span>
+        <span class="s2">&quot;iframe&quot;</span>
     <span class="o">];</span>
 
     <span class="c">// Private CustomEvent listeners</span>
@@ -246,13 +264,12 @@
 <span class="c">        * See configuration documentation for more details.</span>
 <span class="c">        */</span>
         <span class="nx">init</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">userConfig</span><span class="o">)</span> <span class="o">{</span>
-    
             <span class="c">/*</span>
 <span class="c">                 Note that we don&#39;t pass the user config in here yet because </span>
 <span class="c">                 we only want it executed once, at the lowest subclass level</span>
 <span class="c">            */</span>
 
-            <span class="nx">Panel</span><span class="o">.</span><span class="nx">superclass</span><span class="o">.</span><span class="nx">init</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="nx">el</span><span class="c">/*, userConfig*/</span><span class="o">);</span>  
+            <span class="nx">Panel</span><span class="o">.</span><span class="nx">superclass</span><span class="o">.</span><span class="nx">init</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="nx">el</span><span class="c">/*, userConfig*/</span><span class="o">);</span>
 
             <span class="k">this</span><span class="o">.</span><span class="nx">beforeInitEvent</span><span class="o">.</span><span class="nx">fire</span><span class="o">(</span><span class="nx">Panel</span><span class="o">);</span>
 
@@ -268,21 +285,50 @@
             <span class="k">this</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="s2">&quot;hideMask&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_removeFocusHandlers</span><span class="o">);</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="s2">&quot;beforeRender&quot;</span><span class="o">,</span> <span class="nx">createHeader</span><span class="o">);</span>
 
+            <span class="k">this</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="s2">&quot;render&quot;</span><span class="o">,</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">setFirstLastFocusable</span><span class="o">();</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="s2">&quot;changeContent&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">setFirstLastFocusable</span><span class="o">);</span>
+            <span class="o">});</span>
+
+            <span class="k">this</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="s2">&quot;show&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">focusFirst</span><span class="o">);</span>
+
             <span class="k">this</span><span class="o">.</span><span class="nx">initEvent</span><span class="o">.</span><span class="nx">fire</span><span class="o">(</span><span class="nx">Panel</span><span class="o">);</span>
         <span class="o">},</span>
 
         <span class="c">/**</span>
-<span class="c">         * @method _onElementFocus </span>
+<span class="c">         * @method _onElementFocus</span>
 <span class="c">         * @private</span>
-<span class="c">         * </span>
-<span class="c">         * &quot;focus&quot; event handler for a focuable element. Used to automatically </span>
-<span class="c">         * blur the element when it receives focus to ensure that a Panel </span>
+<span class="c">         *</span>
+<span class="c">         * &quot;focus&quot; event handler for a focuable element. Used to automatically</span>
+<span class="c">         * blur the element when it receives focus to ensure that a Panel</span>
 <span class="c">         * instance&#39;s modality is not compromised.</span>
-<span class="c">         * </span>
+<span class="c">         *</span>
 <span class="c">         * @param {Event} e The DOM event object</span>
 <span class="c">         */</span>
         <span class="nx">_onElementFocus</span> <span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">e</span><span class="o">){</span>
-            <span class="k">this</span><span class="o">.</span><span class="nx">blur</span><span class="o">();</span>
+
+            <span class="k">var</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">Event</span><span class="o">.</span><span class="nx">getTarget</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="nx">target</span> <span class="o">!==</span> <span class="k">this</span><span class="o">.</span><span class="nx">element</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">Dom</span><span class="o">.</span><span class="nx">isAncestor</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">element</span><span class="o">,</span> <span class="nx">target</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="nx">_currentModal</span> <span class="o">==</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">firstElement</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">firstElement</span><span class="o">.</span><span class="nx">focus</span><span class="o">();</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_modalFocus</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="k">this</span><span class="o">.</span><span class="nx">_modalFocus</span><span class="o">.</span><span class="nx">focus</span><span class="o">();</span>
+                        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                            <span class="k">this</span><span class="o">.</span><span class="nx">innerElement</span><span class="o">.</span><span class="nx">focus</span><span class="o">();</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nx">err</span><span class="o">){</span>
+                    <span class="c">// Just in case we fail to focus</span>
+<span class="c"></span>                    <span class="k">try</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="nx">target</span> <span class="o">!==</span> <span class="nb">document</span> <span class="o">&amp;&amp;</span> <span class="nx">target</span> <span class="o">!==</span> <span class="nb">document</span><span class="o">.</span><span class="nx">body</span> <span class="o">&amp;&amp;</span> <span class="nx">target</span> <span class="o">!==</span> <span class="nb">window</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nx">target</span><span class="o">.</span><span class="nx">blur</span><span class="o">();</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nx">err2</span><span class="o">)</span> <span class="o">{</span> <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
         <span class="o">},</span>
 
         <span class="c">/** </span>
@@ -292,100 +338,250 @@
 <span class="c">         *  &quot;showMask&quot; event handler that adds a &quot;focus&quot; event handler to all</span>
 <span class="c">         *  focusable elements in the document to enforce a Panel instance&#39;s </span>
 <span class="c">         *  modality from being compromised.</span>
-<span class="c">         *  </span>
+<span class="c">         *</span>
 <span class="c">         *  @param p_sType {String} Custom event type</span>
 <span class="c">         *  @param p_aArgs {Array} Custom event arguments</span>
 <span class="c">         */</span>
         <span class="nx">_addFocusHandlers</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">p_sType</span><span class="o">,</span> <span class="nx">p_aArgs</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">this</span><span class="o">,</span>
-                <span class="nx">focus</span> <span class="o">=</span> <span class="s2">&quot;focus&quot;</span><span class="o">,</span>
-                <span class="nx">hidden</span> <span class="o">=</span> <span class="s2">&quot;hidden&quot;</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">firstElement</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nx">UA</span><span class="o">.</span><span class="nx">webkit</span> <span class="o">||</span> <span class="nx">UA</span><span class="o">.</span><span class="nx">opera</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">_modalFocus</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">_createHiddenFocusElement</span><span class="o">();</span>
+                    <span class="o">}</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">innerElement</span><span class="o">.</span><span class="nx">tabIndex</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">setTabLoop</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">firstElement</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">lastElement</span><span class="o">);</span>
+            <span class="nx">Event</span><span class="o">.</span><span class="nx">onFocus</span><span class="o">(</span><span class="nb">document</span><span class="o">.</span><span class="nx">documentElement</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_onElementFocus</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="nx">_currentModal</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+        <span class="o">},</span>
+
+        <span class="c">/**</span>
+<span class="c">         * Creates a hidden focusable element, used to focus on,</span>
+<span class="c">         * to enforce modality for browsers in which focus cannot</span>
+<span class="c">         * be applied to the container box.</span>
+<span class="c">         * </span>
+<span class="c">         * @method _createHiddenFocusElement</span>
+<span class="c">         * @private</span>
+<span class="c">         */</span>
+        <span class="nx">_createHiddenFocusElement</span> <span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="nb">document</span><span class="o">.</span><span class="nx">createElement</span><span class="o">(</span><span class="s2">&quot;button&quot;</span><span class="o">);</span>
+            <span class="nx">e</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;1px&quot;</span><span class="o">;</span>
+            <span class="nx">e</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">width</span> <span class="o">=</span> <span class="s2">&quot;1px&quot;</span><span class="o">;</span>
+            <span class="nx">e</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">position</span> <span class="o">=</span> <span class="s2">&quot;absolute&quot;</span><span class="o">;</span>
+            <span class="nx">e</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">left</span> <span class="o">=</span> <span class="s2">&quot;-10000em&quot;</span><span class="o">;</span>
+            <span class="nx">e</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">opacity</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
+            <span class="nx">e</span><span class="o">.</span><span class="nx">tabIndex</span> <span class="o">=</span> <span class="s2">&quot;-1&quot;</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">innerElement</span><span class="o">.</span><span class="nx">appendChild</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_modalFocus</span> <span class="o">=</span> <span class="nx">e</span><span class="o">;</span>
+        <span class="o">},</span>
+
+        <span class="c">/**</span>
+<span class="c">         *  @method _removeFocusHandlers</span>
+<span class="c">         *  @protected</span>
+<span class="c">         *</span>
+<span class="c">         *  &quot;hideMask&quot; event handler that removes all &quot;focus&quot; event handlers added </span>
+<span class="c">         *  by the &quot;addFocusEventHandlers&quot; method.</span>
+<span class="c">         *</span>
+<span class="c">         *  @param p_sType {String} Event type</span>
+<span class="c">         *  @param p_aArgs {Array} Event Arguments</span>
+<span class="c">         */</span>
+        <span class="nx">_removeFocusHandlers</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">p_sType</span><span class="o">,</span> <span class="nx">p_aArgs</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">Event</span><span class="o">.</span><span class="nx">removeFocusListener</span><span class="o">(</span><span class="nb">document</span><span class="o">.</span><span class="nx">documentElement</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_onElementFocus</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="nx">_currentModal</span> <span class="o">==</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">_currentModal</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
+
+        <span class="c">/**</span>
+<span class="c">         * Sets focus to the first element in the Panel.</span>
+<span class="c">         *</span>
+<span class="c">         * @method focusFirst</span>
+<span class="c">         */</span>
+        <span class="nx">focusFirst</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">firstElement</span><span class="o">;</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="nx">args</span> <span class="o">&amp;&amp;</span> <span class="nx">args</span><span class="o">[</span><span class="m">1</span><span class="o">])</span> <span class="o">{</span>
+                <span class="nx">Event</span><span class="o">.</span><span class="nx">stopEvent</span><span class="o">(</span><span class="nx">args</span><span class="o">[</span><span class="m">1</span><span class="o">]);</span>
+            <span class="o">}</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="nx">el</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="nx">el</span><span class="o">.</span><span class="nx">focus</span><span class="o">();</span>
+                <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nx">err</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="c">// Ignore</span>
+<span class="c"></span>                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
+
+        <span class="c">/**</span>
+<span class="c">         * Sets focus to the last element in the Panel.</span>
+<span class="c">         *</span>
+<span class="c">         * @method focusLast</span>
+<span class="c">         */</span>
+        <span class="nx">focusLast</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">lastElement</span><span class="o">;</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="nx">args</span> <span class="o">&amp;&amp;</span> <span class="nx">args</span><span class="o">[</span><span class="m">1</span><span class="o">])</span> <span class="o">{</span>
+                <span class="nx">Event</span><span class="o">.</span><span class="nx">stopEvent</span><span class="o">(</span><span class="nx">args</span><span class="o">[</span><span class="m">1</span><span class="o">]);</span>
+            <span class="o">}</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="nx">el</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="nx">el</span><span class="o">.</span><span class="nx">focus</span><span class="o">();</span>
+                <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nx">err</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="c">// Ignore</span>
+<span class="c"></span>                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
+
+        <span class="c">/**</span>
+<span class="c">         * Sets up a tab, shift-tab loop between the first and last elements</span>
+<span class="c">         * provided. NOTE: Sets up the preventBackTab and preventTabOut KeyListener</span>
+<span class="c">         * instance properties, which are reset everytime this method is invoked.</span>
+<span class="c">         *</span>
+<span class="c">         * @method setTabLoop</span>
+<span class="c">         * @param {HTMLElement} firstElement</span>
+<span class="c">         * @param {HTMLElement} lastElement</span>
+<span class="c">         *</span>
+<span class="c">         */</span>
+        <span class="nx">setTabLoop</span> <span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">firstElement</span><span class="o">,</span> <span class="nx">lastElement</span><span class="o">)</span> <span class="o">{</span>
+
+            <span class="k">var</span> <span class="nx">backTab</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">preventBackTab</span><span class="o">,</span> <span class="nx">tab</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">preventTabOut</span><span class="o">,</span>
+                <span class="nx">showEvent</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">showEvent</span><span class="o">,</span> <span class="nx">hideEvent</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">hideEvent</span><span class="o">;</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="nx">backTab</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">backTab</span><span class="o">.</span><span class="nx">disable</span><span class="o">();</span>
+                <span class="nx">showEvent</span><span class="o">.</span><span class="nx">unsubscribe</span><span class="o">(</span><span class="nx">backTab</span><span class="o">.</span><span class="nx">enable</span><span class="o">,</span> <span class="nx">backTab</span><span class="o">);</span>
+                <span class="nx">hideEvent</span><span class="o">.</span><span class="nx">unsubscribe</span><span class="o">(</span><span class="nx">backTab</span><span class="o">.</span><span class="nx">disable</span><span class="o">,</span> <span class="nx">backTab</span><span class="o">);</span>
+                <span class="nx">backTab</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">preventBackTab</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="nx">tab</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">tab</span><span class="o">.</span><span class="nx">disable</span><span class="o">();</span>
+                <span class="nx">showEvent</span><span class="o">.</span><span class="nx">unsubscribe</span><span class="o">(</span><span class="nx">tab</span><span class="o">.</span><span class="nx">enable</span><span class="o">,</span> <span class="nx">tab</span><span class="o">);</span>
+                <span class="nx">hideEvent</span><span class="o">.</span><span class="nx">unsubscribe</span><span class="o">(</span><span class="nx">tab</span><span class="o">.</span><span class="nx">disable</span><span class="o">,</span><span class="nx">tab</span><span class="o">);</span>
+                <span class="nx">tab</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">preventTabOut</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="nx">firstElement</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">preventBackTab</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">KeyListener</span><span class="o">(</span><span class="nx">firstElement</span><span class="o">,</span> 
+                    <span class="o">{</span><span class="nx">shift</span><span class="o">:</span><span class="kc">true</span><span class="o">,</span> <span class="nx">keys</span><span class="o">:</span><span class="m">9</span><span class="o">},</span>
+                    <span class="o">{</span><span class="nx">fn</span><span class="o">:</span><span class="k">this</span><span class="o">.</span><span class="nx">focusLast</span><span class="o">,</span> <span class="nx">scope</span><span class="o">:</span><span class="k">this</span><span class="o">,</span> <span class="nx">correctScope</span><span class="o">:</span><span class="kc">true</span><span class="o">}</span>
+                <span class="o">);</span>
+                <span class="nx">backTab</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">preventBackTab</span><span class="o">;</span>
+
+                <span class="nx">showEvent</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="nx">backTab</span><span class="o">.</span><span class="nx">enable</span><span class="o">,</span> <span class="nx">backTab</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                <span class="nx">hideEvent</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="nx">backTab</span><span class="o">.</span><span class="nx">disable</span><span class="o">,</span><span class="nx">backTab</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="o">}</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="nx">lastElement</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">preventTabOut</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">KeyListener</span><span class="o">(</span><span class="nx">lastElement</span><span class="o">,</span> 
+                    <span class="o">{</span><span class="nx">shift</span><span class="o">:</span><span class="kc">false</span><span class="o">,</span> <span class="nx">keys</span><span class="o">:</span><span class="m">9</span><span class="o">},</span> 
+                    <span class="o">{</span><span class="nx">fn</span><span class="o">:</span><span class="k">this</span><span class="o">.</span><span class="nx">focusFirst</span><span class="o">,</span> <span class="nx">scope</span><span class="o">:</span><span class="k">this</span><span class="o">,</span> <span class="nx">correctScope</span><span class="o">:</span><span class="kc">true</span><span class="o">}</span>
+                <span class="o">);</span>
+                <span class="nx">tab</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">preventTabOut</span><span class="o">;</span>
+
+                <span class="nx">showEvent</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="nx">tab</span><span class="o">.</span><span class="nx">enable</span><span class="o">,</span> <span class="nx">tab</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                <span class="nx">hideEvent</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="nx">tab</span><span class="o">.</span><span class="nx">disable</span><span class="o">,</span><span class="nx">tab</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
+
+        <span class="c">/**</span>
+<span class="c">         * Returns an array of the currently focusable items which reside within</span>
+<span class="c">         * Panel. The set of focusable elements the method looks for are defined</span>
+<span class="c">         * in the Panel.FOCUSABLE static property</span>
+<span class="c">         *</span>
+<span class="c">         * @method getFocusableElements</span>
+<span class="c">         * @param {HTMLElement} root element to start from.</span>
+<span class="c">         */</span>
+        <span class="nx">getFocusableElements</span> <span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">root</span><span class="o">)</span> <span class="o">{</span>
+
+            <span class="nx">root</span> <span class="o">=</span> <span class="nx">root</span> <span class="o">||</span> <span class="k">this</span><span class="o">.</span><span class="nx">innerElement</span><span class="o">;</span>
+
+            <span class="k">var</span> <span class="nx">focusable</span> <span class="o">=</span> <span class="o">{};</span>
+            <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">Panel</span><span class="o">.</span><span class="nx">FOCUSABLE</span><span class="o">.</span><span class="nx">length</span><span class="o">;</span> <span class="nx">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="nx">focusable</span><span class="o">[</span><span class="nx">Panel</span><span class="o">.</span><span class="nx">FOCUSABLE</span><span class="o">[</span><span class="nx">i</span><span class="o">]]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span>
 
             <span class="k">function</span> <span class="nx">isFocusable</span><span class="o">(</span><span class="nx">el</span><span class="o">)</span> <span class="o">{</span>
-                <span class="c">// NOTE: if e.type is undefined that&#39;s fine, want to avoid perf </span>
-<span class="c"></span>                <span class="c">// impact of tagName check to filter for inputs</span>
-<span class="c"></span>                <span class="k">if</span> <span class="o">(</span><span class="nx">el</span><span class="o">.</span><span class="nx">type</span> <span class="o">!==</span> <span class="nx">hidden</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">Dom</span><span class="o">.</span><span class="nx">isAncestor</span><span class="o">(</span><span class="nx">me</span><span class="o">.</span><span class="nx">element</span><span class="o">,</span> <span class="nx">el</span><span class="o">))</span> <span class="o">{</span>
-                    <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">focus</span><span class="o">,</span> <span class="nx">me</span><span class="o">.</span><span class="nx">_onElementFocus</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nx">el</span><span class="o">.</span><span class="nx">focus</span> <span class="o">&amp;&amp;</span> <span class="nx">el</span><span class="o">.</span><span class="nx">type</span> <span class="o">!==</span> <span class="s2">&quot;hidden&quot;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">el</span><span class="o">.</span><span class="nx">disabled</span> <span class="o">&amp;&amp;</span> <span class="nx">focusable</span><span class="o">[</span><span class="nx">el</span><span class="o">.</span><span class="nx">tagName</span><span class="o">.</span><span class="nx">toLowerCase</span><span class="o">()])</span> <span class="o">{</span>
                     <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
                 <span class="o">}</span>
                 <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
             <span class="o">}</span>
 
-            <span class="k">var</span> <span class="nx">focusable</span> <span class="o">=</span> <span class="nx">Panel</span><span class="o">.</span><span class="nx">FOCUSABLE</span><span class="o">,</span>
-                <span class="nx">l</span> <span class="o">=</span> <span class="nx">focusable</span><span class="o">.</span><span class="nx">length</span><span class="o">,</span>
-                <span class="nx">arr</span> <span class="o">=</span> <span class="o">[];</span>
-
-            <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">l</span><span class="o">;</span> <span class="nx">i</span><span class="o">++)</span> <span class="o">{</span>
-                <span class="nx">arr</span> <span class="o">=</span> <span class="nx">arr</span><span class="o">.</span><span class="nx">concat</span><span class="o">(</span><span class="nx">Dom</span><span class="o">.</span><span class="nx">getElementsBy</span><span class="o">(</span><span class="nx">isFocusable</span><span class="o">,</span> <span class="nx">focusable</span><span class="o">[</span><span class="nx">i</span><span class="o">]));</span>
-            <span class="o">}</span>
-
-            <span class="k">this</span><span class="o">.</span><span class="nx">focusableElements</span> <span class="o">=</span> <span class="nx">arr</span><span class="o">;</span>
+            <span class="c">// Not looking by Tag, since we want elements in DOM order</span>
+<span class="c"></span>            <span class="k">return</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getElementsBy</span><span class="o">(</span><span class="nx">isFocusable</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="nx">root</span><span class="o">);</span>
         <span class="o">},</span>
 
-        <span class="c">/** </span>
-<span class="c">         *  @method _removeFocusHandlers</span>
-<span class="c">         *  @protected</span>
-<span class="c">         *  </span>
-<span class="c">         *  &quot;hideMask&quot; event handler that removes all &quot;focus&quot; event handlers added </span>
-<span class="c">         *  by the &quot;addFocusEventHandlers&quot; method.</span>
-<span class="c">         *  </span>
-<span class="c">         *  @param p_sType {String} Event type</span>
-<span class="c">         *  @param p_aArgs {Array} Event Arguments</span>
+        <span class="c">/**</span>
+<span class="c">         * Sets the firstElement and lastElement instance properties</span>
+<span class="c">         * to the first and last focusable elements in the Panel.</span>
+<span class="c">         *</span>
+<span class="c">         * @method setFirstLastFocusable</span>
 <span class="c">         */</span>
-        <span class="nx">_removeFocusHandlers</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">p_sType</span><span class="o">,</span> <span class="nx">p_aArgs</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">var</span> <span class="nx">aElements</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">focusableElements</span><span class="o">,</span>
-                <span class="nx">nElements</span> <span class="o">=</span> <span class="nx">aElements</span><span class="o">.</span><span class="nx">length</span><span class="o">,</span>
-                <span class="nx">focus</span> <span class="o">=</span> <span class="s2">&quot;focus&quot;</span><span class="o">;</span>
+        <span class="nx">setFirstLastFocusable</span> <span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
 
-            <span class="k">if</span> <span class="o">(</span><span class="nx">aElements</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">nElements</span><span class="o">;</span> <span class="nx">i</span><span class="o">++)</span> <span class="o">{</span>
-                    <span class="nx">Event</span><span class="o">.</span><span class="nx">removeListener</span><span class="o">(</span><span class="nx">aElements</span><span class="o">[</span><span class="nx">i</span><span class="o">],</span> <span class="nx">focus</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_onElementFocus</span><span class="o">);</span>
-                <span class="o">}</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">firstElement</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">lastElement</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+            <span class="k">var</span> <span class="nx">elements</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">getFocusableElements</span><span class="o">();</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">focusableElements</span> <span class="o">=</span> <span class="nx">elements</span><span class="o">;</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="nx">elements</span><span class="o">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="m">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">firstElement</span> <span class="o">=</span> <span class="nx">elements</span><span class="o">[</span><span class="m">0</span><span class="o">];</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">lastElement</span> <span class="o">=</span> <span class="nx">elements</span><span class="o">[</span><span class="nx">elements</span><span class="o">.</span><span class="nx">length</span> <span class="o">-</span> <span class="m">1</span><span class="o">];</span>
+            <span class="o">}</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">getProperty</span><span class="o">(</span><span class="s2">&quot;modal&quot;</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">setTabLoop</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">firstElement</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">lastElement</span><span class="o">);</span>
             <span class="o">}</span>
         <span class="o">},</span>
 
         <span class="c">/**</span>
-<span class="c">        * Initializes the custom events for Module which are fired </span>
-<span class="c">        * automatically at appropriate times by the Module class.</span>
-<span class="c">        */</span>
+<span class="c">         * Initializes the custom events for Module which are fired </span>
+<span class="c">         * automatically at appropriate times by the Module class.</span>
+<span class="c">         */</span>
         <span class="nx">initEvents</span><span class="o">:</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
             <span class="nx">Panel</span><span class="o">.</span><span class="nx">superclass</span><span class="o">.</span><span class="nx">initEvents</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-        
+
             <span class="k">var</span> <span class="nx">SIGNATURE</span> <span class="o">=</span> <span class="nx">CustomEvent</span><span class="o">.</span><span class="nx">LIST</span><span class="o">;</span>
-        
+
             <span class="c">/**</span>
 <span class="c">            * CustomEvent fired after the modality mask is shown</span>
 <span class="c">            * @event showMaskEvent</span>
 <span class="c">            */</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">showMaskEvent</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">createEvent</span><span class="o">(</span><span class="nx">EVENT_TYPES</span><span class="o">.</span><span class="nx">SHOW_MASK</span><span class="o">);</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">showMaskEvent</span><span class="o">.</span><span class="nx">signature</span> <span class="o">=</span> <span class="nx">SIGNATURE</span><span class="o">;</span>
-        
+
             <span class="c">/**</span>
 <span class="c">            * CustomEvent fired after the modality mask is hidden</span>
 <span class="c">            * @event hideMaskEvent</span>
 <span class="c">            */</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">hideMaskEvent</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">createEvent</span><span class="o">(</span><span class="nx">EVENT_TYPES</span><span class="o">.</span><span class="nx">HIDE_MASK</span><span class="o">);</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">hideMaskEvent</span><span class="o">.</span><span class="nx">signature</span> <span class="o">=</span> <span class="nx">SIGNATURE</span><span class="o">;</span>
-        
+
             <span class="c">/**</span>
 <span class="c">            * CustomEvent when the Panel is dragged</span>
 <span class="c">            * @event dragEvent</span>
 <span class="c">            */</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">dragEvent</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">createEvent</span><span class="o">(</span><span class="nx">EVENT_TYPES</span><span class="o">.</span><span class="nx">DRAG</span><span class="o">);</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">dragEvent</span><span class="o">.</span><span class="nx">signature</span> <span class="o">=</span> <span class="nx">SIGNATURE</span><span class="o">;</span>
-        
         <span class="o">},</span>
-        
+
         <span class="c">/**</span>
-<span class="c">        * Initializes the class&#39;s configurable properties which can be changed </span>
-<span class="c">        * using the Panel&#39;s Config object (cfg).</span>
-<span class="c">        * @method initDefaultConfig</span>
-<span class="c">        */</span>
+<span class="c">         * Initializes the class&#39;s configurable properties which can be changed </span>
+<span class="c">         * using the Panel&#39;s Config object (cfg).</span>
+<span class="c">         * @method initDefaultConfig</span>
+<span class="c">         */</span>
         <span class="nx">initDefaultConfig</span><span class="o">:</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
             <span class="nx">Panel</span><span class="o">.</span><span class="nx">superclass</span><span class="o">.</span><span class="nx">initDefaultConfig</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-        
+
             <span class="c">// Add panel config properties //</span>
-<span class="c"></span>        
+<span class="c"></span>
             <span class="c">/**</span>
 <span class="c">            * True if the Panel should display a &quot;close&quot; button</span>
 <span class="c">            * @config close</span>
@@ -398,7 +594,7 @@
                 <span class="nx">validator</span><span class="o">:</span> <span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">CLOSE</span><span class="o">.</span><span class="nx">validator</span><span class="o">,</span> 
                 <span class="nx">supercedes</span><span class="o">:</span> <span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">CLOSE</span><span class="o">.</span><span class="nx">supercedes</span> 
             <span class="o">});</span>
-        
+
             <span class="c">/**</span>
 <span class="c">            * Boolean specifying if the Panel should be draggable.  The default </span>
 <span class="c">            * value is &quot;true&quot; if the Drag and Drop utility is included, </span>
@@ -421,11 +617,11 @@
 <span class="c">            * @type Boolean</span>
 <span class="c">            * @default true</span>
 <span class="c">            */</span>
-            <span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">addProperty</span><span class="o">(</span><span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">DRAGGABLE</span><span class="o">.</span><span class="nx">key</span><span class="o">,</span> <span class="o">{</span> 
-                <span class="nx">handler</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">configDraggable</span><span class="o">,</span> 
-                <span class="nx">value</span><span class="o">:</span> <span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">DRAGGABLE</span><span class="o">.</span><span class="nx">value</span><span class="o">,</span> 
-                <span class="nx">validator</span><span class="o">:</span> <span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">DRAGGABLE</span><span class="o">.</span><span class="nx">validator</span><span class="o">,</span> 
-                <span class="nx">supercedes</span><span class="o">:</span> <span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">DRAGGABLE</span><span class="o">.</span><span class="nx">supercedes</span> 
+            <span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">addProperty</span><span class="o">(</span><span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">DRAGGABLE</span><span class="o">.</span><span class="nx">key</span><span class="o">,</span> <span class="o">{</span>
+                <span class="nx">handler</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">configDraggable</span><span class="o">,</span>
+                <span class="nx">value</span><span class="o">:</span> <span class="o">(</span><span class="nx">Util</span><span class="o">.</span><span class="nx">DD</span><span class="o">)</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+                <span class="nx">validator</span><span class="o">:</span> <span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">DRAGGABLE</span><span class="o">.</span><span class="nx">validator</span><span class="o">,</span>
+                <span class="nx">supercedes</span><span class="o">:</span> <span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">DRAGGABLE</span><span class="o">.</span><span class="nx">supercedes</span>
             <span class="o">});</span>
 
             <span class="c">/**</span>
@@ -487,7 +683,7 @@
                 <span class="nx">validator</span><span class="o">:</span> <span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">MODAL</span><span class="o">.</span><span class="nx">validator</span><span class="o">,</span> 
                 <span class="nx">supercedes</span><span class="o">:</span> <span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">MODAL</span><span class="o">.</span><span class="nx">supercedes</span> 
             <span class="o">});</span>
-        
+
             <span class="c">/**</span>
 <span class="c">            * A KeyListener (or array of KeyListeners) that will be enabled </span>
 <span class="c">            * when the Panel is shown, and disabled when the Panel is hidden.</span>
@@ -500,9 +696,25 @@
                 <span class="nx">suppressEvent</span><span class="o">:</span> <span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">KEY_LISTENERS</span><span class="o">.</span><span class="nx">suppressEvent</span><span class="o">,</span> 
                 <span class="nx">supercedes</span><span class="o">:</span> <span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">KEY_LISTENERS</span><span class="o">.</span><span class="nx">supercedes</span> 
             <span class="o">});</span>
-        
+
+            <span class="c">/**</span>
+<span class="c">            * UI Strings used by the Panel</span>
+<span class="c">            * </span>
+<span class="c">            * @config strings</span>
+<span class="c">            * @type Object</span>
+<span class="c">            * @default An object literal with the properties shown below:</span>
+<span class="c">            *     &lt;dl&gt;</span>
+<span class="c">            *         &lt;dt&gt;close&lt;/dt&gt;&lt;dd&gt;&lt;em&gt;String&lt;/em&gt; : The string to use for the close icon. Defaults to &quot;Close&quot;.&lt;/dd&gt;</span>
+<span class="c">            *     &lt;/dl&gt;</span>
+<span class="c">            */</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">addProperty</span><span class="o">(</span><span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">STRINGS</span><span class="o">.</span><span class="nx">key</span><span class="o">,</span> <span class="o">{</span> 
+                <span class="nx">value</span><span class="o">:</span><span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">STRINGS</span><span class="o">.</span><span class="nx">value</span><span class="o">,</span>
+                <span class="nx">handler</span><span class="o">:</span><span class="k">this</span><span class="o">.</span><span class="nx">configStrings</span><span class="o">,</span>
+                <span class="nx">validator</span><span class="o">:</span><span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">STRINGS</span><span class="o">.</span><span class="nx">validator</span><span class="o">,</span>
+                <span class="nx">supercedes</span><span class="o">:</span><span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">STRINGS</span><span class="o">.</span><span class="nx">supercedes</span>
+            <span class="o">});</span>
         <span class="o">},</span>
-        
+
         <span class="c">// BEGIN BUILT-IN PROPERTY EVENT HANDLERS //</span>
 <span class="c"></span>        
         <span class="c">/**</span>
@@ -519,24 +731,25 @@
         <span class="nx">configClose</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span>
 
             <span class="k">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">args</span><span class="o">[</span><span class="m">0</span><span class="o">],</span>
-                <span class="nx">oClose</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">close</span><span class="o">;</span>
-        
-            <span class="k">function</span> <span class="nx">doHide</span><span class="o">(</span><span class="nx">e</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span>
-                <span class="nx">obj</span><span class="o">.</span><span class="nx">hide</span><span class="o">();</span>
-            <span class="o">}</span>
-        
+                <span class="nx">oClose</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">close</span><span class="o">,</span>
+                <span class="nx">strings</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">getProperty</span><span class="o">(</span><span class="s2">&quot;strings&quot;</span><span class="o">);</span>
+
             <span class="k">if</span> <span class="o">(</span><span class="nx">val</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">if</span> <span class="o">(!</span><span class="nx">oClose</span><span class="o">)</span> <span class="o">{</span>
+
                     <span class="k">if</span> <span class="o">(!</span><span class="nx">m_oCloseIconTemplate</span><span class="o">)</span> <span class="o">{</span>
-                        <span class="nx">m_oCloseIconTemplate</span> <span class="o">=</span> <span class="nb">document</span><span class="o">.</span><span class="nx">createElement</span><span class="o">(</span><span class="s2">&quot;span&quot;</span><span class="o">);</span>
-                        <span class="nx">m_oCloseIconTemplate</span><span class="o">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">&quot;&amp;#160;&quot;</span><span class="o">;</span>
+                        <span class="nx">m_oCloseIconTemplate</span> <span class="o">=</span> <span class="nb">document</span><span class="o">.</span><span class="nx">createElement</span><span class="o">(</span><span class="s2">&quot;a&quot;</span><span class="o">);</span>
                         <span class="nx">m_oCloseIconTemplate</span><span class="o">.</span><span class="nx">className</span> <span class="o">=</span> <span class="s2">&quot;container-close&quot;</span><span class="o">;</span>
+                        <span class="nx">m_oCloseIconTemplate</span><span class="o">.</span><span class="nx">href</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span><span class="o">;</span>
                     <span class="o">}</span>
 
                     <span class="nx">oClose</span> <span class="o">=</span> <span class="nx">m_oCloseIconTemplate</span><span class="o">.</span><span class="nx">cloneNode</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
                     <span class="k">this</span><span class="o">.</span><span class="nx">innerElement</span><span class="o">.</span><span class="nx">appendChild</span><span class="o">(</span><span class="nx">oClose</span><span class="o">);</span>
-                    <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nx">oClose</span><span class="o">,</span> <span class="s2">&quot;click&quot;</span><span class="o">,</span> <span class="nx">doHide</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
-                    
+
+                    <span class="nx">oClose</span><span class="o">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="o">(</span><span class="nx">strings</span> <span class="o">&amp;&amp;</span> <span class="nx">strings</span><span class="o">.</span><span class="nx">close</span><span class="o">)</span> <span class="o">?</span> <span class="nx">strings</span><span class="o">.</span><span class="nx">close</span> <span class="o">:</span> <span class="s2">&quot;&amp;#160;&quot;</span><span class="o">;</span>
+
+                    <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nx">oClose</span><span class="o">,</span> <span class="s2">&quot;click&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_doClose</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
                     <span class="k">this</span><span class="o">.</span><span class="nx">close</span> <span class="o">=</span> <span class="nx">oClose</span><span class="o">;</span>
 
                 <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
@@ -549,6 +762,19 @@
                 <span class="o">}</span>
             <span class="o">}</span>
 
+        <span class="o">},</span>
+
+        <span class="c">/**</span>
+<span class="c">         * Event handler for the close icon</span>
+<span class="c">         * </span>
+<span class="c">         * @method _doClose</span>
+<span class="c">         * @protected</span>
+<span class="c">         * </span>
+<span class="c">         * @param {DOMEvent} e</span>
+<span class="c">         */</span>
+        <span class="nx">_doClose</span> <span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">Event</span><span class="o">.</span><span class="nx">preventDefault</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">hide</span><span class="o">();</span>
         <span class="o">},</span>
 
         <span class="c">/**</span>
@@ -565,7 +791,7 @@
             <span class="k">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">args</span><span class="o">[</span><span class="m">0</span><span class="o">];</span>
 
             <span class="k">if</span> <span class="o">(</span><span class="nx">val</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(!</span><span class="nx">DD</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(!</span><span class="nx">Util</span><span class="o">.</span><span class="nx">DD</span><span class="o">)</span> <span class="o">{</span>
                     <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s2">&quot;DD dependency not met.&quot;</span><span class="o">,</span> <span class="s2">&quot;error&quot;</span><span class="o">);</span>
                     <span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">setProperty</span><span class="o">(</span><span class="s2">&quot;draggable&quot;</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
                     <span class="k">return</span><span class="o">;</span>
@@ -604,9 +830,7 @@
 <span class="c">        */</span>
         <span class="nx">configUnderlay</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span>
 
-            <span class="k">var</span> <span class="nx">UA</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">ua</span><span class="o">,</span>
-                <span class="nx">bMacGecko</span> <span class="o">=</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">platform</span> <span class="o">==</span> <span class="s2">&quot;mac&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">UA</span><span class="o">.</span><span class="nx">gecko</span><span class="o">),</span>
-                <span class="nx">bIEQuirks</span> <span class="o">=</span> <span class="o">(</span><span class="nx">UA</span><span class="o">.</span><span class="nx">ie</span> <span class="o">==</span> <span class="m">6</span> <span class="o">||</span> <span class="o">(</span><span class="nx">UA</span><span class="o">.</span><span class="nx">ie</span> <span class="o">==</span> <span class="m">7</span> <span class="o">&amp;&amp;</span> <span class="nb">document</span><span class="o">.</span><span class="nx">compatMode</span> <span class="o">==</span> <span class="s2">&quot;BackCompat&quot;</span><span class="o">)),</span>
+            <span class="k">var</span> <span class="nx">bMacGecko</span> <span class="o">=</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">platform</span> <span class="o">==</span> <span class="s2">&quot;mac&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">UA</span><span class="o">.</span><span class="nx">gecko</span><span class="o">),</span>
                 <span class="nx">sUnderlay</span> <span class="o">=</span> <span class="nx">args</span><span class="o">[</span><span class="m">0</span><span class="o">].</span><span class="nx">toLowerCase</span><span class="o">(),</span>
                 <span class="nx">oUnderlay</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">underlay</span><span class="o">,</span>
                 <span class="nx">oElement</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">element</span><span class="o">;</span>
@@ -641,7 +865,8 @@
                     <span class="k">if</span> <span class="o">(</span><span class="nx">bIEQuirks</span><span class="o">)</span> <span class="o">{</span>
                         <span class="k">this</span><span class="o">.</span><span class="nx">sizeUnderlay</span><span class="o">();</span>
                         <span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">subscribeToConfigEvent</span><span class="o">(</span><span class="s2">&quot;width&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">sizeUnderlay</span><span class="o">);</span>
-                        <span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">subscribeToConfigEvent</span><span class="o">(</span><span class="s2">&quot;height&quot;</span><span class="o">,</span><span class="k">this</span><span class="o">.</span><span class="nx">sizeUnderlay</span><span class="o">);</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">subscribeToConfigEvent</span><span class="o">(</span><span class="s2">&quot;height&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">sizeUnderlay</span><span class="o">);</span>
+
                         <span class="k">this</span><span class="o">.</span><span class="nx">changeContentEvent</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">sizeUnderlay</span><span class="o">);</span>
                         <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">Module</span><span class="o">.</span><span class="nx">textResizeEvent</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">sizeUnderlay</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
                     <span class="o">}</span>
@@ -758,28 +983,28 @@
                     <span class="k">this</span><span class="o">.</span><span class="nx">unsubscribe</span><span class="o">(</span><span class="s2">&quot;hide&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">hideMask</span><span class="o">);</span>
 
                     <span class="nx">Overlay</span><span class="o">.</span><span class="nx">windowResizeEvent</span><span class="o">.</span><span class="nx">unsubscribe</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">sizeMask</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
-                    
+
                     <span class="k">this</span><span class="o">.</span><span class="nx">_hasModalityEventListeners</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
                 <span class="o">}</span>
             <span class="o">}</span>
         <span class="o">},</span>
-        
+
         <span class="c">/**</span>
 <span class="c">        * Removes the modality mask.</span>
 <span class="c">        * @method removeMask</span>
 <span class="c">        */</span>
         <span class="nx">removeMask</span><span class="o">:</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
-        
+
             <span class="k">var</span> <span class="nx">oMask</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">,</span>
                 <span class="nx">oParentNode</span><span class="o">;</span>
-        
+
             <span class="k">if</span> <span class="o">(</span><span class="nx">oMask</span><span class="o">)</span> <span class="o">{</span>
                 <span class="c">/*</span>
 <span class="c">                    Hide the mask before destroying it to ensure that DOM</span>
 <span class="c">                    event handlers on focusable elements get removed.</span>
 <span class="c">                */</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">hideMask</span><span class="o">();</span>
-                
+
                 <span class="nx">oParentNode</span> <span class="o">=</span> <span class="nx">oMask</span><span class="o">.</span><span class="nx">parentNode</span><span class="o">;</span>
                 <span class="k">if</span> <span class="o">(</span><span class="nx">oParentNode</span><span class="o">)</span> <span class="o">{</span>
                     <span class="nx">oParentNode</span><span class="o">.</span><span class="nx">removeChild</span><span class="o">(</span><span class="nx">oMask</span><span class="o">);</span>
@@ -833,7 +1058,6 @@
                             <span class="k">this</span><span class="o">.</span><span class="nx">destroyEvent</span><span class="o">.</span><span class="nx">subscribe</span><span class="o">(</span><span class="nx">listener</span><span class="o">.</span><span class="nx">disable</span><span class="o">,</span> 
                                 <span class="nx">listener</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
                         <span class="o">}</span>
-
                     <span class="o">}</span>
 
                 <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
@@ -861,7 +1085,16 @@
             <span class="o">}</span>
 
         <span class="o">},</span>
-        
+
+        <span class="c">/**</span>
+<span class="c">        * The default handler for the &quot;strings&quot; property</span>
+<span class="c">        * @method configStrings</span>
+<span class="c">        */</span>
+        <span class="nx">configStrings</span> <span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">Lang</span><span class="o">.</span><span class="nx">merge</span><span class="o">(</span><span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">STRINGS</span><span class="o">.</span><span class="nx">value</span><span class="o">,</span> <span class="nx">args</span><span class="o">[</span><span class="m">0</span><span class="o">]);</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">setProperty</span><span class="o">(</span><span class="nx">DEFAULT_CONFIG</span><span class="o">.</span><span class="nx">STRINGS</span><span class="o">.</span><span class="nx">key</span><span class="o">,</span> <span class="nx">val</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="o">},</span>
+
         <span class="c">/**</span>
 <span class="c">        * The default event handler fired when the &quot;height&quot; property is changed.</span>
 <span class="c">        * @method configHeight</span>
@@ -872,15 +1105,31 @@
 <span class="c">        * this will usually equal the owner.</span>
 <span class="c">        */</span>
         <span class="nx">configHeight</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span>
-    
             <span class="k">var</span> <span class="nx">height</span> <span class="o">=</span> <span class="nx">args</span><span class="o">[</span><span class="m">0</span><span class="o">],</span>
                 <span class="nx">el</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">innerElement</span><span class="o">;</span>
-    
+
             <span class="nx">Dom</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="s2">&quot;height&quot;</span><span class="o">,</span> <span class="nx">height</span><span class="o">);</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">refireEvent</span><span class="o">(</span><span class="s2">&quot;iframe&quot;</span><span class="o">);</span>
-    
         <span class="o">},</span>
-        
+
+        <span class="c">/**</span>
+<span class="c">         * The default custom event handler executed when the Panel&#39;s height is changed, </span>
+<span class="c">         * if the autofillheight property has been set.</span>
+<span class="c">         *</span>
+<span class="c">         * @method _autoFillOnHeightChange</span>
+<span class="c">         * @protected</span>
+<span class="c">         * @param {String} type The event type</span>
+<span class="c">         * @param {Array} args The array of arguments passed to event subscribers</span>
+<span class="c">         * @param {HTMLElement} el The header, body or footer element which is to be resized to fill</span>
+<span class="c">         * out the containers height</span>
+<span class="c">         */</span>
+        <span class="nx">_autoFillOnHeightChange</span> <span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">el</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">Panel</span><span class="o">.</span><span class="nx">superclass</span><span class="o">.</span><span class="nx">_autoFillOnHeightChange</span><span class="o">.</span><span class="nx">apply</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="nx">arguments</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nx">bIEQuirks</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">sizeUnderlay</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
+
         <span class="c">/**</span>
 <span class="c">        * The default event handler fired when the &quot;width&quot; property is changed.</span>
 <span class="c">        * @method configWidth</span>
@@ -983,13 +1232,13 @@
 
             <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">header</span><span class="o">)</span> <span class="o">{</span>
 
-                <span class="k">if</span> <span class="o">(!</span><span class="nx">DD</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(!</span><span class="nx">Util</span><span class="o">.</span><span class="nx">DD</span><span class="o">)</span> <span class="o">{</span>
                     <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s2">&quot;DD dependency not met.&quot;</span><span class="o">,</span> <span class="s2">&quot;error&quot;</span><span class="o">);</span>
                     <span class="k">return</span><span class="o">;</span>
                 <span class="o">}</span>
 
                 <span class="k">var</span> <span class="nx">bDragOnly</span> <span class="o">=</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">getProperty</span><span class="o">(</span><span class="s2">&quot;dragonly&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="kc">true</span><span class="o">);</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">dd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DD</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">element</span><span class="o">.</span><span class="nx">id</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">id</span><span class="o">,</span> <span class="o">{</span><span class="nx">dragOnly</span><span class="o">:</span> <span class="nx">bDragOnly</span><span class="o">});</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">dd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Util</span><span class="o">.</span><span class="nx">DD</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">element</span><span class="o">.</span><span class="nx">id</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">id</span><span class="o">,</span> <span class="o">{</span><span class="nx">dragOnly</span><span class="o">:</span> <span class="nx">bDragOnly</span><span class="o">});</span>
 
                 <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">header</span><span class="o">.</span><span class="nx">id</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">this</span><span class="o">.</span><span class="nx">header</span><span class="o">.</span><span class="nx">id</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">id</span> <span class="o">+</span> <span class="s2">&quot;_h&quot;</span><span class="o">;</span>
@@ -1111,8 +1360,8 @@
         <span class="nx">hideMask</span><span class="o">:</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">getProperty</span><span class="o">(</span><span class="s2">&quot;modal&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="o">;</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">hideMaskEvent</span><span class="o">.</span><span class="nx">fire</span><span class="o">();</span>
                 <span class="nx">Dom</span><span class="o">.</span><span class="nx">removeClass</span><span class="o">(</span><span class="nb">document</span><span class="o">.</span><span class="nx">body</span><span class="o">,</span> <span class="s2">&quot;masked&quot;</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">hideMaskEvent</span><span class="o">.</span><span class="nx">fire</span><span class="o">();</span>
             <span class="o">}</span>
         <span class="o">},</span>
 
@@ -1136,7 +1385,22 @@
 <span class="c">        */</span>
         <span class="nx">sizeMask</span><span class="o">:</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getDocumentHeight</span><span class="o">()</span> <span class="o">+</span> <span class="s2">&quot;px&quot;</span><span class="o">;</span>
+
+                <span class="c">// Shrink mask first, so it doesn&#39;t affect the document size.</span>
+<span class="c"></span>                <span class="k">var</span> <span class="nx">mask</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">,</span>
+                    <span class="nx">viewWidth</span> <span class="o">=</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getViewportWidth</span><span class="o">(),</span>
+                    <span class="nx">viewHeight</span> <span class="o">=</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getViewportHeight</span><span class="o">();</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">.</span><span class="nx">offsetHeight</span> <span class="o">&gt;</span> <span class="nx">viewHeight</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">viewHeight</span> <span class="o">+</span> <span class="s2">&quot;px&quot;</span><span class="o">;</span>
+                <span class="o">}</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">.</span><span class="nx">offsetWidth</span> <span class="o">&gt;</span> <span class="nx">viewWidth</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">viewWidth</span> <span class="o">+</span> <span class="s2">&quot;px&quot;</span><span class="o">;</span>
+                <span class="o">}</span>
+
+                <span class="c">// Then size it to the document</span>
+<span class="c"></span>                <span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getDocumentHeight</span><span class="o">()</span> <span class="o">+</span> <span class="s2">&quot;px&quot;</span><span class="o">;</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">mask</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getDocumentWidth</span><span class="o">()</span> <span class="o">+</span> <span class="s2">&quot;px&quot;</span><span class="o">;</span>
             <span class="o">}</span>
         <span class="o">},</span>
@@ -1190,19 +1454,12 @@
 <span class="c">        * @method destroy</span>
 <span class="c">        */</span>
         <span class="nx">destroy</span><span class="o">:</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
-        
             <span class="nx">Overlay</span><span class="o">.</span><span class="nx">windowResizeEvent</span><span class="o">.</span><span class="nx">unsubscribe</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">sizeMask</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
-            
             <span class="k">this</span><span class="o">.</span><span class="nx">removeMask</span><span class="o">();</span>
-        
             <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">close</span><span class="o">)</span> <span class="o">{</span>
-            
                 <span class="nx">Event</span><span class="o">.</span><span class="nx">purgeElement</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">close</span><span class="o">);</span>
-        
             <span class="o">}</span>
-        
             <span class="nx">Panel</span><span class="o">.</span><span class="nx">superclass</span><span class="o">.</span><span class="nx">destroy</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>  
-        
         <span class="o">},</span>
         
         <span class="c">/**</span>
@@ -1235,6 +1492,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -1275,6 +1534,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1339,7 +1600,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

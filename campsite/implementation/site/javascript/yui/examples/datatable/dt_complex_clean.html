@@ -17,16 +17,22 @@ body {
 </style>
 
 <link rel="stylesheet" type="text/css" href="../../build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="../../build/paginator/assets/skins/sam/paginator.css" />
 <link rel="stylesheet" type="text/css" href="../../build/datatable/assets/skins/sam/datatable.css" />
 <script type="text/javascript" src="../../build/utilities/utilities.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/paginator/paginator-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
-<!--there is no custom header content for this example-->
+
+<!--begin custom header content for this example-->
+
+<!--end custom header content for this example-->
 
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>Complex Example of Multiple Features</h1>
 
@@ -44,10 +50,10 @@ utilities.</p>
 <script type="text/javascript" src="assets/js/data.js"></script>
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.MultipleFeatures = new function() {
+    YAHOO.example.MultipleFeatures = function() {
         // Custom sort handler to sort by state and then by areacode
         // where a and b are Record instances to compare
-        this.sortStates = function(a, b, desc) {
+        var sortStates = function(a, b, desc) {
             // Deal with empty values
             if(!YAHOO.lang.isValue(a)) {
                 return (!YAHOO.lang.isValue(b)) ? 0 : 1;
@@ -67,13 +73,13 @@ YAHOO.util.Event.addListener(window, "load", function() {
         var myColumnDefs = [
             {key:"areacode",label:"Area Codes",width:100,resizeable:true,sortable:true},
             {key:"state",label:"States",width:250,resizeable:true,sortable:true,
-                    sortOptions:{sortFunction:this.sortStates}},
+                    sortOptions:{sortFunction:sortStates}},
             {key:"notes",label:"Notes (editable)",editor:"textbox",resizeable:true,sortable:true}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.areacodes);
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.areacodes);
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        myDataSource.responseSchema = {
             fields: ["areacode","state"]
         };
 
@@ -81,21 +87,20 @@ YAHOO.util.Event.addListener(window, "load", function() {
             sortedBy:{key:"areacode",dir:"asc"},
             paginator: new YAHOO.widget.Paginator({
                 rowsPerPage: 25,
-                dropdownOptions: [10,25,50,100],
+                template: YAHOO.widget.Paginator.TEMPLATE_ROWS_PER_PAGE,
+                rowsPerPageOptions: [10,25,50,100],
                 pageLinks: 5
-            }),
-            scrollable:true,
-            height:"25em"
+            })
         }
 
-        this.myDataTable = new YAHOO.widget.DataTable("complex", myColumnDefs, this.myDataSource, myConfigs);
-        this.myDataTable.subscribe("rowClickEvent",this.myDataTable.onEventSelectRow);
-        this.myDataTable.subscribe("cellDblclickEvent",this.myDataTable.onEventShowCellEditor);
-        this.myDataTable.subscribe("editorBlurEvent", this.myDataTable.onEventSaveCellEditor);
+        var myDataTable = new YAHOO.widget.DataTable("complex", myColumnDefs, myDataSource, myConfigs);
+        myDataTable.subscribe("rowClickEvent",myDataTable.onEventSelectRow);
+        myDataTable.subscribe("cellDblclickEvent",myDataTable.onEventShowCellEditor);
+        myDataTable.subscribe("editorBlurEvent", myDataTable.onEventSaveCellEditor);
 
         // When cell is edited, pulse the color of the row yellow
-        this.onCellEdit = function(oArgs) {
-            var elCell = oArgs.editor.cell;
+        var onCellEdit = function(oArgs) {
+            var elCell = oArgs.editor.getTdEl();
             var oOldData = oArgs.oldData;
             var oNewData = oArgs.newData;
 
@@ -114,8 +119,13 @@ YAHOO.util.Event.addListener(window, "load", function() {
             rowColorAnim.onComplete.subscribe(onComplete);
             rowColorAnim.animate();
         }
-        this.myDataTable.subscribe("editorSaveEvent", this.onCellEdit);
-    };
+        myDataTable.subscribe("editorSaveEvent", onCellEdit);
+        
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
 });
 </script>
 

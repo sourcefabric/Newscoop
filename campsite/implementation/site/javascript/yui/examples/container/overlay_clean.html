@@ -27,6 +27,7 @@ body {
 
 <body class=" yui-skin-sam">
 
+
 <h1>Creating and Positioning an Overlay</h1>
 
 <div class="exampleIntro">
@@ -70,7 +71,10 @@ body {
 			YAHOO.log("Overlay2 rendered.", "info", "example");
 
 			// Build overlay3 dynamically, initially hidden, aligned to context element "context", and 200px wide
-			YAHOO.example.container.overlay3 = new YAHOO.widget.Overlay("overlay3", { context:["ctx","tl","bl"],
+
+            // Re-align just before the overlay is shown and whenever the window is resized to account for changes in the position  
+            // of the context element after the initial context alignment 
+			YAHOO.example.container.overlay3 = new YAHOO.widget.Overlay("overlay3", { context:["ctx","tl","bl", ["beforeShow", "windowResize"]],
 																					  visible:false,
 																					  width:"200px" } );
 			YAHOO.example.container.overlay3.setHeader("Overlay #3 from Script");
@@ -116,6 +120,7 @@ body {
 	<div class="bd">This is a Overlay that was marked up in the document.</div>
 	<div class="ft">End of Overlay #1</div>
 </div>
+
 <!--END SOURCE CODE FOR EXAMPLE =============================== -->
 
 </body>

@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Drag and Drop&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Drag and Drop&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_dragdrop.html">dragdrop</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -655,6 +657,21 @@ started
                                     <hr />
                                     </div>
                                     <div class="">
+                                    <h4><a name="property_useShim">useShim</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            If this flag is true, a shim will be placed over the screen/viewable area to track mouse events. Should help with dragging elements over iframes and other controls.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
                                     <h4><a name="property_xTicks">xTicks</a>
                                         <code>- int[]</code>
                                     </h4>
@@ -737,7 +754,10 @@ when you define a tick interval.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -784,7 +804,10 @@ that should not initiate a drag
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -832,7 +855,10 @@ drag handle that do something other than start the drag.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -880,7 +906,10 @@ groups as needed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -918,7 +947,10 @@ each object.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -952,7 +984,10 @@ each object.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -986,7 +1021,10 @@ each object.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1020,7 +1058,10 @@ each object.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1054,7 +1095,10 @@ each object.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1088,7 +1132,10 @@ each object.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1134,7 +1181,10 @@ each object.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1168,7 +1218,10 @@ each object.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1203,7 +1256,10 @@ since they can't exist independent of a constraint at this time.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1237,7 +1293,10 @@ since they can't exist independent of a constraint at this time.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1284,7 +1343,10 @@ was indeed the handle or a valid child of the handle
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1330,7 +1392,10 @@ was indeed the handle or a valid child of the handle
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1366,7 +1431,10 @@ element. An example of this can be found in YAHOO.util.DDProxy
                                                     </code></dt>
                                                     <dd>the html element</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1400,7 +1468,10 @@ element. An example of this can be found in YAHOO.util.DDProxy
                                                     </code></dt>
                                                     <dd>the html element</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1414,7 +1485,7 @@ element. An example of this can be found in YAHOO.util.DDProxy
                                          private 
                                         
                                         
-                                        void
+                                        
                                             <strong>getTargetCoord</strong>
                                            (
                                                 
@@ -1448,14 +1519,10 @@ it to where the mouse location less the click offset would place us.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>an object that contains the coordinates (Object.x and Object.y)</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1511,7 +1578,10 @@ location when we have it set up like this.
                                                     </code></dt>
                                                     <dd>the closest tick</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1565,7 +1635,10 @@ location when we have it set up like this.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1599,7 +1672,10 @@ location when we have it set up like this.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1662,7 +1738,10 @@ YAHOO.util.DragDrop subclass
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1725,7 +1804,10 @@ get a mousedown handler.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1761,7 +1843,10 @@ get a mousedown handler.
                                                     <dd>true if this obj or all drag/drop is locked, else 
 false</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1807,7 +1892,10 @@ false</dd>
                                                     </code></dt>
                                                     <dd>true if this is a valid tag type, false if not</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1841,7 +1929,10 @@ false</dd>
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1875,7 +1966,10 @@ false</dd>
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1910,7 +2004,10 @@ position was determined.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1957,7 +2054,10 @@ object.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2014,7 +2114,10 @@ was dropped on.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2071,7 +2174,10 @@ dragdrop items being hovered over.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2127,7 +2233,10 @@ that the mouse is no longer over.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2184,7 +2293,10 @@ being hovered over.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2231,7 +2343,10 @@ drop target
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2277,7 +2392,10 @@ drop target
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2323,7 +2441,10 @@ drop target
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2369,7 +2490,10 @@ drop target
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2416,7 +2540,10 @@ re-enable
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2462,7 +2589,10 @@ re-enable
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2508,7 +2638,10 @@ re-enable
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2542,7 +2675,10 @@ re-enable
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2589,7 +2725,10 @@ will be moved with the cursor during a drag
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2641,7 +2780,10 @@ initiate the drag.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2695,7 +2837,10 @@ initiate the drag.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2742,7 +2887,10 @@ handle
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2816,7 +2964,10 @@ will have the first param, the left and right the second.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2863,7 +3014,10 @@ is initialized, the reset when a drag is started.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2930,7 +3084,10 @@ should move iTickSize pixels at a time.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2965,7 +3122,10 @@ in setXConstraint().
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3030,7 +3190,10 @@ element should move iTickSize pixels at a time.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3065,7 +3228,10 @@ setYConstraint().
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3120,7 +3286,10 @@ and the drag or mousedown time thresholds have beeen met.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3154,7 +3323,10 @@ and the drag or mousedown time thresholds have beeen met.
                                                     </code></dt>
                                                     <dd>string representation of the dd obj</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3188,7 +3360,10 @@ and the drag or mousedown time thresholds have beeen met.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3222,7 +3397,10 @@ and the drag or mousedown time thresholds have beeen met.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3752,6 +3930,8 @@ and the drag or mousedown time thresholds have beeen met.
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -3791,6 +3971,8 @@ and the drag or mousedown time thresholds have beeen met.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -3935,6 +4117,9 @@ and the drag or mousedown time thresholds have beeen met.
                                 <li class="private"><a href="#property_startPageY">startPageY</a>
                                         <!--<code>&lt;int[]&gt;</code>-->
                                 </li>
+                                <li class=""><a href="#property_useShim">useShim</a>
+                                        <!--<code>&lt;int[]&gt;</code>-->
+                                </li>
                                 <li class=""><a href="#property_xTicks">xTicks</a>
                                         <!--<code>&lt;int[]&gt;</code>-->
                                 </li>
@@ -4001,7 +4186,7 @@ and the drag or mousedown time thresholds have beeen met.
                                 <li class=""><!--<code>HTMLElement</code>-->
                                 <a href="#method_getEl">getEl</a>
                                 </li>
-                                <li class="private"><!--<code>void</code>-->
+                                <li class="private"><!--<code></code>-->
                                 <a href="#method_getTargetCoord">getTargetCoord</a>
                                 </li>
                                 <li class="private"><!--<code>int</code>-->
@@ -4181,7 +4366,7 @@ and the drag or mousedown time thresholds have beeen met.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

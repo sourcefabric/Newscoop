@@ -23,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="../../build/resize/assets/skins/sam/resize.css" />
     <script type="text/javascript" src="../../build/utilities/utilities.js"></script>
     <script type="text/javascript" src="../../build/container/container.js"></script>
-    <script type="text/javascript" src="../../build/resize/resize-beta.js"></script>
+    <script type="text/javascript" src="../../build/resize/resize.js"></script>
 
     <style type="text/css">
     #examplecontainer {
@@ -32,7 +32,6 @@
 
     #resizablepanel .bd {
         overflow:auto;
-        height:10em;
         background-color:#fff;
         padding:10px;
     }
@@ -96,63 +95,55 @@
 
         function() {
 
-            // Setup constants
-
-            // QUIRKS FLAG, FOR BOX MODEL
-            var IE_QUIRKS = (YAHOO.env.ua.ie && document.compatMode == "BackCompat");
-
-            // UNDERLAY/IFRAME SYNC REQUIRED
-            var IE_SYNC = (YAHOO.env.ua.ie == 6 || (YAHOO.env.ua.ie == 7 && IE_QUIRKS));
-
-            // PADDING USED FOR BODY ELEMENT (Hardcoded for example)
-            var PANEL_BODY_PADDING = (10*2) // 10px top/bottom padding applied to Panel body element. The top/bottom border width is 0
-
             // Create a panel Instance, from the 'resizablepanel' DIV standard module markup
-            var panel = new YAHOO.widget.Panel('resizablepanel', {
+            var panel = new YAHOO.widget.Panel("resizablepanel", {
                 draggable: true,
-                width: '500px',
+                width: "500px",
+                height: "150px",
+                autofillheight: "body", // default value, specified here to highlight its use in the example
+                constraintoviewport:true,
                 context: ["showbtn", "tl", "bl"]
             });
             panel.render();
 
             // Create Resize instance, binding it to the 'resizablepanel' DIV 
-            var resize = new YAHOO.util.Resize('resizablepanel', {
-                handles: ['br'],
+            var resize = new YAHOO.util.Resize("resizablepanel", {
+                handles: ["br"],
                 autoRatio: false,
                 minWidth: 300,
                 minHeight: 100,
-                status: true
+                status: false 
             });
 
-            // Setup resize handler to update the size of the Panel's body element
-            // whenever the size of the 'resizablepanel' DIV changes
-            resize.on('resize', function(args) {
+            // Setup startResize handler, to constrain the resize width/height
+            // if the constraintoviewport configuration property is enabled.
+            resize.on("startResize", function(args) {
 
+    		    if (this.cfg.getProperty("constraintoviewport")) {
+                    var D = YAHOO.util.Dom;
+
+                    var clientRegion = D.getClientRegion();
+                    var elRegion = D.getRegion(this.element);
+
+                    resize.set("maxWidth", clientRegion.right - elRegion.left - YAHOO.widget.Overlay.VIEWPORT_OFFSET);
+                    resize.set("maxHeight", clientRegion.bottom - elRegion.top - YAHOO.widget.Overlay.VIEWPORT_OFFSET);
+	            } else {
+                    resize.set("maxWidth", null);
+                    resize.set("maxHeight", null);
+	        	}
+
+            }, panel, true);
+
+            // Setup resize handler to update the Panel's 'height' configuration property 
+            // whenever the size of the 'resizablepanel' DIV changes.
+
+            // Setting the height configuration property will result in the 
+            // body of the Panel being resized to fill the new height (based on the
+            // autofillheight property introduced in 2.6.0) and the iframe shim and 
+            // shadow being resized also if required (for IE6 and IE7 quirks mode).
+            resize.on("resize", function(args) {
                 var panelHeight = args.height;
-
-                var headerHeight = this.header.offsetHeight; // Content + Padding + Border
-                var footerHeight = this.footer.offsetHeight; // Content + Padding + Border
-
-                var bodyHeight = (panelHeight - headerHeight - footerHeight);
-                var bodyContentHeight = (IE_QUIRKS) ? bodyHeight : bodyHeight - PANEL_BODY_PADDING;
-
-                YAHOO.util.Dom.setStyle(this.body, 'height', bodyContentHeight + 'px');
-
-                if (IE_SYNC) {
-
-                    // Keep the underlay and iframe size in sync.
-
-                    // You could also set the width property, to achieve the 
-                    // same results, if you wanted to keep the panel's internal
-                    // width property in sync with the DOM width. 
-
-                    this.sizeUnderlay();
-
-                    // Syncing the iframe can be expensive. Disable iframe if you
-                    // don't need it.
-
-                    this.syncIframe();
-                }
+                this.cfg.setProperty("height", panelHeight + "px");
             }, panel, true);
 
             YAHOO.util.Event.on("showbtn", "click", panel.show, panel, true);
@@ -160,10 +151,10 @@
     );
     </script>
 </head>
-<body class=" yui-skin-sam">
+<body class="yui-skin-sam">
     <h1>Creating a Resizable Panel</h1>
     <div class="exampleIntro">
-        <p>Operating systems offer windows that can be resized, often by dragging from the lower right-hand corner (and, on Microsoft Windows, from the window edges). This example of the Panel Control implements resizability by leveraging YAHOO.util.Resize to introduce a resize handle to the bottom-right corner of the footer. Resize events are listened for, and the size of the body element is modified to fill out the new dimensions of the Panel.</p>
+        <p>Operating systems offer windows that can be resized, often by dragging from the lower right-hand corner (and, on Microsoft Windows, from the window edges). This example implements resizability for the Panel control, by leveraging YAHOO.util.Resize to introduce a resize handle to the bottom-right corner of the footer. Resize events are listened for, and the height configuration property of the Panel is set to reflect the new height of Panel's containing element.</p>
     </div>
 
     <div id="examplecontainer">

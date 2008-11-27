@@ -2,7 +2,7 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
+version: 2.6.0
 */
 .yui-overlay,
 .yui-panel-container {
@@ -154,7 +154,15 @@ PLEASE NOTE:
 */
 
 .yui-tt-shadow {
-
     position: absolute;
+}
 
+.yui-override-padding {
+    padding:0 !important;
+}
+
+.yui-panel-container .container-close {
+    overflow:hidden;
+    text-indent:-10000em;
+    text-decoration:none;
 }

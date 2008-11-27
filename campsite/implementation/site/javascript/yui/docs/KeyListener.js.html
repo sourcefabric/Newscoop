@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Event Utility&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Event Utility&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_event.html">event</a>
@@ -21,21 +21,27 @@
                  &gt; KeyListener.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
                         <style>
                             #doc3 #classopts { display:none; }
                         </style>
-<div class="highlight" ><pre><span class="c">/**</span>
+<div class="highlight" ><pre><span class="c">//@TODO optimize</span>
+<span class="c">//@TODO use event utility, lang abstractions</span>
+<span class="c">//@TODO replace</span>
+<span class="c"></span>
+<span class="c">/**</span>
 <span class="c">* KeyListener is a utility that provides an easy interface for listening for</span>
 <span class="c">* keydown/keyup events fired against DOM elements.</span>
 <span class="c">* @namespace YAHOO.util</span>
@@ -213,21 +219,21 @@
 <span class="o">};</span>
 
 <span class="c">/**</span>
-<span class="c">* Constant representing the DOM &quot;keydown&quot; event.</span>
-<span class="c">* @property YAHOO.util.KeyListener.KEYDOWN</span>
-<span class="c">* @static</span>
-<span class="c">* @final</span>
-<span class="c">* @type String</span>
-<span class="c">*/</span>
+<span class="c"> * Constant representing the DOM &quot;keydown&quot; event.</span>
+<span class="c"> * @property YAHOO.util.KeyListener.KEYDOWN</span>
+<span class="c"> * @static</span>
+<span class="c"> * @final</span>
+<span class="c"> * @type String</span>
+<span class="c"> */</span>
 <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">KeyListener</span><span class="o">.</span><span class="nx">KEYDOWN</span> <span class="o">=</span> <span class="s2">&quot;keydown&quot;</span><span class="o">;</span>
 
 <span class="c">/**</span>
-<span class="c">* Constant representing the DOM &quot;keyup&quot; event.</span>
-<span class="c">* @property YAHOO.util.KeyListener.KEYUP</span>
-<span class="c">* @static</span>
-<span class="c">* @final</span>
-<span class="c">* @type String</span>
-<span class="c">*/</span>
+<span class="c"> * Constant representing the DOM &quot;keyup&quot; event.</span>
+<span class="c"> * @property YAHOO.util.KeyListener.KEYUP</span>
+<span class="c"> * @static</span>
+<span class="c"> * @final</span>
+<span class="c"> * @type String</span>
+<span class="c"> */</span>
 <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">KeyListener</span><span class="o">.</span><span class="nx">KEYUP</span> <span class="o">=</span> <span class="s2">&quot;keyup&quot;</span><span class="o">;</span>
 
 <span class="c">/**</span>
@@ -280,6 +286,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -319,6 +327,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -374,7 +384,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

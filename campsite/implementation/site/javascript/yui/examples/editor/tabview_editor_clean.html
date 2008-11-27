@@ -29,13 +29,14 @@ body {
 <script type="text/javascript" src="../../build/container/container-min.js"></script>
 <script type="text/javascript" src="../../build/menu/menu-min.js"></script>
 <script type="text/javascript" src="../../build/button/button-min.js"></script>
-<script type="text/javascript" src="../../build/editor/editor-beta-min.js"></script>
+<script type="text/javascript" src="../../build/editor/editor-min.js"></script>
 
 <!--there is no custom header content for this example-->
 
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>Editor inside a Tabview Control</h1>
 
@@ -62,7 +63,8 @@ body {
 (function() {
     var Dom = YAHOO.util.Dom,
         Event = YAHOO.util.Event,
-        editorTab = null;
+        editorTab = null,
+        myEditor = null;
 
 
     YAHOO.log('Create the Tabview..', 'info', 'example');
@@ -92,22 +94,21 @@ body {
     myTabs.on('activeTabChange', function(ev) {
         YAHOO.log('Active tab Change, check to see if we are showing the editor..', 'info', 'example');
          if (ev.newValue == editorTab) {
-            YAHOO.log('Editor showing, calling myEditor.show()..', 'info', 'example');
-            myEditor.show();
+            var myConfig = {
+                height: '100px',
+                width: '600px',
+                animate: true,
+                dompath: true
+            };
+            if (!myEditor) {
+                YAHOO.log('Create the Editor..', 'info', 'example');
+                myEditor = new YAHOO.widget.Editor('editor', myConfig);
+                myEditor.render();
+            }
          }
     });
 
 
-    var myConfig = {
-        height: '100px',
-        width: '530px',
-        animate: true,
-        dompath: true
-    };
-
-    YAHOO.log('Create the Editor..', 'info', 'example');
-    var myEditor = new YAHOO.widget.Editor('editor', myConfig);
-    myEditor.render();
 
 })();
 </script>

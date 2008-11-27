@@ -21,8 +21,8 @@ body {
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../../build/connection/connection-min.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 
 <!--begin custom header content for this example-->
@@ -36,6 +36,7 @@ body {
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>Textual Data Over XHR</h1>
 
@@ -54,57 +55,64 @@ doBeforeCallback().</p>
 
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.XHR_Text = new function() {
-        this.formatUrl = function(elCell, oRecord, oColumn, sData) {
+    YAHOO.example.XHR_Text = function() {
+        var formatUrl = function(elCell, oRecord, oColumn, sData) {
             elCell.innerHTML = "<a href='" + oRecord.getData("Url") + "' target='_blank'>" + sData + "</a>";
         };
 
         var myColumnDefs = [
-            {key:"Name", sortable:true, formatter:this.formatUrl},
+            {key:"Name", sortable:true, formatter:formatUrl},
             {key:"Phone"},
             {key:"City"},
             {key:"Rating", formatter:YAHOO.widget.DataTable.formatNumber, sortable:true}
 
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource("assets/php/text_proxy.txt?");
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_TEXT;
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource("assets/php/text_proxy.txt");
+        //myDataSource.responseType = YAHOO.util.DataSource.TYPE_TEXT;
+        myDataSource.responseSchema = {
             recordDelim: "\n",
             fieldDelim: "|",
-            fields: ["Name","Address","City","Phone",{key:"Rating",parser:YAHOO.util.DataSource.parseNumber},"Url"]
+            fields: ["Name","Address","City","Phone",{key:"Rating",parser:"number"},"Url"]
         };
 
-        this.myDataTable = new YAHOO.widget.DataTable("text", myColumnDefs,
-                this.myDataSource, {caption:"Example: Textual Data Over XHR"});
+        var myDataTable = new YAHOO.widget.DataTable("text", myColumnDefs,
+                myDataSource, {caption:"Example: Textual Data Over XHR"});
 
 
 
         var moreColumnDefs = [
-            {key:"Restaurant", sortable:true, formatter:this.formatUrl},
+            {key:"Restaurant", sortable:true, formatter:formatUrl},
             {key:"Location"},
             {key:"Town"},
             {key:"Stars", formatter:YAHOO.widget.DataTable.formatNumber, sortable:true}
         ];
 
-        this.anotherDataSource = new YAHOO.util.DataSource("assets/php/text_with_headers_proxy.txt?");
-        this.anotherDataSource.responseType = YAHOO.util.DataSource.TYPE_TEXT;
-        this.anotherDataSource.responseSchema = {
+        var anotherDataSource = new YAHOO.util.DataSource("assets/php/text_with_headers_proxy.txt");
+        anotherDataSource.responseType = YAHOO.util.DataSource.TYPE_TEXT;
+        anotherDataSource.responseSchema = {
             recordDelim: "\n",
             fieldDelim: "|",
-            fields: ["Restaurant","Location","Town","Telephone",{key:"Stars",parser:YAHOO.util.DataSource.parseNumber},"Url"]
+            fields: ["Restaurant","Location","Town","Telephone",{key:"Stars",parser:"number"},"Url"]
         };
         // Upgrade note: As of 2.5.0, the second argument is the full type-converted
         // response from the live data, and not the unconverted raw response
-        this.anotherDataSource.doBeforeCallback = function(oRequest, oFullResponse, oParsedResponse) {
+        anotherDataSource.doBeforeCallback = function(oRequest, oFullResponse, oParsedResponse) {
             // Remove the first result (i.e., the headers);
             oParsedResponse.results.shift();
             return oParsedResponse;
         };
 
-        this.anotherDataTable = new YAHOO.widget.DataTable("textWithHeaderData", moreColumnDefs,
-                this.anotherDataSource, {caption:"Example: First Record Holds Header Data"});
-    };
+        anotherDataTable = new YAHOO.widget.DataTable("textWithHeaderData", moreColumnDefs,
+                anotherDataSource, {caption:"Example: First Record Holds Header Data"});
+                
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable,
+            oDS2: anotherDataSource,
+            oDT2: anotherDataTable
+        };
+    }();
 });
 </script>
 

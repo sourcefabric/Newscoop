@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Container&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Container&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_container.html">container</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -131,7 +133,7 @@ documentation for more details.
 
                                     <hr />
                                     </div>
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4><a name="property_browser">browser</a>
                                         <code>- String</code>
                                     </h4>
@@ -270,7 +272,7 @@ configuration properties.
 
                                     <hr />
                                     </div>
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4><a name="property_imageRoot">imageRoot</a>
                                         <code>- String</code>
                                     </h4>
@@ -491,7 +493,10 @@ prevent Operation Aborted errors in IE.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -525,7 +530,10 @@ prevent Operation Aborted errors in IE.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -560,7 +568,10 @@ Determines if the browser supports resize events on iframe content windows.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -609,7 +620,10 @@ children of the fragment will be appended to the body.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -658,7 +672,10 @@ children of the fragment will be appended to the footer
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -707,7 +724,10 @@ children of the fragment will be appended to the header.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -771,7 +791,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -838,7 +861,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -873,7 +899,10 @@ to null.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -909,7 +938,10 @@ the visibility change, and hideEvent after.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -975,7 +1007,10 @@ See configuration documentation for more details.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1010,7 +1045,10 @@ automatically at appropriate times by the Module class.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1045,7 +1083,10 @@ automatically at appropriate times by the Module class.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1080,7 +1121,10 @@ that can be used to detect text resize.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1134,7 +1178,10 @@ that can be used to detect text resize.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1213,7 +1260,10 @@ represents the actual Standard Module container.
                                                     </code></dt>
                                                     <dd>Success or failure of the render</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1243,10 +1293,9 @@ represents the actual Standard Module container.
                                         </code>
                                         
                                         <div class="description">
-                                            Sets the Module's body content to the HTML specified, or appends the
-passed element to the body. If no body is present, one will be 
-automatically created. An empty string can be passed to the method
-to clear the contents of the body.
+                                            Sets the Module's body content to the HTML specified. 
+If no body is present, one will be automatically created. 
+An empty string can be passed to the method to clear the contents of the body.
                                         </div>
 
                                         <div class="description">
@@ -1263,7 +1312,8 @@ set to their default toString implementations.
                                                         </dd>
                                                         <dd>
                                                             <code>bodyContent &lt;HTMLElement&gt;</code>
-                                                             The HTMLElement to append to the body
+                                                             The HTMLElement to add as the first and only
+child of the body element.
 <em>OR</em>
                                                         </dd>
                                                         <dd>
@@ -1280,7 +1330,10 @@ containing elements which are to be added to the body
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1348,7 +1401,10 @@ elements which are to be added to the footer
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1415,7 +1471,10 @@ containing elements which are to be added to the header
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1451,7 +1510,10 @@ the visibility change, and showEvent after.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1485,7 +1547,10 @@ the visibility change, and showEvent after.
                                                     </code></dt>
                                                     <dd>The string representation of the Module</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2040,8 +2105,18 @@ false by default.
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Object or array of objects representing the ContainerEffect 
+                                            <p>
+Object or array of objects representing the ContainerEffect 
 classes that are active for animating the container.
+</p>
+<p>
+<strong>NOTE:</strong> Although this configuration 
+property is introduced at the Module level, an out of the box
+implementation is not shipped for the Module class so setting
+the proroperty on the Module class has no effect. The Overlay 
+class is the first class to provide out of the box ContainerEffect 
+support.
+</p>
                                         </div>
                                     </div>
  
@@ -2109,6 +2184,8 @@ for user font resizing in the document
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -2148,6 +2225,8 @@ for user font resizing in the document
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -2209,7 +2288,7 @@ for user font resizing in the document
                                 <li class=""><a href="#property_body">body</a>
                                         <!--<code>&lt;String&gt;</code>-->
                                 </li>
-                                <li class=""><a href="#property_browser">browser</a>
+                                <li class=" deprecated"><a href="#property_browser">browser</a>
                                         <!--<code>&lt;String&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_cfg">cfg</a>
@@ -2236,7 +2315,7 @@ for user font resizing in the document
                                 <li class=""><a href="#property_id">id</a>
                                         <!--<code>&lt;String&gt;</code>-->
                                 </li>
-                                <li class=""><a href="#property_imageRoot">imageRoot</a>
+                                <li class=" deprecated"><a href="#property_imageRoot">imageRoot</a>
                                         <!--<code>&lt;String&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_isSecure">isSecure</a>
@@ -2412,7 +2491,7 @@ for user font resizing in the document
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

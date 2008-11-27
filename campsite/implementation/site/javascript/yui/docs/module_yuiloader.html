@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>yuiloader&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>yuiloader&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_yuiloader.html">yuiloader</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                    
@@ -46,6 +48,10 @@ appropriate in order to minimize the number of http connections
 required to load all of the dependencies.
                     </div>
 
+
+
+<div class="yui-gc">
+    <div class="yui-u first">
                     <form onsubmit="return false">
                         <p>Search yuiloader:
                         <div id="propertysearch">
@@ -56,9 +62,13 @@ required to load all of the dependencies.
                         </div>
                     </form>
                     <script type="text/javascript">
-                        ALL_YUI_PROPS = [{"access": "", "host": "YAHOO.util.YUILoader", "name": "addModule", "url": "YAHOO.util.YUILoader.html#method_addModule"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_addSkin", "url": "YAHOO.util.YUILoader.html#method__addSkin"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "allowRollup", "url": "YAHOO.util.YUILoader.html#property_allowRollup"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "base", "url": "YAHOO.util.YUILoader.html#property_base"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "calculate", "url": "YAHOO.util.YUILoader.html#method_calculate"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "charset", "url": "YAHOO.util.YUILoader.html#property_charset"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "data", "url": "YAHOO.util.YUILoader.html#property_data"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "dirty", "url": "YAHOO.util.YUILoader.html#property_dirty"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_explode", "url": "YAHOO.util.YUILoader.html#method__explode"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "filter", "url": "YAHOO.util.YUILoader.html#property_filter"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "force", "url": "YAHOO.util.YUILoader.html#property_force"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "formatSkin", "url": "YAHOO.util.YUILoader.html#method_formatSkin"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "getProvides", "url": "YAHOO.util.YUILoader.html#method_getProvides"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "getRequires", "url": "YAHOO.util.YUILoader.html#method_getRequires"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "ignore", "url": "YAHOO.util.YUILoader.html#property_ignore"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "insert", "url": "YAHOO.util.YUILoader.html#method_insert"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "insertBefore", "url": "YAHOO.util.YUILoader.html#property_insertBefore"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "inserted", "url": "YAHOO.util.YUILoader.html#property_inserted"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_internalCallback", "url": "YAHOO.util.YUILoader.html#property__internalCallback"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "loaded", "url": "YAHOO.util.YUILoader.html#property_loaded"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "loadNext", "url": "YAHOO.util.YUILoader.html#method_loadNext"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "loadOptional", "url": "YAHOO.util.YUILoader.html#property_loadOptional"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "moduleInfo", "url": "YAHOO.util.YUILoader.html#property_moduleInfo"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "onFailure", "url": "YAHOO.util.YUILoader.html#method_onFailure"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "onProgress", "url": "YAHOO.util.YUILoader.html#method_onProgress"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "onSuccess", "url": "YAHOO.util.YUILoader.html#method_onSuccess"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "parseSkin", "url": "YAHOO.util.YUILoader.html#method_parseSkin"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_pushEvents", "url": "YAHOO.util.YUILoader.html#method__pushEvents"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_reduce", "url": "YAHOO.util.YUILoader.html#method__reduce"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "require", "url": "YAHOO.util.YUILoader.html#method_require"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "required", "url": "YAHOO.util.YUILoader.html#property_required"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_rollup", "url": "YAHOO.util.YUILoader.html#method__rollup"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "rollups", "url": "YAHOO.util.YUILoader.html#property_rollups"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "scope", "url": "YAHOO.util.YUILoader.html#property_scope"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_setup", "url": "YAHOO.util.YUILoader.html#method__setup"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "skin", "url": "YAHOO.util.YUILoader.html#property_skin"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_skin", "url": "YAHOO.util.YUILoader.html#method__skin"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_sort", "url": "YAHOO.util.YUILoader.html#method__sort"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "sorted", "url": "YAHOO.util.YUILoader.html#property_sorted"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_url", "url": "YAHOO.util.YUILoader.html#method__url"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_useYahooListener", "url": "YAHOO.util.YUILoader.html#property__useYahooListener"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "varName", "url": "YAHOO.util.YUILoader.html#property_varName"}];
+                        ALL_YUI_PROPS = [{"access": "", "host": "YAHOO.util.YUILoader", "name": "addModule", "url": "YAHOO.util.YUILoader.html#method_addModule"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_addSkin", "url": "YAHOO.util.YUILoader.html#method__addSkin"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "allowRollup", "url": "YAHOO.util.YUILoader.html#property_allowRollup"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "base", "url": "YAHOO.util.YUILoader.html#property_base"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "calculate", "url": "YAHOO.util.YUILoader.html#method_calculate"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "charset", "url": "YAHOO.util.YUILoader.html#property_charset"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "combine", "url": "YAHOO.util.YUILoader.html#property_combine"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "comboBase", "url": "YAHOO.util.YUILoader.html#property_comboBase"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "data", "url": "YAHOO.util.YUILoader.html#property_data"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "dirty", "url": "YAHOO.util.YUILoader.html#property_dirty"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_explode", "url": "YAHOO.util.YUILoader.html#method__explode"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "filter", "url": "YAHOO.util.YUILoader.html#property_filter"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_filter", "url": "YAHOO.util.YUILoader.html#method__filter"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "force", "url": "YAHOO.util.YUILoader.html#property_force"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "formatSkin", "url": "YAHOO.util.YUILoader.html#method_formatSkin"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "getProvides", "url": "YAHOO.util.YUILoader.html#method_getProvides"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "getRequires", "url": "YAHOO.util.YUILoader.html#method_getRequires"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "ignore", "url": "YAHOO.util.YUILoader.html#property_ignore"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "insert", "url": "YAHOO.util.YUILoader.html#method_insert"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "insertBefore", "url": "YAHOO.util.YUILoader.html#property_insertBefore"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "inserted", "url": "YAHOO.util.YUILoader.html#property_inserted"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_internalCallback", "url": "YAHOO.util.YUILoader.html#property__internalCallback"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "loaded", "url": "YAHOO.util.YUILoader.html#property_loaded"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "loadNext", "url": "YAHOO.util.YUILoader.html#method_loadNext"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "loadOptional", "url": "YAHOO.util.YUILoader.html#property_loadOptional"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "moduleInfo", "url": "YAHOO.util.YUILoader.html#property_moduleInfo"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "onFailure", "url": "YAHOO.util.YUILoader.html#method_onFailure"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "onProgress", "url": "YAHOO.util.YUILoader.html#method_onProgress"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "onSuccess", "url": "YAHOO.util.YUILoader.html#method_onSuccess"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "onTimeout", "url": "YAHOO.util.YUILoader.html#method_onTimeout"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "parseSkin", "url": "YAHOO.util.YUILoader.html#method_parseSkin"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_pushEvents", "url": "YAHOO.util.YUILoader.html#method__pushEvents"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_reduce", "url": "YAHOO.util.YUILoader.html#method__reduce"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "require", "url": "YAHOO.util.YUILoader.html#method_require"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "required", "url": "YAHOO.util.YUILoader.html#property_required"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_rollup", "url": "YAHOO.util.YUILoader.html#method__rollup"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "rollups", "url": "YAHOO.util.YUILoader.html#property_rollups"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "root", "url": "YAHOO.util.YUILoader.html#property_root"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "sandbox", "url": "YAHOO.util.YUILoader.html#method_sandbox"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "scope", "url": "YAHOO.util.YUILoader.html#property_scope"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_setup", "url": "YAHOO.util.YUILoader.html#method__setup"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "skin", "url": "YAHOO.util.YUILoader.html#property_skin"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_skin", "url": "YAHOO.util.YUILoader.html#method__skin"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_sort", "url": "YAHOO.util.YUILoader.html#method__sort"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "sorted", "url": "YAHOO.util.YUILoader.html#property_sorted"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "timeout", "url": "YAHOO.util.YUILoader.html#property_timeout"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_url", "url": "YAHOO.util.YUILoader.html#method__url"}, {"access": "private", "host": "YAHOO.util.YUILoader", "name": "_useYahooListener", "url": "YAHOO.util.YUILoader.html#property__useYahooListener"}, {"access": "", "host": "YAHOO.util.YUILoader", "name": "varName", "url": "YAHOO.util.YUILoader.html#property_varName"}];
                     </script>
+	    </div>
+    <div class="yui-u">
 
+	    </div>
+</div>
 
 			</div>
 		</div>
@@ -76,6 +86,8 @@ required to load all of the dependencies.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -116,6 +128,8 @@ required to load all of the dependencies.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -164,7 +178,7 @@ required to load all of the dependencies.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -3,7 +3,7 @@
 
 	<description>Builds the SWF file used by the YUI Charts Control</description>
 	
-	<property name="flexbin" value="C:/Program Files/Adobe/Flex Builder 3/sdks/2.0.1/bin"/>
+	<property name="flexbin" value="C:/Program Files/Adobe/Flex Builder 3/sdks/3.0.0/bin"/>
 	
 	<property name="lib" value="${basedir}"/>
 	<property name="src" value="${basedir}"/>

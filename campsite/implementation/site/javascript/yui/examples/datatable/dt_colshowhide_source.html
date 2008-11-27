@@ -91,7 +91,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="../../build/yuiloader/yuiloader-beta.js"></script>
+<script type="text/javascript" src="../../build/yuiloader/yuiloader.js"></script>
 <script type="text/javascript" src="./assets/js/data.js"></script>
 <script type="text/javascript">
 var loader = new YAHOO.util.YUILoader();
@@ -101,7 +101,7 @@ loader.insert({
     filter: 'debug',
     allowRollup: false,
     onSuccess: function() {
-        YAHOO.example.ColumnShowHide = new function() {
+        YAHOO.example.ColumnShowHide = function() {
             // Define Columns
             var myColumnDefs = [
                 {key:"address"},
@@ -114,24 +114,24 @@ loader.insert({
             ];
     
             // Create DataSource
-            this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.addresses);
-            this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
-            this.myDataSource.responseSchema = {
-                fields: ["address","city","state","amount","active","colors",{key:"last_login",parser:YAHOO.util.DataSource.parseDate}]
+            var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.addresses);
+            myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+            myDataSource.responseSchema = {
+                fields: ["address","city","state","amount","active","colors",{key:"last_login",parser:"date"}]
             };
     
             // Create DataTable
-            var myDT = this.myDataTable = new YAHOO.widget.DataTable("columnshowhide", myColumnDefs, this.myDataSource, {draggableColumns:true});
+            var myDataTable = new YAHOO.widget.DataTable("columnshowhide", myColumnDefs, myDataSource, {draggableColumns:true});
                         
             // Shows dialog, creating one when necessary
-            this.newCols = true;
-            this.showDlg = function(e) {
+            var newCols = true;
+            var showDlg = function(e) {
                 YAHOO.util.Event.stopEvent(e);
 
-                if(this.newCols) {
+                if(newCols) {
                     // Populate Dialog
                     // Using a template to create elements for the SimpleDialog
-                    var allColumns = myDT.getColumnSet().keys;
+                    var allColumns = myDataTable.getColumnSet().keys;
                     var elPicker = YAHOO.util.Dom.get("dt-dlg-picker");
                     var elTemplateCol = document.createElement("div");
                     YAHOO.util.Dom.addClass(elTemplateCol, "dt-dlg-pickercol");
@@ -139,7 +139,7 @@ loader.insert({
                     YAHOO.util.Dom.addClass(elTemplateKey, "dt-dlg-pickerkey");
                     var elTemplateBtns = elTemplateCol.appendChild(document.createElement("span"));
                     YAHOO.util.Dom.addClass(elTemplateBtns, "dt-dlg-pickerbtns");
-                    var onclickObj = {fn:this.handleButtonClick, obj:this, scope:false };
+                    var onclickObj = {fn:handleButtonClick, obj:this, scope:false };
                     
                     // Create one section in the SimpleDialog for each Column
                     var elColumn, elKey, elButton, oButtonGrp;
@@ -166,48 +166,54 @@ loader.insert({
                                         
                         elPicker.appendChild(elColumn);
                     }
-                    this.newCols = false;
+                    newCols = false;
             	}
-                this.myDlg.show();
-                this.myDlg.center();
+                myDlg.show();
             };
-            this.hideDlg = function(e) {
+            var hideDlg = function(e) {
                 this.hide();
             };
-            this.handleButtonClick = function(e, oSelf) {
+            var handleButtonClick = function(e, oSelf) {
                 var sKey = this.get("name");
                 if(this.get("value") === "Hide") {
                     // Hides a Column
-                    oSelf.myDataTable.hideColumn(sKey);
+                    myDataTable.hideColumn(sKey);
                 }
                 else {
                     // Shows a Column
-                    oSelf.myDataTable.showColumn(sKey);
+                    myDataTable.showColumn(sKey);
                 }
             };
             
             // Create the SimpleDialog
             YAHOO.util.Dom.removeClass("dt-dlg", "inprogress");
-            this.myDlg = new YAHOO.widget.SimpleDialog("dt-dlg", {
+            var myDlg = new YAHOO.widget.SimpleDialog("dt-dlg", {
                     width: "30em",
     			    visible: false,
     			    modal: true,
     			    buttons: [ 
-    					{ text:"Close",  handler:this.hideDlg }
-                    ]
+    					{ text:"Close",  handler:hideDlg }
+                    ],
+                    fixedcenter: true,
+                    constrainToViewport: true
     		});
-    		this.myDlg.render();
+    		myDlg.render();
 
             // Nulls out myDlg to force a new one to be created
-            myDT.subscribe("columnReorderEvent", function(){
-                this.newCols = true;
+            myDataTable.subscribe("columnReorderEvent", function(){
+                newCols = true;
                 YAHOO.util.Event.purgeElement("dt-dlg-picker", true);
                 YAHOO.util.Dom.get("dt-dlg-picker").innerHTML = "";
             }, this, true);
     		
     		// Hook up the SimpleDialog to the link
-    		YAHOO.util.Event.addListener("dt-options-link", "click", this.showDlg, this, true);
-        };
+    		YAHOO.util.Event.addListener("dt-options-link", "click", showDlg, this, true);
+    		
+    		return {
+    		  oDS: myDataSource,
+    		  oDT: myDataTable
+    		};
+        }();
     }
 });
 </script>

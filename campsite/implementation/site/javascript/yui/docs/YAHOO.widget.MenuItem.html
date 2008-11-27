@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Menu&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Menu&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_menu.html">menu</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -227,7 +229,7 @@ one-html.html#ID-58190037">HTMLElement</a></code>
 
                                     <hr />
                                     </div>
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4><a name="property_browser">browser</a>
                                         <code>- String</code>
                                     </h4>
@@ -301,21 +303,6 @@ menu item's <code>&#60;a&#62;</code> element.
 
                                     <hr />
                                     </div>
-                                    <div class="private">
-                                    <h4><a name="property_DEFAULT_CONFIG">DEFAULT_CONFIG</a>
-                                        <code>- private final Object</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Constant representing the MenuItem's configuration properties
-                                        </div>
-                                    </div>
-     
-                                        
-
-
-                                    <hr />
-                                    </div>
                                     <div class="">
                                     <h4><a name="property_element">element</a>
                                         <code>- <a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-
@@ -333,21 +320,6 @@ one-html.html#ID-74680021">HTMLLIElement</a></code>
                                         Default Value: <a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level
 -one-html.html#ID-74680021">HTMLLIElement</a>
                                     </div>        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4><a name="property_EVENT_TYPES">EVENT_TYPES</a>
-                                        <code>- private final Object</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Constant representing the name of the MenuItem's events
-                                        </div>
-                                    </div>
-     
-                                        
 
 
                                     <hr />
@@ -528,7 +500,10 @@ add when parsing the child nodes of the menu item's source HTML element.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -563,7 +538,10 @@ the child nodes to instantiate other menus.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -618,7 +596,60 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method_addClassNameForState">addClassNameForState</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>addClassNameForState</strong>
+                                           (
+                                                
+                                                        
+                                                         state
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Applies a class name to a MenuItem instance's &#60;LI&#62; and &#60;A&#62; elements
+that represents a MenuItem's state - "disabled," "checked," etc.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>state &lt;String&gt;</code>
+                                                             String representing a state - "disabled," "checked," etc.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -653,7 +684,10 @@ blur event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -718,7 +752,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -783,7 +820,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -848,7 +888,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -913,7 +956,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -978,7 +1024,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1043,7 +1092,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1108,7 +1160,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1173,7 +1228,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1238,7 +1296,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1303,7 +1364,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1368,7 +1432,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1433,7 +1500,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1468,7 +1538,10 @@ from its parent <code>&#60;ul&#62;</code> element.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1503,7 +1576,68 @@ focus event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method_getClassNameForState">getClassNameForState</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>getClassNameForState</strong>
+                                           (
+                                                
+                                                        
+                                                         prefix
+                                                    
+                                                
+                                                        , 
+                                                         state
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Returns a class name for the specified prefix and state.  If the class name does not 
+yet exist, it is created and stored in the CLASS_NAMES object to increase performance.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>prefix &lt;String&gt;</code>
+                                                             String representing the prefix for the class name
+                                                        </dd>
+                                                        <dd>
+                                                            <code>state &lt;String&gt;</code>
+                                                             String representing a state - "disabled," "checked," etc.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1517,7 +1651,7 @@ focus event.
                                         
                                         
                                         
-                                        void
+                                        
                                             <strong>getNextEnabledSibling</strong>
                                            (
                                             )
@@ -1530,14 +1664,10 @@ focus event.
                                         <div class="description">
 
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>YAHOO.widget.MenuItem</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1571,7 +1701,10 @@ focus event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1606,7 +1739,10 @@ has focus.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1689,7 +1825,10 @@ for more details.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1723,7 +1862,60 @@ for more details.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method_removeClassNameForState">removeClassNameForState</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>removeClassNameForState</strong>
+                                           (
+                                                
+                                                        
+                                                         state
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Removes a class name from a MenuItem instance's &#60;LI&#62; and &#60;A&#62; elements
+that represents a MenuItem's state - "disabled," "checked," etc.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>state &lt;String&gt;</code>
+                                                             String representing a state - "disabled," "checked," etc.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1757,7 +1949,10 @@ for more details.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2163,7 +2358,7 @@ or fire events.)
 
                                     <hr />
                                     </div>        
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4><a name="config_emphasis">emphasis</a>
                                         <code>- Boolean</code>
                                     </h4>
@@ -2175,7 +2370,7 @@ rendered with emphasis.
                                     </div>
  
                                     <div class="deprecated">
-                                        <strong>Deprecated</strong> Use "text" configuration property to add emphasis.  
+                                        <strong>Deprecated</strong> Use the "text" configuration property to add emphasis.  
 For example: <code>oMenuItem.cfg.setProperty("text", "&#60;em&#62;Some 
 Text&#60;/em&#62;");</code>
                                     </div>        
@@ -2186,7 +2381,7 @@ Text&#60;/em&#62;");</code>
 
                                     <hr />
                                     </div>        
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4><a name="config_helptext">helptext</a>
                                         <code>- String|<a href="http://www.w3.org/TR/
 2000/WD-DOM-Level-1-20000929/level-one-html.html#ID-58190037">
@@ -2252,7 +2447,7 @@ be highlighted.
 
                                     <hr />
                                     </div>        
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4><a name="config_strongemphasis">strongemphasis</a>
                                         <code>- Boolean</code>
                                     </h4>
@@ -2264,7 +2459,7 @@ rendered with strong emphasis.
                                     </div>
  
                                     <div class="deprecated">
-                                        <strong>Deprecated</strong> Use "text" configuration property to add strong emphasis.  
+                                        <strong>Deprecated</strong> Use the "text" configuration property to add strong emphasis.  
 For example: <code>oMenuItem.cfg.setProperty("text", "&#60;strong&#62; 
 Some Text&#60;/strong&#62;");</code>
                                     </div>        
@@ -2384,6 +2579,8 @@ of this property will be interpreted from the menu's markup.
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -2423,6 +2620,8 @@ of this property will be interpreted from the menu's markup.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class="selected"><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -2492,7 +2691,7 @@ of this property will be interpreted from the menu's markup.
                                 <li class="private"><a href="#property__sClassName">_sClassName</a>
                                         <!--<code>&lt;Object&gt;</code>-->
                                 </li>
-                                <li class=""><a href="#property_browser">browser</a>
+                                <li class=" deprecated"><a href="#property_browser">browser</a>
                                         <!--<code>&lt;Object&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_constructor">constructor</a>
@@ -2504,13 +2703,7 @@ of this property will be interpreted from the menu's markup.
                                 <li class=""><a href="#property_CSS_LABEL_CLASS_NAME">CSS_LABEL_CLASS_NAME</a>
                                         <!--<code>&lt;Object&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a>
-                                        <!--<code>&lt;Object&gt;</code>-->
-                                </li>
                                 <li class=""><a href="#property_element">element</a>
-                                        <!--<code>&lt;Object&gt;</code>-->
-                                </li>
-                                <li class="private"><a href="#property_EVENT_TYPES">EVENT_TYPES</a>
                                         <!--<code>&lt;Object&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_groupIndex">groupIndex</a>
@@ -2548,6 +2741,9 @@ of this property will be interpreted from the menu's markup.
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__onSubmenuBeforeHide">_onSubmenuBeforeHide</a>
+                                </li>
+                                <li class="private"><!--<code>void</code>-->
+                                <a href="#method_addClassNameForState">addClassNameForState</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_blur">blur</a>
@@ -2594,7 +2790,10 @@ of this property will be interpreted from the menu's markup.
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_focus">focus</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class="private"><!--<code>void</code>-->
+                                <a href="#method_getClassNameForState">getClassNameForState</a>
+                                </li>
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_getNextEnabledSibling">getNextEnabledSibling</a>
                                 </li>
                                 <li class=""><!--<code>YAHOO.widget.MenuItem</code>-->
@@ -2608,6 +2807,9 @@ of this property will be interpreted from the menu's markup.
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_initDefaultConfig">initDefaultConfig</a>
+                                </li>
+                                <li class="private"><!--<code>void</code>-->
+                                <a href="#method_removeClassNameForState">removeClassNameForState</a>
                                 </li>
                                 <li class=""><!--<code>String</code>-->
                                 <a href="#method_toString">toString</a>
@@ -2666,10 +2868,10 @@ of this property will be interpreted from the menu's markup.
                                 <li class="">
                                 <a href="#config_disabled">disabled</a>
                                 </li>
-                                <li class="">
+                                <li class=" deprecated">
                                 <a href="#config_emphasis">emphasis</a>
                                 </li>
-                                <li class="">
+                                <li class=" deprecated">
                                 <a href="#config_helptext">helptext</a>
                                 </li>
                                 <li class="">
@@ -2678,7 +2880,7 @@ of this property will be interpreted from the menu's markup.
                                 <li class="">
                                 <a href="#config_selected">selected</a>
                                 </li>
-                                <li class="">
+                                <li class=" deprecated">
                                 <a href="#config_strongemphasis">strongemphasis</a>
                                 </li>
                                 <li class="">
@@ -2701,7 +2903,7 @@ of this property will be interpreted from the menu's markup.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

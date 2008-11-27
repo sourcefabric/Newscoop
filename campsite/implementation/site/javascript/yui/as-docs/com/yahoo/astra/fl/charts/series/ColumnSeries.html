@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../../../print.css" type="text/css" media="print">
-<meta content="ColumnSeries,com.yahoo.astra.fl.charts.series.ColumnSeries,clone,drawMarkers,getStyleDefinition,tweenUpdateHandler" name="keywords">
+<meta content="ColumnSeries,com.yahoo.astra.fl.charts.series.ColumnSeries,clone,getStyleDefinition" name="keywords">
 <title>com.yahoo.astra.fl.charts.series.ColumnSeries</title>
 </head>
 <body>
@@ -40,6 +40,9 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr>
 <td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">ColumnSeries <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../../../images/inherit-arrow.gif"> <a href="CartesianSeries.html">CartesianSeries</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../../../images/inherit-arrow.gif"> <a href="Series.html">Series</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../../../images/inherit-arrow.gif"> fl.core.UIComponent</td>
 </tr>
+<tr>
+<td class="classHeaderTableLabel">Subclasses</td><td><a href="../series/StackedColumnSeries.html">StackedColumnSeries</a></td>
+</tr>
 </table>
 <p></p>
   Renders data points as a series of vertical columns.
@@ -64,8 +67,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Series.html#chart">chart</a> : <a href="../../charts/Chart.html">Chart</a>
-<div class="summaryTableDescription">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Series.html#chart">chart</a> : Object<div class="summaryTableDescription">
    </div>
 </td><td class="summaryTableOwnerCol"><a href="Series.html">Series</a></td>
 </tr>
@@ -130,7 +132,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#clone()">clone</a>():<a href="../series/ISeries.html">ISeries</a>
 </div>
 <div class="summaryTableDescription">
-   </div>
+   
+   Creates a copy of the ISeries object.</div>
 </td><td class="summaryTableOwnerCol">ColumnSeries</td>
 </tr>
 <tr class="hideInheritedMethod">
@@ -179,22 +182,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a onclick="javascript:setInheritedVisible(true,'ProtectedMethod');" href="#protectedMethodSummary" class="showHideLink"><img src="../../../../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Protected Methods</a>
 </div>
 </div>
-<table id="summaryTableProtectedMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<table id="summaryTableProtectedMethod" class="summaryTable hideInheritedProtectedMethod" cellpadding="3" cellspacing="0">
 <tr>
 <th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#drawMarkers()">drawMarkers</a>(data:Array):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol">ColumnSeries</td>
 </tr>
 <tr class="hideInheritedProtectedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
 <a class="signatureLink" href="Series.html#invalidateMarker()">invalidateMarker</a>(marker:<a href="../series/ISeriesItemRenderer.html">ISeriesItemRenderer</a>):void</div>
-<div class="summaryTableDescription"></div>
+<div class="summaryTableDescription">
+   Invalidates a marker (considered new).</div>
 </td><td class="summaryTableOwnerCol"><a href="Series.html">Series</a></td>
 </tr>
 <tr class="hideInheritedProtectedMethod">
@@ -204,13 +201,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summaryTableDescription">
    Indicates whether special considerations should be taken for a newly created marker.</div>
 </td><td class="summaryTableOwnerCol"><a href="Series.html">Series</a></td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#tweenUpdateHandler()">tweenUpdateHandler</a>(event:<a href="../../../animation/AnimationEvent.html">AnimationEvent</a>):void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol">ColumnSeries</td>
 </tr>
 <tr class="hideInheritedProtectedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -266,15 +256,23 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="Series.html#style:fillColor">fillColor</a>
 </div>
-</td><td class="summaryTableDescription"><span class="label">Type: </span>Color<br>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>uint<br>
   The base color used by objects displayed in this series.</td><td class="summaryTableOwnerCol"><a href="Series.html">Series</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="Series.html#style:markerAlpha">markerAlpha</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Number<br>
+  The alpha value from 0.0 to 1.0 to use for drawing the markers.</td><td class="summaryTableOwnerCol"><a href="Series.html">Series</a></td>
 </tr>
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
 <a class="signatureLink" href="Series.html#style:markerSize">markerSize</a>
 </div>
-</td><td class="summaryTableDescription"><span class="label">Type: </span>Class<br>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Number<br>
   The size, in pixels, of each marker.</td><td class="summaryTableOwnerCol"><a href="Series.html">Series</a></td>
 </tr>
 <tr class="hideInheritedStyle">
@@ -320,25 +318,18 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public override function clone():<a href="../series/ISeries.html">ISeries</a></code><p>
+   
+   Creates a copy of the ISeries object.
+   
    </p><p></p>
 <span class="label">Returns</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20"></td><td><code><a href="../series/ISeries.html">ISeries</a></code></td>
-</tr>
-</table>
-</div>
-<a name="drawMarkers()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">drawMarkers</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>protected function drawMarkers(data:Array):void</code><span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">data</span>:Array</code></td>
+<td width="20"></td><td><code><a href="../series/ISeries.html">ISeries</a></code> &mdash; 
+                        a new ISeries object
+   
+                        
+                     </td>
 </tr>
 </table>
 </div>
@@ -355,20 +346,6 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20"></td><td><code>Object</code></td>
-</tr>
-</table>
-</div>
-<a name="tweenUpdateHandler()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">tweenUpdateHandler</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>protected function tweenUpdateHandler(event:<a href="../../../animation/AnimationEvent.html">AnimationEvent</a>):void</code><span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">event</span>:<a href="../../../animation/AnimationEvent.html">AnimationEvent</a></code></td>
 </tr>
 </table>
 </div>

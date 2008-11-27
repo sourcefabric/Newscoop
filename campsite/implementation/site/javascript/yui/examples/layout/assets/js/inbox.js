@@ -151,7 +151,6 @@
                         dataTable.set('width', (this.getSizes().top.w) + 'px');
                         dataTable.setColumnWidth(dataTable.getColumn('Subject'), (this.getSizes().top.w - magicNum));
                         dataTable._syncColWidths();
-                        dataTable._syncScrollPadding();
                     }
                 }, layout2, true);
                 layout2.on('render', function() {

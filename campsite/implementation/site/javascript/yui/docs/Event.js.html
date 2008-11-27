@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Event Utility&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Event Utility&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_event.html">event</a>
@@ -21,14 +21,16 @@
                  &gt; Event.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -158,6 +160,10 @@
 <span class="c"></span>            <span class="m">25</span><span class="o">:</span> <span class="m">9</span>      <span class="c">// SHIFT-TAB (Safari provides a different key code in</span>
 <span class="c"></span>                       <span class="c">// this case, even though the shiftKey modifier is set)</span>
 <span class="c"></span>        <span class="o">};</span>
+        
+        <span class="c">// String constants used by the addFocusListener and removeFocusListener methods</span>
+<span class="c"></span>        <span class="k">var</span> <span class="nx">_FOCUS</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">ua</span><span class="o">.</span><span class="nx">ie</span> <span class="o">?</span> <span class="s2">&quot;focusin&quot;</span> <span class="o">:</span> <span class="s2">&quot;focus&quot;</span><span class="o">;</span>
+        <span class="k">var</span> <span class="nx">_BLUR</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">env</span><span class="o">.</span><span class="nx">ua</span><span class="o">.</span><span class="nx">ie</span> <span class="o">?</span> <span class="s2">&quot;focusout&quot;</span> <span class="o">:</span> <span class="s2">&quot;blur&quot;</span><span class="o">;</span>      
 
         <span class="k">return</span> <span class="o">{</span>
 
@@ -257,6 +263,16 @@
 <span class="c">             * @final</span>
 <span class="c">             */</span>
             <span class="nx">OVERRIDE</span><span class="o">:</span> <span class="m">6</span><span class="o">,</span>
+
+            <span class="c">/**</span>
+<span class="c">             * The original capture parameter passed into _addListener</span>
+<span class="c">             * @property CAPTURE</span>
+<span class="c">             * @type int</span>
+<span class="c">             * @static</span>
+<span class="c">             * @final</span>
+<span class="c">             */</span>
+            <span class="nx">CAPTURE</span><span class="o">:</span> <span class="m">7</span><span class="o">,</span>
+
 
             <span class="c">/**</span>
 <span class="c">             * addListener/removeListener can throw errors in unexpected scenarios.</span>
@@ -459,10 +475,11 @@
                 <span class="o">}</span>
             <span class="o">},</span>
 
+
             <span class="c">/**</span>
 <span class="c">             * Appends an event handler</span>
 <span class="c">             *</span>
-<span class="c">             * @method addListener</span>
+<span class="c">             * @method _addListener</span>
 <span class="c">             *</span>
 <span class="c">             * @param {String|HTMLElement|Array|NodeList} el An id, an element </span>
 <span class="c">             *  reference, or a collection of ids and/or elements to assign the </span>
@@ -475,16 +492,18 @@
 <span class="c">             *                             the execution scope of the listener. If an</span>
 <span class="c">             *                             object, this object becomes the execution</span>
 <span class="c">             *                             scope.</span>
+<span class="c">             * @param {boolen}      capture capture or bubble phase</span>
 <span class="c">             * @return {Boolean} True if the action was successful or defered,</span>
 <span class="c">             *                        false if one or more of the elements </span>
 <span class="c">             *                        could not have the listener attached,</span>
 <span class="c">             *                        or if the operation throws an exception.</span>
+<span class="c">             * @private</span>
 <span class="c">             * @static</span>
 <span class="c">             */</span>
-            <span class="nx">addListener</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">_addListener</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">,</span> <span class="nx">capture</span><span class="o">)</span> <span class="o">{</span>
 
                 <span class="k">if</span> <span class="o">(!</span><span class="nx">fn</span> <span class="o">||</span> <span class="o">!</span><span class="nx">fn</span><span class="o">.</span><span class="nx">call</span><span class="o">)</span> <span class="o">{</span>
-<span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="nx">sType</span> <span class="o">+</span> <span class="s2">&quot; addListener failed, invalid callback&quot;</span><span class="o">,</span> <span class="s2">&quot;error&quot;</span><span class="o">,</span> <span class="s2">&quot;Event&quot;</span><span class="o">);</span>
+                    <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="nx">sType</span> <span class="o">+</span> <span class="s2">&quot; addListener failed, invalid callback&quot;</span><span class="o">,</span> <span class="s2">&quot;error&quot;</span><span class="o">,</span> <span class="s2">&quot;Event&quot;</span><span class="o">);</span>
                     <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
                 <span class="o">}</span>
 
@@ -492,11 +511,12 @@
 <span class="c"></span>                <span class="k">if</span> <span class="o">(</span> <span class="k">this</span><span class="o">.</span><span class="nx">_isValidCollection</span><span class="o">(</span><span class="nx">el</span><span class="o">))</span> <span class="o">{</span>
                     <span class="k">var</span> <span class="nx">ok</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
                     <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">i</span><span class="o">=</span><span class="m">0</span><span class="o">,</span><span class="nx">len</span><span class="o">=</span><span class="nx">el</span><span class="o">.</span><span class="nx">length</span><span class="o">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">len</span><span class="o">;</span> <span class="o">++</span><span class="nx">i</span><span class="o">)</span> <span class="o">{</span>
-                        <span class="nx">ok</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nx">el</span><span class="o">[</span><span class="nx">i</span><span class="o">],</span> 
+                        <span class="nx">ok</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_addListener</span><span class="o">(</span><span class="nx">el</span><span class="o">[</span><span class="nx">i</span><span class="o">],</span> 
                                        <span class="nx">sType</span><span class="o">,</span> 
                                        <span class="nx">fn</span><span class="o">,</span> 
                                        <span class="nx">obj</span><span class="o">,</span> 
-                                       <span class="nx">override</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="nx">ok</span><span class="o">;</span>
+                                       <span class="nx">override</span><span class="o">,</span> 
+                                       <span class="nx">capture</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="nx">ok</span><span class="o">;</span>
                     <span class="o">}</span>
                     <span class="k">return</span> <span class="nx">ok</span><span class="o">;</span>
 
@@ -514,7 +534,7 @@
                     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
                         <span class="c">// defer adding the event until the element is available</span>
 <span class="c"></span>                        <span class="k">this</span><span class="o">.</span><span class="nx">onAvailable</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
-                           <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">);</span>
+                           <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Event</span><span class="o">.</span><span class="nx">_addListener</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">,</span> <span class="nx">capture</span><span class="o">);</span>
                         <span class="o">});</span>
 
                         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
@@ -534,7 +554,7 @@
 <span class="c"></span>                <span class="c">// handles explicitly during our one unload event.</span>
 <span class="c"></span>                <span class="k">if</span> <span class="o">(</span><span class="s2">&quot;unload&quot;</span> <span class="o">==</span> <span class="nx">sType</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span> <span class="o">!==</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
                     <span class="nx">unloadListeners</span><span class="o">[</span><span class="nx">unloadListeners</span><span class="o">.</span><span class="nx">length</span><span class="o">]</span> <span class="o">=</span>
-                            <span class="o">[</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">];</span>
+                            <span class="o">[</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">,</span> <span class="nx">capture</span><span class="o">];</span>
                     <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
                 <span class="o">}</span>
 
@@ -559,7 +579,7 @@
                                 <span class="nx">obj</span><span class="o">);</span>
                     <span class="o">};</span>
 
-                <span class="k">var</span> <span class="nx">li</span> <span class="o">=</span> <span class="o">[</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">wrappedFn</span><span class="o">,</span> <span class="nx">scope</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">];</span>
+                <span class="k">var</span> <span class="nx">li</span> <span class="o">=</span> <span class="o">[</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">wrappedFn</span><span class="o">,</span> <span class="nx">scope</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">,</span> <span class="nx">capture</span><span class="o">];</span>
                 <span class="k">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">listeners</span><span class="o">.</span><span class="nx">length</span><span class="o">;</span>
                 <span class="c">// cache the listener so we can try to automatically unload</span>
 <span class="c"></span>                <span class="nx">listeners</span><span class="o">[</span><span class="nx">index</span><span class="o">]</span> <span class="o">=</span> <span class="nx">li</span><span class="o">;</span>
@@ -595,18 +615,138 @@
 
                 <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
                     <span class="k">try</span> <span class="o">{</span>
-                        <span class="k">this</span><span class="o">.</span><span class="nx">_simpleAdd</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">wrappedFn</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">_simpleAdd</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">wrappedFn</span><span class="o">,</span> <span class="nx">capture</span><span class="o">);</span>
                     <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nx">ex</span><span class="o">)</span> <span class="o">{</span>
                         <span class="c">// handle an error trying to attach an event.  If it fails</span>
 <span class="c"></span>                        <span class="c">// we need to clean up the cache</span>
 <span class="c"></span>                        <span class="k">this</span><span class="o">.</span><span class="nx">lastError</span> <span class="o">=</span> <span class="nx">ex</span><span class="o">;</span>
-                        <span class="k">this</span><span class="o">.</span><span class="nx">removeListener</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">);</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">_removeListener</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">capture</span><span class="o">);</span>
                         <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
                     <span class="o">}</span>
                 <span class="o">}</span>
 
                 <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
                 
+            <span class="o">},</span>
+
+
+            <span class="c">/**</span>
+<span class="c">             * Appends an event handler</span>
+<span class="c">             *</span>
+<span class="c">             * @method addListener</span>
+<span class="c">             *</span>
+<span class="c">             * @param {String|HTMLElement|Array|NodeList} el An id, an element </span>
+<span class="c">             *  reference, or a collection of ids and/or elements to assign the </span>
+<span class="c">             *  listener to.</span>
+<span class="c">             * @param {String}   sType     The type of event to append</span>
+<span class="c">             * @param {Function} fn        The method the event invokes</span>
+<span class="c">             * @param {Object}   obj    An arbitrary object that will be </span>
+<span class="c">             *                             passed as a parameter to the handler</span>
+<span class="c">             * @param {Boolean|object}  override  If true, the obj passed in becomes</span>
+<span class="c">             *                             the execution scope of the listener. If an</span>
+<span class="c">             *                             object, this object becomes the execution</span>
+<span class="c">             *                             scope.</span>
+<span class="c">             * @return {Boolean} True if the action was successful or defered,</span>
+<span class="c">             *                        false if one or more of the elements </span>
+<span class="c">             *                        could not have the listener attached,</span>
+<span class="c">             *                        or if the operation throws an exception.</span>
+<span class="c">             * @static</span>
+<span class="c">             */</span>
+            <span class="nx">addListener</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">_addListener</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+            <span class="o">},</span>
+
+            <span class="c">/**</span>
+<span class="c">             * Appends a focus event handler.  (The focusin event is used for Internet Explorer, </span>
+<span class="c">             * the focus, capture-event for Opera, WebKit, and Gecko.)</span>
+<span class="c">             *</span>
+<span class="c">             * @method addFocusListener</span>
+<span class="c">             *</span>
+<span class="c">             * @param {String|HTMLElement|Array|NodeList} el An id, an element </span>
+<span class="c">             *  reference, or a collection of ids and/or elements to assign the </span>
+<span class="c">             *  listener to.</span>
+<span class="c">             * @param {Function} fn        The method the event invokes</span>
+<span class="c">             * @param {Object}   obj    An arbitrary object that will be </span>
+<span class="c">             *                             passed as a parameter to the handler</span>
+<span class="c">             * @param {Boolean|object}  override  If true, the obj passed in becomes</span>
+<span class="c">             *                             the execution scope of the listener. If an</span>
+<span class="c">             *                             object, this object becomes the execution</span>
+<span class="c">             *                             scope.</span>
+<span class="c">             * @return {Boolean} True if the action was successful or defered,</span>
+<span class="c">             *                        false if one or more of the elements </span>
+<span class="c">             *                        could not have the listener attached,</span>
+<span class="c">             *                        or if the operation throws an exception.</span>
+<span class="c">             * @static</span>
+<span class="c">             */</span>
+            <span class="nx">addFocusListener</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">_addListener</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">_FOCUS</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="o">},</span>          
+
+
+            <span class="c">/**</span>
+<span class="c">             * Removes a focus event listener</span>
+<span class="c">             *</span>
+<span class="c">             * @method removeFocusListener</span>
+<span class="c">             *</span>
+<span class="c">             * @param {String|HTMLElement|Array|NodeList} el An id, an element </span>
+<span class="c">             *  reference, or a collection of ids and/or elements to remove</span>
+<span class="c">             *  the listener from.</span>
+<span class="c">             * @param {Function} fn the method the event invokes.  If fn is</span>
+<span class="c">             *  undefined, then all event handlers for the type of event are </span>
+<span class="c">             *  removed.</span>
+<span class="c">             * @return {boolean} true if the unbind was successful, false </span>
+<span class="c">             *  otherwise.</span>
+<span class="c">             * @static</span>
+<span class="c">             */</span>
+            <span class="nx">removeFocusListener</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">fn</span><span class="o">)</span> <span class="o">{</span> 
+                <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">_removeListener</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">_FOCUS</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="o">},</span>
+
+            <span class="c">/**</span>
+<span class="c">             * Appends a blur event handler.  (The focusout event is used for Internet Explorer, </span>
+<span class="c">             * the focusout, capture-event for Opera, WebKit, and Gecko.)</span>
+<span class="c">             *</span>
+<span class="c">             * @method addBlurListener</span>
+<span class="c">             *</span>
+<span class="c">             * @param {String|HTMLElement|Array|NodeList} el An id, an element </span>
+<span class="c">             *  reference, or a collection of ids and/or elements to assign the </span>
+<span class="c">             *  listener to.</span>
+<span class="c">             * @param {Function} fn        The method the event invokes</span>
+<span class="c">             * @param {Object}   obj    An arbitrary object that will be </span>
+<span class="c">             *                             passed as a parameter to the handler</span>
+<span class="c">             * @param {Boolean|object}  override  If true, the obj passed in becomes</span>
+<span class="c">             *                             the execution scope of the listener. If an</span>
+<span class="c">             *                             object, this object becomes the execution</span>
+<span class="c">             *                             scope.</span>
+<span class="c">             * @return {Boolean} True if the action was successful or defered,</span>
+<span class="c">             *                        false if one or more of the elements </span>
+<span class="c">             *                        could not have the listener attached,</span>
+<span class="c">             *                        or if the operation throws an exception.</span>
+<span class="c">             * @static</span>
+<span class="c">             */</span>
+            <span class="nx">addBlurListener</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">_addListener</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">_BLUR</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">obj</span><span class="o">,</span> <span class="nx">override</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="o">},</span>          
+
+            <span class="c">/**</span>
+<span class="c">             * Removes a blur event listener</span>
+<span class="c">             *</span>
+<span class="c">             * @method removeBlurListener</span>
+<span class="c">             *</span>
+<span class="c">             * @param {String|HTMLElement|Array|NodeList} el An id, an element </span>
+<span class="c">             *  reference, or a collection of ids and/or elements to remove</span>
+<span class="c">             *  the listener from.</span>
+<span class="c">             * @param {Function} fn the method the event invokes.  If fn is</span>
+<span class="c">             *  undefined, then all event handlers for the type of event are </span>
+<span class="c">             *  removed.</span>
+<span class="c">             * @return {boolean} true if the unbind was successful, false </span>
+<span class="c">             *  otherwise.</span>
+<span class="c">             * @static</span>
+<span class="c">             */</span>
+            <span class="nx">removeBlurListener</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">fn</span><span class="o">)</span> <span class="o">{</span> 
+            
+                <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">_removeListener</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">_BLUR</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            
             <span class="o">},</span>
 
             <span class="c">/**</span>
@@ -668,19 +808,13 @@
 <span class="c">             * @private</span>
 <span class="c">             */</span>
             <span class="nx">useLegacyEvent</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">webkit</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="s2">&quot;click&quot;</span><span class="o">==</span><span class="nx">sType</span> <span class="o">||</span> <span class="s2">&quot;dblclick&quot;</span><span class="o">==</span><span class="nx">sType</span><span class="o">))</span> <span class="o">{</span>
-                    <span class="k">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">webkit</span><span class="o">,</span> <span class="m">10</span><span class="o">);</span>
-                    <span class="k">if</span> <span class="o">(!</span><span class="nb">isNaN</span><span class="o">(</span><span class="nx">v</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="nx">v</span><span class="o">&lt;</span><span class="m">418</span><span class="o">)</span> <span class="o">{</span>
-                        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-                    <span class="o">}</span>
-                <span class="o">}</span>
-                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+<span class="k">return</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">webkit</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="nx">webkit</span> <span class="o">&lt;</span> <span class="m">419</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="s2">&quot;click&quot;</span><span class="o">==</span><span class="nx">sType</span> <span class="o">||</span> <span class="s2">&quot;dblclick&quot;</span><span class="o">==</span><span class="nx">sType</span><span class="o">));</span>
             <span class="o">},</span>
                     
             <span class="c">/**</span>
 <span class="c">             * Removes an event listener</span>
 <span class="c">             *</span>
-<span class="c">             * @method removeListener</span>
+<span class="c">             * @method _removeListener</span>
 <span class="c">             *</span>
 <span class="c">             * @param {String|HTMLElement|Array|NodeList} el An id, an element </span>
 <span class="c">             *  reference, or a collection of ids and/or elements to remove</span>
@@ -689,11 +823,13 @@
 <span class="c">             * @param {Function} fn the method the event invokes.  If fn is</span>
 <span class="c">             *  undefined, then all event handlers for the type of event are </span>
 <span class="c">             *  removed.</span>
+<span class="c">             * @param {boolen}      capture capture or bubble phase             </span>
 <span class="c">             * @return {boolean} true if the unbind was successful, false </span>
 <span class="c">             *  otherwise.</span>
 <span class="c">             * @static</span>
+<span class="c">             * @private</span>
 <span class="c">             */</span>
-            <span class="nx">removeListener</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">_removeListener</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">capture</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">var</span> <span class="nx">i</span><span class="o">,</span> <span class="nx">len</span><span class="o">,</span> <span class="nx">li</span><span class="o">;</span>
 
                 <span class="c">// The el argument can be a string</span>
@@ -703,7 +839,7 @@
 <span class="c"></span>                <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span> <span class="k">this</span><span class="o">.</span><span class="nx">_isValidCollection</span><span class="o">(</span><span class="nx">el</span><span class="o">))</span> <span class="o">{</span>
                     <span class="k">var</span> <span class="nx">ok</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
                     <span class="k">for</span> <span class="o">(</span><span class="nx">i</span><span class="o">=</span><span class="nx">el</span><span class="o">.</span><span class="nx">length</span><span class="o">-</span><span class="m">1</span><span class="o">;</span> <span class="nx">i</span><span class="o">&gt;-</span><span class="m">1</span><span class="o">;</span> <span class="nx">i</span><span class="o">--)</span> <span class="o">{</span>
-                        <span class="nx">ok</span> <span class="o">=</span> <span class="o">(</span> <span class="k">this</span><span class="o">.</span><span class="nx">removeListener</span><span class="o">(</span><span class="nx">el</span><span class="o">[</span><span class="nx">i</span><span class="o">],</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="nx">ok</span> <span class="o">);</span>
+                        <span class="nx">ok</span> <span class="o">=</span> <span class="o">(</span> <span class="k">this</span><span class="o">.</span><span class="nx">_removeListener</span><span class="o">(</span><span class="nx">el</span><span class="o">[</span><span class="nx">i</span><span class="o">],</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="nx">capture</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="nx">ok</span> <span class="o">);</span>
                     <span class="o">}</span>
                     <span class="k">return</span> <span class="nx">ok</span><span class="o">;</span>
                 <span class="o">}</span>
@@ -736,7 +872,7 @@
                 <span class="c">// The index is a hidden parameter; needed to remove it from</span>
 <span class="c"></span>                <span class="c">// the method signature because it was tempting users to</span>
 <span class="c"></span>                <span class="c">// try and take advantage of it, which is not possible.</span>
-<span class="c"></span>                <span class="k">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">arguments</span><span class="o">[</span><span class="m">3</span><span class="o">];</span>
+<span class="c"></span>                <span class="k">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">arguments</span><span class="o">[</span><span class="m">4</span><span class="o">];</span>
   
                 <span class="k">if</span> <span class="o">(</span><span class="s2">&quot;undefined&quot;</span> <span class="o">===</span> <span class="k">typeof</span> <span class="nx">index</span><span class="o">)</span> <span class="o">{</span>
                     <span class="nx">index</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_getCacheIndex</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">);</span>
@@ -773,7 +909,7 @@
 
                 <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
                     <span class="k">try</span> <span class="o">{</span>
-                        <span class="k">this</span><span class="o">.</span><span class="nx">_simpleRemove</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">cacheItem</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">WFN</span><span class="o">],</span> <span class="kc">false</span><span class="o">);</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">_simpleRemove</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">cacheItem</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">WFN</span><span class="o">],</span> <span class="nx">capture</span><span class="o">);</span>
                     <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nx">ex</span><span class="o">)</span> <span class="o">{</span>
                         <span class="k">this</span><span class="o">.</span><span class="nx">lastError</span> <span class="o">=</span> <span class="nx">ex</span><span class="o">;</span>
                         <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
@@ -789,6 +925,30 @@
                 <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
 
             <span class="o">},</span>
+
+
+            <span class="c">/**</span>
+<span class="c">             * Removes an event listener</span>
+<span class="c">             *</span>
+<span class="c">             * @method removeListener</span>
+<span class="c">             *</span>
+<span class="c">             * @param {String|HTMLElement|Array|NodeList} el An id, an element </span>
+<span class="c">             *  reference, or a collection of ids and/or elements to remove</span>
+<span class="c">             *  the listener from.</span>
+<span class="c">             * @param {String} sType the type of event to remove.</span>
+<span class="c">             * @param {Function} fn the method the event invokes.  If fn is</span>
+<span class="c">             *  undefined, then all event handlers for the type of event are </span>
+<span class="c">             *  removed.</span>
+<span class="c">             * @return {boolean} true if the unbind was successful, false </span>
+<span class="c">             *  otherwise.</span>
+<span class="c">             * @static</span>
+<span class="c">             */</span>
+            <span class="nx">removeListener</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">)</span> <span class="o">{</span>
+
+				<span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">_removeListener</span><span class="o">(</span><span class="nx">el</span><span class="o">,</span> <span class="nx">sType</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+
+            <span class="o">},</span>
+
 
             <span class="c">/**</span>
 <span class="c">             * Returns the event&#39;s target element.  Safari sometimes provides</span>
@@ -1283,7 +1443,7 @@
                 <span class="k">if</span> <span class="o">(</span><span class="nx">elListeners</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">for</span> <span class="o">(</span><span class="nx">i</span><span class="o">=</span><span class="nx">elListeners</span><span class="o">.</span><span class="nx">length</span><span class="o">-</span><span class="m">1</span><span class="o">;</span> <span class="nx">i</span><span class="o">&gt;-</span><span class="m">1</span><span class="o">;</span> <span class="nx">i</span><span class="o">--)</span> <span class="o">{</span>
                         <span class="k">var</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">elListeners</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
-                        <span class="k">this</span><span class="o">.</span><span class="nx">removeListener</span><span class="o">(</span><span class="nx">oEl</span><span class="o">,</span> <span class="nx">l</span><span class="o">.</span><span class="nx">type</span><span class="o">,</span> <span class="nx">l</span><span class="o">.</span><span class="nx">fn</span><span class="o">);</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">_removeListener</span><span class="o">(</span><span class="nx">oEl</span><span class="o">,</span> <span class="nx">l</span><span class="o">.</span><span class="nx">type</span><span class="o">,</span> <span class="nx">l</span><span class="o">.</span><span class="nx">fn</span><span class="o">,</span> <span class="nx">l</span><span class="o">.</span><span class="nx">capture</span><span class="o">);</span>
                     <span class="o">}</span>
                 <span class="o">}</span>
 
@@ -1307,6 +1467,7 @@
 <span class="c">             * &amp;nbsp;&amp;nbsp;obj:    (object)   the custom object supplied to addListener</span>
 <span class="c">             * &amp;nbsp;&amp;nbsp;adjust: (boolean|object)  whether or not to adjust the default scope</span>
 <span class="c">             * &amp;nbsp;&amp;nbsp;scope: (boolean)  the derived scope based on the adjust parameter</span>
+<span class="c">             * &amp;nbsp;&amp;nbsp;scope: (capture)  the capture parameter supplied to addListener</span>
 <span class="c">             * &amp;nbsp;&amp;nbsp;index:  (int)      its position in the Event util listener cache</span>
 <span class="c">             * @static</span>
 <span class="c">             */</span>           
@@ -1335,6 +1496,7 @@
                                     <span class="nx">obj</span><span class="o">:</span>    <span class="nx">l</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">OBJ</span><span class="o">],</span>
                                     <span class="nx">adjust</span><span class="o">:</span> <span class="nx">l</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">OVERRIDE</span><span class="o">],</span>
                                     <span class="nx">scope</span><span class="o">:</span>  <span class="nx">l</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">ADJ_SCOPE</span><span class="o">],</span>
+                                    <span class="nx">capture</span><span class="o">:</span>  <span class="nx">l</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">CAPTURE</span><span class="o">],</span>                                    
                                     <span class="nx">index</span><span class="o">:</span>  <span class="nx">i</span>
                                 <span class="o">});</span>
                             <span class="o">}</span>
@@ -1389,7 +1551,7 @@
                     <span class="k">for</span> <span class="o">(</span><span class="nx">j</span><span class="o">=</span><span class="nx">listeners</span><span class="o">.</span><span class="nx">length</span><span class="o">-</span><span class="m">1</span><span class="o">;</span> <span class="nx">j</span><span class="o">&gt;-</span><span class="m">1</span><span class="o">;</span> <span class="nx">j</span><span class="o">--)</span> <span class="o">{</span>
                         <span class="nx">l</span> <span class="o">=</span> <span class="nx">listeners</span><span class="o">[</span><span class="nx">j</span><span class="o">];</span>
                         <span class="k">if</span> <span class="o">(</span><span class="nx">l</span><span class="o">)</span> <span class="o">{</span>
-                            <span class="nx">EU</span><span class="o">.</span><span class="nx">removeListener</span><span class="o">(</span><span class="nx">l</span><span class="o">[</span><span class="nx">EU</span><span class="o">.</span><span class="nx">EL</span><span class="o">],</span> <span class="nx">l</span><span class="o">[</span><span class="nx">EU</span><span class="o">.</span><span class="nx">TYPE</span><span class="o">],</span> <span class="nx">l</span><span class="o">[</span><span class="nx">EU</span><span class="o">.</span><span class="nx">FN</span><span class="o">],</span> <span class="nx">j</span><span class="o">);</span>
+                            <span class="nx">EU</span><span class="o">.</span><span class="nx">_removeListener</span><span class="o">(</span><span class="nx">l</span><span class="o">[</span><span class="nx">EU</span><span class="o">.</span><span class="nx">EL</span><span class="o">],</span> <span class="nx">l</span><span class="o">[</span><span class="nx">EU</span><span class="o">.</span><span class="nx">TYPE</span><span class="o">],</span> <span class="nx">l</span><span class="o">[</span><span class="nx">EU</span><span class="o">.</span><span class="nx">FN</span><span class="o">],</span> <span class="nx">l</span><span class="o">[</span><span class="nx">EU</span><span class="o">.</span><span class="nx">CAPTURE</span><span class="o">],</span> <span class="nx">j</span><span class="o">);</span>
                         <span class="o">}</span> 
                     <span class="o">}</span>
                     <span class="nx">l</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
@@ -1515,6 +1677,23 @@
 <span class="c">         */</span>
         <span class="nx">EU</span><span class="o">.</span><span class="nx">on</span> <span class="o">=</span> <span class="nx">EU</span><span class="o">.</span><span class="nx">addListener</span><span class="o">;</span>
 
+        <span class="c">/**</span>
+<span class="c">         * YAHOO.util.Event.onFocus is an alias for addFocusListener</span>
+<span class="c">         * @method on</span>
+<span class="c">         * @see addFocusListener</span>
+<span class="c">         * @static</span>
+<span class="c">         */</span>
+        <span class="nx">EU</span><span class="o">.</span><span class="nx">onFocus</span> <span class="o">=</span> <span class="nx">EU</span><span class="o">.</span><span class="nx">addFocusListener</span><span class="o">;</span>
+
+        <span class="c">/**</span>
+<span class="c">         * YAHOO.util.Event.onBlur is an alias for addBlurListener</span>
+<span class="c">         * @method onBlur</span>
+<span class="c">         * @see addBlurListener</span>
+<span class="c">         * @static</span>
+<span class="c">         */</span>     
+        <span class="nx">EU</span><span class="o">.</span><span class="nx">onBlur</span> <span class="o">=</span> <span class="nx">EU</span><span class="o">.</span><span class="nx">addBlurListener</span><span class="o">;</span>
+
+
 <span class="c">/*! DOMReady: based on work by: Dean Edwards/John Resig/Matthias Miller */</span>
 
         <span class="c">// Internet Explorer: use the readyState of a defered script.</span>
@@ -1592,6 +1771,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -1631,6 +1812,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1686,7 +1869,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

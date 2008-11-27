@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Container&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Container&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_container.html">container</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -180,7 +182,7 @@ for showing the Tooltip.
                                 <code>
                                     
                                         <a class="" href="YAHOO.widget.Module.html#property_body">body</a><span class="">,</span>
-                                        <a class="" href="YAHOO.widget.Module.html#property_browser">browser</a><span class="">,</span>
+                                        <a class=" deprecated" href="YAHOO.widget.Module.html#property_browser">browser</a><span class=" deprecated">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_cfg">cfg</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_contructor">contructor</a><span class="">,</span>
                                         <a class="private" href="YAHOO.widget.Module.html#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a><span class="private">,</span>
@@ -189,7 +191,7 @@ for showing the Tooltip.
                                         <a class="" href="YAHOO.widget.Module.html#property_footer">footer</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_header">header</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_id">id</a><span class="">,</span>
-                                        <a class="" href="YAHOO.widget.Module.html#property_imageRoot">imageRoot</a><span class="">,</span>
+                                        <a class=" deprecated" href="YAHOO.widget.Module.html#property_imageRoot">imageRoot</a><span class=" deprecated">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_isSecure">isSecure</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_platform">platform</a>
                                 </code>
@@ -200,6 +202,7 @@ for showing the Tooltip.
                             <div class="content">
                                 <code>
                                     
+                                        <a class="" href="YAHOO.widget.Overlay.html#property_CONTEXT_TRIGGERS">CONTEXT_TRIGGERS</a><span class="">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_EVENT_TYPES">EVENT_TYPES</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_YAHOO.widget.Overlay._initialized">YAHOO.widget.Overlay._initialized</a>
@@ -239,7 +242,10 @@ element(s) that trigger the display of the tooltip.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -305,7 +311,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -370,7 +379,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -434,7 +446,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -469,7 +484,10 @@ elements to null.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -505,7 +523,10 @@ after 5 seconds of being displayed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -527,6 +548,10 @@ after 5 seconds of being displayed.
                                                          e
                                                     
                                                 
+                                                        , 
+                                                         context
+                                                    
+                                                
                                             )
                                         </code>
                                         
@@ -543,6 +568,10 @@ and offset of the Tooltip.
                                                             <code>e &lt;DOMEvent&gt;</code>
                                                              The current DOM event
                                                         </dd>
+                                                        <dd>
+                                                            <code>context &lt;HTMLElement&gt;</code>
+                                                             The current context element
+                                                        </dd>
                                                 </dl>
 
                                                 <dl>
@@ -553,7 +582,10 @@ and offset of the Tooltip.
                                                     <dd>The process ID of the timeout function associated 
 with doShow</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -618,7 +650,10 @@ See configuration documentation for more details.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -653,7 +688,10 @@ changed using the Overlay's Config object (cfg).
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -687,7 +725,10 @@ changed using the Overlay's Config object (cfg).
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -742,7 +783,10 @@ over the context element.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -797,7 +841,10 @@ the context element.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -852,7 +899,10 @@ context element.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -908,7 +958,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -963,7 +1016,10 @@ prevent the Tooltip from overlapping with its context element.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -997,7 +1053,10 @@ prevent the Tooltip from overlapping with its context element.
                                                     </code></dt>
                                                     <dd>The string representation of the Tooltip</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1018,7 +1077,7 @@ prevent the Tooltip from overlapping with its context element.
                                 <h4>Methods inherited from <a href="YAHOO.widget.Overlay.html">YAHOO.widget.Overlay</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__primeXYFromDOM">_primeXYFromDOM</a><span class="protected">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_align">align</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_bringToTop">bringToTop</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_center">center</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configConstrainToViewport">configConstrainToViewport</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configContext">configContext</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configFixedCenter">configFixedCenter</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configHeight">configHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configIframe">configIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configVisible">configVisible</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configWidth">configWidth</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configX">configX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configXY">configXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configY">configY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configzIndex">configzIndex</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_doCenterOnDOMEvent">doCenterOnDOMEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_enforceConstraints">enforceConstraints</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedXY">getConstrainedXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideIframe">hideIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideMacGeckoScrollbars">hideMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_moveTo">moveTo</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_onDomResize">onDomResize</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showIframe">showIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showMacGeckoScrollbars">showMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_stackIframe">stackIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncIframe">syncIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncPosition">syncPosition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_toString">toString</a>
+                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__alignOnTrigger">_alignOnTrigger</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__autoFillOnHeightChange">_autoFillOnHeightChange</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__findTriggerCE">_findTriggerCE</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__getComputedHeight">_getComputedHeight</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__getPreciseHeight">_getPreciseHeight</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__primeXYFromDOM">_primeXYFromDOM</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__processTriggers">_processTriggers</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__validateAutoFillHeight">_validateAutoFillHeight</a><span class="protected">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_align">align</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_bringToTop">bringToTop</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_center">center</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configAutoFillHeight">configAutoFillHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configConstrainToViewport">configConstrainToViewport</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configContext">configContext</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configFixedCenter">configFixedCenter</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configHeight">configHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configIframe">configIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configVisible">configVisible</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configWidth">configWidth</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configX">configX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configXY">configXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configY">configY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configzIndex">configzIndex</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_doCenterOnDOMEvent">doCenterOnDOMEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_enforceConstraints">enforceConstraints</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_fillHeight">fillHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedX">getConstrainedX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedXY">getConstrainedXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedY">getConstrainedY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideIframe">hideIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideMacGeckoScrollbars">hideMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_moveTo">moveTo</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_onDomResize">onDomResize</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showIframe">showIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showMacGeckoScrollbars">showMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_stackIframe">stackIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncIframe">syncIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncPosition">syncPosition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_toString">toString</a>
                                     </code>
                                 </div>
                             </div>
@@ -1297,7 +1356,7 @@ disabled tooltips, to prevent default tooltip behavior.
                                     <div class="detail">
                                         <div class="description">
                                             The number of milliseconds to wait before hiding a Tooltip 
-on mouseover.
+after mouseout.
                                         </div>
                                     </div>
  
@@ -1405,7 +1464,7 @@ bug #1735423.
                             <h4>Configuration attributes inherited from <a href="YAHOO.widget.Overlay.html">YAHOO.widget.Overlay</a>:</h4>
                             <div class="content">
                                 <code>
-                                        <a class="" href="YAHOO.widget.Overlay.html#config_constraintoviewport">constraintoviewport</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_context">context</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_fixedcenter">fixedcenter</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_height">height</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_iframe">iframe</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_width">width</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_x">x</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_xy">xy</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_y">y</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_zIndex">zIndex</a><span class="">,</span>
+                                        <a class="" href="YAHOO.widget.Overlay.html#config_autofillheight">autofillheight</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_constraintoviewport">constraintoviewport</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_context">context</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_fixedcenter">fixedcenter</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_height">height</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_iframe">iframe</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_preventcontextoverlap">preventcontextoverlap</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_width">width</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_x">x</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_xy">xy</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_y">y</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_zIndex">zIndex</a><span class="">,</span>
                                 </code>
                             </div>
                         </div>
@@ -1426,6 +1485,8 @@ bug #1735423.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -1466,6 +1527,8 @@ bug #1735423.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1646,7 +1709,7 @@ bug #1735423.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -58,6 +58,7 @@ body {
 
 <body class=" yui-skin-sam">
 
+
 <h1>Checkbox Buttons</h1>
 
 <div class="exampleIntro">
@@ -68,7 +69,9 @@ body {
 
 <script type="text/javascript">
 
-    YAHOO.example.init = function () {
+    (function () {
+    
+    	var Button = YAHOO.widget.Button;
 
         // "contentready" event handler for the "checkboxbuttonsfrommarkup" <fieldset>
 
@@ -76,30 +79,30 @@ body {
 
             // Create Buttons using existing <input> elements as a data source
     
-            var oCheckButton1 = new YAHOO.widget.Button("checkbutton1", { label: "One" });
-            var oCheckButton2 = new YAHOO.widget.Button("checkbutton2", { label: "Two" });
-            var oCheckButton3 = new YAHOO.widget.Button("checkbutton3", { label: "Three" });
-            var oCheckButton4 = new YAHOO.widget.Button("checkbutton4", { label: "Four" });
+            var oCheckButton1 = new Button("checkbutton1", { label: "One" });
+            var oCheckButton2 = new Button("checkbutton2", { label: "Two" });
+            var oCheckButton3 = new Button("checkbutton3", { label: "Three" });
+            var oCheckButton4 = new Button("checkbutton4", { label: "Four" });
 
 
             // Create Buttons using the YUI Button markup
 
-            var oCheckButton5 = new YAHOO.widget.Button("checkbutton5", { type: "checkbox", value: "1", checked: true });
-            var oCheckButton6 = new YAHOO.widget.Button("checkbutton6", { type: "checkbox", value: "2"});
-            var oCheckButton7 = new YAHOO.widget.Button("checkbutton7", { type: "checkbox", value: "3" });
-            var oCheckButton8 = new YAHOO.widget.Button("checkbutton8", { type: "checkbox", value: "4" });        
+            var oCheckButton5 = new Button("checkbutton5", { type: "checkbox", value: "1", checked: true });
+            var oCheckButton6 = new Button("checkbutton6", { type: "checkbox", value: "2"});
+            var oCheckButton7 = new Button("checkbutton7", { type: "checkbox", value: "3" });
+            var oCheckButton8 = new Button("checkbutton8", { type: "checkbox", value: "4" });        
         
         });
 
 
         // Create Buttons without using existing markup
 
-        var oCheckButton9 = new YAHOO.widget.Button({ type: "checkbox", label: "One", id: "checkbutton9", name: "checkboxfield3", value: "1", container: "checkboxbuttonsfromjavascript", checked: true });
-        var oCheckButton10 = new YAHOO.widget.Button({ type: "checkbox", label: "Two", id: "checkbutton10", name: "checkboxfield3", value: "2", container: "checkboxbuttonsfromjavascript" });
-        var oCheckButton11 = new YAHOO.widget.Button({ type: "checkbox", label: "Three", id: "checkbutton11", name: "checkboxfield3", value: "3", container: "checkboxbuttonsfromjavascript" });
-        var oCheckButton12 = new YAHOO.widget.Button({ type: "checkbox", label: "Four", id: "checkbutton12", name: "checkboxfield3", value: "4", container: "checkboxbuttonsfromjavascript" });
+        var oCheckButton9 = new Button({ type: "checkbox", label: "One", id: "checkbutton9", name: "checkboxfield3", value: "1", container: "checkboxbuttonsfromjavascript", checked: true });
+        var oCheckButton10 = new Button({ type: "checkbox", label: "Two", id: "checkbutton10", name: "checkboxfield3", value: "2", container: "checkboxbuttonsfromjavascript" });
+        var oCheckButton11 = new Button({ type: "checkbox", label: "Three", id: "checkbutton11", name: "checkboxfield3", value: "3", container: "checkboxbuttonsfromjavascript" });
+        var oCheckButton12 = new Button({ type: "checkbox", label: "Four", id: "checkbutton12", name: "checkboxfield3", value: "4", container: "checkboxbuttonsfromjavascript" });
 
-    } ();
+    }());
 
 </script>
 

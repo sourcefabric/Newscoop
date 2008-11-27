@@ -1,4 +1,4 @@
-function getStates(sQuery) {
+var getStates = function(sQuery) {
     aResults = [];
     if(sQuery && sQuery.length > 0) {
         var charKey = sQuery.substring(0,1).toLowerCase();

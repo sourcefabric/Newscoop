@@ -1,6 +1,5 @@
 ﻿package com.yahoo.astra.fl.charts.series
 {
-	import com.yahoo.astra.fl.charts.Chart;
 	import com.yahoo.astra.fl.charts.events.ChartEvent;
 	
 	import fl.core.InvalidationType;
@@ -37,7 +36,7 @@
 	/**
 	 * The base color used by objects displayed in this series.
 	 */
-    [Style(name="fillColor", type="Color")]
+    [Style(name="fillColor", type="uint")]
     
 	/**
 	 * The Class used to instantiate each marker's skin.
@@ -47,7 +46,12 @@
 	/**
 	 * The size, in pixels, of each marker.
 	 */
-    [Style(name="markerSize", type="Class")]
+    [Style(name="markerSize", type="Number")]
+    
+	/**
+	 * The alpha value from 0.0 to 1.0 to use for drawing the markers.
+	 */
+    [Style(name="markerAlpha", type="Number")]
 
 	/**
 	 * Functionality common to most series. Generally, a <code>Series</code> object
@@ -71,6 +75,7 @@
 			markerSkin: Shape, //an empty display object
 			fillColor: 0x00b8bf,
 			markerSize: 10,
+			markerAlpha: 1.0,
 			animationEnabled: true,
 			animationEasingFunction: fl.transitions.easing.Strong.easeOut,
 			animationDuration: 500
@@ -129,12 +134,12 @@
 		 * @private
 		 * Storage for the chart property.
 		 */
-		private var _chart:Chart;
+		private var _chart:Object;
 		
 		/**
 		 * @copy com.yahoo.astra.fl.charts.ISeries#chart
 		 */
-		public function get chart():Chart
+		public function get chart():Object
 		{
 			return this._chart;
 		}
@@ -142,7 +147,7 @@
 		/**
 		 * @private
 		 */
-		public function set chart(value:Chart):void
+		public function set chart(value:Object):void
 		{
 			this._chart = value;
 			//this is a fun hack to ensure that series know if their parent charts are in live preview
@@ -159,6 +164,10 @@
 			this.isLivePreview = (className == "fl.livepreview::LivePreviewParent");	
 		}
 		
+		/**
+		 * @private
+		 * A lookup system to convert from an item to its item renderer.
+		 */
 		private var _itemToItemRendererHash:Dictionary = new Dictionary();
 		
 		/**
@@ -225,8 +234,8 @@
 				}
 				
 				this._dataProvider = value;
-				this.invalidate(InvalidationType.DATA);
 				this.dispatchEvent(new Event("dataChange"));
+				this.invalidate(InvalidationType.DATA);
 			}
 		}
 		
@@ -249,11 +258,7 @@
 		 */
 		public function set displayName(value:String):void
 		{
-			if(this._displayName != value)
-			{
-				this._displayName = value;
-				this.invalidate(InvalidationType.DATA);
-			}
+			this._displayName = value;
 		}
 		
 		/**
@@ -310,18 +315,14 @@
 		 */
 		override protected function draw():void
 		{
-			var itemRendererInvalid:Boolean = this.isInvalid("itemRenderer");
-			var stylesInvalid:Boolean = this.isInvalid(InvalidationType.STYLES);
-			var dataInvalid:Boolean = this.isInvalid(InvalidationType.DATA);
-			
 			//the class for the item renderers has changed. remove all markers
 			//so that they may be recreated.
-			if(itemRendererInvalid)
+			if(this.isInvalid("itemRenderer"))
 			{
 				this.removeAllMarkers();
 			}
 			
-			if(itemRendererInvalid || this.isInvalid(InvalidationType.DATA) || this.isInvalid(InvalidationType.STYLES))
+			if(this.isInvalid("itemRenderer", InvalidationType.DATA, InvalidationType.STYLES))
 			{
 				this.refreshMarkers();
 				this._itemToItemRendererHash = new Dictionary(true);
@@ -329,17 +330,14 @@
 				for(var i:int = 0; i < itemCount; i++)
 				{
 					var marker:ISeriesItemRenderer = this.markers[i] as ISeriesItemRenderer;
-					if(dataInvalid) //update data if needed
+					if(this.isInvalid(InvalidationType.DATA)) //update data if needed
 					{
 						marker.data = this.dataProvider[i];
 					}
 					this._itemToItemRendererHash[marker.data] = marker;
 					
 					var markerComponent:UIComponent = marker as UIComponent;
-					if(stylesInvalid) //update styles if needed
-					{
-						this.copyStylesToChild(markerComponent, RENDERER_STYLES);
-					}
+					this.copyStylesToChild(markerComponent, RENDERER_STYLES);
 					markerComponent.drawNow();
 				}
 			}
@@ -409,6 +407,7 @@
 			{
 				marker = ISeriesItemRenderer(this.markers[i]);
 				marker.data = this.dataProvider[i];
+				DisplayObject(marker).alpha = this.getStyleValue("markerAlpha") as Number;
 				this.copyStylesToChild(UIComponent(marker), RENDERER_STYLES);
 			}
 		}
@@ -421,10 +420,24 @@
 			return this.markerInvalidHash[marker];
 		}
 		
+		/**
+		 * Invalidates a marker (considered new).
+		 */
 		protected function invalidateMarker(marker:ISeriesItemRenderer):void
 		{
 			markerInvalidHash[marker] = true;
 			DisplayObject(marker).visible = false;
+		}
+		
+		/**
+		 * @private
+		 * We never want the series to callLater after invalidating.
+		 * The chart will ALWAYS handle drawing.
+		 */
+		override public function invalidate(property:String = InvalidationType.ALL, callLater:Boolean = true):void
+		{
+			//never call later!
+			super.invalidate(property, false);
 		}
 		
 		/**

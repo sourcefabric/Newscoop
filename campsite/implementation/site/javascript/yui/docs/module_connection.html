@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>connection&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>connection&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_connection.html">connection</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                    
@@ -44,6 +46,10 @@ interactive states and server response, returning the results to a pre-defined
 callback you create.
                     </div>
 
+
+
+<div class="yui-gc">
+    <div class="yui-u first">
                     <form onsubmit="return false">
                         <p>Search connection:
                         <div id="propertysearch">
@@ -54,9 +60,13 @@ callback you create.
                         </div>
                     </form>
                     <script type="text/javascript">
-                        ALL_YUI_PROPS = [{"access": "", "host": "YAHOO.util.Connect", "name": "abort", "url": "YAHOO.util.Connect.html#method_abort"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "abortEvent", "url": "YAHOO.util.Connect.html#property_abortEvent"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "appendPostData", "url": "YAHOO.util.Connect.html#method_appendPostData"}, {"access": "", "host": "YAHOO.util.Connect", "name": "asyncRequest", "url": "YAHOO.util.Connect.html#method_asyncRequest"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "completeEvent", "url": "YAHOO.util.Connect.html#property_completeEvent"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "createExceptionObject", "url": "YAHOO.util.Connect.html#method_createExceptionObject"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "createFrame", "url": "YAHOO.util.Connect.html#method_createFrame"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "createResponseObject", "url": "YAHOO.util.Connect.html#method_createResponseObject"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "createXhrObject", "url": "YAHOO.util.Connect.html#method_createXhrObject"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_customEvents", "url": "YAHOO.util.Connect.html#property__customEvents"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_default_post_header", "url": "YAHOO.util.Connect.html#property__default_post_header"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_default_xhr_header", "url": "YAHOO.util.Connect.html#property__default_xhr_header"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "failureEvent", "url": "YAHOO.util.Connect.html#property_failureEvent"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_formNode", "url": "YAHOO.util.Connect.html#property__formNode"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "getConnectionObject", "url": "YAHOO.util.Connect.html#method_getConnectionObject"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "handleReadyState", "url": "YAHOO.util.Connect.html#method_handleReadyState"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "handleTransactionResponse", "url": "YAHOO.util.Connect.html#method_handleTransactionResponse"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_has_default_header", "url": "YAHOO.util.Connect.html#property__has_default_header"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_has_http_headers", "url": "YAHOO.util.Connect.html#property__has_http_headers"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_hasSubmitListener", "url": "YAHOO.util.Connect.html#property__hasSubmitListener"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_http_header", "url": "YAHOO.util.Connect.html#property__http_header"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "initCustomEvents", "url": "YAHOO.util.Connect.html#method_initCustomEvents"}, {"access": "", "host": "YAHOO.util.Connect", "name": "initHeader", "url": "YAHOO.util.Connect.html#method_initHeader"}, {"access": "", "host": "YAHOO.util.Connect", "name": "isCallInProgress", "url": "YAHOO.util.Connect.html#method_isCallInProgress"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_isFileUpload", "url": "YAHOO.util.Connect.html#property__isFileUpload"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_isFormSubmit", "url": "YAHOO.util.Connect.html#property__isFormSubmit"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_msxml_progid", "url": "YAHOO.util.Connect.html#property__msxml_progid"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_poll", "url": "YAHOO.util.Connect.html#property__poll"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_polling_interval", "url": "YAHOO.util.Connect.html#property__polling_interval"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "releaseObject", "url": "YAHOO.util.Connect.html#method_releaseObject"}, {"access": "", "host": "YAHOO.util.Connect", "name": "resetDefaultHeaders", "url": "YAHOO.util.Connect.html#method_resetDefaultHeaders"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "resetFormState", "url": "YAHOO.util.Connect.html#method_resetFormState"}, {"access": "", "host": "YAHOO.util.Connect", "name": "setDefaultPostHeader", "url": "YAHOO.util.Connect.html#method_setDefaultPostHeader"}, {"access": "", "host": "YAHOO.util.Connect", "name": "setDefaultXhrHeader", "url": "YAHOO.util.Connect.html#method_setDefaultXhrHeader"}, {"access": "", "host": "YAHOO.util.Connect", "name": "setForm", "url": "YAHOO.util.Connect.html#method_setForm"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "setHeader", "url": "YAHOO.util.Connect.html#method_setHeader"}, {"access": "", "host": "YAHOO.util.Connect", "name": "setPollingInterval", "url": "YAHOO.util.Connect.html#method_setPollingInterval"}, {"access": "", "host": "YAHOO.util.Connect", "name": "setProgId", "url": "YAHOO.util.Connect.html#method_setProgId"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_sFormData", "url": "YAHOO.util.Connect.html#property__sFormData"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "startEvent", "url": "YAHOO.util.Connect.html#property_startEvent"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_submitElementValue", "url": "YAHOO.util.Connect.html#property__submitElementValue"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "successEvent", "url": "YAHOO.util.Connect.html#property_successEvent"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_timeOut", "url": "YAHOO.util.Connect.html#property__timeOut"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_transaction_id", "url": "YAHOO.util.Connect.html#property__transaction_id"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "uploadFile", "url": "YAHOO.util.Connect.html#method_uploadFile"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_use_default_post_header", "url": "YAHOO.util.Connect.html#property__use_default_post_header"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_use_default_xhr_header", "url": "YAHOO.util.Connect.html#property__use_default_xhr_header"}];
+                        ALL_YUI_PROPS = [{"access": "", "host": "YAHOO.util.Connect", "name": "abort", "url": "YAHOO.util.Connect.html#method_abort"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "abortEvent", "url": "YAHOO.util.Connect.html#property_abortEvent"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "appendPostData", "url": "YAHOO.util.Connect.html#method_appendPostData"}, {"access": "", "host": "YAHOO.util.Connect", "name": "asyncRequest", "url": "YAHOO.util.Connect.html#method_asyncRequest"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "completeEvent", "url": "YAHOO.util.Connect.html#property_completeEvent"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "createExceptionObject", "url": "YAHOO.util.Connect.html#method_createExceptionObject"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "createFrame", "url": "YAHOO.util.Connect.html#method_createFrame"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "createResponseObject", "url": "YAHOO.util.Connect.html#method_createResponseObject"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "createXhrObject", "url": "YAHOO.util.Connect.html#method_createXhrObject"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_customEvents", "url": "YAHOO.util.Connect.html#property__customEvents"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_default_form_header", "url": "YAHOO.util.Connect.html#property__default_form_header"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_default_post_header", "url": "YAHOO.util.Connect.html#property__default_post_header"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_default_xhr_header", "url": "YAHOO.util.Connect.html#property__default_xhr_header"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "failureEvent", "url": "YAHOO.util.Connect.html#property_failureEvent"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_formNode", "url": "YAHOO.util.Connect.html#property__formNode"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "getConnectionObject", "url": "YAHOO.util.Connect.html#method_getConnectionObject"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "handleReadyState", "url": "YAHOO.util.Connect.html#method_handleReadyState"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "handleTransactionResponse", "url": "YAHOO.util.Connect.html#method_handleTransactionResponse"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_has_default_header", "url": "YAHOO.util.Connect.html#property__has_default_header"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_has_http_headers", "url": "YAHOO.util.Connect.html#property__has_http_headers"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_hasSubmitListener", "url": "YAHOO.util.Connect.html#property__hasSubmitListener"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_http_header", "url": "YAHOO.util.Connect.html#property__http_header"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "initCustomEvents", "url": "YAHOO.util.Connect.html#method_initCustomEvents"}, {"access": "", "host": "YAHOO.util.Connect", "name": "initHeader", "url": "YAHOO.util.Connect.html#method_initHeader"}, {"access": "", "host": "YAHOO.util.Connect", "name": "isCallInProgress", "url": "YAHOO.util.Connect.html#method_isCallInProgress"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_isFileUpload", "url": "YAHOO.util.Connect.html#property__isFileUpload"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_isFormSubmit", "url": "YAHOO.util.Connect.html#property__isFormSubmit"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_msxml_progid", "url": "YAHOO.util.Connect.html#property__msxml_progid"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_poll", "url": "YAHOO.util.Connect.html#property__poll"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_polling_interval", "url": "YAHOO.util.Connect.html#property__polling_interval"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "releaseObject", "url": "YAHOO.util.Connect.html#method_releaseObject"}, {"access": "", "host": "YAHOO.util.Connect", "name": "resetDefaultHeaders", "url": "YAHOO.util.Connect.html#method_resetDefaultHeaders"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "resetFormState", "url": "YAHOO.util.Connect.html#method_resetFormState"}, {"access": "", "host": "YAHOO.util.Connect", "name": "setDefaultPostHeader", "url": "YAHOO.util.Connect.html#method_setDefaultPostHeader"}, {"access": "", "host": "YAHOO.util.Connect", "name": "setDefaultXhrHeader", "url": "YAHOO.util.Connect.html#method_setDefaultXhrHeader"}, {"access": "", "host": "YAHOO.util.Connect", "name": "setForm", "url": "YAHOO.util.Connect.html#method_setForm"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "setHeader", "url": "YAHOO.util.Connect.html#method_setHeader"}, {"access": "", "host": "YAHOO.util.Connect", "name": "setPollingInterval", "url": "YAHOO.util.Connect.html#method_setPollingInterval"}, {"access": "", "host": "YAHOO.util.Connect", "name": "setProgId", "url": "YAHOO.util.Connect.html#method_setProgId"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_sFormData", "url": "YAHOO.util.Connect.html#property__sFormData"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "startEvent", "url": "YAHOO.util.Connect.html#property_startEvent"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_submitElementValue", "url": "YAHOO.util.Connect.html#property__submitElementValue"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "successEvent", "url": "YAHOO.util.Connect.html#property_successEvent"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_timeOut", "url": "YAHOO.util.Connect.html#property__timeOut"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_transaction_id", "url": "YAHOO.util.Connect.html#property__transaction_id"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "uploadFile", "url": "YAHOO.util.Connect.html#method_uploadFile"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_use_default_post_header", "url": "YAHOO.util.Connect.html#property__use_default_post_header"}, {"access": "private", "host": "YAHOO.util.Connect", "name": "_use_default_xhr_header", "url": "YAHOO.util.Connect.html#property__use_default_xhr_header"}];
                     </script>
+	    </div>
+    <div class="yui-u">
 
+	    </div>
+</div>
 
 			</div>
 		</div>
@@ -74,6 +84,8 @@ callback you create.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -114,6 +126,8 @@ callback you create.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -162,7 +176,7 @@ callback you create.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

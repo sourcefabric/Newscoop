@@ -1,7 +1,7 @@
 <?php
 
 /* yadl_spaceid - Skip Stamping */
- 
+
 // Yahoo! proxy
 
 // Hard-code hostname and path:

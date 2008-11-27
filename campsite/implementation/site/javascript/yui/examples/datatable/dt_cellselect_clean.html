@@ -20,8 +20,8 @@ body {
 <link rel="stylesheet" type="text/css" href="../../build/datatable/assets/skins/sam/datatable.css" />
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 
 <!--begin custom header content for this example-->
@@ -36,6 +36,7 @@ body {
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>Cell Selection</h1>
 
@@ -54,7 +55,7 @@ selection modes.</p>
 <script type="text/javascript" src="assets/js/data.js"></script>
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.CellSelection = new function() {
+    YAHOO.example.CellSelection = function() {
         var myColumnDefs = [
             {key:"col1", sortable:true},
             {key:"col2", sortable:true},
@@ -62,48 +63,55 @@ YAHOO.util.Event.addListener(window, "load", function() {
             {key:"col4", sortable:true}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.webstats);
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.webstats);
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        myDataSource.responseSchema = {
             fields: ["col0","col1","col2","col3","col4"]
         };
 
-        this.cellBlockSelectDataTable = new YAHOO.widget.DataTable("cellblock",
-                myColumnDefs, this.myDataSource, {
+        var cellBlockSelectDataTable = new YAHOO.widget.DataTable("cellblock",
+                myColumnDefs, myDataSource, {
                     caption:"Cell-Block Selection Mode with Support for Modifier Keys",
                     selectionMode:"cellblock"
                 });
 
         // Subscribe to events for cell selection
-        this.cellBlockSelectDataTable.subscribe("cellMouseoverEvent", this.cellBlockSelectDataTable.onEventHighlightCell);
-        this.cellBlockSelectDataTable.subscribe("cellMouseoutEvent", this.cellBlockSelectDataTable.onEventUnhighlightCell);
-        this.cellBlockSelectDataTable.subscribe("cellClickEvent", this.cellBlockSelectDataTable.onEventSelectCell);
-        this.cellBlockSelectDataTable.subscribe("cellSelectEvent", this.cellBlockSelectDataTable.clearTextSelection);
+        cellBlockSelectDataTable.subscribe("cellMouseoverEvent", cellBlockSelectDataTable.onEventHighlightCell);
+        cellBlockSelectDataTable.subscribe("cellMouseoutEvent", cellBlockSelectDataTable.onEventUnhighlightCell);
+        cellBlockSelectDataTable.subscribe("cellClickEvent", cellBlockSelectDataTable.onEventSelectCell);
+        cellBlockSelectDataTable.subscribe("cellSelectEvent", cellBlockSelectDataTable.clearTextSelection);
 
-        this.cellRangeSelectDataTable = new YAHOO.widget.DataTable("cellrange",
-                myColumnDefs, this.myDataSource, {
+        var cellRangeSelectDataTable = new YAHOO.widget.DataTable("cellrange",
+                myColumnDefs, myDataSource, {
                     caption:"Example: Cell-Range Selection Mode Support for Modifier Keys",
                     selectionMode:"cellrange"
                 });
 
         // Subscribe to events for cell selection
-        this.cellRangeSelectDataTable.subscribe("cellMouseoverEvent", this.cellRangeSelectDataTable.onEventHighlightCell);
-        this.cellRangeSelectDataTable.subscribe("cellMouseoutEvent", this.cellRangeSelectDataTable.onEventUnhighlightCell);
-        this.cellRangeSelectDataTable.subscribe("cellClickEvent", this.cellRangeSelectDataTable.onEventSelectCell);
-        this.cellRangeSelectDataTable.subscribe("cellSelectEvent", this.cellRangeSelectDataTable.clearTextSelection);
+        cellRangeSelectDataTable.subscribe("cellMouseoverEvent", cellRangeSelectDataTable.onEventHighlightCell);
+        cellRangeSelectDataTable.subscribe("cellMouseoutEvent", cellRangeSelectDataTable.onEventUnhighlightCell);
+        cellRangeSelectDataTable.subscribe("cellClickEvent", cellRangeSelectDataTable.onEventSelectCell);
+        cellRangeSelectDataTable.subscribe("cellSelectEvent", cellRangeSelectDataTable.clearTextSelection);
 
-        this.singleCellSelectDataTable = new YAHOO.widget.DataTable("singlecell",
-                myColumnDefs, this.myDataSource, {
+        var singleCellSelectDataTable = new YAHOO.widget.DataTable("singlecell",
+                myColumnDefs, myDataSource, {
                     caption:"Single-Cell Selection Mode with Modifier Keys Disabled",
                     selectionMode:"singlecell"
                 });
 
         // Subscribe to events for cell selection
-        this.singleCellSelectDataTable.subscribe("cellMouseoverEvent", this.singleCellSelectDataTable.onEventHighlightCell);
-        this.singleCellSelectDataTable.subscribe("cellMouseoutEvent", this.singleCellSelectDataTable.onEventUnhighlightCell);
-        this.singleCellSelectDataTable.subscribe("cellClickEvent", this.singleCellSelectDataTable.onEventSelectCell);
-        this.singleCellSelectDataTable.subscribe("cellSelectEvent", this.singleCellSelectDataTable.clearTextSelection);
-    };
+        singleCellSelectDataTable.subscribe("cellMouseoverEvent", singleCellSelectDataTable.onEventHighlightCell);
+        singleCellSelectDataTable.subscribe("cellMouseoutEvent", singleCellSelectDataTable.onEventUnhighlightCell);
+        singleCellSelectDataTable.subscribe("cellClickEvent", singleCellSelectDataTable.onEventSelectCell);
+        singleCellSelectDataTable.subscribe("cellSelectEvent", singleCellSelectDataTable.clearTextSelection);
+        
+        return {
+            oDS: myDataSource,
+            oDTCellBlockSelect: cellBlockSelectDataTable,
+            oDTCellRangeSelect: cellRangeSelectDataTable,
+            oDTSingleCellSelect: singleCellSelectDataTable
+        };
+    }();
 });
 </script>
 

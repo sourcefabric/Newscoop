@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>editor&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>editor&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_editor.html">editor</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -59,21 +61,6 @@ This is what you pass to Editor.openWindow();. These parameters will not take ef
                         <div class="section field details">
                             <h3 id="properties">Properties</h3>
                             <div class="content">
-                                    <div class="private">
-                                    <h4><a name="property__cache">_cache</a>
-                                        <code>- private object</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Holds a cache of the DOM for the window so we only have to build it once..
-                                        </div>
-                                    </div>
-     
-                                        
-
-
-                                    <hr />
-                                    </div>
                                     <div class="private">
                                     <h4><a name="property_attrs">attrs</a>
                                         <code>- private object</code>
@@ -198,7 +185,10 @@ This is what you pass to Editor.openWindow();. These parameters will not take ef
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -244,7 +234,10 @@ This is what you pass to Editor.openWindow();. These parameters will not take ef
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -290,7 +283,10 @@ This is what you pass to Editor.openWindow();. These parameters will not take ef
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -324,7 +320,10 @@ This is what you pass to Editor.openWindow();. These parameters will not take ef
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -574,6 +573,161 @@ This is what you pass to Editor.openWindow();. These parameters will not take ef
                                     </div>
                                     <hr />
                                     </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_windowCreateLinkRender">windowCreateLinkRender</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>windowCreateLinkRender</strong>
+
+                                            (
+                                                
+                                                        
+                                                         panel
+                                                    
+                                                
+                                                        , 
+                                                         body
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Event fired when the pre render of the Create Link window has finished.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>panel &lt;Overlay&gt;</code>
+                                                             The Overlay object that is used to create the window.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>body &lt;HTMLElement&gt;</code>
+                                                             The HTML element used as the body of the window..
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_windowInsertImageRender">windowInsertImageRender</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>windowInsertImageRender</strong>
+
+                                            (
+                                                
+                                                        
+                                                         panel
+                                                    
+                                                
+                                                        , 
+                                                         body
+                                                    
+                                                
+                                                        , 
+                                                         toolbar
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Event fired when the pre render of the Insert Image window has finished.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>panel &lt;Overlay&gt;</code>
+                                                             The Overlay object that is used to create the window.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>body &lt;HTMLElement&gt;</code>
+                                                             The HTML element used as the body of the window..
+                                                        </dd>
+                                                        <dd>
+                                                            <code>toolbar &lt;Toolbar&gt;</code>
+                                                             A reference to the toolbar object used inside this window.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_windowRender">windowRender</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>windowRender</strong>
+
+                                            (
+                                                
+                                                        
+                                                         win
+                                                    
+                                                
+                                                        , 
+                                                         panel
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Event fired when the initial Overlay is rendered. Can be used to manipulate the content of the panel.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>win &lt;<a href="YAHOO.widget.EditorWindow.html">EditorWindow</a>&gt;</code>
+                                                             The EditorWindow object
+                                                        </dd>
+                                                        <dd>
+                                                            <code>panel &lt;Overlay&gt;</code>
+                                                             The Overlay object that is used to create the window.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
                             </div>
                         </div>
 
@@ -597,6 +751,8 @@ This is what you pass to Editor.openWindow();. These parameters will not take ef
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -637,6 +793,8 @@ This is what you pass to Editor.openWindow();. These parameters will not take ef
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -688,9 +846,6 @@ This is what you pass to Editor.openWindow();. These parameters will not take ef
                     <div class="module">
                         <h4>Properties</h4>
                         <ul class="content">        
-                                <li class="private"><a href="#property__cache">_cache</a>
-                                        <!--<code>&lt;object&gt;</code>-->
-                                </li>
                                 <li class="private"><a href="#property_attrs">attrs</a>
                                         <!--<code>&lt;object&gt;</code>-->
                                 </li>
@@ -745,6 +900,15 @@ This is what you pass to Editor.openWindow();. These parameters will not take ef
                                 <li class="">
                                 <a href="#event_windowCMDOpen">windowCMDOpen</a>
                                 </li>
+                                <li class="">
+                                <a href="#event_windowCreateLinkRender">windowCreateLinkRender</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_windowInsertImageRender">windowInsertImageRender</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_windowRender">windowRender</a>
+                                </li>
                         </ul>
                     </div>
 
@@ -754,7 +918,7 @@ This is what you pass to Editor.openWindow();. These parameters will not take ef
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

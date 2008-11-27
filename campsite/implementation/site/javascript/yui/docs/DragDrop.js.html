@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Drag and Drop&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Drag and Drop&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_dragdrop.html">dragdrop</a>
@@ -21,14 +21,16 @@
                  &gt; DragDrop.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -236,6 +238,13 @@
 <span class="c">     * @type Boolean</span>
 <span class="c">     */</span>
     <span class="nx">dragOnly</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+
+    <span class="c">/**</span>
+<span class="c">     * If this flag is true, a shim will be placed over the screen/viewable area to track mouse events. Should help with dragging elements over iframes and other controls.</span>
+<span class="c">     * @property useShim</span>
+<span class="c">     * @type Boolean</span>
+<span class="c">     */</span>
+    <span class="nx">useShim</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
 
     <span class="c">/**</span>
 <span class="c">     * Cached reference to the linked element</span>
@@ -692,6 +701,7 @@
         <span class="k">this</span><span class="o">.</span><span class="nx">maintainOffset</span>    <span class="o">=</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">config</span><span class="o">.</span><span class="nx">maintainOffset</span><span class="o">);</span>
         <span class="k">this</span><span class="o">.</span><span class="nx">primaryButtonOnly</span> <span class="o">=</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">config</span><span class="o">.</span><span class="nx">primaryButtonOnly</span> <span class="o">!==</span> <span class="kc">false</span><span class="o">);</span>
         <span class="k">this</span><span class="o">.</span><span class="nx">dragOnly</span> <span class="o">=</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">config</span><span class="o">.</span><span class="nx">dragOnly</span> <span class="o">===</span> <span class="kc">true</span><span class="o">)</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="nx">useShim</span> <span class="o">=</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">config</span><span class="o">.</span><span class="nx">useShim</span> <span class="o">===</span> <span class="kc">true</span><span class="o">)</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="o">);</span>
     <span class="o">},</span>
 
     <span class="c">/**</span>
@@ -907,16 +917,19 @@
         <span class="k">this</span><span class="o">.</span><span class="nx">logger</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s2">&quot;firing onMouseDown events&quot;</span><span class="o">);</span>
 
         <span class="c">// firing the mousedown events prior to calculating positions</span>
-<span class="c"></span>        <span class="k">var</span> <span class="nx">b4Return</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">b4MouseDown</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span>
+<span class="c"></span>        <span class="k">var</span> <span class="nx">b4Return</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">b4MouseDown</span><span class="o">(</span><span class="nx">e</span><span class="o">),</span>
+        <span class="nx">b4Return2</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+
         <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">events</span><span class="o">.</span><span class="nx">b4MouseDown</span><span class="o">)</span> <span class="o">{</span>
-            <span class="nx">b4Return</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="s1">&#39;b4MouseDownEvent&#39;</span><span class="o">,</span> <span class="nx">e</span><span class="o">);</span>
+            <span class="nx">b4Return2</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="s1">&#39;b4MouseDownEvent&#39;</span><span class="o">,</span> <span class="nx">e</span><span class="o">);</span>
         <span class="o">}</span>
-        <span class="k">var</span> <span class="nx">mDownReturn</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">onMouseDown</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span>
+        <span class="k">var</span> <span class="nx">mDownReturn</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">onMouseDown</span><span class="o">(</span><span class="nx">e</span><span class="o">),</span>
+            <span class="nx">mDownReturn2</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
         <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">events</span><span class="o">.</span><span class="nx">mouseDown</span><span class="o">)</span> <span class="o">{</span>
-            <span class="nx">mDownReturn</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="s1">&#39;mouseDownEvent&#39;</span><span class="o">,</span> <span class="nx">e</span><span class="o">);</span>
+            <span class="nx">mDownReturn2</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="s1">&#39;mouseDownEvent&#39;</span><span class="o">,</span> <span class="nx">e</span><span class="o">);</span>
         <span class="o">}</span>
 
-        <span class="k">if</span> <span class="o">((</span><span class="nx">b4Return</span> <span class="o">===</span> <span class="kc">false</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="nx">mDownReturn</span> <span class="o">===</span> <span class="kc">false</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">((</span><span class="nx">b4Return</span> <span class="o">===</span> <span class="kc">false</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="nx">mDownReturn</span> <span class="o">===</span> <span class="kc">false</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="nx">b4Return2</span> <span class="o">===</span> <span class="kc">false</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="nx">mDownReturn2</span> <span class="o">===</span> <span class="kc">false</span><span class="o">))</span> <span class="o">{</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">logger</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;b4MouseDown or onMouseDown returned false, exiting drag&#39;</span><span class="o">);</span>
             <span class="k">return</span><span class="o">;</span>
         <span class="o">}</span>
@@ -1443,6 +1456,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -1482,6 +1497,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1539,7 +1556,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

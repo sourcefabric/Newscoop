@@ -14,18 +14,8 @@
  * @param checked  {boolean} The initial checked/unchecked state
  */
 YAHOO.widget.TaskNode = function(oData, oParent, expanded, checked) {
-
-    if (YAHOO.widget.LogWriter) {
-        this.logger = new YAHOO.widget.LogWriter(this.toString());
-    } else {
-        this.logger = YAHOO;
-    }
-
-    if (oData) { 
-        this.init(oData, oParent, expanded);
-        this.setUpLabel(oData);
-        this.setUpCheck(checked);
-    }
+	YAHOO.widget.TaskNode.superclass.constructor.call(this,oData,oParent,expanded);
+    this.setUpCheck(checked || oData.checked);
 
 };
 
@@ -45,10 +35,19 @@ YAHOO.extend(YAHOO.widget.TaskNode, YAHOO.widget.TextNode, {
      */
     checkState: 0,
 
-    taskNodeParentChange: function() {
+	/**
+     * The node type
+     * @property _type
+     * @private
+     * @type string
+     * @default "TextNode"
+     */
+    _type: "TaskNode",
+	
+	taskNodeParentChange: function() {
         //this.updateParent();
     },
-
+	
     setUpCheck: function(checked) {
         // if this node is checked by default, run the check code to update
         // the parent's display state
@@ -76,7 +75,9 @@ YAHOO.extend(YAHOO.widget.TaskNode, YAHOO.widget.TextNode, {
             this.tree.createEvent("checkClick", this.tree);
         }
 
+		this.tree.subscribe('clickEvent',this.checkClick);
         this.subscribe("parentChange", this.taskNodeParentChange);
+
 
     },
 
@@ -105,28 +106,25 @@ YAHOO.extend(YAHOO.widget.TaskNode, YAHOO.widget.TextNode, {
         return "ygtvcheck" + this.checkState;
     },
 
-    /**
-     * Returns the link that will invoke this node's check toggle
-     * @return {string} returns the link required to adjust the checkbox state
-     */
-    getCheckLink: function() { 
-        return "YAHOO.widget.TreeView.getNode(\'" + this.tree.id + "\'," + 
-            this.index + ").checkClick()";
-    },
 
-    /**
+   /**
      * Invoked when the user clicks the check box
      */
-    checkClick: function() { 
-        this.logger.log("previous checkstate: " + this.checkState);
-        if (this.checkState === 0) {
-            this.check();
-        } else {
-            this.uncheck();
-        }
+    checkClick: function(oArgs) { 
+		var node = oArgs.node;
+		var target = YAHOO.util.Event.getTarget(oArgs.event);
+		if (YAHOO.util.Dom.hasClass(target,'ygtvspacer')) {
+	        node.logger.log("previous checkstate: " + node.checkState);
+	        if (node.checkState === 0) {
+	            node.check();
+	        } else {
+	            node.uncheck();
+	        }
 
-        this.onCheckClick(this);
-        this.tree.fireEvent("checkClick", this);
+	        node.onCheckClick(node);
+	        this.fireEvent("checkClick", node);
+		    return false;
+		}
     },
 
     /**
@@ -227,83 +225,46 @@ YAHOO.extend(YAHOO.widget.TaskNode, YAHOO.widget.TextNode, {
         this.updateCheckHtml();
         this.updateParent();
     },
-
     // Overrides YAHOO.widget.TextNode
-    getNodeHtml: function() { 
-        this.logger.log("Generating html");
+
+    /*
+	getContentHtml: function() { 
         var sb = [];
-
-        var getNode = 'YAHOO.widget.TreeView.getNode(\'' +
-                        this.tree.id + '\',' + this.index + ')';
-
-
-        sb[sb.length] = '<table border="0" cellpadding="0" cellspacing="0">';
-        sb[sb.length] = '<tr>';
-        
-        for (var i=0;i<this.depth;++i) {
-            //sb[sb.length] = '<td class="' + this.getDepthStyle(i) + '">&#160;</td>';
-            sb[sb.length] = '<td class="' + this.getDepthStyle(i) + '"><div class="ygtvspacer"></div></td>';
-        }
-
-        sb[sb.length] = '<td';
-        sb[sb.length] = ' id="' + this.getToggleElId() + '"';
-        sb[sb.length] = ' class="' + this.getStyle() + '"';
-        if (this.hasChildren(true)) {
-            sb[sb.length] = ' onmouseover="this.className=';
-            sb[sb.length] = 'YAHOO.widget.TreeView.getNode(\'';
-            sb[sb.length] = this.tree.id + '\',' + this.index +  ').getHoverStyle()"';
-            sb[sb.length] = ' onmouseout="this.className=';
-            sb[sb.length] = 'YAHOO.widget.TreeView.getNode(\'';
-            sb[sb.length] = this.tree.id + '\',' + this.index +  ').getStyle()"';
-        }
-        //sb[sb.length] = ' onclick="javascript:' + this.getToggleLink() + '">&#160;';
-        sb[sb.length] = ' onclick="javascript:' + this.getToggleLink() + '">';
-        //sb[sb.length] = '</td>';
-        sb[sb.length] = '<div class="ygtvspacer"></div></td>';
-
-        // check box
         sb[sb.length] = '<td';
         sb[sb.length] = ' id="' + this.getCheckElId() + '"';
         sb[sb.length] = ' class="' + this.getCheckStyle() + '"';
-        sb[sb.length] = ' onclick="javascript:' + this.getCheckLink() + '">';
-        //sb[sb.length] = '&#160;</td>';
+        sb[sb.length] = '>';
         sb[sb.length] = '<div class="ygtvspacer"></div></td>';
-        
 
-        sb[sb.length] = '<td>';
-        sb[sb.length] = '<a';
+        sb[sb.length] = '<span';
         sb[sb.length] = ' id="' + this.labelElId + '"';
         if (this.title) {
             sb[sb.length] = ' title="' + this.title + '"';
         }
-        sb[sb.length] = ' class="' + this.labelStyle + '"';
-        sb[sb.length] = ' href="' + this.href + '"';
-        sb[sb.length] = ' target="' + this.target + '"';
-        sb[sb.length] = ' onclick="return ' + getNode + '.onLabelClick(' + getNode +')"';
-        if (this.hasChildren(true)) {
-            sb[sb.length] = ' onmouseover="document.getElementById(\'';
-            sb[sb.length] = this.getToggleElId() + '\').className=';
-            sb[sb.length] = 'YAHOO.widget.TreeView.getNode(\'';
-            sb[sb.length] = this.tree.id + '\',' + this.index +  ').getHoverStyle()"';
-            sb[sb.length] = ' onmouseout="document.getElementById(\'';
-            sb[sb.length] = this.getToggleElId() + '\').className=';
-            sb[sb.length] = 'YAHOO.widget.TreeView.getNode(\'';
-            sb[sb.length] = this.tree.id + '\',' + this.index +  ').getStyle()"';
-        }
-        sb[sb.length] = (this.nowrap) ? ' nowrap="nowrap" ' : '';
+        sb[sb.length] = ' class="' + this.labelStyle  + '"';
         sb[sb.length] = ' >';
         sb[sb.length] = this.label;
-        sb[sb.length] = '</a>';
-        sb[sb.length] = '</td>';
-        sb[sb.length] = '</tr>';
-        sb[sb.length] = '</table>';
-
+        sb[sb.length] = '</span>';
         return sb.join("");
-
-    },
-
-    toString: function() {
-        return "TaskNode (" + this.index + ") " + this.label;
     }
-
+    */
+    getContentHtml: function() {                                                                                                                                           
+        var sb = [];                                                                                                                                                       
+        sb[sb.length] = '<td';                                                                                                                                             
+        sb[sb.length] = ' id="' + this.getCheckElId() + '"';                                                                                                               
+        sb[sb.length] = ' class="' + this.getCheckStyle() + '"';                                                                                                           
+        sb[sb.length] = '>';                                                                                                                                               
+        sb[sb.length] = '<div class="ygtvspacer"></div></td>';                                                                                                             
+                                                                                                                                                                           
+        sb[sb.length] = '<td><span';                                                                                                                                       
+        sb[sb.length] = ' id="' + this.labelElId + '"';                                                                                                                    
+        if (this.title) {                                                                                                                                                  
+            sb[sb.length] = ' title="' + this.title + '"';                                                                                                                 
+        }                                                                                                                                                                  
+        sb[sb.length] = ' class="' + this.labelStyle  + '"';                                                                                                               
+        sb[sb.length] = ' >';                                                                                                                                              
+        sb[sb.length] = this.label;                                                                                                                                        
+        sb[sb.length] = '</span></td>';                                                                                                                                    
+        return sb.join("");                                                                                                                                                
+    }  
 });

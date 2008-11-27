@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>dom&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>dom&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_dom.html">dom</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -108,7 +110,10 @@
                                                     </code></dt>
                                                     <dd>A pass/fail boolean or array of booleans</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -179,7 +184,10 @@ The method is called with the element(s) as the first arg, and the optional para
                                                     </code></dt>
                                                     <dd>The return value(s) from the supplied method</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -233,7 +241,10 @@ The method is called with the element(s) as the first arg, and the optional para
                                                     </code></dt>
                                                     <dd>The generated ID, or array of generated IDs (or original ID if already present on an element)</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -279,7 +290,10 @@ The method is called with the element(s) as the first arg, and the optional para
                                                     </code></dt>
                                                     <dd>A DOM reference to an HTML element or an array of HTMLElements.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -334,7 +348,10 @@ For performance reasons, IDs are not accepted and argument validation omitted.
                                                     </code></dt>
                                                     <dd>HTMLElement or null if not found</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -388,7 +405,10 @@ For performance reasons, IDs are not accepted and argument validation omitted.
                                                     </code></dt>
                                                     <dd>HTMLElement</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -442,7 +462,10 @@ For performance reasons, IDs are not accepted and argument validation omitted.
                                                     </code></dt>
                                                     <dd>HTMLElement</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -488,7 +511,10 @@ For performance reasons, IDs are not accepted and argument validation omitted.
                                                     </code></dt>
                                                     <dd>A static array of HTMLElements</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -543,13 +569,16 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>A static array of HTMLElements</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
                                     <hr />
                                     </div>
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4>
                                         <a name="method_getClientHeight">getClientHeight</a></h4>
                                     <div class="detail">
@@ -577,10 +606,13 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>The height of the viewable area of the page.</dd>
                                                 </dl>
+
+
              
                                             <div class="deprecated">
                                                 <strong>Deprecated</strong> Now using getViewportHeight.  This interface left intact for back compat.
                                             </div>        
+
                                         </div>
 
                                     </div>
@@ -614,13 +646,16 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>A Region object representing the viewport which accounts for document scroll</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
                                     <hr />
                                     </div>
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4>
                                         <a name="method_getClientWidth">getClientWidth</a></h4>
                                     <div class="detail">
@@ -648,10 +683,13 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>The width of the viewable area of the page.</dd>
                                                 </dl>
+
+
              
                                             <div class="deprecated">
                                                 <strong>Deprecated</strong> Now using getViewportWidth.  This interface left intact for back compat.
                                             </div>        
+
                                         </div>
 
                                     </div>
@@ -685,7 +723,10 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>The height of the actual document (which includes the body and its margin).</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -731,7 +772,10 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>The amount that the document is scrolled to the left</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -777,7 +821,10 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>The amount that the document is scrolled to the top</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -811,7 +858,10 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>The width of the actual document (which includes the body and its margin).</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -882,7 +932,10 @@ For optimized performance, include a tag and/or root node when possible.
                                                     </code></dt>
                                                     <dd>Array of HTMLElements</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -953,7 +1006,10 @@ For optimized performance, include a tag and/or root node when possible.
                                                     </code></dt>
                                                     <dd>An array of elements that have the given class name</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -999,7 +1055,10 @@ For optimized performance, include a tag and/or root node when possible.
                                                     </code></dt>
                                                     <dd>HTMLElement or null if not found</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1054,7 +1113,10 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>HTMLElement or null if not found</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1100,7 +1162,10 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>HTMLElement or null if not found</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1155,7 +1220,10 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>HTMLElement or null if not found</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1201,7 +1269,10 @@ that receives the node being tested as its only argument
                                                     </code></dt>
                                                     <dd>HTMLElement or null if not found</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1258,7 +1329,10 @@ that receives the sibling node being tested as its only argument
                                                     </code></dt>
                                                     <dd>HTMLElement or null if not found</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1304,7 +1378,10 @@ that receives the sibling node being tested as its only argument
                                                     </code></dt>
                                                     <dd>HTMLElement or null if not found</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1361,7 +1438,10 @@ that receives the sibling node being tested as its only argument
                                                     </code></dt>
                                                     <dd>HTMLElement or null if not found</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1408,7 +1488,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>A Region or array of Region instances containing "top, left, bottom, right" member data.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1462,7 +1545,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>The current value of the style property for the element(s).</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1496,7 +1582,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>The height of the viewable area of the page (excludes scrollbars).</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1530,7 +1619,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>The width of the viewable area of the page (excludes scrollbars).</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1576,7 +1668,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>The X position of the element(s)</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1622,7 +1717,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>The XY position of the element(s)</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1668,7 +1766,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>The Y position of the element(s)</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1722,7 +1823,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>A boolean value or array of boolean values</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1768,7 +1872,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>Whether or not the element is present in the current document</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1822,7 +1929,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>The node that was inserted (or null if insert fails)</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1876,7 +1986,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>The node that was inserted (or null if insert fails)</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1930,7 +2043,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>Whether or not the haystack is an ancestor of needle</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1984,7 +2100,10 @@ The element must be part of the DOM tree to have a region (display:none or eleme
                                                     </code></dt>
                                                     <dd>A pass/fail boolean or array of booleans</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2047,7 +2166,10 @@ If no oldClassName is present, the newClassName is simply added.
                                                     </code></dt>
                                                     <dd>A pass/fail boolean or array of booleans</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2109,7 +2231,10 @@ If no oldClassName is present, the newClassName is simply added.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2164,7 +2289,10 @@ The element must be part of the DOM tree to have page coordinates (display:none 
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2227,7 +2355,10 @@ The element(s) must be part of the DOM tree to have page coordinates (display:no
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2282,7 +2413,10 @@ The element must be part of the DOM tree to have page coordinates (display:none 
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2313,6 +2447,8 @@ The element must be part of the DOM tree to have page coordinates (display:none 
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -2353,6 +2489,8 @@ The element must be part of the DOM tree to have page coordinates (display:none 
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -2426,13 +2564,13 @@ The element must be part of the DOM tree to have page coordinates (display:none 
                                 <li class=""><!--<code>Array</code>-->
                                 <a href="#method_getChildrenBy">getChildrenBy</a>
                                 </li>
-                                <li class=""><!--<code>Int</code>-->
+                                <li class=" deprecated"><!--<code>Int</code>-->
                                 <a href="#method_getClientHeight">getClientHeight</a>
                                 </li>
                                 <li class=""><!--<code>Region</code>-->
                                 <a href="#method_getClientRegion">getClientRegion</a>
                                 </li>
-                                <li class=""><!--<code>Int</code>-->
+                                <li class=" deprecated"><!--<code>Int</code>-->
                                 <a href="#method_getClientWidth">getClientWidth</a>
                                 </li>
                                 <li class=""><!--<code>Int</code>-->
@@ -2541,7 +2679,7 @@ The element must be part of the DOM tree to have page coordinates (display:none 
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

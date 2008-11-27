@@ -26,14 +26,16 @@ body {
 <script type="text/javascript" src="../../build/container/container-min.js"></script>
 <script type="text/javascript" src="../../build/menu/menu-min.js"></script>
 <script type="text/javascript" src="../../build/button/button-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
 <script type="text/javascript" src="../../build/autocomplete/autocomplete-min.js"></script>
-<script type="text/javascript" src="../../build/editor/editor-beta-min.js"></script>
+<script type="text/javascript" src="../../build/editor/editor-min.js"></script>
 
 <!--there is no custom header content for this example-->
 
 </head>
 
 <body class="yui-skin-sam">
+
 
 <h1>Flickr Image Search</h1>
 
@@ -140,6 +142,11 @@ body {
             top:0pt;
             width:20px;
         }
+</style>
+<style>
+.yui-toolbar-group-insertitem {
+    *width: auto;
+}
 </style>
 
 <form method="post" action="#" id="form1">
@@ -281,7 +288,7 @@ var gutter = null;
 
 var myConfig = {
     height: '300px',
-    width: '530px',
+    width: '600px',
     animate: true,
     dompath: true,
     focusAtStart: true

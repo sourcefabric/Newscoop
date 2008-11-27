@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>Calendar Menu Button</title>
+<title>Simple Calendar Menu Button</title>
 
 <style type="text/css">
 /*margin and padding on body element
@@ -104,7 +104,8 @@ body {
 
 <body class=" yui-skin-sam">
 
-<h1>Calendar Menu Button</h1>
+
+<h1>Simple Calendar Menu Button</h1>
 
 <div class="exampleIntro">
 	<p>
@@ -116,113 +117,162 @@ This example demonstrates how to create a Menu Button whose Menu instance displa
 
 <script type="text/javascript">
 
-    YAHOO.util.Event.onDOMReady(function () {
-
-        function onButtonClick() {
-            
-            /*
-                 Create a Calendar instance and render it into the body 
-                 element of the Overlay.
-            */
-
-            var oCalendar = new YAHOO.widget.Calendar("buttoncalendar", oCalendarMenu.body.id);
-
-            oCalendar.render();
-
-
-            /* 
-                Subscribe to the Calendar instance's "changePage" event to 
-                keep the Overlay visible when either the previous or next page
-                controls are clicked.
-            */
-
-            oCalendar.changePageEvent.subscribe(function () {
-                
-                window.setTimeout(function () {
-
-                    oCalendarMenu.show();
-                
-                }, 0);
-            
-            });
-
-
-            /*
-                Subscribe to the Calendar instance's "select" event to 
-                update the month, day, year form fields when the user
-                selects a date.
-            */
-
-            oCalendar.selectEvent.subscribe(function (p_sType, p_aArgs) {
-
-                var aDate;
-
-                if (p_aArgs) {
-                        
-                    aDate = p_aArgs[0][0];
-                        
-                    YAHOO.util.Dom.get("month-field").value = aDate[1];
-                    YAHOO.util.Dom.get("day-field").value = aDate[2];
-                    YAHOO.util.Dom.get("year-field").value = aDate[0];
-
-                }
-                
-                oCalendarMenu.hide();
-            
-            });
-            
-
-            /*
-                 Unsubscribe from the "click" event so that this code is 
-                 only executed once
-            */
-
-            this.unsubscribe("click", onButtonClick);
-        
-        }
-
-
-        // Create an Overlay instance to house the Calendar instance
-
-        var oCalendarMenu = new YAHOO.widget.Overlay("calendarmenu", { visible: false });
-
-
-        // Create a Button instance of type "menu"
-
-        var oButton = new YAHOO.widget.Button({ 
-                                            type: "menu", 
-                                            id: "calendarpicker", 
-                                            label: "Choose A Date", 
-                                            menu: oCalendarMenu, 
-                                            container: "datefields" });
-
-		oButton.on("appendTo", function () {
-
-			/*
-				 Create an empty body element for the Overlay instance in order 
-				 to reserve space to render the Calendar instance into.
-			*/
+	(function () {
 	
-			oCalendarMenu.setBody("&#32;");
+		var Event = YAHOO.util.Event,
+			Dom = YAHOO.util.Dom;
+
+
+		Event.onDOMReady(function () {
 	
-			oCalendarMenu.body.id = "calendarcontainer";
+			var oCalendarMenu;
 	
-			// Render the Overlay instance into the Button's parent element
+			var onButtonClick = function () {
+				
+				// Create a Calendar instance and render it into the body 
+				// element of the Overlay.
 	
-			oCalendarMenu.render(this.get("container"));
+				var oCalendar = new YAHOO.widget.Calendar("buttoncalendar", oCalendarMenu.body.id);
+	
+				oCalendar.render();
+	
+	
+				// Subscribe to the Calendar instance's "select" event to 
+				// update the month, day, year form fields when the user
+				// selects a date.
+	
+				oCalendar.selectEvent.subscribe(function (p_sType, p_aArgs) {
+	
+					var aDate;
+	
+					if (p_aArgs) {
+							
+						aDate = p_aArgs[0][0];
+							
+						Dom.get("month-field").value = aDate[1];
+						Dom.get("day-field").value = aDate[2];
+						Dom.get("year-field").value = aDate[0];
+	
+					}
+					
+					oCalendarMenu.hide();
+				
+				});
+	
+	
+				// Pressing the Esc key will hide the Calendar Menu and send focus back to 
+				// its parent Button
+	
+				Event.on(oCalendarMenu.element, "keydown", function (p_oEvent) {
+				
+					if (Event.getCharCode(p_oEvent) === 27) {
+						oCalendarMenu.hide();
+						this.focus();
+					}
+				
+				}, null, this);
+				
+				
+				var focusDay = function () {
+
+					var oCalendarTBody = Dom.get("buttoncalendar").tBodies[0],
+						aElements = oCalendarTBody.getElementsByTagName("a"),
+						oAnchor;
+
+					
+					if (aElements.length > 0) {
+					
+						Dom.batch(aElements, function (element) {
+						
+							if (Dom.hasClass(element.parentNode, "today")) {
+								oAnchor = element;
+							}
+						
+						});
+						
+						
+						if (!oAnchor) {
+							oAnchor = aElements[0];
+						}
+
+
+						// Focus the anchor element using a timer since Calendar will try 
+						// to set focus to its next button by default
+						
+						YAHOO.lang.later(0, oAnchor, function () {
+							try {
+								oAnchor.focus();
+							}
+							catch(e) {}
+						});
+					
+					}
+					
+				};
+
+
+				// Set focus to either the current day, or first day of the month in 
+				// the Calendar	when it is made visible or the month changes
+	
+				oCalendarMenu.subscribe("show", focusDay);
+				oCalendar.renderEvent.subscribe(focusDay, oCalendar, true);
+	
+
+				// Give the Calendar an initial focus
+				
+				focusDay.call(oCalendar);
+	
+	
+				// Re-align the CalendarMenu to the Button to ensure that it is in the correct
+				// position when it is initial made visible
+				
+				oCalendarMenu.align();
+				
+	
+				// Unsubscribe from the "click" event so that this code is 
+				// only executed once
+	
+				this.unsubscribe("click", onButtonClick);
+			
+			};
+	
+	
+			// Create an Overlay instance to house the Calendar instance
+	
+			oCalendarMenu = new YAHOO.widget.Overlay("calendarmenu", { visible: false });
+	
+	
+			// Create a Button instance of type "menu"
+	
+			var oButton = new YAHOO.widget.Button({ 
+												type: "menu", 
+												id: "calendarpicker", 
+												label: "Choose A Date", 
+												menu: oCalendarMenu, 
+												container: "datefields" });
+	
+	
+			oButton.on("appendTo", function () {
+	
+				// Create an empty body element for the Overlay instance in order 
+				// to reserve space to render the Calendar instance into.
 		
-        });
-        
+				oCalendarMenu.setBody("&#32;");
+		
+				oCalendarMenu.body.id = "calendarcontainer";
+			
+			});
+			
+	
+			// Add a "click" event listener that will render the Overlay, and 
+			// instantiate the Calendar the first time the Button instance is 
+			// clicked.
+	
+			oButton.on("click", onButtonClick);
+		
+		});	
 
-        /*
-            Add a "click" event listener that will render the Overlay, and 
-            instantiate the Calendar the first time the Button instance is 
-            clicked.
-        */
-
-        oButton.on("click", onButtonClick);
-    
-    });
+	}());
 
 </script>
 

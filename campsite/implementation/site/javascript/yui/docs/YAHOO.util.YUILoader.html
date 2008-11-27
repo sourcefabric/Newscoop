@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>yuiloader&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>yuiloader&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_yuiloader.html">yuiloader</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -139,6 +141,44 @@ is only switched on for Safari 2.x and below.
                                         
                                     <div class="default">
                                         Default Value: utf-8
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_combine">combine</a>
+                                        <code>- boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            If configured, YUI will use the the combo handler on the
+Yahoo! CDN to pontentially reduce the number of http requests
+required.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: false
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_comboBase">comboBase</a>
+                                        <code>- string</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Base path for the combo service
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: http://yui.yahooapis.com/combo?
                                     </div>        
 
 
@@ -356,6 +396,25 @@ the requested modules
                                     <hr />
                                     </div>
                                     <div class="">
+                                    <h4><a name="property_root">root</a>
+                                        <code>- string</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Root path to prepend to module path for the combo
+service
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: [YUI VERSION]/build/
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
                                     <h4><a name="property_scope">scope</a>
                                         <code>- object</code>
                                     </h4>
@@ -425,6 +484,23 @@ calendar: ['skin1', 'skin2']
                                             All of the derived dependencies in sorted order, which
 will be populated when either calculate() or insert()
 is called
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_timeout">timeout</a>
+                                        <code>- int</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Timeout value in milliseconds.  If set, this value will be used by
+the get utility.  the timeout event will fire if
+a timeout occurs.
                                         </div>
                                     </div>
      
@@ -509,7 +585,10 @@ fail.
                                                     </code></dt>
                                                     <dd>the module name for the skin</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -545,7 +624,48 @@ required modules.  Called by calculate()
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__filter">_filter</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        string
+                                            <strong>_filter</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Applies filter
+method _filter
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        string
+                                                    </code></dt>
+                                                    <dd>the filtered string</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -592,7 +712,10 @@ loaded dynamically
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -627,7 +750,10 @@ calculate() after we have the mega list of all dependencies
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -664,7 +790,10 @@ by calculate()
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -700,13 +829,16 @@ option is encountered.  Called by calculate()
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
                                     <hr />
                                     </div>
-                                    <div class="private">
+                                    <div class="private deprecated">
                                     <h4>
                                         <a name="method__skin">_skin</a></h4>
                                     <div class="detail">
@@ -735,12 +867,15 @@ requested modules are skinnable
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
                                             <div class="deprecated">
                                                 <strong>Deprecated</strong> skin modules are generated for all skinnable
 components during _setup(), and the components
 are configured to require the skin.
                                             </div>        
+
                                         </div>
 
                                     </div>
@@ -774,7 +909,10 @@ are configured to require the skin.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -821,7 +959,10 @@ method _url
                                                     </code></dt>
                                                     <dd>the full url</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -880,7 +1021,10 @@ method _url
                                                     <dd>true if the module was added, false if 
 the object passed in did not provide all required attributes</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -927,7 +1071,10 @@ property
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -983,7 +1130,10 @@ specific to the module passed in.
                                                     </code></dt>
                                                     <dd>the full skin module name</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -997,7 +1147,7 @@ specific to the module passed in.
                                         
                                         
                                         
-                                        void
+                                        
                                             <strong>getProvides</strong>
                                            (
                                                 
@@ -1030,14 +1180,10 @@ specific to the module passed in.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>what this module provides</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1084,7 +1230,10 @@ in order to load the requested module
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1140,7 +1289,10 @@ css are inserted if type is not provided.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1191,7 +1343,10 @@ one)
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1225,7 +1380,10 @@ one)
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1259,7 +1417,10 @@ one)
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1294,7 +1455,47 @@ with an insert
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_onTimeout">onTimeout</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>onTimeout</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Callback that will be executed if a timeout occurs
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1343,7 +1544,10 @@ module name if the string matches the pattern for skins.
 and module name, or null if the supplied string does not match
 the skin pattern</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1389,7 +1593,63 @@ the skin pattern</dd>
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_sandbox">sandbox</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>sandbox</strong>
+                                           (
+                                                
+                                                        
+                                                         callback
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Interns the script for the requested modules.  The callback is
+provided a reference to the sandboxed YAHOO object.  This only
+applies to the script: css can not be sandboxed; css will be
+loaded into the page normally if specified.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>callback &lt;Function&gt;</code>
+                                                              the callback to exectued when the load is
+complete.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1420,6 +1680,8 @@ the skin pattern</dd>
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -1460,6 +1722,8 @@ the skin pattern</dd>
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1517,6 +1781,12 @@ the skin pattern</dd>
                                 <li class=""><a href="#property_charset">charset</a>
                                         <!--<code>&lt;string&gt;</code>-->
                                 </li>
+                                <li class=""><a href="#property_combine">combine</a>
+                                        <!--<code>&lt;string&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_comboBase">comboBase</a>
+                                        <!--<code>&lt;string&gt;</code>-->
+                                </li>
                                 <li class=""><a href="#property_data">data</a>
                                         <!--<code>&lt;string&gt;</code>-->
                                 </li>
@@ -1553,6 +1823,9 @@ the skin pattern</dd>
                                 <li class=""><a href="#property_rollups">rollups</a>
                                         <!--<code>&lt;string&gt;</code>-->
                                 </li>
+                                <li class=""><a href="#property_root">root</a>
+                                        <!--<code>&lt;string&gt;</code>-->
+                                </li>
                                 <li class=""><a href="#property_scope">scope</a>
                                         <!--<code>&lt;string&gt;</code>-->
                                 </li>
@@ -1560,6 +1833,9 @@ the skin pattern</dd>
                                         <!--<code>&lt;string&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_sorted">sorted</a>
+                                        <!--<code>&lt;string&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_timeout">timeout</a>
                                         <!--<code>&lt;string&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_varName">varName</a>
@@ -1577,6 +1853,9 @@ the skin pattern</dd>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__explode">_explode</a>
                                 </li>
+                                <li class="private"><!--<code>string</code>-->
+                                <a href="#method__filter">_filter</a>
+                                </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__pushEvents">_pushEvents</a>
                                 </li>
@@ -1589,7 +1868,7 @@ the skin pattern</dd>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__setup">_setup</a>
                                 </li>
-                                <li class="private"><!--<code>void</code>-->
+                                <li class="private deprecated"><!--<code>void</code>-->
                                 <a href="#method__skin">_skin</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
@@ -1607,7 +1886,7 @@ the skin pattern</dd>
                                 <li class=""><!--<code>string</code>-->
                                 <a href="#method_formatSkin">formatSkin</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_getProvides">getProvides</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
@@ -1628,11 +1907,17 @@ the skin pattern</dd>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_onSuccess">onSuccess</a>
                                 </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_onTimeout">onTimeout</a>
+                                </li>
                                 <li class=""><!--<code>skin: string, module: string</code>-->
                                 <a href="#method_parseSkin">parseSkin</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_require">require</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_sandbox">sandbox</a>
                                 </li>
                         </ul>
                     </div>
@@ -1644,7 +1929,7 @@ the skin pattern</dd>
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

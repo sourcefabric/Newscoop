@@ -4,7 +4,7 @@
 
 	header('Content-type: text/plain');
 	$search_queries = initArray();
-	$query = $_GET['query'];
+	$query = html_entity_decode(urldecode($_GET['query']));
 	$results = search($search_queries, $query);
 	sendResults($query,$results);
 
@@ -16,13 +16,12 @@ function search($search_queries, $query) {
 
 	$firstChar = $query[0];
 
-	if (!preg_match('/[0-9a-z]/',$firstChar,$matches))
+	if (!preg_match('/[0-9a-z$]/',$firstChar,$matches))
 		return;
 
 	$charQueries = $search_queries[$firstChar];
 
-	$results = array();
-
+	$results = array();	
 	for($i = 0; $i < count($charQueries); $i++) {
 		if (strcasecmp(substr($charQueries[$i],0,strlen($query)),$query) == 0)
 			$results[] = $charQueries[$i];
@@ -38,6 +37,11 @@ function sendResults($query,$results) {
 
 function initArray() {
 	return array(
+	'$' => array(
+		"$100 reward	4385",
+		"$1000 bonus	1234",
+		"$20 found	5803",
+	),
 	'0' => array(
 		"00000000	1082",
 		"007	25010",
@@ -29385,6 +29389,7 @@ function initArray() {
 		"penis pain	1400",
 		"penis sex	1578",
 		"penmanship	1563",
+		"penn & teller	2955",
 		"penn college	1727",
 		"penney saver	1122",
 		"pennington	2547",

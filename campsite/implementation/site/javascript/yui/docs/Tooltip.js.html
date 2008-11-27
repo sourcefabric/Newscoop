@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Container&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Container&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_container.html">container</a>
@@ -21,14 +21,16 @@
                  &gt; Tooltip.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -150,8 +152,6 @@
         <span class="k">if</span> <span class="o">(</span><span class="nx">sCurrentWidth</span> <span class="o">==</span> <span class="nx">sNewWidth</span><span class="o">)</span> <span class="o">{</span>
             <span class="nx">oConfig</span><span class="o">.</span><span class="nx">setProperty</span><span class="o">(</span><span class="s2">&quot;width&quot;</span><span class="o">,</span> <span class="nx">sOriginalWidth</span><span class="o">);</span>
         <span class="o">}</span>
-
-        <span class="k">this</span><span class="o">.</span><span class="nx">unsubscribe</span><span class="o">(</span><span class="s2">&quot;hide&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_onHide</span><span class="o">,</span> <span class="nx">p_oObject</span><span class="o">);</span>
     <span class="o">}</span>
 
     <span class="c">/* </span>
@@ -359,7 +359,7 @@
 
             <span class="c">/**</span>
 <span class="c">            * The number of milliseconds to wait before hiding a Tooltip </span>
-<span class="c">            * on mouseover.</span>
+<span class="c">            * after mouseout.</span>
 <span class="c">            * @config hidedelay</span>
 <span class="c">            * @type Number</span>
 <span class="c">            * @default 250</span>
@@ -651,6 +651,7 @@
 <span class="c">        * and offset of the Tooltip.</span>
 <span class="c">        * @method doShow</span>
 <span class="c">        * @param {DOMEvent} e The current DOM event</span>
+<span class="c">        * @param {HTMLElement} context The current context element</span>
 <span class="c">        * @return {Number} The process ID of the timeout function associated </span>
 <span class="c">        * with doShow</span>
 <span class="c">        */</span>
@@ -880,6 +881,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -919,6 +922,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -983,7 +988,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -22,8 +22,8 @@ body {
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../../build/calendar/calendar-min.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 
 <!--begin custom header content for this example-->
@@ -37,6 +37,7 @@ body {
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>Inline Cell Editing</h1>
 
@@ -53,52 +54,47 @@ more complex customizations, such as input validation and click-to-save interact
 <script type="text/javascript" src="assets/js/data.js"></script>
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.InlineCellEditing = new function() {
+    YAHOO.example.InlineCellEditing = function() {
         // Custom formatter for "address" column to preserve line breaks
-        this.formatAddress = function(elCell, oRecord, oColumn, oData) {
+        var formatAddress = function(elCell, oRecord, oColumn, oData) {
             elCell.innerHTML = "<pre class=\"address\">" + oData + "</pre>";
         };
 
         var myColumnDefs = [
             {key:"uneditable"},
-            {key:"address", formatter:this.formatAddress, editor:"textarea"},
-            {key:"city", editor:"textbox"},
-            {key:"state", editor:"dropdown", editorOptions:{dropdownOptions:YAHOO.example.Data.stateAbbrs}},
-            {key:"amount", editor:"textbox", editorOptions:{validator:YAHOO.widget.DataTable.validateNumber}},
-            {key:"active", editor:"radio", editorOptions:{radioOptions:["yes","no","maybe"],disableBtns:true}},
-            {key:"colors", editor:"checkbox", editorOptions:{checkboxOptions:["red","yellow","blue"]}},
-            {key:"last_login", formatter:YAHOO.widget.DataTable.formatDate, editor:"date"}
+            {key:"address", formatter:formatAddress, editor: new YAHOO.widget.TextareaCellEditor()},
+            {key:"city", editor: new YAHOO.widget.TextboxCellEditor({disableBtns:true})},
+            {key:"state", editor: new YAHOO.widget.DropdownCellEditor({dropdownOptions:YAHOO.example.Data.stateAbbrs,disableBtns:true})},
+            {key:"amount", editor: new YAHOO.widget.TextboxCellEditor({validator:YAHOO.widget.DataTable.validateNumber})},
+            {key:"active", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["yes","no","maybe"],disableBtns:true})},
+            {key:"colors", editor: new YAHOO.widget.CheckboxCellEditor({checkboxOptions:["red","yellow","blue"]})},
+            {key:"last_login", formatter:YAHOO.widget.DataTable.formatDate, editor: new YAHOO.widget.DateCellEditor()}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.addresses);
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
-        this.myDataSource.responseSchema = {
-            fields: ["address","city","state","amount","active","colors",{key:"last_login",parser:YAHOO.util.DataSource.parseDate}]
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.addresses);
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        myDataSource.responseSchema = {
+            fields: ["address","city","state","amount","active","colors",{key:"last_login",parser:"date"}]
         };
 
-        this.myDataTable = new YAHOO.widget.DataTable("cellediting", myColumnDefs, this.myDataSource);
+        var myDataTable = new YAHOO.widget.DataTable("cellediting", myColumnDefs, myDataSource, {});
 
         // Set up editing flow
-        this.highlightEditableCell = function(oArgs) {
+        var highlightEditableCell = function(oArgs) {
             var elCell = oArgs.target;
             if(YAHOO.util.Dom.hasClass(elCell, "yui-dt-editable")) {
                 this.highlightCell(elCell);
             }
         };
-        this.myDataTable.subscribe("cellMouseoverEvent", this.highlightEditableCell);
-        this.myDataTable.subscribe("cellMouseoutEvent", this.myDataTable.onEventUnhighlightCell);
-        this.myDataTable.subscribe("cellClickEvent", this.myDataTable.onEventShowCellEditor);
-
-        // Hook into custom event to customize save-flow of "radio" editor
-        this.myDataTable.subscribe("editorUpdateEvent", function(oArgs) {
-            if(oArgs.editor.column.key === "active") {
-                this.saveCellEditor();
-            }
-        });
-        this.myDataTable.subscribe("editorBlurEvent", function(oArgs) {
-            this.cancelCellEditor();
-        });
-    };
+        myDataTable.subscribe("cellMouseoverEvent", highlightEditableCell);
+        myDataTable.subscribe("cellMouseoutEvent", myDataTable.onEventUnhighlightCell);
+        myDataTable.subscribe("cellClickEvent", myDataTable.onEventShowCellEditor);
+        
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
 });
 </script>
 

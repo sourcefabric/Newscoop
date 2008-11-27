@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>DataSource Utility&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>DataSource Utility&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_datasource.html">datasource</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -51,8 +53,7 @@
   
 
                     <div class="summary description">
-                        The static Date class provides helper functions to deal with data of type
-Number.
+                        The static Date class provides helper functions to deal with data of type Date.
                     </div>
 
 
@@ -81,6 +82,10 @@ Number.
                                                          oConfig
                                                     
                                                 
+                                                        , 
+                                                         sLocale
+                                                    
+                                                
                                             )
                                         </code>
                                         
@@ -100,10 +105,31 @@ Number.
                                                             <code>oConfig &lt;Object} (Optional) Optional configuration values:
 <dl>
 <dt>format {String&gt;</code>
-                                                             </dd>
-<dd>Currently only the following formats are supported:
-"MM/DD/YYYY", "YYYY/MM/DD", or "DD/MM/YYYY"</dd>
+                                                             </dt>
+<dd>Any format defined by strftime is supported</dd>
 </dl>
+strftime has several format specifiers defined by the Open group at 
+http://www.opengroup.org/onlinepubs/007908799/xsh/strftime.html
+PHP added a few of its own, defined at http://www.php.net/strftime
+This javascript implementation supports all the PHP specifiers and a few more.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>sLocale &lt;String&gt;</code>
+                                                              (Optional) The locale to use when displaying days of week,
+months of the year, and other locale specific strings.  The following locales are
+built in:
+<dl>
+<dt>en</dt>
+<dd>English</dd>
+<dt>en-US</dt>
+<dd>US English</dd>
+<dt>en-GB</dt>
+<dd>British English</dd>
+<dt>en-AU</dt>
+<dd>Australian English (identical to British English)</dd>
+</dl>
+More locales may be added by subclassing of YAHOO.util.DateLocale.
+See YAHOO.util.DateLocale for more information.
                                                         </dd>
                                                 </dl>
 
@@ -114,7 +140,10 @@ Number.
                                                     </code></dt>
                                                     <dd>Formatted date for display.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -145,6 +174,8 @@ Number.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -186,6 +217,8 @@ Number.
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
 
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
+
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
                                 <li class=""><a href="module_profilerviewer.html">profilerviewer</a></li>
@@ -214,8 +247,14 @@ Number.
                         <h4>Classes</h4>
                         <ul class="content">
                                 <li class=""><a href="YAHOO.util.DataSource.html">YAHOO.util.DataSource</a></li>
+                                <li class=""><a href="YAHOO.util.DataSourceBase.html">YAHOO.util.DataSourceBase</a></li>
                                 <li class="selected"><a href="YAHOO.util.Date.html">YAHOO.util.Date</a></li>
+                                <li class=""><a href="YAHOO.util.DateLocale.html">YAHOO.util.DateLocale</a></li>
+                                <li class=""><a href="YAHOO.util.FunctionDataSource.html">YAHOO.util.FunctionDataSource</a></li>
+                                <li class=""><a href="YAHOO.util.LocalDataSource.html">YAHOO.util.LocalDataSource</a></li>
                                 <li class=""><a href="YAHOO.util.Number.html">YAHOO.util.Number</a></li>
+                                <li class=""><a href="YAHOO.util.ScriptNodeDataSource.html">YAHOO.util.ScriptNodeDataSource</a></li>
+                                <li class=""><a href="YAHOO.util.XHRDataSource.html">YAHOO.util.XHRDataSource</a></li>
                         </ul>
                     </div>
 
@@ -223,6 +262,7 @@ Number.
                         <h4>Files</h4>
                         <ul class="content">        
                                 <li class=""><a href="DataSource.js.html">DataSource.js</a></li>
+                                <li class=""><a href="Type.js.html">Type.js</a></li>
                         </ul>
                     </div>
 
@@ -243,7 +283,7 @@ Number.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

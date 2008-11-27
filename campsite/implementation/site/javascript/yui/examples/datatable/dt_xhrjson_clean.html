@@ -22,14 +22,15 @@ body {
 <script type="text/javascript" src="../../build/connection/connection-min.js"></script>
 <script type="text/javascript" src="../../build/json/json-min.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 <!--there is no custom header content for this example-->
 
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>JSON Data Over XHR</h1>
 
@@ -46,45 +47,54 @@ Local webservice.</p>
 
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.XHR_JSON = new function() {
-        this.formatUrl = function(elCell, oRecord, oColumn, sData) {
+    YAHOO.example.XHR_JSON = function() {
+        var formatUrl = function(elCell, oRecord, oColumn, sData) {
             elCell.innerHTML = "<a href='" + oRecord.getData("ClickUrl") + "' target='_blank'>" + sData + "</a>";
         };
 
         var myColumnDefs = [
-            {key:"Title", label:"Name", sortable:true, formatter:this.formatUrl},
+            {key:"Title", label:"Name", sortable:true, formatter:formatUrl},
             {key:"Phone"},
             {key:"City"},
             {key:"Rating.AverageRating", label:"Rating", formatter:YAHOO.widget.DataTable.formatNumber, sortable:true}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource("assets/php/ylocal_proxy.php?");
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
-        this.myDataSource.connXhrMode = "queueRequests";
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource("assets/php/ylocal_proxy.php?");
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
+        myDataSource.connXhrMode = "queueRequests";
+        myDataSource.responseSchema = {
             resultsList: "ResultSet.Result",
-            fields: ["Title","Phone","City",{key:"Rating.AverageRating",parser:YAHOO.util.DataSource.parseNumber},"ClickUrl"]
+            fields: ["Title","Phone","City",{key:"Rating.AverageRating",parser:"number"},"ClickUrl"]
         };
 
-        this.myDataTable = new YAHOO.widget.DataTable("json", myColumnDefs,
-                this.myDataSource, {initialRequest:"query=pizza&zip=94089&results=10&output=json"});
+        var myDataTable = new YAHOO.widget.DataTable("json", myColumnDefs,
+                myDataSource, {initialRequest:"query=pizza&zip=94089&results=10&output=json"});
 
-        var callback1 = {
-            success : this.myDataTable.onDataReturnAppendRows,
-            failure : this.myDataTable.onDataReturnAppendRows,
-            scope : this.myDataTable
+        var mySuccessHandler = function() {
+            this.set("sortedBy", null);
+            this.onDataReturnAppendRows.apply(this,arguments);
         };
-        this.myDataSource.sendRequest("query=mexican&zip=94089&results=10&output=json",
-                callback1);
+        var myFailureHandler = function() {
+            this.showTableMessage(YAHOO.widget.DataTable.MSG_ERROR, YAHOO.widget.DataTable.CLASS_ERROR);
+            this.onDataReturnAppendRows.apply(this,arguments);
+        };
+        var callbackObj = {
+            success : mySuccessHandler,
+            failure : myFailureHandler,
+            scope : myDataTable
+        };
+        
+        myDataSource.sendRequest("query=mexican&zip=94089&results=10&output=json",
+                callbackObj);
 
-        var callback2 = {
-            success : this.myDataTable.onDataReturnInsertRows,
-            failure : this.myDataTable.onDataReturnInsertRows,
-            scope : this.myDataTable
+        myDataSource.sendRequest("query=chinese&zip=94089&results=10&output=json",
+                callbackObj);
+                
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
         };
-        this.myDataSource.sendRequest("query=chinese&zip=94089&results=10&output=json",
-                callback2);
-    };
+    }();
 });
 </script>
 

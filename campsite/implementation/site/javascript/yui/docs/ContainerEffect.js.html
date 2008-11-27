@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Container&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Container&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_container.html">container</a>
@@ -21,14 +21,16 @@
                  &gt; ContainerEffect.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -58,14 +60,12 @@
 <span class="c">    * @param {class} Optional. The animation class to instantiate. Defaults to </span>
 <span class="c">    * YAHOO.util.Anim. Other options include YAHOO.util.Motion.</span>
 <span class="c">    */</span>
-    <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">ContainerEffect</span> <span class="o">=</span> 
-    
-        <span class="k">function</span> <span class="o">(</span><span class="nx">overlay</span><span class="o">,</span> <span class="nx">attrIn</span><span class="o">,</span> <span class="nx">attrOut</span><span class="o">,</span> <span class="nx">targetElement</span><span class="o">,</span> <span class="nx">animClass</span><span class="o">)</span> <span class="o">{</span>
-    
+    <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">ContainerEffect</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">overlay</span><span class="o">,</span> <span class="nx">attrIn</span><span class="o">,</span> <span class="nx">attrOut</span><span class="o">,</span> <span class="nx">targetElement</span><span class="o">,</span> <span class="nx">animClass</span><span class="o">)</span> <span class="o">{</span>
+
         <span class="k">if</span> <span class="o">(!</span><span class="nx">animClass</span><span class="o">)</span> <span class="o">{</span>
             <span class="nx">animClass</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Anim</span><span class="o">;</span>
         <span class="o">}</span>
-        
+
         <span class="c">/**</span>
 <span class="c">        * The overlay to animate</span>
 <span class="c">        * @property overlay</span>
@@ -106,7 +106,6 @@
 
     <span class="k">var</span> <span class="nx">Dom</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Dom</span><span class="o">,</span>
         <span class="nx">CustomEvent</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">CustomEvent</span><span class="o">,</span>
-        <span class="nx">Easing</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Easing</span><span class="o">,</span>
         <span class="nx">ContainerEffect</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">ContainerEffect</span><span class="o">;</span>
 
 
@@ -121,19 +120,18 @@
 <span class="c">    */</span>
     <span class="nx">ContainerEffect</span><span class="o">.</span><span class="nx">FADE</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">overlay</span><span class="o">,</span> <span class="nx">dur</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="k">var</span> <span class="nx">fin</span> <span class="o">=</span> <span class="o">{</span>
-            <span class="nx">attributes</span><span class="o">:</span> <span class="o">{</span><span class="nx">opacity</span><span class="o">:{</span><span class="nx">from</span><span class="o">:</span><span class="m">0</span><span class="o">,</span> <span class="nx">to</span><span class="o">:</span><span class="m">1</span><span class="o">}},</span>
-            <span class="nx">duration</span><span class="o">:</span> <span class="nx">dur</span><span class="o">,</span>
-            <span class="nx">method</span><span class="o">:</span> <span class="nx">Easing</span><span class="o">.</span><span class="nx">easeIn</span>
-        <span class="o">};</span>
-
-        <span class="k">var</span> <span class="nx">fout</span> <span class="o">=</span> <span class="o">{</span>
-            <span class="nx">attributes</span><span class="o">:</span> <span class="o">{</span><span class="nx">opacity</span><span class="o">:{</span><span class="nx">to</span><span class="o">:</span><span class="m">0</span><span class="o">}},</span>
-            <span class="nx">duration</span><span class="o">:</span> <span class="nx">dur</span><span class="o">,</span>
-            <span class="nx">method</span><span class="o">:</span> <span class="nx">Easing</span><span class="o">.</span><span class="nx">easeOut</span>
-        <span class="o">};</span>
-
-        <span class="k">var</span> <span class="nx">fade</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ContainerEffect</span><span class="o">(</span><span class="nx">overlay</span><span class="o">,</span> <span class="nx">fin</span><span class="o">,</span> <span class="nx">fout</span><span class="o">,</span> <span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">);</span>
+        <span class="k">var</span> <span class="nx">Easing</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Easing</span><span class="o">,</span>
+            <span class="nx">fin</span> <span class="o">=</span> <span class="o">{</span>
+                <span class="nx">attributes</span><span class="o">:</span> <span class="o">{</span><span class="nx">opacity</span><span class="o">:{</span><span class="nx">from</span><span class="o">:</span><span class="m">0</span><span class="o">,</span> <span class="nx">to</span><span class="o">:</span><span class="m">1</span><span class="o">}},</span>
+                <span class="nx">duration</span><span class="o">:</span> <span class="nx">dur</span><span class="o">,</span>
+                <span class="nx">method</span><span class="o">:</span> <span class="nx">Easing</span><span class="o">.</span><span class="nx">easeIn</span>
+            <span class="o">},</span>
+            <span class="nx">fout</span> <span class="o">=</span> <span class="o">{</span>
+                <span class="nx">attributes</span><span class="o">:</span> <span class="o">{</span><span class="nx">opacity</span><span class="o">:{</span><span class="nx">to</span><span class="o">:</span><span class="m">0</span><span class="o">}},</span>
+                <span class="nx">duration</span><span class="o">:</span> <span class="nx">dur</span><span class="o">,</span>
+                <span class="nx">method</span><span class="o">:</span> <span class="nx">Easing</span><span class="o">.</span><span class="nx">easeOut</span>
+            <span class="o">},</span>
+            <span class="nx">fade</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ContainerEffect</span><span class="o">(</span><span class="nx">overlay</span><span class="o">,</span> <span class="nx">fin</span><span class="o">,</span> <span class="nx">fout</span><span class="o">,</span> <span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">);</span>
 
         <span class="nx">fade</span><span class="o">.</span><span class="nx">handleUnderlayStart</span> <span class="o">=</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
             <span class="k">var</span> <span class="nx">underlay</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">overlay</span><span class="o">.</span><span class="nx">underlay</span><span class="o">;</span>
@@ -152,7 +150,7 @@
             <span class="o">}</span>
         <span class="o">};</span>
 
-        <span class="nx">fade</span><span class="o">.</span><span class="nx">handleStartAnimateIn</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span><span class="nx">args</span><span class="o">,</span><span class="nx">obj</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nx">fade</span><span class="o">.</span><span class="nx">handleStartAnimateIn</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span>
             <span class="nx">Dom</span><span class="o">.</span><span class="nx">addClass</span><span class="o">(</span><span class="nx">obj</span><span class="o">.</span><span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">,</span> <span class="s2">&quot;hide-select&quot;</span><span class="o">);</span>
 
             <span class="k">if</span> <span class="o">(!</span><span class="nx">obj</span><span class="o">.</span><span class="nx">overlay</span><span class="o">.</span><span class="nx">underlay</span><span class="o">)</span> <span class="o">{</span>
@@ -212,33 +210,32 @@
 <span class="c">    * @return {YAHOO.widget.ContainerEffect} The configured ContainerEffect object</span>
 <span class="c">    */</span>
     <span class="nx">ContainerEffect</span><span class="o">.</span><span class="nx">SLIDE</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">overlay</span><span class="o">,</span> <span class="nx">dur</span><span class="o">)</span> <span class="o">{</span>
-    
-        <span class="k">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">overlay</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">getProperty</span><span class="o">(</span><span class="s2">&quot;x&quot;</span><span class="o">)</span> <span class="o">||</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getX</span><span class="o">(</span><span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">),</span>
-    
+        <span class="k">var</span> <span class="nx">Easing</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Easing</span><span class="o">,</span>
+
+            <span class="nx">x</span> <span class="o">=</span> <span class="nx">overlay</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">getProperty</span><span class="o">(</span><span class="s2">&quot;x&quot;</span><span class="o">)</span> <span class="o">||</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getX</span><span class="o">(</span><span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">),</span>
             <span class="nx">y</span> <span class="o">=</span> <span class="nx">overlay</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">getProperty</span><span class="o">(</span><span class="s2">&quot;y&quot;</span><span class="o">)</span> <span class="o">||</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getY</span><span class="o">(</span><span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">),</span>
-    
             <span class="nx">clientWidth</span> <span class="o">=</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getClientWidth</span><span class="o">(),</span>
-    
             <span class="nx">offsetWidth</span> <span class="o">=</span> <span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">.</span><span class="nx">offsetWidth</span><span class="o">,</span>
-    
-            <span class="nx">slide</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ContainerEffect</span><span class="o">(</span><span class="nx">overlay</span><span class="o">,</span> 
-            
-            <span class="o">{</span> <span class="nx">attributes</span><span class="o">:</span> <span class="o">{</span> <span class="nx">points</span><span class="o">:</span> <span class="o">{</span> <span class="nx">to</span><span class="o">:</span> <span class="o">[</span><span class="nx">x</span><span class="o">,</span> <span class="nx">y</span><span class="o">]</span> <span class="o">}</span> <span class="o">},</span>
+
+            <span class="nx">sin</span> <span class="o">=</span>  <span class="o">{</span> 
+                <span class="nx">attributes</span><span class="o">:</span> <span class="o">{</span> <span class="nx">points</span><span class="o">:</span> <span class="o">{</span> <span class="nx">to</span><span class="o">:</span> <span class="o">[</span><span class="nx">x</span><span class="o">,</span> <span class="nx">y</span><span class="o">]</span> <span class="o">}</span> <span class="o">},</span>
                 <span class="nx">duration</span><span class="o">:</span> <span class="nx">dur</span><span class="o">,</span>
-                <span class="nx">method</span><span class="o">:</span> <span class="nx">Easing</span><span class="o">.</span><span class="nx">easeIn</span> <span class="o">},</span>
-    
-            <span class="o">{</span> <span class="nx">attributes</span><span class="o">:</span> <span class="o">{</span> <span class="nx">points</span><span class="o">:</span> <span class="o">{</span> <span class="nx">to</span><span class="o">:</span> <span class="o">[(</span><span class="nx">clientWidth</span> <span class="o">+</span> <span class="m">25</span><span class="o">),</span> <span class="nx">y</span><span class="o">]</span> <span class="o">}</span> <span class="o">},</span>
+                <span class="nx">method</span><span class="o">:</span> <span class="nx">Easing</span><span class="o">.</span><span class="nx">easeIn</span> 
+            <span class="o">},</span>
+
+            <span class="nx">sout</span> <span class="o">=</span> <span class="o">{</span>
+                <span class="nx">attributes</span><span class="o">:</span> <span class="o">{</span> <span class="nx">points</span><span class="o">:</span> <span class="o">{</span> <span class="nx">to</span><span class="o">:</span> <span class="o">[(</span><span class="nx">clientWidth</span> <span class="o">+</span> <span class="m">25</span><span class="o">),</span> <span class="nx">y</span><span class="o">]</span> <span class="o">}</span> <span class="o">},</span>
                 <span class="nx">duration</span><span class="o">:</span> <span class="nx">dur</span><span class="o">,</span>
-                <span class="nx">method</span><span class="o">:</span> <span class="nx">Easing</span><span class="o">.</span><span class="nx">easeOut</span> <span class="o">},</span>
-    
-            <span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">,</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Motion</span><span class="o">);</span>
-        
-        
+                <span class="nx">method</span><span class="o">:</span> <span class="nx">Easing</span><span class="o">.</span><span class="nx">easeOut</span> 
+            <span class="o">},</span>
+
+            <span class="nx">slide</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ContainerEffect</span><span class="o">(</span><span class="nx">overlay</span><span class="o">,</span> <span class="nx">sin</span><span class="o">,</span> <span class="nx">sout</span><span class="o">,</span> <span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">,</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Motion</span><span class="o">);</span>
+
         <span class="nx">slide</span><span class="o">.</span><span class="nx">handleStartAnimateIn</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span><span class="nx">args</span><span class="o">,</span><span class="nx">obj</span><span class="o">)</span> <span class="o">{</span>
             <span class="nx">obj</span><span class="o">.</span><span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">left</span> <span class="o">=</span> <span class="o">((-</span><span class="m">25</span><span class="o">)</span> <span class="o">-</span> <span class="nx">offsetWidth</span><span class="o">)</span> <span class="o">+</span> <span class="s2">&quot;px&quot;</span><span class="o">;</span>
             <span class="nx">obj</span><span class="o">.</span><span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">top</span>  <span class="o">=</span> <span class="nx">y</span> <span class="o">+</span> <span class="s2">&quot;px&quot;</span><span class="o">;</span>
         <span class="o">};</span>
-        
+
         <span class="nx">slide</span><span class="o">.</span><span class="nx">handleTweenAnimateIn</span> <span class="o">=</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span>
         
             <span class="k">var</span> <span class="nx">pos</span> <span class="o">=</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getXY</span><span class="o">(</span><span class="nx">obj</span><span class="o">.</span><span class="nx">overlay</span><span class="o">.</span><span class="nx">element</span><span class="o">),</span>
@@ -289,13 +286,13 @@
             <span class="nx">obj</span><span class="o">.</span><span class="nx">overlay</span><span class="o">.</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">setProperty</span><span class="o">(</span><span class="s2">&quot;xy&quot;</span><span class="o">,</span> <span class="o">[</span><span class="nx">x</span><span class="o">,</span> <span class="nx">y</span><span class="o">]);</span>
             <span class="nx">obj</span><span class="o">.</span><span class="nx">animateOutCompleteEvent</span><span class="o">.</span><span class="nx">fire</span><span class="o">();</span>
         <span class="o">};</span>
-        
+
         <span class="nx">slide</span><span class="o">.</span><span class="nx">init</span><span class="o">();</span>
         <span class="k">return</span> <span class="nx">slide</span><span class="o">;</span>
     <span class="o">};</span>
-    
+
     <span class="nx">ContainerEffect</span><span class="o">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="o">{</span>
-    
+
         <span class="c">/**</span>
 <span class="c">        * Initializes the animation classes and events.</span>
 <span class="c">        * @method init</span>
@@ -344,7 +341,7 @@
             <span class="k">this</span><span class="o">.</span><span class="nx">beforeAnimateInEvent</span><span class="o">.</span><span class="nx">fire</span><span class="o">();</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">animIn</span><span class="o">.</span><span class="nx">animate</span><span class="o">();</span>
         <span class="o">},</span>
-        
+
         <span class="c">/**</span>
 <span class="c">        * Triggers the out-animation.</span>
 <span class="c">        * @method animateOut</span>
@@ -353,7 +350,7 @@
             <span class="k">this</span><span class="o">.</span><span class="nx">beforeAnimateOutEvent</span><span class="o">.</span><span class="nx">fire</span><span class="o">();</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">animOut</span><span class="o">.</span><span class="nx">animate</span><span class="o">();</span>
         <span class="o">},</span>
-        
+
         <span class="c">/**</span>
 <span class="c">        * The default onStart handler for the in-animation.</span>
 <span class="c">        * @method handleStartAnimateIn</span>
@@ -362,7 +359,7 @@
 <span class="c">        * @param {Object} obj The scope object</span>
 <span class="c">        */</span>
         <span class="nx">handleStartAnimateIn</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span> <span class="o">},</span>
-    
+
         <span class="c">/**</span>
 <span class="c">        * The default onTween handler for the in-animation.</span>
 <span class="c">        * @method handleTweenAnimateIn</span>
@@ -371,7 +368,7 @@
 <span class="c">        * @param {Object} obj The scope object</span>
 <span class="c">        */</span>
         <span class="nx">handleTweenAnimateIn</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span> <span class="o">},</span>
-    
+
         <span class="c">/**</span>
 <span class="c">        * The default onComplete handler for the in-animation.</span>
 <span class="c">        * @method handleCompleteAnimateIn</span>
@@ -380,7 +377,7 @@
 <span class="c">        * @param {Object} obj The scope object</span>
 <span class="c">        */</span>
         <span class="nx">handleCompleteAnimateIn</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span> <span class="o">},</span>
-        
+
         <span class="c">/**</span>
 <span class="c">        * The default onStart handler for the out-animation.</span>
 <span class="c">        * @method handleStartAnimateOut</span>
@@ -389,7 +386,7 @@
 <span class="c">        * @param {Object} obj The scope object</span>
 <span class="c">        */</span>
         <span class="nx">handleStartAnimateOut</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span> <span class="o">},</span>
-    
+
         <span class="c">/**</span>
 <span class="c">        * The default onTween handler for the out-animation.</span>
 <span class="c">        * @method handleTweenAnimateOut</span>
@@ -398,7 +395,7 @@
 <span class="c">        * @param {Object} obj The scope object</span>
 <span class="c">        */</span>
         <span class="nx">handleTweenAnimateOut</span><span class="o">:</span> <span class="k">function</span> <span class="o">(</span><span class="nx">type</span><span class="o">,</span> <span class="nx">args</span><span class="o">,</span> <span class="nx">obj</span><span class="o">)</span> <span class="o">{</span> <span class="o">},</span>
-    
+
         <span class="c">/**</span>
 <span class="c">        * The default onComplete handler for the out-animation.</span>
 <span class="c">        * @method handleCompleteAnimateOut</span>
@@ -420,7 +417,6 @@
             <span class="o">}</span>
             <span class="k">return</span> <span class="nx">output</span><span class="o">;</span>
         <span class="o">}</span>
-    
     <span class="o">};</span>
 
     <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">augmentProto</span><span class="o">(</span><span class="nx">ContainerEffect</span><span class="o">,</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">EventProvider</span><span class="o">);</span>
@@ -444,6 +440,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -484,6 +482,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -548,7 +548,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

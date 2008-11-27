@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>layout&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>layout&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_layout.html">layout</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -293,6 +295,21 @@
                                     <hr />
                                     </div>
                                     <div class="private">
+                                    <h4><a name="property__loading">_loading</a>
+                                        <code>- private Number</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            During the loading process this variable will be true
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
                                     <h4><a name="property__resize">_resize</a>
                                         <code>- private YAHOO.util.Resize</code>
                                     </h4>
@@ -353,6 +370,21 @@
                                     <hr />
                                     </div>
                                     <div class="">
+                                    <h4><a name="property_dataConnection">dataConnection</a>
+                                        <code>- Object</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            YUI Connection Manager handler
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
                                     <h4><a name="property_footer">footer</a>
                                         <code>- HTMLElement</code>
                                     </h4>
@@ -378,6 +410,39 @@
                                     </div>
      
                                         
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_loadHandler">loadHandler</a>
+                                        <code>- Object</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Callback method for the YUI Connection Manager used for load the body using AJAX
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_LOADING_CLASSNAME">LOADING_CLASSNAME</a>
+                                        <code>- String</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The class name applied to dynamic tabs while loading.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: "disabled"
+                                    </div>        
 
 
                                     <hr />
@@ -492,7 +557,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -526,7 +594,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -560,7 +631,10 @@
                                                     </code></dt>
                                                     <dd>The new HTMLElement</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -622,7 +696,10 @@
                                                     </code></dt>
                                                     <dd>The fixed dimension</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -668,7 +745,10 @@
                                                     </code></dt>
                                                     <dd>An array of the top, right, bottom, left borders.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -714,7 +794,10 @@
                                                     </code></dt>
                                                     <dd>An array of height and width</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -768,7 +851,10 @@
                                                     </code></dt>
                                                     <dd>The new height, fixed for borders and IE QuirksMode</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -822,7 +908,10 @@
                                                     </code></dt>
                                                     <dd>The new width, fixed for borders and IE QuirksMode</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -856,7 +945,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -890,7 +982,10 @@
                                                     </code></dt>
                                                     <dd>The parent Layout instance</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -924,7 +1019,10 @@
                                                     </code></dt>
                                                     <dd>The LayoutUnit instance</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -941,6 +1039,11 @@
                                         <a href="YAHOO.widget.Layout.html">YAHOO.widget.Layout</a>
                                             <strong>destroy</strong>
                                            (
+                                                
+                                                        
+                                                         force
+                                                    
+                                                
                                             )
                                         </code>
                                         
@@ -950,6 +1053,13 @@
 
                                         <div class="description">
 
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>force &lt;Boolean&gt;</code>
+                                                             Don't report to the parent, because we are being called from the parent.
+                                                        </dd>
+                                                </dl>
 
                                                 <dl>
                                                     <dt>Returns:
@@ -958,7 +1068,10 @@
                                                     </code></dt>
                                                     <dd>The parent Layout instance</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -992,7 +1105,10 @@
                                                     </code></dt>
                                                     <dd>The LayoutUnit instance</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1026,7 +1142,10 @@
                                                     </code></dt>
                                                     <dd>The Layout Object</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1060,7 +1179,10 @@
                                                     </code></dt>
                                                     <dd>An object of the sizes used for calculations</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1094,7 +1216,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1128,7 +1253,47 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_loadContent">loadContent</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        object
+                                            <strong>loadContent</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Loading the content of the unit using the connection manager
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        object
+                                                    </code></dt>
+                                                    <dd>YUI Connection Manager handler</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1174,7 +1339,10 @@
                                                     </code></dt>
                                                     <dd>The LayoutUnit instance</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1208,7 +1376,10 @@
                                                     </code></dt>
                                                     <dd>The LayoutUnit instance</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1242,7 +1413,10 @@
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1263,7 +1437,7 @@
                                 <h4>Methods inherited from <a href="YAHOO.util.AttributeProvider.html">YAHOO.util.AttributeProvider</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_configureAttribute">configureAttribute</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireBeforeChangeEvent">fireBeforeChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireChangeEvent">fireChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_get">get</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_getAttributeConfig">getAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_getAttributeKeys">getAttributeKeys</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_refresh">refresh</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_register">register</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_resetAttributeConfig">resetAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_resetValue">resetValue</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_set">set</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributeConfig">setAttributeConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributes">setAttributes</a>
+                                            <a class=" deprecated" href="YAHOO.util.AttributeProvider.html#method_configureAttribute">configureAttribute</a><span class=" deprecated">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireBeforeChangeEvent">fireBeforeChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireChangeEvent">fireChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_get">get</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_getAttributeConfig">getAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_getAttributeKeys">getAttributeKeys</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_refresh">refresh</a><span class="">,</span>                                            <a class=" deprecated" href="YAHOO.util.AttributeProvider.html#method_register">register</a><span class=" deprecated">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_resetAttributeConfig">resetAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_resetValue">resetValue</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_set">set</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributeConfig">setAttributeConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributes">setAttributes</a>
                                     </code>
                                 </div>
                             </div>
@@ -1292,7 +1466,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1309,7 +1483,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1333,7 +1507,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1350,8 +1524,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1374,7 +1548,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1391,8 +1565,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1415,7 +1589,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1432,8 +1606,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1485,7 +1659,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1502,8 +1676,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1526,7 +1700,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1543,8 +1717,131 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeDataLoadedChange">beforeDataLoadedChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeDataLoadedChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before the value for the configuration attribute 'dataLoaded' changes. Return false to cancel the attribute change.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeDataSrcChange">beforeDataSrcChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeDataSrcChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before the value for the configuration attribute 'dataSrc' changes. Return false to cancel the attribute change.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeDataTimeoutChange">beforeDataTimeoutChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeDataTimeoutChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before the value for the configuration attribute 'dataTimeout' changes. Return false to cancel the attribute change.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1567,7 +1864,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1584,8 +1881,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1608,7 +1905,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1625,8 +1922,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1678,7 +1975,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1695,8 +1992,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1719,7 +2016,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1736,8 +2033,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1760,7 +2057,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1777,8 +2074,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1801,7 +2098,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1818,8 +2115,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1842,7 +2139,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1859,8 +2156,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1883,7 +2180,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1900,8 +2197,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1924,7 +2221,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1941,8 +2238,49 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeLoadMethodChange">beforeLoadMethodChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeLoadMethodChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before the value for the configuration attribute 'loadMethod' changes. Return false to cancel the attribute change.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1965,7 +2303,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1982,8 +2320,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2006,7 +2344,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2023,8 +2361,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2047,7 +2385,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2064,8 +2402,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2088,7 +2426,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2105,8 +2443,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2129,7 +2467,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2146,8 +2484,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2170,7 +2508,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2187,8 +2525,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2211,7 +2549,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2228,8 +2566,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2281,7 +2619,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2298,8 +2636,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2322,7 +2660,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2339,8 +2677,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2363,7 +2701,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2380,8 +2718,49 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeUseShimChange">beforeUseShimChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeUseShimChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before the value for the configuration attribute 'useShim' changes. Return false to cancel the attribute change.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2404,7 +2783,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2421,8 +2800,8 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2445,7 +2824,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2462,8 +2841,49 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_beforeZIndexChange">beforeZIndexChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>beforeZIndexChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires before the value for the configuration attribute 'zIndex' changes. Return false to cancel the attribute change.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -2486,7 +2906,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2503,7 +2923,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -2556,7 +2976,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2573,7 +2993,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -2626,7 +3046,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2643,7 +3063,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -2667,7 +3087,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2684,7 +3104,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -2726,6 +3146,129 @@
                                     </div>
                                     <div class="">
                                     <h4>
+                                        <a name="event_dataLoadedChange">dataLoadedChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>dataLoadedChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires when the value for the configuration attribute 'dataLoaded' changes.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_dataSrcChange">dataSrcChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>dataSrcChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires when the value for the configuration attribute 'dataSrc' changes.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_dataTimeoutChange">dataTimeoutChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>dataTimeoutChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires when the value for the configuration attribute 'dataTimeout' changes.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
                                         <a name="event_durationChange">durationChange</a></h4>
                                     <div class="detail">
                                         <code>
@@ -2737,7 +3280,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2754,7 +3297,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -2778,7 +3321,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2795,10 +3338,39 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_endResize">endResize</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>endResize</strong>
+
+                                            (
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fired when the Resize Utility fires it's endResize Event.
+                                        </div>
+
+                                        <div class="description">
+
+
 
 
                                         </div>
@@ -2848,7 +3420,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2865,7 +3437,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -2889,7 +3461,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2906,7 +3478,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -2930,7 +3502,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2947,7 +3519,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -2971,7 +3543,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2988,7 +3560,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3012,7 +3584,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3029,7 +3601,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3053,7 +3625,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3070,7 +3642,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3094,7 +3666,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3111,7 +3683,106 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_load">load</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>load</strong>
+
+                                            (
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fired when data is loaded via the dataSrc config.
+                                        </div>
+
+                                        <div class="description">
+
+
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_loadError">loadError</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>loadError</strong>
+
+                                            (
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fired when an error occurs loading data via the dataSrc config. Error message is passed as argument to this event.
+                                        </div>
+
+                                        <div class="description">
+
+
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_loadMethodChange">loadMethodChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>loadMethodChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires when the value for the configuration attribute 'loadMethod' changes.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3135,7 +3806,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3152,7 +3823,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3176,7 +3847,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3193,7 +3864,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3217,7 +3888,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3234,7 +3905,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3258,7 +3929,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3275,7 +3946,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3299,7 +3970,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3316,7 +3987,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3340,7 +4011,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3357,7 +4028,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3381,7 +4052,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3398,7 +4069,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3451,7 +4122,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3468,7 +4139,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3492,7 +4163,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3509,7 +4180,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3562,7 +4233,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3579,7 +4250,48 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_useShimChange">useShimChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>useShimChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires when the value for the configuration attribute 'useShim' changes.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3603,7 +4315,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3620,7 +4332,7 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3644,7 +4356,7 @@
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -3661,7 +4373,48 @@
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_zIndexChange">zIndexChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>zIndexChange</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires when the value for the configuration attribute 'zIndex' changes.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -3755,6 +4508,51 @@
                                     </div>
  
      
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
+                                    <h4><a name="config_dataLoaded">dataLoaded</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Whether or not any data has been loaded from the server.
+                                        </div>
+                                    </div>
+ 
+     
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
+                                    <h4><a name="config_dataSrc">dataSrc</a>
+                                        <code>- String</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The unit data source, used for loading content dynamically.
+                                        </div>
+                                    </div>
+ 
+     
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
+                                    <h4><a name="config_dataTimeout">dataTimeout</a>
+                                        <code>- Number</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Number if milliseconds before aborting and calling failure handler.
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: null
+                                    </div>        
 
                                     <hr />
                                     </div>        
@@ -3885,6 +4683,23 @@
                                     <hr />
                                     </div>        
                                     <div class="">
+                                    <h4><a name="config_loadMethod">loadMethod</a>
+                                        <code>- String</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The method to use for the data request.
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: "GET"
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
                                     <h4><a name="config_maxHeight">maxHeight</a>
                                         <code>- Number</code>
                                     </h4>
@@ -3998,11 +4813,11 @@
                                     </div>        
                                     <div class="">
                                     <h4><a name="config_scroll">scroll</a>
-                                        <code>- object</code>
+                                        <code>- Boolean/Null</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Adds a class to the unit to allow for overflow: auto, default is overflow: hidden
+                                            Adds a class to the unit to allow for overflow: auto (yui-layout-scroll), default is overflow: hidden (yui-layout-noscroll). If true scroll bars will be placed on the element when the content exceeds the given area, false will put overflow hidden to hide the content. Passing null will render the content as usual overflow.
                                         </div>
                                     </div>
  
@@ -4017,6 +4832,20 @@
                                     <div class="detail">
                                         <div class="description">
                                             The current top positioning of the Unit
+                                        </div>
+                                    </div>
+ 
+     
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
+                                    <h4><a name="config_useShim">useShim</a>
+                                        <code>- object</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Config option to pass to the Resize Utility
                                         </div>
                                     </div>
  
@@ -4045,6 +4874,20 @@
                                     <div class="detail">
                                         <div class="description">
                                             A reference to the wrap element
+                                        </div>
+                                    </div>
+ 
+     
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
+                                    <h4><a name="config_zIndex">zIndex</a>
+                                        <code>- {Number}</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The CSS zIndex to give to the unit, so you can have overlapping elements such as menus in a unit.
                                         </div>
                                     </div>
  
@@ -4081,6 +4924,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -4121,6 +4966,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -4204,6 +5051,9 @@
                                 <li class="private"><a href="#property__lastWidth">_lastWidth</a>
                                         <!--<code>&lt;{String}&gt;</code>-->
                                 </li>
+                                <li class="private"><a href="#property__loading">_loading</a>
+                                        <!--<code>&lt;{String}&gt;</code>-->
+                                </li>
                                 <li class="private"><a href="#property__resize">_resize</a>
                                         <!--<code>&lt;{String}&gt;</code>-->
                                 </li>
@@ -4216,10 +5066,19 @@
                                 <li class=""><a href="#property_browser">browser</a>
                                         <!--<code>&lt;{String}&gt;</code>-->
                                 </li>
+                                <li class=""><a href="#property_dataConnection">dataConnection</a>
+                                        <!--<code>&lt;{String}&gt;</code>-->
+                                </li>
                                 <li class=""><a href="#property_footer">footer</a>
                                         <!--<code>&lt;{String}&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_header">header</a>
+                                        <!--<code>&lt;{String}&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_loadHandler">loadHandler</a>
+                                        <!--<code>&lt;{String}&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_LOADING_CLASSNAME">LOADING_CLASSNAME</a>
                                         <!--<code>&lt;{String}&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_STR_CLOSE">STR_CLOSE</a>
@@ -4288,6 +5147,9 @@
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method_initAttributes">initAttributes</a>
                                 </li>
+                                <li class=""><!--<code>object</code>-->
+                                <a href="#method_loadContent">loadContent</a>
+                                </li>
                                 <li class=""><!--<code><a href="YAHOO.widget.LayoutUnit.html">YAHOO.widget.LayoutUnit</a></code>-->
                                 <a href="#method_resize">resize</a>
                                 </li>
@@ -4325,6 +5187,15 @@
                                 <a href="#event_beforeCollapseSizeChange">beforeCollapseSizeChange</a>
                                 </li>
                                 <li class="">
+                                <a href="#event_beforeDataLoadedChange">beforeDataLoadedChange</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_beforeDataSrcChange">beforeDataSrcChange</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_beforeDataTimeoutChange">beforeDataTimeoutChange</a>
+                                </li>
+                                <li class="">
                                 <a href="#event_beforeDurationChange">beforeDurationChange</a>
                                 </li>
                                 <li class="">
@@ -4353,6 +5224,9 @@
                                 </li>
                                 <li class="">
                                 <a href="#event_beforeLeftChange">beforeLeftChange</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_beforeLoadMethodChange">beforeLoadMethodChange</a>
                                 </li>
                                 <li class="">
                                 <a href="#event_beforeMaxHeightChange">beforeMaxHeightChange</a>
@@ -4388,10 +5262,16 @@
                                 <a href="#event_beforeTopChange">beforeTopChange</a>
                                 </li>
                                 <li class="">
+                                <a href="#event_beforeUseShimChange">beforeUseShimChange</a>
+                                </li>
+                                <li class="">
                                 <a href="#event_beforeWidthChange">beforeWidthChange</a>
                                 </li>
                                 <li class="">
                                 <a href="#event_beforeWrapChange">beforeWrapChange</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_beforeZIndexChange">beforeZIndexChange</a>
                                 </li>
                                 <li class="">
                                 <a href="#event_bodyChange">bodyChange</a>
@@ -4415,10 +5295,22 @@
                                 <a href="#event_contentChange">contentChange</a>
                                 </li>
                                 <li class="">
+                                <a href="#event_dataLoadedChange">dataLoadedChange</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_dataSrcChange">dataSrcChange</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_dataTimeoutChange">dataTimeoutChange</a>
+                                </li>
+                                <li class="">
                                 <a href="#event_durationChange">durationChange</a>
                                 </li>
                                 <li class="">
                                 <a href="#event_easingChange">easingChange</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_endResize">endResize</a>
                                 </li>
                                 <li class="">
                                 <a href="#event_expand">expand</a>
@@ -4443,6 +5335,15 @@
                                 </li>
                                 <li class="">
                                 <a href="#event_leftChange">leftChange</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_load">load</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_loadError">loadError</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_loadMethodChange">loadMethodChange</a>
                                 </li>
                                 <li class="">
                                 <a href="#event_maxHeightChange">maxHeightChange</a>
@@ -4481,10 +5382,16 @@
                                 <a href="#event_topChange">topChange</a>
                                 </li>
                                 <li class="">
+                                <a href="#event_useShimChange">useShimChange</a>
+                                </li>
+                                <li class="">
                                 <a href="#event_widthChange">widthChange</a>
                                 </li>
                                 <li class="">
                                 <a href="#event_wrapChange">wrapChange</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_zIndexChange">zIndexChange</a>
                                 </li>
                         </ul>
                     </div>
@@ -4506,6 +5413,15 @@
                                 </li>
                                 <li class="">
                                 <a href="#config_collapseSize">collapseSize</a>
+                                </li>
+                                <li class="">
+                                <a href="#config_dataLoaded">dataLoaded</a>
+                                </li>
+                                <li class="">
+                                <a href="#config_dataSrc">dataSrc</a>
+                                </li>
+                                <li class="">
+                                <a href="#config_dataTimeout">dataTimeout</a>
                                 </li>
                                 <li class="">
                                 <a href="#config_duration">duration</a>
@@ -4533,6 +5449,9 @@
                                 </li>
                                 <li class="private">
                                 <a href="#config_left">left</a>
+                                </li>
+                                <li class="">
+                                <a href="#config_loadMethod">loadMethod</a>
                                 </li>
                                 <li class="">
                                 <a href="#config_maxHeight">maxHeight</a>
@@ -4565,10 +5484,16 @@
                                 <a href="#config_top">top</a>
                                 </li>
                                 <li class="">
+                                <a href="#config_useShim">useShim</a>
+                                </li>
+                                <li class="">
                                 <a href="#config_width">width</a>
                                 </li>
                                 <li class="private">
                                 <a href="#config_wrap">wrap</a>
+                                </li>
+                                <li class="">
+                                <a href="#config_zIndex">zIndex</a>
                                 </li>
                         </ul>
                     </div>
@@ -4578,7 +5503,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

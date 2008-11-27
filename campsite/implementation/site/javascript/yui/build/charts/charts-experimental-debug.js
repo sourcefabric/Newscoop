@@ -2,7 +2,7 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
+version: 2.6.0
 */
 /*extern ActiveXObject, __flash_unloadHandler, __flash_savedUnloadHandler */
 /*!
@@ -91,8 +91,12 @@ deconcept.SWFObject.prototype =
 		var variablePairs = [];
 		var key;
 		var variables = this.getVariables();
-		for(key in variables){
-			variablePairs[variablePairs.length] = key +"="+ variables[key];
+		for(key in variables)
+		{
+			if(variables.hasOwnProperty(key))
+			{
+				variablePairs[variablePairs.length] = key +"="+ variables[key];
+			}
 		}
 		return variablePairs;
 	},
@@ -109,7 +113,13 @@ deconcept.SWFObject.prototype =
 			swfNode = '<embed type="application/x-shockwave-flash" src="'+ this.getAttribute('swf') +'" width="'+ this.getAttribute('width') +'" height="'+ this.getAttribute('height') +'" style="'+ this.getAttribute('style') +'"';
 			swfNode += ' id="'+ this.getAttribute('id') +'" name="'+ this.getAttribute('id') +'" ';
 			params = this.getParams();
-			for(key in params){ swfNode += [key] +'="'+ params[key] +'" '; }
+			for(key in params)
+			{
+				if(params.hasOwnProperty(key))
+				{
+					swfNode += [key] +'="'+ params[key] +'" ';
+				}
+			}
 			pairs = this.getVariablePairs().join("&");
 			if (pairs.length > 0){ swfNode += 'flashvars="'+ pairs +'"'; }
 			swfNode += '/>';
@@ -121,8 +131,12 @@ deconcept.SWFObject.prototype =
 			swfNode = '<object id="'+ this.getAttribute('id') +'" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="'+ this.getAttribute('width') +'" height="'+ this.getAttribute('height') +'" style="'+ this.getAttribute('style') +'">';
 			swfNode += '<param name="movie" value="'+ this.getAttribute('swf') +'" />';
 			params = this.getParams();
-			for(key in params) {
-			 swfNode += '<param name="'+ key +'" value="'+ params[key] +'" />';
+			for(key in params)
+			{
+				if(params.hasOwnProperty(key))
+				{
+					swfNode += '<param name="'+ key +'" value="'+ params[key] +'" />';
+				}
 			}
 			pairs = this.getVariablePairs().join("&");
 			if(pairs.length > 0) {swfNode += '<param name="flashvars" value="'+ pairs +'" />';}
@@ -363,7 +377,12 @@ YAHOO.widget.FlashAdapter = function(swfURL, containerID, attributes)
 	 * Fires when the SWF is initialized and communication is possible.
 	 * @event contentReady
 	 */
-	this.createEvent("contentReady");
+	//Fix for iframe cross-domain issue with FF2x 
+	try
+	{
+		this.createEvent("contentReady");
+	}
+	catch(e){}
 };
 
 YAHOO.extend(YAHOO.widget.FlashAdapter, YAHOO.util.AttributeProvider,
@@ -398,6 +417,15 @@ YAHOO.extend(YAHOO.widget.FlashAdapter, YAHOO.util.AttributeProvider,
 	 * @private
 	 */
 	_id: null,
+
+	/**
+	 * Indicates whether the SWF has been initialized and is ready
+	 * to communicate with JavaScript
+	 * @property _initialized
+	 * @type Boolean
+	 * @private
+	 */
+	_initialized: false,
 	
 	/**
 	 * The initializing attributes are stored here until the SWF is ready.
@@ -468,7 +496,7 @@ YAHOO.extend(YAHOO.widget.FlashAdapter, YAHOO.util.AttributeProvider,
 		//make sure we can communicate with ExternalInterface
 		swfObj.addParam("allowScriptAccess", "always");
 		
-		if(wmode !== null)
+		if(wmode)
 		{
 			swfObj.addParam("wmode", wmode);
 		}
@@ -510,6 +538,7 @@ YAHOO.extend(YAHOO.widget.FlashAdapter, YAHOO.util.AttributeProvider,
 		{
 			case "swfReady":
    				this._loadHandler();
+   				this.fireEvent("contentReady");
 				return;
 			case "log":
 				YAHOO.log(event.message, event.category, this.toString());
@@ -528,11 +557,19 @@ YAHOO.extend(YAHOO.widget.FlashAdapter, YAHOO.util.AttributeProvider,
 	 */
 	_loadHandler: function()
 	{
+		this._initialized = false;
 		this._initAttributes(this._attributes);
 		this.setAttributes(this._attributes, true);
-		this._attributes = null;
 		
-		this.fireEvent("contentReady");
+		this._initialized = true;
+	},
+	
+	set: function(name, value)
+	{
+		//save all the attributes in case the swf reloads
+		//so that we can pass them in again
+		this._attributes[name] = value;
+		YAHOO.widget.FlashAdapter.superclass.set.call(this, name, value);
 	},
 	
 	/**
@@ -574,6 +611,20 @@ YAHOO.extend(YAHOO.widget.FlashAdapter, YAHOO.util.AttributeProvider,
 		 *		set after Flash Player has been embedded in the page.
 		 * @type String
 		 */
+		 
+		/**
+		 * @attribute altText
+		 * @description The alternative text to provide for screen readers and other assistive technology.
+		 * @type String
+		 */
+		this.getAttributeConfig("altText",
+		{
+			method: this._getAltText
+		});
+		this.setAttributeConfig("altText",
+		{
+			method: this._setAltText
+		});
 		
 		/**
 		 * @attribute swfURL
@@ -596,6 +647,28 @@ YAHOO.extend(YAHOO.widget.FlashAdapter, YAHOO.util.AttributeProvider,
 	_getSWFURL: function()
 	{
 		return this._swfURL;
+	},
+	
+	/**
+	 * Getter for altText attribute.
+	 *
+	 * @method _getAltText
+	 * @private
+	 */
+	_getAltText: function()
+	{
+		return this._swf.getAltText();
+	},
+
+	/**
+	 * Setter for altText attribute.
+	 *
+	 * @method _setAltText
+	 * @private
+	 */
+	_setAltText: function(value)
+	{
+		return this._swf.setAltText(value);
 	}
 });
 
@@ -674,15 +747,19 @@ YAHOO.widget.FlashAdapter.removeProxyFunction = function(funcName)
  * @module charts
  * @requires yahoo, dom, event, datasource
  * @title Charts Widget
- * @beta
+ * @experimental
  */
+ 
+/****************************************************************************/
+/****************************************************************************/
+/****************************************************************************/
 
 /**
  * Chart class for the YUI Charts widget.
  *
  * @namespace YAHOO.widget
  * @class Chart
- * @uses YAHOO.util.FlashAdapter
+ * @uses YAHOO.widget.FlashAdapter
  * @constructor
  * @param type {String} The char type. May be "line", "column", "bar", or "pie"
  * @param containerId {HTMLElement} Container element for the Flash Player instance.
@@ -813,15 +890,6 @@ YAHOO.extend(YAHOO.widget.Chart, YAHOO.widget.FlashAdapter,
 	 * @private
 	 */
 	_pollingInterval: null,
-	
-	/**
-	 * Indicates whether all attributes have been set and
-	 * the dataSource may be passed to the SWF.
-	 * @property _initialized
-	 * @type Boolean
-	 * @private
-	 */
-	_initialized: false,
 
 	/**
 	 * Stores a reference to the dataTipFunction created by
@@ -831,6 +899,15 @@ YAHOO.extend(YAHOO.widget.Chart, YAHOO.widget.FlashAdapter,
 	 * @private
 	 */
 	_dataTipFunction: null,
+	
+	/**
+	 * Stores references to series labelFunction values created by
+	 * YAHOO.widget.FlashAdapter.createProxyFunction()
+	 * @property _seriesLabelFunctions
+	 * @type Array
+	 * @private
+	 */
+	_seriesLabelFunctions: null,
 
 	/**
 	 * Public accessor to the unique name of the Chart instance.
@@ -1024,6 +1101,7 @@ YAHOO.extend(YAHOO.widget.Chart, YAHOO.widget.FlashAdapter,
 	 */
 	_loadHandler: function()
 	{
+		//the type is set separately because it must be first!
 		this._swf.setType(this._type);
 		
 		//set initial styles
@@ -1035,8 +1113,6 @@ YAHOO.extend(YAHOO.widget.Chart, YAHOO.widget.FlashAdapter,
 		
 		YAHOO.widget.Chart.superclass._loadHandler.call(this);
 		
-		this._initialized = true;
-		
 		if(this._dataSource)
 		{
 			this.set("dataSource", this._dataSource);
@@ -1044,12 +1120,11 @@ YAHOO.extend(YAHOO.widget.Chart, YAHOO.widget.FlashAdapter,
 	},
 
 	/**
-	 * Sends the request to the DataSource.
+	 * Sends (or resends) the request to the DataSource.
 	 *
-	 * @method _refreshData
-	 * @private
+	 * @method refreshData
 	 */
-	_refreshData: function()
+	refreshData: function()
 	{
 		if(!this._initialized)
 		{
@@ -1081,68 +1156,89 @@ YAHOO.extend(YAHOO.widget.Chart, YAHOO.widget.FlashAdapter,
 	 */
 	_loadDataHandler: function(request, response, error)
 	{
-		if(error)
+		if(this._swf)
 		{
-			YAHOO.log("Unable to load data.", "error");
-		}
-		else
-		{
-			var styleChanged = false;
-			
-			//make a copy of the series definitions so that we aren't
-			//editing them directly.
-			var dataProvider = [];	
-			var seriesCount = 0;
-			var currentSeries = null;
-			var i = 0;
-			if(this._seriesDefs !== null)
+			if(error)
 			{
-				seriesCount = this._seriesDefs.length;
-				for(i = 0; i < seriesCount; i++)
-				{
-					currentSeries = this._seriesDefs[i];
-					var clonedSeries = {};
-					for(var prop in currentSeries)
-					{
-						if(YAHOO.lang.hasOwnProperty(currentSeries, prop))
-						{
-							if(prop == "style" && currentSeries.style !== null)
-							{
-								clonedSeries.style = YAHOO.lang.JSON.stringify(currentSeries.style);
-								styleChanged = true;
-   
-								//we don't want to modify the styles again next time
-								//so null out the style property.
-								currentSeries.style = null;
-							}
-							else
-							{
-								clonedSeries[prop] = currentSeries[prop];
-							}
-						}
-					}
-					dataProvider.push(clonedSeries);
-				}
-			}
-			
-			if(seriesCount > 0)
-			{
-				for(i = 0; i < seriesCount; i++)
-				{
-					currentSeries = dataProvider[i];
-					if(!currentSeries.type)
-					{
-						currentSeries.type = this._type;
-					}
-					currentSeries.dataProvider = response.results;
-				}
+				YAHOO.log("Unable to load data.", "error");
 			}
 			else
 			{
-				var series = {type: this._type, dataProvider: response.results};
-				dataProvider.push(series);
+				var i;
+				if(this._seriesLabelFunctions)
+				{
+					var count = this._seriesLabelFunctions.length;
+					for(i = 0; i < count; i++)
+					{
+						YAHOO.widget.FlashAdapter.removeProxyFunction(this._seriesLabelFunctions[i]);
+					}
+					this._seriesLabelFunction = null;
+				}
+				this._seriesLabelFunctions = [];
+
+				//make a copy of the series definitions so that we aren't
+				//editing them directly.
+				var dataProvider = [];	
+				var seriesCount = 0;
+				var currentSeries = null;
+				if(this._seriesDefs !== null)
+				{
+					seriesCount = this._seriesDefs.length;
+					for(i = 0; i < seriesCount; i++)
+					{
+						currentSeries = this._seriesDefs[i];
+						var clonedSeries = {};
+						for(var prop in currentSeries)
+						{
+							if(YAHOO.lang.hasOwnProperty(currentSeries, prop))
+							{
+								if(prop == "style")
+								{
+									if(currentSeries.style !== null)
+									{
+										clonedSeries.style = YAHOO.lang.JSON.stringify(currentSeries.style);
+									}
+								}
+
+								else if(prop == "labelFunction")
+								{
+									if(currentSeries.labelFunction !== null &&
+										typeof currentSeries.labelFunction == "function")
+									{
+										clonedSeries.labelFunction = YAHOO.widget.FlashAdapter.createProxyFunction(currentSeries.labelFunction);
+										this._seriesLabelFunctions.push(clonedSeries.labelFunction);
+									}
+								}
+
+								else
+								{
+									clonedSeries[prop] = currentSeries[prop];
+								}
+							}
+						}
+						dataProvider.push(clonedSeries);
+					}
+				}
+
+				if(seriesCount > 0)
+				{
+					for(i = 0; i < seriesCount; i++)
+					{
+						currentSeries = dataProvider[i];
+						if(!currentSeries.type)
+						{
+							currentSeries.type = this._type;
+						}
+						currentSeries.dataProvider = response.results;
+					}
+				}
+				else
+				{
+					var series = {type: this._type, dataProvider: response.results};
+					dataProvider.push(series);
+				}
+				this._swf.setDataProvider(dataProvider);
 			}
-			this._swf.setDataProvider(dataProvider, styleChanged);
 		}
 	},
 
@@ -1174,7 +1270,7 @@ YAHOO.extend(YAHOO.widget.Chart, YAHOO.widget.FlashAdapter,
 	_setRequest: function(value)
 	{
 		this._request = value;
-		this._refreshData();
+		this.refreshData();
 	},
 
 	/**
@@ -1205,7 +1301,7 @@ YAHOO.extend(YAHOO.widget.Chart, YAHOO.widget.FlashAdapter,
 	_setDataSource: function(value)
 	{	
 		this._dataSource = value;
-		this._refreshData();
+		this.refreshData();
 	},
 	
 	/**
@@ -1236,7 +1332,7 @@ YAHOO.extend(YAHOO.widget.Chart, YAHOO.widget.FlashAdapter,
 	_setSeriesDefs: function(value)
 	{
 		this._seriesDefs = value;
-		this._refreshData();
+		this.refreshData();
 	},
 
 	/**
@@ -1302,7 +1398,7 @@ YAHOO.extend(YAHOO.widget.Chart, YAHOO.widget.FlashAdapter,
 	_setPolling: function(value)
 	{
 		this._pollingInterval = value;
-		this._refreshData();
+		this.refreshData();
 	}
 });
 
@@ -1428,7 +1524,7 @@ YAHOO.lang.extend(YAHOO.widget.PieChart, YAHOO.widget.Chart,
  *
  * @namespace YAHOO.widget
  * @class CartesianChart
- * @uses YAHOO.widget.Charts
+ * @uses YAHOO.widget.Chart
  * @constructor
  * @param type {String} The char type. May be "line", "column", or "bar"
  * @param containerId {HTMLElement} Container element for the Flash Player instance.
@@ -1594,17 +1690,36 @@ YAHOO.lang.extend(YAHOO.widget.CartesianChart, YAHOO.widget.Chart,
 	 */
 	_setXAxis: function(value)
 	{
-		if(this._xAxisLabelFunction)
+		if(this._xAxisLabelFunction !== null)
 		{
 			YAHOO.widget.FlashAdapter.removeProxyFunction(this._xAxisLabelFunction);
+			this._xAxisLabelFunction = null;
 		}
 		
-		if(value.labelFunction && typeof value.labelFunction == "function")
+		var clonedXAxis = {};
+		for(var prop in value)
 		{
-			value.labelFunction = YAHOO.widget.FlashAdapter.createProxyFunction(value);
-			this._xAxisLabelFunction = value.labelFunction;
+			if(prop == "labelFunction")
+			{
+				if(value.labelFunction !== null)
+				{
+					if(typeof value.labelFunction == "function")
+					{
+						clonedXAxis.labelFunction = YAHOO.widget.FlashAdapter.createProxyFunction(value.labelFunction);
+					}
+					else
+					{
+						clonedXAxis.labelFunction = value.labelFunction;
+					}
+					this._xAxisLabelFunction = clonedXAxis.labelFunction;
+				}
+			}
+			else
+			{
+				clonedXAxis[prop] = value[prop];
+			}
 		}
-		this._swf.setHorizontalAxis(value);
+		this._swf.setHorizontalAxis(clonedXAxis);
 	},
 
 	/**
@@ -1615,17 +1730,36 @@ YAHOO.lang.extend(YAHOO.widget.CartesianChart, YAHOO.widget.Chart,
 	 */
 	_setYAxis: function(value)
 	{
-		if(this._yAxisLabelFunction)
+		if(this._yAxisLabelFunction !== null)
 		{
 			YAHOO.widget.FlashAdapter.removeProxyFunction(this._yAxisLabelFunction);
+			this._yAxisLabelFunction = null;
 		}
 
-		if(value.labelFunction && typeof value.labelFunction == "function")
+		var clonedYAxis = {};
+		for(var prop in value)
 		{
-			value.labelFunction = YAHOO.widget.FlashAdapter.createProxyFunction(value.labelFunction);
-			this._yAxisLabelFunction = value.labelFunction;
+			if(prop == "labelFunction")
+			{
+				if(value.labelFunction !== null)
+				{
+					if(typeof value.labelFunction == "function")
+					{
+						clonedYAxis.labelFunction = YAHOO.widget.FlashAdapter.createProxyFunction(value.labelFunction);
+					}
+					else
+					{
+						clonedYAxis.labelFunction = value.labelFunction;
+					}
+					this._yAxisLabelFunction = clonedYAxis.labelFunction;
+				}
+			}
+			else
+			{
+				clonedYAxis[prop] = value[prop];
+			}
 		}
-		this._swf.setVerticalAxis(value);
+		this._swf.setVerticalAxis(clonedYAxis);
 	}
 });
 
@@ -1684,6 +1818,42 @@ YAHOO.widget.BarChart = function(containerId, dataSource, attributes)
 YAHOO.lang.extend(YAHOO.widget.BarChart, YAHOO.widget.CartesianChart);
 
 /**
+ * StackedColumnChart class for the YUI Charts widget.
+ *
+ * @namespace YAHOO.widget
+ * @class StackedColumnChart
+ * @uses YAHOO.widget.CartesianChart
+ * @constructor
+ * @param containerId {HTMLElement} Container element for the Flash Player instance.
+ * @param dataSource {YAHOO.util.DataSource} DataSource instance.
+ * @param attributes {object} (optional) Object literal of configuration values.
+ */
+YAHOO.widget.StackedColumnChart = function(containerId, dataSource, attributes)
+{
+	YAHOO.widget.StackedColumnChart.superclass.constructor.call(this, "stackcolumn", containerId, dataSource, attributes);
+};
+
+YAHOO.lang.extend(YAHOO.widget.StackedColumnChart, YAHOO.widget.CartesianChart);
+
+/**
+ * StackedBarChart class for the YUI Charts widget.
+ *
+ * @namespace YAHOO.widget
+ * @class StackedBarChart
+ * @uses YAHOO.widget.CartesianChart
+ * @constructor
+ * @param containerId {HTMLElement} Container element for the Flash Player instance.
+ * @param dataSource {YAHOO.util.DataSource} DataSource instance.
+ * @param attributes {object} (optional) Object literal of configuration values.
+ */
+YAHOO.widget.StackedBarChart = function(containerId, dataSource, attributes)
+{
+	YAHOO.widget.StackedBarChart.superclass.constructor.call(this, "stackbar", containerId, dataSource, attributes);
+};
+
+YAHOO.lang.extend(YAHOO.widget.StackedBarChart, YAHOO.widget.CartesianChart);
+
+/**
  * Defines a CartesianChart's vertical or horizontal axis.
  *
  * @namespace YAHOO.widget
@@ -1705,14 +1875,6 @@ YAHOO.widget.Axis.prototype =
 	type: null,
 	
 	/**
-	 * The direction in which the axis is drawn. May be "horizontal" or "vertical".
-	 *
-	 * @property orientation
-	 * @type String
-	 */
-	orientation: "horizontal",
-	
-	/**
 	 * If true, the items on the axis will be drawn in opposite direction.
 	 *
 	 * @property reverse
@@ -1722,20 +1884,12 @@ YAHOO.widget.Axis.prototype =
 	
 	/**
 	 * A string reference to the globally-accessible function that may be called to
-	 * determine each of the label values for this axis.
+	 * determine each of the label values for this axis. Also accepts function references.
 	 *
 	 * @property labelFunction
 	 * @type String
 	 */
-	labelFunction: null,
-	
-	/**
-	 * If true, labels that overlap previously drawn labels on the axis will be hidden.
-	 *
-	 * @property hideOverlappingLabels
-	 * @type Boolean
-	 */
-	hideOverlappingLabels: true
+	labelFunction: null
 };
 
 /**
@@ -1797,6 +1951,14 @@ YAHOO.lang.extend(YAHOO.widget.NumericAxis, YAHOO.widget.Axis,
 	 * @type Boolean
 	 */
 	snapToUnits: true,
+	
+	/**
+	 * Series that are stackable will only stack when this value is set to true.
+	 *
+	 * @property stackingEnabled
+	 * @type Boolean
+	 */
+	stackingEnabled: false,
 
 	/**
 	 * If true, and the bounds are calculated automatically, either the minimum or
@@ -1890,7 +2052,15 @@ YAHOO.lang.extend(YAHOO.widget.TimeAxis, YAHOO.widget.Axis,
 	 * @property snapToUnits
 	 * @type Boolean
 	 */
-	snapToUnits: true
+	snapToUnits: true,
+
+	/**
+	 * Series that are stackable will only stack when this value is set to true.
+	 *
+	 * @property stackingEnabled
+	 * @type Boolean
+	 */
+	stackingEnabled: false
 });
 
 /**
@@ -1919,7 +2089,9 @@ YAHOO.lang.extend(YAHOO.widget.CategoryAxis, YAHOO.widget.Axis,
 });
 
 /**
- * Series class for the YUI Charts widget.
+ * Functionality common to most series. Generally, a <code>Series</code> 
+ * object shouldn't be instantiated directly. Instead, a subclass with a 
+ * concrete implementation should be used.
  *
  * @namespace YAHOO.widget
  * @class Series
@@ -1947,10 +2119,14 @@ YAHOO.widget.Series.prototype =
 };
 
 /**
- * CartesianSeries class for the YUI Charts widget.
+ * Functionality common to most series appearing in cartesian charts.
+ * Generally, a <code>CartesianSeries</code> object shouldn't be
+ * instantiated directly. Instead, a subclass with a concrete implementation
+ * should be used.
  *
  * @namespace YAHOO.widget
  * @class CartesianSeries
+ * @uses YAHOO.widget.Series
  * @constructor
  */
 YAHOO.widget.CartesianSeries = function() 
@@ -1982,6 +2158,7 @@ YAHOO.lang.extend(YAHOO.widget.CartesianSeries, YAHOO.widget.Series,
  *
  * @namespace YAHOO.widget
  * @class ColumnSeries
+ * @uses YAHOO.widget.CartesianSeries
  * @constructor
  */
 YAHOO.widget.ColumnSeries = function() 
@@ -1999,6 +2176,7 @@ YAHOO.lang.extend(YAHOO.widget.ColumnSeries, YAHOO.widget.CartesianSeries,
  *
  * @namespace YAHOO.widget
  * @class LineSeries
+ * @uses YAHOO.widget.CartesianSeries
  * @constructor
  */
 YAHOO.widget.LineSeries = function() 
@@ -2017,6 +2195,7 @@ YAHOO.lang.extend(YAHOO.widget.LineSeries, YAHOO.widget.CartesianSeries,
  *
  * @namespace YAHOO.widget
  * @class BarSeries
+ * @uses YAHOO.widget.CartesianSeries
  * @constructor
  */
 YAHOO.widget.BarSeries = function() 
@@ -2035,6 +2214,7 @@ YAHOO.lang.extend(YAHOO.widget.BarSeries, YAHOO.widget.CartesianSeries,
  *
  * @namespace YAHOO.widget
  * @class PieSeries
+ * @uses YAHOO.widget.Series
  * @constructor
  */
 YAHOO.widget.PieSeries = function() 
@@ -2045,8 +2225,67 @@ YAHOO.widget.PieSeries = function()
 YAHOO.lang.extend(YAHOO.widget.PieSeries, YAHOO.widget.Series,
 {
 	type: "pie",
+	
+	/**
+	 * The field used to access the data value from the items from the data source.
+	 *
+	 * @property dataField
+	 * @type String
+	 */
 	dataField: null,
-	categoryField: null
+	
+	/**
+	 * The field used to access the category value from the items from the data source.
+	 *
+	 * @property categoryField
+	 * @type String
+	 */
+	categoryField: null,
+
+	/**
+	 * A string reference to the globally-accessible function that may be called to
+	 * determine each of the label values for this series. Also accepts function references.
+	 *
+	 * @property labelFunction
+	 * @type String
+	 */
+	labelFunction: null
 });
 
-YAHOO.register("charts", YAHOO.widget.Chart, {version: "2.5.2", build: "1076"});
+/**
+ * StackedBarSeries class for the YUI Charts widget.
+ *
+ * @namespace YAHOO.widget
+ * @class StackedBarSeries
+ * @uses YAHOO.widget.CartesianSeries
+ * @constructor
+ */
+YAHOO.widget.StackedBarSeries = function() 
+{
+	YAHOO.widget.StackedBarSeries.superclass.constructor.call(this);
+};
+
+YAHOO.lang.extend(YAHOO.widget.StackedBarSeries, YAHOO.widget.CartesianSeries,
+{
+	type: "stackbar"
+});
+
+/**
+ * StackedColumnSeries class for the YUI Charts widget.
+ *
+ * @namespace YAHOO.widget
+ * @class StackedColumnSeries
+ * @uses YAHOO.widget.CartesianSeries
+ * @constructor
+ */
+YAHOO.widget.StackedColumnSeries = function() 
+{
+	YAHOO.widget.StackedColumnSeries.superclass.constructor.call(this);
+};
+
+YAHOO.lang.extend(YAHOO.widget.StackedColumnSeries, YAHOO.widget.CartesianSeries,
+{
+	type: "stackcolumn"
+});
+
+YAHOO.register("charts", YAHOO.widget.Chart, {version: "2.6.0", build: "1321"});

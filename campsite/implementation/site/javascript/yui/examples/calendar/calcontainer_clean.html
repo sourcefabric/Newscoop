@@ -73,6 +73,7 @@ body {
 
 <body class=" yui-skin-sam">
 
+
 <h1>Calendar inside a Container</h1>
 
 <div class="exampleIntro">
@@ -135,12 +136,12 @@ body {
         });
 
         YAHOO.util.Event.on("show", "click", function() {
-            dialog.show();
-            if (YAHOO.env.ua.opera && document.documentElement) {
-                // Opera needs to force a repaint
-                document.documentElement.style += "";
-            } 
-        });
+		dialog.show();
+		if (YAHOO.env.ua.opera && document.documentElement) {
+			// Opera needs to force a repaint
+			document.documentElement.className += "";
+		} 
+	});
     });
 </script>
 <div class="box">

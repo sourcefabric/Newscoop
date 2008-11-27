@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Uploader&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Uploader&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_uploader.html">uploader</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -122,6 +124,7 @@
                                         <a class="private" href="YAHOO.widget.FlashAdapter.html#property__attributes">_attributes</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.FlashAdapter.html#property__containerID">_containerID</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.FlashAdapter.html#property__id">_id</a><span class="private">,</span>
+                                        <a class="private" href="YAHOO.widget.FlashAdapter.html#property__initialized">_initialized</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.FlashAdapter.html#property__swf">_swf</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.FlashAdapter.html#property__swfURL">_swfURL</a>
                                 </code>
@@ -150,61 +153,6 @@
                         <div class="section method details">
                             <h3 id="methods">Methods</h3>
                             <div class="content">
-                                    <div class="">
-                                    <h4>
-                                        <a name="method_browse">browse</a></h4>
-                                    <div class="detail">
-                                        <code>
-                                        
-                                        
-                                        
-                                        void
-                                            <strong>browse</strong>
-                                           (
-                                                
-                                                        
-                                                         allowMultiple
-                                                    
-                                                
-                                                        , 
-                                                         extensionFilterArray
-                                                    
-                                                
-                                            )
-                                        </code>
-                                        
-                                        <div class="description">
-                                            Invokes the "Open File" dialog and allows the user to select the files for upload
-                                        </div>
-
-                                        <div class="description">
-
-                                                <dl>
-                                                    <dt>Parameters:</dt>
-                                                        <dd>
-                                                            <code>allowMultiple &lt;Boolean&gt;</code>
-                                                              If true, allows for multiple file selection; if false, only a single file can be selected. False by default.
-                                                        </dd>
-                                                        <dd>
-                                                            <code>extensionFilterArray &lt;Array} An array of key-value pairs for permissible file extensions. The array elements should 
-be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</code>
-                                                             .
-                                                        </dd>
-                                                </dl>
-
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd></dd>
-                                                </dl>
-             
-                                        </div>
-
-                                    </div>
-                                    <hr />
-                                    </div>
                                     <div class="">
                                     <h4>
                                         <a name="method_cancel">cancel</a></h4>
@@ -245,7 +193,10 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -279,7 +230,10 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -325,7 +279,211 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_setAllowLogging">setAllowLogging</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>setAllowLogging</strong>
+                                           (
+                                                
+                                                        
+                                                         allowLogging
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Turns the logging functionality on.
+Uses Flash internal trace logging, as well as YUI Logger, if available.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>allowLogging &lt;Boolean&gt;</code>
+                                                              If true, logs are output; otherwise, no logs are produced.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_setAllowMultipleFiles">setAllowMultipleFiles</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>setAllowMultipleFiles</strong>
+                                           (
+                                                
+                                                        
+                                                         allowMultipleFiles
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Sets the flag allowing users to select multiple files for the upload.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>allowMultipleFiles &lt;Boolean&gt;</code>
+                                                              If true, multiple files can be selected. False by default.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_setFileFilters">setFileFilters</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>setFileFilters</strong>
+                                           (
+                                                
+                                                        
+                                                         newFilterArray
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Sets the file filters for the "Browse" dialog.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>newFilterArray &lt;extensions: extensionString, description: descriptionString, [optional]macType: macTypeString&gt;</code>
+                                                             An array of sets of key-value pairs of the form
+
+The extensions string is a semicolon-delimited list of elements of the form "*.xxx", 
+e.g. "*.jpg;*.gif;*.png".
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_setSimUploadLimit">setSimUploadLimit</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>setSimUploadLimit</strong>
+                                           (
+                                                
+                                                        
+                                                         simUploadLimit
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Sets the number of simultaneous uploads when using uploadAll()
+The minimum value is 1, and maximum value is 5. The default value is 2.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>simUploadLimit &lt;int&gt;</code>
+                                                              Number of simultaneous uploads, between 1 and 5.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -363,6 +521,10 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                          fieldName
                                                     
                                                 
+                                                        , 
+                                                         headers
+                                                    
+                                                
                                             )
                                         </code>
                                         
@@ -394,6 +556,18 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                             <code>fieldName &lt;String&gt;</code>
                                                               The name of the variable in the POST request containing the file data. "Filedata" by default.
                                                         </dd>
+                                                        <dd>
+                                                            <code>headers &lt;Object&gt;</code>
+                                                              An object containing variables that should be set as headers in the POST request. The following header names
+cannot be used: 
+<code>
+Accept-Charset, Accept-Encoding, Accept-Ranges, Age, Allow, Allowed, Authorization, Charge-To, Connect, Connection, 
+Content-Length, Content-Location, Content-Range, Cookie, Date, Delete, ETag, Expect, Get, Head, Host, Keep-Alive, 
+Last-Modified, Location, Max-Forwards, Options, Post, Proxy-Authenticate, Proxy-Authorization, Proxy-Connection, 
+Public, Put, Range, Referer, Request-Range, Retry-After, Server, TE, Trace, Trailer, Transfer-Encoding, Upgrade, 
+URI, User-Agent, Vary, Via, Warning, WWW-Authenticate, x-flash-version.
+</code>
+                                                        </dd>
                                                 </dl>
 
                                                 <dl>
@@ -403,7 +577,10 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -437,6 +614,10 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                          fieldName
                                                     
                                                 
+                                                        , 
+                                                         headers
+                                                    
+                                                
                                             )
                                         </code>
                                         
@@ -464,6 +645,18 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                             <code>fieldName &lt;String&gt;</code>
                                                               The name of the variable in the POST request containing the file data. "Filedata" by default.
                                                         </dd>
+                                                        <dd>
+                                                            <code>headers &lt;Object&gt;</code>
+                                                              An object containing variables that should be set as headers in the POST request. The following header names
+cannot be used: 
+<code>
+Accept-Charset, Accept-Encoding, Accept-Ranges, Age, Allow, Allowed, Authorization, Charge-To, Connect, Connection, 
+Content-Length, Content-Location, Content-Range, Cookie, Date, Delete, ETag, Expect, Get, Head, Host, Keep-Alive, 
+Last-Modified, Location, Max-Forwards, Options, Post, Proxy-Authenticate, Proxy-Authorization, Proxy-Connection, 
+Public, Put, Range, Referer, Request-Range, Retry-After, Server, TE, Trace, Trailer, Transfer-Encoding, Upgrade, 
+URI, User-Agent, Vary, Via, Warning, WWW-Authenticate, x-flash-version.
+</code>
+                                                        </dd>
                                                 </dl>
 
                                                 <dl>
@@ -473,7 +666,10 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -486,7 +682,7 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                 <h4>Methods inherited from <a href="YAHOO.widget.FlashAdapter.html">YAHOO.widget.FlashAdapter</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__embedSWF">_embedSWF</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__eventHandler">_eventHandler</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__getSWFURL">_getSWFURL</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__initAttributes">_initAttributes</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__loadHandler">_loadHandler</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.FlashAdapter.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.FlashAdapter.html#method_toString">toString</a>
+                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__embedSWF">_embedSWF</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__eventHandler">_eventHandler</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__getAltText">_getAltText</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__getSWFURL">_getSWFURL</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__initAttributes">_initAttributes</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__loadHandler">_loadHandler</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__setAltText">_setAltText</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.FlashAdapter.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.FlashAdapter.html#method_toString">toString</a>
                                     </code>
                                 </div>
                             </div>
@@ -494,7 +690,7 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                 <h4>Methods inherited from <a href="YAHOO.util.AttributeProvider.html">YAHOO.util.AttributeProvider</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_configureAttribute">configureAttribute</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireBeforeChangeEvent">fireBeforeChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireChangeEvent">fireChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_get">get</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_getAttributeConfig">getAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_getAttributeKeys">getAttributeKeys</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_refresh">refresh</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_register">register</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_resetAttributeConfig">resetAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_resetValue">resetValue</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_set">set</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributeConfig">setAttributeConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributes">setAttributes</a>
+                                            <a class=" deprecated" href="YAHOO.util.AttributeProvider.html#method_configureAttribute">configureAttribute</a><span class=" deprecated">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireBeforeChangeEvent">fireBeforeChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireChangeEvent">fireChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_get">get</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_getAttributeConfig">getAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_getAttributeKeys">getAttributeKeys</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_refresh">refresh</a><span class="">,</span>                                            <a class=" deprecated" href="YAHOO.util.AttributeProvider.html#method_register">register</a><span class=" deprecated">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_resetAttributeConfig">resetAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_resetValue">resetValue</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_set">set</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributeConfig">setAttributeConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributes">setAttributes</a>
                                     </code>
                                 </div>
                             </div>
@@ -590,6 +786,88 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                         <dd>
                                                             <code>event.fileList[].id &lt;String&gt;</code>
                                                               Unique file id of a specific file in fileList
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_rollOut">rollOut</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>rollOut</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event.type
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires when an upload of a specific file has started.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event.type &lt;String&gt;</code>
+                                                              The event type
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_rollOver">rollOver</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>rollOver</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event.type
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fires when an upload of a specific file has started.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>event.type &lt;String&gt;</code>
+                                                              The event type
                                                         </dd>
                                                 </dl>
 
@@ -892,10 +1170,6 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                          event.type
                                                     
                                                 
-                                                        , 
-                                                         event.id
-                                                    
-                                                
                                             )
 
                                         </code>
@@ -913,10 +1187,6 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                                             <code>event.type &lt;String&gt;</code>
                                                               The event type
                                                         </dd>
-                                                        <dd>
-                                                            <code>event.id &lt;String&gt;</code>
-                                                              The id of the file that's started to upload
-                                                        </dd>
                                                 </dl>
 
 
@@ -933,7 +1203,7 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                             <h4>Events inherited from <a href="YAHOO.widget.FlashAdapter.html">YAHOO.widget.FlashAdapter</a>:</h4>
                             <div class="content">
                                 <code>
-                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_backgroundColorChange">backgroundColorChange</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeBackgroundColorChange">beforeBackgroundColorChange</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeExpressInstallChange">beforeExpressInstallChange</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeSwfURLChange">beforeSwfURLChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeVersionChange">beforeVersionChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeWmodeChange">beforeWmodeChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_contentReady">contentReady</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_expressInstallChange">expressInstallChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_swfURLChange">swfURLChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_versionChange">versionChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_wmodeChange">wmodeChange</a>
+                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_altTextChange">altTextChange</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_backgroundColorChange">backgroundColorChange</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeAltTextChange">beforeAltTextChange</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeBackgroundColorChange">beforeBackgroundColorChange</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeExpressInstallChange">beforeExpressInstallChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeSwfURLChange">beforeSwfURLChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeVersionChange">beforeVersionChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeWmodeChange">beforeWmodeChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_contentReady">contentReady</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_expressInstallChange">expressInstallChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_swfURLChange">swfURLChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_versionChange">versionChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_wmodeChange">wmodeChange</a>
                                 </code>
                             </div>
                         </div>
@@ -943,7 +1213,7 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                             <h4>Configuration attributes inherited from <a href="YAHOO.widget.FlashAdapter.html">YAHOO.widget.FlashAdapter</a>:</h4>
                             <div class="content">
                                 <code>
-                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_backgroundColor">backgroundColor</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_expressInstall">expressInstall</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_swfURL">swfURL</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_version">version</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_wmode">wmode</a>
+                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_altText">altText</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_backgroundColor">backgroundColor</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_expressInstall">expressInstall</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_swfURL">swfURL</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_version">version</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_wmode">wmode</a>
                                 </code>
                             </div>
                         </div>
@@ -964,6 +1234,8 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -1005,6 +1277,8 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
 
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
+
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
                                 <li class=""><a href="module_profilerviewer.html">profilerviewer</a></li>
@@ -1040,6 +1314,8 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                     <div class="module">
                         <h4>Files</h4>
                         <ul class="content">        
+                                <li class=""><a href="FlashAdapter.js.html">FlashAdapter.js</a></li>
+                                <li class=""><a href="swfobject.js.html">swfobject.js</a></li>
                                 <li class=""><a href="Uploader.js.html">Uploader.js</a></li>
                         </ul>
                     </div>
@@ -1057,9 +1333,6 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                         <h4>Methods</h4>
                         <ul class="content">        
                                 <li class=""><!--<code>void</code>-->
-                                <a href="#method_browse">browse</a>
-                                </li>
-                                <li class=""><!--<code>void</code>-->
                                 <a href="#method_cancel">cancel</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
@@ -1067,6 +1340,18 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_removeFile">removeFile</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_setAllowLogging">setAllowLogging</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_setAllowMultipleFiles">setAllowMultipleFiles</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_setFileFilters">setFileFilters</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_setSimUploadLimit">setSimUploadLimit</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_upload">upload</a>
@@ -1082,6 +1367,12 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
                         <ul class="content">        
                                 <li class="">
                                 <a href="#event_fileSelect">fileSelect</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_rollOut">rollOut</a>
+                                </li>
+                                <li class="">
+                                <a href="#event_rollOver">rollOver</a>
                                 </li>
                                 <li class="">
                                 <a href="#event_uploadCancel">uploadCancel</a>
@@ -1110,7 +1401,7 @@ be of the form: {description: "Images", extensions: "*.jpg; *.gif; *.png"&gt;</c
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

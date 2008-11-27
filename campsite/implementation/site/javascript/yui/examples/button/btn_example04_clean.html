@@ -58,6 +58,7 @@ body {
 
 <body class=" yui-skin-sam">
 
+
 <h1>Radio Buttons</h1>
 
 <div class="exampleIntro">
@@ -68,11 +69,14 @@ body {
 
 <script type="text/javascript">
 
-    YAHOO.example.init = function () {
+    (function () {
+
+		var ButtonGroup = YAHOO.widget.ButtonGroup;
+
 
         // "checkedButtonChange" event handler for each ButtonGroup instance
 
-        function onCheckedButtonChange(p_oEvent) {
+        var onCheckedButtonChange = function (p_oEvent) {
 
             if(p_oEvent.prevValue) {
 
@@ -86,17 +90,17 @@ body {
 
             }
         
-        }
+        };
 
 
         // "contentready" event handler for the "radiobuttonsfrommarkup" <fieldset>    
 
         YAHOO.util.Event.onContentReady("radiobuttonsfrommarkup", function () {
 
-            var oButtonGroup1 = new YAHOO.widget.ButtonGroup("buttongroup1");
+            var oButtonGroup1 = new ButtonGroup("buttongroup1");
             oButtonGroup1.on("checkedButtonChange", onCheckedButtonChange);
 
-            var oButtonGroup2 = new YAHOO.widget.ButtonGroup("buttongroup2");
+            var oButtonGroup2 = new ButtonGroup("buttongroup2");
             oButtonGroup2.on("checkedButtonChange", onCheckedButtonChange);
         
         
@@ -105,7 +109,7 @@ body {
 
         // Create a ButtonGroup without using existing markup
 
-        var oButtonGroup3 = new YAHOO.widget.ButtonGroup({ id:  "buttongroup3", name:  "radiofield3", container:  "radiobuttonsfromjavascript" });
+        var oButtonGroup3 = new ButtonGroup({ id:  "buttongroup3", name:  "radiofield3", container:  "radiobuttonsfromjavascript", usearia: true });
 
         oButtonGroup3.addButtons([
 
@@ -118,7 +122,7 @@ body {
         
         oButtonGroup3.on("checkedButtonChange", onCheckedButtonChange);
     
-    } ();
+    }());
 
 </script>
 

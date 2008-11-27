@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>layout&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>layout&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_layout.html">layout</a>
@@ -21,14 +21,16 @@
                  &gt; layout.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -114,6 +116,13 @@
         <span class="o">}(),</span>
         <span class="c">/**</span>
 <span class="c">        * @private</span>
+<span class="c">        * @property _units</span>
+<span class="c">        * @description An object literal that contains a list of units in the layout</span>
+<span class="c">        * @type Object</span>
+<span class="c">        */</span>
+        <span class="nx">_rendered</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
+        <span class="c">/**</span>
+<span class="c">        * @private</span>
 <span class="c">        * @property _rendered</span>
 <span class="c">        * @description Set to true when the layout is rendered</span>
 <span class="c">        * @type Boolean</span>
@@ -182,61 +191,61 @@
 <span class="c">        */</span>
         <span class="nx">_setSides</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">set</span><span class="o">)</span> <span class="o">{</span>
             <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Setting side units&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Layout&#39;</span><span class="o">);</span>
-            <span class="k">var</span> <span class="nx">h1</span> <span class="o">=</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_top</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_top</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">)</span> <span class="o">:</span> <span class="m">0</span><span class="o">),</span>
-                <span class="nx">h2</span> <span class="o">=</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_bottom</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_bottom</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">)</span> <span class="o">:</span> <span class="m">0</span><span class="o">),</span>
+            <span class="k">var</span> <span class="nx">h1</span> <span class="o">=</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">top</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">top</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">)</span> <span class="o">:</span> <span class="m">0</span><span class="o">),</span>
+                <span class="nx">h2</span> <span class="o">=</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">bottom</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">bottom</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">)</span> <span class="o">:</span> <span class="m">0</span><span class="o">),</span>
                 <span class="nx">h</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">doc</span><span class="o">.</span><span class="nx">h</span><span class="o">,</span>
                 <span class="nx">w</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">doc</span><span class="o">.</span><span class="nx">w</span><span class="o">;</span>
             <span class="nx">set</span> <span class="o">=</span> <span class="o">((</span><span class="nx">set</span> <span class="o">===</span> <span class="kc">false</span><span class="o">)</span> <span class="o">?</span> <span class="kc">false</span> <span class="o">:</span> <span class="kc">true</span><span class="o">);</span>
 
             <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">top</span> <span class="o">=</span> <span class="o">{</span>
-                <span class="nx">h</span><span class="o">:</span> <span class="nx">h1</span><span class="o">,</span> <span class="nx">w</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_top</span><span class="o">)</span> <span class="o">?</span> <span class="nx">w</span> <span class="o">:</span> <span class="m">0</span><span class="o">),</span>
+                <span class="nx">h</span><span class="o">:</span> <span class="nx">h1</span><span class="o">,</span> <span class="nx">w</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">top</span><span class="o">)</span> <span class="o">?</span> <span class="nx">w</span> <span class="o">:</span> <span class="m">0</span><span class="o">),</span>
                 <span class="nx">t</span><span class="o">:</span> <span class="m">0</span>
             <span class="o">};</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">bottom</span> <span class="o">=</span> <span class="o">{</span>
-                <span class="nx">h</span><span class="o">:</span> <span class="nx">h2</span><span class="o">,</span> <span class="nx">w</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_bottom</span><span class="o">)</span> <span class="o">?</span> <span class="nx">w</span> <span class="o">:</span> <span class="m">0</span><span class="o">)</span>
+                <span class="nx">h</span><span class="o">:</span> <span class="nx">h2</span><span class="o">,</span> <span class="nx">w</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">bottom</span><span class="o">)</span> <span class="o">?</span> <span class="nx">w</span> <span class="o">:</span> <span class="m">0</span><span class="o">)</span>
             <span class="o">};</span>
             
             <span class="k">var</span> <span class="nx">newH</span> <span class="o">=</span> <span class="o">(</span><span class="nx">h</span> <span class="o">-</span> <span class="o">(</span><span class="nx">h1</span> <span class="o">+</span> <span class="nx">h2</span><span class="o">));</span>
 
             <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span> <span class="o">=</span> <span class="o">{</span>
-                <span class="nx">h</span><span class="o">:</span> <span class="nx">newH</span><span class="o">,</span> <span class="nx">w</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_left</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_left</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">)</span> <span class="o">:</span> <span class="m">0</span><span class="o">)</span>
+                <span class="nx">h</span><span class="o">:</span> <span class="nx">newH</span><span class="o">,</span> <span class="nx">w</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">left</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">)</span> <span class="o">:</span> <span class="m">0</span><span class="o">)</span>
             <span class="o">};</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">right</span> <span class="o">=</span> <span class="o">{</span>
-                <span class="nx">h</span><span class="o">:</span> <span class="nx">newH</span><span class="o">,</span> <span class="nx">w</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_right</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_right</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">)</span> <span class="o">:</span> <span class="m">0</span><span class="o">),</span>
-                <span class="nx">l</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_right</span><span class="o">)</span> <span class="o">?</span> <span class="o">(</span><span class="nx">w</span> <span class="o">-</span> <span class="k">this</span><span class="o">.</span><span class="nx">_right</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">))</span> <span class="o">:</span> <span class="m">0</span><span class="o">),</span>
-                <span class="nx">t</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_top</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">top</span><span class="o">.</span><span class="nx">h</span> <span class="o">:</span> <span class="m">0</span><span class="o">)</span>
+                <span class="nx">h</span><span class="o">:</span> <span class="nx">newH</span><span class="o">,</span> <span class="nx">w</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">right</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">)</span> <span class="o">:</span> <span class="m">0</span><span class="o">),</span>
+                <span class="nx">l</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">right</span><span class="o">)</span> <span class="o">?</span> <span class="o">(</span><span class="nx">w</span> <span class="o">-</span> <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">))</span> <span class="o">:</span> <span class="m">0</span><span class="o">),</span>
+                <span class="nx">t</span><span class="o">:</span> <span class="o">((</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">top</span><span class="o">)</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">top</span><span class="o">.</span><span class="nx">h</span> <span class="o">:</span> <span class="m">0</span><span class="o">)</span>
             <span class="o">};</span>
             
-            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_right</span> <span class="o">&amp;&amp;</span> <span class="nx">set</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">_right</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;top&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">t</span><span class="o">);</span>
-                <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">_right</span><span class="o">.</span><span class="nx">_collapsing</span><span class="o">)</span> <span class="o">{</span> 
-                    <span class="k">this</span><span class="o">.</span><span class="nx">_right</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;left&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">l</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">right</span> <span class="o">&amp;&amp;</span> <span class="nx">set</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;top&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">t</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">_collapsing</span><span class="o">)</span> <span class="o">{</span> 
+                    <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;left&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">l</span><span class="o">);</span>
                 <span class="o">}</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">_right</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">h</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">h</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
             <span class="o">}</span>
-            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_left</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">left</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">l</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
-                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_top</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">top</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">t</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">top</span><span class="o">.</span><span class="nx">h</span><span class="o">;</span>
                 <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
                     <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">t</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
                 <span class="o">}</span>
                 <span class="k">if</span> <span class="o">(</span><span class="nx">set</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="k">this</span><span class="o">.</span><span class="nx">_left</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;top&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">t</span><span class="o">);</span>
-                    <span class="k">this</span><span class="o">.</span><span class="nx">_left</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">h</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-                    <span class="k">this</span><span class="o">.</span><span class="nx">_left</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;left&#39;</span><span class="o">,</span> <span class="m">0</span><span class="o">);</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;top&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">t</span><span class="o">);</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">h</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;left&#39;</span><span class="o">,</span> <span class="m">0</span><span class="o">);</span>
                 <span class="o">}</span>
             <span class="o">}</span>
-            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_bottom</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">bottom</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">bottom</span><span class="o">.</span><span class="nx">t</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">top</span><span class="o">.</span><span class="nx">h</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">h</span><span class="o">;</span>
                 <span class="k">if</span> <span class="o">(</span><span class="nx">set</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="k">this</span><span class="o">.</span><span class="nx">_bottom</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;top&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">bottom</span><span class="o">.</span><span class="nx">t</span><span class="o">);</span>
-                    <span class="k">this</span><span class="o">.</span><span class="nx">_bottom</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">bottom</span><span class="o">.</span><span class="nx">w</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">bottom</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;top&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">bottom</span><span class="o">.</span><span class="nx">t</span><span class="o">);</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">bottom</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">bottom</span><span class="o">.</span><span class="nx">w</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
                 <span class="o">}</span>
             <span class="o">}</span>
-            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_top</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">top</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">if</span> <span class="o">(</span><span class="nx">set</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="k">this</span><span class="o">.</span><span class="nx">_top</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">top</span><span class="o">.</span><span class="nx">w</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">top</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">top</span><span class="o">.</span><span class="nx">w</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
                 <span class="o">}</span>
             <span class="o">}</span>
             <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Setting sizes: (&#39;</span> <span class="o">+</span> <span class="nx">Lang</span><span class="o">.</span><span class="nx">dump</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Layout&#39;</span><span class="o">);</span>
@@ -253,10 +262,10 @@
             <span class="k">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">h</span><span class="o">;</span>
             <span class="k">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">doc</span><span class="o">.</span><span class="nx">w</span> <span class="o">-</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">w</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">right</span><span class="o">.</span><span class="nx">w</span><span class="o">));</span>
             <span class="k">if</span> <span class="o">(</span><span class="nx">set</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">_center</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">,</span> <span class="nx">h</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">_center</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="nx">w</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">_center</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;top&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">top</span><span class="o">.</span><span class="nx">h</span><span class="o">);</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">_center</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;left&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">w</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">center</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">,</span> <span class="nx">h</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">center</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">,</span> <span class="nx">w</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">center</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;top&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">top</span><span class="o">.</span><span class="nx">h</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">.</span><span class="nx">center</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s1">&#39;left&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">w</span><span class="o">);</span>
             <span class="o">}</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">center</span> <span class="o">=</span> <span class="o">{</span> <span class="nx">h</span><span class="o">:</span> <span class="nx">h</span><span class="o">,</span> <span class="nx">w</span><span class="o">:</span> <span class="nx">w</span><span class="o">,</span> <span class="nx">t</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">top</span><span class="o">.</span><span class="nx">h</span><span class="o">,</span> <span class="nx">l</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span><span class="o">.</span><span class="nx">left</span><span class="o">.</span><span class="nx">w</span> <span class="o">};</span>
             <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Setting Center size to: (&#39;</span> <span class="o">+</span> <span class="nx">h</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="nx">w</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Layout&#39;</span><span class="o">);</span>
@@ -287,9 +296,10 @@
         <span class="nx">getUnitByPosition</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">pos</span><span class="o">)</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="nx">pos</span><span class="o">)</span> <span class="o">{</span>
                 <span class="nx">pos</span> <span class="o">=</span> <span class="nx">pos</span><span class="o">.</span><span class="nx">toLowerCase</span><span class="o">();</span>
-                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">[</span><span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nx">pos</span><span class="o">])</span> <span class="o">{</span>
-                    <span class="k">return</span> <span class="k">this</span><span class="o">[</span><span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nx">pos</span><span class="o">];</span>
+                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">[</span><span class="nx">pos</span><span class="o">])</span> <span class="o">{</span>
+                    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">[</span><span class="nx">pos</span><span class="o">];</span>
                 <span class="o">}</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
             <span class="o">}</span>
             <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
         <span class="o">},</span>
@@ -299,7 +309,7 @@
 <span class="c">        * @description Remove the unit from this layout and resize the layout.</span>
 <span class="c">        */</span>
         <span class="nx">removeUnit</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">unit</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">this</span><span class="o">[</span><span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nx">unit</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;position&#39;</span><span class="o">)]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="nx">delete</span> <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">[</span><span class="nx">unit</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;position&#39;</span><span class="o">)];</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">resize</span><span class="o">();</span>
         <span class="o">},</span>
         <span class="c">/**</span>
@@ -313,7 +323,7 @@
                 <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;No position property passed&#39;</span><span class="o">,</span> <span class="s1">&#39;error&#39;</span><span class="o">,</span> <span class="s1">&#39;Layout&#39;</span><span class="o">);</span>
                 <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
             <span class="o">}</span>
-            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">[</span><span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nx">cfg</span><span class="o">.</span><span class="nx">position</span><span class="o">])</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">[</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">position</span><span class="o">])</span> <span class="o">{</span>
                 <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Position already exists&#39;</span><span class="o">,</span> <span class="s1">&#39;error&#39;</span><span class="o">,</span> <span class="s1">&#39;Layout&#39;</span><span class="o">);</span>
                 <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
             <span class="o">}</span>
@@ -375,7 +385,7 @@
             <span class="nx">unit</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="s1">&#39;heightChange&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">resize</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
             <span class="nx">unit</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="s1">&#39;widthChange&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">resize</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
             <span class="nx">unit</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="s1">&#39;gutterChange&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">resize</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-            <span class="k">this</span><span class="o">[</span><span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nx">cfg</span><span class="o">.</span><span class="nx">position</span><span class="o">]</span> <span class="o">=</span> <span class="nx">unit</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">[</span><span class="nx">cfg</span><span class="o">.</span><span class="nx">position</span><span class="o">]</span> <span class="o">=</span> <span class="nx">unit</span><span class="o">;</span>
 
             <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_rendered</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">resize</span><span class="o">();</span>
@@ -452,14 +462,13 @@
 <span class="c">        * @description Sets up the main doc element when not using the body as the main element.</span>
 <span class="c">        */</span>
         <span class="nx">_setupElements</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
-            <span class="k">this</span><span class="o">.</span><span class="nx">_doc</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">getElementsByClassName</span><span class="o">(</span><span class="s1">&#39;doc&#39;</span><span class="o">)[</span><span class="m">0</span><span class="o">];</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_doc</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">getElementsByClassName</span><span class="o">(</span><span class="s1">&#39;yui-layout-doc&#39;</span><span class="o">)[</span><span class="m">0</span><span class="o">];</span>
             <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">_doc</span><span class="o">)</span> <span class="o">{</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">_doc</span> <span class="o">=</span> <span class="nb">document</span><span class="o">.</span><span class="nx">createElement</span><span class="o">(</span><span class="s1">&#39;div&#39;</span><span class="o">);</span>
                 <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;element&#39;</span><span class="o">).</span><span class="nx">appendChild</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_doc</span><span class="o">);</span>
             <span class="o">}</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">_createUnits</span><span class="o">();</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">_setBodySize</span><span class="o">();</span>
-            <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nb">window</span><span class="o">,</span> <span class="s1">&#39;resize&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">resize</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
             <span class="nx">Dom</span><span class="o">.</span><span class="nx">addClass</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_doc</span><span class="o">,</span> <span class="s1">&#39;yui-layout-doc&#39;</span><span class="o">);</span>
         <span class="o">},</span>
         <span class="c">/**</span>
@@ -478,47 +487,14 @@
         <span class="nx">_doc</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
         <span class="c">/**</span>
 <span class="c">        * @private</span>
-<span class="c">        * @property _left</span>
-<span class="c">        * @description Reference to the left LayoutUnit Object</span>
-<span class="c">        * @type {&lt;a href=&quot;YAHOO.widget.LayoutUnit.html&quot;&gt;YAHOO.widget.LayoutUnit&lt;/a&gt;} A LayoutUnit instance</span>
-<span class="c">        */</span>
-        <span class="nx">_left</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
-        <span class="c">/**</span>
-<span class="c">        * @private</span>
-<span class="c">        * @property _right</span>
-<span class="c">        * @description Reference to the right LayoutUnit Object</span>
-<span class="c">        * @type {&lt;a href=&quot;YAHOO.widget.LayoutUnit.html&quot;&gt;YAHOO.widget.LayoutUnit&lt;/a&gt;} A LayoutUnit instance</span>
-<span class="c">        */</span>
-        <span class="nx">_right</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
-        <span class="c">/**</span>
-<span class="c">        * @private</span>
-<span class="c">        * @property _top</span>
-<span class="c">        * @description Reference to the top LayoutUnit Object</span>
-<span class="c">        * @type {&lt;a href=&quot;YAHOO.widget.LayoutUnit.html&quot;&gt;YAHOO.widget.LayoutUnit&lt;/a&gt;} A LayoutUnit instance</span>
-<span class="c">        */</span>
-        <span class="nx">_top</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
-        <span class="c">/**</span>
-<span class="c">        * @private</span>
-<span class="c">        * @property _bottom</span>
-<span class="c">        * @description Reference to the bottom LayoutUnit Object</span>
-<span class="c">        * @type {&lt;a href=&quot;YAHOO.widget.LayoutUnit.html&quot;&gt;YAHOO.widget.LayoutUnit&lt;/a&gt;} A LayoutUnit instance</span>
-<span class="c">        */</span>
-        <span class="nx">_bottom</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
-        <span class="c">/**</span>
-<span class="c">        * @private</span>
-<span class="c">        * @property _center</span>
-<span class="c">        * @description Reference to the center LayoutUnit Object</span>
-<span class="c">        * @type {&lt;a href=&quot;YAHOO.widget.LayoutUnit.html&quot;&gt;YAHOO.widget.LayoutUnit&lt;/a&gt;} A LayoutUnit instance</span>
-<span class="c">        */</span>
-        <span class="nx">_center</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
-        <span class="c">/**</span>
-<span class="c">        * @private</span>
 <span class="c">        * @method init</span>
 <span class="c">        * @description The Layout class&#39; initialization method</span>
 <span class="c">        */</span>        
         <span class="nx">init</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">p_oElement</span><span class="o">,</span> <span class="nx">p_oAttributes</span><span class="o">)</span> <span class="o">{</span>
             <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;init&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;Layout&#39;</span><span class="o">);</span>
+
             <span class="k">this</span><span class="o">.</span><span class="nx">_zIndex</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
+
             <span class="nx">Layout</span><span class="o">.</span><span class="nx">superclass</span><span class="o">.</span><span class="nx">init</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="nx">p_oElement</span><span class="o">,</span> <span class="nx">p_oAttributes</span><span class="o">);</span>
             
             <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;parent&#39;</span><span class="o">))</span> <span class="o">{</span>
@@ -526,6 +502,7 @@
             <span class="o">}</span>
 
             <span class="k">this</span><span class="o">.</span><span class="nx">_sizes</span> <span class="o">=</span> <span class="o">{};</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_units</span> <span class="o">=</span> <span class="o">{};</span>
 
             <span class="k">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">p_oElement</span><span class="o">;</span>
             <span class="k">if</span> <span class="o">(!</span><span class="nx">Lang</span><span class="o">.</span><span class="nx">isString</span><span class="o">(</span><span class="nx">id</span><span class="o">))</span> <span class="o">{</span>
@@ -656,6 +633,42 @@
             <span class="o">});</span>
         <span class="o">},</span>
         <span class="c">/**</span>
+<span class="c">        * @method destroy</span>
+<span class="c">        * @description Removes this layout from the page and destroys all units that it contains. This will destroy all data inside the layout and it&#39;s children.</span>
+<span class="c">        */</span>
+        <span class="nx">destroy</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">var</span> <span class="nx">par</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;parent&#39;</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nx">par</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">par</span><span class="o">.</span><span class="nx">removeListener</span><span class="o">(</span><span class="s1">&#39;resize&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">resize</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="nx">Event</span><span class="o">.</span><span class="nx">removeListener</span><span class="o">(</span><span class="nb">window</span><span class="o">,</span> <span class="s1">&#39;resize&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">resize</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+            <span class="k">this</span><span class="o">.</span><span class="nx">unsubscribeAll</span><span class="o">();</span>
+            <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">u</span> <span class="k">in</span> <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nx">Lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">,</span> <span class="nx">u</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">[</span><span class="nx">u</span><span class="o">])</span> <span class="o">{</span>
+                        <span class="k">this</span><span class="o">.</span><span class="nx">_units</span><span class="o">[</span><span class="nx">u</span><span class="o">].</span><span class="nx">destroy</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+
+            <span class="nx">Event</span><span class="o">.</span><span class="nx">purgeElement</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;element&#39;</span><span class="o">));</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;parentNode&#39;</span><span class="o">).</span><span class="nx">removeChild</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;element&#39;</span><span class="o">));</span>
+            
+            <span class="nx">delete</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">Layout</span><span class="o">.</span><span class="nx">_instances</span><span class="o">[</span><span class="k">this</span><span class="o">.</span><span class="nx">get</span><span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">)];</span>
+            <span class="c">//Brutal Object Destroy</span>
+<span class="c"></span>            <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nx">Lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="nx">i</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">this</span><span class="o">[</span><span class="nx">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                    <span class="nx">delete</span> <span class="k">this</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            
+            <span class="k">if</span> <span class="o">(</span><span class="nx">par</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">par</span><span class="o">.</span><span class="nx">resize</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
+        <span class="c">/**</span>
 <span class="c">        * @method toString</span>
 <span class="c">        * @description Returns a string representing the Layout.</span>
 <span class="c">        * @return {String}</span>
@@ -709,6 +722,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -748,6 +763,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -798,7 +815,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Container&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Container&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_container.html">container</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -119,6 +121,34 @@ documentation for more details.
                         <div class="section field details">
                             <h3 id="properties">Properties</h3>
                             <div class="content">
+                                    <div class="">
+                                    <h4><a name="property_CONTEXT_TRIGGERS">CONTEXT_TRIGGERS</a>
+                                        <code>- final Array</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            <p>
+Array of default event types which will trigger
+context alignment for the Overlay class.
+</p>
+<p>The array is empty by default for Overlay,
+but maybe populated in future releases, so classes extending
+Overlay which need to define their own set of CONTEXT_TRIGGERS
+should concatenate their super class's prototype.CONTEXT_TRIGGERS 
+value with their own array of values.
+</p>
+<p>
+E.g.:
+<code>CustomOverlay.prototype.CONTEXT_TRIGGERS = YAHOO.widget.Overlay.prototype.CONTEXT_TRIGGERS.concat(["windowScroll"]);</code>
+</p>
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
                                     <div class="private">
                                     <h4><a name="property_DEFAULT_CONFIG">DEFAULT_CONFIG</a>
                                         <code>- private final Object</code>
@@ -157,6 +187,24 @@ documentation for more details.
                                         <div class="description">
                                             A boolean that indicated whether the window resize and scroll events have 
 already been subscribed to.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4><a name="property_YAHOO.widget.Overlay._TRIGGER_MAP">YAHOO.widget.Overlay._TRIGGER_MAP</a>
+                                        <code>- private static Object</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Internal map of special event types, which are provided
+by the instance. It maps the event type to the custom event 
+instance. Contains entries for the "windowScroll", "windowResize" and
+"textResize" static container events.
                                         </div>
                                     </div>
      
@@ -231,6 +279,22 @@ configuring the context element alignment
                                     <hr />
                                     </div>
                                     <div class="">
+                                    <h4><a name="property_YAHOO.widget.Overlay.STD_MOD_RE">YAHOO.widget.Overlay.STD_MOD_RE</a>
+                                        <code>- static final RegExp</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Constant representing the names of the standard module elements
+used in the overlay.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
                                     <h4><a name="property_YAHOO.widget.Overlay.TOP_LEFT">YAHOO.widget.Overlay.TOP_LEFT</a>
                                         <code>- static final String</code>
                                     </h4>
@@ -292,7 +356,7 @@ positioned relative to the boundaries of the browser's viewport, in pixels.
                                 <code>
                                     
                                         <a class="" href="YAHOO.widget.Module.html#property_body">body</a><span class="">,</span>
-                                        <a class="" href="YAHOO.widget.Module.html#property_browser">browser</a><span class="">,</span>
+                                        <a class=" deprecated" href="YAHOO.widget.Module.html#property_browser">browser</a><span class=" deprecated">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_cfg">cfg</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_contructor">contructor</a><span class="">,</span>
                                         <a class="private" href="YAHOO.widget.Module.html#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a><span class="private">,</span>
@@ -301,7 +365,7 @@ positioned relative to the boundaries of the browser's viewport, in pixels.
                                         <a class="" href="YAHOO.widget.Module.html#property_footer">footer</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_header">header</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_id">id</a><span class="">,</span>
-                                        <a class="" href="YAHOO.widget.Module.html#property_imageRoot">imageRoot</a><span class="">,</span>
+                                        <a class=" deprecated" href="YAHOO.widget.Module.html#property_imageRoot">imageRoot</a><span class=" deprecated">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_isSecure">isSecure</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_platform">platform</a>
                                 </code>
@@ -311,6 +375,280 @@ positioned relative to the boundaries of the browser's viewport, in pixels.
                         <div class="section method details">
                             <h3 id="methods">Methods</h3>
                             <div class="content">
+                                    <div class="protected">
+                                    <h4>
+                                        <a name="method__alignOnTrigger">_alignOnTrigger</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         protected 
+                                        
+                                        
+                                        void
+                                            <strong>_alignOnTrigger</strong>
+                                           (
+                                                
+                                                        
+                                                         type
+                                                    
+                                                
+                                                        , 
+                                                         args
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Custom Event handler for context alignment triggers. Invokes the align method
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>type &lt;String&gt;</code>
+                                                             The event type (not used by the default implementation)
+                                                        </dd>
+                                                        <dd>
+                                                            <code>args &lt;Any[]&gt;</code>
+                                                             The array of arguments for the trigger event (not used by the default implementation)
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="protected">
+                                    <h4>
+                                        <a name="method__autoFillOnHeightChange">_autoFillOnHeightChange</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         protected 
+                                        
+                                        
+                                        void
+                                            <strong>_autoFillOnHeightChange</strong>
+                                           (
+                                                
+                                                        
+                                                         type
+                                                    
+                                                
+                                                        , 
+                                                         args
+                                                    
+                                                
+                                                        , 
+                                                         el
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            The default custom event handler executed when the overlay's height is changed, 
+if the autofillheight property has been set.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>type &lt;String&gt;</code>
+                                                             The event type
+                                                        </dd>
+                                                        <dd>
+                                                            <code>args &lt;Array&gt;</code>
+                                                             The array of arguments passed to event subscribers
+                                                        </dd>
+                                                        <dd>
+                                                            <code>el &lt;HTMLElement&gt;</code>
+                                                             The header, body or footer element which is to be resized to fill
+out the containers height
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__findTriggerCE">_findTriggerCE</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>_findTriggerCE</strong>
+                                           (
+                                                
+                                                        
+                                                         t
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Helper method to locate the custom event instance for the event name string
+passed in. As a convenience measure, any custom events passed in are returned.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>t &lt;String|CustomEvent&gt;</code>
+                                                             Either a CustomEvent, or event type (e.g. "windowScroll") for which a 
+custom event instance needs to be looked up from the Overlay._TRIGGER_MAP.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__getComputedHeight">_getComputedHeight</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        Number
+                                            <strong>_getComputedHeight</strong>
+                                           (
+                                                
+                                                        
+                                                         el
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Determines the content box height of the given element (height of the element, without padding or borders) in pixels.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>el &lt;HTMLElement&gt;</code>
+                                                             The element for which the content height needs to be determined
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Number
+                                                    </code></dt>
+                                                    <dd>The content box height of the given element, or null if it could not be determined.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__getPreciseHeight">_getPreciseHeight</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        Float
+                                            <strong>_getPreciseHeight</strong>
+                                           (
+                                                
+                                                        
+                                                         el
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Returns the sub-pixel height of the el, using getBoundingClientRect, if available,
+otherwise returns the offsetHeight
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>el &lt;HTMLElement&gt;</code>
+                                                            
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Float
+                                                    </code></dt>
+                                                    <dd>The sub-pixel height if supported by the browser, else the rounded height.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
                                     <div class="protected">
                                     <h4>
                                         <a name="method__primeXYFromDOM">_primeXYFromDOM</a></h4>
@@ -342,7 +680,124 @@ beforeMove, Move event listeners are invoked.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="protected">
+                                    <h4>
+                                        <a name="method__processTriggers">_processTriggers</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         protected 
+                                        
+                                        
+                                        void
+                                            <strong>_processTriggers</strong>
+                                           (
+                                                
+                                                        
+                                                         triggers
+                                                    
+                                                
+                                                        , 
+                                                         mode
+                                                    
+                                                
+                                                        , 
+                                                         fn
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Utility method that subscribes or unsubscribes the given 
+function from the list of trigger events provided.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>triggers &lt;Array[String|CustomEvent]&gt;</code>
+                                                             An array of either CustomEvents, event type strings 
+(e.g. "beforeShow", "windowScroll") to/from which the provided function should be 
+subscribed/unsubscribed respectively.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>mode &lt;String&gt;</code>
+                                                             Either "subscribe" or "unsubscribe", specifying whether or not
+we are subscribing or unsubscribing trigger listeners
+                                                        </dd>
+                                                        <dd>
+                                                            <code>fn &lt;Function&gt;</code>
+                                                             The function to be subscribed/unsubscribed to/from the trigger event.
+Context is always set to the overlay instance, and no additional object argument 
+get passed to the subscribed function.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="protected">
+                                    <h4>
+                                        <a name="method__validateAutoFillHeight">_validateAutoFillHeight</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         protected 
+                                        
+                                        
+                                        
+                                            <strong>_validateAutoFillHeight</strong>
+                                           (
+                                                
+                                                        
+                                                         val
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            autofillheight validator. Verifies that the autofill value is either null 
+or one of the strings : "body", "header" or "footer".
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>val &lt;String&gt;</code>
+                                                            
+                                                        </dd>
+                                                </dl>
+
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -400,7 +855,10 @@ that the elementAlign corner should stick to.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -435,7 +893,10 @@ YAHOO.widget.Overlay.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -469,7 +930,77 @@ YAHOO.widget.Overlay.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_configAutoFillHeight">configAutoFillHeight</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>configAutoFillHeight</strong>
+                                           (
+                                                
+                                                        
+                                                         type
+                                                    
+                                                
+                                                        , 
+                                                         args
+                                                    
+                                                
+                                                        , 
+                                                         obj
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            The default event handler fired when the "autofillheight" property is changed.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>type &lt;String&gt;</code>
+                                                             The CustomEvent type (usually the property name)
+                                                        </dd>
+                                                        <dd>
+                                                            <code>args &lt;Object[]&gt;</code>
+                                                             The CustomEvent arguments. For configuration 
+handlers, args[0] will equal the newly applied value for the property.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>obj &lt;Object&gt;</code>
+                                                             The scope object. For configuration handlers, 
+this will usually equal the owner.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -535,7 +1066,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -569,7 +1103,7 @@ this will usually equal the owner.
                                         </code>
                                         
                                         <div class="description">
-                                            The default event handler fired when the "context" property 
+                                            The default event handler fired when the "context" property
 is changed.
                                         </div>
 
@@ -600,7 +1134,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -665,7 +1202,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -729,7 +1269,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -793,7 +1336,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -859,7 +1405,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -923,7 +1472,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -987,7 +1539,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1051,7 +1606,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1115,7 +1673,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1179,7 +1740,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1214,7 +1778,10 @@ elements to null.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1249,7 +1816,10 @@ the Overlay is visible
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1314,7 +1884,121 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_fillHeight">fillHeight</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>fillHeight</strong>
+                                           (
+                                                
+                                                        
+                                                         el
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            <p>
+Sets the height on the provided header, body or footer element to 
+fill out the height of the container. It determines the height of the 
+containers content box, based on it's configured height value, and 
+sets the height of the autofillheight element to fill out any 
+space remaining after the other standard module element heights 
+have been accounted for.
+</p>
+<p><strong>NOTE:</strong> This method is not designed to work if an explicit 
+height has not been set on the container, since for an "auto" height container, 
+the heights of the header/body/footer will drive the height of the container.</p>
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>el &lt;HTMLElement&gt;</code>
+                                                             The element which should be resized to fill out the height
+of the container element.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getConstrainedX">getConstrainedX</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        Number
+                                            <strong>getConstrainedX</strong>
+                                           (
+                                                
+                                                        
+                                                         x
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Given x coordinate value, returns the calculated x coordinate required to 
+position the Overlay if it is to be constrained to the viewport, based on the 
+current element size, viewport dimensions and scroll values.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>x &lt;Number&gt;</code>
+                                                             The X coordinate value to be constrained
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Number
+                                                    </code></dt>
+                                                    <dd>The constrained x coordinate</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1370,7 +2054,61 @@ current element size, viewport dimensions and scroll values.
                                                     </code></dt>
                                                     <dd>The constrained x and y coordinates at index 0 and 1 respectively;</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getConstrainedY">getConstrainedY</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        Number
+                                            <strong>getConstrainedY</strong>
+                                           (
+                                                
+                                                        
+                                                         y
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Given y coordinate value, returns the calculated y coordinate required to 
+position the Overlay if it is to be constrained to the viewport, based on the 
+current element size, viewport dimensions and scroll values.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>y &lt;Number&gt;</code>
+                                                             The Y coordinate value to be constrained
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Number
+                                                    </code></dt>
+                                                    <dd>The constrained y coordinate</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1404,7 +2142,10 @@ current element size, viewport dimensions and scroll values.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1440,7 +2181,10 @@ current element size, viewport dimensions and scroll values.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1505,7 +2249,10 @@ See configuration documentation for more details.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1540,7 +2287,10 @@ using the Overlay's Config object (cfg).
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1575,7 +2325,10 @@ automatically at appropriate times by the Overlay class.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1630,7 +2383,10 @@ identical to calling this.cfg.setProperty("xy", [x,y]);
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1684,7 +2440,10 @@ identical to calling this.cfg.setProperty("xy", [x,y]);
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1718,7 +2477,10 @@ identical to calling this.cfg.setProperty("xy", [x,y]);
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1754,7 +2516,10 @@ identical to calling this.cfg.setProperty("xy", [x,y]);
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1796,7 +2561,10 @@ this method is called.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1831,7 +2599,10 @@ corresponding Overlay instance.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1867,7 +2638,10 @@ position information during drag & drop.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1901,7 +2675,10 @@ position information during drag & drop.
                                                     </code></dt>
                                                     <dd>The string representation of the Overlay.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1947,7 +2724,10 @@ position information during drag & drop.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1993,7 +2773,10 @@ position information during drag & drop.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2189,6 +2972,24 @@ window scroll
                             <h3 id="configattributes">Configuration Attributes</h3>
                             <div class="content">
                                     <div class="">
+                                    <h4><a name="config_autofillheight">autofillheight</a>
+                                        <code>- String</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Standard module element which should auto fill out the height of the Overlay if the height config property is set.
+Supported values are "header", "body", "footer".
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: null
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
                                     <h4><a name="config_constraintoviewport">constraintoviewport</a>
                                         <code>- Boolean</code>
                                     </h4>
@@ -2212,11 +3013,44 @@ out of the viewport.
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            The array of context arguments for context-sensitive positioning.  
-The format is: [id or element, element corner, context corner]. 
-For example, setting this property to ["img1", "tl", "bl"] would 
-align the Overlay's top left corner to the context element's 
-bottom left corner.
+                                            <p>
+The array of context arguments for context-sensitive positioning. 
+</p>
+<p>
+The format of the array is: <code>[contextElementOrId, overlayCorner, contextCorner, arrayOfTriggerEvents (optional)]</code>, the
+the 4 array elements described in detail below:
+</p>
+<dl>
+<dt>contextElementOrId &#60;String|HTMLElement&#62;</dt>
+<dd>A reference to the context element to which the overlay should be aligned (or it's id).</dd>
+<dt>overlayCorner &#60;String&#62;</dt>
+<dd>The corner of the overlay which is to be used for alignment. This corner will be aligned to the 
+corner of the context element defined by the "contextCorner" entry which follows. Supported string values are: 
+"tr" (top right), "tl" (top left), "br" (bottom right), or "bl" (bottom left).</dd>
+<dt>contextCorner &#60;String&#62;</dt>
+<dd>The corner of the context element which is to be used for alignment. Supported string values are the same ones listed for the "overlayCorner" entry above.</dd>
+<dt>arrayOfTriggerEvents (optional) &#60;Array[String|CustomEvent]&#62;</dt>
+<dd>
+<p>
+By default, context alignment is a one time operation, aligning the Overlay to the context element when context configuration property is set, or when the <a href="#method_align">align</a> 
+method is invoked. However, you can use the optional "arrayOfTriggerEvents" entry to define the list of events which should force the overlay to re-align itself with the context element. 
+This is useful in situations where the layout of the document may change, resulting in the context element's position being modified.
+</p>
+<p>
+The array can contain either event type strings for events the instance publishes (e.g. "beforeShow") or CustomEvent instances. Additionally the following
+3 static container event types are also currently supported : <code>"windowResize", "windowScroll", "textResize"</code> (defined in <a href="#property__TRIGGER_MAP">_TRIGGER_MAP</a> private property).
+</p>
+</dd>
+</dl>
+<p>
+For example, setting this property to <code>["img1", "tl", "bl"]</code> will 
+align the Overlay's top left corner to the bottom left corner of the
+context element with id "img1".
+</p>
+<p>
+Adding the optional trigger values: <code>["img1", "tl", "bl", ["beforeShow", "windowResize"]]</code>,
+will re-align the overlay position, whenever the "beforeShow" or "windowResize" events are fired.
+</p>
                                         </div>
                                     </div>
  
@@ -2279,6 +3113,25 @@ made visible.
      
                                     <div class="default">
                                         Default Value: true for IE6 and below, false for all other browsers.
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
+                                    <h4><a name="config_preventcontextoverlap">preventcontextoverlap</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Boolean indicating whether or not the Overlay should overlap its 
+context element (defined using the "context" configuration property) when the 
+"constraintoviewport" configuration property is set to "true".
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: false
                                     </div>        
 
                                     <hr />
@@ -2398,6 +3251,8 @@ made visible.
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -2437,6 +3292,8 @@ made visible.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -2495,6 +3352,9 @@ made visible.
                     <div class="module">
                         <h4>Properties</h4>
                         <ul class="content">        
+                                <li class=""><a href="#property_CONTEXT_TRIGGERS">CONTEXT_TRIGGERS</a>
+                                        <!--<code>&lt;Number&gt;</code>-->
+                                </li>
                                 <li class="private"><a href="#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
@@ -2502,6 +3362,9 @@ made visible.
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property_YAHOO.widget.Overlay._initialized">YAHOO.widget.Overlay._initialized</a>
+                                        <!--<code>&lt;Number&gt;</code>-->
+                                </li>
+                                <li class="private"><a href="#property_YAHOO.widget.Overlay._TRIGGER_MAP">YAHOO.widget.Overlay._TRIGGER_MAP</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_YAHOO.widget.Overlay.BOTTOM_LEFT">YAHOO.widget.Overlay.BOTTOM_LEFT</a>
@@ -2514,6 +3377,9 @@ made visible.
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_YAHOO.widget.Overlay.IFRAME_SRC">YAHOO.widget.Overlay.IFRAME_SRC</a>
+                                        <!--<code>&lt;Number&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_YAHOO.widget.Overlay.STD_MOD_RE">YAHOO.widget.Overlay.STD_MOD_RE</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_YAHOO.widget.Overlay.TOP_LEFT">YAHOO.widget.Overlay.TOP_LEFT</a>
@@ -2532,7 +3398,28 @@ made visible.
                         <h4>Methods</h4>
                         <ul class="content">        
                                 <li class="protected"><!--<code>void</code>-->
+                                <a href="#method__alignOnTrigger">_alignOnTrigger</a>
+                                </li>
+                                <li class="protected"><!--<code>void</code>-->
+                                <a href="#method__autoFillOnHeightChange">_autoFillOnHeightChange</a>
+                                </li>
+                                <li class="private"><!--<code>void</code>-->
+                                <a href="#method__findTriggerCE">_findTriggerCE</a>
+                                </li>
+                                <li class="private"><!--<code>Number</code>-->
+                                <a href="#method__getComputedHeight">_getComputedHeight</a>
+                                </li>
+                                <li class="private"><!--<code>Float</code>-->
+                                <a href="#method__getPreciseHeight">_getPreciseHeight</a>
+                                </li>
+                                <li class="protected"><!--<code>void</code>-->
                                 <a href="#method__primeXYFromDOM">_primeXYFromDOM</a>
+                                </li>
+                                <li class="protected"><!--<code>void</code>-->
+                                <a href="#method__processTriggers">_processTriggers</a>
+                                </li>
+                                <li class="protected"><!--<code></code>-->
+                                <a href="#method__validateAutoFillHeight">_validateAutoFillHeight</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_align">align</a>
@@ -2542,6 +3429,9 @@ made visible.
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_center">center</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_configAutoFillHeight">configAutoFillHeight</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_configConstrainToViewport">configConstrainToViewport</a>
@@ -2585,8 +3475,17 @@ made visible.
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_enforceConstraints">enforceConstraints</a>
                                 </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_fillHeight">fillHeight</a>
+                                </li>
+                                <li class=""><!--<code>Number</code>-->
+                                <a href="#method_getConstrainedX">getConstrainedX</a>
+                                </li>
                                 <li class=""><!--<code>Array</code>-->
                                 <a href="#method_getConstrainedXY">getConstrainedXY</a>
+                                </li>
+                                <li class=""><!--<code>Number</code>-->
+                                <a href="#method_getConstrainedY">getConstrainedY</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_hideIframe">hideIframe</a>
@@ -2658,6 +3557,9 @@ made visible.
                         <h4>Configuration Attributes</h4>
                         <ul class="content">        
                                 <li class="">
+                                <a href="#config_autofillheight">autofillheight</a>
+                                </li>
+                                <li class="">
                                 <a href="#config_constraintoviewport">constraintoviewport</a>
                                 </li>
                                 <li class="">
@@ -2671,6 +3573,9 @@ made visible.
                                 </li>
                                 <li class="">
                                 <a href="#config_iframe">iframe</a>
+                                </li>
+                                <li class="">
+                                <a href="#config_preventcontextoverlap">preventcontextoverlap</a>
                                 </li>
                                 <li class="">
                                 <a href="#config_width">width</a>
@@ -2695,7 +3600,7 @@ made visible.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

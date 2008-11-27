@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Container&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Container&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_container.html">container</a>
@@ -21,14 +21,16 @@
                  &gt; SimpleDialog.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -321,7 +323,7 @@
             <span class="o">}</span>
 
         <span class="o">},</span>
-        
+
         <span class="c">/**</span>
 <span class="c">        * Fired when the &quot;text&quot; property is set.</span>
 <span class="c">        * @method configText</span>
@@ -349,7 +351,32 @@
         <span class="nx">toString</span><span class="o">:</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
             <span class="k">return</span> <span class="s2">&quot;SimpleDialog &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">id</span><span class="o">;</span>
         <span class="o">}</span>
-    
+
+        <span class="c">/**</span>
+<span class="c">        * &lt;p&gt;</span>
+<span class="c">        * Sets the SimpleDialog&#39;s body content to the HTML specified. </span>
+<span class="c">        * If no body is present, one will be automatically created. </span>
+<span class="c">        * An empty string can be passed to the method to clear the contents of the body.</span>
+<span class="c">        * &lt;/p&gt;</span>
+<span class="c">        * &lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; SimpleDialog provides the &lt;a href=&quot;#config_text&quot;&gt;text&lt;/a&gt;</span>
+<span class="c">        * and &lt;a href=&quot;#config_icon&quot;&gt;icon&lt;/a&gt; configuration properties to set the contents</span>
+<span class="c">        * of it&#39;s body element in accordance with the UI design for a SimpleDialog (an </span>
+<span class="c">        * icon and message text). Calling setBody on the SimpleDialog will not enforce this </span>
+<span class="c">        * UI design constraint and will replace the entire contents of the SimpleDialog body. </span>
+<span class="c">        * It should only be used if you wish the replace the default icon/text body structure </span>
+<span class="c">        * of a SimpleDialog with your own custom markup.&lt;/p&gt;</span>
+<span class="c">        * </span>
+<span class="c">        * @method setBody</span>
+<span class="c">        * @param {String} bodyContent The HTML used to set the body. </span>
+<span class="c">        * As a convenience, non HTMLElement objects can also be passed into </span>
+<span class="c">        * the method, and will be treated as strings, with the body innerHTML</span>
+<span class="c">        * set to their default toString implementations.</span>
+<span class="c">        * &lt;em&gt;OR&lt;/em&gt;</span>
+<span class="c">        * @param {HTMLElement} bodyContent The HTMLElement to add as the first and only child of the body element.</span>
+<span class="c">        * &lt;em&gt;OR&lt;/em&gt;</span>
+<span class="c">        * @param {DocumentFragment} bodyContent The document fragment </span>
+<span class="c">        * containing elements which are to be added to the body</span>
+<span class="c">        */</span>
     <span class="o">});</span>
 
 <span class="o">}());</span>
@@ -371,6 +398,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -411,6 +440,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -475,7 +506,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

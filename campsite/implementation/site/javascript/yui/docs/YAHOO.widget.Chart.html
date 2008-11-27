@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Charts Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Charts Widget&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_charts.html">charts</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -43,7 +45,7 @@
                         <span class="extends">
                           - uses 
                             
-                                <a href="YAHOO.util.FlashAdapter.html">YAHOO.util.FlashAdapter</a>
+                                <a href="YAHOO.widget.FlashAdapter.html">YAHOO.widget.FlashAdapter</a>
                             
                         </span>
                         
@@ -150,22 +152,6 @@ YAHOO.widget.FlashAdapter.createProxyFunction()
                                     <hr />
                                     </div>
                                     <div class="private">
-                                    <h4><a name="property__initialized">_initialized</a>
-                                        <code>- private Boolean</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Indicates whether all attributes have been set and
-the dataSource may be passed to the SWF.
-                                        </div>
-                                    </div>
-     
-                                        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
                                     <h4><a name="property__pollingID">_pollingID</a>
                                         <code>- private Number</code>
                                     </h4>
@@ -226,6 +212,22 @@ the dataSource may be passed to the SWF.
                                     <hr />
                                     </div>
                                     <div class="private">
+                                    <h4><a name="property__seriesLabelFunctions">_seriesLabelFunctions</a>
+                                        <code>- private Array</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Stores references to series labelFunction values created by
+YAHOO.widget.FlashAdapter.createProxyFunction()
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
                                     <h4><a name="property__type">_type</a>
                                         <code>- private String</code>
                                     </h4>
@@ -263,6 +265,39 @@ the dataSource may be passed to the SWF.
                             </div>
                         </div>
 
+                        <div class="section field inheritance">
+                            <h4>Properties inherited from <a href="YAHOO.widget.FlashAdapter.html">YAHOO.widget.FlashAdapter</a>:</h4>
+                            <div class="content">
+                                <code>
+                                    
+                                        <a class="private" href="YAHOO.widget.FlashAdapter.html#property__attributes">_attributes</a><span class="private">,</span>
+                                        <a class="private" href="YAHOO.widget.FlashAdapter.html#property__containerID">_containerID</a><span class="private">,</span>
+                                        <a class="private" href="YAHOO.widget.FlashAdapter.html#property__id">_id</a><span class="private">,</span>
+                                        <a class="private" href="YAHOO.widget.FlashAdapter.html#property__initialized">_initialized</a><span class="private">,</span>
+                                        <a class="private" href="YAHOO.widget.FlashAdapter.html#property__swf">_swf</a><span class="private">,</span>
+                                        <a class="private" href="YAHOO.widget.FlashAdapter.html#property__swfURL">_swfURL</a>
+                                </code>
+                            </div>
+                        </div>
+                        <div class="section field inheritance">
+                            <h4>Properties inherited from <a href="YAHOO.util.AttributeProvider.html">YAHOO.util.AttributeProvider</a>:</h4>
+                            <div class="content">
+                                <code>
+                                    
+                                        <a class="private" href="YAHOO.util.AttributeProvider.html#property__configs">_configs</a>
+                                </code>
+                            </div>
+                        </div>
+                        <div class="section field inheritance">
+                            <h4>Properties inherited from <a href="YAHOO.util.EventProvider.html">YAHOO.util.EventProvider</a>:</h4>
+                            <div class="content">
+                                <code>
+                                    
+                                        <a class="private" href="YAHOO.util.EventProvider.html#property___yui_events">__yui_events</a><span class="private">,</span>
+                                        <a class="private" href="YAHOO.util.EventProvider.html#property___yui_subscribers">__yui_subscribers</a>
+                                </code>
+                            </div>
+                        </div>
 
                         <div class="section method details">
                             <h3 id="methods">Methods</h3>
@@ -295,7 +330,10 @@ the dataSource may be passed to the SWF.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -329,7 +367,10 @@ the dataSource may be passed to the SWF.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -363,7 +404,10 @@ the dataSource may be passed to the SWF.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -397,7 +441,10 @@ the dataSource may be passed to the SWF.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -431,7 +478,10 @@ the dataSource may be passed to the SWF.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -465,7 +515,10 @@ the dataSource may be passed to the SWF.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -500,7 +553,10 @@ to build a data provider for the SWF chart.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -535,41 +591,10 @@ the styles, and sets the DataSource.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
-                                        </div>
 
-                                    </div>
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4>
-                                        <a name="method__refreshData">_refreshData</a></h4>
-                                    <div class="detail">
-                                        <code>
-                                         private 
-                                        
-                                        
-                                        void
-                                            <strong>_refreshData</strong>
-                                           (
-                                            )
-                                        </code>
-                                        
-                                        <div class="description">
-                                            Sends the request to the DataSource.
-                                        </div>
-
-                                        <div class="description">
-
-
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd></dd>
-                                                </dl>
-             
                                         </div>
 
                                     </div>
@@ -603,7 +628,10 @@ the styles, and sets the DataSource.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -637,7 +665,10 @@ the styles, and sets the DataSource.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -671,7 +702,10 @@ the styles, and sets the DataSource.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -705,7 +739,10 @@ the styles, and sets the DataSource.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -739,7 +776,10 @@ the styles, and sets the DataSource.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -773,7 +813,47 @@ the styles, and sets the DataSource.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_refreshData">refreshData</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>refreshData</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Sends (or resends) the request to the DataSource.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -819,7 +899,10 @@ the styles, and sets the DataSource.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -873,7 +956,10 @@ the styles, and sets the DataSource.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -919,7 +1005,10 @@ the styles, and sets the DataSource.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -953,7 +1042,10 @@ the styles, and sets the DataSource.
                                                     </code></dt>
                                                     <dd>Unique name of the Chart instance.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -962,6 +1054,30 @@ the styles, and sets the DataSource.
                             </div>
                         </div>
 
+                            <div class="section field inheritance">
+                                <h4>Methods inherited from <a href="YAHOO.widget.FlashAdapter.html">YAHOO.widget.FlashAdapter</a>:</h4>
+                                <div class="content">
+                                    <code>
+                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__embedSWF">_embedSWF</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__eventHandler">_eventHandler</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__getAltText">_getAltText</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__getSWFURL">_getSWFURL</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__initAttributes">_initAttributes</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__loadHandler">_loadHandler</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.FlashAdapter.html#method__setAltText">_setAltText</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.FlashAdapter.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.FlashAdapter.html#method_toString">toString</a>
+                                    </code>
+                                </div>
+                            </div>
+                            <div class="section field inheritance">
+                                <h4>Methods inherited from <a href="YAHOO.util.AttributeProvider.html">YAHOO.util.AttributeProvider</a>:</h4>
+                                <div class="content">
+                                    <code>
+                                            <a class=" deprecated" href="YAHOO.util.AttributeProvider.html#method_configureAttribute">configureAttribute</a><span class=" deprecated">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireBeforeChangeEvent">fireBeforeChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_fireChangeEvent">fireChangeEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_get">get</a><span class="">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_getAttributeConfig">getAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_getAttributeKeys">getAttributeKeys</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_refresh">refresh</a><span class="">,</span>                                            <a class=" deprecated" href="YAHOO.util.AttributeProvider.html#method_register">register</a><span class=" deprecated">,</span>                                            <a class="private" href="YAHOO.util.AttributeProvider.html#method_resetAttributeConfig">resetAttributeConfig</a><span class="private">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_resetValue">resetValue</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_set">set</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributeConfig">setAttributeConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.util.AttributeProvider.html#method_setAttributes">setAttributes</a>
+                                    </code>
+                                </div>
+                            </div>
+                            <div class="section field inheritance">
+                                <h4>Methods inherited from <a href="YAHOO.util.EventProvider.html">YAHOO.util.EventProvider</a>:</h4>
+                                <div class="content">
+                                    <code>
+                                            <a class="" href="YAHOO.util.EventProvider.html#method_createEvent">createEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.EventProvider.html#method_fireEvent">fireEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.EventProvider.html#method_hasEvent">hasEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.util.EventProvider.html#method_subscribe">subscribe</a><span class="">,</span>                                            <a class="" href="YAHOO.util.EventProvider.html#method_unsubscribe">unsubscribe</a><span class="">,</span>                                            <a class="" href="YAHOO.util.EventProvider.html#method_unsubscribeAll">unsubscribeAll</a>
+                                    </code>
+                                </div>
+                            </div>
 
                         <div class="section method details">
                             <h3 id="events">Events</h3>
@@ -979,7 +1095,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -996,8 +1112,8 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1020,7 +1136,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1037,8 +1153,8 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1061,7 +1177,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1078,8 +1194,8 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1102,7 +1218,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1119,8 +1235,8 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1143,7 +1259,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1160,8 +1276,8 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1184,7 +1300,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1201,8 +1317,8 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
-                                                            An object containing the current attribute value and the new value.
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
 
@@ -1225,7 +1341,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1242,7 +1358,7 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1266,7 +1382,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1283,7 +1399,7 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1307,7 +1423,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1324,7 +1440,7 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1915,7 +2031,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1932,7 +2048,7 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1956,7 +2072,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -1973,7 +2089,7 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -1997,7 +2113,7 @@ the styles, and sets the DataSource.
                                             (
                                                 
                                                         
-                                                         eventInfo
+                                                         event
                                                     
                                                 
                                             )
@@ -2014,7 +2130,7 @@ the styles, and sets the DataSource.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>eventInfo &lt;{oldValue: any, newValue: any}&gt;</code>
+                                                            <code>event &lt;{oldValue: any, newValue: any}&gt;</code>
                                                             An object containing the previous attribute value and the new value.
                                                         </dd>
                                                 </dl>
@@ -2029,6 +2145,14 @@ the styles, and sets the DataSource.
                         </div>
 
 
+                        <div class="section field inheritance">
+                            <h4>Events inherited from <a href="YAHOO.widget.FlashAdapter.html">YAHOO.widget.FlashAdapter</a>:</h4>
+                            <div class="content">
+                                <code>
+                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_altTextChange">altTextChange</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_backgroundColorChange">backgroundColorChange</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeAltTextChange">beforeAltTextChange</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeBackgroundColorChange">beforeBackgroundColorChange</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeExpressInstallChange">beforeExpressInstallChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeSwfURLChange">beforeSwfURLChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeVersionChange">beforeVersionChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_beforeWmodeChange">beforeWmodeChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_contentReady">contentReady</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_expressInstallChange">expressInstallChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_swfURLChange">swfURLChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_versionChange">versionChange</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#event_wmodeChange">wmodeChange</a>
+                                </code>
+                            </div>
+                        </div>
 
                         <div class="section field details">
                             <h3 id="configattributes">Configuration Attributes</h3>
@@ -2123,6 +2247,14 @@ polling requests to the DataSource.
                             </div>
                         </div>
 
+                        <div class="section field inheritance">
+                            <h4>Configuration attributes inherited from <a href="YAHOO.widget.FlashAdapter.html">YAHOO.widget.FlashAdapter</a>:</h4>
+                            <div class="content">
+                                <code>
+                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_altText">altText</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_backgroundColor">backgroundColor</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_expressInstall">expressInstall</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_swfURL">swfURL</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_version">version</a>                                        <a class="" href="YAHOO.widget.FlashAdapter.html#config_wmode">wmode</a>
+                                </code>
+                            </div>
+                        </div>
 
 			</div>
 		</div>
@@ -2140,6 +2272,8 @@ polling requests to the DataSource.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class="selected"><a href="module_charts.html">charts</a></li>
 
@@ -2180,6 +2314,8 @@ polling requests to the DataSource.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -2224,6 +2360,10 @@ polling requests to the DataSource.
                                 <li class=""><a href="YAHOO.widget.PieChart.html">YAHOO.widget.PieChart</a></li>
                                 <li class=""><a href="YAHOO.widget.PieSeries.html">YAHOO.widget.PieSeries</a></li>
                                 <li class=""><a href="YAHOO.widget.Series.html">YAHOO.widget.Series</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedBarChart.html">YAHOO.widget.StackedBarChart</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedBarSeries.html">YAHOO.widget.StackedBarSeries</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedColumnChart.html">YAHOO.widget.StackedColumnChart</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedColumnSeries.html">YAHOO.widget.StackedColumnSeries</a></li>
                                 <li class=""><a href="YAHOO.widget.TimeAxis.html">YAHOO.widget.TimeAxis</a></li>
                         </ul>
                     </div>
@@ -2254,9 +2394,6 @@ polling requests to the DataSource.
                                 <li class="private"><a href="#property__dataTipFunction">_dataTipFunction</a>
                                         <!--<code>&lt;object&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property__initialized">_initialized</a>
-                                        <!--<code>&lt;object&gt;</code>-->
-                                </li>
                                 <li class="private"><a href="#property__pollingID">_pollingID</a>
                                         <!--<code>&lt;object&gt;</code>-->
                                 </li>
@@ -2267,6 +2404,9 @@ polling requests to the DataSource.
                                         <!--<code>&lt;object&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__seriesDefs">_seriesDefs</a>
+                                        <!--<code>&lt;object&gt;</code>-->
+                                </li>
+                                <li class="private"><a href="#property__seriesLabelFunctions">_seriesLabelFunctions</a>
                                         <!--<code>&lt;object&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__type">_type</a>
@@ -2306,9 +2446,6 @@ polling requests to the DataSource.
                                 <a href="#method__loadHandler">_loadHandler</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
-                                <a href="#method__refreshData">_refreshData</a>
-                                </li>
-                                <li class="private"><!--<code>void</code>-->
                                 <a href="#method__setCategoryNames">_setCategoryNames</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
@@ -2325,6 +2462,9 @@ polling requests to the DataSource.
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__setSeriesDefs">_setSeriesDefs</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_refreshData">refreshData</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_setSeriesStyles">setSeriesStyles</a>
@@ -2433,7 +2573,7 @@ polling requests to the DataSource.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

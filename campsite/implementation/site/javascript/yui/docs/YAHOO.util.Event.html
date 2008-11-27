@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Event Utility&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Event Utility&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_event.html">event</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -106,6 +108,21 @@ on or the custom object passed in by the listener, int constant
 
                                     <hr />
                                     </div>
+                                    <div class="">
+                                    <h4><a name="property_CAPTURE">CAPTURE</a>
+                                        <code>- static final int</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The original capture parameter passed into _addListener
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
                                     <div class="private">
                                     <h4><a name="property_counter">counter</a>
                                         <code>- private static object</code>
@@ -151,7 +168,7 @@ on or the custom object passed in by the listener, int constant
 
                                     <hr />
                                     </div>
-                                    <div class="private">
+                                    <div class="private deprecated">
                                     <h4><a name="property_elCache
 DOM element cache">elCache
 DOM element cache</a>
@@ -187,7 +204,7 @@ elements are removed and re-added
 
                                     <hr />
                                     </div>
-                                    <div class="private">
+                                    <div class="private deprecated">
                                     <h4><a name="property_isIE">isIE</a>
                                         <code>- private static object</code>
                                     </h4>
@@ -205,7 +222,7 @@ elements are removed and re-added
 
                                     <hr />
                                     </div>
-                                    <div class="private">
+                                    <div class="private deprecated">
                                     <h4><a name="property_isSafari">isSafari</a>
                                         <code>- private static object</code>
                                     </h4>
@@ -466,7 +483,7 @@ are detached
 
                                     <hr />
                                     </div>
-                                    <div class="private">
+                                    <div class="private deprecated">
                                     <h4><a name="property_webkit">webkit</a>
                                         <code>- private static string</code>
                                     </h4>
@@ -525,6 +542,104 @@ are detached
                             <div class="content">
                                     <div class="private">
                                     <h4>
+                                        <a name="method__addListener">_addListener</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                         static 
+                                        
+                                        Boolean
+                                            <strong>_addListener</strong>
+                                           (
+                                                
+                                                        
+                                                         el
+                                                    
+                                                
+                                                        , 
+                                                         sType
+                                                    
+                                                
+                                                        , 
+                                                         fn
+                                                    
+                                                
+                                                        , 
+                                                         obj
+                                                    
+                                                
+                                                        , 
+                                                         override
+                                                    
+                                                
+                                                        , 
+                                                         capture
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Appends an event handler
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>el &lt;String|HTMLElement|Array|NodeList&gt;</code>
+                                                             An id, an element 
+reference, or a collection of ids and/or elements to assign the 
+listener to.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>sType &lt;String&gt;</code>
+                                                                 The type of event to append
+                                                        </dd>
+                                                        <dd>
+                                                            <code>fn &lt;Function&gt;</code>
+                                                                    The method the event invokes
+                                                        </dd>
+                                                        <dd>
+                                                            <code>obj &lt;Object&gt;</code>
+                                                                An arbitrary object that will be 
+passed as a parameter to the handler
+                                                        </dd>
+                                                        <dd>
+                                                            <code>override &lt;Boolean|object&gt;</code>
+                                                              If true, the obj passed in becomes
+the execution scope of the listener. If an
+object, this object becomes the execution
+scope.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>capture &lt;boolen&gt;</code>
+                                                             capture or bubble phase
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Boolean
+                                                    </code></dt>
+                                                    <dd>True if the action was successful or defered,
+false if one or more of the elements 
+could not have the listener attached,
+or if the operation throws an exception.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
                                         <a name="method__getCacheIndex">_getCacheIndex</a></h4>
                                     <div class="detail">
                                         <code>
@@ -551,7 +666,10 @@ are detached
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -586,7 +704,10 @@ pageX and pageY in Internet Explorer
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -620,7 +741,10 @@ pageX and pageY in Internet Explorer
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -654,7 +778,10 @@ pageX and pageY in Internet Explorer
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -704,7 +831,10 @@ fail if the object is an array, but is empty.
                                                     </code></dt>
                                                     <dd>true if the object is array-like and populated</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -738,7 +868,10 @@ fail if the object is an array, but is empty.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -773,7 +906,88 @@ usable.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__removeListener">_removeListener</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                         static 
+                                        
+                                        boolean
+                                            <strong>_removeListener</strong>
+                                           (
+                                                
+                                                        
+                                                         el
+                                                    
+                                                
+                                                        , 
+                                                         sType
+                                                    
+                                                
+                                                        , 
+                                                         fn
+                                                    
+                                                
+                                                        , 
+                                                         capture
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Removes an event listener
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>el &lt;String|HTMLElement|Array|NodeList&gt;</code>
+                                                             An id, an element 
+reference, or a collection of ids and/or elements to remove
+the listener from.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>sType &lt;String&gt;</code>
+                                                             the type of event to remove.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>fn &lt;Function&gt;</code>
+                                                             the method the event invokes.  If fn is
+undefined, then all event handlers for the type of event are 
+removed.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>capture &lt;boolen&gt;</code>
+                                                             capture or bubble phase
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        boolean
+                                                    </code></dt>
+                                                    <dd>true if the unbind was successful, false 
+otherwise.</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -843,7 +1057,10 @@ usable.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -913,7 +1130,10 @@ usable.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -949,7 +1169,10 @@ available
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -984,7 +1207,176 @@ automatically during the unload event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_addBlurListener">addBlurListener</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        Boolean
+                                            <strong>addBlurListener</strong>
+                                           (
+                                                
+                                                        
+                                                         el
+                                                    
+                                                
+                                                        , 
+                                                         fn
+                                                    
+                                                
+                                                        , 
+                                                         obj
+                                                    
+                                                
+                                                        , 
+                                                         override
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Appends a blur event handler.  (The focusout event is used for Internet Explorer, 
+the focusout, capture-event for Opera, WebKit, and Gecko.)
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>el &lt;String|HTMLElement|Array|NodeList&gt;</code>
+                                                             An id, an element 
+reference, or a collection of ids and/or elements to assign the 
+listener to.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>fn &lt;Function&gt;</code>
+                                                                    The method the event invokes
+                                                        </dd>
+                                                        <dd>
+                                                            <code>obj &lt;Object&gt;</code>
+                                                                An arbitrary object that will be 
+passed as a parameter to the handler
+                                                        </dd>
+                                                        <dd>
+                                                            <code>override &lt;Boolean|object&gt;</code>
+                                                              If true, the obj passed in becomes
+the execution scope of the listener. If an
+object, this object becomes the execution
+scope.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Boolean
+                                                    </code></dt>
+                                                    <dd>True if the action was successful or defered,
+false if one or more of the elements 
+could not have the listener attached,
+or if the operation throws an exception.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_addFocusListener">addFocusListener</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        Boolean
+                                            <strong>addFocusListener</strong>
+                                           (
+                                                
+                                                        
+                                                         el
+                                                    
+                                                
+                                                        , 
+                                                         fn
+                                                    
+                                                
+                                                        , 
+                                                         obj
+                                                    
+                                                
+                                                        , 
+                                                         override
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Appends a focus event handler.  (The focusin event is used for Internet Explorer, 
+the focus, capture-event for Opera, WebKit, and Gecko.)
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>el &lt;String|HTMLElement|Array|NodeList&gt;</code>
+                                                             An id, an element 
+reference, or a collection of ids and/or elements to assign the 
+listener to.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>fn &lt;Function&gt;</code>
+                                                                    The method the event invokes
+                                                        </dd>
+                                                        <dd>
+                                                            <code>obj &lt;Object&gt;</code>
+                                                                An arbitrary object that will be 
+passed as a parameter to the handler
+                                                        </dd>
+                                                        <dd>
+                                                            <code>override &lt;Boolean|object&gt;</code>
+                                                              If true, the obj passed in becomes
+the execution scope of the listener. If an
+object, this object becomes the execution
+scope.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Boolean
+                                                    </code></dt>
+                                                    <dd>True if the action was successful or defered,
+false if one or more of the elements 
+could not have the listener attached,
+or if the operation throws an exception.</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1071,13 +1463,16 @@ false if one or more of the elements
 could not have the listener attached,
 or if the operation throws an exception.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
                                     <hr />
                                     </div>
-                                    <div class="private">
+                                    <div class="private deprecated">
                                     <h4>
                                         <a name="method_clearCache">clearCache</a></h4>
                                     <div class="detail">
@@ -1105,10 +1500,13 @@ or if the operation throws an exception.</dd>
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
                                             <div class="deprecated">
                                                 <strong>Deprecated</strong> Elements are not cached any longer
                                             </div>        
+
                                         </div>
 
                                     </div>
@@ -1143,7 +1541,10 @@ so we can fire our custom listener stack.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1190,7 +1591,10 @@ have one.
                                                     </code></dt>
                                                     <dd>the resulting id of the element</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1236,13 +1640,16 @@ have one.
                                                     </code></dt>
                                                     <dd>the event's charCode</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
                                     <hr />
                                     </div>
-                                    <div class="private">
+                                    <div class="private deprecated">
                                     <h4>
                                         <a name="method_getEl">getEl</a></h4>
                                     <div class="detail">
@@ -1271,10 +1678,13 @@ fires, we can no longer use document.getElementById
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
                                             <div class="deprecated">
                                                 <strong>Deprecated</strong> Elements are not cached any longer
                                             </div>        
+
                                         </div>
 
                                     </div>
@@ -1332,7 +1742,10 @@ this function at all.
                                                     </code></dt>
                                                     <dd>the event</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1367,7 +1780,10 @@ signature
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1427,9 +1843,13 @@ left out, all listeners will be returned
 &nbsp;&nbsp;obj:    (object)   the custom object supplied to addListener
 &nbsp;&nbsp;adjust: (boolean|object)  whether or not to adjust the default scope
 &nbsp;&nbsp;scope: (boolean)  the derived scope based on the adjust parameter
+&nbsp;&nbsp;scope: (capture)  the capture parameter supplied to addListener
 &nbsp;&nbsp;index:  (int)      its position in the Event util listener cache</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1475,7 +1895,10 @@ left out, all listeners will be returned
                                                     </code></dt>
                                                     <dd>the event's pageX</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1521,7 +1944,10 @@ left out, all listeners will be returned
                                                     </code></dt>
                                                     <dd>the event's pageY</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1567,7 +1993,10 @@ left out, all listeners will be returned
                                                     </code></dt>
                                                     <dd>the event's relatedTarget</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1626,7 +2055,10 @@ now resolved automatically
                                                     </code></dt>
                                                     <dd>the event's target</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1673,7 +2105,10 @@ event is modified using the current time.
                                                     </code></dt>
                                                     <dd>the time of the event</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1719,7 +2154,10 @@ event is modified using the current time.
                                                     </code></dt>
                                                     <dd>the pageX and pageY properties of the event</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1753,7 +2191,10 @@ event is modified using the current time.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1842,7 +2283,47 @@ will execute in the scope of that object
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_onBlur">onBlur</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        void
+                                            <strong>onBlur</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            YAHOO.util.Event.onBlur is an alias for addBlurListener
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1919,7 +2400,10 @@ exectute in the scope of that object
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2000,7 +2484,10 @@ will execute in the scope of that object
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2046,7 +2533,10 @@ will execute in the scope of that object
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2112,13 +2602,16 @@ left out, all listeners will be removed
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
                                     <hr />
                                     </div>
-                                    <div class="private">
+                                    <div class="private deprecated">
                                     <h4>
                                         <a name="method_regCE">regCE</a></h4>
                                     <div class="detail">
@@ -2147,10 +2640,137 @@ compatibility
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
                                             <div class="deprecated">
                                                 <strong>Deprecated</strong> still here for backwards compatibility
                                             </div>        
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_removeBlurListener">removeBlurListener</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        boolean
+                                            <strong>removeBlurListener</strong>
+                                           (
+                                                
+                                                        
+                                                         el
+                                                    
+                                                
+                                                        , 
+                                                         fn
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Removes a blur event listener
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>el &lt;String|HTMLElement|Array|NodeList&gt;</code>
+                                                             An id, an element 
+reference, or a collection of ids and/or elements to remove
+the listener from.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>fn &lt;Function&gt;</code>
+                                                             the method the event invokes.  If fn is
+undefined, then all event handlers for the type of event are 
+removed.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        boolean
+                                                    </code></dt>
+                                                    <dd>true if the unbind was successful, false 
+otherwise.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_removeFocusListener">removeFocusListener</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                         static 
+                                        
+                                        boolean
+                                            <strong>removeFocusListener</strong>
+                                           (
+                                                
+                                                        
+                                                         el
+                                                    
+                                                
+                                                        , 
+                                                         fn
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Removes a focus event listener
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>el &lt;String|HTMLElement|Array|NodeList&gt;</code>
+                                                             An id, an element 
+reference, or a collection of ids and/or elements to remove
+the listener from.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>fn &lt;Function&gt;</code>
+                                                             the method the event invokes.  If fn is
+undefined, then all event handlers for the type of event are 
+removed.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        boolean
+                                                    </code></dt>
+                                                    <dd>true if the unbind was successful, false 
+otherwise.</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -2217,7 +2837,10 @@ removed.
                                                     <dd>true if the unbind was successful, false 
 otherwise.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2265,7 +2888,10 @@ return value for getTarget and getRelatedTarget.
                                                     </code></dt>
                                                     <dd>the normized node</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2299,7 +2925,10 @@ return value for getTarget and getRelatedTarget.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2345,7 +2974,10 @@ return value for getTarget and getRelatedTarget.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2391,7 +3023,10 @@ return value for getTarget and getRelatedTarget.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2427,7 +3062,10 @@ Safari browsers with a broken preventDefault
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2493,6 +3131,8 @@ Safari browsers with a broken preventDefault
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -2532,6 +3172,8 @@ Safari browsers with a broken preventDefault
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -2590,6 +3232,9 @@ Safari browsers with a broken preventDefault
                                 <li class=""><a href="#property_ADJ_SCOPE">ADJ_SCOPE</a>
                                         <!--<code>&lt;int&gt;</code>-->
                                 </li>
+                                <li class=""><a href="#property_CAPTURE">CAPTURE</a>
+                                        <!--<code>&lt;int&gt;</code>-->
+                                </li>
                                 <li class="private"><a href="#property_counter">counter</a>
                                         <!--<code>&lt;int&gt;</code>-->
                                 </li>
@@ -2599,7 +3244,7 @@ Safari browsers with a broken preventDefault
                                 <li class=""><a href="#property_EL">EL</a>
                                         <!--<code>&lt;int&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property_elCache
+                                <li class="private deprecated"><a href="#property_elCache
 DOM element cache">elCache
 DOM element cache</a>
                                         <!--<code>&lt;int&gt;</code>-->
@@ -2607,10 +3252,10 @@ DOM element cache</a>
                                 <li class=""><a href="#property_FN">FN</a>
                                         <!--<code>&lt;int&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property_isIE">isIE</a>
+                                <li class="private deprecated"><a href="#property_isIE">isIE</a>
                                         <!--<code>&lt;int&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property_isSafari">isSafari</a>
+                                <li class="private deprecated"><a href="#property_isSafari">isSafari</a>
                                         <!--<code>&lt;int&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_lastError">lastError</a>
@@ -2658,7 +3303,7 @@ DOM element cache</a>
                                 <li class="private"><a href="#property_unloadListeners">unloadListeners</a>
                                         <!--<code>&lt;int&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property_webkit">webkit</a>
+                                <li class="private deprecated"><a href="#property_webkit">webkit</a>
                                         <!--<code>&lt;int&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property_webkitKeymap">webkitKeymap</a>
@@ -2673,6 +3318,9 @@ DOM element cache</a>
                     <div class="module">
                         <h4>Methods</h4>
                         <ul class="content">        
+                                <li class="private"><!--<code>Boolean</code>-->
+                                <a href="#method__addListener">_addListener</a>
+                                </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__getCacheIndex">_getCacheIndex</a>
                                 </li>
@@ -2694,6 +3342,9 @@ DOM element cache</a>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__ready">_ready</a>
                                 </li>
+                                <li class="private"><!--<code>boolean</code>-->
+                                <a href="#method__removeListener">_removeListener</a>
+                                </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__simpleAdd">_simpleAdd</a>
                                 </li>
@@ -2707,9 +3358,15 @@ DOM element cache</a>
                                 <a href="#method__unload">_unload</a>
                                 </li>
                                 <li class=""><!--<code>Boolean</code>-->
+                                <a href="#method_addBlurListener">addBlurListener</a>
+                                </li>
+                                <li class=""><!--<code>Boolean</code>-->
+                                <a href="#method_addFocusListener">addFocusListener</a>
+                                </li>
+                                <li class=""><!--<code>Boolean</code>-->
                                 <a href="#method_addListener">addListener</a>
                                 </li>
-                                <li class="private"><!--<code>void</code>-->
+                                <li class="private deprecated"><!--<code>void</code>-->
                                 <a href="#method_clearCache">clearCache</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
@@ -2721,7 +3378,7 @@ DOM element cache</a>
                                 <li class=""><!--<code>int</code>-->
                                 <a href="#method_getCharCode">getCharCode</a>
                                 </li>
-                                <li class="private"><!--<code>void</code>-->
+                                <li class="private deprecated"><!--<code>void</code>-->
                                 <a href="#method_getEl">getEl</a>
                                 </li>
                                 <li class=""><!--<code>Event</code>-->
@@ -2758,6 +3415,9 @@ DOM element cache</a>
                                 <a href="#method_onAvailable">onAvailable</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
+                                <a href="#method_onBlur">onBlur</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
                                 <a href="#method_onContentReady">onContentReady</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
@@ -2769,8 +3429,14 @@ DOM element cache</a>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_purgeElement">purgeElement</a>
                                 </li>
-                                <li class="private"><!--<code>void</code>-->
+                                <li class="private deprecated"><!--<code>void</code>-->
                                 <a href="#method_regCE">regCE</a>
+                                </li>
+                                <li class=""><!--<code>boolean</code>-->
+                                <a href="#method_removeBlurListener">removeBlurListener</a>
+                                </li>
+                                <li class=""><!--<code>boolean</code>-->
+                                <a href="#method_removeFocusListener">removeFocusListener</a>
                                 </li>
                                 <li class=""><!--<code>boolean</code>-->
                                 <a href="#method_removeListener">removeListener</a>
@@ -2808,7 +3474,7 @@ DOM element cache</a>
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -20,8 +20,8 @@ body {
 <link rel="stylesheet" type="text/css" href="../../build/datatable/assets/skins/sam/datatable.css" />
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 
 <!--begin custom header content for this example-->
@@ -64,10 +64,11 @@ body {
 
 <body class=" yui-skin-sam">
 
+
 <h1>Conditional row coloring</h1>
 
 <div class="exampleIntro">
-	<p>This example demonstrates how to color DataTable rows based on data in a cell.  In this case, rows with Quantity less than 40 are highlighted.</p>
+	<p>This example demonstrates how to color DataTable rows based on data in a Record.  In this case, rows with Quantity less than 40 are highlighted.</p>
 			
 </div>
 
@@ -85,9 +86,7 @@ YAHOO.util.Event.onDOMReady(function () {
 var Dom = YAHOO.util.Dom;
 
 // Contain our code under the YAHOO.example namespace
-var Ex = YAHOO.example,
-    // cache of the records to mark
-    markRecs = {};
+var Ex = YAHOO.example;
 
 // Create the DataSource
 Ex.dataSource = new YAHOO.util.DataSource(Ex.Data.inventory);
@@ -96,43 +95,23 @@ Ex.dataSource.responseSchema = {
     fields : ['SKU','Quantity','Item','Description']
 };
 
-// Create a custom function to store the records needing row coloring
-YAHOO.widget.DataTable.Formatter.rowMarker = function (cell,rec,col,data) {
-    if (data < 40) {
-        // In object hash to prevent duplication
-        markRecs[rec.getId()] = rec;
+// Define a custom row formatter function
+var myRowFormatter = function(elTr, oRecord) {
+    if (oRecord.getData('Quantity') < 40) {
+        Dom.addClass(elTr, 'mark');
     }
-    cell.innerHTML = data;
-};
-
-// Function to add the color class to rows
-Ex.updateMarks = function () {
-    // Clear mark class off all rows
-    Dom.removeClass(Dom.getElementsByClassName('mark','tr','tbl'), 'mark');
-
-    // Apply mark class to identified rows
-    for (var recKey in markRecs) {
-        if (YAHOO.lang.hasOwnProperty(markRecs, recKey)) {
-            Dom.addClass(Ex.dataTable.getTrEl(markRecs[recKey]), 'mark');
-        }
-    }
-};
+    return true;
+}; 
 
 // Instantiate the DataTable.
 Ex.dataTable = new YAHOO.widget.DataTable('tbl',
                 [ {key:'SKU',sortable: true},
                   {key:'Item',sortable: true},
-                  {key:'Quantity',sortable: true, formatter: 'rowMarker'},
+                  {key:'Quantity',sortable: true},
                   {key:'Description',sortable: true}
                 ],
-                Ex.dataSource);
-
-// Set row colors initially
-Ex.updateMarks();
-
-// Add the class to the rows on renderEvent
-Ex.dataTable.subscribe('renderEvent',Ex.updateMarks);
-
+                Ex.dataSource,
+                {formatRow: myRowFormatter}); // Enable the row formatter
 });
 </script>
 

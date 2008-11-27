@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Container&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Container&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_container.html">container</a>
@@ -21,14 +21,16 @@
                  &gt; Module.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -504,8 +506,18 @@
             <span class="o">});</span>
 
             <span class="c">/**</span>
+<span class="c">            * &lt;p&gt;</span>
 <span class="c">            * Object or array of objects representing the ContainerEffect </span>
 <span class="c">            * classes that are active for animating the container.</span>
+<span class="c">            * &lt;/p&gt;</span>
+<span class="c">            * &lt;p&gt;</span>
+<span class="c">            * &lt;strong&gt;NOTE:&lt;/strong&gt; Although this configuration </span>
+<span class="c">            * property is introduced at the Module level, an out of the box</span>
+<span class="c">            * implementation is not shipped for the Module class so setting</span>
+<span class="c">            * the proroperty on the Module class has no effect. The Overlay </span>
+<span class="c">            * class is the first class to provide out of the box ContainerEffect </span>
+<span class="c">            * support.</span>
+<span class="c">            * &lt;/p&gt;</span>
 <span class="c">            * @config effect</span>
 <span class="c">            * @type Object</span>
 <span class="c">            * @default null</span>
@@ -695,6 +707,7 @@
                     <span class="o">}</span>
 
                     <span class="nx">oIFrame</span><span class="o">.</span><span class="nx">id</span> <span class="o">=</span> <span class="s2">&quot;_yuiResizeMonitor&quot;</span><span class="o">;</span>
+                    <span class="nx">oIFrame</span><span class="o">.</span><span class="nx">title</span> <span class="o">=</span> <span class="s2">&quot;Text Resize Monitor&quot;</span><span class="o">;</span>
                     <span class="c">/*</span>
 <span class="c">                        Need to set &quot;position&quot; property before inserting the </span>
 <span class="c">                        iframe into the document or Safari&#39;s status bar will </span>
@@ -851,17 +864,19 @@
         <span class="o">},</span>
 
         <span class="c">/**</span>
-<span class="c">        * Sets the Module&#39;s body content to the HTML specified, or appends the</span>
-<span class="c">        * passed element to the body. If no body is present, one will be </span>
-<span class="c">        * automatically created. An empty string can be passed to the method</span>
-<span class="c">        * to clear the contents of the body.</span>
+<span class="c">        * Sets the Module&#39;s body content to the HTML specified. </span>
+<span class="c">        * </span>
+<span class="c">        * If no body is present, one will be automatically created. </span>
+<span class="c">        * </span>
+<span class="c">        * An empty string can be passed to the method to clear the contents of the body.</span>
 <span class="c">        * @method setBody</span>
 <span class="c">        * @param {String} bodyContent The HTML used to set the body. </span>
 <span class="c">        * As a convenience, non HTMLElement objects can also be passed into </span>
 <span class="c">        * the method, and will be treated as strings, with the body innerHTML</span>
 <span class="c">        * set to their default toString implementations.</span>
 <span class="c">        * &lt;em&gt;OR&lt;/em&gt;</span>
-<span class="c">        * @param {HTMLElement} bodyContent The HTMLElement to append to the body</span>
+<span class="c">        * @param {HTMLElement} bodyContent The HTMLElement to add as the first and only</span>
+<span class="c">        * child of the body element.</span>
 <span class="c">        * &lt;em&gt;OR&lt;/em&gt;</span>
 <span class="c">        * @param {DocumentFragment} bodyContent The document fragment </span>
 <span class="c">        * containing elements which are to be added to the body</span>
@@ -1068,13 +1083,6 @@
             <span class="k">this</span><span class="o">.</span><span class="nx">cfg</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
             <span class="k">this</span><span class="o">.</span><span class="nx">destroyEvent</span><span class="o">.</span><span class="nx">fire</span><span class="o">();</span>
-        
-            <span class="k">for</span> <span class="o">(</span><span class="nx">e</span> <span class="k">in</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="nx">e</span> <span class="k">instanceof</span> <span class="nx">CustomEvent</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="nx">e</span><span class="o">.</span><span class="nx">unsubscribeAll</span><span class="o">();</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-
         <span class="o">},</span>
 
         <span class="c">/**</span>
@@ -1199,6 +1207,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -1238,6 +1248,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1302,7 +1314,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

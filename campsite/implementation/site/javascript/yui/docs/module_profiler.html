@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>profiler&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>profiler&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_profiler.html">profiler</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                    
@@ -41,6 +43,10 @@
                         The YUI JavaScript profiler.
                     </div>
 
+
+
+<div class="yui-gc">
+    <div class="yui-u first">
                     <form onsubmit="return false">
                         <p>Search profiler:
                         <div id="propertysearch">
@@ -53,7 +59,11 @@
                     <script type="text/javascript">
                         ALL_YUI_PROPS = [{"access": "private", "host": "YAHOO.tool.Profiler", "name": "_container", "url": "YAHOO.tool.Profiler.html#property__container"}, {"access": "", "host": "YAHOO.tool.Profiler", "name": "getAverage", "url": "YAHOO.tool.Profiler.html#method_getAverage"}, {"access": "", "host": "YAHOO.tool.Profiler", "name": "getCallCount", "url": "YAHOO.tool.Profiler.html#method_getCallCount"}, {"access": "", "host": "YAHOO.tool.Profiler", "name": "getFullReport", "url": "YAHOO.tool.Profiler.html#method_getFullReport"}, {"access": "", "host": "YAHOO.tool.Profiler", "name": "getFunctionReport", "url": "YAHOO.tool.Profiler.html#method_getFunctionReport"}, {"access": "", "host": "YAHOO.tool.Profiler", "name": "getMax", "url": "YAHOO.tool.Profiler.html#method_getMax"}, {"access": "", "host": "YAHOO.tool.Profiler", "name": "getMin", "url": "YAHOO.tool.Profiler.html#method_getMin"}, {"access": "", "host": "YAHOO.tool.Profiler", "name": "registerConstructor", "url": "YAHOO.tool.Profiler.html#method_registerConstructor"}, {"access": "", "host": "YAHOO.tool.Profiler", "name": "registerFunction", "url": "YAHOO.tool.Profiler.html#method_registerFunction"}, {"access": "", "host": "YAHOO.tool.Profiler", "name": "registerObject", "url": "YAHOO.tool.Profiler.html#method_registerObject"}, {"access": "private", "host": "YAHOO.tool.Profiler", "name": "_report", "url": "YAHOO.tool.Profiler.html#property__report"}, {"access": "private", "host": "YAHOO.tool.Profiler", "name": "_saveData", "url": "YAHOO.tool.Profiler.html#method__saveData"}, {"access": "", "host": "YAHOO.tool.Profiler", "name": "unregisterFunction", "url": "YAHOO.tool.Profiler.html#method_unregisterFunction"}, {"access": "", "host": "YAHOO.tool.Profiler", "name": "unregisterObject", "url": "YAHOO.tool.Profiler.html#method_unregisterObject"}];
                     </script>
+	    </div>
+    <div class="yui-u">
 
+	    </div>
+</div>
 
 			</div>
 		</div>
@@ -71,6 +81,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -111,6 +123,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class="selected"><a href="module_profiler.html">profiler</a></li>
 
@@ -159,7 +173,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

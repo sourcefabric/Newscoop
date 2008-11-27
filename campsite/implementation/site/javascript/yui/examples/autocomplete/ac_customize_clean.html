@@ -21,6 +21,7 @@ body {
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../../build/animation/animation-min.js"></script>
 <script type="text/javascript" src="../../build/connection/connection-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
 <script type="text/javascript" src="../../build/autocomplete/autocomplete-min.js"></script>
 
 
@@ -37,17 +38,11 @@ body {
 
 <body class=" yui-skin-sam">
 
+
 <h1>Configurations Dashboard</h1>
 
 <div class="exampleIntro">
-	<p>This example is designed to allow you to experiment with the various
-configuration properties provided by AutoComplete and to explore their impact
-on the interaction.  The first field after the AutoComplete input textbox
-is a select element that
-allows you to test for bleed-through on Internet Explorer when the AutoComplete
-suggestion container descends to cover it.  The remaining form fields allow you
-to change property settings on the AutoComplete instance and to see immediately
-how those changes feel in the browser.</p>
+	<p>This example is designed to allow you to experiment with the various configuration properties provided by AutoComplete and to explore their impact on the interaction.  The first field after the AutoComplete input textbox is a select element that allows you to test for bleed-through on Internet Explorer when the AutoComplete suggestion container descends to cover it.  The remaining form fields allow you to change property settings on the AutoComplete instance and to see immediately how those changes feel in the browser.</p>
 			
 </div>
 
@@ -118,6 +113,11 @@ how those changes feel in the browser.</p>
             <input id="queryDelay" type="button" value="Update">
         </div>
         <div>
+            <label for="typeAheadDelayInput">TypeAhead Delay: </label>
+            <input id="typeAheadDelayInput" type="text" size="2" value="0.2">
+            <input id="typeAheadDelay" type="button" value="Update">
+        </div>
+        <div>
             <label for="delimCharInput">Delimiter Character(s) like ; or [";", ","]</label><br>
             <input id="delimCharInput" type="text" size="30" value="">
             <input id="delimChar" type="button" value="Update">
@@ -159,23 +159,31 @@ how those changes feel in the browser.</p>
 <!-- Panel ends -->
 
 <script type="text/javascript">
-YAHOO.example.Dashboard = new function() {
+YAHOO.example.Dashboard = function() {
+return {
+
+    myDataSource: null,
+    myAutoComp: null,
+    
     // Initialize widgets and the dashboard
-    this.init = function() {
+    init:  function() {
 
         // DataSource
-        this.myDataSource = new YAHOO.widget.DS_XHR("assets/php/ysearch_flat.php", ["\n", "\t"]);
-        // This is the one non-default value other than constructor params
-        this.myDataSource.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
+        this.myDataSource = new YAHOO.util.XHRDataSource("assets/php/ysearch_flat.php");
+        this.myDataSource.responseSchema = {
+             recordDelim: "\n",
+             fieldDelim: "\t"
+        };
+        this.myDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_TEXT;
 
         // AutoComplete
         this.myAutoComp = new YAHOO.widget.AutoComplete("dashboard_input","dashboard_container", this.myDataSource);
 
         // IFrame workaround for IE
         var ua = navigator.userAgent.toLowerCase();
-        if(ua.indexOf('msie') != -1 && ua.indexOf('opera') < 0) {
+        if(YAHOO.env.ua.ie < 7) {
             this.myAutoComp.useIFrame = true;
-            YAHOO.util.Dom.get("useiframe").checked = true;
+            YAHOO.util.Dom.get("useIFrame").checked = true;
         }
 
         // Dashboard DOM event handling (assign scope to the HTML Element)
@@ -193,7 +201,8 @@ YAHOO.example.Dashboard = new function() {
         YAHOO.util.Event.addListener("maxResultsDisplayed","click",this.handleNumberInputEvent,this);
         YAHOO.util.Event.addListener("minQueryLength","click",this.handleNumberInputEvent,this);
         YAHOO.util.Event.addListener("queryDelay","click",this.handleNumberInputEvent,this);
-
+        YAHOO.util.Event.addListener("typeAheadDelay","click",this.handleNumberInputEvent,this);
+        
         YAHOO.util.Event.addListener("delimChar","click",this.handleDelimiterInputEvent,this);
 
         YAHOO.util.Event.addListener("highlightClassName","click",this.handleTextInputEvent,this);
@@ -202,42 +211,42 @@ YAHOO.example.Dashboard = new function() {
         YAHOO.util.Event.addListener("setHeader","click",this.handleTextareaEvent,this);
         YAHOO.util.Event.addListener("setBody","click",this.handleTextareaEvent,this);
         YAHOO.util.Event.addListener("setFooter","click",this.handleTextareaEvent,this);
-    };
+    },
     
     // For valid inputs
-    this.updateValue = function(property, value) {
+    updateValue: function(property, value) {
         this.myAutoComp[property] = value;
         this.logSuccess(property);
-    };
+    },
 
     // For invalid inputs
-    this.revertInput = function(property) {
+    revertInput: function(property) {
         YAHOO.util.Dom.get(property+"Input").value = this.myAutoComp[property];
         this.logFailure(property);
-    };
+    },
     
     // Log success message
-    this.logSuccess = function(property) {
+    logSuccess: function(property) {
         YAHOO.log("Updated " + property + " to " + this.myAutoComp[property] + ".", "info", "example");
-    };
+    },
 
     // Log failure message
-    this.logFailure = function(property, error) {
+    logFailure: function(property, error) {
         YAHOO.log("Could not update " + property + ".", "warn","example");
-    };
+    },
 
     // DOM event handler (scope assigned to the HTML Element)
-    this.handleCheckboxEvent = function(e, oSelf) {
+    handleCheckboxEvent: function(e, oSelf) {
         var property = this.id;
         oSelf.updateValue(property, this.checked);
         
         if(oSelf.myAutoComp.useShadow && oSelf.myAutoComp.alwaysShowContainer) {
             YAHOO.log("The AutoComplete properties useShadow and alwaysShowContainer should not be enabled concurrently.","warn","example")
         }
-    };
+    },
     
     // DOM event handler (scope assigned to the HTML Element)
-    this.handleNumberInputEvent = function(e, oSelf) {
+    handleNumberInputEvent: function(e, oSelf) {
         var property = this.id;
         
         // Validate input
@@ -248,10 +257,10 @@ YAHOO.example.Dashboard = new function() {
         else {
             oSelf.revertInput(property);
         }
-    };
+    },
     
     // DOM event handler (scope assigned to the HTML Element)
-    this.handleDelimiterInputEvent = function(e, oSelf) {
+    handleDelimiterInputEvent: function(e, oSelf) {
         var property = this.id;
         
         // Validate input
@@ -276,16 +285,16 @@ YAHOO.example.Dashboard = new function() {
             return;
         }
         oSelf.updateValue(property, sValue);
-    };
+    },
     
     // DOM event handler (scope assigned to the HTML Element)
-    this.handleTextInputEvent = function(e, oSelf) {
+    handleTextInputEvent: function(e, oSelf) {
         var property = this.id;
         oSelf.updateValue(property, YAHOO.util.Dom.get(property+"Input").value);
-    };
+    },
 
     // DOM event handler (scope assigned to the HTML Element)
-    this.handleTextareaEvent = function(e, oSelf) {
+    handleTextareaEvent: function(e, oSelf) {
         var method = this.id;
         var value = YAHOO.util.Dom.get(method+"Input").value;
         switch(method) {
@@ -300,9 +309,10 @@ YAHOO.example.Dashboard = new function() {
                 break;
         }
         YAHOO.log("Called " + method + "() with " + value, "info", "example");
-    };
+    }
 };
-YAHOO.util.Event.addListener(this,'load',YAHOO.example.Dashboard.init,YAHOO.example.Dashboard,true);
+}();
+YAHOO.util.Event.addListener(this,'load',YAHOO.example.Dashboard.init, YAHOO.example.Dashboard, true);
 </script>
 
 <!--END SOURCE CODE FOR EXAMPLE =============================== -->

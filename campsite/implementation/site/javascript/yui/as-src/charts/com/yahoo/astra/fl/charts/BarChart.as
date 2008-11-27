@@ -1,8 +1,8 @@
 package com.yahoo.astra.fl.charts
 {
+	import com.yahoo.astra.fl.charts.axes.CategoryAxis;
+	import com.yahoo.astra.fl.charts.axes.NumericAxis;
 	import com.yahoo.astra.fl.charts.series.BarSeries;
-	
-	import fl.core.UIComponent;
 	
 	/**
 	 * A chart that displays its data points with horizontal bars.
@@ -64,65 +64,21 @@ package com.yahoo.astra.fl.charts
 		 */
 		override protected function configUI():void
 		{
+			if(!this.horizontalAxis)
+			{
+				var numericAxis:NumericAxis = new NumericAxis();
+				numericAxis.stackingEnabled = true;
+				this.horizontalAxis = numericAxis;
+			}
+			
+			if(!this.verticalAxis)
+			{
+				var categoryAxis:CategoryAxis = new CategoryAxis();
+				this.verticalAxis = categoryAxis;
+			}
+			
 			super.configUI();
-			
-			var numericAxis:NumericAxis = new NumericAxis();
-			this.horizontalAxis = numericAxis;
-			
-			var categoryAxis:CategoryAxis = new CategoryAxis();
-			this.verticalAxis = categoryAxis;
 		}
 		
-		/**
-		 * @private
-		 * Positions and updates the series objects.
-		 * Bars must be positioned next to each other.
-		 */
-		override protected function drawSeries():void
-		{
-			super.drawSeries();
-			
-			//this function looks like a total hack, but it's actually kind of clever
-			
-			var markerSizes:Array = [];
-			var defaultMarkerSize:Number = BarSeries.getStyleDefinition().markerSize;
-			
-			var seriesCount:int = this.series.length;
-			var totalMarkerSize:Number = 0;
-			var maximumAllowedMarkerSize:Number = this._contentBounds.height / CategoryAxis(this.verticalAxis).categoryNames.length / BarSeries.getSeriesCount(this);
-			for(var i:int = 0; i < seriesCount; i++)
-			{
-				var series:UIComponent = UIComponent(this.series[i]);
-				if(!(series is BarSeries))
-				{
-					continue;
-				}
-				
-				series.y = 0;
-				
-				var markerSize:Object = series.getStyle("markerSize");
-				if(markerSize === null)
-				{
-					//get the default value
-					markerSize = defaultMarkerSize;
-				}
-				markerSize = Math.floor(Math.min(maximumAllowedMarkerSize, markerSize as Number));
-				markerSizes.push(markerSize);
-				totalMarkerSize += markerSize;
-			}
-			
-			var yPosition:Number = 0;
-			for(i = 0; i < seriesCount; i++)
-			{
-				series = UIComponent(this.series[i]);
-				if(!(series is BarSeries))
-				{
-					continue;
-				}
-				
-				series.y += -(totalMarkerSize / 2) + yPosition;
-				yPosition += markerSizes[i];
-			}
-		}
 	}
 }

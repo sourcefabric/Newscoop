@@ -20,14 +20,15 @@ body {
 <link rel="stylesheet" type="text/css" href="../../build/datatable/assets/skins/sam/datatable.css" />
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 <!--there is no custom header content for this example-->
 
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>Client-side Sorting</h1>
 
@@ -45,10 +46,10 @@ by area code.</p>
 <script type="text/javascript" src="assets/js/data.js"></script>
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.CustomSort = new function() {
+    YAHOO.example.CustomSort = function() {
         // Custom sort handler to sort by state and then by areacode
         // where a and b are Record instances to compare
-        this.sortStates = function(a, b, desc) {
+        var sortStates = function(a, b, desc) {
             // Deal with empty values
             if(!YAHOO.lang.isValue(a)) {
                 return (!YAHOO.lang.isValue(b)) ? 0 : 1;
@@ -67,18 +68,23 @@ YAHOO.util.Event.addListener(window, "load", function() {
 
         var myColumnDefs = [
             {key:"areacode",label:"Area Codes",sortable:true},
-            {key:"state",label:"States",sortable:true,sortOptions:{sortFunction:this.sortStates}}
+            {key:"state",label:"States",sortable:true,sortOptions:{sortFunction:sortStates}}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.areacodes.slice(0,25));
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.areacodes.slice(0,25));
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        myDataSource.responseSchema = {
             fields: ["areacode","state"]
         };
 
-        this.myDataTable = new YAHOO.widget.DataTable("sort", myColumnDefs,
-                this.myDataSource, {sortedBy:{key:"areacode", dir:"asc"}});
-    };
+        var myDataTable = new YAHOO.widget.DataTable("sort", myColumnDefs,
+                myDataSource, {sortedBy:{key:"areacode", dir:"asc"}});
+                
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
 });
 </script>
 

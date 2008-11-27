@@ -21,8 +21,8 @@ body {
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../../build/dragdrop/dragdrop-min.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 
 <!--begin custom header content for this example-->
@@ -36,6 +36,7 @@ body {
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>Basic Example</h1>
 
@@ -51,7 +52,7 @@ body {
 <script type="text/javascript" src="assets/js/data.js"></script>
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.Basic = new function() {
+    YAHOO.example.Basic = function() {
         var myColumnDefs = [
             {key:"id", sortable:true, resizeable:true},
             {key:"date", formatter:YAHOO.widget.DataTable.formatDate, sortable:true, sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_DESC},resizeable:true},
@@ -60,15 +61,20 @@ YAHOO.util.Event.addListener(window, "load", function() {
             {key:"title", sortable:true, resizeable:true}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.bookorders);
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.bookorders);
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        myDataSource.responseSchema = {
             fields: ["id","date","quantity","amount","title"]
         };
 
-        this.myDataTable = new YAHOO.widget.DataTable("basic",
-                myColumnDefs, this.myDataSource, {caption:"DataTable Caption"});
-    };
+        var myDataTable = new YAHOO.widget.DataTable("basic",
+                myColumnDefs, myDataSource, {caption:"DataTable Caption"});
+                
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
 });
 </script>
 

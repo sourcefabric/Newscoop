@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>yuitest&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>yuitest&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_yuitest.html">yuitest</a>
@@ -21,14 +21,16 @@
                  &gt; TestManager.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -196,6 +198,7 @@
         <span class="nx">r</span><span class="o">.</span><span class="nx">failed</span> <span class="o">+=</span> <span class="nx">results</span><span class="o">.</span><span class="nx">failed</span><span class="o">;</span>
         <span class="nx">r</span><span class="o">.</span><span class="nx">ignored</span> <span class="o">+=</span> <span class="nx">results</span><span class="o">.</span><span class="nx">ignored</span><span class="o">;</span>
         <span class="nx">r</span><span class="o">.</span><span class="nx">total</span> <span class="o">+=</span> <span class="nx">results</span><span class="o">.</span><span class="nx">total</span><span class="o">;</span>
+        <span class="nx">r</span><span class="o">.</span><span class="nx">duration</span> <span class="o">+=</span> <span class="nx">results</span><span class="o">.</span><span class="nx">duration</span><span class="o">;</span>
         
         <span class="k">if</span> <span class="o">(</span><span class="nx">results</span><span class="o">.</span><span class="nx">failed</span><span class="o">){</span>
             <span class="nx">r</span><span class="o">.</span><span class="nx">failedPages</span><span class="o">.</span><span class="nx">push</span><span class="o">(</span><span class="nx">page</span><span class="o">);</span>
@@ -317,7 +320,7 @@
                 <span class="nx">frame</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">visibility</span> <span class="o">=</span> <span class="s2">&quot;hidden&quot;</span><span class="o">;</span>
                 <span class="nx">frame</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">position</span> <span class="o">=</span> <span class="s2">&quot;absolute&quot;</span><span class="o">;</span>
                 <span class="nb">document</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">appendChild</span><span class="o">(</span><span class="nx">frame</span><span class="o">);</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">_frame</span> <span class="o">=</span> <span class="nx">frame</span><span class="o">.</span><span class="nx">contentWindow</span> <span class="o">||</span> <span class="nx">frame</span><span class="o">.</span><span class="nx">contentDocument</span><span class="o">.</span><span class="nx">ownerWindow</span><span class="o">;</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_frame</span> <span class="o">=</span> <span class="nx">frame</span><span class="o">.</span><span class="nx">contentWindow</span> <span class="o">||</span> <span class="nx">frame</span><span class="o">.</span><span class="nx">contentDocument</span><span class="o">.</span><span class="nx">parentWindow</span><span class="o">;</span>
             <span class="o">}</span>
             
             <span class="c">//create test logger if not already available</span>
@@ -338,6 +341,7 @@
             <span class="nx">total</span><span class="o">:</span> <span class="m">0</span><span class="o">,</span>
             <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;report&quot;</span><span class="o">,</span>
             <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;YUI Test Results&quot;</span><span class="o">,</span>
+            <span class="nx">duration</span><span class="o">:</span> <span class="m">0</span><span class="o">,</span>
             <span class="nx">failedPages</span><span class="o">:[],</span>
             <span class="nx">passedPages</span><span class="o">:[]</span>
             <span class="c">/*</span>
@@ -393,6 +397,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -432,6 +438,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -509,7 +517,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

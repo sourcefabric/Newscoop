@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-	<title>API: charts   swfobject.js  (YUI Library)</title>
+	<title>API: uploader   swfobject.js  (YUI Library)</title>
 	<link rel="stylesheet" type="text/css" href="assets/api.css">
     <script type="text/javascript" src="assets/api-js"></script>
     <script type="text/javascript" src="assets/ac-js"></script>
@@ -13,13 +13,14 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Charts Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Uploader&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
-            &gt; <a href="./module_charts.html">charts</a>
+            &gt; <a href="./module_uploader.html">uploader</a>
                 
                  &gt; swfobject.js (source view) 
             </p>
+
 
 	</div>
 
@@ -27,8 +28,9 @@
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -122,8 +124,12 @@
 		<span class="k">var</span> <span class="nx">variablePairs</span> <span class="o">=</span> <span class="o">[];</span>
 		<span class="k">var</span> <span class="nx">key</span><span class="o">;</span>
 		<span class="k">var</span> <span class="nx">variables</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">getVariables</span><span class="o">();</span>
-		<span class="k">for</span><span class="o">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">variables</span><span class="o">){</span>
-			<span class="nx">variablePairs</span><span class="o">[</span><span class="nx">variablePairs</span><span class="o">.</span><span class="nx">length</span><span class="o">]</span> <span class="o">=</span> <span class="nx">key</span> <span class="o">+</span><span class="s2">&quot;=&quot;</span><span class="o">+</span> <span class="nx">variables</span><span class="o">[</span><span class="nx">key</span><span class="o">];</span>
+		<span class="k">for</span><span class="o">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">variables</span><span class="o">)</span>
+		<span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="nx">variables</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">key</span><span class="o">))</span>
+			<span class="o">{</span>
+				<span class="nx">variablePairs</span><span class="o">[</span><span class="nx">variablePairs</span><span class="o">.</span><span class="nx">length</span><span class="o">]</span> <span class="o">=</span> <span class="nx">key</span> <span class="o">+</span><span class="s2">&quot;=&quot;</span><span class="o">+</span> <span class="nx">variables</span><span class="o">[</span><span class="nx">key</span><span class="o">];</span>
+			<span class="o">}</span>
 		<span class="o">}</span>
 		<span class="k">return</span> <span class="nx">variablePairs</span><span class="o">;</span>
 	<span class="o">},</span>
@@ -140,7 +146,13 @@
 			<span class="nx">swfNode</span> <span class="o">=</span> <span class="s1">&#39;&lt;embed type=&quot;application/x-shockwave-flash&quot; src=&quot;&#39;</span><span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">getAttribute</span><span class="o">(</span><span class="s1">&#39;swf&#39;</span><span class="o">)</span> <span class="o">+</span><span class="s1">&#39;&quot; width=&quot;&#39;</span><span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">getAttribute</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">)</span> <span class="o">+</span><span class="s1">&#39;&quot; height=&quot;&#39;</span><span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">getAttribute</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">)</span> <span class="o">+</span><span class="s1">&#39;&quot; style=&quot;&#39;</span><span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">getAttribute</span><span class="o">(</span><span class="s1">&#39;style&#39;</span><span class="o">)</span> <span class="o">+</span><span class="s1">&#39;&quot;&#39;</span><span class="o">;</span>
 			<span class="nx">swfNode</span> <span class="o">+=</span> <span class="s1">&#39; id=&quot;&#39;</span><span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">getAttribute</span><span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">)</span> <span class="o">+</span><span class="s1">&#39;&quot; name=&quot;&#39;</span><span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">getAttribute</span><span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">)</span> <span class="o">+</span><span class="s1">&#39;&quot; &#39;</span><span class="o">;</span>
 			<span class="nx">params</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">getParams</span><span class="o">();</span>
-			<span class="k">for</span><span class="o">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">params</span><span class="o">){</span> <span class="nx">swfNode</span> <span class="o">+=</span> <span class="o">[</span><span class="nx">key</span><span class="o">]</span> <span class="o">+</span><span class="s1">&#39;=&quot;&#39;</span><span class="o">+</span> <span class="nx">params</span><span class="o">[</span><span class="nx">key</span><span class="o">]</span> <span class="o">+</span><span class="s1">&#39;&quot; &#39;</span><span class="o">;</span> <span class="o">}</span>
+			<span class="k">for</span><span class="o">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">params</span><span class="o">)</span>
+			<span class="o">{</span>
+				<span class="k">if</span><span class="o">(</span><span class="nx">params</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">key</span><span class="o">))</span>
+				<span class="o">{</span>
+					<span class="nx">swfNode</span> <span class="o">+=</span> <span class="o">[</span><span class="nx">key</span><span class="o">]</span> <span class="o">+</span><span class="s1">&#39;=&quot;&#39;</span><span class="o">+</span> <span class="nx">params</span><span class="o">[</span><span class="nx">key</span><span class="o">]</span> <span class="o">+</span><span class="s1">&#39;&quot; &#39;</span><span class="o">;</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
 			<span class="nx">pairs</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">getVariablePairs</span><span class="o">().</span><span class="nx">join</span><span class="o">(</span><span class="s2">&quot;&amp;&quot;</span><span class="o">);</span>
 			<span class="k">if</span> <span class="o">(</span><span class="nx">pairs</span><span class="o">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="m">0</span><span class="o">){</span> <span class="nx">swfNode</span> <span class="o">+=</span> <span class="s1">&#39;flashvars=&quot;&#39;</span><span class="o">+</span> <span class="nx">pairs</span> <span class="o">+</span><span class="s1">&#39;&quot;&#39;</span><span class="o">;</span> <span class="o">}</span>
 			<span class="nx">swfNode</span> <span class="o">+=</span> <span class="s1">&#39;/&gt;&#39;</span><span class="o">;</span>
@@ -152,8 +164,12 @@
 			<span class="nx">swfNode</span> <span class="o">=</span> <span class="s1">&#39;&lt;object id=&quot;&#39;</span><span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">getAttribute</span><span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">)</span> <span class="o">+</span><span class="s1">&#39;&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; width=&quot;&#39;</span><span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">getAttribute</span><span class="o">(</span><span class="s1">&#39;width&#39;</span><span class="o">)</span> <span class="o">+</span><span class="s1">&#39;&quot; height=&quot;&#39;</span><span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">getAttribute</span><span class="o">(</span><span class="s1">&#39;height&#39;</span><span class="o">)</span> <span class="o">+</span><span class="s1">&#39;&quot; style=&quot;&#39;</span><span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">getAttribute</span><span class="o">(</span><span class="s1">&#39;style&#39;</span><span class="o">)</span> <span class="o">+</span><span class="s1">&#39;&quot;&gt;&#39;</span><span class="o">;</span>
 			<span class="nx">swfNode</span> <span class="o">+=</span> <span class="s1">&#39;&lt;param name=&quot;movie&quot; value=&quot;&#39;</span><span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="nx">getAttribute</span><span class="o">(</span><span class="s1">&#39;swf&#39;</span><span class="o">)</span> <span class="o">+</span><span class="s1">&#39;&quot; /&gt;&#39;</span><span class="o">;</span>
 			<span class="nx">params</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">getParams</span><span class="o">();</span>
-			<span class="k">for</span><span class="o">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">params</span><span class="o">)</span> <span class="o">{</span>
-			 <span class="nx">swfNode</span> <span class="o">+=</span> <span class="s1">&#39;&lt;param name=&quot;&#39;</span><span class="o">+</span> <span class="nx">key</span> <span class="o">+</span><span class="s1">&#39;&quot; value=&quot;&#39;</span><span class="o">+</span> <span class="nx">params</span><span class="o">[</span><span class="nx">key</span><span class="o">]</span> <span class="o">+</span><span class="s1">&#39;&quot; /&gt;&#39;</span><span class="o">;</span>
+			<span class="k">for</span><span class="o">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">params</span><span class="o">)</span>
+			<span class="o">{</span>
+				<span class="k">if</span><span class="o">(</span><span class="nx">params</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">key</span><span class="o">))</span>
+				<span class="o">{</span>
+					<span class="nx">swfNode</span> <span class="o">+=</span> <span class="s1">&#39;&lt;param name=&quot;&#39;</span><span class="o">+</span> <span class="nx">key</span> <span class="o">+</span><span class="s1">&#39;&quot; value=&quot;&#39;</span><span class="o">+</span> <span class="nx">params</span><span class="o">[</span><span class="nx">key</span><span class="o">]</span> <span class="o">+</span><span class="s1">&#39;&quot; /&gt;&#39;</span><span class="o">;</span>
+				<span class="o">}</span>
 			<span class="o">}</span>
 			<span class="nx">pairs</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">getVariablePairs</span><span class="o">().</span><span class="nx">join</span><span class="o">(</span><span class="s2">&quot;&amp;&quot;</span><span class="o">);</span>
 			<span class="k">if</span><span class="o">(</span><span class="nx">pairs</span><span class="o">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="m">0</span><span class="o">)</span> <span class="o">{</span><span class="nx">swfNode</span> <span class="o">+=</span> <span class="s1">&#39;&lt;param name=&quot;flashvars&quot; value=&quot;&#39;</span><span class="o">+</span> <span class="nx">pairs</span> <span class="o">+</span><span class="s1">&#39;&quot; /&gt;&#39;</span><span class="o">;}</span>
@@ -375,7 +391,9 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
-                                <li class="selected"><a href="module_charts.html">charts</a></li>
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
+                                <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
 
@@ -415,6 +433,8 @@
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
 
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
+
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
                                 <li class=""><a href="module_profilerviewer.html">profilerviewer</a></li>
@@ -429,7 +449,7 @@
 
                                 <li class=""><a href="module_treeview.html">treeview</a></li>
 
-                                <li class=""><a href="module_uploader.html">uploader</a></li>
+                                <li class="selected"><a href="module_uploader.html">uploader</a></li>
 
                                 <li class=""><a href="module_yahoo.html">yahoo</a></li>
 
@@ -442,40 +462,17 @@
                     <div class="module">
                         <h4>Classes</h4>
                         <ul class="content">
-                                <li class=""><a href="YAHOO.widget.Axis.html">YAHOO.widget.Axis</a></li>
-                                <li class=""><a href="YAHOO.widget.BarChart.html">YAHOO.widget.BarChart</a></li>
-                                <li class=""><a href="YAHOO.widget.BarSeries.html">YAHOO.widget.BarSeries</a></li>
-                                <li class=""><a href="YAHOO.widget.CartesianChart.html">YAHOO.widget.CartesianChart</a></li>
-                                <li class=""><a href="YAHOO.widget.CartesianSeries.html">YAHOO.widget.CartesianSeries</a></li>
-                                <li class=""><a href="YAHOO.widget.CategoryAxis.html">YAHOO.widget.CategoryAxis</a></li>
-                                <li class=""><a href="YAHOO.widget.Chart.html">YAHOO.widget.Chart</a></li>
-                                <li class=""><a href="YAHOO.widget.ColumnChart.html">YAHOO.widget.ColumnChart</a></li>
-                                <li class=""><a href="YAHOO.widget.ColumnSeries.html">YAHOO.widget.ColumnSeries</a></li>
                                 <li class=""><a href="YAHOO.widget.FlashAdapter.html">YAHOO.widget.FlashAdapter</a></li>
-                                <li class=""><a href="YAHOO.widget.LineChart.html">YAHOO.widget.LineChart</a></li>
-                                <li class=""><a href="YAHOO.widget.LineSeries.html">YAHOO.widget.LineSeries</a></li>
-                                <li class=""><a href="YAHOO.widget.NumericAxis.html">YAHOO.widget.NumericAxis</a></li>
-                                <li class=""><a href="YAHOO.widget.PieChart.html">YAHOO.widget.PieChart</a></li>
-                                <li class=""><a href="YAHOO.widget.PieSeries.html">YAHOO.widget.PieSeries</a></li>
-                                <li class=""><a href="YAHOO.widget.Series.html">YAHOO.widget.Series</a></li>
-                                <li class=""><a href="YAHOO.widget.TimeAxis.html">YAHOO.widget.TimeAxis</a></li>
+                                <li class=""><a href="YAHOO.widget.Uploader.html">YAHOO.widget.Uploader</a></li>
                         </ul>
                     </div>
 
                     <div class="module">
                         <h4>Files</h4>
                         <ul class="content">        
-                                <li class=""><a href="Axis.js.html">Axis.js</a></li>
-                                <li class=""><a href="CartesianChart.js.html">CartesianChart.js</a></li>
-                                <li class=""><a href="CategoryAxis.js.html">CategoryAxis.js</a></li>
-                                <li class=""><a href="Chart.js.html">Chart.js</a></li>
-                                <li class=""><a href="ChartTypes.js.html">ChartTypes.js</a></li>
                                 <li class=""><a href="FlashAdapter.js.html">FlashAdapter.js</a></li>
-                                <li class=""><a href="NumericAxis.js.html">NumericAxis.js</a></li>
-                                <li class=""><a href="PieChart.js.html">PieChart.js</a></li>
-                                <li class=""><a href="Series.js.html">Series.js</a></li>
                                 <li class="selected"><a href="swfobject.js.html">swfobject.js</a></li>
-                                <li class=""><a href="TimeAxis.js.html">TimeAxis.js</a></li>
+                                <li class=""><a href="Uploader.js.html">Uploader.js</a></li>
                         </ul>
                     </div>
 
@@ -488,7 +485,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

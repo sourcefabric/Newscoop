@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Menu&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Menu&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_menu.html">menu</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -147,17 +149,21 @@ bar's <code>&#60;div&#62;</code> element.
 
                                     <hr />
                                     </div>
-                                    <div class="private">
-                                    <h4><a name="property_DEFAULT_CONFIG">DEFAULT_CONFIG</a>
-                                        <code>- private final Object</code>
+                                    <div class="">
+                                    <h4><a name="property_SUBMENU_TOGGLE_REGION_WIDTH">SUBMENU_TOGGLE_REGION_WIDTH</a>
+                                        <code>- final Number</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Constant representing the MenuBar's configuration properties
+                                            Width (in pixels) of the area of a MenuBarItem that, when pressed, will toggle the
+display of the MenuBarItem's submenu.
                                         </div>
                                     </div>
      
                                         
+                                    <div class="default">
+                                        Default Value: 20
+                                    </div>        
 
 
                                     <hr />
@@ -172,6 +178,7 @@ bar's <code>&#60;div&#62;</code> element.
                             <div class="content">
                                 <code>
                                     
+                                        <a class="" href="YAHOO.widget.Overlay.html#property_CONTEXT_TRIGGERS">CONTEXT_TRIGGERS</a><span class="">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_EVENT_TYPES">EVENT_TYPES</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_YAHOO.widget.Overlay._initialized">YAHOO.widget.Overlay._initialized</a>
@@ -184,7 +191,7 @@ bar's <code>&#60;div&#62;</code> element.
                                 <code>
                                     
                                         <a class="" href="YAHOO.widget.Module.html#property_body">body</a><span class="">,</span>
-                                        <a class="" href="YAHOO.widget.Module.html#property_browser">browser</a><span class="">,</span>
+                                        <a class=" deprecated" href="YAHOO.widget.Module.html#property_browser">browser</a><span class=" deprecated">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_cfg">cfg</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_contructor">contructor</a><span class="">,</span>
                                         <a class="private" href="YAHOO.widget.Module.html#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a><span class="private">,</span>
@@ -193,7 +200,7 @@ bar's <code>&#60;div&#62;</code> element.
                                         <a class="" href="YAHOO.widget.Module.html#property_footer">footer</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_header">header</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_id">id</a><span class="">,</span>
-                                        <a class="" href="YAHOO.widget.Module.html#property_imageRoot">imageRoot</a><span class="">,</span>
+                                        <a class=" deprecated" href="YAHOO.widget.Module.html#property_imageRoot">imageRoot</a><span class=" deprecated">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_isSecure">isSecure</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_platform">platform</a>
                                 </code>
@@ -211,16 +218,10 @@ bar's <code>&#60;div&#62;</code> element.
                                         <a class="private" href="YAHOO.widget.Menu.html#property__bHandledMouseOverEvent">_bHandledMouseOverEvent</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Menu.html#property__bHideDelayEventHandlersAssigned">_bHideDelayEventHandlersAssigned</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Menu.html#property__bStopMouseEventHandlers">_bStopMouseEventHandlers</a><span class="private">,</span>
-                                        <a class="private" href="YAHOO.widget.Menu.html#property__nBodyScrollId">_nBodyScrollId</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Menu.html#property__nCurrentMouseX">_nCurrentMouseX</a><span class="private">,</span>
-                                        <a class="private" href="YAHOO.widget.Menu.html#property__nHideDelayId">_nHideDelayId</a><span class="private">,</span>
-                                        <a class="private" href="YAHOO.widget.Menu.html#property__nShowDelayId">_nShowDelayId</a><span class="private">,</span>
-                                        <a class="private" href="YAHOO.widget.Menu.html#property__nSubmenuHideDelayId">_nSubmenuHideDelayId</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Menu.html#property__sClassName">_sClassName</a><span class="private">,</span>
                                         <a class="" href="YAHOO.widget.Menu.html#property_activeItem">activeItem</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Menu.html#property_CSS_CLASS_NAME">CSS_CLASS_NAME</a><span class="">,</span>
-                                        <a class="private" href="YAHOO.widget.Menu.html#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a><span class="private">,</span>
-                                        <a class="private" href="YAHOO.widget.Menu.html#property_EVENT_TYPES">EVENT_TYPES</a><span class="private">,</span>
                                         <a class="" href="YAHOO.widget.Menu.html#property_GROUP_TITLE_TAG_NAME">GROUP_TITLE_TAG_NAME</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Menu.html#property_ITEM_TYPE">ITEM_TYPE</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Menu.html#property_itemData">itemData</a><span class="">,</span>
@@ -293,7 +294,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -357,7 +361,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -404,7 +411,68 @@ is one of the supported strings. Returns true if the position is supported.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_configSubmenuToggle">configSubmenuToggle</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>configSubmenuToggle</strong>
+                                           (
+                                                
+                                                        
+                                                         p_sType
+                                                    
+                                                
+                                                        , 
+                                                         p_aArgs
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Event handler for when the "submenutoggleregion" configuration property of 
+a MenuBar changes.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>p_sType &lt;String&gt;</code>
+                                                             The name of the event that was fired.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>p_aArgs &lt;Array&gt;</code>
+                                                             Collection of arguments sent when the event was fired.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -488,7 +556,10 @@ more details.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -523,7 +594,10 @@ changed using the menu bar's Config object ("cfg").
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -557,7 +631,10 @@ changed using the menu bar's Config object ("cfg").
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -570,7 +647,7 @@ changed using the menu bar's Config object ("cfg").
                                 <h4>Methods inherited from <a href="YAHOO.widget.Overlay.html">YAHOO.widget.Overlay</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__primeXYFromDOM">_primeXYFromDOM</a><span class="protected">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_align">align</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_bringToTop">bringToTop</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_center">center</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configConstrainToViewport">configConstrainToViewport</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configContext">configContext</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configFixedCenter">configFixedCenter</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configHeight">configHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configIframe">configIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configVisible">configVisible</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configWidth">configWidth</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configX">configX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configXY">configXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configY">configY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configzIndex">configzIndex</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_doCenterOnDOMEvent">doCenterOnDOMEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_enforceConstraints">enforceConstraints</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedXY">getConstrainedXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideIframe">hideIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideMacGeckoScrollbars">hideMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_moveTo">moveTo</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_onDomResize">onDomResize</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showIframe">showIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showMacGeckoScrollbars">showMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_stackIframe">stackIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncIframe">syncIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncPosition">syncPosition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_toString">toString</a>
+                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__alignOnTrigger">_alignOnTrigger</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__autoFillOnHeightChange">_autoFillOnHeightChange</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__findTriggerCE">_findTriggerCE</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__getComputedHeight">_getComputedHeight</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__getPreciseHeight">_getPreciseHeight</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__primeXYFromDOM">_primeXYFromDOM</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__processTriggers">_processTriggers</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__validateAutoFillHeight">_validateAutoFillHeight</a><span class="protected">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_align">align</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_bringToTop">bringToTop</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_center">center</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configAutoFillHeight">configAutoFillHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configConstrainToViewport">configConstrainToViewport</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configContext">configContext</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configFixedCenter">configFixedCenter</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configHeight">configHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configIframe">configIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configVisible">configVisible</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configWidth">configWidth</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configX">configX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configXY">configXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configY">configY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configzIndex">configzIndex</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_doCenterOnDOMEvent">doCenterOnDOMEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_enforceConstraints">enforceConstraints</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_fillHeight">fillHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedX">getConstrainedX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedXY">getConstrainedXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedY">getConstrainedY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideIframe">hideIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideMacGeckoScrollbars">hideMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_moveTo">moveTo</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_onDomResize">onDomResize</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showIframe">showIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showMacGeckoScrollbars">showMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_stackIframe">stackIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncIframe">syncIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncPosition">syncPosition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_toString">toString</a>
                                     </code>
                                 </div>
                             </div>
@@ -586,7 +663,7 @@ changed using the menu bar's Config object ("cfg").
                                 <h4>Methods inherited from <a href="YAHOO.widget.Menu.html">YAHOO.widget.Menu</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="private" href="YAHOO.widget.Menu.html#method__addItemToGroup">_addItemToGroup</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__cancelHideDelay">_cancelHideDelay</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__cancelShowDelay">_cancelShowDelay</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__configureSubmenu">_configureSubmenu</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__createItemGroup">_createItemGroup</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__disableScrollFooter">_disableScrollFooter</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__disableScrollHeader">_disableScrollHeader</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__enableScrollFooter">_enableScrollFooter</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__enableScrollHeader">_enableScrollHeader</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__execHideDelay">_execHideDelay</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__execShowDelay">_execShowDelay</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__execSubmenuHideDelay">_execSubmenuHideDelay</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__getFirstEnabledItem">_getFirstEnabledItem</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__getItemGroup">_getItemGroup</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__initSubTree">_initSubTree</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onBeforeHide">_onBeforeHide</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onBeforeRender">_onBeforeRender</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onBeforeShow">_onBeforeShow</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onClick">_onClick</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onInit">_onInit</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onItemAdded">_onItemAdded</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onKeyDown">_onKeyDown</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onKeyPress">_onKeyPress</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onMenuItemBlur">_onMenuItemBlur</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onMenuItemConfigChange">_onMenuItemConfigChange</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onMenuItemDestroy">_onMenuItemDestroy</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onMenuItemFocus">_onMenuItemFocus</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onMouseMove">_onMouseMove</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onMouseOut">_onMouseOut</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onMouseOver">_onMouseOver</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onParentMenuConfigChange">_onParentMenuConfigChange</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onParentMenuRender">_onParentMenuRender</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onRender">_onRender</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onScrollTargetMouseOut">_onScrollTargetMouseOut</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onScrollTargetMouseOver">_onScrollTargetMouseOver</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onShow">_onShow</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onSubmenuBeforeShow">_onSubmenuBeforeShow</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onVisibleChange">_onVisibleChange</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onYChange">_onYChange</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__removeItemFromGroupByIndex">_removeItemFromGroupByIndex</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__removeItemFromGroupByValue">_removeItemFromGroupByValue</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__setMaxHeight">_setMaxHeight</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__subscribeToItemEvents">_subscribeToItemEvents</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__updateItemProperties">_updateItemProperties</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_addItem">addItem</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_addItems">addItems</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_blur">blur</a><span class="">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method_checkPosition">checkPosition</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_clearActiveItem">clearActiveItem</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_clearContent">clearContent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configClassName">configClassName</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configContainer">configContainer</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configDisabled">configDisabled</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configHideDelay">configHideDelay</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configIframe">configIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configMaxHeight">configMaxHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configPosition">configPosition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configVisible">configVisible</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_enforceConstraints">enforceConstraints</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_focus">focus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_getItem">getItem</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_getItemGroups">getItemGroups</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_getItems">getItems</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_getRoot">getRoot</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_getSubmenus">getSubmenus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_hasFocus">hasFocus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_insertItem">insertItem</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_onRender">onRender</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_positionOffScreen">positionOffScreen</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_removeItem">removeItem</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_setInitialFocus">setInitialFocus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_setInitialSelection">setInitialSelection</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_setItemGroupTitle">setItemGroupTitle</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_subscribe">subscribe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_toString">toString</a>
+                                            <a class="private" href="YAHOO.widget.Menu.html#method__addItemToGroup">_addItemToGroup</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__cancelHideDelay">_cancelHideDelay</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__cancelShowDelay">_cancelShowDelay</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__clearSetWidthFlag">_clearSetWidthFlag</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__configureSubmenu">_configureSubmenu</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__createItemGroup">_createItemGroup</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__disableScrollFooter">_disableScrollFooter</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__disableScrollHeader">_disableScrollHeader</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__enableScrollFooter">_enableScrollFooter</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__enableScrollHeader">_enableScrollHeader</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__execHideDelay">_execHideDelay</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__execSubmenuHideDelay">_execSubmenuHideDelay</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__getFirstEnabledItem">_getFirstEnabledItem</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__getItemGroup">_getItemGroup</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__initSubTree">_initSubTree</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onBeforeHide">_onBeforeHide</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onBeforeRender">_onBeforeRender</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onBeforeShow">_onBeforeShow</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onBlur">_onBlur</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onClick">_onClick</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onHide">_onHide</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onInit">_onInit</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onItemAdded">_onItemAdded</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onKeyDown">_onKeyDown</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onKeyPress">_onKeyPress</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onMenuItemConfigChange">_onMenuItemConfigChange</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onMenuItemDestroy">_onMenuItemDestroy</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onMouseMove">_onMouseMove</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onMouseOut">_onMouseOut</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onMouseOver">_onMouseOver</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onParentMenuConfigChange">_onParentMenuConfigChange</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onParentMenuRender">_onParentMenuRender</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onRender">_onRender</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onScrollTargetMouseOut">_onScrollTargetMouseOut</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onScrollTargetMouseOver">_onScrollTargetMouseOver</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onShow">_onShow</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__onVisibleChange">_onVisibleChange</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Menu.html#method__onYChange">_onYChange</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__removeItemFromGroupByIndex">_removeItemFromGroupByIndex</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__removeItemFromGroupByValue">_removeItemFromGroupByValue</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__setMaxHeight">_setMaxHeight</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__setScrollHeight">_setScrollHeight</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__subscribeToItemEvents">_subscribeToItemEvents</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method__updateItemProperties">_updateItemProperties</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_addItem">addItem</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_addItems">addItems</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_blur">blur</a><span class="">,</span>                                            <a class="private" href="YAHOO.widget.Menu.html#method_checkPosition">checkPosition</a><span class="private">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_clearActiveItem">clearActiveItem</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_clearContent">clearContent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configClassName">configClassName</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configContainer">configContainer</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configDisabled">configDisabled</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configHideDelay">configHideDelay</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configIframe">configIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configMaxHeight">configMaxHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configPosition">configPosition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configShadow">configShadow</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_configVisible">configVisible</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_focus">focus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_getItem">getItem</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_getItemGroups">getItemGroups</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_getItems">getItems</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_getRoot">getRoot</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_getSubmenus">getSubmenus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_hasFocus">hasFocus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_insertItem">insertItem</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_positionOffScreen">positionOffScreen</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_removeItem">removeItem</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_setInitialFocus">setInitialFocus</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_setInitialSelection">setInitialSelection</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_setItemGroupTitle">setItemGroupTitle</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_subscribe">subscribe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Menu.html#method_toString">toString</a>
                                     </code>
                                 </div>
                             </div>
@@ -679,6 +756,29 @@ parent menu bar item. The format is: [itemCorner, submenuCorner].
 
                                     <hr />
                                     </div>        
+                                    <div class="">
+                                    <h4><a name="config_submenutoggleregion">submenutoggleregion</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Boolean indicating if only a specific region of a MenuBarItem should toggle the 
+display of a submenu.  The default width of the region is determined by the value of the
+SUBMENU_TOGGLE_REGION_WIDTH property.  If set to true, the autosubmenudisplay 
+configuration property will be set to false, and any click event listeners will not be 
+called when the user clicks inside the submenu toggle region of a MenuBarItem.  If the 
+user clicks outside of the submenu toggle region, the MenuBarItem will maintain its 
+standard behavior.
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: false
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
 
                             </div>
                         </div>
@@ -687,7 +787,7 @@ parent menu bar item. The format is: [itemCorner, submenuCorner].
                             <h4>Configuration attributes inherited from <a href="YAHOO.widget.Overlay.html">YAHOO.widget.Overlay</a>:</h4>
                             <div class="content">
                                 <code>
-                                        <a class="" href="YAHOO.widget.Overlay.html#config_constraintoviewport">constraintoviewport</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_context">context</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_fixedcenter">fixedcenter</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_height">height</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_iframe">iframe</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_width">width</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_x">x</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_xy">xy</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_y">y</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_zIndex">zIndex</a><span class="">,</span>
+                                        <a class="" href="YAHOO.widget.Overlay.html#config_autofillheight">autofillheight</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_constraintoviewport">constraintoviewport</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_context">context</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_fixedcenter">fixedcenter</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_height">height</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_iframe">iframe</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_preventcontextoverlap">preventcontextoverlap</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_width">width</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_x">x</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_xy">xy</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_y">y</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_zIndex">zIndex</a><span class="">,</span>
                                 </code>
                             </div>
                         </div>
@@ -703,7 +803,7 @@ parent menu bar item. The format is: [itemCorner, submenuCorner].
                             <h4>Configuration attributes inherited from <a href="YAHOO.widget.Menu.html">YAHOO.widget.Menu</a>:</h4>
                             <div class="content">
                                 <code>
-                                        <a class="" href="YAHOO.widget.Menu.html#config_autosubmenudisplay">autosubmenudisplay</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_classname">classname</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_clicktohide">clicktohide</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_constraintoviewport">constraintoviewport</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_container">container</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_context">context</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_disabled">disabled</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_effect">effect</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_fixedcenter">fixedcenter</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_hidedelay">hidedelay</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_iframe">iframe</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_maxheight">maxheight</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_minscrollheight">minscrollheight</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_position">position</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_scrollincrement">scrollincrement</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_showdelay">showdelay</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_submenualignment">submenualignment</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_submenuhidedelay">submenuhidedelay</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_visible">visible</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_x">x</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_xy">xy</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_y">y</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_zindex">zindex</a><span class="">,</span>
+                                        <a class="" href="YAHOO.widget.Menu.html#config_autosubmenudisplay">autosubmenudisplay</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_classname">classname</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_clicktohide">clicktohide</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_constraintoviewport">constraintoviewport</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_container">container</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_context">context</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_disabled">disabled</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_effect">effect</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_fixedcenter">fixedcenter</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_hidedelay">hidedelay</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_iframe">iframe</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_keepopen">keepopen</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_maxheight">maxheight</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_minscrollheight">minscrollheight</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_position">position</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_preventcontextoverlap">preventcontextoverlap</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_scrollincrement">scrollincrement</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_shadow">shadow</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_showdelay">showdelay</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_submenualignment">submenualignment</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_submenuhidedelay">submenuhidedelay</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_visible">visible</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_x">x</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_xy">xy</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Menu.html#config_y">y</a><span class="">,</span>
                                 </code>
                             </div>
                         </div>
@@ -724,6 +824,8 @@ parent menu bar item. The format is: [itemCorner, submenuCorner].
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -764,6 +866,8 @@ parent menu bar item. The format is: [itemCorner, submenuCorner].
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class="selected"><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -819,10 +923,10 @@ parent menu bar item. The format is: [itemCorner, submenuCorner].
                         <h4>Properties</h4>
                         <ul class="content">        
                                 <li class=""><a href="#property_CSS_CLASS_NAME">CSS_CLASS_NAME</a>
-                                        <!--<code>&lt;Object&gt;</code>-->
+                                        <!--<code>&lt;Number&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a>
-                                        <!--<code>&lt;Object&gt;</code>-->
+                                <li class=""><a href="#property_SUBMENU_TOGGLE_REGION_WIDTH">SUBMENU_TOGGLE_REGION_WIDTH</a>
+                                        <!--<code>&lt;Number&gt;</code>-->
                                 </li>
                         </ul>
                     </div>
@@ -838,6 +942,9 @@ parent menu bar item. The format is: [itemCorner, submenuCorner].
                                 </li>
                                 <li class="private"><!--<code>Boolean</code>-->
                                 <a href="#method_checkPosition">checkPosition</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_configSubmenuToggle">configSubmenuToggle</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_init">init</a>
@@ -864,6 +971,9 @@ parent menu bar item. The format is: [itemCorner, submenuCorner].
                                 <li class="">
                                 <a href="#config_submenualignment">submenualignment</a>
                                 </li>
+                                <li class="">
+                                <a href="#config_submenutoggleregion">submenutoggleregion</a>
+                                </li>
                         </ul>
                     </div>
 
@@ -872,7 +982,7 @@ parent menu bar item. The format is: [itemCorner, submenuCorner].
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

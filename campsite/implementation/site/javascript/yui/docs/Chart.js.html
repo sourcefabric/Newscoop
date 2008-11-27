@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Charts Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Charts Widget&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_charts.html">charts</a>
@@ -21,14 +21,16 @@
                  &gt; Chart.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -42,15 +44,19 @@
 <span class="c"> * @module charts</span>
 <span class="c"> * @requires yahoo, dom, event, datasource</span>
 <span class="c"> * @title Charts Widget</span>
-<span class="c"> * @beta</span>
+<span class="c"> * @experimental</span>
 <span class="c"> */</span>
+ 
+<span class="c">/****************************************************************************/</span>
+<span class="c">/****************************************************************************/</span>
+<span class="c">/****************************************************************************/</span>
 
 <span class="c">/**</span>
 <span class="c"> * Chart class for the YUI Charts widget.</span>
 <span class="c"> *</span>
 <span class="c"> * @namespace YAHOO.widget</span>
 <span class="c"> * @class Chart</span>
-<span class="c"> * @uses YAHOO.util.FlashAdapter</span>
+<span class="c"> * @uses YAHOO.widget.FlashAdapter</span>
 <span class="c"> * @constructor</span>
 <span class="c"> * @param type {String} The char type. May be &quot;line&quot;, &quot;column&quot;, &quot;bar&quot;, or &quot;pie&quot;</span>
 <span class="c"> * @param containerId {HTMLElement} Container element for the Flash Player instance.</span>
@@ -181,15 +187,6 @@
 <span class="c">	 * @private</span>
 <span class="c">	 */</span>
 	<span class="nx">_pollingInterval</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
-	
-	<span class="c">/**</span>
-<span class="c">	 * Indicates whether all attributes have been set and</span>
-<span class="c">	 * the dataSource may be passed to the SWF.</span>
-<span class="c">	 * @property _initialized</span>
-<span class="c">	 * @type Boolean</span>
-<span class="c">	 * @private</span>
-<span class="c">	 */</span>
-	<span class="nx">_initialized</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
 
 	<span class="c">/**</span>
 <span class="c">	 * Stores a reference to the dataTipFunction created by</span>
@@ -199,6 +196,15 @@
 <span class="c">	 * @private</span>
 <span class="c">	 */</span>
 	<span class="nx">_dataTipFunction</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
+	
+	<span class="c">/**</span>
+<span class="c">	 * Stores references to series labelFunction values created by</span>
+<span class="c">	 * YAHOO.widget.FlashAdapter.createProxyFunction()</span>
+<span class="c">	 * @property _seriesLabelFunctions</span>
+<span class="c">	 * @type Array</span>
+<span class="c">	 * @private</span>
+<span class="c">	 */</span>
+	<span class="nx">_seriesLabelFunctions</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
 
 	<span class="c">/**</span>
 <span class="c">	 * Public accessor to the unique name of the Chart instance.</span>
@@ -392,7 +398,8 @@
 <span class="c">	 */</span>
 	<span class="nx">_loadHandler</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span>
 	<span class="o">{</span>
-		<span class="k">this</span><span class="o">.</span><span class="nx">_swf</span><span class="o">.</span><span class="nx">setType</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_type</span><span class="o">);</span>
+		<span class="c">//the type is set separately because it must be first!</span>
+<span class="c"></span>		<span class="k">this</span><span class="o">.</span><span class="nx">_swf</span><span class="o">.</span><span class="nx">setType</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_type</span><span class="o">);</span>
 		
 		<span class="c">//set initial styles</span>
 <span class="c"></span>		<span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_attributes</span><span class="o">.</span><span class="nx">style</span><span class="o">)</span>
@@ -403,8 +410,6 @@
 		
 		<span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">Chart</span><span class="o">.</span><span class="nx">superclass</span><span class="o">.</span><span class="nx">_loadHandler</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
 		
-		<span class="k">this</span><span class="o">.</span><span class="nx">_initialized</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-		
 		<span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_dataSource</span><span class="o">)</span>
 		<span class="o">{</span>
 			<span class="k">this</span><span class="o">.</span><span class="nx">set</span><span class="o">(</span><span class="s2">&quot;dataSource&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_dataSource</span><span class="o">);</span>
@@ -412,12 +417,11 @@
 	<span class="o">},</span>
 
 	<span class="c">/**</span>
-<span class="c">	 * Sends the request to the DataSource.</span>
+<span class="c">	 * Sends (or resends) the request to the DataSource.</span>
 <span class="c">	 *</span>
-<span class="c">	 * @method _refreshData</span>
-<span class="c">	 * @private</span>
+<span class="c">	 * @method refreshData</span>
 <span class="c">	 */</span>
-	<span class="nx">_refreshData</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span>
+	<span class="nx">refreshData</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span>
 	<span class="o">{</span>
 		<span class="k">if</span><span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">_initialized</span><span class="o">)</span>
 		<span class="o">{</span>
@@ -449,68 +453,89 @@
 <span class="c">	 */</span>
 	<span class="nx">_loadDataHandler</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">request</span><span class="o">,</span> <span class="nx">response</span><span class="o">,</span> <span class="nx">error</span><span class="o">)</span>
 	<span class="o">{</span>
-		<span class="k">if</span><span class="o">(</span><span class="nx">error</span><span class="o">)</span>
+		<span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_swf</span><span class="o">)</span>
 		<span class="o">{</span>
-			<span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s2">&quot;Unable to load data.&quot;</span><span class="o">,</span> <span class="s2">&quot;error&quot;</span><span class="o">);</span>
-		<span class="o">}</span>
-		<span class="k">else</span>
-		<span class="o">{</span>
-			<span class="k">var</span> <span class="nx">styleChanged</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-			
-			<span class="c">//make a copy of the series definitions so that we aren&#39;t</span>
-<span class="c"></span>			<span class="c">//editing them directly.</span>
-<span class="c"></span>			<span class="k">var</span> <span class="nx">dataProvider</span> <span class="o">=</span> <span class="o">[];</span>	
-			<span class="k">var</span> <span class="nx">seriesCount</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
-			<span class="k">var</span> <span class="nx">currentSeries</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-			<span class="k">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
-			<span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_seriesDefs</span> <span class="o">!==</span> <span class="kc">null</span><span class="o">)</span>
+			<span class="k">if</span><span class="o">(</span><span class="nx">error</span><span class="o">)</span>
 			<span class="o">{</span>
-				<span class="nx">seriesCount</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_seriesDefs</span><span class="o">.</span><span class="nx">length</span><span class="o">;</span>
-				<span class="k">for</span><span class="o">(</span><span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">seriesCount</span><span class="o">;</span> <span class="nx">i</span><span class="o">++)</span>
-				<span class="o">{</span>
-					<span class="nx">currentSeries</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_seriesDefs</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
-					<span class="k">var</span> <span class="nx">clonedSeries</span> <span class="o">=</span> <span class="o">{};</span>
-					<span class="k">for</span><span class="o">(</span><span class="k">var</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">currentSeries</span><span class="o">)</span>
-					<span class="o">{</span>
-						<span class="k">if</span><span class="o">(</span><span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">currentSeries</span><span class="o">,</span> <span class="nx">prop</span><span class="o">))</span>
-						<span class="o">{</span>
-							<span class="k">if</span><span class="o">(</span><span class="nx">prop</span> <span class="o">==</span> <span class="s2">&quot;style&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">currentSeries</span><span class="o">.</span><span class="nx">style</span> <span class="o">!==</span> <span class="kc">null</span><span class="o">)</span>
-							<span class="o">{</span>
-								<span class="nx">clonedSeries</span><span class="o">.</span><span class="nx">style</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">JSON</span><span class="o">.</span><span class="nx">stringify</span><span class="o">(</span><span class="nx">currentSeries</span><span class="o">.</span><span class="nx">style</span><span class="o">);</span>
-								<span class="nx">styleChanged</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-   
-								<span class="c">//we don&#39;t want to modify the styles again next time</span>
-<span class="c"></span>								<span class="c">//so null out the style property.</span>
-<span class="c"></span>								<span class="nx">currentSeries</span><span class="o">.</span><span class="nx">style</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-							<span class="o">}</span>
-							<span class="k">else</span>
-							<span class="o">{</span>
-								<span class="nx">clonedSeries</span><span class="o">[</span><span class="nx">prop</span><span class="o">]</span> <span class="o">=</span> <span class="nx">currentSeries</span><span class="o">[</span><span class="nx">prop</span><span class="o">];</span>
-							<span class="o">}</span>
-						<span class="o">}</span>
-					<span class="o">}</span>
-					<span class="nx">dataProvider</span><span class="o">.</span><span class="nx">push</span><span class="o">(</span><span class="nx">clonedSeries</span><span class="o">);</span>
-				<span class="o">}</span>
-			<span class="o">}</span>
-			
-			<span class="k">if</span><span class="o">(</span><span class="nx">seriesCount</span> <span class="o">&gt;</span> <span class="m">0</span><span class="o">)</span>
-			<span class="o">{</span>
-				<span class="k">for</span><span class="o">(</span><span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">seriesCount</span><span class="o">;</span> <span class="nx">i</span><span class="o">++)</span>
-				<span class="o">{</span>
-					<span class="nx">currentSeries</span> <span class="o">=</span> <span class="nx">dataProvider</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
-					<span class="k">if</span><span class="o">(!</span><span class="nx">currentSeries</span><span class="o">.</span><span class="nx">type</span><span class="o">)</span>
-					<span class="o">{</span>
-						<span class="nx">currentSeries</span><span class="o">.</span><span class="nx">type</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_type</span><span class="o">;</span>
-					<span class="o">}</span>
-					<span class="nx">currentSeries</span><span class="o">.</span><span class="nx">dataProvider</span> <span class="o">=</span> <span class="nx">response</span><span class="o">.</span><span class="nx">results</span><span class="o">;</span>
-				<span class="o">}</span>
+				<span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s2">&quot;Unable to load data.&quot;</span><span class="o">,</span> <span class="s2">&quot;error&quot;</span><span class="o">);</span>
 			<span class="o">}</span>
 			<span class="k">else</span>
 			<span class="o">{</span>
-				<span class="k">var</span> <span class="nx">series</span> <span class="o">=</span> <span class="o">{</span><span class="nx">type</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_type</span><span class="o">,</span> <span class="nx">dataProvider</span><span class="o">:</span> <span class="nx">response</span><span class="o">.</span><span class="nx">results</span><span class="o">};</span>
-				<span class="nx">dataProvider</span><span class="o">.</span><span class="nx">push</span><span class="o">(</span><span class="nx">series</span><span class="o">);</span>
+				<span class="k">var</span> <span class="nx">i</span><span class="o">;</span>
+				<span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_seriesLabelFunctions</span><span class="o">)</span>
+				<span class="o">{</span>
+					<span class="k">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_seriesLabelFunctions</span><span class="o">.</span><span class="nx">length</span><span class="o">;</span>
+					<span class="k">for</span><span class="o">(</span><span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="o">;</span> <span class="nx">i</span><span class="o">++)</span>
+					<span class="o">{</span>
+						<span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">FlashAdapter</span><span class="o">.</span><span class="nx">removeProxyFunction</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_seriesLabelFunctions</span><span class="o">[</span><span class="nx">i</span><span class="o">]);</span>
+					<span class="o">}</span>
+					<span class="k">this</span><span class="o">.</span><span class="nx">_seriesLabelFunction</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+				<span class="o">}</span>
+				<span class="k">this</span><span class="o">.</span><span class="nx">_seriesLabelFunctions</span> <span class="o">=</span> <span class="o">[];</span>
+
+				<span class="c">//make a copy of the series definitions so that we aren&#39;t</span>
+<span class="c"></span>				<span class="c">//editing them directly.</span>
+<span class="c"></span>				<span class="k">var</span> <span class="nx">dataProvider</span> <span class="o">=</span> <span class="o">[];</span>	
+				<span class="k">var</span> <span class="nx">seriesCount</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span>
+				<span class="k">var</span> <span class="nx">currentSeries</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+				<span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_seriesDefs</span> <span class="o">!==</span> <span class="kc">null</span><span class="o">)</span>
+				<span class="o">{</span>
+					<span class="nx">seriesCount</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_seriesDefs</span><span class="o">.</span><span class="nx">length</span><span class="o">;</span>
+					<span class="k">for</span><span class="o">(</span><span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">seriesCount</span><span class="o">;</span> <span class="nx">i</span><span class="o">++)</span>
+					<span class="o">{</span>
+						<span class="nx">currentSeries</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_seriesDefs</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
+						<span class="k">var</span> <span class="nx">clonedSeries</span> <span class="o">=</span> <span class="o">{};</span>
+						<span class="k">for</span><span class="o">(</span><span class="k">var</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">currentSeries</span><span class="o">)</span>
+						<span class="o">{</span>
+							<span class="k">if</span><span class="o">(</span><span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">currentSeries</span><span class="o">,</span> <span class="nx">prop</span><span class="o">))</span>
+							<span class="o">{</span>
+								<span class="k">if</span><span class="o">(</span><span class="nx">prop</span> <span class="o">==</span> <span class="s2">&quot;style&quot;</span><span class="o">)</span>
+								<span class="o">{</span>
+									<span class="k">if</span><span class="o">(</span><span class="nx">currentSeries</span><span class="o">.</span><span class="nx">style</span> <span class="o">!==</span> <span class="kc">null</span><span class="o">)</span>
+									<span class="o">{</span>
+										<span class="nx">clonedSeries</span><span class="o">.</span><span class="nx">style</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">JSON</span><span class="o">.</span><span class="nx">stringify</span><span class="o">(</span><span class="nx">currentSeries</span><span class="o">.</span><span class="nx">style</span><span class="o">);</span>
+									<span class="o">}</span>
+								<span class="o">}</span>
+
+								<span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="nx">prop</span> <span class="o">==</span> <span class="s2">&quot;labelFunction&quot;</span><span class="o">)</span>
+								<span class="o">{</span>
+									<span class="k">if</span><span class="o">(</span><span class="nx">currentSeries</span><span class="o">.</span><span class="nx">labelFunction</span> <span class="o">!==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span>
+										<span class="k">typeof</span> <span class="nx">currentSeries</span><span class="o">.</span><span class="nx">labelFunction</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="o">)</span>
+									<span class="o">{</span>
+										<span class="nx">clonedSeries</span><span class="o">.</span><span class="nx">labelFunction</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">FlashAdapter</span><span class="o">.</span><span class="nx">createProxyFunction</span><span class="o">(</span><span class="nx">currentSeries</span><span class="o">.</span><span class="nx">labelFunction</span><span class="o">);</span>
+										<span class="k">this</span><span class="o">.</span><span class="nx">_seriesLabelFunctions</span><span class="o">.</span><span class="nx">push</span><span class="o">(</span><span class="nx">clonedSeries</span><span class="o">.</span><span class="nx">labelFunction</span><span class="o">);</span>
+									<span class="o">}</span>
+								<span class="o">}</span>
+
+								<span class="k">else</span>
+								<span class="o">{</span>
+									<span class="nx">clonedSeries</span><span class="o">[</span><span class="nx">prop</span><span class="o">]</span> <span class="o">=</span> <span class="nx">currentSeries</span><span class="o">[</span><span class="nx">prop</span><span class="o">];</span>
+								<span class="o">}</span>
+							<span class="o">}</span>
+						<span class="o">}</span>
+						<span class="nx">dataProvider</span><span class="o">.</span><span class="nx">push</span><span class="o">(</span><span class="nx">clonedSeries</span><span class="o">);</span>
+					<span class="o">}</span>
+				<span class="o">}</span>
+
+				<span class="k">if</span><span class="o">(</span><span class="nx">seriesCount</span> <span class="o">&gt;</span> <span class="m">0</span><span class="o">)</span>
+				<span class="o">{</span>
+					<span class="k">for</span><span class="o">(</span><span class="nx">i</span> <span class="o">=</span> <span class="m">0</span><span class="o">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">seriesCount</span><span class="o">;</span> <span class="nx">i</span><span class="o">++)</span>
+					<span class="o">{</span>
+						<span class="nx">currentSeries</span> <span class="o">=</span> <span class="nx">dataProvider</span><span class="o">[</span><span class="nx">i</span><span class="o">];</span>
+						<span class="k">if</span><span class="o">(!</span><span class="nx">currentSeries</span><span class="o">.</span><span class="nx">type</span><span class="o">)</span>
+						<span class="o">{</span>
+							<span class="nx">currentSeries</span><span class="o">.</span><span class="nx">type</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_type</span><span class="o">;</span>
+						<span class="o">}</span>
+						<span class="nx">currentSeries</span><span class="o">.</span><span class="nx">dataProvider</span> <span class="o">=</span> <span class="nx">response</span><span class="o">.</span><span class="nx">results</span><span class="o">;</span>
+					<span class="o">}</span>
+				<span class="o">}</span>
+				<span class="k">else</span>
+				<span class="o">{</span>
+					<span class="k">var</span> <span class="nx">series</span> <span class="o">=</span> <span class="o">{</span><span class="nx">type</span><span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">_type</span><span class="o">,</span> <span class="nx">dataProvider</span><span class="o">:</span> <span class="nx">response</span><span class="o">.</span><span class="nx">results</span><span class="o">};</span>
+					<span class="nx">dataProvider</span><span class="o">.</span><span class="nx">push</span><span class="o">(</span><span class="nx">series</span><span class="o">);</span>
+				<span class="o">}</span>
+				<span class="k">this</span><span class="o">.</span><span class="nx">_swf</span><span class="o">.</span><span class="nx">setDataProvider</span><span class="o">(</span><span class="nx">dataProvider</span><span class="o">);</span>
 			<span class="o">}</span>
-			<span class="k">this</span><span class="o">.</span><span class="nx">_swf</span><span class="o">.</span><span class="nx">setDataProvider</span><span class="o">(</span><span class="nx">dataProvider</span><span class="o">,</span> <span class="nx">styleChanged</span><span class="o">);</span>
 		<span class="o">}</span>
 	<span class="o">},</span>
 
@@ -542,7 +567,7 @@
 	<span class="nx">_setRequest</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">value</span><span class="o">)</span>
 	<span class="o">{</span>
 		<span class="k">this</span><span class="o">.</span><span class="nx">_request</span> <span class="o">=</span> <span class="nx">value</span><span class="o">;</span>
-		<span class="k">this</span><span class="o">.</span><span class="nx">_refreshData</span><span class="o">();</span>
+		<span class="k">this</span><span class="o">.</span><span class="nx">refreshData</span><span class="o">();</span>
 	<span class="o">},</span>
 
 	<span class="c">/**</span>
@@ -573,7 +598,7 @@
 	<span class="nx">_setDataSource</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">value</span><span class="o">)</span>
 	<span class="o">{</span>	
 		<span class="k">this</span><span class="o">.</span><span class="nx">_dataSource</span> <span class="o">=</span> <span class="nx">value</span><span class="o">;</span>
-		<span class="k">this</span><span class="o">.</span><span class="nx">_refreshData</span><span class="o">();</span>
+		<span class="k">this</span><span class="o">.</span><span class="nx">refreshData</span><span class="o">();</span>
 	<span class="o">},</span>
 	
 	<span class="c">/**</span>
@@ -604,7 +629,7 @@
 	<span class="nx">_setSeriesDefs</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">value</span><span class="o">)</span>
 	<span class="o">{</span>
 		<span class="k">this</span><span class="o">.</span><span class="nx">_seriesDefs</span> <span class="o">=</span> <span class="nx">value</span><span class="o">;</span>
-		<span class="k">this</span><span class="o">.</span><span class="nx">_refreshData</span><span class="o">();</span>
+		<span class="k">this</span><span class="o">.</span><span class="nx">refreshData</span><span class="o">();</span>
 	<span class="o">},</span>
 
 	<span class="c">/**</span>
@@ -670,7 +695,7 @@
 	<span class="nx">_setPolling</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">value</span><span class="o">)</span>
 	<span class="o">{</span>
 		<span class="k">this</span><span class="o">.</span><span class="nx">_pollingInterval</span> <span class="o">=</span> <span class="nx">value</span><span class="o">;</span>
-		<span class="k">this</span><span class="o">.</span><span class="nx">_refreshData</span><span class="o">();</span>
+		<span class="k">this</span><span class="o">.</span><span class="nx">refreshData</span><span class="o">();</span>
 	<span class="o">}</span>
 <span class="o">});</span>
 
@@ -702,6 +727,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class="selected"><a href="module_charts.html">charts</a></li>
 
@@ -742,6 +769,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -786,6 +815,10 @@
                                 <li class=""><a href="YAHOO.widget.PieChart.html">YAHOO.widget.PieChart</a></li>
                                 <li class=""><a href="YAHOO.widget.PieSeries.html">YAHOO.widget.PieSeries</a></li>
                                 <li class=""><a href="YAHOO.widget.Series.html">YAHOO.widget.Series</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedBarChart.html">YAHOO.widget.StackedBarChart</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedBarSeries.html">YAHOO.widget.StackedBarSeries</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedColumnChart.html">YAHOO.widget.StackedColumnChart</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedColumnSeries.html">YAHOO.widget.StackedColumnSeries</a></li>
                                 <li class=""><a href="YAHOO.widget.TimeAxis.html">YAHOO.widget.TimeAxis</a></li>
                         </ul>
                     </div>
@@ -816,7 +849,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

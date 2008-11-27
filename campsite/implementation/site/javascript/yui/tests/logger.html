@@ -1,16 +1,16 @@
 <html>
 <head>
 <title>YUI Logger Tests</title>
-<link type="text/css" rel="stylesheet" href="../build/logger/assets/logger.css" />
+<link type="text/css" rel="stylesheet" href="../build/logger/assets/skins/sam/logger.css" />
 <link type="text/css" rel="stylesheet" href="../build/yuitest/assets/testlogger.css" />
 
-<script type="text/javascript" src="../build/yahoo/yahoo-min.js"></script>
-<script type="text/javascript" src="../build/dom/dom-min.js"></script>
-<script type="text/javascript" src="../build/event/event-min.js"></script>
-<script type="text/javascript" src="../build/logger/logger-min.js"></script>
+<script type="text/javascript" src="../build/yahoo/yahoo.js"></script>
+<script type="text/javascript" src="../build/dom/dom.js"></script>
+<script type="text/javascript" src="../build/event/event.js"></script>
+<script type="text/javascript" src="../build/logger/logger.js"></script>
 <script type="text/javascript" src="../build/yuitest/yuitest.js"></script>
 </head>
-<body>
+<body class="yui-skin-sam">
 <h1>Logger Tests</h1>
 <p><input type="button" value="Run Tests" id="btnRun" disabled="true" /></p>
 
@@ -106,6 +106,11 @@
             var lw = this.createInstance();
             Assert.isObject(lw, "Failed to create basic instance");
             Assert.isInstanceOf(LogWriter, lw, "Failed to create basic instance");
+            // bug 1699208
+            Assert.areSame("testlogwriter", lw.getSource());
+            lw.setSource("foo");
+            Assert.areSame("foo", lw.getSource());
+
             lr = null;
         }
     };
@@ -118,6 +123,53 @@
         loggersuite.add(loggerTest);
         loggersuite.add(logreaderTest);
         loggersuite.add(logwriterTest);
+        loggersuite.add(new TestCase({
+            name : "LogReader test cont.",
+            setUp : function () {
+                this.full = new LogReader();
+                this.noFooter = new LogReader(null, {
+                    footerEnabled: false
+                });
+            },
+            tearDown: function () {
+                delete this.full;
+                delete this.noFooter;
+            },
+            testPauseResume : function () {
+                try {
+                    this.full.pause();
+                    this.full.resume();
+                }
+                catch (e) {
+                    Assert.fail(e);
+                }
+
+                try {
+                    this.noFooter.pause();
+                    this.noFooter.resume();
+                }
+                catch (e) {
+                    Assert.fail(e);
+                }
+            }
+        }));
+
+        // for bug 1987607
+        loggersuite.add(new TestCase({
+            name : "Console logging test",
+            testConsoleLog : function () {
+                if (!YAHOO.env.ua.ie) {
+                    YAHOO.widget.Logger.enableBrowserConsole();
+                    YAHOO.log("Console logging info entry","info");
+                    YAHOO.log("Console logging warn entry","warn");
+                    YAHOO.log("Console logging error entry","error");
+                    YAHOO.widget.Logger.disableBrowserConsole();
+
+                    YAHOO.log("CHECK CONSOLE FOR MESSAGES","warn","TestLogger");
+                }
+            }
+        }));
+
         
         TestRunner.add(loggersuite);
 

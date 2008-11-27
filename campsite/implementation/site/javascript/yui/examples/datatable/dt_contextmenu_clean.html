@@ -23,8 +23,8 @@ body {
 <script type="text/javascript" src="../../build/container/container_core-min.js"></script>
 <script type="text/javascript" src="../../build/menu/menu-min.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 
 <!--begin custom header content for this example-->
@@ -39,6 +39,7 @@ div.yuimenu .bd {
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>Context Menu Integration</h1>
 
@@ -56,7 +57,7 @@ information on using the ContextMenu class please refer to the
 <script type="text/javascript" src="assets/js/data.js"></script>
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.ContextMenu = new function() {
+    YAHOO.example.ContextMenu = function() {
         var myColumnDefs = [
             {key:"SKU", sortable:true},
             {key:"Quantity", sortable:true},
@@ -64,15 +65,15 @@ YAHOO.util.Event.addListener(window, "load", function() {
             {key:"Description"}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.inventory);
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.inventory);
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        myDataSource.responseSchema = {
             fields: ["SKU","Quantity","Item","Description"]
         };
 
-        this.myDataTable = new YAHOO.widget.DataTable("myContainer", myColumnDefs, this.myDataSource);
+        var myDataTable = new YAHOO.widget.DataTable("myContainer", myColumnDefs, myDataSource);
 
-        this.onContextMenuClick = function(p_sType, p_aArgs, p_myDataTable) {
+        var onContextMenuClick = function(p_sType, p_aArgs, p_myDataTable) {
             var task = p_aArgs[1];
             if(task) {
                 // Extract which TR element triggered the context menu
@@ -93,13 +94,18 @@ YAHOO.util.Event.addListener(window, "load", function() {
             }
         };
 
-        this.myContextMenu = new YAHOO.widget.ContextMenu("mycontextmenu",
-                {trigger:this.myDataTable.getTbodyEl()});
-        this.myContextMenu.addItem("Delete Item");
+        var myContextMenu = new YAHOO.widget.ContextMenu("mycontextmenu",
+                {trigger:myDataTable.getTbodyEl()});
+        myContextMenu.addItem("Delete Item");
         // Render the ContextMenu instance to the parent container of the DataTable
-        this.myContextMenu.render("myContainer");
-        this.myContextMenu.clickEvent.subscribe(this.onContextMenuClick, this.myDataTable);
-    };
+        myContextMenu.render("myContainer");
+        myContextMenu.clickEvent.subscribe(onContextMenuClick, myDataTable);
+        
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
 });
 </script>
 

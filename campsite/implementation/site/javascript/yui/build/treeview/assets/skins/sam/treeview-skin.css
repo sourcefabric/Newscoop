@@ -2,6 +2,12 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
+version: 2.6.0
+*/
+/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
 version: 2.5.2
 */
 
@@ -12,9 +18,14 @@ version: 2.5.2
     margin-bottom:0; border:none;
 }
 
-.ygtvitem td {
+/*.ygtvitem td {*/
+.ygtvrow td {
     border: none; padding: 0;
 }
+.ygtvrow td a {
+	text-decoration:none;
+}
+
 
 /* first or middle sibling, no children */
 .ygtvtn {
@@ -30,7 +41,7 @@ version: 2.5.2
 }
 
 /* first or middle sibling, collapsable, hover */
-.ygtvtmh {
+.ygtvtmh,.ygtvtmhh {
     width:18px; height:22px; 
     cursor:pointer ;
     background: url(treeview-sprite.gif) 0 -4800px no-repeat; 
@@ -44,7 +55,7 @@ version: 2.5.2
 }
 
 /* first or middle sibling, expandable, hover */
-.ygtvtph {
+.ygtvtph ,.ygtvtphh {
     width:18px; height:22px; 
     cursor:pointer ;
     background: url(treeview-sprite.gif) 0 -7200px no-repeat; 
@@ -64,7 +75,7 @@ version: 2.5.2
 }
 
 /* Last sibling, collapsable, hover */
-.ygtvlmh {
+.ygtvlmh,.ygtvlmhh {
     width:18px; height:22px; 
     cursor:pointer ;
     background: url(treeview-sprite.gif) 0 -800px no-repeat; 
@@ -78,7 +89,7 @@ version: 2.5.2
 }
 
 /* Last sibling, expandable, hover */
-.ygtvlph { 
+.ygtvlph,.ygtvlphh { 
     width:18px; height:22px; cursor:pointer ;
     background: url(treeview-sprite.gif) 0 -3200px no-repeat; 
 }
@@ -108,6 +119,80 @@ version: 2.5.2
     margin-left:2px;
     text-decoration: none;
     background-color: white; /* workaround for IE font smoothing bug */
+	cursor:pointer;
+}
+
+.ygtvcontent {
+	cursor:default;
 }
 
 .ygtvspacer { height: 22px; width: 12px; }
+
+.ygtvfocus {
+	background-color: #c0e0e0;
+	border: none;
+}
+.ygtvfocus .ygtvlabel, .ygtvfocus .ygtvlabel:link, .ygtvfocus .ygtvlabel:visited, .ygtvfocus .ygtvlabel:hover {
+	background-color: #c0e0e0;
+}
+
+.ygtvfocus a , .ygtvrow  td a {
+	outline-style:none;
+}
+
+
+.ygtvok {
+    width:18px; height:22px; 
+    background: url(treeview-sprite.gif) 0 -8800px no-repeat; 
+}
+
+.ygtvok:hover {
+    background: url(treeview-sprite.gif) 0 -8844px no-repeat; 
+}
+	
+.ygtvcancel {
+    width:18px; height:22px; 
+    background: url(treeview-sprite.gif) 0 -8822px no-repeat; 
+}
+
+.ygtvcancel:hover  {
+    background: url(treeview-sprite.gif) 0 -8866px no-repeat; 
+}
+
+.ygtv-label-editor {
+	background-color:#f2f2f2;
+	border: 1px solid silver;
+	position:absolute;
+	display:none;
+	overflow:hidden;
+	margin:auto;
+	z-index:9000;
+}
+
+.ygtv-edit-TextNode  {
+	width: 190px;
+}
+
+.ygtv-edit-TextNode .ygtvcancel, .ygtv-edit-TextNode .ygtvok  {
+	border:none;
+}
+
+.ygtv-edit-TextNode .ygtv-button-container {
+	float: right;
+}
+
+.ygtv-edit-TextNode .ygtv-input  input{
+	width: 140px;
+}
+
+.ygtv-edit-DateNode .ygtvcancel {
+	border:none;
+}
+.ygtv-edit-DateNode .ygtvok  {
+	display:none;
+}
+
+.ygtv-edit-DateNode   .ygtv-button-container {
+	text-align:right;
+	margin:auto;
+}

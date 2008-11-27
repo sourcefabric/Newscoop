@@ -63,6 +63,7 @@ body {
 
 <body class=" yui-skin-sam">
 
+
 <h1>MenuItem Configuration Properties</h1>
 
 <div class="exampleIntro">
@@ -122,11 +123,6 @@ below to make the Menu instance visible if it is hidden.
         */
 
         oMenu.render("rendertarget");
-
-
-        // Set focus to the Menu when it is made visible
-
-        oMenu.subscribe("show", oMenu.focus);
 
 
         YAHOO.util.Event.addListener("menutoggle", "click", oMenu.show, null, oMenu);

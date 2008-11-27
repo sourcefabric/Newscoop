@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>imageloader&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>imageloader&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_imageloader.html">imageloader</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                    
@@ -43,6 +45,10 @@ according to certain triggers, enabling faster load times
 and a more responsive UI.
                     </div>
 
+
+
+<div class="yui-gc">
+    <div class="yui-u first">
                     <form onsubmit="return false">
                         <p>Search imageloader:
                         <div id="propertysearch">
@@ -55,7 +61,11 @@ and a more responsive UI.
                     <script type="text/javascript">
                         ALL_YUI_PROPS = [{"access": "", "host": "YAHOO.util.ImageLoader.group", "name": "addCustomTrigger", "url": "YAHOO.util.ImageLoader.group.html#method_addCustomTrigger"}, {"access": "", "host": "YAHOO.util.ImageLoader.group", "name": "addTrigger", "url": "YAHOO.util.ImageLoader.group.html#method_addTrigger"}, {"access": "private", "host": "YAHOO.util.ImageLoader.imgObj", "name": "_applyUrl", "url": "YAHOO.util.ImageLoader.imgObj.html#method__applyUrl"}, {"access": "private", "host": "YAHOO.util.ImageLoader.bgImgObj", "name": "_applyUrl", "url": "YAHOO.util.ImageLoader.bgImgObj.html#method__applyUrl"}, {"access": "private", "host": "YAHOO.util.ImageLoader.srcImgObj", "name": "_applyUrl", "url": "YAHOO.util.ImageLoader.srcImgObj.html#method__applyUrl"}, {"access": "private", "host": "YAHOO.util.ImageLoader.pngBgImgObj", "name": "_applyUrl", "url": "YAHOO.util.ImageLoader.pngBgImgObj.html#method__applyUrl"}, {"access": "private", "host": "YAHOO.util.ImageLoader.group", "name": "_classImageEls", "url": "YAHOO.util.ImageLoader.group.html#property__classImageEls"}, {"access": "", "host": "YAHOO.util.ImageLoader.group", "name": "className", "url": "YAHOO.util.ImageLoader.group.html#property_className"}, {"access": "private", "host": "YAHOO.util.ImageLoader.group", "name": "_customTriggers", "url": "YAHOO.util.ImageLoader.group.html#property__customTriggers"}, {"access": "", "host": "YAHOO.util.ImageLoader.imgObj", "name": "domId", "url": "YAHOO.util.ImageLoader.imgObj.html#property_domId"}, {"access": "", "host": "YAHOO.util.ImageLoader.group", "name": "fetch", "url": "YAHOO.util.ImageLoader.group.html#method_fetch"}, {"access": "", "host": "YAHOO.util.ImageLoader.imgObj", "name": "fetch", "url": "YAHOO.util.ImageLoader.imgObj.html#method_fetch"}, {"access": "private", "host": "YAHOO.util.ImageLoader.group", "name": "_fetchByClass", "url": "YAHOO.util.ImageLoader.group.html#method__fetchByClass"}, {"access": "private", "host": "YAHOO.util.ImageLoader.imgObj", "name": "_fetched", "url": "YAHOO.util.ImageLoader.imgObj.html#property__fetched"}, {"access": "private", "host": "YAHOO.util.ImageLoader.group", "name": "_foldCheck", "url": "YAHOO.util.ImageLoader.group.html#method__foldCheck"}, {"access": "", "host": "YAHOO.util.ImageLoader.group", "name": "foldConditional", "url": "YAHOO.util.ImageLoader.group.html#property_foldConditional"}, {"access": "private", "host": "YAHOO.util.ImageLoader.group", "name": "_getFetchTimeout", "url": "YAHOO.util.ImageLoader.group.html#method__getFetchTimeout"}, {"access": "", "host": "YAHOO.util.ImageLoader.imgObj", "name": "height", "url": "YAHOO.util.ImageLoader.imgObj.html#property_height"}, {"access": "private", "host": "YAHOO.util.ImageLoader.group", "name": "_imgObjs", "url": "YAHOO.util.ImageLoader.group.html#property__imgObjs"}, {"access": "", "host": "YAHOO.util.ImageLoader.group", "name": "name", "url": "YAHOO.util.ImageLoader.group.html#property_name"}, {"access": "private", "host": "YAHOO.util.ImageLoader.group", "name": "_onloadTasks", "url": "YAHOO.util.ImageLoader.group.html#method__onloadTasks"}, {"access": "", "host": "YAHOO.util.ImageLoader.pngBgImgObj", "name": "props", "url": "YAHOO.util.ImageLoader.pngBgImgObj.html#property_props"}, {"access": "", "host": "YAHOO.util.ImageLoader.group", "name": "registerBgImage", "url": "YAHOO.util.ImageLoader.group.html#method_registerBgImage"}, {"access": "", "host": "YAHOO.util.ImageLoader.group", "name": "registerPngBgImage", "url": "YAHOO.util.ImageLoader.group.html#method_registerPngBgImage"}, {"access": "", "host": "YAHOO.util.ImageLoader.group", "name": "registerSrcImage", "url": "YAHOO.util.ImageLoader.group.html#method_registerSrcImage"}, {"access": "", "host": "YAHOO.util.ImageLoader.imgObj", "name": "setVisible", "url": "YAHOO.util.ImageLoader.imgObj.html#property_setVisible"}, {"access": "private", "host": "YAHOO.util.ImageLoader.group", "name": "_timeout", "url": "YAHOO.util.ImageLoader.group.html#property__timeout"}, {"access": "", "host": "YAHOO.util.ImageLoader.group", "name": "timeoutLen", "url": "YAHOO.util.ImageLoader.group.html#property_timeoutLen"}, {"access": "private", "host": "YAHOO.util.ImageLoader.group", "name": "_triggers", "url": "YAHOO.util.ImageLoader.group.html#property__triggers"}, {"access": "", "host": "YAHOO.util.ImageLoader.imgObj", "name": "url", "url": "YAHOO.util.ImageLoader.imgObj.html#property_url"}, {"access": "", "host": "YAHOO.util.ImageLoader.imgObj", "name": "width", "url": "YAHOO.util.ImageLoader.imgObj.html#property_width"}];
                     </script>
+	    </div>
+    <div class="yui-u">
 
+	    </div>
+</div>
 
 			</div>
 		</div>
@@ -73,6 +83,8 @@ and a more responsive UI.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -113,6 +125,8 @@ and a more responsive UI.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -165,7 +179,7 @@ and a more responsive UI.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

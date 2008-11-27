@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>get&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>get&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_get.html">get</a>
@@ -21,14 +21,16 @@
                  &gt; Get.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -218,6 +220,21 @@
     <span class="o">};</span>
 
     <span class="c">/**</span>
+<span class="c">     * Timeout detected</span>
+<span class="c">     * @method _timeout</span>
+<span class="c">     * @param id {string} the id of the request</span>
+<span class="c">     * @private</span>
+<span class="c">     */</span>
+    <span class="k">var</span> <span class="nx">_timeout</span> <span class="o">=</span> <span class="k">function</span><span class="o">(</span><span class="nx">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s2">&quot;Timeout &quot;</span> <span class="o">+</span> <span class="nx">id</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;get&quot;</span><span class="o">);</span>
+        <span class="k">var</span> <span class="nx">q</span> <span class="o">=</span> <span class="nx">queues</span><span class="o">[</span><span class="nx">id</span><span class="o">];</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nx">q</span><span class="o">.</span><span class="nx">onTimeout</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">var</span> <span class="nx">sc</span><span class="o">=</span><span class="nx">q</span><span class="o">.</span><span class="nx">context</span> <span class="o">||</span> <span class="nx">q</span><span class="o">;</span>
+            <span class="nx">q</span><span class="o">.</span><span class="nx">onTimeout</span><span class="o">.</span><span class="nx">call</span><span class="o">(</span><span class="nx">sc</span><span class="o">,</span> <span class="nx">_returnData</span><span class="o">(</span><span class="nx">q</span><span class="o">));</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+
+    <span class="c">/**</span>
 <span class="c">     * Loads the next item for a given request</span>
 <span class="c">     * @method _next</span>
 <span class="c">     * @param id {string} the id of the request</span>
@@ -227,6 +244,11 @@
     <span class="k">var</span> <span class="nx">_next</span> <span class="o">=</span> <span class="k">function</span><span class="o">(</span><span class="nx">id</span><span class="o">,</span> <span class="nx">loaded</span><span class="o">)</span> <span class="o">{</span>
         <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s2">&quot;_next: &quot;</span> <span class="o">+</span> <span class="nx">id</span> <span class="o">+</span> <span class="s2">&quot;, loaded: &quot;</span> <span class="o">+</span> <span class="nx">loaded</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;Get&quot;</span><span class="o">);</span>
         <span class="k">var</span> <span class="nx">q</span> <span class="o">=</span> <span class="nx">queues</span><span class="o">[</span><span class="nx">id</span><span class="o">];</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="nx">q</span><span class="o">.</span><span class="nx">timer</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c">// Y.log(&#39;cancel timer&#39;);</span>
+<span class="c"></span>            <span class="nx">q</span><span class="o">.</span><span class="nx">timer</span><span class="o">.</span><span class="nx">cancel</span><span class="o">();</span>
+        <span class="o">}</span>
 
         <span class="k">if</span> <span class="o">(</span><span class="nx">q</span><span class="o">.</span><span class="nx">aborted</span><span class="o">)</span> <span class="o">{</span>
             <span class="k">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="s2">&quot;transaction &quot;</span> <span class="o">+</span> <span class="nx">id</span> <span class="o">+</span> <span class="s2">&quot; was aborted&quot;</span><span class="o">;</span>
@@ -276,7 +298,20 @@
 
 
         <span class="k">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">q</span><span class="o">.</span><span class="nx">url</span><span class="o">[</span><span class="m">0</span><span class="o">];</span>
+
+        <span class="c">// if the url is undefined, this is probably a trailing comma problem in IE</span>
+<span class="c"></span>        <span class="k">if</span> <span class="o">(!</span><span class="nx">url</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nx">q</span><span class="o">.</span><span class="nx">url</span><span class="o">.</span><span class="nx">shift</span><span class="o">();</span> 
+            <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;skipping empty url&#39;</span><span class="o">);</span>
+            <span class="k">return</span> <span class="nx">_next</span><span class="o">(</span><span class="nx">id</span><span class="o">);</span>
+        <span class="o">}</span>
+
         <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s2">&quot;attempting to load &quot;</span> <span class="o">+</span> <span class="nx">url</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;Get&quot;</span><span class="o">);</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="nx">q</span><span class="o">.</span><span class="nx">timeout</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c">// Y.log(&#39;create timer&#39;);</span>
+<span class="c"></span>            <span class="nx">q</span><span class="o">.</span><span class="nx">timer</span> <span class="o">=</span> <span class="nx">lang</span><span class="o">.</span><span class="nx">later</span><span class="o">(</span><span class="nx">q</span><span class="o">.</span><span class="nx">timeout</span><span class="o">,</span> <span class="nx">q</span><span class="o">,</span> <span class="nx">_timeout</span><span class="o">,</span> <span class="nx">id</span><span class="o">);</span>
+        <span class="o">}</span>
 
         <span class="k">if</span> <span class="o">(</span><span class="nx">q</span><span class="o">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s2">&quot;script&quot;</span><span class="o">)</span> <span class="o">{</span>
             <span class="nx">n</span> <span class="o">=</span> <span class="nx">_scriptNode</span><span class="o">(</span><span class="nx">url</span><span class="o">,</span> <span class="nx">w</span><span class="o">,</span> <span class="nx">q</span><span class="o">.</span><span class="nx">charset</span><span class="o">);</span>
@@ -355,8 +390,9 @@
             <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">i</span><span class="o">=</span><span class="m">0</span><span class="o">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">l</span><span class="o">;</span> <span class="nx">i</span><span class="o">=</span><span class="nx">i</span><span class="o">+</span><span class="m">1</span><span class="o">)</span> <span class="o">{</span>
                 <span class="nx">h</span><span class="o">.</span><span class="nx">removeChild</span><span class="o">(</span><span class="nx">n</span><span class="o">[</span><span class="nx">i</span><span class="o">]);</span>
             <span class="o">}</span>
+
+            <span class="nx">q</span><span class="o">.</span><span class="nx">nodes</span> <span class="o">=</span> <span class="o">[];</span>
         <span class="o">}</span>
-        <span class="nx">q</span><span class="o">.</span><span class="nx">nodes</span> <span class="o">=</span> <span class="o">[];</span>
     <span class="o">};</span>
 
     <span class="c">/**</span>
@@ -382,6 +418,7 @@
             <span class="nx">type</span><span class="o">:</span> <span class="nx">type</span><span class="o">,</span>
             <span class="nx">url</span><span class="o">:</span> <span class="nx">url</span><span class="o">,</span>
             <span class="nx">finished</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+            <span class="nx">aborted</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
             <span class="nx">nodes</span><span class="o">:</span> <span class="o">[]</span>
         <span class="o">});</span>
 
@@ -423,6 +460,7 @@
                 <span class="k">var</span> <span class="nx">rs</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">readyState</span><span class="o">;</span>
                 <span class="k">if</span> <span class="o">(</span><span class="s2">&quot;loaded&quot;</span> <span class="o">===</span> <span class="nx">rs</span> <span class="o">||</span> <span class="s2">&quot;complete&quot;</span> <span class="o">===</span> <span class="nx">rs</span><span class="o">)</span> <span class="o">{</span>
                     <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="nx">id</span> <span class="o">+</span> <span class="s2">&quot; onload &quot;</span> <span class="o">+</span> <span class="nx">url</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;Get&quot;</span><span class="o">);</span>
+                    <span class="nx">n</span><span class="o">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
                     <span class="nx">f</span><span class="o">(</span><span class="nx">id</span><span class="o">,</span> <span class="nx">url</span><span class="o">);</span>
                 <span class="o">}</span>
             <span class="o">};</span>
@@ -602,6 +640,25 @@
 <span class="c">         * &lt;dt&gt;</span>
 <span class="c">         * &lt;/dl&gt;</span>
 <span class="c">         * &lt;/dd&gt;</span>
+<span class="c">         * &lt;dt&gt;onTimeout&lt;/dt&gt;</span>
+<span class="c">         * &lt;dd&gt;</span>
+<span class="c">         * callback to execute when a timeout occurs.</span>
+<span class="c">         * The callback receives an object back with the following</span>
+<span class="c">         * data:</span>
+<span class="c">         * &lt;dl&gt;</span>
+<span class="c">         * &lt;dt&gt;win&lt;/dt&gt;</span>
+<span class="c">         * &lt;dd&gt;the window the script(s) were inserted into&lt;/dd&gt;</span>
+<span class="c">         * &lt;dt&gt;data&lt;/dt&gt;</span>
+<span class="c">         * &lt;dd&gt;the data object passed in when the request was made&lt;/dd&gt;</span>
+<span class="c">         * &lt;dt&gt;nodes&lt;/dt&gt;</span>
+<span class="c">         * &lt;dd&gt;An array containing references to the nodes that were</span>
+<span class="c">         * inserted&lt;/dd&gt;</span>
+<span class="c">         * &lt;dt&gt;purge&lt;/dt&gt;</span>
+<span class="c">         * &lt;dd&gt;A function that, when executed, will remove the nodes</span>
+<span class="c">         * that were inserted&lt;/dd&gt;</span>
+<span class="c">         * &lt;dt&gt;</span>
+<span class="c">         * &lt;/dl&gt;</span>
+<span class="c">         * &lt;/dd&gt;</span>
 <span class="c">         * &lt;dt&gt;scope&lt;/dt&gt;</span>
 <span class="c">         * &lt;dd&gt;the execution context for the callbacks&lt;/dd&gt;</span>
 <span class="c">         * &lt;dt&gt;win&lt;/dt&gt;</span>
@@ -631,6 +688,8 @@
 <span class="c">         * &lt;/dl&gt;</span>
 <span class="c">         * &lt;dt&gt;charset&lt;/dt&gt;</span>
 <span class="c">         * &lt;dd&gt;Node charset, default utf-8&lt;/dd&gt;</span>
+<span class="c">         * &lt;dt&gt;timeout&lt;/dt&gt;</span>
+<span class="c">         * &lt;dd&gt;Number of milliseconds to wait before aborting and firing the timeout event&lt;/dd&gt;</span>
 <span class="c">         * &lt;pre&gt;</span>
 <span class="c">         * // assumes yahoo, dom, and event are already on the page</span>
 <span class="c">         * &amp;nbsp;&amp;nbsp;YAHOO.util.Get.script(</span>
@@ -647,6 +706,7 @@
 <span class="c">         * &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;YAHOO.log(&quot;transaction failed&quot;);</span>
 <span class="c">         * &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#125;,</span>
 <span class="c">         * &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;data: &quot;foo&quot;,</span>
+<span class="c">         * &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;timeout: 10000, // 10 second timeout</span>
 <span class="c">         * &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;scope: YAHOO,</span>
 <span class="c">         * &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;// win: otherframe // target another window/frame</span>
 <span class="c">         * &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;autopurge: true // allow the utility to choose when to remove the nodes</span>
@@ -730,6 +790,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -769,6 +831,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -817,7 +881,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

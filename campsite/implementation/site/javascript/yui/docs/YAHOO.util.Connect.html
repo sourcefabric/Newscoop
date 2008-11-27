@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>connection&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>connection&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_connection.html">connection</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -76,15 +78,28 @@ event name.
                                     <hr />
                                     </div>
                                     <div class="private">
+                                    <h4><a name="property__default_form_header">_default_form_header</a>
+                                        <code>- private static boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            The default header used for transactions involving the
+use of HTML forms.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
                                     <h4><a name="property__default_post_header">_default_post_header</a>
                                         <code>- private static boolean</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Determines if a default header of
-Content-Type of 'application/x-www-form-urlencoded'
-will be added to client HTTP headers sent for POST
-transactions.
+                                            The default header used for POST transactions.
                                         </div>
                                     </div>
      
@@ -509,7 +524,10 @@ response in the HTTP 2xx range.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -556,7 +574,10 @@ for each key-value, and appends them to the HTML form object.
                                                     </code></dt>
                                                     <dd>formElements Collection of hidden fields.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -626,7 +647,10 @@ for each key-value, and appends them to the HTML form object.
                                                     </code></dt>
                                                     <dd>Returns the connection object</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -692,7 +716,10 @@ If an abort was successful, the status property will report a value of -1.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -739,7 +766,10 @@ document upon completion of the upload transaction.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -795,7 +825,10 @@ object's property values.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -809,7 +842,7 @@ object's property values.
                                          private 
                                          static 
                                         
-                                        void
+                                        
                                             <strong>createXhrObject</strong>
                                            (
                                                 
@@ -835,14 +868,10 @@ the XMLHttpRequest instance and the transaction id.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>object</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -878,7 +907,10 @@ transaction id and increments the transaction id counter.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -935,7 +967,10 @@ will process the response, and the timer will be cleared.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -999,7 +1034,10 @@ exception was encountered.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1054,7 +1092,10 @@ specific to each transaction
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1117,7 +1158,10 @@ automatically sent with each transaction.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1143,7 +1187,7 @@ automatically sent with each transaction.
                                         </code>
                                         
                                         <div class="description">
-                                            Public method to check if the transaction is still being processed.
+                                            Determines if the transaction is still being processed.
                                         </div>
 
                                         <div class="description">
@@ -1163,7 +1207,10 @@ automatically sent with each transaction.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1209,7 +1256,10 @@ automatically sent with each transaction.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1243,7 +1293,10 @@ automatically sent with each transaction.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1278,7 +1331,10 @@ with file upload transaction is sent.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1292,7 +1348,7 @@ with file upload transaction is sent.
                                         
                                          static 
                                         
-                                        void
+                                        
                                             <strong>setDefaultPostHeader</strong>
                                            (
                                                 
@@ -1304,7 +1360,7 @@ with file upload transaction is sent.
                                         </code>
                                         
                                         <div class="description">
-                                            Member to enable or disable the default POST header.
+                                            Member to override the default POST header.
                                         </div>
 
                                         <div class="description">
@@ -1317,14 +1373,10 @@ with file upload transaction is sent.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>void</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1338,7 +1390,7 @@ with file upload transaction is sent.
                                         
                                          static 
                                         
-                                        void
+                                        
                                             <strong>setDefaultXhrHeader</strong>
                                            (
                                                 
@@ -1350,7 +1402,7 @@ with file upload transaction is sent.
                                         </code>
                                         
                                         <div class="description">
-                                            Member to enable or disable the default POST header.
+                                            Member to override the default transaction header..
                                         </div>
 
                                         <div class="description">
@@ -1363,14 +1415,10 @@ with file upload transaction is sent.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>void</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1433,7 +1481,10 @@ a HTTP header Content-Type of application/x-www-form-urlencoded.
                                                     </code></dt>
                                                     <dd>string of the HTML form field name and value pairs..</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1479,7 +1530,10 @@ a HTTP header Content-Type of application/x-www-form-urlencoded.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1493,7 +1547,7 @@ a HTTP header Content-Type of application/x-www-form-urlencoded.
                                         
                                          static 
                                         
-                                        void
+                                        
                                             <strong>setPollingInterval</strong>
                                            (
                                                 
@@ -1518,14 +1572,10 @@ a HTTP header Content-Type of application/x-www-form-urlencoded.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>void</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1539,7 +1589,7 @@ a HTTP header Content-Type of application/x-www-form-urlencoded.
                                         
                                          static 
                                         
-                                        void
+                                        
                                             <strong>setProgId</strong>
                                            (
                                                 
@@ -1566,14 +1616,10 @@ without internal code modifications.
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>void</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1644,7 +1690,10 @@ iframe created in createFrame to facilitate the transaction.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1675,6 +1724,8 @@ iframe created in createFrame to facilitate the transaction.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -1715,6 +1766,8 @@ iframe created in createFrame to facilitate the transaction.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1758,6 +1811,9 @@ iframe created in createFrame to facilitate the transaction.
                         <h4>Properties</h4>
                         <ul class="content">        
                                 <li class="private"><a href="#property__customEvents">_customEvents</a>
+                                        <!--<code>&lt;CustomEvent&gt;</code>-->
+                                </li>
+                                <li class="private"><a href="#property__default_form_header">_default_form_header</a>
                                         <!--<code>&lt;CustomEvent&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__default_post_header">_default_post_header</a>
@@ -1853,7 +1909,7 @@ iframe created in createFrame to facilitate the transaction.
                                 <li class="private"><!--<code>object</code>-->
                                 <a href="#method_createResponseObject">createResponseObject</a>
                                 </li>
-                                <li class="private"><!--<code>void</code>-->
+                                <li class="private"><!--<code></code>-->
                                 <a href="#method_createXhrObject">createXhrObject</a>
                                 </li>
                                 <li class="private"><!--<code>object</code>-->
@@ -1883,10 +1939,10 @@ iframe created in createFrame to facilitate the transaction.
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method_resetFormState">resetFormState</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_setDefaultPostHeader">setDefaultPostHeader</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_setDefaultXhrHeader">setDefaultXhrHeader</a>
                                 </li>
                                 <li class=""><!--<code>string</code>-->
@@ -1895,10 +1951,10 @@ iframe created in createFrame to facilitate the transaction.
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method_setHeader">setHeader</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_setPollingInterval">setPollingInterval</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=""><!--<code></code>-->
                                 <a href="#method_setProgId">setProgId</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
@@ -1914,7 +1970,7 @@ iframe created in createFrame to facilitate the transaction.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

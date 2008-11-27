@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>yuitest&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>yuitest&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_yuitest.html">yuitest</a>
@@ -21,14 +21,16 @@
                  &gt; TestFormat.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -61,6 +63,10 @@
 
     <span class="k">var</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">;</span>
     <span class="k">var</span> <span class="nx">xml</span> <span class="c">/*:String*/</span> <span class="o">=</span> <span class="s2">&quot;&lt;&quot;</span> <span class="o">+</span> <span class="nx">results</span><span class="o">.</span><span class="nx">type</span> <span class="o">+</span> <span class="s2">&quot; name=\&quot;&quot;</span> <span class="o">+</span> <span class="nx">results</span><span class="o">.</span><span class="nx">name</span><span class="o">.</span><span class="nx">replace</span><span class="o">(</span><span class="sr">/&quot;/g</span><span class="o">,</span> <span class="s2">&quot;&amp;quot;&quot;</span><span class="o">).</span><span class="nx">replace</span><span class="o">(</span><span class="sr">/&#39;/g</span><span class="o">,</span> <span class="s2">&quot;&amp;apos;&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s2">&quot;\&quot;&quot;</span><span class="o">;</span>
+    
+    <span class="k">if</span> <span class="o">(</span><span class="nx">l</span><span class="o">.</span><span class="nx">isNumber</span><span class="o">(</span><span class="nx">results</span><span class="o">.</span><span class="nx">duration</span><span class="o">)){</span>
+        <span class="nx">xml</span> <span class="o">+=</span> <span class="s2">&quot; duration=\&quot;&quot;</span> <span class="o">+</span> <span class="nx">results</span><span class="o">.</span><span class="nx">duration</span> <span class="o">+</span> <span class="s2">&quot;\&quot;&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
     
     <span class="k">if</span> <span class="o">(</span><span class="nx">results</span><span class="o">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="o">){</span>
         <span class="nx">xml</span> <span class="o">+=</span> <span class="s2">&quot; result=\&quot;&quot;</span> <span class="o">+</span> <span class="nx">results</span><span class="o">.</span><span class="nx">result</span> <span class="o">+</span> <span class="s2">&quot;\&quot; message=\&quot;&quot;</span> <span class="o">+</span> <span class="nx">results</span><span class="o">.</span><span class="nx">message</span> <span class="o">+</span> <span class="s2">&quot;\&quot;&gt;&quot;</span><span class="o">;</span>
@@ -96,6 +102,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -136,6 +144,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -213,7 +223,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

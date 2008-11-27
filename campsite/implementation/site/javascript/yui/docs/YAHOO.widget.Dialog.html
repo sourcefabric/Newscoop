@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Container&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Container&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_container.html">container</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -310,7 +312,7 @@ level-one-html.html#ID-40002357">HTMLFormElement</a></code>
                                 <code>
                                     
                                         <a class="" href="YAHOO.widget.Module.html#property_body">body</a><span class="">,</span>
-                                        <a class="" href="YAHOO.widget.Module.html#property_browser">browser</a><span class="">,</span>
+                                        <a class=" deprecated" href="YAHOO.widget.Module.html#property_browser">browser</a><span class=" deprecated">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_cfg">cfg</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_contructor">contructor</a><span class="">,</span>
                                         <a class="private" href="YAHOO.widget.Module.html#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a><span class="private">,</span>
@@ -319,7 +321,7 @@ level-one-html.html#ID-40002357">HTMLFormElement</a></code>
                                         <a class="" href="YAHOO.widget.Module.html#property_footer">footer</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_header">header</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_id">id</a><span class="">,</span>
-                                        <a class="" href="YAHOO.widget.Module.html#property_imageRoot">imageRoot</a><span class="">,</span>
+                                        <a class=" deprecated" href="YAHOO.widget.Module.html#property_imageRoot">imageRoot</a><span class=" deprecated">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_isSecure">isSecure</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_platform">platform</a>
                                 </code>
@@ -330,6 +332,7 @@ level-one-html.html#ID-40002357">HTMLFormElement</a></code>
                             <div class="content">
                                 <code>
                                     
+                                        <a class="" href="YAHOO.widget.Overlay.html#property_CONTEXT_TRIGGERS">CONTEXT_TRIGGERS</a><span class="">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_EVENT_TYPES">EVENT_TYPES</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_YAHOO.widget.Overlay._initialized">YAHOO.widget.Overlay._initialized</a>
@@ -340,6 +343,208 @@ level-one-html.html#ID-40002357">HTMLFormElement</a></code>
                         <div class="section method details">
                             <h3 id="methods">Methods</h3>
                             <div class="content">
+                                    <div class="protected">
+                                    <h4>
+                                        <a name="method__doClose">_doClose</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         protected 
+                                        
+                                        
+                                        void
+                                            <strong>_doClose</strong>
+                                           (
+                                                
+                                                        
+                                                         e
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Event handler for the close icon
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>e &lt;DOMEvent&gt;</code>
+                                                            
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__getButton">_getButton</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        YAHOO.widget.Button|HTMLElement
+                                            <strong>_getButton</strong>
+                                           (
+                                                
+                                                        
+                                                         button
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Helper method to normalize button references. It either returns the 
+YUI Button instance for the given element if found,
+or the passes back the HTMLElement reference if a corresponding YUI Button
+reference is not found or YAHOO.widget.Button does not exist on the page.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>button &lt;HTMLElement&gt;</code>
+                                                            
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        YAHOO.widget.Button|HTMLElement
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="protected">
+                                    <h4>
+                                        <a name="method__getFormAttributes">_getFormAttributes</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         protected 
+                                        
+                                        
+                                        Object
+                                            <strong>_getFormAttributes</strong>
+                                           (
+                                                
+                                                        
+                                                         oForm
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Retrieves important attributes (currently method and action) from
+the form element, accounting for any elements which may have the same name 
+as the attributes. Defaults to "POST" and "" for method and action respectively
+if the attribute cannot be retrieved.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>oForm &lt;HTMLFormElement&gt;</code>
+                                                             The HTML Form element from which to retrieve the attributes
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Object
+                                                    </code></dt>
+                                                    <dd>Object literal, with method and action String properties.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="protected">
+                                    <h4>
+                                        <a name="method__submitHandler">_submitHandler</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         protected 
+                                        
+                                        
+                                        void
+                                            <strong>_submitHandler</strong>
+                                           (
+                                                
+                                                        
+                                                         e
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Internal handler for the form submit event
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>e &lt;DOMEvent&gt;</code>
+                                                             The DOM Event object
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
                                     <div class="">
                                     <h4>
                                         <a name="method_blurButtons">blurButtons</a></h4>
@@ -369,7 +574,10 @@ configuration property.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -403,7 +611,10 @@ configuration property.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -467,7 +678,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -534,7 +748,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -599,7 +816,10 @@ this will usually equal the owner.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -634,7 +854,10 @@ to null.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -678,7 +901,10 @@ connection/#file">Connection Manager documenation on file uploads</a>.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -714,7 +940,10 @@ called when the Dialog is made visible.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -750,7 +979,10 @@ when the Dialog is made visible.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -785,7 +1017,10 @@ configuration property.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -820,7 +1055,10 @@ button defined via the "buttons" configuration property.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -855,7 +1093,10 @@ configuration property.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -894,7 +1135,10 @@ is returned.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -930,7 +1174,10 @@ currently contained in the form.
                                                     <dd>A JSON object reprsenting the data of the 
 current form.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -995,7 +1242,10 @@ See configuration documentation for more details.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1030,7 +1280,10 @@ using the Dialog's Config object (cfg).
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1065,7 +1318,10 @@ automatically at appropriate times by the Dialog class.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1100,7 +1356,107 @@ not currently present.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_setFirstLastFocusable">setFirstLastFocusable</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>setFirstLastFocusable</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Configures instance properties, pointing to the 
+first and last focusable elements in the Dialog's form.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_setTabLoop">setTabLoop</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>setTabLoop</strong>
+                                           (
+                                                
+                                                        
+                                                         firstElement
+                                                    
+                                                
+                                                        , 
+                                                         lastElement
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Sets up a tab, shift-tab loop between the first and last elements
+provided. NOTE: Sets up the preventBackTab and preventTabOut KeyListener
+instance properties, which are reset everytime this method is invoked.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>firstElement &lt;HTMLElement&gt;</code>
+                                                            
+                                                        </dd>
+                                                        <dd>
+                                                            <code>lastElement &lt;HTMLElement&gt;</code>
+                                                            
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1138,7 +1494,10 @@ from being hidden.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1172,7 +1531,10 @@ from being hidden.
                                                     </code></dt>
                                                     <dd>The string representation of the Dialog</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1209,7 +1571,10 @@ overridden if validation is necessary.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1222,7 +1587,7 @@ overridden if validation is necessary.
                                 <h4>Methods inherited from <a href="YAHOO.widget.Panel.html">YAHOO.widget.Panel</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="protected" href="YAHOO.widget.Panel.html#method__addFocusHandlers">_addFocusHandlers</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Panel.html#method__onElementFocus">_onElementFocus</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Panel.html#method__removeFocusHandlers">_removeFocusHandlers</a><span class="protected">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_buildMask">buildMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_buildWrapper">buildWrapper</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configClose">configClose</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configDraggable">configDraggable</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configHeight">configHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configKeyListeners">configKeyListeners</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configModal">configModal</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configUnderlay">configUnderlay</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configWidth">configWidth</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configzIndex">configzIndex</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_hideMask">hideMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_registerDragDrop">registerDragDrop</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_removeMask">removeMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_render">render</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_showMask">showMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_sizeMask">sizeMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_sizeUnderlay">sizeUnderlay</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_stackMask">stackMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_toString">toString</a>
+                                            <a class="protected" href="YAHOO.widget.Panel.html#method__addFocusHandlers">_addFocusHandlers</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Panel.html#method__autoFillOnHeightChange">_autoFillOnHeightChange</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Panel.html#method__createHiddenFocusElement">_createHiddenFocusElement</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Panel.html#method__doClose">_doClose</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Panel.html#method__onElementFocus">_onElementFocus</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Panel.html#method__removeFocusHandlers">_removeFocusHandlers</a><span class="protected">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_buildMask">buildMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_buildWrapper">buildWrapper</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configClose">configClose</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configDraggable">configDraggable</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configHeight">configHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configKeyListeners">configKeyListeners</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configModal">configModal</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configStrings">configStrings</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configUnderlay">configUnderlay</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configWidth">configWidth</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_configzIndex">configzIndex</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_focusFirst">focusFirst</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_focusLast">focusLast</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_getFocusableElements">getFocusableElements</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_hideMask">hideMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_registerDragDrop">registerDragDrop</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_removeMask">removeMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_render">render</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_setFirstLastFocusable">setFirstLastFocusable</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_setTabLoop">setTabLoop</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_showMask">showMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_sizeMask">sizeMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_sizeUnderlay">sizeUnderlay</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_stackMask">stackMask</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Panel.html#method_toString">toString</a>
                                     </code>
                                 </div>
                             </div>
@@ -1238,7 +1603,7 @@ overridden if validation is necessary.
                                 <h4>Methods inherited from <a href="YAHOO.widget.Overlay.html">YAHOO.widget.Overlay</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__primeXYFromDOM">_primeXYFromDOM</a><span class="protected">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_align">align</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_bringToTop">bringToTop</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_center">center</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configConstrainToViewport">configConstrainToViewport</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configContext">configContext</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configFixedCenter">configFixedCenter</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configHeight">configHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configIframe">configIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configVisible">configVisible</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configWidth">configWidth</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configX">configX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configXY">configXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configY">configY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configzIndex">configzIndex</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_doCenterOnDOMEvent">doCenterOnDOMEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_enforceConstraints">enforceConstraints</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedXY">getConstrainedXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideIframe">hideIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideMacGeckoScrollbars">hideMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_moveTo">moveTo</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_onDomResize">onDomResize</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showIframe">showIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showMacGeckoScrollbars">showMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_stackIframe">stackIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncIframe">syncIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncPosition">syncPosition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_toString">toString</a>
+                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__alignOnTrigger">_alignOnTrigger</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__autoFillOnHeightChange">_autoFillOnHeightChange</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__findTriggerCE">_findTriggerCE</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__getComputedHeight">_getComputedHeight</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__getPreciseHeight">_getPreciseHeight</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__primeXYFromDOM">_primeXYFromDOM</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__processTriggers">_processTriggers</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__validateAutoFillHeight">_validateAutoFillHeight</a><span class="protected">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_align">align</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_bringToTop">bringToTop</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_center">center</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configAutoFillHeight">configAutoFillHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configConstrainToViewport">configConstrainToViewport</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configContext">configContext</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configFixedCenter">configFixedCenter</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configHeight">configHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configIframe">configIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configVisible">configVisible</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configWidth">configWidth</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configX">configX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configXY">configXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configY">configY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configzIndex">configzIndex</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_doCenterOnDOMEvent">doCenterOnDOMEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_enforceConstraints">enforceConstraints</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_fillHeight">fillHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedX">getConstrainedX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedXY">getConstrainedXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedY">getConstrainedY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideIframe">hideIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideMacGeckoScrollbars">hideMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_moveTo">moveTo</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_onDomResize">onDomResize</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showIframe">showIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showMacGeckoScrollbars">showMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_stackIframe">stackIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncIframe">syncIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncPosition">syncPosition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_toString">toString</a>
                                     </code>
                                 </div>
                             </div>
@@ -1541,7 +1906,7 @@ are "async", "form", and "manual".
                             <h4>Configuration attributes inherited from <a href="YAHOO.widget.Panel.html">YAHOO.widget.Panel</a>:</h4>
                             <div class="content">
                                 <code>
-                                        <a class="" href="YAHOO.widget.Panel.html#config_close">close</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Panel.html#config_draggable">draggable</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Panel.html#config_dragOnly">dragOnly</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Panel.html#config_keylisteners">keylisteners</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Panel.html#config_modal">modal</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Panel.html#config_underlay">underlay</a><span class="">,</span>
+                                        <a class="" href="YAHOO.widget.Panel.html#config_close">close</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Panel.html#config_draggable">draggable</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Panel.html#config_dragOnly">dragOnly</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Panel.html#config_keylisteners">keylisteners</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Panel.html#config_modal">modal</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Panel.html#config_strings">strings</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Panel.html#config_underlay">underlay</a><span class="">,</span>
                                 </code>
                             </div>
                         </div>
@@ -1557,7 +1922,7 @@ are "async", "form", and "manual".
                             <h4>Configuration attributes inherited from <a href="YAHOO.widget.Overlay.html">YAHOO.widget.Overlay</a>:</h4>
                             <div class="content">
                                 <code>
-                                        <a class="" href="YAHOO.widget.Overlay.html#config_constraintoviewport">constraintoviewport</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_context">context</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_fixedcenter">fixedcenter</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_height">height</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_iframe">iframe</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_width">width</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_x">x</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_xy">xy</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_y">y</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_zIndex">zIndex</a><span class="">,</span>
+                                        <a class="" href="YAHOO.widget.Overlay.html#config_autofillheight">autofillheight</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_constraintoviewport">constraintoviewport</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_context">context</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_fixedcenter">fixedcenter</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_height">height</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_iframe">iframe</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_preventcontextoverlap">preventcontextoverlap</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_width">width</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_x">x</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_xy">xy</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_y">y</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_zIndex">zIndex</a><span class="">,</span>
                                 </code>
                             </div>
                         </div>
@@ -1578,6 +1943,8 @@ are "async", "form", and "manual".
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -1618,6 +1985,8 @@ are "async", "form", and "manual".
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1709,6 +2078,18 @@ are "async", "form", and "manual".
                     <div class="module">
                         <h4>Methods</h4>
                         <ul class="content">        
+                                <li class="protected"><!--<code>void</code>-->
+                                <a href="#method__doClose">_doClose</a>
+                                </li>
+                                <li class="private"><!--<code>YAHOO.widget.Button|HTMLElement</code>-->
+                                <a href="#method__getButton">_getButton</a>
+                                </li>
+                                <li class="protected"><!--<code>Object</code>-->
+                                <a href="#method__getFormAttributes">_getFormAttributes</a>
+                                </li>
+                                <li class="protected"><!--<code>void</code>-->
+                                <a href="#method__submitHandler">_submitHandler</a>
+                                </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_blurButtons">blurButtons</a>
                                 </li>
@@ -1762,6 +2143,12 @@ are "async", "form", and "manual".
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_registerForm">registerForm</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_setFirstLastFocusable">setFirstLastFocusable</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_setTabLoop">setTabLoop</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_submit">submit</a>
@@ -1819,7 +2206,7 @@ are "async", "form", and "manual".
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -211,18 +211,19 @@ showHideInherited();
    event when it is inside a layout container, the layout container will
    refresh its layout.</p>
    
-   TODO: add parameters
-   
    <span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">source</span>:Class</code></td>
+<td width="20px"></td><td><code><span class="label">source</span>:Class</code> &mdash;  The class that will fire invalidating events (ie. TextField)
+   </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">events</span>:Array</code></td>
+<td width="20px"></td><td><code><span class="label">events</span>:Array</code> &mdash;  An Array of event constants (ie. Event.CHANGE)
+   
+   </td>
 </tr>
 </table>
 <br>
@@ -245,24 +246,26 @@ showHideInherited();
    fire events for size changes, calling this function will allow
    its size to properly affect its parent layout.
    
-   TODO: add parameters
-   
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">target</span>:DisplayObject</code></td>
+<td width="20px"></td><td><code><span class="label">target</span>:DisplayObject</code> &mdash;  The display object to resize
+   </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">width</span>:Number</code></td>
+<td width="20px"></td><td><code><span class="label">width</span>:Number</code> &mdash;   The new width of the display object
+   </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">height</span>:Number</code></td>
+<td width="20px"></td><td><code><span class="label">height</span>:Number</code> &mdash;  The new height of the display object
+   
+   </td>
 </tr>
 </table>
 <br>
@@ -311,24 +314,26 @@ showHideInherited();
    to update any property of a DisplayObject and notify its parent layout
    container to refresh if no event normally indicates this is needed.
    
-   TODO: add parameters
-   
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">target</span>:DisplayObject</code></td>
+<td width="20px"></td><td><code><span class="label">target</span>:DisplayObject</code> &mdash;  The display object whose property will be changed
+   </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">property</span>:String</code></td>
+<td width="20px"></td><td><code><span class="label">property</span>:String</code> &mdash;  The name of the property.
+   </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">value</span>:Object</code></td>
+<td width="20px"></td><td><code><span class="label">value</span>:Object</code> &mdash;   The value of the property
+   
+   </td>
 </tr>
 </table>
 <br>

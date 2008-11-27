@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Calendar&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Calendar&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_calendar.html">calendar</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -785,7 +787,7 @@ when the arrow up/down key is pressed on the year control
                                          private 
                                         
                                         
-                                        void
+                                        
                                             <strong>__getCfg</strong>
                                            (
                                                 
@@ -823,14 +825,10 @@ return the default value of the configuration property, as set in _DEFAULT_CFG
                                                         </dd>
                                                 </dl>
 
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd>The value of the configuration property</dd>
-                                                </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -865,7 +863,10 @@ return the default value of the configuration property, as set in _DEFAULT_CFG
                                                     <dd>The month index, or 0 if a UI element for the month
 is not found</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -900,7 +901,10 @@ is not found</dd>
                                                     <dd>The year value set in the UI, if valid. null is returned if 
 the UI does not contain a valid year value.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -947,7 +951,10 @@ on the Navigator's year control (yearEl).
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -994,7 +1001,10 @@ on the Navigator's year control (yearEl)
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1041,7 +1051,10 @@ on the first control (firstCtrl) in the Navigator.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1088,7 +1101,10 @@ on the last control (lastCtrl) in the Navigator.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1128,7 +1144,10 @@ See <a href="#applyKeyListeners">applyKeyListeners</a>
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1163,7 +1182,10 @@ hidden/shown.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1201,7 +1223,59 @@ The method is also registered as an HTMLElement resize listener on the Calendars
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="protected">
+                                    <h4>
+                                        <a name="method__update">_update</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         protected 
+                                        
+                                        
+                                        void
+                                            <strong>_update</strong>
+                                           (
+                                                
+                                                        
+                                                         cal
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Updates the Calendar rendered state, based on the state of the CalendarNavigator
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>cal &lt;object&gt;</code>
+                                                             The Calendar instance to update
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1235,7 +1309,10 @@ The method is also registered as an HTMLElement resize listener on the Calendars
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1269,7 +1346,10 @@ The method is also registered as an HTMLElement resize listener on the Calendars
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1311,7 +1391,10 @@ elements which can be reached using the tab key.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1349,7 +1432,10 @@ listeners
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1383,7 +1469,10 @@ listeners
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1417,7 +1506,10 @@ listeners
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1451,7 +1543,10 @@ listeners
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1485,7 +1580,10 @@ listeners
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1520,7 +1618,10 @@ container.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1555,7 +1656,10 @@ the containg element to the Calendar/CalendarGroup's container.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1589,7 +1693,10 @@ the containg element to the Calendar/CalendarGroup's container.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1625,7 +1732,10 @@ references to HTML references
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1661,7 +1771,10 @@ the UI contains an invalid value.
                                                     </code></dt>
                                                     <dd>The Navigator's current month index</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1697,7 +1810,10 @@ the UI contains an invalid value.
                                                     </code></dt>
                                                     <dd>The Navigator's current year value</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1732,7 +1848,10 @@ The show method will fire the Calendar/CalendarGroup's beforeHideNav event and h
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1766,7 +1885,10 @@ The show method will fire the Calendar/CalendarGroup's beforeHideNav event and h
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1812,7 +1934,10 @@ The show method will fire the Calendar/CalendarGroup's beforeHideNav event and h
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1846,7 +1971,10 @@ The show method will fire the Calendar/CalendarGroup's beforeHideNav event and h
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1880,7 +2008,10 @@ The show method will fire the Calendar/CalendarGroup's beforeHideNav event and h
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1916,7 +2047,10 @@ already been rendered.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1950,7 +2084,10 @@ already been rendered.
                                                     </code></dt>
                                                     <dd>The HTML created for the Button UI</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1996,7 +2133,10 @@ already been rendered.
                                                     </code></dt>
                                                     <dd>A reference to the buffer passed in.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2042,7 +2182,10 @@ already been rendered.
                                                     </code></dt>
                                                     <dd>A reference to the buffer passed in.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2088,7 +2231,10 @@ already been rendered.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2122,7 +2268,10 @@ already been rendered.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2168,7 +2317,10 @@ already been rendered.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2215,7 +2367,10 @@ provided year is invalid, it will not be set.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2249,7 +2404,10 @@ provided year is invalid, it will not be set.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2287,7 +2445,10 @@ The show method will fire the Calendar/CalendarGroup's beforeShowNav and showNav
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2321,7 +2482,10 @@ The show method will fire the Calendar/CalendarGroup's beforeShowNav and showNav
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2359,7 +2523,10 @@ Calendar/CalendarGroup's pagedate will not be updated.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2393,7 +2560,10 @@ Calendar/CalendarGroup's pagedate will not be updated.
                                                     </code></dt>
                                                     <dd>true, if the current UI state contains valid values, false if not</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2424,6 +2594,8 @@ Calendar/CalendarGroup's pagedate will not be updated.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class="selected"><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -2464,6 +2636,8 @@ Calendar/CalendarGroup's pagedate will not be updated.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -2649,7 +2823,7 @@ Calendar/CalendarGroup's pagedate will not be updated.
                     <div class="module">
                         <h4>Methods</h4>
                         <ul class="content">        
-                                <li class="private"><!--<code>void</code>-->
+                                <li class="private"><!--<code></code>-->
                                 <a href="#method___getCfg">__getCfg</a>
                                 </li>
                                 <li class="protected"><!--<code>Number</code>-->
@@ -2678,6 +2852,9 @@ Calendar/CalendarGroup's pagedate will not be updated.
                                 </li>
                                 <li class="protected"><!--<code>void</code>-->
                                 <a href="#method__syncMask">_syncMask</a>
+                                </li>
+                                <li class="protected"><!--<code>void</code>-->
+                                <a href="#method__update">_update</a>
                                 </li>
                                 <li class="protected"><!--<code>void</code>-->
                                 <a href="#method__updateMonthUI">_updateMonthUI</a>
@@ -2785,7 +2962,7 @@ Calendar/CalendarGroup's pagedate will not be updated.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

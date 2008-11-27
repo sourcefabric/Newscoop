@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Drag and Drop&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Drag and Drop&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_dragdrop.html">dragdrop</a>
@@ -21,14 +21,16 @@
                  &gt; DragDropMgr.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -61,9 +63,124 @@
 <span class="c"> */</span>
 <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">DragDropMgr</span> <span class="o">=</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
 
-    <span class="k">var</span> <span class="nx">Event</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Event</span><span class="o">;</span>
+    <span class="k">var</span> <span class="nx">Event</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Event</span><span class="o">,</span>
+        <span class="nx">Dom</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Dom</span><span class="o">;</span>
 
     <span class="k">return</span> <span class="o">{</span>
+        <span class="c">/**</span>
+<span class="c">        * This property is used to turn on global use of the shim element on all DragDrop instances, defaults to false for backcompat. (Use: YAHOO.util.DDM.useShim = true)</span>
+<span class="c">        * @property useShim</span>
+<span class="c">        * @type Boolean</span>
+<span class="c">        * @static</span>
+<span class="c">        */</span>
+        <span class="nx">useShim</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+        <span class="c">/**</span>
+<span class="c">        * This property is used to determine if the shim is active over the screen, default false.</span>
+<span class="c">        * @private</span>
+<span class="c">        * @property _shimActive</span>
+<span class="c">        * @type Boolean</span>
+<span class="c">        * @static</span>
+<span class="c">        */</span>
+        <span class="nx">_shimActive</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+        <span class="c">/**</span>
+<span class="c">        * This property is used when useShim is set on a DragDrop object to store the current state of DDM.useShim so it can be reset when a drag operation is done.</span>
+<span class="c">        * @private</span>
+<span class="c">        * @property _shimState</span>
+<span class="c">        * @type Boolean</span>
+<span class="c">        * @static</span>
+<span class="c">        */</span>
+        <span class="nx">_shimState</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+        <span class="c">/**</span>
+<span class="c">        * This property is used when useShim is set to true, it will set the opacity on the shim to .5 for debugging. Use: (YAHOO.util.DDM._debugShim = true;)</span>
+<span class="c">        * @private</span>
+<span class="c">        * @property _debugShim</span>
+<span class="c">        * @type Boolean</span>
+<span class="c">        * @static</span>
+<span class="c">        */</span>
+        <span class="nx">_debugShim</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+        <span class="c">/**</span>
+<span class="c">        * This method will create a shim element (giving it the id of yui-ddm-shim), it also attaches the mousemove and mouseup listeners to it and attaches a scroll listener on the window</span>
+<span class="c">        * @private</span>
+<span class="c">        * @method _sizeShim</span>
+<span class="c">        * @static</span>
+<span class="c">        */</span>
+        <span class="nx">_createShim</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Creating Shim Element&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;DragDropMgr&#39;</span><span class="o">);</span>
+            <span class="k">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="nb">document</span><span class="o">.</span><span class="nx">createElement</span><span class="o">(</span><span class="s1">&#39;div&#39;</span><span class="o">);</span>
+            <span class="nx">s</span><span class="o">.</span><span class="nx">id</span> <span class="o">=</span> <span class="s1">&#39;yui-ddm-shim&#39;</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nb">document</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">firstChild</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nb">document</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">insertBefore</span><span class="o">(</span><span class="nx">s</span><span class="o">,</span> <span class="nb">document</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">firstChild</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="nb">document</span><span class="o">.</span><span class="nx">body</span><span class="o">.</span><span class="nx">appendChild</span><span class="o">(</span><span class="nx">s</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="nx">s</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="o">;</span>
+            <span class="nx">s</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">backgroundColor</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="o">;</span>
+            <span class="nx">s</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">position</span> <span class="o">=</span> <span class="s1">&#39;absolute&#39;</span><span class="o">;</span>
+            <span class="nx">s</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">zIndex</span> <span class="o">=</span> <span class="s1">&#39;99999&#39;</span><span class="o">;</span>
+            <span class="nx">Dom</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="nx">s</span><span class="o">,</span> <span class="s1">&#39;opacity&#39;</span><span class="o">,</span> <span class="s1">&#39;0&#39;</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_shim</span> <span class="o">=</span> <span class="nx">s</span><span class="o">;</span>
+            <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nx">s</span><span class="o">,</span> <span class="s2">&quot;mouseup&quot;</span><span class="o">,</span>   <span class="k">this</span><span class="o">.</span><span class="nx">handleMouseUp</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nx">s</span><span class="o">,</span> <span class="s2">&quot;mousemove&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">handleMouseMove</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nb">window</span><span class="o">,</span> <span class="s1">&#39;scroll&#39;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">_sizeShim</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="o">},</span>
+        <span class="c">/**</span>
+<span class="c">        * This method will size the shim, called from activate and on window scroll event</span>
+<span class="c">        * @private</span>
+<span class="c">        * @method _sizeShim</span>
+<span class="c">        * @static</span>
+<span class="c">        */</span>
+        <span class="nx">_sizeShim</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_shimActive</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Sizing Shim&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;DragDropMgr&#39;</span><span class="o">);</span>
+                <span class="k">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_shim</span><span class="o">;</span>
+                <span class="nx">s</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getDocumentHeight</span><span class="o">()</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="o">;</span>
+                <span class="nx">s</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">Dom</span><span class="o">.</span><span class="nx">getDocumentWidth</span><span class="o">()</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="o">;</span>
+                <span class="nx">s</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">top</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span><span class="o">;</span>
+                <span class="nx">s</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">left</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
+        <span class="c">/**</span>
+<span class="c">        * This method will create the shim element if needed, then show the shim element, size the element and set the _shimActive property to true</span>
+<span class="c">        * @private</span>
+<span class="c">        * @method _activateShim</span>
+<span class="c">        * @static</span>
+<span class="c">        */</span>
+        <span class="nx">_activateShim</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">useShim</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Activating Shim&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;DragDropMgr&#39;</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(!</span><span class="k">this</span><span class="o">.</span><span class="nx">_shim</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">_createShim</span><span class="o">();</span>
+                <span class="o">}</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_shimActive</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                <span class="k">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_shim</span><span class="o">,</span>
+                    <span class="nx">o</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_debugShim</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="nx">o</span> <span class="o">=</span> <span class="s1">&#39;.5&#39;</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="nx">Dom</span><span class="o">.</span><span class="nx">setStyle</span><span class="o">(</span><span class="nx">s</span><span class="o">,</span> <span class="s1">&#39;opacity&#39;</span><span class="o">,</span> <span class="nx">o</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_sizeShim</span><span class="o">();</span>
+                <span class="nx">s</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s1">&#39;block&#39;</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">},</span>
+        <span class="c">/**</span>
+<span class="c">        * This method will hide the shim element and set the _shimActive property to false</span>
+<span class="c">        * @private</span>
+<span class="c">        * @method _deactivateShim</span>
+<span class="c">        * @static</span>
+<span class="c">        */</span>
+        <span class="nx">_deactivateShim</span><span class="o">:</span> <span class="k">function</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s1">&#39;Deactivating Shim&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="s1">&#39;DragDropMgr&#39;</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_shim</span><span class="o">.</span><span class="nx">style</span><span class="o">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_shimActive</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">},</span>
+        <span class="c">/**</span>
+<span class="c">        * The HTML element created to use as a shim over the document to track mouse movements</span>
+<span class="c">        * @private</span>
+<span class="c">        * @property _shim</span>
+<span class="c">        * @type HTMLElement</span>
+<span class="c">        * @static</span>
+<span class="c">        */</span>
+        <span class="nx">_shim</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
         <span class="c">/**</span>
 <span class="c">         * Two dimensional Array of registered DragDrop objects.  The first </span>
 <span class="c">         * dimension is the DragDrop item group, the second the DragDrop </span>
@@ -259,7 +376,6 @@
             <span class="k">this</span><span class="o">.</span><span class="nx">init</span><span class="o">();</span>
 
             <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s2">&quot;DragDropMgr onload&quot;</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;DragDropMgr&quot;</span><span class="o">);</span>
-
             <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nb">document</span><span class="o">,</span> <span class="s2">&quot;mouseup&quot;</span><span class="o">,</span>   <span class="k">this</span><span class="o">.</span><span class="nx">handleMouseUp</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
             <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nb">document</span><span class="o">,</span> <span class="s2">&quot;mousemove&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="nx">handleMouseMove</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
             <span class="nx">Event</span><span class="o">.</span><span class="nx">on</span><span class="o">(</span><span class="nb">window</span><span class="o">,</span>   <span class="s2">&quot;unload&quot;</span><span class="o">,</span>    <span class="k">this</span><span class="o">.</span><span class="nx">_onUnload</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
@@ -430,10 +546,13 @@
 <span class="c">         */</span>
         <span class="nx">_remove</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">oDD</span><span class="o">)</span> <span class="o">{</span>
             <span class="k">for</span> <span class="o">(</span><span class="k">var</span> <span class="nx">g</span> <span class="k">in</span> <span class="nx">oDD</span><span class="o">.</span><span class="nx">groups</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="nx">g</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="nx">ids</span><span class="o">[</span><span class="nx">g</span><span class="o">][</span><span class="nx">oDD</span><span class="o">.</span><span class="nx">id</span><span class="o">])</span> <span class="o">{</span>
-                    <span class="nx">delete</span> <span class="k">this</span><span class="o">.</span><span class="nx">ids</span><span class="o">[</span><span class="nx">g</span><span class="o">][</span><span class="nx">oDD</span><span class="o">.</span><span class="nx">id</span><span class="o">];</span>
-                    <span class="c">//YAHOO.log(&quot;NEW LEN &quot; + this.ids.length, &quot;warn&quot;);</span>
-<span class="c"></span>                <span class="o">}</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nx">g</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">ids</span><span class="o">[</span><span class="nx">g</span><span class="o">];</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">item</span> <span class="o">&amp;&amp;</span> <span class="nx">item</span><span class="o">[</span><span class="nx">oDD</span><span class="o">.</span><span class="nx">id</span><span class="o">])</span> <span class="o">{</span>
+                        <span class="nx">delete</span> <span class="nx">item</span><span class="o">[</span><span class="nx">oDD</span><span class="o">.</span><span class="nx">id</span><span class="o">];</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+                
             <span class="o">}</span>
             <span class="nx">delete</span> <span class="k">this</span><span class="o">.</span><span class="nx">handleIds</span><span class="o">[</span><span class="nx">oDD</span><span class="o">.</span><span class="nx">id</span><span class="o">];</span>
         <span class="o">},</span>
@@ -569,7 +688,8 @@
 <span class="c">         * @static</span>
 <span class="c">         */</span>
         <span class="nx">handleMouseDown</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">e</span><span class="o">,</span> <span class="nx">oDD</span><span class="o">)</span> <span class="o">{</span>
-
+            <span class="c">//this._activateShim();</span>
+<span class="c"></span>
             <span class="k">this</span><span class="o">.</span><span class="nx">currentTarget</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Event</span><span class="o">.</span><span class="nx">getTarget</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span>
 
             <span class="k">this</span><span class="o">.</span><span class="nx">dragCurrent</span> <span class="o">=</span> <span class="nx">oDD</span><span class="o">;</span>
@@ -595,7 +715,7 @@
         <span class="o">},</span>
 
         <span class="c">/**</span>
-<span class="c">         * Fired when either the drag pixel threshol or the mousedown hold </span>
+<span class="c">         * Fired when either the drag pixel threshold or the mousedown hold </span>
 <span class="c">         * time threshold has been met.</span>
 <span class="c">         * @method startDrag</span>
 <span class="c">         * @param x {int} the X position of the original mousedown</span>
@@ -603,6 +723,11 @@
 <span class="c">         * @static</span>
 <span class="c">         */</span>
         <span class="nx">startDrag</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">x</span><span class="o">,</span> <span class="nx">y</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">dragCurrent</span><span class="o">.</span><span class="nx">useShim</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_shimState</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">useShim</span><span class="o">;</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">useShim</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">_activateShim</span><span class="o">();</span>
             <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">log</span><span class="o">(</span><span class="s2">&quot;firing drag start events&quot;</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;DragDropMgr&quot;</span><span class="o">);</span>
             <span class="nx">clearTimeout</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">clickTimeout</span><span class="o">);</span>
             <span class="k">var</span> <span class="nx">dc</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">dragCurrent</span><span class="o">;</span>
@@ -705,6 +830,14 @@
                 <span class="o">}</span>
             <span class="o">}</span>
 
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_shimActive</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="nx">_deactivateShim</span><span class="o">();</span>
+                <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">dragCurrent</span><span class="o">.</span><span class="nx">useShim</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">useShim</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">_shimState</span><span class="o">;</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">_shimState</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+
             <span class="k">this</span><span class="o">.</span><span class="nx">dragCurrent</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
             <span class="k">this</span><span class="o">.</span><span class="nx">dragOvers</span> <span class="o">=</span> <span class="o">{};</span>
         <span class="o">},</span>
@@ -725,7 +858,7 @@
 <span class="c">         */</span>
         <span class="nx">handleMouseMove</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span>
             <span class="c">//YAHOO.log(&quot;handlemousemove&quot;);</span>
-<span class="c"></span>            
+<span class="c"></span>
             <span class="k">var</span> <span class="nx">dc</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">dragCurrent</span><span class="o">;</span>
             <span class="k">if</span> <span class="o">(</span><span class="nx">dc</span><span class="o">)</span> <span class="o">{</span>
                 <span class="c">// YAHOO.log(&quot;no current drag obj&quot;);</span>
@@ -1136,6 +1269,7 @@
 
             <span class="nx">oTarget</span><span class="o">.</span><span class="nx">overlap</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
+
             <span class="c">// Get the current location of the drag element, this is the</span>
 <span class="c"></span>            <span class="c">// location of the mouse event less the delta that represents</span>
 <span class="c"></span>            <span class="c">// where the original mousedown happened on the element.  We</span>
@@ -1504,6 +1638,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -1543,6 +1679,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1600,7 +1738,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Slider Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Slider Widget&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_slider.html">slider</a>
@@ -21,14 +21,16 @@
                  &gt; DualSlider.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -124,13 +126,18 @@
 
     <span class="c">// dispatch mousedowns to the active slider</span>
 <span class="c"></span>    <span class="nx">minSlider</span><span class="o">.</span><span class="nx">onMouseDown</span> <span class="o">=</span> <span class="k">function</span><span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span>
-        <span class="nx">self</span><span class="o">.</span><span class="nx">_handleMouseDown</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="nx">self</span><span class="o">.</span><span class="nx">_handleMouseDown</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span>
     <span class="o">};</span>
 
     <span class="c">// we can safely ignore a mousedown on one of the sliders since</span>
 <span class="c"></span>    <span class="c">// they share a background</span>
 <span class="c"></span>    <span class="nx">maxSlider</span><span class="o">.</span><span class="nx">onMouseDown</span> <span class="o">=</span> <span class="k">function</span><span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span> 
-        <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Event</span><span class="o">.</span><span class="nx">stopEvent</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span> 
+        <span class="k">if</span> <span class="o">(</span><span class="nx">self</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">.</span><span class="nx">isLocked</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">self</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">.</span><span class="nx">_sliding</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="nx">self</span><span class="o">.</span><span class="nx">_handleMouseDown</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Event</span><span class="o">.</span><span class="nx">stopEvent</span><span class="o">(</span><span class="nx">e</span><span class="o">);</span> 
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
     <span class="o">};</span>
 
     <span class="c">// Fix the drag behavior so that only the active slider</span>
@@ -309,8 +316,9 @@
             <span class="o">}</span>
         <span class="o">});</span>
 
-        <span class="nx">mins</span><span class="o">.</span><span class="nx">setValue</span><span class="o">(</span><span class="nx">min</span><span class="o">,</span><span class="nx">skipAnim</span><span class="o">,</span><span class="nx">force</span><span class="o">,</span><span class="nx">silent</span><span class="o">);</span>
-        <span class="nx">maxs</span><span class="o">.</span><span class="nx">setValue</span><span class="o">(</span><span class="nx">max</span><span class="o">,</span><span class="nx">skipAnim</span><span class="o">,</span><span class="nx">force</span><span class="o">,</span><span class="nx">silent</span><span class="o">);</span>
+        <span class="c">// Must emit Slider slideEnd event to propagate to updateValue</span>
+<span class="c"></span>        <span class="nx">mins</span><span class="o">.</span><span class="nx">setValue</span><span class="o">(</span><span class="nx">min</span><span class="o">,</span><span class="nx">skipAnim</span><span class="o">,</span><span class="nx">force</span><span class="o">,</span><span class="kc">false</span><span class="o">);</span>
+        <span class="nx">maxs</span><span class="o">.</span><span class="nx">setValue</span><span class="o">(</span><span class="nx">max</span><span class="o">,</span><span class="nx">skipAnim</span><span class="o">,</span><span class="nx">force</span><span class="o">,</span><span class="kc">false</span><span class="o">);</span>
     <span class="o">},</span>
 
     <span class="c">/**</span>
@@ -386,11 +394,12 @@
         <span class="k">if</span> <span class="o">(</span><span class="nx">min</span> <span class="o">!=</span> <span class="k">this</span><span class="o">.</span><span class="nx">minVal</span> <span class="o">||</span> <span class="nx">max</span> <span class="o">!=</span> <span class="k">this</span><span class="o">.</span><span class="nx">maxVal</span><span class="o">)</span> <span class="o">{</span>
             <span class="nx">changed</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
 
-            <span class="k">var</span> <span class="nx">mint</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">.</span><span class="nx">thumb</span><span class="o">;</span>
-            <span class="k">var</span> <span class="nx">maxt</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">maxSlider</span><span class="o">.</span><span class="nx">thumb</span><span class="o">;</span>
+            <span class="k">var</span> <span class="nx">mint</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">.</span><span class="nx">thumb</span><span class="o">,</span>
+                <span class="nx">maxt</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">maxSlider</span><span class="o">.</span><span class="nx">thumb</span><span class="o">,</span>
+                <span class="nx">dim</span>  <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">isHoriz</span> <span class="o">?</span> <span class="s1">&#39;x&#39;</span> <span class="o">:</span> <span class="s1">&#39;y&#39;</span><span class="o">;</span>
 
-            <span class="k">var</span> <span class="nx">thumbInnerWidth</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">.</span><span class="nx">thumbCenterPoint</span><span class="o">.</span><span class="nx">x</span> <span class="o">+</span>
-                                  <span class="k">this</span><span class="o">.</span><span class="nx">maxSlider</span><span class="o">.</span><span class="nx">thumbCenterPoint</span><span class="o">.</span><span class="nx">x</span><span class="o">;</span>
+            <span class="k">var</span> <span class="nx">thumbInnerWidth</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">.</span><span class="nx">thumbCenterPoint</span><span class="o">[</span><span class="nx">dim</span><span class="o">]</span> <span class="o">+</span>
+                                  <span class="k">this</span><span class="o">.</span><span class="nx">maxSlider</span><span class="o">.</span><span class="nx">thumbCenterPoint</span><span class="o">[</span><span class="nx">dim</span><span class="o">];</span>
 
             <span class="c">// Establish barriers within the respective other thumb&#39;s edge, less</span>
 <span class="c"></span>            <span class="c">// the minRange.  Limit to the Slider&#39;s range in the case of</span>
@@ -428,27 +437,23 @@
 <span class="c">     * @private</span>
 <span class="c">     */</span>
     <span class="nx">selectActiveSlider</span><span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">var</span> <span class="nx">min</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">.</span><span class="nx">getValue</span><span class="o">(),</span>
-            <span class="nx">max</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">maxSlider</span><span class="o">.</span><span class="nx">getValue</span><span class="o">(),</span>
+        <span class="k">var</span> <span class="nx">min</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">,</span>
+            <span class="nx">max</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">maxSlider</span><span class="o">,</span>
+            <span class="nx">minLocked</span> <span class="o">=</span> <span class="nx">min</span><span class="o">.</span><span class="nx">isLocked</span><span class="o">(),</span>
+            <span class="nx">maxLocked</span> <span class="o">=</span> <span class="nx">max</span><span class="o">.</span><span class="nx">isLocked</span><span class="o">(),</span>
+            <span class="nx">Ev</span>  <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Event</span><span class="o">,</span>
             <span class="nx">d</span><span class="o">;</span>
 
-        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">isHoriz</span><span class="o">)</span> <span class="o">{</span>
-            <span class="nx">d</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Event</span><span class="o">.</span><span class="nx">getPageX</span><span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">-</span> <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">.</span><span class="nx">initPageX</span> <span class="o">-</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">.</span><span class="nx">thumbCenterPoint</span><span class="o">.</span><span class="nx">x</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nx">minLocked</span> <span class="o">||</span> <span class="nx">maxLocked</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="nx">activeSlider</span> <span class="o">=</span> <span class="nx">minLocked</span> <span class="o">?</span> <span class="nx">max</span> <span class="o">:</span> <span class="nx">min</span><span class="o">;</span>
         <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="nx">d</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">util</span><span class="o">.</span><span class="nx">Event</span><span class="o">.</span><span class="nx">getPageY</span><span class="o">(</span><span class="nx">e</span><span class="o">)</span> <span class="o">-</span> <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">.</span><span class="nx">initPageY</span> <span class="o">-</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">.</span><span class="nx">thumbCenterPoint</span><span class="o">.</span><span class="nx">y</span><span class="o">;</span>
-        <span class="o">}</span>
-                
-        <span class="c">// Below the minSlider thumb.  Move the minSlider thumb</span>
-<span class="c"></span>        <span class="k">if</span> <span class="o">(</span><span class="nx">d</span> <span class="o">&lt;</span> <span class="nx">min</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">this</span><span class="o">.</span><span class="nx">activeSlider</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">;</span>
-        <span class="c">// Above the maxSlider thumb.  Move the maxSlider thumb</span>
-<span class="c"></span>        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="nx">d</span> <span class="o">&gt;</span> <span class="nx">max</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">this</span><span class="o">.</span><span class="nx">activeSlider</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">maxSlider</span><span class="o">;</span>
-        <span class="c">// Split the difference between thumbs</span>
-<span class="c"></span>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="k">this</span><span class="o">.</span><span class="nx">activeSlider</span> <span class="o">=</span> <span class="nx">d</span><span class="o">*</span><span class="m">2</span> <span class="o">&gt;</span> <span class="nx">max</span><span class="o">+</span><span class="nx">min</span> <span class="o">?</span> <span class="k">this</span><span class="o">.</span><span class="nx">maxSlider</span> <span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="nx">minSlider</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">isHoriz</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nx">d</span> <span class="o">=</span> <span class="nx">Ev</span><span class="o">.</span><span class="nx">getPageX</span><span class="o">(</span><span class="nx">e</span><span class="o">)-</span><span class="nx">min</span><span class="o">.</span><span class="nx">thumb</span><span class="o">.</span><span class="nx">initPageX</span><span class="o">-</span><span class="nx">min</span><span class="o">.</span><span class="nx">thumbCenterPoint</span><span class="o">.</span><span class="nx">x</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="nx">d</span> <span class="o">=</span> <span class="nx">Ev</span><span class="o">.</span><span class="nx">getPageY</span><span class="o">(</span><span class="nx">e</span><span class="o">)-</span><span class="nx">min</span><span class="o">.</span><span class="nx">thumb</span><span class="o">.</span><span class="nx">initPageY</span><span class="o">-</span><span class="nx">min</span><span class="o">.</span><span class="nx">thumbCenterPoint</span><span class="o">.</span><span class="nx">y</span><span class="o">;</span>
+            <span class="o">}</span>
+                    
+            <span class="k">this</span><span class="o">.</span><span class="nx">activeSlider</span> <span class="o">=</span> <span class="nx">d</span><span class="o">*</span><span class="m">2</span> <span class="o">&gt;</span> <span class="nx">max</span><span class="o">.</span><span class="nx">getValue</span><span class="o">()+</span><span class="nx">min</span><span class="o">.</span><span class="nx">getValue</span><span class="o">()</span> <span class="o">?</span> <span class="nx">max</span> <span class="o">:</span> <span class="nx">min</span><span class="o">;</span>
         <span class="o">}</span>
     <span class="o">},</span>
 
@@ -585,6 +590,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -624,6 +631,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -676,7 +685,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

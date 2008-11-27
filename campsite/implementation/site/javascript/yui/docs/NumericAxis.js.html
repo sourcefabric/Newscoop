@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Charts Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Charts Widget&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_charts.html">charts</a>
@@ -21,14 +21,16 @@
                  &gt; NumericAxis.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -94,6 +96,14 @@
 <span class="c">	 * @type Boolean</span>
 <span class="c">	 */</span>
 	<span class="nx">snapToUnits</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span>
+	
+	<span class="c">/**</span>
+<span class="c">	 * Series that are stackable will only stack when this value is set to true.</span>
+<span class="c">	 *</span>
+<span class="c">	 * @property stackingEnabled</span>
+<span class="c">	 * @type Boolean</span>
+<span class="c">	 */</span>
+	<span class="nx">stackingEnabled</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
 
 	<span class="c">/**</span>
 <span class="c">	 * If true, and the bounds are calculated automatically, either the minimum or</span>
@@ -130,6 +140,8 @@
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class="selected"><a href="module_charts.html">charts</a></li>
 
@@ -170,6 +182,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -214,6 +228,10 @@
                                 <li class=""><a href="YAHOO.widget.PieChart.html">YAHOO.widget.PieChart</a></li>
                                 <li class=""><a href="YAHOO.widget.PieSeries.html">YAHOO.widget.PieSeries</a></li>
                                 <li class=""><a href="YAHOO.widget.Series.html">YAHOO.widget.Series</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedBarChart.html">YAHOO.widget.StackedBarChart</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedBarSeries.html">YAHOO.widget.StackedBarSeries</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedColumnChart.html">YAHOO.widget.StackedColumnChart</a></li>
+                                <li class=""><a href="YAHOO.widget.StackedColumnSeries.html">YAHOO.widget.StackedColumnSeries</a></li>
                                 <li class=""><a href="YAHOO.widget.TimeAxis.html">YAHOO.widget.TimeAxis</a></li>
                         </ul>
                     </div>
@@ -244,7 +262,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>DataTable Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>DataTable Widget&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_datatable.html">datatable</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -87,7 +89,7 @@
                         <div class="section field details">
                             <h3 id="properties">Properties</h3>
                             <div class="content">
-                                    <div class="private">
+                                    <div class="private deprecated">
                                     <h4><a name="property__length">_length</a>
                                         <code>- private Number</code>
                                     </h4>
@@ -193,7 +195,10 @@ then adds the Record to the end of the RecordSet.
                                                     </code></dt>
                                                     <dd>A Record instance.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -248,7 +253,10 @@ then only one Record is deleted.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -304,7 +312,10 @@ Record is added to the end of the RecordSet.
                                                     </code></dt>
                                                     <dd>A Record instance.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -359,7 +370,10 @@ then adds the Record to the end of the RecordSet.
                                                     </code></dt>
                                                     <dd>A Record instance.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -415,7 +429,10 @@ added to the end of the RecordSet.
                                                     </code></dt>
                                                     <dd>An array of Record instances.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -471,7 +488,10 @@ of RecordSet is correspondingly shortened.
                                                     </code></dt>
                                                     <dd>A copy of the data held by the deleted Record.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -527,7 +547,10 @@ of RecordSet is correspondingly shortened.
                                                     </code></dt>
                                                     <dd>An array of copies of the data held by the deleted Records.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -561,7 +584,10 @@ of RecordSet is correspondingly shortened.
                                                     </code></dt>
                                                     <dd>Unique name of the RecordSet instance.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -595,7 +621,10 @@ of RecordSet is correspondingly shortened.
                                                     </code></dt>
                                                     <dd>Number of records in the RecordSet.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -642,7 +671,10 @@ RecordSet position index, or Record ID.
                                                     </code></dt>
                                                     <dd>Record object.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -688,7 +720,10 @@ RecordSet position index, or Record ID.
                                                     </code></dt>
                                                     <dd>Record's RecordSet position index.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -744,7 +779,10 @@ start at.
                                                     <dd>Array of Records starting at given index and
 length equal to given range. If index is not given, all Records are returned.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -800,7 +838,10 @@ index in the range.
                                                     </code></dt>
                                                     <dd>true if all indices are populated in the RecordSet</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -848,7 +889,10 @@ data object literals.
                                                     <dd>A Record instance or
 an array of Records.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -882,7 +926,10 @@ an array of Records.</dd>
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -916,7 +963,10 @@ an array of Records.</dd>
                                                     </code></dt>
                                                     <dd>Reverse-sorted array of Records.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -972,7 +1022,10 @@ If no index is specified, it adds the Record to the end of the RecordSet.
                                                     </code></dt>
                                                     <dd>A Record instance.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1028,7 +1081,10 @@ Records are added to the end of the RecordSet.
                                                     </code></dt>
                                                     <dd>An array of Record instances.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1084,7 +1140,10 @@ direction is ascending.
                                                     </code></dt>
                                                     <dd>Sorted array of Records.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1118,13 +1177,16 @@ direction is ascending.
                                                     </code></dt>
                                                     <dd>Unique name of the RecordSet instance.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
                                     <hr />
                                     </div>
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4>
                                         <a name="method_updateKey">updateKey</a></h4>
                                     <div class="detail">
@@ -1152,10 +1214,13 @@ direction is ascending.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
                                             <div class="deprecated">
                                                 <strong>Deprecated</strong> Use updateRecordValue
                                             </div>        
+
                                         </div>
 
                                     </div>
@@ -1210,7 +1275,10 @@ a RecordSet position index, or a Record ID.
                                                     </code></dt>
                                                     <dd>Updated Record, or null.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1273,7 +1341,10 @@ a RecordSet position index, or a Record ID.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1286,7 +1357,7 @@ a RecordSet position index, or a Record ID.
                         <div class="section method details">
                             <h3 id="events">Events</h3>
                             <div class="content">
-                                    <div class="">
+                                    <div class=" deprecated">
                                     <h4>
                                         <a name="event_keyUpdateEvent">keyUpdateEvent</a></h4>
                                     <div class="detail">
@@ -1789,6 +1860,8 @@ from the Records.
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -1829,6 +1902,8 @@ from the Records.
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
 
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
+
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
                                 <li class=""><a href="module_profilerviewer.html">profilerviewer</a></li>
@@ -1860,37 +1935,39 @@ from the Records.
                                 <li class=""><a href="YAHOO.util.ColumnDD.html">YAHOO.util.ColumnDD</a></li>
                                 <li class=""><a href="YAHOO.util.ColumnResizer.html">YAHOO.util.ColumnResizer</a></li>
                                 <li class=""><a href="YAHOO.util.Sort.html">YAHOO.util.Sort</a></li>
+                                <li class=""><a href="YAHOO.widget.BaseCellEditor.html">YAHOO.widget.BaseCellEditor</a></li>
+                                <li class=""><a href="YAHOO.widget.CellEditor.html">YAHOO.widget.CellEditor</a></li>
+                                <li class=""><a href="YAHOO.widget.CheckboxCellEditor.html">YAHOO.widget.CheckboxCellEditor</a></li>
                                 <li class=""><a href="YAHOO.widget.Column.html">YAHOO.widget.Column</a></li>
                                 <li class=""><a href="YAHOO.widget.ColumnSet.html">YAHOO.widget.ColumnSet</a></li>
                                 <li class=""><a href="YAHOO.widget.DataTable.html">YAHOO.widget.DataTable</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.html">YAHOO.widget.Paginator</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.CurrentPageReport.html">YAHOO.widget.Paginator.ui.CurrentPageReport</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.FirstPageLink.html">YAHOO.widget.Paginator.ui.FirstPageLink</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.LastPageLink.html">YAHOO.widget.Paginator.ui.LastPageLink</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.NextPageLink.html">YAHOO.widget.Paginator.ui.NextPageLink</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.PageLinks.html">YAHOO.widget.Paginator.ui.PageLinks</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.PreviousPageLink.html">YAHOO.widget.Paginator.ui.PreviousPageLink</a></li>
-                                <li class=""><a href="YAHOO.widget.Paginator.ui.RowsPerPageDropdown.html">YAHOO.widget.Paginator.ui.RowsPerPageDropdown</a></li>
+                                <li class=""><a href="YAHOO.widget.DateCellEditor.html">YAHOO.widget.DateCellEditor</a></li>
+                                <li class=""><a href="YAHOO.widget.DropdownCellEditor.html">YAHOO.widget.DropdownCellEditor</a></li>
+                                <li class=""><a href="YAHOO.widget.RadioCellEditor.html">YAHOO.widget.RadioCellEditor</a></li>
                                 <li class=""><a href="YAHOO.widget.Record.html">YAHOO.widget.Record</a></li>
                                 <li class="selected"><a href="YAHOO.widget.RecordSet.html">YAHOO.widget.RecordSet</a></li>
+                                <li class=""><a href="YAHOO.widget.ScrollingDataTable.html">YAHOO.widget.ScrollingDataTable</a></li>
+                                <li class=""><a href="YAHOO.widget.TextareaCellEditor.html">YAHOO.widget.TextareaCellEditor</a></li>
+                                <li class=""><a href="YAHOO.widget.TextboxCellEditor.html">YAHOO.widget.TextboxCellEditor</a></li>
                         </ul>
                     </div>
 
                     <div class="module">
                         <h4>Files</h4>
                         <ul class="content">        
+                                <li class=""><a href="CellEditor.js.html">CellEditor.js</a></li>
                                 <li class=""><a href="Chain.js.html">Chain.js</a></li>
                                 <li class=""><a href="ColumnSet.js.html">ColumnSet.js</a></li>
                                 <li class=""><a href="DataTable.js.html">DataTable.js</a></li>
-                                <li class=""><a href="Paginator.js.html">Paginator.js</a></li>
                                 <li class=""><a href="RecordSet.js.html">RecordSet.js</a></li>
+                                <li class=""><a href="ScrollingDataTable.js.html">ScrollingDataTable.js</a></li>
                         </ul>
                     </div>
 
                     <div class="module">
                         <h4>Properties</h4>
                         <ul class="content">        
-                                <li class="private"><a href="#property__length">_length</a>
+                                <li class="private deprecated"><a href="#property__length">_length</a>
                                         <!--<code>&lt;Number&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__sId">_sId</a>
@@ -1965,7 +2042,7 @@ from the Records.
                                 <li class=""><!--<code>String</code>-->
                                 <a href="#method_toString">toString</a>
                                 </li>
-                                <li class=""><!--<code>void</code>-->
+                                <li class=" deprecated"><!--<code>void</code>-->
                                 <a href="#method_updateKey">updateKey</a>
                                 </li>
                                 <li class=""><!--<code>YAHOO.widget.Record</code>-->
@@ -1980,7 +2057,7 @@ from the Records.
                     <div class="module">
                         <h4>Events</h4>
                         <ul class="content">        
-                                <li class="">
+                                <li class=" deprecated">
                                 <a href="#event_keyUpdateEvent">keyUpdateEvent</a>
                                 </li>
                                 <li class="">
@@ -2019,7 +2096,7 @@ from the Records.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

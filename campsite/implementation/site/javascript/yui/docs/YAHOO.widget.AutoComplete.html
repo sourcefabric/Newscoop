@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>AutoComplete Widget&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>AutoComplete Widget&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_autocomplete.html">autocomplete</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -136,22 +138,6 @@ attributes, borders, position, fonts, etc</li>
                         <div class="section field details">
                             <h3 id="properties">Properties</h3>
                             <div class="content">
-                                    <div class="private">
-                                    <h4><a name="property__aListItems">_aListItems</a>
-                                        <code>- private HTMLElement[]</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Array of &lt;li&gt; elements references that contain query results within the
-results container.
-                                        </div>
-                                    </div>
-     
-                                        
-
-
-                                    <hr />
-                                    </div>
                                     <div class="private">
                                     <h4><a name="property__bContainerOpen">_bContainerOpen</a>
                                         <code>- private Boolean</code>
@@ -263,6 +249,21 @@ from being text input field blur events.
                                     <hr />
                                     </div>
                                     <div class="private">
+                                    <h4><a name="property__elCurListItem">_elCurListItem</a>
+                                        <code>- private HTMLElement</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Pointer to the currently highlighted &lt;li&gt; element in the container.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
                                     <h4><a name="property__elFooter">_elFooter</a>
                                         <code>- private HTMLElement</code>
                                     </h4>
@@ -299,6 +300,22 @@ from being text input field blur events.
                                     <div class="detail">
                                         <div class="description">
                                             Reference to iframe element within container element.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4><a name="property__elList">_elList</a>
+                                        <code>- private HTMLElement</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Internal reference to &lt;ul&gt; elements that contains query results within the
+results container.
                                         </div>
                                     </div>
      
@@ -345,21 +362,6 @@ from being text input field blur events.
                                         <div class="description">
                                             Src to iFrame used when useIFrame = true. Supports implementations over SSL
 as well.
-                                        </div>
-                                    </div>
-     
-                                        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4><a name="property__maxResultsDisplayed">_maxResultsDisplayed</a>
-                                        <code>- private Number</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Internal count of &lt;li&gt; elements displayed and hidden in results container.
                                         </div>
                                     </div>
      
@@ -432,12 +434,12 @@ as well.
                                     <hr />
                                     </div>
                                     <div class="private">
-                                    <h4><a name="property__oAnim">_oAnim</a>
-                                        <code>- private Boolean</code>
+                                    <h4><a name="property__nTypeAheadDelayID">_nTypeAheadDelayID</a>
+                                        <code>- private Number</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Animation instance for container expand/collapse.
+                                            TypeAhead delay timeout ID.
                                         </div>
                                     </div>
      
@@ -447,12 +449,12 @@ as well.
                                     <hr />
                                     </div>
                                     <div class="private">
-                                    <h4><a name="property__oCurItem">_oCurItem</a>
-                                        <code>- private HTMLElement</code>
+                                    <h4><a name="property__oAnim">_oAnim</a>
+                                        <code>- private Boolean</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Pointer to the currently highlighted &lt;li&gt; element in the container.
+                                            Animation instance for container expand/collapse.
                                         </div>
                                     </div>
      
@@ -493,6 +495,21 @@ since key events yet supported across all browsers for all IMEs.
                                     <hr />
                                     </div>
                                     <div class="private">
+                                    <h4><a name="property__sInitInputValue">_sInitInputValue</a>
+                                        <code>- private String</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Stores initial input value used to determine if textboxChangeEvent should be fired.
+                                        </div>
+                                    </div>
+     
+                                        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="private">
                                     <h4><a name="property__sName">_sName</a>
                                         <code>- private String</code>
                                     </h4>
@@ -508,16 +525,19 @@ since key events yet supported across all browsers for all IMEs.
                                     <hr />
                                     </div>
                                     <div class="private">
-                                    <h4><a name="property__sSavedQuery">_sSavedQuery</a>
+                                    <h4><a name="property__sPastSelections">_sPastSelections</a>
                                         <code>- private String</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Past queries this session (for saving delimited queries).
+                                            Selections from previous queries (for saving delimited queries).
                                         </div>
                                     </div>
      
                                         
+                                    <div class="default">
+                                        Default Value: ""
+                                    </div>        
 
 
                                     <hr />
@@ -552,9 +572,9 @@ case, implementers should consider setting allowBrowserAutocomplete to false.
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Whether or not the results container should always be displayed.
-Enabling this feature displays the container when the widget is instantiated
-and prevents the toggling of the container to a collapsed state.
+                                            Enabling this feature prevents the toggling of the container to a collapsed state.
+Setting to true does not automatically trigger the opening of the container.
+Implementers are advised to pre-load the container with an explicit "sendQuery()" call.
                                         </div>
                                     </div>
      
@@ -617,6 +637,25 @@ vertical direction.
                                         
                                     <div class="default">
                                         Default Value: true
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_applyLocalFilter">applyLocalFilter</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            By default, results from local DataSources will pass through the filterResults
+method to apply a client-side matching algorithm.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: true for local arrays and json, otherwise false
                                     </div>        
 
 
@@ -776,10 +815,9 @@ values.
                                         <div class="description">
                                             Number of seconds to delay before submitting a query request.  If a query
 request is received before a previous one has completed its delay, the
-previous request is cancelled and the new request is set to the delay.
-Implementers should take care when setting this value very low (i.e., less
-than 0.2) with low latency DataSources and the typeAhead feature enabled, as
-fast typers may see unexpected behavior.
+previous request is cancelled and the new request is set to the delay. If 
+typeAhead is also enabled, this value must always be less than the typeAheadDelay
+in order to avoid certain race conditions.
                                         </div>
                                     </div>
      
@@ -792,20 +830,180 @@ fast typers may see unexpected behavior.
                                     <hr />
                                     </div>
                                     <div class="">
-                                    <h4><a name="property_typeAhead">typeAhead</a>
+                                    <h4><a name="property_queryInterval">queryInterval</a>
+                                        <code>- Number</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            When IME usage is detected, AutoComplete will switch to querying the input
+value at the given interval rather than per key event.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: 500
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_queryMatchCase">queryMatchCase</a>
                                         <code>- Boolean</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
-                                            Whether or not the input field should be automatically updated
-with the first query result as the user types, auto-selecting the substring
-that the user has not typed.
+                                            When applyLocalFilter is true, the local filtering algorthim can have case sensitivity
+enabled.
                                         </div>
                                     </div>
      
                                         
                                     <div class="default">
                                         Default Value: false
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_queryMatchContains">queryMatchContains</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            When applyLocalFilter is true, results can  be locally filtered to return
+matching strings that "contain" the query string rather than simply "start with"
+the query string.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: false
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_queryMatchSubset">queryMatchSubset</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Enables query subset matching. When the DataSource's cache is enabled and queryMatchSubset is
+true, substrings of queries will return matching cached results. For
+instance, if the first query is for "abc" susequent queries that start with
+"abc", like "abcd", will be queried against the cache, and not the live data
+source. Recommended only for DataSources that return comprehensive results
+for queries with very few characters.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: false
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_queryQuestionMark">queryQuestionMark</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            For XHR DataSources, AutoComplete will automatically insert a "?" between the server URI and 
+the "query" param/value pair. To prevent this behavior, implementers should
+set this value to false. To more fully customize the query syntax, implementers
+should override the generateRequest() method.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: true
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_resultTypeList">resultTypeList</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            For backward compatibility to pre-2.6.0 formatResults() signatures, setting
+resultsTypeList to true will take each object literal result returned by
+DataSource and flatten into an array.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: true
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_supressInputUpdate">supressInputUpdate</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Whether or not the input field should be updated with selections.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: false
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_typeAhead">typeAhead</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            If autohighlight is enabled, whether or not the input field should be automatically updated
+with the first query result as the user types, auto-selecting the substring portion
+of the first result that the user has not yet typed.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: false
+                                    </div>        
+
+
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4><a name="property_typeAheadDelay">typeAheadDelay</a>
+                                        <code>- Number</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            If typeAhead is true, number of seconds to delay before updating input with
+typeAhead value. In order to prevent certain race conditions, this value must
+always be greater than the queryDelay.
+                                        </div>
+                                    </div>
+     
+                                        
+                                    <div class="default">
+                                        Default Value: 0.5
                                     </div>        
 
 
@@ -887,7 +1085,10 @@ IE. Set to true only when the results container will be on top of a
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -895,14 +1096,14 @@ IE. Set to true only when the results container will be on top of a
                                     </div>
                                     <div class="private">
                                     <h4>
-                                        <a name="method__cancelIntervalDetection">_cancelIntervalDetection</a></h4>
+                                        <a name="method__clearInterval">_clearInterval</a></h4>
                                     <div class="detail">
                                         <code>
                                          private 
                                         
                                         
                                         void
-                                            <strong>_cancelIntervalDetection</strong>
+                                            <strong>_clearInterval</strong>
                                            (
                                                 
                                                         
@@ -933,7 +1134,10 @@ IE. Set to true only when the results container will be on top of a
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -969,7 +1173,10 @@ the user selection is cleared.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -990,8 +1197,7 @@ the user selection is cleared.
                                         </code>
                                         
                                         <div class="description">
-                                            Enables query triggers based on text input detection by intervals (rather
-than by key events).
+                                            Enables interval detection for IME support.
                                         </div>
 
                                         <div class="description">
@@ -1004,7 +1210,10 @@ than by key events).
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1012,14 +1221,14 @@ than by key events).
                                     </div>
                                     <div class="private">
                                     <h4>
-                                        <a name="method__initContainer">_initContainer</a></h4>
+                                        <a name="method__initContainerEl">_initContainerEl</a></h4>
                                     <div class="detail">
                                         <code>
                                          private 
                                         
                                         
                                         void
-                                            <strong>_initContainer</strong>
+                                            <strong>_initContainerEl</strong>
                                            (
                                             )
                                         </code>
@@ -1038,7 +1247,10 @@ than by key events).
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1046,14 +1258,14 @@ than by key events).
                                     </div>
                                     <div class="private">
                                     <h4>
-                                        <a name="method__initContainerHelpers">_initContainerHelpers</a></h4>
+                                        <a name="method__initContainerHelperEls">_initContainerHelperEls</a></h4>
                                     <div class="detail">
                                         <code>
                                          private 
                                         
                                         
                                         void
-                                            <strong>_initContainerHelpers</strong>
+                                            <strong>_initContainerHelperEls</strong>
                                            (
                                             )
                                         </code>
@@ -1073,7 +1285,10 @@ not exist
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1081,14 +1296,14 @@ not exist
                                     </div>
                                     <div class="private">
                                     <h4>
-                                        <a name="method__initList">_initList</a></h4>
+                                        <a name="method__initListEl">_initListEl</a></h4>
                                     <div class="detail">
                                         <code>
                                          private 
                                         
                                         
                                         void
-                                            <strong>_initList</strong>
+                                            <strong>_initListEl</strong>
                                            (
                                             )
                                         </code>
@@ -1109,61 +1324,10 @@ YAHOO.widget.AutoComplete#maxResultsDisplayed &lt;li&gt; elements in an
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
-                                        </div>
 
-                                    </div>
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4>
-                                        <a name="method__initListItem">_initListItem</a></h4>
-                                    <div class="detail">
-                                        <code>
-                                         private 
-                                        
-                                        
-                                        void
-                                            <strong>_initListItem</strong>
-                                           (
-                                                
-                                                        
-                                                         oItem
-                                                    
-                                                
-                                                        , 
-                                                         nItemIndex
-                                                    
-                                                
-                                            )
-                                        </code>
-                                        
-                                        <div class="description">
-                                            Initializes each &lt;li&gt; element in the container list.
-                                        </div>
-
-                                        <div class="description">
-
-                                                <dl>
-                                                    <dt>Parameters:</dt>
-                                                        <dd>
-                                                            <code>oItem &lt;HTMLElement&gt;</code>
-                                                              The &lt;li&gt; DOM element.
-                                                        </dd>
-                                                        <dd>
-                                                            <code>nItemIndex &lt;Number&gt;</code>
-                                                              The index of the element.
-                                                        </dd>
-                                                </dl>
-
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd></dd>
-                                                </dl>
-             
                                         </div>
 
                                     </div>
@@ -1211,7 +1375,10 @@ charsets.
                                                     </code></dt>
                                                     <dd>True if key should be ignored, false otherwise.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1247,7 +1414,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1294,7 +1464,67 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__onContainerClick">_onContainerClick</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>_onContainerClick</strong>
+                                           (
+                                                
+                                                        
+                                                         v
+                                                    
+                                                
+                                                        , 
+                                                         oSelf
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Handles container click events.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>v &lt;HTMLEvent&gt;</code>
+                                                              The click event.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>oSelf &lt;YAHOO.widget.AutoComplete&gt;</code>
+                                                              The AutoComplete instance.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1348,7 +1578,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1402,7 +1635,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1456,7 +1692,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1510,7 +1749,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1518,36 +1760,25 @@ is closed.
                                     </div>
                                     <div class="private">
                                     <h4>
-                                        <a name="method__onIMEDetected">_onIMEDetected</a></h4>
+                                        <a name="method__onInterval">_onInterval</a></h4>
                                     <div class="detail">
                                         <code>
                                          private 
                                         
                                         
                                         void
-                                            <strong>_onIMEDetected</strong>
+                                            <strong>_onInterval</strong>
                                            (
-                                                
-                                                        
-                                                         oSelf
-                                                    
-                                                
                                             )
                                         </code>
                                         
                                         <div class="description">
-                                            Enables interval detection for  Korean IME support.
+                                            Enables query triggers based on text input detection by intervals (rather
+than by key events).
                                         </div>
 
                                         <div class="description">
 
-                                                <dl>
-                                                    <dt>Parameters:</dt>
-                                                        <dd>
-                                                            <code>oSelf &lt;YAHOO.widget.AutoComplete&gt;</code>
-                                                              The AutoComplete instance.
-                                                        </dd>
-                                                </dl>
 
                                                 <dl>
                                                     <dt>Returns:
@@ -1556,7 +1787,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1610,7 +1844,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1664,7 +1901,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1718,7 +1958,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1772,7 +2015,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1826,7 +2072,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1880,7 +2129,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1934,7 +2186,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1964,7 +2219,7 @@ is closed.
                                         </code>
                                         
                                         <div class="description">
-                                            Handles textbox keyup events that trigger queries.
+                                            Handles textbox keyup events to trigger queries.
                                         </div>
 
                                         <div class="description">
@@ -1988,7 +2243,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2042,7 +2300,10 @@ is closed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2065,11 +2326,11 @@ is closed.
                                                     
                                                 
                                                         , 
-                                                         aResults
+                                                         oResponse
                                                     
                                                 
                                                         , 
-                                                         oSelf
+                                                         oPayload
                                                     
                                                 
                                             )
@@ -2077,9 +2338,7 @@ is closed.
                                         
                                         <div class="description">
                                             Populates the array of &lt;li&gt; elements in the container with query
-results. This method is passed to YAHOO.widget.DataSource#getResults as a
-callback function so results from the DataSource instance are returned to the
-AutoComplete instance.
+results.
                                         </div>
 
                                         <div class="description">
@@ -2088,15 +2347,15 @@ AutoComplete instance.
                                                     <dt>Parameters:</dt>
                                                         <dd>
                                                             <code>sQuery &lt;String&gt;</code>
-                                                              The query string.
+                                                              Original request.
                                                         </dd>
                                                         <dd>
-                                                            <code>aResults &lt;Object[]&gt;</code>
-                                                              An array of query result objects from the DataSource.
+                                                            <code>oResponse &lt;Object&gt;</code>
+                                                              Response object.
                                                         </dd>
                                                         <dd>
-                                                            <code>oSelf &lt;YAHOO.widget.AutoComplete&gt;</code>
-                                                              The AutoComplete instance.
+                                                            <code>oPayload &lt;MIXED&gt;</code>
+                                                              (optional) Additional argument(s)
                                                         </dd>
                                                 </dl>
 
@@ -2107,7 +2366,10 @@ AutoComplete instance.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2126,7 +2388,7 @@ AutoComplete instance.
                                            (
                                                 
                                                         
-                                                         oItem
+                                                         elListItem
                                                     
                                                 
                                             )
@@ -2141,7 +2403,7 @@ AutoComplete instance.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>oItem &lt;HTMLElement&gt;</code>
+                                                            <code>elListItem &lt;HTMLElement&gt;</code>
                                                               The selected &lt;li&gt; element item.
                                                         </dd>
                                                 </dl>
@@ -2153,7 +2415,10 @@ AutoComplete instance.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2215,7 +2480,10 @@ AutoComplete instance.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2261,7 +2529,10 @@ AutoComplete instance.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2297,7 +2568,10 @@ query results.
                                                     <dd>Matching list item element if user-input text matches
 a result, null otherwise.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2343,7 +2617,10 @@ a result, null otherwise.</dd>
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2389,7 +2666,10 @@ a result, null otherwise.</dd>
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2408,7 +2688,7 @@ a result, null otherwise.</dd>
                                            (
                                                 
                                                         
-                                                         oNewItem
+                                                         elNewListItem
                                                     
                                                 
                                                         , 
@@ -2428,7 +2708,7 @@ up highlighting of any previous item.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>oNewItem &lt;HTMLElement&gt;</code>
+                                                            <code>elNewListItem &lt;HTMLElement&gt;</code>
                                                               The &lt;li&gt; element item to receive highlight behavior.
                                                         </dd>
                                                         <dd>
@@ -2444,7 +2724,10 @@ up highlighting of any previous item.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2463,7 +2746,7 @@ up highlighting of any previous item.
                                            (
                                                 
                                                         
-                                                         oNewItem
+                                                         elNewListItem
                                                     
                                                 
                                                         , 
@@ -2482,7 +2765,7 @@ up highlighting of any previous item.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>oNewItem &lt;HTMLElement&gt;</code>
+                                                            <code>elNewListItem &lt;HTMLElement&gt;</code>
                                                               The &lt;li&gt; element item to receive highlight behavior.
                                                         </dd>
                                                         <dd>
@@ -2498,7 +2781,10 @@ up highlighting of any previous item.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2517,7 +2803,7 @@ up highlighting of any previous item.
                                            (
                                                 
                                                         
-                                                         oItem
+                                                         elListItem
                                                     
                                                 
                                                         , 
@@ -2537,7 +2823,7 @@ selecting the substring that the user has not typed.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>oItem &lt;HTMLElement&gt;</code>
+                                                            <code>elListItem &lt;HTMLElement&gt;</code>
                                                               The &lt;li&gt; element item whose data populates the input field.
                                                         </dd>
                                                         <dd>
@@ -2553,7 +2839,10 @@ selecting the substring that the user has not typed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2572,7 +2861,7 @@ selecting the substring that the user has not typed.
                                            (
                                                 
                                                         
-                                                         oItem
+                                                         elListItem
                                                     
                                                 
                                             )
@@ -2588,7 +2877,7 @@ has been defined, then the value gets appended with the delimiter.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>oItem &lt;HTMLElement&gt;</code>
+                                                            <code>elListItem &lt;HTMLElement&gt;</code>
                                                               The &lt;li&gt; element item with which to update the value.
                                                         </dd>
                                                 </dl>
@@ -2600,7 +2889,96 @@ has been defined, then the value gets appended with the delimiter.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method_AutoComplete._cloneObject">AutoComplete._cloneObject</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                         static 
+                                        
+                                        void
+                                            <strong>AutoComplete._cloneObject</strong>
+                                           (
+                                                
+                                                        
+                                                         o
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Clones object literal or array of object literals.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>o &lt;Object&gt;</code>
+                                                              Object.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_collapseContainer">collapseContainer</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>collapseContainer</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Collapses container.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -2637,7 +3015,10 @@ implementer, as in myDataTable = null. Use with caution!
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2708,7 +3089,10 @@ and DOM elements.
                                                     </code></dt>
                                                     <dd>Return true to continue expanding container, false to cancel the expand.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2716,25 +3100,33 @@ and DOM elements.
                                     </div>
                                     <div class="">
                                     <h4>
-                                        <a name="method_doBeforeSendQuery">doBeforeSendQuery</a></h4>
+                                        <a name="method_doBeforeLoadData">doBeforeLoadData</a></h4>
                                     <div class="detail">
                                         <code>
                                         
                                         
                                         
-                                        String
-                                            <strong>doBeforeSendQuery</strong>
+                                        Boolean
+                                            <strong>doBeforeLoadData</strong>
                                            (
                                                 
                                                         
                                                          sQuery
                                                     
                                                 
+                                                        , 
+                                                         oResponse
+                                                    
+                                                
+                                                        , 
+                                                         oPayload
+                                                    
+                                                
                                             )
                                         </code>
                                         
                                         <div class="description">
-                                            Overridable method gives implementers access to the query before it gets sent.
+                                            Overridable method called before container is loaded with result data.
                                         </div>
 
                                         <div class="description">
@@ -2743,18 +3135,143 @@ and DOM elements.
                                                     <dt>Parameters:</dt>
                                                         <dd>
                                                             <code>sQuery &lt;String&gt;</code>
-                                                              Query string.
+                                                              Original request.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>oResponse &lt;Object&gt;</code>
+                                                              Response object.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>oPayload &lt;MIXED&gt;</code>
+                                                              (optional) Additional argument(s)
                                                         </dd>
                                                 </dl>
 
                                                 <dl>
                                                     <dt>Returns:
                                                     <code>
-                                                        String
+                                                        Boolean
                                                     </code></dt>
-                                                    <dd>Query string.</dd>
+                                                    <dd>Return true to continue loading data, false to cancel.</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class=" deprecated">
+                                    <h4>
+                                        <a name="method_doBeforeSendQuery">doBeforeSendQuery</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>doBeforeSendQuery</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+                                            <div class="deprecated">
+                                                <strong>Deprecated</strong> Use generateRequest.
+                                            </div>        
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_filterResults">filterResults</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        Object
+                                            <strong>filterResults</strong>
+                                           (
+                                                
+                                                        
+                                                         sQuery
+                                                    
+                                                
+                                                        , 
+                                                         oFullResponse
+                                                    
+                                                
+                                                        , 
+                                                         oParsedResponse
+                                                    
+                                                
+                                                        , 
+                                                         oCallback
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Executed by DataSource (within DataSource scope via doBeforeCallback()) to
+filter results through a simple client-side matching algorithm.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>sQuery &lt;String&gt;</code>
+                                                              Original request.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>oFullResponse &lt;Object&gt;</code>
+                                                              Full response object.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>oParsedResponse &lt;Object&gt;</code>
+                                                              Parsed response object.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>oCallback &lt;Object&gt;</code>
+                                                              Callback object.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Object
+                                                    </code></dt>
+                                                    <dd>Filtered response object.</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -2773,21 +3290,23 @@ and DOM elements.
                                            (
                                                 
                                                         
-                                                         oResultItem
+                                                         oResultData
                                                     
                                                 
                                                         , 
                                                          sQuery
                                                     
                                                 
+                                                        , 
+                                                         sResultMatch
+                                                    
+                                                
                                             )
                                         </code>
                                         
                                         <div class="description">
-                                            Overridable method that converts a result item object into HTML markup
-for display. Return data values are accessible via the oResultItem object,
-and the key return value will always be oResultItem[0]. Markup will be
-displayed within &lt;li&gt; element tags in the container.
+                                            Overridable method that returns HTML markup for one result to be populated
+as innerHTML of an &lt;LI&gt; element.
                                         </div>
 
                                         <div class="description">
@@ -2795,11 +3314,15 @@ displayed within &lt;li&gt; element tags in the container.
                                                 <dl>
                                                     <dt>Parameters:</dt>
                                                         <dd>
-                                                            <code>oResultItem &lt;Object&gt;</code>
-                                                              Result item representing one query result. Data is held in an array.
+                                                            <code>oResultData &lt;Object&gt;</code>
+                                                              Result data object.
                                                         </dd>
                                                         <dd>
                                                             <code>sQuery &lt;String&gt;</code>
+                                                              The corresponding query string.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>sResultMatch &lt;HTMLElement&gt;</code>
                                                               The current query string.
                                                         </dd>
                                                 </dl>
@@ -2811,7 +3334,173 @@ displayed within &lt;li&gt; element tags in the container.
                                                     </code></dt>
                                                     <dd>HTML markup of formatted result data.</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_generateRequest">generateRequest</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>generateRequest</strong>
+                                           (
+                                                
+                                                        
+                                                         sQuery
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            A function that converts an AutoComplete query into a request value which is then
+passed to the DataSource's sendRequest method in order to retrieve data for 
+the query. By default, returns a String with the syntax: "query={query}"
+Implementers can customize this method for custom request syntaxes.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>sQuery &lt;String&gt;</code>
+                                                              Query string
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getContainerEl">getContainerEl</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        HTMLELement
+                                            <strong>getContainerEl</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Returns DOM reference to container element.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        HTMLELement
+                                                    </code></dt>
+                                                    <dd>DOM reference to container element.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getInputEl">getInputEl</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        HTMLELement
+                                            <strong>getInputEl</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Returns DOM reference to input element.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        HTMLELement
+                                                    </code></dt>
+                                                    <dd>DOM reference to input element.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getListEl">getListEl</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        HTMLElement[]
+                                            <strong>getListEl</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Public accessor to the &lt;ul&gt; element that displays query results within the results container.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        HTMLElement[]
+                                                    </code></dt>
+                                                    <dd>Reference to &lt;ul&gt; element within the results container.</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -2825,28 +3514,42 @@ displayed within &lt;li&gt; element tags in the container.
                                         
                                         
                                         
-                                        Object | Object[]
+                                        Object
                                             <strong>getListItemData</strong>
                                            (
+                                                
+                                                        
+                                                         elListItem
+                                                    
+                                                
                                             )
                                         </code>
                                         
                                         <div class="description">
-                                            Public accessor to the data held in an &lt;li&gt; element of the
-results container.
+                                            Public accessor to the result data associated with a given &lt;li&gt; result.
                                         </div>
 
                                         <div class="description">
 
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>elListItem &lt;HTMLElement&gt;</code>
+                                                              Reference to &lt;LI&gt; element.
+                                                        </dd>
+                                                </dl>
 
                                                 <dl>
                                                     <dt>Returns:
                                                     <code>
-                                                        Object | Object[]
+                                                        Object
                                                     </code></dt>
-                                                    <dd>Object or array of result data or null</dd>
+                                                    <dd>Result data.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2854,21 +3557,118 @@ results container.
                                     </div>
                                     <div class="">
                                     <h4>
+                                        <a name="method_getListItemIndex">getListItemIndex</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        Number
+                                            <strong>getListItemIndex</strong>
+                                           (
+                                                
+                                                        
+                                                         elListItem
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Public accessor to the index of the associated with a given &lt;li&gt; result.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>elListItem &lt;HTMLElement&gt;</code>
+                                                              Reference to &lt;LI&gt; element.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Number
+                                                    </code></dt>
+                                                    <dd>Index.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getListItemMatch">getListItemMatch</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        String
+                                            <strong>getListItemMatch</strong>
+                                           (
+                                                
+                                                        
+                                                         elListItem
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Public accessor to the matching string associated with a given &lt;li&gt; result.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>elListItem &lt;HTMLElement&gt;</code>
+                                                              Reference to &lt;LI&gt; element.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        String
+                                                    </code></dt>
+                                                    <dd>Matching string.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class=" deprecated">
+                                    <h4>
                                         <a name="method_getListItems">getListItems</a></h4>
                                     <div class="detail">
                                         <code>
                                         
                                         
                                         
-                                        HTMLElement[]
+                                        void
                                             <strong>getListItems</strong>
                                            (
                                             )
                                         </code>
                                         
                                         <div class="description">
-                                            Public accessor to the internal array of DOM &lt;li&gt; elements that
-display query results within the results container.
+                                            
                                         </div>
 
                                         <div class="description">
@@ -2877,11 +3677,133 @@ display query results within the results container.
                                                 <dl>
                                                     <dt>Returns:
                                                     <code>
-                                                        HTMLElement[]
+                                                        void
                                                     </code></dt>
-                                                    <dd>Array of &lt;li&gt; elements within the results container.</dd>
+                                                    <dd></dd>
                                                 </dl>
+
+
              
+                                            <div class="deprecated">
+                                                <strong>Deprecated</strong> Use getListEl().childNodes.
+                                            </div>        
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_getSubsetMatches">getSubsetMatches</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        Object
+                                            <strong>getSubsetMatches</strong>
+                                           (
+                                                
+                                                        
+                                                         sQuery
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Handles subset matching for when queryMatchSubset is enabled.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>sQuery &lt;String&gt;</code>
+                                                              Query string.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Object
+                                                    </code></dt>
+                                                    <dd>oParsedResponse or null.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_handleResponse">handleResponse</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>handleResponse</strong>
+                                           (
+                                                
+                                                        
+                                                         sQuery
+                                                    
+                                                
+                                                        , 
+                                                         oResponse
+                                                    
+                                                
+                                                        , 
+                                                         oPayload
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Handles response for display. This is the callback function method passed to
+YAHOO.util.DataSourceBase#sendRequest so results from the DataSource are
+returned to the AutoComplete instance.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>sQuery &lt;String&gt;</code>
+                                                              Original request.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>oResponse &lt;Object&gt;</code>
+                                                              Response object.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>oPayload &lt;MIXED&gt;</code>
+                                                              (optional) Additional argument(s)
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -2915,7 +3837,97 @@ display query results within the results container.
                                                     </code></dt>
                                                     <dd>Returns true if container is in an expanded state, false otherwise.</dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_isFocused">isFocused</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        Boolean
+                                            <strong>isFocused</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Returns true if widget instance is currently focused.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Boolean
+                                                    </code></dt>
+                                                    <dd>Returns true if widget instance is currently focused.</dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_preparseRawResponse">preparseRawResponse</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        Object
+                                            <strong>preparseRawResponse</strong>
+                                           (
+                                                
+                                                        
+                                                         sQuery
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Executed by DataSource (within DataSource scope via doBeforeParseData()) to
+handle responseStripAfter cleanup.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>sQuery &lt;String&gt;</code>
+                                                              Query string.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        Object
+                                                    </code></dt>
+                                                    <dd>oParsedResponse or null.</dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -2961,7 +3973,10 @@ display query results within the results container.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3008,7 +4023,10 @@ inserted within a &lt;div&gt; tag with a class of "yui-ac-bd".
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3055,7 +4073,10 @@ inserted within a &lt;div&gt; tag with a class of "yui-ac-ft".
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3102,7 +4123,10 @@ inserted within a &lt;div&gt; tag with a class of "yui-ac-hd".
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3136,7 +4160,10 @@ inserted within a &lt;div&gt; tag with a class of "yui-ac-hd".
                                                     </code></dt>
                                                     <dd>Unique name of the AutoComplete instance.</dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3236,12 +4263,69 @@ to trigger a query via interval for certain IME users.
                                                          oSelf
                                                     
                                                 
+                                                        , 
+                                                         sQuery
+                                                    
+                                                
+                                                        , 
+                                                         aResults
+                                                    
+                                                
                                             )
 
                                         </code>
                                         
                                         <div class="description">
                                             Fired when the results container is expanded.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>oSelf &lt;YAHOO.widget.AutoComplete&gt;</code>
+                                                              The AutoComplete instance.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>sQuery &lt;String&gt;</code>
+                                                              The query string.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>aResults &lt;Object[]&gt;</code>
+                                                              Results array.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="event_containerPopulateEvent">containerPopulateEvent</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>containerPopulateEvent</strong>
+
+                                            (
+                                                
+                                                        
+                                                         oSelf
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fired when the results container is populated.
                                         </div>
 
                                         <div class="description">
@@ -3331,12 +4415,16 @@ DataSource due to an error.
                                                          sQuery
                                                     
                                                 
+                                                        , 
+                                                         oRequest
+                                                    
+                                                
                                             )
 
                                         </code>
                                         
                                         <div class="description">
-                                            Fired when the AutoComplete instance makes a query to the DataSource.
+                                            Fired when the AutoComplete instance makes a request to the DataSource.
                                         </div>
 
                                         <div class="description">
@@ -3351,6 +4439,10 @@ DataSource due to an error.
                                                         <dd>
                                                             <code>sQuery &lt;String&gt;</code>
                                                               The query string.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>oRequest &lt;Object&gt;</code>
+                                                              The request.
                                                         </dd>
                                                 </dl>
 
@@ -3757,6 +4849,47 @@ because it did not match one of the returned query results.
                                     </div>
                                     <div class="">
                                     <h4>
+                                        <a name="event_textboxChangeEvent">textboxChangeEvent</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong>textboxChangeEvent</strong>
+
+                                            (
+                                                
+                                                        
+                                                         oSelf
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Fired when the input field value has changed when it loses focus.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>oSelf &lt;YAHOO.widget.AutoComplete&gt;</code>
+                                                              The AutoComplete instance.
+                                                        </dd>
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
                                         <a name="event_textboxFocusEvent">textboxFocusEvent</a></h4>
                                     <div class="detail">
                                         <code>
@@ -3919,6 +5052,10 @@ feature.
                                                          oSelf
                                                     
                                                 
+                                                        , 
+                                                         sSelection
+                                                    
+                                                
                                             )
 
                                         </code>
@@ -3935,6 +5072,10 @@ feature.
                                                         <dd>
                                                             <code>oSelf &lt;YAHOO.widget.AutoComplete&gt;</code>
                                                               The AutoComplete instance.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>sSelection &lt;String&gt;</code>
+                                                              The selected string.
                                                         </dd>
                                                 </dl>
 
@@ -3967,6 +5108,8 @@ feature.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -4008,6 +5151,8 @@ feature.
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
 
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
+
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
                                 <li class=""><a href="module_profilerviewer.html">profilerviewer</a></li>
@@ -4036,11 +5181,6 @@ feature.
                         <h4>Classes</h4>
                         <ul class="content">
                                 <li class="selected"><a href="YAHOO.widget.AutoComplete.html">YAHOO.widget.AutoComplete</a></li>
-                                <li class=""><a href="YAHOO.widget.DataSource.html">YAHOO.widget.DataSource</a></li>
-                                <li class=""><a href="YAHOO.widget.DS_JSArray.html">YAHOO.widget.DS_JSArray</a></li>
-                                <li class=""><a href="YAHOO.widget.DS_JSFunction.html">YAHOO.widget.DS_JSFunction</a></li>
-                                <li class=""><a href="YAHOO.widget.DS_ScriptNode.html">YAHOO.widget.DS_ScriptNode</a></li>
-                                <li class=""><a href="YAHOO.widget.DS_XHR.html">YAHOO.widget.DS_XHR</a></li>
                         </ul>
                     </div>
 
@@ -4048,16 +5188,12 @@ feature.
                         <h4>Files</h4>
                         <ul class="content">        
                                 <li class=""><a href="AutoComplete.js.html">AutoComplete.js</a></li>
-                                <li class=""><a href="DataSource.js.html">DataSource.js</a></li>
                         </ul>
                     </div>
 
                     <div class="module">
                         <h4>Properties</h4>
                         <ul class="content">        
-                                <li class="private"><a href="#property__aListItems">_aListItems</a>
-                                        <!--<code>&lt;Boolean&gt;</code>-->
-                                </li>
                                 <li class="private"><a href="#property__bContainerOpen">_bContainerOpen</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
@@ -4079,6 +5215,9 @@ feature.
                                 <li class="private"><a href="#property__elContent">_elContent</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
+                                <li class="private"><a href="#property__elCurListItem">_elCurListItem</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
                                 <li class="private"><a href="#property__elFooter">_elFooter</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
@@ -4088,6 +5227,9 @@ feature.
                                 <li class="private"><a href="#property__elIFrame">_elIFrame</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
+                                <li class="private"><a href="#property__elList">_elList</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
                                 <li class="private"><a href="#property__elShadow">_elShadow</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
@@ -4095,9 +5237,6 @@ feature.
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__iFrameSrc">_iFrameSrc</a>
-                                        <!--<code>&lt;Boolean&gt;</code>-->
-                                </li>
-                                <li class="private"><a href="#property__maxResultsDisplayed">_maxResultsDisplayed</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__nDelayID">_nDelayID</a>
@@ -4112,10 +5251,10 @@ feature.
                                 <li class="private"><a href="#property__nKeyCode">_nKeyCode</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property__oAnim">_oAnim</a>
+                                <li class="private"><a href="#property__nTypeAheadDelayID">_nTypeAheadDelayID</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property__oCurItem">_oCurItem</a>
+                                <li class="private"><a href="#property__oAnim">_oAnim</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
                                 <li class="private"><a href="#property__queryInterval">_queryInterval</a>
@@ -4124,10 +5263,13 @@ feature.
                                 <li class="private"><a href="#property__sCurQuery">_sCurQuery</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
+                                <li class="private"><a href="#property__sInitInputValue">_sInitInputValue</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
                                 <li class="private"><a href="#property__sName">_sName</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property__sSavedQuery">_sSavedQuery</a>
+                                <li class="private"><a href="#property__sPastSelections">_sPastSelections</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_allowBrowserAutocomplete">allowBrowserAutocomplete</a>
@@ -4143,6 +5285,9 @@ feature.
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_animVert">animVert</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_applyLocalFilter">applyLocalFilter</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_autoHighlight">autoHighlight</a>
@@ -4172,7 +5317,31 @@ feature.
                                 <li class=""><a href="#property_queryDelay">queryDelay</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
+                                <li class=""><a href="#property_queryInterval">queryInterval</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_queryMatchCase">queryMatchCase</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_queryMatchContains">queryMatchContains</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_queryMatchSubset">queryMatchSubset</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_queryQuestionMark">queryQuestionMark</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_resultTypeList">resultTypeList</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_supressInputUpdate">supressInputUpdate</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
                                 <li class=""><a href="#property_typeAhead">typeAhead</a>
+                                        <!--<code>&lt;Boolean&gt;</code>-->
+                                </li>
+                                <li class=""><a href="#property_typeAheadDelay">typeAheadDelay</a>
                                         <!--<code>&lt;Boolean&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_useIFrame">useIFrame</a>
@@ -4191,7 +5360,7 @@ feature.
                                 <a href="#method___initProps">__initProps</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
-                                <a href="#method__cancelIntervalDetection">_cancelIntervalDetection</a>
+                                <a href="#method__clearInterval">_clearInterval</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__clearSelection">_clearSelection</a>
@@ -4200,16 +5369,13 @@ feature.
                                 <a href="#method__enableIntervalDetection">_enableIntervalDetection</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
-                                <a href="#method__initContainer">_initContainer</a>
+                                <a href="#method__initContainerEl">_initContainerEl</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
-                                <a href="#method__initContainerHelpers">_initContainerHelpers</a>
+                                <a href="#method__initContainerHelperEls">_initContainerHelperEls</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
-                                <a href="#method__initList">_initList</a>
-                                </li>
-                                <li class="private"><!--<code>void</code>-->
-                                <a href="#method__initListItem">_initListItem</a>
+                                <a href="#method__initListEl">_initListEl</a>
                                 </li>
                                 <li class="private"><!--<code>Boolean</code>-->
                                 <a href="#method__isIgnoreKey">_isIgnoreKey</a>
@@ -4219,6 +5385,9 @@ feature.
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__moveSelection">_moveSelection</a>
+                                </li>
+                                <li class="private"><!--<code>void</code>-->
+                                <a href="#method__onContainerClick">_onContainerClick</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__onContainerMouseout">_onContainerMouseout</a>
@@ -4233,7 +5402,7 @@ feature.
                                 <a href="#method__onContainerScroll">_onContainerScroll</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
-                                <a href="#method__onIMEDetected">_onIMEDetected</a>
+                                <a href="#method__onInterval">_onInterval</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__onItemMouseclick">_onItemMouseclick</a>
@@ -4295,26 +5464,68 @@ feature.
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__updateValue">_updateValue</a>
                                 </li>
+                                <li class="private"><!--<code>void</code>-->
+                                <a href="#method_AutoComplete._cloneObject">AutoComplete._cloneObject</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_collapseContainer">collapseContainer</a>
+                                </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_destroy">destroy</a>
                                 </li>
                                 <li class=""><!--<code>Boolean</code>-->
                                 <a href="#method_doBeforeExpandContainer">doBeforeExpandContainer</a>
                                 </li>
-                                <li class=""><!--<code>String</code>-->
+                                <li class=""><!--<code>Boolean</code>-->
+                                <a href="#method_doBeforeLoadData">doBeforeLoadData</a>
+                                </li>
+                                <li class=" deprecated"><!--<code>void</code>-->
                                 <a href="#method_doBeforeSendQuery">doBeforeSendQuery</a>
+                                </li>
+                                <li class=""><!--<code>Object</code>-->
+                                <a href="#method_filterResults">filterResults</a>
                                 </li>
                                 <li class=""><!--<code>String</code>-->
                                 <a href="#method_formatResult">formatResult</a>
                                 </li>
-                                <li class=""><!--<code>Object | Object[]</code>-->
-                                <a href="#method_getListItemData">getListItemData</a>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_generateRequest">generateRequest</a>
+                                </li>
+                                <li class=""><!--<code>HTMLELement</code>-->
+                                <a href="#method_getContainerEl">getContainerEl</a>
+                                </li>
+                                <li class=""><!--<code>HTMLELement</code>-->
+                                <a href="#method_getInputEl">getInputEl</a>
                                 </li>
                                 <li class=""><!--<code>HTMLElement[]</code>-->
+                                <a href="#method_getListEl">getListEl</a>
+                                </li>
+                                <li class=""><!--<code>Object</code>-->
+                                <a href="#method_getListItemData">getListItemData</a>
+                                </li>
+                                <li class=""><!--<code>Number</code>-->
+                                <a href="#method_getListItemIndex">getListItemIndex</a>
+                                </li>
+                                <li class=""><!--<code>String</code>-->
+                                <a href="#method_getListItemMatch">getListItemMatch</a>
+                                </li>
+                                <li class=" deprecated"><!--<code>void</code>-->
                                 <a href="#method_getListItems">getListItems</a>
+                                </li>
+                                <li class=""><!--<code>Object</code>-->
+                                <a href="#method_getSubsetMatches">getSubsetMatches</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
+                                <a href="#method_handleResponse">handleResponse</a>
                                 </li>
                                 <li class=""><!--<code>Boolean</code>-->
                                 <a href="#method_isContainerOpen">isContainerOpen</a>
+                                </li>
+                                <li class=""><!--<code>Boolean</code>-->
+                                <a href="#method_isFocused">isFocused</a>
+                                </li>
+                                <li class=""><!--<code>Object</code>-->
+                                <a href="#method_preparseRawResponse">preparseRawResponse</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_sendQuery">sendQuery</a>
@@ -4347,6 +5558,9 @@ feature.
                                 <a href="#event_containerExpandEvent">containerExpandEvent</a>
                                 </li>
                                 <li class="">
+                                <a href="#event_containerPopulateEvent">containerPopulateEvent</a>
+                                </li>
+                                <li class="">
                                 <a href="#event_dataErrorEvent">dataErrorEvent</a>
                                 </li>
                                 <li class="">
@@ -4377,6 +5591,9 @@ feature.
                                 <a href="#event_textboxBlurEvent">textboxBlurEvent</a>
                                 </li>
                                 <li class="">
+                                <a href="#event_textboxChangeEvent">textboxChangeEvent</a>
+                                </li>
+                                <li class="">
                                 <a href="#event_textboxFocusEvent">textboxFocusEvent</a>
                                 </li>
                                 <li class="">
@@ -4397,7 +5614,7 @@ feature.
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

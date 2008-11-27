@@ -43,11 +43,25 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("IÂ
   advanced configuration settings for individual children.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IAxis.html"><i>IAxis</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/IAxis.html"><i>IAxis</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-  A renderer for an axis on a chart.</td>
+  Data-only representation of a chart's axis.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/IAxisRenderer.html"><i>IAxisRenderer</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  A visual representation of an IAxis instance.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/ICartesianAxisRenderer.html"><i>ICartesianAxisRenderer</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  Interface for a cartesian chart's axis renderers.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/ICategoryChart.html"><i>ICategoryChart</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td>
@@ -64,11 +78,32 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("IÂ
   Defines functions and properties for an ISeries that relies on categories.</td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IChart.html"><i>IChart</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  Methods and properties expected to be defined by all charts.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/IClusteringAxis.html"><i>IClusteringAxis</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  An axis that supports clustering.</td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IDataTipRenderer.html"><i>IDataTipRenderer</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
   A renderer for a mouse-over datatip on a chart.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/IGridLinesRenderer.html"><i>IGridLinesRenderer</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  A renderer for grid lines appearing on a chart's axis.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/class-list.html');" href="com/yahoo/astra/layout/ILayoutContainer.html"><i>ILayoutContainer</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/class-list.html');" href="com/yahoo/astra/layout/package-detail.html">com.yahoo.astra.layout</a></td>
@@ -153,7 +188,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("IÂ
    To be overridden by subclasses to add ExternalInterface callbacks.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/TickPosition.html#INSIDE">INSIDE</a> &mdash; Constant static property in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/TickPosition.html">TickPosition</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/TickPosition.html#INSIDE">INSIDE</a> &mdash; Constant static property in class com.yahoo.astra.fl.charts.axes.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/TickPosition.html">TickPosition</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
@@ -195,7 +230,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("IÂ
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/Series.html#invalidateMarker()">invalidateMarker</a>(marker:<a href="com/yahoo/astra/fl/charts/series/ISeriesItemRenderer.html" onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series./class-list.html');">com.yahoo.astra.fl.charts.series:ISeriesItemRenderer</a>) &mdash; Method in class com.yahoo.astra.fl.charts.series.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/Series.html">Series</a></td>
 </tr>
 <tr>
-<td width="20"></td><td></td>
+<td width="20"></td><td>
+   Invalidates a marker (considered new).</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/class-list.html');" href="com/yahoo/astra/layout/LayoutManager.html#invalidateParentLayout()">invalidateParentLayout</a>(target) &mdash; Static method in class com.yahoo.astra.layout.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/class-list.html');" href="com/yahoo/astra/layout/LayoutManager.html">LayoutManager</a></td>
@@ -206,11 +242,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("IÂ
    informed that it needs to update the layout.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IPlotArea.html"><i>IPlotArea</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/IOriginAxis.html"><i>IOriginAxis</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-  An interface for a chart with a drawing area.</td>
+  An axis with an origin.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/skins/class-list.html');" href="com/yahoo/astra/fl/charts/skins/IProgrammaticSkin.html"><i>IProgrammaticSkin</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/skins/class-list.html');" href="com/yahoo/astra/fl/charts/skins/package-detail.html">com.yahoo.astra.fl.charts.skins</a></td>
@@ -218,6 +254,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("IÂ
 <tr>
 <td width="20"></td><td>
   A type of skin that supports color customization.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/IRadialAxisRenderer.html"><i>IRadialAxisRenderer</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  Interface for a chart's axis renderers.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/ISeries.html"><i>ISeries</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/package-detail.html">com.yahoo.astra.fl.charts.series</a></td>
@@ -246,6 +289,27 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("IÂ
 <tr>
 <td width="20"></td><td>
    Indicates whether special considerations should be taken for a newly created marker.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/ChartUtil.html#isStackingAllowed()">isStackingAllowed</a>(axis:<a href="com/yahoo/astra/fl/charts/axes/IAxis.html" onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes./class-list.html');">com.yahoo.astra.fl.charts.axes:IAxis</a>, series:<a href="com/yahoo/astra/fl/charts/series/ISeries.html" onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series./class-list.html');">com.yahoo.astra.fl.charts.series:ISeries</a>) &mdash; Static method in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/ChartUtil.html">ChartUtil</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Determines if a series may be stacked on an axis.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/IStackedSeries.html"><i>IStackedSeries</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/package-detail.html">com.yahoo.astra.fl.charts.series</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  A type of series that supports stacking.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/IStackingAxis.html"><i>IStackingAxis</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  A type of axis that allows values to be stacked.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/events/class-list.html');" href="com/yahoo/astra/fl/charts/events/ChartEvent.html#item">item</a> &mdash; Property in class com.yahoo.astra.fl.charts.events.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/events/class-list.html');" href="com/yahoo/astra/fl/charts/events/ChartEvent.html">ChartEvent</a></td>
@@ -314,6 +378,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("IÂ
    event object.</td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IChart.html#itemToAxisValue()">itemToAxisValue</a>(series:<a href="com/yahoo/astra/fl/charts/series/ISeries.html" onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series./class-list.html');">com.yahoo.astra.fl.charts.series:ISeries</a>, itemIndex, axis:<a href="com/yahoo/astra/fl/charts/axes/IAxis.html" onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes./class-list.html');">com.yahoo.astra.fl.charts.axes:IAxis</a>, stack) &mdash; Method in interface com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IChart.html">IChart</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Retreives the value of an item on one of the chart's axes.</td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/ICategorySeries.html#itemToCategory()">itemToCategory</a>(item, index) &mdash; Method in interface com.yahoo.astra.fl.charts.series.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/ICategorySeries.html">ICategorySeries</a></td>
 </tr>
 <tr>
@@ -352,6 +423,21 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("IÂ
 <tr>
 <td width="20"></td><td>
    Converts an item's value to its percentage equivilent.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/CartesianChart.html#itemToPosition()">itemToPosition</a>(series:<a href="com/yahoo/astra/fl/charts/series/ISeries.html" onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series./class-list.html');">com.yahoo.astra.fl.charts.series:ISeries</a>, itemIndex) &mdash; Method in class com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   
+   Calculates the position of a data point along the axis.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IChart.html#itemToPosition()">itemToPosition</a>(series:<a href="com/yahoo/astra/fl/charts/series/ISeries.html" onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series./class-list.html');">com.yahoo.astra.fl.charts.series:ISeries</a>, itemIndex) &mdash; Method in interface com.yahoo.astra.fl.charts.<a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/IChart.html">IChart</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Calculates the position of a data point along the axis.</td>
 </tr>
 <tr>
 <td style="padding-bottom:20px" colspan="2"></td>

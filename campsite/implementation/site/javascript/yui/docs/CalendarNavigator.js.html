@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Calendar&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Calendar&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_calendar.html">calendar</a>
@@ -21,14 +21,16 @@
                  &gt; CalendarNavigator.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -861,21 +863,28 @@
 			<span class="k">this</span><span class="o">.</span><span class="nx">setYear</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">_getYearFromUI</span><span class="o">());</span>
 
 			<span class="k">var</span> <span class="nx">cal</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">cal</span><span class="o">;</span>
-			<span class="k">var</span> <span class="nx">nav</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
-			
-			<span class="k">function</span> <span class="nx">update</span><span class="o">()</span> <span class="o">{</span>
-				<span class="nx">cal</span><span class="o">.</span><span class="nx">setYear</span><span class="o">(</span><span class="nx">nav</span><span class="o">.</span><span class="nx">getYear</span><span class="o">());</span>
-				<span class="nx">cal</span><span class="o">.</span><span class="nx">setMonth</span><span class="o">(</span><span class="nx">nav</span><span class="o">.</span><span class="nx">getMonth</span><span class="o">());</span>
-				<span class="nx">cal</span><span class="o">.</span><span class="nx">render</span><span class="o">();</span>
-			<span class="o">}</span>
+
 			<span class="c">// Artificial delay, just to help the user see something changed</span>
 <span class="c"></span>			<span class="k">var</span> <span class="nx">delay</span> <span class="o">=</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">widget</span><span class="o">.</span><span class="nx">CalendarNavigator</span><span class="o">.</span><span class="nx">UPDATE_DELAY</span><span class="o">;</span>
 			<span class="k">if</span> <span class="o">(</span><span class="nx">delay</span> <span class="o">&gt;</span> <span class="m">0</span><span class="o">)</span> <span class="o">{</span>
-				<span class="nb">window</span><span class="o">.</span><span class="nx">setTimeout</span><span class="o">(</span><span class="nx">update</span><span class="o">,</span> <span class="nx">delay</span><span class="o">);</span>
+				<span class="k">var</span> <span class="nx">nav</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+				<span class="nb">window</span><span class="o">.</span><span class="nx">setTimeout</span><span class="o">(</span><span class="k">function</span><span class="o">(){</span> <span class="nx">nav</span><span class="o">.</span><span class="nx">_update</span><span class="o">(</span><span class="nx">cal</span><span class="o">);</span> <span class="o">},</span> <span class="nx">delay</span><span class="o">);</span>
 			<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-				<span class="nx">update</span><span class="o">();</span>
+				<span class="k">this</span><span class="o">.</span><span class="nx">_update</span><span class="o">(</span><span class="nx">cal</span><span class="o">);</span>
 			<span class="o">}</span>
 		<span class="o">}</span>
+	<span class="o">},</span>
+
+	<span class="c">/**</span>
+<span class="c">	 * Updates the Calendar rendered state, based on the state of the CalendarNavigator</span>
+<span class="c">	 * @method _update</span>
+<span class="c">	 * @param cal The Calendar instance to update</span>
+<span class="c">	 * @protected</span>
+<span class="c">	 */</span>
+	<span class="nx">_update</span> <span class="o">:</span> <span class="k">function</span><span class="o">(</span><span class="nx">cal</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nx">cal</span><span class="o">.</span><span class="nx">setYear</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">getYear</span><span class="o">());</span>
+		<span class="nx">cal</span><span class="o">.</span><span class="nx">setMonth</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">getMonth</span><span class="o">());</span>
+		<span class="nx">cal</span><span class="o">.</span><span class="nx">render</span><span class="o">();</span>
 	<span class="o">},</span>
 
 	<span class="c">/**</span>
@@ -966,7 +975,7 @@
 				<span class="nx">el</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">yearEl</span><span class="o">;</span>
 				<span class="k">try</span> <span class="o">{</span>
 					<span class="k">this</span><span class="o">.</span><span class="nx">yearEl</span><span class="o">.</span><span class="nx">select</span><span class="o">();</span>
-				<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nx">err</span><span class="o">)</span> <span class="o">{</span>
+				<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nx">selErr</span><span class="o">)</span> <span class="o">{</span>
 					<span class="c">// Ignore;</span>
 <span class="c"></span>				<span class="o">}</span>
 			<span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="nx">f</span> <span class="o">==</span> <span class="s2">&quot;month&quot;</span><span class="o">)</span> <span class="o">{</span>
@@ -977,7 +986,7 @@
 		<span class="k">if</span> <span class="o">(</span><span class="nx">el</span> <span class="o">&amp;&amp;</span> <span class="nx">YAHOO</span><span class="o">.</span><span class="nx">lang</span><span class="o">.</span><span class="nx">isFunction</span><span class="o">(</span><span class="nx">el</span><span class="o">.</span><span class="nx">focus</span><span class="o">))</span> <span class="o">{</span>
 			<span class="k">try</span> <span class="o">{</span>
 				<span class="nx">el</span><span class="o">.</span><span class="nx">focus</span><span class="o">();</span>
-			<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nx">err</span><span class="o">)</span> <span class="o">{</span>
+			<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nx">focusErr</span><span class="o">)</span> <span class="o">{</span>
 				<span class="c">// TODO: Fall back if focus fails?</span>
 <span class="c"></span>			<span class="o">}</span>
 		<span class="o">}</span>
@@ -1292,6 +1301,8 @@
 
                                 <li class="selected"><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -1331,6 +1342,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -1387,7 +1400,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

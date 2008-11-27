@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Menu&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Menu&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_menu.html">menu</a>
@@ -21,14 +21,16 @@
                 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <h2>
@@ -238,7 +240,7 @@ the parent node for each item's <code>&#60;li&#62;</code> element.
                                     <div class="detail">
                                         <div class="description">
                                             Boolean indicating if the "mouseover" and "mouseout" event 
-handlers used for hiding the menu via a call to "window.setTimeout" have 
+handlers used for hiding the menu via a call to "YAHOO.lang.later" have 
 already been assigned.
                                         </div>
                                     </div>
@@ -271,25 +273,6 @@ from executing.
                                     <hr />
                                     </div>
                                     <div class="private">
-                                    <h4><a name="property__nBodyScrollId">_nBodyScrollId</a>
-                                        <code>- private Number</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Number representing the time-out setting used to cancel the 
-scrolling of the menu's body element.
-                                        </div>
-                                    </div>
-     
-                                        
-                                    <div class="default">
-                                        Default Value: null
-                                    </div>        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
                                     <h4><a name="property__nCurrentMouseX">_nCurrentMouseX</a>
                                         <code>- private Number</code>
                                     </h4>
@@ -303,63 +286,6 @@ the menu.
                                         
                                     <div class="default">
                                         Default Value: 0
-                                    </div>        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4><a name="property__nHideDelayId">_nHideDelayId</a>
-                                        <code>- private Number</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Number representing the time-out setting used to cancel the 
-hiding of a menu.
-                                        </div>
-                                    </div>
-     
-                                        
-                                    <div class="default">
-                                        Default Value: null
-                                    </div>        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4><a name="property__nShowDelayId">_nShowDelayId</a>
-                                        <code>- private Number</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Number representing the time-out setting used to cancel the 
-showing of a menu.
-                                        </div>
-                                    </div>
-     
-                                        
-                                    <div class="default">
-                                        Default Value: null
-                                    </div>        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4><a name="property__nSubmenuHideDelayId">_nSubmenuHideDelayId</a>
-                                        <code>- private Number</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Number representing the time-out setting used to cancel the 
-hiding of a submenu.
-                                        </div>
-                                    </div>
-     
-                                        
-                                    <div class="default">
-                                        Default Value: null
                                     </div>        
 
 
@@ -416,36 +342,6 @@ menu's <code>&#60;div&#62;</code> element.
                                     <div class="default">
                                         Default Value: "yuimenu"
                                     </div>        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4><a name="property_DEFAULT_CONFIG">DEFAULT_CONFIG</a>
-                                        <code>- private final Object</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Constant representing the Menu's configuration properties
-                                        </div>
-                                    </div>
-     
-                                        
-
-
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4><a name="property_EVENT_TYPES">EVENT_TYPES</a>
-                                        <code>- private final Object</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Constant representing the name of the Menu's events
-                                        </div>
-                                    </div>
-     
-                                        
 
 
                                     <hr />
@@ -536,7 +432,7 @@ object literal.
                                     </div>
                                     <div class="">
                                     <h4><a name="property_OFF_SCREEN_POSITION">OFF_SCREEN_POSITION</a>
-                                        <code>- final Array</code>
+                                        <code>- final String</code>
                                     </h4>
                                     <div class="detail">
                                         <div class="description">
@@ -548,7 +444,7 @@ should have when it is positioned outside the viewport by the
      
                                         
                                     <div class="default">
-                                        Default Value: [-10000, -10000]
+                                        Default Value: "-999em"
                                     </div>        
 
 
@@ -608,7 +504,7 @@ create the menu.
                                 <code>
                                     
                                         <a class="" href="YAHOO.widget.Module.html#property_body">body</a><span class="">,</span>
-                                        <a class="" href="YAHOO.widget.Module.html#property_browser">browser</a><span class="">,</span>
+                                        <a class=" deprecated" href="YAHOO.widget.Module.html#property_browser">browser</a><span class=" deprecated">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_cfg">cfg</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_contructor">contructor</a><span class="">,</span>
                                         <a class="private" href="YAHOO.widget.Module.html#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a><span class="private">,</span>
@@ -617,7 +513,7 @@ create the menu.
                                         <a class="" href="YAHOO.widget.Module.html#property_footer">footer</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_header">header</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_id">id</a><span class="">,</span>
-                                        <a class="" href="YAHOO.widget.Module.html#property_imageRoot">imageRoot</a><span class="">,</span>
+                                        <a class=" deprecated" href="YAHOO.widget.Module.html#property_imageRoot">imageRoot</a><span class=" deprecated">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_isSecure">isSecure</a><span class="">,</span>
                                         <a class="" href="YAHOO.widget.Module.html#property_platform">platform</a>
                                 </code>
@@ -628,6 +524,7 @@ create the menu.
                             <div class="content">
                                 <code>
                                     
+                                        <a class="" href="YAHOO.widget.Overlay.html#property_CONTEXT_TRIGGERS">CONTEXT_TRIGGERS</a><span class="">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_EVENT_TYPES">EVENT_TYPES</a><span class="private">,</span>
                                         <a class="private" href="YAHOO.widget.Overlay.html#property_YAHOO.widget.Overlay._initialized">YAHOO.widget.Overlay._initialized</a>
@@ -711,7 +608,10 @@ which the menu item should be added.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -745,7 +645,10 @@ which the menu item should be added.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -779,7 +682,52 @@ which the menu item should be added.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__clearSetWidthFlag">_clearSetWidthFlag</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>_clearSetWidthFlag</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Change event listener for the "width" configuration property.  This listener is 
+added when a Menu's "width" configuration property is set by the "_setScrollHeight" method, and 
+is used to set the "_widthSetForScroll" property to "false" if the "width" configuration property 
+is changed after it was set by the "_setScrollHeight" method.  If the "_widthSetForScroll" 
+property is set to "false", and the "_setScrollHeight" method is in the process of tearing down 
+scrolling functionality, it will maintain the Menu's new width rather than reseting it.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -826,7 +774,10 @@ instance with the submenu to be configured.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -873,7 +824,10 @@ instance with the submenu to be configured.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -907,7 +861,10 @@ instance with the submenu to be configured.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -941,7 +898,10 @@ instance with the submenu to be configured.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -975,7 +935,10 @@ instance with the submenu to be configured.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1009,7 +972,10 @@ instance with the submenu to be configured.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1044,55 +1010,10 @@ the "hidedelay" configuration property.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
-                                        </div>
 
-                                    </div>
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4>
-                                        <a name="method__execShowDelay">_execShowDelay</a></h4>
-                                    <div class="detail">
-                                        <code>
-                                         private 
-                                        
-                                        
-                                        void
-                                            <strong>_execShowDelay</strong>
-                                           (
-                                                
-                                                        
-                                                         p_oMenu
-                                                    
-                                                
-                                            )
-                                        </code>
-                                        
-                                        <div class="description">
-                                            Shows the menu after the number of milliseconds specified by 
-the "showdelay" configuration property have ellapsed.
-                                        </div>
-
-                                        <div class="description">
-
-                                                <dl>
-                                                    <dt>Parameters:</dt>
-                                                        <dd>
-                                                            <code>p_oMenu &lt;YAHOO.widget.Menu&gt;</code>
-                                                             Object specifying the menu that should 
-be made visible.
-                                                        </dd>
-                                                </dl>
-
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd></dd>
-                                                </dl>
-             
                                         </div>
 
                                     </div>
@@ -1158,7 +1079,10 @@ before the submenu is hidden.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1192,7 +1116,10 @@ before the submenu is hidden.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1239,7 +1166,10 @@ to be retrieved.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1274,7 +1204,10 @@ used to instantiate menu and menu items.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1329,7 +1262,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1386,7 +1322,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1441,7 +1380,68 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="protected">
+                                    <h4>
+                                        <a name="method__onBlur">_onBlur</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         protected 
+                                        
+                                        
+                                        void
+                                            <strong>_onBlur</strong>
+                                           (
+                                                
+                                                        
+                                                         p_sType
+                                                    
+                                                
+                                                        , 
+                                                         p_aArgs
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            "blur" event handler for a Menu instance.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>p_sType &lt;String&gt;</code>
+                                                             The name of the event that was fired.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>p_aArgs &lt;Array&gt;</code>
+                                                             Collection of arguments sent when the event 
+was fired.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1496,7 +1496,68 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__onHide">_onHide</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>_onHide</strong>
+                                           (
+                                                
+                                                        
+                                                         p_sType
+                                                    
+                                                
+                                                        , 
+                                                         p_aArgs
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            "hide" event handler for the menu.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>p_sType &lt;String&gt;</code>
+                                                             String representing the name of the event that 
+was fired.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>p_aArgs &lt;Array&gt;</code>
+                                                             Array of arguments sent when the event was fired.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -1551,7 +1612,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1606,7 +1670,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1661,7 +1728,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1716,62 +1786,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
-                                        </div>
 
-                                    </div>
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4>
-                                        <a name="method__onMenuItemBlur">_onMenuItemBlur</a></h4>
-                                    <div class="detail">
-                                        <code>
-                                         private 
-                                        
-                                        
-                                        void
-                                            <strong>_onMenuItemBlur</strong>
-                                           (
-                                                
-                                                        
-                                                         p_sType
-                                                    
-                                                
-                                                        , 
-                                                         p_aArgs
-                                                    
-                                                
-                                            )
-                                        </code>
-                                        
-                                        <div class="description">
-                                            "blur" event handler for the menu's items.
-                                        </div>
-
-                                        <div class="description">
-
-                                                <dl>
-                                                    <dt>Parameters:</dt>
-                                                        <dd>
-                                                            <code>p_sType &lt;String&gt;</code>
-                                                             String representing the name of the event 
-that was fired.
-                                                        </dd>
-                                                        <dd>
-                                                            <code>p_aArgs &lt;Array&gt;</code>
-                                                             Array of arguments sent when the event was fired.
-                                                        </dd>
-                                                </dl>
-
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd></dd>
-                                                </dl>
-             
                                         </div>
 
                                     </div>
@@ -1835,7 +1853,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -1899,62 +1920,10 @@ that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
-                                        </div>
 
-                                    </div>
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4>
-                                        <a name="method__onMenuItemFocus">_onMenuItemFocus</a></h4>
-                                    <div class="detail">
-                                        <code>
-                                         private 
-                                        
-                                        
-                                        void
-                                            <strong>_onMenuItemFocus</strong>
-                                           (
-                                                
-                                                        
-                                                         p_sType
-                                                    
-                                                
-                                                        , 
-                                                         p_aArgs
-                                                    
-                                                
-                                            )
-                                        </code>
-                                        
-                                        <div class="description">
-                                            "focus" event handler for the menu's items.
-                                        </div>
-
-                                        <div class="description">
-
-                                                <dl>
-                                                    <dt>Parameters:</dt>
-                                                        <dd>
-                                                            <code>p_sType &lt;String&gt;</code>
-                                                             String representing the name of the event that 
-was fired.
-                                                        </dd>
-                                                        <dd>
-                                                            <code>p_aArgs &lt;Array&gt;</code>
-                                                             Array of arguments sent when the event was fired.
-                                                        </dd>
-                                                </dl>
-
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd></dd>
-                                                </dl>
-             
                                         </div>
 
                                     </div>
@@ -2010,7 +1979,10 @@ fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2065,7 +2037,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2120,7 +2095,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2184,7 +2162,10 @@ subscribed to the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2249,7 +2230,10 @@ subscribed to the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2304,7 +2288,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2362,7 +2349,10 @@ fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2420,7 +2410,10 @@ fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2475,62 +2468,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
-                                        </div>
 
-                                    </div>
-                                    <hr />
-                                    </div>
-                                    <div class="private">
-                                    <h4>
-                                        <a name="method__onSubmenuBeforeShow">_onSubmenuBeforeShow</a></h4>
-                                    <div class="detail">
-                                        <code>
-                                         private 
-                                        
-                                        
-                                        void
-                                            <strong>_onSubmenuBeforeShow</strong>
-                                           (
-                                                
-                                                        
-                                                         p_sType
-                                                    
-                                                
-                                                        , 
-                                                         p_aArgs
-                                                    
-                                                
-                                            )
-                                        </code>
-                                        
-                                        <div class="description">
-                                            "beforeshow" event handler for a submenu.
-                                        </div>
-
-                                        <div class="description">
-
-                                                <dl>
-                                                    <dt>Parameters:</dt>
-                                                        <dd>
-                                                            <code>p_sType &lt;String&gt;</code>
-                                                             String representing the name of the event that 
-was fired.
-                                                        </dd>
-                                                        <dd>
-                                                            <code>p_aArgs &lt;Array&gt;</code>
-                                                             Array of arguments sent when the event was fired.
-                                                        </dd>
-                                                </dl>
-
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd></dd>
-                                                </dl>
-             
                                         </div>
 
                                     </div>
@@ -2586,7 +2527,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2641,7 +2585,10 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2698,7 +2645,10 @@ to be removed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2755,7 +2705,10 @@ instance to be removed.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2821,7 +2774,59 @@ was fired.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="private">
+                                    <h4>
+                                        <a name="method__setScrollHeight">_setScrollHeight</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                         private 
+                                        
+                                        
+                                        void
+                                            <strong>_setScrollHeight</strong>
+                                           (
+                                                
+                                                        
+                                                         p_nScrollHeight
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>p_nScrollHeight &lt;String&gt;</code>
+                                                             Number representing the scrolling height of the Menu.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -2868,7 +2873,10 @@ instance whose events should be subscribed to.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2915,7 +2923,10 @@ of the menu items in the specified group.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -2985,7 +2996,10 @@ which the item belongs.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3043,7 +3057,10 @@ which the items belongs.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3077,7 +3094,10 @@ which the items belongs.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3124,7 +3144,10 @@ is one of the supported strings. Returns true if the position is supported.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3172,7 +3195,10 @@ should be blurred.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3207,7 +3233,10 @@ items, group titles, header and footer.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3270,7 +3299,10 @@ a menu changes.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3335,7 +3367,10 @@ fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3398,7 +3433,10 @@ a menu changes.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3463,7 +3501,10 @@ fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3528,7 +3569,10 @@ fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3593,7 +3637,10 @@ the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3658,7 +3705,76 @@ fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="">
+                                    <h4>
+                                        <a name="method_configShadow">configShadow</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                        void
+                                            <strong>configShadow</strong>
+                                           (
+                                                
+                                                        
+                                                         p_sType
+                                                    
+                                                
+                                                        , 
+                                                         p_aArgs
+                                                    
+                                                
+                                                        , 
+                                                         p_oMenu
+                                                    
+                                                
+                                            )
+                                        </code>
+                                        
+                                        <div class="description">
+                                            Event handler for when the "shadow" configuration property of 
+a menu changes.
+                                        </div>
+
+                                        <div class="description">
+
+                                                <dl>
+                                                    <dt>Parameters:</dt>
+                                                        <dd>
+                                                            <code>p_sType &lt;String&gt;</code>
+                                                             The name of the event that was fired.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>p_aArgs &lt;Array&gt;</code>
+                                                             Collection of arguments sent when the event was fired.
+                                                        </dd>
+                                                        <dd>
+                                                            <code>p_oMenu &lt;YAHOO.widget.Menu&gt;</code>
+                                                             The Menu instance fired the event.
+                                                        </dd>
+                                                </dl>
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code>
+                                                        void
+                                                    </code></dt>
+                                                    <dd></dd>
+                                                </dl>
+
+
+             
+
                                         </div>
 
                                     </div>
@@ -3723,7 +3839,10 @@ fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3758,72 +3877,10 @@ fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
-                                        </div>
 
-                                    </div>
-                                    <hr />
-                                    </div>
-                                    <div class="">
-                                    <h4>
-                                        <a name="method_enforceConstraints">enforceConstraints</a></h4>
-                                    <div class="detail">
-                                        <code>
-                                        
-                                        
-                                        
-                                        void
-                                            <strong>enforceConstraints</strong>
-                                           (
-                                                
-                                                        
-                                                         type
-                                                    
-                                                
-                                                        , 
-                                                         args
-                                                    
-                                                
-                                                        , 
-                                                         obj
-                                                    
-                                                
-                                            )
-                                        </code>
-                                        
-                                        <div class="description">
-                                            The default event handler executed when the moveEvent is fired,  
-if the "constraintoviewport" configuration property is set to true.
-                                        </div>
-
-                                        <div class="description">
-
-                                                <dl>
-                                                    <dt>Parameters:</dt>
-                                                        <dd>
-                                                            <code>type &lt;String&gt;</code>
-                                                             The name of the event that was fired.
-                                                        </dd>
-                                                        <dd>
-                                                            <code>args &lt;Array&gt;</code>
-                                                             Collection of arguments sent when the 
-event was fired.
-                                                        </dd>
-                                                        <dd>
-                                                            <code>obj &lt;Array&gt;</code>
-                                                             Array containing the current Menu instance 
-and the item that fired the event.
-                                                        </dd>
-                                                </dl>
-
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd></dd>
-                                                </dl>
-             
                                         </div>
 
                                     </div>
@@ -3857,7 +3914,10 @@ and the item that fired the event.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3913,7 +3973,10 @@ the item belongs.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3948,7 +4011,10 @@ are grouped in the menu.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -3982,7 +4048,10 @@ are grouped in the menu.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4016,7 +4085,10 @@ are grouped in the menu.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4051,7 +4123,10 @@ children of the menu.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4085,7 +4160,10 @@ children of the menu.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4170,7 +4248,10 @@ more details.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4205,7 +4286,10 @@ changed using the menu's Config object ("cfg").
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4239,7 +4323,10 @@ changed using the menu's Config object ("cfg").
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4318,62 +4405,10 @@ the item belongs.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
-                                        </div>
 
-                                    </div>
-                                    <hr />
-                                    </div>
-                                    <div class="">
-                                    <h4>
-                                        <a name="method_onRender">onRender</a></h4>
-                                    <div class="detail">
-                                        <code>
-                                        
-                                        
-                                        
-                                        void
-                                            <strong>onRender</strong>
-                                           (
-                                                
-                                                        
-                                                         p_sType
-                                                    
-                                                
-                                                        , 
-                                                         p_aArgs
-                                                    
-                                                
-                                            )
-                                        </code>
-                                        
-                                        <div class="description">
-                                            "render" event handler for the menu.
-                                        </div>
-
-                                        <div class="description">
-
-                                                <dl>
-                                                    <dt>Parameters:</dt>
-                                                        <dd>
-                                                            <code>p_sType &lt;String&gt;</code>
-                                                             String representing the name of the event that 
-was fired.
-                                                        </dd>
-                                                        <dd>
-                                                            <code>p_aArgs &lt;Array&gt;</code>
-                                                             Array of arguments sent when the event was fired.
-                                                        </dd>
-                                                </dl>
-
-                                                <dl>
-                                                    <dt>Returns:
-                                                    <code>
-                                                        void
-                                                    </code></dt>
-                                                    <dd></dd>
-                                                </dl>
-             
                                         </div>
 
                                     </div>
@@ -4409,7 +4444,10 @@ it doesn't force the browser to render uncessary scrollbars.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4472,7 +4510,10 @@ which the item belongs.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4506,7 +4547,10 @@ which the item belongs.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4541,7 +4585,10 @@ enabled item to "true."
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4596,7 +4643,10 @@ the title belongs.
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4669,7 +4719,10 @@ execution scope of the listener
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4703,7 +4756,10 @@ execution scope of the listener
                                                     </code></dt>
                                                     <dd></dd>
                                                 </dl>
+
+
              
+
                                         </div>
 
                                     </div>
@@ -4724,7 +4780,7 @@ execution scope of the listener
                                 <h4>Methods inherited from <a href="YAHOO.widget.Overlay.html">YAHOO.widget.Overlay</a>:</h4>
                                 <div class="content">
                                     <code>
-                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__primeXYFromDOM">_primeXYFromDOM</a><span class="protected">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_align">align</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_bringToTop">bringToTop</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_center">center</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configConstrainToViewport">configConstrainToViewport</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configContext">configContext</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configFixedCenter">configFixedCenter</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configHeight">configHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configIframe">configIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configVisible">configVisible</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configWidth">configWidth</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configX">configX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configXY">configXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configY">configY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configzIndex">configzIndex</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_doCenterOnDOMEvent">doCenterOnDOMEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_enforceConstraints">enforceConstraints</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedXY">getConstrainedXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideIframe">hideIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideMacGeckoScrollbars">hideMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_moveTo">moveTo</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_onDomResize">onDomResize</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showIframe">showIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showMacGeckoScrollbars">showMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_stackIframe">stackIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncIframe">syncIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncPosition">syncPosition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_toString">toString</a>
+                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__alignOnTrigger">_alignOnTrigger</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__autoFillOnHeightChange">_autoFillOnHeightChange</a><span class="protected">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__findTriggerCE">_findTriggerCE</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__getComputedHeight">_getComputedHeight</a><span class="private">,</span>                                            <a class="private" href="YAHOO.widget.Overlay.html#method__getPreciseHeight">_getPreciseHeight</a><span class="private">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__primeXYFromDOM">_primeXYFromDOM</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__processTriggers">_processTriggers</a><span class="protected">,</span>                                            <a class="protected" href="YAHOO.widget.Overlay.html#method__validateAutoFillHeight">_validateAutoFillHeight</a><span class="protected">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_align">align</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_bringToTop">bringToTop</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_center">center</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configAutoFillHeight">configAutoFillHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configConstrainToViewport">configConstrainToViewport</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configContext">configContext</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configFixedCenter">configFixedCenter</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configHeight">configHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configIframe">configIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configVisible">configVisible</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configWidth">configWidth</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configX">configX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configXY">configXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configY">configY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_configzIndex">configzIndex</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_destroy">destroy</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_doCenterOnDOMEvent">doCenterOnDOMEvent</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_enforceConstraints">enforceConstraints</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_fillHeight">fillHeight</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedX">getConstrainedX</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedXY">getConstrainedXY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_getConstrainedY">getConstrainedY</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideIframe">hideIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_hideMacGeckoScrollbars">hideMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_init">init</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initDefaultConfig">initDefaultConfig</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_initEvents">initEvents</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_moveTo">moveTo</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_onDomResize">onDomResize</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showIframe">showIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_showMacGeckoScrollbars">showMacGeckoScrollbars</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_stackIframe">stackIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncIframe">syncIframe</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_syncPosition">syncPosition</a><span class="">,</span>                                            <a class="" href="YAHOO.widget.Overlay.html#method_toString">toString</a>
                                     </code>
                                 </div>
                             </div>
@@ -5278,6 +5334,23 @@ to all submenus.
                                     <hr />
                                     </div>        
                                     <div class="">
+                                    <h4><a name="config_keepopen">keepopen</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Boolean indicating if the menu should remain open when clicked.
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: flase
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
                                     <h4><a name="config_maxheight">maxheight</a>
                                         <code>- Number</code>
                                     </h4>
@@ -5340,6 +5413,24 @@ can overlay other elements on the screen.
                                     <hr />
                                     </div>        
                                     <div class="">
+                                    <h4><a name="config_preventcontextoverlap">preventcontextoverlap</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Boolean indicating whether or not a submenu should overlap its parent MenuItem 
+when the "constraintoviewport" configuration property is set to "true".
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: true
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
                                     <h4><a name="config_scrollincrement">scrollincrement</a>
                                         <code>- Number</code>
                                     </h4>
@@ -5355,6 +5446,23 @@ to all submenus.
      
                                     <div class="default">
                                         Default Value: 1
+                                    </div>        
+
+                                    <hr />
+                                    </div>        
+                                    <div class="">
+                                    <h4><a name="config_shadow">shadow</a>
+                                        <code>- Boolean</code>
+                                    </h4>
+                                    <div class="detail">
+                                        <div class="description">
+                                            Boolean indicating if the menu should have a shadow.
+                                        </div>
+                                    </div>
+ 
+     
+                                    <div class="default">
+                                        Default Value: true
                                     </div>        
 
                                     <hr />
@@ -5503,25 +5611,6 @@ configuration property is set to dynamic.
 
                                     <hr />
                                     </div>        
-                                    <div class="">
-                                    <h4><a name="config_zindex">zindex</a>
-                                        <code>- Number</code>
-                                    </h4>
-                                    <div class="detail">
-                                        <div class="description">
-                                            Number representing the CSS z-index of the Menu.  This 
-property is only applied when the "position" configuration property is 
-set to dynamic.
-                                        </div>
-                                    </div>
- 
-     
-                                    <div class="default">
-                                        Default Value: null
-                                    </div>        
-
-                                    <hr />
-                                    </div>        
 
                             </div>
                         </div>
@@ -5538,7 +5627,7 @@ set to dynamic.
                             <h4>Configuration attributes inherited from <a href="YAHOO.widget.Overlay.html">YAHOO.widget.Overlay</a>:</h4>
                             <div class="content">
                                 <code>
-                                        <a class="" href="YAHOO.widget.Overlay.html#config_constraintoviewport">constraintoviewport</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_context">context</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_fixedcenter">fixedcenter</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_height">height</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_iframe">iframe</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_width">width</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_x">x</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_xy">xy</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_y">y</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_zIndex">zIndex</a><span class="">,</span>
+                                        <a class="" href="YAHOO.widget.Overlay.html#config_autofillheight">autofillheight</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_constraintoviewport">constraintoviewport</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_context">context</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_fixedcenter">fixedcenter</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_height">height</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_iframe">iframe</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_preventcontextoverlap">preventcontextoverlap</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_width">width</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_x">x</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_xy">xy</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_y">y</a><span class="">,</span>                                        <a class="" href="YAHOO.widget.Overlay.html#config_zIndex">zIndex</a><span class="">,</span>
                                 </code>
                             </div>
                         </div>
@@ -5559,6 +5648,8 @@ set to dynamic.
                                 <li class=""><a href="module_button.html">button</a></li>
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
+
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
 
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
@@ -5599,6 +5690,8 @@ set to dynamic.
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class="selected"><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -5695,31 +5788,7 @@ level-one-html.html#ID-94282980">HTMLSelectElement</a>|<a
 href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-html.
 html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 </li>
-                                <li class="private"><a href="#property__nBodyScrollId">_nBodyScrollId</a>
-                                        <!--<code>&lt;<a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/
-level-one-html.html#ID-94282980">HTMLSelectElement</a>|<a 
-href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-html.
-html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
-                                </li>
                                 <li class="private"><a href="#property__nCurrentMouseX">_nCurrentMouseX</a>
-                                        <!--<code>&lt;<a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/
-level-one-html.html#ID-94282980">HTMLSelectElement</a>|<a 
-href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-html.
-html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
-                                </li>
-                                <li class="private"><a href="#property__nHideDelayId">_nHideDelayId</a>
-                                        <!--<code>&lt;<a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/
-level-one-html.html#ID-94282980">HTMLSelectElement</a>|<a 
-href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-html.
-html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
-                                </li>
-                                <li class="private"><a href="#property__nShowDelayId">_nShowDelayId</a>
-                                        <!--<code>&lt;<a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/
-level-one-html.html#ID-94282980">HTMLSelectElement</a>|<a 
-href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-html.
-html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
-                                </li>
-                                <li class="private"><a href="#property__nSubmenuHideDelayId">_nSubmenuHideDelayId</a>
                                         <!--<code>&lt;<a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/
 level-one-html.html#ID-94282980">HTMLSelectElement</a>|<a 
 href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-html.
@@ -5738,18 +5807,6 @@ href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-html.
 html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 </li>
                                 <li class=""><a href="#property_CSS_CLASS_NAME">CSS_CLASS_NAME</a>
-                                        <!--<code>&lt;<a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/
-level-one-html.html#ID-94282980">HTMLSelectElement</a>|<a 
-href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-html.
-html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
-                                </li>
-                                <li class="private"><a href="#property_DEFAULT_CONFIG">DEFAULT_CONFIG</a>
-                                        <!--<code>&lt;<a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/
-level-one-html.html#ID-94282980">HTMLSelectElement</a>|<a 
-href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-html.
-html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
-                                </li>
-                                <li class="private"><a href="#property_EVENT_TYPES">EVENT_TYPES</a>
                                         <!--<code>&lt;<a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/
 level-one-html.html#ID-94282980">HTMLSelectElement</a>|<a 
 href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-html.
@@ -5813,6 +5870,9 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 <a href="#method__cancelShowDelay">_cancelShowDelay</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
+                                <a href="#method__clearSetWidthFlag">_clearSetWidthFlag</a>
+                                </li>
+                                <li class="private"><!--<code>void</code>-->
                                 <a href="#method__configureSubmenu">_configureSubmenu</a>
                                 </li>
                                 <li class="private"><!--<code>Array</code>-->
@@ -5832,9 +5892,6 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__execHideDelay">_execHideDelay</a>
-                                </li>
-                                <li class="private"><!--<code>void</code>-->
-                                <a href="#method__execShowDelay">_execShowDelay</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__execSubmenuHideDelay">_execSubmenuHideDelay</a>
@@ -5858,7 +5915,13 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 <a href="#method__onBeforeShow">_onBeforeShow</a>
                                 </li>
                                 <li class="protected"><!--<code>void</code>-->
+                                <a href="#method__onBlur">_onBlur</a>
+                                </li>
+                                <li class="protected"><!--<code>void</code>-->
                                 <a href="#method__onClick">_onClick</a>
+                                </li>
+                                <li class="private"><!--<code>void</code>-->
+                                <a href="#method__onHide">_onHide</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__onInit">_onInit</a>
@@ -5873,16 +5936,10 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 <a href="#method__onKeyPress">_onKeyPress</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
-                                <a href="#method__onMenuItemBlur">_onMenuItemBlur</a>
-                                </li>
-                                <li class="private"><!--<code>void</code>-->
                                 <a href="#method__onMenuItemConfigChange">_onMenuItemConfigChange</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__onMenuItemDestroy">_onMenuItemDestroy</a>
-                                </li>
-                                <li class="private"><!--<code>void</code>-->
-                                <a href="#method__onMenuItemFocus">_onMenuItemFocus</a>
                                 </li>
                                 <li class="protected"><!--<code>void</code>-->
                                 <a href="#method__onMouseMove">_onMouseMove</a>
@@ -5912,9 +5969,6 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 <a href="#method__onShow">_onShow</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
-                                <a href="#method__onSubmenuBeforeShow">_onSubmenuBeforeShow</a>
-                                </li>
-                                <li class="private"><!--<code>void</code>-->
                                 <a href="#method__onVisibleChange">_onVisibleChange</a>
                                 </li>
                                 <li class="protected"><!--<code>void</code>-->
@@ -5928,6 +5982,9 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__setMaxHeight">_setMaxHeight</a>
+                                </li>
+                                <li class="private"><!--<code>void</code>-->
+                                <a href="#method__setScrollHeight">_setScrollHeight</a>
                                 </li>
                                 <li class="private"><!--<code>void</code>-->
                                 <a href="#method__subscribeToItemEvents">_subscribeToItemEvents</a>
@@ -5975,13 +6032,13 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 <a href="#method_configPosition">configPosition</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
+                                <a href="#method_configShadow">configShadow</a>
+                                </li>
+                                <li class=""><!--<code>void</code>-->
                                 <a href="#method_configVisible">configVisible</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_destroy">destroy</a>
-                                </li>
-                                <li class=""><!--<code>void</code>-->
-                                <a href="#method_enforceConstraints">enforceConstraints</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_focus">focus</a>
@@ -6015,9 +6072,6 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 </li>
                                 <li class=""><!--<code>YAHOO.widget.MenuItem</code>-->
                                 <a href="#method_insertItem">insertItem</a>
-                                </li>
-                                <li class=""><!--<code>void</code>-->
-                                <a href="#method_onRender">onRender</a>
                                 </li>
                                 <li class=""><!--<code>void</code>-->
                                 <a href="#method_positionOffScreen">positionOffScreen</a>
@@ -6116,6 +6170,9 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 <a href="#config_iframe">iframe</a>
                                 </li>
                                 <li class="">
+                                <a href="#config_keepopen">keepopen</a>
+                                </li>
+                                <li class="">
                                 <a href="#config_maxheight">maxheight</a>
                                 </li>
                                 <li class="">
@@ -6125,7 +6182,13 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 <a href="#config_position">position</a>
                                 </li>
                                 <li class="">
+                                <a href="#config_preventcontextoverlap">preventcontextoverlap</a>
+                                </li>
+                                <li class="">
                                 <a href="#config_scrollincrement">scrollincrement</a>
+                                </li>
+                                <li class="">
+                                <a href="#config_shadow">shadow</a>
                                 </li>
                                 <li class="">
                                 <a href="#config_showdelay">showdelay</a>
@@ -6148,9 +6211,6 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
                                 <li class="">
                                 <a href="#config_y">y</a>
                                 </li>
-                                <li class="">
-                                <a href="#config_zindex">zindex</a>
-                                </li>
                         </ul>
                     </div>
 
@@ -6159,7 +6219,7 @@ html#ID-22445964">HTMLDivElement</a>&gt;</code>-->
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

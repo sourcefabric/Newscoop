@@ -22,14 +22,15 @@ body {
 <script type="text/javascript" src="../../build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
 <script type="text/javascript" src="../../build/button/button-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 <!--there is no custom header content for this example-->
 
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>XY-scrolling, Y-scrolling, and X-scrolling</h1>
 
@@ -54,7 +55,7 @@ values.</p>
 <script type="text/javascript" src="assets/js/data.js"></script>
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.Scrolling = new function() {
+    YAHOO.example.Scrolling = function() {
         var myColumnDefs = [
                 {key:"field1", width:50},
                 {key:"field2", width:100, formatter:"date"},
@@ -82,9 +83,9 @@ YAHOO.util.Event.addListener(window, "load", function() {
                 {key:"field6", width:150}
             ];
 
-        this.myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.multitypes);
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.multitypes);
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
+        myDataSource.responseSchema = {
             resultsList: "items",
             fields: [
                 {key:"field1"},
@@ -97,17 +98,24 @@ YAHOO.util.Event.addListener(window, "load", function() {
         };
 
         // Set "scrollable:true" and set width and height string values
-        this.myDataTableXY = new YAHOO.widget.DataTable("xyscrolling", myColumnDefs,
-                this.myDataSource, {scrollable:true, width:"30em", height:"10em"});
+        var myDataTableXY = new YAHOO.widget.DataTable("xyscrolling", myColumnDefs,
+                myDataSource, {scrollable:true, width:"30em", height:"10em"});
 
         // Set "scrollable:true" and set only height string value
-        this.myDataTableY = new YAHOO.widget.DataTable("yscrolling", myColumnDefsY,
-                this.myDataSource, {scrollable:true, height:"10em"});
+        var myDataTableY = new YAHOO.widget.DataTable("yscrolling", myColumnDefsY,
+                myDataSource, {scrollable:true, height:"10em"});
 
         // Set "scrollable:true" and set only width string value
-        this.myDataTableX = new YAHOO.widget.DataTable("xscrolling", myColumnDefsX,
-                this.myDataSource, {scrollable:true, width:"30em"});
-    };
+        var myDataTableX = new YAHOO.widget.DataTable("xscrolling", myColumnDefsX,
+                myDataSource, {scrollable:true, width:"30em"});
+                
+        return {
+            oDS: myDataSource,
+            oDTXY: myDataTableXY,
+            oDTY: myDataTableY,
+            oDTX: myDataTableX
+        };
+    }();
 });
 </script>
 

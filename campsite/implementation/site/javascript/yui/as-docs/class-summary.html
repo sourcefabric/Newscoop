@@ -49,15 +49,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Al
   The AnimationEvent class represents events that are broadcast by the com.yahoo.astra.animation.Animation class.</td>
 </tr>
 <tr class="prow1">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/Axis.html">Axis</a>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/AxisData.html">AxisData</a>
 <br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
-  Functionality common to most axes.</td>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  Positioning and other data used by an IAxisRenderer to draw
+  items like ticks.</td>
 </tr>
 <tr class="prow0">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/AxisOrientation.html">AxisOrientation</a>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/AxisOrientation.html">AxisOrientation</a>
 <br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
   Orientation values available to <code>IAxis</code> objects.</td>
 </tr>
 <tr class="prow1">
@@ -88,70 +89,83 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Al
   Renders data points as a series of horizontal bars.</td>
 </tr>
 <tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/BaseAxis.html">BaseAxis</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  Implements some of the most common axis functionality
+  to prevent duplicate code in IAxis implementations.</td>
+</tr>
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/layout/modes/BaseLayoutMode.html">BaseLayoutMode</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/modes/class-list.html');" href="com/yahoo/astra/layout/modes/package-detail.html">com.yahoo.astra.layout.modes</a></td><td class="summaryTableLastCol">
   Some basic properties shared by multiple ILayoutMode implementations.</td>
 </tr>
-<tr class="prow1">
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/layout/modes/BorderConstraints.html">BorderConstraints</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/modes/class-list.html');" href="com/yahoo/astra/layout/modes/package-detail.html">com.yahoo.astra.layout.modes</a></td><td class="summaryTableLastCol">
   Constraint values available in BorderLayout.</td>
 </tr>
-<tr class="prow0">
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/layout/modes/BorderLayout.html">BorderLayout</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/modes/class-list.html');" href="com/yahoo/astra/layout/modes/package-detail.html">com.yahoo.astra.layout.modes</a></td><td class="summaryTableLastCol">
   Arranges a DisplayObjectContainer's children using a page-like border
   algorithm.</td>
 </tr>
-<tr class="prow1">
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/layout/modes/BoxLayout.html">BoxLayout</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/modes/class-list.html');" href="com/yahoo/astra/layout/modes/package-detail.html">com.yahoo.astra.layout.modes</a></td><td class="summaryTableLastCol">
   Arranges a DisplayObjectContainer's children in a single column or row.</td>
 </tr>
-<tr class="prow0">
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/CartesianChart.html">CartesianChart</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
   A chart based on the cartesian coordinate system (x, y).</td>
 </tr>
-<tr class="prow1">
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/series/CartesianSeries.html">CartesianSeries</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/package-detail.html">com.yahoo.astra.fl.charts.series</a></td><td class="summaryTableLastCol">
   Functionality common to most series appearing in cartesian charts.</td>
 </tr>
-<tr class="prow0">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/CategoryAxis.html">CategoryAxis</a>
-<br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
-  An axis type representing a range of categories.</td>
-</tr>
 <tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/CategoryAxis.html">CategoryAxis</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  An axis type representing a set of categories.</td>
+</tr>
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/Chart.html">Chart</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
   Functionality common to most charts.</td>
 </tr>
-<tr class="prow0">
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/events/ChartEvent.html">ChartEvent</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/events/class-list.html');" href="com/yahoo/astra/fl/charts/events/package-detail.html">com.yahoo.astra.fl.charts.events</a></td><td class="summaryTableLastCol">
   Events related to items appearing in a chart.</td>
 </tr>
-<tr class="prow1">
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="Charts.html">Charts</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('class-list.html');" href="package-detail.html">Top Level</a></td><td class="summaryTableLastCol">
   A wrapper for the Astra Charts components to allow them to be used by the YUI library.</td>
 </tr>
-<tr class="prow0">
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/yui/charts/ChartSerializer.html">ChartSerializer</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/yui/charts/class-list.html');" href="com/yahoo/yui/charts/package-detail.html">com.yahoo.yui.charts</a></td><td class="summaryTableLastCol">&nbsp;</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/ChartUtil.html">ChartUtil</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
+  Utility functions used throughout the charting framework.</td>
 </tr>
 <tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/skins/CircleSkin.html">CircleSkin</a>
@@ -184,6 +198,18 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Al
   A collection of utility functions for the manipulation and inspection of date and time values.</td>
 </tr>
 <tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/DefaultAxisRenderer.html">DefaultAxisRenderer</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  The default axis renderer for a cartesian chart.</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/DefaultGridLinesRenderer.html">DefaultGridLinesRenderer</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  Renders grid lines associated with a cartesian axis.</td>
+</tr>
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/skins/DiamondSkin.html">DiamondSkin</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/skins/class-list.html');" href="com/yahoo/astra/fl/charts/skins/package-detail.html">com.yahoo.astra.fl.charts.skins</a></td><td class="summaryTableLastCol">
@@ -196,10 +222,23 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Al
   Utility functions for use with DisplayObjects.</td>
 </tr>
 <tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/utils/DynamicRegistration.html">DynamicRegistration</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/package-detail.html">com.yahoo.astra.utils</a></td><td class="summaryTableLastCol">
+  Allows you to manipulate display objects based on a registration point other
+  than the standard (0,0).</td>
+</tr>
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/layout/modes/FlowLayout.html">FlowLayout</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/modes/class-list.html');" href="com/yahoo/astra/layout/modes/package-detail.html">com.yahoo.astra.layout.modes</a></td><td class="summaryTableLastCol">
   Arranges a DisplayObjectContainer's children using a flow algorithm.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/utils/GeomUtil.html">GeomUtil</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/package-detail.html">com.yahoo.astra.utils</a></td><td class="summaryTableLastCol">
+  Utility functions for common geometric operations.</td>
 </tr>
 <tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/utils/GraphicsUtil.html">GraphicsUtil</a>
@@ -222,10 +261,22 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Al
   advanced configuration settings for individual children.</td>
 </tr>
 <tr class="prow0">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/IAxis.html"><i>IAxis</i></a>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/IAxis.html"><i>IAxis</i></a>
 <br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
-  A renderer for an axis on a chart.</td>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  Data-only representation of a chart's axis.</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/IAxisRenderer.html"><i>IAxisRenderer</i></a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  A visual representation of an IAxis instance.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/ICartesianAxisRenderer.html"><i>ICartesianAxisRenderer</i></a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  Interface for a cartesian chart's axis renderers.</td>
 </tr>
 <tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/ICategoryChart.html"><i>ICategoryChart</i></a>
@@ -240,54 +291,78 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Al
   Defines functions and properties for an ISeries that relies on categories.</td>
 </tr>
 <tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/IChart.html"><i>IChart</i></a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
+  Methods and properties expected to be defined by all charts.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/IClusteringAxis.html"><i>IClusteringAxis</i></a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  An axis that supports clustering.</td>
+</tr>
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/IDataTipRenderer.html"><i>IDataTipRenderer</i></a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
   A renderer for a mouse-over datatip on a chart.</td>
 </tr>
 <tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/IGridLinesRenderer.html"><i>IGridLinesRenderer</i></a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  A renderer for grid lines appearing on a chart's axis.</td>
+</tr>
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/layout/ILayoutContainer.html"><i>ILayoutContainer</i></a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/class-list.html');" href="com/yahoo/astra/layout/package-detail.html">com.yahoo.astra.layout</a></td><td class="summaryTableLastCol">
   Defines properties and methods required for layout containers
   to work with LayoutManager.</td>
 </tr>
-<tr class="prow1">
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/layout/modes/ILayoutMode.html"><i>ILayoutMode</i></a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/modes/class-list.html');" href="com/yahoo/astra/layout/modes/package-detail.html">com.yahoo.astra.layout.modes</a></td><td class="summaryTableLastCol">
   Defines the properties and functions required
   for layout modes used by ILayoutContainer.</td>
 </tr>
-<tr class="prow0">
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/legend/ILegend.html"><i>ILegend</i></a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/legend/class-list.html');" href="com/yahoo/astra/fl/charts/legend/package-detail.html">com.yahoo.astra.fl.charts.legend</a></td><td class="summaryTableLastCol">
   Properties required by a chart's legend.</td>
 </tr>
-<tr class="prow1">
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/series/ILegendItemSeries.html"><i>ILegendItemSeries</i></a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/package-detail.html">com.yahoo.astra.fl.charts.series</a></td><td class="summaryTableLastCol">
   A series type that can create data for a legend.</td>
 </tr>
-<tr class="prow0">
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/utils/InstanceFactory.html">InstanceFactory</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/package-detail.html">com.yahoo.astra.utils</a></td><td class="summaryTableLastCol">
   Creates an instance of the specified class.</td>
 </tr>
-<tr class="prow1">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/IPlotArea.html"><i>IPlotArea</i></a>
-<br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
-  An interface for a chart with a drawing area.</td>
-</tr>
 <tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/IOriginAxis.html"><i>IOriginAxis</i></a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  An axis with an origin.</td>
+</tr>
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/skins/IProgrammaticSkin.html"><i>IProgrammaticSkin</i></a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/skins/class-list.html');" href="com/yahoo/astra/fl/charts/skins/package-detail.html">com.yahoo.astra.fl.charts.skins</a></td><td class="summaryTableLastCol">
   A type of skin that supports color customization.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/IRadialAxisRenderer.html"><i>IRadialAxisRenderer</i></a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  Interface for a chart's axis renderers.</td>
 </tr>
 <tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/series/ISeries.html"><i>ISeries</i></a>
@@ -300,6 +375,18 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Al
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/package-detail.html">com.yahoo.astra.fl.charts.series</a></td><td class="summaryTableLastCol">
   A renderer for an item in a series on a chart.</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/series/IStackedSeries.html"><i>IStackedSeries</i></a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/package-detail.html">com.yahoo.astra.fl.charts.series</a></td><td class="summaryTableLastCol">
+  A type of series that supports stacking.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/IStackingAxis.html"><i>IStackingAxis</i></a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  A type of axis that allows values to be stacked.</td>
 </tr>
 <tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/utils/JavaScriptUtil.html">JavaScriptUtil</a>
@@ -417,10 +504,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Al
   A collection of utility functions for the manipulation of numeric values.</td>
 </tr>
 <tr class="prow1">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/NumericAxis.html">NumericAxis</a>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/NumericAxis.html">NumericAxis</a>
 <br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
-  An axis type representing a numeric range.</td>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  An axis type representing a numeric range from minimum to maximum
+  with major and minor divisions.</td>
 </tr>
 <tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/layout/modes/PercentageSizeUtil.html">PercentageSizeUtil</a>
@@ -441,95 +529,127 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Al
   Renders data points as a series of pie-like wedges.</td>
 </tr>
 <tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/RadialAxisRenderer.html">RadialAxisRenderer</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  The default axis renderer for radial axes.</td>
+</tr>
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/skins/RectangleSkin.html">RectangleSkin</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/skins/class-list.html');" href="com/yahoo/astra/fl/charts/skins/package-detail.html">com.yahoo.astra.fl.charts.skins</a></td><td class="summaryTableLastCol">
   A skin shaped like a rectangle with a single color.</td>
 </tr>
-<tr class="prow0">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/ScaleType.html">ScaleType</a>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/ScaleType.html">ScaleType</a>
 <br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
   Scale types available to <code>IAxis</code> objects.</td>
 </tr>
-<tr class="prow1">
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/series/Series.html">Series</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/package-detail.html">com.yahoo.astra.fl.charts.series</a></td><td class="summaryTableLastCol">
   Functionality common to most series.</td>
 </tr>
-<tr class="prow0">
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/series/SeriesItemRenderer.html">SeriesItemRenderer</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/package-detail.html">com.yahoo.astra.fl.charts.series</a></td><td class="summaryTableLastCol">
      The primary item renderer class for a chart series.</td>
 </tr>
-<tr class="prow1">
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/yui/charts/SeriesSerializer.html">SeriesSerializer</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/yui/charts/class-list.html');" href="com/yahoo/yui/charts/package-detail.html">com.yahoo.yui.charts</a></td><td class="summaryTableLastCol">&nbsp;</td>
 </tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/StackedBarChart.html">StackedBarChart</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
+  A chart that displays its data points with horizontal bars
+  that are stacked horizontally.</td>
+</tr>
 <tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/series/StackedBarSeries.html">StackedBarSeries</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/package-detail.html">com.yahoo.astra.fl.charts.series</a></td><td class="summaryTableLastCol">
+  A bar series type that stacks.</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/StackedColumnChart.html">StackedColumnChart</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
+  A chart that displays its data points with vertical columns
+  that are stacked vertically.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/series/StackedColumnSeries.html">StackedColumnSeries</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/series/class-list.html');" href="com/yahoo/astra/fl/charts/series/package-detail.html">com.yahoo.astra.fl.charts.series</a></td><td class="summaryTableLastCol">
+  A column series type that stacks.</td>
+</tr>
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/yui/charts/TextFormatSerializer.html">TextFormatSerializer</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/yui/charts/class-list.html');" href="com/yahoo/yui/charts/package-detail.html">com.yahoo.yui.charts</a></td><td class="summaryTableLastCol">&nbsp;</td>
 </tr>
-<tr class="prow1">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/TickPosition.html">TickPosition</a>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/TickPosition.html">TickPosition</a>
 <br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
   Position values available to axis ticks.</td>
 </tr>
-<tr class="prow0">
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/layout/modes/TileLayout.html">TileLayout</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/modes/class-list.html');" href="com/yahoo/astra/layout/modes/package-detail.html">com.yahoo.astra.layout.modes</a></td><td class="summaryTableLastCol">
   Arranges a DisplayObjectContainer's children using a tiling algorithm.</td>
 </tr>
-<tr class="prow1">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/TimeAxis.html">TimeAxis</a>
-<br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/class-list.html');" href="com/yahoo/astra/fl/charts/package-detail.html">com.yahoo.astra.fl.charts</a></td><td class="summaryTableLastCol">
-  An axis type representing a date and time range.</td>
-</tr>
 <tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/axes/TimeAxis.html">TimeAxis</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/axes/class-list.html');" href="com/yahoo/astra/fl/charts/axes/package-detail.html">com.yahoo.astra.fl.charts.axes</a></td><td class="summaryTableLastCol">
+  An axis type representing a date and time range from minimum to maximum
+  with major and minor divisions.</td>
+</tr>
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/utils/TimeUnit.html">TimeUnit</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/utils/class-list.html');" href="com/yahoo/astra/utils/package-detail.html">com.yahoo.astra.utils</a></td><td class="summaryTableLastCol">
   A collection of constants for date and time units.</td>
 </tr>
-<tr class="prow1">
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/charts/skins/TriangleSkin.html">TriangleSkin</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/charts/skins/class-list.html');" href="com/yahoo/astra/fl/charts/skins/package-detail.html">com.yahoo.astra.fl.charts.skins</a></td><td class="summaryTableLastCol">
   A skin shaped like a triangle with a single color.</td>
 </tr>
-<tr class="prow0">
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/fl/utils/UIComponentUtil.html">UIComponentUtil</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/fl/utils/class-list.html');" href="com/yahoo/astra/fl/utils/package-detail.html">com.yahoo.astra.fl.utils</a></td><td class="summaryTableLastCol">
   Utility functions for use with UIComponents.</td>
 </tr>
-<tr class="prow1">
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="Uploader.html">Uploader</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('class-list.html');" href="package-detail.html">Top Level</a></td><td class="summaryTableLastCol">
-
-  A wrapper for the Astra Uploader components to allow them to be used by the YUI library.</td>
+  The base Uploader class for YUI's Flash-based file uploader.</td>
 </tr>
-<tr class="prow0">
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/astra/layout/modes/VerticalAlignment.html">VerticalAlignment</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/astra/layout/modes/class-list.html');" href="com/yahoo/astra/layout/modes/package-detail.html">com.yahoo.astra.layout.modes</a></td><td class="summaryTableLastCol">
   A set of constants for vertical alignment values used by
   the layout engine.</td>
 </tr>
-<tr class="prow1">
+<tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/yui/YUIAdapter.html">YUIAdapter</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/yui/class-list.html');" href="com/yahoo/yui/package-detail.html">com.yahoo.yui</a></td><td class="summaryTableLastCol">&nbsp;</td>
 </tr>
-<tr class="prow0">
+<tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="com/yahoo/yui/YUILogger.html">YUILogger</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('com/yahoo/yui/class-list.html');" href="com/yahoo/yui/package-detail.html">com.yahoo.yui</a></td><td class="summaryTableLastCol">&nbsp;</td>

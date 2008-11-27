@@ -23,10 +23,6 @@
                 YAHOO.example.app.alert('You clicked: ' + ev.button.label);
             });
             
-            //Editor startResize method - Disables the editor so we can drga over it.
-            var editorStartResize = function() {
-                YAHOO.example.app.editor.set('disabled', true);
-            };
             //Custom editor resize method
             var editorResize = function() {
                 var h = YAHOO.util.Dom.get('composeViewEl').parentNode.clientHeight - (YAHOO.util.Dom.get('composeBarWrap').clientHeight);
@@ -34,7 +30,6 @@
                 var newH = (h - th);
                 YAHOO.example.app.editor.set('height', newH + 'px');
                 YAHOO.example.app.editor.set('width', YAHOO.example.app.layout.getSizes().center.w + 'px');
-                YAHOO.example.app.editor.set('disabled', false);
             };
             YAHOO.log('Create the Editor', 'info', 'editor.js');
             var editor = new YAHOO.widget.Editor('compose', {
@@ -54,12 +49,10 @@
             YAHOO.example.app.editor = editor;
 
             //On resize and start resize handlers
-            YAHOO.example.app.layout.on('startResize', editorStartResize);
             YAHOO.example.app.layout.on('resize', editorResize);
             //Method to destroy the editor.
             YAHOO.example.app.destroyEditor = function() {
                 YAHOO.log('Destroying the Editor instance and HTML', 'info', 'editor.js');
-                YAHOO.example.app.layout.unsubscribe('startResize', editorStartResize);
                 YAHOO.example.app.layout.unsubscribe('resize', editorResize);
                 YAHOO.example.app.editor = null;
             };

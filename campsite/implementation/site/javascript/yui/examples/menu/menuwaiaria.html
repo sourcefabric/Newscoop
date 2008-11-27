@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-	<title>YUI Library Examples: Menu Family: Implementing ARIA Roles and States with Menu</title>
+	<title>YUI Library Examples: Menu Family: Using the Menu ARIA Plugin</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     	<link rel="stylesheet" type="text/css" href="../../assets/yui.css" >
 
@@ -16,7 +16,7 @@
 <link rel="stylesheet" type="text/css" href="../../assets/dpSyntaxHighlighter.css">
 <!--Script and CSS includes for YUI dependencies on this page-->
 <link rel="stylesheet" type="text/css" href="../../build/button/assets/skins/sam/button.css" />
-<script type="text/javascript" src="../../build/yuiloader/yuiloader-beta-min.js"></script>
+<script type="text/javascript" src="../../build/yuiloader/yuiloader-min.js"></script>
 <script type="text/javascript" src="../../build/event/event-min.js"></script>
 <script type="text/javascript" src="../../build/dom/dom-min.js"></script>
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
@@ -25,16 +25,18 @@
 <!--there is no custom header content for this example-->
 
 
+<script type="text/javascript">
+//enable passthrough of errors from YUI Event:
+if ((typeof YAHOO !== "undefined") && (YAHOO.util) && (YAHOO.util.Event)) {
+	YAHOO.util.Event.throwErrors = true;
+}
+</script>
 </head>
 <body id="yahoo-com" class=" yui-skin-sam">
 <div id="custom-doc" class="yui-t2">
 <div id="hd">
 	<div id="ygunav">
-		<p><em>
-			<a href="http://developer.yahoo.com">Yahoo! Developer Network Home</a> <i> - </i>	
-			<a href="http://help.yahoo.com/help/us/ysearch">Help</a>
-			</em>
-		</p>
+		<p><em><a href="http://developer.yahoo.com/yui/">YUI Library Home</a></em></p>
 		<form action="http://search.yahoo.com/search" id="sitesearchform">
 		<input name="vs" type="hidden" value="developer.yahoo.com">
 		<input name="vs" type="hidden" value="yuiblog.com">
@@ -44,8 +46,8 @@
 			<input type="submit" value="Search" id="searchsubmit" class="ygbt">
 		</div>
 		</form>	</div>
-	<div id="ygma"><a href="../../"><img src="../../assets/yui.gif"  border="0" width="378" height="28"></a></div>
-	<div id="pagetitle"><h1>YUI Library Examples: Menu Family: Implementing ARIA Roles and States with Menu</h1></div>
+	<div id="ygma"><a href="../../"><img src="../../assets/yui.gif"  border="0" height="38"></a></div>
+	<div id="pagetitle"><h1>YUI Library Examples: Menu Family: Using the Menu ARIA Plugin</h1></div>
 </div>
 <div id="bd">
 	
@@ -53,16 +55,26 @@
 		<div class="yui-b">
 		  <div class="yui-ge">
 			  <div class="yui-u first example">
-	
+
+    
 	<div class="promo">
-	<h1>Menu Family: Implementing ARIA Roles and States with Menu</h1>
+	<h1>Menu Family: Using the Menu ARIA Plugin</h1>
 	
 	<div class="exampleIntro">
 	<p>
-This example demonstrates how use the <a href="http://www.w3.org/TR/aria-role/">WAI-ARIA Roles and States</a> 
-as implemented for <a href="http://www.mozilla.com/en-US/firefox/all-beta.html">Firefox 3</a> and 
-<a href="http://www.microsoft.com/windows/products/winfamily/ie/ie8/default.mspx">Internet Explorer 8</a> 
-with the <a href="http://developer.yahoo.com/yui/menu">YUI Menu Control</a>.
+The Menu ARIA Plugin makes it easy to use the 
+<a href="http://www.w3.org/TR/wai-aria/">WAI-ARIA Roles and States</a> with each of the controls 
+in the Menu family.
+Using the Menu ARIA Plugin, menus created with the Menu widget are more interoperable with 
+assistive technologies (AT), such as screen readers, making them more accessible to users 
+with disabilities.
+</p>
+<p>
+<a href="http://video.yahoo.com/watch/3608798/9955360">Watch a screen cast of this example 
+running in Firefox 3 with the NVDA screen reader</a>, to see immediately the benefits that 
+ARIA provides, or 
+<a href="http://www.nvda-project.org/wiki/Snapshots">download the latest development snapshot of 
+NVDA</a> to test this example for yourself.
 </p>			
 	</div>	
 					
@@ -78,414 +90,76 @@ with the <a href="http://developer.yahoo.com/yui/menu">YUI Menu Control</a>.
 	</div>			
 	</div>
 		
-	<h2 class="first">Using ARIA roles and states in the Menu Control</h2>
+	<h2>Getting Started</h2>
 <p>
-Begin by defining an anonymous function in order to keep all variables out of the global scope.  
-Inside the anonymous function, define some shortcuts to widgets and utils that will be used 
-frequently as well as an array of 
-<a href="/yui/docs/YAHOO.widget.MenuItem.html#configattributes">MenuItem configuration properties</a> 
-that describe each item in the MenuBar.  
+Using the Menu ARIA Plugin is easy.  Simply include the source file(s) for the ARIA plugin after 
+the Menu source files as indicated on the Menu landing page.  (Note: Since the Container Core 
+file is a dependency of Menu, the Container ARIA Plugin is also a dependency of the Menu 
+ARIA Plugin.)
 </p>
-
-<textarea name="code" class="JScript" cols="60" rows="1">
-(function () {
-
-	var Event = YAHOO.util.Event,
-		Dom = YAHOO.util.Dom,
-		MenuBar = YAHOO.widget.MenuBar,
-
-
-		/*
-			 Define an array of object literals, each containing 
-			 the data necessary to create the items for a MenuBar.
-		*/
-	
-		aItemData = [
-	
-			{ text: "File", submenu: {  id: "filemenu", itemdata: [
-	
-					{ text: "New File", helptext: "Ctrl + N" },
-					"New Folder",
-					{ text: "Open", helptext: "Ctrl + O" },
-					{ text: "Open With...", submenu: { id: "applications", itemdata: [
-							"Application 1", 
-							"Application 2", 
-							"Application 3", 
-							"Application 4"
-						] } 
-					},
-					{ text: "Print", helptext: "Ctrl + P" }
-	
-				] }
-			
-			},
-			
-			{ text: "Edit", submenu: { id: "editmenu", itemdata: [
-	
-					[ 
-						{ text: "Undo", helptext: "Ctrl + Z" },
-						{ text: "Redo", helptext: "Ctrl + Y" }
-					],
-					
-					[
-						{ text: "Cut", helptext: "Ctrl + X" },
-						{ text: "Copy", helptext: "Ctrl + C" },
-						{ text: "Paste", helptext: "Ctrl + V" },
-						{ text: "Delete", helptext: "Del" }
-					],
-					
-					[ { text: "Select All", helptext: "Ctrl + A" } ],
-	
-					[
-						{ text: "Find", helptext: "Ctrl + F" },
-						{ text: "Find Again", helptext: "Ctrl + G" }
-					]
-			
-				] }
-	
-			}
-	
-		];
-
-}());
+<textarea name="code" class="HTML" cols="60" rows="1">
+<!-- Dependency --> 
+<script type="text/javascript" src="../container/assets/containerariaplugin.js"></script>
+<!-- Source File --> 
+<script type="text/javascript" src="../menu/assets/menuariaplugin.js"></script>
 </textarea>
+
 <p>
-Next, use the <a href="../../event/#onavailable"><code>onDOMReady</code> 
-method</a> of the <a href="http://developer.yahoo.com/yui/event/">YUI Event Utility</a>
- to instantiate the MenuBar as soon as the 
-page's DOM is available for scripting.
+All YUI ARIA Plugins require the user's browser and AT support the WAI-ARIA Roles and States.  
+Currently only <a href="http://www.mozilla.com/en-US/firefox/">Firefox 3</a> and 
+<a href="http://www.microsoft.com/windows/products/winfamily/ie/ie8/getitnow.mspx">Internet Explorer
+8</a> have support for ARIA, and are supported by several screen readers for 
+Windows that also offer support for ARIA.  For this reason the YUI ARIA Plugins are only enabled 
+by default for these browsers.  To enable the ARIA plugin for other browsers, simply the set 
+the <code>usearia</code> configuration property to <code>true</code>.  For example:
 </p>
 <textarea name="code" class="JScript" cols="60" rows="1">
-/*
-	 Initialize and render the MenuBar when the page's DOM is ready 
-	 to be scripted.
-*/
-
-Event.onDOMReady(function () {
-
-	/*
-		 Instantiate a MenuBar:  The first argument passed to the constructor is 
-		 the id of the HTML to be created that will represent the MenuBar; the 
-		 second is an object literal of configuration properties.
-	*/
-
-	var oMenuBar = new MenuBar("mymenubar", { lazyload: true, itemdata: aItemData });
-
-
-	/*
-		Add a "show" event listener that keeps the left-most
-		submenu against the left edge of the browser viewport.
-	*/
-	
-	function onSubmenuShow() {
-	
-		var oIFrame;
-
-
-		if (this.id == "filemenu") {
-			
-			Dom.setX(this.element, 0);
-
-			oIFrame = this.iframe;            
-
-
-			if (oIFrame) {
-	
-				Dom.setX(oIFrame, 0);
-	
-			}
-			
-			this.cfg.setProperty("x", 0, true);
-		
-		}
-	
-	}
-	
-
-	// Subscribe to the "show" event for each submenu
-	
-	oMenuBar.subscribe("show", onSubmenuShow);
-	
-});
+var oMenu = new YAHOO.widget.Menu("menu-1", { usearia: true });
 </textarea>
+
+<h2>Plugin Features</h2>
+<h3>The <code>labelledby</code> and <code>describedby</code> configuration properties.</h3>
 <p>
-Lastly, apply the WAI-ARIA Roles and States to a Menu widget via a "render" event listener.  
-Waiting for a Menu's "render" event to fire ensures that all of its DOM elements have been 
-appended to the document and are available to be scripted.   Roles and states are added to a 
-Menu's DOM elements via the DOM 
-<a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/level-one-core.html#ID-F68F082">setAttribute</a> method.
+The Menu ARIA Plugin adds a <code>labelledby</code> and <code>describedby</code>
+configuration properties to the Menu class, each of which maps back to their respective ARIA 
+property of <a href="http://www.w3.org/TR/wai-aria/#labelledby"><code>aria-labelledby</code></a> and 
+<a href="http://www.w3.org/TR/wai-aria/#describedby"><code>aria-describedby</code></a>.  For example:
 </p>
 <textarea name="code" class="JScript" cols="60" rows="1">
-/*
-	 Create a variable to store a reference to the currently focused MenuItem 
-	 label, or the MenuItem label that CAN be focused by the user.
-*/
+var oMenuBar = new YAHOO.widget.MenuBar("menubar-1", { labelledby: "menubar-label" });
+</textarea>
 
-var oCurrentItemLabel;
 
-
-/*
-	 Initialize and render the MenuBar when the page's DOM is ready 
-	 to be scripted.
-*/
-
-Event.onDOMReady(function () {
-
-	/*
-		 Instantiate a MenuBar:  The first argument passed to the constructor is 
-		 the id of the HTML to be created that will represent the MenuBar; the 
-		 second is an object literal of configuration properties.
-	*/
-
-	var oMenuBar = new MenuBar("mymenubar", { lazyload: true, itemdata: aItemData });
-
-
-	/*
-		Add a "show" event listener that keeps the left-most
-		submenu against the left edge of the browser viewport.
-	*/
-	
-	function onSubmenuShow() {
-	
-		var oIFrame;
-
-
-		if (this.id == "filemenu") {
-			
-			Dom.setX(this.element, 0);
-
-			oIFrame = this.iframe;            
-
-
-			if (oIFrame) {
-	
-				Dom.setX(oIFrame, 0);
-	
-			}
-			
-			this.cfg.setProperty("x", 0, true);
-		
-		}
-	
-	}
-	
-
-	// Subscribe to the "show" event for each submenu
-	
-	oMenuBar.subscribe("show", onSubmenuShow);
-
-
-	/*
-		 Create a variable to store a reference to the currently focused MenuItem 
-		 label, or the MenuItem label that CAN be focused by the user.
-	*/
-
-	var oCurrentItemLabel;
-
-
-	/*
-		 Only apply the WAI-ARIA Roles and States for FF 3 and IE 8 since those
-		 are the only browsers that support them.
-	*/
-	
-	if ((UA.gecko && UA.gecko >= 1.9) || (UA.ie && UA.ie >= 8)) {
-	
-		/*
-			Add the WAI-ARIA Roles and States to the MenuBar's DOM elements once it 
-			is rendered.
-		*/
-
-		oMenuBar.subscribe("render", function () {
-
-			/*
-				 Apply the "role" attribute of "menu" or "menubar" depending on the 
-				 type of the Menu control being rendered.
-			*/
-
-			this.element.setAttribute("role", 
-							(this instanceof MenuBar ? "menubar" : "menu"));
-
-
-			/*
-				 Apply the appropriate "role" and "aria-[state]" attributes to the 
-				 label of each MenuItem instance.
-			*/
-
-			var aMenuItems = this.getItems(),
-				i = aMenuItems.length - 1,
-				oMenuItem,
-				oMenuItemLabel;
-			
-
-			do {
-
-				oMenuItem = aMenuItems[i];
-
-
-				/*
-					Retrieve a reference to the anchor element that serves as the 
-					label for each MenuItem.
-				*/
-
-				oMenuItemLabel = oMenuItem.element.firstChild;
-
-
-				// Set the "role" attribute of the label to "menuitem"
-
-				oMenuItemLabel.setAttribute("role", "menuitem");
-
-
-				// Remove the label from the browser's default tab order
-				
-				oMenuItemLabel.tabIndex = -1;
-
-
-				/*
-					Optional: JAWS announces the value of each anchor element's 
-					"href" attribute when it recieves focus.  If the MenuItem 
-					instance's "url" attribute is set to the default, remove the 
-					attribute so that JAWS doesn't announce its value.
-				*/
-
-				if (oMenuItem.cfg.getProperty("url") == "#") {
-
-					oMenuItemLabel.removeAttribute("href");
-				
-				}
-
-
-				/*
-					If the MenuItem has a submenu, set the "aria-haspopup" 
-					attribute to true so that the screen reader can announce 
-				*/
-
-				if (oMenuItem.cfg.getProperty("submenu")) {
-				
-					oMenuItemLabel.setAttribute("aria-haspopup", true);
-				
-				}
-
-			}
-			while (i--);
-			
-
-			/*
-				 Set the "tabindex" of the first MenuItem's label to 0 so the user 
-				 can easily tab into and out of the control.
-			*/
-
-			if (this.getRoot() == this) {
-			
-				oCurrentItemLabel = this.getItem(0).element.firstChild;
-			
-				oCurrentItemLabel.tabIndex = 0;
-			
-			}
-		
-		});
-
-
-		function onMenuItemFocus(p_oEvent) {
-
-			// The currently focused element
-
-			var oTarget = Event.getTarget(p_oEvent);
-
-
-			if (Dom.isAncestor(oMenuBar.element, oTarget)) {
-
-				/*
-					Modify value of the tabIndex attribute so that the currently 
-					focused MenuItem label is in the browser's default tab order.
-				*/	
-
-				if (oCurrentItemLabel) {
-				
-					oCurrentItemLabel.tabIndex = -1;
-				
-				}
-
-				oCurrentItemLabel = oTarget;
-				oCurrentItemLabel.tabIndex = 0;
-			
-			}
-			else {
-			
-				/*
-					If the focus has moved to an element on the page that is not a 
-					part of the MenuBar, restore the MenuBar to its original state 
-					so that the first item is in the browser's default tab index.
-				*/
-			
-				oCurrentItemLabel.tabIndex = -1;
-
-				oCurrentItemLabel = oMenuBar.getItem(0).element.firstChild;
-				oCurrentItemLabel.tabIndex = 0;
-			
-			}
-
-		}
-
-
-		// Subscribe to the focus event.
-
-		if (UA.ie) {
-		
-			/*					
-				Since the "focus" event doesn't bubble, and IE doesn't support 
-				listening for the capture phase of events, subscribe to the 
-				"focusin" event, which DOES bubble.
-			*/
-
-			Event.on(document, "focusin", onMenuItemFocus);
-		
-		}
-		else {
-
-			/*					
-				Since the "focus" event doesn't bubble, we'll use 
-				event capture for Gecko, Webkit and Opera.
-			*/
-		
-			document.addEventListener("focus", onMenuItemFocus, true);
-		
-		}
-
-	}
-
-
-/*
-	 Since this MenuBar instance is built completely from 
-	 script, call the "render" method passing in a node 
-	 reference for the DOM element that its should be 
-	 appended to.
-*/
-
-oMenuBar.render(document.body);
-</textarea>	
+<h3>Enhanced Keyboard Support</h3>
 <p>
-Once the WAI-ARIA Roles and States are applied, there are a few tweaks that can be made to the 
-Menu's DOM elements to further improve the user experience.  For Menu, the label of each MenuItem 
-instance is represented in HTML as an anchor element 
-(i.e. <code>&#60;a class="yuimenuitemlabel"&#62;</code>), and in IE and Firefox, anchor elements 
-are automatically part of the tab order.  Having MenuItem labels in the tab order by default is 
-important when JavaScript is disabled to ensure that the user can navigate a Menu via the keyboard 
-with the tab key.
+In keeping with the 
+<a href="http://www.w3.org/WAI/PF/aria-practices/#keyboard">WAI-ARIA Best Practices for keyboard 
+navigation</a> the ARIA plugin for Menu enhances Menu's default behavior such that 
+only one MenuItem is in the browser's tab index, enabling the user to easily tab into and out of the 
+Menu.  When a MenuItem in a Menu has focus, pressing the arrow keys moves focus between each 
+MenuItem in the Menu.
 </p>
 
+
+<h3>ContextMenu Support</h3>
 <p>
-Since the Menu code provides its own, desktop-like keyboard functionality when JavaScript is 
-enabled, having every MenuItem label in the browser's default tab order can be a nuisance to users 
-of screen readers.   When navigating the document with the tab key, users of screen readers have to 
-tab through every single MenuItem label in a Menu, regardless of whether or not they want to use 
-the Menu Control.  This problem can be solved by setting the "tabindex" attribute of every 
-MenuItem label but the first to a value of -1.  Setting an element's "tabindex" attribute to a 
-value of -1 removes it from the browser's default tab order, while maintaining its focusability 
-via JavaScript.  Since the YUI Menu keyboard functionality is activated when any MenuItem label 
-has focus, with just one MenuItem label in the browser's default tab order the Menu's keyboard 
-functionality will be preserved, while at the same time giving the user the ability to quickly 
-tab into and out of the control.
-</p>					</div>
+The Menu ARIA Plugin enhances the ContextMenu widget such that any element defined as a ContextMenu
+instance's trigger will have the <a href="http://www.w3.org/TR/wai-aria/#labelledby">
+<code>aria-haspopup</code></a> property automatically applied to let 
+users of AT know that the element has a context menu associated with it.
+</p>
+
+
+<h2>Screen Reader Testing</h2>
+<p>
+Two of the leading screen readers for Windows, 
+<a href="http://www.freedomscientific.com/fs_products/software_jaws.asp">JAWS</a> and 
+<a href="http://www.gwmicro.com/Window-Eyes/">Window-Eyes</a>, support ARIA.  Free, trial 
+versions of both are available for download, but require Windows be restarted every 40 minutes.
+The open-source 
+<a href="http://www.nvda-project.org/">NVDA Screen Reader</a> is the best option for developers as 
+it is both free and provides excellent support for ARIA.
+</p>				</div>
 				<div class="yui-u">
 					
 				
@@ -494,7 +168,7 @@ tab into and out of the control.
 	
 						<div id="exampleToc">
 							<ul>
-								<li><a href='../menu/example01.html'>Basic Menu From Markup</a></li><li><a href='../menu/example02.html'>Basic Menu From JavaScript</a></li><li><a href='../menu/example03.html'>Grouped Menu Items Using Markup</a></li><li><a href='../menu/example04.html'>Grouped Menu Items Using JavaScript</a></li><li><a href='../menu/example05.html'>Grouped Menu Items With Titles From Markup</a></li><li><a href='../menu/example06.html'>Grouped Menu Items With Titles From JavaScript</a></li><li><a href='../menu/example07.html'>Multi-tiered Menu From Markup</a></li><li><a href='../menu/example08.html'>Multi-tiered Menu From JavaScript</a></li><li><a href='../menu/example09.html'>Handling Menu Click Events</a></li><li><a href='../menu/example10.html'>Listening For Menu Events</a></li><li><a href='../menu/example11.html'>MenuItem Configuration Properties</a></li><li><a href='../menu/example12.html'>Setting Menu Configuration Properties At Runtime</a></li><li><a href='../menu/leftnavfrommarkup.html'>Website Left Nav With Submenus Built From Markup</a></li><li><a href='../menu/leftnavfromjs.html'>Website Left Nav With Submenus From JavaScript</a></li><li><a href='../menu/topnavfrommarkup.html'>Website Top Nav With Submenus Built From Markup</a></li><li><a href='../menu/topnavfromjs.html'>Website Top Nav With Submenus From JavaScript</a></li><li><a href='../menu/leftnavfrommarkupwithanim.html'>Website Left Nav Using Animation With Submenus Built From Markup</a></li><li><a href='../menu/leftnavfromjswithanim.html'>Website Left Nav Using Animation With Submenus From JavaScript</a></li><li><a href='../menu/topnavfrommarkupwithanim.html'>Website Top Nav Using Animation With Submenus Built From Markup</a></li><li><a href='../menu/topnavfromjswithanim.html'>Website Top Nav Using Animation With Submenus From JavaScript</a></li><li><a href='../menu/contextmenu.html'>Context Menu</a></li><li><a href='../menu/tablecontextmenu.html'>Adding A Context Menu To A Table</a></li><li><a href='../menu/treeviewcontextmenu.html'>Adding A Context Menu To A TreeView</a></li><li><a href='../menu/programsmenu.html'>OS-Style Programs Menu</a></li><li><a href='../menu/applicationmenubar.html'>Application Menubar</a></li><li class='selected'><a href='../menu/menuwaiaria.html'>Implementing ARIA Roles and States with Menu</a></li><li><a href='../datatable/dt_contextmenu.html'>Context Menu Integration (included with examples for DataTable Control (beta))</a></li><li><a href='../button/btn_example07.html'>Menu Buttons (included with examples for Button Control)</a></li><li><a href='../button/btn_example08.html'>Split Buttons (included with examples for Button Control)</a></li><li><a href='../button/btn_example11.html'>Color Picker Button (included with examples for Button Control)</a></li><li><a href='../button/btn_example12.html'>Fixed Width Menu Button (included with examples for Button Control)</a></li><li><a href='../button/btn_example14.html'>Slider Button (included with examples for Button Control)</a></li><li><a href='../profilerviewer/pv-api.html'>Using the ProfilerViewer API while Profiling the YUI Menu Control (included with examples for ProfilerViewer Control (beta))</a></li>							</ul>
+								<li><a href='../menu/example01.html'>Basic Menu From Markup</a></li><li><a href='../menu/example02.html'>Basic Menu From JavaScript</a></li><li><a href='../menu/example03.html'>Grouped Menu Items Using Markup</a></li><li><a href='../menu/example04.html'>Grouped Menu Items Using JavaScript</a></li><li><a href='../menu/example05.html'>Grouped Menu Items With Titles From Markup</a></li><li><a href='../menu/example06.html'>Grouped Menu Items With Titles From JavaScript</a></li><li><a href='../menu/example07.html'>Multi-tiered Menu From Markup</a></li><li><a href='../menu/example08.html'>Multi-tiered Menu From JavaScript</a></li><li><a href='../menu/example09.html'>Handling Menu Click Events</a></li><li><a href='../menu/example10.html'>Listening For Menu Events</a></li><li><a href='../menu/example11.html'>MenuItem Configuration Properties</a></li><li><a href='../menu/example12.html'>Setting Menu Configuration Properties At Runtime</a></li><li><a href='../menu/leftnavfrommarkup.html'>Website Left Nav With Submenus Built From Markup</a></li><li><a href='../menu/leftnavfromjs.html'>Website Left Nav With Submenus From JavaScript</a></li><li><a href='../menu/topnavfrommarkup.html'>Website Top Nav With Submenus Built From Markup</a></li><li><a href='../menu/topnavfromjs.html'>Website Top Nav With Submenus From JavaScript</a></li><li><a href='../menu/leftnavfrommarkupwithanim.html'>Website Left Nav Using Animation With Submenus Built From Markup</a></li><li><a href='../menu/leftnavfromjswithanim.html'>Website Left Nav Using Animation With Submenus From JavaScript</a></li><li><a href='../menu/topnavfrommarkupwithanim.html'>Website Top Nav Using Animation With Submenus Built From Markup</a></li><li><a href='../menu/topnavfromjswithanim.html'>Website Top Nav Using Animation With Submenus From JavaScript</a></li><li><a href='../menu/contextmenu.html'>Context Menu</a></li><li><a href='../menu/tablecontextmenu.html'>Adding A Context Menu To A Table</a></li><li><a href='../menu/treeviewcontextmenu.html'>Adding A Context Menu To A TreeView</a></li><li><a href='../menu/programsmenu.html'>OS-Style Programs Menu</a></li><li><a href='../menu/applicationmenubar.html'>Application Menubar</a></li><li class='selected'><a href='../menu/menuwaiaria.html'>Using the Menu ARIA Plugin</a></li><li><a href='../button/button-ariaplugin.html'>Using the Button ARIA Plugin (included with examples for Button Control)</a></li><li><a href='../datatable/dt_contextmenu.html'>Context Menu Integration (included with examples for DataTable Control)</a></li><li><a href='../button/btn_example07.html'>Menu Buttons (included with examples for Button Control)</a></li><li><a href='../button/btn_example08.html'>Split Buttons (included with examples for Button Control)</a></li><li><a href='../button/btn_example11.html'>Color Picker Button (included with examples for Button Control)</a></li><li><a href='../button/btn_example12.html'>Fixed Width Menu Button (included with examples for Button Control)</a></li><li><a href='../button/btn_example14.html'>Slider Button (included with examples for Button Control)</a></li><li><a href='../layout/menu_layout.html'>Layout with Menu Controls (included with examples for Layout Manager)</a></li><li><a href='../profilerviewer/pv-api.html'>Using the ProfilerViewer API while Profiling the YUI Menu Control (included with examples for ProfilerViewer Control (beta))</a></li>							</ul>
 						</div>
 					</div>
 					
@@ -519,7 +193,7 @@ tab into and out of the control.
 <div id="toc">
 	
 <ul>
-<li class="sect first">Yahoo! UI Library</li><li class="item"><a title="The Yahoo! User Interface Library (YUI)" href="http://developer.yahoo.com/yui/">Home (external)</a></li><li class="item"><a title="The Yahoo! User Interface Blog" href="http://yuiblog.com">YUIBlog (external)</a></li><li class="item"><a title="The Yahoo! Group YDN-JavaScript hosts the YUI community forum" href="http://tech.groups.yahoo.com/group/ydn-javascript/">YUI Discussion Forum (external)</a></li><li class="item"><a title="The YUI Library can be downloaded from SourceForge" href="http://sourceforge.net/projects/yui/">YUI on Sourceforge (external)</a></li><li class="item"><a title="Instantly searchable API documentation for the entire YUI library." href="../../docs/index.html">API Documentation</a></li><li class="item"><a title="Examples of every YUI utility and control in action" href="../../examples/">Functional Examples</a></li><li class="item"><a title="Videos and podcasts from the YUI Team and from the Yahoo! frontend engineering community." href="http://developer.yahoo.com/yui/theater/">YUI Theater (external)</a></li><li class="item"><a title="YUI is free and open, offered under a BSD license." href="http://developer.yahoo.com/yui/license.html">YUI License (external)</a></li><li class="sect">YUI Functional Examples</li><li class="item"><a title="The YUI Animation Utility - Functional Examples" href="../../examples/animation/index.html">Animation</a></li><li class="item"><a title="The YUI AutoComplete Control - Functional Examples" href="../../examples/autocomplete/index.html">AutoComplete</a></li><li class="item"><a title="The YUI Browser History Manager - Functional Examples" href="../../examples/history/index.html">Browser History Manager</a></li><li class="item"><a title="The YUI Button Control - Functional Examples" href="../../examples/button/index.html">Button</a></li><li class="item"><a title="The YUI Calendar Control - Functional Examples" href="../../examples/calendar/index.html">Calendar</a></li><li class="item"><a title="The YUI Charts Control - Functional Examples" href="../../examples/charts/index.html">Charts (experimental)</a></li><li class="item"><a title="The YUI Color Picker Control - Functional Examples" href="../../examples/colorpicker/index.html">Color Picker</a></li><li class="item"><a title="The YUI Cookie Utility - Functional Examples" href="../../examples/cookie/index.html">Cookie (beta)</a></li><li class="item"><a title="The YUI Connection Manager (AJAX) - Functional Examples" href="../../examples/connection/index.html">Connection Manager</a></li><li class="item"><a title="The YUI Container Family (Module, Overlay, Tooltip, Panel, Dialog, SimpleDialog) - Functional Examples" href="../../examples/container/index.html">Container</a></li><li class="item"><a title="The YUI DataTable Control - Functional Examples" href="../../examples/datatable/index.html">DataTable (beta)</a></li><li class="item"><a title="The YUI Dom Collection - Functional Examples" href="../../examples/dom/index.html">Dom</a></li><li class="item"><a title="The YUI Drag &amp; Drop Utility - Functional Examples" href="../../examples/dragdrop/index.html">Drag &amp; Drop</a></li><li class="item"><a title="The YUI Event Utility - Functional Examples" href="../../examples/event/index.html">Event</a></li><li class="item"><a title="The YUI Get Utility - Functional Examples" href="../../examples/get/index.html">Get</a></li><li class="item"><a title="The YUI ImageCropper Control - Functional Examples" href="../../examples/imagecropper/index.html">ImageCropper (beta)</a></li><li class="item"><a title="The YUI ImageLoader Utility - Functional Examples" href="../../examples/imageloader/index.html">ImageLoader</a></li><li class="item"><a title="The YUI JSON Utility - Functional Examples" href="../../examples/json/index.html">JSON</a></li><li class="item"><a title="The YUI Layout Manager - Functional Examples" href="../../examples/layout/index.html">Layout Manager (beta)</a></li><li class="item"><a title="The YUI Logger Control - Functional Examples" href="../../examples/logger/index.html">Logger</a></li><li class="selected "><a title="The YUI Menu Control - Functional Examples" href="../../examples/menu/index.html">Menu</a></li><li class="item"><a title="The YUI Profiler Utility - Functional Examples" href="../../examples/profiler/index.html">Profiler (beta)</a></li><li class="item"><a title="The YUI ProfileViewer Control - Functional Examples" href="../../examples/profilerviewer/index.html">ProfilerViewer (beta)</a></li><li class="item"><a title="The YUI Resize Utility - Functional Examples" href="../../examples/resize/index.html">Resize (beta)</a></li><li class="item"><a title="The YUI Rich Text Editor - Functional Examples" href="../../examples/editor/index.html">Rich Text Editor (beta)</a></li><li class="item"><a title="The YUI Selector Utility - Functional Examples" href="../../examples/selector/index.html">Selector (beta)</a></li><li class="item"><a title="The YUI Slider Control - Functional Examples" href="../../examples/slider/index.html">Slider</a></li><li class="item"><a title="The YUI TabView Control - Functional Examples" href="../../examples/tabview/index.html">TabView</a></li><li class="item"><a title="The YUI TreeView Control - Functional Examples" href="../../examples/treeview/index.html">TreeView</a></li><li class="item"><a title="The YUI Uploader Utility - Functional Examples" href="../../examples/uploader/index.html">Uploader (experimental)</a></li><li class="item"><a title="The YUI YAHOO Global Object - Functional Examples" href="../../examples/yahoo/index.html">YAHOO Global Object</a></li><li class="item"><a title="The YUI Loader Utility - Functional Examples" href="../../examples/yuiloader/index.html">YUI Loader (beta)</a></li><li class="item"><a title="The YUI Test Utility - Functional Examples" href="../../examples/yuitest/index.html">YUI Test</a></li><li class="item"><a title="YUI Reset CSS - Functional Examples" href="../../examples/reset/index.html">Reset CSS</a></li><li class="item"><a title="YUI Base CSS - Functional Examples" href="../../examples/base/index.html">Base CSS</a></li><li class="item"><a title="YUI Fonts CSS - Functional Examples" href="../../examples/fonts/index.html">Fonts CSS</a></li><li class="item"><a title="YUI Grids CSS - Functional Examples" href="../../examples/grids/index.html">Grids CSS</a></li><li class="sect">YUI Articles on the YUI Website</li><li class="item"><a title="Answers to Frequently Asked Questions about the YUI Library" href="http://developer.yahoo.com/yui/articles/faq/">YUI FAQ (external)</a></li><li class="item"><a title="Yahoo!'s philosophy of Graded Browser Support" href="http://developer.yahoo.com/yui/articles/gbs/">Graded Browser Support (external)</a></li><li class="item"><a title="Reporting Bugs and Making Feature Requests for YUI Components" href="http://developer.yahoo.com/yui/articles/reportingbugs/">Bug Reports/Feature Requests (external)</a></li><li class="item"><a title="Serve YUI source files from Yahoo! -- free, fast, and simple" href="http://developer.yahoo.com/yui/articles/hosting/">Serving YUI Files from Yahoo! (external)</a></li><li class="item"><a title="Best practices for working with web services while protecting user privacy" href="http://developer.yahoo.com/security/">Security Best Practices (external)</a></li></ul>
+<li class="sect first">Yahoo! UI Library</li><li class="item"><a title="The Yahoo! User Interface Library (YUI)" href="http://developer.yahoo.com/yui/">Home (external)</a></li><li class="item"><a title="The Yahoo! User Interface Blog" href="http://yuiblog.com">YUIBlog (external)</a></li><li class="item"><a title="The Yahoo! Group YDN-JavaScript hosts the YUI community forum" href="http://tech.groups.yahoo.com/group/ydn-javascript/">YUI Discussion Forum (external)</a></li><li class="item"><a title="The YUI Library can be downloaded from SourceForge" href="http://sourceforge.net/projects/yui/">YUI on Sourceforge (external)</a></li><li class="item"><a title="Instantly searchable API documentation for the entire YUI library." href="../../docs/index.html">API Documentation</a></li><li class="item"><a title="Examples of every YUI utility and control in action" href="../../examples/">Functional Examples</a></li><li class="item"><a title="Videos and podcasts from the YUI Team and from the Yahoo! frontend engineering community." href="http://developer.yahoo.com/yui/theater/">YUI Theater (external)</a></li><li class="item"><a title="YUI is free and open, offered under a BSD license." href="http://developer.yahoo.com/yui/license.html">YUI License (external)</a></li><li class="sect">YUI Functional Examples</li><li class="item"><a title="The YUI Animation Utility - Functional Examples" href="../../examples/animation/index.html">Animation</a></li><li class="item"><a title="The YUI AutoComplete Control - Functional Examples" href="../../examples/autocomplete/index.html">AutoComplete</a></li><li class="item"><a title="The YUI Browser History Manager - Functional Examples" href="../../examples/history/index.html">Browser History Manager</a></li><li class="item"><a title="The YUI Button Control - Functional Examples" href="../../examples/button/index.html">Button</a></li><li class="item"><a title="The YUI Calendar Control - Functional Examples" href="../../examples/calendar/index.html">Calendar</a></li><li class="item"><a title="The YUI Carousel Control - Functional Examples" href="../../examples/carousel/index.html">Carousel</a></li><li class="item"><a title="The YUI Charts Control - Functional Examples" href="../../examples/charts/index.html">Charts (experimental)</a></li><li class="item"><a title="The YUI Color Picker Control - Functional Examples" href="../../examples/colorpicker/index.html">Color Picker</a></li><li class="item"><a title="The YUI Cookie Utility - Functional Examples" href="../../examples/cookie/index.html">Cookie</a></li><li class="item"><a title="The YUI Connection Manager (AJAX) - Functional Examples" href="../../examples/connection/index.html">Connection Manager</a></li><li class="item"><a title="The YUI Container Family (Module, Overlay, Tooltip, Panel, Dialog, SimpleDialog) - Functional Examples" href="../../examples/container/index.html">Container</a></li><li class="item"><a title="The YUI DataTable Control - Functional Examples" href="../../examples/datatable/index.html">DataTable</a></li><li class="item"><a title="The YUI Dom Collection - Functional Examples" href="../../examples/dom/index.html">Dom</a></li><li class="item"><a title="The YUI Drag &amp; Drop Utility - Functional Examples" href="../../examples/dragdrop/index.html">Drag &amp; Drop</a></li><li class="item"><a title="The YUI Event Utility - Functional Examples" href="../../examples/event/index.html">Event</a></li><li class="item"><a title="The YUI Get Utility - Functional Examples" href="../../examples/get/index.html">Get</a></li><li class="item"><a title="The YUI ImageCropper Control - Functional Examples" href="../../examples/imagecropper/index.html">ImageCropper</a></li><li class="item"><a title="The YUI ImageLoader Utility - Functional Examples" href="../../examples/imageloader/index.html">ImageLoader</a></li><li class="item"><a title="The YUI JSON Utility - Functional Examples" href="../../examples/json/index.html">JSON</a></li><li class="item"><a title="The YUI Layout Manager - Functional Examples" href="../../examples/layout/index.html">Layout Manager</a></li><li class="item"><a title="The YUI Logger Control - Functional Examples" href="../../examples/logger/index.html">Logger</a></li><li class="selected "><a title="The YUI Menu Control - Functional Examples" href="../../examples/menu/index.html">Menu</a></li><li class="item"><a title="The YUI Paginator - Functional Examples" href="../../examples/paginator/index.html">Paginator</a></li><li class="item"><a title="The YUI Profiler Utility - Functional Examples" href="../../examples/profiler/index.html">Profiler</a></li><li class="item"><a title="The YUI ProfileViewer Control - Functional Examples" href="../../examples/profilerviewer/index.html">ProfilerViewer</a></li><li class="item"><a title="The YUI Resize Utility - Functional Examples" href="../../examples/resize/index.html">Resize</a></li><li class="item"><a title="The YUI Rich Text Editor - Functional Examples" href="../../examples/editor/index.html">Rich Text Editor</a></li><li class="item"><a title="The YUI Selector Utility - Functional Examples" href="../../examples/selector/index.html">Selector</a></li><li class="item"><a title="The YUI Slider Control - Functional Examples" href="../../examples/slider/index.html">Slider</a></li><li class="item"><a title="The YUI TabView Control - Functional Examples" href="../../examples/tabview/index.html">TabView</a></li><li class="item"><a title="The YUI TreeView Control - Functional Examples" href="../../examples/treeview/index.html">TreeView</a></li><li class="item"><a title="The YUI Uploader Utility - Functional Examples" href="../../examples/uploader/index.html">Uploader (experimental)</a></li><li class="item"><a title="The YUI YAHOO Global Object - Functional Examples" href="../../examples/yahoo/index.html">YAHOO Global Object</a></li><li class="item"><a title="The YUI Loader Utility - Functional Examples" href="../../examples/yuiloader/index.html">YUI Loader</a></li><li class="item"><a title="The YUI Test Utility - Functional Examples" href="../../examples/yuitest/index.html">YUI Test</a></li><li class="item"><a title="YUI Reset CSS - Functional Examples" href="../../examples/reset/index.html">Reset CSS</a></li><li class="item"><a title="YUI Base CSS - Functional Examples" href="../../examples/base/index.html">Base CSS</a></li><li class="item"><a title="YUI Fonts CSS - Functional Examples" href="../../examples/fonts/index.html">Fonts CSS</a></li><li class="item"><a title="YUI Grids CSS - Functional Examples" href="../../examples/grids/index.html">Grids CSS</a></li><li class="sect">YUI Articles on the YUI Website</li><li class="item"><a title="Answers to Frequently Asked Questions about the YUI Library" href="http://developer.yahoo.com/yui/articles/faq/">YUI FAQ (external)</a></li><li class="item"><a title="Yahoo!'s philosophy of Graded Browser Support" href="http://developer.yahoo.com/yui/articles/gbs/">Graded Browser Support (external)</a></li><li class="item"><a title="Reporting Bugs and Making Feature Requests for YUI Components" href="http://developer.yahoo.com/yui/articles/reportingbugs/">Bug Reports/Feature Requests (external)</a></li><li class="item"><a title="Serve YUI source files from Yahoo! -- free, fast, and simple" href="http://developer.yahoo.com/yui/articles/hosting/">Serving YUI Files from Yahoo! (external)</a></li><li class="item"><a title="Best practices for working with web services while protecting user privacy" href="http://developer.yahoo.com/security/">Security Best Practices (external)</a></li></ul>
 </div>
 </div>
 	</div><!--closes bd-->

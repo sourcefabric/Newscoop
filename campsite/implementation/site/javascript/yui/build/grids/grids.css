@@ -2,11 +2,12 @@
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
+version: 2.6.0
 */
 /*
-	Note: Throughout this file, the *property filter is used to 
-	      give a value to IE that other browsers do not see.	
+	Note: Throughout this file, the *property (star-property) filter is used 
+    to give a value to IE that other browsers do not see. _property is only seen 
+    by IE7, so the combo of *prop and _prop can target between IE6 and IE7.
 */
 
 /*
@@ -74,7 +75,8 @@ version: 2.5.2
 	.yui-b{_position:static;}
 	#yui-main .yui-b{position:static;}
 
-	#yui-main {width:100%;}
+	#yui-main,
+	.yui-g .yui-u .yui-g {width:100%;}
 		
 	.yui-t1 #yui-main,
 	.yui-t2 #yui-main,
@@ -106,9 +108,8 @@ version: 2.5.2
 	.yui-t6 .yui-b {float:right;width:23.0769em;*width:22.50em;}
 	.yui-t6 #yui-main .yui-b {margin-right:24.0769em;*margin-right:23.62em;}
 
-	.yui-t7 #yui-main .yui-b {
-		display:block;margin:0 0 1em 0;
-	}
+	.yui-t7 #yui-main .yui-b {display:block;margin:0 0 1em 0;}
+	
 	#yui-main .yui-b {float:none;width:auto;}
 
 /*
@@ -205,7 +206,8 @@ version: 2.5.2
 	.yui-gd .yui-g .yui-u,
 	.yui-ge .yui-g .yui-u,
 	.yui-gf .yui-g .yui-u {width:49%;*width:48.1%;*margin-left:0;}
-
+	
+	.yui-g .yui-g .yui-u {width:48.1%;}/*SF 1927599 from 1.14 to 2.6.0*/
 	.yui-g .yui-gb div.first,
 	.yui-gb .yui-gb div.first {*margin-right:0;*width:32%;_width:31.7%;}
 
@@ -238,7 +240,7 @@ version: 2.5.2
 	.yui-gb .yui-gb div.first {*margin-left:0;}
 
 	.yui-gc .yui-g .yui-u,
-	.yui-gd .yui-g .yui-u {*width:48.1%;*margin-left:0;}s
+	.yui-gd .yui-g .yui-u {*width:48.1%;*margin-left:0;}
 
 	.yui-gb .yui-gd div.first {width:32%;}
 	.yui-g .yui-gd div.first {_width:29.9%;}

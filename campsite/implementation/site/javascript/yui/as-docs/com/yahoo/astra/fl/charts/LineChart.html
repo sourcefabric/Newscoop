@@ -69,14 +69,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
 </tr>
 <tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Chart.html#contentBounds">contentBounds</a> : Rectangle<div class="summaryTableDescription">
-   The <code>Rectangle</code> representing the area where content should be
-   drawn within the plot area.</div>
-</td><td class="summaryTableOwnerCol"><a href="Chart.html">Chart</a></td>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CartesianChart.html#contentBounds">contentBounds</a> : Rectangle<div class="summaryTableDescription">
+   The rectangular bounds where the cartesian chart's data is drawn.</div>
+</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
 </tr>
 <tr class="hideInheritedProperty">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Chart.html#dataProvider">dataProvider</a> : Object<div class="summaryTableDescription">
-   The data the chart displays.</div>
+   </div>
 </td><td class="summaryTableOwnerCol"><a href="Chart.html">Chart</a></td>
 </tr>
 <tr class="hideInheritedProperty">
@@ -87,12 +86,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </tr>
 <tr class="hideInheritedProperty">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Chart.html#defaultSeriesType">defaultSeriesType</a> : Object<div class="summaryTableDescription">
-   When data is encountered where an ISeries is expected, it will be converted
-   to this default type.</div>
+   When raw data (like an Array of Numbers) is encountered where an
+   ISeries instance is expected, it will be converted to this default
+   type.</div>
 </td><td class="summaryTableOwnerCol"><a href="Chart.html">Chart</a></td>
 </tr>
 <tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CartesianChart.html#horizontalAxis">horizontalAxis</a> : <a href="../charts/IAxis.html">IAxis</a>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CartesianChart.html#horizontalAxis">horizontalAxis</a> : <a href="axes/IAxis.html">IAxis</a>
 <div class="summaryTableDescription">
    The axis representing the horizontal range.</div>
 </td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
@@ -121,7 +121,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
 </tr>
 <tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CartesianChart.html#verticalAxis">verticalAxis</a> : <a href="../charts/IAxis.html">IAxis</a>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CartesianChart.html#verticalAxis">verticalAxis</a> : <a href="axes/IAxis.html">IAxis</a>
 <div class="summaryTableDescription">
    The axis representing the vertical range.</div>
 </td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
@@ -162,39 +162,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
    Constructor.</div>
 </td><td class="summaryTableOwnerCol">LineChart</td>
 </tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="CartesianChart.html#axisAndSeriesToField()">axisAndSeriesToField</a>(axis:<a href="../charts/IAxis.html">IAxis</a>, series:<a href="series/ISeries.html">ISeries</a>):String</div>
-<div class="summaryTableDescription">
-  An interface for a chart with a drawing area.</div>
-</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="CartesianChart.html#axisToField()">axisToField</a>(axis:<a href="../charts/IAxis.html">IAxis</a>):String</div>
-<div class="summaryTableDescription">
-  An interface for a chart with a drawing area.</div>
-</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="CartesianChart.html#dataToLocal()">dataToLocal</a>(data:Object, series:<a href="series/ISeries.html">ISeries</a>):Point</div>
-<div class="summaryTableDescription">
-   Calculates the position of a data point along the axis.</div>
-</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="CartesianChart.html#fieldToAxis()">fieldToAxis</a>(field:String):<a href="../charts/IAxis.html">IAxis</a>
-</div>
-<div class="summaryTableDescription">
-  An interface for a chart with a drawing area.</div>
-</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
-</tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
@@ -215,10 +182,51 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#itemToPosition()">itemToPosition</a>(series:<a href="series/ISeries.html">ISeries</a>, itemIndex:int):Point</div>
+<div class="summaryTableDescription">
+   
+   Calculates the position of a data point along the axis.</div>
+</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="Chart.html#seriesToIndex()">seriesToIndex</a>(series:<a href="series/ISeries.html">ISeries</a>):int</div>
 <div class="summaryTableDescription">
    Returns the index within this plot area of the input ISeries object.</div>
 </td><td class="summaryTableOwnerCol"><a href="Chart.html">Chart</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#setHorizontalAxisGridLinesStyle()">setHorizontalAxisGridLinesStyle</a>(name:String, value:Object):void</div>
+<div class="summaryTableDescription">
+   Sets a style on the horizontal axis grid lines.</div>
+</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#setHorizontalAxisStyle()">setHorizontalAxisStyle</a>(name:String, value:Object):void</div>
+<div class="summaryTableDescription">
+   Sets a style on the horizontal axis.</div>
+</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#setVerticalAxisGridLinesStyle()">setVerticalAxisGridLinesStyle</a>(name:String, value:Object):void</div>
+<div class="summaryTableDescription">
+   Sets a style on the vertical axis grid lines.</div>
+</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#setVerticalAxisStyle()">setVerticalAxisStyle</a>(name:String, value:Object):void</div>
+<div class="summaryTableDescription">
+   Sets a style on the vertical axis.</div>
+</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
 </tr>
 </table>
 </div>
@@ -236,13 +244,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <table id="summaryTableProtectedMethod" class="summaryTable hideInheritedProtectedMethod" cellpadding="3" cellspacing="0">
 <tr>
 <th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="hideInheritedProtectedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="Chart.html#refreshDataTip()">refreshDataTip</a>():void</div>
-<div class="summaryTableDescription"></div>
-</td><td class="summaryTableOwnerCol"><a href="Chart.html">Chart</a></td>
 </tr>
 <tr class="hideInheritedProtectedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -324,10 +325,37 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="Chart.html#style:embedFonts">embedFonts</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Boolean<br>
+  Indicates whether embedded font outlines are used to render the text
+  field.</td><td class="summaryTableOwnerCol"><a href="Chart.html">Chart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="CartesianChart.html#style:horizontalAxisColor">horizontalAxisColor</a>
 </div>
 </td><td class="summaryTableDescription"><span class="label">Type: </span>uint<br>
   The line color for the horizontal axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:horizontalAxisGridFillAlphas">horizontalAxisGridFillAlphas</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Array<br>
+  An Array of alpha values (in the range of 0 to 1) that is used to draw
+  alternating fills between the horizontal axis' grid lines.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:horizontalAxisGridFillColors">horizontalAxisGridFillColors</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Array<br>
+  An Array of <code>uint</code> color values that is used to draw
+  alternating fills between the horizontal axis' grid lines.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
 </tr>
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -340,6 +368,23 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:horizontalAxisGridLinesRenderer">horizontalAxisGridLinesRenderer</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Class<br>
+  The class used to instantiate the horizontal axis grid lines.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:horizontalAxisGridLinesStyles">horizontalAxisGridLinesStyles</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Object<br>
+  An object containing style values to be passed to the horizontal axis grid
+  lines renderer.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="CartesianChart.html#style:horizontalAxisGridLineWeight">horizontalAxisGridLineWeight</a>
 </div>
 </td><td class="summaryTableDescription"><span class="label">Type: </span>int<br>
@@ -348,10 +393,27 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:horizontalAxisHideOverlappingLabels">horizontalAxisHideOverlappingLabels</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Boolean<br> 
+  If true, labels that overlap previously drawn labels on the axis will be
+  hidden.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="CartesianChart.html#style:horizontalAxisLabelDistance">horizontalAxisLabelDistance</a>
 </div>
 </td><td class="summaryTableDescription"><span class="label">Type: </span>Number<br>
   The distance, in pixels, between a label and the horizontal axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:horizontalAxisLabelRotation">horizontalAxisLabelRotation</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Number<br> 
+  The angle, in degrees, of the labels on the horizontal axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
 </tr>
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -400,6 +462,32 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </div>
 </td><td class="summaryTableDescription"><span class="label">Type: </span>int<br>
   The line weight, in pixels, for the minor ticks on the horizontal axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:horizontalAxisRenderer">horizontalAxisRenderer</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Class<br>
+  The class used to instantiate the visual representation of the horizontal
+  axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:horizontalAxisStyles">horizontalAxisStyles</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Object<br>
+  An object containing style values to be passed to the horizontal axis
+  renderer.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:horizontalAxisTextFormat">horizontalAxisTextFormat</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>TextFormat<br>
+  Defines the TextFormat used by labels on the horizontal axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
 </tr>
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -496,6 +584,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:showHorizontalAxis">showHorizontalAxis</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Boolean<br>
+  If false, the horizontal axis is not drawn.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="CartesianChart.html#style:showHorizontalAxisGridLines">showHorizontalAxisGridLines</a>
 </div>
 </td><td class="summaryTableDescription"><span class="label">Type: </span>Boolean<br>
@@ -540,6 +636,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </div>
 </td><td class="summaryTableDescription"><span class="label">Type: </span>Boolean<br>
   If true, the horizontal axis title will be displayed.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:showVerticalAxis">showVerticalAxis</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Boolean<br>
+  If false, the vertical axis is not drawn.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
 </tr>
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -600,10 +704,45 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:verticalAxisGridFillAlphas">verticalAxisGridFillAlphas</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Array<br>
+  An Array of alpha values (in the range of 0 to 1) that is used to draw
+  alternating fills between the vertical axis' grid lines.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:verticalAxisGridFillColors">verticalAxisGridFillColors</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Array<br>
+  An Array of <code>uint</code> color values that is used to draw
+  alternating fills between the vertical axis' grid lines.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="CartesianChart.html#style:verticalAxisGridLineColor">verticalAxisGridLineColor</a>
 </div>
 </td><td class="summaryTableDescription"><span class="label">Type: </span>uint<br>
   The line color for the grid lines on the vertical axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:verticalAxisGridLinesRenderer">verticalAxisGridLinesRenderer</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Class<br>
+  The class used to instantiate the vertical axis grid lines.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:verticalAxisGridLinesStyles">verticalAxisGridLinesStyles</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Object<br>
+  An object containing style values to be passed to the vertical axis grid
+  lines renderer.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
 </tr>
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -616,10 +755,27 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:verticalAxisHideOverlappingLabels">verticalAxisHideOverlappingLabels</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Boolean<br> 
+  If true, labels that overlap previously drawn labels on the axis will be
+  hidden.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="CartesianChart.html#style:verticalAxisLabelDistance">verticalAxisLabelDistance</a>
 </div>
 </td><td class="summaryTableDescription"><span class="label">Type: </span>Number<br>
   The distance, in pixels, between a label and the vertical axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:verticalAxisLabelRotation">verticalAxisLabelRotation</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Number<br> 
+  The angle, in degrees, of the labels on the vertical axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
 </tr>
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -668,6 +824,32 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </div>
 </td><td class="summaryTableDescription"><span class="label">Type: </span>int<br>
   The line weight, in pixels, for the minor ticks on the vertical axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:verticalAxisRenderer">verticalAxisRenderer</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Class<br>
+  The class used to instantiate the visual representation of the vertical
+  axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:verticalAxisStyles">verticalAxisStyles</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Object<br>
+  An object containing style values to be passed to the vertical axis
+  renderer.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
+</tr>
+<tr class="hideInheritedStyle">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CartesianChart.html#style:verticalAxisTextFormat">verticalAxisTextFormat</a>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>TextFormat<br>
+  Defines the TextFormat used by labels on the vertical axis.</td><td class="summaryTableOwnerCol"><a href="CartesianChart.html">CartesianChart</a></td>
 </tr>
 <tr class="hideInheritedStyle">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">

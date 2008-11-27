@@ -13,7 +13,7 @@
 
 	<div id="hd">
         <a href="http://developer.yahoo.com/yui/"><h1>Yahoo! UI Library</h1></a>
-        <h3>Container&nbsp; <span class="subtitle">2.5.2</span></h3>
+        <h3>Container&nbsp; <span class="subtitle">2.6.0</span></h3>
         <p>
         <a href="./index.html">Yahoo! UI Library</a> 
             &gt; <a href="./module_container.html">container</a>
@@ -21,14 +21,16 @@
                  &gt; Config.js (source view) 
             </p>
 
+
 	</div>
 
 	<div id="bd">
 		<div id="yui-main">
 			<div class="yui-b">
             <form name="yui-classopts-form">
-    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> Show Private</span>
-    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> Show Protected</span>
+    <span id="classopts"><input type="checkbox" name="showprivate" id="showprivate" /> <label for="showprivate">Show Private</label></span>
+    <span id="classopts"><input type="checkbox" name="showprotected" id="showprotected" /> <label for="showprotected">Show Protected</label></span>
+    <span id="classopts"><input type="checkbox" name="showdeprecated" id="showdeprecated" /> <label for="showdeprecated">Show Deprecated</label></span>
             </form>
 
                     <div id="srcout">
@@ -231,16 +233,19 @@
         <span class="nx">getConfig</span><span class="o">:</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
         
             <span class="k">var</span> <span class="nx">cfg</span> <span class="o">=</span> <span class="o">{},</span>
+                <span class="nx">currCfg</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">config</span><span class="o">,</span>
                 <span class="nx">prop</span><span class="o">,</span>
                 <span class="nx">property</span><span class="o">;</span>
                 
-            <span class="k">for</span> <span class="o">(</span><span class="nx">prop</span> <span class="k">in</span> <span class="k">this</span><span class="o">.</span><span class="nx">config</span><span class="o">)</span> <span class="o">{</span>
-                <span class="nx">property</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">config</span><span class="o">[</span><span class="nx">prop</span><span class="o">];</span>
-                <span class="k">if</span> <span class="o">(</span><span class="nx">property</span> <span class="o">&amp;&amp;</span> <span class="nx">property</span><span class="o">.</span><span class="nx">event</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="nx">cfg</span><span class="o">[</span><span class="nx">prop</span><span class="o">]</span> <span class="o">=</span> <span class="nx">property</span><span class="o">.</span><span class="nx">value</span><span class="o">;</span>
+            <span class="k">for</span> <span class="o">(</span><span class="nx">prop</span> <span class="k">in</span> <span class="nx">currCfg</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nx">Lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="nx">currCfg</span><span class="o">,</span> <span class="nx">prop</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="nx">property</span> <span class="o">=</span> <span class="nx">currCfg</span><span class="o">[</span><span class="nx">prop</span><span class="o">];</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="nx">property</span> <span class="o">&amp;&amp;</span> <span class="nx">property</span><span class="o">.</span><span class="nx">event</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="nx">cfg</span><span class="o">[</span><span class="nx">prop</span><span class="o">]</span> <span class="o">=</span> <span class="nx">property</span><span class="o">.</span><span class="nx">value</span><span class="o">;</span>
+                    <span class="o">}</span>
                 <span class="o">}</span>
             <span class="o">}</span>
-            
+
             <span class="k">return</span> <span class="nx">cfg</span><span class="o">;</span>
         <span class="o">},</span>
         
@@ -516,11 +521,13 @@
 <span class="c">        * @method refresh</span>
 <span class="c">        */</span>
         <span class="nx">refresh</span><span class="o">:</span> <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
-        
+
             <span class="k">var</span> <span class="nx">prop</span><span class="o">;</span>
-        
+
             <span class="k">for</span> <span class="o">(</span><span class="nx">prop</span> <span class="k">in</span> <span class="k">this</span><span class="o">.</span><span class="nx">config</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">this</span><span class="o">.</span><span class="nx">refireEvent</span><span class="o">(</span><span class="nx">prop</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nx">Lang</span><span class="o">.</span><span class="nx">hasOwnProperty</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="nx">config</span><span class="o">,</span> <span class="nx">prop</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">this</span><span class="o">.</span><span class="nx">refireEvent</span><span class="o">(</span><span class="nx">prop</span><span class="o">);</span>
+                <span class="o">}</span>
             <span class="o">}</span>
         <span class="o">},</span>
         
@@ -544,9 +551,14 @@
                     <span class="nx">key</span> <span class="o">=</span> <span class="nx">queueItem</span><span class="o">[</span><span class="m">0</span><span class="o">];</span>
                     <span class="nx">value</span> <span class="o">=</span> <span class="nx">queueItem</span><span class="o">[</span><span class="m">1</span><span class="o">];</span>
                     <span class="nx">property</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="nx">config</span><span class="o">[</span><span class="nx">key</span><span class="o">];</span>
-        
+
                     <span class="nx">property</span><span class="o">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="o">;</span>
-        
+
+                    <span class="c">// Clear out queue entry, to avoid it being </span>
+<span class="c"></span>                    <span class="c">// re-added to the queue by any queueProperty/supercedes</span>
+<span class="c"></span>                    <span class="c">// calls which are invoked during fireEvent</span>
+<span class="c"></span>                    <span class="k">this</span><span class="o">.</span><span class="nx">eventQueue</span><span class="o">[</span><span class="nx">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
                     <span class="k">this</span><span class="o">.</span><span class="nx">fireEvent</span><span class="o">(</span><span class="nx">key</span><span class="o">,</span><span class="nx">value</span><span class="o">);</span>
                 <span class="o">}</span>
             <span class="o">}</span>
@@ -735,6 +747,8 @@
 
                                 <li class=""><a href="module_calendar.html">calendar</a></li>
 
+                                <li class=""><a href="module_carousel.html">carousel</a></li>
+
                                 <li class=""><a href="module_charts.html">charts</a></li>
 
                                 <li class=""><a href="module_colorpicker.html">colorpicker</a></li>
@@ -774,6 +788,8 @@
                                 <li class=""><a href="module_logger.html">logger</a></li>
 
                                 <li class=""><a href="module_menu.html">menu</a></li>
+
+                                <li class=""><a href="module_paginator.html">paginator</a></li>
 
                                 <li class=""><a href="module_profiler.html">profiler</a></li>
 
@@ -838,7 +854,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2007 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2008 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 </body>

@@ -23,8 +23,8 @@ body {
 <script type="text/javascript" src="../../build/element/element-beta-min.js"></script>
 <script type="text/javascript" src="../../build/button/button-min.js"></script>
 <script type="text/javascript" src="../../build/dragdrop/dragdrop-min.js"></script>
-<script type="text/javascript" src="../../build/datasource/datasource-beta-min.js"></script>
-<script type="text/javascript" src="../../build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="../../build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="../../build/datatable/datatable-min.js"></script>
 
 
 <!--begin custom header content for this example-->
@@ -38,6 +38,7 @@ body {
 </head>
 
 <body class=" yui-skin-sam">
+
 
 <h1>Adding and Deleting Rows</h1>
 
@@ -75,7 +76,7 @@ body {
 <script type="text/javascript" src="assets/js/data.js"></script>
 <script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.DynamicData = new function() {
+    YAHOO.example.DynamicData = function() {
         var data = {one:"one",two:"two",three:"three"};
         
         var myColumnDefs = [
@@ -85,55 +86,77 @@ YAHOO.util.Event.addListener(window, "load", function() {
             {key:"three",resizeable:true}   
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource([]);
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
-        this.myDataSource.responseSchema = {
+        var myDataSource = new YAHOO.util.DataSource([]);
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        myDataSource.responseSchema = {
             fields: ["one","two","three"]
         };
         
-
-        this.myDataTable = new YAHOO.widget.DataTable("basic",
-                myColumnDefs, this.myDataSource, {});
+        var myDataTable = new YAHOO.widget.DataTable("basic",
+                myColumnDefs, myDataSource, {});
                 
-        var i=1;
-        
-        YAHOO.util.Event.addListener("addrow","click",function() {
+        var i=1,
+            bReverseSorted = false;
+
+        // Track when Column is reverse-sorted, since new data will come in out of order
+        var trackReverseSorts = function(oArg) {
+            bReverseSorted = (oArg.dir === YAHOO.widget.DataTable.CLASS_DESC);
+        };
+        myDataTable.subscribe("columnSortEvent", trackReverseSorts);
+
+        // Add one row to the bottom
+        var btnAddRow = new YAHOO.widget.Button("addrow");
+        btnAddRow.on("click", function() {
+            // Clear sort when necessary
+            if(bReverseSorted) {
+                myDataTable.set("sortedBy", null);
+            }
+            
             var record = YAHOO.widget.DataTable._cloneObject(data);
             record.row = i++;
-            this.myDataTable.addRow(record);
+            myDataTable.addRow(record);
         },this,true);
 
-        YAHOO.util.Event.addListener("deleterow","click",function() {
-            if(this.myDataTable.getRecordSet().getLength() > 0) {
-                this.myDataTable.deleteRow(0);
+        // Add 20 rows to the bottom
+        var btnAddRows = new YAHOO.widget.Button("addrows");
+        btnAddRows.on("click", function(e) {
+            // Clear sort when necessary
+            if(bReverseSorted) {
+                myDataTable.set("sortedBy", null);
             }
-        },this,true);
-        
- 
-        YAHOO.util.Event.addListener("addrows","click",function(e) {
+
             var myArray = [];
             for(var l=i;i<=l+19;i++) {
                 var record = YAHOO.widget.DataTable._cloneObject(data);
                 record.row = i;
                 myArray.push(record);
             }
-            this.myDataTable.addRows(myArray); 
+            myDataTable.addRows(myArray); 
         },this,true);
-
-        YAHOO.util.Event.addListener("deleterows","click",function() {
-            var length = this.myDataTable.getRecordSet().getLength();
-            if(length > 0) {
-                var count = (length > 19) ? 20 : length;
-                this.myDataTable.deleteRows(0,count);
+        
+        // Delete one row from the top
+        var btnDeleteRow = new YAHOO.widget.Button("deleterow");
+        btnDeleteRow.on("click", function() {
+            if(myDataTable.getRecordSet().getLength() > 0) {
+                myDataTable.deleteRow(0);
             }
         },this,true);
-
-
-        var oPushButton4 = new YAHOO.widget.Button("addrow");
-        var oPushButton5 = new YAHOO.widget.Button("addrows");
-        var oPushButton6 = new YAHOO.widget.Button("deleterow");
-        var oPushButton6 = new YAHOO.widget.Button("deleterows");
-    };
+        
+        // Delete 20 row from the top
+        var btnDeleteRows = new YAHOO.widget.Button("deleterows");
+        btnDeleteRows.on("click", function() {
+            var length = myDataTable.getRecordSet().getLength();
+            if(length > 0) {
+                var count = (length > 19) ? 20 : length;
+                myDataTable.deleteRows(0,count);
+            }
+        },this,true);
+        
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
 });
 </script>
 
