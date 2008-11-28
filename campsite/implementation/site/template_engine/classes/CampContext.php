@@ -528,14 +528,14 @@ final class CampContext
         $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
         $listName = $this->m_listObjects[$objectName]['list'];
 
-        array_pop($this->m_readonlyProperties['lists']);
-   	    $this->m_readonlyProperties['current_list'] = array_pop($this->m_readonlyProperties['lists']);
-
-        if (count($this->m_readonlyProperties[$listName.'_lists']) == 0) {
-            return;
+        if (count($this->m_readonlyProperties[$listName.'_lists']) > 0) {
+            array_pop($this->m_readonlyProperties[$listName.'_lists']);
+            $this->m_readonlyProperties['current_'.$listName.'_list'] =
+                end($this->m_readonlyProperties[$listName.'_lists']);
         }
-        array_pop($this->m_readonlyProperties[$listName.'_lists']);
-       	$this->m_readonlyProperties['current_'.$listName.'_list'] = array_pop($this->m_readonlyProperties[$listName.'_lists']);
+        
+        array_pop($this->m_readonlyProperties['lists']);
+   	    $this->m_readonlyProperties['current_list'] = end($this->m_readonlyProperties['lists']);
     } // fn resetCurrentList
 
 
