@@ -815,7 +815,7 @@ final class CampContext
     private function setLanguageHandler(MetaLanguage $p_oldLanguage, MetaLanguage $p_newLanguage)
     {
         static $languageHandlerRunning = false;
-        if ($languageHandlerRunning || $p_newLanguage == $p_oldLanguage) {
+        if ($languageHandlerRunning || $p_newLanguage === $p_oldLanguage) {
             return;
         }
         $languageHandlerRunning = true;
@@ -837,7 +837,7 @@ final class CampContext
     MetaPublication $p_newPublication)
     {
         static $publicationHandlerRunning = false;
-        if ($publicationHandlerRunning || $p_newPublication == $p_oldPublication) {
+        if ($publicationHandlerRunning || $p_newPublication === $p_oldPublication) {
             return;
         }
         $publicationHandlerRunning = true;
@@ -862,7 +862,7 @@ final class CampContext
     private function setIssueHandler(MetaIssue $p_oldIssue, MetaIssue $p_newIssue)
     {
         static $issueHandlerRunning = false;
-        if ($issueHandlerRunning || $p_newIssue == $p_oldIssue) {
+        if ($issueHandlerRunning || $p_newIssue === $p_oldIssue) {
             return;
         }
         $issueHandlerRunning = true;
@@ -887,7 +887,7 @@ final class CampContext
     private function setSectionHandler(MetaSection $p_oldSection, MetaSection $p_newSection)
     {
         static $sectionHandlerRunning = false;
-        if ($sectionHandlerRunning || $p_newSection == $p_oldSection) {
+        if ($sectionHandlerRunning || $p_newSection === $p_oldSection) {
             return;
         }
         $sectionHandlerRunning = true;
@@ -912,7 +912,7 @@ final class CampContext
     private function setArticleHandler(MetaArticle $p_oldArticle, MetaArticle $p_newArticle)
     {
         static $articleHandlerRunning = false;
-        if ($articleHandlerRunning || $p_newArticle == $p_oldArticle) {
+        if ($articleHandlerRunning || $p_newArticle === $p_oldArticle) {
             return;
         }
         $articleHandlerRunning = true;
@@ -945,21 +945,21 @@ final class CampContext
      * @param MetaComment $p_newComment
      */
     private function setCommentHandler(MetaComment $p_oldComment, MetaComment $p_newComment) {
-        if ($p_oldComment != $p_newComment) {
+        if ($p_oldComment !== $p_newComment) {
             $this->m_objects['comment'] = $p_newComment;
         }
     }
 
 
     private function setSubtitleHandler(MetaSubtitle $p_oldSubtitle, MetaSubtitle $p_newSubtitle) {
-        if ($p_oldSubtitle != $p_newSubtitle) {
+        if ($p_oldSubtitle !== $p_newSubtitle) {
             $this->m_objects['subtitle'] = $p_newSubtitle;
         }
     }
 
 
     private function setTopicHandler(MetaTopic $p_oldTopic, MetaTopic $p_newTopic) {
-        if ($p_oldTopic != $p_newTopic) {
+        if ($p_oldTopic !== $p_newTopic) {
             $this->m_readonlyProperties['url']->set_parameter('tpid', $p_newTopic->identifier);
             $this->m_objects['topic'] = $p_newTopic;
         }

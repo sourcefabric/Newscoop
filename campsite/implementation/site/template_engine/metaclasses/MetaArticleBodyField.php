@@ -35,7 +35,7 @@ final class MetaArticleBodyField {
      *
      * @var MetaArticle
      */
-    private $m_parent;
+    private $m_parent_article;
 
 
     /**
@@ -67,7 +67,7 @@ final class MetaArticleBodyField {
         foreach ($this->m_subtitles as $subtitle) {
             $this->m_sutitlesNames = $subtitle->name;
         }
-        $this->m_parent = $p_parent;
+        $this->m_parent_article = new Article($p_parent->language->number, $p_parent->number);
         $this->m_fieldName = $p_fieldName;
         $this->m_articleTypeField = new ArticleTypeField($p_parent->type_name, $p_fieldName);
     }
@@ -160,15 +160,12 @@ final class MetaArticleBodyField {
         if ($this->m_articleTypeField->isContent()) {
             $objectType = new ObjectType('article');
             $userId = CampTemplate::singleton()->context()->user->identifier;
-            $requestObjectId = $this->m_parent->request_object_id;
-            $updateArticle = empty($requestObjectId);
+            $requestObjectId = $this->m_parent_article->getProperty('object_id');
             try {
                 SessionRequest::Create(session_id(), $requestObjectId,
                                        $objectType->getObjectTypeId(), $userId);
-                if ($updateArticle) {
-                    $article = new Article($this->m_parent->language->number,
-                                           $this->m_parent->number);
-                    $article->setProperty('object_id', $requestObjectId);
+                if (empty($requestObjectId)) {
+                    $this->m_parent_article->setProperty('object_id', $requestObjectId);
                 }
             } catch (Exception $ex) {
                 $content .= "<p><strong><font color=\"red\">INTERNAL ERROR! " . $ex->getMessage()
