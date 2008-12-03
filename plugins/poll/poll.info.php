@@ -89,7 +89,7 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
         $g_ado_db->execute('DROP TABLE plugin_pollanswer_attachment');
         
         
-        system('rm -rf '.$g_documentRoot.DIR_SEP.PLUGINS_DIR.'/poll');    
+        system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'/poll');    
     }
     
     function plugin_poll_init(&$p_context)
@@ -99,10 +99,27 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
         $p_context->poll = new MetaPoll($poll_language_id, $poll_nr);
            
         // reset the context urlparameters
-        $p_context->default_url->reset_parameter("f_poll_nr");
-        $p_context->default_url->reset_parameter("f_poll_language_id");
-        $p_context->url->reset_parameter("f_poll_nr");
-        $p_context->url->reset_parameter("f_poll_language_id");
+        foreach (array(
+                        'f_poll',
+                        'f_poll_nr',
+                        'f_poll_language_id',
+                        'f_poll_ajax_request',
+            ) as $param) {
+                
+            $p_context->url->reset_parameter($param);
+            $p_context->default_url->reset_parameter($param); 
+        }
+    }
+    
+    function plugin_poll_addPermissions()
+    {
+        $Admin = new UserType(1);
+        $ChiefEditor = new UserType(2);
+        $Editor = new UserType(3);
+        
+        $Admin->setPermission('plugin_poll', true);
+        $ChiefEditor->setPermission('plugin_poll', true);
+        $Editor->setPermission('plugin_poll', true);
     }
 }
 ?>

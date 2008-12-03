@@ -42,11 +42,15 @@ function smarty_block_list_polls($p_params, $p_content, &$p_smarty, &$p_repeat)
     
     if (is_null($currentPoll)) {
 	    $p_repeat = false;
+	    $campContext->url->reset_parameter('f_poll_nr');
+	    $campContext->url->reset_parameter('f_poll_language_id');
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
         $campContext->poll = $currentPoll;
     	$p_repeat = true;
+    	$campContext->url->set_parameter('f_poll_nr', $currentPoll->number);
+    	$campContext->url->set_parameter('f_poll_language_id', $currentPoll->language_id);
     }
 
     if (isset($p_content)) {
