@@ -7,7 +7,7 @@
     <br>
 {{ /list_interviewitems }}
 
-{{ if !$campsite->prev_list_empty }}
+{{ if $campsite->prev_list_empty }}
     No Items
 {{ /if }}
 
