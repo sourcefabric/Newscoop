@@ -113,7 +113,7 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         $g_ado_db->execute('DROP TABLE plugin_interview_interviews');
         $g_ado_db->execute('DROP TABLE plugin_interview_items');
         
-        #system('rm -rf '.$g_documentRoot.DIR_SEP.PLUGINS_DIR.'/interview/');    
+        system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'interview');
     }
     
     function plugin_interview_init(&$p_context)
@@ -128,6 +128,18 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         } else {
             $p_context->interview = new MetaInterview($interview_id);
         }
+    }
+    
+    function plugin_interview_addPermissions()
+    {
+        $Admin = new UserType(1);
+        $ChiefEditor = new UserType(2);
+        $Editor = new UserType(3);
+        
+        $Admin->setPermission('plugin_blog_admin', true);
+        $Admin->setPermission('plugin_blog_moderator', true);
+        
+        $ChiefEditor->setPermission('plugin_blog_moderator', true);
     }
 }
 

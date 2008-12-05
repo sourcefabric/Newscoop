@@ -314,9 +314,7 @@ if ($InterviewsList->getLength()) {
 					<table cellpadding="0" cellspacing="0">
 					<tr>
 						<td width="18px">
-							<?php if (
-							
-							) { ?>
+							<?php if ($count) { ?>
 							<a href="javascript: 
                             uncheckAll(<?php p($count); ?>);
                             document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
