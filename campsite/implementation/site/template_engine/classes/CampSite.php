@@ -195,13 +195,13 @@ final class CampSite extends CampSystem
      */
     public function getTemplateName()
     {
-        $tplId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
-        if (!empty($tplId)) {
-            $template = CampSystem::GetTemplateNameById($tplId);
-        } else {
+//        $tplId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
+//        if (!empty($tplId)) {
+//            $template = CampSystem::GetTemplateNameById($tplId);
+//        } else {
             $uri = self::GetURIInstance();
             $template = $uri->getTemplate();
-        }
+//        }
 
         return $template;
     } // fn getTemplate

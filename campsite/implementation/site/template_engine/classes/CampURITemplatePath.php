@@ -477,10 +477,11 @@ class CampURITemplatePath extends CampURI
         }
 
         if (is_null($this->m_buildPath)) {
-            $template = CampSystem::GetTemplate($this->m_language->number,
-            $this->m_publication->identifier, $this->m_issue->number,
-            $this->m_section->number, $this->m_article->number);
+//            $template = CampSystem::GetTemplate($this->m_language->number,
+//            $this->m_publication->identifier, $this->m_issue->number,
+//            $this->m_section->number, $this->m_article->number);
 
+        	$template = $this->getTemplate();
             if (empty($template)) {
                 CampTemplate::singleton()->trigger_error('Invalid template in context');
                 return;
