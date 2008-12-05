@@ -206,6 +206,7 @@ class Blog extends DatabaseObject {
         }
         asort($ownerList);
         
+        $languageList = array('' => getGS("---Select language---"));
         foreach (Language::GetLanguages() as $Language) {
             $languageList[$Language->getLanguageId()] = $Language->getNativeName();   
         }
@@ -230,6 +231,7 @@ class Blog extends DatabaseObject {
                     'label'     => 'Language',
                     'default'   => $data['fk_language_id'],
                     'options'   => $languageList,
+                    'required'  => true
             ),   
             'title'     => array(
                 'element'   => 'Blog[title]',
@@ -241,6 +243,7 @@ class Blog extends DatabaseObject {
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
                 'text'      => '<script language="javascript" type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>'.
+                               '<script language="javascript" type="text/javascript" src="/javascript/tiny_mce/tiny_mce.js"></script>'.
                 '<script language="javascript" type="text/javascript">'.
                 '     tinyMCE.init({'.
                 '     	mode : "exact",'.
