@@ -142,10 +142,4 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         $ChiefEditor->setPermission('plugin_blog_moderator', true);
     }
 }
-
-// sets the PEAR local directory
-if (!defined('PLUGINS_INTERVIEW_INCLUDE_PATH')) {
-    define ('PLUGINS_INTERVIEW_INCLUDE_PATH', CS_PATH_PLUGINS.DIR_SEP.'interview'.DIR_SEP.'include'.DIR_SEP.'pear');
-    set_include_path(PLUGINS_INTERVIEW_INCLUDE_PATH.PATH_SEPARATOR.get_include_path());
-}
 ?>
