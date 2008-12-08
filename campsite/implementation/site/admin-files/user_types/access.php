@@ -168,6 +168,6 @@ foreach ($section_rights as $publication => $issues) {
 	<input type="submit" class="button" name="Save" value="<?php putGS('Save'); ?>">
 	</td>
 </tr>
-</table></p>
+</table>
 </form>
 <?php camp_html_copyright_notice(); ?>

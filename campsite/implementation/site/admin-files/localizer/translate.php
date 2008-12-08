@@ -327,12 +327,12 @@ function translationForm($p_request)
 	}
 	?>
 	<!-- Begin translated strings box -->
-	<table border="0" class="table_input" style="padding-left: 10px; padding-bottom: 10px; margin-left: 10px;" width="700px">
-	<form action="do_save.php" method="post">
+    <form action="do_save.php" method="post">
     <INPUT TYPE="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
     <INPUT TYPE="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
     <INPUT TYPE="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
     <INPUT TYPE="hidden" name="search_string" value="<?php echo $searchString; ?>">
+	<table border="0" class="table_input" style="padding-left: 10px; padding-bottom: 10px; margin-left: 10px;" width="700px">
 	<?PHP
 	$foundUntranslatedString = false;
 	$count = 0;

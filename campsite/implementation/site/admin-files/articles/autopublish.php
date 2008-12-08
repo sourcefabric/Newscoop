@@ -81,13 +81,6 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 <?php camp_html_display_msgs(); ?>
 
 <FORM NAME="autopublish" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" style="margin-top: 10px;">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php putGS("Schedule a new action"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php echo $f_publication_id; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php echo $f_issue_number; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php echo $f_section_number; ?>">
@@ -96,6 +89,13 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php echo $f_language_id; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php echo $f_language_selected; ?>">
 <INPUT type="hidden" name="f_backlink" value="<?php echo $BackLink; ?>">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" style="margin-top: 10px;">
+<TR>
+	<TD COLSPAN="2">
+		<B><?php putGS("Schedule a new action"); ?></B>
+		<HR NOSHADE SIZE="1" COLOR="BLACK">
+	</TD>
+</TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD>
@@ -177,7 +177,6 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 </TR>
 </TABLE>
 </FORM>
-</P>
 <?php } else { ?>
 	<BLOCKQUOTE>
 	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">

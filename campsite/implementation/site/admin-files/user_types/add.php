@@ -152,7 +152,6 @@ foreach ($section_rights as $publication => $issues) {
 	</td>
 </tr>
 </table>
-</p>
 </form>
 <script>
 document.user_type_add.Name.focus();

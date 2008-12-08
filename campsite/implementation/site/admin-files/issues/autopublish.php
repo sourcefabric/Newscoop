@@ -137,6 +137,5 @@ camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $public
 </TR>
 </TABLE>
 </FORM>
-</P>
 
 <?php camp_html_copyright_notice(); ?>

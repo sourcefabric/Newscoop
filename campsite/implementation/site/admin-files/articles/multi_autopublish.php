@@ -90,13 +90,6 @@ if (count($articles) > 0) {
 ?>
 <P>
 <FORM NAME="autopublish" METHOD="POST" ACTION="autopublish_do_add.php" >
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php  putGS("Schedule a new action"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php echo $f_publication_id; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php echo $f_issue_number; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php echo $f_section_number; ?>">
@@ -106,6 +99,13 @@ if (count($articles) > 0) {
 <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php echo $f_language_id; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php echo $f_language_selected; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_mode" VALUE="multi">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
+<TR>
+	<TD COLSPAN="2">
+		<B><?php  putGS("Schedule a new action"); ?></B>
+		<HR NOSHADE SIZE="1" COLOR="BLACK">
+	</TD>
+</TR>
 <TR>
 	<TD valign="top" align="right" style="padding-top: 12px;">
 		<?php putGS("Articles"); ?>:
@@ -197,7 +197,6 @@ if (count($articles) > 0) {
 </TR>
 </TABLE>
 </FORM>
-</P>
 <?php
 }
 

@@ -82,7 +82,6 @@ if (sizeof($allArticleTypes) == 0) {
 	</td>
 </tr>
 </table>
-</p>
 <?php
 } else {
 	include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");

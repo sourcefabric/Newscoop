@@ -2070,20 +2070,20 @@ class Article extends DatabaseObject {
             if ($matchAllTopics) {
                 foreach ($hasTopics as $topicId) {
                     $sqlQuery = Article::BuildTopicSelectClause(array($topicId), $typeAttributes);
-                    $whereCondition = "Articles.Number in (\n$sqlQuery        )";
+                    $whereCondition = "Articles.Number IN (\n$sqlQuery        )";
                     $selectClauseObj->addWhere($whereCondition);
                     $countClauseObj->addWhere($whereCondition);
                 }
             } else {
                 $sqlQuery = Article::BuildTopicSelectClause($hasTopics, $typeAttributes);
-                $whereCondition = "Articles.Number in (\n$sqlQuery        )";
+                $whereCondition = "Articles.Number IN (\n$sqlQuery        )";
                 $selectClauseObj->addWhere($whereCondition);
                 $countClauseObj->addWhere($whereCondition);
             }
         }
         if (count($hasNotTopics) > 0) {
             $sqlQuery = Article::BuildTopicSelectClause($hasNotTopics, $typeAttributes, true);
-            $whereCondition = "Articles.Number in (\n$sqlQuery        )";
+            $whereCondition = "Articles.Number IN (\n$sqlQuery        )";
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
         }
@@ -2231,15 +2231,15 @@ class Article extends DatabaseObject {
                                                    array $p_typeAttributes,
                                                    $p_negate = false)
     {
-        $notCondition = $p_negate ? ' not' : '';
-        $selectClause = '        select NrArticle from ArticleTopics where TopicId'
-                      . "$notCondition in (" . implode(', ', $p_TopicIds) . ")\n";
+        $notCondition = $p_negate ? ' NOT' : '';
+        $selectClause = '        SELECT NrArticle FROM ArticleTopics WHERE TopicId'
+                      . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
         foreach ($p_typeAttributes as $typeAttribute) {
-            $selectClause .= "        union\n"
-                          . "        select NrArticle from "
+            $selectClause .= "        UNION\n"
+                          . "        SELECT NrArticle FROM "
                           . $typeAttribute->getDbTableName()
-                          . " where " . $typeAttribute->getName()
-                          . "$notCondition in (" . implode(', ', $p_TopicIds) . ")\n";
+                          . " WHERE " . $typeAttribute->getName()
+                          . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
         }
         return $selectClause;
     }

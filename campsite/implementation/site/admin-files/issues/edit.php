@@ -362,7 +362,6 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 			</TD>
 		</TR>
 		</TABLE>
-        </P>
 		</FORM>
 	</td>
 </tr>

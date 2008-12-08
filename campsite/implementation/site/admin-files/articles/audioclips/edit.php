@@ -152,7 +152,6 @@ switch($f_action) {
     </td>
 </tr>
 </table>
-</p>
 
 </form>
 
