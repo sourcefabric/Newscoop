@@ -161,10 +161,11 @@ final class MetaArticleBodyField {
             $objectType = new ObjectType('article');
             $userId = CampTemplate::singleton()->context()->user->identifier;
             $requestObjectId = $this->m_parent_article->getProperty('object_id');
+            $updateArticle = empty($requestObjectId);
             try {
                 SessionRequest::Create(session_id(), $requestObjectId,
                                        $objectType->getObjectTypeId(), $userId);
-                if (empty($requestObjectId)) {
+                if ($updateArticle) {
                     $this->m_parent_article->setProperty('object_id', $requestObjectId);
                 }
             } catch (Exception $ex) {
