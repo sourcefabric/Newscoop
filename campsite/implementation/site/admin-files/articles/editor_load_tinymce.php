@@ -42,10 +42,13 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage)
 	  $plugins[] = 'searchreplace';
 	}
 	if ($p_user->hasPermission('EditorEnlarge')) {
-	    $plugins[] = "fullscreen";
+	    $plugins[] = 'fullscreen';
 	}
 	if ($p_user->hasPermission('EditorTable')) {
 	    $plugins[] = 'table';
+	}
+	if ($p_user->hasPermission('EditorLink')) {
+	    $plugins[] = 'campsiteinternallink';
 	}
 	$plugins_list = implode(",", $plugins);
 
@@ -100,7 +103,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage)
 	}
 	if ($p_user->hasPermission('EditorLink')) {
 	    $toolbar1[] = "|";
-	    //$toolbar1[] = "\"campsite-internal-link\"";
+	    $toolbar1[] = "campsiteinternallink";
 	    $toolbar1[] = "link";
 	}
 	if ($p_user->hasPermission('EditorSubhead')) {
