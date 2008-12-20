@@ -57,8 +57,16 @@ class SessionRequest {
         $request = new Request($p_sessionId, $p_objectId);
         if (!$request->exists()) {
             $request->create();
+            $request->setLastStatsUpdate();
         }
-        $request->incrementRequestCount();
+        if (!$request->isInStats('now')) {
+        	$requestStats = new RequestStats($p_objectId);
+        	if (!$requestStats->exists()) {
+        		$requestStats->create();
+        	}
+        	$requestStats->incrementRequestCount();
+            $request->setLastStatsUpdate();
+        }
     }
 }
 

@@ -209,7 +209,7 @@ class ArticleImage extends DatabaseObject {
 			camp_load_translation_strings("api");
 		}
 		$logtext = getGS('Image $1 linked to article $2', $p_imageId, $p_articleNumber);
-		Log::Message($logtext, null, 42);
+		Log::Message($logtext, null, 41);
 	} // fn AddImageToArticle
 
 

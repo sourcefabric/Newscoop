@@ -22,8 +22,7 @@ class RequestObject extends DatabaseObject {
 	var $m_dbTableName = 'RequestObjects';
 	var $m_columnNames = array('object_id',
 	                           'object_type_id',
-	                           'request_count',
-	                           'last_update_time');
+	                           'request_count');
 
 	public function __construct($p_objectId = null)
 	{
@@ -52,37 +51,25 @@ class RequestObject extends DatabaseObject {
     } // fn getObjectTypeId
 
 
-    /**
-     * @return integer
-     */
     public function getRequestCount()
     {
-        return $this->m_data['request_count'];
-    } // fn getRequestCount
-
-
-    /**
-     * @return integer
-     */
-    public function incrementRequestCount($p_count)
-    {
-        global $g_ado_db;
-        $sql = "UPDATE " . $this->m_dbTableName
-             . " SET request_count = LAST_INSERT_ID(request_count + 1)"
-             . " WHERE object_id = '" . $g_ado_db->Escape($this->m_data['object_id']) . "'";
-        $g_ado_db->Execute($sql);
-        $this->m_data['request_count'] = $g_ado_db->GetOne("SELECT LAST_INSERT_ID()");
-        return $this->m_data['request_count'];
+    	return $this->m_data['request_count'];
     }
 
 
-    /**
-	 * @return string
-	 */
-	public function getLastUpdateTime()
-	{
-		return $this->m_data['last_update_time'];
-	} // fn getLastUpdateTime
+    public function updateRequestCount()
+    {
+        global $g_ado_db;
+    	
+        if (!$this->exists()) {
+    		return false;
+    	}
+    	$objectRequestCount = RequestStats::GetObjectRequestCount($this->getObjectId());
+    	$sql = "UPDATE " . $this->m_dbTableName . " "
+    	     . "SET request_count = $objectRequestCount "
+    	     . "WHERE object_id = " . $this->getObjectId();
+    	return $g_ado_db->Execute($sql);
+    }
 } // class RequestObject
 
 ?>

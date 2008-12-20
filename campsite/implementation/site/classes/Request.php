@@ -22,8 +22,7 @@ class Request extends DatabaseObject {
 	var $m_dbTableName = 'Requests';
 	var $m_columnNames = array('session_id',
                                'object_id',
-	                           'request_count',
-	                           'last_request_time');
+	                           'last_stats_update');
 
 	public function __construct($p_sessionId = null, $p_objectId = null)
 	{
@@ -52,34 +51,29 @@ class Request extends DatabaseObject {
         return $this->m_data['object_id'];
     } // fn getObjectId
 
+    
 
-    /**
-     * @return integer
-     */
-    public function getRequestCount() {
-        return $this->m_data['request_count'];
+    public function setLastStatsUpdate($p_time = null)
+    {
+    	if (empty($p_time)) {
+    		$p_time = date('Y-m-d G:i:s');
+    	}
+    	return $this->setProperty('last_stats_update', $p_time);
     }
 
 
-    /**
-	 * @return string
-	 */
-	public function getLastRequestTime()
-	{
-		return $this->m_data['last_request_time'];
-	} // fn getLastRequestTime
+    public function getLastStatsUpdate()
+    {
+    	return $this->m_data['last_stats_update'];
+    }
 
 
-	public function incrementRequestCount() {
-        global $g_ado_db;
-        $sql = "UPDATE " . $this->m_dbTableName
-             . " SET request_count = LAST_INSERT_ID(request_count + 1)"
-             . " WHERE session_id = '" . $g_ado_db->Escape($this->m_data['session_id']) . "'"
-             . " AND object_id = '" . $g_ado_db->Escape($this->m_data['object_id']) . "'";
-        $g_ado_db->Execute($sql);
-        $this->m_data['request_count'] = $g_ado_db->GetOne("SELECT LAST_INSERT_ID()");
-        return $this->m_data['request_count'];
-	}
+    public function isInStats()
+    {
+    	$currentTime = date('Y-m-d G');
+    	$lastUpdateTime = date('Y-m-d G', strtotime($this->getLastStatsUpdate()));
+    	return $currentTime == $lastUpdateTime;
+    }
 } // class Request
 
 ?>
