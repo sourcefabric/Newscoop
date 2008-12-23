@@ -99,11 +99,10 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
         $p_context->poll = new MetaPoll($poll_language_id, $poll_nr);
            
         // reset the context urlparameters
-        foreach (array(
-                        'f_poll',
+        foreach (array( 'f_poll',
                         'f_poll_nr',
                         'f_poll_language_id',
-                        'f_poll_ajax_request',
+                        'f_poll_ajax_request'
             ) as $param) {
                 
             $p_context->url->reset_parameter($param);

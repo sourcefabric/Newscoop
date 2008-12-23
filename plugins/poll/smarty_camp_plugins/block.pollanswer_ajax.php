@@ -6,11 +6,11 @@
 
 
 /**
- * Campsite poll_form block plugin
+ * Campsite pollanswer_ajax block plugin
  *
  * Type:     block
- * Name:     poll_form
- * Purpose:  Provides a form for an poll
+ * Name:     pollanswer_ajax
+ * Purpose:  Provides ajax code for an poll answer
  *
  * @param string
  *     $p_params
@@ -46,7 +46,11 @@ function smarty_block_pollanswer_ajax($p_params, $p_content, &$p_smarty, &$p_rep
     $_SESSION['camp_poll_maxvote'][$poll_nr][$language_id][$answer_nr][$value] = true; 
     
     if (isset($p_content)) {
-    	$html .= "<span onClick=\"$('{$id}').checked=true; poll_{$campsite->poll->identifier}_vote()\" style=\"cursor: pointer\" >\n";
+        
+        if ($campsite->poll->is_votable) {
+    	   $html .= "<span onClick=\"$('{$id}').checked=true; poll_{$campsite->poll->identifier}_vote()\" style=\"cursor: pointer\" >\n";
+        }
+        
         $html .= "<input type=\"radio\" id=\"{$id}\" name=\"f_pollanswer_{$answer_nr}\" value=\"{$value}\" style=\"display: none\" />\n"; 
         $html .= $p_content;        
         $html .= "</span>\n";

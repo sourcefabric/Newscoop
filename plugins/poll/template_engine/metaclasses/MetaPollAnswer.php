@@ -16,6 +16,8 @@ final class MetaPollAnswer extends MetaDbObject {
 		$this->m_properties['votes'] = 'nr_of_votes';
 		$this->m_properties['percentage'] = 'percentage';
 		$this->m_properties['percentage_overall'] = 'percentage_overall';
+		$this->m_properties['value'] = 'value';
+		$this->m_properties['average_value'] = 'average_value';
 		$this->m_properties['last_modified'] = 'last_modified';
 	}
 

@@ -15,7 +15,7 @@
     
         <h3>Poll Details</h3>
         
-        {{ include file='poll/poll-form.tpl' included=true}}
+        {{ include file='poll/poll-form-ajax.tpl' included=true}}
         
         <br>
         <a href="{{ uri options="template section-polls.tpl" }}">All Polls</a>

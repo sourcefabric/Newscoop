@@ -1,7 +1,5 @@
 {{ if $included }}
 
-<script language="javascript" src="/javascript/prototype/prototype.js"></script>
-
 <style>
  .poll_bar {
     border:1px solid #000; 
@@ -35,7 +33,7 @@ function stop()
 {{ /if }}
 
 
-{{ poll_form template='poll/poll-form.tpl' submit_button=false ajax=true }} 
+{{ poll_form template='poll/poll-form-ajax.tpl' submit_button=false ajax=true }} 
        
        
     {{ $campsite->poll->title }}<br>
@@ -74,13 +72,15 @@ function stop()
         {{ /list_pollanswer_attachments }}
         
 		<div style="clear: both"></div>
+		
+		{{ if $campsite->poll->is_votable }}
 		Give a note: 
-        {{ section name=foo start=1 loop=6 }}
-            {{ pollanswer_ajax value=$smarty.section.foo.index }}{{ $smarty.section.foo.index }}{{ /pollanswer_ajax }}
-        {{ /section }}
-
-        <br>
-        
+            {{ section name=foo start=1 loop=6 }}
+                {{ pollanswer_ajax value=$smarty.section.foo.index }}{{ $smarty.section.foo.index }}{{ /pollanswer_ajax }}
+            {{ /section }}
+            <br>
+        {{ /if }}
+            
         {{ $campsite->pollanswer->votes }} votes |
         &#216;{{ $campsite->pollanswer->average_value|string_format:"%.1f" }} |
         sum: {{ $campsite->pollanswer->value }}
@@ -88,6 +88,10 @@ function stop()
         <div style="clear: both; height: 10px"></div>
 
     {{ /list_poll_answers }}
+    
+    {{ if !$campsite->poll->is_votable }}
+        This poll has expired.
+    {{ /if }}
            
 {{ /poll_form }}
  

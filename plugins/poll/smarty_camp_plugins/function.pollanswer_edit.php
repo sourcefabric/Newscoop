@@ -34,8 +34,12 @@ function smarty_function_pollanswer_edit($p_params, &$p_smarty)
     if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
         $p_params['html_code'] = '';
     }
-
-    $html .= "<input type=\"radio\" name=\"f_pollanswer_nr\" value=\"{$campsite->pollanswer->number}\" {$p_params['html_code']} />";  
+    
+    if (!isset($p_params['value']) || empty($p_params['value'])) {
+        $p_params['value'] = 1;
+    }
+    
+    $html .= "<input type=\"radio\" name=\"f_pollanswer_{$campsite->pollanswer->number}\" value=\"{$p_params['value']}\" {$p_params['html_code']} />";  
 
     return $html;
 } // fn smarty_function_pollanswer_edit

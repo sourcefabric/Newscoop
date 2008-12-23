@@ -3,11 +3,11 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 
 
-define('ACTION_POLL_ERR_NO_POLL_NUMBER', 'ACTION_POLL_ERR_NO_POLL_NUMBER');
-define('ACTION_POLL_ERR_NO_LANGUAGE_ID', 'ACTION_POLL_ERR_NO_LANGUAGE_ID');
-define('ACTION_POLL_ERR_NOT_EXISTS', 'ACTION_POLL_ERR_NOT_EXISTS');
-define('ACTION_POLL_ERR_NOT_VOTABLE', 'ACTION_POLL_ERR_NOT_VOTABLE');
-define('ACTION_POLL_ERR_INVALID_VALUE', 'ACTION_POLL_ERR_INVALID_VALUE');
+define('ACTION_POLL_ERR_NO_POLL_NUMBER',    'ACTION_POLL_ERR_NO_POLL_NUMBER');
+define('ACTION_POLL_ERR_NO_LANGUAGE_ID',    'ACTION_POLL_ERR_NO_LANGUAGE_ID');
+define('ACTION_POLL_ERR_NOT_EXISTS',        'ACTION_POLL_ERR_NOT_EXISTS');
+define('ACTION_POLL_ERR_NOT_VOTABLE',       'ACTION_POLL_ERR_NOT_VOTABLE');
+define('ACTION_POLL_ERR_INVALID_VALUE',     'ACTION_POLL_ERR_INVALID_VALUE');
 
 class MetaActionPoll extends MetaAction
 {
@@ -26,13 +26,13 @@ class MetaActionPoll extends MetaAction
         
         if (!isset($p_input['f_poll_nr']) || empty($p_input['f_poll_nr'])) {
             $this->m_error = new PEAR_Error('The poll number is missing.', ACTION_POLL_ERR_NO_POLL_NUMBER);
-            return;
+            return false;
         }
         $this->m_properties['poll_nr'] = $p_input['f_poll_nr'];
         
         if (!isset($p_input['f_poll_language_id']) || empty($p_input['f_poll_language_id'])) {
             $this->m_error = new PEAR_Error('The poll language is missing.', ACTION_POLL_ERR_NO_LANGUAGE_ID);
-            return;
+            return false;
         }
         $this->m_properties['poll_language_id'] = $p_input['f_poll_language_id'];
         
@@ -40,12 +40,12 @@ class MetaActionPoll extends MetaAction
         
         if (!$Poll->exists()) {
             $this->m_error = new PEAR_Error('Poll does not exists.', ACTION_POLL_ERR_NOT_EXISTS);
-            return;
+            return false;
         }
         
         if (!$Poll->isVotable()) {
             $this->m_error = new PEAR_Error('Poll is not votable.', ACTION_POLL_ERR_NOT_VOTABLE);
-            return;  
+            return false;  
         } else {
             $allowed_values = $_SESSION['camp_poll_maxvote'][$this->m_properties['poll_nr']][$this->m_properties['poll_language_id']];
             
@@ -57,11 +57,16 @@ class MetaActionPoll extends MetaAction
                     // check if value is valid
                     if (!array_key_exists($p_input['f_pollanswer_'.$nr], $allowed_values[$nr])) {
                         $this->m_error = new PEAR_Error('Invalid poll voting value.', ACTION_POLL_ERR_INVALID_VALUE);
-                        return;   
+                        return false;   
                     }
                     $this->m_properties['pollanswer_nr'] = $nr;
                     $this->m_properties['value'] = $p_input['f_pollanswer_'.$nr];
+                    break;
                 }
+            }
+            if (!$this->m_properties['value']) {
+                $this->m_error = new PEAR_Error('No answer value was given.', ACTION_POLL_ERR_NOANSWER_VALUE);
+                return false;
             }
         }
         
@@ -87,25 +92,14 @@ class MetaActionPoll extends MetaAction
                                      $this->m_properties['pollanswer_nr']);
         $PollAnswer->vote($this->m_properties['value']);
         
-        // reset the context
-        #$p_context->default_url->reset_parameter('f_poll_nr');
-        #$p_context->url->reset_parameter('f_poll_nr');
-        #$p_context->default_url->reset_parameter('f_poll_language_id');
-        #$p_context->url->reset_parameter('f_poll_language_id');
-                
+        // reset the f_pollanswer_$nr context vars             
         foreach ($this->m_poll->getAnswers() as $PollAnswer) {
             $nr = $PollAnswer->getNumber();
             $p_context->default_url->reset_parameter('f_pollanswer_'.$nr);
             $p_context->url->reset_parameter('f_pollanswer_'.$nr);
         }
 
-        if ($this->m_error != ACTION_OK) {
-            return false;
-        }
-
-        // do not init poll, because CampPlugin is called later!
-        //$p_context->poll = new MetaPoll($this->m_poll->getLanguageId(), $this->m_poll->getNumber());
-        
+        $this->m_error = ACTION_OK;       
         return true;
     }
 }
