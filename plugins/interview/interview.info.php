@@ -88,7 +88,7 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_interview_admin', 'has_implied' => 1));
         
         require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
-        $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
+        $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
         
         $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'interview/install/sql/plugin_interview.sql', $error_queries);
         

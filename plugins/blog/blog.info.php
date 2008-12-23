@@ -80,7 +80,7 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_blog_moderator', 'has_implied' => 1)); 
         
         require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
-        $GLOBALS['g_db'] =& $GLOBALS['g_ado_db'];
+        $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
         
         $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'blog'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'plugin_blog.sql', $error_queries);
         
