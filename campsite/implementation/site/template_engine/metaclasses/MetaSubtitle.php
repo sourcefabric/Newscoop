@@ -173,6 +173,10 @@ final class MetaSubtitle {
      * @return string
      */
     private static function ProcessContent($p_content) {
+    	$content = trim($p_content);
+    	if (empty($content)) {
+    		return $p_content;
+    	}
         // process internal links
         $linkPattern = '<!\*\*[\s]*Link[\s]+Internal[\s]+(([\d\w]+[=][\d\w]+&?)*)([\s]+TARGET[\s]+([^>\s]*))*[\s]*>';
         $content = preg_replace_callback("|$linkPattern|i",
