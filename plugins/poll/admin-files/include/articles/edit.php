@@ -1,6 +1,7 @@
-<?php global $articleObj, $f_article_number; ?>
+<?php global $articleObj, $f_article_number, $f_edit_; ?>
 
-<TABLE width="100%" style="border: 1px solid #EEEEEE;">
+<tr><td>
+  <TABLE width="100%" style="border: 1px solid #EEEEEE;">
     <TR>
     	<TD>
     		<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
@@ -26,4 +27,5 @@
         	<TD align="left" valign="top"><?php p($poll->getName().' ('.$poll->getLanguageName().')') ?></TD>
         </TR>
     <?php } ?>
-</TABLE>
+  </TABLE>
+</td></tr>
