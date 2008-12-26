@@ -38,7 +38,7 @@ if (!$file_exists) {
 	$ok = touch ($newTempl);
 	Template::UpdateStatus();
 	$logtext = getGS('New template $1 created',$f_path."/".$f_name);
-	Log::Message($logtext, $g_user->getUserName(), 114);
+	Log::Message($logtext, $g_user->getUserId(), 114);
 	camp_html_add_msg($logtext, "ok");
 	camp_html_goto_page("/$ADMIN/templates/edit_template.php?f_path=$f_path&f_name=$f_name");
 } else {

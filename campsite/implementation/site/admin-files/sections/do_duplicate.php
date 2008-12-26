@@ -66,7 +66,7 @@ if ($correct) {
     $logtext = getGS('Section $1 has been duplicated to $2. $3 of $4',
                      $dstSectionObj->getName(), $f_dest_issue_number, $dstIssueObj->getName(),
                      $dstPublicationObj->getName());
-    Log::Message($logtext, $g_user->getUserName(), 154);
+    Log::Message($logtext, $g_user->getUserId(), 154);
 	camp_html_goto_page("/$ADMIN/sections/duplicate_complete.php?"
 		   ."f_src_publication_id=$f_src_publication_id"
 		   ."&f_src_issue_number=$f_src_issue_number"

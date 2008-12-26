@@ -38,7 +38,7 @@ if (file_exists($filename)) {
 
 if ($result !== false) {
 	$logtext = getGS('Template $1 was changed', $Path."/".$Name);
-	Log::Message($logtext, $g_user->getUserName(), 113);
+	Log::Message($logtext, $g_user->getUserId(), 113);
 	camp_html_add_msg(getGS("The template '$1' was saved successfully.", $Name), "ok");
 }
 camp_html_goto_page("/$ADMIN/templates/edit_template.php?"

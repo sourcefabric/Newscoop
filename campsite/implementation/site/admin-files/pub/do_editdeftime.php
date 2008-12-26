@@ -27,6 +27,6 @@ $defaultTime->setTrialTime($cTrialTime);
 $defaultTime->setPaidTime($cPaidTime);
 camp_html_add_msg(getGS("Country subscription settings updated."), "ok");
 $logtext = getGS('Default subscription time for $1 changed', $publicationObj->getName().':'.$CountryCode);
-Log::Message($logtext, $g_user->getUserName(), 6);
+Log::Message($logtext, $g_user->getUserId(), 6);
 camp_html_goto_page("/$ADMIN/pub/deftime.php?Pub=$Pub&Language=$Language");
 ?>

@@ -57,7 +57,7 @@ if (!is_null($issueCopies)) {
 	camp_html_add_msg(getGS("Issue created."), "ok");
 	$logtext = getGS('New issue $1 from $2 in publication $3', $f_issue_number,
 					 $lastIssue->getIssueNumber(), $publicationObj->getName());
-	Log::Message($logtext, $g_user->getUserName(), 11);
+	Log::Message($logtext, $g_user->getUserId(), 11);
 	camp_html_goto_page("/$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=".$issueCopy->getIssueNumber()
 		   ."&Language=".$issueCopy->getLanguageId());
 } else {

@@ -80,7 +80,7 @@ if ($LiveUserAdmin->updateUser($liveUserValues, $editUser->getPermUserId()) === 
 }
 
 $logtext = getGS('User account information changed for $1', $editUser->getUserName());
-Log::Message($logtext, $g_user->getUserName(), 56);
+Log::Message($logtext, $g_user->getUserId(), 56);
 
 // sync base data to the corresponding phorum user
 $isPhorumUser = Phorum_user::GetByUserName($editUser->getUserName());
@@ -104,7 +104,7 @@ if ($editUser->isAdmin() && $customizeRights && $canManage) {
 	$editUser->updatePermissions($permissions);
 
 	$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
-	Log::Message($logtext, $g_user->getUserName(), 55);
+	Log::Message($logtext, $g_user->getUserId(), 55);
 }
 if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 	// save user rights based on existing user type
