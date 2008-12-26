@@ -51,7 +51,6 @@ class Request extends DatabaseObject {
         return $this->m_data['object_id'];
     } // fn getObjectId
 
-    
 
     public function setLastStatsUpdate($p_time = null)
     {
