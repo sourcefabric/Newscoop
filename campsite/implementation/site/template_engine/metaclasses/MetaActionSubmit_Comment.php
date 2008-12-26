@@ -265,7 +265,7 @@ class MetaActionSubmit_Comment extends MetaAction
         } else {
             return null;
         }
-    } // fn camp_comment_first_post
+    } // method CreateFirstComment
 }
 
 ?>

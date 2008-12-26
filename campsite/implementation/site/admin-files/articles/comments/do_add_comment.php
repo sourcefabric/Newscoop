@@ -7,7 +7,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/comment_lib.php");
 
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -88,4 +87,74 @@ $isFirstMessage = ($threadId == 0);
 ArticleComment::Link($f_article_number, $f_language_id, $commentObj->getMessageId(), $isFirstMessage);
 
 camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
+
+
+/**
+ * Create the first message for an article, which is a blank message
+ * with the title of the article as the subject.
+ *
+ * @param Article $p_article
+ * @param int $p_forumId
+ * @return mixed
+ *      The comment created (or the one that already exists) on success,
+ *      or false on error.
+ */
+function camp_comment_first_post($p_article, $p_forumId)
+{
+    // Check if the first post already exists.
+    $articleNumber = $p_article->getArticleNumber();
+    $languageId = $p_article->getLanguageId();
+    $firstPostId = ArticleComment::GetCommentThreadId($articleNumber, $languageId);
+    if ($firstPostId) {
+        $firstPost = new Phorum_message($firstPostId);
+        if ($firstPost->exists()) {
+            return $firstPost;
+        }
+        // Unlink the message from the current article.
+        ArticleComment::Unlink($articleNumber, $languageId, $firstPostId);
+    }
+
+    // Get article creator
+    $user = new User($p_article->getCreatorId());
+    if ($user->exists()) {
+        $userId = $user->getUserId();
+        $userEmail = $user->getEmail();
+        $userPasswd = $user->getPassword();
+        $userName = $user->getUserName();
+        $userRealName = $user->getRealName();
+
+        // Create phorum user if necessary
+        $phorumUser = Phorum_user::GetByUserName($userName);
+        if (!is_object($phorumUser)) {
+            $phorumUser = new Phorum_user();
+        }
+        if (!$phorumUser->CampUserExists($userId)
+            && !$phorumUser->create($userName, $userPasswd, $userEmail, $userId)) {
+            return false;
+        }
+    } else {
+        $userId = null;
+        $userEmail = '';
+        $userRealName = '';
+    }
+
+    // Create the comment.
+    $title = $p_article->getTitle();
+    $commentObj = new Phorum_message();
+    if ($commentObj->create($p_forumId,
+                               $title,
+                               '',
+                               0,
+                               0,
+                               $userRealName,
+                               $userEmail,
+                               is_null($userId) ? 0 : $userId)) {
+        // Link the message to the current article.
+        ArticleComment::Link($articleNumber, $languageId, $commentObj->getMessageId(), true);
+        return $commentObj;
+    } else {
+        return false;
+    }
+} // fn camp_comment_first_post
+
 ?>
