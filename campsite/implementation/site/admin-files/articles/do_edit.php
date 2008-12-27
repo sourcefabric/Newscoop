@@ -304,6 +304,9 @@ foreach ($articleFields as $dbColumnName => $text) {
 	$articleTypeObj->setProperty($dbColumnName, $text);
 }
 
+$logtext = getGS('Article content edited for "$1" (Publication: $2, Issue: $3, Section: $4, Language: $5)', $articleObj->getTitle(), $articleObj->getPublicationId(), $articleObj->getIssueNumber(), $articleObj->getSectionNumber(), $articleObj->getLanguageId());
+Log::Message($logtext, $g_user->getUserId(), 37);
+
 if ($f_save_button == "save") {
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 } elseif ($f_save_button == "save_and_close") {

@@ -117,4 +117,5 @@ regGS("Insert Internal Link", "Inserează link intern");
 regGS("No such article.", "Articolul nu există");
 regGS("No such section.", "Secţiunea nu există.");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");
 ?>

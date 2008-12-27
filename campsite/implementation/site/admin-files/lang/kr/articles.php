@@ -116,4 +116,5 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("Insert Internal Link", "내부링크 삽입");
 regGS("No such article.", "그런 기사 없슴");
 regGS("No such section.", "그런 섹션 없슴.");
+regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");
 ?>

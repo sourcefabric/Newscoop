@@ -128,4 +128,5 @@ regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?
 regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць тэму \\'$1\\' з артыкула?");
 regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць файл \\'$1\\' з артыкула?");
 regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдаліць графічны файл \\'$1\\' з артыкула? ");
+regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");
 ?>

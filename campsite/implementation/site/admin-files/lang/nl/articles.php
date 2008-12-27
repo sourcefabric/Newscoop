@@ -121,4 +121,5 @@ regGS("duplicate", "dupliceren");
 regGS("Move", "Verplaats");
 regGS("All", "Alle");
 regGS("Are you sure you want to unlock it?", "Weet je zeker dat je de beveiliging wilt opheffen?");
+regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");
 ?>

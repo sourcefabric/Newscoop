@@ -119,4 +119,5 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("Insert Internal Link", "Internen Link hinzugügen");
 regGS("No such article.", "Artikel nicht vorhanden");
 regGS("No such section.", "Rubrik nicht vorhanden");
+regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");
 ?>
