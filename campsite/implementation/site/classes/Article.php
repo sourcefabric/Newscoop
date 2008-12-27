@@ -2035,11 +2035,22 @@ class Article extends DatabaseObject {
             if (array_key_exists($leftOperand, Article::$s_regularParameters)) {
                 // regular article field, having a direct correspondent in the
                 // Article table fields
-                $whereCondition = Article::$s_regularParameters[$leftOperand] . ' '
-                    . $comparisonOperation['symbol'] . " '"
-                    . $comparisonOperation['right'] . "' ";
-                $selectClauseObj->addWhere($whereCondition);
-                $countClauseObj->addWhere($whereCondition);
+                $whereCondition = Article::$s_regularParameters[$leftOperand]
+                    . ' ' . $comparisonOperation['symbol']
+                    . " '" . $comparisonOperation['right'] . "' ";
+                if ($leftOperand == 'reads'
+                && strstr($comparisonOperation['symbol'], '=')
+                && $comparisonOperation['right'] == 0) {
+                	$selectClauseObj->addConditionalWhere($whereCondition);
+                	$countClauseObj->addConditionalWhere($whereCondition);
+                	$isNullCond = Article::$s_regularParameters[$leftOperand]
+                	            . ' IS NULL';
+                    $selectClauseObj->addConditionalWhere($isNullCond);
+                    $countClauseObj->addConditionalWhere($isNullCond);
+                } else {
+                    $selectClauseObj->addWhere($whereCondition);
+                    $countClauseObj->addWhere($whereCondition);
+                }
             } elseif ($leftOperand == 'matchalltopics') {
                 // set the matchAllTopics flag
                 $matchAllTopics = true;
