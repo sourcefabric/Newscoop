@@ -2113,9 +2113,21 @@ class Article extends DatabaseObject {
         }
         if (count($otherTables) > 0) {
             foreach ($otherTables as $table=>$fields) {
-                $tableJoin = "LEFT JOIN `" . $g_ado_db->Escape($table) . "` ON ";
+            	if (isset($fields['__TABLE_ALIAS'])) {
+            		$tableAlias = $fields['__TABLE_ALIAS'];
+            		$tableJoin = "\n    LEFT JOIN $table AS $tableAlias ON \n";
+            	} else {
+            		$tableAlias = $table;
+                    $tableJoin = "\n    LEFT JOIN $tableAlias ON \n";
+            	}
+                $firstCondition = true;
                 foreach ($fields as $parent=>$child) {
-                    $tableJoin .= "`$articleTable`.`$parent` = `$table`.`$child`";
+                	if ($parent == '__TABLE_ALIAS') {
+                		continue;
+                	}
+                	$condOperator = $firstCondition ? '' : 'AND ';
+                    $tableJoin .= "        $condOperator`$articleTable`.`$parent` = `$tableAlias`.`$child`\n";
+                    $firstCondition = false;
                 }
                 $selectClauseObj->addJoin($tableJoin);
                 $countClauseObj->addJoin($tableJoin);
@@ -2396,9 +2408,17 @@ class Article extends DatabaseObject {
                     $dbField = 'Articles.ArticleOrder';
                     break;
                 case 'bypopularity':
-                    $dbField = '`RequestObjects`.`request_count`';
+                    $dbField = 'RequestObjects.request_count';
                     $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
                     break;
+                case 'bycomments':
+                	$dbField = 'comments_counter.comments_count';
+                	$joinTable = "(SELECT COUNT(*) AS comments_count, fk_article_number, fk_language_id \n"
+                	           . "    FROM ArticleComments \n"
+                	           . '    GROUP BY fk_article_number, fk_language_id)';
+                	$p_otherTables[$joinTable] = array('__TABLE_ALIAS'=>'comments_counter',
+                	                                   'Number'=>'fk_article_number',
+                	                                   'IdLanguage'=>'fk_language_id');
             }
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';

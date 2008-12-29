@@ -42,7 +42,8 @@ class ArticlesList extends ListObject
                                           'byissue',
                                           'bysection',
                                           'bylanguage',
-                                          'bysectionorder'
+                                          'bysectionorder',
+                                          'bycomments'
                                     );
 
 
