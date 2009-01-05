@@ -41,14 +41,66 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>{#campsiteinternallink_dlg.title}</title>
-	<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
-	<script type="text/javascript" src="../../utils/mctabs.js"></script>
-	<script type="text/javascript" src="../../utils/form_utils.js"></script>
-	<script type="text/javascript" src="../../utils/validate.js"></script>
-	<script type="text/javascript" src="js/campsiteinternallink.js"></script>
-	<link href="css/campsiteinternallink.css" rel="stylesheet" type="text/css" />
-	<base target="_self" />
+  <title>{#campsiteinternallink_dlg.title}</title>
+
+  <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+  <script type="text/javascript" src="../../utils/mctabs.js"></script>
+  <script type="text/javascript" src="../../utils/form_utils.js"></script>
+  <script type="text/javascript" src="../../utils/validate.js"></script>
+  <script type="text/javascript" src="js/campsiteinternallink.js"></script>
+  <link href="css/campsiteinternallink.css" rel="stylesheet" type="text/css" />
+  <base target="_self" />
+
+  <script>
+    function onOK() {
+      languageId = document.getElementById("IdLanguage").value;
+      publicationElement = document.getElementById("IdPublication");
+      publicationId = publicationElement ? publicationElement.value : 0;
+      issueElement = document.getElementById("NrIssue");
+      issueId = issueElement ? issueElement.value : 0;
+      sectionElement = document.getElementById("NrSection");
+      sectionId = sectionElement ? sectionElement.value : 0;
+      articleElement = document.getElementById("NrArticle");
+      articleId = articleElement? articleElement.value : 0;
+      targetElement = document.getElementById("f_target");
+      target = targetElement ? targetElement.value : '';
+
+      // User must at least specify language and publication.
+      if ((languageId <= 0) || (publicationId <= 0)) {
+        alert("You must specify the language and the publication.");
+          return false;
+        }
+
+      // Pass data back to the calling window.
+      var param = new Object();
+      param["f_href"] = "campsite_internal_link?IdPublication="+publicationId
+                          +"&IdLanguage="+languageId;
+      if (issueId > 0) {
+        param["f_href"] += "&NrIssue=" + issueId;
+      }
+      if (sectionId > 0) {
+        param["f_href"] += "&NrSection=" + sectionId;
+      }
+      if (articleId > 0) {
+        param["f_href"] += "&NrArticle=" + articleId;
+      }
+      if (target != '') {
+        if (target == "_other") {
+          param["f_target"] = document.getElementById("f_other_target").value;
+        }
+        else {
+          param["f_target"] = target;
+        }
+      }
+      else {
+        param["f_target"] = "";
+      }
+      param["f_title"] = "";
+
+      alert(param["f_href"]);
+    }
+  </script>
+
 </head>
 <body id="campsiteinternallink" style="display: none">
     <form onsubmit="insertAction();return false;" action="#">
@@ -65,7 +117,7 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
 
 					<table border="0" cellpadding="4" cellspacing="0">
 						<tr>
-						  <td nowrap="nowrap"><label id="hreflabel" for="href">{#campsiteinternallink_dlg.url}</label></td>
+						  <td nowrap="nowrap"><label id="hreflabel" for="href">{#campsiteinternallink_dlg.language}</label></td>
 						  <td><table border="0" cellspacing="0" cellpadding="0">
 								<tr>
 								  <td>
@@ -83,9 +135,9 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
 								</tr>
 							  </table></td>
 						</tr>
-						<tr id="linklisthrefrow">
-							<td class="column1"><label for="linklisthref">{#campsiteinternallink_dlg.list}</label></td>
-							<td colspan="2" id="linklisthrefcontainer">
+						<tr id="pickpublicationfrom">
+							<td class="column1"><label for="pickpublication">{#campsiteinternallink_dlg.publication}</label></td>
+							<td colspan="2" id="pickpublicationcontainer">
 								<select name="IdPublication" id="IdPublication" onchange="this.form.submit();" <?php if ($languageId == 0){ ?>disabled<?php } ?>>
 								<option value="0">?</option>
 								<?php
@@ -98,8 +150,8 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
 							</td>
 						</tr>
 						<tr>
-							<td class="column1"><label for="anchorlist">{#campsiteinternallink_dlg.anchor_names}</label></td>
-							<td colspan="2" id="anchorlistcontainer">
+							<td class="column1"><label for="pickissue">{#campsiteinternallink_dlg.issue}</label></td>
+							<td colspan="2" id="pickissuecontainer">
 								<select name="NrIssue" id="NrIssue" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0)) { ?>disabled<?php } ?>>
 									<option value="0">?</option>
 									<?php
@@ -114,8 +166,8 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
 							</td>
 						</tr>
 						<tr>
-							<td><label id="targetlistlabel" for="targetlist">{#campsiteinternallink_dlg.target}</label></td>
-							<td id="targetlistcontainer">
+							<td><label id="picksectionfrom" for="picksection">{#campsiteinternallink_dlg.section}</label></td>
+							<td id="picksectioncontainer">
 								<select name="NrSection" id="NrSection" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0) || ($issueId == 0)) { ?>disabled<?php } ?>>
 									<option value="0">?</option>
 									<?php
@@ -130,8 +182,8 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
 							</td>
 						</tr>
 						<tr>
-							<td nowrap="nowrap"><label id="titlelabel" for="title">{#campsiteinternallink_dlg.titlefield}</label></td>
-							<td>
+							<td nowrap="nowrap"><label id="pickarticlefrom" for="article">{#campsiteinternallink_dlg.article}</label></td>
+							<td id="pickarticlecontainer">
 								<select name="NrArticle" id="NrArticle" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0) || ($issueId == 0) || ($sectionId == 0)) { ?>disabled<?php } ?>>
 									<option value="0">?</option>
 									<?php
@@ -145,6 +197,13 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
 								</select>
 							</td>
 						</tr>
+
+                                                <tr>
+							<td class="column1"><label id="targetlistlabel" for="targetlist">{#campsiteinternallink_dlg.target}</label></td>
+                                                        <td id="targetlistcontainer">&nbsp;</td>
+                                                </tr>
+
+
 					</table>
 				</fieldset>
 			</div>
