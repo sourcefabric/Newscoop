@@ -556,4 +556,45 @@ function htmlspecialchars_array($p_input, $p_decode_keys=false)
         return html_entity_decode($p_input);
     }
 }
+
+/**
+ * Set Lock Info and Row Class strings
+ * for the usage in Article list tables.
+ *
+ * @param object $p_articleObj
+ * @param string $p_lockInfo
+ * @param string $p_rowClass
+ * @param boolean $p_color
+ */
+function camp_set_article_row_decoration(&$p_articleObj, &$p_lockInfo, &$p_rowClass, &$p_color) {
+    global $g_user;
+    $p_lockInfo = '';
+    
+    $timeDiff = camp_time_diff_str($p_articleObj->getLockTime());
+    if ($p_articleObj->isLocked() && ($timeDiff['days'] <= 0)) {
+        $lockUserObj = new User($p_articleObj->getLockedByUser());
+        if ($timeDiff['hours'] > 0) {
+            $p_lockInfo = getGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
+            htmlspecialchars($lockUserObj->getRealName()),
+            htmlspecialchars($lockUserObj->getUserName()),
+            $timeDiff['hours'], $timeDiff['minutes']);
+        } else {
+            $p_lockInfo = getGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
+            htmlspecialchars($lockUserObj->getRealName()),
+            htmlspecialchars($lockUserObj->getUserName()),
+            $timeDiff['minutes']);
+        }
+    }
+        
+    if ($p_articleObj->isLocked() && ($timeDiff['days'] <= 0) && $p_articleObj->getLockedByUser() != $g_user->getUserId()) {
+        $p_rowClass = "article_locked";
+    } else {
+        if ($p_color) {
+            $p_rowClass = "list_row_even";
+        } else {
+            $p_rowClass = "list_row_odd";
+        }
+    }
+    $p_color = !$p_color;
+}
 ?>

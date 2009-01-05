@@ -172,9 +172,13 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 									$tmpArticle->getIssueNumber(),
 									$tmpArticle->getLanguageId(),
 									$tmpArticle->getSectionNumber());
-			 ?>
-		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+			camp_set_article_row_decoration($tmpArticle, $lockInfo, $rowClass, $color);
+		    ?>
+		<TR class="<?php echo $rowClass ?>">
 			<TD valign="top">
+                <?php if ($lockInfo) { ?>
+	               <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
+	            <?php } ?>
 				<?php
 				if ($g_user->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
 					echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php");
@@ -254,7 +258,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 	        </tr>
 	        <?php
 	    }
-
+        $color = 0;
 		foreach ($SubmittedArticles as $tmpArticle) {
 			$section = $tmpArticle->getSection();
 			$language = new Language($tmpArticle->getLanguageId());
@@ -267,9 +271,13 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 									$tmpArticle->getLanguageId(),
 									$tmpArticle->getSectionNumber());
 			$creator = new User($tmpArticle->getCreatorId());
-			?>
-		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+			camp_set_article_row_decoration($tmpArticle, $lockInfo, $rowClass, $color);
+		    ?>
+		<TR class="<?php echo $rowClass ?>">
 			<TD valign="top">
+                <?php if ($lockInfo) { ?>
+	               <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
+	            <?php } ?>
 			<?php echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php"); ?>
 			<?php
 			p(htmlspecialchars($tmpArticle->getTitle()));
@@ -348,10 +356,14 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 			$section = new Section($tmpArticle->getPublicationId(),
 									$tmpArticle->getIssueNumber(),
 									$tmpArticle->getLanguageId(),
-									$tmpArticle->getSectionNumber());
-			 ?>
-		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+									$tmpArticle->getSectionNumber());				
+			camp_set_article_row_decoration($tmpArticle, $lockInfo, $rowClass, $color);
+		    ?>
+		<TR class="<?php echo $rowClass ?>">
 			<TD valign="top">
+                <?php if ($lockInfo) { ?>
+	               <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
+	            <?php } ?>
 				<?php
 				if ($g_user->hasPermission('ChangeArticle')) {
     				echo camp_html_article_link($tmpArticle, $tmpArticle->getLanguageId(), "edit.php");
@@ -410,10 +422,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		// Warning: the next section is a big hack!
 		// Hopefully will be fixed in 2.4
 		$color = 0;
-		foreach ($pendingActions as $action) {
-			 ?>
-		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-		<?PHP
+		foreach ($pendingActions as $action) {	 
 		if ($action["ObjectType"] == "article") {
 			$language = new Language($action["IdLanguage"]);
 			$pub = new Publication($action["IdPublication"]);
@@ -424,8 +433,15 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 									$action["NrIssue"],
 									$action["IdLanguage"],
 									$action["NrSection"]);
-			?>
-			<TD valign="top"><?php putGS("Article"); ?>:
+			$tmpArticle = new Article($action['IdLanguage'], $action['Number']);
+			camp_set_article_row_decoration($tmpArticle, $lockInfo, $rowClass, $color);
+		    ?>
+		<TR class="<?php echo $rowClass ?>">
+			<TD valign="top">
+                <?php if ($lockInfo) { ?>
+	               <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
+	            <?php } ?>
+			    <?php putGS("Article"); ?>:
     			<?PHP
 				if ($g_user->hasPermission('ChangeArticle')) { ?>
                     <a href="/<?php p($ADMIN); ?>/articles/edit.php?f_publication_id=<?php p($action["IdPublication"]); ?>&f_issue_number=<?php p($action["NrIssue"]); ?>&f_section_number=<?php p($action["NrSection"]); ?>&f_article_number=<?php p($action["Number"]); ?>&f_language_id=<?php p($action["IdLanguage"]); ?>&f_language_selected=<?php p($action["IdLanguage"]); ?>">
@@ -481,6 +497,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		<?PHP
 		}
 		elseif ($action["ObjectType"] == "issue") {
+		  ?><TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>><?PHP
 			//$language = new Language($action["IdLanguage"]);
 			$pub = new Publication($action["IdPublication"]);
 			?>
@@ -560,9 +577,13 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 			$creator = new User($tmpArticle->getCreatorId());
 			$section = $tmpArticle->getSection();
 			$language = new Language($tmpArticle->getLanguageId());
-			 ?>
-		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+			camp_set_article_row_decoration($tmpArticle, $lockInfo, $rowClass, $color);
+		    ?>
+		<TR class="<?php echo $rowClass ?>">
 			<TD valign="top">
+                <?php if ($lockInfo) { ?>
+	               <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
+	            <?php } ?>
 				<?php
 				if ($g_user->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
 					echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php");
@@ -640,9 +661,13 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
                                     $tmpArticle->getLanguageId(),
                                     $tmpArticle->getSectionNumber());
             $creator = new User($tmpArticle->getCreatorId());
-            ?>
-        <TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-            <TD valign="top">
+			camp_set_article_row_decoration($tmpArticle, $lockInfo, $rowClass, $color);
+		    ?>
+		<TR class="<?php echo $rowClass ?>">
+			<TD valign="top">
+                <?php if ($lockInfo) { ?>
+	               <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
+	            <?php } ?>
             <?php echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php"); ?>
             <?php
             p(htmlspecialchars($tmpArticle->getTitle()));
