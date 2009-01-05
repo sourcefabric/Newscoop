@@ -41,6 +41,7 @@ $unplacedArticlesPager = new SimplePager($numUnplacedArticles, $NumDisplayArticl
 $popularArticlesPager = new SimplePager($popularArticlesCount, $NumDisplayArticles, 'f_popular_articles_offset', 'home.php?f_screen=popular_articles&');
 
 $recentlyPublishedArticles = Article::GetRecentArticles($NumDisplayArticles);
+$recentlyModifiedArticles = Article::GetRecentlyModifiedArticles($NumDisplayArticles);
 
 $pendingArticles = ArticlePublish::GetFutureActions($NumDisplayArticles);
 $pendingIssues = IssuePublish::GetFutureActions($NumDisplayArticles);
@@ -57,12 +58,14 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 home_page_elements = new Array("your_articles",
 							   "submitted_articles",
 							   "recently_published_articles",
+							   "recently_modified_articles",
 							   "scheduled_actions",
 							   "unplaced_articles",
 							   "popular_articles");
 home_page_links = new Array("link_your_articles",
 							"link_submitted_articles",
 							"link_recently_published_articles",
+							"link_recently_modified_articles",
 							"link_scheduled_actions",
 							"link_unplaced_articles",
 							"link_popular_articles");
@@ -129,6 +132,8 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 		<tr><td nowrap><a href="javascript: void(0);" id="link_recently_published_articles" onclick="HideAll(home_page_elements); ShowElement('recently_published_articles'); on_link_click('link_recently_published_articles', home_page_links);"  style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "recently_published_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Recently Published Articles"); ?></a></td></tr>
 
+		<tr><td nowrap><a href="javascript: void(0);" id="link_recently_modified_articles" onclick="HideAll(home_page_elements); ShowElement('recently_modified_articles'); on_link_click('link_recently_modified_articles', home_page_links);"  style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "recently_modified_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Recently Modified Articles"); ?></a></td></tr>
+		
 		<tr><td nowrap><a href="javascript: void(0);" id="link_scheduled_actions" onclick="HideAll(home_page_elements); ShowElement('scheduled_actions'); on_link_click('link_scheduled_actions', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "scheduled_actions") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Scheduled Publishing"); ?></a></td></tr>
 
 		<tr><td nowrap><a href="javascript: void(0);" id="link_unplaced_articles" onclick="HideAll(home_page_elements); ShowElement('unplaced_articles'); on_link_click('link_unplaced_articles', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "unplaced_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Pending Articles"); ?></a></td></tr>
@@ -400,6 +405,82 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		} // for
     	?>
         </table>
+        
+        
+		<!-- Recently Modified -->
+		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="recently_modified_articles" <?php if ($f_screen != "recently_modified_articles") { echo 'style="display:none;"'; } ?>>
+		<TR class="table_list_header">
+			<TD ALIGN="LEFT" VALIGN="TOP" ><?php  putGS("Recently Modified Articles"); ?></TD>
+			<TD ALIGN="center" VALIGN="TOP" nowrap><?php  putGS("Modification Date"); ?></TD>
+			<TD ALIGN="center" VALIGN="TOP" nowrap><?php  putGS("Publication"); ?></TD>
+			<TD ALIGN="center" VALIGN="TOP" nowrap><?php  putGS("Issue"); ?></TD>
+			<TD ALIGN="center" VALIGN="TOP" nowrap><?php  putGS("Section"); ?></TD>
+			<TD ALIGN="center" VALIGN="TOP" nowrap><?php  p(str_replace(" ", "<br>", getGS("On Front Page"))); ?></TD>
+			<TD ALIGN="center" VALIGN="TOP" nowrap><?php  p(str_replace(" ", "<br>", getGS("On Section Page"))); ?></TD>
+		</TR>
+		<?php
+		if (count($recentlyModifiedArticles) == 0) {
+	        ?>
+    		<TR>
+			<TD colspan="7" class="list_row_odd"><?php putGS("No articles have been modified yet."); ?></td>
+	        </tr>
+		    <?php
+		}
+		$color = 0;
+		foreach ($recentlyModifiedArticles as $tmpArticle) {
+			$language = new Language($tmpArticle->getLanguageId());
+			$pub = new Publication($tmpArticle->getPublicationId());
+			$issue = new Issue($tmpArticle->getPublicationId(),
+								$tmpArticle->getLanguageId(),
+								$tmpArticle->getIssueNumber());
+			$section = new Section($tmpArticle->getPublicationId(),
+									$tmpArticle->getIssueNumber(),
+									$tmpArticle->getLanguageId(),
+									$tmpArticle->getSectionNumber());				
+			camp_set_article_row_decoration($tmpArticle, $lockInfo, $rowClass, $color);
+		    ?>
+		<TR class="<?php echo $rowClass ?>">
+			<TD valign="top">
+                <?php if ($lockInfo) { ?>
+	               <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
+	            <?php } ?>
+				<?php
+				if ($g_user->hasPermission('ChangeArticle')) {
+    				echo camp_html_article_link($tmpArticle, $tmpArticle->getLanguageId(), "edit.php");
+				}
+				p(htmlspecialchars($tmpArticle->getTitle(). " (".$language->getNativeName().")"));
+				if ($g_user->hasPermission('ChangeArticle')) {
+    				echo '</a>';
+				}
+				?>
+			</TD>
+			<td nowrap valign="top"><?php echo $tmpArticle->getLastModified(); ?></td>
+
+			<td valign="top">
+				<?php p(htmlspecialchars($pub->getName())); ?>
+			</td>
+
+			<td valign="top">
+				<?php p(htmlspecialchars($issue->getName())); ?>
+			</td>
+
+			<td valign="top">
+				<?php p(htmlspecialchars($section->getName())); ?>
+			</td>
+
+			<td align="center" valign="top">
+				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p($tmpArticle->onFrontPage() ? "is_shown.png" : "is_hidden.png"); ?>" border="0">
+			</td>
+
+			<td align="center" valign="top">
+				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p($tmpArticle->onSectionPage() ? "is_shown.png" : "is_hidden.png"); ?>" border="0">
+			</td>
+        </tr>
+		<?php
+		} // for
+    	?>
+        </table>
+                
 
         <!-- Scheduled Publishing -->
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="scheduled_actions" <?php if ($f_screen != "scheduled_actions") { echo 'style="display:none;"'; } ?>>

@@ -1969,8 +1969,23 @@ class Article extends DatabaseObject {
 	    $result = DbObjectArray::Create('Article', $queryStr);
 	    return $result;
 	} // fn GetRecentArticles
+	
+	
+	/**
+	 * Get the $p_max number of the most recently modified articles.
+	 * @param int $p_max
+	 * @return array
+	 */
+	public static function GetRecentlyModifiedArticles($p_max)
+	{
+	    $queryStr = "SELECT * FROM Articles "
+	               ." ORDER BY time_updated DESC"
+	               ." LIMIT $p_max";
+	    $result = DbObjectArray::Create('Article', $queryStr);
+	    return $result;
+	} // fn GetRecentlyModifiedArticles
 
-
+	
 	/**
 	 * Unlock all articles by the given user.
 	 * @param int $p_userId
