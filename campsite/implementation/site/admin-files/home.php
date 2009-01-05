@@ -155,6 +155,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 			<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Issue"); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Section"); ?></TD>
 			<td align="center" valign="top"><?php echo str_replace(" ", "<br>", getGS("Creation date")); ?></td>
+			<td align="center" valign="top"><?php putGS("Publish Schedule"); ?></td>
 		</TR>
 
 		<?php
@@ -165,6 +166,13 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 	        </tr>
 		    <?php
 		}
+		
+		foreach ($pendingArticles as $pendingArticle) {
+		  if ($pendingArticle['publish_action'] && $pendingArticle['IdUser'] == $g_user->getUserId()) {
+		      $yourPendingArticles[$pendingArticle['IdLanguage']][$pendingArticle['Number']] = $pendingArticle;
+		  }   
+		}
+		
 		$color = 0;
 		foreach ($YourArticles as $tmpArticle) {
 			$section = $tmpArticle->getSection();
@@ -227,6 +235,20 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($tmpArticle->getCreationDate())); ?>
+			</td>
+			
+			<td align="center" valign="top">
+				<?php
+				if ($pendingArticle = $yourPendingArticles[$tmpArticle->getLanguageId()][$tmpArticle->getArticleNumber()]) {
+				    echo $pendingArticle['time_action'].'<br />';
+				    if ($pendingArticle['publish_action'] == "P") {
+							putGS("Publish");
+						}
+						if ($publishAction == "U") {
+							putGS("Unpublish");
+						}  
+				}
+				?>
 			</td>
 		</TR>
 		<?php
