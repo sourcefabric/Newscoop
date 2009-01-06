@@ -39,7 +39,7 @@
     {{ if $display_poll_form }}
     
         {{ poll_form template='poll/section-polls.tpl' submit_button='submit' }} 
-            {{ list_poll_answers order="byvalue desc" }} 
+            {{ list_poll_answers }} 
                 {{ pollanswer_edit }}
                    {{ $campsite->pollanswer->answer }}
                 {{ /pollanswer_edit }}

@@ -47,7 +47,7 @@ function stop()
     <div style="height: 10px;" /></div>
 
     
-    {{ list_poll_answers order="byvalue desc" }}
+    {{ list_poll_answers }}
        
          {{ pollanswer_ajax }}
          

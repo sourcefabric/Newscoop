@@ -113,7 +113,10 @@ class MetaActionPoll extends MetaAction
                                      $this->m_properties['pollanswer_nr']);
         $PollAnswer->vote($this->m_properties['value']);
         
-        // reset the f_pollanswer_$nr context vars             
+        // reset the f_pollanswer(_$nr) context vars             
+        $p_context->default_url->reset_parameter('f_pollanswer_nr');
+        $p_context->url->reset_parameter('f_pollanswer_nr');
+
         foreach ($this->m_poll->getAnswers() as $PollAnswer) {
             $nr = $PollAnswer->getNumber();
             $p_context->default_url->reset_parameter('f_pollanswer_'.$nr);
