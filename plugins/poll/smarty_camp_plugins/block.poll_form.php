@@ -80,6 +80,10 @@ function smarty_block_poll_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 </script>	
 ';
 	       $html .= '<div id="poll_'.$campsite->poll->identifier.'_div">';
+	       
+	       $mode_tag = "<input type=\"hidden\" name=\"f_poll_mode\" value=\"ajax\" />\n";
+	    } else {
+	       $mode_tag = "<input type=\"hidden\" name=\"f_poll_mode\" value=\"standard\" />\n";   
 	    }
 	    
         $url = $campsite->url;
@@ -88,7 +92,7 @@ function smarty_block_poll_form($p_params, $p_content, &$p_smarty, &$p_repeat)
         
         $html .= "<input type=\"hidden\" name=\"f_poll\" value=\"1\" />\n";
         $html .= "<input type=\"hidden\" name=\"f_poll_nr\" value=\"{$campsite->poll->number}\" />\n";
-        $html .= "<input type=\"hidden\" name=\"f_poll_language_id\" value=\"{$campsite->poll->language_id}\" />\n";
+        $html .= "<input type=\"hidden\" name=\"f_poll_language_id\" value=\"{$campsite->poll->language_id}\" />\n";        $html .= $mode_tag;
         
         foreach ($campsite->url->form_parameters as $param) {
             $html .= '<input type="hidden" name="'.$param['name']

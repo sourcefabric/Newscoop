@@ -8,6 +8,7 @@ define('ACTION_POLL_ERR_NO_LANGUAGE_ID',    'ACTION_POLL_ERR_NO_LANGUAGE_ID');
 define('ACTION_POLL_ERR_NOT_EXISTS',        'ACTION_POLL_ERR_NOT_EXISTS');
 define('ACTION_POLL_ERR_NOT_VOTABLE',       'ACTION_POLL_ERR_NOT_VOTABLE');
 define('ACTION_POLL_ERR_INVALID_VALUE',     'ACTION_POLL_ERR_INVALID_VALUE');
+define('ACTION_POLL_ERR_INVLID_MODE',       'ACTION_POLL_ERR_INVLID_MODE');
 
 class MetaActionPoll extends MetaAction
 {
@@ -36,6 +37,12 @@ class MetaActionPoll extends MetaAction
         }
         $this->m_properties['poll_language_id'] = $p_input['f_poll_language_id'];
         
+        if ($p_input['f_poll_mode'] !== 'standard' && $p_input['f_poll_mode'] !== 'ajax') {
+            $this->m_error = new PEAR_Error('The poll mode parameter is invalid.', ACTION_POLL_ERR_INVLID_MODE);
+            return false;
+        }
+        $this->m_properties['poll_mode'] = $p_input['f_poll_mode'];
+        
         $Poll = new Poll($this->m_properties['poll_language_id'], $this->m_properties['poll_nr']);
         
         if (!$Poll->exists()) {
@@ -45,28 +52,42 @@ class MetaActionPoll extends MetaAction
         
         if (!$Poll->isVotable()) {
             $this->m_error = new PEAR_Error('Poll is not votable.', ACTION_POLL_ERR_NOT_VOTABLE);
-            return false;  
+            return false; 
+             
         } else {
-            $allowed_values = $_SESSION['camp_poll_maxvote'][$this->m_properties['poll_nr']][$this->m_properties['poll_language_id']];
-            
-            foreach ($Poll->getAnswers() as $PollAnswer) {
-                $nr = $PollAnswer->getNumber();
-                
-                if (isset($p_input['f_pollanswer_'.$nr]) && !empty($p_input['f_pollanswer_'.$nr])) {
+            switch($p_input['f_poll_mode']) {
+                case 'ajax':            
+                    $allowed_values = $_SESSION['camp_poll_maxvote'][$this->m_properties['poll_nr']][$this->m_properties['poll_language_id']];
                     
-                    // check if value is valid
-                    if (!array_key_exists($p_input['f_pollanswer_'.$nr], $allowed_values[$nr])) {
-                        $this->m_error = new PEAR_Error('Invalid poll voting value.', ACTION_POLL_ERR_INVALID_VALUE);
-                        return false;   
+                    foreach ($Poll->getAnswers() as $PollAnswer) {
+                        $nr = $PollAnswer->getNumber();
+                        
+                        if (isset($p_input['f_pollanswer_'.$nr]) && !empty($p_input['f_pollanswer_'.$nr])) {
+                            
+                            // check if value is valid
+                            if (!array_key_exists($p_input['f_pollanswer_'.$nr], $allowed_values[$nr])) {
+                                $this->m_error = new PEAR_Error('Invalid poll voting value.', ACTION_POLL_ERR_INVALID_VALUE);
+                                return false;   
+                            }
+                            $this->m_properties['pollanswer_nr'] = $nr;
+                            $this->m_properties['value'] = $p_input['f_pollanswer_'.$nr];
+                            break;
+                        }
                     }
-                    $this->m_properties['pollanswer_nr'] = $nr;
-                    $this->m_properties['value'] = $p_input['f_pollanswer_'.$nr];
-                    break;
-                }
-            }
-            if (!$this->m_properties['value']) {
-                $this->m_error = new PEAR_Error('No answer value was given.', ACTION_POLL_ERR_NOANSWER_VALUE);
-                return false;
+                    if (!$this->m_properties['value']) {
+                        $this->m_error = new PEAR_Error('No answer value was given.', ACTION_POLL_ERR_NOANSWER_VALUE);
+                        return false;
+                    }
+                break;
+                
+                case 'standard':
+                    if (!isset($p_input['f_pollanswer_nr']) || empty($p_input['f_pollanswer_nr'])) {
+                        $this->m_error = new PEAR_Error('Invalid poll voting value.', ACTION_POLL_ERR_INVALID_VALUE);
+                        return false;
+                    }
+                    $this->m_properties['pollanswer_nr'] = $p_input['f_pollanswer_nr'];
+                    $this->m_properties['value'] = 1;
+                break;
             }
         }
         
