@@ -136,10 +136,10 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         $ChiefEditor = new UserType(2);
         $Editor = new UserType(3);
         
-        $Admin->setPermission('plugin_blog_admin', true);
-        $Admin->setPermission('plugin_blog_moderator', true);
+        $Admin->setPermission('plugin_interview_admin', true);
+        $Admin->setPermission('plugin_interview_moderator', true);
         
-        $ChiefEditor->setPermission('plugin_blog_moderator', true);
+        $ChiefEditor->setPermission('plugin_interview_moderator', true);
     }
 }
 ?>
