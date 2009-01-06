@@ -1,4 +1,4 @@
-<?php global $articleObj, $f_article_number, $f_edit_; ?>
+<?php global $articleObj, $f_article_number, $f_edit_mode; ?>
 
 <tr><td>
   <TABLE width="100%" style="border: 1px solid #EEEEEE;">
