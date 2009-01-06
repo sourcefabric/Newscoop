@@ -86,6 +86,7 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties['section'] = 'getSection';
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['owner'] = 'getOwner';
+        $this->m_customProperties['author'] = 'getAuthor';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['has_attachments'] = 'hasAttachments';
         $this->m_customProperties['image_index'] = 'getImageIndex';
@@ -362,6 +363,12 @@ final class MetaArticle extends MetaDbObject {
     protected function getOwner()
     {
         return new MetaUser($this->m_dbObject->getProperty('IdUser'));
+    }
+
+
+    protected function getAuthor()
+    {
+        return new MetaAuthor($this->m_dbObject->getProperty('fk_default_author_id'));
     }
 
 

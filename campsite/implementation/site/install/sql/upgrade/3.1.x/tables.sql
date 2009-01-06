@@ -15,3 +15,21 @@ CREATE TABLE `RequestStats` (
   INDEX `stats_object_date_idx`(`object_id`, `date`),
   INDEX `stats_object_hour_idx`(`object_id`, `hour`)
 );
+
+CREATE TABLE `Authors` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(100)  NOT NULL,
+  `last_name` VARCHAR(100)  NOT NULL,
+  `email` VARCHAR(255) ,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY authors_name_ukey (`first_name`, `last_name`)
+);
+
+CREATE TABLE `ArticleAuthors` (
+  `fk_article_number` INTEGER UNSIGNED NOT NULL,
+  `fk_language_id` INTEGER UNSIGNED NOT NULL,
+  `fk_author_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`fk_article_number`, `fk_language_id`, `fk_author_id`)
+);
+
+ALTER TABLE `Articles` ADD COLUMN `fk_default_author_id` INTEGER UNSIGNED AFTER `IdUser`;

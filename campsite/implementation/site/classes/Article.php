@@ -50,8 +50,10 @@ class Article extends DatabaseObject {
 		// string - Article Type
 		'Type',
 
-		// int - User ID of user who created the article
+		// int - User ID of user who manages the article in Campsite
 		'IdUser',
+        // int - id of the author who wrote the article
+        'fk_default_author_id',
 
 		// string - The title of the article.
 		'Name',

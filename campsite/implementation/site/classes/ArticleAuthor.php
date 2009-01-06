@@ -13,36 +13,40 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/SQLSelectClause.php');
-require_once($g_documentRoot.'/classes/Audioclip.php');
+require_once($g_documentRoot.'/classes/Author.php');
 
 /**
  * @package Campsite
  */
-class ArticleAudioclip extends DatabaseObject {
-    var $m_keyColumnNames = array('fk_article_number', 'fk_audioclip_gunid');
-    var $m_dbTableName = 'ArticleAudioclips';
+class ArticleAuthor extends DatabaseObject {
+    var $m_keyColumnNames = array('fk_article_number', 'fk_language_id', 'fk_author_id');
+    var $m_dbTableName = 'ArticleAuthors';
     var $m_columnNames = array('fk_article_number',
-                               'fk_audioclip_gunid',
                                'fk_language_id',
-                               'order_no');
+                               'fk_author_id');
+
 
     /**
-     * The article audioclip table links together articles with Audioclips.
+     * The article authors table links together articles with authors.
      *
      * @param int $p_articleNumber
-     * @param int $p_audioclipGunId
+     * @param int $p_languageId
+     * @param int $p_authorId
      *
-     * @return object ArticleAudioclip
      */
-    public function ArticleAudioclip($p_articleNumber = null, $p_audioclipGunId = null)
+    public function __construct($p_articleNumber = null, $p_languageId = null, $p_authorId = null)
     {
         if (is_numeric($p_articleNumber)) {
             $this->m_data['fk_article_number'] = $p_articleNumber;
         }
-        if (!is_null($p_audioclipGunId)) {
-            $this->m_data['fk_audioclip_gunid'] = $p_audioclipGunId;
+        if (is_numeric($p_languageId)) {
+            $this->m_data['fk_language_id'] = $p_languageId;
         }
-        if (!is_null($p_articleNumber) && !is_null($p_audioclipGunId)) {
+        if (is_numeric($p_authorId)) {
+            $this->m_data['fk_author_id'] = $p_authorId;
+        }
+        if (!is_null($p_articleNumber) && !is_null($p_languageId)
+        && !is_null($p_authorId)) {
             $this->fetch();
         }
     } // constructor
@@ -58,15 +62,6 @@ class ArticleAudioclip extends DatabaseObject {
 
 
     /**
-     * @return string
-     */
-    public function getAudioclipGunId()
-    {
-        return $this->m_data['fk_audioclip_gunid'];
-    } // fn getAudioclipGunId
-
-
-    /**
      * @return int
      */
     public function getLanguageId()
@@ -78,54 +73,33 @@ class ArticleAudioclip extends DatabaseObject {
     /**
      * @return int
      */
-    public function getAudioclipOrder()
+    public function getAuthorId()
     {
-        return $this->m_data['order_no'];
-    } // fn getAudioclipOrder
+        return $this->m_data['fk_author_id'];
+    } // fn getAuthorId
 
 
     /**
-     * Sets the order for the article audioclip
-     *
-     * @param int $p_orderNo
-     *      The order number to be set
-     */
-    public function setOrder($p_orderNo)
-    {
-        global $g_ado_db;
-
-        if (!$this->m_exists) {
-            return false;
-        }
-        $queryStr = "UPDATE ".$this->m_dbTableName."
-                     SET order_no = '".intval($p_orderNo)."' "
-                   ."WHERE fk_article_number = '".$this->getArticleNumber()."' "
-                   ."AND fk_audioclip_gunid = '".$g_ado_db->escape($this->getAudioclipGunId())."'";
-        $g_ado_db->Execute($queryStr);
-    } // fn setOrder
-
-
-    /**
-     * Get all the audioclips that belong to this article.
+     * Get all the authors that wrote this article.
      *
      * @param int $p_articleNumber
      * @param int $p_languageId
      *
      * @return array $returnArray
-     *      An array of AudioclipMetadataEntry objects
+     *      An array of Author objects
      */
-    public static function GetAudioclipsByArticleNumber($p_articleNumber,
-                                                        $p_languageId = null)
+    public static function GetAuthorsByArticle($p_articleNumber,
+                                               $p_languageId = null)
     {
         global $g_ado_db;
 
         if (is_null($p_languageId)) {
             $langConstraint = "FALSE";
         } else {
-            $langConstraint = "fk_language_id=$p_languageId";
+            $langConstraint = "fk_language_id = $p_languageId";
         }
-        $queryStr = "SELECT fk_audioclip_gunid
-                     FROM ArticleAudioclips
+        $queryStr = "SELECT fk_author_id
+                     FROM ArticleAuthors
                      WHERE fk_article_number = '$p_articleNumber'
                      AND (fk_language_id IS NULL OR $langConstraint)
                      ORDER BY order_no";
@@ -133,37 +107,35 @@ class ArticleAudioclip extends DatabaseObject {
         $returnArray = array();
         if (is_array($rows)) {
             foreach ($rows as $row) {
-                $audioClip = new Audioclip($row['fk_audioclip_gunid']);
-                if ($audioClip->exists()) {
-                	$returnArray[] = $audioClip;
+                $author = new Author($row['fk_author_id']);
+                if ($author->exists()) {
+                	$returnArray[] = $author;
                 }
             }
         }
 
 		return $returnArray;
-    } // fn GetAudioclipsByArticleNumber
+    } // fn GetAuthorsByArticle
 
 
     /**
-     * This is called when an audioclip file is deleted.
-     * It will disassociate the audioclip from all articles.
      *
-     * @param int $p_gunId
+     * @param int $p_id
      *
      * @return void
      */
-    public static function OnAudioclipDelete($p_gunId)
+    public static function OnAuthorDelete($p_id)
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAudioclips
-                     WHERE fk_audioclip_gunid = '$p_gunId'";
+        $queryStr = "DELETE FROM ArticleAuthors
+                     WHERE fk_author_id = '$p_id'";
         $g_ado_db->Execute($queryStr);
-    } // fn OnAudioclipDelete
+    } // fn OnAuthorDelete
 
 
     /**
-     * Remove audioclip pointers for the given article.
+     * Remove author pointers for the given article.
      *
      * @param int $p_articleNumber
      *
@@ -173,7 +145,7 @@ class ArticleAudioclip extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAudioclips
+        $queryStr = "DELETE FROM ArticleAuthors
                      WHERE fk_article_number = '$p_articleNumber'";
         $g_ado_db->Execute($queryStr);
     } // fn OnArticleDelete
@@ -191,23 +163,23 @@ class ArticleAudioclip extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = "SELECT fk_audioclip_gunid, order_no
-                     FROM ArticleAudioclips
+        $queryStr = "SELECT fk_language_id, fk_author_id
+                     FROM ArticleAuthors
                      WHERE fk_article_number='$p_srcArticleNumber'";
         $rows = $g_ado_db->GetAll($queryStr);
         foreach ($rows as $row) {
-            $queryStr = "INSERT IGNORE INTO ArticleAudioclips
-                         (fk_article_number, fk_audioclip_gunid, order_no)
+            $queryStr = "INSERT IGNORE INTO ArticleAuthors
+                         (fk_article_number, fk_language_id, fk_author_id)
                          VALUES ('$p_destArticleNumber', '"
-                        .$row['fk_audioclip_gunid']."', '"
-                        .$row['order_no']."')";
+                        .$row['fk_language_id']."', '"
+                        .$row['fk_author_id']."')";
             $g_ado_db->Execute($queryStr);
         }
     } // fn OnArticleCopy
 
 
     /**
-     * Returns an article audioclips list based on the given parameters.
+     * Returns an article authors list based on the given parameters.
      *
      * @param array $p_parameters
      *    An array of ComparisonOperation objects
@@ -221,8 +193,8 @@ class ArticleAudioclip extends DatabaseObject {
      *    The total count of the elements; this count is computed without
      *    applying the start ($p_start) and limit parameters ($p_limit)
      *
-     * @return array $articleAudioclipsList
-     *    An array of Audioclip objects
+     * @return array $articleAuthorsList
+     *    An array of Author objects
      */
     public static function GetList(array $p_parameters, $p_order = null,
                                    $p_start = 0, $p_limit = 0, &$p_count)
@@ -258,16 +230,16 @@ class ArticleAudioclip extends DatabaseObject {
 
         // validates whether article number was given
         if ($hasArticleNr == false) {
-            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_audioclips");
+            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_authors");
         }
 
-        // sets the base table ArticleAudioclips and the column to be fetched
-        $tmpArticleAudioclip = new ArticleAudioclip();
-        $selectClauseObj->setTable($tmpArticleAudioclip->getDbTableName());
-        $selectClauseObj->addColumn('fk_audioclip_gunid');
-        $countClauseObj->setTable($tmpArticleAudioclip->getDbTableName());
+        // sets the base table ArticleAuthors and the column to be fetched
+        $tmpArticleAuthor = new ArticleAuthor();
+        $selectClauseObj->setTable($tmpArticleAuthor->getDbTableName());
+        $selectClauseObj->addColumn('fk_author_id');
+        $countClauseObj->setTable($tmpArticleAuthor->getDbTableName());
         $countClauseObj->addColumn('COUNT(*)');
-        unset($tmpArticleAudioclip);
+        unset($tmpArticleAuthor);
 
         if (!is_array($p_order)) {
             $p_order = array();
@@ -283,23 +255,23 @@ class ArticleAudioclip extends DatabaseObject {
 
         // builds the query and executes it
         $selectQuery = $selectClauseObj->buildQuery();
-        $audioclips = $g_ado_db->GetAll($selectQuery);
-        if (!is_array($audioclips)) {
+        $authors = $g_ado_db->GetAll($selectQuery);
+        if (!is_array($authors)) {
             return null;
         }
         $countQuery = $countClauseObj->buildQuery();
         $p_count = $g_ado_db->GetOne($countQuery);
 
         // builds the array of attachment objects
-        $articleAudioclipsList = array();
-        foreach ($audioclips as $audioclip) {
-            $aclipObj = new Audioclip($audioclip['fk_audioclip_gunid']);
-            if ($aclipObj->exists()) {
-                $articleAudioclipsList[] = $aclipObj;
+        $articleAuthorsList = array();
+        foreach ($authors as $author) {
+            $authorObj = new Author($author['fk_author_id']);
+            if ($authorObj->exists()) {
+                $articleAuthorsList[] = $authorObj;
             }
         }
 
-        return $articleAudioclipsList;
+        return $articleAuthorsList;
     } // fn GetList
 
 
@@ -328,6 +300,6 @@ class ArticleAudioclip extends DatabaseObject {
         return $parameter;
     } // fn ProcessListParameters
 
-} // class ArticleAudioclip
+} // class ArticleAuthor
 
 ?>
