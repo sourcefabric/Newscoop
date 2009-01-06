@@ -50,57 +50,6 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
   <script type="text/javascript" src="js/campsiteinternallink.js"></script>
   <link href="css/campsiteinternallink.css" rel="stylesheet" type="text/css" />
   <base target="_self" />
-
-  <script>
-    function onOK() {
-      languageId = document.getElementById("IdLanguage").value;
-      publicationElement = document.getElementById("IdPublication");
-      publicationId = publicationElement ? publicationElement.value : 0;
-      issueElement = document.getElementById("NrIssue");
-      issueId = issueElement ? issueElement.value : 0;
-      sectionElement = document.getElementById("NrSection");
-      sectionId = sectionElement ? sectionElement.value : 0;
-      articleElement = document.getElementById("NrArticle");
-      articleId = articleElement? articleElement.value : 0;
-      targetElement = document.getElementById("f_target");
-      target = targetElement ? targetElement.value : '';
-
-      // User must at least specify language and publication.
-      if ((languageId <= 0) || (publicationId <= 0)) {
-        alert("You must specify the language and the publication.");
-          return false;
-        }
-
-      // Pass data back to the calling window.
-      var param = new Object();
-      param["f_href"] = "campsite_internal_link?IdPublication="+publicationId
-                          +"&IdLanguage="+languageId;
-      if (issueId > 0) {
-        param["f_href"] += "&NrIssue=" + issueId;
-      }
-      if (sectionId > 0) {
-        param["f_href"] += "&NrSection=" + sectionId;
-      }
-      if (articleId > 0) {
-        param["f_href"] += "&NrArticle=" + articleId;
-      }
-      if (target != '') {
-        if (target == "_other") {
-          param["f_target"] = document.getElementById("f_other_target").value;
-        }
-        else {
-          param["f_target"] = target;
-        }
-      }
-      else {
-        param["f_target"] = "";
-      }
-      param["f_title"] = "";
-
-      alert(param["f_href"]);
-    }
-  </script>
-
 </head>
 <body id="campsiteinternallink" style="display: none">
     <form onsubmit="insertAction();return false;" action="#">
