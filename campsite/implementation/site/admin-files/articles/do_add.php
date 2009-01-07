@@ -109,6 +109,13 @@ if (count($conflictingArticles) > 0) {
 
 if ($articleObj->exists()) {
 	$articleObj->setCreatorId($g_user->getUserId());
+	$authorObj = new Author($g_user->getRealName());
+	if (!$authorObj->exists()) {
+        $authorData = Author::ReadName($g_user->getRealName());
+        $authorData['email'] = $g_user->getEmail();
+        $authorObj->create($authorData);
+	}
+	$articleObj->setAuthorId($authorObj->getId());
 	$articleObj->setIsPublic(true);
 	if ($publication_id > 0) {
     	$commentDefault = $publicationObj->commentsArticleDefaultEnabled();

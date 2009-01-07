@@ -41,6 +41,7 @@ if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('No such article.'));
 	exit;
 }
+$articleAuthorObj = new Author($articleObj->getAuthorId());
 
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
@@ -470,7 +471,7 @@ if ($f_edit_mode == "edit") { ?>
 			<?php } ?>
 			<table width="100%" style="border-bottom: 1px solid #8baed1; padding-bottom: 3px;">
 			<tr>
-				<td align="left" valign="top"><b><?php putGS("Name"); ?>:</b>
+				<td colspan="2" align="left" valign="top"><b><?php putGS("Name"); ?>:</b>
 					<?php if ($f_edit_mode == "edit") { ?>
 					<input type="text" name="f_article_title" id="f_article_title" size="60" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" />
 					<?php } else {
@@ -478,7 +479,18 @@ if ($f_edit_mode == "edit") { ?>
 					}
 					?>
 				</td>
-				<td align="right" valign="top" style="padding-right: 0.5em;"><b><?php  putGS("Created by"); ?>:</b> <?php p(htmlspecialchars($articleCreator->getRealName())); ?></td>
+		    </tr>
+		    <tr>
+                <td>
+                    <b><?php putGS("Author"); ?>:</b>
+                    <?php if ($f_edit_mode == "edit") { ?>
+                    <input type="text" name="f_article_author" size="50" class="input_text" value="<?php  print htmlspecialchars($articleAuthorObj->getName()); ?>" />
+                    <?php } else {
+                        print wordwrap(htmlspecialchars($articleAuthorObj->getName()), 60, "<br>");
+                    }
+                    ?>
+                </td>
+                <td align="right" valign="top" style="padding-right: 0.5em;"><b><?php  putGS("Created by"); ?>:</b> <?php p(htmlspecialchars($articleCreator->getRealName())); ?></td>
 		    </tr>
 		    </table>
 

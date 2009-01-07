@@ -42,6 +42,7 @@ class Author extends DatabaseObject {
 			$this->m_data['first_name'] = $names['first_name'];
             $this->m_data['last_name'] = $names['last_name'];
             $this->fetch();
+            $this->m_keyColumnNames = array('id');
 		}
 	} // constructor
 
@@ -60,9 +61,10 @@ class Author extends DatabaseObject {
 	 */
 	public function getName($p_format = '%_FIRST_NAME %_LAST_NAME')
 	{
-		return preg_replace(array('/%_FIRST_NAME/', '/%_LAST_NAME/'),
-		                    array($this->getFirstName(), $this->getLastName()),
-		                    $p_format);
+		$name = preg_replace(array('/%_FIRST_NAME/', '/%_LAST_NAME/'),
+		                     array($this->getFirstName(), $this->getLastName()),
+		                     $p_format);
+        return trim($name);
 	} // fn getName
 
 
@@ -97,9 +99,12 @@ class Author extends DatabaseObject {
         	if (isset($matches[0])) {
         		$matches = $matches[0];
         	}
-        	if (count($matches) > 0) {
+        	if (count($matches) > 1) {
         		$lastName = array_pop($matches);
         		$firstName = implode(' ', $matches);
+        	}
+        	if (count($matches) == 1) {
+        		$firstName = $matches[0];
         	}
         }
         return array('first_name'=>$firstName, 'last_name'=>$lastName);
@@ -151,6 +156,20 @@ class Author extends DatabaseObject {
 	{
 		return $this->setProperty('email', $p_value);
 	} // fn setEmail
+
+
+	public static function GetAllExistingNames()
+	{
+		global $g_ado_db;
+		
+		$sql = "SELECT DISTINCT Name FROM (\n"
+             . "  SELECT Name FROM liveuser_users\n"
+             . "  UNION\n"
+             . "  SELECT CONCAT(first_name, ' ', last_name) AS Name\n"
+             . "    FROM Authors\n"
+             . ") AS names";
+        return $g_ado_db->GetAll($sql);
+	}
 
 } // class Author
 

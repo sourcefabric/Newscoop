@@ -174,6 +174,7 @@ $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_article_author = Input::Get('f_article_author', 'string', '');
 $f_on_front_page = Input::Get('f_on_front_page', 'string', '', true);
 $f_on_section_page = Input::Get('f_on_section_page', 'string', '', true);
 $f_is_public = Input::Get('f_is_public', 'string', '', true);
@@ -200,6 +201,7 @@ if (!Input::IsValid()) {
 $articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('No such article.'), $BackLink);
+	exit;
 }
 
 $articleTypeObj = $articleObj->getArticleData();
@@ -221,6 +223,7 @@ $userSectionRight = 'ManageSection'.$articleObj->getSectionNumber().'_P'.$articl
 if (!$articleObj->userCanModify($g_user, $userSectionRight)) {
 	camp_html_add_msg(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
 	camp_html_goto_page($BackLink);
+	exit;
 }
 // Only users with a lock on the article can change it.
 if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedByUser())) {
@@ -231,6 +234,7 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
 	$lockUser = new User($articleObj->getLockedByUser());
 	camp_html_add_msg(getGS('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getRealName(), $hours, $minutes));
 	camp_html_goto_page($BackLink);
+	exit;
 }
 
 // Update the first comment if the article title has changed
@@ -241,6 +245,14 @@ if ($f_article_title != $articleObj->getTitle()) {
 		$firstPost->setSubject($f_article_title);
 	}
 }
+
+// Update the article author
+$authorObj = new Author($f_article_author);
+if (!$authorObj->exists()) {
+	$authorData = Author::ReadName($f_article_author);
+	$authorObj->create($authorData);
+}
+$articleObj->setAuthorId($authorObj->getId());
 
 // Update the article.
 $articleObj->setOnFrontPage(!empty($f_on_front_page));

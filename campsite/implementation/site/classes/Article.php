@@ -1055,19 +1055,41 @@ class Article extends DatabaseObject {
 	} // fn getCreatorId
 
 
-	/**
-	 * Set the user ID of the user who created this article.
-	 *
-	 * @param int $p_value
-	 * @return boolean
-	 */
-	public function setCreatorId($p_value)
-	{
-		return parent::setProperty('IdUser', $p_value);
-	} // fn setCreatorId
+    /**
+     * Set the user ID of the user who created this article.
+     *
+     * @param int $p_value
+     * @return boolean
+     */
+    public function setCreatorId($p_value)
+    {
+        return parent::setProperty('IdUser', $p_value);
+    } // fn setCreatorId
 
 
 	/**
+     * Return the ID of the author who wrote this article.
+     * @return int
+     */
+    public function getAuthorId()
+    {
+        return $this->m_data['fk_default_author_id'];
+    } // fn getAuthorId
+
+
+    /**
+     * Set the ID of the author who wrote this article.
+     *
+     * @param int $p_value
+     * @return boolean
+     */
+    public function setAuthorId($p_value)
+    {
+        return parent::setProperty('fk_default_author_id', $p_value);
+    } // fn setAuthorId
+
+
+    /**
 	 * Return an integer representing the order of the article
 	 * within the section.  Note that these numbers are not sequential
 	 * and can only be compared with the other articles in the section.
