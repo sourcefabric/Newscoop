@@ -177,6 +177,21 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 	editor_load_tinymce($dbColumns, $g_user, $editorLanguage);
 }
 
+?>
+
+<!-- YUI dependencies //-->
+<script src="/javascript/yui/build/yahoo/yahoo-min.js"></script>
+<script src="/javascript/yui/build/event/event-min.js"></script>
+<script src="/javascript/yui/build/connection/connection-min.js"></script>
+
+<style type="text/css">
+  
+</style>
+
+<div id="yui-connection-container"></div>
+<div id="yui-connection-message"></div>
+
+<?php
 // If the article is locked.
 if ($articleObj->userCanModify($g_user, $userSectionRight) && $locked && ($f_edit_mode == "edit")) {
 	?><P>
@@ -258,12 +273,12 @@ if ($f_edit_mode == "edit") { ?>
 
     			<!-- BEGIN the article control bar -->
     			<form name="article_actions" action="do_article_action.php" method="POST">
-    			<input type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>" />
-    			<input type="hidden" name="f_issue_number" value="<?php  p($f_issue_number); ?>" />
-    			<input type="hidden" name="f_section_number" value="<?php  p($f_section_number); ?>" />
-    			<input type="hidden" name="f_language_id" value="<?php  p($f_language_id); ?>" />
-    			<input type="hidden" name="f_language_selected" value="<?php  p($f_language_selected); ?>" />
-    			<input type="hidden" name="f_article_number" value="<?php  p($f_article_number); ?>" />
+    			<input type="hidden" name="f_publication_id" id="f_publication_id" value="<?php  p($f_publication_id); ?>" />
+    			<input type="hidden" name="f_issue_number" id="f_issue_number" value="<?php  p($f_issue_number); ?>" />
+    			<input type="hidden" name="f_section_number" id="f_section_number" value="<?php  p($f_section_number); ?>" />
+    			<input type="hidden" name="f_language_id" id="f_language_id" value="<?php  p($f_language_id); ?>" />
+    			<input type="hidden" name="f_language_selected" id="f_language_selected" value="<?php  p($f_language_selected); ?>" />
+    			<input type="hidden" name="f_article_number" id="f_article_number" value="<?php  p($f_article_number); ?>" />
     			<table border="0" cellspacing="1" cellpadding="0">
     			<tr>
 					<td style="padding-left: 1em;">
@@ -426,14 +441,14 @@ if ($f_edit_mode == "edit") { ?>
 <tr>
 	<td valign="top">
 	<!-- BEGIN article content -->
-	<form name="article_edit" action="do_edit.php" method="POST">
+	<form name="article_edit" action="#" method="POST">
 	<input type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>" />
 	<input type="hidden" name="f_issue_number" value="<?php  p($f_issue_number); ?>" />
 	<input type="hidden" name="f_section_number" value="<?php  p($f_section_number); ?>" />
 	<input type="hidden" name="f_language_id" value="<?php  p($f_language_id); ?>" />
 	<input type="hidden" name="f_language_selected" value="<?php  p($f_language_selected); ?>" />
 	<input type="hidden" name="f_article_number" value="<?php  p($f_article_number); ?>" />
-	<input type="hidden" name="f_message" value="" />
+	<input type="hidden" name="f_message" id="f_message" value="" />
 	<table width="100%">
 	<tr>
 		<td style="padding-top: 3px;">
@@ -446,9 +461,9 @@ if ($f_edit_mode == "edit") { ?>
                     <input type="submit" name="preview" value="<?php putGS('Preview'); ?>" class="button" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php p($f_publication_id); ?>&amp;f_issue_number=<?php p($f_issue_number); ?>&amp;f_section_number=<?php p($f_section_number); ?>&amp;f_article_number=<?php p($f_article_number); ?>&amp;f_language_id=<?php p($f_language_id); ?>&amp;f_language_selected=<?php p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false">
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <?php } ?>
-					<input type="submit" name="save" value="<?php putGS('Save'); ?>" class="button" />
+					<input type="button" name="save" id="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('save');" />
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="submit" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
+					<input type="button" name="save_and_close" id="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" onClick="makeRequest('save_and_close');window.location.href='http://www.google.com'" />
 				</td>
 			</tr>
 			</table>
@@ -457,7 +472,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" valign="top"><b><?php putGS("Name"); ?>:</b>
 					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="text" name="f_article_title" size="60" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" />
+					<input type="text" name="f_article_title" id="f_article_title" size="60" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" />
 					<?php } else {
 						print wordwrap(htmlspecialchars($articleObj->getTitle()), 60, "<br>");
 					}
@@ -591,7 +606,7 @@ if ($f_edit_mode == "edit") { ?>
 
                     <!-- Show article on front page -->
                     <tr>
-				        <td align="right" valign="top"><input type="CHECKBOX" name="f_on_front_page" class="input_checkbox" <?php  if ($articleObj->onFrontPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?> /></td>
+				        <td align="right" valign="top"><input type="CHECKBOX" name="f_on_front_page" id="f_on_front_page" class="input_checkbox" <?php  if ($articleObj->onFrontPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?> /></td>
 				        <td align="left" valign="top" style="padding-top: 0.1em;">
         				<?php  putGS('Show article on front page'); ?>
         				</td>
@@ -599,7 +614,7 @@ if ($f_edit_mode == "edit") { ?>
 
         			<!-- Show article on section page -->
         			<tr>
-				        <td align="right" valign="top"><input type="CHECKBOX" name="f_on_section_page" class="input_checkbox" <?php  if ($articleObj->onSectionPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?> /></td>
+				        <td align="right" valign="top"><input type="CHECKBOX" name="f_on_section_page" id="f_on_section_page" class="input_checkbox" <?php  if ($articleObj->onSectionPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?> /></td>
 				        <td align="left" valign="top"  style="padding-top: 0.1em;">
 				            <?php  putGS('Show article on section page'); ?>
 				        </td>
@@ -607,7 +622,7 @@ if ($f_edit_mode == "edit") { ?>
 
 			        <!-- Article viewable by public -->
 			        <tr>
-				        <td align="right" valign="top"><input type="CHECKBOX" name="f_is_public" class="input_checkbox" <?php  if ($articleObj->isPublic()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?> /></td>
+				        <td align="right" valign="top"><input type="CHECKBOX" name="f_is_public" id="f_is_public" class="input_checkbox" <?php  if ($articleObj->isPublic()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?> /></td>
 				        <td align="left" valign="top" style="padding-top: 0.1em;">
 							<?php putGS('Visible to non-subscribers'); ?>
 				        </td>
@@ -620,7 +635,7 @@ if ($f_edit_mode == "edit") { ?>
 				    <tr>
 				        <td align="left" colspan="2" style="padding-top: 0.25em;">
 				            <?php putGS("Comments:"); ?>
-				            <select name="f_comment_status" class="input_select" <?php if ($f_edit_mode == "view") { ?>disabled<?php } ?>>
+				            <select name="f_comment_status" id="f_comment_status" class="input_select" <?php if ($f_edit_mode == "view") { ?>disabled<?php } ?>>
 				            <?php
 				            if ($articleObj->commentsEnabled()) {
 				                if ($articleObj->commentsLocked()) {
@@ -658,7 +673,7 @@ if ($f_edit_mode == "edit") { ?>
 				<td align="right" ><?php  putGS("Keywords"); ?>:</td>
 				<td>
 					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="TEXT" name="f_keywords" value="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" size="50" maxlength="255" />
+					<input type="TEXT" name="f_keywords" id="f_keywords" value="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" size="50" maxlength="255" />
 					<?php } else {
 						print htmlspecialchars($articleObj->getKeywords());
 					}
@@ -688,8 +703,11 @@ if ($f_edit_mode == "edit") { ?>
 				</td>
 				<td>
 				<?php
-				if ($f_edit_mode == "edit") { ?>
+				if ($f_edit_mode == "edit") {
+				    $fCustomFields[] = $dbColumn->getName();
+				?>
 		        <input name="<?php echo $dbColumn->getName(); ?>"
+				    id="<?php echo $dbColumn->getName(); ?>"
 					   type="TEXT"
 					   value="<?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
 					   class="input_text"
@@ -718,8 +736,12 @@ if ($f_edit_mode == "edit") { ?>
 					<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
 				</td>
 				<td>
-				<?php if ($f_edit_mode == "edit") { ?>
+				<?php
+				    if ($f_edit_mode == "edit") {
+				        $fCustomFields[] = $dbColumn->getName();
+				?>
 				<input name="<?php echo $dbColumn->getName(); ?>"
+				           id="<?php echo $dbColumn->getName(); ?>"
 					   type="TEXT"
 					   value="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
 					   class="input_text"
@@ -795,7 +817,10 @@ window.location.reload();
 			<td align="left" valign="top">
 				<table cellpadding="0" cellspacing="0" width="100%">
 				<tr>
-					<?php if ($f_edit_mode == "edit") { ?>
+					<?php
+			                    if ($f_edit_mode == "edit") {
+					        $fCustomFields[] = $dbColumn->getName();
+				        ?>
 					<td><textarea name="<?php print $dbColumn->getName() ?>"
 								  id="<?php print $dbColumn->getName() ?>"
 								  rows="20" cols="70"><?php print $text; ?></textarea>
@@ -939,6 +964,105 @@ window.location.reload();
 	</td>
 </tr>
 </table>
+
+<?php
+// 
+for($i = 0; $i < sizeof($fCustomFields); $i++) {
+    $jsArrayStr .= "'" . htmlspecialchars($fCustomFields[$i]) . "'";
+    if ($i + 1 < sizeof($fCustomFields)) {
+        $jsArrayStr .= ',';
+    }
+}
+?>
+
+<!-- YUI code //-->
+<script>
+var resp = document.getElementById('yui-connection-container');
+var mesg = document.getElementById('yui-connection-message');
+
+var handleSuccess = function(o){
+    var response = o.responseText;
+    YAHOO.log("The success handler was called.  tId: " + o.tId + ".", "info", "example");
+    if(response !== undefined){
+	resp.innerHTML = response;
+	mesg.innerHTML = "Saved";
+    }
+};
+
+var handleFailure = function(o){
+    YAHOO.log("The failure handler was called.  tId: " + o.tId + ".", "info", "example");
+
+    if(o.responseText !== undefined){
+        resp.innerHTML = "<li>Transaction id: " + o.tId + "</li>";
+	resp.innerHTML += "<li>HTTP status: " + o.status + "</li>";
+	resp.innerHTML += "<li>Status code message: " + o.statusText + "</li>";
+    }
+};
+
+var callback =
+{
+    success:handleSuccess,
+    failure:handleFailure
+};
+
+
+var sUrl = "assets/post.php";
+
+
+function makeRequest(a){
+
+    if (a == 'save') {
+        postAction = '&save=1';
+    } else {
+        postAction = '&save_and_close=1';
+    }
+
+    var ycaFArticleTitle = document.getElementById('f_article_title').value;
+    var ycaFOnFrontPage = document.getElementById('f_on_front_page').value;
+    var ycaFOnSectionPage = document.getElementById('f_on_section_page').value;
+    var ycaFCreationDate = document.getElementById('f_creation_date').value;
+    var ycaFPublishDate = document.getElementById('f_publish_date').value;
+    var ycaFIsPublic = document.getElementById('f_is_public').value;
+    var ycaFCommentStatus = document.getElementById('f_comment_status').value;
+    var ycaFKeywords = document.getElementById('f_keywords').value;
+    var ycaFPublicationId = document.getElementById('f_publication_id').value;
+    var ycaFIssueNumber = document.getElementById('f_issue_number').value;
+    var ycaFSectionNumber = document.getElementById('f_section_number').value;
+    var ycaFLanguageId = document.getElementById('f_language_id').value;
+    var ycaFLanguageSelected = document.getElementById('f_language_selected').value;
+    var ycaFArticleNumber = document.getElementById('f_article_number').value;
+    var ycaFMessage = document.getElementById('f_message').value;
+
+    var textFields = [<?php print($jsArrayStr); ?>];
+    var postCustomData = '';
+
+    for (i = 0; i < textFields.length; i++) {
+        postCustomData += '&' + textFields[i] + '=' + encodeURIComponent(document.getElementById(textFields[i]).value);
+    }
+
+    var postData = "f_article_title=" + encodeURIComponent(ycaFArticleTitle)
+      + "&f_on_front_page=" + ycaFOnFrontPage
+      + "&f_on_section_page=" + ycaFOnSectionPage
+      + "&f_creation_date=" + ycaFCreationDate
+      + "&f_publish_date=" + ycaFPublishDate
+      + "&f_is_public=" + ycaFIsPublic
+      + "&f_comment_status=" + ycaFCommentStatus
+      + "&f_keywords=" + ycaFKeywords
+      + "&f_publication_id=" + ycaFPublicationId
+      + "&f_issue_number=" + ycaFIssueNumber
+      + "&f_section_number=" + ycaFSectionNumber
+      + "&f_language_id=" + ycaFLanguageId
+      + "&f_language_selected=" + ycaFLanguageSelected
+      + "&f_article_number=" + ycaFArticleNumber
+      + "&f_message=" + encodeURIComponent(ycaFMessage)
+      + postCustomData + postAction;
+
+    var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
+    YAHOO.log("Initiating request; tId: " + request.tId + ".", "info", "example");
+}
+</script>
+<!-- END YUI code //-->
+
 <?php
 if ($showComments && $f_show_comments) {
     include("comments/show_comments.php");
