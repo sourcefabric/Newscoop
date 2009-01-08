@@ -1676,10 +1676,12 @@ class Article extends DatabaseObject {
 	    			." LIMIT $p_start, $p_upperLimit";
 		$query = $g_ado_db->Execute($queryStr);
 		$articles = array();
-		while ($row = $query->FetchRow()) {
-			$tmpArticle = new Article();
+		if ($query != false) {
+		    while ($row = $query->FetchRow()) {
+		        $tmpArticle = new Article();
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
+		    }
 		}
 		$queryStr = 'SELECT COUNT(*) FROM Articles'
 	    			." WHERE Published = 'S' "
@@ -1711,10 +1713,12 @@ class Article extends DatabaseObject {
 	    			." LIMIT $p_start, $p_maxRows";
 		$query = $g_ado_db->Execute($queryStr);
 		$articles = array();
-		while ($row = $query->FetchRow()) {
-			$tmpArticle = new Article();
+		if ($query != false) {
+		    while ($row = $query->FetchRow()) {
+		        $tmpArticle = new Article();
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
+		    }
 		}
 		$queryStr = 'SELECT COUNT(*) FROM Articles'
 	    			." WHERE IdPublication=0 AND NrIssue=0 AND NrSection=0 ";
