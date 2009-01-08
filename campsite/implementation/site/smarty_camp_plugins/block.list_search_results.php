@@ -43,6 +43,7 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
         $p_params['search_level'] = $campContext->search_articles_action->search_level;
         $p_params['search_phrase'] = $campContext->search_articles_action->search_phrase;
         $p_params['search_results'] = $campContext->search_articles_action->search_results;
+        $p_params['search_section'] = $campContext->search_articles_action->search_section;
         
         $searchResultsList = new SearchResultsList($start, $p_params);
         if ($searchResultsList->isEmpty()) {

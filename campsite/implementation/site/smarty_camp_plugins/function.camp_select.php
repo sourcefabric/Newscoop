@@ -156,11 +156,33 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $html = '<input type="checkbox" name="f_match_all" '
             . $p_params['html_code'] . ' />';
         } elseif ($attribute == 'level') {
+        	camp_load_translation_strings("globals");
             $html = '<select name="f_search_'.$attribute.'" ' . $p_params['html_code'] . '>'
-                .'<option value="0">Publication</option>'
-                .'<option value="1">Issue</option>'
-                .'<option value="2">Section</option>'
+                .'<option value="1">' . getGS('Publication') . '</option>'
+                .'<option value="2">' . getGS('Issue') . '</option>'
+                .'<option value="3">' . getGS('Section') . '</option>'
                 .'</select>';
+        } elseif ($attribute == 'section') {
+            $constraints = array();
+            $operator = new Operator('is', 'integer');
+            if ($campsite->publication->defined) {
+            	$constraints[] = new ComparisonOperation('IdPublication', $operator, $campsite->publication->identifier);
+            }
+            if ($campsite->language->defined) {
+            	$constraints[] = new ComparisonOperation('IdLanguage', $operator, $campsite->language->number);
+            }
+            if ($campsite->issue->defined) {
+            	$constraints[] = new ComparisonOperation('NrIssue', $operator, $campsite->issue->number);
+            }
+            $sectionsList = Section::GetList($constraints, array('Number'=>'ASC'));
+            camp_load_translation_strings("user_subscription_sections");
+            $html = '<select name="f_search_section" ' . $p_params['html_code'] . '>';
+            $html .= '<option value="0">' . getGS('-- ALL SECTIONS --') . '</option>';
+            foreach ($sectionsList as $section) {
+            	$html .= '<option value="' . $section->getSectionNumber() . '">'
+            	      . htmlspecialchars($section->getName()) . '</option>';
+            }
+            $html .= '</select>';
         }
     }
 

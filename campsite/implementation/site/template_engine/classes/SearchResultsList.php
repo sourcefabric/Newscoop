@@ -33,18 +33,25 @@ class SearchResultsList extends ListObject
 	{
 	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
-	    if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_PUBLICATION) {
+	    if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_PUBLICATION
+	    && $context->publication->defined) {
 	        $this->m_constraints[] = new ComparisonOperation('Articles.IdPublication', $operator,
 	                                                         $context->publication->identifier);
 	    }
-	    if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_ISSUE) {
+	    if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_ISSUE
+	    && $context->issue->defined) {
 	        $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
 	                                                         $context->issue->number);
 	    }
-	    if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_SECTION) {
+	    if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_SECTION
+	    && $context->section->defined && $p_parameters['search_section'] == 0) {
 	        $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
 	                                                         $context->section->number);
 	    }
+        if ($p_parameters['search_section'] != 0) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
+                                                             $p_parameters['search_section']);
+        }
 
 	    $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
 	    $articlesList = $p_parameters['search_results'];
@@ -130,6 +137,7 @@ class SearchResultsList extends ListObject
     			case 'search_level':
     			case 'search_phrase':
     			case 'search_results':
+    			case 'search_section':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {

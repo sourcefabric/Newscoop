@@ -61,6 +61,12 @@ class MetaActionSearch_Articles extends MetaAction
             $this->m_properties['search_level'] = MetaActionSearch_Articles::DEFAULT_SEARCH_LEVEL;
         }
 
+        if (isset($p_input['f_search_section'])) {
+        	$this->m_properties['search_section'] = (int)$p_input['f_search_section'];
+        } else {
+        	$this->m_properties['search_section'] = 0;
+        }
+
         $this->m_properties['submit_button'] = $p_input['f_search_articles'];
         $this->m_error = ACTION_OK;
     }
@@ -93,17 +99,24 @@ class MetaActionSearch_Articles extends MetaAction
 
 	    $operator = new Operator('is', 'integer');
 	    $this->m_properties['constraints'] = array();
-	    if ($this->m_properties['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_PUBLICATION) {
+	    if ($this->m_properties['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_PUBLICATION
+	    && $p_context->publication->defined) {
 	        $this->m_properties['constraints'][] = new ComparisonOperation('Articles.IdPublication', $operator,
 	                                                         $p_context->publication->identifier);
 	    }
-	    if ($this->m_properties['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_ISSUE) {
+	    if ($this->m_properties['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_ISSUE
+	    && $p_context->issue->defined) {
 	        $this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrIssue', $operator,
 	                                                         $p_context->issue->number);
 	    }
-	    if ($this->m_properties['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_SECTION) {
+	    if ($this->m_properties['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_SECTION
+	    && $p_context->section->defined && $this->m_properties['search_section'] == 0) {
 	        $this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrSection', $operator,
 	                                                         $p_context->section->number);
+	    }
+	    if ($this->m_properties['search_section'] != 0) {
+	    	$this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrSection', $operator,
+                                                             $this->m_properties['search_section']);
 	    }
         return true;
     }
