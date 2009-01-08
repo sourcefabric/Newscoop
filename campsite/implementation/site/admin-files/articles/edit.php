@@ -31,15 +31,15 @@ $f_show_comments = camp_session_get('f_show_comments', 1);
 $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+    exit;
 }
 
 // Fetch article
 $articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
-	camp_html_display_error(getGS('No such article.'));
-	exit;
+    camp_html_display_error(getGS('No such article.'));
+    exit;
 }
 $articleAuthorObj = new Author($articleObj->getAuthorId());
 
@@ -69,10 +69,10 @@ if ($today['year'] != $savedOn['year'] || $today['mon'] != $savedOn['mon'] || $t
 $showComments = false;
 $showCommentControls = false;
 if ($f_publication_id > 0) {
-	$publicationObj = new Publication($f_publication_id);
-	$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
-	$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
-	$languageObj = new Language($articleObj->getLanguageId());
+    $publicationObj = new Publication($f_publication_id);
+    $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+    $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+    $languageObj = new Language($articleObj->getLanguageId());
 
     $showCommentControls = ($publicationObj->commentsEnabled() && $articleType->commentsEnabled());
     $showComments = $showCommentControls && $articleObj->commentsEnabled();
@@ -99,7 +99,7 @@ if ($showComments) {
 $articleLang = $f_language_id ? $f_language_id : $articleObj->getLanguageId();
 $userSectionRight = 'ManageSection'.$articleObj->getSectionNumber().'_P'.$articleObj->getPublicationId().'_I'.$articleObj->getIssueNumber().'_L'.$articleLang;
 if (!$articleObj->userCanModify($g_user, $userSectionRight)) {
-	$f_edit_mode = "view";
+    $f_edit_mode = "view";
 }
 
 //
@@ -108,14 +108,14 @@ if (!$articleObj->userCanModify($g_user, $userSectionRight)) {
 $locked = true;
 // If the article hasnt been touched in 24 hours
 $timeDiff = camp_time_diff_str($articleObj->getLockTime());
-if ( $timeDiff['days'] > 0 ) {
-	$articleObj->setIsLocked(false);
-	$locked = false;
+if ($timeDiff['days'] > 0) {
+    $articleObj->setIsLocked(false);
+    $locked = false;
 }
 // If the user who locked the article doesnt exist anymore, unlock the article.
 elseif (($articleObj->getLockedByUser() != 0) && !$lockUserObj->exists()) {
-	$articleObj->setIsLocked(false);
-	$locked = false;
+    $articleObj->setIsLocked(false);
+    $locked = false;
 }
 
 //
@@ -125,16 +125,16 @@ elseif (($articleObj->getLockedByUser() != 0) && !$lockUserObj->exists()) {
 // If the article has not been unlocked and is not locked by a user.
 if ($f_unlock === false) {
     if (!$articleObj->isLocked()) {
-		// Lock the article
-		$articleObj->setIsLocked(true, $g_user->getUserId());
+        // Lock the article
+        $articleObj->setIsLocked(true, $g_user->getUserId());
     }
 } else {
-	$f_edit_mode = "view";
+    $f_edit_mode = "view";
 }
 
 // Automatically unlock the article is the user goes into VIEW mode
 $lockedByCurrentUser = ($articleObj->getLockedByUser() == $g_user->getUserId());
-if ( ($f_edit_mode == "view") && $lockedByCurrentUser) {
+if (($f_edit_mode == "view") && $lockedByCurrentUser) {
     $articleObj->setIsLocked(false);
 }
 
@@ -149,44 +149,41 @@ if ($lockedByCurrentUser) {
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 
 if ($f_edit_mode == "edit") {
-	$title = getGS("Edit article");
-}
-else {
-	$title = getGS("View article");
+    $title = getGS("Edit article");
+} else {
+    $title = getGS("View article");
 }
 
 if ($f_publication_id > 0) {
-	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
-					  'Section' => $sectionObj, 'Article'=>$articleObj);
-	camp_html_content_top($title, $topArray);
+    $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
+		      'Section' => $sectionObj, 'Article'=>$articleObj);
+    camp_html_content_top($title, $topArray);
 } else {
-	$crumbs = array();
-	$crumbs[] = array(getGS("Actions"), "");
-	$crumbs[] = array($title, "");
-	echo camp_html_breadcrumbs($crumbs);
+    $crumbs = array();
+    $crumbs[] = array(getGS("Actions"), "");
+    $crumbs[] = array($title, "");
+    echo camp_html_breadcrumbs($crumbs);
 }
 
 $hasArticleBodyField = false;
 foreach ($dbColumns as $dbColumn) {
-	if (stristr($dbColumn->getType(), "blob")) {
-		$hasArticleBodyField = true;
-	}
+    if (stristr($dbColumn->getType(), "blob")) {
+        $hasArticleBodyField = true;
+    }
 }
 if (($f_edit_mode == "edit") && $hasArticleBodyField) {
-	$languageSelectedObj = new Language($f_language_selected);
-	$editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
-	editor_load_tinymce($dbColumns, $g_user, $editorLanguage);
+    $languageSelectedObj = new Language($f_language_selected);
+    $editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
+    editor_load_tinymce($dbColumns, $g_user, $editorLanguage);
 }
-
 ?>
-
 <!-- YUI dependencies //-->
 <script src="/javascript/yui/build/yahoo/yahoo-min.js"></script>
 <script src="/javascript/yui/build/event/event-min.js"></script>
 <script src="/javascript/yui/build/connection/connection-min.js"></script>
 
 <style type="text/css">
-  
+  div#yui-connection-container {display:none;}
 </style>
 
 <div id="yui-connection-container"></div>
@@ -195,49 +192,49 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 <?php
 // If the article is locked.
 if ($articleObj->userCanModify($g_user, $userSectionRight) && $locked && ($f_edit_mode == "edit")) {
-	?><P>
-	<table border="0" cellspacing="0" cellpadding="6" class="table_input">
-	<tr>
-		<td colspan="2">
-			<B><?php  putGS("Article is locked"); ?> </B>
-			<hr noshade size="1" color="black">
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2" align="center">
-			<blockquote>
-				<?php
-				$timeDiff = camp_time_diff_str($articleObj->getLockTime());
-				if ($timeDiff['hours'] > 0) {
-					putGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
-						  '<B>'.htmlspecialchars($lockUserObj->getRealName()),
-						  htmlspecialchars($lockUserObj->getUserName()).'</B>',
-						  $timeDiff['hours'], $timeDiff['minutes']);
-				}
-				else {
-					putGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
-						  '<B>'.htmlspecialchars($lockUserObj->getRealName()),
-						  htmlspecialchars($lockUserObj->getUserName()).'</B>',
-						  $timeDiff['minutes']);
-				}
-				?>
-				<br>
-			</blockquote>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<div align="CENTER">
-		<input type="button" name="Yes" value="<?php  putGS('Unlock'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php"); ?>'" />
-		<input type="button" name="Yes" value="<?php  putGS('View'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_edit_mode=view"); ?>'" />
-		<input type="button" name="No" value="<?php  putGS('Cancel'); ?>" class="button" onclick="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'" />
-		</div>
-		</td>
-	</tr>
-	</table>
-	<P>
-	<?php
-	return;
+?>
+<p>
+<table border="0" cellspacing="0" cellpadding="6" class="table_input">
+<tr>
+  <td colspan="2">
+    <b><?php  putGS("Article is locked"); ?> </b>
+    <hr noshade size="1" color="black">
+  </td>
+</tr>
+<tr>
+  <td colspan="2" align="center">
+    <blockquote>
+    <?php
+        $timeDiff = camp_time_diff_str($articleObj->getLockTime());
+        if ($timeDiff['hours'] > 0) {
+            putGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
+                  '<B>'.htmlspecialchars($lockUserObj->getRealName()),
+                  htmlspecialchars($lockUserObj->getUserName()).'</B>',
+                  $timeDiff['hours'], $timeDiff['minutes']);
+        } else {
+            putGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
+                  '<B>'.htmlspecialchars($lockUserObj->getRealName()),
+                  htmlspecialchars($lockUserObj->getUserName()).'</B>',
+                  $timeDiff['minutes']);
+        }
+    ?>
+    <br/>
+    </blockquote>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <div align="CENTER">
+      <input type="button" name="Yes" value="<?php  putGS('Unlock'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php"); ?>'" />
+      <input type="button" name="Yes" value="<?php  putGS('View'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_edit_mode=view"); ?>'" />
+      <input type="button" name="No" value="<?php  putGS('Cancel'); ?>" class="button" onclick="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'" />
+    </div>
+  </td>
+</tr>
+</table>
+<p>
+<?php
+   return;
 }
 
 if ($f_edit_mode == "edit") { ?>
@@ -250,14 +247,14 @@ if ($f_edit_mode == "edit") { ?>
 <?php if ($f_publication_id > 0) { ?>
 <table border="0" cellspacing="0" cellpadding="1" class="action_buttons" style="padding-top: 5px;">
 <tr>
-	<td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" border="0"></a></td>
-	<td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><B><?php  putGS("Article List"); ?></B></a></td>
+  <td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" border="0"></a></td>
+  <td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><b><?php  putGS("Article List"); ?></b></a></td>
 
-	<?php if ($g_user->hasPermission($userSectionRight)
-                  && $g_user->hasPermission('AddArticle')) { ?>
-	<td style="padding-left: 20px;"><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a></td>
-	<td><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><B><?php  putGS("Add new article"); ?></B></a></td>
-<?php  } ?>
+<?php if ($g_user->hasPermission($userSectionRight)
+              && $g_user->hasPermission('AddArticle')) { ?>
+  <td style="padding-left: 20px;"><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a></td>
+  <td><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><b><?php  putGS("Add new article"); ?></b></a></td>
+<?php } ?>
 </tr>
 </table>
 <?php } ?>
@@ -266,116 +263,112 @@ if ($f_edit_mode == "edit") { ?>
 
 <table border="0" cellspacing="1" cellpadding="0" class="table_input" width="900px" style="margin-top: 5px;">
 <tr>
-	<td width="700px" style="border-bottom: 1px solid #8baed1;" colspan="2">
-		<!-- for the left side of the article edit screen -->
-		<table cellpadding="0" cellspacing="0">
-		<tr>
-			<td width="100%" valign="middle">
+  <td width="700px" style="border-bottom: 1px solid #8baed1;" colspan="2">
+    <!-- for the left side of the article edit screen -->
+    <table cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" valign="middle">
+        <!-- BEGIN the article control bar -->
+        <form name="article_actions" action="do_article_action.php" method="POST">
+        <input type="hidden" name="f_publication_id" id="f_publication_id" value="<?php  p($f_publication_id); ?>" />
+        <input type="hidden" name="f_issue_number" id="f_issue_number" value="<?php  p($f_issue_number); ?>" />
+        <input type="hidden" name="f_section_number" id="f_section_number" value="<?php  p($f_section_number); ?>" />
+        <input type="hidden" name="f_language_id" id="f_language_id" value="<?php  p($f_language_id); ?>" />
+        <input type="hidden" name="f_language_selected" id="f_language_selected" value="<?php  p($f_language_selected); ?>" />
+        <input type="hidden" name="f_article_number" id="f_article_number" value="<?php  p($f_article_number); ?>" />
+        <table border="0" cellspacing="1" cellpadding="0">
+        <tr>
+          <td style="padding-left: 1em;">
+            <script>
+            function action_selected(dropdownElement) {
+                // Get the index of the "delete" option.
+                deleteOptionIndex = -1;
+                for (var index = 0; index < dropdownElement.options.length; index++) {
+                    if (dropdownElement.options[index].value == "delete") {
+                        deleteOptionIndex = index;
+                    }
+                }
 
-    			<!-- BEGIN the article control bar -->
-    			<form name="article_actions" action="do_article_action.php" method="POST">
-    			<input type="hidden" name="f_publication_id" id="f_publication_id" value="<?php  p($f_publication_id); ?>" />
-    			<input type="hidden" name="f_issue_number" id="f_issue_number" value="<?php  p($f_issue_number); ?>" />
-    			<input type="hidden" name="f_section_number" id="f_section_number" value="<?php  p($f_section_number); ?>" />
-    			<input type="hidden" name="f_language_id" id="f_language_id" value="<?php  p($f_language_id); ?>" />
-    			<input type="hidden" name="f_language_selected" id="f_language_selected" value="<?php  p($f_language_selected); ?>" />
-    			<input type="hidden" name="f_article_number" id="f_article_number" value="<?php  p($f_article_number); ?>" />
-    			<table border="0" cellspacing="1" cellpadding="0">
-    			<tr>
-					<td style="padding-left: 1em;">
-						<script>
-						function action_selected(dropdownElement)
-						{
-							// Get the index of the "delete" option.
-							deleteOptionIndex = -1;
-							for (var index = 0; index < dropdownElement.options.length; index++) {
-								if (dropdownElement.options[index].value == "delete") {
-									deleteOptionIndex = index;
-								}
-							}
+                // if the user has selected the "delete" option
+                if (dropdownElement.selectedIndex == deleteOptionIndex) {
+                    ok = confirm("<?php putGS("Are you sure you want to delete this article?"); ?>");
+                    if (!ok) {
+                        dropdownElement.options[0].selected = true;
+                        return;
+                    }
+                }
 
-							// if the user has selected the "delete" option
-							if (dropdownElement.selectedIndex == deleteOptionIndex) {
-								ok = confirm("<?php putGS("Are you sure you want to delete this article?"); ?>");
-								if (!ok) {
-									dropdownElement.options[0].selected = true;
-									return;
-								}
-							}
+                // do the action if it isnt the first or second option
+                if ((dropdownElement.selectedIndex != 0) &&  (dropdownElement.selectedIndex != 1)) {
+                    dropdownElement.form.submit();
+                }
+            }
+            </script>
+            <select name="f_action" class="input_select" onchange="action_selected(this);">
+              <option value=""><?php putGS("Actions"); ?>...</option>
+              <option value="">-----------</option>
+              <?php if ($articleObj->userCanModify($g_user, $userSectionRight) && $articleObj->isLocked()) { ?>
+              <option value="unlock"><?php putGS("Unlock"); ?></option>
+              <?php } ?>
 
-							// do the action if it isnt the first or second option
-							if ( (dropdownElement.selectedIndex != 0) &&  (dropdownElement.selectedIndex != 1) ) {
-								dropdownElement.form.submit();
-							}
-						}
-						</script>
-						<select name="f_action" class="input_select" onchange="action_selected(this);">
-						<option value=""><?php putGS("Actions"); ?>...</option>
-						<option value="">-----------</option>
+              <?php if ($g_user->hasPermission('DeleteArticle')) { ?>
+              <option value="delete"><?php putGS("Delete"); ?></option>
+              <?php } ?>
 
-						<?php if ($articleObj->userCanModify($g_user, $userSectionRight) && $articleObj->isLocked()) { ?>
-						<option value="unlock"><?php putGS("Unlock"); ?></option>
-						<?php } ?>
+              <?php if ($g_user->hasPermission('AddArticle')) { ?>
+              <option value="copy"><?php putGS("Duplicate"); ?></option>
+              <?php } ?>
 
-						<?php  if ($g_user->hasPermission('DeleteArticle')) { ?>
-						<option value="delete"><?php putGS("Delete"); ?></option>
-						<?php } ?>
+              <?php if ($g_user->hasPermission('TranslateArticle')) { ?>
+              <option value="translate"><?php putGS("Translate"); ?></option>
+              <?php } ?>
 
-						<?php  if ($g_user->hasPermission('AddArticle')) { ?>
-						<option value="copy"><?php putGS("Duplicate"); ?></option>
-						<?php } ?>
+              <?php if ($g_user->hasPermission('MoveArticle')) { ?>
+              <option value="move"><?php putGS("Move"); ?></option>
+              <?php } ?>
+            </select>
+          </td>
 
-						<?php if ($g_user->hasPermission('TranslateArticle')) { ?>
-						<option value="translate"><?php putGS("Translate"); ?></option>
-						<?php } ?>
-
-						<?php if ($g_user->hasPermission('MoveArticle')) { ?>
-						<option value="move"><?php putGS("Move"); ?></option>
-						<?php } ?>
-						</select>
-					</td>
-
-					<!-- BEGIN Workflow -->
-					<td style="padding-left: 1em;">
-						<?php
-						// Show a different menu depending on the rights of the user.
-						if ($g_user->hasPermission("Publish")) { ?>
-						<select name="f_action_workflow" class="input_select" onchange="this.form.submit();">
-						<?php
-						camp_html_select_option("Y", $articleObj->getWorkflowStatus(), getGS("Status: Published"));
-						camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
-						camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
-						?>
-						</select>
-						<?php } elseif ($articleObj->userCanModify($g_user, $userSectionRight) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
-						<select name="f_action_workflow" class="input_select" onchange="this.form.submit();">
-						<?php
-						camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
-						camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
-						?>
-						</select>
-						<?php } else {
-							switch ($articleObj->getWorkflowStatus()) {
-								case 'Y':
-									putGS("Status: Published");
-									break;
-								case 'S':
-									putGS("Status: Submitted");
-									break;
-								case 'N':
-									putGS("Status: New");
-									break;
-							}
-						}
-						if ( count($articleEvents) > 0 ) {
-							?>
-							<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="absmiddle" style="padding-bottom: 1px;">
-							<?php
-						}
-						?>
-
-					</td>
-					<!-- END Workflow -->
+          <!-- BEGIN Workflow -->
+          <td style="padding-left: 1em;">
+          <?php
+          // Show a different menu depending on the rights of the user.
+          if ($g_user->hasPermission("Publish")) { ?>
+            <select name="f_action_workflow" class="input_select" onchange="this.form.submit();">
+              <?php
+                  camp_html_select_option("Y", $articleObj->getWorkflowStatus(), getGS("Status: Published"));
+                  camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
+                  camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
+              ?>
+            </select>
+          <?php } elseif ($articleObj->userCanModify($g_user, $userSectionRight) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
+            <select name="f_action_workflow" class="input_select" onchange="this.form.submit();">
+              <?php
+                  camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
+                  camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
+              ?>
+            </select>
+          <?php } else {
+              switch ($articleObj->getWorkflowStatus()) {
+              case 'Y':
+                  putGS("Status: Published");
+                  break;
+              case 'S':
+                  putGS("Status: Submitted");
+                  break;
+              case 'N':
+                  putGS("Status: New");
+                  break;
+              }
+          }
+          if (count($articleEvents) > 0) {
+          ?>
+            <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="absmiddle" style="padding-bottom: 1px;">
+          <?php
+          }
+          ?>
+          </td>
+          <!-- END Workflow -->
 
 					<td style="padding-left: 1em;">
 		        		<table border="0" cellspacing="0" cellpadding="3">
@@ -464,14 +457,14 @@ if ($f_edit_mode == "edit") { ?>
                     <?php } ?>
 					<input type="button" name="save" id="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('save');" />
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" name="save_and_close" id="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" onClick="makeRequest('save_and_close');window.location.href='http://www.google.com'" />
+					<input type="button" name="save_and_close" id="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" onClick="makeRequest('save_and_close');window.location='/admin/articles/index.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php p($f_section_number); ?>';" />
 				</td>
 			</tr>
 			</table>
 			<?php } ?>
 			<table width="100%" style="border-bottom: 1px solid #8baed1; padding-bottom: 3px;">
 			<tr>
-				<td colspan="2" align="left" valign="top"><b><?php putGS("Name"); ?>:</b>
+				<td align="left" valign="top"><b><?php putGS("Name"); ?>:</b>
 					<?php if ($f_edit_mode == "edit") { ?>
 					<input type="text" name="f_article_title" id="f_article_title" size="60" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" />
 					<?php } else {
@@ -479,18 +472,18 @@ if ($f_edit_mode == "edit") { ?>
 					}
 					?>
 				</td>
-		    </tr>
-		    <tr>
-                <td>
-                    <b><?php putGS("Author"); ?>:</b>
-                    <?php if ($f_edit_mode == "edit") { ?>
-                    <input type="text" name="f_article_author" size="50" class="input_text" value="<?php  print htmlspecialchars($articleAuthorObj->getName()); ?>" />
-                    <?php } else {
-                        print wordwrap(htmlspecialchars($articleAuthorObj->getName()), 60, "<br>");
-                    }
-                    ?>
-                </td>
-                <td align="right" valign="top" style="padding-right: 0.5em;"><b><?php  putGS("Created by"); ?>:</b> <?php p(htmlspecialchars($articleCreator->getRealName())); ?></td>
+			</tr>
+			<tr>
+				<td>
+				  <b><?php putGS("Author"); ?>:</b>
+				  <?php if ($f_edit_mode == "edit") { ?>
+	                          <input type="text" name="f_article_author" size="50" class="input_text" value="<?php  print htmlspecialchars($articleAuthorObj->getName()); ?>" />
+				  <?php } else {
+	                          print wordwrap(htmlspecialchars($articleAuthorObj->getName()), 60, "<br>");
+	                          }
+                                  ?>
+                                </td>
+				<td align="right" valign="top" style="padding-right: 0.5em;"><b><?php  putGS("Created by"); ?>:</b> <?php p(htmlspecialchars($articleCreator->getRealName())); ?></td>
 		    </tr>
 		    </table>
 
@@ -694,6 +687,8 @@ if ($f_edit_mode == "edit") { ?>
 			</tr>
 
 			<?php
+			$fCustomFields = array();
+                        $fCustomTextareas = array();
 			// Display the article type fields.
 			foreach ($dbColumns as $dbColumn) {
 
@@ -831,7 +826,7 @@ window.location.reload();
 				<tr>
 					<?php
 			                    if ($f_edit_mode == "edit") {
-					        $fCustomFields[] = $dbColumn->getName();
+					        $fCustomTextareas[] = $dbColumn->getName();
 				        ?>
 					<td><textarea name="<?php print $dbColumn->getName() ?>"
 								  id="<?php print $dbColumn->getName() ?>"
@@ -908,9 +903,9 @@ window.location.reload();
             <input type="submit" name="preview" value="<?php putGS('Preview'); ?>" class="button" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php p($f_publication_id); ?>&amp;f_issue_number=<?php p($f_issue_number); ?>&amp;f_section_number=<?php p($f_section_number); ?>&amp;f_article_number=<?php p($f_article_number); ?>&amp;f_language_id=<?php p($f_language_id); ?>&amp;f_language_selected=<?php p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false">
             &nbsp;&nbsp;&nbsp;&nbsp;
             <?php } ?>
-			<input type="submit" name="save" value="<?php putGS('Save'); ?>" class="button" />
+			<input type="button" name="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('save');" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="submit" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
+			  <input type="button" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" onClick="makeRequest('save_and_close');window.location='/admin/articles/index.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php p($f_section_number); ?>';" />
 		</td>
 	</tr>
 	<?php } ?>
@@ -978,11 +973,19 @@ window.location.reload();
 </table>
 
 <?php
-// 
+//
+$jsArrayFieldsStr = '';
 for($i = 0; $i < sizeof($fCustomFields); $i++) {
-    $jsArrayStr .= "'" . htmlspecialchars($fCustomFields[$i]) . "'";
+    $jsArrayFieldsStr .= "'" . addslashes($fCustomFields[$i]) . "'";
     if ($i + 1 < sizeof($fCustomFields)) {
-        $jsArrayStr .= ',';
+        $jsArrayFieldsStr .= ',';
+    }
+}
+$jsArrayTextareasStr = '';
+for($i = 0; $i < sizeof($fCustomTextareas); $i++) {
+    $jsArrayTextareasStr .= "'" . addslashes($fCustomTextareas[$i]) . "'";
+    if ($i + 1 < sizeof($fCustomTextareas)) {
+        $jsArrayTextareasStr .= ',';
     }
 }
 ?>
@@ -993,17 +996,16 @@ var resp = document.getElementById('yui-connection-container');
 var mesg = document.getElementById('yui-connection-message');
 
 var handleSuccess = function(o){
-    var response = o.responseText;
-    YAHOO.log("The success handler was called.  tId: " + o.tId + ".", "info", "example");
-    if(response !== undefined){
-	resp.innerHTML = response;
-	mesg.innerHTML = "Saved";
+    if(o.responseText !== undefined){
+        resp.innerHTML = "<li>Transaction id: " + o.tId + "</li>";
+	resp.innerHTML += "<li>HTTP status: " + o.status + "</li>";
+	resp.innerHTML += "<li>Status code message: " + o.statusText + "</li>";
+	resp.innerHTML += "<li>HTTP headers received: <ul>" + o.getAllResponseHeaders + "</ul></li>";
+	resp.innerHTML += "<li>PHP response: " + o.responseText + "</li>";
     }
 };
 
 var handleFailure = function(o){
-    YAHOO.log("The failure handler was called.  tId: " + o.tId + ".", "info", "example");
-
     if(o.responseText !== undefined){
         resp.innerHTML = "<li>Transaction id: " + o.tId + "</li>";
 	resp.innerHTML += "<li>HTTP status: " + o.status + "</li>";
@@ -1018,11 +1020,10 @@ var callback =
 };
 
 
-var sUrl = "assets/post.php";
+var sUrl = "/admin/articles/yui-assets/post.php";
 
 
 function makeRequest(a){
-
     if (a == 'save') {
         postAction = '&save=1';
     } else {
@@ -1030,11 +1031,12 @@ function makeRequest(a){
     }
 
     var ycaFArticleTitle = document.getElementById('f_article_title').value;
-    var ycaFOnFrontPage = document.getElementById('f_on_front_page').value;
-    var ycaFOnSectionPage = document.getElementById('f_on_section_page').value;
+    var ycaFArticleAuthor = document.getElementById('f_article_author').value;
+    var ycaFOnFrontPage = document.getElementById('f_on_front_page').checked;
+    var ycaFOnSectionPage = document.getElementById('f_on_section_page').checked;
     var ycaFCreationDate = document.getElementById('f_creation_date').value;
     var ycaFPublishDate = document.getElementById('f_publish_date').value;
-    var ycaFIsPublic = document.getElementById('f_is_public').value;
+    var ycaFIsPublic = document.getElementById('f_is_public').checked;
     var ycaFCommentStatus = document.getElementById('f_comment_status').value;
     var ycaFKeywords = document.getElementById('f_keywords').value;
     var ycaFPublicationId = document.getElementById('f_publication_id').value;
@@ -1045,14 +1047,35 @@ function makeRequest(a){
     var ycaFArticleNumber = document.getElementById('f_article_number').value;
     var ycaFMessage = document.getElementById('f_message').value;
 
-    var textFields = [<?php print($jsArrayStr); ?>];
-    var postCustomData = '';
+    var textFields = [<?php print($jsArrayFieldsStr); ?>];
+    var textAreas = [<?php print($jsArrayTextareasStr); ?>];
+    var postCustomFieldsData = '';
+    var postCustomTextareasData = '';
 
     for (i = 0; i < textFields.length; i++) {
-        postCustomData += '&' + textFields[i] + '=' + encodeURIComponent(document.getElementById(textFields[i]).value);
+        postCustomFieldsData += '&' + textFields[i] + '=' + encodeURI(document.getElementById(textFields[i]).value);
     }
 
-    var postData = "f_article_title=" + encodeURIComponent(ycaFArticleTitle)
+    for (i = 0; i < textAreas.length; i++) {
+        var ed = tinyMCE.get(textAreas[i]);
+        postCustomTextareasData += '&' + textAreas[i] + '=' + encodeURI(ed.getContent());
+    }
+
+    if (ycaFOnFrontPage == true)
+        ycaFOnFrontPage = 'on';
+    else
+        ycaFOnFrontPage = '';
+    if (ycaFOnSectionPage == true)
+        ycaFOnSectionPage = 'on';
+    else
+        ycaFOnSectionPage = '';
+    if (ycaFIsPublic == true)
+        ycaFIsPublic = 'on';
+    else
+        ycaFIsPublic = '';
+
+    var postData = "f_article_title=" + encodeURI(ycaFArticleTitle)
+      + "&f_article_author=" + ycaFArticleAuthor
       + "&f_on_front_page=" + ycaFOnFrontPage
       + "&f_on_section_page=" + ycaFOnSectionPage
       + "&f_creation_date=" + ycaFCreationDate
@@ -1066,11 +1089,10 @@ function makeRequest(a){
       + "&f_language_id=" + ycaFLanguageId
       + "&f_language_selected=" + ycaFLanguageSelected
       + "&f_article_number=" + ycaFArticleNumber
-      + "&f_message=" + encodeURIComponent(ycaFMessage)
-      + postCustomData + postAction;
+      + "&f_message=" + encodeURI(ycaFMessage)
+      + postCustomFieldsData + postCustomTextareasData + postAction;
 
     var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
-    YAHOO.log("Initiating request; tId: " + request.tId + ".", "info", "example");
 }
 </script>
 <!-- END YUI code //-->

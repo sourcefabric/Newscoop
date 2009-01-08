@@ -1,5 +1,4 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
 require_once($_SERVER['DOCUMENT_ROOT']. "/admin-files/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleImage.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleComment.php");
@@ -175,6 +174,7 @@ $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_article_author = Input::Get('f_article_author', 'string', '');
 $f_on_front_page = Input::Get('f_on_front_page', 'string', '', true);
 $f_on_section_page = Input::Get('f_on_section_page', 'string', '', true);
 $f_is_public = Input::Get('f_is_public', 'string', '', true);
@@ -184,6 +184,7 @@ $f_message = Input::Get('f_message', 'string', '', true);
 $f_creation_date = Input::Get('f_creation_date');
 $f_publish_date = Input::Get('f_publish_date');
 $f_comment_status = Input::Get('f_comment_status', 'string', '', true);
+
 if (isset($_REQUEST['save_and_close'])) {
 	$f_save_button = 'save_and_close';
 	$BackLink = "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
@@ -201,6 +202,7 @@ if (!Input::IsValid()) {
 $articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('No such article.'), $BackLink);
+	exit;
 }
 
 $articleTypeObj = $articleObj->getArticleData();
@@ -222,6 +224,7 @@ $userSectionRight = 'ManageSection'.$articleObj->getSectionNumber().'_P'.$articl
 if (!$articleObj->userCanModify($g_user, $userSectionRight)) {
 	camp_html_add_msg(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
 	camp_html_goto_page($BackLink);
+	exit;
 }
 // Only users with a lock on the article can change it.
 if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedByUser())) {
@@ -242,6 +245,15 @@ if ($f_article_title != $articleObj->getTitle()) {
 		$firstPost->setSubject($f_article_title);
 	}
 }
+
+// Update the article author
+$authorObj = new Author($f_article_author);
+if (!$authorObj->exists()) {
+	$authorData = Author::ReadName($f_article_author);
+	$authorObj->create($authorData);
+}
+$articleObj->setAuthorId($authorObj->getId());
+
 
 // Update the article.
 $articleObj->setOnFrontPage(!empty($f_on_front_page));
@@ -305,7 +317,7 @@ foreach ($articleFields as $dbColumnName => $text) {
 	$articleTypeObj->setProperty($dbColumnName, $text);
 }
 
-$logtext = getGS('Article content changed for "$1" (Publication: $2, Issue: $3, Section: $4, Language: $5)', $articleObj->getTitle(), $articleObj->getPublicationId(), $articleObj->getIssueNumber(), $articleObj->getSectionNumber(), $articleObj->getLanguageId());
+$logtext = getGS('Article content edited for "$1" (Publication: $2, Issue: $3, Section: $4, Language: $5)', $articleObj->getTitle(), $articleObj->getPublicationId(), $articleObj->getIssueNumber(), $articleObj->getSectionNumber(), $articleObj->getLanguageId());
 Log::Message($logtext, $g_user->getUserId(), 37);
 
 if ($f_save_button == "save") {
