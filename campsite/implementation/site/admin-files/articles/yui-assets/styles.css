@@ -1,0 +1,9 @@
+div#yui-connection-container {display:none;}
+div#yui-connection-message {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    padding-left: 0.75em;
+    font-size: 14pt;
+    font-weight: bold;
+    color: green;
+}

@@ -182,12 +182,7 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 <script src="/javascript/yui/build/event/event-min.js"></script>
 <script src="/javascript/yui/build/connection/connection-min.js"></script>
 
-<style type="text/css">
-  div#yui-connection-container {display:none;}
-</style>
-
-<div id="yui-connection-container"></div>
-<div id="yui-connection-message"></div>
+<link rel="stylesheet" type="text/css" href="yui-assets/styles.css">
 
 <?php
 // If the article is locked.
@@ -260,6 +255,9 @@ if ($f_edit_mode == "edit") { ?>
 <?php } ?>
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
+
+<div id="yui-connection-container"></div>
+<div id="yui-connection-message"></div>
 
 <table border="0" cellspacing="1" cellpadding="0" class="table_input" width="900px" style="margin-top: 5px;">
 <tr>
@@ -477,7 +475,7 @@ if ($f_edit_mode == "edit") { ?>
 				<td>
 				  <b><?php putGS("Author"); ?>:</b>
 				  <?php if ($f_edit_mode == "edit") { ?>
-	                          <input type="text" name="f_article_author" size="50" class="input_text" value="<?php  print htmlspecialchars($articleAuthorObj->getName()); ?>" />
+	                          <input type="text" name="f_article_author" id="f_article_author" size="50" class="input_text" value="<?php print htmlspecialchars($articleAuthorObj->getName()); ?>" />
 				  <?php } else {
 	                          print wordwrap(htmlspecialchars($articleAuthorObj->getName()), 60, "<br>");
 	                          }
@@ -905,7 +903,7 @@ window.location.reload();
             <?php } ?>
 			<input type="button" name="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('save');" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			  <input type="button" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" onClick="makeRequest('save_and_close');window.location='/admin/articles/index.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php p($f_section_number); ?>';" />
+			<input type="button" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" onClick="makeRequest('save_and_close');window.location='/admin/articles/index.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php p($f_section_number); ?>';" />
 		</td>
 	</tr>
 	<?php } ?>
@@ -1002,6 +1000,7 @@ var handleSuccess = function(o){
 	resp.innerHTML += "<li>Status code message: " + o.statusText + "</li>";
 	resp.innerHTML += "<li>HTTP headers received: <ul>" + o.getAllResponseHeaders + "</ul></li>";
 	resp.innerHTML += "<li>PHP response: " + o.responseText + "</li>";
+	mesg.innerHTML += "Article Saved";
     }
 };
 
