@@ -485,6 +485,7 @@ function camp_get_error_message($p_errorCode, $p_arg1 = null, $p_arg2 = null)
 	return "";
 } // fn camp_get_error_message
 
+
 function camp_get_plugin_path($p_plugin_name, $p_source_fullpath)
 {
     global $ADMIN_DIR;
@@ -500,6 +501,7 @@ function camp_get_plugin_path($p_plugin_name, $p_source_fullpath)
     
     else return false; 
 }
+
 
 function get($p_input)
 {
@@ -535,6 +537,7 @@ function camp_html_entity_decode_array($p_input, $p_decode_keys=false)
     }
 }
 
+
 function htmlspecialchars_array($p_input, $p_decode_keys=false)
 {
     if ($p_decode_keys) {
@@ -556,6 +559,7 @@ function htmlspecialchars_array($p_input, $p_decode_keys=false)
         return html_entity_decode($p_input);
     }
 }
+
 
 /**
  * Set Lock Info and Row Class strings
@@ -597,4 +601,59 @@ function camp_set_article_row_decoration(&$p_articleObj, &$p_lockInfo, &$p_rowCl
     }
     $p_color = !$p_color;
 }
+
+
+function camp_get_calendar_include()
+{
+	$environmentLanguage = camp_session_get('TOL_Language', 'en');
+	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
+	ob_start();
+?>
+<style type="text/css">@import url(<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/calendar-system.css);</style>
+<script type="text/javascript" src="<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/calendar.js"></script>
+<script type="text/javascript" src="<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/lang/calendar-<?php echo $environmentLanguage ?>.js"></script>
+<script type="text/javascript" src="<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/calendar-setup.js"></script>
+<?php
+	return ob_get_clean();
+}
+
+
+function camp_get_calendar_field($p_fieldName, $p_defaultValue = null,
+                                 $p_showTime = false, $p_htmlCode = null)
+{
+	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
+	$showTime = $p_showTime ? 'true' : 'false';
+	$buttonName = $p_fieldName . '_trigger';
+	$size = $p_showTime ? 19 : 10;
+	$format = $p_showTime ? "%Y-%m-%d %H:%M:00" : "%Y-%m-%d";
+	ob_start();
+?>
+<input type="text" name="<?php echo htmlspecialchars($p_fieldName); ?>"
+    value="<?php echo htmlspecialchars($p_defaultValue); ?>"
+    id="<?php echo htmlspecialchars($p_fieldName); ?>"
+    size="<?php echo $size; ?>" maxlength="<?php echo $size; ?>"
+    <?php echo $p_htmlCode; ?> />
+<img src="<?php echo htmlspecialchars($websiteURL); ?>/css/calendar.gif"
+    id="<?php echo htmlspecialchars($buttonName); ?>"
+    style="cursor: pointer; border: 1px solid red;"
+    title="Date selector"
+    onmouseover="this.style.background='red';"
+    onmouseout="this.style.background=''" />
+<script type="text/javascript">
+    Calendar.setup({
+        inputField:"<?php echo htmlspecialchars($p_fieldName); ?>",
+        ifFormat:"<?php echo $format; ?>",
+        displayArea:"<?php echo htmlspecialchars($p_fieldName); ?>",
+        daFormat:"<?php echo $format; ?>",
+        showsTime:<?php echo $showTime; ?>,
+        showOthers:true,
+        weekNumbers:false,
+        range:new Array(1990, 2020),
+        button:"<?php echo htmlspecialchars($buttonName); ?>"
+    });
+</script>
+<?php
+    return ob_get_clean();
+}
+
 ?>

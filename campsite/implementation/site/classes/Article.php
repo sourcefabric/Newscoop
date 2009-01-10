@@ -2367,9 +2367,10 @@ class Article extends DatabaseObject {
 
         // set other constraints
         foreach ($p_constraints as $constraint) {
-            $selectClauseObj->addWhere($constraint->getLeftOperand()
-                                       . $constraint->getOperator()->getSymbol('sql')
-                                       . $constraint->getRightOperand());
+        	$leftOperand = $constraint->getLeftOperand();
+        	$symbol = $constraint->getOperator()->getSymbol('sql');
+        	$rightOperand = "'" . $g_ado_db->escape($constraint->getRightOperand()) . "'";
+            $selectClauseObj->addWhere("$leftOperand $symbol $rightOperand");
         }
 
         // create the count clause object

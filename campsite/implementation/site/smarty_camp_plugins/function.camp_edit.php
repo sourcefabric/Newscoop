@@ -24,6 +24,8 @@
 function smarty_function_camp_edit($p_params, &$p_smarty)
 {
     global $g_ado_db;
+    
+    static $calendarIncludesSent = false;
 
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
 
@@ -102,6 +104,12 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
                 $html.= smarty_function_escape_special_chars($campsite->search->keywords);
             }
             $html .= '" '.$p_params['html_code'].' />';
+        } elseif ($attribute == 'start_date' || $attribute == 'end_date') {
+        	if (!$calendarIncludesSent) {
+        		$html = camp_get_calendar_include();
+        		$calendarIncludesSent = true;
+        	}
+        	$html .= camp_get_calendar_field('f_search_' . $attribute, null, $p_params['html_code']);
         }
         break;
 

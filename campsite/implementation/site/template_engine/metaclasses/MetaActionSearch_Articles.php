@@ -67,6 +67,18 @@ class MetaActionSearch_Articles extends MetaAction
         	$this->m_properties['search_section'] = 0;
         }
 
+        if (isset($p_input['f_search_start_date'])) {
+        	$this->m_properties['start_date'] = $p_input['f_search_start_date'];
+        } else {
+        	$this->m_properties['start_date'] = null;
+        }
+
+        if (isset($p_input['f_search_end_date'])) {
+            $this->m_properties['end_date'] = $p_input['f_search_end_date'];
+        } else {
+            $this->m_properties['end_date'] = null;
+        }
+
         $this->m_properties['submit_button'] = $p_input['f_search_articles'];
         $this->m_error = ACTION_OK;
     }
@@ -91,7 +103,9 @@ class MetaActionSearch_Articles extends MetaAction
             $this->m_properties['template'] = $p_context->template;
         }
         
-        $fields = array('f_search_keywords', 'f_search_level', 'f_search_articles', 'f_match_all');
+        $fields = array('f_search_articles', 'f_match_all', 'f_search_level',
+                        'f_search_keywords', 'f_search_section', 'f_search_start_date',
+                        'f_search_end_date');
         foreach ($fields as $field) {
             $p_context->default_url->reset_parameter($field);
             $p_context->url->reset_parameter($field);
@@ -118,7 +132,17 @@ class MetaActionSearch_Articles extends MetaAction
 	    	$this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrSection', $operator,
                                                              $this->m_properties['search_section']);
 	    }
-        return true;
+	    if (!empty($this->m_properties['start_date'])) {
+            $startDateOperator = new Operator('greater_equal', 'date');
+	    	$this->m_properties['constraints'][] = new ComparisonOperation('Articles.PublishDate', $startDateOperator,
+	    	                                                 $this->m_properties['start_date']);
+	    }
+	    if (!empty($this->m_properties['end_date'])) {
+            $endDateOperator = new Operator('smaller_equal', 'date');
+	    	$this->m_properties['constraints'][] = new ComparisonOperation('Articles.PublishDate', $endDateOperator,
+                                                             $this->m_properties['end_date']);
+        }
+	    return true;
     }
 
 

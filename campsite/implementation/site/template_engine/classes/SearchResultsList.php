@@ -52,6 +52,16 @@ class SearchResultsList extends ListObject
             $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
                                                              $p_parameters['search_section']);
         }
+        if (!empty($p_parameters['start_date'])) {
+            $startDateOperator = new Operator('greater_equal', 'date');
+        	$this->m_constraints[] = new ComparisonOperation('Articles.PublishDate', $startDateOperator,
+                                                             $p_parameters['start_date']);
+        }
+        if (!empty($p_parameters['end_date'])) {
+            $endDateOperator = new Operator('smaller_equal', 'date');
+        	$this->m_constraints[] = new ComparisonOperation('Articles.PublishDate', $endDateOperator,
+                                                             $p_parameters['end_date']);
+        }
 
 	    $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
 	    $articlesList = $p_parameters['search_results'];
@@ -138,7 +148,10 @@ class SearchResultsList extends ListObject
     			case 'search_phrase':
     			case 'search_results':
     			case 'search_section':
-    				if ($parameter == 'length' || $parameter == 'columns') {
+    			case 'start_date':
+                case 'end_date':
+    				if ($parameter == 'length' || $parameter == 'columns'
+    				|| $parameter == 'search_level' || $parameter == 'search_section') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {
     						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_search_results");

@@ -44,7 +44,9 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
         $p_params['search_phrase'] = $campContext->search_articles_action->search_phrase;
         $p_params['search_results'] = $campContext->search_articles_action->search_results;
         $p_params['search_section'] = $campContext->search_articles_action->search_section;
-        
+        $p_params['start_date'] = $campContext->search_articles_action->start_date;
+        $p_params['end_date'] = $campContext->search_articles_action->end_date;
+
         $searchResultsList = new SearchResultsList($start, $p_params);
         if ($searchResultsList->isEmpty()) {
         	$campContext->setCurrentList($searchResultsList, array());
@@ -54,9 +56,12 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
         }
 
         $campContext->url->set_parameter('f_search_articles', $campContext->search_articles_action->submit_button);
-        $campContext->url->set_parameter('f_search_keywords', $p_params['search_phrase']);
-        $campContext->url->set_parameter('f_search_level', $p_params['search_level']);
         $campContext->url->set_parameter('f_match_all', $p_params['match_all']);
+        $campContext->url->set_parameter('f_search_level', $p_params['search_level']);
+        $campContext->url->set_parameter('f_search_keywords', $p_params['search_phrase']);
+        $campContext->url->set_parameter('f_search_section', $p_params['search_section']);
+        $campContext->url->set_parameter('f_search_start_date', $p_params['start_date']);
+        $campContext->url->set_parameter('f_search_end_date', $p_params['end_date']);
 
         $campContext->setCurrentList($searchResultsList, array('publication', 'language',
     	                                                       'issue', 'section', 'article',
@@ -70,8 +75,9 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
             $campContext->article = $campContext->current_search_results_list->current;
             $p_repeat = true;
         } else {
-            $fields = array('f_search_articles', 'f_search_level', 'f_search_keywords', 'f_match_all',
-            $campContext->current_list_id());
+            $fields = array('f_search_articles', 'f_match_all', 'f_search_level',
+                            'f_search_keywords', 'f_search_section', 'f_search_start_date',
+                            'f_search_end_date', $campContext->current_list_id());
             foreach ($fields as $field) {
                 $campContext->url->reset_parameter($field);
             }
