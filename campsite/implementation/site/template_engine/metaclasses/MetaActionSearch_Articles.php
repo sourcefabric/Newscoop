@@ -16,13 +16,6 @@ class MetaActionSearch_Articles extends MetaAction
     const DEFAULT_SEARCH_LEVEL = MetaActionSearch_Articles::SEARCH_LEVEL_PUBLICATION;
     
     /**
-     * Stores the array of articles that matched the search criteria.
-     *
-     * @var array
-     */
-    private $m_articlesList = null;
-
-    /**
      * Stores the total number of articles that matched the search criteria.
      *
      * @var int
@@ -158,27 +151,15 @@ class MetaActionSearch_Articles extends MetaAction
         $p_property = MetaAction::TranslateProperty($p_property);
         if ($p_property == 'results_count') {
             if (is_null($this->m_totalCount)) {
-                $this->getSearchResults();
+                Article::SearchByKeyword($this->m_properties['search_keywords'],
+                                         $this->m_properties['match_all'],
+                                         $this->m_properties['constraints'],
+                                         array(), 0, 0,
+                                         $this->m_totalCount);
             }
             return $this->m_totalCount;
         }
         return parent::__get($p_property);
-    }
-
-
-    /**
-     * Returns an array of Articles
-     *
-     */
-    protected function getSearchResults() {
-        if (is_null($this->m_articlesList)) {
-            $this->m_articlesList = Article::SearchByKeyword($this->m_properties['search_keywords'],
-                                                             $this->m_properties['match_all'],
-                                                             $this->m_properties['constraints'],
-                                                             array(), 0, 0,
-                                                             $this->m_totalCount);
-        }
-        return $this->m_articlesList;
     }
 }
 

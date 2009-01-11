@@ -2323,7 +2323,8 @@ class Article extends DatabaseObject {
                                            $p_matchAll = false,
                                            array $p_constraints = array(),
                                            array $p_order = array(),
-                                           $p_start = 0, $p_limit = 0, &$p_count)
+                                           $p_start = 0, $p_limit = 0, &$p_count,
+                                           $p_countOnly = false)
     {
         global $g_ado_db;
 
@@ -2395,10 +2396,13 @@ class Article extends DatabaseObject {
         // set the column for the count clause
         $countClauseObj->addColumn('COUNT(*)');
 
-        $selectQuery = $selectClauseObj->buildQuery();
-        $articles = $g_ado_db->GetAll($selectQuery);
-        foreach ($articles as $article) {
-            $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+        $articlesList = array();
+        if (!$p_countOnly) {
+	        $selectQuery = $selectClauseObj->buildQuery();
+	        $articles = $g_ado_db->GetAll($selectQuery);
+	        foreach ($articles as $article) {
+	            $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+	        }
         }
         $countQuery = $countClauseObj->buildQuery();
         $p_count = $g_ado_db->GetOne($countQuery);
