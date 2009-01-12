@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/admin-files/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleImage.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleComment.php");
 
@@ -240,6 +240,7 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
 	$lockUser = new User($articleObj->getLockedByUser());
 	camp_html_add_msg(getGS('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getRealName(), $hours, $minutes));
 	camp_html_goto_page($BackLink);
+	exit;
 }
 
 // Update the first comment if the article title has changed
