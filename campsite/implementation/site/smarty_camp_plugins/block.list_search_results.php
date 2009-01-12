@@ -46,7 +46,8 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
         $p_params['search_section'] = $campContext->search_articles_action->search_section;
         $p_params['start_date'] = $campContext->search_articles_action->start_date;
         $p_params['end_date'] = $campContext->search_articles_action->end_date;
-
+        $p_params['topic_id'] = $campContext->search_articles_action->topic_id;
+        
         $searchResultsList = new SearchResultsList($start, $p_params);
         if ($searchResultsList->isEmpty()) {
         	$campContext->setCurrentList($searchResultsList, array());
@@ -62,7 +63,8 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
         $campContext->url->set_parameter('f_search_section', $p_params['search_section']);
         $campContext->url->set_parameter('f_search_start_date', $p_params['start_date']);
         $campContext->url->set_parameter('f_search_end_date', $p_params['end_date']);
-
+        $campContext->url->set_parameter('f_search_topic', $p_params['topic_id']);
+        
         $campContext->setCurrentList($searchResultsList, array('publication', 'language',
     	                                                       'issue', 'section', 'article',
     	                                                       'image', 'attachment', 'comment',
@@ -77,7 +79,7 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
         } else {
             $fields = array('f_search_articles', 'f_match_all', 'f_search_level',
                             'f_search_keywords', 'f_search_section', 'f_search_start_date',
-                            'f_search_end_date', $campContext->current_list_id());
+                            'f_search_end_date', 'f_search_topic', $campContext->current_list_id());
             foreach ($fields as $field) {
                 $campContext->url->reset_parameter($field);
             }

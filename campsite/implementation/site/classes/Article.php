@@ -2366,12 +2366,23 @@ class Article extends DatabaseObject {
             $selectClauseObj->addWhere($mainClauseConstraint);
         }
 
+        $joinTables = array();
         // set other constraints
         foreach ($p_constraints as $constraint) {
         	$leftOperand = $constraint->getLeftOperand();
+        	$operandAttributes = explode('.', $leftOperand);
+        	if (count($operandAttributes) == 2) {
+        		$table = trim($operandAttributes[0]);
+        		if (strtolower($table) != 'articles') {
+        			$joinTables[] = $table;
+        		}
+        	}
         	$symbol = $constraint->getOperator()->getSymbol('sql');
         	$rightOperand = "'" . $g_ado_db->escape($constraint->getRightOperand()) . "'";
             $selectClauseObj->addWhere("$leftOperand $symbol $rightOperand");
+        }
+        foreach ($joinTables as $table) {
+        	$selectClauseObj->addJoin("LEFT JOIN $table ON Articles.Number = $table.NrArticle");
         }
 
         // create the count clause object

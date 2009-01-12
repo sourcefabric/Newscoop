@@ -72,6 +72,12 @@ class MetaActionSearch_Articles extends MetaAction
             $this->m_properties['end_date'] = null;
         }
 
+        if (isset($p_input['f_search_topic'])) {
+            $this->m_properties['topic_id'] = $p_input['f_search_topic'];
+        } else {
+            $this->m_properties['topic_id'] = null;
+        }
+
         $this->m_properties['submit_button'] = $p_input['f_search_articles'];
         $this->m_error = ACTION_OK;
     }
@@ -98,7 +104,7 @@ class MetaActionSearch_Articles extends MetaAction
         
         $fields = array('f_search_articles', 'f_match_all', 'f_search_level',
                         'f_search_keywords', 'f_search_section', 'f_search_start_date',
-                        'f_search_end_date');
+                        'f_search_end_date', 'f_search_topic_id');
         foreach ($fields as $field) {
             $p_context->default_url->reset_parameter($field);
             $p_context->url->reset_parameter($field);
@@ -135,7 +141,11 @@ class MetaActionSearch_Articles extends MetaAction
 	    	$this->m_properties['constraints'][] = new ComparisonOperation('Articles.PublishDate', $endDateOperator,
                                                              $this->m_properties['end_date']);
         }
-	    return true;
+        if (!empty($this->m_properties['topic_id'])) {
+            $this->m_properties['constraints'][] = new ComparisonOperation('ArticleTopics.TopicId', $operator,
+                                                             $this->m_properties['topic_id']);
+        }
+        return true;
     }
 
 

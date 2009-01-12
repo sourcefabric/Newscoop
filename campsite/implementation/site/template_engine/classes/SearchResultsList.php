@@ -62,6 +62,10 @@ class SearchResultsList extends ListObject
         	$this->m_constraints[] = new ComparisonOperation('Articles.PublishDate', $endDateOperator,
                                                              $p_parameters['end_date']);
         }
+        if (!empty($p_parameters['topic_id'])) {
+            $this->m_constraints[] = new ComparisonOperation('ArticleTopics.TopicId', $operator,
+                                                             $p_parameters['topic_id']);
+        }
 
 	    $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
 	    $articlesList = $p_parameters['search_results'];
@@ -150,6 +154,7 @@ class SearchResultsList extends ListObject
     			case 'search_section':
     			case 'start_date':
                 case 'end_date':
+                case 'topic_id':
     				if ($parameter == 'length' || $parameter == 'columns'
     				|| $parameter == 'search_level' || $parameter == 'search_section') {
     					$intValue = (int)$value;
