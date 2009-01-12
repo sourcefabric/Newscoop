@@ -174,7 +174,7 @@ foreach ($dbColumns as $dbColumn) {
 if (($f_edit_mode == "edit") && $hasArticleBodyField) {
     $languageSelectedObj = new Language($f_language_selected);
     $editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
-    editor_load_tinymce($dbColumns, $g_user, $editorLanguage);
+    editor_load_tinymce($dbColumns, $g_user, $f_article_number, $editorLanguage);
 }
 ?>
 <!-- YUI dependencies //-->
@@ -824,10 +824,11 @@ window.location.reload();
 				<tr>
 					<?php
 			                    if ($f_edit_mode == "edit") {
-					        $fCustomTextareas[] = $dbColumn->getName();
+					        $textAreaId = $dbColumn->getName() . '_' . $f_article_number;
+						$fCustomTextareas[] = $textAreaId;
 				        ?>
-					<td><textarea name="<?php print $dbColumn->getName() ?>"
-								  id="<?php print $dbColumn->getName() ?>"
+					<td><textarea name="<?php print($textAreaId); ?>"
+								  id="<?php print($textAreaId); ?>"
 								  rows="20" cols="70"><?php print $text; ?></textarea>
 					</td>
 					<?php } else { ?>

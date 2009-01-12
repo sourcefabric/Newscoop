@@ -7,7 +7,8 @@
  *
  * @return void
  */
-function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage)
+function editor_load_tinymce($p_dbColumns, $p_user,
+			     $p_articleNumber, $p_editorLanguage)
 {
 	global $Campsite;
 
@@ -21,11 +22,11 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage)
 	if (is_array($p_dbColumns)) {
 	    foreach ($p_dbColumns as $dbColumn) {
 	        if (stristr($dbColumn->getType(), "blob")) {
-		    $editors[] = $dbColumn->getName();
+		    $editors[] = $dbColumn->getName().'_'.$p_articleNumber;
 		}
 	    }
 	} else {
-	    $editors[] = $p_dbColumns;
+	    $editors[] = $p_dbColumns.'_'.$p_articleNumber;
 	}
 	$textareas = implode(",", $editors);
 
@@ -50,6 +51,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage)
 	if ($p_user->hasPermission('EditorLink')) {
 	    $plugins[] = 'campsiteinternallink';
 	}
+	$plugins[] = 'campsiteimage';
 	$plugins_list = implode(",", $plugins);
 
 	/** STEP 3 ********************************************************
@@ -110,7 +112,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage)
 	    $toolbar1[] = "campsite-subhead";
 	}
 	if ($p_user->hasPermission('EditorImage')) {
-	    $toolbar1[] = "image";
+	    $toolbar1[] = "campsiteimage";
 	}
 	if ($p_user->hasPermission('EditorSourceView')) {
 	    $toolbar1[] = "code";

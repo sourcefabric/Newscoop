@@ -209,9 +209,14 @@ $dbColumns = $articleTypeObj->getUserDefinedColumns();
 
 $articleFields = array();
 foreach ($dbColumns as $dbColumn) {
-	if (isset($_REQUEST[$dbColumn->getName()])) {
-		$articleFields[$dbColumn->getName()] = trim(Input::Get($dbColumn->getName()));
-	}
+    if (stristr($dbColumn->getType(), "blob")) {
+        $dbColumnParam = $dbColumn->getName() . '_' . $f_article_number;
+    } else {
+        $dbColumnParam = $dbColumn->getName();
+    }
+    if (isset($_REQUEST[$dbColumnParam])) {
+        $articleFields[$dbColumn->getName()] = trim(Input::Get($dbColumnParam));
+    }
 }
 
 if (!empty($f_message)) {
