@@ -91,7 +91,6 @@ ArticleAttachment::AddFileToArticle($file->getAttachmentId(), $articleObj->getAr
 ?>
 <script>
 window.opener.document.forms.article_edit.f_message.value = "<?php putGS("File '$1' added.", $file->getFileName()); ?>";
-window.opener.document.forms.article_edit.onsubmit();
 window.opener.document.forms.article_edit.submit();
 window.close();
 </script>

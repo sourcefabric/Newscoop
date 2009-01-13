@@ -433,7 +433,7 @@ if ($f_edit_mode == "edit") { ?>
 <tr>
 	<td valign="top">
 	<!-- BEGIN article content -->
-	<form name="article_edit" action="#" method="POST">
+	<form name="article_edit" action="do_edit.php" method="POST">
 	<input type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>" />
 	<input type="hidden" name="f_issue_number" value="<?php  p($f_issue_number); ?>" />
 	<input type="hidden" name="f_section_number" value="<?php  p($f_section_number); ?>" />

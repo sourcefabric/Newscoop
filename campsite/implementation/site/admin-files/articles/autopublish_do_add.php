@@ -118,7 +118,6 @@ if ($f_mode == "multi") {
 	?>
 	<script>
 	window.opener.document.forms.article_edit.f_message.value = "<?php putGS("Scheduled action added."); ?>";
-	window.opener.document.forms.article_edit.onsubmit();
 	window.opener.document.forms.article_edit.submit();
 	window.close();
 	</script>
