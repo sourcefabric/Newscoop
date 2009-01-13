@@ -52,121 +52,119 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
   <base target="_self" />
 </head>
 <body id="campsiteinternallink" style="display: none">
-    <form onsubmit="insertAction();return false;" action="#">
-		<div class="tabs">
-			<ul>
-				<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{#campsiteinternallink_dlg.general_tab}</a></span></li>
-			</ul>
-		</div>
+  <form onsubmit="insertAction();return false;" action="#">
+  <div class="tabs">
+    <ul>
+      <li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{#campsiteinternallink_dlg.general_tab}</a></span></li>
+    </ul>
+  </div>
+  <div class="panel_wrapper">
+    <div id="general_panel" class="panel current">
+      <fieldset>
+        <legend>{#campsiteinternallink_dlg.general_props}</legend>
 
-		<div class="panel_wrapper">
-			<div id="general_panel" class="panel current">
-				<fieldset>
-					<legend>{#campsiteinternallink_dlg.general_props}</legend>
-
-					<table border="0" cellpadding="4" cellspacing="0">
-						<tr>
-						  <td nowrap="nowrap"><label id="hreflabel" for="href">{#campsiteinternallink_dlg.language}</label></td>
-						  <td><table border="0" cellspacing="0" cellpadding="0">
-								<tr>
-								  <td>
-									<select name="IdLanguage" id="IdLanguage" onchange="this.form.submit();">
-									<option value="0">?</option>
-									<?php
-										foreach ($languages as $language) {
-											$languageName = substr($language->getName(), 0, $maxSelectLength);
-											camp_html_select_option($language->getLanguageId(), $languageId, $languageName);
-										}
-									?>
-									</select>
-								  </td>
-								  <td id="hrefbrowsercontainer">&nbsp;</td>
-								</tr>
-							  </table></td>
-						</tr>
-						<tr id="pickpublicationfrom">
-							<td class="column1"><label for="pickpublication">{#campsiteinternallink_dlg.publication}</label></td>
-							<td colspan="2" id="pickpublicationcontainer">
-								<select name="IdPublication" id="IdPublication" onchange="this.form.submit();" <?php if ($languageId == 0){ ?>disabled<?php } ?>>
-								<option value="0">?</option>
-								<?php
-									foreach ($publications as $publication) {
-										$publicationName = substr($publication->getName(), 0, $maxSelectLength);
-										camp_html_select_option($publication->getPublicationId(), $publicationId, $publicationName);
-									}
-								?>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td class="column1"><label for="pickissue">{#campsiteinternallink_dlg.issue}</label></td>
-							<td colspan="2" id="pickissuecontainer">
-								<select name="NrIssue" id="NrIssue" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0)) { ?>disabled<?php } ?>>
-									<option value="0">?</option>
-									<?php
-										if (($languageId != 0) && ($publicationId != 0)) {
-											foreach ($issues as $issue) {
-												$issueName = substr($issue->getName(), 0, $maxSelectLength);
-												camp_html_select_option($issue->getIssueNumber(), $issueId, $issueName);
-											}
-										}
-									?>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td><label id="picksectionfrom" for="picksection">{#campsiteinternallink_dlg.section}</label></td>
-							<td id="picksectioncontainer">
-								<select name="NrSection" id="NrSection" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0) || ($issueId == 0)) { ?>disabled<?php } ?>>
-									<option value="0">?</option>
-									<?php
-										if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0)) {
-											foreach ($sections as $section) {
-												$sectionName = substr($section->getName(), 0, $maxSelectLength);
-												camp_html_select_option($section->getSectionNumber(), $sectionId, $sectionName);
-											}
-										}
-									?>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td nowrap="nowrap"><label id="pickarticlefrom" for="article">{#campsiteinternallink_dlg.article}</label></td>
-							<td id="pickarticlecontainer">
-								<select name="NrArticle" id="NrArticle" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0) || ($issueId == 0) || ($sectionId == 0)) { ?>disabled<?php } ?>>
-									<option value="0">?</option>
-									<?php
-										if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionId != 0)) {
-											foreach ($articles as $article) {
-												$articleName = substr($article->getTitle(), 0, $maxSelectLength);
-												camp_html_select_option($article->getArticleNumber(), $articleId, $articleName);
-											}
-										}
-									?>
-								</select>
-							</td>
-						</tr>
-
-                                                <tr>
-							<td class="column1"><label id="targetlistlabel" for="targetlist">{#campsiteinternallink_dlg.target}</label></td>
-                                                        <td id="targetlistcontainer">&nbsp;</td>
-                                                </tr>
-
-
-					</table>
-				</fieldset>
-			</div>
-		</div>
-
-		<div class="mceActionPanel">
-			<div style="float: left">
-				<input type="submit" id="insert" name="insert" value="{#insert}" />
-			</div>
-
-			<div style="float: right">
-				<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
-			</div>
-		</div>
-    </form>
+        <table border="0" cellpadding="4" cellspacing="0">
+        <tr>
+          <td nowrap="nowrap"><label id="hreflabel" for="href">{#campsiteinternallink_dlg.language}</label></td>
+          <td>
+            <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td>
+                <input type="hidden" name="language" id="language" />
+                <select name="IdLanguage" id="IdLanguage" onchange="this.form.submit();">
+                  <option value="0">?</option>
+                  <?php
+                  foreach ($languages as $language) {
+                      $languageName = substr($language->getName(), 0, $maxSelectLength);
+                      camp_html_select_option($language->getLanguageId(), $languageId, $languageName);
+                  }
+                  ?>
+                </select>
+              </td>
+              <td id="hrefbrowsercontainer">&nbsp;</td>
+            </tr>
+            </table>
+          </td>
+        </tr>
+        <tr id="pickpublicationfrom">
+          <td class="column1"><label for="pickpublication">{#campsiteinternallink_dlg.publication}</label></td>
+          <td colspan="2" id="pickpublicationcontainer">
+            <input type="hidden" name="publication" id="publication" />
+            <select name="IdPublication" id="IdPublication" onchange="this.form.submit();" <?php if ($languageId == 0){ ?>disabled<?php } ?>>
+              <option value="0">?</option>
+              <?php
+              foreach ($publications as $publication) {
+                  $publicationName = substr($publication->getName(), 0, $maxSelectLength);
+                  camp_html_select_option($publication->getPublicationId(), $publicationId, $publicationName);
+              }
+              ?>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="column1"><label for="pickissue">{#campsiteinternallink_dlg.issue}</label></td>
+          <td colspan="2" id="pickissuecontainer">
+            <select name="NrIssue" id="NrIssue" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0)) { ?>disabled<?php } ?>>
+              <option value="0">?</option>
+              <?php
+              if (($languageId != 0) && ($publicationId != 0)) {
+                  foreach ($issues as $issue) {
+                      $issueName = substr($issue->getName(), 0, $maxSelectLength);
+                      camp_html_select_option($issue->getIssueNumber(), $issueId, $issueName);
+                  }
+              }
+              ?>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><label id="picksectionfrom" for="picksection">{#campsiteinternallink_dlg.section}</label></td>
+          <td id="picksectioncontainer">
+            <select name="NrSection" id="NrSection" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0) || ($issueId == 0)) { ?>disabled<?php } ?>>
+              <option value="0">?</option>
+              <?php
+              if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0)) {
+                  foreach ($sections as $section) {
+                      $sectionName = substr($section->getName(), 0, $maxSelectLength);
+                      camp_html_select_option($section->getSectionNumber(), $sectionId, $sectionName);
+                  }
+              }
+              ?>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td nowrap="nowrap"><label id="pickarticlefrom" for="article">{#campsiteinternallink_dlg.article}</label></td>
+          <td id="pickarticlecontainer">
+            <select name="NrArticle" id="NrArticle" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0) || ($issueId == 0) || ($sectionId == 0)) { ?>disabled<?php } ?>>
+              <option value="0">?</option>
+              <?php
+              if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionId != 0)) {
+                  foreach ($articles as $article) {
+                      $articleName = substr($article->getTitle(), 0, $maxSelectLength);
+                      camp_html_select_option($article->getArticleNumber(), $articleId, $articleName);
+                  }
+              }
+              ?>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="column1"><label id="targetlistlabel" for="targetlist">{#campsiteinternallink_dlg.target}</label></td>
+          <td id="targetlistcontainer">&nbsp;</td>
+        </tr>
+      </table>
+      </fieldset>
+    </div>
+  </div>
+  <div class="mceActionPanel">
+    <div style="float: left">
+      <input type="submit" id="insert" name="insert" value="{#insert}" />
+    </div>
+    <div style="float: right">
+      <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+    </div>
+  </div>
+  </form>
 </body>
 </html>

@@ -1053,12 +1053,12 @@ function makeRequest(a){
     var postCustomTextareasData = '';
 
     for (i = 0; i < textFields.length; i++) {
-        postCustomFieldsData += '&' + textFields[i] + '=' + encodeURI(document.getElementById(textFields[i]).value);
+        postCustomFieldsData += '&' + textFields[i] + '=' + encodeURIComponent(document.getElementById(textFields[i]).value);
     }
 
     for (i = 0; i < textAreas.length; i++) {
         var ed = tinyMCE.get(textAreas[i]);
-        postCustomTextareasData += '&' + textAreas[i] + '=' + encodeURI(ed.getContent());
+        postCustomTextareasData += '&' + textAreas[i] + '=' + encodeURIComponent(ed.getContent());
     }
 
     if (ycaFOnFrontPage == true)
@@ -1074,7 +1074,7 @@ function makeRequest(a){
     else
         ycaFIsPublic = '';
 
-    var postData = "f_article_title=" + encodeURI(ycaFArticleTitle)
+    var postData = "f_article_title=" + encodeURIComponent(ycaFArticleTitle)
       + "&f_article_author=" + ycaFArticleAuthor
       + "&f_on_front_page=" + ycaFOnFrontPage
       + "&f_on_section_page=" + ycaFOnSectionPage
@@ -1089,7 +1089,7 @@ function makeRequest(a){
       + "&f_language_id=" + ycaFLanguageId
       + "&f_language_selected=" + ycaFLanguageSelected
       + "&f_article_number=" + ycaFArticleNumber
-      + "&f_message=" + encodeURI(ycaFMessage)
+      + "&f_message=" + encodeURIComponent(ycaFMessage)
       + postCustomFieldsData + postCustomTextareasData + postAction;
 
     var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);

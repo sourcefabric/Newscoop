@@ -38,57 +38,11 @@ function init() {
 
     if (action == "update") {
 	var href = inst.dom.getAttrib(elm, 'href');
-	var onclick = inst.dom.getAttrib(elm, 'onclick');
-
-	// Setup form data
-	setFormValue('href', href);
-	setFormValue('title', inst.dom.getAttrib(elm, 'title'));
-	setFormValue('id', inst.dom.getAttrib(elm, 'id'));
-	setFormValue('style', inst.dom.getAttrib(elm, "style"));
-	setFormValue('rel', inst.dom.getAttrib(elm, 'rel'));
-	setFormValue('rev', inst.dom.getAttrib(elm, 'rev'));
-	setFormValue('charset', inst.dom.getAttrib(elm, 'charset'));
-	setFormValue('hreflang', inst.dom.getAttrib(elm, 'hreflang'));
-	setFormValue('dir', inst.dom.getAttrib(elm, 'dir'));
-	setFormValue('lang', inst.dom.getAttrib(elm, 'lang'));
-	setFormValue('tabindex', inst.dom.getAttrib(elm, 'tabindex', typeof(elm.tabindex) != "undefined" ? elm.tabindex : ""));
-	setFormValue('accesskey', inst.dom.getAttrib(elm, 'accesskey', typeof(elm.accesskey) != "undefined" ? elm.accesskey : ""));
-	setFormValue('type', inst.dom.getAttrib(elm, 'type'));
-	setFormValue('onfocus', inst.dom.getAttrib(elm, 'onfocus'));
-	setFormValue('onblur', inst.dom.getAttrib(elm, 'onblur'));
-	setFormValue('onclick', onclick);
-	setFormValue('ondblclick', inst.dom.getAttrib(elm, 'ondblclick'));
-	setFormValue('onmousedown', inst.dom.getAttrib(elm, 'onmousedown'));
-	setFormValue('onmouseup', inst.dom.getAttrib(elm, 'onmouseup'));
-	setFormValue('onmouseover', inst.dom.getAttrib(elm, 'onmouseover'));
-	setFormValue('onmousemove', inst.dom.getAttrib(elm, 'onmousemove'));
-	setFormValue('onmouseout', inst.dom.getAttrib(elm, 'onmouseout'));
-	setFormValue('onkeypress', inst.dom.getAttrib(elm, 'onkeypress'));
-	setFormValue('onkeydown', inst.dom.getAttrib(elm, 'onkeydown'));
-	setFormValue('onkeyup', inst.dom.getAttrib(elm, 'onkeyup'));
-	setFormValue('target', inst.dom.getAttrib(elm, 'target'));
-	setFormValue('classes', inst.dom.getAttrib(elm, 'class'));
-
-	// Parse onclick data
-	if (onclick != null && onclick.indexOf('window.open') != -1)
-	    parseWindowOpen(onclick);
-	else
-	    parseFunction(onclick);
-
-	// Select by the values
-	selectByValue(formObj, 'dir', inst.dom.getAttrib(elm, 'dir'));
-	selectByValue(formObj, 'rel', inst.dom.getAttrib(elm, 'rel'));
-	selectByValue(formObj, 'rev', inst.dom.getAttrib(elm, 'rev'));
-	//selectByValue(formObj, 'linklisthref', href);
-
-	if (href.charAt(0) == '#')
-	    selectByValue(formObj, 'anchorlist', href);
-
-	addClassesToList('classlist', 'campsiteinternallink_styles');
 
 	selectByValue(formObj, 'targetlist', inst.dom.getAttrib(elm, 'target'), true);
-    } else
-	addClassesToList('classlist', 'campsiteinternallink_styles');
+    }
+
+    addClassesToList('classlist', 'campsiteinternallink_styles');
 }
 
 function checkPrefix(n) {
@@ -179,6 +133,31 @@ function setPopupControlsDisabled(state) {
 
     setBrowserDisabled('popupurlbrowser', state);
 }
+
+
+function getURLVar(urlVarName, href) {
+    //divide the URL in half at the '?'
+    var urlHalves = String(href).split('?');
+    var urlVarValue = '';
+
+    if(urlHalves[1]){
+	//load all the name/value pairs into an array
+	var urlVars = urlHalves[1].split('&');
+	//loop over the list, and find the specified url variable
+	for(i=0; i<=(urlVars.length); i++){
+	    if(urlVars[i]){
+		//load the name/value pair into an array
+		var urlVarPair = urlVars[i].split('=');
+		if (urlVarPair[0] && urlVarPair[0] == urlVarName) {
+		    //I found a variable that matches, load it's value into the return variable
+		    urlVarValue = urlVarPair[1];
+		}
+	    }
+	}
+    }
+    return urlVarValue;   
+}
+
 
 function parseLink(link) {
     link = link.replace(new RegExp('&#39;', 'g'), "'");
@@ -370,7 +349,7 @@ function insertAction() {
     sectionId = sectionElement ? sectionElement.value : 0;
     articleElement = document.getElementById("NrArticle");
     articleId = articleElement? articleElement.value : 0;
-    targetElement = document.getElementById("f_target");
+    targetElement = document.getElementById("targetlist");
     target = targetElement ? targetElement.value : '';
 
     // User must at least specify language and publication.
