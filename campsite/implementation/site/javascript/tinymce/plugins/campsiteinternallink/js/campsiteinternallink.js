@@ -384,15 +384,16 @@ function insertAction() {
     }
     param["f_title"] = "";
 
-    elm = inst.selection.getNode();
-    elm = inst.dom.getParent(elm, "A");
+    elm = inst.dom.getParent(inst.selection.getNode(), "A");
 
     tinyMCEPopup.execCommand("mceBeginUndoLevel");
 
     // Create new anchor elements
     if (elm == null) {
-	elm = param["f_href"];
-	tinyMCEPopup.execCommand("CreateLink", false, elm, {skip_undo : 1});
+	tinyMCEPopup.execCommand("CreateLink", false, "#mce_temp_url#", {skip_undo : 1});
+	elementArray = tinymce.grep(inst.dom.select("a"), function(n) {return inst.dom.getAttrib(n, 'href') == '#mce_temp_url#';});
+	for (i=0; i<elementArray.length; i++)
+	    setAllAttribs(elm = elementArray[i]);
     }
     setAllAttribs(elm, param["f_href"]);
 

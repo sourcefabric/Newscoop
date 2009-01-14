@@ -23,8 +23,7 @@ $publicationId = Input::get('IdPublication', 'int', 0, true);
 $sectionId = Input::get('NrSection', 'int', 0, true);
 $issueId = Input::get('NrIssue', 'int', 0, true);
 $articleId = Input::get('NrArticle', 'int', 0, true);
-$target = Input::get('target', 'string', '', true);
-
+$target = Input::get('targetlist', 'string', '', true);
 $languages = Language::GetLanguages();
 $publications = Publication::GetPublications();
 if (($languageId != 0) && ($publicationId != 0)) {
@@ -150,6 +149,7 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
           </td>
         </tr>
         <tr>
+          <input type="hidden" name="target" id="target" />
           <td class="column1"><label id="targetlistlabel" for="targetlist">{#campsiteinternallink_dlg.target}</label></td>
           <td id="targetlistcontainer">&nbsp;</td>
         </tr>
