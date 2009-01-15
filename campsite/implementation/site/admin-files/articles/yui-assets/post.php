@@ -1,7 +1,13 @@
 <?php
+header('Content-Type: application/json');
+
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleImage.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleComment.php");
+
+require_once('JSON.php');
+
+$json = new Services_JSON();
 
 // This is used in TransformSubheads() in order to figure out when
 // a SPAN tag closes.
@@ -184,6 +190,27 @@ $f_message = Input::Get('f_message', 'string', '', true);
 $f_creation_date = Input::Get('f_creation_date');
 $f_publish_date = Input::Get('f_publish_date');
 $f_comment_status = Input::Get('f_comment_status', 'string', '', true);
+$f_save_and_close = Input::Get('f_save_and_close', 'int', 0, true);
+
+$data = new stdclass();
+$data->Results = new stdclass();
+$data->Results->f_publication_id = $f_publication_id;
+$data->Results->f_issue_number = $f_issue_number;
+$data->Results->f_section_number = $f_section_number;
+$data->Results->f_language_id = $f_language_id;
+$data->Results->f_language_selected = $f_language_selected;
+$data->Results->f_article_number = $f_article_number;
+$data->Results->f_article_author = $f_article_author;
+$data->Results->f_on_front_page = $f_on_front_page;
+$data->Results->f_on_section_page = $f_on_section_page;
+$data->Results->f_is_public = $f_is_public;
+$data->Results->f_keywords = $f_keywords;
+$data->Results->f_article_title = $f_article_title;
+$data->Results->f_message = $f_message;
+$data->Results->f_creation_date = $f_creation_date;
+$data->Results->f_publish_date = $f_publish_date;
+$data->Results->f_comment_status = $f_comment_status;
+$data->Results->f_save_and_close = ($f_save_and_close) ? 1 : 0;
 
 if (isset($_REQUEST['save_and_close'])) {
 	$f_save_button = 'save_and_close';
@@ -326,13 +353,6 @@ foreach ($articleFields as $dbColumnName => $text) {
 $logtext = getGS('Article content edited for "$1" (Publication: $2, Issue: $3, Section: $4, Language: $5)', $articleObj->getTitle(), $articleObj->getPublicationId(), $articleObj->getIssueNumber(), $articleObj->getSectionNumber(), $articleObj->getLanguageId());
 Log::Message($logtext, $g_user->getUserId(), 37);
 
-if ($f_save_button == "save") {
-	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
-} elseif ($f_save_button == "save_and_close") {
-	if ($f_publication_id > 0) {
-		camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'index.php'));
-	} else {
-		camp_html_goto_page("/$ADMIN/");
-	}
-}
+echo($json->encode($data));
+
 ?>

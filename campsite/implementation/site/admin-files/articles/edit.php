@@ -1001,7 +1001,7 @@ var handleSuccess = function(o){
 	resp.innerHTML += "<li>Status code message: " + o.statusText + "</li>";
 	resp.innerHTML += "<li>HTTP headers received: <ul>" + o.getAllResponseHeaders + "</ul></li>";
 	resp.innerHTML += "<li>PHP response: " + o.responseText + "</li>";
-	mesg.innerHTML += "Article Saved";
+	mesg.innerHTML = "Article Saved";
     }
 };
 
