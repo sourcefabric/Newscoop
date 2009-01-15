@@ -69,12 +69,12 @@ function translationForm($p_request)
         $modified = $sourceLang->syncToDefault();
         if ($modified) {
         	$sourceSaveSuccess = $sourceLang->saveFile($mode);
-        	camp_html_add_msg(camp_get_error_message($sourceSaveSuccess));
+        	camp_html_add_msg($sourceSaveSuccess);
         }
         $modified = $targetLang->syncToDefault();
         if ($modified) {
         	$targetSaveSuccess = $targetLang->saveFile($mode);
-        	camp_html_add_msg(camp_get_error_message($targetSaveSuccess));
+        	camp_html_add_msg($targetSaveSuccess);
         }
 	}
 
