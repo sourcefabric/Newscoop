@@ -165,8 +165,8 @@ function TransformImageTags($p_match) {
 		$altTag = 'alt="'.$attrs['alt'].'"';
 	}
 	$captionTag = '';
-	if (isset($attrs['sub'])) {
-		$captionTag = 'sub="'.$attrs['sub'].'"';
+	if (isset($attrs['title'])) {
+		$captionTag = 'sub="'.$attrs['title'].'"';
 	}
 	$imageTag = "<!** Image $templateId $alignTag $altTag $captionTag>";
 	return $imageTag;
@@ -343,9 +343,9 @@ foreach ($articleFields as $dbColumnName => $text) {
 	$srcAttr = "(src\s*=\s*[\"][^\"]*[\"])";
 	$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";
 	$alignAttr = "(align\s*=\s*[\"][^\"]*[\"])";
-	$subAttr = "(sub\s*=\s*[\"][^\"]*[\"])";
+	$subAttr = "(title\s*=\s*[\"][^\"]*[\"])";
 	$idAttr = "(id\s*=\s*[\"][^\"]*[\"])";
-	$pattern = "/<\s*img\s*(($srcAttr|$altAttr|$alignAttr|$subAttr|$idAttr)\s*)*[\s\w\"']*\/>/i";
+	$pattern = "/<\s*img\s*(($idAttr|$subAttr|$srcAttr|$altAttr|$alignAttr)\s*)*[\s\w\"']*\/>/i";
 	$text = preg_replace_callback($pattern, "TransformImageTags", $text);
 	$articleTypeObj->setProperty($dbColumnName, $text);
 }

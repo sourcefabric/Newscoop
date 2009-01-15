@@ -13,12 +13,11 @@ var CampsiteImageDialog = {
 	var topDoc = window.top.document;
 
 	tinyMCEPopup.execCommand('mceInsertContent', false, dom.createHTML('img', {
-		    src : topDoc.getElementById('f_url').value,
-		    align : topDoc.getElementById('f_align').value,
-		    id : topDoc.getElementById('f_image_template_id').value,
-		    alt : ed.getLang(topDoc.getElementById('f_alt').value),
-		    title : ed.getLang(topDoc.getElementById('f_caption').value),
-		    border : 0
+	    src : topDoc.getElementById('f_url').value,
+	    align : topDoc.getElementById('f_align').value,
+	    id : topDoc.getElementById('f_image_template_id').value,
+	    alt : topDoc.getElementById('f_alt').value,
+	    title : topDoc.getElementById('f_caption').value
 	}));
 
 	tinyMCEPopup.close();
