@@ -269,7 +269,7 @@ class Localizer {
         $functPattern2 = '/(put|get)gs( )*\(( )*"([^"]*)"/iU';
 
         // Get all files in this directory
-        $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$startDirectory, 3);
+        $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$startDirectory, 1);
 
         // Get all the PHP files
         $filelist = self::CompilePhpFileList($files);
