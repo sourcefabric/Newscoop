@@ -305,7 +305,29 @@ class CampInstallationBase
             return false;
         }
 
-        $sqlFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_3_0_demo_data.sql';
+        $sqlFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_demo_tables.sql';
+        $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
+        if ($errors > 0) {
+            $this->m_step = 'loaddemo';
+            $this->m_message = 'Error: Importing Database';
+            foreach ($errorQueries as $query) {
+                $this->m_message .= "<br>$query";
+            }
+            return false;
+        }
+
+        $sqlFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_demo_prepare.sql';
+        $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
+        if ($errors > 0) {
+            $this->m_step = 'loaddemo';
+            $this->m_message = 'Error: Importing Database';
+            foreach ($errorQueries as $query) {
+                $this->m_message .= "<br>$query";
+            }
+            return false;
+        }
+
+        $sqlFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_demo_data.sql';
         $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
         if ($errors > 0) {
             $this->m_step = 'loaddemo';
