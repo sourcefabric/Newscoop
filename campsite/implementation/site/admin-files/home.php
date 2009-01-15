@@ -838,4 +838,4 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 </table>
 
 
-<?php //camp_html_copyright_notice(); ?>
+<?php camp_html_copyright_notice(false); ?>

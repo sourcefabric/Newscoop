@@ -44,6 +44,7 @@ function camp_html_select_option($p_value, $p_selectedValue, $p_printValue)
 function camp_html_copyright_notice($p_displayBorder = true)
 {
 	global $Campsite;
+    $campVersion = new CampVersion();
 	if ($p_displayBorder) {
 	?>
 	<table width="100%" align="center" style="border-top: 1px solid black; margin-top: 15px;">
@@ -56,10 +57,16 @@ function camp_html_copyright_notice($p_displayBorder = true)
 	?>
 	<tr>
 		<td style="padding-left: 5px; padding-top: 10px;" align="center">
-			<a style="font-size:8pt; color: black;" href="http://www.campware.org" target="campware">
-			Campsite <?php echo $Campsite['VERSION'] ?> &copy; 1999-2008 MDLF,
-			maintained and distributed under GNU GPL by CAMPWARE
-			</a>
+            <?php
+                echo $campVersion->getPackage() . '&nbsp;';
+                echo $campVersion->getVersion() . '&nbsp;';
+                echo $campVersion->getCopyright();
+            ?><br/>
+            Maintained and distributed under
+            <?php echo $campVersion->getLicense(); ?> by
+            <a style="font-size:8pt; color: black;" href="http://www.campware.org" target="campware">
+            <?php echo $campVersion->getOrganization(); ?>
+            </a>
 		</td>
 	</tr>
 	</table>
