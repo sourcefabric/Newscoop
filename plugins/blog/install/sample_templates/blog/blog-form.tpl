@@ -106,11 +106,13 @@
         <tr><td>status</td><td>{{ $campsite->blogentry->status }}</td></tr>
         <tr><td>title</td><td>{{ $campsite->blogentry->title }}</td></tr>
         <tr><td>content</td><td>{{ $campsite->blogentry->content }}</td></tr>
+        <tr><td>tags</td><td>{{ $campsite->blogentry->tags }}</td></tr>
         <tr><td>mood</td><td>{{ $campsite->blogentry->mood }}</td></tr>
         <tr><td>admin_status</td><td>{{ $campsite->blogentry->admin_status }}</td></tr>
         <tr><td>comments_online</td><td>{{ $campsite->blogentry->comments_online }}</td></tr>
         <tr><td>comments_offline</td><td>{{ $campsite->blogentry->comments_offline }}</td></tr>
         <tr><td>feature</td><td>{{ $campsite->blogentry->feature }}</td></tr>
+        <tr><td>image</td><td><img src="{{ $campsite->blogentry->images.90x90 }}" /></td></tr>
         </table>
        
         {{ if $campsite->preview_blogcomment_action->defined }}

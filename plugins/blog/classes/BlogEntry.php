@@ -56,7 +56,7 @@ class BlogEntry extends DatabaseObject {
 
         if ($this->keyValuesExist()) {
             $this->fetch();
-            $this->m_data['images'] = BlogEntry::_getImagePaths($p_entry_id, true);
+            $this->m_data['images'] = BlogEntry::_getImagePaths($p_entry_id, true, true);
 
         } elseif ($p_blog_id) {
             $this->m_data['fk_blog_id'] = $p_blog_id;
@@ -508,19 +508,24 @@ class BlogEntry extends DatabaseObject {
         return array (42 => 42, 90 => 90, 205 => 205);
     }
 
-    function _getImagePaths($p_entry_id, $p_check_exists=false)
+    function _getImagePaths($p_entry_id, $p_check_exists=false, $p_as_url=false)
     {
         global $Campsite;
         
         foreach (BlogEntry::_getImageFormates() as $width => $height) {
             $path[$width.'x'.$height] = $Campsite['IMAGE_DIRECTORY']."plugin_blog/entry/{$width}x{$height}/{$p_entry_id}.jpg";
+            $url[$width.'x'.$height] = $Campsite['IMAGE_BASE_URL']."plugin_blog/entry/{$width}x{$height}/{$p_entry_id}.jpg";
 
             if ($p_check_exists && !file_exists($path[$width.'x'.$height])) {
                 unset ($path[$width.'x'.$height]);
             }
         }
 
-        return $path;
+        if ($p_as_url) {
+            return $url;    
+        } else {
+            return $path;
+        }
     }
 
     function _storeImage($p_image, $p_entry_id)
