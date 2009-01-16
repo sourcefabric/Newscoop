@@ -17,7 +17,7 @@ require_once($g_documentRoot.'/template_engine/classes/Exceptions.php');
 /**
  * @package Campsite
  */
-final class MetaDateTime
+final class MetaDatetime
 {
     private $m_value = null;
 
@@ -32,8 +32,8 @@ final class MetaDateTime
 
     public function setValue($p_value)
     {
-        if (!MetaDateTime::IsValid($p_value)) {
-            throw new InvalidValueException($p_value, MetaDateTime::GetTypeName());
+        if (!self::IsValid($p_value)) {
+            throw new InvalidValueException($p_value, self::GetTypeName());
         }
         $this->m_value = trim($p_value);
         $datetimeParts = preg_split('/[\s]+/', $this->m_value);
@@ -120,6 +120,6 @@ final class MetaDateTime
         return 'datetime';
     }
 
-} // class MetaDateTime
+} // class MetaDatetime
 
 ?>

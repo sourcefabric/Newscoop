@@ -121,13 +121,13 @@ final class MetaIssue extends MetaDbObject {
 
 
     protected function getPublishMonthName() {
-        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('PublicationDate'));
+        $dateTime = new MetaDatetime($this->m_dbObject->getProperty('PublicationDate'));
         return $dateTime->getMonthName();
     }
 
 
     protected function getPublishWeekDayName() {
-        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('PublicationDate'));
+        $dateTime = new MetaDatetime($this->m_dbObject->getProperty('PublicationDate'));
         return $dateTime->getWeekDayName();
     }
 

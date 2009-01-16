@@ -290,13 +290,13 @@ final class MetaArticle extends MetaDbObject {
 
 
     protected function getCreationMonthName() {
-        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('UploadDate'));
+        $dateTime = new MetaDatetime($this->m_dbObject->getProperty('UploadDate'));
         return $dateTime->getMonthName();
     }
 
 
     protected function getCreationWeekDayName() {
-        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('UploadDate'));
+        $dateTime = new MetaDatetime($this->m_dbObject->getProperty('UploadDate'));
         return $dateTime->getWeekDayName();
     }
 

@@ -97,7 +97,7 @@ class Article extends DatabaseObject {
                                                 'idlanguage'=>'IdLanguage',
                                                 'name'=>'Name',
                                                 'number'=>'Number',
-                                                'upload_date'=>'UploadDate',
+                                                'upload_date'=>'DATE(UploadDate)',
                                                 'type'=>'Type',
                                                 'keyword'=>'Keywords',
                                                 'onfrontpage'=>'OnFrontPage',
@@ -2080,7 +2080,7 @@ class Article extends DatabaseObject {
                 // Article table fields
                 $whereCondition = Article::$s_regularParameters[$leftOperand]
                     . ' ' . $comparisonOperation['symbol']
-                    . " '" . $comparisonOperation['right'] . "' ";
+                    . " '" . $g_ado_db->escape($comparisonOperation['right']) . "' ";
                 if ($leftOperand == 'reads'
                 && strstr($comparisonOperation['symbol'], '=')
                 && $comparisonOperation['right'] == 0) {
@@ -2312,18 +2312,27 @@ class Article extends DatabaseObject {
 
 
     /**
-     * Returns a list of Article objects selected based on the given keywords
+     * Performs a search against the article content using the given
+     * keywords. Returns the list of articles matching the given criteria.
      *
      * @param array $p_keywords
+     * @param string $p_fieldName - may be 'title' or 'author'
+     * @param bool $p_matchAll - true if all keyword have to match
      * @param array $p_constraints
      * @param array $p_order
+     * @param int $p_start - return results starting from the given order number
+     * @param int $p_limit - return at most $p_limit rows
+     * @param int $p_count - sets $p_count to the total number of rows in the search
+     * @param bool $p_countOnly - if true returns only the total number of rows
      * @return array
      */
     public static function SearchByKeyword(array $p_keywords,
                                            $p_matchAll = false,
                                            array $p_constraints = array(),
                                            array $p_order = array(),
-                                           $p_start = 0, $p_limit = 0, &$p_count,
+                                           $p_start = 0,
+                                           $p_limit = 0,
+                                           &$p_count,
                                            $p_countOnly = false)
     {
         global $g_ado_db;
@@ -2485,6 +2494,47 @@ class Article extends DatabaseObject {
             $order[] = array('field'=>$dbField, 'dir'=>$direction);
         }
         return $order;
+    }
+
+
+    /**
+     * Performs a search against the given article field using the given
+     * keywords. Returns the list of articles matching the given criteria.
+     *
+     * @param array $p_keywords
+     * @param string $p_fieldName - may be 'title' or 'author'
+     * @param bool $p_matchAll - true if all keyword have to match
+     * @param array $p_constraints
+     * @param array $p_order
+     * @param int $p_start - return results starting from the given order number
+     * @param int $p_limit - return at most $p_limit rows
+     * @param int $p_count - sets $p_count to the total number of rows in the search
+     * @param bool $p_countOnly - if true returns only the total number of rows
+     * @return array
+     */
+    public static function SearchByField(array $p_keywords,
+                                         $p_fieldName,
+                                         $p_matchAll = false,
+                                         array $p_constraints = array(),
+                                         array $p_order = array(),
+                                         $p_start = 0,
+                                         $p_limit = 0,
+                                         &$p_count,
+                                         $p_countOnly = false)
+    {
+        global $g_ado_db;
+        
+        static $searchFields = array(
+                'title'=>array('tableFields'=>array('Name'),
+                               'table'=>'Articles'),
+                'author'=>array('tableFields'=>array('fist_name', 'last_name'),
+                                'table'=>'Authors',
+                                'joinFields'=>array('fk_default_author_id')));
+
+        $selectClauseObj = new SQLSelectClause();
+
+        // set tables and joins between tables
+        $selectClauseObj->setTable('Articles');
     }
 
 } // class Article

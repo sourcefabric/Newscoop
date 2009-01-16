@@ -17,7 +17,7 @@ class ArticlesList extends ListObject
                                          'onsection'=>array('field'=>'OnSection',
                                                             'type'=>'switch'),
                                          'upload_date'=>array('field'=>'UploadDate',
-                                                              'type'=>'dateTime'),
+                                                              'type'=>'date'),
                                          'public'=>array('field'=>'Public',
                                                          'type'=>'switch'),
                                          'type'=>array('field'=>'Type',

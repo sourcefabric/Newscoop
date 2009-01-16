@@ -133,13 +133,13 @@ final class MetaImage extends MetaDbObject {
 
 
     protected function getMonthName() {
-        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('Date'));
+        $dateTime = new MetaDatetime($this->m_dbObject->getProperty('Date'));
         return $dateTime->getMonthName();
     }
 
 
     protected function getWeekDayName() {
-        $dateTime = new MetaDateTime($this->m_dbObject->getProperty('Date'));
+        $dateTime = new MetaDatetime($this->m_dbObject->getProperty('Date'));
         return $dateTime->getWeekDayName();
     }
 
