@@ -159,8 +159,8 @@ function TransformImageTags($p_match) {
 		$altTag = 'alt="'.$attrs['alt'].'"';
 	}
 	$captionTag = '';
-	if (isset($attrs['sub'])) {
-		$captionTag = 'sub="'.$attrs['sub'].'"';
+	if (isset($attrs['title'])) {
+		$captionTag = 'sub="'.$attrs['title'].'"';
 	}
 	$imageTag = "<!** Image $templateId $alignTag $altTag $captionTag>";
 	return $imageTag;
@@ -223,9 +223,7 @@ if (!empty($f_message)) {
 	camp_html_add_msg($f_message, "ok");
 }
 
-$articleLang = $f_language_id ? $f_language_id : $articleObj->getLanguageId();
-$userSectionRight = 'ManageSection'.$articleObj->getSectionNumber().'_P'.$articleObj->getPublicationId().'_I'.$articleObj->getIssueNumber().'_L'.$articleLang;
-if (!$articleObj->userCanModify($g_user, $userSectionRight)) {
+if (!$articleObj->userCanModify($g_user)) {
 	camp_html_add_msg(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
 	camp_html_goto_page($BackLink);
 	exit;
@@ -314,9 +312,9 @@ foreach ($articleFields as $dbColumnName => $text) {
 	$srcAttr = "(src\s*=\s*[\"][^\"]*[\"])";
 	$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";
 	$alignAttr = "(align\s*=\s*[\"][^\"]*[\"])";
-	$subAttr = "(sub\s*=\s*[\"][^\"]*[\"])";
+	$subAttr = "(title\s*=\s*[\"][^\"]*[\"])";
 	$idAttr = "(id\s*=\s*[\"][^\"]*[\"])";
-	$pattern = "/<\s*img\s*(($srcAttr|$altAttr|$alignAttr|$subAttr|$idAttr)\s*)*[\s\w\"']*\/>/i";
+	$pattern = "/<\s*img\s*(($idAttr|$subAttr|$srcAttr|$altAttr|$alignAttr)\s*)*[\s\w\"']*\/>/i";
 	$text = preg_replace_callback($pattern, "TransformImageTags", $text);
 	$articleTypeObj->setProperty($dbColumnName, $text);
 }
