@@ -670,7 +670,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-					<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save" />
+					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('save');" />
 				<?php } ?>
 				</td>
 				<td align="right" ><?php  putGS("Keywords"); ?>:</td>
@@ -700,7 +700,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save" />
+					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('save');" />
 					<?php } ?>
 				</td>
 				<td align="right">
@@ -734,7 +734,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save" />
+					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('save');" />
 					<?php } ?>
 				</td>
 				<td align="right">
@@ -813,7 +813,7 @@ window.location.reload();
 			<tr>
 			<td align="right" valign="top" style="padding-top: 8px; padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-				<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save" />
+				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('save');" />
 				<?php } ?>
 			</td>
 			<td align="right" valign="top" style="padding-top: 8px;">
