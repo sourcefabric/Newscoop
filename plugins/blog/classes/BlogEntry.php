@@ -56,7 +56,7 @@ class BlogEntry extends DatabaseObject {
 
         if ($this->keyValuesExist()) {
             $this->fetch();
-            #$this->m_data['images'] = BlogEntry::_getImagePaths($p_entry_id, true);
+            $this->m_data['images'] = BlogEntry::_getImagePaths($p_entry_id, true);
 
         } elseif ($p_blog_id) {
             $this->m_data['fk_blog_id'] = $p_blog_id;
@@ -443,7 +443,7 @@ class BlogEntry extends DatabaseObject {
                 }
             }
 
-            if ($data['entry_id']) {
+            if ($data['f_entry_id']) {
                 foreach ($data['BlogEntry'] as $k => $v) {
                     if (is_array($v)) {
                         foreach($v as $key => $value) {
@@ -458,10 +458,10 @@ class BlogEntry extends DatabaseObject {
                     $this->setProperty($k, $v);
                 }
 
-                if ($data['BlogEntry_Image_remove']) BlogEntry::_removeImage($data['entry_id']);
-                if ($data['BlogEntry_Image'])        BlogEntry::_storeImage($data['BlogEntry_Image'], $data['entry_id']);
+                if ($data['BlogEntry_Image_remove']) BlogEntry::_removeImage($data['f_entry_id']);
+                if ($data['BlogEntry_Image'])        BlogEntry::_storeImage($data['BlogEntry_Image'], $data['f_entry_id']);
 
-                Blog::TriggerCounters(BlogEntry::GetBlogId($data['entry_id']));
+                Blog::TriggerCounters(BlogEntry::GetBlogId($data['f_entry_id']));
 
                 return true;
 
@@ -510,36 +510,37 @@ class BlogEntry extends DatabaseObject {
 
     function _getImagePaths($p_entry_id, $p_check_exists=false)
     {
+        global $Campsite;
+        
         foreach (BlogEntry::_getImageFormates() as $width => $height) {
-            $rel_path[$width.'x'.$height] = BLOGENTRY_IMG_PATH."{$width}x{$height}/{$p_entry_id}.jpg";
+            $path[$width.'x'.$height] = $Campsite['IMAGE_DIRECTORY']."plugin_blog/entry/{$width}x{$height}/{$p_entry_id}.jpg";
 
-            if ($p_check_exists) {
-                if (!file_exists($_SERVER['DOCUMENT_ROOT'].$rel_path[$width.'x'.$height])) unset ($rel_path[$width.'x'.$height]);
+            if ($p_check_exists && !file_exists($path[$width.'x'.$height])) {
+                unset ($path[$width.'x'.$height]);
             }
         }
 
-        return $rel_path;
+        return $path;
     }
 
     function _storeImage($p_image, $p_entry_id)
     {
         if ($p_image['error'] == 0 && preg_match('/^image\/(p)?jp(e)?g$/', $p_image['type'])) {
 
-            foreach (BlogEntry::_getImagePaths($p_entry_id) as $dim => $rel_path) {
+            foreach (BlogEntry::_getImagePaths($p_entry_id) as $dim => $path) {
                 list ($width, $height) = explode('x', $dim);
                 $d_width = $width * 2;
                 $d_height = $width * 2;
-                $abs_path = "{$_SERVER['DOCUMENT_ROOT']}$rel_path";
 
-                if (!@opendir($abs_path)) {
-                    $mkdir = $_SERVER['DOCUMENT_ROOT'];
-                    foreach(explode('/', dirname($rel_path)) as $k => $dir) {
+                if (!file_exists(dirname($path))) {
+                    $mkdir = '';
+                    foreach (explode('/', dirname($path)) as $k => $dir) {
                         $mkdir .= '/'.$dir;
                         @mkdir($mkdir, 0775);
                     }
                 }
 
-                $cmd = "convert -resize {$d_width}x -resize 'x{$d_height}<' -resize 50% -gravity center  -crop {$width}x{$height}+0+0 +repage {$p_image['tmp_name']} $abs_path";
+                $cmd = "convert -resize {$d_width}x -resize 'x{$d_height}<' -resize 50% -gravity center  -crop {$width}x{$height}+0+0 +repage {$p_image['tmp_name']} $path";
                 passthru($cmd, $return_value);
             }
 
@@ -551,7 +552,7 @@ class BlogEntry extends DatabaseObject {
     function _removeImage($p_entry_id)
     {
         foreach (BlogEntry::_getImagePaths($p_entry_id, true) as $path) {
-            unlink($_SERVER['DOCUMENT_ROOT'].$path);
+            unlink($path);
         }
     }
 
