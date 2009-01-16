@@ -47,12 +47,12 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_copyrightYear = 2008;
+    private $m_copyrightYear = 2009;
 
     /**
      * @var string
      */
-    private $m_license = 'GPL v.2';
+    private $m_license = 'GNU GPL v.2';
 
     /**
      * @var string
