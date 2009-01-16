@@ -17,14 +17,12 @@ $publicationObj = new Publication($f_publication_id);
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
-$sectionRight = array('right_define_name' => $sectionObj->getSectionRightName());
 $articles = Article::GetArticles($f_publication_id, $f_issue_number, $f_section_number, $f_language_id);
 $numArticles = count($articles);
 $numSubscriptionsDeleted = 0;
 $numArticlesDeleted = 0;
 $numArticlesDeleted = $sectionObj->delete(true);
-// removes the corresponding section right
-$GLOBALS['LiveUserAdmin']->perm->removeRight($sectionRight);
+
 if ($f_deleteSubscriptions != "") {
     $numSubscriptionsDeleted = Subscription::DeleteSubscriptionsInSection($f_publication_id, $f_section_number);
 }

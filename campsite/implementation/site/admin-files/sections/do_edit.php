@@ -1,6 +1,10 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 
+if (!$g_user->hasPermission('ManageSection')) {
+    camp_html_display_error(getGS("You do not have the right to add sections."));
+    exit;
+}
 
 $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
@@ -30,13 +34,6 @@ if (!Input::IsValid()) {
 $issueObj = new Issue($Pub, $Language, $Issue);
 $publicationObj = new Publication($Pub);
 $sectionObj = new Section($Pub, $Issue, $Language, $Section);
-
-$sectionRightName = $sectionObj->getSectionRightName();
-if (!$g_user->hasPermission('ManageSection')
-        && !$g_user->hasPermission($sectionRightName)) {
-	camp_html_display_error(getGS("You do not have the right to add sections."));
-	exit;
-}
 
 if (!$publicationObj->exists()) {
     camp_html_display_error(getGS('Publication does not exist.'));

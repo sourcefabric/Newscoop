@@ -96,9 +96,7 @@ if ($showComments) {
 }
 
 // Automatically switch to "view" mode if user doesnt have permissions.
-$articleLang = $f_language_id ? $f_language_id : $articleObj->getLanguageId();
-$userSectionRight = 'ManageSection'.$articleObj->getSectionNumber().'_P'.$articleObj->getPublicationId().'_I'.$articleObj->getIssueNumber().'_L'.$articleLang;
-if (!$articleObj->userCanModify($g_user, $userSectionRight)) {
+if (!$articleObj->userCanModify($g_user)) {
     $f_edit_mode = "view";
 }
 
@@ -186,7 +184,7 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 
 <?php
 // If the article is locked.
-if ($articleObj->userCanModify($g_user, $userSectionRight) && $locked && ($f_edit_mode == "edit")) {
+if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) {
 ?>
 <p>
 <table border="0" cellspacing="0" cellpadding="6" class="table_input">
@@ -245,8 +243,7 @@ if ($f_edit_mode == "edit") { ?>
   <td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" border="0"></a></td>
   <td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><b><?php  putGS("Article List"); ?></b></a></td>
 
-<?php if ($g_user->hasPermission($userSectionRight)
-              && $g_user->hasPermission('AddArticle')) { ?>
+  <?php if ($g_user->hasPermission('AddArticle')) { ?>
   <td style="padding-left: 20px;"><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a></td>
   <td><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><b><?php  putGS("Add new article"); ?></b></a></td>
 <?php } ?>
@@ -305,7 +302,7 @@ if ($f_edit_mode == "edit") { ?>
             <select name="f_action" class="input_select" onchange="action_selected(this);">
               <option value=""><?php putGS("Actions"); ?>...</option>
               <option value="">-----------</option>
-              <?php if ($articleObj->userCanModify($g_user, $userSectionRight) && $articleObj->isLocked()) { ?>
+              <?php if ($articleObj->userCanModify($g_user) && $articleObj->isLocked()) { ?>
               <option value="unlock"><?php putGS("Unlock"); ?></option>
               <?php } ?>
 
@@ -339,7 +336,7 @@ if ($f_edit_mode == "edit") { ?>
                   camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
               ?>
             </select>
-          <?php } elseif ($articleObj->userCanModify($g_user, $userSectionRight) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
+          <?php } elseif ($articleObj->userCanModify($g_user) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
             <select name="f_action_workflow" class="input_select" onchange="this.form.submit();">
               <?php
                   camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
@@ -405,7 +402,7 @@ if ($f_edit_mode == "edit") { ?>
 			</td>
 
 			<?php
-			if ($articleObj->userCanModify($g_user, $userSectionRight)) {
+			if ($articleObj->userCanModify($g_user)) {
 			$switchModeUrl = camp_html_article_url($articleObj, $f_language_id, "edit.php")
 				."&f_edit_mode=".( ($f_edit_mode =="edit") ? "view" : "edit");
 			?>

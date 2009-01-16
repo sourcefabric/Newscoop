@@ -350,32 +350,6 @@ class Section extends DatabaseObject {
 	} // fn setSectionTemplateId
 
 
-    /**
-     * @return string
-     *      $sectionRight The section right name
-     */
-    public function getSectionRightName()
-    {
-        $sectionRight = 'ManageSection'.$this->getSectionNumber().'_P'.$this->getPublicationId().'_I'.$this->getIssueNumber().'_L'.$this->getLanguageId();
-        return $sectionRight;
-    } // fn getSectionRightName
-
-
-    /**
-     * Adds a new section right to the rights table.
-     *
-     * @return integer|boolean
-     *      The Id right just created on success, false on failure
-     */
-    public function addSectionRight()
-    {
-        $rightData = array('area_id' => 0,
-                           'right_define_name' => $this->getSectionRightName(),
-                           'has_implied' => 1);
-        return $GLOBALS['LiveUserAdmin']->perm->addRight($rightData);
-    } // fn AddSectionRight
-
-
 	/**
 	 * Return an array of sections in the given issue.
 	 * @param int $p_publicationId
