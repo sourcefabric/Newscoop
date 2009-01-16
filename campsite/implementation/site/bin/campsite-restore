@@ -229,13 +229,13 @@ $destDbName = $Campsite['DATABASE_NAME'];
 //
 if ($backupVersion < 3) {
     if (!camp_is_empty_dir("$tempDirName/look")) {
-        $templatesSrcDir = "$tempDirName/look/*";
+        $templatesSrcDir = "$tempDirName/look";
     } else {
         $templatesSrcDir = null;
     }
     $configSrcDir = "$tempDirName/$origDbName/database_conf.php";
 } else {
-    $templatesSrcDir = "$tempDirName/templates/*";
+    $templatesSrcDir = "$tempDirName/templates";
     $configSrcDir = "$tempDirName/conf/database_conf.php";
 }
 
