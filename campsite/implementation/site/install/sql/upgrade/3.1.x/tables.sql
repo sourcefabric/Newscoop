@@ -1,9 +1,9 @@
+-- changes to the statistics table to implement real time statistics
 ALTER TABLE `Requests` ADD INDEX `requests_session_idx`(`session_id`);
 ALTER TABLE `Requests` ADD INDEX `requests_object_idx`(`object_id`);
 ALTER TABLE `Requests` DROP COLUMN `request_count`;
 ALTER TABLE `Requests` DROP COLUMN `last_request_time`;
 ALTER TABLE `Requests` ADD COLUMN `last_stats_update` DATETIME NOT NULL;
-
 
 CREATE TABLE `RequestStats` (
   `object_id` INTEGER  NOT NULL,
@@ -16,6 +16,8 @@ CREATE TABLE `RequestStats` (
   INDEX `stats_object_hour_idx`(`object_id`, `hour`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
+-- add support for article authors
 CREATE TABLE `Authors` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(100)  NOT NULL,
@@ -33,3 +35,8 @@ CREATE TABLE `ArticleAuthors` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 ALTER TABLE `Articles` ADD COLUMN `fk_default_author_id` INTEGER UNSIGNED AFTER `IdUser`;
+
+
+-- add full text indexes for article name (title) and author name
+ALTER TABLE `Articles` ADD FULLTEXT articles_name_skey (`Name`);
+ALTER TABLE `Authors` ADD FULLTEXT authors_name_skey (`first_name`, `last_name`);
