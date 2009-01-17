@@ -103,8 +103,14 @@ class RequestStats extends DatabaseObject {
              . "WHERE object_id = '" . $g_ado_db->Escape($this->m_data['object_id']) . "'"
              . "  AND date = '" . $g_ado_db->Escape($this->m_data['date']) . "'"
              . "  AND hour = '" . $g_ado_db->Escape($this->m_data['hour']) . "'";
-        $g_ado_db->Execute($sql);
+        $success = $g_ado_db->Execute($sql);
+        if ($success === false) {
+        	return false;
+        }
+
         $this->m_data['request_count'] = $g_ado_db->GetOne("SELECT LAST_INSERT_ID()");
+        // Write the object to cache
+        $this->writeCache();
 
         $requestObject = new RequestObject($this->m_data['object_id']);
         $requestObject->updateRequestCount();

@@ -65,10 +65,7 @@ class RequestObject extends DatabaseObject {
     		return false;
     	}
     	$objectRequestCount = RequestStats::GetObjectRequestCount($this->getObjectId());
-    	$sql = "UPDATE " . $this->m_dbTableName . " "
-    	     . "SET request_count = $objectRequestCount "
-    	     . "WHERE object_id = " . $this->getObjectId();
-    	return $g_ado_db->Execute($sql);
+    	return $this->setProperty('request_count', $objectRequestCount);
     }
 } // class RequestObject
 
