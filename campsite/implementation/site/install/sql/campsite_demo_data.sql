@@ -260,7 +260,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `liveuser_users_auth_user_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` DISABLE KEYS */;
-INSERT  IGNORE INTO `liveuser_users_auth_user_id_seq` VALUES (2);
+UPDATE `liveuser_users_auth_user_id_seq` SET id = 2 WHERE id = 1;
 /*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +280,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `liveuser_rights_right_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` DISABLE KEYS */;
-INSERT  IGNORE INTO `liveuser_rights_right_id_seq` VALUES (92);
+UPDATE `liveuser_rights_right_id_seq` SET id = 92 WHERE id = 71;
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
