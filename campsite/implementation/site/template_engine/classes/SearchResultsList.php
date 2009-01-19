@@ -68,10 +68,22 @@ class SearchResultsList extends ListObject
         }
 
 	    $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
-	    $articlesList = $p_parameters['search_results'];
-    	$articlesList = Article::SearchByKeyword($keywords, $p_parameters['match_all'],
-    	                                         $this->m_constraints, $this->m_order, $p_start,
-    	                                         $p_limit, $p_count);
+
+	    if ($p_parameters['scope'] == 'keywords') {
+	    	$articlesList = Article::SearchByKeyword($keywords,
+	    	                $p_parameters['match_all'],
+	    	                $this->m_constraints,
+	    	                $this->m_order,
+	    	                $p_start, $p_limit, $p_count);
+	    } else {
+            $articlesList = Article::SearchByField($keywords,
+                            $p_parameters['scope'],
+                            $p_parameters['match_all'],
+                            $this->m_constraints,
+                            $this->m_order,
+                            $p_start, $p_limit, $p_count);
+	    }
+
 	    $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
 	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),
@@ -155,6 +167,7 @@ class SearchResultsList extends ListObject
     			case 'start_date':
                 case 'end_date':
                 case 'topic_id':
+                case 'scope':
     				if ($parameter == 'length' || $parameter == 'columns'
     				|| $parameter == 'search_level' || $parameter == 'search_section') {
     					$intValue = (int)$value;

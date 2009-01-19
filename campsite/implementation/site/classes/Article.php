@@ -2522,18 +2522,98 @@ class Article extends DatabaseObject {
                                          $p_countOnly = false)
     {
         global $g_ado_db;
-        
+
         static $searchFields = array(
-                'title'=>array('tableFields'=>array('Name'),
+                'title'=>array('table_fields'=>array('Name'),
                                'table'=>'Articles'),
-                'author'=>array('tableFields'=>array('fist_name', 'last_name'),
+                'author'=>array('table_fields'=>array('first_name', 'last_name'),
                                 'table'=>'Authors',
-                                'joinFields'=>array('fk_default_author_id')));
+                                'join_fields'=>array('fk_default_author_id'=>'id')));
+
+        $fieldName = strtolower($p_fieldName);
+        if (!array_key_exists($fieldName, $searchFields)) {
+        	return false;
+        }
 
         $selectClauseObj = new SQLSelectClause();
 
         // set tables and joins between tables
         $selectClauseObj->setTable('Articles');
+
+        $joinTable = $searchFields[$fieldName]['table'];
+        if ($joinTable != 'Articles') {
+        	$selectClauseObj->addTableFrom($joinTable);
+        	foreach ($searchFields[$fieldName]['join_fields'] as
+        	           $leftJoinField=>$rightJoinField) {
+                $selectClauseObj->addWhere("`Articles`.`$leftJoinField` = "
+                                           . "`$joinTable`.`$rightJoinField`");
+        	}
+        }
+
+        foreach ($searchFields[$fieldName]['table_fields'] as $matchField) {
+        	$matchFields[] = "`$joinTable`.`$matchField`";
+        }
+        $matchCond = 'MATCH (' . implode(', ', $matchFields) . ") AGAINST ('";
+        foreach ($p_keywords as $keyword) {
+        	$matchCond .= ($p_matchAll ? '+' : '') . $g_ado_db->escape($keyword) . ' ';
+        }
+        $matchCond .= "' IN BOOLEAN MODE)";
+        $selectClauseObj->addWhere($matchCond);
+
+        $joinTables = array();
+        // set other constraints
+        foreach ($p_constraints as $constraint) {
+            $leftOperand = $constraint->getLeftOperand();
+            $operandAttributes = explode('.', $leftOperand);
+            if (count($operandAttributes) == 2) {
+                $table = trim($operandAttributes[0]);
+                if (strtolower($table) != 'articles') {
+                    $joinTables[] = $table;
+                }
+            }
+            $symbol = $constraint->getOperator()->getSymbol('sql');
+            $rightOperand = "'" . $g_ado_db->escape($constraint->getRightOperand()) . "'";
+            $selectClauseObj->addWhere("$leftOperand $symbol $rightOperand");
+        }
+        foreach ($joinTables as $table) {
+            $selectClauseObj->addJoin("LEFT JOIN $table ON Articles.Number = $table.NrArticle");
+        }
+
+        // create the count clause object
+        $countClauseObj = clone $selectClauseObj;
+
+        // set the columns for the select clause
+        $selectClauseObj->addColumn('Articles.Number');
+        $selectClauseObj->addColumn('Articles.IdLanguage');
+        $selectClauseObj->addColumn($matchCond . ' AS score');
+
+        // set the order for the select clause
+        $p_order = count($p_order) > 0 ? $p_order : Article::$s_defaultOrder;
+        $order = Article::ProcessListOrder($p_order);
+        $selectClauseObj->addOrderBy('score DESC');
+        foreach ($order as $orderDesc) {
+            $orderField = $orderDesc['field'];
+            $orderDirection = $orderDesc['dir'];
+            $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
+        }
+
+        // sets the LIMIT start and offset values
+        $selectClauseObj->setLimit($p_start, $p_limit);
+
+        // set the column for the count clause
+        $countClauseObj->addColumn('COUNT(*)');
+
+        $articlesList = array();
+        if (!$p_countOnly) {
+            $selectQuery = $selectClauseObj->buildQuery();
+            $articles = $g_ado_db->GetAll($selectQuery);
+            foreach ($articles as $article) {
+                $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+            }
+        }
+        $countQuery = $countClauseObj->buildQuery();
+        $p_count = $g_ado_db->GetOne($countQuery);
+        return $articlesList;
     }
 
 } // class Article
