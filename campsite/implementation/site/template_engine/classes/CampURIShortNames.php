@@ -272,15 +272,19 @@ class CampURIShortNames extends CampURI
                 $this->m_language->number,
                 $issueArray[0]->getIssueNumber());
             }
+	        if (!$this->m_issue->defined()) {
+	            CampTemplate::singleton()->trigger_error("Invalid issue name '$cIssueSName' in URL.");
+	            return;
+	        }
         } else {
             $issueObj = Issue::GetCurrentIssue($this->m_publication->identifier,
             $this->m_language->number);
             $this->m_issue = new MetaIssue($this->m_publication->identifier,
             $this->m_language->number, $issueObj->getIssueNumber());
-        }
-        if (!$this->m_issue->defined()) {
-            CampTemplate::singleton()->trigger_error("Invalid issue name '$cIssueSName' in URL.");
-            return;
+            if (!$this->m_issue->defined()) {
+                CampTemplate::singleton()->trigger_error("Did not find any published issue.");
+                return;
+            }
         }
 
         // gets the section number and sets the section short name
