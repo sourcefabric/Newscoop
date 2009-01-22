@@ -51,6 +51,13 @@ class ArticleData extends DatabaseObject {
 	} // constructor
 
 
+	public function getFieldValue($p_property, $p_forceFetchFromDatabase = false)
+	{
+		$dbColumnName = 'F'.$p_property;
+		return parent::getProperty($dbColumnName, $p_forceFetchFromDatabase);
+	}
+
+
 	/**
 	 * Gets the translation for a given language; default language is the
 	 * session language.  If no translation is set for that language, we
@@ -94,6 +101,7 @@ class ArticleData extends DatabaseObject {
 			.' VALUES ('.$p_destArticleNumber.','.implode(',', $tmpData).')';
 		$g_ado_db->Execute($queryStr);
 	} // fn copy
+
 
     /**
     * Return an array of ArticleTypeField objects.

@@ -88,6 +88,7 @@ class Author extends DatabaseObject {
     
     public static function ReadName($p_name)
     {
+    	$p_name = trim($p_name);
     	$firstName = null;
     	$lastName = null;
         preg_match('/([^,]+),([^,]+)/', $p_name, $matches);

@@ -656,4 +656,25 @@ function camp_get_calendar_field($p_fieldName, $p_defaultValue = null,
     return ob_get_clean();
 }
 
+
+function camp_set_author(ArticleTypeField $p_sourceField)
+{
+	$result = true;
+	$articles = Article::GetArticlesOfType($p_sourceField->getArticleType());
+	foreach ($articles as $article) {
+		$articleData = $article->getArticleData();
+		$authorName = $articleData->getFieldValue($p_sourceField->getPrintName());
+		$author = new Author($authorName);
+		if (!$author->exists()) {
+			if (!$author->create()) {
+				return false;
+			}
+		}
+		if (!$article->setAuthorId($author->getId())) {
+			return false;
+		}
+	}
+	return true;
+}
+
 ?>

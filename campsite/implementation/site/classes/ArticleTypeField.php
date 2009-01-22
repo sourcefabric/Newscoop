@@ -54,6 +54,17 @@ class ArticleTypeField {
 
 
 	/**
+	 * Returns the article type name.
+	 *
+	 * @return string
+	 */
+	public function getArticleType()
+	{
+		return substr($this->m_dbTableName, 1);
+	} // fn getArticleType
+
+
+	/**
 	 * Rename the article type.  This will move the entire table in the database and update ArticleTypeMetadata.
 	 * Usually, one wants to just rename the Display Name, which is done via SetDisplayName
 	 *
@@ -247,7 +258,7 @@ class ArticleTypeField {
 	} // fn fetch
 
 
-	/*
+	/**
 	* Deletes an ATF
 	*/
 	public function delete()
@@ -332,6 +343,7 @@ class ArticleTypeField {
 		}
 		return strtolower($this->Type);
 	} // fn getType
+
 
 	/**
 	 * @return string
@@ -516,6 +528,8 @@ class ArticleTypeField {
 	    return $this->m_metadata['is_content_field'];
 	}
 	
+
+
 	public function setIsContent($p_isContent) {
         global $g_ado_db;
 	    $queryStr = "UPDATE ArticleTypeMetadata "
@@ -524,6 +538,7 @@ class ArticleTypeField {
                     ." AND field_name='". $this->m_fieldName ."'";
         $ret = $g_ado_db->Execute($queryStr);
 	}
+
 
 	/**
 	 * Quick lookup to see if the current language is already translated for this article type: used by delete and update in setName
@@ -635,6 +650,7 @@ class ArticleTypeField {
 	} // fn getNextOrder
 
 
+
 	/**
 	 * Get the ordering of all fields; initially, a field has a field_weight
 	 * of NULL when it is created.  if we discover that a field has a field
@@ -742,7 +758,8 @@ class ArticleTypeField {
 	        $whereClauses[] = "field_type = '" . $g_ado_db->escape($p_dataType) . "'";
 	    }
 	    $query = 'SELECT * FROM ArticleTypeMetadata WHERE '
-	             . implode(' and ', $whereClauses);
+	             . implode(' and ', $whereClauses)
+	             . ' ORDER BY type_name ASC, field_name ASC';
 	    $rows = $g_ado_db->GetAll($query);
 	    $fields = array();
 	    foreach ($rows as $row) {
