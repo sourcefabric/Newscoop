@@ -452,7 +452,7 @@ if ($f_edit_mode == "edit") { ?>
                     <?php } ?>
 					<input type="button" name="save" id="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('save');" />
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" name="save_and_close" id="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" onClick="makeRequest('save_and_close');window.location='/admin/articles/index.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php p($f_section_number); ?>';" />
+					<input type="submit" name="save_and_close" id="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
 				</td>
 			</tr>
 			</table>
@@ -901,7 +901,7 @@ window.location.reload();
             <?php } ?>
 			<input type="button" name="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('save');" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="button" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" onClick="makeRequest('save_and_close');window.location='/admin/articles/index.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php p($f_section_number); ?>';" />
+			<input type="submit" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
 		</td>
 	</tr>
 	<?php } ?>
