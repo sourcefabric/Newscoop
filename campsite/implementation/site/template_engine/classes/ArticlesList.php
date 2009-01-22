@@ -18,6 +18,8 @@ class ArticlesList extends ListObject
                                                             'type'=>'switch'),
                                          'upload_date'=>array('field'=>'UploadDate',
                                                               'type'=>'date'),
+                                         'publish_date'=>array('field'=>'PublishDate',
+                                                              'type'=>'date'),
                                          'public'=>array('field'=>'Public',
                                                          'type'=>'switch'),
                                          'type'=>array('field'=>'Type',

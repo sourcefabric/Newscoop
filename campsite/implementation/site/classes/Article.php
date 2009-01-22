@@ -98,6 +98,7 @@ class Article extends DatabaseObject {
                                                 'name'=>'Name',
                                                 'number'=>'Number',
                                                 'upload_date'=>'DATE(UploadDate)',
+                                                'publish_date'=>'DATE(PublishDate)',
                                                 'type'=>'Type',
                                                 'keyword'=>'Keywords',
                                                 'onfrontpage'=>'OnFrontPage',
