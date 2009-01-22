@@ -28,7 +28,7 @@
 	    ed.addButton('campsiteimage', {
 	        title : 'campsiteimage.image_desc',
 		cmd : 'mceCampsiteImage',
-		image : url + '/img/example.gif'
+		image : url + '/img/campsiteimage.gif'
 	    });
 
 	    ed.addShortcut('ctrl+g', 'campsiteimage.campsiteimage_desc', 'mceCampsiteImage');
