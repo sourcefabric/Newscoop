@@ -111,6 +111,7 @@ class Author extends DatabaseObject {
         return array('first_name'=>$firstName, 'last_name'=>$lastName);
     }
 
+
     /**
 	 *
 	 */

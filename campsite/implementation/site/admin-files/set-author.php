@@ -20,14 +20,17 @@ if (!empty($f_src_author_field)) {
 	}
 
 	foreach ($fields as $field) {
-		$res = camp_set_author($field);
-		if ($res) {
+		camp_set_author($field, $errors);
+		if (count($errors) == 0) {
 			camp_html_add_msg(getGS("The author was set successfuly for articles of type '$1' from the field '$2'.",
 			                        $field->getArticleType(), $field->getPrintName()), 'ok');
 		} else {
-            camp_html_add_msg(getGS("Error setting the author for articles of type '$1' from the field '$2'.",
+            camp_html_add_msg(getGS("There were errors setting the author for articles of type '$1' from the field '$2'.",
                                     $field->getArticleType(), $field->getPrintName()));
 		}
+        foreach ($errors as $error) {
+            camp_html_add_msg($error);
+        }
 	}
     camp_html_display_msgs();
 }

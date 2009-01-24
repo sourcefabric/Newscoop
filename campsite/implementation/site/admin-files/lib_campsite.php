@@ -657,24 +657,33 @@ function camp_get_calendar_field($p_fieldName, $p_defaultValue = null,
 }
 
 
-function camp_set_author(ArticleTypeField $p_sourceField)
+function camp_set_author(ArticleTypeField $p_sourceField, &$p_errors)
 {
-	$result = true;
+	$p_errors = array();
 	$articles = Article::GetArticlesOfType($p_sourceField->getArticleType());
 	foreach ($articles as $article) {
 		$articleData = $article->getArticleData();
-		$authorName = $articleData->getFieldValue($p_sourceField->getPrintName());
+		$authorName = trim($articleData->getFieldValue($p_sourceField->getPrintName()));
+		if (empty($authorName)) {
+			continue;
+		}
 		$author = new Author($authorName);
 		if (!$author->exists()) {
 			if (!$author->create()) {
-				return false;
+				$p_errors[] = getGS('Unable to create author "$1" for article no. $2 ("$3") of type $4.',
+				                    $author->getName(), $article->getArticleNumber(),
+				                    $article->getName(), $article->getType());
+				continue;
 			}
 		}
 		if (!$article->setAuthorId($author->getId())) {
-			return false;
+			$p_errors[] = getGS('Error setting the author "$1" for article no. $2 ("$3") of type $4.',
+                                $author->getName(), $article->getArticleNumber(),
+                                $article->getName(), $article->getType());
+			continue;
 		}
 	}
-	return true;
+	return count($p_errors);
 }
 
 ?>
