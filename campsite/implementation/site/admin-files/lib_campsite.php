@@ -603,16 +603,23 @@ function camp_set_article_row_decoration(&$p_articleObj, &$p_lockInfo, &$p_rowCl
 }
 
 
-function camp_get_calendar_include()
+function camp_get_calendar_include($p_languageCode = null)
 {
-	$environmentLanguage = camp_session_get('TOL_Language', 'en');
+	$calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/javascript/jscalendar';
+    $calendarLocalization = "lang/calendar-$p_languageCode.js";
+	if (!file_exists("$calendarPath/$calendarLocalization")) {
+        $p_languageCode = camp_session_get('TOL_Language', 'en');
+		$calendarLocalization = "lang/calendar-$p_languageCode.js";
+	}
+	
 	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
+	$calendarURL = "$websiteURL/javascript/jscalendar";
 	ob_start();
 ?>
-<style type="text/css">@import url(<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/calendar-system.css);</style>
-<script type="text/javascript" src="<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/calendar.js"></script>
-<script type="text/javascript" src="<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/lang/calendar-<?php echo $environmentLanguage ?>.js"></script>
-<script type="text/javascript" src="<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/calendar-setup.js"></script>
+<style type="text/css">@import url(<?php echo htmlspecialchars($calendarURL); ?>/calendar-system.css);</style>
+<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/calendar.js"></script>
+<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/<?php echo $calendarLocalization; ?>"></script>
+<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/calendar-setup.js"></script>
 <?php
 	return ob_get_clean();
 }

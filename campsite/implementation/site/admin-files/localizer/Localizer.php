@@ -16,6 +16,14 @@ require_once('LocalizerLanguage.php');
 require_once('LanguageMetadata.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/classes/SyntaxError.php');
 
+
+function isGS($p_translateString)
+{
+    global $g_translationStrings;
+	return isset($g_translationStrings[$p_translateString]);
+}
+
+
 /**
  * Translate the given string and print it.  This function accepts a variable
  * number of parameters and works something like printf().
@@ -43,7 +51,7 @@ function putGS($p_translateString)
  */
 function getGS($p_translateString)
 {
-	global $g_translationStrings, $TOL_Language;
+	global $g_translationStrings;
 	$numFunctionArgs = func_num_args();
 	if (!isset($g_translationStrings[$p_translateString]) || ($g_translationStrings[$p_translateString]=='')) {
 		$translatedString = "$p_translateString (*)";

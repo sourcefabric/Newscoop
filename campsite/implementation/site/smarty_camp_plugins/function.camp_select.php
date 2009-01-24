@@ -156,9 +156,11 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $html = '<input type="checkbox" name="f_match_all" '
             . $p_params['html_code'] . ' />';
         } elseif ($attribute == 'level') {
-        	camp_load_translation_strings("globals");
+        	if (!isGS('Publication')) {
+        		camp_load_translation_strings("globals", $campsite->language->code);
+        	}
             $html = '<select name="f_search_'.$attribute.'" ' . $p_params['html_code'] . '>'
-                .'<option value="1">' . getGS('Publication') . '</option>'
+                .'<option value="1" selected>' . getGS('Publication') . '</option>'
                 .'<option value="2">' . getGS('Issue') . '</option>'
                 .'<option value="3">' . getGS('Section') . '</option>'
                 .'</select>';
@@ -175,9 +177,11 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             	$constraints[] = new ComparisonOperation('NrIssue', $operator, $campsite->issue->number);
             }
             $sectionsList = Section::GetList($constraints, array('Number'=>'ASC'));
-            camp_load_translation_strings("user_subscription_sections");
+            if (!isGS('-- ALL SECTIONS --')) {
+            	camp_load_translation_strings("user_subscription_sections", $campsite->language->code);
+            }
             $html = '<select name="f_search_section" ' . $p_params['html_code'] . '>';
-            $html .= '<option value="0">' . getGS('-- ALL SECTIONS --') . '</option>';
+            $html .= '<option value="0" selected>' . getGS('-- ALL SECTIONS --') . '</option>';
             foreach ($sectionsList as $section) {
             	$html .= '<option value="' . $section->getSectionNumber() . '">'
             	      . htmlspecialchars($section->getName()) . '</option>';
