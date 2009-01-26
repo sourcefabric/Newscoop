@@ -15,6 +15,12 @@ popup_blocked:"Sorry, but we have noticed that your popup-blocker has disabled a
 invalid_data:"Error: Invalid values entered, these are marked in red.",
 more_colors:"More colors"
 },
+campsiteimage:{
+campsiteimage_desc:"Campsite Image"
+},
+campsiteinternallink:{
+campsiteinternallink_desc:"Campsite Internal Link"
+},
 contextmenu:{
 align:"Alignment",
 left:"Left",
