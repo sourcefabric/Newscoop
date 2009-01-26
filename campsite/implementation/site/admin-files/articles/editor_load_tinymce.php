@@ -212,6 +212,7 @@ tinyMCE.init({
     elements : "<?php p($textareas); ?>",
     theme : "advanced",
     plugins : "<?php p($plugins_list); ?>",
+    forced_root_block : "",
 
     // Theme options
     theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
