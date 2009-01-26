@@ -65,6 +65,7 @@ function db_connect($p_conf_dir)
                   $Campsite['DATABASE_PASSWORD']) or
         die('Could not connect: ' . mysql_error());
     mysql_select_db($Campsite['DATABASE_NAME']);
+    mysql_query("SET NAMES 'utf8'");
 } // fn db_connect
 
 

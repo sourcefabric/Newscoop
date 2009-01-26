@@ -272,7 +272,8 @@ function db_server_connect()
         return false;
     }
 
-    return mysql_select_db($db_name, $link);
+    mysql_select_db($db_name, $link);
+    return mysql_query("SET NAMES 'utf8'");
 } // fn db_server_connect
 
 
