@@ -142,14 +142,14 @@ class CampInstallationBase
     {
         global $g_db;
 
-	$session = CampSession::singleton();
+    	$session = CampSession::singleton();
 
         $db_hostname = Input::Get('db_hostname', 'text');
         $db_hostport = Input::Get('db_hostport', 'int');
         $db_username = Input::Get('db_username', 'text');
         $db_userpass = Input::Get('db_userpass', 'text');
         $db_database = Input::Get('db_database', 'text');
-	$db_overwrite = Input::Get('db_overwrite', 'int', 0);
+    	$db_overwrite = Input::Get('db_overwrite', 'int', 0);
 
         if (empty($db_hostport)) {
             $db_hostport = 3306;
@@ -170,26 +170,26 @@ class CampInstallationBase
             $error = true;
         } else {
             $selectDb = $g_db->SelectDB($db_database);
-	    if ($selectDb && !$db_overwrite) {
-	        $this->m_step = 'database';
-		$this->m_overwriteDb = true;
-		$this->m_message = '<p>There is already a database named <i>' . $db_database . '</i>.</p><p>If you are sure to overwrite it, check <i>Yes</i> for the option below. If not, just change the <i>Database Name</i> and continue.</p>';
-		$this->m_config['database'] = array(
+            if ($selectDb && !$db_overwrite) {
+            	$this->m_step = 'database';
+            	$this->m_overwriteDb = true;
+            	$this->m_message = '<p>There is already a database named <i>' . $db_database . '</i>.</p><p>If you are sure to overwrite it, check <i>Yes</i> for the option below. If not, just change the <i>Database Name</i> and continue.</p>';
+            	$this->m_config['database'] = array(
                                             'hostname' => $db_hostname,
                                             'hostport' => $db_hostport,
                                             'username' => $db_username,
                                             'userpass' => $db_userpass,
                                             'database' => $db_database
-                                            );
-		$session->unsetData('config.db', 'installation');
-		$session->setData('config.db', $this->m_config['database'], 'installation', true);
-		return false;
-	    }
+            	);
+            	$session->unsetData('config.db', 'installation');
+            	$session->setData('config.db', $this->m_config['database'], 'installation', true);
+            	return false;
+            }
         }
 
         if (!$error && !$selectDb) {
             $dict = NewDataDictionary($g_db);
-            $sql = $dict->CreateDatabase($db_database);
+            $sql = $dict->CreateDatabase($db_database, array('MYSQL'=>'CHARACTER SET utf8'));
             // ExecuteSQLArray() returns:
             // 0 if failed,
             // 1 if executed all but with errors,

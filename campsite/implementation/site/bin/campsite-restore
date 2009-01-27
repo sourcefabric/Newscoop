@@ -362,7 +362,7 @@ if (($res = camp_connect_to_database()) != 0) {
 if (camp_database_exists($destDbName)) {
     camp_clean_database($destDbName);
 } else {
-    if (!mysql_query("CREATE DATABASE `$destDbName` CHARACTER SET utf8 COLLATE utf8_bin")) {
+    if (!mysql_query("CREATE DATABASE `$destDbName` CHARACTER SET utf8")) {
         camp_exit_with_error("Can't create database $destDbName");
     }
 }
