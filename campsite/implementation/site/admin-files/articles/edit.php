@@ -180,6 +180,16 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 <script src="/javascript/yui/build/event/event-min.js"></script>
 <script src="/javascript/yui/build/connection/connection-min.js"></script>
 
+<!-- Autocomplete Dependencies -->
+<script src="/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="/javascript/yui/build/datasource/datasource-min.js"></script>
+
+<!-- Autocomplete Source file -->
+<script src="/javascript/yui/build/autocomplete/autocomplete-min.js"></script>
+
+<!-- CSS file (default YUI Sam Skin) -->
+<link type="text/css" rel="stylesheet" href="/javascript/yui/build/autocomplete/assets/skins/sam/autocomplete.css">
+
 <link rel="stylesheet" type="text/css" href="yui-assets/styles.css">
 
 <?php
@@ -459,9 +469,10 @@ if ($f_edit_mode == "edit") { ?>
 			<?php } ?>
 			<table width="100%" style="border-bottom: 1px solid #8baed1; padding-bottom: 3px;">
 			<tr>
-				<td align="left" valign="top"><b><?php putGS("Name"); ?>:</b>
-					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="text" name="f_article_title" id="f_article_title" size="60" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" />
+				<td align="left" valign="top"><b><?php putGS("Name"); ?>:</b></td>
+				<td align="left" valign="top" colspan="2">
+				    <?php if ($f_edit_mode == "edit") { ?>
+					<input type="text" name="f_article_title" id="f_article_title" size="55" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" />
 					<?php } else {
 						print wordwrap(htmlspecialchars($articleObj->getTitle()), 60, "<br>");
 					}
@@ -469,15 +480,18 @@ if ($f_edit_mode == "edit") { ?>
 				</td>
 			</tr>
 			<tr>
-				<td>
-				  <b><?php putGS("Author"); ?>:</b>
-				  <?php if ($f_edit_mode == "edit") { ?>
-	                          <input type="text" name="f_article_author" id="f_article_author" size="50" class="input_text" value="<?php print htmlspecialchars($articleAuthorObj->getName()); ?>" />
-				  <?php } else {
-	                          print wordwrap(htmlspecialchars($articleAuthorObj->getName()), 60, "<br>");
-	                          }
-                                  ?>
-                                </td>
+				<td align="left" valign="top"><b><?php putGS("Author"); ?>:</b></td>
+                <td align="left" valign="top" class="yui-skin-sam">
+                    <?php if ($f_edit_mode == "edit") { ?>
+                    <div id="authorAutoComplete">
+                        <input type="text" name="f_article_author" id="f_article_author" size="45" class="input_text" value="<?php print htmlspecialchars($articleAuthorObj->getName()); ?>" />
+                        <div id="authorContainer"></div>
+                    </div>
+                    <?php } else {
+                            print wordwrap(htmlspecialchars($articleAuthorObj->getName()), 60, "<br>");
+	                      }
+                    ?>
+                </td>
 				<td align="right" valign="top" style="padding-right: 0.5em;"><b><?php  putGS("Created by"); ?>:</b> <?php p(htmlspecialchars($articleCreator->getRealName())); ?></td>
 		    </tr>
 		    </table>
@@ -1091,6 +1105,35 @@ function makeRequest(a){
 
     var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
 }
+
+
+authorsData = {
+		arrayAuthors: [
+<?php
+$allAuthors = Author::GetAllExistingNames();
+$quoteStringFn = create_function('&$value, $key',
+                 '$value = "\"" . camp_javascriptspecialchars($value) . "\"";');
+array_walk($allAuthors, $quoteStringFn);
+echo implode(",\n", $allAuthors);
+?>
+        ]
+};
+
+createAuthorAutocomplete = function() {
+    // Use a LocalDataSource
+    var oDS = new YAHOO.util.LocalDataSource(authorsData.arrayAuthors);
+
+    // Instantiate the AutoComplete
+    var oAC = new YAHOO.widget.AutoComplete("f_article_author", "authorContainer", oDS);
+    oAC.prehighlightClassName = "yui-ac-prehighlight";
+    oAC.useShadow = true;
+    
+    return {
+        oDS: oDS,
+        oAC: oAC
+    };
+}();
+
 </script>
 <!-- END YUI code //-->
 

@@ -167,10 +167,14 @@ class Author extends DatabaseObject {
 		$sql = "SELECT DISTINCT Name FROM (\n"
              . "  SELECT Name FROM liveuser_users\n"
              . "  UNION\n"
-             . "  SELECT CONCAT(first_name, ' ', last_name) AS Name\n"
+             . "  SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS Name\n"
              . "    FROM Authors\n"
-             . ") AS names";
-        return $g_ado_db->GetAll($sql);
+             . ") AS names ORDER BY Name ASC";
+        $authors = $g_ado_db->GetAll($sql);
+        $convertArray = create_function('&$value, $key',
+                                        '$value = $value["Name"];');
+        array_walk($authors, $convertArray);
+        return $authors;
 	}
 
 } // class Author
