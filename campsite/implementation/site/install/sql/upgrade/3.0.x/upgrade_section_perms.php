@@ -20,6 +20,7 @@ if (!mysql_connect($db_host, $db_user, $db_passwd)) {
 if (!mysql_select_db($db_name)) {
     die("Unable to use the database " . $db_name . ".\n");
 }
+mysql_query("SET NAMES 'utf8'");
 
 //
 // gets sections key info

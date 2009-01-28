@@ -104,6 +104,7 @@ require './scripts/phorum3_in.php';
 // establishing the first link to the old database
 $oldlink = mysql_connect($CONVERT['old_dbhost'], $CONVERT['old_dbuser'], $CONVERT['old_dbpass'], true);
 mysql_select_db($CONVERT['olddb'], $oldlink);
+mysql_query("SET NAMES 'utf8'");
 
 if (!$oldlink) {
     print "Couldn't connect to the old database.".$CONVERT['lbr'];
