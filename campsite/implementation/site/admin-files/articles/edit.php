@@ -426,8 +426,19 @@ if ($f_edit_mode == "edit") { ?>
 			     <input type="button" name="edit" value="<?php putGS("View"); ?>" <?php if ($f_edit_mode == "view") {?> disabled class="button_disabled" <?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="button" <?php } ?> />
 			     </td>
 
-			     <td style="background-color: #00CB38; color: #FFF; border: 1px solid white; padding-left: 5px; padding-right: 10px;" align="center" nowrap>
-			     <b><?php putGS("Saved:"); ?> <?php if ($savedToday) { p(date("H:i", $lastModified)); } else { p(date("Y-m-d H:i", $lastModified)); } ?></b>
+			     <td nowrap>
+			       <div id="yui-saved-box">
+			         <div id="yui-saved-title"><?php putGS("Saved:"); ?>&nbsp;</div>
+				 <div id="yui-connection-saved"></div>
+				 <div id="yui-saved">
+                                 <script>
+				    var dateTime = '<?php if ($savedToday) { p(date("H:i:s", $lastModified)); } else { p(date("Y-m-d H:i", $lastModified)); } ?>';
+			            if (document.getElementById('yui-connection-saved').value == undefined) {
+				        document.write(dateTime);
+				    }
+				 </script>
+                                 </div>
+                               </div>
 			     </td>
 			     </tr></table>
 			</td>
@@ -1004,6 +1015,7 @@ for($i = 0; $i < sizeof($fCustomTextareas); $i++) {
 <script>
 var resp = document.getElementById('yui-connection-container');
 var mesg = document.getElementById('yui-connection-message');
+var saved = document.getElementById('yui-connection-saved');
 
 var handleSuccess = function(o){
     if(o.responseText !== undefined){
@@ -1012,6 +1024,10 @@ var handleSuccess = function(o){
 	resp.innerHTML += "<li>Status code message: " + o.statusText + "</li>";
 	resp.innerHTML += "<li>HTTP headers received: <ul>" + o.getAllResponseHeaders + "</ul></li>";
 	resp.innerHTML += "<li>PHP response: " + o.responseText + "</li>";
+
+	document.getElementById('yui-saved').style.display = 'none';
+	var savedTime = makeSavedTime();
+	saved.innerHTML = savedTime;
 	mesg.innerHTML = "Article Saved";
     }
 };
@@ -1106,6 +1122,17 @@ function makeRequest(a){
     var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
 }
 
+function makeSavedTime() {
+    var dt = new Date();
+    var hours = dt.getHours();
+    var minutes = dt.getMinutes();
+    var seconds = dt.getSeconds();
+
+    if (minutes < 10){ minutes = "0" + minutes }
+    if (seconds < 10){ seconds = "0" + seconds }
+
+    return hours + ':' + minutes + ':' + seconds;
+}
 
 authorsData = {
 		arrayAuthors: [
