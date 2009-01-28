@@ -471,7 +471,7 @@ if ($f_edit_mode == "edit") { ?>
                     <input type="submit" name="preview" value="<?php putGS('Preview'); ?>" class="button" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php p($f_publication_id); ?>&amp;f_issue_number=<?php p($f_issue_number); ?>&amp;f_section_number=<?php p($f_section_number); ?>&amp;f_article_number=<?php p($f_article_number); ?>&amp;f_language_id=<?php p($f_language_id); ?>&amp;f_language_selected=<?php p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false">
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <?php } ?>
-					<input type="button" name="save" id="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('save');" />
+					<input type="button" name="save" id="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('all');" />
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="submit" name="save_and_close" id="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
 				</td>
@@ -480,18 +480,28 @@ if ($f_edit_mode == "edit") { ?>
 			<?php } ?>
 			<table width="100%" style="border-bottom: 1px solid #8baed1; padding-bottom: 3px;">
 			<tr>
-				<td align="left" valign="top"><b><?php putGS("Name"); ?>:</b></td>
-				<td align="left" valign="top" colspan="2">
-				    <?php if ($f_edit_mode == "edit") { ?>
-					<input type="text" name="f_article_title" id="f_article_title" size="55" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" />
-					<?php } else {
-						print wordwrap(htmlspecialchars($articleObj->getTitle()), 60, "<br>");
-					}
-					?>
-				</td>
+	                  <td align="left" valign="top" style="padding-right: 5px;">
+	                  <?php if ($f_edit_mode == "edit") { ?>
+			    <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('f_article_title');" />
+			  <?php } ?>
+                          </td>
+                          <td align="right" valign="top"><b><?php  putGS("Name"); ?>:</b></td>
+                          <td align="left" valign="top" colspan="2">
+                          <?php if ($f_edit_mode == "edit") { ?>
+                            <input type="text" name="f_article_title" id="f_article_title" size="55" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" />
+                          <?php } else {
+                              print wordwrap(htmlspecialchars($articleObj->getTitle()), 60, "<br>");
+                                }
+                          ?>
+                          </td>
 			</tr>
 			<tr>
-				<td align="left" valign="top"><b><?php putGS("Author"); ?>:</b></td>
+				<td align="left" valign="top" style="padding-right: 5px;">
+				<?php if ($f_edit_mode == "edit") { ?>
+					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('f_article_author');" />
+				<?php } ?>
+				</td>
+				<td align="right" valign="top"><b><?php putGS("Author"); ?>:</b></td>
                 <td align="left" valign="top" class="yui-skin-sam">
                     <?php if ($f_edit_mode == "edit") { ?>
                     <div id="authorAutoComplete">
@@ -692,7 +702,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('save');" />
+					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('f_keywords');" />
 				<?php } ?>
 				</td>
 				<td align="right" ><?php  putGS("Keywords"); ?>:</td>
@@ -711,7 +721,6 @@ if ($f_edit_mode == "edit") { ?>
                         $fCustomTextareas = array();
 			// Display the article type fields.
 			foreach ($dbColumns as $dbColumn) {
-
 				if (stristr($dbColumn->getType(), "char")
 				    /* DO NOT DELETE */ || stristr($dbColumn->getType(), "binary") /* DO NOT DELETE */ ) {
 					// The "binary" comparizon is needed for Fedora distro; MySQL on Fedora changes ALL
@@ -722,7 +731,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 					<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('save');" />
+					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
 					<?php } ?>
 				</td>
 				<td align="right">
@@ -756,7 +765,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 					<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('save');" />
+					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
 					<?php } ?>
 				</td>
 				<td align="right">
@@ -835,7 +844,7 @@ window.location.reload();
 			<tr>
 			<td align="right" valign="top" style="padding-top: 8px; padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('save');" />
+				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
 				<?php } ?>
 			</td>
 			<td align="right" valign="top" style="padding-top: 8px;">
@@ -924,7 +933,7 @@ window.location.reload();
             <input type="submit" name="preview" value="<?php putGS('Preview'); ?>" class="button" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php p($f_publication_id); ?>&amp;f_issue_number=<?php p($f_issue_number); ?>&amp;f_section_number=<?php p($f_section_number); ?>&amp;f_article_number=<?php p($f_article_number); ?>&amp;f_language_id=<?php p($f_language_id); ?>&amp;f_language_selected=<?php p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false">
             &nbsp;&nbsp;&nbsp;&nbsp;
             <?php } ?>
-			<input type="button" name="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('save');" />
+			<input type="button" name="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('all');" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="submit" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
 		</td>
@@ -1051,11 +1060,7 @@ var sUrl = "/admin/articles/yui-assets/post.php";
 
 
 function makeRequest(a){
-    if (a == 'save') {
-        postAction = '&save=1';
-    } else {
-        postAction = '&save_and_close=1';
-    }
+    var postAction = '&f_save=' + a;
 
     var ycaFArticleTitle = document.getElementById('f_article_title').value;
     var ycaFArticleAuthor = document.getElementById('f_article_author').value;
